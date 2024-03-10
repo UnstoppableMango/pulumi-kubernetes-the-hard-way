@@ -2,34 +2,40 @@
 ---
 name: kubernetes-the-hard-way
 resources:
-  kubernetes-the-hard-way:index:StaticPage:
+  kubernetes-the-hard-way:index:RemoteFile:
     isComponent: true
     inputProperties:
-      indexContent:
+      connection:
+        "$ref": "/command/v0.9.0/schema.json#/types/command:remote:Connection"
+        description: The connection details.
+      content:
         type: string
-        description: The HTML content for index.html.
+        description: The content of the file.
+      path:
+        type: string
+        description: The path to the file on the remote host.
     requiredInputs:
-      - indexContent
+      - connection
+      - content
+      - path
     properties:
-      bucket:
-        "$ref": "/aws/v4.0.0/schema.json#/resources/aws:s3%2Fbucket:Bucket"
-        description: The bucket resource.
-      websiteUrl:
-        type: string
-        description: The website URL.
+      command:
+        "$ref": "/command/v0.9.0/schema.json#/resources/command:remote:Command"
+        description: The command resource.
     required:
-      - bucket
-      - websiteUrl
+      - command
 language:
   csharp:
+    rootNamespace: UnMango
     packageReferences:
       Pulumi: 3.*
       Pulumi.Command: 0.9.*
       Pulumi.Tls: 5.*
   go:
     generateResourceContainerTypes: true
-    importBasePath: github.com/pulumi/pulumi-kubernetes-the-hard-way/sdk/go/kubernetes-the-hard-way
+    importBasePath: github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/sdk/go/kubernetes-the-hard-way
   nodejs:
+    packageName: '@unmango/pulumi-kubernetes-the-hard-way'
     dependencies:
       "@pulumi/command": "^0.9.0"
       "@pulumi/tls": "^5.0.0"
