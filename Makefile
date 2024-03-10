@@ -6,7 +6,7 @@ CODEGEN         := pulumi-gen-${PACK}
 VERSION_PATH    := provider/pkg/version.Version
 
 WORKING_DIR     := $(shell pwd)
-SCHEMA_PATH     := ${WORKING_DIR}/schema.yaml
+SCHEMA_FILE     := ${WORKING_DIR}/schema.yaml
 
 PROVIDER_PKG    := $(shell find provider/pkg -type f)
 
@@ -68,62 +68,87 @@ gen_go_sdk::
 
 # .NET SDK
 
-gen_dotnet_sdk::
-	rm -rf sdk/dotnet
-	cd provider/cmd/${CODEGEN} && go run . dotnet ../../../sdk/dotnet ${SCHEMA_PATH}
-
-build_dotnet_sdk:: DOTNET_VERSION := ${VERSION}
-build_dotnet_sdk:: gen_dotnet_sdk
-	cd sdk/dotnet/ && \
-		echo "${DOTNET_VERSION}" >version.txt && \
-		dotnet build /p:Version=${DOTNET_VERSION}
-
-install_dotnet_sdk:: build_dotnet_sdk
-	rm -rf ${WORKING_DIR}/nuget
-	mkdir -p ${WORKING_DIR}/nuget
-	find . -name '*.nupkg' -print -exec cp -p {} ${WORKING_DIR}/nuget \;
+#gen_dotnet_sdk::
+#	rm -rf sdk/dotnet
+#	cd provider/cmd/${CODEGEN} && go run . dotnet ../../../sdk/dotnet ${SCHEMA_PATH}
+#
+#build_dotnet_sdk:: DOTNET_VERSION := ${VERSION}
+#build_dotnet_sdk:: gen_dotnet_sdk
+#	cd sdk/dotnet/ && \
+#		echo "${DOTNET_VERSION}" >version.txt && \
+#		dotnet build /p:Version=${DOTNET_VERSION}
+#
+#install_dotnet_sdk:: build_dotnet_sdk
+#	rm -rf ${WORKING_DIR}/nuget
+#	mkdir -p ${WORKING_DIR}/nuget
+#	find . -name '*.nupkg' -print -exec cp -p {} ${WORKING_DIR}/nuget \;
 
 
 # Node.js SDK
 
-gen_nodejs_sdk::
-	rm -rf sdk/nodejs
-	cd provider/cmd/${CODEGEN} && go run . nodejs ../../../sdk/nodejs ${SCHEMA_PATH}
-
-build_nodejs_sdk:: gen_nodejs_sdk
-	cd sdk/nodejs/ && \
-		yarn install && \
-		yarn run tsc --version && \
-		yarn run tsc && \
-		cp ../../README.md ../../LICENSE package.json yarn.lock ./bin/ && \
-		sed -i.bak -e "s/\$${VERSION}/$(VERSION)/g" ./bin/package.json && \
-		rm ./bin/package.json.bak
-
-install_nodejs_sdk:: build_nodejs_sdk
-	yarn link --cwd ${WORKING_DIR}/sdk/nodejs/bin
+#gen_nodejs_sdk::
+#	rm -rf sdk/nodejs
+#	cd provider/cmd/${CODEGEN} && go run . nodejs ../../../sdk/nodejs ${SCHEMA_PATH}
+#
+#build_nodejs_sdk:: gen_nodejs_sdk
+#	cd sdk/nodejs/ && \
+#		yarn install && \
+#		yarn run tsc --version && \
+#		yarn run tsc && \
+#		cp ../../README.md ../../LICENSE package.json yarn.lock ./bin/ && \
+#		sed -i.bak -e "s/\$${VERSION}/$(VERSION)/g" ./bin/package.json && \
+#		rm ./bin/package.json.bak
+#
+#install_nodejs_sdk:: build_nodejs_sdk
+#	yarn link --cwd ${WORKING_DIR}/sdk/nodejs/bin
 
 
 # Python SDK
 
-gen_python_sdk::
-	rm -rf sdk/python
-	cd provider/cmd/${CODEGEN} && go run . python ../../../sdk/python ${SCHEMA_PATH}
-	cp ${WORKING_DIR}/README.md sdk/python
-
-build_python_sdk:: PYPI_VERSION := ${VERSION}
-build_python_sdk:: gen_python_sdk
-	cd sdk/python/ && \
-		rm -rf ./bin/ ../python.bin/ && cp -R . ../python.bin && mv ../python.bin ./bin && \
-#		sed -i.bak -e 's/^  version = .*/  version = "$(PYPI_VERSION)"/g' ./bin/pyproject.toml && \
-#		rm ./bin/pyproject.toml.bak && \
-		sed -i.bak -e 's/^VERSION = .*/VERSION = "$(PYPI_VERSION)"/g' -e 's/^PLUGIN_VERSION = .*/PLUGIN_VERSION = "$(VERSION)"/g' ./bin/setup.py && \
-		python3 -m venv venv && \
-		./venv/bin/python -m pip install build && \
-		cd ./bin && \
-		../venv/bin/python -m build .
+#gen_python_sdk::
+#	rm -rf sdk/python
+#	cd provider/cmd/${CODEGEN} && go run . python ../../../sdk/python ${SCHEMA_PATH}
+#	cp ${WORKING_DIR}/README.md sdk/python
+#
+#build_python_sdk:: PYPI_VERSION := ${VERSION}
+#build_python_sdk:: gen_python_sdk
+#	cd sdk/python/ && \
+#		rm -rf ./bin/ ../python.bin/ && cp -R . ../python.bin && mv ../python.bin ./bin && \
+##		sed -i.bak -e 's/^  version = .*/  version = "$(PYPI_VERSION)"/g' ./bin/pyproject.toml && \
+##		rm ./bin/pyproject.toml.bak && \
+#		sed -i.bak -e 's/^VERSION = .*/VERSION = "$(PYPI_VERSION)"/g' -e 's/^PLUGIN_VERSION = .*/PLUGIN_VERSION = "$(VERSION)"/g' ./bin/setup.py && \
+#		python3 -m venv venv && \
+#		./venv/bin/python -m pip install build && \
+#		cd ./bin && \
+#		../venv/bin/python -m build .
 
 ## Empty build target for Go
-build_go_sdk::
+#build_go_sdk::
+
+.PHONY: install_dotnet_sdk install_python_sdk install_go_sdk install_java_sdk install_nodejs_sdk install_sdks
+# Required by CI steps - some can be skipped
+install_dotnet_sdk: .make/install_dotnet_sdk
+install_python_sdk:
+install_go_sdk:
+install_java_sdk:
+install_nodejs_sdk: .make/install_nodejs_sdk
+install_sdks: install_dotnet_sdk install_nodejs_sdk
+
+.PHONY: clean
+clean:
+	rm -rf nuget
+	rm -rf .make
+	rm -rf bin
+	rm -rf dist
+	rm -rf sdk/dotnet/bin
+	rm -rf sdk/dotnet/build sdk/dotnet/src
+	rm -rf sdk/nodejs/bin
+	rm -rf sdk/pulumi-kubernetes-the-hard-way
+	rm -rf sdk/python/bin
+	rm -rf sdk/java/.gradle
+	if dotnet nuget list source | grep "$(WORKING_DIR)"; then \
+		dotnet nuget remove source "$(WORKING_DIR)" \
+	; fi
 
 .PHONY: upgrade_tools upgrade_java upgrade_pulumi upgrade_pulumictl upgrade_schematools
 upgrade_tools: upgrade_java upgrade_pulumi upgrade_pulumictl upgrade_schematools
@@ -135,7 +160,6 @@ upgrade_pulumictl:
 	gh release list --repo pulumi/pulumictl --exclude-drafts --exclude-pre-releases --limit 1 | cut -f1 | sed 's/^v//' > .pulumictl.version
 upgrade_schematools:
 	gh release list --repo pulumi/schema-tools --exclude-drafts --exclude-pre-releases --limit 1 | cut -f1 | sed 's/^v//' > .schema-tools.version
-
 
 # --------- File-based targets --------- #
 
@@ -176,4 +200,18 @@ bin/$(CODEGEN): bin/pulumictl .make/provider_mod_download provider/cmd/$(CODEGEN
 
 .make/provider_mod_download: provider/go.mod provider/go.sum
 	cd provider && go mod download
+	@touch $@
+
+.make/generate_java: bin/pulumictl .pulumi/bin/pulumi
+	@mkdir -p sdk/java
+	rm -rf $$(find sdk/java -mindepth 1 -maxdepth 1)
+	.pulumi/bin/pulumi package gen-sdk --language java $(SCHEMA_FILE)
+	@touch $@
+
+.make/generate_nodejs: bin/pulumictl .pulumi/bin/pulumi
+	@mkdir -p sdk/nodejs
+	rm -rf $$(find sdk/nodejs -mindepth 1 -maxdepth 1 ! -name "go.mod")
+	.pulumi/bin/pulumi package gen-sdk $(SCHEMA_FILE) --language nodejs
+	sed -i.bak -e "s/sourceMap/inlineSourceMap/g" sdk/nodejs/tsconfig.json
+	rm sdk/nodejs/tsconfig.json.bak
 	@touch $@
