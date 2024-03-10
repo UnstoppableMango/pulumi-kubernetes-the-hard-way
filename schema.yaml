@@ -26,7 +26,8 @@ resources:
       - command
 language:
   csharp:
-    rootNamespace: UnMango
+    rootNamespace: UnMango # TODO: Name that works
+    dictionaryConstructors: true
     packageReferences:
       Pulumi: 3.*
       Pulumi.Command: 0.9.*
