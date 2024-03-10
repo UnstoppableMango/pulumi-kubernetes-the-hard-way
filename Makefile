@@ -215,3 +215,56 @@ bin/$(CODEGEN): bin/pulumictl .make/provider_mod_download provider/cmd/$(CODEGEN
 	sed -i.bak -e "s/sourceMap/inlineSourceMap/g" sdk/nodejs/tsconfig.json
 	rm sdk/nodejs/tsconfig.json.bak
 	@touch $@
+
+.make/generate_python: bin/pulumictl .pulumi/bin/pulumi
+	@mkdir -p sdk/python
+	rm -rf $$(find sdk/python -mindepth 1 -maxdepth 1 ! -name "go.mod")
+	.pulumi/bin/pulumi package gen-sdk $(SCHEMA_FILE) --language python
+	cp README.md sdk/python
+	@touch $@
+
+.make/generate_dotnet: bin/pulumictl .pulumi/bin/pulumi
+	@mkdir -p sdk/dotnet
+	rm -rf $$(find sdk/dotnet -mindepth 1 -maxdepth 1 ! -name "go.mod")
+	.pulumi/bin/pulumi package gen-sdk $(SCHEMA_FILE) --language dotnet
+	sed -i.bak -e "s/<\/Nullable>/<\/Nullable>\n    <UseSharedCompilation>false<\/UseSharedCompilation>/g" sdk/dotnet/Pulumi.AzureNative.csproj
+	rm sdk/dotnet/Pulumi.AzureNative.csproj.bak
+	@touch $@
+
+# TODO: Fix or remove if not needed
+#.make/generate_go_local: bin/pulumictl bin/$(CODEGEN)
+#	@mkdir -p sdk/pulumi-${PACK}
+#	@# Unmark this is as an up-to-date local build
+#	rm -f .make/prepublish_go
+#	rm -rf $$(find sdk/pulumi-${PACK} -mindepth 1 -maxdepth 1 ! -name ".git")
+#	bin/$(CODEGEN) go $(VERSION_GENERIC) ${WORKING_DIR}/sdk/pulumi-${PACK} $(SCHEMA_FILE)
+#	@# Tidy up all go.mod files
+#	find sdk/pulumi-${PACK} -type d -maxdepth 1 -exec sh -c "cd \"{}\" && go mod tidy" \;
+#	@touch $@
+
+.make/nodejs_yarn_install: .make/generate_nodejs sdk/nodejs/package.json
+	yarn install --cwd sdk/nodejs
+	@touch $@
+
+.make/build_nodejs: VERSION_JS = $(shell bin/pulumictl convert-version -l javascript -v "$(VERSION_GENERIC)")
+.make/build_nodejs: bin/pulumictl .make/nodejs_yarn_install
+	cd sdk/nodejs/ && \
+		NODE_OPTIONS=--max-old-space-size=12288 yarn run tsc --diagnostics --incremental && \
+		cp ../../README.md ../../LICENSE package.json yarn.lock ./bin/ && \
+		mkdir -p bin/scripts && \
+		sed -i.bak -e "s/\$${VERSION}/$(VERSION_JS)/g" ./bin/package.json
+	@touch $@
+
+.make/build_python: VERSION_PYTHON = $(shell bin/pulumictl convert-version -l python -v "$(VERSION_GENERIC)")
+.make/build_python: bin/pulumictl .make/generate_python
+	cd sdk/python && \
+		git clean -fxd && \
+		rm -rf ./bin/ ../python.bin/ && cp -R . ../python.bin && mv ../python.bin ./bin && \
+		sed -i.bak -e 's/^  version = .*/  version = "$(VERSION_PYTHON)"/g' ./bin/pyproject.toml && \
+		rm ./bin/pyproject.toml.bak && \
+		rm ./bin/go.mod && \
+		python3 -m venv venv && \
+		./venv/bin/python -m pip install build && \
+		cd ./bin && \
+		../venv/bin/python -m build .
+	@touch $@
