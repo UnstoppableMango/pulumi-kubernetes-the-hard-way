@@ -1,8 +1,8 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/pulumi/pulumi/master/pkg/codegen/schema/pulumi.json
 ---
-name: xyz
+name: kubernetes-the-hard-way
 resources:
-  xyz:index:StaticPage:
+  kubernetes-the-hard-way:index:StaticPage:
     isComponent: true
     inputProperties:
       indexContent:
@@ -27,7 +27,7 @@ language:
       Pulumi.Aws: 4.*
   go:
     generateResourceContainerTypes: true
-    importBasePath: github.com/pulumi/pulumi-xyz/sdk/go/xyz
+    importBasePath: github.com/pulumi/pulumi-kubernetes-the-hard-way/sdk/go/kubernetes-the-hard-way
   nodejs:
     dependencies:
       "@pulumi/aws": "^4.0.0"

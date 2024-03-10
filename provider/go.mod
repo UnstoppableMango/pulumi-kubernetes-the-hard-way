@@ -1,4 +1,4 @@
-module github.com/pulumi/pulumi-xyz
+module github.com/pulumi/pulumi-kubernetes-the-hard-way
 
 go 1.17
 

@@ -17,11 +17,11 @@
 package main
 
 import (
-	"github.com/pulumi/pulumi-xyz/pkg/provider"
-	"github.com/pulumi/pulumi-xyz/pkg/version"
+	"github.com/pulumi/pulumi-kubernetes-the-hard-way/pkg/provider"
+	"github.com/pulumi/pulumi-kubernetes-the-hard-way/pkg/version"
 )
 
-var providerName = "xyz"
+var providerName = "kubernetes-the-hard-way"
 
 func main() {
 	provider.Serve(providerName, version.Version, pulumiSchema)
