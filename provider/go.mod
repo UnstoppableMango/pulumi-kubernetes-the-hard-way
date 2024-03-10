@@ -1,4 +1,4 @@
-module github.com/pulumi/pulumi-kubernetes-the-hard-way
+module github.com/unstoppablemango/pulumi-kubernetes-the-hard-way
 
 go 1.21
 

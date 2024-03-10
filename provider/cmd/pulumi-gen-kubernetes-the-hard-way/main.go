@@ -23,7 +23,9 @@ import (
 	"strings"
 
 	"github.com/ghodss/yaml"
+
 	"github.com/pkg/errors"
+
 	dotnetgen "github.com/pulumi/pulumi/pkg/v3/codegen/dotnet"
 	gogen "github.com/pulumi/pulumi/pkg/v3/codegen/go"
 	nodejsgen "github.com/pulumi/pulumi/pkg/v3/codegen/nodejs"
