@@ -449,7 +449,7 @@ jobs:
           --skip-existing
           --verbose
 
-      - uses: JS-DevTools/npm-publish@v1
+      - uses: JS-DevTools/npm-publish@v3
         with:
           access: "public"
           token: ${{ env.NPM_TOKEN }}
