@@ -41,22 +41,15 @@ VERSION_FLAGS   = -ldflags "-X ${PROJECT}/${VERSION_PATH}=${VERSION_GENERIC}"
 # relevant target we run `@touch $@` to update the file which is the name of the target.
 _ := $(shell mkdir -p .make)
 
-generate:: gen_go_sdk gen_dotnet_sdk gen_nodejs_sdk gen_python_sdk
-
-build:: build_provider build_dotnet_sdk build_nodejs_sdk build_python_sdk
-
-install:: install_provider install_dotnet_sdk install_nodejs_sdk
-
-
 # Provider
 
-#build_provider::
-#	rm -rf ${WORKING_DIR}/bin/${PROVIDER}
-#	cd provider/cmd/${PROVIDER} && VERSION=${VERSION} SCHEMA=${SCHEMA_PATH} go generate main.go
-#	cd provider/cmd/${PROVIDER} && go build -o ${WORKING_DIR}/bin/${PROVIDER} -ldflags "-X ${PROJECT}/${VERSION_PATH}=${VERSION}" .
+build_provider::
+	rm -rf ${WORKING_DIR}/bin/${PROVIDER}
+	cd provider/cmd/${PROVIDER} && VERSION=${VERSION_GENERIC} SCHEMA=${SCHEMA_FILE} go generate main.go
+	cd provider/cmd/${PROVIDER} && go build -o ${WORKING_DIR}/bin/${PROVIDER} -ldflags "-X ${PROJECT}/${VERSION_PATH}=${VERSION_GENERIC}" .
 
-install_provider:: build_provider
-	cp ${WORKING_DIR}/bin/${PROVIDER} ${GOPATH}/bin
+#install_provider:: build_provider
+#	cp ${WORKING_DIR}/bin/${PROVIDER} ${GOPATH}/bin
 
 
 # Go SDK
@@ -66,64 +59,47 @@ gen_go_sdk::
 	cd provider/cmd/${CODEGEN} && go run . go ../../../sdk/go ${SCHEMA_PATH}
 
 
-# .NET SDK
+.PHONY: default ensure dist
+default: provider build_sdks
+ensure: bin/pulumictl .make/provider_mod_download
+dist: dist/pulumi-azure-native_$(VERSION_GENERIC)_checksums.txt
 
-#gen_dotnet_sdk::
-#	rm -rf sdk/dotnet
-#	cd provider/cmd/${CODEGEN} && go run . dotnet ../../../sdk/dotnet ${SCHEMA_PATH}
-#
-#build_dotnet_sdk:: DOTNET_VERSION := ${VERSION}
-#build_dotnet_sdk:: gen_dotnet_sdk
-#	cd sdk/dotnet/ && \
-#		echo "${DOTNET_VERSION}" >version.txt && \
-#		dotnet build /p:Version=${DOTNET_VERSION}
-#
-#install_dotnet_sdk:: build_dotnet_sdk
-#	rm -rf ${WORKING_DIR}/nuget
-#	mkdir -p ${WORKING_DIR}/nuget
-#	find . -name '*.nupkg' -print -exec cp -p {} ${WORKING_DIR}/nuget \;
+# Binaries
+.PHONY: codegen provider
+codegen: bin/$(CODEGEN)
+provider: bin/$(LOCAL_PROVIDER_FILENAME)
 
+.PHONY: install_provider
+install_provider: .make/install_provider
 
-# Node.js SDK
+.PHONY: generate generate_java generate_nodejs generate_python generate_dotnet generate_go
+#generate: generate_java generate_nodejs generate_python generate_dotnet generate_go
+generate: generate_java generate_nodejs generate_python generate_dotnet
+generate_java: .make/generate_java
+generate_nodejs: .make/generate_nodejs
+generate_python: .make/generate_python
+generate_dotnet: .make/generate_dotnet
+#generate_go: .make/generate_go_local
 
-#gen_nodejs_sdk::
-#	rm -rf sdk/nodejs
-#	cd provider/cmd/${CODEGEN} && go run . nodejs ../../../sdk/nodejs ${SCHEMA_PATH}
-#
-#build_nodejs_sdk:: gen_nodejs_sdk
-#	cd sdk/nodejs/ && \
-#		yarn install && \
-#		yarn run tsc --version && \
-#		yarn run tsc && \
-#		cp ../../README.md ../../LICENSE package.json yarn.lock ./bin/ && \
-#		sed -i.bak -e "s/\$${VERSION}/$(VERSION)/g" ./bin/package.json && \
-#		rm ./bin/package.json.bak
-#
-#install_nodejs_sdk:: build_nodejs_sdk
-#	yarn link --cwd ${WORKING_DIR}/sdk/nodejs/bin
+.PHONY: local_generate_code
+local_generate_code: generate_java
+local_generate_code: generate_nodejs
+local_generate_code: generate_python
+local_generate_code: generate_dotnet
+#local_generate_code: generate_go
+local_generate: local_generate_code
 
-
-# Python SDK
-
-#gen_python_sdk::
-#	rm -rf sdk/python
-#	cd provider/cmd/${CODEGEN} && go run . python ../../../sdk/python ${SCHEMA_PATH}
-#	cp ${WORKING_DIR}/README.md sdk/python
-#
-#build_python_sdk:: PYPI_VERSION := ${VERSION}
-#build_python_sdk:: gen_python_sdk
-#	cd sdk/python/ && \
-#		rm -rf ./bin/ ../python.bin/ && cp -R . ../python.bin && mv ../python.bin ./bin && \
-##		sed -i.bak -e 's/^  version = .*/  version = "$(PYPI_VERSION)"/g' ./bin/pyproject.toml && \
-##		rm ./bin/pyproject.toml.bak && \
-#		sed -i.bak -e 's/^VERSION = .*/VERSION = "$(PYPI_VERSION)"/g' -e 's/^PLUGIN_VERSION = .*/PLUGIN_VERSION = "$(VERSION)"/g' ./bin/setup.py && \
-#		python3 -m venv venv && \
-#		./venv/bin/python -m pip install build && \
-#		cd ./bin && \
-#		../venv/bin/python -m build .
-
-## Empty build target for Go
-#build_go_sdk::
+.PHONY: build only_build build_sdks build_nodejs build_python build_dotnet build_java build_go
+build: codegen local_generate provider build_sdks
+# Required for the codegen action that runs in pulumi/pulumi
+only_build: build
+#build_sdks: build_nodejs build_dotnet build_python build_go build_java
+build_sdks: build_nodejs build_dotnet build_python build_java
+build_nodejs: .make/build_nodejs
+build_python: .make/build_python
+build_dotnet: .make/build_dotnet
+build_java: .make/build_java
+#build_go: .make/build_go
 
 .PHONY: install_dotnet_sdk install_python_sdk install_go_sdk install_java_sdk install_nodejs_sdk install_sdks
 # Required by CI steps - some can be skipped
@@ -196,6 +172,35 @@ bin/$(CODEGEN): bin/pulumictl .make/provider_mod_download provider/cmd/$(CODEGEN
 	#cd provider && go build -o $(WORKING_DIR)/bin/$(CODEGEN) $(VERSION_FLAGS) $(PROJECT)/provider/cmd/$(CODEGEN)
 	cd provider && go build -o $(WORKING_DIR)/bin/$(CODEGEN) $(VERSION_FLAGS) ./cmd/$(CODEGEN)
 
+bin/$(LOCAL_PROVIDER_FILENAME): bin/pulumictl .make/provider_mod_download provider/cmd/$(PROVIDER)/*.go $(PROVIDER_PKG)
+	# TODO: Why is this weird
+	cd provider && \
+#		CGO_ENABLED=0 go build -o $(WORKING_DIR)/bin/$(LOCAL_PROVIDER_FILENAME) $(VERSION_FLAGS) $(PROJECT)/provider/cmd/$(PROVIDER)
+		CGO_ENABLED=0 go build -o $(WORKING_DIR)/bin/$(LOCAL_PROVIDER_FILENAME) $(VERSION_FLAGS) ./cmd/$(PROVIDER)
+
+bin/linux-amd64/$(PROVIDER): TARGET := linux-amd64
+bin/linux-arm64/$(PROVIDER): TARGET := linux-arm64
+bin/darwin-amd64/$(PROVIDER): TARGET := darwin-amd64
+bin/darwin-arm64/$(PROVIDER): TARGET := darwin-arm64
+bin/windows-amd64/$(PROVIDER).exe: TARGET := windows-amd64
+bin/%/$(PROVIDER) bin/%/$(PROVIDER).exe: bin/pulumictl .make/provider_mod_download provider/cmd/$(PROVIDER)/*.go $(PROVIDER_PKG)
+	@# check the TARGET is set
+	test $(TARGET)
+	cd provider && \
+		export GOOS=$$(echo "$(TARGET)" | cut -d "-" -f 1) && \
+		export GOARCH=$$(echo "$(TARGET)" | cut -d "-" -f 2) && \
+		CGO_ENABLED=0 go build -o ${WORKING_DIR}/$@ $(VERSION_FLAGS) $(PROJECT)/provider/cmd/$(PROVIDER)
+
+dist/$(PROVIDER)-v$(PROVIDER_VERSION)-linux-amd64.tar.gz: bin/linux-amd64/$(PROVIDER)
+dist/$(PROVIDER)-v$(PROVIDER_VERSION)-linux-arm64.tar.gz: bin/linux-arm64/$(PROVIDER)
+dist/$(PROVIDER)-v$(PROVIDER_VERSION)-darwin-amd64.tar.gz: bin/darwin-amd64/$(PROVIDER)
+dist/$(PROVIDER)-v$(PROVIDER_VERSION)-darwin-arm64.tar.gz: bin/darwin-arm64/$(PROVIDER)
+dist/$(PROVIDER)-v$(PROVIDER_VERSION)-windows-amd64.tar.gz: bin/windows-amd64/$(PROVIDER).exe
+dist/$(PROVIDER)-v$(PROVIDER_VERSION)-%.tar.gz:
+	@mkdir -p dist
+	@# $< is the last dependency (the binary path from above)
+	tar --gzip -cf $@ README.md LICENSE -C $$(dirname $<) .
+
 # --------- Sentinel targets --------- #
 
 .make/provider_mod_download: provider/go.mod provider/go.sum
@@ -227,8 +232,8 @@ bin/$(CODEGEN): bin/pulumictl .make/provider_mod_download provider/cmd/$(CODEGEN
 	@mkdir -p sdk/dotnet
 	rm -rf $$(find sdk/dotnet -mindepth 1 -maxdepth 1 ! -name "go.mod")
 	.pulumi/bin/pulumi package gen-sdk $(SCHEMA_FILE) --language dotnet
-	sed -i.bak -e "s/<\/Nullable>/<\/Nullable>\n    <UseSharedCompilation>false<\/UseSharedCompilation>/g" sdk/dotnet/Pulumi.AzureNative.csproj
-	rm sdk/dotnet/Pulumi.AzureNative.csproj.bak
+	sed -i.bak -e "s/<\/Nullable>/<\/Nullable>\n    <UseSharedCompilation>false<\/UseSharedCompilation>/g" sdk/dotnet/UnMango.KubernetesTheHardWay.csproj
+	rm sdk/dotnet/UnMango.KubernetesTheHardWay.csproj.bak
 	@touch $@
 
 # TODO: Fix or remove if not needed
@@ -267,4 +272,37 @@ bin/$(CODEGEN): bin/pulumictl .make/provider_mod_download provider/cmd/$(CODEGEN
 		./venv/bin/python -m pip install build && \
 		cd ./bin && \
 		../venv/bin/python -m build .
+	@touch $@
+
+.make/build_dotnet: VERSION_DOTNET = $(shell bin/pulumictl convert-version -l dotnet -v "$(PROVIDER_VERSION)")
+.make/build_dotnet: bin/pulumictl .make/generate_dotnet
+	cd sdk/dotnet && \
+		echo "${PACK}\n$(VERSION_DOTNET)" >version.txt && \
+		dotnet build /p:Version=$(VERSION_DOTNET)
+	@touch $@
+
+.make/build_java: bin/pulumictl .make/generate_java
+	cd sdk/java/ && \
+		gradle --console=plain -Pversion=$(VERSION_GENERIC) build
+	@touch $@
+
+# TODO: Fix or remove if not needed
+#.make/build_go: .make/generate_go_local
+#	find sdk/pulumi-azure-native-sdk -type d -maxdepth 1 -exec sh -c "cd \"{}\" && go build" \;
+#	@touch $@
+
+.make/install_nodejs_sdk: .make/build_nodejs
+	yarn link --cwd sdk/nodejs/bin
+	@touch $@
+
+.make/install_dotnet_sdk: .make/build_dotnet
+	@mkdir -p nuget
+	find sdk/dotnet/bin -name '*.nupkg' -print -exec cp -p {} ${WORKING_DIR}/nuget \;
+	if ! dotnet nuget list source | grep ${WORKING_DIR}; then \
+		dotnet nuget add source ${WORKING_DIR}/nuget --name ${WORKING_DIR} \
+	; fi
+	@touch $@
+
+.make/install_provider: bin/pulumictl .make/provider_mod_download provider/cmd/$(PROVIDER)/* $(PROVIDER_PKG)
+	cd provider && go install $(VERSION_FLAGS) $(PROJECT)/provider/cmd/$(PROVIDER)
 	@touch $@

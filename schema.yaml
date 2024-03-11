@@ -1,6 +1,15 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/pulumi/pulumi/master/pkg/codegen/schema/pulumi.json
 ---
 name: kubernetes-the-hard-way
+description: "A Pulumi implementation of Kelsey Hightower's Kubernetes the Hard Way"
+repository: https://github.com/UnstoppableMango/pulumi-kubernetes-the-hard-way
+keywords:
+  - pulumi
+  - command
+  - tls
+  - kubernetes
+  - category/utility
+  - kind/component
 resources:
   kubernetes-the-hard-way:index:RemoteFile:
     isComponent: true
@@ -36,8 +45,9 @@ language:
     generateResourceContainerTypes: true
     importBasePath: github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/sdk/go/kubernetes-the-hard-way
   nodejs:
-    packageName: '@unmango/pulumi-kubernetes-the-hard-way'
+    packageName: "@unmango/pulumi-kubernetes-the-hard-way"
     dependencies:
+      "@pulumi/pulumi": "^3.0.0"
       "@pulumi/command": "^0.9.0"
       "@pulumi/tls": "^5.0.0"
     devDependencies:
@@ -49,3 +59,13 @@ language:
       pulumi: ">=3.0.0,<4.0.0"
       pulumi-command: ">=0.9.0,<1.0.0"
       pulumi-tls: ">=5.0.0,<6.0.0"
+  java:
+    basePackage: com.unmango # TODO: Name that works
+    buildFiles: gradle
+    gradleNexusPublishPluginVersion: 1.1.0
+    dependencies:
+      com.google.code.findbugs:jsr305: 3.0.2
+      com.google.code.gson:gson: 2.8.9
+      com.pulumi:pulumi: 0.9.9
+      com.pulumi:command: 0.9.2
+      com.pulumi:tls: 5.0.0
