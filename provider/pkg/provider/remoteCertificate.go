@@ -5,6 +5,8 @@ import (
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
+// TODO: Should this resource be replaced with a function or resource method?
+
 type RemoteCertificateArgs struct {
 	CertificateArgs
 

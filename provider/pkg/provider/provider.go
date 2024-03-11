@@ -24,6 +24,8 @@ import (
 func construct(ctx *pulumi.Context, typ, name string, inputs provider.ConstructInputs,
 	options pulumi.ResourceOption) (*provider.ConstructResult, error) {
 	switch typ {
+	case "kubernetes-the-hard-way:index:AdminCertificate":
+		return constructAdminCertificate(ctx, name, inputs, options)
 	case "kubernetes-the-hard-way:index:Certificate":
 		return constructCertificate(ctx, name, inputs, options)
 	case "kubernetes-the-hard-way:index:RemoteCertificate":
@@ -35,6 +37,21 @@ func construct(ctx *pulumi.Context, typ, name string, inputs provider.ConstructI
 	default:
 		return nil, errors.Errorf("unknown resource type %s", typ)
 	}
+}
+
+func constructAdminCertificate(ctx *pulumi.Context, name string, inputs provider.ConstructInputs,
+	options pulumi.ResourceOption) (*provider.ConstructResult, error) {
+	args := &AdminCertificateArgs{}
+	if err := inputs.CopyTo(args); err != nil {
+		return nil, errors.Wrap(err, "setting args")
+	}
+
+	component, err := NewAdminCertificate(ctx, name, args, options)
+	if err != nil {
+		return nil, errors.Wrap(err, "creating component")
+	}
+
+	return provider.NewConstructResult(component)
 }
 
 func constructCertificate(ctx *pulumi.Context, name string, inputs provider.ConstructInputs,
