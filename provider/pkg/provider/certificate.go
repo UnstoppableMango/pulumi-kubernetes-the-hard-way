@@ -16,6 +16,7 @@ type CertificateArgs struct {
 }
 
 type Certificate struct {
+	pulumi.ResourceState
 	KeyPair
 
 	Cert *tls.LocallySignedCert `pulumi:"cert"`
@@ -50,6 +51,9 @@ func NewCertificate(ctx *pulumi.Context,
 		Subject:       args.Subject,
 		Uris:          args.Uris,
 	}, pulumi.Parent(component))
+	if err != nil {
+		return nil, err
+	}
 
 	cert, err := tls.NewLocallySignedCert(ctx, name, &tls.LocallySignedCertArgs{
 		AllowedUses:         args.AllowedUses,

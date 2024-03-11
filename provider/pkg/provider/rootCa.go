@@ -14,6 +14,7 @@ type RootCaArgs struct {
 
 // The RootCa for a cluster
 type RootCa struct {
+	pulumi.ResourceState
 	KeyPair
 
 	Cert *tls.SelfSignedCert `pulumi:"cert"`
