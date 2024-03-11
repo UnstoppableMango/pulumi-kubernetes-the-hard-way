@@ -16,13 +16,10 @@ type CertificateArgs struct {
 }
 
 type Certificate struct {
-	pulumi.ResourceState
+	KeyPair
 
-	Cert    *tls.LocallySignedCert `pulumi:"cert"`
-	CertPem pulumi.StringOutput    `pulumi:"certPem"`
-	Csr     *tls.CertRequest       `pulumi:"csr"`
-	Key     *tls.PrivateKey        `pulumi:"key"`
-	KeyPem  pulumi.StringOutput    `pulumi:"keyPem"`
+	Cert *tls.LocallySignedCert `pulumi:"cert"`
+	Csr  *tls.CertRequest       `pulumi:"csr"`
 }
 
 func NewCertificate(ctx *pulumi.Context,

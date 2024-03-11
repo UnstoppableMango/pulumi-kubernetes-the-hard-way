@@ -53,5 +53,8 @@ type KeyPairArgs struct {
 
 type KeyPair struct {
 	pulumi.ResourceState
-	Key *tls.PrivateKey `pulumi:"key"`
+
+	CertPem pulumi.StringOutput `pulumi:"certPem"`
+	Key     *tls.PrivateKey     `pulumi:"key"`
+	KeyPem  pulumi.StringOutput `pulumi:"keyPem"`
 }
