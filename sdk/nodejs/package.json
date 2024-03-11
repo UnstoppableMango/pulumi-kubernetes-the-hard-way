@@ -1,19 +1,29 @@
 {
-    "name": "@pulumi/xyz",
+    "name": "@unmango/pulumi-kubernetes-the-hard-way",
     "version": "${VERSION}",
+    "keywords": [
+        "pulumi",
+        "command",
+        "tls",
+        "kubernetes",
+        "category/utility",
+        "kind/component"
+    ],
+    "repository": "https://github.com/UnstoppableMango/pulumi-kubernetes-the-hard-way",
     "scripts": {
         "build": "tsc"
     },
     "dependencies": {
-        "@pulumi/aws": "^4.0.0"
+        "@pulumi/command": "^0.9.0",
+        "@pulumi/pulumi": "^3.0.0",
+        "@pulumi/tls": "^5.0.0"
     },
     "devDependencies": {
+        "@types/node": "^14",
         "typescript": "^3.7.0"
     },
-    "peerDependencies": {
-        "@pulumi/pulumi": "latest"
-    },
     "pulumi": {
-        "resource": true
+        "resource": true,
+        "name": "kubernetes-the-hard-way"
     }
 }

@@ -1,39 +1,71 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/pulumi/pulumi/master/pkg/codegen/schema/pulumi.json
 ---
-name: xyz
+name: kubernetes-the-hard-way
+description: "A Pulumi implementation of Kelsey Hightower's Kubernetes the Hard Way"
+repository: https://github.com/UnstoppableMango/pulumi-kubernetes-the-hard-way
+keywords:
+  - pulumi
+  - command
+  - tls
+  - kubernetes
+  - category/utility
+  - kind/component
 resources:
-  xyz:index:StaticPage:
+  kubernetes-the-hard-way:index:RemoteFile:
     isComponent: true
     inputProperties:
-      indexContent:
+      connection:
+        "$ref": "/command/v0.9.0/schema.json#/types/command:remote:Connection"
+        description: The connection details.
+      content:
         type: string
-        description: The HTML content for index.html.
+        description: The content of the file.
+      path:
+        type: string
+        description: The path to the file on the remote host.
     requiredInputs:
-      - indexContent
+      - connection
+      - content
+      - path
     properties:
-      bucket:
-        "$ref": "/aws/v4.0.0/schema.json#/resources/aws:s3%2Fbucket:Bucket"
-        description: The bucket resource.
-      websiteUrl:
-        type: string
-        description: The website URL.
+      command:
+        "$ref": "/command/v0.9.0/schema.json#/resources/command:remote:Command"
+        description: The command resource.
     required:
-      - bucket
-      - websiteUrl
+      - command
 language:
   csharp:
+    rootNamespace: UnMango # TODO: Name that works
+    dictionaryConstructors: true
     packageReferences:
       Pulumi: 3.*
-      Pulumi.Aws: 4.*
+      Pulumi.Command: 0.9.*
+      Pulumi.Tls: 5.*
   go:
     generateResourceContainerTypes: true
-    importBasePath: github.com/pulumi/pulumi-xyz/sdk/go/xyz
+    importBasePath: github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/sdk/go/kubernetes-the-hard-way
   nodejs:
+    packageName: "@unmango/pulumi-kubernetes-the-hard-way"
     dependencies:
-      "@pulumi/aws": "^4.0.0"
+      "@pulumi/pulumi": "^3.0.0"
+      "@pulumi/command": "^0.9.0"
+      "@pulumi/tls": "^5.0.0"
     devDependencies:
       typescript: "^3.7.0"
   python:
+    pyproject:
+      enabled: true
     requires:
       pulumi: ">=3.0.0,<4.0.0"
-      pulumi-aws: ">=4.0.0,<5.0.0"
+      pulumi-command: ">=0.9.0,<1.0.0"
+      pulumi-tls: ">=5.0.0,<6.0.0"
+  java:
+    basePackage: com.unmango # TODO: Name that works
+    buildFiles: gradle
+    gradleNexusPublishPluginVersion: 1.1.0
+    dependencies:
+      com.google.code.findbugs:jsr305: 3.0.2
+      com.google.code.gson:gson: 2.8.9
+      com.pulumi:pulumi: 0.9.9
+      com.pulumi:command: 0.9.2
+      com.pulumi:tls: 5.0.0

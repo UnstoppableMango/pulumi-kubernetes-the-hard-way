@@ -1,8 +1,11 @@
-import * as xyz from "@pulumi/xyz";
+import * as kthw from "@unmango/kubernetes-the-hard-way";
 
-const page = new xyz.StaticPage("page", {
-    indexContent: "<html><body><p>Hello world!</p></body></html>",
+const file = new kthw.RemoteFile("page", {
+    connection: {
+        host: "localhost",
+    },
+    content: "Some file content",
+    path: "/home/pulumi/test.txt",
 });
 
-export const bucket = page.bucket;
-export const url = page.websiteUrl;
+export const command = file.command;

@@ -17,7 +17,7 @@ A code generator is available which generates SDKs in TypeScript, Python, Go and
 
 An example of using the `StaticPage` component in TypeScript is in `examples/simple`.
 
-Note that the generated provider plugin (`pulumi-resource-xyz`) must be on your `PATH` to be used by Pulumi deployments. If creating a provider for distribution to other users, you should ensure they install this plugin to their `PATH`.
+Note that the generated provider plugin (`pulumi-resource-kubernetes-the-hard-way`) must be on your `PATH` to be used by Pulumi deployments. If creating a provider for distribution to other users, you should ensure they install this plugin to their `PATH`.
 
 ## Prerequisites
 
@@ -41,7 +41,7 @@ make generate
 $ make install_nodejs_sdk
 $ cd examples/simple
 $ yarn install
-$ yarn link @pulumi/xyz
+$ yarn link @pulumi/kubernetes-the-hard-way
 $ pulumi stack init test
 $ pulumi config set aws:region us-east-1
 $ pulumi up
@@ -49,7 +49,7 @@ $ pulumi up
 
 ## Naming
 
-The `xyz` provider's plugin binary must be named `pulumi-resource-xyz` (in the format `pulumi-resource-<provider>`).
+The `kubernetes-the-hard-way` provider's plugin binary must be named `pulumi-resource-kubernetes-the-hard-way` (in the format `pulumi-resource-<provider>`).
 
 While the provider plugin must follow this naming convention, the SDK package naming can be customized. TODO explain.
 
@@ -67,7 +67,7 @@ The example `StaticPage` component resource is defined in `schema.yaml`:
 
 ```yaml
 resources:
-  xyz:index:StaticPage:
+  kubernetes-the-hard-way:index:StaticPage:
     isComponent: true
     inputProperties:
       indexContent:
@@ -87,7 +87,7 @@ resources:
       - websiteUrl
 ```
 
-The component resource's type token is `xyz:index:StaticPage` in the format of `<package>:<module>:<type>`. In this case, it's in the `xyz` package and `index` module. This is the same type token passed to `RegisterComponentResource` inside the implementation of `NewStaticPage` in `provider/pkg/provider/staticPage.go`, and also the same token referenced in `Construct` in `provider/pkg/provider/provider.go`.
+The component resource's type token is `kubernetes-the-hard-way:index:StaticPage` in the format of `<package>:<module>:<type>`. In this case, it's in the `kubernetes-the-hard-way` package and `index` module. This is the same type token passed to `RegisterComponentResource` inside the implementation of `NewStaticPage` in `provider/pkg/provider/staticPage.go`, and also the same token referenced in `Construct` in `provider/pkg/provider/provider.go`.
 
 This component has a required `indexContent` input property typed as `string`, and two required output properties: `bucket` and `websiteUrl`. Note that `bucket` is typed as the `aws:s3/bucket:Bucket` resource from the `aws` provider (in the schema the `/` is escaped as `%2F`).
 
@@ -101,7 +101,7 @@ language:
       Pulumi.Aws: 4.*
   go:
     generateResourceContainerTypes: true
-    importBasePath: github.com/pulumi/pulumi-xyz/sdk/go/xyz
+    importBasePath: github.com/pulumi/pulumi-kubernetes-the-hard-way/sdk/go/kubernetes-the-hard-way
   nodejs:
     dependencies:
       "@pulumi/aws": "^4.0.0"
@@ -139,7 +139,7 @@ func NewStaticPage(ctx *pulumi.Context, name string, args *StaticPageArgs, opts 
 }
 ```
 
-The provider makes this component resource available in the `construct` function in `provider/pkg/provider/provider.go`. When `construct` is called and the `typ` argument is `xyz:index:StaticPage`, we create an instance of the `StaticPage` component resource and return its `URN` and state.
+The provider makes this component resource available in the `construct` function in `provider/pkg/provider/provider.go`. When `construct` is called and the `typ` argument is `kubernetes-the-hard-way:index:StaticPage`, we create an instance of the `StaticPage` component resource and return its `URN` and state.
 
 ```go
 func constructStaticPage(ctx *pulumi.Context, name string, inputs provider.ConstructInputs,

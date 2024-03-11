@@ -5,7 +5,7 @@
         "module": "commonjs",
         "moduleResolution": "node",
         "declaration": true,
-        "sourceMap": true,
+        "inlineSourceMap": true,
         "stripInternal": true,
         "experimentalDecorators": true,
         "noFallthroughCasesInSwitch": true,
@@ -15,7 +15,7 @@
     "files": [
         "index.ts",
         "provider.ts",
-        "staticPage.ts",
+        "remoteFile.ts",
         "utilities.ts"
     ]
 }
