@@ -206,6 +206,7 @@ dist/$(PROVIDER)-v$(PROVIDER_VERSION)-%.tar.gz:
 .make/generate_go: bin/pulumictl .pulumi/bin/pulumi
 	rm -rf sdk/go
 	.pulumi/bin/pulumi package gen-sdk $(SCHEMA_FILE) --language go
+	@touch $@
 
 # TODO: Fix or remove if not needed
 #.make/generate_go_local: bin/pulumictl bin/$(CODEGEN)
@@ -252,7 +253,6 @@ dist/$(PROVIDER)-v$(PROVIDER_VERSION)-%.tar.gz:
 		rm -rf ./bin/ ../python.bin/ && cp -R . ../python.bin && mv ../python.bin ./bin && \
 		sed -i.bak -e 's/^  version = .*/  version = "$(VERSION_PYTHON)"/g' ./bin/pyproject.toml && \
 		rm ./bin/pyproject.toml.bak && \
-		rm ./bin/go.mod && \
 		python3 -m venv venv && \
 		./venv/bin/python -m pip install build && \
 		cd ./bin && \
@@ -271,8 +271,9 @@ dist/$(PROVIDER)-v$(PROVIDER_VERSION)-%.tar.gz:
 		gradle --console=plain -Pversion=$(VERSION_GENERIC) build
 	@touch $@
 
+# TODO: Fix
 .make/build_go: .make/generate_go
-	find sdk/go -type d -maxdepth 1 -exec sh -c "cd \"{}\" && go build" \;
+	find sdk/go -maxdepth 1 -type d -exec sh -c "cd \"{}\" && go build" \;
 	@touch $@
 
 .make/install_nodejs_sdk: .make/build_nodejs
