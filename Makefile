@@ -10,11 +10,6 @@ SCHEMA_FILE     := ${WORKING_DIR}/schema.yaml
 
 PROVIDER_PKG    := $(shell find provider/pkg -type f)
 
-# TODO: Can we remove?
-GOPATH          := $(shell go env GOPATH)
-
-JAVA_GEN        := pulumi-java-gen
-
 GOOS ?= $(shell go env GOOS)
 GOARCH ?= $(shell go env GOARCH)
 GOEXE ?= $(shell go env GOEXE)
@@ -41,28 +36,9 @@ VERSION_FLAGS   = -ldflags "-X ${PROJECT}/${VERSION_PATH}=${VERSION_GENERIC}"
 # relevant target we run `@touch $@` to update the file which is the name of the target.
 _ := $(shell mkdir -p .make)
 
-# Provider
-
-build_provider::
-	rm -rf ${WORKING_DIR}/bin/${PROVIDER}
-	cd provider/cmd/${PROVIDER} && VERSION=${VERSION_GENERIC} SCHEMA=${SCHEMA_FILE} go generate main.go
-	cd provider/cmd/${PROVIDER} && go build -o ${WORKING_DIR}/bin/${PROVIDER} -ldflags "-X ${PROJECT}/${VERSION_PATH}=${VERSION_GENERIC}" .
-
-#install_provider:: build_provider
-#	cp ${WORKING_DIR}/bin/${PROVIDER} ${GOPATH}/bin
-
-
-# Go SDK
-
-gen_go_sdk::
-	rm -rf sdk/go
-	cd provider/cmd/${CODEGEN} && go run . go ../../../sdk/go ${SCHEMA_PATH}
-
-
-.PHONY: default ensure dist
+.PHONY: default ensure
 default: provider build_sdks
 ensure: bin/pulumictl .make/provider_mod_download
-dist: dist/pulumi-azure-native_$(VERSION_GENERIC)_checksums.txt
 
 # Binaries
 .PHONY: codegen provider
@@ -73,33 +49,32 @@ provider: bin/$(LOCAL_PROVIDER_FILENAME)
 install_provider: .make/install_provider
 
 .PHONY: generate generate_java generate_nodejs generate_python generate_dotnet generate_go
-#generate: generate_java generate_nodejs generate_python generate_dotnet generate_go
-generate: generate_java generate_nodejs generate_python generate_dotnet
+generate: generate_java generate_nodejs generate_python generate_dotnet generate_go
 generate_java: .make/generate_java
 generate_nodejs: .make/generate_nodejs
 generate_python: .make/generate_python
 generate_dotnet: .make/generate_dotnet
 #generate_go: .make/generate_go_local
+generate_go: .make/generate_go
 
 .PHONY: local_generate_code
 local_generate_code: generate_java
 local_generate_code: generate_nodejs
 local_generate_code: generate_python
 local_generate_code: generate_dotnet
-#local_generate_code: generate_go
+local_generate_code: generate_go
 local_generate: local_generate_code
 
 .PHONY: build only_build build_sdks build_nodejs build_python build_dotnet build_java build_go
 build: codegen local_generate provider build_sdks
 # Required for the codegen action that runs in pulumi/pulumi
 only_build: build
-#build_sdks: build_nodejs build_dotnet build_python build_go build_java
-build_sdks: build_nodejs build_dotnet build_python build_java
+build_sdks: build_nodejs build_dotnet build_python build_go build_java
 build_nodejs: .make/build_nodejs
 build_python: .make/build_python
 build_dotnet: .make/build_dotnet
 build_java: .make/build_java
-#build_go: .make/build_go
+build_go: .make/build_go
 
 .PHONY: install_dotnet_sdk install_python_sdk install_go_sdk install_java_sdk install_nodejs_sdk install_sdks
 # Required by CI steps - some can be skipped
@@ -168,15 +143,11 @@ bin/schema-tools: .schema-tools.version
 	@echo "schema-tools" $$(./bin/schema-tools version)
 
 bin/$(CODEGEN): bin/pulumictl .make/provider_mod_download provider/cmd/$(CODEGEN)/* $(PROVIDER_PKG)
-	# TODO: Why is this weird
-	#cd provider && go build -o $(WORKING_DIR)/bin/$(CODEGEN) $(VERSION_FLAGS) $(PROJECT)/provider/cmd/$(CODEGEN)
-	cd provider && go build -o $(WORKING_DIR)/bin/$(CODEGEN) $(VERSION_FLAGS) ./cmd/$(CODEGEN)
+	cd provider && go build -o $(WORKING_DIR)/bin/$(CODEGEN) $(VERSION_FLAGS) $(PROJECT)/provider/cmd/$(CODEGEN)
 
 bin/$(LOCAL_PROVIDER_FILENAME): bin/pulumictl .make/provider_mod_download provider/cmd/$(PROVIDER)/*.go $(PROVIDER_PKG)
-	# TODO: Why is this weird
 	cd provider && \
-#		CGO_ENABLED=0 go build -o $(WORKING_DIR)/bin/$(LOCAL_PROVIDER_FILENAME) $(VERSION_FLAGS) $(PROJECT)/provider/cmd/$(PROVIDER)
-		CGO_ENABLED=0 go build -o $(WORKING_DIR)/bin/$(LOCAL_PROVIDER_FILENAME) $(VERSION_FLAGS) ./cmd/$(PROVIDER)
+		CGO_ENABLED=0 go build -o $(WORKING_DIR)/bin/$(LOCAL_PROVIDER_FILENAME) $(VERSION_FLAGS) $(PROJECT)/provider/cmd/$(PROVIDER)
 
 bin/linux-amd64/$(PROVIDER): TARGET := linux-amd64
 bin/linux-arm64/$(PROVIDER): TARGET := linux-arm64
@@ -208,33 +179,33 @@ dist/$(PROVIDER)-v$(PROVIDER_VERSION)-%.tar.gz:
 	@touch $@
 
 .make/generate_java: bin/pulumictl .pulumi/bin/pulumi
-	@mkdir -p sdk/java
-	rm -rf $$(find sdk/java -mindepth 1 -maxdepth 1)
-	.pulumi/bin/pulumi package gen-sdk --language java $(SCHEMA_FILE)
+	rm -rf sdk/java
+	.pulumi/bin/pulumi package gen-sdk $(SCHEMA_FILE) --language java
 	@touch $@
 
 .make/generate_nodejs: bin/pulumictl .pulumi/bin/pulumi
-	@mkdir -p sdk/nodejs
-	rm -rf $$(find sdk/nodejs -mindepth 1 -maxdepth 1 ! -name "go.mod")
+	rm -rf sdk/nodejs
 	.pulumi/bin/pulumi package gen-sdk $(SCHEMA_FILE) --language nodejs
 	sed -i.bak -e "s/sourceMap/inlineSourceMap/g" sdk/nodejs/tsconfig.json
 	rm sdk/nodejs/tsconfig.json.bak
 	@touch $@
 
 .make/generate_python: bin/pulumictl .pulumi/bin/pulumi
-	@mkdir -p sdk/python
-	rm -rf $$(find sdk/python -mindepth 1 -maxdepth 1 ! -name "go.mod")
+	rm -rf sdk/python
 	.pulumi/bin/pulumi package gen-sdk $(SCHEMA_FILE) --language python
 	cp README.md sdk/python
 	@touch $@
 
 .make/generate_dotnet: bin/pulumictl .pulumi/bin/pulumi
-	@mkdir -p sdk/dotnet
-	rm -rf $$(find sdk/dotnet -mindepth 1 -maxdepth 1 ! -name "go.mod")
+	rm -rf sdk/dotnet
 	.pulumi/bin/pulumi package gen-sdk $(SCHEMA_FILE) --language dotnet
-	sed -i.bak -e "s/<\/Nullable>/<\/Nullable>\n    <UseSharedCompilation>false<\/UseSharedCompilation>/g" sdk/dotnet/UnMango.KubernetesTheHardWay.csproj
-	rm sdk/dotnet/UnMango.KubernetesTheHardWay.csproj.bak
+#	sed -i.bak -e "s/<\/Nullable>/<\/Nullable>\n    <UseSharedCompilation>false<\/UseSharedCompilation>/g" sdk/dotnet/UnMango.KubernetesTheHardWay.csproj
+#	rm sdk/dotnet/UnMango.KubernetesTheHardWay.csproj.bak
 	@touch $@
+
+.make/generate_go: bin/pulumictl .pulumi/bin/pulumi
+	rm -rf sdk/go
+	.pulumi/bin/pulumi package gen-sdk $(SCHEMA_FILE) --language go
 
 # TODO: Fix or remove if not needed
 #.make/generate_go_local: bin/pulumictl bin/$(CODEGEN)
@@ -245,6 +216,20 @@ dist/$(PROVIDER)-v$(PROVIDER_VERSION)-%.tar.gz:
 #	bin/$(CODEGEN) go $(VERSION_GENERIC) ${WORKING_DIR}/sdk/pulumi-${PACK} $(SCHEMA_FILE)
 #	@# Tidy up all go.mod files
 #	find sdk/pulumi-${PACK} -type d -maxdepth 1 -exec sh -c "cd \"{}\" && go mod tidy" \;
+#	@touch $@
+
+#.make/prepublish_go:
+#	@# Unmark this is as an up-to-date local build
+#	rm -f .make/generate_go_local
+#	@# Remove go module replacements which are added for local testing
+#	@# Note: must use `sed -i -e` to be portable - but leaves go.mod-e behind on macos
+#	find sdk/pulumi-azure-native-sdk -maxdepth 2 -type f -name go.mod -exec sed -i -e '/replace github\.com\/pulumi\/pulumi-azure-native-sdk/d' {} \;
+#	@# Remove sed backup files if using older sed versions
+#	find sdk/pulumi-azure-native-sdk -maxdepth 2 -type f -name go.mod-e -delete
+#	@# Delete go.sum files as these are not used at the point of publishing.
+#	@# This is because we depend on the root package which will come from the same release commit, that doesn't yet exist.
+#	find sdk/pulumi-azure-native-sdk -maxdepth 2 -type f -name go.sum -delete
+#	cp README.md LICENSE sdk/pulumi-azure-native-sdk/
 #	@touch $@
 
 .make/nodejs_yarn_install: .make/generate_nodejs sdk/nodejs/package.json
@@ -286,10 +271,9 @@ dist/$(PROVIDER)-v$(PROVIDER_VERSION)-%.tar.gz:
 		gradle --console=plain -Pversion=$(VERSION_GENERIC) build
 	@touch $@
 
-# TODO: Fix or remove if not needed
-#.make/build_go: .make/generate_go_local
-#	find sdk/pulumi-azure-native-sdk -type d -maxdepth 1 -exec sh -c "cd \"{}\" && go build" \;
-#	@touch $@
+.make/build_go: .make/generate_go
+	find sdk/go -type d -maxdepth 1 -exec sh -c "cd \"{}\" && go build" \;
+	@touch $@
 
 .make/install_nodejs_sdk: .make/build_nodejs
 	yarn link --cwd sdk/nodejs/bin

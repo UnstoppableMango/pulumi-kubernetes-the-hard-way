@@ -17,8 +17,8 @@
 package main
 
 import (
-	"github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/pkg/provider"
-	"github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/pkg/version"
+	"github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/provider/pkg/provider"
+	"github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/provider/pkg/version"
 )
 
 var providerName = "kubernetes-the-hard-way"
