@@ -14,11 +14,9 @@ type RootCaArgs struct {
 
 // The RootCa for a cluster
 type RootCa struct {
-	pulumi.ResourceState
-	Cert    *tls.SelfSignedCert `pulumi:"cert"`
-	CertPem pulumi.StringOutput `pulumi:"certPem"`
-	Key     *tls.PrivateKey     `pulumi:"key"`
-	KeyPem  pulumi.StringOutput `pulumi:"keyPem"`
+	KeyPair
+
+	Cert *tls.SelfSignedCert `pulumi:"cert"`
 }
 
 // NewRootCa creates a new RootCa component resource.
@@ -53,7 +51,7 @@ func NewRootCa(ctx *pulumi.Context,
 		DnsNames:            args.DnsNames,
 		EarlyRenewalHours:   args.EarlyRenewalHours,
 		IpAddresses:         args.IpAddresses,
-		IsCaCertificate:     pulumi.BoolPtr(true),
+		IsCaCertificate:     pulumi.Bool(true),
 		PrivateKeyPem:       key.PrivateKeyPem,
 		SetAuthorityKeyId:   args.SetAuthorityKeyId,
 		SetSubjectKeyId:     args.SetSubjectKeyId,

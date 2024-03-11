@@ -11,6 +11,79 @@ keywords:
   - category/utility
   - kind/component
 resources:
+  kubernetes-the-hard-way:index:Certificate:
+    isComponent: true
+    inputProperties:
+      algorithm:
+        type: string
+        description: Name of the algorithm to use when generating the private key.
+      ecdsaCurve:
+        type: string
+        description: When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
+      rsaBits:
+        type: integer
+        description: When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
+      dnsNames:
+        type: array
+        items:
+          type: string
+        description: List of DNS names for which a certificate is being requested.
+      earlyRenewalHours:
+        type: integer
+        description: TODO
+      ipAddresses:
+        type: array
+        items:
+          type: string
+        description: List of IP addresses for which a certificate is being requested.
+      setAuthorityKeyId:
+        type: boolean
+        description: Should the generated certificate include an authority key identifier.
+      setSubjectKeyId:
+        type: boolean
+        description: Should the generated certificate include a subject key identifier.
+      uris:
+        type: array
+        items:
+          type: string
+        description: List of URIs for which a certificate is being requested.
+      validityPeriodHours:
+        type: integer
+        description: Number of hours, after initial issuing, that the certificate will remain valid.
+      allowedUses:
+        type: array
+        items:
+          type: string
+      caCertPem:
+        type: string
+      caPrivateKeyPem:
+        type: string
+      isCaCertificate:
+        type: boolean
+      subject:
+        "$ref": "/tls/v5.0.0/schema.json#/types/tls:index/CertRequestSubject:CertRequestSubject"
+    requiredInputs:
+      - allowedUses
+      - caCertPem
+      - caPrivateKeyPem
+      - validityPeriodHours
+    properties:
+      cert:
+        "$ref": "/tls/v5.0.0/schema.json#/resources/tls:index/locallySignedCert:LocallySignedCert"
+      certPem:
+        type: string
+      csr:
+        "$ref": "/tls/v5.0.0/schema.json#/resources/tls:index/certRequest:CertRequest"
+      key:
+        "$ref": "/tls/v5.0.0/schema.json#/resources/tls:index/privateKey:PrivateKey"
+      keyPem:
+        type: string
+    required:
+      - cert
+      - certPem
+      - csr
+      - key
+      - keyPem
   kubernetes-the-hard-way:index:RemoteFile:
     isComponent: true
     inputProperties:
@@ -33,6 +106,63 @@ resources:
         description: The command resource.
     required:
       - command
+  kubernetes-the-hard-way:index:RootCa:
+    isComponent: true
+    inputProperties:
+      algorithm:
+        type: string
+        description: Name of the algorithm to use when generating the private key.
+      ecdsaCurve:
+        type: string
+        description: When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
+      rsaBits:
+        type: integer
+        description: When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
+      dnsNames:
+        type: array
+        items:
+          type: string
+        description: List of DNS names for which a certificate is being requested.
+      earlyRenewalHours:
+        type: integer
+        description: TODO
+      ipAddresses:
+        type: array
+        items:
+          type: string
+        description: List of IP addresses for which a certificate is being requested.
+      setAuthorityKeyId:
+        type: boolean
+        description: Should the generated certificate include an authority key identifier.
+      setSubjectKeyId:
+        type: boolean
+        description: Should the generated certificate include a subject key identifier.
+      uris:
+        type: array
+        items:
+          type: string
+        description: List of URIs for which a certificate is being requested.
+      validityPeriodHours:
+        type: integer
+        description: Number of hours, after initial issuing, that the certificate will remain valid.
+      subject:
+        "$ref": "/tls/v5.0.0/schema.json#/types/tls:index/SelfSignedCertSubject:SelfSignedCertSubject"
+    requiredInputs:
+      - validityPeriodHours
+    properties:
+      cert:
+        "$ref": "/tls/v5.0.0/schema.json#/resources/tls:index/selfSignedCert:SelfSignedCert"
+      certPem:
+        type: string
+      key:
+        "$ref": "/tls/v5.0.0/schema.json#/resources/tls:index/privateKey:PrivateKey"
+      keyPem:
+        type: string
+    required:
+      - cert
+      - certPem
+      - key
+      - keyPem
 language:
   csharp:
     rootNamespace: UnMango # TODO: Name that works
