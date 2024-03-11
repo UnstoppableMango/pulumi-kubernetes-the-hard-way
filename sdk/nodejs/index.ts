@@ -5,6 +5,11 @@ import * as pulumi from "@pulumi/pulumi";
 import * as utilities from "./utilities";
 
 // Export members:
+export { CertificateArgs } from "./certificate";
+export type Certificate = import("./certificate").Certificate;
+export const Certificate: typeof import("./certificate").Certificate = null as any;
+utilities.lazyLoad(exports, ["Certificate"], () => require("./certificate"));
+
 export { ProviderArgs } from "./provider";
 export type Provider = import("./provider").Provider;
 export const Provider: typeof import("./provider").Provider = null as any;
@@ -15,13 +20,22 @@ export type RemoteFile = import("./remoteFile").RemoteFile;
 export const RemoteFile: typeof import("./remoteFile").RemoteFile = null as any;
 utilities.lazyLoad(exports, ["RemoteFile"], () => require("./remoteFile"));
 
+export { RootCaArgs } from "./rootCa";
+export type RootCa = import("./rootCa").RootCa;
+export const RootCa: typeof import("./rootCa").RootCa = null as any;
+utilities.lazyLoad(exports, ["RootCa"], () => require("./rootCa"));
+
 
 const _module = {
     version: utilities.getVersion(),
     construct: (name: string, type: string, urn: string): pulumi.Resource => {
         switch (type) {
+            case "kubernetes-the-hard-way:index:Certificate":
+                return new Certificate(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:index:RemoteFile":
                 return new RemoteFile(name, <any>undefined, { urn })
+            case "kubernetes-the-hard-way:index:RootCa":
+                return new RootCa(name, <any>undefined, { urn })
             default:
                 throw new Error(`unknown resource type ${type}`);
         }
