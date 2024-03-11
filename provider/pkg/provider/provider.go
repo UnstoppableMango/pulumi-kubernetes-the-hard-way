@@ -26,6 +26,8 @@ func construct(ctx *pulumi.Context, typ, name string, inputs provider.ConstructI
 	switch typ {
 	case "kubernetes-the-hard-way:index:Certificate":
 		return constructCertificate(ctx, name, inputs, options)
+	case "kubernetes-the-hard-way:index:RemoteCertificate":
+		return constructRemoteCertificate(ctx, name, inputs, options)
 	case "kubernetes-the-hard-way:index:RemoteFile":
 		return constructRemoteFile(ctx, name, inputs, options)
 	case "kubernetes-the-hard-way:index:RootCa":
@@ -43,6 +45,21 @@ func constructCertificate(ctx *pulumi.Context, name string, inputs provider.Cons
 	}
 
 	component, err := NewCertificate(ctx, name, args, options)
+	if err != nil {
+		return nil, errors.Wrap(err, "creating component")
+	}
+
+	return provider.NewConstructResult(component)
+}
+
+func constructRemoteCertificate(ctx *pulumi.Context, name string, inputs provider.ConstructInputs,
+	options pulumi.ResourceOption) (*provider.ConstructResult, error) {
+	args := &RemoteCertificateArgs{}
+	if err := inputs.CopyTo(args); err != nil {
+		return nil, errors.Wrap(err, "setting args")
+	}
+
+	component, err := NewRemoteCertificate(ctx, name, args, options)
 	if err != nil {
 		return nil, errors.Wrap(err, "creating component")
 	}
