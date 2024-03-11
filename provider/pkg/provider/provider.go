@@ -23,18 +23,33 @@ import (
 
 func construct(ctx *pulumi.Context, typ, name string, inputs provider.ConstructInputs,
 	options pulumi.ResourceOption) (*provider.ConstructResult, error) {
-	// TODO: Add support for additional component resources here.
 	switch typ {
+	case "kubernetes-the-hard-way:index:Certificate":
+		return constructCertificate(ctx, name, inputs, options)
 	case "kubernetes-the-hard-way:index:RemoteFile":
 		return constructRemoteFile(ctx, name, inputs, options)
+	case "kubernetes-the-hard-way:index:RootCa":
+		return constructRootCa(ctx, name, inputs, options)
 	default:
 		return nil, errors.Errorf("unknown resource type %s", typ)
 	}
 }
 
-// constructRemoteFile is an implementation of Construct for the example StaticPage component.
-// It demonstrates converting the raw ConstructInputs to the component's args struct, creating
-// the component, and returning its URN and state (outputs).
+func constructCertificate(ctx *pulumi.Context, name string, inputs provider.ConstructInputs,
+	options pulumi.ResourceOption) (*provider.ConstructResult, error) {
+	args := &CertificateArgs{}
+	if err := inputs.CopyTo(args); err != nil {
+		return nil, errors.Wrap(err, "setting args")
+	}
+
+	component, err := NewCertificate(ctx, name, args, options)
+	if err != nil {
+		return nil, errors.Wrap(err, "creating component")
+	}
+
+	return provider.NewConstructResult(component)
+}
+
 func constructRemoteFile(ctx *pulumi.Context, name string, inputs provider.ConstructInputs,
 	options pulumi.ResourceOption) (*provider.ConstructResult, error) {
 	args := &RemoteFileArgs{}
@@ -42,10 +57,25 @@ func constructRemoteFile(ctx *pulumi.Context, name string, inputs provider.Const
 		return nil, errors.Wrap(err, "setting args")
 	}
 
-	remoteFile, err := NewRemoteFile(ctx, name, args, options)
+	component, err := NewRemoteFile(ctx, name, args, options)
 	if err != nil {
 		return nil, errors.Wrap(err, "creating component")
 	}
 
-	return provider.NewConstructResult(remoteFile)
+	return provider.NewConstructResult(component)
+}
+
+func constructRootCa(ctx *pulumi.Context, name string, inputs provider.ConstructInputs,
+	options pulumi.ResourceOption) (*provider.ConstructResult, error) {
+	args := &RootCaArgs{}
+	if err := inputs.CopyTo(args); err != nil {
+		return nil, errors.Wrap(err, "setting args")
+	}
+
+	component, err := NewRootCa(ctx, name, args, options)
+	if err != nil {
+		return nil, errors.Wrap(err, "creating component")
+	}
+
+	return provider.NewConstructResult(component)
 }
