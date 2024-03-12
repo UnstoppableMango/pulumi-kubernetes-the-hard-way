@@ -5,10 +5,8 @@ import * as pulumi from "@pulumi/pulumi";
 import * as utilities from "./utilities";
 
 // Export members:
-export { CertificateArgs } from "./certificate";
-export type Certificate = import("./certificate").Certificate;
-export const Certificate: typeof import("./certificate").Certificate = null as any;
-utilities.lazyLoad(exports, ["Certificate"], () => require("./certificate"));
+export * from "./certificate";
+import { Certificate } from "./certificate";
 
 export { ProviderArgs } from "./provider";
 export type Provider = import("./provider").Provider;
@@ -20,11 +18,16 @@ export type RemoteFile = import("./remoteFile").RemoteFile;
 export const RemoteFile: typeof import("./remoteFile").RemoteFile = null as any;
 utilities.lazyLoad(exports, ["RemoteFile"], () => require("./remoteFile"));
 
-export { RootCaArgs } from "./rootCa";
-export type RootCa = import("./rootCa").RootCa;
-export const RootCa: typeof import("./rootCa").RootCa = null as any;
-utilities.lazyLoad(exports, ["RootCa"], () => require("./rootCa"));
+export * from "./rootCa";
+import { RootCa } from "./rootCa";
 
+
+// Export sub-modules:
+import * as remote from "./remote";
+
+export {
+    remote,
+};
 
 const _module = {
     version: utilities.getVersion(),
