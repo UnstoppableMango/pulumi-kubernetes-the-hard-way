@@ -1,0 +1,303 @@
+name: build-test
+
+on:
+  workflow_call:
+    inputs:
+      ref:
+        required: true
+        type: string
+      version:
+        type: string
+        description: Version to be used to build the binaries, schema and SDKs
+        required: true
+      short_test:
+        type: boolean
+        description: Skip longer running tests
+        default: false
+#      oidc_arm_client_id:
+#        type: string
+#        description: The Azure Active Directory application to authenticate the OIDC tests. Empty skips the OIDC tests.
+#        default: "89380e12-5be6-486a-89ef-eea107af2f47" # AD app 'oidc-test'
+      retention_days:
+        type: number
+        description: The number of days for which we retain assets
+        default: 90
+
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  PROVIDER: kubernetes-the-hard-way
+  PROVIDER_VERSION: ${{ inputs.version }}
+  PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+  PULUMI_LOCAL_NUGET: ${{ github.workspace }}/nuget
+  PULUMI_GO_DEP_ROOT: ${{ github.workspace }}/..
+
+jobs:
+  prerequisites:
+    runs-on: ubuntu-latest
+    name: Build binaries and schema
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref }}
+          submodules: true
+
+      - name: Install Languages & Frameworks
+        uses: ./.github/actions/install
+        with:
+          skip_dotnet_and_java: "true"
+
+      - name: Build binaries
+        run: make codegen provider
+
+      - name: Artifact capture
+        uses: ./.github/actions/prerequisites-artifact-capture
+
+      - name: Check worktree clean
+        uses: ./.github/actions/check-worktree-clean
+
+  build_sdks:
+    needs: prerequisites
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        language:
+          - nodejs
+          - python
+          - dotnet
+          - go
+          - java
+    name: Build SDKs
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref }}
+          submodules: true
+
+      - name: Install Languages & Frameworks
+        uses: ./.github/actions/install
+
+      - run: make ensure
+
+      - name: Prerequisites artifact restore
+        uses: ./.github/actions/prerequisites-artifact-restore
+
+      - name: Mark prerequisites as up-to-date
+        run: make --touch codegen provider
+
+      - name: Generate SDK
+        run: make generate_${{ matrix.language }}
+
+      - name: Build SDK
+        run: make build_${{ matrix.language }}
+
+      - name: Check worktree clean
+        uses: ./.github/actions/check-worktree-clean
+
+      - name: Tar SDK folder
+        if: ${{ matrix.language != 'go' }}
+        run: tar -zcf sdk/${{ matrix.language }}.tar.gz -C sdk/${{ matrix.language }} .
+
+      - name: Upload artifacts
+        if: ${{ matrix.language != 'go' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.language  }}-sdk.tar.gz
+          path: ${{ github.workspace}}/sdk/${{ matrix.language }}.tar.gz
+          retention-days: ${{ inputs.retention_days }}
+
+      - name: Tar split Go SDK folder
+        if: ${{ matrix.language == 'go' }}
+        run: tar -zcf sdk/pulumi-kubernetes-the-hard-way-sdk.tar.gz -C sdk/pulumi-kubernetes-the-hard-way-sdk .
+
+      - name: Upload split Go artifacts
+        uses: actions/upload-artifact@v4
+        if: ${{ matrix.language == 'go' }}
+        with:
+          name: pulumi-kubernetes-the-hard-way-sdk.tar.gz
+          path: ${{ github.workspace}}/sdk/pulumi-kubernetes-the-hard-way-sdk.tar.gz
+          retention-days: ${{ inputs.retention_days }}
+
+      - if: failure() && github.event_name == 'push'
+        name: Notify Slack
+        uses: 8398a7/action-slack@v3
+        with:
+          author_name: Failure while building SDKs
+          fields: repo,commit,author,action
+          status: ${{ job.status }}
+
+  test_sdks:
+    needs: build_sdks
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        language:
+          - nodejs
+          - python
+          - dotnet
+          - go
+          - java
+    name: Test SDKs
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref }}
+          submodules: true
+
+      - name: Setup
+        uses: ./.github/actions/test-setup
+        with:
+          language: ${{ matrix.language }}
+
+      - name: Run tests
+        if: ${{ ! inputs.short_test }}
+        env:
+          # specifying this id will cause the OIDC test(s) to run against this AD application
+          OIDC_ARM_CLIENT_ID: ${{ inputs.oidc_arm_client_id }}
+        run: |
+          set -euo pipefail
+          cd examples && go test -v -json -cover -timeout 2h -tags=${{ matrix.language }} -skip TestPulumiExamples -parallel 16 . 2>&1 | tee /tmp/gotest.log | gotestfmt
+
+      - name: Run short tests
+        if: inputs.short_test
+        run: |
+          set -euo pipefail
+          cd examples && go test -v -json -cover -timeout 15m -short -tags=${{ matrix.language }} -skip TestPulumiExamples -parallel 16 . 2>&1 | tee /tmp/gotest.log | gotestfmt
+
+  test_examples:
+    needs: build_sdks
+    runs-on: ubuntu-latest
+    name: Test pulumi/examples
+    strategy:
+      fail-fast: true
+      matrix:
+        language:
+          - nodejs
+          - python
+          - dotnet
+          - go
+          - java
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref }}
+          submodules: true
+      - name: Checkout p/examples
+        uses: actions/checkout@v4
+        with:
+          repository: pulumi/examples
+          ref: master
+          path: p-examples
+
+      - name: Setup
+        uses: ./.github/actions/test-setup
+        with:
+          language: ${{ matrix.language }}
+
+      - name: Free up disk space
+        run: |-
+          df -h
+          rm -rf /opt/hostedtoolcache/CodeQL
+          rm -rf /opt/hostedtoolcache/go/1.19.*
+          rm -rf /opt/hostedtoolcache/go/1.20.*
+          sudo apt clean
+          df -h
+
+      - name: Run pulumi/examples tests
+        if: ${{ !inputs.short_test }}
+        env:
+          # specifying this id will cause the OIDC test(s) to run against this AD application
+          OIDC_ARM_CLIENT_ID: ${{ inputs.oidc_arm_client_id }}
+        run: |
+          set -euo pipefail
+          cd examples && \
+            go mod edit -replace github.com/pulumi/examples/misc/test=../p-examples/misc/test/ && \
+            go mod tidy && \
+            go test -v -json -cover -timeout 2h -tags=${{ matrix.language }} -run TestPulumiExamples -parallel 16 . 2>&1 | tee /tmp/gotest.log | gotestfmt
+
+  test_provider:
+    runs-on: ubuntu-latest
+    name: Test Provider
+    needs: prerequisites
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref }}
+          submodules: true
+
+      - name: Install Languages & Frameworks
+        uses: ./.github/actions/install
+        with:
+          skip_dotnet_and_java: "true"
+
+      - name: Install gotestfmt
+        uses: jaxxstorm/action-install-gh-release@v1.11.0
+        with:
+          tag: v2.5.0
+          repo: GoTestTools/gotestfmt
+
+      - run: make ensure
+
+      - name: Prerequisites artifact restore
+        uses: ./.github/actions/prerequisites-artifact-restore
+
+      # This is essentially just copying files from bin to the provider folder
+      - name: Prebuild provider prerequisites
+        run: |
+          make prebuild
+          make --touch codegen schema
+          make provider_prebuild
+
+      - name: Test Provider Library
+        run: |
+          set -euo pipefail
+          cd provider && go test -v -json -coverprofile="coverage.txt" -coverpkg=./... -timeout 1h -parallel 16 ./... 2>&1 | tee /tmp/gotest.log | gotestfmt
+
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v3
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
+  dist:
+    runs-on: ubuntu-latest
+    name: Provider Dist
+    needs: prerequisites
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+          ref: ${{ inputs.ref }}
+
+      - name: Install Languages & Frameworks
+        uses: ./.github/actions/install
+        with:
+          skip_dotnet_and_java: "true"
+
+      - run: make ensure
+
+      - name: Prerequisites artifact restore
+        uses: ./.github/actions/prerequisites-artifact-restore
+
+      - name: Prerequisites
+        run: |
+          make prebuild
+          # Don't include provider as that's the bit we're going to rebuild
+          make --touch codegen schema
+          make provider_prebuild
+
+      - name: Build dist packages
+        run: make dist --jobs=2
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist
+          retention-days: ${{ inputs.retention_days }}
