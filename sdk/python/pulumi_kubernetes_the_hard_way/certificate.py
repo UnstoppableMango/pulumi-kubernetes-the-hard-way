@@ -8,8 +8,6 @@ import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
 from . import _utilities
-from .remote_file import RemoteFile
-import pulumi_command
 import pulumi_tls
 
 __all__ = ['CertificateArgs', 'Certificate']
@@ -382,32 +380,4 @@ class Certificate(pulumi.ComponentResource):
     @pulumi.getter(name="keyPem")
     def key_pem(self) -> pulumi.Output[str]:
         return pulumi.get(self, "key_pem")
-
-    @pulumi.output_type
-    class InstallOnResult:
-        def __init__(__self__, file=None):
-            if file and not isinstance(file, RemoteFile):
-                raise TypeError("Expected argument 'file' to be a RemoteFile")
-            pulumi.set(__self__, "file", file)
-
-        @property
-        @pulumi.getter
-        def file(self) -> 'RemoteFile':
-            return pulumi.get(self, "file")
-
-    def install_on(__self__, *,
-                   connection: pulumi.Input['pulumi_command.remote.ConnectionArgs'],
-                   path: Optional[pulumi.Input[str]] = None) -> pulumi.Output['Certificate.InstallOnResult']:
-        """
-        Creates a RemoteFile resource representing the copy operation.
-
-
-        :param pulumi.Input['pulumi_command.remote.ConnectionArgs'] connection: The connection details.
-        :param pulumi.Input[str] path: The path to install to.
-        """
-        __args__ = dict()
-        __args__['__self__'] = __self__
-        __args__['connection'] = connection
-        __args__['path'] = path
-        return pulumi.runtime.call('kubernetes-the-hard-way:index:Certificate/installOn', __args__, res=__self__, typ=Certificate.InstallOnResult)
 
