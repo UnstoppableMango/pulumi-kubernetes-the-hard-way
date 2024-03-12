@@ -175,6 +175,12 @@ dist/$(PROVIDER)-v$(PROVIDER_VERSION)-%.tar.gz:
 	@# $< is the last dependency (the binary path from above)
 	tar --gzip -cf $@ README.md LICENSE -C $$(dirname $<) .
 
+dist: dist/$(PROVIDER)-v$(PROVIDER_VERSION)-linux-amd64.tar.gz
+dist: dist/$(PROVIDER)-v$(PROVIDER_VERSION)-linux-arm64.tar.gz
+dist: dist/$(PROVIDER)-v$(PROVIDER_VERSION)-darwin-amd64.tar.gz
+dist: dist/$(PROVIDER)-v$(PROVIDER_VERSION)-darwin-arm64.tar.gz
+dist: dist/$(PROVIDER)-v$(PROVIDER_VERSION)-windows-amd64.tar.gz
+
 # --------- Sentinel targets --------- #
 
 .make/provider_mod_download: provider/go.mod provider/go.sum

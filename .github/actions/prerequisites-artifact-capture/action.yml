@@ -1,8 +1,9 @@
+# https://github.com/pulumi/pulumi-azure-native/blob/master/.github/actions/prerequisites-artifact-capture/action.yml
 name: Prerequisites Artifact Capture
 description: Compress and upload prerequisites artifacts for schema and binaries
 
 runs:
-  using: "composite"
+  using: composite
   steps:
     - name: Tar artifacts
       shell: bash
