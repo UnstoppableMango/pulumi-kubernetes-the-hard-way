@@ -4,10 +4,7 @@
 import * as pulumi from "@pulumi/pulumi";
 import * as utilities from "./utilities";
 
-import * as pulumiCommand from "@pulumi/command";
 import * as pulumiTls from "@pulumi/tls";
-
-import {RemoteFile} from "./index";
 
 export class Certificate extends pulumi.ComponentResource {
     /** @internal */
@@ -83,17 +80,6 @@ export class Certificate extends pulumi.ComponentResource {
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         super(Certificate.__pulumiType, name, resourceInputs, opts, true /*remote*/);
     }
-
-    /**
-     * Creates a RemoteFile resource representing the copy operation.
-     */
-    installOn(args: Certificate.InstallOnArgs): pulumi.Output<Certificate.InstallOnResult> {
-        return pulumi.runtime.call("kubernetes-the-hard-way:index:Certificate/installOn", {
-            "__self__": this,
-            "connection": args.connection,
-            "path": args.path,
-        }, this);
-    }
 }
 
 /**
@@ -145,28 +131,4 @@ export interface CertificateArgs {
      * Number of hours, after initial issuing, that the certificate will remain valid.
      */
     validityPeriodHours: pulumi.Input<number>;
-}
-
-export namespace Certificate {
-    /**
-     * The set of arguments for the Certificate.installOn method.
-     */
-    export interface InstallOnArgs {
-        /**
-         * The connection details.
-         */
-        connection: pulumi.Input<pulumiCommand.types.input.remote.ConnectionArgs>;
-        /**
-         * The path to install to.
-         */
-        path?: pulumi.Input<string>;
-    }
-
-    /**
-     * The results of the Certificate.installOn method.
-     */
-    export interface InstallOnResult {
-        readonly file: RemoteFile;
-    }
-
 }
