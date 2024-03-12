@@ -178,32 +178,32 @@ dist/$(PROVIDER)-v$(PROVIDER_VERSION)-%.tar.gz:
 	cd provider && go mod download
 	@touch $@
 
-.make/generate_java: bin/pulumictl .pulumi/bin/pulumi
+.make/generate_java: bin/pulumictl .pulumi/bin/pulumi schema.yaml
 	rm -rf sdk/java
 	.pulumi/bin/pulumi package gen-sdk $(SCHEMA_FILE) --language java
 	@touch $@
 
-.make/generate_nodejs: bin/pulumictl .pulumi/bin/pulumi
+.make/generate_nodejs: bin/pulumictl .pulumi/bin/pulumi schema.yaml
 	rm -rf sdk/nodejs
 	.pulumi/bin/pulumi package gen-sdk $(SCHEMA_FILE) --language nodejs
 	sed -i.bak -e "s/sourceMap/inlineSourceMap/g" sdk/nodejs/tsconfig.json
 	rm sdk/nodejs/tsconfig.json.bak
 	@touch $@
 
-.make/generate_python: bin/pulumictl .pulumi/bin/pulumi
+.make/generate_python: bin/pulumictl .pulumi/bin/pulumi schema.yaml
 	rm -rf sdk/python
 	.pulumi/bin/pulumi package gen-sdk $(SCHEMA_FILE) --language python
 	cp README.md sdk/python
 	@touch $@
 
-.make/generate_dotnet: bin/pulumictl .pulumi/bin/pulumi
+.make/generate_dotnet: bin/pulumictl .pulumi/bin/pulumi schema.yaml
 	rm -rf sdk/dotnet
 	.pulumi/bin/pulumi package gen-sdk $(SCHEMA_FILE) --language dotnet
 #	sed -i.bak -e "s/<\/Nullable>/<\/Nullable>\n    <UseSharedCompilation>false<\/UseSharedCompilation>/g" sdk/dotnet/UnMango.KubernetesTheHardWay.csproj
 #	rm sdk/dotnet/UnMango.KubernetesTheHardWay.csproj.bak
 	@touch $@
 
-.make/generate_go: bin/pulumictl .pulumi/bin/pulumi
+.make/generate_go: bin/pulumictl .pulumi/bin/pulumi schema.yaml
 	rm -rf sdk/go
 	.pulumi/bin/pulumi package gen-sdk $(SCHEMA_FILE) --language go
 	@touch $@
