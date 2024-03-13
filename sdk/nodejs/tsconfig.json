@@ -16,7 +16,6 @@
         "certificate.ts",
         "index.ts",
         "provider.ts",
-        "remote/index.ts",
         "remoteFile.ts",
         "rootCa.ts",
         "utilities.ts"

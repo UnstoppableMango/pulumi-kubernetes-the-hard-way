@@ -8,7 +8,6 @@ import (
 	"reflect"
 
 	"errors"
-	"github.com/pulumi/pulumi-command/sdk/go/command/remote"
 	"github.com/pulumi/pulumi-tls/sdk/v5/go/tls"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 	"github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/sdk/go/kubernetes-the-hard-way/internal"
@@ -641,48 +640,6 @@ func (o RootCaGetServiceAccountsCertificateResultOutput) Cert() CertificateOutpu
 	return o.ApplyT(func(v RootCaGetServiceAccountsCertificateResult) *Certificate { return v.Cert }).(CertificateOutput)
 }
 
-// Creates a RemoteFile resource representing the copy operation.
-func (r *RootCa) InstallOn(ctx *pulumi.Context, args *RootCaInstallOnArgs) (RootCaInstallOnResultOutput, error) {
-	out, err := ctx.Call("kubernetes-the-hard-way:index:RootCa/installOn", args, RootCaInstallOnResultOutput{}, r)
-	if err != nil {
-		return RootCaInstallOnResultOutput{}, err
-	}
-	return out.(RootCaInstallOnResultOutput), nil
-}
-
-type rootCaInstallOnArgs struct {
-	// The connection details.
-	Connection remote.Connection `pulumi:"connection"`
-	// The path to install to.
-	Path *string `pulumi:"path"`
-}
-
-// The set of arguments for the InstallOn method of the RootCa resource.
-type RootCaInstallOnArgs struct {
-	// The connection details.
-	Connection remote.ConnectionInput
-	// The path to install to.
-	Path pulumi.StringPtrInput
-}
-
-func (RootCaInstallOnArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*rootCaInstallOnArgs)(nil)).Elem()
-}
-
-type RootCaInstallOnResult struct {
-	File *RemoteFile `pulumi:"file"`
-}
-
-type RootCaInstallOnResultOutput struct{ *pulumi.OutputState }
-
-func (RootCaInstallOnResultOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*RootCaInstallOnResult)(nil)).Elem()
-}
-
-func (o RootCaInstallOnResultOutput) File() RemoteFileOutput {
-	return o.ApplyT(func(v RootCaInstallOnResult) *RemoteFile { return v.File }).(RemoteFileOutput)
-}
-
 type RootCaInput interface {
 	pulumi.Input
 
@@ -834,7 +791,6 @@ func init() {
 	pulumi.RegisterOutputType(RootCaGetKubeSchedulerCertificateResultOutput{})
 	pulumi.RegisterOutputType(RootCaGetKubeletCertificateResultOutput{})
 	pulumi.RegisterOutputType(RootCaGetServiceAccountsCertificateResultOutput{})
-	pulumi.RegisterOutputType(RootCaInstallOnResultOutput{})
 	pulumi.RegisterOutputType(RootCaArrayOutput{})
 	pulumi.RegisterOutputType(RootCaMapOutput{})
 }
