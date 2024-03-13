@@ -3,7 +3,33 @@
 
 package com.unmango.kubernetesthehardway;
 
-
+import com.pulumi.core.Output;
+import com.pulumi.core.TypeShape;
+import com.pulumi.deployment.Deployment;
+import com.pulumi.deployment.InvokeOptions;
+import com.unmango.kubernetesthehardway.Utilities;
+import com.unmango.kubernetesthehardway.inputs.InstallOnArgs;
+import com.unmango.kubernetesthehardway.inputs.InstallOnPlainArgs;
+import com.unmango.kubernetesthehardway.outputs.InstallOnResult;
+import java.util.concurrent.CompletableFuture;
 
 public final class KubernetesthehardwayFunctions {
+    public static Output<InstallOnResult> installOn() {
+        return installOn(InstallOnArgs.Empty, InvokeOptions.Empty);
+    }
+    public static CompletableFuture<InstallOnResult> installOnPlain() {
+        return installOnPlain(InstallOnPlainArgs.Empty, InvokeOptions.Empty);
+    }
+    public static Output<InstallOnResult> installOn(InstallOnArgs args) {
+        return installOn(args, InvokeOptions.Empty);
+    }
+    public static CompletableFuture<InstallOnResult> installOnPlain(InstallOnPlainArgs args) {
+        return installOnPlain(args, InvokeOptions.Empty);
+    }
+    public static Output<InstallOnResult> installOn(InstallOnArgs args, InvokeOptions options) {
+        return Deployment.getInstance().invoke("kubernetes-the-hard-way:index:installOn", TypeShape.of(InstallOnResult.class), args, Utilities.withVersion(options));
+    }
+    public static CompletableFuture<InstallOnResult> installOnPlain(InstallOnPlainArgs args, InvokeOptions options) {
+        return Deployment.getInstance().invokeAsync("kubernetes-the-hard-way:index:installOn", TypeShape.of(InstallOnResult.class), args, Utilities.withVersion(options));
+    }
 }

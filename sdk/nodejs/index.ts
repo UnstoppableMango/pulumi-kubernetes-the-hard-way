@@ -5,41 +5,23 @@ import * as pulumi from "@pulumi/pulumi";
 import * as utilities from "./utilities";
 
 // Export members:
-export { CertificateArgs } from "./certificate";
-export type Certificate = import("./certificate").Certificate;
-export const Certificate: typeof import("./certificate").Certificate = null as any;
-utilities.lazyLoad(exports, ["Certificate"], () => require("./certificate"));
+export { InstallOnArgs, InstallOnResult, InstallOnOutputArgs } from "./installOn";
+export const installOn: typeof import("./installOn").installOn = null as any;
+export const installOnOutput: typeof import("./installOn").installOnOutput = null as any;
+utilities.lazyLoad(exports, ["installOn","installOnOutput"], () => require("./installOn"));
 
 export { ProviderArgs } from "./provider";
 export type Provider = import("./provider").Provider;
 export const Provider: typeof import("./provider").Provider = null as any;
 utilities.lazyLoad(exports, ["Provider"], () => require("./provider"));
 
-export { RemoteFileArgs } from "./remoteFile";
-export type RemoteFile = import("./remoteFile").RemoteFile;
-export const RemoteFile: typeof import("./remoteFile").RemoteFile = null as any;
-utilities.lazyLoad(exports, ["RemoteFile"], () => require("./remoteFile"));
 
-export * from "./rootCa";
-import { RootCa } from "./rootCa";
+// Export sub-modules:
+import * as remote from "./remote";
 
-
-const _module = {
-    version: utilities.getVersion(),
-    construct: (name: string, type: string, urn: string): pulumi.Resource => {
-        switch (type) {
-            case "kubernetes-the-hard-way:index:Certificate":
-                return new Certificate(name, <any>undefined, { urn })
-            case "kubernetes-the-hard-way:index:RemoteFile":
-                return new RemoteFile(name, <any>undefined, { urn })
-            case "kubernetes-the-hard-way:index:RootCa":
-                return new RootCa(name, <any>undefined, { urn })
-            default:
-                throw new Error(`unknown resource type ${type}`);
-        }
-    },
+export {
+    remote,
 };
-pulumi.runtime.registerResourceModule("kubernetes-the-hard-way", "index", _module)
 pulumi.runtime.registerResourcePackage("kubernetes-the-hard-way", {
     version: utilities.getVersion(),
     constructProvider: (name: string, type: string, urn: string): pulumi.ProviderResource => {

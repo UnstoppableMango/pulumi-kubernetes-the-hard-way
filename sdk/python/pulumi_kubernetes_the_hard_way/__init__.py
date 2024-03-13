@@ -5,24 +5,11 @@
 from . import _utilities
 import typing
 # Export this package's modules as members:
-from .certificate import *
+from .install_on import *
 from .provider import *
-from .remote_file import *
-from .root_ca import *
 _utilities.register(
     resource_modules="""
-[
- {
-  "pkg": "kubernetes-the-hard-way",
-  "mod": "index",
-  "fqn": "pulumi_kubernetes_the_hard_way",
-  "classes": {
-   "kubernetes-the-hard-way:index:Certificate": "Certificate",
-   "kubernetes-the-hard-way:index:RemoteFile": "RemoteFile",
-   "kubernetes-the-hard-way:index:RootCa": "RootCa"
-  }
- }
-]
+[]
 """,
     resource_packages="""
 [

@@ -13,11 +13,10 @@
         "strict": true
     },
     "files": [
-        "certificate.ts",
         "index.ts",
+        "installOn.ts",
         "provider.ts",
-        "remoteFile.ts",
-        "rootCa.ts",
+        "remote/index.ts",
         "utilities.ts"
     ]
 }
