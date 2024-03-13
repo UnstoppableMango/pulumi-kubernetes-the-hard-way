@@ -136,6 +136,12 @@ functions:
       required:
         - allowedUses
         - validityPeriodHours
+    outputs:
+      properties:
+        cert:
+          $ref: "#/resources/kubernetes-the-hard-way:index:Certificate"
+      required:
+        - cert
 language:
   csharp:
     rootNamespace: UnMango # TODO: Name that works

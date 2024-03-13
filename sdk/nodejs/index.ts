@@ -10,9 +10,10 @@ export type Certificate = import("./certificate").Certificate;
 export const Certificate: typeof import("./certificate").Certificate = null as any;
 utilities.lazyLoad(exports, ["Certificate"], () => require("./certificate"));
 
-export { GetAdminCertificateArgs } from "./getAdminCertificate";
+export { GetAdminCertificateArgs, GetAdminCertificateResult, GetAdminCertificateOutputArgs } from "./getAdminCertificate";
 export const getAdminCertificate: typeof import("./getAdminCertificate").getAdminCertificate = null as any;
-utilities.lazyLoad(exports, ["getAdminCertificate"], () => require("./getAdminCertificate"));
+export const getAdminCertificateOutput: typeof import("./getAdminCertificate").getAdminCertificateOutput = null as any;
+utilities.lazyLoad(exports, ["getAdminCertificate","getAdminCertificateOutput"], () => require("./getAdminCertificate"));
 
 export { ProviderArgs } from "./provider";
 export type Provider = import("./provider").Provider;

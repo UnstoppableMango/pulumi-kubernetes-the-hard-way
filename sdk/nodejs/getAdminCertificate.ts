@@ -6,10 +6,12 @@ import * as utilities from "./utilities";
 
 import * as pulumiTls from "@pulumi/tls";
 
+import {Certificate} from "./index";
+
 /**
  * Creates a Certificate configured for the cluster admin.
  */
-export function getAdminCertificate(args: GetAdminCertificateArgs, opts?: pulumi.InvokeOptions): Promise<void> {
+export function getAdminCertificate(args: GetAdminCertificateArgs, opts?: pulumi.InvokeOptions): Promise<GetAdminCertificateResult> {
 
     opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
     return pulumi.runtime.invoke("kubernetes-the-hard-way:index:getAdminCertificate", {
@@ -73,4 +75,60 @@ export interface GetAdminCertificateArgs {
      * Number of hours, after initial issuing, that the certificate will remain valid.
      */
     validityPeriodHours: number;
+}
+
+export interface GetAdminCertificateResult {
+    readonly cert: Certificate;
+}
+/**
+ * Creates a Certificate configured for the cluster admin.
+ */
+export function getAdminCertificateOutput(args: GetAdminCertificateOutputArgs, opts?: pulumi.InvokeOptions): pulumi.Output<GetAdminCertificateResult> {
+    return pulumi.output(args).apply((a: any) => getAdminCertificate(a, opts))
+}
+
+export interface GetAdminCertificateOutputArgs {
+    /**
+     * Name of the algorithm to use when generating the private key.
+     */
+    algorithm?: pulumi.Input<string>;
+    allowedUses: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * List of DNS names for which a certificate is being requested.
+     */
+    dnsNames?: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * TODO
+     */
+    earlyRenewalHours?: pulumi.Input<number>;
+    /**
+     * When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
+     */
+    ecdsaCurve?: pulumi.Input<string>;
+    /**
+     * List of IP addresses for which a certificate is being requested.
+     */
+    ipAddresses?: pulumi.Input<pulumi.Input<string>[]>;
+    isCaCertificate?: pulumi.Input<boolean>;
+    /**
+     * When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
+     */
+    rsaBits?: pulumi.Input<number>;
+    /**
+     * Should the generated certificate include an authority key identifier.
+     */
+    setAuthorityKeyId?: pulumi.Input<boolean>;
+    /**
+     * Should the generated certificate include a subject key identifier.
+     */
+    setSubjectKeyId?: pulumi.Input<boolean>;
+    subject?: pulumi.Input<pulumiTls.types.input.CertRequestSubjectArgs>;
+    /**
+     * List of URIs for which a certificate is being requested.
+     */
+    uris?: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * Number of hours, after initial issuing, that the certificate will remain valid.
+     */
+    validityPeriodHours: pulumi.Input<number>;
 }

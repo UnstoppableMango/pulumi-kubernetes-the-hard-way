@@ -10,7 +10,7 @@ import com.pulumi.deployment.InvokeOptions;
 import com.unmango.kubernetesthehardway.Utilities;
 import com.unmango.kubernetesthehardway.inputs.GetAdminCertificateArgs;
 import com.unmango.kubernetesthehardway.inputs.GetAdminCertificatePlainArgs;
-import java.lang.Void;
+import com.unmango.kubernetesthehardway.outputs.GetAdminCertificateResult;
 import java.util.concurrent.CompletableFuture;
 
 public final class KubernetesthehardwayFunctions {
@@ -18,28 +18,28 @@ public final class KubernetesthehardwayFunctions {
      * Creates a Certificate configured for the cluster admin.
      * 
      */
-    public static Output<Void> getAdminCertificate(GetAdminCertificateArgs args) {
+    public static Output<GetAdminCertificateResult> getAdminCertificate(GetAdminCertificateArgs args) {
         return getAdminCertificate(args, InvokeOptions.Empty);
     }
     /**
      * Creates a Certificate configured for the cluster admin.
      * 
      */
-    public static CompletableFuture<Void> getAdminCertificatePlain(GetAdminCertificatePlainArgs args) {
+    public static CompletableFuture<GetAdminCertificateResult> getAdminCertificatePlain(GetAdminCertificatePlainArgs args) {
         return getAdminCertificatePlain(args, InvokeOptions.Empty);
     }
     /**
      * Creates a Certificate configured for the cluster admin.
      * 
      */
-    public static Output<Void> getAdminCertificate(GetAdminCertificateArgs args, InvokeOptions options) {
-        return Deployment.getInstance().invoke("kubernetes-the-hard-way:index:getAdminCertificate", TypeShape.of(Void.class), args, Utilities.withVersion(options));
+    public static Output<GetAdminCertificateResult> getAdminCertificate(GetAdminCertificateArgs args, InvokeOptions options) {
+        return Deployment.getInstance().invoke("kubernetes-the-hard-way:index:getAdminCertificate", TypeShape.of(GetAdminCertificateResult.class), args, Utilities.withVersion(options));
     }
     /**
      * Creates a Certificate configured for the cluster admin.
      * 
      */
-    public static CompletableFuture<Void> getAdminCertificatePlain(GetAdminCertificatePlainArgs args, InvokeOptions options) {
-        return Deployment.getInstance().invokeAsync("kubernetes-the-hard-way:index:getAdminCertificate", TypeShape.of(Void.class), args, Utilities.withVersion(options));
+    public static CompletableFuture<GetAdminCertificateResult> getAdminCertificatePlain(GetAdminCertificatePlainArgs args, InvokeOptions options) {
+        return Deployment.getInstance().invokeAsync("kubernetes-the-hard-way:index:getAdminCertificate", TypeShape.of(GetAdminCertificateResult.class), args, Utilities.withVersion(options));
     }
 }

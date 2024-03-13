@@ -4,17 +4,23 @@
 package kubernetesthehardway
 
 import (
+	"context"
+	"reflect"
+
 	"github.com/pulumi/pulumi-tls/sdk/v5/go/tls"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 	"github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/sdk/go/kubernetes-the-hard-way/internal"
 )
 
 // Creates a Certificate configured for the cluster admin.
-func GetAdminCertificate(ctx *pulumi.Context, args *GetAdminCertificateArgs, opts ...pulumi.InvokeOption) error {
+func GetAdminCertificate(ctx *pulumi.Context, args *GetAdminCertificateArgs, opts ...pulumi.InvokeOption) (*GetAdminCertificateResult, error) {
 	opts = internal.PkgInvokeDefaultOpts(opts)
-	var rv struct{}
+	var rv GetAdminCertificateResult
 	err := ctx.Invoke("kubernetes-the-hard-way:index:getAdminCertificate", args, &rv, opts...)
-	return err
+	if err != nil {
+		return nil, err
+	}
+	return &rv, nil
 }
 
 type GetAdminCertificateArgs struct {
@@ -41,4 +47,73 @@ type GetAdminCertificateArgs struct {
 	Uris []string `pulumi:"uris"`
 	// Number of hours, after initial issuing, that the certificate will remain valid.
 	ValidityPeriodHours int `pulumi:"validityPeriodHours"`
+}
+
+type GetAdminCertificateResult struct {
+	Cert *Certificate `pulumi:"cert"`
+}
+
+func GetAdminCertificateOutput(ctx *pulumi.Context, args GetAdminCertificateOutputArgs, opts ...pulumi.InvokeOption) GetAdminCertificateResultOutput {
+	return pulumi.ToOutputWithContext(context.Background(), args).
+		ApplyT(func(v interface{}) (GetAdminCertificateResult, error) {
+			args := v.(GetAdminCertificateArgs)
+			r, err := GetAdminCertificate(ctx, &args, opts...)
+			var s GetAdminCertificateResult
+			if r != nil {
+				s = *r
+			}
+			return s, err
+		}).(GetAdminCertificateResultOutput)
+}
+
+type GetAdminCertificateOutputArgs struct {
+	// Name of the algorithm to use when generating the private key.
+	Algorithm   pulumi.StringPtrInput   `pulumi:"algorithm"`
+	AllowedUses pulumi.StringArrayInput `pulumi:"allowedUses"`
+	// List of DNS names for which a certificate is being requested.
+	DnsNames pulumi.StringArrayInput `pulumi:"dnsNames"`
+	// TODO
+	EarlyRenewalHours pulumi.IntPtrInput `pulumi:"earlyRenewalHours"`
+	// When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
+	EcdsaCurve pulumi.StringPtrInput `pulumi:"ecdsaCurve"`
+	// List of IP addresses for which a certificate is being requested.
+	IpAddresses     pulumi.StringArrayInput `pulumi:"ipAddresses"`
+	IsCaCertificate pulumi.BoolPtrInput     `pulumi:"isCaCertificate"`
+	// When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
+	RsaBits pulumi.IntPtrInput `pulumi:"rsaBits"`
+	// Should the generated certificate include an authority key identifier.
+	SetAuthorityKeyId pulumi.BoolPtrInput `pulumi:"setAuthorityKeyId"`
+	// Should the generated certificate include a subject key identifier.
+	SetSubjectKeyId pulumi.BoolPtrInput            `pulumi:"setSubjectKeyId"`
+	Subject         tls.CertRequestSubjectPtrInput `pulumi:"subject"`
+	// List of URIs for which a certificate is being requested.
+	Uris pulumi.StringArrayInput `pulumi:"uris"`
+	// Number of hours, after initial issuing, that the certificate will remain valid.
+	ValidityPeriodHours pulumi.IntInput `pulumi:"validityPeriodHours"`
+}
+
+func (GetAdminCertificateOutputArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetAdminCertificateArgs)(nil)).Elem()
+}
+
+type GetAdminCertificateResultOutput struct{ *pulumi.OutputState }
+
+func (GetAdminCertificateResultOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetAdminCertificateResult)(nil)).Elem()
+}
+
+func (o GetAdminCertificateResultOutput) ToGetAdminCertificateResultOutput() GetAdminCertificateResultOutput {
+	return o
+}
+
+func (o GetAdminCertificateResultOutput) ToGetAdminCertificateResultOutputWithContext(ctx context.Context) GetAdminCertificateResultOutput {
+	return o
+}
+
+func (o GetAdminCertificateResultOutput) Cert() CertificateOutput {
+	return o.ApplyT(func(v GetAdminCertificateResult) *Certificate { return v.Cert }).(CertificateOutput)
+}
+
+func init() {
+	pulumi.RegisterOutputType(GetAdminCertificateResultOutput{})
 }
