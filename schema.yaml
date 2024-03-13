@@ -61,7 +61,7 @@ resources:
       isCaCertificate:
         type: boolean
       subject:
-        $ref: "/tls/v5.0.0/schema.json#/types/tls:index/CertRequestSubject:CertRequestSubject"
+        $ref: "/tls/v5.0.1/schema.json#/types/tls:index/CertRequestSubject:CertRequestSubject"
     requiredInputs:
       - allowedUses
       - caCertPem
@@ -69,13 +69,13 @@ resources:
       - validityPeriodHours
     properties:
       cert:
-        $ref: "/tls/v5.0.0/schema.json#/resources/tls:index/locallySignedCert:LocallySignedCert"
+        $ref: "/tls/v5.0.1/schema.json#/resources/tls:index/locallySignedCert:LocallySignedCert"
       certPem:
         type: string
       csr:
-        $ref: "/tls/v5.0.0/schema.json#/resources/tls:index/certRequest:CertRequest"
+        $ref: "/tls/v5.0.1/schema.json#/resources/tls:index/certRequest:CertRequest"
       key:
-        $ref: "/tls/v5.0.0/schema.json#/resources/tls:index/privateKey:PrivateKey"
+        $ref: "/tls/v5.0.1/schema.json#/resources/tls:index/privateKey:PrivateKey"
       keyPem:
         type: string
     required:
@@ -659,8 +659,8 @@ language:
     packageName: "@unmango/pulumi-kubernetes-the-hard-way"
     dependencies:
       "@pulumi/pulumi": "^3.0.0"
-      "@pulumi/command": "^0.9.0"
-      "@pulumi/tls": "^5.0.0"
+      "@pulumi/command": "^0.9.2"
+      "@pulumi/tls": "^5.0.1"
     devDependencies:
       typescript: "^3.7.0"
   python:
@@ -668,8 +668,8 @@ language:
       enabled: true
     requires:
       pulumi: ">=3.0.0,<4.0.0"
-      pulumi-command: ">=0.9.0,<1.0.0"
-      pulumi-tls: ">=5.0.0,<6.0.0"
+      pulumi-command: ">=0.9.2,<1.0.0"
+      pulumi-tls: ">=5.0.1,<6.0.0"
   java:
     basePackage: com.unmango # TODO: Name that works
     buildFiles: gradle
@@ -679,4 +679,4 @@ language:
       com.google.code.gson:gson: 2.8.9
       com.pulumi:pulumi: 0.9.9
       com.pulumi:command: 0.9.2
-      com.pulumi:tls: 5.0.0
+      com.pulumi:tls: 5.0.1
