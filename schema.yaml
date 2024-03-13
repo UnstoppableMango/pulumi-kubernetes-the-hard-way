@@ -166,14 +166,14 @@ resources:
       - key
       - keyPem
     methods:
-#      getAdminCertificate: kubernetes-the-hard-way:index:RootCa/getAdminCertificate
-#      getApiServerCertificate: kubernetes-the-hard-way:index:RootCa/getApiServerCertificate
-#      getControllerManagerCertificate: kubernetes-the-hard-way:index:RootCa/getControllerManagerCertificate
-#      getKubeletCertificate: kubernetes-the-hard-way:index:RootCa/getKubeletCertificate
-#      getKubeProxyCertificate: kubernetes-the-hard-way:index:RootCa/getKubeProxyCertificate
-#      getKubeSchedulerCertificate: kubernetes-the-hard-way:index:RootCa/getKubeSchedulerCertificate
-#      getServiceAccountsCertificate: kubernetes-the-hard-way:index:RootCa/getServiceAccountsCertificate
-#      installOn: kubernetes-the-hard-way:index:RootCa/installOn
+      getAdminCertificate: kubernetes-the-hard-way:index:RootCa/getAdminCertificate
+      getApiServerCertificate: kubernetes-the-hard-way:index:RootCa/getApiServerCertificate
+      getControllerManagerCertificate: kubernetes-the-hard-way:index:RootCa/getControllerManagerCertificate
+      getKubeletCertificate: kubernetes-the-hard-way:index:RootCa/getKubeletCertificate
+      getKubeProxyCertificate: kubernetes-the-hard-way:index:RootCa/getKubeProxyCertificate
+      getKubeSchedulerCertificate: kubernetes-the-hard-way:index:RootCa/getKubeSchedulerCertificate
+      getServiceAccountsCertificate: kubernetes-the-hard-way:index:RootCa/getServiceAccountsCertificate
+      installOn: kubernetes-the-hard-way:index:RootCa/installOn
 functions:
 #  kubernetes-the-hard-way:index:Certificate/installOn:
 #    description: Creates a RemoteFile resource representing the copy operation.
@@ -188,6 +188,7 @@ functions:
 #          type: string
 #          description: The path to install to.
 #      required:
+#        - __self__
 #        - connection
 #    outputs:
 #      properties:
@@ -195,439 +196,454 @@ functions:
 #          $ref: "#/resources/kubernetes-the-hard-way:index:RemoteFile"
 #      required:
 #        - file
-#  kubernetes-the-hard-way:index:RootCa/getAdminCertificate:
-#    description: Creates a Certificate configured for the cluster admin.
-#    inputs:
-#      properties:
-#        __self__:
-#          $ref: "#/resources/kubernetes-the-hard-way:index:RootCa"
-#        algorithm:
-#          type: string
-#          description: Name of the algorithm to use when generating the private key.
-#        ecdsaCurve:
-#          type: string
-#          description: When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
-#        rsaBits:
-#          type: integer
-#          description: When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
-#        dnsNames:
-#          type: array
-#          items:
-#            type: string
-#          description: List of DNS names for which a certificate is being requested.
-#        earlyRenewalHours:
-#          type: integer
-#          description: TODO
-#        ipAddresses:
-#          type: array
-#          items:
-#            type: string
-#          description: List of IP addresses for which a certificate is being requested.
-#        setAuthorityKeyId:
-#          type: boolean
-#          description: Should the generated certificate include an authority key identifier.
-#        setSubjectKeyId:
-#          type: boolean
-#          description: Should the generated certificate include a subject key identifier.
-#        uris:
-#          type: array
-#          items:
-#            type: string
-#          description: List of URIs for which a certificate is being requested.
-#        validityPeriodHours:
-#          type: integer
-#          description: Number of hours, after initial issuing, that the certificate will remain valid.
-#        allowedUses:
-#          type: array
-#          items:
-#            type: string
-#        isCaCertificate:
-#          type: boolean
+  kubernetes-the-hard-way:index:RootCa/getAdminCertificate:
+    description: Creates a Certificate configured for the cluster admin.
+    inputs:
+      properties:
+        __self__:
+          $ref: "#/resources/kubernetes-the-hard-way:index:RootCa"
+        algorithm:
+          type: string
+          description: Name of the algorithm to use when generating the private key.
+        ecdsaCurve:
+          type: string
+          description: When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
+        rsaBits:
+          type: integer
+          description: When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
+        dnsNames:
+          type: array
+          items:
+            type: string
+          description: List of DNS names for which a certificate is being requested.
+        earlyRenewalHours:
+          type: integer
+          description: TODO
+        ipAddresses:
+          type: array
+          items:
+            type: string
+          description: List of IP addresses for which a certificate is being requested.
+        setAuthorityKeyId:
+          type: boolean
+          description: Should the generated certificate include an authority key identifier.
+        setSubjectKeyId:
+          type: boolean
+          description: Should the generated certificate include a subject key identifier.
+        uris:
+          type: array
+          items:
+            type: string
+          description: List of URIs for which a certificate is being requested.
+        validityPeriodHours:
+          type: integer
+          description: Number of hours, after initial issuing, that the certificate will remain valid.
+        allowedUses:
+          type: array
+          items:
+            type: string
+        isCaCertificate:
+          type: boolean
+         # TODO: Why is this borked
+#        subject:
+#          $ref: "/tls/v5.0.1/schema.json#/types/tls:index/CertRequestSubject:CertRequestSubject"
+      required:
+        - __self__
+        - allowedUses
+        - validityPeriodHours
+    outputs:
+      properties:
+        cert:
+          $ref: "#/resources/kubernetes-the-hard-way:index:Certificate"
+      required:
+        - cert
+  kubernetes-the-hard-way:index:RootCa/getApiServerCertificate:
+    description: Creates a Certificate configured for the api-server.
+    inputs:
+      properties:
+        __self__:
+          $ref: "#/resources/kubernetes-the-hard-way:index:RootCa"
+        algorithm:
+          type: string
+          description: Name of the algorithm to use when generating the private key.
+        ecdsaCurve:
+          type: string
+          description: When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
+        rsaBits:
+          type: integer
+          description: When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
+        dnsNames:
+          type: array
+          items:
+            type: string
+          description: List of DNS names for which a certificate is being requested.
+        earlyRenewalHours:
+          type: integer
+          description: TODO
+        ipAddresses:
+          type: array
+          items:
+            type: string
+          description: List of IP addresses for which a certificate is being requested.
+        setAuthorityKeyId:
+          type: boolean
+          description: Should the generated certificate include an authority key identifier.
+        setSubjectKeyId:
+          type: boolean
+          description: Should the generated certificate include a subject key identifier.
+        uris:
+          type: array
+          items:
+            type: string
+          description: List of URIs for which a certificate is being requested.
+        validityPeriodHours:
+          type: integer
+          description: Number of hours, after initial issuing, that the certificate will remain valid.
+        allowedUses:
+          type: array
+          items:
+            type: string
+        isCaCertificate:
+          type: boolean
+        # TODO: Why is this borked
 #        subject:
 #          $ref: "/tls/v5.0.0/schema.json#/types/tls:index/CertRequestSubject:CertRequestSubject"
-#      required:
-#        - allowedUses
-#        - validityPeriodHours
-#    outputs:
-#      properties:
-#        cert:
-#          $ref: "#/resources/kubernetes-the-hard-way:index:Certificate"
-#      required:
-#        - cert
-#  kubernetes-the-hard-way:index:RootCa/getApiServerCertificate:
-#    description: Creates a Certificate configured for the api-server.
-#    inputs:
-#      properties:
-#        __self__:
-#          $ref: "#/resources/kubernetes-the-hard-way:index:RootCa"
-#        algorithm:
-#          type: string
-#          description: Name of the algorithm to use when generating the private key.
-#        ecdsaCurve:
-#          type: string
-#          description: When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
-#        rsaBits:
-#          type: integer
-#          description: When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
-#        dnsNames:
-#          type: array
-#          items:
-#            type: string
-#          description: List of DNS names for which a certificate is being requested.
-#        earlyRenewalHours:
-#          type: integer
-#          description: TODO
-#        ipAddresses:
-#          type: array
-#          items:
-#            type: string
-#          description: List of IP addresses for which a certificate is being requested.
-#        setAuthorityKeyId:
-#          type: boolean
-#          description: Should the generated certificate include an authority key identifier.
-#        setSubjectKeyId:
-#          type: boolean
-#          description: Should the generated certificate include a subject key identifier.
-#        uris:
-#          type: array
-#          items:
-#            type: string
-#          description: List of URIs for which a certificate is being requested.
-#        validityPeriodHours:
-#          type: integer
-#          description: Number of hours, after initial issuing, that the certificate will remain valid.
-#        allowedUses:
-#          type: array
-#          items:
-#            type: string
-#        isCaCertificate:
-#          type: boolean
-#        subject:
-#          $ref: "/tls/v5.0.0/schema.json#/types/tls:index/CertRequestSubject:CertRequestSubject"
-#      required:
-#        - allowedUses
-#        - validityPeriodHours
-#    outputs:
-#      properties:
-#        cert:
-#          $ref: "#/resources/kubernetes-the-hard-way:index:Certificate"
-#      required:
-#        - cert
-#  kubernetes-the-hard-way:index:RootCa/getControllerManagerCertificate:
-#    description: Creates a Certificate configured for the controller manager.
-#    inputs:
-#      properties:
-#        __self__:
-#          $ref: "#/resources/kubernetes-the-hard-way:index:RootCa"
-#        algorithm:
-#          type: string
-#          description: Name of the algorithm to use when generating the private key.
-#        ecdsaCurve:
-#          type: string
-#          description: When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
-#        rsaBits:
-#          type: integer
-#          description: When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
-#        dnsNames:
-#          type: array
-#          items:
-#            type: string
-#          description: List of DNS names for which a certificate is being requested.
-#        earlyRenewalHours:
-#          type: integer
-#          description: TODO
-#        ipAddresses:
-#          type: array
-#          items:
-#            type: string
-#          description: List of IP addresses for which a certificate is being requested.
-#        setAuthorityKeyId:
-#          type: boolean
-#          description: Should the generated certificate include an authority key identifier.
-#        setSubjectKeyId:
-#          type: boolean
-#          description: Should the generated certificate include a subject key identifier.
-#        uris:
-#          type: array
-#          items:
-#            type: string
-#          description: List of URIs for which a certificate is being requested.
-#        validityPeriodHours:
-#          type: integer
-#          description: Number of hours, after initial issuing, that the certificate will remain valid.
-#        allowedUses:
-#          type: array
-#          items:
-#            type: string
-#        isCaCertificate:
-#          type: boolean
-#        subject:
-#          $ref: "/tls/v5.0.0/schema.json#/types/tls:index/CertRequestSubject:CertRequestSubject"
-#      required:
-#        - allowedUses
-#        - validityPeriodHours
-#    outputs:
-#      properties:
-#        cert:
-#          $ref: "#/resources/kubernetes-the-hard-way:index:Certificate"
-#      required:
-#        - cert
-#  kubernetes-the-hard-way:index:RootCa/getKubeletCertificate:
-#    description: Creates a Certificate configured for a kubelet.
-#    inputs:
-#      properties:
-#        __self__:
-#          $ref: "#/resources/kubernetes-the-hard-way:index:RootCa"
-#        algorithm:
-#          type: string
-#          description: Name of the algorithm to use when generating the private key.
-#        ecdsaCurve:
-#          type: string
-#          description: When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
-#        rsaBits:
-#          type: integer
-#          description: When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
-#        dnsNames:
-#          type: array
-#          items:
-#            type: string
-#          description: List of DNS names for which a certificate is being requested.
-#        earlyRenewalHours:
-#          type: integer
-#          description: TODO
-#        ipAddresses:
-#          type: array
-#          items:
-#            type: string
-#          description: List of IP addresses for which a certificate is being requested.
-#        setAuthorityKeyId:
-#          type: boolean
-#          description: Should the generated certificate include an authority key identifier.
-#        setSubjectKeyId:
-#          type: boolean
-#          description: Should the generated certificate include a subject key identifier.
-#        uris:
-#          type: array
-#          items:
-#            type: string
-#          description: List of URIs for which a certificate is being requested.
-#        validityPeriodHours:
-#          type: integer
-#          description: Number of hours, after initial issuing, that the certificate will remain valid.
-#        allowedUses:
-#          type: array
-#          items:
-#            type: string
-#        isCaCertificate:
-#          type: boolean
-#        subject:
-#          $ref: "/tls/v5.0.0/schema.json#/types/tls:index/CertRequestSubject:CertRequestSubject"
-#      required:
-#        - allowedUses
-#        - validityPeriodHours
-#    outputs:
-#      properties:
-#        cert:
-#          $ref: "#/resources/kubernetes-the-hard-way:index:Certificate"
-#      required:
-#        - cert
-#  kubernetes-the-hard-way:index:RootCa/getKubeProxyCertificate:
-#    description: Creates a Certificate configured for the kube-proxy.
-#    inputs:
-#      properties:
-#        __self__:
-#          $ref: "#/resources/kubernetes-the-hard-way:index:RootCa"
-#        algorithm:
-#          type: string
-#          description: Name of the algorithm to use when generating the private key.
-#        ecdsaCurve:
-#          type: string
-#          description: When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
-#        rsaBits:
-#          type: integer
-#          description: When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
-#        dnsNames:
-#          type: array
-#          items:
-#            type: string
-#          description: List of DNS names for which a certificate is being requested.
-#        earlyRenewalHours:
-#          type: integer
-#          description: TODO
-#        ipAddresses:
-#          type: array
-#          items:
-#            type: string
-#          description: List of IP addresses for which a certificate is being requested.
-#        setAuthorityKeyId:
-#          type: boolean
-#          description: Should the generated certificate include an authority key identifier.
-#        setSubjectKeyId:
-#          type: boolean
-#          description: Should the generated certificate include a subject key identifier.
-#        uris:
-#          type: array
-#          items:
-#            type: string
-#          description: List of URIs for which a certificate is being requested.
-#        validityPeriodHours:
-#          type: integer
-#          description: Number of hours, after initial issuing, that the certificate will remain valid.
-#        allowedUses:
-#          type: array
-#          items:
-#            type: string
-#        isCaCertificate:
-#          type: boolean
-#        subject:
-#          $ref: "/tls/v5.0.0/schema.json#/types/tls:index/CertRequestSubject:CertRequestSubject"
-#      required:
-#        - allowedUses
-#        - validityPeriodHours
-#    outputs:
-#      properties:
-#        cert:
-#          $ref: "#/resources/kubernetes-the-hard-way:index:Certificate"
-#      required:
-#        - cert
-#  kubernetes-the-hard-way:index:RootCa/getKubeSchedulerCertificate:
-#    description: Creates a Certificate configured for the kube-scheduler.
-#    inputs:
-#      properties:
-#        __self__:
-#          $ref: "#/resources/kubernetes-the-hard-way:index:RootCa"
-#        algorithm:
-#          type: string
-#          description: Name of the algorithm to use when generating the private key.
-#        ecdsaCurve:
-#          type: string
-#          description: When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
-#        rsaBits:
-#          type: integer
-#          description: When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
-#        dnsNames:
-#          type: array
-#          items:
-#            type: string
-#          description: List of DNS names for which a certificate is being requested.
-#        earlyRenewalHours:
-#          type: integer
-#          description: TODO
-#        ipAddresses:
-#          type: array
-#          items:
-#            type: string
-#          description: List of IP addresses for which a certificate is being requested.
-#        setAuthorityKeyId:
-#          type: boolean
-#          description: Should the generated certificate include an authority key identifier.
-#        setSubjectKeyId:
-#          type: boolean
-#          description: Should the generated certificate include a subject key identifier.
-#        uris:
-#          type: array
-#          items:
-#            type: string
-#          description: List of URIs for which a certificate is being requested.
-#        validityPeriodHours:
-#          type: integer
-#          description: Number of hours, after initial issuing, that the certificate will remain valid.
-#        allowedUses:
-#          type: array
-#          items:
-#            type: string
-#        isCaCertificate:
-#          type: boolean
-#        subject:
-#          $ref: "/tls/v5.0.0/schema.json#/types/tls:index/CertRequestSubject:CertRequestSubject"
-#      required:
-#        - allowedUses
-#        - validityPeriodHours
-#    outputs:
-#      properties:
-#        cert:
-#          $ref: "#/resources/kubernetes-the-hard-way:index:Certificate"
-#      required:
-#        - cert
-#  kubernetes-the-hard-way:index:RootCa/getServiceAccountsCertificate:
-#    description: Creates a Certificate configured for the kube-scheduler.
-#    inputs:
-#      properties:
-#        __self__:
-#          $ref: "#/resources/kubernetes-the-hard-way:index:RootCa"
-#        algorithm:
-#          type: string
-#          description: Name of the algorithm to use when generating the private key.
-#        ecdsaCurve:
-#          type: string
-#          description: When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
-#        rsaBits:
-#          type: integer
-#          description: When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
-#        dnsNames:
-#          type: array
-#          items:
-#            type: string
-#          description: List of DNS names for which a certificate is being requested.
-#        earlyRenewalHours:
-#          type: integer
-#          description: TODO
-#        ipAddresses:
-#          type: array
-#          items:
-#            type: string
-#          description: List of IP addresses for which a certificate is being requested.
-#        setAuthorityKeyId:
-#          type: boolean
-#          description: Should the generated certificate include an authority key identifier.
-#        setSubjectKeyId:
-#          type: boolean
-#          description: Should the generated certificate include a subject key identifier.
-#        uris:
-#          type: array
-#          items:
-#            type: string
-#          description: List of URIs for which a certificate is being requested.
-#        validityPeriodHours:
-#          type: integer
-#          description: Number of hours, after initial issuing, that the certificate will remain valid.
-#        allowedUses:
-#          type: array
-#          items:
-#            type: string
-#        isCaCertificate:
-#          type: boolean
-#        subject:
-#          $ref: "/tls/v5.0.0/schema.json#/types/tls:index/CertRequestSubject:CertRequestSubject"
-#      required:
-#        - allowedUses
-#        - validityPeriodHours
-#    outputs:
-#      properties:
-#        cert:
-#          $ref: "#/resources/kubernetes-the-hard-way:index:Certificate"
-#      required:
-#        - cert
-#  kubernetes-the-hard-way:index:RootCa/installOn:
-#    description: Creates a RemoteFile resource representing the copy operation.
-#    inputs:
-#      properties:
-#        __self__:
-#          $ref: "#/resources/kubernetes-the-hard-way:index:RootCa"
-#        connection:
-#          $ref: "/command/v0.9.0/schema.json#/types/command:remote:Connection"
-#          description: The connection details.
-#        path:
-#          type: string
-#          description: The path to install to.
-#      required:
-#        - connection
-#    outputs:
-#      properties:
-#        file:
-#          $ref: "#/resources/kubernetes-the-hard-way:index:RemoteFile"
-#      required:
-#        - file
+      required:
+        - __self__
+        - allowedUses
+        - validityPeriodHours
+    outputs:
+      properties:
+        cert:
+          $ref: "#/resources/kubernetes-the-hard-way:index:Certificate"
+      required:
+        - cert
+  kubernetes-the-hard-way:index:RootCa/getControllerManagerCertificate:
+    description: Creates a Certificate configured for the controller manager.
+    inputs:
+      properties:
+        __self__:
+          $ref: "#/resources/kubernetes-the-hard-way:index:RootCa"
+        algorithm:
+          type: string
+          description: Name of the algorithm to use when generating the private key.
+        ecdsaCurve:
+          type: string
+          description: When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
+        rsaBits:
+          type: integer
+          description: When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
+        dnsNames:
+          type: array
+          items:
+            type: string
+          description: List of DNS names for which a certificate is being requested.
+        earlyRenewalHours:
+          type: integer
+          description: TODO
+        ipAddresses:
+          type: array
+          items:
+            type: string
+          description: List of IP addresses for which a certificate is being requested.
+        setAuthorityKeyId:
+          type: boolean
+          description: Should the generated certificate include an authority key identifier.
+        setSubjectKeyId:
+          type: boolean
+          description: Should the generated certificate include a subject key identifier.
+        uris:
+          type: array
+          items:
+            type: string
+          description: List of URIs for which a certificate is being requested.
+        validityPeriodHours:
+          type: integer
+          description: Number of hours, after initial issuing, that the certificate will remain valid.
+        allowedUses:
+          type: array
+          items:
+            type: string
+        isCaCertificate:
+          type: boolean
+        # TODO: Why is this borked
+      #        subject:
+      #          $ref: "/tls/v5.0.0/schema.json#/types/tls:index/CertRequestSubject:CertRequestSubject"
+      required:
+        - __self__
+        - allowedUses
+        - validityPeriodHours
+    outputs:
+      properties:
+        cert:
+          $ref: "#/resources/kubernetes-the-hard-way:index:Certificate"
+      required:
+        - cert
+  kubernetes-the-hard-way:index:RootCa/getKubeletCertificate:
+    description: Creates a Certificate configured for a kubelet.
+    inputs:
+      properties:
+        __self__:
+          $ref: "#/resources/kubernetes-the-hard-way:index:RootCa"
+        algorithm:
+          type: string
+          description: Name of the algorithm to use when generating the private key.
+        ecdsaCurve:
+          type: string
+          description: When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
+        rsaBits:
+          type: integer
+          description: When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
+        dnsNames:
+          type: array
+          items:
+            type: string
+          description: List of DNS names for which a certificate is being requested.
+        earlyRenewalHours:
+          type: integer
+          description: TODO
+        ipAddresses:
+          type: array
+          items:
+            type: string
+          description: List of IP addresses for which a certificate is being requested.
+        setAuthorityKeyId:
+          type: boolean
+          description: Should the generated certificate include an authority key identifier.
+        setSubjectKeyId:
+          type: boolean
+          description: Should the generated certificate include a subject key identifier.
+        uris:
+          type: array
+          items:
+            type: string
+          description: List of URIs for which a certificate is being requested.
+        validityPeriodHours:
+          type: integer
+          description: Number of hours, after initial issuing, that the certificate will remain valid.
+        allowedUses:
+          type: array
+          items:
+            type: string
+        isCaCertificate:
+          type: boolean
+        # TODO: Why is this borked
+      #        subject:
+      #          $ref: "/tls/v5.0.0/schema.json#/types/tls:index/CertRequestSubject:CertRequestSubject"
+      required:
+        - __self__
+        - allowedUses
+        - validityPeriodHours
+    outputs:
+      properties:
+        cert:
+          $ref: "#/resources/kubernetes-the-hard-way:index:Certificate"
+      required:
+        - cert
+  kubernetes-the-hard-way:index:RootCa/getKubeProxyCertificate:
+    description: Creates a Certificate configured for the kube-proxy.
+    inputs:
+      properties:
+        __self__:
+          $ref: "#/resources/kubernetes-the-hard-way:index:RootCa"
+        algorithm:
+          type: string
+          description: Name of the algorithm to use when generating the private key.
+        ecdsaCurve:
+          type: string
+          description: When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
+        rsaBits:
+          type: integer
+          description: When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
+        dnsNames:
+          type: array
+          items:
+            type: string
+          description: List of DNS names for which a certificate is being requested.
+        earlyRenewalHours:
+          type: integer
+          description: TODO
+        ipAddresses:
+          type: array
+          items:
+            type: string
+          description: List of IP addresses for which a certificate is being requested.
+        setAuthorityKeyId:
+          type: boolean
+          description: Should the generated certificate include an authority key identifier.
+        setSubjectKeyId:
+          type: boolean
+          description: Should the generated certificate include a subject key identifier.
+        uris:
+          type: array
+          items:
+            type: string
+          description: List of URIs for which a certificate is being requested.
+        validityPeriodHours:
+          type: integer
+          description: Number of hours, after initial issuing, that the certificate will remain valid.
+        allowedUses:
+          type: array
+          items:
+            type: string
+        isCaCertificate:
+          type: boolean
+        # TODO: Why is this borked
+      #        subject:
+      #          $ref: "/tls/v5.0.0/schema.json#/types/tls:index/CertRequestSubject:CertRequestSubject"
+      required:
+        - __self__
+        - allowedUses
+        - validityPeriodHours
+    outputs:
+      properties:
+        cert:
+          $ref: "#/resources/kubernetes-the-hard-way:index:Certificate"
+      required:
+        - cert
+  kubernetes-the-hard-way:index:RootCa/getKubeSchedulerCertificate:
+    description: Creates a Certificate configured for the kube-scheduler.
+    inputs:
+      properties:
+        __self__:
+          $ref: "#/resources/kubernetes-the-hard-way:index:RootCa"
+        algorithm:
+          type: string
+          description: Name of the algorithm to use when generating the private key.
+        ecdsaCurve:
+          type: string
+          description: When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
+        rsaBits:
+          type: integer
+          description: When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
+        dnsNames:
+          type: array
+          items:
+            type: string
+          description: List of DNS names for which a certificate is being requested.
+        earlyRenewalHours:
+          type: integer
+          description: TODO
+        ipAddresses:
+          type: array
+          items:
+            type: string
+          description: List of IP addresses for which a certificate is being requested.
+        setAuthorityKeyId:
+          type: boolean
+          description: Should the generated certificate include an authority key identifier.
+        setSubjectKeyId:
+          type: boolean
+          description: Should the generated certificate include a subject key identifier.
+        uris:
+          type: array
+          items:
+            type: string
+          description: List of URIs for which a certificate is being requested.
+        validityPeriodHours:
+          type: integer
+          description: Number of hours, after initial issuing, that the certificate will remain valid.
+        allowedUses:
+          type: array
+          items:
+            type: string
+        isCaCertificate:
+          type: boolean
+        # TODO: Why is this borked
+      #        subject:
+      #          $ref: "/tls/v5.0.0/schema.json#/types/tls:index/CertRequestSubject:CertRequestSubject"
+      required:
+        - __self__
+        - allowedUses
+        - validityPeriodHours
+    outputs:
+      properties:
+        cert:
+          $ref: "#/resources/kubernetes-the-hard-way:index:Certificate"
+      required:
+        - cert
+  kubernetes-the-hard-way:index:RootCa/getServiceAccountsCertificate:
+    description: Creates a Certificate configured for the kube-scheduler.
+    inputs:
+      properties:
+        __self__:
+          $ref: "#/resources/kubernetes-the-hard-way:index:RootCa"
+        algorithm:
+          type: string
+          description: Name of the algorithm to use when generating the private key.
+        ecdsaCurve:
+          type: string
+          description: When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
+        rsaBits:
+          type: integer
+          description: When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
+        dnsNames:
+          type: array
+          items:
+            type: string
+          description: List of DNS names for which a certificate is being requested.
+        earlyRenewalHours:
+          type: integer
+          description: TODO
+        ipAddresses:
+          type: array
+          items:
+            type: string
+          description: List of IP addresses for which a certificate is being requested.
+        setAuthorityKeyId:
+          type: boolean
+          description: Should the generated certificate include an authority key identifier.
+        setSubjectKeyId:
+          type: boolean
+          description: Should the generated certificate include a subject key identifier.
+        uris:
+          type: array
+          items:
+            type: string
+          description: List of URIs for which a certificate is being requested.
+        validityPeriodHours:
+          type: integer
+          description: Number of hours, after initial issuing, that the certificate will remain valid.
+        allowedUses:
+          type: array
+          items:
+            type: string
+        isCaCertificate:
+          type: boolean
+        # TODO: Why is this borked
+      #        subject:
+      #          $ref: "/tls/v5.0.0/schema.json#/types/tls:index/CertRequestSubject:CertRequestSubject"
+      required:
+        - __self__
+        - allowedUses
+        - validityPeriodHours
+    outputs:
+      properties:
+        cert:
+          $ref: "#/resources/kubernetes-the-hard-way:index:Certificate"
+      required:
+        - cert
+  kubernetes-the-hard-way:index:RootCa/installOn:
+    description: Creates a RemoteFile resource representing the copy operation.
+    inputs:
+      properties:
+        __self__:
+          $ref: "#/resources/kubernetes-the-hard-way:index:RootCa"
+        connection:
+          $ref: "/command/v0.9.0/schema.json#/types/command:remote:Connection"
+          description: The connection details.
+        path:
+          type: string
+          description: The path to install to.
+      required:
+        - __self__
+        - connection
+    outputs:
+      properties:
+        file:
+          $ref: "#/resources/kubernetes-the-hard-way:index:RemoteFile"
+      required:
+        - file
 language:
   csharp:
     rootNamespace: UnMango # TODO: Name that works
