@@ -20,11 +20,16 @@ export type RemoteFile = import("./remoteFile").RemoteFile;
 export const RemoteFile: typeof import("./remoteFile").RemoteFile = null as any;
 utilities.lazyLoad(exports, ["RemoteFile"], () => require("./remoteFile"));
 
-export { RootCaArgs } from "./rootCa";
-export type RootCa = import("./rootCa").RootCa;
-export const RootCa: typeof import("./rootCa").RootCa = null as any;
-utilities.lazyLoad(exports, ["RootCa"], () => require("./rootCa"));
+export * from "./rootCa";
+import { RootCa } from "./rootCa";
 
+
+// Export sub-modules:
+import * as remote from "./remote";
+
+export {
+    remote,
+};
 
 const _module = {
     version: utilities.getVersion(),
