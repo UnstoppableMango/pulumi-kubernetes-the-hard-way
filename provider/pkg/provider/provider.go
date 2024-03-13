@@ -30,30 +30,30 @@ func construct(ctx *pulumi.Context, typ, name string, inputs provider.ConstructI
 		return constructRemoteFile(ctx, name, inputs, options)
 	case "kubernetes-the-hard-way:index:RootCa":
 		return constructRootCa(ctx, name, inputs, options)
-	case "kubernetes-the-hard-way:index:test":
-		return constructGeneric(ctx, name, inputs, &RootCaArgs{}, NewRootCa, options)
+	//case "kubernetes-the-hard-way:index:test":
+	//	return constructGeneric(ctx, name, inputs, &RootCaArgs{}, NewRootCa, options)
 	default:
 		return nil, errors.Errorf("unknown resource type %s", typ)
 	}
 }
 
-type builder func(ctx *pulumi.Context, name string, args interface{}, opts ...pulumi.ResourceOption)
-
-func constructGeneric[T any](ctx *pulumi.Context, name string, inputs provider.ConstructInputs,
-	args *T,
-	construct func(ctx *pulumi.Context, name string, args interface{}, opts ...pulumi.ResourceOption) (pulumi.ComponentResource, error),
-	opts pulumi.ResourceOption) (*provider.ConstructResult, error) {
-	if err := inputs.CopyTo(args); err != nil {
-		return nil, errors.Wrap(err, "setting args")
-	}
-
-	component, err := construct(ctx, name, args, opts)
-	if err != nil {
-		return nil, errors.Wrap(err, "creating component")
-	}
-
-	return provider.NewConstructResult(component)
-}
+//type builder func(ctx *pulumi.Context, name string, args interface{}, opts ...pulumi.ResourceOption)
+//
+//func constructGeneric[T any](ctx *pulumi.Context, name string, inputs provider.ConstructInputs,
+//	args *T,
+//	construct func(ctx *pulumi.Context, name string, args interface{}, opts ...pulumi.ResourceOption) (pulumi.ComponentResource, error),
+//	opts pulumi.ResourceOption) (*provider.ConstructResult, error) {
+//	if err := inputs.CopyTo(args); err != nil {
+//		return nil, errors.Wrap(err, "setting args")
+//	}
+//
+//	component, err := construct(ctx, name, args, opts)
+//	if err != nil {
+//		return nil, errors.Wrap(err, "creating component")
+//	}
+//
+//	return provider.NewConstructResult(component)
+//}
 
 func constructCertificate(ctx *pulumi.Context, name string, inputs provider.ConstructInputs,
 	options pulumi.ResourceOption) (*provider.ConstructResult, error) {
