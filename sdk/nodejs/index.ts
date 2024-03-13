@@ -10,18 +10,14 @@ export type Certificate = import("./certificate").Certificate;
 export const Certificate: typeof import("./certificate").Certificate = null as any;
 utilities.lazyLoad(exports, ["Certificate"], () => require("./certificate"));
 
+export { GetAdminCertificateArgs } from "./getAdminCertificate";
+export const getAdminCertificate: typeof import("./getAdminCertificate").getAdminCertificate = null as any;
+utilities.lazyLoad(exports, ["getAdminCertificate"], () => require("./getAdminCertificate"));
+
 export { ProviderArgs } from "./provider";
 export type Provider = import("./provider").Provider;
 export const Provider: typeof import("./provider").Provider = null as any;
 utilities.lazyLoad(exports, ["Provider"], () => require("./provider"));
-
-export { RemoteFileArgs } from "./remoteFile";
-export type RemoteFile = import("./remoteFile").RemoteFile;
-export const RemoteFile: typeof import("./remoteFile").RemoteFile = null as any;
-utilities.lazyLoad(exports, ["RemoteFile"], () => require("./remoteFile"));
-
-export * from "./rootCa";
-import { RootCa } from "./rootCa";
 
 
 const _module = {
@@ -30,10 +26,6 @@ const _module = {
         switch (type) {
             case "kubernetes-the-hard-way:index:Certificate":
                 return new Certificate(name, <any>undefined, { urn })
-            case "kubernetes-the-hard-way:index:RemoteFile":
-                return new RemoteFile(name, <any>undefined, { urn })
-            case "kubernetes-the-hard-way:index:RootCa":
-                return new RootCa(name, <any>undefined, { urn })
             default:
                 throw new Error(`unknown resource type ${type}`);
         }

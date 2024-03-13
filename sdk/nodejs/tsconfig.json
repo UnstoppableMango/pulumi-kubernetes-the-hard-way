@@ -14,10 +14,9 @@
     },
     "files": [
         "certificate.ts",
+        "getAdminCertificate.ts",
         "index.ts",
         "provider.ts",
-        "remoteFile.ts",
-        "rootCa.ts",
         "utilities.ts"
     ]
 }
