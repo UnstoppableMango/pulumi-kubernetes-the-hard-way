@@ -173,7 +173,7 @@ resources:
       getKubeProxyCertificate: kubernetes-the-hard-way:index:RootCa/getKubeProxyCertificate
       getKubeSchedulerCertificate: kubernetes-the-hard-way:index:RootCa/getKubeSchedulerCertificate
       getServiceAccountsCertificate: kubernetes-the-hard-way:index:RootCa/getServiceAccountsCertificate
-      installOn: kubernetes-the-hard-way:index:RootCa/installOn
+#      installOn: kubernetes-the-hard-way:index:RootCa/installOn
 functions:
 #  kubernetes-the-hard-way:index:Certificate/installOn:
 #    description: Creates a RemoteFile resource representing the copy operation.
@@ -623,27 +623,27 @@ functions:
           $ref: "#/resources/kubernetes-the-hard-way:index:Certificate"
       required:
         - cert
-  kubernetes-the-hard-way:index:RootCa/installOn:
-    description: Creates a RemoteFile resource representing the copy operation.
-    inputs:
-      properties:
-        __self__:
-          $ref: "#/resources/kubernetes-the-hard-way:index:RootCa"
-        connection:
-          $ref: "/command/v0.9.0/schema.json#/types/command:remote:Connection"
-          description: The connection details.
-        path:
-          type: string
-          description: The path to install to.
-      required:
-        - __self__
-        - connection
-    outputs:
-      properties:
-        file:
-          $ref: "#/resources/kubernetes-the-hard-way:index:RemoteFile"
-      required:
-        - file
+#  kubernetes-the-hard-way:index:RootCa/installOn:
+#    description: Creates a RemoteFile resource representing the copy operation.
+#    inputs:
+#      properties:
+#        __self__:
+#          $ref: "#/resources/kubernetes-the-hard-way:index:RootCa"
+#        connection:
+#          $ref: "/command/v0.9.0/schema.json#/types/command:remote:Connection"
+#          description: The connection details.
+#        path:
+#          type: string
+#          description: The path to install to.
+#      required:
+#        - __self__
+#        - connection
+#    outputs:
+#      properties:
+#        file:
+#          $ref: "#/resources/kubernetes-the-hard-way:index:RemoteFile"
+#      required:
+#        - file
 language:
   csharp:
     rootNamespace: UnMango # TODO: Name that works
