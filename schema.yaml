@@ -299,12 +299,16 @@ functions:
         connection:
           $ref: "#/types/kubernetes-the-hard-way:index:Connection"
           description: The connection details.
+        name:
+          type: string
+          plain: true
         path:
           type: string
           description: The path to install to.
       required:
         - __self__
         - connection
+        - name
     outputs:
       properties:
         file:
