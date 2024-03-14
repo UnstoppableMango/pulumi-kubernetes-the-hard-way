@@ -84,8 +84,8 @@ resources:
       - csr
       - key
       - keyPem
-#    methods:
-#      installOn: kubernetes-the-hard-way:index:Certificate/installOn
+    methods:
+      installOn: kubernetes-the-hard-way:index:Certificate/installOn
   kubernetes-the-hard-way:index:RemoteFile:
     isComponent: true
     inputProperties:
@@ -173,8 +173,9 @@ resources:
       getKubeProxyCertificate: kubernetes-the-hard-way:index:RootCa/getKubeProxyCertificate
       getKubeSchedulerCertificate: kubernetes-the-hard-way:index:RootCa/getKubeSchedulerCertificate
       getServiceAccountsCertificate: kubernetes-the-hard-way:index:RootCa/getServiceAccountsCertificate
-#      installOn: kubernetes-the-hard-way:index:RootCa/installOn
+      installOn: kubernetes-the-hard-way:index:RootCa/installOn
 types:
+  # https://github.com/pulumi/pulumi-tls/blob/620cb07a95049672bdaab17bf86fade26db051b1/provider/cmd/pulumi-resource-tls/schema.json#L84-L127
   kubernetes-the-hard-way:index:CertRequestSubject:
     type: object
     properties:
@@ -207,28 +208,70 @@ types:
         items:
           type: string
         description: "Distinguished name: STREET"
+  # https://github.com/pulumi/pulumi-command/blob/f122b7ae8d9f2b7649a28b170c6141216a209f04/provider/cmd/pulumi-resource-command/schema.json#L470-L522
+  kubernetes-the-hard-way:index:Connection:
+    description: Instructions for how to connect to a remote endpoint.
+    type: object
+    properties:
+      agentSocketPath:
+        type: string
+        description: SSH Agent socket path. Default to environment variable SSH_AUTH_SOCK if present.
+      dialErrorLimit:
+        type: integer
+        default: 10
+        description: Max allowed errors on trying to dial the remote host. -1 set count to unlimited. Default value is 10.
+      host:
+        type: string
+        description: The address of the resource to connect to.
+      password:
+        type: string
+        description: The password we should use for the connection.
+      perDialTimeout:
+        type: integer
+        default: 15
+        description: Max number of seconds for each dial attempt. 0 implies no maximum. Default value is 15 seconds.
+      port:
+        type: integer
+        default: 22
+        description: The port to connect to.
+      privateKey:
+        type: string
+        description: The contents of an SSH key to use for the connection. This takes preference over the password if provided.
+      privateKeyPassword:
+        type: string
+        description: The password to use in case the private key is encrypted.
+      # This also causes the rogue module error
+      # proxy:
+      #   $ref: "/command/v0.9.0/schema.json#/types/command:remote:ProxyConnection"
+      #   description: The connection settings for the bastion/proxy host.
+      user:
+        type: string
+        default: root
+        description: The user that we should use for the connection.
+    required:
+      - host
 functions:
-#  kubernetes-the-hard-way:index:Certificate/installOn:
-#    description: Creates a RemoteFile resource representing the copy operation.
-#    inputs:
-#      properties:
-#        __self__:
-#          $ref: "#/resources/kubernetes-the-hard-way:index:Certificate"
-#        connection:
-#          $ref: "/command/v0.9.0/schema.json#/types/command:remote:Connection"
-#          description: The connection details.
-#        path:
-#          type: string
-#          description: The path to install to.
-#      required:
-#        - __self__
-#        - connection
-#    outputs:
-#      properties:
-#        file:
-#          $ref: "#/resources/kubernetes-the-hard-way:index:RemoteFile"
-#      required:
-#        - file
+  kubernetes-the-hard-way:index:Certificate/installOn:
+    description: Creates a RemoteFile resource representing the copy operation.
+    inputs:
+      properties:
+        __self__:
+          $ref: "#/resources/kubernetes-the-hard-way:index:Certificate"
+        connection:
+          $ref: "#/types/kubernetes-the-hard-way:index:Connection"
+          description: The connection details.
+        path:
+          type: string
+          description: The path to install to.
+      required:
+        - __self__
+        - connection
+    outputs:
+      properties:
+        file:
+          $ref: "#/resources/kubernetes-the-hard-way:index:RemoteFile"
+      required:
+        - file
   kubernetes-the-hard-way:index:RootCa/getAdminCertificate:
     description: Creates a Certificate configured for the cluster admin.
     inputs:
@@ -656,27 +699,27 @@ functions:
           $ref: "#/resources/kubernetes-the-hard-way:index:Certificate"
       required:
         - cert
-#  kubernetes-the-hard-way:index:RootCa/installOn:
-#    description: Creates a RemoteFile resource representing the copy operation.
-#    inputs:
-#      properties:
-#        __self__:
-#          $ref: "#/resources/kubernetes-the-hard-way:index:RootCa"
-#        connection:
-#          $ref: "/command/v0.9.0/schema.json#/types/command:remote:Connection"
-#          description: The connection details.
-#        path:
-#          type: string
-#          description: The path to install to.
-#      required:
-#        - __self__
-#        - connection
-#    outputs:
-#      properties:
-#        file:
-#          $ref: "#/resources/kubernetes-the-hard-way:index:RemoteFile"
-#      required:
-#        - file
+  kubernetes-the-hard-way:index:RootCa/installOn:
+    description: Creates a RemoteFile resource representing the copy operation.
+    inputs:
+      properties:
+        __self__:
+          $ref: "#/resources/kubernetes-the-hard-way:index:RootCa"
+        connection:
+          $ref: "#/types/kubernetes-the-hard-way:index:Connection"
+          description: The connection details.
+        path:
+          type: string
+          description: The path to install to.
+      required:
+        - __self__
+        - connection
+    outputs:
+      properties:
+        file:
+          $ref: "#/resources/kubernetes-the-hard-way:index:RemoteFile"
+      required:
+        - file
 language:
   csharp:
     rootNamespace: UnMango # TODO: Name that works
