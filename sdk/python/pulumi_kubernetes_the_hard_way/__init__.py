@@ -9,6 +9,7 @@ from .certificate import *
 from .provider import *
 from .remote_file import *
 from .root_ca import *
+from ._inputs import *
 _utilities.register(
     resource_modules="""
 [

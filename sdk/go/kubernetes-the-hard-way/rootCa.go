@@ -121,7 +121,8 @@ type rootCaGetAdminCertificateArgs struct {
 	// Should the generated certificate include an authority key identifier.
 	SetAuthorityKeyId *bool `pulumi:"setAuthorityKeyId"`
 	// Should the generated certificate include a subject key identifier.
-	SetSubjectKeyId *bool `pulumi:"setSubjectKeyId"`
+	SetSubjectKeyId *bool               `pulumi:"setSubjectKeyId"`
+	Subject         *CertRequestSubject `pulumi:"subject"`
 	// List of URIs for which a certificate is being requested.
 	Uris []string `pulumi:"uris"`
 	// Number of hours, after initial issuing, that the certificate will remain valid.
@@ -148,6 +149,7 @@ type RootCaGetAdminCertificateArgs struct {
 	SetAuthorityKeyId pulumi.BoolPtrInput
 	// Should the generated certificate include a subject key identifier.
 	SetSubjectKeyId pulumi.BoolPtrInput
+	Subject         CertRequestSubjectPtrInput
 	// List of URIs for which a certificate is being requested.
 	Uris pulumi.StringArrayInput
 	// Number of hours, after initial issuing, that the certificate will remain valid.
@@ -199,7 +201,8 @@ type rootCaGetApiServerCertificateArgs struct {
 	// Should the generated certificate include an authority key identifier.
 	SetAuthorityKeyId *bool `pulumi:"setAuthorityKeyId"`
 	// Should the generated certificate include a subject key identifier.
-	SetSubjectKeyId *bool `pulumi:"setSubjectKeyId"`
+	SetSubjectKeyId *bool               `pulumi:"setSubjectKeyId"`
+	Subject         *CertRequestSubject `pulumi:"subject"`
 	// List of URIs for which a certificate is being requested.
 	Uris []string `pulumi:"uris"`
 	// Number of hours, after initial issuing, that the certificate will remain valid.
@@ -226,6 +229,7 @@ type RootCaGetApiServerCertificateArgs struct {
 	SetAuthorityKeyId pulumi.BoolPtrInput
 	// Should the generated certificate include a subject key identifier.
 	SetSubjectKeyId pulumi.BoolPtrInput
+	Subject         CertRequestSubjectPtrInput
 	// List of URIs for which a certificate is being requested.
 	Uris pulumi.StringArrayInput
 	// Number of hours, after initial issuing, that the certificate will remain valid.
@@ -277,7 +281,8 @@ type rootCaGetControllerManagerCertificateArgs struct {
 	// Should the generated certificate include an authority key identifier.
 	SetAuthorityKeyId *bool `pulumi:"setAuthorityKeyId"`
 	// Should the generated certificate include a subject key identifier.
-	SetSubjectKeyId *bool `pulumi:"setSubjectKeyId"`
+	SetSubjectKeyId *bool               `pulumi:"setSubjectKeyId"`
+	Subject         *CertRequestSubject `pulumi:"subject"`
 	// List of URIs for which a certificate is being requested.
 	Uris []string `pulumi:"uris"`
 	// Number of hours, after initial issuing, that the certificate will remain valid.
@@ -304,6 +309,7 @@ type RootCaGetControllerManagerCertificateArgs struct {
 	SetAuthorityKeyId pulumi.BoolPtrInput
 	// Should the generated certificate include a subject key identifier.
 	SetSubjectKeyId pulumi.BoolPtrInput
+	Subject         CertRequestSubjectPtrInput
 	// List of URIs for which a certificate is being requested.
 	Uris pulumi.StringArrayInput
 	// Number of hours, after initial issuing, that the certificate will remain valid.
@@ -355,7 +361,8 @@ type rootCaGetKubeProxyCertificateArgs struct {
 	// Should the generated certificate include an authority key identifier.
 	SetAuthorityKeyId *bool `pulumi:"setAuthorityKeyId"`
 	// Should the generated certificate include a subject key identifier.
-	SetSubjectKeyId *bool `pulumi:"setSubjectKeyId"`
+	SetSubjectKeyId *bool               `pulumi:"setSubjectKeyId"`
+	Subject         *CertRequestSubject `pulumi:"subject"`
 	// List of URIs for which a certificate is being requested.
 	Uris []string `pulumi:"uris"`
 	// Number of hours, after initial issuing, that the certificate will remain valid.
@@ -382,6 +389,7 @@ type RootCaGetKubeProxyCertificateArgs struct {
 	SetAuthorityKeyId pulumi.BoolPtrInput
 	// Should the generated certificate include a subject key identifier.
 	SetSubjectKeyId pulumi.BoolPtrInput
+	Subject         CertRequestSubjectPtrInput
 	// List of URIs for which a certificate is being requested.
 	Uris pulumi.StringArrayInput
 	// Number of hours, after initial issuing, that the certificate will remain valid.
@@ -433,7 +441,8 @@ type rootCaGetKubeSchedulerCertificateArgs struct {
 	// Should the generated certificate include an authority key identifier.
 	SetAuthorityKeyId *bool `pulumi:"setAuthorityKeyId"`
 	// Should the generated certificate include a subject key identifier.
-	SetSubjectKeyId *bool `pulumi:"setSubjectKeyId"`
+	SetSubjectKeyId *bool               `pulumi:"setSubjectKeyId"`
+	Subject         *CertRequestSubject `pulumi:"subject"`
 	// List of URIs for which a certificate is being requested.
 	Uris []string `pulumi:"uris"`
 	// Number of hours, after initial issuing, that the certificate will remain valid.
@@ -460,6 +469,7 @@ type RootCaGetKubeSchedulerCertificateArgs struct {
 	SetAuthorityKeyId pulumi.BoolPtrInput
 	// Should the generated certificate include a subject key identifier.
 	SetSubjectKeyId pulumi.BoolPtrInput
+	Subject         CertRequestSubjectPtrInput
 	// List of URIs for which a certificate is being requested.
 	Uris pulumi.StringArrayInput
 	// Number of hours, after initial issuing, that the certificate will remain valid.
@@ -511,7 +521,8 @@ type rootCaGetKubeletCertificateArgs struct {
 	// Should the generated certificate include an authority key identifier.
 	SetAuthorityKeyId *bool `pulumi:"setAuthorityKeyId"`
 	// Should the generated certificate include a subject key identifier.
-	SetSubjectKeyId *bool `pulumi:"setSubjectKeyId"`
+	SetSubjectKeyId *bool               `pulumi:"setSubjectKeyId"`
+	Subject         *CertRequestSubject `pulumi:"subject"`
 	// List of URIs for which a certificate is being requested.
 	Uris []string `pulumi:"uris"`
 	// Number of hours, after initial issuing, that the certificate will remain valid.
@@ -538,6 +549,7 @@ type RootCaGetKubeletCertificateArgs struct {
 	SetAuthorityKeyId pulumi.BoolPtrInput
 	// Should the generated certificate include a subject key identifier.
 	SetSubjectKeyId pulumi.BoolPtrInput
+	Subject         CertRequestSubjectPtrInput
 	// List of URIs for which a certificate is being requested.
 	Uris pulumi.StringArrayInput
 	// Number of hours, after initial issuing, that the certificate will remain valid.
@@ -589,7 +601,8 @@ type rootCaGetServiceAccountsCertificateArgs struct {
 	// Should the generated certificate include an authority key identifier.
 	SetAuthorityKeyId *bool `pulumi:"setAuthorityKeyId"`
 	// Should the generated certificate include a subject key identifier.
-	SetSubjectKeyId *bool `pulumi:"setSubjectKeyId"`
+	SetSubjectKeyId *bool               `pulumi:"setSubjectKeyId"`
+	Subject         *CertRequestSubject `pulumi:"subject"`
 	// List of URIs for which a certificate is being requested.
 	Uris []string `pulumi:"uris"`
 	// Number of hours, after initial issuing, that the certificate will remain valid.
@@ -616,6 +629,7 @@ type RootCaGetServiceAccountsCertificateArgs struct {
 	SetAuthorityKeyId pulumi.BoolPtrInput
 	// Should the generated certificate include a subject key identifier.
 	SetSubjectKeyId pulumi.BoolPtrInput
+	Subject         CertRequestSubjectPtrInput
 	// List of URIs for which a certificate is being requested.
 	Uris pulumi.StringArrayInput
 	// Number of hours, after initial issuing, that the certificate will remain valid.

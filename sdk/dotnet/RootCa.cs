@@ -258,6 +258,9 @@ namespace UnMango.KubernetesTheHardWay
         [Input("setSubjectKeyId")]
         public Input<bool>? SetSubjectKeyId { get; set; }
 
+        [Input("subject")]
+        public Input<Inputs.CertRequestSubjectArgs>? Subject { get; set; }
+
         [Input("uris")]
         private InputList<string>? _uris;
 
@@ -372,6 +375,9 @@ namespace UnMango.KubernetesTheHardWay
         /// </summary>
         [Input("setSubjectKeyId")]
         public Input<bool>? SetSubjectKeyId { get; set; }
+
+        [Input("subject")]
+        public Input<Inputs.CertRequestSubjectArgs>? Subject { get; set; }
 
         [Input("uris")]
         private InputList<string>? _uris;
@@ -488,6 +494,9 @@ namespace UnMango.KubernetesTheHardWay
         [Input("setSubjectKeyId")]
         public Input<bool>? SetSubjectKeyId { get; set; }
 
+        [Input("subject")]
+        public Input<Inputs.CertRequestSubjectArgs>? Subject { get; set; }
+
         [Input("uris")]
         private InputList<string>? _uris;
 
@@ -602,6 +611,9 @@ namespace UnMango.KubernetesTheHardWay
         /// </summary>
         [Input("setSubjectKeyId")]
         public Input<bool>? SetSubjectKeyId { get; set; }
+
+        [Input("subject")]
+        public Input<Inputs.CertRequestSubjectArgs>? Subject { get; set; }
 
         [Input("uris")]
         private InputList<string>? _uris;
@@ -718,6 +730,9 @@ namespace UnMango.KubernetesTheHardWay
         [Input("setSubjectKeyId")]
         public Input<bool>? SetSubjectKeyId { get; set; }
 
+        [Input("subject")]
+        public Input<Inputs.CertRequestSubjectArgs>? Subject { get; set; }
+
         [Input("uris")]
         private InputList<string>? _uris;
 
@@ -833,6 +848,9 @@ namespace UnMango.KubernetesTheHardWay
         [Input("setSubjectKeyId")]
         public Input<bool>? SetSubjectKeyId { get; set; }
 
+        [Input("subject")]
+        public Input<Inputs.CertRequestSubjectArgs>? Subject { get; set; }
+
         [Input("uris")]
         private InputList<string>? _uris;
 
@@ -947,6 +965,9 @@ namespace UnMango.KubernetesTheHardWay
         /// </summary>
         [Input("setSubjectKeyId")]
         public Input<bool>? SetSubjectKeyId { get; set; }
+
+        [Input("subject")]
+        public Input<Inputs.CertRequestSubjectArgs>? Subject { get; set; }
 
         [Input("uris")]
         private InputList<string>? _uris;

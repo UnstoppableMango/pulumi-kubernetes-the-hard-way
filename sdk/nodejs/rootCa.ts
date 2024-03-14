@@ -2,6 +2,8 @@
 // *** Do not edit by hand unless you're certain you know what you are doing! ***
 
 import * as pulumi from "@pulumi/pulumi";
+import * as inputs from "./types/input";
+import * as outputs from "./types/output";
 import * as utilities from "./utilities";
 
 import * as pulumiTls from "@pulumi/tls";
@@ -83,6 +85,7 @@ export class RootCa extends pulumi.ComponentResource {
             "rsaBits": args.rsaBits,
             "setAuthorityKeyId": args.setAuthorityKeyId,
             "setSubjectKeyId": args.setSubjectKeyId,
+            "subject": args.subject,
             "uris": args.uris,
             "validityPeriodHours": args.validityPeriodHours,
         }, this);
@@ -104,6 +107,7 @@ export class RootCa extends pulumi.ComponentResource {
             "rsaBits": args.rsaBits,
             "setAuthorityKeyId": args.setAuthorityKeyId,
             "setSubjectKeyId": args.setSubjectKeyId,
+            "subject": args.subject,
             "uris": args.uris,
             "validityPeriodHours": args.validityPeriodHours,
         }, this);
@@ -125,6 +129,7 @@ export class RootCa extends pulumi.ComponentResource {
             "rsaBits": args.rsaBits,
             "setAuthorityKeyId": args.setAuthorityKeyId,
             "setSubjectKeyId": args.setSubjectKeyId,
+            "subject": args.subject,
             "uris": args.uris,
             "validityPeriodHours": args.validityPeriodHours,
         }, this);
@@ -146,6 +151,7 @@ export class RootCa extends pulumi.ComponentResource {
             "rsaBits": args.rsaBits,
             "setAuthorityKeyId": args.setAuthorityKeyId,
             "setSubjectKeyId": args.setSubjectKeyId,
+            "subject": args.subject,
             "uris": args.uris,
             "validityPeriodHours": args.validityPeriodHours,
         }, this);
@@ -167,6 +173,7 @@ export class RootCa extends pulumi.ComponentResource {
             "rsaBits": args.rsaBits,
             "setAuthorityKeyId": args.setAuthorityKeyId,
             "setSubjectKeyId": args.setSubjectKeyId,
+            "subject": args.subject,
             "uris": args.uris,
             "validityPeriodHours": args.validityPeriodHours,
         }, this);
@@ -188,6 +195,7 @@ export class RootCa extends pulumi.ComponentResource {
             "rsaBits": args.rsaBits,
             "setAuthorityKeyId": args.setAuthorityKeyId,
             "setSubjectKeyId": args.setSubjectKeyId,
+            "subject": args.subject,
             "uris": args.uris,
             "validityPeriodHours": args.validityPeriodHours,
         }, this);
@@ -209,6 +217,7 @@ export class RootCa extends pulumi.ComponentResource {
             "rsaBits": args.rsaBits,
             "setAuthorityKeyId": args.setAuthorityKeyId,
             "setSubjectKeyId": args.setSubjectKeyId,
+            "subject": args.subject,
             "uris": args.uris,
             "validityPeriodHours": args.validityPeriodHours,
         }, this);
@@ -301,6 +310,7 @@ export namespace RootCa {
          * Should the generated certificate include a subject key identifier.
          */
         setSubjectKeyId?: pulumi.Input<boolean>;
+        subject?: pulumi.Input<inputs.CertRequestSubjectArgs>;
         /**
          * List of URIs for which a certificate is being requested.
          */
@@ -356,6 +366,7 @@ export namespace RootCa {
          * Should the generated certificate include a subject key identifier.
          */
         setSubjectKeyId?: pulumi.Input<boolean>;
+        subject?: pulumi.Input<inputs.CertRequestSubjectArgs>;
         /**
          * List of URIs for which a certificate is being requested.
          */
@@ -411,6 +422,7 @@ export namespace RootCa {
          * Should the generated certificate include a subject key identifier.
          */
         setSubjectKeyId?: pulumi.Input<boolean>;
+        subject?: pulumi.Input<inputs.CertRequestSubjectArgs>;
         /**
          * List of URIs for which a certificate is being requested.
          */
@@ -466,6 +478,7 @@ export namespace RootCa {
          * Should the generated certificate include a subject key identifier.
          */
         setSubjectKeyId?: pulumi.Input<boolean>;
+        subject?: pulumi.Input<inputs.CertRequestSubjectArgs>;
         /**
          * List of URIs for which a certificate is being requested.
          */
@@ -521,6 +534,7 @@ export namespace RootCa {
          * Should the generated certificate include a subject key identifier.
          */
         setSubjectKeyId?: pulumi.Input<boolean>;
+        subject?: pulumi.Input<inputs.CertRequestSubjectArgs>;
         /**
          * List of URIs for which a certificate is being requested.
          */
@@ -576,6 +590,7 @@ export namespace RootCa {
          * Should the generated certificate include a subject key identifier.
          */
         setSubjectKeyId?: pulumi.Input<boolean>;
+        subject?: pulumi.Input<inputs.CertRequestSubjectArgs>;
         /**
          * List of URIs for which a certificate is being requested.
          */
@@ -631,6 +646,7 @@ export namespace RootCa {
          * Should the generated certificate include a subject key identifier.
          */
         setSubjectKeyId?: pulumi.Input<boolean>;
+        subject?: pulumi.Input<inputs.CertRequestSubjectArgs>;
         /**
          * List of URIs for which a certificate is being requested.
          */

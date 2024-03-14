@@ -8,6 +8,7 @@ import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
 from . import _utilities
+from ._inputs import *
 from .certificate import Certificate
 import pulumi_tls
 
@@ -337,6 +338,7 @@ class RootCa(pulumi.ComponentResource):
                               rsa_bits: Optional[pulumi.Input[int]] = None,
                               set_authority_key_id: Optional[pulumi.Input[bool]] = None,
                               set_subject_key_id: Optional[pulumi.Input[bool]] = None,
+                              subject: Optional[pulumi.Input['CertRequestSubjectArgs']] = None,
                               uris: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None) -> pulumi.Output['RootCa.GetAdminCertificateResult']:
         """
         Creates a Certificate configured for the cluster admin.
@@ -366,6 +368,7 @@ class RootCa(pulumi.ComponentResource):
         __args__['rsaBits'] = rsa_bits
         __args__['setAuthorityKeyId'] = set_authority_key_id
         __args__['setSubjectKeyId'] = set_subject_key_id
+        __args__['subject'] = subject
         __args__['uris'] = uris
         return pulumi.runtime.call('kubernetes-the-hard-way:index:RootCa/getAdminCertificate', __args__, res=__self__, typ=RootCa.GetAdminCertificateResult)
 
@@ -393,6 +396,7 @@ class RootCa(pulumi.ComponentResource):
                                    rsa_bits: Optional[pulumi.Input[int]] = None,
                                    set_authority_key_id: Optional[pulumi.Input[bool]] = None,
                                    set_subject_key_id: Optional[pulumi.Input[bool]] = None,
+                                   subject: Optional[pulumi.Input['CertRequestSubjectArgs']] = None,
                                    uris: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None) -> pulumi.Output['RootCa.GetApiServerCertificateResult']:
         """
         Creates a Certificate configured for the api-server.
@@ -422,6 +426,7 @@ class RootCa(pulumi.ComponentResource):
         __args__['rsaBits'] = rsa_bits
         __args__['setAuthorityKeyId'] = set_authority_key_id
         __args__['setSubjectKeyId'] = set_subject_key_id
+        __args__['subject'] = subject
         __args__['uris'] = uris
         return pulumi.runtime.call('kubernetes-the-hard-way:index:RootCa/getApiServerCertificate', __args__, res=__self__, typ=RootCa.GetApiServerCertificateResult)
 
@@ -449,6 +454,7 @@ class RootCa(pulumi.ComponentResource):
                                            rsa_bits: Optional[pulumi.Input[int]] = None,
                                            set_authority_key_id: Optional[pulumi.Input[bool]] = None,
                                            set_subject_key_id: Optional[pulumi.Input[bool]] = None,
+                                           subject: Optional[pulumi.Input['CertRequestSubjectArgs']] = None,
                                            uris: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None) -> pulumi.Output['RootCa.GetControllerManagerCertificateResult']:
         """
         Creates a Certificate configured for the controller manager.
@@ -478,6 +484,7 @@ class RootCa(pulumi.ComponentResource):
         __args__['rsaBits'] = rsa_bits
         __args__['setAuthorityKeyId'] = set_authority_key_id
         __args__['setSubjectKeyId'] = set_subject_key_id
+        __args__['subject'] = subject
         __args__['uris'] = uris
         return pulumi.runtime.call('kubernetes-the-hard-way:index:RootCa/getControllerManagerCertificate', __args__, res=__self__, typ=RootCa.GetControllerManagerCertificateResult)
 
@@ -505,6 +512,7 @@ class RootCa(pulumi.ComponentResource):
                                    rsa_bits: Optional[pulumi.Input[int]] = None,
                                    set_authority_key_id: Optional[pulumi.Input[bool]] = None,
                                    set_subject_key_id: Optional[pulumi.Input[bool]] = None,
+                                   subject: Optional[pulumi.Input['CertRequestSubjectArgs']] = None,
                                    uris: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None) -> pulumi.Output['RootCa.GetKubeProxyCertificateResult']:
         """
         Creates a Certificate configured for the kube-proxy.
@@ -534,6 +542,7 @@ class RootCa(pulumi.ComponentResource):
         __args__['rsaBits'] = rsa_bits
         __args__['setAuthorityKeyId'] = set_authority_key_id
         __args__['setSubjectKeyId'] = set_subject_key_id
+        __args__['subject'] = subject
         __args__['uris'] = uris
         return pulumi.runtime.call('kubernetes-the-hard-way:index:RootCa/getKubeProxyCertificate', __args__, res=__self__, typ=RootCa.GetKubeProxyCertificateResult)
 
@@ -561,6 +570,7 @@ class RootCa(pulumi.ComponentResource):
                                        rsa_bits: Optional[pulumi.Input[int]] = None,
                                        set_authority_key_id: Optional[pulumi.Input[bool]] = None,
                                        set_subject_key_id: Optional[pulumi.Input[bool]] = None,
+                                       subject: Optional[pulumi.Input['CertRequestSubjectArgs']] = None,
                                        uris: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None) -> pulumi.Output['RootCa.GetKubeSchedulerCertificateResult']:
         """
         Creates a Certificate configured for the kube-scheduler.
@@ -590,6 +600,7 @@ class RootCa(pulumi.ComponentResource):
         __args__['rsaBits'] = rsa_bits
         __args__['setAuthorityKeyId'] = set_authority_key_id
         __args__['setSubjectKeyId'] = set_subject_key_id
+        __args__['subject'] = subject
         __args__['uris'] = uris
         return pulumi.runtime.call('kubernetes-the-hard-way:index:RootCa/getKubeSchedulerCertificate', __args__, res=__self__, typ=RootCa.GetKubeSchedulerCertificateResult)
 
@@ -617,6 +628,7 @@ class RootCa(pulumi.ComponentResource):
                                 rsa_bits: Optional[pulumi.Input[int]] = None,
                                 set_authority_key_id: Optional[pulumi.Input[bool]] = None,
                                 set_subject_key_id: Optional[pulumi.Input[bool]] = None,
+                                subject: Optional[pulumi.Input['CertRequestSubjectArgs']] = None,
                                 uris: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None) -> pulumi.Output['RootCa.GetKubeletCertificateResult']:
         """
         Creates a Certificate configured for a kubelet.
@@ -646,6 +658,7 @@ class RootCa(pulumi.ComponentResource):
         __args__['rsaBits'] = rsa_bits
         __args__['setAuthorityKeyId'] = set_authority_key_id
         __args__['setSubjectKeyId'] = set_subject_key_id
+        __args__['subject'] = subject
         __args__['uris'] = uris
         return pulumi.runtime.call('kubernetes-the-hard-way:index:RootCa/getKubeletCertificate', __args__, res=__self__, typ=RootCa.GetKubeletCertificateResult)
 
@@ -673,6 +686,7 @@ class RootCa(pulumi.ComponentResource):
                                          rsa_bits: Optional[pulumi.Input[int]] = None,
                                          set_authority_key_id: Optional[pulumi.Input[bool]] = None,
                                          set_subject_key_id: Optional[pulumi.Input[bool]] = None,
+                                         subject: Optional[pulumi.Input['CertRequestSubjectArgs']] = None,
                                          uris: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None) -> pulumi.Output['RootCa.GetServiceAccountsCertificateResult']:
         """
         Creates a Certificate configured for the kube-scheduler.
@@ -702,6 +716,7 @@ class RootCa(pulumi.ComponentResource):
         __args__['rsaBits'] = rsa_bits
         __args__['setAuthorityKeyId'] = set_authority_key_id
         __args__['setSubjectKeyId'] = set_subject_key_id
+        __args__['subject'] = subject
         __args__['uris'] = uris
         return pulumi.runtime.call('kubernetes-the-hard-way:index:RootCa/getServiceAccountsCertificate', __args__, res=__self__, typ=RootCa.GetServiceAccountsCertificateResult)
 

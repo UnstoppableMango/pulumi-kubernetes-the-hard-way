@@ -24,6 +24,13 @@ export * from "./rootCa";
 import { RootCa } from "./rootCa";
 
 
+// Export sub-modules:
+import * as types from "./types";
+
+export {
+    types,
+};
+
 const _module = {
     version: utilities.getVersion(),
     construct: (name: string, type: string, urn: string): pulumi.Resource => {
