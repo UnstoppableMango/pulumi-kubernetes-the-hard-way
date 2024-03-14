@@ -174,6 +174,39 @@ resources:
       getKubeSchedulerCertificate: kubernetes-the-hard-way:index:RootCa/getKubeSchedulerCertificate
       getServiceAccountsCertificate: kubernetes-the-hard-way:index:RootCa/getServiceAccountsCertificate
 #      installOn: kubernetes-the-hard-way:index:RootCa/installOn
+types:
+  kubernetes-the-hard-way:index:CertRequestSubject:
+    type: object
+    properties:
+      commonName:
+        type: string
+        description: "Distinguished name: CN"
+      country:
+        type: string
+        description: "Distinguished name: C"
+      locality:
+        type: string
+        description: "Distinguished name: L"
+      organization:
+        type: string
+        description: "Distinguished name: O"
+      organizationalUnit:
+        type: string
+        description: "Distinguished name: OU"
+      postalCode:
+        type: string
+        description: "Distinguished name: PC"
+      province:
+        type: string
+        description: "Distinguished name: ST"
+      serialNumber:
+        type: string
+        description: "Distinguished name: SERIALNUMBER"
+      streetAddresses:
+        type: array
+        items:
+          type: string
+        description: "Distinguished name: STREET"
 functions:
 #  kubernetes-the-hard-way:index:Certificate/installOn:
 #    description: Creates a RemoteFile resource representing the copy operation.
@@ -244,9 +277,9 @@ functions:
             type: string
         isCaCertificate:
           type: boolean
-         # TODO: Why is this borked
-#        subject:
-#          $ref: "/tls/v5.0.1/schema.json#/types/tls:index/CertRequestSubject:CertRequestSubject"
+        subject:
+          # $ref: "/tls/v5.0.0/schema.json#/types/tls:index/CertRequestSubject:CertRequestSubject"
+          $ref: "#/types/kubernetes-the-hard-way:index:CertRequestSubject"
       required:
         - __self__
         - allowedUses
@@ -305,9 +338,9 @@ functions:
             type: string
         isCaCertificate:
           type: boolean
-        # TODO: Why is this borked
-#        subject:
-#          $ref: "/tls/v5.0.0/schema.json#/types/tls:index/CertRequestSubject:CertRequestSubject"
+        subject:
+          # $ref: "/tls/v5.0.0/schema.json#/types/tls:index/CertRequestSubject:CertRequestSubject"
+          $ref: "#/types/kubernetes-the-hard-way:index:CertRequestSubject"
       required:
         - __self__
         - allowedUses
@@ -366,9 +399,9 @@ functions:
             type: string
         isCaCertificate:
           type: boolean
-        # TODO: Why is this borked
-      #        subject:
-      #          $ref: "/tls/v5.0.0/schema.json#/types/tls:index/CertRequestSubject:CertRequestSubject"
+        subject:
+          # $ref: "/tls/v5.0.0/schema.json#/types/tls:index/CertRequestSubject:CertRequestSubject"
+          $ref: "#/types/kubernetes-the-hard-way:index:CertRequestSubject"
       required:
         - __self__
         - allowedUses
@@ -427,9 +460,9 @@ functions:
             type: string
         isCaCertificate:
           type: boolean
-        # TODO: Why is this borked
-      #        subject:
-      #          $ref: "/tls/v5.0.0/schema.json#/types/tls:index/CertRequestSubject:CertRequestSubject"
+        subject:
+          # $ref: "/tls/v5.0.0/schema.json#/types/tls:index/CertRequestSubject:CertRequestSubject"
+          $ref: "#/types/kubernetes-the-hard-way:index:CertRequestSubject"
       required:
         - __self__
         - allowedUses
@@ -488,9 +521,9 @@ functions:
             type: string
         isCaCertificate:
           type: boolean
-        # TODO: Why is this borked
-      #        subject:
-      #          $ref: "/tls/v5.0.0/schema.json#/types/tls:index/CertRequestSubject:CertRequestSubject"
+        subject:
+          # $ref: "/tls/v5.0.0/schema.json#/types/tls:index/CertRequestSubject:CertRequestSubject"
+          $ref: "#/types/kubernetes-the-hard-way:index:CertRequestSubject"
       required:
         - __self__
         - allowedUses
@@ -549,9 +582,9 @@ functions:
             type: string
         isCaCertificate:
           type: boolean
-        # TODO: Why is this borked
-      #        subject:
-      #          $ref: "/tls/v5.0.0/schema.json#/types/tls:index/CertRequestSubject:CertRequestSubject"
+        subject:
+          # $ref: "/tls/v5.0.0/schema.json#/types/tls:index/CertRequestSubject:CertRequestSubject"
+          $ref: "#/types/kubernetes-the-hard-way:index:CertRequestSubject"
       required:
         - __self__
         - allowedUses
@@ -610,9 +643,9 @@ functions:
             type: string
         isCaCertificate:
           type: boolean
-        # TODO: Why is this borked
-      #        subject:
-      #          $ref: "/tls/v5.0.0/schema.json#/types/tls:index/CertRequestSubject:CertRequestSubject"
+        subject:
+          # $ref: "/tls/v5.0.0/schema.json#/types/tls:index/CertRequestSubject:CertRequestSubject"
+          $ref: "#/types/kubernetes-the-hard-way:index:CertRequestSubject"
       required:
         - __self__
         - allowedUses
