@@ -5,10 +5,8 @@ import * as pulumi from "@pulumi/pulumi";
 import * as utilities from "./utilities";
 
 // Export members:
-export { CertificateArgs } from "./certificate";
-export type Certificate = import("./certificate").Certificate;
-export const Certificate: typeof import("./certificate").Certificate = null as any;
-utilities.lazyLoad(exports, ["Certificate"], () => require("./certificate"));
+export * from "./certificate";
+import { Certificate } from "./certificate";
 
 export { ProviderArgs } from "./provider";
 export type Provider = import("./provider").Provider;

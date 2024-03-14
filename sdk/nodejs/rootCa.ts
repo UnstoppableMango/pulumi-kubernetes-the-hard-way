@@ -8,7 +8,7 @@ import * as utilities from "./utilities";
 
 import * as pulumiTls from "@pulumi/tls";
 
-import {Certificate} from "./index";
+import {Certificate, RemoteFile} from "./index";
 
 export class RootCa extends pulumi.ComponentResource {
     /** @internal */
@@ -220,6 +220,17 @@ export class RootCa extends pulumi.ComponentResource {
             "subject": args.subject,
             "uris": args.uris,
             "validityPeriodHours": args.validityPeriodHours,
+        }, this);
+    }
+
+    /**
+     * Creates a RemoteFile resource representing the copy operation.
+     */
+    installOn(args: RootCa.InstallOnArgs): pulumi.Output<RootCa.InstallOnResult> {
+        return pulumi.runtime.call("kubernetes-the-hard-way:index:RootCa/installOn", {
+            "__self__": this,
+            "connection": args.connection,
+            "path": args.path,
         }, this);
     }
 }
@@ -662,6 +673,27 @@ export namespace RootCa {
      */
     export interface GetServiceAccountsCertificateResult {
         readonly cert: Certificate;
+    }
+
+    /**
+     * The set of arguments for the RootCa.installOn method.
+     */
+    export interface InstallOnArgs {
+        /**
+         * The connection details.
+         */
+        connection: pulumi.Input<inputs.ConnectionArgs>;
+        /**
+         * The path to install to.
+         */
+        path?: pulumi.Input<string>;
+    }
+
+    /**
+     * The results of the RootCa.installOn method.
+     */
+    export interface InstallOnResult {
+        readonly file: RemoteFile;
     }
 
 }

@@ -52,6 +52,12 @@ namespace UnMango.KubernetesTheHardWay
             merged.Id = id ?? merged.Id;
             return merged;
         }
+
+        /// <summary>
+        /// Creates a RemoteFile resource representing the copy operation.
+        /// </summary>
+        public global::Pulumi.Output<CertificateInstallOnResult> InstallOn(CertificateInstallOnArgs args)
+            => global::Pulumi.Deployment.Instance.Call<CertificateInstallOnResult>("kubernetes-the-hard-way:index:Certificate/installOn", args ?? new CertificateInstallOnArgs(), this);
     }
 
     public sealed class CertificateArgs : global::Pulumi.ResourceArgs
@@ -158,5 +164,43 @@ namespace UnMango.KubernetesTheHardWay
         {
         }
         public static new CertificateArgs Empty => new CertificateArgs();
+    }
+
+    /// <summary>
+    /// The set of arguments for the <see cref="Certificate.InstallOn"/> method.
+    /// </summary>
+    public sealed class CertificateInstallOnArgs : global::Pulumi.CallArgs
+    {
+        /// <summary>
+        /// The connection details.
+        /// </summary>
+        [Input("connection", required: true)]
+        public Input<Inputs.ConnectionArgs> Connection { get; set; } = null!;
+
+        /// <summary>
+        /// The path to install to.
+        /// </summary>
+        [Input("path")]
+        public Input<string>? Path { get; set; }
+
+        public CertificateInstallOnArgs()
+        {
+        }
+        public static new CertificateInstallOnArgs Empty => new CertificateInstallOnArgs();
+    }
+
+    /// <summary>
+    /// The results of the <see cref="Certificate.InstallOn"/> method.
+    /// </summary>
+    [OutputType]
+    public sealed class CertificateInstallOnResult
+    {
+        public readonly UnMango.KubernetesTheHardWay.RemoteFile File;
+
+        [OutputConstructor]
+        private CertificateInstallOnResult(UnMango.KubernetesTheHardWay.RemoteFile file)
+        {
+            File = file;
+        }
     }
 }
