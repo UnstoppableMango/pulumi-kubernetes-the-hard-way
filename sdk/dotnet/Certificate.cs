@@ -178,6 +178,9 @@ namespace UnMango.KubernetesTheHardWay
         [Input("connection", required: true)]
         public Input<Inputs.ConnectionArgs> Connection { get; set; } = null!;
 
+        [Input("name", required: true)]
+        public string Name { get; set; } = null!;
+
         /// <summary>
         /// The path to install to.
         /// </summary>

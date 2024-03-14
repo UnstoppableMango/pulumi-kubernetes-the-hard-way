@@ -92,6 +92,7 @@ export class Certificate extends pulumi.ComponentResource {
         return pulumi.runtime.call("kubernetes-the-hard-way:index:Certificate/installOn", {
             "__self__": this,
             "connection": args.connection,
+            "name": args.name,
             "path": args.path,
         }, this);
     }
@@ -157,6 +158,7 @@ export namespace Certificate {
          * The connection details.
          */
         connection: pulumi.Input<inputs.ConnectionArgs>;
+        name: string;
         /**
          * The path to install to.
          */

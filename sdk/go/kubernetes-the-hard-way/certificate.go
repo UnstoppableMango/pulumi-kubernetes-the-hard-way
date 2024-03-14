@@ -124,6 +124,7 @@ func (r *Certificate) InstallOn(ctx *pulumi.Context, args *CertificateInstallOnA
 type certificateInstallOnArgs struct {
 	// The connection details.
 	Connection Connection `pulumi:"connection"`
+	Name       string     `pulumi:"name"`
 	// The path to install to.
 	Path *string `pulumi:"path"`
 }
@@ -132,6 +133,7 @@ type certificateInstallOnArgs struct {
 type CertificateInstallOnArgs struct {
 	// The connection details.
 	Connection ConnectionInput
+	Name       string
 	// The path to install to.
 	Path pulumi.StringPtrInput
 }

@@ -397,6 +397,7 @@ class Certificate(pulumi.ComponentResource):
 
     def install_on(__self__, *,
                    connection: pulumi.Input['ConnectionArgs'],
+                   name: str,
                    path: Optional[pulumi.Input[str]] = None) -> pulumi.Output['Certificate.InstallOnResult']:
         """
         Creates a RemoteFile resource representing the copy operation.
@@ -408,6 +409,7 @@ class Certificate(pulumi.ComponentResource):
         __args__ = dict()
         __args__['__self__'] = __self__
         __args__['connection'] = connection
+        __args__['name'] = name
         __args__['path'] = path
         return pulumi.runtime.call('kubernetes-the-hard-way:index:Certificate/installOn', __args__, res=__self__, typ=Certificate.InstallOnResult)
 
