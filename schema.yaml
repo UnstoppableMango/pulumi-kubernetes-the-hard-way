@@ -8,8 +8,11 @@ keywords:
   - command
   - tls
   - kubernetes
-  - category/utility
+  - category/utility # idk
   - kind/component
+pluginDownloadURL: github://api.github.com/UnstoppableMango
+publisher: UnstoppableMango
+attribution: https://github.com/kelseyhightower/kubernetes-the-hard-way/
 language:
   csharp:
     rootNamespace: UnMango # TODO: Name that works
