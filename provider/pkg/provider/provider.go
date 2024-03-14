@@ -30,30 +30,43 @@ func construct(ctx *pulumi.Context, typ, name string, inputs provider.ConstructI
 		return constructRemoteFile(ctx, name, inputs, options)
 	case "kubernetes-the-hard-way:index:RootCa":
 		return constructRootCa(ctx, name, inputs, options)
-	//case "kubernetes-the-hard-way:index:test":
-	//	return constructGeneric(ctx, name, inputs, &RootCaArgs{}, NewRootCa, options)
+	case "kubernetes-the-hard-way:index:test":
+		return constructGeneric[RootCaArgs, Constructor[RootCaArgs]](ctx, name, inputs, &RootCaArgs{}, NewRootCa, options)
 	default:
 		return nil, errors.Errorf("unknown resource type %s", typ)
 	}
 }
 
-//type builder func(ctx *pulumi.Context, name string, args interface{}, opts ...pulumi.ResourceOption)
-//
-//func constructGeneric[T any](ctx *pulumi.Context, name string, inputs provider.ConstructInputs,
-//	args *T,
-//	construct func(ctx *pulumi.Context, name string, args interface{}, opts ...pulumi.ResourceOption) (pulumi.ComponentResource, error),
-//	opts pulumi.ResourceOption) (*provider.ConstructResult, error) {
-//	if err := inputs.CopyTo(args); err != nil {
-//		return nil, errors.Wrap(err, "setting args")
-//	}
-//
-//	component, err := construct(ctx, name, args, opts)
-//	if err != nil {
-//		return nil, errors.Wrap(err, "creating component")
-//	}
-//
-//	return provider.NewConstructResult(component)
-//}
+func variance[T pulumi.ComponentResource](resource T) pulumi.ComponentResource {
+	return resource
+}
+
+func call(ctx *pulumi.Context, call string, inputs provider.CallArgs) (*provider.CallResult, error) {
+	switch call {
+	case "kubernetes-the-hard-way:index:Certificate/installOn":
+		return callCertificateInstallOn(ctx, inputs)
+	default:
+		return nil, errors.Errorf("unknown function %s", call)
+	}
+}
+
+type Constructor[T any] interface {
+	func(ctx *pulumi.Context, name string, args T, opts ...pulumi.ResourceOption) (pulumi.ComponentResource, error)
+}
+
+func constructGeneric[T any, V Constructor[T]](ctx *pulumi.Context, name string, inputs provider.ConstructInputs,
+	args *T, construct V, opts pulumi.ResourceOption) (*provider.ConstructResult, error) {
+	if err := inputs.CopyTo(args); err != nil {
+		return nil, errors.Wrap(err, "setting args")
+	}
+
+	component, err := construct(ctx, name, *args, opts)
+	if err != nil {
+		return nil, errors.Wrap(err, "creating component")
+	}
+
+	return provider.NewConstructResult(component)
+}
 
 func constructCertificate(ctx *pulumi.Context, name string, inputs provider.ConstructInputs,
 	options pulumi.ResourceOption) (*provider.ConstructResult, error) {
@@ -98,4 +111,22 @@ func constructRootCa(ctx *pulumi.Context, name string, inputs provider.Construct
 	}
 
 	return provider.NewConstructResult(component)
+}
+
+func callCertificateInstallOn(ctx *pulumi.Context, inputs provider.CallArgs) (*provider.CallResult, error) {
+	args := &InstallOnArgs{}
+
+	resource, err := inputs.CopyTo(args)
+	if err != nil {
+		return nil, err
+	}
+
+	cert, ok := resource.(*Certificate)
+	if !ok {
+		return nil, errors.New("Unable to retrieve __self__")
+	}
+
+	result, err := cert.InstallOn(ctx, *args)
+
+	return provider.NewCallResult(result)
 }

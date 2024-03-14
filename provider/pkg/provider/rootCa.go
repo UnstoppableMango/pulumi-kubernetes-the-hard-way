@@ -1,7 +1,6 @@
 package provider
 
 import (
-	"github.com/pulumi/pulumi-command/sdk/go/command/remote"
 	"github.com/pulumi/pulumi-tls/sdk/v5/go/tls"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
@@ -23,7 +22,7 @@ type RootCa struct {
 
 // NewRootCa creates a new RootCa component resource.
 func NewRootCa(ctx *pulumi.Context,
-	name string, args *RootCaArgs, opts ...pulumi.ResourceOption) (*RootCa, error) {
+	name string, args *RootCaArgs, opts ...pulumi.ResourceOption) (pulumi.ComponentResource, error) {
 	if args == nil {
 		args = &RootCaArgs{}
 	}
@@ -94,20 +93,25 @@ func (c *RootCa) GetAdminCertificate(ctx *pulumi.Context,
 			Uris:                pulumi.StringArray{},
 			ValidityPeriodHours: pulumi.Int(87600),
 		},
-		AllowedUses:     pulumi.StringArray{pulumi.String("digital_signature"), pulumi.String("key_encipherment"), pulumi.String("server_auth"), pulumi.String("client_auth")},
+		AllowedUses: pulumi.StringArray{
+			pulumi.String("digital_signature"),
+			pulumi.String("key_encipherment"),
+			pulumi.String("server_auth"),
+			pulumi.String("client_auth"),
+		},
 		CaCertPem:       c.Cert.CertPem,
 		CaPrivateKeyPem: c.Key.PrivateKeyPem,
 		IsCaCertificate: pulumi.Bool(false),
-		Subject:         &tls.CertRequestSubjectArgs{CommonName: pulumi.String("admin")},
+		Subject: &tls.CertRequestSubjectArgs{
+			CommonName: pulumi.String("admin"),
+		},
 	})
 }
 
-func (c *RootCa) InstallOn(ctx *pulumi.Context,
-	conn remote.ConnectionArgs, path pulumi.StringInput) (*RemoteFile, error) {
-	// TODO: How do names work here
-	return NewRemoteFile(ctx, "rootCaInstall", &RemoteFileArgs{
-		Connection: conn,
+func (c *RootCa) InstallOn(ctx *pulumi.Context, args InstallOnArgs) (*RemoteFile, error) {
+	return NewRemoteFile(ctx, args.Name, &RemoteFileArgs{
+		Connection: args.Connection,
 		Content:    c.CertPem,
-		Path:       path,
+		Path:       args.Path,
 	})
 }
