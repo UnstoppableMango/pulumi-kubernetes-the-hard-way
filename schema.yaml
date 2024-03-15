@@ -340,6 +340,9 @@ functions:
       properties:
         __self__:
           $ref: "#/resources/kubernetes-the-hard-way:index:RootCa"
+        name:
+          type: string
+          plain: true
         algorithm:
           $ref: "#/types/kubernetes-the-hard-way:index:Algorithm"
           description: Name of the algorithm to use when generating the private key.

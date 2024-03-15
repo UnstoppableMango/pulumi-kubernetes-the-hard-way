@@ -39,6 +39,10 @@ func call(ctx *pulumi.Context, call string, inputs provider.CallArgs) (*provider
 	switch call {
 	case "kubernetes-the-hard-way:index:Certificate/installOn":
 		return callCertificateInstallOn(ctx, inputs)
+	case "kubernetes-the-hard-way:index:RootCa/createCertificate":
+		return callRootCaCreateCertificate(ctx, inputs)
+	case "kubernetes-the-hard-way:index:RootCa/installOn":
+		return callRootCaInstallOn(ctx, inputs)
 	default:
 		return nil, errors.Errorf("unknown function %s", call)
 	}
@@ -130,13 +134,30 @@ func callCertificateInstallOn(ctx *pulumi.Context, inputs provider.CallArgs) (*p
 }
 
 func callRootCaCreateCertificate(ctx *pulumi.Context, inputs provider.CallArgs) (*provider.CallResult, error) {
+	args := &CreateCertificateArgs{}
+	resource, err := inputs.CopyTo(args)
+	if err != nil {
+		return nil, err
+	}
+
+	ca, ok := resource.(*RootCa)
+	if !ok {
+		return nil, errors.New("Unable to retrieve __self__")
+	}
+
+	result, err := ca.CreateCertificate(ctx, *args)
+
+	return provider.NewCallResult(result)
+}
+
+func callRootCaInstallOn(ctx *pulumi.Context, inputs provider.CallArgs) (*provider.CallResult, error) {
 	args := &InstallOnArgs{}
 	resource, err := inputs.CopyTo(args)
 	if err != nil {
 		return nil, err
 	}
 
-	cert, ok := resource.(*Certificate)
+	cert, ok := resource.(*RootCa)
 	if !ok {
 		return nil, errors.New("Unable to retrieve __self__")
 	}

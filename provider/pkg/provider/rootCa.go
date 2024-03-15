@@ -81,6 +81,65 @@ func NewRootCa(ctx *pulumi.Context,
 	return component, nil
 }
 
+// CreateCertificateArgs is the set of arguments for creating a Certificate resource
+type CreateCertificateArgs struct {
+	// Name of the algorithm to use when generating the private key. Currently-supported values are: `RSA`, `ECDSA`, `ED25519`.
+	Algorithm string `pulumi:"algorithm"`
+	// When `algorithm` is `ECDSA`, the name of the elliptic curve to use. Currently-supported values are: `P224`, `P256`, `P384`, `P521`. (default: `P224`).
+	EcdsaCurve *string `pulumi:"ecdsaCurve"`
+	// When `algorithm` is `RSA`, the size of the generated RSA key, in bits (default: `2048`).
+	RsaBits *int `pulumi:"rsaBits"`
+	// List of DNS names for which a certificate is being requested (i.e. certificate subjects).
+	DnsNames []string `pulumi:"dnsNames"`
+	// The resource will consider the certificate to have expired the given number of hours before its actual expiry time. This
+	// can be useful to deploy an updated certificate in advance of the expiration of the current certificate. However, the old
+	// certificate remains valid until its true expiration time, since this resource does not (and cannot) support certificate
+	// revocation. Also, this advance update can only be performed should the Terraform configuration be applied during the
+	// early renewal period. (default: `0`)
+	EarlyRenewalHours *int `pulumi:"earlyRenewalHours"`
+	// List of IP addresses for which a certificate is being requested (i.e. certificate subjects).
+	IpAddresses []string `pulumi:"ipAddresses"`
+	// Should the generated certificate include an [authority key identifier](https://datatracker.ietf.org/doc/html/rfc5280#section-4.2.1.1): for self-signed certificates this is the same value as the [subject key identifier](https://datatracker.ietf.org/doc/html/rfc5280#section-4.2.1.2) (default: `false`).
+	SetAuthorityKeyId *bool `pulumi:"setAuthorityKeyId"`
+	// Should the generated certificate include a [subject key identifier](https://datatracker.ietf.org/doc/html/rfc5280#section-4.2.1.2) (default: `false`).
+	SetSubjectKeyId *bool `pulumi:"setSubjectKeyId"`
+	// List of URIs for which a certificate is being requested (i.e. certificate subjects).
+	Uris []string `pulumi:"uris"`
+	// Number of hours, after initial issuing, that the certificate will remain valid for.
+	ValidityPeriodHours int `pulumi:"validityPeriodHours"`
+
+	AllowedUses     []string                   `pulumi:"allowedUses"`
+	IsCaCertificate bool                       `pulumi:"isCaCertificate"`
+	Name            string                     `pulumi:"name"`
+	Subject         tls.CertRequestSubjectArgs `pulumi:"subject"`
+}
+
+type CreateCertificateResult struct {
+	Cert *Certificate `pulumi:"cert"`
+}
+
+func (c *RootCa) CreateCertificate(ctx *pulumi.Context, args CreateCertificateArgs) (*CreateCertificateResult, error) {
+	cert, err := NewCertificate(ctx, args.Name, &CertificateArgs{
+		KeyPairArgs: KeyPairArgs{
+			DnsNames:            pulumi.ToStringArray(args.DnsNames),
+			EarlyRenewalHours:   pulumi.IntPtrFromPtr(args.EarlyRenewalHours),
+			IpAddresses:         pulumi.ToStringArray(args.IpAddresses),
+			SetAuthorityKeyId:   pulumi.BoolPtrFromPtr(args.SetAuthorityKeyId),
+			SetSubjectKeyId:     pulumi.BoolPtrFromPtr(args.SetSubjectKeyId),
+			Uris:                pulumi.ToStringArray(args.Uris),
+			ValidityPeriodHours: pulumi.Int(args.ValidityPeriodHours),
+		},
+		AllowedUses:     pulumi.ToStringArray(args.AllowedUses),
+		IsCaCertificate: pulumi.Bool(args.IsCaCertificate),
+		Subject:         tls.CertRequestSubjectPtr(&args.Subject),
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	return &CreateCertificateResult{Cert: cert}, nil
+}
+
 func (c *RootCa) InstallOn(ctx *pulumi.Context, args InstallOnArgs) (*InstallOnResult, error) {
 	file, err := NewRemoteFile(ctx, args.Name, &RemoteFileArgs{
 		Connection: args.Connection,
