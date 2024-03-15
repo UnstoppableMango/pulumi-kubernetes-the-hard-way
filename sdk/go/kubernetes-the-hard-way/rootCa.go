@@ -116,6 +116,7 @@ type rootCaCreateCertificateArgs struct {
 	// List of IP addresses for which a certificate is being requested.
 	IpAddresses     []string `pulumi:"ipAddresses"`
 	IsCaCertificate *bool    `pulumi:"isCaCertificate"`
+	Name            *string  `pulumi:"name"`
 	// When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
 	RsaBits *int `pulumi:"rsaBits"`
 	// Should the generated certificate include an authority key identifier.
@@ -143,6 +144,7 @@ type RootCaCreateCertificateArgs struct {
 	// List of IP addresses for which a certificate is being requested.
 	IpAddresses     pulumi.StringArrayInput
 	IsCaCertificate pulumi.BoolPtrInput
+	Name            *string
 	// When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
 	RsaBits pulumi.IntPtrInput
 	// Should the generated certificate include an authority key identifier.

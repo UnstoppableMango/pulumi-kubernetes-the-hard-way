@@ -83,6 +83,7 @@ export class RootCa extends pulumi.ComponentResource {
             "ecdsaCurve": args.ecdsaCurve,
             "ipAddresses": args.ipAddresses,
             "isCaCertificate": args.isCaCertificate,
+            "name": args.name,
             "rsaBits": args.rsaBits,
             "setAuthorityKeyId": args.setAuthorityKeyId,
             "setSubjectKeyId": args.setSubjectKeyId,
@@ -178,6 +179,7 @@ export namespace RootCa {
          */
         ipAddresses?: pulumi.Input<pulumi.Input<string>[]>;
         isCaCertificate?: pulumi.Input<boolean>;
+        name?: string;
         /**
          * When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
          */

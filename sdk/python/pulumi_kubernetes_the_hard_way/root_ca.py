@@ -337,6 +337,7 @@ class RootCa(pulumi.ComponentResource):
                            ecdsa_curve: Optional[pulumi.Input['EcdsaCurve']] = None,
                            ip_addresses: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                            is_ca_certificate: Optional[pulumi.Input[bool]] = None,
+                           name: Optional[str] = None,
                            rsa_bits: Optional[pulumi.Input[int]] = None,
                            set_authority_key_id: Optional[pulumi.Input[bool]] = None,
                            set_subject_key_id: Optional[pulumi.Input[bool]] = None,
@@ -367,6 +368,7 @@ class RootCa(pulumi.ComponentResource):
         __args__['ecdsaCurve'] = ecdsa_curve
         __args__['ipAddresses'] = ip_addresses
         __args__['isCaCertificate'] = is_ca_certificate
+        __args__['name'] = name
         __args__['rsaBits'] = rsa_bits
         __args__['setAuthorityKeyId'] = set_authority_key_id
         __args__['setSubjectKeyId'] = set_subject_key_id

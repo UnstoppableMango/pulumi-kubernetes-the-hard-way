@@ -211,6 +211,9 @@ namespace UnMango.KubernetesTheHardWay
         [Input("isCaCertificate")]
         public Input<bool>? IsCaCertificate { get; set; }
 
+        [Input("name")]
+        public string? Name { get; set; }
+
         /// <summary>
         /// When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
         /// </summary>
