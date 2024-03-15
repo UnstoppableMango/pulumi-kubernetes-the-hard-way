@@ -6,7 +6,7 @@ require (
 	github.com/ghodss/yaml v1.0.0
 	github.com/pkg/errors v0.9.1
 	github.com/pulumi/pulumi-command/sdk v0.9.2
-	github.com/pulumi/pulumi/pkg/v3 v3.110.0
+	github.com/pulumi/pulumi/pkg/v3 v3.111.0
 	github.com/pulumi/pulumi/sdk/v3 v3.111.0
 )
 
