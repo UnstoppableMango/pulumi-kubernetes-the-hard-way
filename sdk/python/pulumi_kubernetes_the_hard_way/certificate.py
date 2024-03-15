@@ -18,7 +18,7 @@ __all__ = ['CertificateArgs', 'Certificate']
 @pulumi.input_type
 class CertificateArgs:
     def __init__(__self__, *,
-                 allowed_uses: pulumi.Input[Sequence[pulumi.Input[str]]],
+                 allowed_uses: pulumi.Input[Sequence[pulumi.Input['AllowedUsage']]],
                  ca_cert_pem: pulumi.Input[str],
                  ca_private_key_pem: pulumi.Input[str],
                  validity_period_hours: pulumi.Input[int],
@@ -75,11 +75,11 @@ class CertificateArgs:
 
     @property
     @pulumi.getter(name="allowedUses")
-    def allowed_uses(self) -> pulumi.Input[Sequence[pulumi.Input[str]]]:
+    def allowed_uses(self) -> pulumi.Input[Sequence[pulumi.Input['AllowedUsage']]]:
         return pulumi.get(self, "allowed_uses")
 
     @allowed_uses.setter
-    def allowed_uses(self, value: pulumi.Input[Sequence[pulumi.Input[str]]]):
+    def allowed_uses(self, value: pulumi.Input[Sequence[pulumi.Input['AllowedUsage']]]):
         pulumi.set(self, "allowed_uses", value)
 
     @property
@@ -245,7 +245,7 @@ class Certificate(pulumi.ComponentResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  algorithm: Optional[pulumi.Input['Algorithm']] = None,
-                 allowed_uses: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
+                 allowed_uses: Optional[pulumi.Input[Sequence[pulumi.Input['AllowedUsage']]]] = None,
                  ca_cert_pem: Optional[pulumi.Input[str]] = None,
                  ca_private_key_pem: Optional[pulumi.Input[str]] = None,
                  dns_names: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
@@ -299,7 +299,7 @@ class Certificate(pulumi.ComponentResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  algorithm: Optional[pulumi.Input['Algorithm']] = None,
-                 allowed_uses: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
+                 allowed_uses: Optional[pulumi.Input[Sequence[pulumi.Input['AllowedUsage']]]] = None,
                  ca_cert_pem: Optional[pulumi.Input[str]] = None,
                  ca_private_key_pem: Optional[pulumi.Input[str]] = None,
                  dns_names: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,

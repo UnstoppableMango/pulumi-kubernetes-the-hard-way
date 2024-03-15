@@ -105,8 +105,8 @@ func (r *RootCa) CreateCertificate(ctx *pulumi.Context, args *RootCaCreateCertif
 
 type rootCaCreateCertificateArgs struct {
 	// Name of the algorithm to use when generating the private key.
-	Algorithm   *Algorithm `pulumi:"algorithm"`
-	AllowedUses []string   `pulumi:"allowedUses"`
+	Algorithm   *Algorithm     `pulumi:"algorithm"`
+	AllowedUses []AllowedUsage `pulumi:"allowedUses"`
 	// List of DNS names for which a certificate is being requested.
 	DnsNames []string `pulumi:"dnsNames"`
 	// TODO
@@ -133,7 +133,7 @@ type rootCaCreateCertificateArgs struct {
 type RootCaCreateCertificateArgs struct {
 	// Name of the algorithm to use when generating the private key.
 	Algorithm   AlgorithmPtrInput
-	AllowedUses pulumi.StringArrayInput
+	AllowedUses AllowedUsageArrayInput
 	// List of DNS names for which a certificate is being requested.
 	DnsNames pulumi.StringArrayInput
 	// TODO

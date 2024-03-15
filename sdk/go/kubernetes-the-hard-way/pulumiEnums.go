@@ -190,6 +190,213 @@ const (
 	AllowedUsage_Server_auth       = AllowedUsage("server_auth")
 )
 
+func (AllowedUsage) ElementType() reflect.Type {
+	return reflect.TypeOf((*AllowedUsage)(nil)).Elem()
+}
+
+func (e AllowedUsage) ToAllowedUsageOutput() AllowedUsageOutput {
+	return pulumi.ToOutput(e).(AllowedUsageOutput)
+}
+
+func (e AllowedUsage) ToAllowedUsageOutputWithContext(ctx context.Context) AllowedUsageOutput {
+	return pulumi.ToOutputWithContext(ctx, e).(AllowedUsageOutput)
+}
+
+func (e AllowedUsage) ToAllowedUsagePtrOutput() AllowedUsagePtrOutput {
+	return e.ToAllowedUsagePtrOutputWithContext(context.Background())
+}
+
+func (e AllowedUsage) ToAllowedUsagePtrOutputWithContext(ctx context.Context) AllowedUsagePtrOutput {
+	return AllowedUsage(e).ToAllowedUsageOutputWithContext(ctx).ToAllowedUsagePtrOutputWithContext(ctx)
+}
+
+func (e AllowedUsage) ToStringOutput() pulumi.StringOutput {
+	return pulumi.ToOutput(pulumi.String(e)).(pulumi.StringOutput)
+}
+
+func (e AllowedUsage) ToStringOutputWithContext(ctx context.Context) pulumi.StringOutput {
+	return pulumi.ToOutputWithContext(ctx, pulumi.String(e)).(pulumi.StringOutput)
+}
+
+func (e AllowedUsage) ToStringPtrOutput() pulumi.StringPtrOutput {
+	return pulumi.String(e).ToStringPtrOutputWithContext(context.Background())
+}
+
+func (e AllowedUsage) ToStringPtrOutputWithContext(ctx context.Context) pulumi.StringPtrOutput {
+	return pulumi.String(e).ToStringOutputWithContext(ctx).ToStringPtrOutputWithContext(ctx)
+}
+
+type AllowedUsageOutput struct{ *pulumi.OutputState }
+
+func (AllowedUsageOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*AllowedUsage)(nil)).Elem()
+}
+
+func (o AllowedUsageOutput) ToAllowedUsageOutput() AllowedUsageOutput {
+	return o
+}
+
+func (o AllowedUsageOutput) ToAllowedUsageOutputWithContext(ctx context.Context) AllowedUsageOutput {
+	return o
+}
+
+func (o AllowedUsageOutput) ToAllowedUsagePtrOutput() AllowedUsagePtrOutput {
+	return o.ToAllowedUsagePtrOutputWithContext(context.Background())
+}
+
+func (o AllowedUsageOutput) ToAllowedUsagePtrOutputWithContext(ctx context.Context) AllowedUsagePtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v AllowedUsage) *AllowedUsage {
+		return &v
+	}).(AllowedUsagePtrOutput)
+}
+
+func (o AllowedUsageOutput) ToStringOutput() pulumi.StringOutput {
+	return o.ToStringOutputWithContext(context.Background())
+}
+
+func (o AllowedUsageOutput) ToStringOutputWithContext(ctx context.Context) pulumi.StringOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, e AllowedUsage) string {
+		return string(e)
+	}).(pulumi.StringOutput)
+}
+
+func (o AllowedUsageOutput) ToStringPtrOutput() pulumi.StringPtrOutput {
+	return o.ToStringPtrOutputWithContext(context.Background())
+}
+
+func (o AllowedUsageOutput) ToStringPtrOutputWithContext(ctx context.Context) pulumi.StringPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, e AllowedUsage) *string {
+		v := string(e)
+		return &v
+	}).(pulumi.StringPtrOutput)
+}
+
+type AllowedUsagePtrOutput struct{ *pulumi.OutputState }
+
+func (AllowedUsagePtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**AllowedUsage)(nil)).Elem()
+}
+
+func (o AllowedUsagePtrOutput) ToAllowedUsagePtrOutput() AllowedUsagePtrOutput {
+	return o
+}
+
+func (o AllowedUsagePtrOutput) ToAllowedUsagePtrOutputWithContext(ctx context.Context) AllowedUsagePtrOutput {
+	return o
+}
+
+func (o AllowedUsagePtrOutput) Elem() AllowedUsageOutput {
+	return o.ApplyT(func(v *AllowedUsage) AllowedUsage {
+		if v != nil {
+			return *v
+		}
+		var ret AllowedUsage
+		return ret
+	}).(AllowedUsageOutput)
+}
+
+func (o AllowedUsagePtrOutput) ToStringPtrOutput() pulumi.StringPtrOutput {
+	return o.ToStringPtrOutputWithContext(context.Background())
+}
+
+func (o AllowedUsagePtrOutput) ToStringPtrOutputWithContext(ctx context.Context) pulumi.StringPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, e *AllowedUsage) *string {
+		if e == nil {
+			return nil
+		}
+		v := string(*e)
+		return &v
+	}).(pulumi.StringPtrOutput)
+}
+
+// AllowedUsageInput is an input type that accepts values of the AllowedUsage enum
+// A concrete instance of `AllowedUsageInput` can be one of the following:
+//
+//	AllowedUsage_Cert_signing
+//	AllowedUsage_Client_auth
+//	AllowedUsage_Crl_signing
+//	AllowedUsage_Digital_signature
+//	AllowedUsage_Key_encipherment
+//	AllowedUsage_Server_auth
+type AllowedUsageInput interface {
+	pulumi.Input
+
+	ToAllowedUsageOutput() AllowedUsageOutput
+	ToAllowedUsageOutputWithContext(context.Context) AllowedUsageOutput
+}
+
+var allowedUsagePtrType = reflect.TypeOf((**AllowedUsage)(nil)).Elem()
+
+type AllowedUsagePtrInput interface {
+	pulumi.Input
+
+	ToAllowedUsagePtrOutput() AllowedUsagePtrOutput
+	ToAllowedUsagePtrOutputWithContext(context.Context) AllowedUsagePtrOutput
+}
+
+type allowedUsagePtr string
+
+func AllowedUsagePtr(v string) AllowedUsagePtrInput {
+	return (*allowedUsagePtr)(&v)
+}
+
+func (*allowedUsagePtr) ElementType() reflect.Type {
+	return allowedUsagePtrType
+}
+
+func (in *allowedUsagePtr) ToAllowedUsagePtrOutput() AllowedUsagePtrOutput {
+	return pulumi.ToOutput(in).(AllowedUsagePtrOutput)
+}
+
+func (in *allowedUsagePtr) ToAllowedUsagePtrOutputWithContext(ctx context.Context) AllowedUsagePtrOutput {
+	return pulumi.ToOutputWithContext(ctx, in).(AllowedUsagePtrOutput)
+}
+
+// AllowedUsageArrayInput is an input type that accepts AllowedUsageArray and AllowedUsageArrayOutput values.
+// You can construct a concrete instance of `AllowedUsageArrayInput` via:
+//
+//	AllowedUsageArray{ AllowedUsageArgs{...} }
+type AllowedUsageArrayInput interface {
+	pulumi.Input
+
+	ToAllowedUsageArrayOutput() AllowedUsageArrayOutput
+	ToAllowedUsageArrayOutputWithContext(context.Context) AllowedUsageArrayOutput
+}
+
+type AllowedUsageArray []AllowedUsage
+
+func (AllowedUsageArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]AllowedUsage)(nil)).Elem()
+}
+
+func (i AllowedUsageArray) ToAllowedUsageArrayOutput() AllowedUsageArrayOutput {
+	return i.ToAllowedUsageArrayOutputWithContext(context.Background())
+}
+
+func (i AllowedUsageArray) ToAllowedUsageArrayOutputWithContext(ctx context.Context) AllowedUsageArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(AllowedUsageArrayOutput)
+}
+
+type AllowedUsageArrayOutput struct{ *pulumi.OutputState }
+
+func (AllowedUsageArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]AllowedUsage)(nil)).Elem()
+}
+
+func (o AllowedUsageArrayOutput) ToAllowedUsageArrayOutput() AllowedUsageArrayOutput {
+	return o
+}
+
+func (o AllowedUsageArrayOutput) ToAllowedUsageArrayOutputWithContext(ctx context.Context) AllowedUsageArrayOutput {
+	return o
+}
+
+func (o AllowedUsageArrayOutput) Index(i pulumi.IntInput) AllowedUsageOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) AllowedUsage {
+		return vs[0].([]AllowedUsage)[vs[1].(int)]
+	}).(AllowedUsageOutput)
+}
+
 // TODO
 type EcdsaCurve string
 
@@ -363,10 +570,16 @@ func (in *ecdsaCurvePtr) ToEcdsaCurvePtrOutputWithContext(ctx context.Context) E
 func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*AlgorithmInput)(nil)).Elem(), Algorithm("RSA"))
 	pulumi.RegisterInputType(reflect.TypeOf((*AlgorithmPtrInput)(nil)).Elem(), Algorithm("RSA"))
+	pulumi.RegisterInputType(reflect.TypeOf((*AllowedUsageInput)(nil)).Elem(), AllowedUsage("cert_signing"))
+	pulumi.RegisterInputType(reflect.TypeOf((*AllowedUsagePtrInput)(nil)).Elem(), AllowedUsage("cert_signing"))
+	pulumi.RegisterInputType(reflect.TypeOf((*AllowedUsageArrayInput)(nil)).Elem(), AllowedUsageArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*EcdsaCurveInput)(nil)).Elem(), EcdsaCurve("P224"))
 	pulumi.RegisterInputType(reflect.TypeOf((*EcdsaCurvePtrInput)(nil)).Elem(), EcdsaCurve("P224"))
 	pulumi.RegisterOutputType(AlgorithmOutput{})
 	pulumi.RegisterOutputType(AlgorithmPtrOutput{})
+	pulumi.RegisterOutputType(AllowedUsageOutput{})
+	pulumi.RegisterOutputType(AllowedUsagePtrOutput{})
+	pulumi.RegisterOutputType(AllowedUsageArrayOutput{})
 	pulumi.RegisterOutputType(EcdsaCurveOutput{})
 	pulumi.RegisterOutputType(EcdsaCurvePtrOutput{})
 }

@@ -107,7 +107,7 @@ export interface CertificateArgs {
      * Name of the algorithm to use when generating the private key.
      */
     algorithm?: pulumi.Input<enums.Algorithm>;
-    allowedUses: pulumi.Input<pulumi.Input<string>[]>;
+    allowedUses: pulumi.Input<pulumi.Input<enums.AllowedUsage>[]>;
     caCertPem: pulumi.Input<string>;
     caPrivateKeyPem: pulumi.Input<string>;
     /**

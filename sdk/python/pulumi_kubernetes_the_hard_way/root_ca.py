@@ -329,7 +329,7 @@ class RootCa(pulumi.ComponentResource):
             return pulumi.get(self, "cert")
 
     def create_certificate(__self__, *,
-                           allowed_uses: pulumi.Input[Sequence[pulumi.Input[str]]],
+                           allowed_uses: pulumi.Input[Sequence[pulumi.Input['AllowedUsage']]],
                            validity_period_hours: pulumi.Input[int],
                            algorithm: Optional[pulumi.Input['Algorithm']] = None,
                            dns_names: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,

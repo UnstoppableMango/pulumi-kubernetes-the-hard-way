@@ -53,10 +53,10 @@ func NewCertificate(ctx *pulumi.Context,
 
 type certificateArgs struct {
 	// Name of the algorithm to use when generating the private key.
-	Algorithm       *Algorithm `pulumi:"algorithm"`
-	AllowedUses     []string   `pulumi:"allowedUses"`
-	CaCertPem       string     `pulumi:"caCertPem"`
-	CaPrivateKeyPem string     `pulumi:"caPrivateKeyPem"`
+	Algorithm       *Algorithm     `pulumi:"algorithm"`
+	AllowedUses     []AllowedUsage `pulumi:"allowedUses"`
+	CaCertPem       string         `pulumi:"caCertPem"`
+	CaPrivateKeyPem string         `pulumi:"caPrivateKeyPem"`
 	// List of DNS names for which a certificate is being requested.
 	DnsNames []string `pulumi:"dnsNames"`
 	// TODO
@@ -83,7 +83,7 @@ type certificateArgs struct {
 type CertificateArgs struct {
 	// Name of the algorithm to use when generating the private key.
 	Algorithm       AlgorithmPtrInput
-	AllowedUses     pulumi.StringArrayInput
+	AllowedUses     AllowedUsageArrayInput
 	CaCertPem       pulumi.StringInput
 	CaPrivateKeyPem pulumi.StringInput
 	// List of DNS names for which a certificate is being requested.

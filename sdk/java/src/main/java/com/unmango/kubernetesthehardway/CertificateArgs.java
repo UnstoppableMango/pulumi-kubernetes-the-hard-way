@@ -8,6 +8,7 @@ import com.pulumi.core.annotations.Import;
 import com.pulumi.exceptions.MissingRequiredPropertyException;
 import com.pulumi.tls.inputs.CertRequestSubjectArgs;
 import com.unmango.kubernetesthehardway.enums.Algorithm;
+import com.unmango.kubernetesthehardway.enums.AllowedUsage;
 import com.unmango.kubernetesthehardway.enums.EcdsaCurve;
 import java.lang.Boolean;
 import java.lang.Integer;
@@ -38,9 +39,9 @@ public final class CertificateArgs extends com.pulumi.resources.ResourceArgs {
     }
 
     @Import(name="allowedUses", required=true)
-    private Output<List<String>> allowedUses;
+    private Output<List<AllowedUsage>> allowedUses;
 
-    public Output<List<String>> allowedUses() {
+    public Output<List<AllowedUsage>> allowedUses() {
         return this.allowedUses;
     }
 
@@ -266,16 +267,16 @@ public final class CertificateArgs extends com.pulumi.resources.ResourceArgs {
             return algorithm(Output.of(algorithm));
         }
 
-        public Builder allowedUses(Output<List<String>> allowedUses) {
+        public Builder allowedUses(Output<List<AllowedUsage>> allowedUses) {
             $.allowedUses = allowedUses;
             return this;
         }
 
-        public Builder allowedUses(List<String> allowedUses) {
+        public Builder allowedUses(List<AllowedUsage> allowedUses) {
             return allowedUses(Output.of(allowedUses));
         }
 
-        public Builder allowedUses(String... allowedUses) {
+        public Builder allowedUses(AllowedUsage... allowedUses) {
             return allowedUses(List.of(allowedUses));
         }
 

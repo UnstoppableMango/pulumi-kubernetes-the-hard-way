@@ -70,10 +70,10 @@ namespace UnMango.KubernetesTheHardWay
         public Input<UnMango.KubernetesTheHardWay.Algorithm>? Algorithm { get; set; }
 
         [Input("allowedUses", required: true)]
-        private InputList<string>? _allowedUses;
-        public InputList<string> AllowedUses
+        private InputList<UnMango.KubernetesTheHardWay.AllowedUsage>? _allowedUses;
+        public InputList<UnMango.KubernetesTheHardWay.AllowedUsage> AllowedUses
         {
-            get => _allowedUses ?? (_allowedUses = new InputList<string>());
+            get => _allowedUses ?? (_allowedUses = new InputList<UnMango.KubernetesTheHardWay.AllowedUsage>());
             set => _allowedUses = value;
         }
 
