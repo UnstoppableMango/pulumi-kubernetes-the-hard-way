@@ -22,6 +22,9 @@ export * from "./rootCa";
 import { RootCa } from "./rootCa";
 
 
+// Export enums:
+export * from "./types/enums";
+
 // Export sub-modules:
 import * as types from "./types";
 

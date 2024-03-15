@@ -4,6 +4,7 @@
 import * as pulumi from "@pulumi/pulumi";
 import * as inputs from "./types/input";
 import * as outputs from "./types/output";
+import * as enums from "./types/enums";
 import * as utilities from "./utilities";
 
 import * as pulumiTls from "@pulumi/tls";
@@ -70,142 +71,10 @@ export class RootCa extends pulumi.ComponentResource {
     }
 
     /**
-     * Creates a Certificate configured for the cluster admin.
+     * Creates a Certificate configured for the current authority.
      */
-    getAdminCertificate(args: RootCa.GetAdminCertificateArgs): pulumi.Output<RootCa.GetAdminCertificateResult> {
-        return pulumi.runtime.call("kubernetes-the-hard-way:index:RootCa/getAdminCertificate", {
-            "__self__": this,
-            "algorithm": args.algorithm,
-            "allowedUses": args.allowedUses,
-            "dnsNames": args.dnsNames,
-            "earlyRenewalHours": args.earlyRenewalHours,
-            "ecdsaCurve": args.ecdsaCurve,
-            "ipAddresses": args.ipAddresses,
-            "isCaCertificate": args.isCaCertificate,
-            "rsaBits": args.rsaBits,
-            "setAuthorityKeyId": args.setAuthorityKeyId,
-            "setSubjectKeyId": args.setSubjectKeyId,
-            "subject": args.subject,
-            "uris": args.uris,
-            "validityPeriodHours": args.validityPeriodHours,
-        }, this);
-    }
-
-    /**
-     * Creates a Certificate configured for the api-server.
-     */
-    getApiServerCertificate(args: RootCa.GetApiServerCertificateArgs): pulumi.Output<RootCa.GetApiServerCertificateResult> {
-        return pulumi.runtime.call("kubernetes-the-hard-way:index:RootCa/getApiServerCertificate", {
-            "__self__": this,
-            "algorithm": args.algorithm,
-            "allowedUses": args.allowedUses,
-            "dnsNames": args.dnsNames,
-            "earlyRenewalHours": args.earlyRenewalHours,
-            "ecdsaCurve": args.ecdsaCurve,
-            "ipAddresses": args.ipAddresses,
-            "isCaCertificate": args.isCaCertificate,
-            "rsaBits": args.rsaBits,
-            "setAuthorityKeyId": args.setAuthorityKeyId,
-            "setSubjectKeyId": args.setSubjectKeyId,
-            "subject": args.subject,
-            "uris": args.uris,
-            "validityPeriodHours": args.validityPeriodHours,
-        }, this);
-    }
-
-    /**
-     * Creates a Certificate configured for the controller manager.
-     */
-    getControllerManagerCertificate(args: RootCa.GetControllerManagerCertificateArgs): pulumi.Output<RootCa.GetControllerManagerCertificateResult> {
-        return pulumi.runtime.call("kubernetes-the-hard-way:index:RootCa/getControllerManagerCertificate", {
-            "__self__": this,
-            "algorithm": args.algorithm,
-            "allowedUses": args.allowedUses,
-            "dnsNames": args.dnsNames,
-            "earlyRenewalHours": args.earlyRenewalHours,
-            "ecdsaCurve": args.ecdsaCurve,
-            "ipAddresses": args.ipAddresses,
-            "isCaCertificate": args.isCaCertificate,
-            "rsaBits": args.rsaBits,
-            "setAuthorityKeyId": args.setAuthorityKeyId,
-            "setSubjectKeyId": args.setSubjectKeyId,
-            "subject": args.subject,
-            "uris": args.uris,
-            "validityPeriodHours": args.validityPeriodHours,
-        }, this);
-    }
-
-    /**
-     * Creates a Certificate configured for the kube-proxy.
-     */
-    getKubeProxyCertificate(args: RootCa.GetKubeProxyCertificateArgs): pulumi.Output<RootCa.GetKubeProxyCertificateResult> {
-        return pulumi.runtime.call("kubernetes-the-hard-way:index:RootCa/getKubeProxyCertificate", {
-            "__self__": this,
-            "algorithm": args.algorithm,
-            "allowedUses": args.allowedUses,
-            "dnsNames": args.dnsNames,
-            "earlyRenewalHours": args.earlyRenewalHours,
-            "ecdsaCurve": args.ecdsaCurve,
-            "ipAddresses": args.ipAddresses,
-            "isCaCertificate": args.isCaCertificate,
-            "rsaBits": args.rsaBits,
-            "setAuthorityKeyId": args.setAuthorityKeyId,
-            "setSubjectKeyId": args.setSubjectKeyId,
-            "subject": args.subject,
-            "uris": args.uris,
-            "validityPeriodHours": args.validityPeriodHours,
-        }, this);
-    }
-
-    /**
-     * Creates a Certificate configured for the kube-scheduler.
-     */
-    getKubeSchedulerCertificate(args: RootCa.GetKubeSchedulerCertificateArgs): pulumi.Output<RootCa.GetKubeSchedulerCertificateResult> {
-        return pulumi.runtime.call("kubernetes-the-hard-way:index:RootCa/getKubeSchedulerCertificate", {
-            "__self__": this,
-            "algorithm": args.algorithm,
-            "allowedUses": args.allowedUses,
-            "dnsNames": args.dnsNames,
-            "earlyRenewalHours": args.earlyRenewalHours,
-            "ecdsaCurve": args.ecdsaCurve,
-            "ipAddresses": args.ipAddresses,
-            "isCaCertificate": args.isCaCertificate,
-            "rsaBits": args.rsaBits,
-            "setAuthorityKeyId": args.setAuthorityKeyId,
-            "setSubjectKeyId": args.setSubjectKeyId,
-            "subject": args.subject,
-            "uris": args.uris,
-            "validityPeriodHours": args.validityPeriodHours,
-        }, this);
-    }
-
-    /**
-     * Creates a Certificate configured for a kubelet.
-     */
-    getKubeletCertificate(args: RootCa.GetKubeletCertificateArgs): pulumi.Output<RootCa.GetKubeletCertificateResult> {
-        return pulumi.runtime.call("kubernetes-the-hard-way:index:RootCa/getKubeletCertificate", {
-            "__self__": this,
-            "algorithm": args.algorithm,
-            "allowedUses": args.allowedUses,
-            "dnsNames": args.dnsNames,
-            "earlyRenewalHours": args.earlyRenewalHours,
-            "ecdsaCurve": args.ecdsaCurve,
-            "ipAddresses": args.ipAddresses,
-            "isCaCertificate": args.isCaCertificate,
-            "rsaBits": args.rsaBits,
-            "setAuthorityKeyId": args.setAuthorityKeyId,
-            "setSubjectKeyId": args.setSubjectKeyId,
-            "subject": args.subject,
-            "uris": args.uris,
-            "validityPeriodHours": args.validityPeriodHours,
-        }, this);
-    }
-
-    /**
-     * Creates a Certificate configured for the kube-scheduler.
-     */
-    getServiceAccountsCertificate(args: RootCa.GetServiceAccountsCertificateArgs): pulumi.Output<RootCa.GetServiceAccountsCertificateResult> {
-        return pulumi.runtime.call("kubernetes-the-hard-way:index:RootCa/getServiceAccountsCertificate", {
+    createCertificate(args: RootCa.CreateCertificateArgs): pulumi.Output<RootCa.CreateCertificateResult> {
+        return pulumi.runtime.call("kubernetes-the-hard-way:index:RootCa/createCertificate", {
             "__self__": this,
             "algorithm": args.algorithm,
             "allowedUses": args.allowedUses,
@@ -242,7 +111,7 @@ export interface RootCaArgs {
     /**
      * Name of the algorithm to use when generating the private key.
      */
-    algorithm?: pulumi.Input<string>;
+    algorithm?: pulumi.Input<enums.Algorithm>;
     /**
      * List of DNS names for which a certificate is being requested.
      */
@@ -254,7 +123,7 @@ export interface RootCaArgs {
     /**
      * When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
      */
-    ecdsaCurve?: pulumi.Input<string>;
+    ecdsaCurve?: pulumi.Input<enums.EcdsaCurve>;
     /**
      * List of IP addresses for which a certificate is being requested.
      */
@@ -284,13 +153,13 @@ export interface RootCaArgs {
 
 export namespace RootCa {
     /**
-     * The set of arguments for the RootCa.getAdminCertificate method.
+     * The set of arguments for the RootCa.createCertificate method.
      */
-    export interface GetAdminCertificateArgs {
+    export interface CreateCertificateArgs {
         /**
          * Name of the algorithm to use when generating the private key.
          */
-        algorithm?: pulumi.Input<string>;
+        algorithm?: pulumi.Input<enums.Algorithm>;
         allowedUses: pulumi.Input<pulumi.Input<string>[]>;
         /**
          * List of DNS names for which a certificate is being requested.
@@ -303,7 +172,7 @@ export namespace RootCa {
         /**
          * When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
          */
-        ecdsaCurve?: pulumi.Input<string>;
+        ecdsaCurve?: pulumi.Input<enums.EcdsaCurve>;
         /**
          * List of IP addresses for which a certificate is being requested.
          */
@@ -333,345 +202,9 @@ export namespace RootCa {
     }
 
     /**
-     * The results of the RootCa.getAdminCertificate method.
+     * The results of the RootCa.createCertificate method.
      */
-    export interface GetAdminCertificateResult {
-        readonly cert: Certificate;
-    }
-
-    /**
-     * The set of arguments for the RootCa.getApiServerCertificate method.
-     */
-    export interface GetApiServerCertificateArgs {
-        /**
-         * Name of the algorithm to use when generating the private key.
-         */
-        algorithm?: pulumi.Input<string>;
-        allowedUses: pulumi.Input<pulumi.Input<string>[]>;
-        /**
-         * List of DNS names for which a certificate is being requested.
-         */
-        dnsNames?: pulumi.Input<pulumi.Input<string>[]>;
-        /**
-         * TODO
-         */
-        earlyRenewalHours?: pulumi.Input<number>;
-        /**
-         * When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
-         */
-        ecdsaCurve?: pulumi.Input<string>;
-        /**
-         * List of IP addresses for which a certificate is being requested.
-         */
-        ipAddresses?: pulumi.Input<pulumi.Input<string>[]>;
-        isCaCertificate?: pulumi.Input<boolean>;
-        /**
-         * When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
-         */
-        rsaBits?: pulumi.Input<number>;
-        /**
-         * Should the generated certificate include an authority key identifier.
-         */
-        setAuthorityKeyId?: pulumi.Input<boolean>;
-        /**
-         * Should the generated certificate include a subject key identifier.
-         */
-        setSubjectKeyId?: pulumi.Input<boolean>;
-        subject?: pulumi.Input<inputs.CertRequestSubjectArgs>;
-        /**
-         * List of URIs for which a certificate is being requested.
-         */
-        uris?: pulumi.Input<pulumi.Input<string>[]>;
-        /**
-         * Number of hours, after initial issuing, that the certificate will remain valid.
-         */
-        validityPeriodHours: pulumi.Input<number>;
-    }
-
-    /**
-     * The results of the RootCa.getApiServerCertificate method.
-     */
-    export interface GetApiServerCertificateResult {
-        readonly cert: Certificate;
-    }
-
-    /**
-     * The set of arguments for the RootCa.getControllerManagerCertificate method.
-     */
-    export interface GetControllerManagerCertificateArgs {
-        /**
-         * Name of the algorithm to use when generating the private key.
-         */
-        algorithm?: pulumi.Input<string>;
-        allowedUses: pulumi.Input<pulumi.Input<string>[]>;
-        /**
-         * List of DNS names for which a certificate is being requested.
-         */
-        dnsNames?: pulumi.Input<pulumi.Input<string>[]>;
-        /**
-         * TODO
-         */
-        earlyRenewalHours?: pulumi.Input<number>;
-        /**
-         * When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
-         */
-        ecdsaCurve?: pulumi.Input<string>;
-        /**
-         * List of IP addresses for which a certificate is being requested.
-         */
-        ipAddresses?: pulumi.Input<pulumi.Input<string>[]>;
-        isCaCertificate?: pulumi.Input<boolean>;
-        /**
-         * When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
-         */
-        rsaBits?: pulumi.Input<number>;
-        /**
-         * Should the generated certificate include an authority key identifier.
-         */
-        setAuthorityKeyId?: pulumi.Input<boolean>;
-        /**
-         * Should the generated certificate include a subject key identifier.
-         */
-        setSubjectKeyId?: pulumi.Input<boolean>;
-        subject?: pulumi.Input<inputs.CertRequestSubjectArgs>;
-        /**
-         * List of URIs for which a certificate is being requested.
-         */
-        uris?: pulumi.Input<pulumi.Input<string>[]>;
-        /**
-         * Number of hours, after initial issuing, that the certificate will remain valid.
-         */
-        validityPeriodHours: pulumi.Input<number>;
-    }
-
-    /**
-     * The results of the RootCa.getControllerManagerCertificate method.
-     */
-    export interface GetControllerManagerCertificateResult {
-        readonly cert: Certificate;
-    }
-
-    /**
-     * The set of arguments for the RootCa.getKubeProxyCertificate method.
-     */
-    export interface GetKubeProxyCertificateArgs {
-        /**
-         * Name of the algorithm to use when generating the private key.
-         */
-        algorithm?: pulumi.Input<string>;
-        allowedUses: pulumi.Input<pulumi.Input<string>[]>;
-        /**
-         * List of DNS names for which a certificate is being requested.
-         */
-        dnsNames?: pulumi.Input<pulumi.Input<string>[]>;
-        /**
-         * TODO
-         */
-        earlyRenewalHours?: pulumi.Input<number>;
-        /**
-         * When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
-         */
-        ecdsaCurve?: pulumi.Input<string>;
-        /**
-         * List of IP addresses for which a certificate is being requested.
-         */
-        ipAddresses?: pulumi.Input<pulumi.Input<string>[]>;
-        isCaCertificate?: pulumi.Input<boolean>;
-        /**
-         * When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
-         */
-        rsaBits?: pulumi.Input<number>;
-        /**
-         * Should the generated certificate include an authority key identifier.
-         */
-        setAuthorityKeyId?: pulumi.Input<boolean>;
-        /**
-         * Should the generated certificate include a subject key identifier.
-         */
-        setSubjectKeyId?: pulumi.Input<boolean>;
-        subject?: pulumi.Input<inputs.CertRequestSubjectArgs>;
-        /**
-         * List of URIs for which a certificate is being requested.
-         */
-        uris?: pulumi.Input<pulumi.Input<string>[]>;
-        /**
-         * Number of hours, after initial issuing, that the certificate will remain valid.
-         */
-        validityPeriodHours: pulumi.Input<number>;
-    }
-
-    /**
-     * The results of the RootCa.getKubeProxyCertificate method.
-     */
-    export interface GetKubeProxyCertificateResult {
-        readonly cert: Certificate;
-    }
-
-    /**
-     * The set of arguments for the RootCa.getKubeSchedulerCertificate method.
-     */
-    export interface GetKubeSchedulerCertificateArgs {
-        /**
-         * Name of the algorithm to use when generating the private key.
-         */
-        algorithm?: pulumi.Input<string>;
-        allowedUses: pulumi.Input<pulumi.Input<string>[]>;
-        /**
-         * List of DNS names for which a certificate is being requested.
-         */
-        dnsNames?: pulumi.Input<pulumi.Input<string>[]>;
-        /**
-         * TODO
-         */
-        earlyRenewalHours?: pulumi.Input<number>;
-        /**
-         * When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
-         */
-        ecdsaCurve?: pulumi.Input<string>;
-        /**
-         * List of IP addresses for which a certificate is being requested.
-         */
-        ipAddresses?: pulumi.Input<pulumi.Input<string>[]>;
-        isCaCertificate?: pulumi.Input<boolean>;
-        /**
-         * When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
-         */
-        rsaBits?: pulumi.Input<number>;
-        /**
-         * Should the generated certificate include an authority key identifier.
-         */
-        setAuthorityKeyId?: pulumi.Input<boolean>;
-        /**
-         * Should the generated certificate include a subject key identifier.
-         */
-        setSubjectKeyId?: pulumi.Input<boolean>;
-        subject?: pulumi.Input<inputs.CertRequestSubjectArgs>;
-        /**
-         * List of URIs for which a certificate is being requested.
-         */
-        uris?: pulumi.Input<pulumi.Input<string>[]>;
-        /**
-         * Number of hours, after initial issuing, that the certificate will remain valid.
-         */
-        validityPeriodHours: pulumi.Input<number>;
-    }
-
-    /**
-     * The results of the RootCa.getKubeSchedulerCertificate method.
-     */
-    export interface GetKubeSchedulerCertificateResult {
-        readonly cert: Certificate;
-    }
-
-    /**
-     * The set of arguments for the RootCa.getKubeletCertificate method.
-     */
-    export interface GetKubeletCertificateArgs {
-        /**
-         * Name of the algorithm to use when generating the private key.
-         */
-        algorithm?: pulumi.Input<string>;
-        allowedUses: pulumi.Input<pulumi.Input<string>[]>;
-        /**
-         * List of DNS names for which a certificate is being requested.
-         */
-        dnsNames?: pulumi.Input<pulumi.Input<string>[]>;
-        /**
-         * TODO
-         */
-        earlyRenewalHours?: pulumi.Input<number>;
-        /**
-         * When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
-         */
-        ecdsaCurve?: pulumi.Input<string>;
-        /**
-         * List of IP addresses for which a certificate is being requested.
-         */
-        ipAddresses?: pulumi.Input<pulumi.Input<string>[]>;
-        isCaCertificate?: pulumi.Input<boolean>;
-        /**
-         * When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
-         */
-        rsaBits?: pulumi.Input<number>;
-        /**
-         * Should the generated certificate include an authority key identifier.
-         */
-        setAuthorityKeyId?: pulumi.Input<boolean>;
-        /**
-         * Should the generated certificate include a subject key identifier.
-         */
-        setSubjectKeyId?: pulumi.Input<boolean>;
-        subject?: pulumi.Input<inputs.CertRequestSubjectArgs>;
-        /**
-         * List of URIs for which a certificate is being requested.
-         */
-        uris?: pulumi.Input<pulumi.Input<string>[]>;
-        /**
-         * Number of hours, after initial issuing, that the certificate will remain valid.
-         */
-        validityPeriodHours: pulumi.Input<number>;
-    }
-
-    /**
-     * The results of the RootCa.getKubeletCertificate method.
-     */
-    export interface GetKubeletCertificateResult {
-        readonly cert: Certificate;
-    }
-
-    /**
-     * The set of arguments for the RootCa.getServiceAccountsCertificate method.
-     */
-    export interface GetServiceAccountsCertificateArgs {
-        /**
-         * Name of the algorithm to use when generating the private key.
-         */
-        algorithm?: pulumi.Input<string>;
-        allowedUses: pulumi.Input<pulumi.Input<string>[]>;
-        /**
-         * List of DNS names for which a certificate is being requested.
-         */
-        dnsNames?: pulumi.Input<pulumi.Input<string>[]>;
-        /**
-         * TODO
-         */
-        earlyRenewalHours?: pulumi.Input<number>;
-        /**
-         * When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
-         */
-        ecdsaCurve?: pulumi.Input<string>;
-        /**
-         * List of IP addresses for which a certificate is being requested.
-         */
-        ipAddresses?: pulumi.Input<pulumi.Input<string>[]>;
-        isCaCertificate?: pulumi.Input<boolean>;
-        /**
-         * When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
-         */
-        rsaBits?: pulumi.Input<number>;
-        /**
-         * Should the generated certificate include an authority key identifier.
-         */
-        setAuthorityKeyId?: pulumi.Input<boolean>;
-        /**
-         * Should the generated certificate include a subject key identifier.
-         */
-        setSubjectKeyId?: pulumi.Input<boolean>;
-        subject?: pulumi.Input<inputs.CertRequestSubjectArgs>;
-        /**
-         * List of URIs for which a certificate is being requested.
-         */
-        uris?: pulumi.Input<pulumi.Input<string>[]>;
-        /**
-         * Number of hours, after initial issuing, that the certificate will remain valid.
-         */
-        validityPeriodHours: pulumi.Input<number>;
-    }
-
-    /**
-     * The results of the RootCa.getServiceAccountsCertificate method.
-     */
-    export interface GetServiceAccountsCertificateResult {
+    export interface CreateCertificateResult {
         readonly cert: Certificate;
     }
 

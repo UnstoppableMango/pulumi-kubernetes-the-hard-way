@@ -7,6 +7,8 @@ import com.pulumi.core.Output;
 import com.pulumi.core.annotations.Import;
 import com.pulumi.exceptions.MissingRequiredPropertyException;
 import com.pulumi.tls.inputs.SelfSignedCertSubjectArgs;
+import com.unmango.kubernetesthehardway.enums.Algorithm;
+import com.unmango.kubernetesthehardway.enums.EcdsaCurve;
 import java.lang.Boolean;
 import java.lang.Integer;
 import java.lang.String;
@@ -25,13 +27,13 @@ public final class RootCaArgs extends com.pulumi.resources.ResourceArgs {
      * 
      */
     @Import(name="algorithm")
-    private @Nullable Output<String> algorithm;
+    private @Nullable Output<Algorithm> algorithm;
 
     /**
      * @return Name of the algorithm to use when generating the private key.
      * 
      */
-    public Optional<Output<String>> algorithm() {
+    public Optional<Output<Algorithm>> algorithm() {
         return Optional.ofNullable(this.algorithm);
     }
 
@@ -70,13 +72,13 @@ public final class RootCaArgs extends com.pulumi.resources.ResourceArgs {
      * 
      */
     @Import(name="ecdsaCurve")
-    private @Nullable Output<String> ecdsaCurve;
+    private @Nullable Output<EcdsaCurve> ecdsaCurve;
 
     /**
      * @return When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
      * 
      */
-    public Optional<Output<String>> ecdsaCurve() {
+    public Optional<Output<EcdsaCurve>> ecdsaCurve() {
         return Optional.ofNullable(this.ecdsaCurve);
     }
 
@@ -217,7 +219,7 @@ public final class RootCaArgs extends com.pulumi.resources.ResourceArgs {
          * @return builder
          * 
          */
-        public Builder algorithm(@Nullable Output<String> algorithm) {
+        public Builder algorithm(@Nullable Output<Algorithm> algorithm) {
             $.algorithm = algorithm;
             return this;
         }
@@ -228,7 +230,7 @@ public final class RootCaArgs extends com.pulumi.resources.ResourceArgs {
          * @return builder
          * 
          */
-        public Builder algorithm(String algorithm) {
+        public Builder algorithm(Algorithm algorithm) {
             return algorithm(Output.of(algorithm));
         }
 
@@ -290,7 +292,7 @@ public final class RootCaArgs extends com.pulumi.resources.ResourceArgs {
          * @return builder
          * 
          */
-        public Builder ecdsaCurve(@Nullable Output<String> ecdsaCurve) {
+        public Builder ecdsaCurve(@Nullable Output<EcdsaCurve> ecdsaCurve) {
             $.ecdsaCurve = ecdsaCurve;
             return this;
         }
@@ -301,7 +303,7 @@ public final class RootCaArgs extends com.pulumi.resources.ResourceArgs {
          * @return builder
          * 
          */
-        public Builder ecdsaCurve(String ecdsaCurve) {
+        public Builder ecdsaCurve(EcdsaCurve ecdsaCurve) {
             return ecdsaCurve(Output.of(ecdsaCurve));
         }
 

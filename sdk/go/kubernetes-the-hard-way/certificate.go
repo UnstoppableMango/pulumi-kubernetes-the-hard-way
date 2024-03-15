@@ -53,16 +53,16 @@ func NewCertificate(ctx *pulumi.Context,
 
 type certificateArgs struct {
 	// Name of the algorithm to use when generating the private key.
-	Algorithm       *string  `pulumi:"algorithm"`
-	AllowedUses     []string `pulumi:"allowedUses"`
-	CaCertPem       string   `pulumi:"caCertPem"`
-	CaPrivateKeyPem string   `pulumi:"caPrivateKeyPem"`
+	Algorithm       *Algorithm `pulumi:"algorithm"`
+	AllowedUses     []string   `pulumi:"allowedUses"`
+	CaCertPem       string     `pulumi:"caCertPem"`
+	CaPrivateKeyPem string     `pulumi:"caPrivateKeyPem"`
 	// List of DNS names for which a certificate is being requested.
 	DnsNames []string `pulumi:"dnsNames"`
 	// TODO
 	EarlyRenewalHours *int `pulumi:"earlyRenewalHours"`
 	// When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
-	EcdsaCurve *string `pulumi:"ecdsaCurve"`
+	EcdsaCurve *EcdsaCurve `pulumi:"ecdsaCurve"`
 	// List of IP addresses for which a certificate is being requested.
 	IpAddresses     []string `pulumi:"ipAddresses"`
 	IsCaCertificate *bool    `pulumi:"isCaCertificate"`
@@ -82,7 +82,7 @@ type certificateArgs struct {
 // The set of arguments for constructing a Certificate resource.
 type CertificateArgs struct {
 	// Name of the algorithm to use when generating the private key.
-	Algorithm       pulumi.StringPtrInput
+	Algorithm       AlgorithmPtrInput
 	AllowedUses     pulumi.StringArrayInput
 	CaCertPem       pulumi.StringInput
 	CaPrivateKeyPem pulumi.StringInput
@@ -91,7 +91,7 @@ type CertificateArgs struct {
 	// TODO
 	EarlyRenewalHours pulumi.IntPtrInput
 	// When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
-	EcdsaCurve pulumi.StringPtrInput
+	EcdsaCurve EcdsaCurvePtrInput
 	// List of IP addresses for which a certificate is being requested.
 	IpAddresses     pulumi.StringArrayInput
 	IsCaCertificate pulumi.BoolPtrInput

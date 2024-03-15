@@ -4,6 +4,7 @@
 import * as pulumi from "@pulumi/pulumi";
 import * as inputs from "./types/input";
 import * as outputs from "./types/output";
+import * as enums from "./types/enums";
 import * as utilities from "./utilities";
 
 import * as pulumiTls from "@pulumi/tls";
@@ -105,7 +106,7 @@ export interface CertificateArgs {
     /**
      * Name of the algorithm to use when generating the private key.
      */
-    algorithm?: pulumi.Input<string>;
+    algorithm?: pulumi.Input<enums.Algorithm>;
     allowedUses: pulumi.Input<pulumi.Input<string>[]>;
     caCertPem: pulumi.Input<string>;
     caPrivateKeyPem: pulumi.Input<string>;
@@ -120,7 +121,7 @@ export interface CertificateArgs {
     /**
      * When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
      */
-    ecdsaCurve?: pulumi.Input<string>;
+    ecdsaCurve?: pulumi.Input<enums.EcdsaCurve>;
     /**
      * List of IP addresses for which a certificate is being requested.
      */

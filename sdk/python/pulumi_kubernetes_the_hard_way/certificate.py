@@ -8,6 +8,7 @@ import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
 from . import _utilities
+from ._enums import *
 from ._inputs import *
 from .remote_file import RemoteFile
 import pulumi_tls
@@ -21,10 +22,10 @@ class CertificateArgs:
                  ca_cert_pem: pulumi.Input[str],
                  ca_private_key_pem: pulumi.Input[str],
                  validity_period_hours: pulumi.Input[int],
-                 algorithm: Optional[pulumi.Input[str]] = None,
+                 algorithm: Optional[pulumi.Input['Algorithm']] = None,
                  dns_names: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  early_renewal_hours: Optional[pulumi.Input[int]] = None,
-                 ecdsa_curve: Optional[pulumi.Input[str]] = None,
+                 ecdsa_curve: Optional[pulumi.Input['EcdsaCurve']] = None,
                  ip_addresses: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  is_ca_certificate: Optional[pulumi.Input[bool]] = None,
                  rsa_bits: Optional[pulumi.Input[int]] = None,
@@ -35,10 +36,10 @@ class CertificateArgs:
         """
         The set of arguments for constructing a Certificate resource.
         :param pulumi.Input[int] validity_period_hours: Number of hours, after initial issuing, that the certificate will remain valid.
-        :param pulumi.Input[str] algorithm: Name of the algorithm to use when generating the private key.
+        :param pulumi.Input['Algorithm'] algorithm: Name of the algorithm to use when generating the private key.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] dns_names: List of DNS names for which a certificate is being requested.
         :param pulumi.Input[int] early_renewal_hours: TODO
-        :param pulumi.Input[str] ecdsa_curve: When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
+        :param pulumi.Input['EcdsaCurve'] ecdsa_curve: When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] ip_addresses: List of IP addresses for which a certificate is being requested.
         :param pulumi.Input[int] rsa_bits: When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
         :param pulumi.Input[bool] set_authority_key_id: Should the generated certificate include an authority key identifier.
@@ -113,14 +114,14 @@ class CertificateArgs:
 
     @property
     @pulumi.getter
-    def algorithm(self) -> Optional[pulumi.Input[str]]:
+    def algorithm(self) -> Optional[pulumi.Input['Algorithm']]:
         """
         Name of the algorithm to use when generating the private key.
         """
         return pulumi.get(self, "algorithm")
 
     @algorithm.setter
-    def algorithm(self, value: Optional[pulumi.Input[str]]):
+    def algorithm(self, value: Optional[pulumi.Input['Algorithm']]):
         pulumi.set(self, "algorithm", value)
 
     @property
@@ -149,14 +150,14 @@ class CertificateArgs:
 
     @property
     @pulumi.getter(name="ecdsaCurve")
-    def ecdsa_curve(self) -> Optional[pulumi.Input[str]]:
+    def ecdsa_curve(self) -> Optional[pulumi.Input['EcdsaCurve']]:
         """
         When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
         """
         return pulumi.get(self, "ecdsa_curve")
 
     @ecdsa_curve.setter
-    def ecdsa_curve(self, value: Optional[pulumi.Input[str]]):
+    def ecdsa_curve(self, value: Optional[pulumi.Input['EcdsaCurve']]):
         pulumi.set(self, "ecdsa_curve", value)
 
     @property
@@ -243,13 +244,13 @@ class Certificate(pulumi.ComponentResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 algorithm: Optional[pulumi.Input[str]] = None,
+                 algorithm: Optional[pulumi.Input['Algorithm']] = None,
                  allowed_uses: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  ca_cert_pem: Optional[pulumi.Input[str]] = None,
                  ca_private_key_pem: Optional[pulumi.Input[str]] = None,
                  dns_names: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  early_renewal_hours: Optional[pulumi.Input[int]] = None,
-                 ecdsa_curve: Optional[pulumi.Input[str]] = None,
+                 ecdsa_curve: Optional[pulumi.Input['EcdsaCurve']] = None,
                  ip_addresses: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  is_ca_certificate: Optional[pulumi.Input[bool]] = None,
                  rsa_bits: Optional[pulumi.Input[int]] = None,
@@ -263,10 +264,10 @@ class Certificate(pulumi.ComponentResource):
         Create a Certificate resource with the given unique name, props, and options.
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[str] algorithm: Name of the algorithm to use when generating the private key.
+        :param pulumi.Input['Algorithm'] algorithm: Name of the algorithm to use when generating the private key.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] dns_names: List of DNS names for which a certificate is being requested.
         :param pulumi.Input[int] early_renewal_hours: TODO
-        :param pulumi.Input[str] ecdsa_curve: When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
+        :param pulumi.Input['EcdsaCurve'] ecdsa_curve: When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] ip_addresses: List of IP addresses for which a certificate is being requested.
         :param pulumi.Input[int] rsa_bits: When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
         :param pulumi.Input[bool] set_authority_key_id: Should the generated certificate include an authority key identifier.
@@ -297,13 +298,13 @@ class Certificate(pulumi.ComponentResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 algorithm: Optional[pulumi.Input[str]] = None,
+                 algorithm: Optional[pulumi.Input['Algorithm']] = None,
                  allowed_uses: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  ca_cert_pem: Optional[pulumi.Input[str]] = None,
                  ca_private_key_pem: Optional[pulumi.Input[str]] = None,
                  dns_names: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  early_renewal_hours: Optional[pulumi.Input[int]] = None,
-                 ecdsa_curve: Optional[pulumi.Input[str]] = None,
+                 ecdsa_curve: Optional[pulumi.Input['EcdsaCurve']] = None,
                  ip_addresses: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  is_ca_certificate: Optional[pulumi.Input[bool]] = None,
                  rsa_bits: Optional[pulumi.Input[int]] = None,

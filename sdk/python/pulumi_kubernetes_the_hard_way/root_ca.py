@@ -8,6 +8,7 @@ import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
 from . import _utilities
+from ._enums import *
 from ._inputs import *
 from .certificate import Certificate
 from .remote_file import RemoteFile
@@ -19,10 +20,10 @@ __all__ = ['RootCaArgs', 'RootCa']
 class RootCaArgs:
     def __init__(__self__, *,
                  validity_period_hours: pulumi.Input[int],
-                 algorithm: Optional[pulumi.Input[str]] = None,
+                 algorithm: Optional[pulumi.Input['Algorithm']] = None,
                  dns_names: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  early_renewal_hours: Optional[pulumi.Input[int]] = None,
-                 ecdsa_curve: Optional[pulumi.Input[str]] = None,
+                 ecdsa_curve: Optional[pulumi.Input['EcdsaCurve']] = None,
                  ip_addresses: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  rsa_bits: Optional[pulumi.Input[int]] = None,
                  set_authority_key_id: Optional[pulumi.Input[bool]] = None,
@@ -32,10 +33,10 @@ class RootCaArgs:
         """
         The set of arguments for constructing a RootCa resource.
         :param pulumi.Input[int] validity_period_hours: Number of hours, after initial issuing, that the certificate will remain valid.
-        :param pulumi.Input[str] algorithm: Name of the algorithm to use when generating the private key.
+        :param pulumi.Input['Algorithm'] algorithm: Name of the algorithm to use when generating the private key.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] dns_names: List of DNS names for which a certificate is being requested.
         :param pulumi.Input[int] early_renewal_hours: TODO
-        :param pulumi.Input[str] ecdsa_curve: When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
+        :param pulumi.Input['EcdsaCurve'] ecdsa_curve: When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] ip_addresses: List of IP addresses for which a certificate is being requested.
         :param pulumi.Input[int] rsa_bits: When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
         :param pulumi.Input[bool] set_authority_key_id: Should the generated certificate include an authority key identifier.
@@ -78,14 +79,14 @@ class RootCaArgs:
 
     @property
     @pulumi.getter
-    def algorithm(self) -> Optional[pulumi.Input[str]]:
+    def algorithm(self) -> Optional[pulumi.Input['Algorithm']]:
         """
         Name of the algorithm to use when generating the private key.
         """
         return pulumi.get(self, "algorithm")
 
     @algorithm.setter
-    def algorithm(self, value: Optional[pulumi.Input[str]]):
+    def algorithm(self, value: Optional[pulumi.Input['Algorithm']]):
         pulumi.set(self, "algorithm", value)
 
     @property
@@ -114,14 +115,14 @@ class RootCaArgs:
 
     @property
     @pulumi.getter(name="ecdsaCurve")
-    def ecdsa_curve(self) -> Optional[pulumi.Input[str]]:
+    def ecdsa_curve(self) -> Optional[pulumi.Input['EcdsaCurve']]:
         """
         When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
         """
         return pulumi.get(self, "ecdsa_curve")
 
     @ecdsa_curve.setter
-    def ecdsa_curve(self, value: Optional[pulumi.Input[str]]):
+    def ecdsa_curve(self, value: Optional[pulumi.Input['EcdsaCurve']]):
         pulumi.set(self, "ecdsa_curve", value)
 
     @property
@@ -199,10 +200,10 @@ class RootCa(pulumi.ComponentResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 algorithm: Optional[pulumi.Input[str]] = None,
+                 algorithm: Optional[pulumi.Input['Algorithm']] = None,
                  dns_names: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  early_renewal_hours: Optional[pulumi.Input[int]] = None,
-                 ecdsa_curve: Optional[pulumi.Input[str]] = None,
+                 ecdsa_curve: Optional[pulumi.Input['EcdsaCurve']] = None,
                  ip_addresses: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  rsa_bits: Optional[pulumi.Input[int]] = None,
                  set_authority_key_id: Optional[pulumi.Input[bool]] = None,
@@ -215,10 +216,10 @@ class RootCa(pulumi.ComponentResource):
         Create a RootCa resource with the given unique name, props, and options.
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[str] algorithm: Name of the algorithm to use when generating the private key.
+        :param pulumi.Input['Algorithm'] algorithm: Name of the algorithm to use when generating the private key.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] dns_names: List of DNS names for which a certificate is being requested.
         :param pulumi.Input[int] early_renewal_hours: TODO
-        :param pulumi.Input[str] ecdsa_curve: When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
+        :param pulumi.Input['EcdsaCurve'] ecdsa_curve: When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] ip_addresses: List of IP addresses for which a certificate is being requested.
         :param pulumi.Input[int] rsa_bits: When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
         :param pulumi.Input[bool] set_authority_key_id: Should the generated certificate include an authority key identifier.
@@ -249,10 +250,10 @@ class RootCa(pulumi.ComponentResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 algorithm: Optional[pulumi.Input[str]] = None,
+                 algorithm: Optional[pulumi.Input['Algorithm']] = None,
                  dns_names: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  early_renewal_hours: Optional[pulumi.Input[int]] = None,
-                 ecdsa_curve: Optional[pulumi.Input[str]] = None,
+                 ecdsa_curve: Optional[pulumi.Input['EcdsaCurve']] = None,
                  ip_addresses: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  rsa_bits: Optional[pulumi.Input[int]] = None,
                  set_authority_key_id: Optional[pulumi.Input[bool]] = None,
@@ -316,7 +317,7 @@ class RootCa(pulumi.ComponentResource):
         return pulumi.get(self, "key_pem")
 
     @pulumi.output_type
-    class GetAdminCertificateResult:
+    class CreateCertificateResult:
         def __init__(__self__, cert=None):
             if cert and not isinstance(cert, Certificate):
                 raise TypeError("Expected argument 'cert' to be a Certificate")
@@ -327,29 +328,29 @@ class RootCa(pulumi.ComponentResource):
         def cert(self) -> 'Certificate':
             return pulumi.get(self, "cert")
 
-    def get_admin_certificate(__self__, *,
-                              allowed_uses: pulumi.Input[Sequence[pulumi.Input[str]]],
-                              validity_period_hours: pulumi.Input[int],
-                              algorithm: Optional[pulumi.Input[str]] = None,
-                              dns_names: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-                              early_renewal_hours: Optional[pulumi.Input[int]] = None,
-                              ecdsa_curve: Optional[pulumi.Input[str]] = None,
-                              ip_addresses: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-                              is_ca_certificate: Optional[pulumi.Input[bool]] = None,
-                              rsa_bits: Optional[pulumi.Input[int]] = None,
-                              set_authority_key_id: Optional[pulumi.Input[bool]] = None,
-                              set_subject_key_id: Optional[pulumi.Input[bool]] = None,
-                              subject: Optional[pulumi.Input['CertRequestSubjectArgs']] = None,
-                              uris: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None) -> pulumi.Output['RootCa.GetAdminCertificateResult']:
+    def create_certificate(__self__, *,
+                           allowed_uses: pulumi.Input[Sequence[pulumi.Input[str]]],
+                           validity_period_hours: pulumi.Input[int],
+                           algorithm: Optional[pulumi.Input['Algorithm']] = None,
+                           dns_names: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
+                           early_renewal_hours: Optional[pulumi.Input[int]] = None,
+                           ecdsa_curve: Optional[pulumi.Input['EcdsaCurve']] = None,
+                           ip_addresses: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
+                           is_ca_certificate: Optional[pulumi.Input[bool]] = None,
+                           rsa_bits: Optional[pulumi.Input[int]] = None,
+                           set_authority_key_id: Optional[pulumi.Input[bool]] = None,
+                           set_subject_key_id: Optional[pulumi.Input[bool]] = None,
+                           subject: Optional[pulumi.Input['CertRequestSubjectArgs']] = None,
+                           uris: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None) -> pulumi.Output['RootCa.CreateCertificateResult']:
         """
-        Creates a Certificate configured for the cluster admin.
+        Creates a Certificate configured for the current authority.
 
 
         :param pulumi.Input[int] validity_period_hours: Number of hours, after initial issuing, that the certificate will remain valid.
-        :param pulumi.Input[str] algorithm: Name of the algorithm to use when generating the private key.
+        :param pulumi.Input['Algorithm'] algorithm: Name of the algorithm to use when generating the private key.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] dns_names: List of DNS names for which a certificate is being requested.
         :param pulumi.Input[int] early_renewal_hours: TODO
-        :param pulumi.Input[str] ecdsa_curve: When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
+        :param pulumi.Input['EcdsaCurve'] ecdsa_curve: When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] ip_addresses: List of IP addresses for which a certificate is being requested.
         :param pulumi.Input[int] rsa_bits: When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
         :param pulumi.Input[bool] set_authority_key_id: Should the generated certificate include an authority key identifier.
@@ -371,355 +372,7 @@ class RootCa(pulumi.ComponentResource):
         __args__['setSubjectKeyId'] = set_subject_key_id
         __args__['subject'] = subject
         __args__['uris'] = uris
-        return pulumi.runtime.call('kubernetes-the-hard-way:index:RootCa/getAdminCertificate', __args__, res=__self__, typ=RootCa.GetAdminCertificateResult)
-
-    @pulumi.output_type
-    class GetApiServerCertificateResult:
-        def __init__(__self__, cert=None):
-            if cert and not isinstance(cert, Certificate):
-                raise TypeError("Expected argument 'cert' to be a Certificate")
-            pulumi.set(__self__, "cert", cert)
-
-        @property
-        @pulumi.getter
-        def cert(self) -> 'Certificate':
-            return pulumi.get(self, "cert")
-
-    def get_api_server_certificate(__self__, *,
-                                   allowed_uses: pulumi.Input[Sequence[pulumi.Input[str]]],
-                                   validity_period_hours: pulumi.Input[int],
-                                   algorithm: Optional[pulumi.Input[str]] = None,
-                                   dns_names: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-                                   early_renewal_hours: Optional[pulumi.Input[int]] = None,
-                                   ecdsa_curve: Optional[pulumi.Input[str]] = None,
-                                   ip_addresses: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-                                   is_ca_certificate: Optional[pulumi.Input[bool]] = None,
-                                   rsa_bits: Optional[pulumi.Input[int]] = None,
-                                   set_authority_key_id: Optional[pulumi.Input[bool]] = None,
-                                   set_subject_key_id: Optional[pulumi.Input[bool]] = None,
-                                   subject: Optional[pulumi.Input['CertRequestSubjectArgs']] = None,
-                                   uris: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None) -> pulumi.Output['RootCa.GetApiServerCertificateResult']:
-        """
-        Creates a Certificate configured for the api-server.
-
-
-        :param pulumi.Input[int] validity_period_hours: Number of hours, after initial issuing, that the certificate will remain valid.
-        :param pulumi.Input[str] algorithm: Name of the algorithm to use when generating the private key.
-        :param pulumi.Input[Sequence[pulumi.Input[str]]] dns_names: List of DNS names for which a certificate is being requested.
-        :param pulumi.Input[int] early_renewal_hours: TODO
-        :param pulumi.Input[str] ecdsa_curve: When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
-        :param pulumi.Input[Sequence[pulumi.Input[str]]] ip_addresses: List of IP addresses for which a certificate is being requested.
-        :param pulumi.Input[int] rsa_bits: When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
-        :param pulumi.Input[bool] set_authority_key_id: Should the generated certificate include an authority key identifier.
-        :param pulumi.Input[bool] set_subject_key_id: Should the generated certificate include a subject key identifier.
-        :param pulumi.Input[Sequence[pulumi.Input[str]]] uris: List of URIs for which a certificate is being requested.
-        """
-        __args__ = dict()
-        __args__['__self__'] = __self__
-        __args__['allowedUses'] = allowed_uses
-        __args__['validityPeriodHours'] = validity_period_hours
-        __args__['algorithm'] = algorithm
-        __args__['dnsNames'] = dns_names
-        __args__['earlyRenewalHours'] = early_renewal_hours
-        __args__['ecdsaCurve'] = ecdsa_curve
-        __args__['ipAddresses'] = ip_addresses
-        __args__['isCaCertificate'] = is_ca_certificate
-        __args__['rsaBits'] = rsa_bits
-        __args__['setAuthorityKeyId'] = set_authority_key_id
-        __args__['setSubjectKeyId'] = set_subject_key_id
-        __args__['subject'] = subject
-        __args__['uris'] = uris
-        return pulumi.runtime.call('kubernetes-the-hard-way:index:RootCa/getApiServerCertificate', __args__, res=__self__, typ=RootCa.GetApiServerCertificateResult)
-
-    @pulumi.output_type
-    class GetControllerManagerCertificateResult:
-        def __init__(__self__, cert=None):
-            if cert and not isinstance(cert, Certificate):
-                raise TypeError("Expected argument 'cert' to be a Certificate")
-            pulumi.set(__self__, "cert", cert)
-
-        @property
-        @pulumi.getter
-        def cert(self) -> 'Certificate':
-            return pulumi.get(self, "cert")
-
-    def get_controller_manager_certificate(__self__, *,
-                                           allowed_uses: pulumi.Input[Sequence[pulumi.Input[str]]],
-                                           validity_period_hours: pulumi.Input[int],
-                                           algorithm: Optional[pulumi.Input[str]] = None,
-                                           dns_names: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-                                           early_renewal_hours: Optional[pulumi.Input[int]] = None,
-                                           ecdsa_curve: Optional[pulumi.Input[str]] = None,
-                                           ip_addresses: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-                                           is_ca_certificate: Optional[pulumi.Input[bool]] = None,
-                                           rsa_bits: Optional[pulumi.Input[int]] = None,
-                                           set_authority_key_id: Optional[pulumi.Input[bool]] = None,
-                                           set_subject_key_id: Optional[pulumi.Input[bool]] = None,
-                                           subject: Optional[pulumi.Input['CertRequestSubjectArgs']] = None,
-                                           uris: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None) -> pulumi.Output['RootCa.GetControllerManagerCertificateResult']:
-        """
-        Creates a Certificate configured for the controller manager.
-
-
-        :param pulumi.Input[int] validity_period_hours: Number of hours, after initial issuing, that the certificate will remain valid.
-        :param pulumi.Input[str] algorithm: Name of the algorithm to use when generating the private key.
-        :param pulumi.Input[Sequence[pulumi.Input[str]]] dns_names: List of DNS names for which a certificate is being requested.
-        :param pulumi.Input[int] early_renewal_hours: TODO
-        :param pulumi.Input[str] ecdsa_curve: When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
-        :param pulumi.Input[Sequence[pulumi.Input[str]]] ip_addresses: List of IP addresses for which a certificate is being requested.
-        :param pulumi.Input[int] rsa_bits: When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
-        :param pulumi.Input[bool] set_authority_key_id: Should the generated certificate include an authority key identifier.
-        :param pulumi.Input[bool] set_subject_key_id: Should the generated certificate include a subject key identifier.
-        :param pulumi.Input[Sequence[pulumi.Input[str]]] uris: List of URIs for which a certificate is being requested.
-        """
-        __args__ = dict()
-        __args__['__self__'] = __self__
-        __args__['allowedUses'] = allowed_uses
-        __args__['validityPeriodHours'] = validity_period_hours
-        __args__['algorithm'] = algorithm
-        __args__['dnsNames'] = dns_names
-        __args__['earlyRenewalHours'] = early_renewal_hours
-        __args__['ecdsaCurve'] = ecdsa_curve
-        __args__['ipAddresses'] = ip_addresses
-        __args__['isCaCertificate'] = is_ca_certificate
-        __args__['rsaBits'] = rsa_bits
-        __args__['setAuthorityKeyId'] = set_authority_key_id
-        __args__['setSubjectKeyId'] = set_subject_key_id
-        __args__['subject'] = subject
-        __args__['uris'] = uris
-        return pulumi.runtime.call('kubernetes-the-hard-way:index:RootCa/getControllerManagerCertificate', __args__, res=__self__, typ=RootCa.GetControllerManagerCertificateResult)
-
-    @pulumi.output_type
-    class GetKubeProxyCertificateResult:
-        def __init__(__self__, cert=None):
-            if cert and not isinstance(cert, Certificate):
-                raise TypeError("Expected argument 'cert' to be a Certificate")
-            pulumi.set(__self__, "cert", cert)
-
-        @property
-        @pulumi.getter
-        def cert(self) -> 'Certificate':
-            return pulumi.get(self, "cert")
-
-    def get_kube_proxy_certificate(__self__, *,
-                                   allowed_uses: pulumi.Input[Sequence[pulumi.Input[str]]],
-                                   validity_period_hours: pulumi.Input[int],
-                                   algorithm: Optional[pulumi.Input[str]] = None,
-                                   dns_names: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-                                   early_renewal_hours: Optional[pulumi.Input[int]] = None,
-                                   ecdsa_curve: Optional[pulumi.Input[str]] = None,
-                                   ip_addresses: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-                                   is_ca_certificate: Optional[pulumi.Input[bool]] = None,
-                                   rsa_bits: Optional[pulumi.Input[int]] = None,
-                                   set_authority_key_id: Optional[pulumi.Input[bool]] = None,
-                                   set_subject_key_id: Optional[pulumi.Input[bool]] = None,
-                                   subject: Optional[pulumi.Input['CertRequestSubjectArgs']] = None,
-                                   uris: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None) -> pulumi.Output['RootCa.GetKubeProxyCertificateResult']:
-        """
-        Creates a Certificate configured for the kube-proxy.
-
-
-        :param pulumi.Input[int] validity_period_hours: Number of hours, after initial issuing, that the certificate will remain valid.
-        :param pulumi.Input[str] algorithm: Name of the algorithm to use when generating the private key.
-        :param pulumi.Input[Sequence[pulumi.Input[str]]] dns_names: List of DNS names for which a certificate is being requested.
-        :param pulumi.Input[int] early_renewal_hours: TODO
-        :param pulumi.Input[str] ecdsa_curve: When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
-        :param pulumi.Input[Sequence[pulumi.Input[str]]] ip_addresses: List of IP addresses for which a certificate is being requested.
-        :param pulumi.Input[int] rsa_bits: When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
-        :param pulumi.Input[bool] set_authority_key_id: Should the generated certificate include an authority key identifier.
-        :param pulumi.Input[bool] set_subject_key_id: Should the generated certificate include a subject key identifier.
-        :param pulumi.Input[Sequence[pulumi.Input[str]]] uris: List of URIs for which a certificate is being requested.
-        """
-        __args__ = dict()
-        __args__['__self__'] = __self__
-        __args__['allowedUses'] = allowed_uses
-        __args__['validityPeriodHours'] = validity_period_hours
-        __args__['algorithm'] = algorithm
-        __args__['dnsNames'] = dns_names
-        __args__['earlyRenewalHours'] = early_renewal_hours
-        __args__['ecdsaCurve'] = ecdsa_curve
-        __args__['ipAddresses'] = ip_addresses
-        __args__['isCaCertificate'] = is_ca_certificate
-        __args__['rsaBits'] = rsa_bits
-        __args__['setAuthorityKeyId'] = set_authority_key_id
-        __args__['setSubjectKeyId'] = set_subject_key_id
-        __args__['subject'] = subject
-        __args__['uris'] = uris
-        return pulumi.runtime.call('kubernetes-the-hard-way:index:RootCa/getKubeProxyCertificate', __args__, res=__self__, typ=RootCa.GetKubeProxyCertificateResult)
-
-    @pulumi.output_type
-    class GetKubeSchedulerCertificateResult:
-        def __init__(__self__, cert=None):
-            if cert and not isinstance(cert, Certificate):
-                raise TypeError("Expected argument 'cert' to be a Certificate")
-            pulumi.set(__self__, "cert", cert)
-
-        @property
-        @pulumi.getter
-        def cert(self) -> 'Certificate':
-            return pulumi.get(self, "cert")
-
-    def get_kube_scheduler_certificate(__self__, *,
-                                       allowed_uses: pulumi.Input[Sequence[pulumi.Input[str]]],
-                                       validity_period_hours: pulumi.Input[int],
-                                       algorithm: Optional[pulumi.Input[str]] = None,
-                                       dns_names: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-                                       early_renewal_hours: Optional[pulumi.Input[int]] = None,
-                                       ecdsa_curve: Optional[pulumi.Input[str]] = None,
-                                       ip_addresses: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-                                       is_ca_certificate: Optional[pulumi.Input[bool]] = None,
-                                       rsa_bits: Optional[pulumi.Input[int]] = None,
-                                       set_authority_key_id: Optional[pulumi.Input[bool]] = None,
-                                       set_subject_key_id: Optional[pulumi.Input[bool]] = None,
-                                       subject: Optional[pulumi.Input['CertRequestSubjectArgs']] = None,
-                                       uris: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None) -> pulumi.Output['RootCa.GetKubeSchedulerCertificateResult']:
-        """
-        Creates a Certificate configured for the kube-scheduler.
-
-
-        :param pulumi.Input[int] validity_period_hours: Number of hours, after initial issuing, that the certificate will remain valid.
-        :param pulumi.Input[str] algorithm: Name of the algorithm to use when generating the private key.
-        :param pulumi.Input[Sequence[pulumi.Input[str]]] dns_names: List of DNS names for which a certificate is being requested.
-        :param pulumi.Input[int] early_renewal_hours: TODO
-        :param pulumi.Input[str] ecdsa_curve: When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
-        :param pulumi.Input[Sequence[pulumi.Input[str]]] ip_addresses: List of IP addresses for which a certificate is being requested.
-        :param pulumi.Input[int] rsa_bits: When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
-        :param pulumi.Input[bool] set_authority_key_id: Should the generated certificate include an authority key identifier.
-        :param pulumi.Input[bool] set_subject_key_id: Should the generated certificate include a subject key identifier.
-        :param pulumi.Input[Sequence[pulumi.Input[str]]] uris: List of URIs for which a certificate is being requested.
-        """
-        __args__ = dict()
-        __args__['__self__'] = __self__
-        __args__['allowedUses'] = allowed_uses
-        __args__['validityPeriodHours'] = validity_period_hours
-        __args__['algorithm'] = algorithm
-        __args__['dnsNames'] = dns_names
-        __args__['earlyRenewalHours'] = early_renewal_hours
-        __args__['ecdsaCurve'] = ecdsa_curve
-        __args__['ipAddresses'] = ip_addresses
-        __args__['isCaCertificate'] = is_ca_certificate
-        __args__['rsaBits'] = rsa_bits
-        __args__['setAuthorityKeyId'] = set_authority_key_id
-        __args__['setSubjectKeyId'] = set_subject_key_id
-        __args__['subject'] = subject
-        __args__['uris'] = uris
-        return pulumi.runtime.call('kubernetes-the-hard-way:index:RootCa/getKubeSchedulerCertificate', __args__, res=__self__, typ=RootCa.GetKubeSchedulerCertificateResult)
-
-    @pulumi.output_type
-    class GetKubeletCertificateResult:
-        def __init__(__self__, cert=None):
-            if cert and not isinstance(cert, Certificate):
-                raise TypeError("Expected argument 'cert' to be a Certificate")
-            pulumi.set(__self__, "cert", cert)
-
-        @property
-        @pulumi.getter
-        def cert(self) -> 'Certificate':
-            return pulumi.get(self, "cert")
-
-    def get_kubelet_certificate(__self__, *,
-                                allowed_uses: pulumi.Input[Sequence[pulumi.Input[str]]],
-                                validity_period_hours: pulumi.Input[int],
-                                algorithm: Optional[pulumi.Input[str]] = None,
-                                dns_names: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-                                early_renewal_hours: Optional[pulumi.Input[int]] = None,
-                                ecdsa_curve: Optional[pulumi.Input[str]] = None,
-                                ip_addresses: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-                                is_ca_certificate: Optional[pulumi.Input[bool]] = None,
-                                rsa_bits: Optional[pulumi.Input[int]] = None,
-                                set_authority_key_id: Optional[pulumi.Input[bool]] = None,
-                                set_subject_key_id: Optional[pulumi.Input[bool]] = None,
-                                subject: Optional[pulumi.Input['CertRequestSubjectArgs']] = None,
-                                uris: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None) -> pulumi.Output['RootCa.GetKubeletCertificateResult']:
-        """
-        Creates a Certificate configured for a kubelet.
-
-
-        :param pulumi.Input[int] validity_period_hours: Number of hours, after initial issuing, that the certificate will remain valid.
-        :param pulumi.Input[str] algorithm: Name of the algorithm to use when generating the private key.
-        :param pulumi.Input[Sequence[pulumi.Input[str]]] dns_names: List of DNS names for which a certificate is being requested.
-        :param pulumi.Input[int] early_renewal_hours: TODO
-        :param pulumi.Input[str] ecdsa_curve: When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
-        :param pulumi.Input[Sequence[pulumi.Input[str]]] ip_addresses: List of IP addresses for which a certificate is being requested.
-        :param pulumi.Input[int] rsa_bits: When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
-        :param pulumi.Input[bool] set_authority_key_id: Should the generated certificate include an authority key identifier.
-        :param pulumi.Input[bool] set_subject_key_id: Should the generated certificate include a subject key identifier.
-        :param pulumi.Input[Sequence[pulumi.Input[str]]] uris: List of URIs for which a certificate is being requested.
-        """
-        __args__ = dict()
-        __args__['__self__'] = __self__
-        __args__['allowedUses'] = allowed_uses
-        __args__['validityPeriodHours'] = validity_period_hours
-        __args__['algorithm'] = algorithm
-        __args__['dnsNames'] = dns_names
-        __args__['earlyRenewalHours'] = early_renewal_hours
-        __args__['ecdsaCurve'] = ecdsa_curve
-        __args__['ipAddresses'] = ip_addresses
-        __args__['isCaCertificate'] = is_ca_certificate
-        __args__['rsaBits'] = rsa_bits
-        __args__['setAuthorityKeyId'] = set_authority_key_id
-        __args__['setSubjectKeyId'] = set_subject_key_id
-        __args__['subject'] = subject
-        __args__['uris'] = uris
-        return pulumi.runtime.call('kubernetes-the-hard-way:index:RootCa/getKubeletCertificate', __args__, res=__self__, typ=RootCa.GetKubeletCertificateResult)
-
-    @pulumi.output_type
-    class GetServiceAccountsCertificateResult:
-        def __init__(__self__, cert=None):
-            if cert and not isinstance(cert, Certificate):
-                raise TypeError("Expected argument 'cert' to be a Certificate")
-            pulumi.set(__self__, "cert", cert)
-
-        @property
-        @pulumi.getter
-        def cert(self) -> 'Certificate':
-            return pulumi.get(self, "cert")
-
-    def get_service_accounts_certificate(__self__, *,
-                                         allowed_uses: pulumi.Input[Sequence[pulumi.Input[str]]],
-                                         validity_period_hours: pulumi.Input[int],
-                                         algorithm: Optional[pulumi.Input[str]] = None,
-                                         dns_names: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-                                         early_renewal_hours: Optional[pulumi.Input[int]] = None,
-                                         ecdsa_curve: Optional[pulumi.Input[str]] = None,
-                                         ip_addresses: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-                                         is_ca_certificate: Optional[pulumi.Input[bool]] = None,
-                                         rsa_bits: Optional[pulumi.Input[int]] = None,
-                                         set_authority_key_id: Optional[pulumi.Input[bool]] = None,
-                                         set_subject_key_id: Optional[pulumi.Input[bool]] = None,
-                                         subject: Optional[pulumi.Input['CertRequestSubjectArgs']] = None,
-                                         uris: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None) -> pulumi.Output['RootCa.GetServiceAccountsCertificateResult']:
-        """
-        Creates a Certificate configured for the kube-scheduler.
-
-
-        :param pulumi.Input[int] validity_period_hours: Number of hours, after initial issuing, that the certificate will remain valid.
-        :param pulumi.Input[str] algorithm: Name of the algorithm to use when generating the private key.
-        :param pulumi.Input[Sequence[pulumi.Input[str]]] dns_names: List of DNS names for which a certificate is being requested.
-        :param pulumi.Input[int] early_renewal_hours: TODO
-        :param pulumi.Input[str] ecdsa_curve: When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
-        :param pulumi.Input[Sequence[pulumi.Input[str]]] ip_addresses: List of IP addresses for which a certificate is being requested.
-        :param pulumi.Input[int] rsa_bits: When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
-        :param pulumi.Input[bool] set_authority_key_id: Should the generated certificate include an authority key identifier.
-        :param pulumi.Input[bool] set_subject_key_id: Should the generated certificate include a subject key identifier.
-        :param pulumi.Input[Sequence[pulumi.Input[str]]] uris: List of URIs for which a certificate is being requested.
-        """
-        __args__ = dict()
-        __args__['__self__'] = __self__
-        __args__['allowedUses'] = allowed_uses
-        __args__['validityPeriodHours'] = validity_period_hours
-        __args__['algorithm'] = algorithm
-        __args__['dnsNames'] = dns_names
-        __args__['earlyRenewalHours'] = early_renewal_hours
-        __args__['ecdsaCurve'] = ecdsa_curve
-        __args__['ipAddresses'] = ip_addresses
-        __args__['isCaCertificate'] = is_ca_certificate
-        __args__['rsaBits'] = rsa_bits
-        __args__['setAuthorityKeyId'] = set_authority_key_id
-        __args__['setSubjectKeyId'] = set_subject_key_id
-        __args__['subject'] = subject
-        __args__['uris'] = uris
-        return pulumi.runtime.call('kubernetes-the-hard-way:index:RootCa/getServiceAccountsCertificate', __args__, res=__self__, typ=RootCa.GetServiceAccountsCertificateResult)
+        return pulumi.runtime.call('kubernetes-the-hard-way:index:RootCa/createCertificate', __args__, res=__self__, typ=RootCa.CreateCertificateResult)
 
     @pulumi.output_type
     class InstallOnResult:

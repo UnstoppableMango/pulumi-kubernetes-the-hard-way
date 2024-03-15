@@ -67,7 +67,7 @@ namespace UnMango.KubernetesTheHardWay
         /// Name of the algorithm to use when generating the private key.
         /// </summary>
         [Input("algorithm")]
-        public Input<string>? Algorithm { get; set; }
+        public Input<UnMango.KubernetesTheHardWay.Algorithm>? Algorithm { get; set; }
 
         [Input("allowedUses", required: true)]
         private InputList<string>? _allowedUses;
@@ -105,7 +105,7 @@ namespace UnMango.KubernetesTheHardWay
         /// When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
         /// </summary>
         [Input("ecdsaCurve")]
-        public Input<string>? EcdsaCurve { get; set; }
+        public Input<UnMango.KubernetesTheHardWay.EcdsaCurve>? EcdsaCurve { get; set; }
 
         [Input("ipAddresses")]
         private InputList<string>? _ipAddresses;

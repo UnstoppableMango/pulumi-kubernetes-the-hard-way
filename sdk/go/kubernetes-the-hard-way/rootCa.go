@@ -43,13 +43,13 @@ func NewRootCa(ctx *pulumi.Context,
 
 type rootCaArgs struct {
 	// Name of the algorithm to use when generating the private key.
-	Algorithm *string `pulumi:"algorithm"`
+	Algorithm *Algorithm `pulumi:"algorithm"`
 	// List of DNS names for which a certificate is being requested.
 	DnsNames []string `pulumi:"dnsNames"`
 	// TODO
 	EarlyRenewalHours *int `pulumi:"earlyRenewalHours"`
 	// When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
-	EcdsaCurve *string `pulumi:"ecdsaCurve"`
+	EcdsaCurve *EcdsaCurve `pulumi:"ecdsaCurve"`
 	// List of IP addresses for which a certificate is being requested.
 	IpAddresses []string `pulumi:"ipAddresses"`
 	// When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
@@ -68,13 +68,13 @@ type rootCaArgs struct {
 // The set of arguments for constructing a RootCa resource.
 type RootCaArgs struct {
 	// Name of the algorithm to use when generating the private key.
-	Algorithm pulumi.StringPtrInput
+	Algorithm AlgorithmPtrInput
 	// List of DNS names for which a certificate is being requested.
 	DnsNames pulumi.StringArrayInput
 	// TODO
 	EarlyRenewalHours pulumi.IntPtrInput
 	// When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
-	EcdsaCurve pulumi.StringPtrInput
+	EcdsaCurve EcdsaCurvePtrInput
 	// List of IP addresses for which a certificate is being requested.
 	IpAddresses pulumi.StringArrayInput
 	// When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
@@ -94,25 +94,25 @@ func (RootCaArgs) ElementType() reflect.Type {
 	return reflect.TypeOf((*rootCaArgs)(nil)).Elem()
 }
 
-// Creates a Certificate configured for the cluster admin.
-func (r *RootCa) GetAdminCertificate(ctx *pulumi.Context, args *RootCaGetAdminCertificateArgs) (RootCaGetAdminCertificateResultOutput, error) {
-	out, err := ctx.Call("kubernetes-the-hard-way:index:RootCa/getAdminCertificate", args, RootCaGetAdminCertificateResultOutput{}, r)
+// Creates a Certificate configured for the current authority.
+func (r *RootCa) CreateCertificate(ctx *pulumi.Context, args *RootCaCreateCertificateArgs) (RootCaCreateCertificateResultOutput, error) {
+	out, err := ctx.Call("kubernetes-the-hard-way:index:RootCa/createCertificate", args, RootCaCreateCertificateResultOutput{}, r)
 	if err != nil {
-		return RootCaGetAdminCertificateResultOutput{}, err
+		return RootCaCreateCertificateResultOutput{}, err
 	}
-	return out.(RootCaGetAdminCertificateResultOutput), nil
+	return out.(RootCaCreateCertificateResultOutput), nil
 }
 
-type rootCaGetAdminCertificateArgs struct {
+type rootCaCreateCertificateArgs struct {
 	// Name of the algorithm to use when generating the private key.
-	Algorithm   *string  `pulumi:"algorithm"`
-	AllowedUses []string `pulumi:"allowedUses"`
+	Algorithm   *Algorithm `pulumi:"algorithm"`
+	AllowedUses []string   `pulumi:"allowedUses"`
 	// List of DNS names for which a certificate is being requested.
 	DnsNames []string `pulumi:"dnsNames"`
 	// TODO
 	EarlyRenewalHours *int `pulumi:"earlyRenewalHours"`
 	// When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
-	EcdsaCurve *string `pulumi:"ecdsaCurve"`
+	EcdsaCurve *EcdsaCurve `pulumi:"ecdsaCurve"`
 	// List of IP addresses for which a certificate is being requested.
 	IpAddresses     []string `pulumi:"ipAddresses"`
 	IsCaCertificate *bool    `pulumi:"isCaCertificate"`
@@ -129,17 +129,17 @@ type rootCaGetAdminCertificateArgs struct {
 	ValidityPeriodHours int `pulumi:"validityPeriodHours"`
 }
 
-// The set of arguments for the GetAdminCertificate method of the RootCa resource.
-type RootCaGetAdminCertificateArgs struct {
+// The set of arguments for the CreateCertificate method of the RootCa resource.
+type RootCaCreateCertificateArgs struct {
 	// Name of the algorithm to use when generating the private key.
-	Algorithm   pulumi.StringPtrInput
+	Algorithm   AlgorithmPtrInput
 	AllowedUses pulumi.StringArrayInput
 	// List of DNS names for which a certificate is being requested.
 	DnsNames pulumi.StringArrayInput
 	// TODO
 	EarlyRenewalHours pulumi.IntPtrInput
 	// When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
-	EcdsaCurve pulumi.StringPtrInput
+	EcdsaCurve EcdsaCurvePtrInput
 	// List of IP addresses for which a certificate is being requested.
 	IpAddresses     pulumi.StringArrayInput
 	IsCaCertificate pulumi.BoolPtrInput
@@ -156,502 +156,22 @@ type RootCaGetAdminCertificateArgs struct {
 	ValidityPeriodHours pulumi.IntInput
 }
 
-func (RootCaGetAdminCertificateArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*rootCaGetAdminCertificateArgs)(nil)).Elem()
+func (RootCaCreateCertificateArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*rootCaCreateCertificateArgs)(nil)).Elem()
 }
 
-type RootCaGetAdminCertificateResult struct {
+type RootCaCreateCertificateResult struct {
 	Cert *Certificate `pulumi:"cert"`
 }
 
-type RootCaGetAdminCertificateResultOutput struct{ *pulumi.OutputState }
+type RootCaCreateCertificateResultOutput struct{ *pulumi.OutputState }
 
-func (RootCaGetAdminCertificateResultOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*RootCaGetAdminCertificateResult)(nil)).Elem()
+func (RootCaCreateCertificateResultOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*RootCaCreateCertificateResult)(nil)).Elem()
 }
 
-func (o RootCaGetAdminCertificateResultOutput) Cert() CertificateOutput {
-	return o.ApplyT(func(v RootCaGetAdminCertificateResult) *Certificate { return v.Cert }).(CertificateOutput)
-}
-
-// Creates a Certificate configured for the api-server.
-func (r *RootCa) GetApiServerCertificate(ctx *pulumi.Context, args *RootCaGetApiServerCertificateArgs) (RootCaGetApiServerCertificateResultOutput, error) {
-	out, err := ctx.Call("kubernetes-the-hard-way:index:RootCa/getApiServerCertificate", args, RootCaGetApiServerCertificateResultOutput{}, r)
-	if err != nil {
-		return RootCaGetApiServerCertificateResultOutput{}, err
-	}
-	return out.(RootCaGetApiServerCertificateResultOutput), nil
-}
-
-type rootCaGetApiServerCertificateArgs struct {
-	// Name of the algorithm to use when generating the private key.
-	Algorithm   *string  `pulumi:"algorithm"`
-	AllowedUses []string `pulumi:"allowedUses"`
-	// List of DNS names for which a certificate is being requested.
-	DnsNames []string `pulumi:"dnsNames"`
-	// TODO
-	EarlyRenewalHours *int `pulumi:"earlyRenewalHours"`
-	// When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
-	EcdsaCurve *string `pulumi:"ecdsaCurve"`
-	// List of IP addresses for which a certificate is being requested.
-	IpAddresses     []string `pulumi:"ipAddresses"`
-	IsCaCertificate *bool    `pulumi:"isCaCertificate"`
-	// When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
-	RsaBits *int `pulumi:"rsaBits"`
-	// Should the generated certificate include an authority key identifier.
-	SetAuthorityKeyId *bool `pulumi:"setAuthorityKeyId"`
-	// Should the generated certificate include a subject key identifier.
-	SetSubjectKeyId *bool               `pulumi:"setSubjectKeyId"`
-	Subject         *CertRequestSubject `pulumi:"subject"`
-	// List of URIs for which a certificate is being requested.
-	Uris []string `pulumi:"uris"`
-	// Number of hours, after initial issuing, that the certificate will remain valid.
-	ValidityPeriodHours int `pulumi:"validityPeriodHours"`
-}
-
-// The set of arguments for the GetApiServerCertificate method of the RootCa resource.
-type RootCaGetApiServerCertificateArgs struct {
-	// Name of the algorithm to use when generating the private key.
-	Algorithm   pulumi.StringPtrInput
-	AllowedUses pulumi.StringArrayInput
-	// List of DNS names for which a certificate is being requested.
-	DnsNames pulumi.StringArrayInput
-	// TODO
-	EarlyRenewalHours pulumi.IntPtrInput
-	// When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
-	EcdsaCurve pulumi.StringPtrInput
-	// List of IP addresses for which a certificate is being requested.
-	IpAddresses     pulumi.StringArrayInput
-	IsCaCertificate pulumi.BoolPtrInput
-	// When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
-	RsaBits pulumi.IntPtrInput
-	// Should the generated certificate include an authority key identifier.
-	SetAuthorityKeyId pulumi.BoolPtrInput
-	// Should the generated certificate include a subject key identifier.
-	SetSubjectKeyId pulumi.BoolPtrInput
-	Subject         CertRequestSubjectPtrInput
-	// List of URIs for which a certificate is being requested.
-	Uris pulumi.StringArrayInput
-	// Number of hours, after initial issuing, that the certificate will remain valid.
-	ValidityPeriodHours pulumi.IntInput
-}
-
-func (RootCaGetApiServerCertificateArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*rootCaGetApiServerCertificateArgs)(nil)).Elem()
-}
-
-type RootCaGetApiServerCertificateResult struct {
-	Cert *Certificate `pulumi:"cert"`
-}
-
-type RootCaGetApiServerCertificateResultOutput struct{ *pulumi.OutputState }
-
-func (RootCaGetApiServerCertificateResultOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*RootCaGetApiServerCertificateResult)(nil)).Elem()
-}
-
-func (o RootCaGetApiServerCertificateResultOutput) Cert() CertificateOutput {
-	return o.ApplyT(func(v RootCaGetApiServerCertificateResult) *Certificate { return v.Cert }).(CertificateOutput)
-}
-
-// Creates a Certificate configured for the controller manager.
-func (r *RootCa) GetControllerManagerCertificate(ctx *pulumi.Context, args *RootCaGetControllerManagerCertificateArgs) (RootCaGetControllerManagerCertificateResultOutput, error) {
-	out, err := ctx.Call("kubernetes-the-hard-way:index:RootCa/getControllerManagerCertificate", args, RootCaGetControllerManagerCertificateResultOutput{}, r)
-	if err != nil {
-		return RootCaGetControllerManagerCertificateResultOutput{}, err
-	}
-	return out.(RootCaGetControllerManagerCertificateResultOutput), nil
-}
-
-type rootCaGetControllerManagerCertificateArgs struct {
-	// Name of the algorithm to use when generating the private key.
-	Algorithm   *string  `pulumi:"algorithm"`
-	AllowedUses []string `pulumi:"allowedUses"`
-	// List of DNS names for which a certificate is being requested.
-	DnsNames []string `pulumi:"dnsNames"`
-	// TODO
-	EarlyRenewalHours *int `pulumi:"earlyRenewalHours"`
-	// When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
-	EcdsaCurve *string `pulumi:"ecdsaCurve"`
-	// List of IP addresses for which a certificate is being requested.
-	IpAddresses     []string `pulumi:"ipAddresses"`
-	IsCaCertificate *bool    `pulumi:"isCaCertificate"`
-	// When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
-	RsaBits *int `pulumi:"rsaBits"`
-	// Should the generated certificate include an authority key identifier.
-	SetAuthorityKeyId *bool `pulumi:"setAuthorityKeyId"`
-	// Should the generated certificate include a subject key identifier.
-	SetSubjectKeyId *bool               `pulumi:"setSubjectKeyId"`
-	Subject         *CertRequestSubject `pulumi:"subject"`
-	// List of URIs for which a certificate is being requested.
-	Uris []string `pulumi:"uris"`
-	// Number of hours, after initial issuing, that the certificate will remain valid.
-	ValidityPeriodHours int `pulumi:"validityPeriodHours"`
-}
-
-// The set of arguments for the GetControllerManagerCertificate method of the RootCa resource.
-type RootCaGetControllerManagerCertificateArgs struct {
-	// Name of the algorithm to use when generating the private key.
-	Algorithm   pulumi.StringPtrInput
-	AllowedUses pulumi.StringArrayInput
-	// List of DNS names for which a certificate is being requested.
-	DnsNames pulumi.StringArrayInput
-	// TODO
-	EarlyRenewalHours pulumi.IntPtrInput
-	// When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
-	EcdsaCurve pulumi.StringPtrInput
-	// List of IP addresses for which a certificate is being requested.
-	IpAddresses     pulumi.StringArrayInput
-	IsCaCertificate pulumi.BoolPtrInput
-	// When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
-	RsaBits pulumi.IntPtrInput
-	// Should the generated certificate include an authority key identifier.
-	SetAuthorityKeyId pulumi.BoolPtrInput
-	// Should the generated certificate include a subject key identifier.
-	SetSubjectKeyId pulumi.BoolPtrInput
-	Subject         CertRequestSubjectPtrInput
-	// List of URIs for which a certificate is being requested.
-	Uris pulumi.StringArrayInput
-	// Number of hours, after initial issuing, that the certificate will remain valid.
-	ValidityPeriodHours pulumi.IntInput
-}
-
-func (RootCaGetControllerManagerCertificateArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*rootCaGetControllerManagerCertificateArgs)(nil)).Elem()
-}
-
-type RootCaGetControllerManagerCertificateResult struct {
-	Cert *Certificate `pulumi:"cert"`
-}
-
-type RootCaGetControllerManagerCertificateResultOutput struct{ *pulumi.OutputState }
-
-func (RootCaGetControllerManagerCertificateResultOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*RootCaGetControllerManagerCertificateResult)(nil)).Elem()
-}
-
-func (o RootCaGetControllerManagerCertificateResultOutput) Cert() CertificateOutput {
-	return o.ApplyT(func(v RootCaGetControllerManagerCertificateResult) *Certificate { return v.Cert }).(CertificateOutput)
-}
-
-// Creates a Certificate configured for the kube-proxy.
-func (r *RootCa) GetKubeProxyCertificate(ctx *pulumi.Context, args *RootCaGetKubeProxyCertificateArgs) (RootCaGetKubeProxyCertificateResultOutput, error) {
-	out, err := ctx.Call("kubernetes-the-hard-way:index:RootCa/getKubeProxyCertificate", args, RootCaGetKubeProxyCertificateResultOutput{}, r)
-	if err != nil {
-		return RootCaGetKubeProxyCertificateResultOutput{}, err
-	}
-	return out.(RootCaGetKubeProxyCertificateResultOutput), nil
-}
-
-type rootCaGetKubeProxyCertificateArgs struct {
-	// Name of the algorithm to use when generating the private key.
-	Algorithm   *string  `pulumi:"algorithm"`
-	AllowedUses []string `pulumi:"allowedUses"`
-	// List of DNS names for which a certificate is being requested.
-	DnsNames []string `pulumi:"dnsNames"`
-	// TODO
-	EarlyRenewalHours *int `pulumi:"earlyRenewalHours"`
-	// When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
-	EcdsaCurve *string `pulumi:"ecdsaCurve"`
-	// List of IP addresses for which a certificate is being requested.
-	IpAddresses     []string `pulumi:"ipAddresses"`
-	IsCaCertificate *bool    `pulumi:"isCaCertificate"`
-	// When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
-	RsaBits *int `pulumi:"rsaBits"`
-	// Should the generated certificate include an authority key identifier.
-	SetAuthorityKeyId *bool `pulumi:"setAuthorityKeyId"`
-	// Should the generated certificate include a subject key identifier.
-	SetSubjectKeyId *bool               `pulumi:"setSubjectKeyId"`
-	Subject         *CertRequestSubject `pulumi:"subject"`
-	// List of URIs for which a certificate is being requested.
-	Uris []string `pulumi:"uris"`
-	// Number of hours, after initial issuing, that the certificate will remain valid.
-	ValidityPeriodHours int `pulumi:"validityPeriodHours"`
-}
-
-// The set of arguments for the GetKubeProxyCertificate method of the RootCa resource.
-type RootCaGetKubeProxyCertificateArgs struct {
-	// Name of the algorithm to use when generating the private key.
-	Algorithm   pulumi.StringPtrInput
-	AllowedUses pulumi.StringArrayInput
-	// List of DNS names for which a certificate is being requested.
-	DnsNames pulumi.StringArrayInput
-	// TODO
-	EarlyRenewalHours pulumi.IntPtrInput
-	// When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
-	EcdsaCurve pulumi.StringPtrInput
-	// List of IP addresses for which a certificate is being requested.
-	IpAddresses     pulumi.StringArrayInput
-	IsCaCertificate pulumi.BoolPtrInput
-	// When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
-	RsaBits pulumi.IntPtrInput
-	// Should the generated certificate include an authority key identifier.
-	SetAuthorityKeyId pulumi.BoolPtrInput
-	// Should the generated certificate include a subject key identifier.
-	SetSubjectKeyId pulumi.BoolPtrInput
-	Subject         CertRequestSubjectPtrInput
-	// List of URIs for which a certificate is being requested.
-	Uris pulumi.StringArrayInput
-	// Number of hours, after initial issuing, that the certificate will remain valid.
-	ValidityPeriodHours pulumi.IntInput
-}
-
-func (RootCaGetKubeProxyCertificateArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*rootCaGetKubeProxyCertificateArgs)(nil)).Elem()
-}
-
-type RootCaGetKubeProxyCertificateResult struct {
-	Cert *Certificate `pulumi:"cert"`
-}
-
-type RootCaGetKubeProxyCertificateResultOutput struct{ *pulumi.OutputState }
-
-func (RootCaGetKubeProxyCertificateResultOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*RootCaGetKubeProxyCertificateResult)(nil)).Elem()
-}
-
-func (o RootCaGetKubeProxyCertificateResultOutput) Cert() CertificateOutput {
-	return o.ApplyT(func(v RootCaGetKubeProxyCertificateResult) *Certificate { return v.Cert }).(CertificateOutput)
-}
-
-// Creates a Certificate configured for the kube-scheduler.
-func (r *RootCa) GetKubeSchedulerCertificate(ctx *pulumi.Context, args *RootCaGetKubeSchedulerCertificateArgs) (RootCaGetKubeSchedulerCertificateResultOutput, error) {
-	out, err := ctx.Call("kubernetes-the-hard-way:index:RootCa/getKubeSchedulerCertificate", args, RootCaGetKubeSchedulerCertificateResultOutput{}, r)
-	if err != nil {
-		return RootCaGetKubeSchedulerCertificateResultOutput{}, err
-	}
-	return out.(RootCaGetKubeSchedulerCertificateResultOutput), nil
-}
-
-type rootCaGetKubeSchedulerCertificateArgs struct {
-	// Name of the algorithm to use when generating the private key.
-	Algorithm   *string  `pulumi:"algorithm"`
-	AllowedUses []string `pulumi:"allowedUses"`
-	// List of DNS names for which a certificate is being requested.
-	DnsNames []string `pulumi:"dnsNames"`
-	// TODO
-	EarlyRenewalHours *int `pulumi:"earlyRenewalHours"`
-	// When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
-	EcdsaCurve *string `pulumi:"ecdsaCurve"`
-	// List of IP addresses for which a certificate is being requested.
-	IpAddresses     []string `pulumi:"ipAddresses"`
-	IsCaCertificate *bool    `pulumi:"isCaCertificate"`
-	// When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
-	RsaBits *int `pulumi:"rsaBits"`
-	// Should the generated certificate include an authority key identifier.
-	SetAuthorityKeyId *bool `pulumi:"setAuthorityKeyId"`
-	// Should the generated certificate include a subject key identifier.
-	SetSubjectKeyId *bool               `pulumi:"setSubjectKeyId"`
-	Subject         *CertRequestSubject `pulumi:"subject"`
-	// List of URIs for which a certificate is being requested.
-	Uris []string `pulumi:"uris"`
-	// Number of hours, after initial issuing, that the certificate will remain valid.
-	ValidityPeriodHours int `pulumi:"validityPeriodHours"`
-}
-
-// The set of arguments for the GetKubeSchedulerCertificate method of the RootCa resource.
-type RootCaGetKubeSchedulerCertificateArgs struct {
-	// Name of the algorithm to use when generating the private key.
-	Algorithm   pulumi.StringPtrInput
-	AllowedUses pulumi.StringArrayInput
-	// List of DNS names for which a certificate is being requested.
-	DnsNames pulumi.StringArrayInput
-	// TODO
-	EarlyRenewalHours pulumi.IntPtrInput
-	// When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
-	EcdsaCurve pulumi.StringPtrInput
-	// List of IP addresses for which a certificate is being requested.
-	IpAddresses     pulumi.StringArrayInput
-	IsCaCertificate pulumi.BoolPtrInput
-	// When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
-	RsaBits pulumi.IntPtrInput
-	// Should the generated certificate include an authority key identifier.
-	SetAuthorityKeyId pulumi.BoolPtrInput
-	// Should the generated certificate include a subject key identifier.
-	SetSubjectKeyId pulumi.BoolPtrInput
-	Subject         CertRequestSubjectPtrInput
-	// List of URIs for which a certificate is being requested.
-	Uris pulumi.StringArrayInput
-	// Number of hours, after initial issuing, that the certificate will remain valid.
-	ValidityPeriodHours pulumi.IntInput
-}
-
-func (RootCaGetKubeSchedulerCertificateArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*rootCaGetKubeSchedulerCertificateArgs)(nil)).Elem()
-}
-
-type RootCaGetKubeSchedulerCertificateResult struct {
-	Cert *Certificate `pulumi:"cert"`
-}
-
-type RootCaGetKubeSchedulerCertificateResultOutput struct{ *pulumi.OutputState }
-
-func (RootCaGetKubeSchedulerCertificateResultOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*RootCaGetKubeSchedulerCertificateResult)(nil)).Elem()
-}
-
-func (o RootCaGetKubeSchedulerCertificateResultOutput) Cert() CertificateOutput {
-	return o.ApplyT(func(v RootCaGetKubeSchedulerCertificateResult) *Certificate { return v.Cert }).(CertificateOutput)
-}
-
-// Creates a Certificate configured for a kubelet.
-func (r *RootCa) GetKubeletCertificate(ctx *pulumi.Context, args *RootCaGetKubeletCertificateArgs) (RootCaGetKubeletCertificateResultOutput, error) {
-	out, err := ctx.Call("kubernetes-the-hard-way:index:RootCa/getKubeletCertificate", args, RootCaGetKubeletCertificateResultOutput{}, r)
-	if err != nil {
-		return RootCaGetKubeletCertificateResultOutput{}, err
-	}
-	return out.(RootCaGetKubeletCertificateResultOutput), nil
-}
-
-type rootCaGetKubeletCertificateArgs struct {
-	// Name of the algorithm to use when generating the private key.
-	Algorithm   *string  `pulumi:"algorithm"`
-	AllowedUses []string `pulumi:"allowedUses"`
-	// List of DNS names for which a certificate is being requested.
-	DnsNames []string `pulumi:"dnsNames"`
-	// TODO
-	EarlyRenewalHours *int `pulumi:"earlyRenewalHours"`
-	// When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
-	EcdsaCurve *string `pulumi:"ecdsaCurve"`
-	// List of IP addresses for which a certificate is being requested.
-	IpAddresses     []string `pulumi:"ipAddresses"`
-	IsCaCertificate *bool    `pulumi:"isCaCertificate"`
-	// When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
-	RsaBits *int `pulumi:"rsaBits"`
-	// Should the generated certificate include an authority key identifier.
-	SetAuthorityKeyId *bool `pulumi:"setAuthorityKeyId"`
-	// Should the generated certificate include a subject key identifier.
-	SetSubjectKeyId *bool               `pulumi:"setSubjectKeyId"`
-	Subject         *CertRequestSubject `pulumi:"subject"`
-	// List of URIs for which a certificate is being requested.
-	Uris []string `pulumi:"uris"`
-	// Number of hours, after initial issuing, that the certificate will remain valid.
-	ValidityPeriodHours int `pulumi:"validityPeriodHours"`
-}
-
-// The set of arguments for the GetKubeletCertificate method of the RootCa resource.
-type RootCaGetKubeletCertificateArgs struct {
-	// Name of the algorithm to use when generating the private key.
-	Algorithm   pulumi.StringPtrInput
-	AllowedUses pulumi.StringArrayInput
-	// List of DNS names for which a certificate is being requested.
-	DnsNames pulumi.StringArrayInput
-	// TODO
-	EarlyRenewalHours pulumi.IntPtrInput
-	// When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
-	EcdsaCurve pulumi.StringPtrInput
-	// List of IP addresses for which a certificate is being requested.
-	IpAddresses     pulumi.StringArrayInput
-	IsCaCertificate pulumi.BoolPtrInput
-	// When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
-	RsaBits pulumi.IntPtrInput
-	// Should the generated certificate include an authority key identifier.
-	SetAuthorityKeyId pulumi.BoolPtrInput
-	// Should the generated certificate include a subject key identifier.
-	SetSubjectKeyId pulumi.BoolPtrInput
-	Subject         CertRequestSubjectPtrInput
-	// List of URIs for which a certificate is being requested.
-	Uris pulumi.StringArrayInput
-	// Number of hours, after initial issuing, that the certificate will remain valid.
-	ValidityPeriodHours pulumi.IntInput
-}
-
-func (RootCaGetKubeletCertificateArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*rootCaGetKubeletCertificateArgs)(nil)).Elem()
-}
-
-type RootCaGetKubeletCertificateResult struct {
-	Cert *Certificate `pulumi:"cert"`
-}
-
-type RootCaGetKubeletCertificateResultOutput struct{ *pulumi.OutputState }
-
-func (RootCaGetKubeletCertificateResultOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*RootCaGetKubeletCertificateResult)(nil)).Elem()
-}
-
-func (o RootCaGetKubeletCertificateResultOutput) Cert() CertificateOutput {
-	return o.ApplyT(func(v RootCaGetKubeletCertificateResult) *Certificate { return v.Cert }).(CertificateOutput)
-}
-
-// Creates a Certificate configured for the kube-scheduler.
-func (r *RootCa) GetServiceAccountsCertificate(ctx *pulumi.Context, args *RootCaGetServiceAccountsCertificateArgs) (RootCaGetServiceAccountsCertificateResultOutput, error) {
-	out, err := ctx.Call("kubernetes-the-hard-way:index:RootCa/getServiceAccountsCertificate", args, RootCaGetServiceAccountsCertificateResultOutput{}, r)
-	if err != nil {
-		return RootCaGetServiceAccountsCertificateResultOutput{}, err
-	}
-	return out.(RootCaGetServiceAccountsCertificateResultOutput), nil
-}
-
-type rootCaGetServiceAccountsCertificateArgs struct {
-	// Name of the algorithm to use when generating the private key.
-	Algorithm   *string  `pulumi:"algorithm"`
-	AllowedUses []string `pulumi:"allowedUses"`
-	// List of DNS names for which a certificate is being requested.
-	DnsNames []string `pulumi:"dnsNames"`
-	// TODO
-	EarlyRenewalHours *int `pulumi:"earlyRenewalHours"`
-	// When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
-	EcdsaCurve *string `pulumi:"ecdsaCurve"`
-	// List of IP addresses for which a certificate is being requested.
-	IpAddresses     []string `pulumi:"ipAddresses"`
-	IsCaCertificate *bool    `pulumi:"isCaCertificate"`
-	// When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
-	RsaBits *int `pulumi:"rsaBits"`
-	// Should the generated certificate include an authority key identifier.
-	SetAuthorityKeyId *bool `pulumi:"setAuthorityKeyId"`
-	// Should the generated certificate include a subject key identifier.
-	SetSubjectKeyId *bool               `pulumi:"setSubjectKeyId"`
-	Subject         *CertRequestSubject `pulumi:"subject"`
-	// List of URIs for which a certificate is being requested.
-	Uris []string `pulumi:"uris"`
-	// Number of hours, after initial issuing, that the certificate will remain valid.
-	ValidityPeriodHours int `pulumi:"validityPeriodHours"`
-}
-
-// The set of arguments for the GetServiceAccountsCertificate method of the RootCa resource.
-type RootCaGetServiceAccountsCertificateArgs struct {
-	// Name of the algorithm to use when generating the private key.
-	Algorithm   pulumi.StringPtrInput
-	AllowedUses pulumi.StringArrayInput
-	// List of DNS names for which a certificate is being requested.
-	DnsNames pulumi.StringArrayInput
-	// TODO
-	EarlyRenewalHours pulumi.IntPtrInput
-	// When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
-	EcdsaCurve pulumi.StringPtrInput
-	// List of IP addresses for which a certificate is being requested.
-	IpAddresses     pulumi.StringArrayInput
-	IsCaCertificate pulumi.BoolPtrInput
-	// When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
-	RsaBits pulumi.IntPtrInput
-	// Should the generated certificate include an authority key identifier.
-	SetAuthorityKeyId pulumi.BoolPtrInput
-	// Should the generated certificate include a subject key identifier.
-	SetSubjectKeyId pulumi.BoolPtrInput
-	Subject         CertRequestSubjectPtrInput
-	// List of URIs for which a certificate is being requested.
-	Uris pulumi.StringArrayInput
-	// Number of hours, after initial issuing, that the certificate will remain valid.
-	ValidityPeriodHours pulumi.IntInput
-}
-
-func (RootCaGetServiceAccountsCertificateArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*rootCaGetServiceAccountsCertificateArgs)(nil)).Elem()
-}
-
-type RootCaGetServiceAccountsCertificateResult struct {
-	Cert *Certificate `pulumi:"cert"`
-}
-
-type RootCaGetServiceAccountsCertificateResultOutput struct{ *pulumi.OutputState }
-
-func (RootCaGetServiceAccountsCertificateResultOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*RootCaGetServiceAccountsCertificateResult)(nil)).Elem()
-}
-
-func (o RootCaGetServiceAccountsCertificateResultOutput) Cert() CertificateOutput {
-	return o.ApplyT(func(v RootCaGetServiceAccountsCertificateResult) *Certificate { return v.Cert }).(CertificateOutput)
+func (o RootCaCreateCertificateResultOutput) Cert() CertificateOutput {
+	return o.ApplyT(func(v RootCaCreateCertificateResult) *Certificate { return v.Cert }).(CertificateOutput)
 }
 
 // Creates a RemoteFile resource representing the copy operation.
@@ -840,13 +360,7 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*RootCaArrayInput)(nil)).Elem(), RootCaArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*RootCaMapInput)(nil)).Elem(), RootCaMap{})
 	pulumi.RegisterOutputType(RootCaOutput{})
-	pulumi.RegisterOutputType(RootCaGetAdminCertificateResultOutput{})
-	pulumi.RegisterOutputType(RootCaGetApiServerCertificateResultOutput{})
-	pulumi.RegisterOutputType(RootCaGetControllerManagerCertificateResultOutput{})
-	pulumi.RegisterOutputType(RootCaGetKubeProxyCertificateResultOutput{})
-	pulumi.RegisterOutputType(RootCaGetKubeSchedulerCertificateResultOutput{})
-	pulumi.RegisterOutputType(RootCaGetKubeletCertificateResultOutput{})
-	pulumi.RegisterOutputType(RootCaGetServiceAccountsCertificateResultOutput{})
+	pulumi.RegisterOutputType(RootCaCreateCertificateResultOutput{})
 	pulumi.RegisterOutputType(RootCaInstallOnResultOutput{})
 	pulumi.RegisterOutputType(RootCaArrayOutput{})
 	pulumi.RegisterOutputType(RootCaMapOutput{})
