@@ -6,7 +6,11 @@ import (
 )
 
 type InstallOnArgs struct {
-	Connection remote.ConnectionArgs
-	Name       string
-	Path       pulumi.StringInput
+	Connection remote.ConnectionArgs `pulumi:"connection"`
+	Name       string                `pulumi:"name"`
+	Path       pulumi.StringInput    `pulumi:"path"`
+}
+
+type InstallOnResult struct {
+	File *RemoteFile `pulumi:"file"`
 }

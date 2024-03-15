@@ -22,7 +22,7 @@ type RootCa struct {
 
 // NewRootCa creates a new RootCa component resource.
 func NewRootCa(ctx *pulumi.Context,
-	name string, args *RootCaArgs, opts ...pulumi.ResourceOption) (pulumi.ComponentResource, error) {
+	name string, args *RootCaArgs, opts ...pulumi.ResourceOption) (*RootCa, error) {
 	if args == nil {
 		args = &RootCaArgs{}
 	}
@@ -81,37 +81,15 @@ func NewRootCa(ctx *pulumi.Context,
 	return component, nil
 }
 
-func (c *RootCa) GetAdminCertificate(ctx *pulumi.Context,
-	subject tls.CertRequestSubjectArgs) (*Certificate, error) {
-	return NewCertificate(ctx, "adminCert", &CertificateArgs{
-		KeyPairArgs: KeyPairArgs{
-			DnsNames:            pulumi.StringArray{pulumi.String("admin")},
-			EarlyRenewalHours:   pulumi.IntPtr(0),
-			IpAddresses:         pulumi.StringArray{},
-			SetAuthorityKeyId:   pulumi.BoolPtr(false),
-			SetSubjectKeyId:     pulumi.BoolPtr(false),
-			Uris:                pulumi.StringArray{},
-			ValidityPeriodHours: pulumi.Int(87600),
-		},
-		AllowedUses: pulumi.StringArray{
-			pulumi.String("digital_signature"),
-			pulumi.String("key_encipherment"),
-			pulumi.String("server_auth"),
-			pulumi.String("client_auth"),
-		},
-		CaCertPem:       c.Cert.CertPem,
-		CaPrivateKeyPem: c.Key.PrivateKeyPem,
-		IsCaCertificate: pulumi.Bool(false),
-		Subject: &tls.CertRequestSubjectArgs{
-			CommonName: pulumi.String("admin"),
-		},
-	})
-}
-
-func (c *RootCa) InstallOn(ctx *pulumi.Context, args InstallOnArgs) (*RemoteFile, error) {
-	return NewRemoteFile(ctx, args.Name, &RemoteFileArgs{
+func (c *RootCa) InstallOn(ctx *pulumi.Context, args InstallOnArgs) (*InstallOnResult, error) {
+	file, err := NewRemoteFile(ctx, args.Name, &RemoteFileArgs{
 		Connection: args.Connection,
 		Content:    c.CertPem,
 		Path:       args.Path,
 	})
+	if err != nil {
+		return nil, err
+	}
+
+	return &InstallOnResult{File: file}, nil
 }

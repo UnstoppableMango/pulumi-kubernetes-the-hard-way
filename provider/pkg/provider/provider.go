@@ -30,15 +30,9 @@ func construct(ctx *pulumi.Context, typ, name string, inputs provider.ConstructI
 		return constructRemoteFile(ctx, name, inputs, options)
 	case "kubernetes-the-hard-way:index:RootCa":
 		return constructRootCa(ctx, name, inputs, options)
-	case "kubernetes-the-hard-way:index:test":
-		return constructGeneric[RootCaArgs, Constructor[RootCaArgs]](ctx, name, inputs, &RootCaArgs{}, NewRootCa, options)
 	default:
 		return nil, errors.Errorf("unknown resource type %s", typ)
 	}
-}
-
-func variance[T pulumi.ComponentResource](resource T) pulumi.ComponentResource {
-	return resource
 }
 
 func call(ctx *pulumi.Context, call string, inputs provider.CallArgs) (*provider.CallResult, error) {
@@ -50,17 +44,22 @@ func call(ctx *pulumi.Context, call string, inputs provider.CallArgs) (*provider
 	}
 }
 
-type Constructor[T any] interface {
-	func(ctx *pulumi.Context, name string, args T, opts ...pulumi.ResourceOption) (pulumi.ComponentResource, error)
+// I haven't convinced myself yet that the jank is worth it
+
+type constructor[T any, V pulumi.ComponentResource] interface {
+	func(ctx *pulumi.Context, name string, args *T, opts ...pulumi.ResourceOption) (V, error)
 }
 
-func constructGeneric[T any, V Constructor[T]](ctx *pulumi.Context, name string, inputs provider.ConstructInputs,
-	args *T, construct V, opts pulumi.ResourceOption) (*provider.ConstructResult, error) {
+func constructGeneric[A any, R pulumi.ComponentResource, C constructor[A, R]](
+	ctx *pulumi.Context,
+	name string, inputs provider.ConstructInputs,
+	args *A, construct C,
+	opts pulumi.ResourceOption) (*provider.ConstructResult, error) {
 	if err := inputs.CopyTo(args); err != nil {
 		return nil, errors.Wrap(err, "setting args")
 	}
 
-	component, err := construct(ctx, name, *args, opts)
+	component, err := construct(ctx, name, args, opts)
 	if err != nil {
 		return nil, errors.Wrap(err, "creating component")
 	}
@@ -115,7 +114,23 @@ func constructRootCa(ctx *pulumi.Context, name string, inputs provider.Construct
 
 func callCertificateInstallOn(ctx *pulumi.Context, inputs provider.CallArgs) (*provider.CallResult, error) {
 	args := &InstallOnArgs{}
+	resource, err := inputs.CopyTo(args)
+	if err != nil {
+		return nil, err
+	}
 
+	cert, ok := resource.(*Certificate)
+	if !ok {
+		return nil, errors.New("Unable to retrieve __self__")
+	}
+
+	result, err := cert.InstallOn(ctx, *args)
+
+	return provider.NewCallResult(result)
+}
+
+func callRootCaCreateCertificate(ctx *pulumi.Context, inputs provider.CallArgs) (*provider.CallResult, error) {
+	args := &InstallOnArgs{}
 	resource, err := inputs.CopyTo(args)
 	if err != nil {
 		return nil, err

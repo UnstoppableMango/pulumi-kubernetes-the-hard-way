@@ -88,10 +88,15 @@ func NewCertificate(ctx *pulumi.Context,
 	return component, nil
 }
 
-func (c *Certificate) InstallOn(ctx *pulumi.Context, args InstallOnArgs) (*RemoteFile, error) {
-	return NewRemoteFile(ctx, args.Name, &RemoteFileArgs{
+func (c *Certificate) InstallOn(ctx *pulumi.Context, args InstallOnArgs) (*InstallOnResult, error) {
+	file, err := NewRemoteFile(ctx, args.Name, &RemoteFileArgs{
 		Connection: args.Connection,
 		Content:    c.CertPem,
 		Path:       args.Path,
 	})
+	if err != nil {
+		return nil, err
+	}
+
+	return &InstallOnResult{File: file}, nil
 }
