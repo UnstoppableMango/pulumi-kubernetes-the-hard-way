@@ -54,10 +54,10 @@ resources:
     isComponent: true
     inputProperties:
       algorithm:
-        $ref: '#/types/kubernetes-the-hard-way:index:Algorithm'
+        $ref: "#/types/kubernetes-the-hard-way:index:Algorithm"
         description: Name of the algorithm to use when generating the private key.
       ecdsaCurve:
-        $ref: '#/types/kubernetes-the-hard-way:index:EcdsaCurve'
+        $ref: "#/types/kubernetes-the-hard-way:index:EcdsaCurve"
         description: When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
       rsaBits:
         type: integer
@@ -92,7 +92,7 @@ resources:
       allowedUses:
         type: array
         items:
-          type: string
+          $ref: "#/types/kubernetes-the-hard-way:index:AllowedUsage"
       caCertPem:
         type: string
       caPrivateKeyPem:
@@ -151,10 +151,10 @@ resources:
     isComponent: true
     inputProperties:
       algorithm:
-        $ref: '#/types/kubernetes-the-hard-way:index:Algorithm'
+        $ref: "#/types/kubernetes-the-hard-way:index:Algorithm"
         description: Name of the algorithm to use when generating the private key.
       ecdsaCurve:
-        $ref: '#/types/kubernetes-the-hard-way:index:EcdsaCurve'
+        $ref: "#/types/kubernetes-the-hard-way:index:EcdsaCurve"
         description: When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
       rsaBits:
         type: integer
@@ -341,10 +341,10 @@ functions:
         __self__:
           $ref: "#/resources/kubernetes-the-hard-way:index:RootCa"
         algorithm:
-          $ref: '#/types/kubernetes-the-hard-way:index:Algorithm'
+          $ref: "#/types/kubernetes-the-hard-way:index:Algorithm"
           description: Name of the algorithm to use when generating the private key.
         ecdsaCurve:
-          $ref: '#/types/kubernetes-the-hard-way:index:EcdsaCurve'
+          $ref: "#/types/kubernetes-the-hard-way:index:EcdsaCurve"
           description: When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
         rsaBits:
           type: integer
@@ -379,7 +379,7 @@ functions:
         allowedUses:
           type: array
           items:
-            type: string
+            $ref: "#/types/kubernetes-the-hard-way:index:AllowedUsage"
         isCaCertificate:
           type: boolean
         subject:
