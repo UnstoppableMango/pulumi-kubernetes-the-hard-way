@@ -1,4 +1,25 @@
-import * as kthw from "@unmango/kubernetes-the-hard-way";
+import * as kthw from "@unmango/pulumi-kubernetes-the-hard-way";
+
+const ca = new kthw.RootCa("yea", {
+    algorithm: "RSA",
+    validityPeriodHours: 69,
+});
+
+const result = ca.createCertificate({
+    algorithm: "RSA",
+    validityPeriodHours: 69,
+    allowedUses: [ // TODO
+        "cert_signing",
+        "client_auth",
+    ],
+});
+
+const caFile = ca.installOn({
+    connection: {
+        host: '',
+    },
+    path: '',
+});
 
 const file = new kthw.RemoteFile("page", {
     connection: {
