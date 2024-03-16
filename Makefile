@@ -101,6 +101,10 @@ clean:
 		dotnet nuget remove source "$(WORKING_DIR)" \
 	; fi
 
+.PHONY: tidy
+tidy:
+	cd provider && go mod tidy
+
 .PHONY: upgrade_tools upgrade_java upgrade_pulumi upgrade_pulumictl upgrade_schematools
 upgrade_tools: upgrade_java upgrade_pulumi upgrade_pulumictl upgrade_schematools
 upgrade_java:
