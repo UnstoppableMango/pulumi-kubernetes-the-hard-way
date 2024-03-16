@@ -1,0 +1,19 @@
+name: Prerequisites Artifact Capture
+description: Compress and upload prerequisites artifacts for schema and binaries
+
+runs:
+  using: "composite"
+  steps:
+    - name: Tar artifacts
+      shell: bash
+      run: >
+        tar -zcf bin/artifacts.tar.gz -C bin
+        pulumi-resource-kubernetes-the-hard-way
+        pulumi-gen-kubernetes-the-hard-way
+        schema.yaml
+
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: artifacts.tar.gz
+        path: bin/artifacts.tar.gz

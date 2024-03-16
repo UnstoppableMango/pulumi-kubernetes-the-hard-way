@@ -21,8 +21,12 @@ func (m *module) Version() semver.Version {
 
 func (m *module) Construct(ctx *pulumi.Context, name, typ, urn string) (r pulumi.Resource, err error) {
 	switch typ {
+	case "kubernetes-the-hard-way:index:Certificate":
+		r = &Certificate{}
 	case "kubernetes-the-hard-way:index:RemoteFile":
 		r = &RemoteFile{}
+	case "kubernetes-the-hard-way:index:RootCa":
+		r = &RootCa{}
 	default:
 		return nil, fmt.Errorf("unknown resource type: %s", typ)
 	}

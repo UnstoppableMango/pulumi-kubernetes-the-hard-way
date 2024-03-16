@@ -21,8 +21,13 @@ import (
 
 // Serve launches the gRPC server for the resource provider.
 func Serve(providerName, version string, schema []byte) {
-	// Start gRPC service.
-	if err := provider.ComponentMain(providerName, version, schema, construct); err != nil {
+	if err := provider.MainWithOptions(provider.Options{
+		Name:      providerName,
+		Version:   version,
+		Schema:    schema,
+		Construct: construct,
+		Call:      call,
+	}); err != nil {
 		cmdutil.ExitError(err.Error())
 	}
 }

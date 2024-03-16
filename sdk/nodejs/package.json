@@ -24,6 +24,7 @@
     },
     "pulumi": {
         "resource": true,
-        "name": "kubernetes-the-hard-way"
+        "name": "kubernetes-the-hard-way",
+        "server": "github://api.github.com/UnstoppableMango"
     }
 }

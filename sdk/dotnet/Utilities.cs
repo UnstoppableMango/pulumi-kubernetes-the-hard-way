@@ -53,6 +53,7 @@ namespace UnMango.KubernetesTheHardWay
         {
             var dst = src ?? new global::Pulumi.InvokeOptions{};
             dst.Version = src?.Version ?? Version;
+            dst.PluginDownloadURL = src?.PluginDownloadURL ?? "github://api.github.com/UnstoppableMango";
             return dst;
         }
 

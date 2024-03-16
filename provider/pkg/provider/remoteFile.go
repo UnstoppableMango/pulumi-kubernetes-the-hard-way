@@ -19,7 +19,7 @@ import (
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
-// The set of arguments for creating a RemoteFile component resource.
+// The RemoteFileArgs for creating a RemoteFile component resource.
 type RemoteFileArgs struct {
 	Connection remote.ConnectionArgs `pulumi:"connection"`
 	Content    pulumi.StringInput    `pulumi:"content"`

@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Authors>Pulumi Corp.</Authors>
-    <Company>Pulumi Corp.</Company>
+    <Authors>UnstoppableMango</Authors>
+    <Company>UnstoppableMango</Company>
     <Description>A Pulumi implementation of Kelsey Hightower's Kubernetes the Hard Way</Description>
     <PackageLicenseExpression></PackageLicenseExpression>
     <PackageProjectUrl></PackageProjectUrl>

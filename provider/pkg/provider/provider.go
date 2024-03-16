@@ -23,18 +23,69 @@ import (
 
 func construct(ctx *pulumi.Context, typ, name string, inputs provider.ConstructInputs,
 	options pulumi.ResourceOption) (*provider.ConstructResult, error) {
-	// TODO: Add support for additional component resources here.
 	switch typ {
+	case "kubernetes-the-hard-way:index:Certificate":
+		return constructCertificate(ctx, name, inputs, options)
 	case "kubernetes-the-hard-way:index:RemoteFile":
 		return constructRemoteFile(ctx, name, inputs, options)
+	case "kubernetes-the-hard-way:index:RootCa":
+		return constructRootCa(ctx, name, inputs, options)
 	default:
 		return nil, errors.Errorf("unknown resource type %s", typ)
 	}
 }
 
-// constructRemoteFile is an implementation of Construct for the example StaticPage component.
-// It demonstrates converting the raw ConstructInputs to the component's args struct, creating
-// the component, and returning its URN and state (outputs).
+func call(ctx *pulumi.Context, call string, inputs provider.CallArgs) (*provider.CallResult, error) {
+	switch call {
+	case "kubernetes-the-hard-way:index:Certificate/installOn":
+		return callCertificateInstallOn(ctx, inputs)
+	case "kubernetes-the-hard-way:index:RootCa/createCertificate":
+		return callRootCaCreateCertificate(ctx, inputs)
+	case "kubernetes-the-hard-way:index:RootCa/installOn":
+		return callRootCaInstallOn(ctx, inputs)
+	default:
+		return nil, errors.Errorf("unknown function %s", call)
+	}
+}
+
+// I haven't convinced myself yet that the jank is worth it
+
+type constructor[T any, V pulumi.ComponentResource] interface {
+	func(ctx *pulumi.Context, name string, args *T, opts ...pulumi.ResourceOption) (V, error)
+}
+
+func constructGeneric[A any, R pulumi.ComponentResource, C constructor[A, R]](
+	ctx *pulumi.Context,
+	name string, inputs provider.ConstructInputs,
+	args *A, construct C,
+	opts pulumi.ResourceOption) (*provider.ConstructResult, error) {
+	if err := inputs.CopyTo(args); err != nil {
+		return nil, errors.Wrap(err, "setting args")
+	}
+
+	component, err := construct(ctx, name, args, opts)
+	if err != nil {
+		return nil, errors.Wrap(err, "creating component")
+	}
+
+	return provider.NewConstructResult(component)
+}
+
+func constructCertificate(ctx *pulumi.Context, name string, inputs provider.ConstructInputs,
+	options pulumi.ResourceOption) (*provider.ConstructResult, error) {
+	args := &CertificateArgs{}
+	if err := inputs.CopyTo(args); err != nil {
+		return nil, errors.Wrap(err, "setting args")
+	}
+
+	component, err := NewCertificate(ctx, name, args, options)
+	if err != nil {
+		return nil, errors.Wrap(err, "creating component")
+	}
+
+	return provider.NewConstructResult(component)
+}
+
 func constructRemoteFile(ctx *pulumi.Context, name string, inputs provider.ConstructInputs,
 	options pulumi.ResourceOption) (*provider.ConstructResult, error) {
 	args := &RemoteFileArgs{}
@@ -42,10 +93,76 @@ func constructRemoteFile(ctx *pulumi.Context, name string, inputs provider.Const
 		return nil, errors.Wrap(err, "setting args")
 	}
 
-	remoteFile, err := NewRemoteFile(ctx, name, args, options)
+	component, err := NewRemoteFile(ctx, name, args, options)
 	if err != nil {
 		return nil, errors.Wrap(err, "creating component")
 	}
 
-	return provider.NewConstructResult(remoteFile)
+	return provider.NewConstructResult(component)
+}
+
+func constructRootCa(ctx *pulumi.Context, name string, inputs provider.ConstructInputs,
+	options pulumi.ResourceOption) (*provider.ConstructResult, error) {
+	args := &RootCaArgs{}
+	if err := inputs.CopyTo(args); err != nil {
+		return nil, errors.Wrap(err, "setting args")
+	}
+
+	component, err := NewRootCa(ctx, name, args, options)
+	if err != nil {
+		return nil, errors.Wrap(err, "creating component")
+	}
+
+	return provider.NewConstructResult(component)
+}
+
+func callCertificateInstallOn(ctx *pulumi.Context, inputs provider.CallArgs) (*provider.CallResult, error) {
+	args := &InstallOnArgs{}
+	resource, err := inputs.CopyTo(args)
+	if err != nil {
+		return nil, err
+	}
+
+	cert, ok := resource.(*Certificate)
+	if !ok {
+		return nil, errors.New("Unable to retrieve __self__")
+	}
+
+	result, err := cert.InstallOn(ctx, *args)
+
+	return provider.NewCallResult(result)
+}
+
+func callRootCaCreateCertificate(ctx *pulumi.Context, inputs provider.CallArgs) (*provider.CallResult, error) {
+	args := &CreateCertificateArgs{}
+	resource, err := inputs.CopyTo(args)
+	if err != nil {
+		return nil, err
+	}
+
+	ca, ok := resource.(*RootCa)
+	if !ok {
+		return nil, errors.New("Unable to retrieve __self__")
+	}
+
+	result, err := ca.CreateCertificate(ctx, *args)
+
+	return provider.NewCallResult(result)
+}
+
+func callRootCaInstallOn(ctx *pulumi.Context, inputs provider.CallArgs) (*provider.CallResult, error) {
+	args := &InstallOnArgs{}
+	resource, err := inputs.CopyTo(args)
+	if err != nil {
+		return nil, err
+	}
+
+	cert, ok := resource.(*RootCa)
+	if !ok {
+		return nil, errors.New("Unable to retrieve __self__")
+	}
+
+	result, err := cert.InstallOn(ctx, *args)
+
+	return provider.NewCallResult(result)
 }
