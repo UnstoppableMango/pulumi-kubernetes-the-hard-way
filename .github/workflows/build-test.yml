@@ -14,10 +14,6 @@ on:
         type: boolean
         description: Skip longer running tests
         default: false
-#      oidc_arm_client_id:
-#        type: string
-#        description: The Azure Active Directory application to authenticate the OIDC tests. Empty skips the OIDC tests.
-#        default: "89380e12-5be6-486a-89ef-eea107af2f47" # AD app 'oidc-test'
       retention_days:
         type: number
         description: The number of days for which we retain assets
