@@ -91,12 +91,11 @@ clean:
 	rm -rf .make
 	rm -rf bin
 	rm -rf dist
-	rm -rf sdk/dotnet/bin
-	rm -rf sdk/dotnet/build sdk/dotnet/src
+	rm -rf sdk/dotnet/{bin,obj}
 	rm -rf sdk/nodejs/bin
-	rm -rf sdk/pulumi-kubernetes-the-hard-way
+	rm -rf sdk/go
 	rm -rf sdk/python/bin
-	rm -rf sdk/java/.gradle
+	rm -rf sdk/java/{.gradle,build}
 	if dotnet nuget list source | grep "$(WORKING_DIR)"; then \
 		dotnet nuget remove source "$(WORKING_DIR)" \
 	; fi
