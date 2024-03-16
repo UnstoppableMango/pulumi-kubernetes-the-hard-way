@@ -1,0 +1,22 @@
+# https://github.com/pulumi/pulumi-azure-native/blob/master/.github/actions/prerequisites-artifact-restore/action.yml
+name: Prerequisites Artifact Restore
+description: Restore prerequisites artifacts (schema and binaries)
+
+runs:
+  using: composite
+  steps:
+    - name: Download artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: artifacts.tar.gz
+        path: ${{ github.workspace }}/bin
+
+    - name: Unpack artifacts
+      shell: bash
+      run: tar -zxf bin/artifacts.tar.gz -C bin
+
+    - name: Restore Binary Permissions
+      shell: bash
+      run: |
+        chmod +x bin/pulumi-resource-kubernetes-the-hard-way
+        chmod +x bin/pulumi-gen-kubernetes-the-hard-way

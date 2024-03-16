@@ -149,6 +149,7 @@ bin/$(CODEGEN): bin/pulumictl .make/provider_mod_download provider/cmd/$(CODEGEN
 	cd provider && go build -o $(WORKING_DIR)/bin/$(CODEGEN) $(VERSION_FLAGS) $(PROJECT)/provider/cmd/$(CODEGEN)
 
 bin/$(LOCAL_PROVIDER_FILENAME): bin/pulumictl .make/provider_mod_download provider/cmd/$(PROVIDER)/*.go $(PROVIDER_PKG)
+	cd provider/cmd/$(PROVIDER) && VERSION=${VERSION_GENERIC} SCHEMA=${SCHEMA_FILE} go generate main.go
 	cd provider && \
 		CGO_ENABLED=0 go build -o $(WORKING_DIR)/bin/$(LOCAL_PROVIDER_FILENAME) $(VERSION_FLAGS) $(PROJECT)/provider/cmd/$(PROVIDER)
 
@@ -174,6 +175,12 @@ dist/$(PROVIDER)-v$(PROVIDER_VERSION)-%.tar.gz:
 	@mkdir -p dist
 	@# $< is the last dependency (the binary path from above)
 	tar --gzip -cf $@ README.md LICENSE -C $$(dirname $<) .
+
+dist: dist/$(PROVIDER)-v$(PROVIDER_VERSION)-linux-amd64.tar.gz
+dist: dist/$(PROVIDER)-v$(PROVIDER_VERSION)-linux-arm64.tar.gz
+dist: dist/$(PROVIDER)-v$(PROVIDER_VERSION)-darwin-amd64.tar.gz
+dist: dist/$(PROVIDER)-v$(PROVIDER_VERSION)-darwin-arm64.tar.gz
+dist: dist/$(PROVIDER)-v$(PROVIDER_VERSION)-windows-amd64.tar.gz
 
 # --------- Sentinel targets --------- #
 

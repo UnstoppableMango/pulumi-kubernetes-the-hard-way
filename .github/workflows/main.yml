@@ -1,0 +1,47 @@
+name: main
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - CHANGELOG.md
+    tags-ignore:
+      - v*
+      - sdk/*
+      - "**"
+  workflow_dispatch:
+    inputs:
+      short_test:
+        type: boolean
+        description: Skip longer running tests
+        default: false
+
+jobs:
+  version:
+    uses: ./.github/workflows/dev-version.yml
+    secrets: inherit
+
+  build_test:
+    uses: ./.github/workflows/build-test.yml
+    secrets: inherit
+    needs: version
+    with:
+      ref: ${{ github.ref }}
+      version: ${{ needs.version.outputs.version }}
+      short_test: ${{ inputs.short_test || false }}
+      retention_days: 30
+
+  publish:
+    uses: ./.github/workflows/publish.yml
+    secrets: inherit
+    needs:
+      - version
+      - build_test
+    with:
+      ref: ${{ github.ref }}
+      version: ${{ needs.version.outputs.version }}
+      prerelease: true
+      # Skip creating the GH release draft because we never publish these prereleases.
+      # Push a prerelease tag instead if we want something that's publicly visible.
+      publishGhRelease: false

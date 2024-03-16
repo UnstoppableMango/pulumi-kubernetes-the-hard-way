@@ -1,0 +1,271 @@
+name: publish
+
+on:
+  workflow_call:
+    inputs:
+      ref:
+        required: true
+        type: string
+      version:
+        required: true
+        type: string
+        description: Version to be used to publish the SDKs
+      prerelease:
+        required: true
+        type: boolean
+        description: Indicates if we're doing a pre- or proper release.
+      publishGhRelease:
+        type: boolean
+        description: Indicates if we're publishing a GitHub release.
+        default: true
+
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  PROVIDER: kubernetes-the-hard-way
+  PROVIDER_VERSION: ${{ inputs.version }}
+  PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+  PULUMI_LOCAL_NUGET: ${{ github.workspace }}/nuget
+  NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+  NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+  NUGET_PUBLISH_KEY: ${{ secrets.NUGET_PUBLISH_KEY }}
+  PYPI_USERNAME: __token__
+  PYPI_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
+  PULUMI_GO_DEP_ROOT: ${{ github.workspace }}/..
+#  PUBLISH_REPO_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+#  PUBLISH_REPO_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
+#  SIGNING_KEY_ID: ${{ secrets.JAVA_SIGNING_KEY_ID }}
+#  SIGNING_KEY: ${{ secrets.JAVA_SIGNING_KEY }}
+#  SIGNING_PASSWORD: ${{ secrets.JAVA_SIGNING_PASSWORD }}
+
+jobs:
+  publish-provider:
+    runs-on: ubuntu-latest
+    name: publish-provider
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref }}
+
+      - name: Install Languages & Frameworks
+        uses: ./.github/actions/install
+        with:
+          skip_dotnet_and_java: "true"
+
+      - run: make ensure
+
+      - name: Prerequisites artifact restore
+        uses: ./.github/actions/prerequisites-artifact-restore
+
+      - name: Ensure provider build prerequisites
+        run: |
+          # Don't include provider as that's the bit we're going to rebuild
+          make --touch codegen
+
+      - name: Build dist packages
+        run: make dist --jobs=2
+
+      - name: Upload Provider Binaries
+        run: aws s3 cp dist s3://get.pulumi.com/releases/plugins/ --recursive
+
+      - name: Create GH Release
+        uses: softprops/action-gh-release@v1
+        if: inputs.publishGhRelease
+        with:
+          tag_name: v${{ inputs.version }}
+          prerelease: ${{ inputs.prerelease }}
+          # We keep pre-releases as drafts so they're not visible until we manually publish them.
+          draft: ${{ inputs.prerelease }}
+          body: ${{ steps.schema-summary.outputs.summary }}
+          generate_release_notes: true
+          files: dist/*
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  publish-python-sdk:
+    # I'll figure this out later
+    if: false
+    runs-on: ubuntu-latest
+    name: publish-python-sdk
+    needs: publish-provider
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: Install Languages & Frameworks
+        uses: ./.github/actions/install
+
+      - name: Download python SDK
+        uses: actions/download-artifact@v4
+        with:
+          name: python-sdk.tar.gz
+          path: ${{ github.workspace}}/sdk/
+
+      - name: Uncompress python SDK
+        run: tar -zxf ${{github.workspace}}/sdk/python.tar.gz -C
+          ${{github.workspace}}/sdk/python
+
+      - name: Install Twine
+        run: python -m pip install pip twine
+
+      - name: Publish PyPi Package
+        run: >
+          twine upload
+          -u "${PYPI_USERNAME}"
+          -p "${PYPI_PASSWORD}"
+          "${{ github.workspace }}/sdk/python/bin/dist/*"
+          --skip-existing
+          --verbose
+
+  publish-dotnet-sdk:
+    # I'll figure this out later
+    if: false
+    runs-on: ubuntu-latest
+    name: publish-dotnet-sdk
+    needs: publish-provider
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: Install Languages & Frameworks
+        uses: ./.github/actions/install
+
+      - name: Download dotnet SDK
+        uses: actions/download-artifact@v4
+        with:
+          name: dotnet-sdk.tar.gz
+          path: ${{ github.workspace}}/sdk/
+
+      - name: Uncompress dotnet SDK
+        run: tar -zxf ${{github.workspace}}/sdk/dotnet.tar.gz -C
+          ${{github.workspace}}/sdk/dotnet
+
+      - name: Publish NuGet Package
+        run: | # TODO: Update here if the namespace jank ever gets worked out
+          find "sdk/dotnet/bin/Debug/" -name 'UnMango.*.nupkg' \
+            -exec dotnet nuget push -k "${NUGET_PUBLISH_KEY}" -s https://api.nuget.org/v3/index.json {} ';'
+
+  publish-nodejs-sdk:
+    runs-on: ubuntu-latest
+    name: publish-nodejs-sdk
+    needs: publish-provider
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: Install Languages & Frameworks
+        uses: ./.github/actions/install
+
+      - name: Download nodejs SDK
+        uses: actions/download-artifact@v4
+        with:
+          name: nodejs-sdk.tar.gz
+          path: ${{ github.workspace}}/sdk/
+
+      - name: Uncompress nodejs SDK
+        run: tar -zxf ${{github.workspace}}/sdk/nodejs.tar.gz -C
+          ${{github.workspace}}/sdk/nodejs
+
+      - name: Calculate tag
+        id: tag
+        run: echo "tag=$(./.github/scripts/calculate-npm-tag.sh "${{ inputs.version }}")" >> "$GITHUB_OUTPUT"
+
+      - name: Publish Node.JS SDK
+        working-directory: sdk/nodejs/bin
+        run: npm publish --tag "${{ steps.tag.outputs.tag }}"
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+  publish-java-sdk:
+    # I'll figure this out later
+    if: false
+    runs-on: ubuntu-latest
+    name: publish-java-sdk
+    needs: publish-provider
+    env:
+      PACKAGE_VERSION: ${{ inputs.version }}
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: Install Languages & Frameworks
+        uses: ./.github/actions/install
+
+      - name: Download java SDK
+        uses: actions/download-artifact@v4
+        with:
+          name: java-sdk.tar.gz
+          path: ${{ github.workspace}}/sdk/
+
+      - name: Uncompress java SDK
+        run: tar -zxf ${{github.workspace}}/sdk/java.tar.gz -C
+          ${{github.workspace}}/sdk/java
+
+      - name: Publish Java SDK
+        # Maven doesn't use lock files and version ranges can't exclude prereleases.
+        # Therefore we can't publish prereleases without risking breaking customers.
+        # All other ecosystems handle prereleases correctly, Maven is the exception.
+        if: inputs.prerelease == false
+        uses: gradle/gradle-build-action@9b814496b50909128c6a52622b416c5ffa04db49
+        with:
+          arguments: publishToSonatype closeAndReleaseSonatypeStagingRepository
+          build-root-directory: ./sdk/java
+          gradle-version: 7.4.1
+
+  publish-go-sdk:
+    # I'll figure this out later
+    if: false
+    runs-on: ubuntu-latest
+    name: publish-go-sdk
+    needs: publish-provider
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: Install Languages & Frameworks
+        uses: ./.github/actions/install
+#
+#      - name: Checkout prerelease branch
+#        if: inputs.prerelease == true
+#        working-directory: sdk/go
+#        run: git checkout -b ${{ inputs.version }}
+
+#      - name: Checkout master branch
+#        if: inputs.prerelease == false
+#        working-directory: sdk/go
+#        run: git checkout master
+
+      - name: Clear all source files
+        working-directory: sdk/go
+        run: find . -maxdepth 1 -not -name '.*' -exec rm -rf {} \;
+
+      - name: Download Go SDK artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: pulumi-kubernetes-the-hard-way.tar.gz
+          path: ${{ github.workspace}}/sdk/
+
+      - name: UnTar Go SDK artifact
+        run: |
+          mkdir -p ${{github.workspace}}/sdk/go
+          tar -zxf ${{ github.workspace}}/sdk/pulumi-kubernetes-the-hard-way.tar.gz -C ${{github.workspace}}/sdk/go
+
+      - name: Prepare for publishing
+        run: make prepublish_go
+
+      - name: Commit and tag
+        working-directory: sdk/go
+        run: |
+          git add .
+          git commit -m "v${{ inputs.version }}"
+          ../../.github/scripts/tag-go-module.sh ${{ inputs.version }}
+
+      - name: Publish to prerelease branch
+        if: inputs.prerelease == true
+        working-directory: sdk/go
+        run: git push -u origin ${{ inputs.version }} --tags
+
+      - name: Publish to master branch
+        if: inputs.prerelease == false
+        working-directory: sdk/go
+        run: git push -u origin main --tags
