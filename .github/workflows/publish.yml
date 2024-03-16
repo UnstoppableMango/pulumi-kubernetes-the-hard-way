@@ -65,9 +65,6 @@ jobs:
       - name: Build dist packages
         run: make dist --jobs=2
 
-      - name: Upload Provider Binaries
-        run: aws s3 cp dist s3://get.pulumi.com/releases/plugins/ --recursive
-
       - name: Create GH Release
         uses: softprops/action-gh-release@v2
         if: inputs.publishGhRelease
