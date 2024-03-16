@@ -161,6 +161,7 @@ bin/windows-amd64/$(PROVIDER).exe: TARGET := windows-amd64
 bin/%/$(PROVIDER) bin/%/$(PROVIDER).exe: bin/pulumictl .make/provider_mod_download provider/cmd/$(PROVIDER)/*.go $(PROVIDER_PKG)
 	@# check the TARGET is set
 	test $(TARGET)
+	cd provider/cmd/$(PROVIDER) && VERSION=${VERSION_GENERIC} SCHEMA=${SCHEMA_FILE} go generate main.go
 	cd provider && \
 		export GOOS=$$(echo "$(TARGET)" | cut -d "-" -f 1) && \
 		export GOARCH=$$(echo "$(TARGET)" | cut -d "-" -f 2) && \
