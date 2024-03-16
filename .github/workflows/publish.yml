@@ -69,7 +69,7 @@ jobs:
         run: aws s3 cp dist s3://get.pulumi.com/releases/plugins/ --recursive
 
       - name: Create GH Release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         if: inputs.publishGhRelease
         with:
           tag_name: v${{ inputs.version }}
