@@ -19,9 +19,7 @@ runs:
       uses: ./.github/actions/prerequisites-artifact-restore
 
     - name: Mark prerequisites as up-to-date
-      run: |
-        make prebuild
-        make --touch codegen provider
+      run: make --touch codegen provider
       shell: bash
 
     - name: Download ${{ inputs.language  }} SDK
