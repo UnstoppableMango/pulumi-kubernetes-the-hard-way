@@ -169,7 +169,7 @@ jobs:
 
       - name: Publish Node.JS SDK
         working-directory: sdk/nodejs/bin
-        run: npm publish --tag "${{ steps.tag.outputs.tag }}"
+        run: npm publish --tag "${{ steps.tag.outputs.tag }}" --access public
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
