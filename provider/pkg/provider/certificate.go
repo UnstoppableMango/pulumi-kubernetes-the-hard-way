@@ -36,7 +36,7 @@ func NewCertificate(ctx *pulumi.Context,
 	}
 
 	key, err := tls.NewPrivateKey(ctx, name, &tls.PrivateKeyArgs{
-		Algorithm:  args.Algorithm,
+		Algorithm:  pulumi.String(args.Algorithm),
 		EcdsaCurve: args.EcdsaCurve,
 		RsaBits:    args.RsaBits,
 	}, pulumi.Parent(component))

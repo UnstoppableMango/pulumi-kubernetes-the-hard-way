@@ -5,9 +5,13 @@ import (
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
+type Algorithm string
 type AllowedUse string
 
 const (
+	Ecdsa             Algorithm  = "ECDSA"
+	Ed25519           Algorithm  = "ED25519"
+	Rsa               Algorithm  = "RSA"
 	AnyExtended       AllowedUse = "any_extended"
 	CertSigning       AllowedUse = "cert_signing"
 	ClientAuth        AllowedUse = "client_auth"
@@ -31,6 +35,7 @@ const (
 type KeyPairArgs struct {
 	tls.PrivateKeyArgs
 
+	Algorithm Algorithm `pulumi:"algorithm"`
 	// List of DNS names for which a certificate is being requested (i.e. certificate subjects).
 	DnsNames pulumi.StringArrayInput `pulumi:"dnsNames"`
 	// The resource will consider the certificate to have expired the given number of hours before its actual expiry time. This
