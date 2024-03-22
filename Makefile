@@ -40,8 +40,7 @@ ensure: bin/pulumictl
 	yarn install
 
 # Binaries
-.PHONY: codegen provider
-codegen: bin/$(CODEGEN)
+.PHONY: provider
 provider: bin/$(LOCAL_PROVIDER_FILENAME)
 
 .PHONY: install_provider
@@ -65,7 +64,7 @@ local_generate_code: generate_go
 local_generate: local_generate_code
 
 .PHONY: build only_build build_sdks build_nodejs build_python build_dotnet build_java build_go
-build: codegen local_generate provider build_sdks
+build: local_generate provider build_sdks
 # Required for the codegen action that runs in pulumi/pulumi
 only_build: build
 build_sdks: build_nodejs build_dotnet build_python build_go build_java
@@ -92,16 +91,11 @@ clean:
 	rm -rf dist
 	rm -rf sdk/dotnet/{bin,obj}
 	rm -rf sdk/nodejs/bin
-	rm -rf sdk/go
 	rm -rf sdk/python/bin
 	rm -rf sdk/java/{.gradle,build}
-	if dotnet nuget list source | grep "$(WORKING_DIR)"; then \
+	@if dotnet nuget list source | grep "$(WORKING_DIR)"; then \
 		dotnet nuget remove source "$(WORKING_DIR)" \
 	; fi
-
-.PHONY: tidy
-tidy:
-	cd provider && go mod tidy
 
 .PHONY: upgrade_tools upgrade_java upgrade_pulumi upgrade_pulumictl upgrade_schematools
 upgrade_tools: upgrade_java upgrade_pulumi upgrade_pulumictl upgrade_schematools
