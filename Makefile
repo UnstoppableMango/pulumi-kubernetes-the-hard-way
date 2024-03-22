@@ -37,7 +37,6 @@ _ := $(shell mkdir -p .make)
 .PHONY: default ensure
 default: provider build_sdks
 ensure: bin/pulumictl
-	yarn install
 
 # Binaries
 .PHONY: provider
