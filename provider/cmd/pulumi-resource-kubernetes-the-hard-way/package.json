@@ -1,4 +1,6 @@
 {
+    "name": "pulumi-kubernetes-the-hard-way",
+    "license": "Apache-2.0",
     "version": "${VERSION}",
     "bin": "bin/index.js",
     "dependencies": {

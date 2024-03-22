@@ -2,7 +2,6 @@ PACK            := kubernetes-the-hard-way
 PROJECT         := github.com/unstoppablemango/pulumi-${PACK}
 
 PROVIDER        := pulumi-resource-${PACK}
-CODEGEN         := pulumi-gen-${PACK}
 
 WORKING_DIR     := $(shell pwd)
 SCHEMA_FILE     := ${WORKING_DIR}/schema.yaml
@@ -153,7 +152,7 @@ bin/$(LOCAL_PROVIDER_FILENAME): bin/pulumictl provider/cmd/$(PROVIDER)/*.ts $(PR
 	cd provider/cmd/${PROVIDER}/ && \
 		yarn install && \
 		yarn tsc && \
-		cp package.json schema.json ./bin && \
+		cp package.json schema.yaml ./bin && \
 		sed -i.bak -e "s/\$${VERSION}/$(PROVIDER_VERSION)/g" bin/package.json
 
 bin/linux-amd64/$(PROVIDER): TARGET := linux-amd64
@@ -299,5 +298,6 @@ dist: dist/$(PROVIDER)-v$(PROVIDER_VERSION)-windows-amd64.tar.gz
 	@touch $@
 
 .make/install_provider: bin/pulumictl provider/cmd/$(PROVIDER)/* $(PROVIDER_PKG)
-	cd provider && go install $(VERSION_FLAGS) $(PROJECT)/provider/cmd/$(PROVIDER)
+	cd provider/cmd/${PROVIDER}/ && \
+		yarn run pkg . ${PKG_ARGS} --target node16 --output ${WORKING_DIR}/bin/${PROVIDER}
 	@touch $@
