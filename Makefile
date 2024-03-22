@@ -3,12 +3,11 @@ PROJECT         := github.com/unstoppablemango/pulumi-${PACK}
 
 PROVIDER        := pulumi-resource-${PACK}
 CODEGEN         := pulumi-gen-${PACK}
-VERSION_PATH    := provider/pkg/version.Version
 
 WORKING_DIR     := $(shell pwd)
 SCHEMA_FILE     := ${WORKING_DIR}/schema.yaml
 
-PROVIDER_PKG    := $(shell find provider/pkg -type f)
+PROVIDER_PKG    := $(shell find provider/cmd/pulumi-resource-kubernetes-the-hard-way -type f)
 
 GOOS ?= $(shell go env GOOS)
 GOARCH ?= $(shell go env GOARCH)
@@ -38,7 +37,8 @@ _ := $(shell mkdir -p .make)
 
 .PHONY: default ensure
 default: provider build_sdks
-ensure: bin/pulumictl .make/provider_mod_download
+ensure: bin/pulumictl
+	yarn install
 
 # Binaries
 .PHONY: codegen provider
@@ -145,20 +145,23 @@ bin/schema-tools: .schema-tools.version
 	@touch bin/schema-tools
 	@echo "schema-tools" $$(./bin/schema-tools version)
 
-bin/$(CODEGEN): bin/pulumictl .make/provider_mod_download provider/cmd/$(CODEGEN)/* $(PROVIDER_PKG)
+bin/$(CODEGEN): bin/pulumictl provider/cmd/$(CODEGEN)/* $(PROVIDER_PKG)
 	cd provider && go build -o $(WORKING_DIR)/bin/$(CODEGEN) $(VERSION_FLAGS) $(PROJECT)/provider/cmd/$(CODEGEN)
 
-bin/$(LOCAL_PROVIDER_FILENAME): bin/pulumictl .make/provider_mod_download provider/cmd/$(PROVIDER)/*.go $(PROVIDER_PKG)
-	cd provider/cmd/$(PROVIDER) && VERSION=${VERSION_GENERIC} SCHEMA=${SCHEMA_FILE} go generate main.go
-	cd provider && \
-		CGO_ENABLED=0 go build -o $(WORKING_DIR)/bin/$(LOCAL_PROVIDER_FILENAME) $(VERSION_FLAGS) $(PROJECT)/provider/cmd/$(PROVIDER)
+bin/$(LOCAL_PROVIDER_FILENAME): bin/pulumictl provider/cmd/$(PROVIDER)/*.ts $(PROVIDER_PKG)
+	cp ${SCHEMA_FILE} provider/cmd/${PROVIDER}/
+	cd provider/cmd/${PROVIDER}/ && \
+		yarn install && \
+		yarn tsc && \
+		cp package.json schema.json ./bin && \
+		sed -i.bak -e "s/\$${VERSION}/$(PROVIDER_VERSION)/g" bin/package.json
 
 bin/linux-amd64/$(PROVIDER): TARGET := linux-amd64
 bin/linux-arm64/$(PROVIDER): TARGET := linux-arm64
 bin/darwin-amd64/$(PROVIDER): TARGET := darwin-amd64
 bin/darwin-arm64/$(PROVIDER): TARGET := darwin-arm64
 bin/windows-amd64/$(PROVIDER).exe: TARGET := windows-amd64
-bin/%/$(PROVIDER) bin/%/$(PROVIDER).exe: bin/pulumictl .make/provider_mod_download provider/cmd/$(PROVIDER)/*.go $(PROVIDER_PKG)
+bin/%/$(PROVIDER) bin/%/$(PROVIDER).exe: bin/pulumictl provider/cmd/$(PROVIDER)/*.go $(PROVIDER_PKG)
 	@# check the TARGET is set
 	test $(TARGET)
 	cd provider/cmd/$(PROVIDER) && VERSION=${VERSION_GENERIC} SCHEMA=${SCHEMA_FILE} go generate main.go
@@ -185,36 +188,32 @@ dist: dist/$(PROVIDER)-v$(PROVIDER_VERSION)-windows-amd64.tar.gz
 
 # --------- Sentinel targets --------- #
 
-.make/provider_mod_download: provider/go.mod provider/go.sum
-	cd provider && go mod download
-	@touch $@
-
-.make/generate_java: bin/pulumictl .pulumi/bin/pulumi schema.yaml
+.make/generate_java: bin/pulumictl .pulumi/bin/pulumi $(SCHEMA_FILE)
 	rm -rf sdk/java
 	.pulumi/bin/pulumi package gen-sdk $(SCHEMA_FILE) --language java
 	@touch $@
 
-.make/generate_nodejs: bin/pulumictl .pulumi/bin/pulumi schema.yaml
+.make/generate_nodejs: bin/pulumictl .pulumi/bin/pulumi $(SCHEMA_FILE)
 	rm -rf sdk/nodejs
 	.pulumi/bin/pulumi package gen-sdk $(SCHEMA_FILE) --language nodejs
 	sed -i.bak -e "s/sourceMap/inlineSourceMap/g" sdk/nodejs/tsconfig.json
 	rm sdk/nodejs/tsconfig.json.bak
 	@touch $@
 
-.make/generate_python: bin/pulumictl .pulumi/bin/pulumi schema.yaml
+.make/generate_python: bin/pulumictl .pulumi/bin/pulumi $(SCHEMA_FILE)
 	rm -rf sdk/python
 	.pulumi/bin/pulumi package gen-sdk $(SCHEMA_FILE) --language python
 	cp README.md sdk/python
 	@touch $@
 
-.make/generate_dotnet: bin/pulumictl .pulumi/bin/pulumi schema.yaml
+.make/generate_dotnet: bin/pulumictl .pulumi/bin/pulumi $(SCHEMA_FILE)
 	rm -rf sdk/dotnet
 	.pulumi/bin/pulumi package gen-sdk $(SCHEMA_FILE) --language dotnet
 #	sed -i.bak -e "s/<\/Nullable>/<\/Nullable>\n    <UseSharedCompilation>false<\/UseSharedCompilation>/g" sdk/dotnet/UnMango.KubernetesTheHardWay.csproj
 #	rm sdk/dotnet/UnMango.KubernetesTheHardWay.csproj.bak
 	@touch $@
 
-.make/generate_go: bin/pulumictl .pulumi/bin/pulumi schema.yaml
+.make/generate_go: bin/pulumictl .pulumi/bin/pulumi $(SCHEMA_FILE)
 	rm -rf sdk/go
 	.pulumi/bin/pulumi package gen-sdk $(SCHEMA_FILE) --language go
 	@touch $@
@@ -299,6 +298,6 @@ dist: dist/$(PROVIDER)-v$(PROVIDER_VERSION)-windows-amd64.tar.gz
 	; fi
 	@touch $@
 
-.make/install_provider: bin/pulumictl .make/provider_mod_download provider/cmd/$(PROVIDER)/* $(PROVIDER_PKG)
+.make/install_provider: bin/pulumictl provider/cmd/$(PROVIDER)/* $(PROVIDER_PKG)
 	cd provider && go install $(VERSION_FLAGS) $(PROJECT)/provider/cmd/$(PROVIDER)
 	@touch $@

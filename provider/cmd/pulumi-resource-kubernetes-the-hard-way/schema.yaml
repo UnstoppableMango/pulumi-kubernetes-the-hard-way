@@ -1,0 +1,421 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/pulumi/pulumi/master/pkg/codegen/schema/pulumi.json
+---
+name: kubernetes-the-hard-way
+description: "A Pulumi implementation of Kelsey Hightower's Kubernetes the Hard Way"
+repository: https://github.com/UnstoppableMango/pulumi-kubernetes-the-hard-way
+keywords:
+  - pulumi
+  - command
+  - tls
+  - kubernetes
+  - category/utility # idk
+  - kind/component
+pluginDownloadURL: github://api.github.com/UnstoppableMango
+publisher: UnstoppableMango
+attribution: https://github.com/kelseyhightower/kubernetes-the-hard-way/
+language:
+  csharp:
+    rootNamespace: UnMango # TODO: Name that works
+    dictionaryConstructors: true
+    packageReferences:
+      Pulumi: 3.*
+      Pulumi.Command: 0.9.*
+      Pulumi.Tls: 5.*
+  go:
+    generateResourceContainerTypes: true
+    importBasePath: github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/sdk/go/kubernetes-the-hard-way
+  nodejs:
+    packageName: "@unmango/pulumi-kubernetes-the-hard-way"
+    dependencies:
+      "@pulumi/pulumi": "^3.0.0"
+      "@pulumi/command": "^0.9.0"
+      "@pulumi/tls": "^5.0.0"
+    devDependencies:
+      typescript: "^3.7.0"
+  python:
+    pyproject:
+      enabled: true
+    requires:
+      pulumi: ">=3.0.0,<4.0.0"
+      pulumi-command: ">=0.9.0,<1.0.0"
+      pulumi-tls: ">=5.0.0,<6.0.0"
+  java:
+    basePackage: com.unmango # TODO: Name that works
+    buildFiles: gradle
+    gradleNexusPublishPluginVersion: 1.1.0
+    dependencies:
+      com.google.code.findbugs:jsr305: 3.0.2
+      com.google.code.gson:gson: 2.8.9
+      com.pulumi:pulumi: 0.9.9
+      com.pulumi:command: 0.9.2
+      com.pulumi:tls: 5.0.0
+resources:
+  kubernetes-the-hard-way:index:Certificate:
+    isComponent: true
+    inputProperties:
+      algorithm:
+        $ref: "#/types/kubernetes-the-hard-way:index:Algorithm"
+        description: Name of the algorithm to use when generating the private key.
+      ecdsaCurve:
+        $ref: "#/types/kubernetes-the-hard-way:index:EcdsaCurve"
+        description: When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
+      rsaBits:
+        type: integer
+        description: When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
+      dnsNames:
+        type: array
+        items:
+          type: string
+        description: List of DNS names for which a certificate is being requested.
+      earlyRenewalHours:
+        type: integer
+        description: TODO
+      ipAddresses:
+        type: array
+        items:
+          type: string
+        description: List of IP addresses for which a certificate is being requested.
+      setAuthorityKeyId:
+        type: boolean
+        description: Should the generated certificate include an authority key identifier.
+      setSubjectKeyId:
+        type: boolean
+        description: Should the generated certificate include a subject key identifier.
+      uris:
+        type: array
+        items:
+          type: string
+        description: List of URIs for which a certificate is being requested.
+      validityPeriodHours:
+        type: integer
+        description: Number of hours, after initial issuing, that the certificate will remain valid.
+      allowedUses:
+        type: array
+        items:
+          $ref: "#/types/kubernetes-the-hard-way:index:AllowedUsage"
+      caCertPem:
+        type: string
+      caPrivateKeyPem:
+        type: string
+      isCaCertificate:
+        type: boolean
+      subject:
+        $ref: "/tls/v5.0.0/schema.json#/types/tls:index/CertRequestSubject:CertRequestSubject"
+    requiredInputs:
+      - allowedUses
+      - caCertPem
+      - caPrivateKeyPem
+      - validityPeriodHours
+    properties:
+      cert:
+        $ref: "/tls/v5.0.0/schema.json#/resources/tls:index/locallySignedCert:LocallySignedCert"
+      certPem:
+        type: string
+      csr:
+        $ref: "/tls/v5.0.0/schema.json#/resources/tls:index/certRequest:CertRequest"
+      key:
+        $ref: "/tls/v5.0.0/schema.json#/resources/tls:index/privateKey:PrivateKey"
+      keyPem:
+        type: string
+    required:
+      - cert
+      - certPem
+      - csr
+      - key
+      - keyPem
+    methods:
+      installOn: kubernetes-the-hard-way:index:Certificate/installOn
+  kubernetes-the-hard-way:index:RemoteFile:
+    isComponent: true
+    inputProperties:
+      connection:
+        $ref: "/command/v0.9.0/schema.json#/types/command:remote:Connection"
+        description: The connection details.
+      content:
+        type: string
+        description: The content of the file.
+      path:
+        type: string
+        description: The path to the file on the remote host.
+    requiredInputs:
+      - connection
+      - content
+      - path
+    properties:
+      command:
+        $ref: "/command/v0.9.0/schema.json#/resources/command:remote:Command"
+        description: The command resource.
+    required:
+      - command
+  kubernetes-the-hard-way:index:RootCa:
+    isComponent: true
+    inputProperties:
+      algorithm:
+        $ref: "#/types/kubernetes-the-hard-way:index:Algorithm"
+        description: Name of the algorithm to use when generating the private key.
+      ecdsaCurve:
+        $ref: "#/types/kubernetes-the-hard-way:index:EcdsaCurve"
+        description: When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
+      rsaBits:
+        type: integer
+        description: When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
+      dnsNames:
+        type: array
+        items:
+          type: string
+        description: List of DNS names for which a certificate is being requested.
+      earlyRenewalHours:
+        type: integer
+        description: TODO
+      ipAddresses:
+        type: array
+        items:
+          type: string
+        description: List of IP addresses for which a certificate is being requested.
+      setAuthorityKeyId:
+        type: boolean
+        description: Should the generated certificate include an authority key identifier.
+      setSubjectKeyId:
+        type: boolean
+        description: Should the generated certificate include a subject key identifier.
+      uris:
+        type: array
+        items:
+          type: string
+        description: List of URIs for which a certificate is being requested.
+      validityPeriodHours:
+        type: integer
+        description: Number of hours, after initial issuing, that the certificate will remain valid.
+      subject:
+        $ref: "/tls/v5.0.0/schema.json#/types/tls:index/SelfSignedCertSubject:SelfSignedCertSubject"
+    requiredInputs:
+      - validityPeriodHours
+    properties:
+      cert:
+        $ref: "/tls/v5.0.0/schema.json#/resources/tls:index/selfSignedCert:SelfSignedCert"
+      certPem:
+        type: string
+      key:
+        $ref: "/tls/v5.0.0/schema.json#/resources/tls:index/privateKey:PrivateKey"
+      keyPem:
+        type: string
+    required:
+      - cert
+      - certPem
+      - key
+      - keyPem
+    methods:
+      createCertificate: kubernetes-the-hard-way:index:RootCa/createCertificate
+      installOn: kubernetes-the-hard-way:index:RootCa/installOn
+types:
+  kubernetes-the-hard-way:index:Algorithm:
+    description: TODO
+    type: string
+    enum:
+      - value: RSA
+      - value: ECDSA
+      - value: ED25519
+  kubernetes-the-hard-way:index:AllowedUsage:
+    description: TODO
+    type: string
+    enum:
+      - value: cert_signing
+      - value: client_auth
+      - value: crl_signing
+      - value: digital_signature
+      - value: key_encipherment
+      - value: server_auth
+  kubernetes-the-hard-way:index:EcdsaCurve:
+    description: TODO
+    type: string
+    enum:
+      - value: P224
+      - value: P256
+      - value: P384
+      - value: P521
+  # https://github.com/pulumi/pulumi-tls/blob/620cb07a95049672bdaab17bf86fade26db051b1/provider/cmd/pulumi-resource-tls/schema.json#L84-L127
+  kubernetes-the-hard-way:index:CertRequestSubject:
+    type: object
+    properties:
+      commonName:
+        type: string
+        description: "Distinguished name: CN"
+      country:
+        type: string
+        description: "Distinguished name: C"
+      locality:
+        type: string
+        description: "Distinguished name: L"
+      organization:
+        type: string
+        description: "Distinguished name: O"
+      organizationalUnit:
+        type: string
+        description: "Distinguished name: OU"
+      postalCode:
+        type: string
+        description: "Distinguished name: PC"
+      province:
+        type: string
+        description: "Distinguished name: ST"
+      serialNumber:
+        type: string
+        description: "Distinguished name: SERIALNUMBER"
+      streetAddresses:
+        type: array
+        items:
+          type: string
+        description: "Distinguished name: STREET"
+  # https://github.com/pulumi/pulumi-command/blob/f122b7ae8d9f2b7649a28b170c6141216a209f04/provider/cmd/pulumi-resource-command/schema.json#L470-L522
+  kubernetes-the-hard-way:index:Connection:
+    description: Instructions for how to connect to a remote endpoint.
+    type: object
+    properties:
+      agentSocketPath:
+        type: string
+        description: SSH Agent socket path. Default to environment variable SSH_AUTH_SOCK if present.
+      dialErrorLimit:
+        type: integer
+        default: 10
+        description: Max allowed errors on trying to dial the remote host. -1 set count to unlimited. Default value is 10.
+      host:
+        type: string
+        description: The address of the resource to connect to.
+      password:
+        type: string
+        description: The password we should use for the connection.
+      perDialTimeout:
+        type: integer
+        default: 15
+        description: Max number of seconds for each dial attempt. 0 implies no maximum. Default value is 15 seconds.
+      port:
+        type: integer
+        default: 22
+        description: The port to connect to.
+      privateKey:
+        type: string
+        description: The contents of an SSH key to use for the connection. This takes preference over the password if provided.
+      privateKeyPassword:
+        type: string
+        description: The password to use in case the private key is encrypted.
+      # This also causes the rogue module error
+      # proxy:
+      #   $ref: "/command/v0.9.0/schema.json#/types/command:remote:ProxyConnection"
+      #   description: The connection settings for the bastion/proxy host.
+      user:
+        type: string
+        default: root
+        description: The user that we should use for the connection.
+    required:
+      - host
+functions:
+  kubernetes-the-hard-way:index:Certificate/installOn:
+    description: Creates a RemoteFile resource representing the copy operation.
+    inputs:
+      properties:
+        __self__:
+          $ref: "#/resources/kubernetes-the-hard-way:index:Certificate"
+        connection:
+          $ref: "#/types/kubernetes-the-hard-way:index:Connection"
+          description: The connection details.
+        name:
+          type: string
+          plain: true
+        path:
+          type: string
+          description: The path to install to.
+      required:
+        - __self__
+        - connection
+        - name
+    outputs:
+      properties:
+        file:
+          $ref: "#/resources/kubernetes-the-hard-way:index:RemoteFile"
+      required:
+        - file
+  kubernetes-the-hard-way:index:RootCa/createCertificate:
+    description: Creates a Certificate configured for the current authority.
+    inputs:
+      properties:
+        __self__:
+          $ref: "#/resources/kubernetes-the-hard-way:index:RootCa"
+        name:
+          type: string
+          plain: true
+        algorithm:
+          $ref: "#/types/kubernetes-the-hard-way:index:Algorithm"
+          description: Name of the algorithm to use when generating the private key.
+        ecdsaCurve:
+          $ref: "#/types/kubernetes-the-hard-way:index:EcdsaCurve"
+          description: When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
+        rsaBits:
+          type: integer
+          description: When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
+        dnsNames:
+          type: array
+          items:
+            type: string
+          description: List of DNS names for which a certificate is being requested.
+        earlyRenewalHours:
+          type: integer
+          description: TODO
+        ipAddresses:
+          type: array
+          items:
+            type: string
+          description: List of IP addresses for which a certificate is being requested.
+        setAuthorityKeyId:
+          type: boolean
+          description: Should the generated certificate include an authority key identifier.
+        setSubjectKeyId:
+          type: boolean
+          description: Should the generated certificate include a subject key identifier.
+        uris:
+          type: array
+          items:
+            type: string
+          description: List of URIs for which a certificate is being requested.
+        validityPeriodHours:
+          type: integer
+          description: Number of hours, after initial issuing, that the certificate will remain valid.
+        allowedUses:
+          type: array
+          items:
+            $ref: "#/types/kubernetes-the-hard-way:index:AllowedUsage"
+        isCaCertificate:
+          type: boolean
+        subject:
+          # $ref: "/tls/v5.0.0/schema.json#/types/tls:index/CertRequestSubject:CertRequestSubject"
+          $ref: "#/types/kubernetes-the-hard-way:index:CertRequestSubject"
+      required:
+        - __self__
+        - allowedUses
+        - validityPeriodHours
+    outputs:
+      properties:
+        cert:
+          $ref: "#/resources/kubernetes-the-hard-way:index:Certificate"
+      required:
+        - cert
+  kubernetes-the-hard-way:index:RootCa/installOn:
+    description: Creates a RemoteFile resource representing the copy operation.
+    inputs:
+      properties:
+        __self__:
+          $ref: "#/resources/kubernetes-the-hard-way:index:RootCa"
+        connection:
+          $ref: "#/types/kubernetes-the-hard-way:index:Connection"
+          description: The connection details.
+        path:
+          type: string
+          description: The path to install to.
+      required:
+        - __self__
+        - connection
+    outputs:
+      properties:
+        file:
+          $ref: "#/resources/kubernetes-the-hard-way:index:RemoteFile"
+      required:
+        - file
