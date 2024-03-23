@@ -16,10 +16,12 @@ import (
 type RootCa struct {
 	pulumi.ResourceState
 
-	Cert    tls.SelfSignedCertOutput `pulumi:"cert"`
-	CertPem pulumi.StringOutput      `pulumi:"certPem"`
-	Key     tls.PrivateKeyOutput     `pulumi:"key"`
-	KeyPem  pulumi.StringOutput      `pulumi:"keyPem"`
+	AllowedUses   AllowedUsageArrayOutput  `pulumi:"allowedUses"`
+	Cert          tls.SelfSignedCertOutput `pulumi:"cert"`
+	CertPem       pulumi.StringOutput      `pulumi:"certPem"`
+	Key           tls.PrivateKeyOutput     `pulumi:"key"`
+	PrivateKeyPem pulumi.StringOutput      `pulumi:"privateKeyPem"`
+	PublicKeyPem  pulumi.StringOutput      `pulumi:"publicKeyPem"`
 }
 
 // NewRootCa registers a new resource with the given unique name, arguments, and options.
@@ -301,6 +303,10 @@ func (o RootCaOutput) ToRootCaOutputWithContext(ctx context.Context) RootCaOutpu
 	return o
 }
 
+func (o RootCaOutput) AllowedUses() AllowedUsageArrayOutput {
+	return o.ApplyT(func(v *RootCa) AllowedUsageArrayOutput { return v.AllowedUses }).(AllowedUsageArrayOutput)
+}
+
 func (o RootCaOutput) Cert() tls.SelfSignedCertOutput {
 	return o.ApplyT(func(v *RootCa) tls.SelfSignedCertOutput { return v.Cert }).(tls.SelfSignedCertOutput)
 }
@@ -313,8 +319,12 @@ func (o RootCaOutput) Key() tls.PrivateKeyOutput {
 	return o.ApplyT(func(v *RootCa) tls.PrivateKeyOutput { return v.Key }).(tls.PrivateKeyOutput)
 }
 
-func (o RootCaOutput) KeyPem() pulumi.StringOutput {
-	return o.ApplyT(func(v *RootCa) pulumi.StringOutput { return v.KeyPem }).(pulumi.StringOutput)
+func (o RootCaOutput) PrivateKeyPem() pulumi.StringOutput {
+	return o.ApplyT(func(v *RootCa) pulumi.StringOutput { return v.PrivateKeyPem }).(pulumi.StringOutput)
+}
+
+func (o RootCaOutput) PublicKeyPem() pulumi.StringOutput {
+	return o.ApplyT(func(v *RootCa) pulumi.StringOutput { return v.PublicKeyPem }).(pulumi.StringOutput)
 }
 
 type RootCaArrayOutput struct{ *pulumi.OutputState }

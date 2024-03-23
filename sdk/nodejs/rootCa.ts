@@ -26,10 +26,12 @@ export class RootCa extends pulumi.ComponentResource {
         return obj['__pulumiType'] === RootCa.__pulumiType;
     }
 
+    public /*out*/ readonly allowedUses!: pulumi.Output<enums.AllowedUsage[]>;
     public /*out*/ readonly cert!: pulumi.Output<pulumiTls.SelfSignedCert>;
     public /*out*/ readonly certPem!: pulumi.Output<string>;
     public /*out*/ readonly key!: pulumi.Output<pulumiTls.PrivateKey>;
-    public /*out*/ readonly keyPem!: pulumi.Output<string>;
+    public /*out*/ readonly privateKeyPem!: pulumi.Output<string>;
+    public /*out*/ readonly publicKeyPem!: pulumi.Output<string>;
 
     /**
      * Create a RootCa resource with the given unique name, arguments, and options.
@@ -56,15 +58,19 @@ export class RootCa extends pulumi.ComponentResource {
             resourceInputs["subject"] = args ? args.subject : undefined;
             resourceInputs["uris"] = args ? args.uris : undefined;
             resourceInputs["validityPeriodHours"] = args ? args.validityPeriodHours : undefined;
+            resourceInputs["allowedUses"] = undefined /*out*/;
             resourceInputs["cert"] = undefined /*out*/;
             resourceInputs["certPem"] = undefined /*out*/;
             resourceInputs["key"] = undefined /*out*/;
-            resourceInputs["keyPem"] = undefined /*out*/;
+            resourceInputs["privateKeyPem"] = undefined /*out*/;
+            resourceInputs["publicKeyPem"] = undefined /*out*/;
         } else {
+            resourceInputs["allowedUses"] = undefined /*out*/;
             resourceInputs["cert"] = undefined /*out*/;
             resourceInputs["certPem"] = undefined /*out*/;
             resourceInputs["key"] = undefined /*out*/;
-            resourceInputs["keyPem"] = undefined /*out*/;
+            resourceInputs["privateKeyPem"] = undefined /*out*/;
+            resourceInputs["publicKeyPem"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         super(RootCa.__pulumiType, name, resourceInputs, opts, true /*remote*/);

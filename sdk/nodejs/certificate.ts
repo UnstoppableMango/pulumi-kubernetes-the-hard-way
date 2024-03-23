@@ -30,7 +30,8 @@ export class Certificate extends pulumi.ComponentResource {
     public /*out*/ readonly certPem!: pulumi.Output<string>;
     public /*out*/ readonly csr!: pulumi.Output<pulumiTls.CertRequest>;
     public /*out*/ readonly key!: pulumi.Output<pulumiTls.PrivateKey>;
-    public /*out*/ readonly keyPem!: pulumi.Output<string>;
+    public /*out*/ readonly privateKeyPem!: pulumi.Output<string>;
+    public /*out*/ readonly publicKeyPem!: pulumi.Output<string>;
 
     /**
      * Create a Certificate resource with the given unique name, arguments, and options.
@@ -43,6 +44,9 @@ export class Certificate extends pulumi.ComponentResource {
         let resourceInputs: pulumi.Inputs = {};
         opts = opts || {};
         if (!opts.id) {
+            if ((!args || args.algorithm === undefined) && !opts.urn) {
+                throw new Error("Missing required property 'algorithm'");
+            }
             if ((!args || args.allowedUses === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'allowedUses'");
             }
@@ -74,13 +78,15 @@ export class Certificate extends pulumi.ComponentResource {
             resourceInputs["certPem"] = undefined /*out*/;
             resourceInputs["csr"] = undefined /*out*/;
             resourceInputs["key"] = undefined /*out*/;
-            resourceInputs["keyPem"] = undefined /*out*/;
+            resourceInputs["privateKeyPem"] = undefined /*out*/;
+            resourceInputs["publicKeyPem"] = undefined /*out*/;
         } else {
             resourceInputs["cert"] = undefined /*out*/;
             resourceInputs["certPem"] = undefined /*out*/;
             resourceInputs["csr"] = undefined /*out*/;
             resourceInputs["key"] = undefined /*out*/;
-            resourceInputs["keyPem"] = undefined /*out*/;
+            resourceInputs["privateKeyPem"] = undefined /*out*/;
+            resourceInputs["publicKeyPem"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         super(Certificate.__pulumiType, name, resourceInputs, opts, true /*remote*/);
@@ -106,7 +112,7 @@ export interface CertificateArgs {
     /**
      * Name of the algorithm to use when generating the private key.
      */
-    algorithm?: pulumi.Input<enums.Algorithm>;
+    algorithm: pulumi.Input<enums.Algorithm>;
     allowedUses: pulumi.Input<pulumi.Input<enums.AllowedUsage>[]>;
     caCertPem: pulumi.Input<string>;
     caPrivateKeyPem: pulumi.Input<string>;

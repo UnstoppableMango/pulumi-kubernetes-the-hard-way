@@ -16,11 +16,12 @@ import (
 type Certificate struct {
 	pulumi.ResourceState
 
-	Cert    tls.LocallySignedCertOutput `pulumi:"cert"`
-	CertPem pulumi.StringOutput         `pulumi:"certPem"`
-	Csr     tls.CertRequestOutput       `pulumi:"csr"`
-	Key     tls.PrivateKeyOutput        `pulumi:"key"`
-	KeyPem  pulumi.StringOutput         `pulumi:"keyPem"`
+	Cert          tls.LocallySignedCertOutput `pulumi:"cert"`
+	CertPem       pulumi.StringOutput         `pulumi:"certPem"`
+	Csr           tls.CertRequestOutput       `pulumi:"csr"`
+	Key           tls.PrivateKeyOutput        `pulumi:"key"`
+	PrivateKeyPem pulumi.StringOutput         `pulumi:"privateKeyPem"`
+	PublicKeyPem  pulumi.StringOutput         `pulumi:"publicKeyPem"`
 }
 
 // NewCertificate registers a new resource with the given unique name, arguments, and options.
@@ -30,6 +31,9 @@ func NewCertificate(ctx *pulumi.Context,
 		return nil, errors.New("missing one or more required arguments")
 	}
 
+	if args.Algorithm == nil {
+		return nil, errors.New("invalid value for required argument 'Algorithm'")
+	}
 	if args.AllowedUses == nil {
 		return nil, errors.New("invalid value for required argument 'AllowedUses'")
 	}
@@ -53,7 +57,7 @@ func NewCertificate(ctx *pulumi.Context,
 
 type certificateArgs struct {
 	// Name of the algorithm to use when generating the private key.
-	Algorithm       *Algorithm     `pulumi:"algorithm"`
+	Algorithm       Algorithm      `pulumi:"algorithm"`
 	AllowedUses     []AllowedUsage `pulumi:"allowedUses"`
 	CaCertPem       string         `pulumi:"caCertPem"`
 	CaPrivateKeyPem string         `pulumi:"caPrivateKeyPem"`
@@ -82,7 +86,7 @@ type certificateArgs struct {
 // The set of arguments for constructing a Certificate resource.
 type CertificateArgs struct {
 	// Name of the algorithm to use when generating the private key.
-	Algorithm       AlgorithmPtrInput
+	Algorithm       AlgorithmInput
 	AllowedUses     AllowedUsageArrayInput
 	CaCertPem       pulumi.StringInput
 	CaPrivateKeyPem pulumi.StringInput
@@ -255,8 +259,12 @@ func (o CertificateOutput) Key() tls.PrivateKeyOutput {
 	return o.ApplyT(func(v *Certificate) tls.PrivateKeyOutput { return v.Key }).(tls.PrivateKeyOutput)
 }
 
-func (o CertificateOutput) KeyPem() pulumi.StringOutput {
-	return o.ApplyT(func(v *Certificate) pulumi.StringOutput { return v.KeyPem }).(pulumi.StringOutput)
+func (o CertificateOutput) PrivateKeyPem() pulumi.StringOutput {
+	return o.ApplyT(func(v *Certificate) pulumi.StringOutput { return v.PrivateKeyPem }).(pulumi.StringOutput)
+}
+
+func (o CertificateOutput) PublicKeyPem() pulumi.StringOutput {
+	return o.ApplyT(func(v *Certificate) pulumi.StringOutput { return v.PublicKeyPem }).(pulumi.StringOutput)
 }
 
 type CertificateArrayOutput struct{ *pulumi.OutputState }

@@ -1,32 +1,28 @@
-import * as kthw from "@unmango/pulumi-kubernetes-the-hard-way";
+import * as kthw from '@unmango/pulumi-kubernetes-the-hard-way';
 
-const ca = new kthw.RootCa("yea", {
-    algorithm: "RSA",
-    validityPeriodHours: 69,
+const ca = new kthw.RootCa('simple', {
+    algorithm: 'RSA',
+    validityPeriodHours: 256,
 });
 
-const result = ca.createCertificate({
-    algorithm: "RSA",
-    validityPeriodHours: 69,
-    allowedUses: [ // TODO
-        "cert_signing",
-        "client_auth",
+const cert = new kthw.Certificate('simple2', {
+    algorithm: 'RSA',
+    allowedUses: [
+        kthw.AllowedUsage.Cert_signing,
     ],
+    validityPeriodHours: 256,
+    caCertPem: ca.certPem,
+    caPrivateKeyPem: ca.privateKeyPem,
 });
 
-const caFile = ca.installOn({
-    connection: {
-        host: '',
-    },
-    path: '',
-});
+export const caAllowedUses = ca.allowedUses;
+export const caCertPem = ca.certPem;
+export const caKeyPem = ca.publicKeyPem;
 
-const file = new kthw.RemoteFile("page", {
-    connection: {
-        host: "localhost",
-    },
-    content: "Some file content",
-    path: "/home/pulumi/test.txt",
-});
+export const certPem = cert.certPem;
+export const keyPem = cert.privateKeyPem;
 
-export const command = file.command;
+export const caCert = ca.cert;
+export const caKey = ca.key;
+export const certCert = cert.cert;
+export const certKey = cert.key;

@@ -285,16 +285,23 @@ class RootCa(pulumi.ComponentResource):
             if validity_period_hours is None and not opts.urn:
                 raise TypeError("Missing required property 'validity_period_hours'")
             __props__.__dict__["validity_period_hours"] = validity_period_hours
+            __props__.__dict__["allowed_uses"] = None
             __props__.__dict__["cert"] = None
             __props__.__dict__["cert_pem"] = None
             __props__.__dict__["key"] = None
-            __props__.__dict__["key_pem"] = None
+            __props__.__dict__["private_key_pem"] = None
+            __props__.__dict__["public_key_pem"] = None
         super(RootCa, __self__).__init__(
             'kubernetes-the-hard-way:index:RootCa',
             resource_name,
             __props__,
             opts,
             remote=True)
+
+    @property
+    @pulumi.getter(name="allowedUses")
+    def allowed_uses(self) -> pulumi.Output[Sequence['AllowedUsage']]:
+        return pulumi.get(self, "allowed_uses")
 
     @property
     @pulumi.getter
@@ -312,9 +319,14 @@ class RootCa(pulumi.ComponentResource):
         return pulumi.get(self, "key")
 
     @property
-    @pulumi.getter(name="keyPem")
-    def key_pem(self) -> pulumi.Output[str]:
-        return pulumi.get(self, "key_pem")
+    @pulumi.getter(name="privateKeyPem")
+    def private_key_pem(self) -> pulumi.Output[str]:
+        return pulumi.get(self, "private_key_pem")
+
+    @property
+    @pulumi.getter(name="publicKeyPem")
+    def public_key_pem(self) -> pulumi.Output[str]:
+        return pulumi.get(self, "public_key_pem")
 
     @pulumi.output_type
     class CreateCertificateResult:

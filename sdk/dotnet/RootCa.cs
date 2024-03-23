@@ -13,6 +13,9 @@ namespace UnMango.KubernetesTheHardWay
     [KubernetesTheHardWayResourceType("kubernetes-the-hard-way:index:RootCa")]
     public partial class RootCa : global::Pulumi.ComponentResource
     {
+        [Output("allowedUses")]
+        public Output<ImmutableArray<UnMango.KubernetesTheHardWay.AllowedUsage>> AllowedUses { get; private set; } = null!;
+
         [Output("cert")]
         public Output<Pulumi.Tls.SelfSignedCert> Cert { get; private set; } = null!;
 
@@ -22,8 +25,11 @@ namespace UnMango.KubernetesTheHardWay
         [Output("key")]
         public Output<Pulumi.Tls.PrivateKey> Key { get; private set; } = null!;
 
-        [Output("keyPem")]
-        public Output<string> KeyPem { get; private set; } = null!;
+        [Output("privateKeyPem")]
+        public Output<string> PrivateKeyPem { get; private set; } = null!;
+
+        [Output("publicKeyPem")]
+        public Output<string> PublicKeyPem { get; private set; } = null!;
 
 
         /// <summary>

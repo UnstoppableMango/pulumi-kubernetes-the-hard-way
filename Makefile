@@ -2,13 +2,11 @@ PACK            := kubernetes-the-hard-way
 PROJECT         := github.com/unstoppablemango/pulumi-${PACK}
 
 PROVIDER        := pulumi-resource-${PACK}
-CODEGEN         := pulumi-gen-${PACK}
-VERSION_PATH    := provider/pkg/version.Version
 
 WORKING_DIR     := $(shell pwd)
 SCHEMA_FILE     := ${WORKING_DIR}/schema.yaml
 
-PROVIDER_PKG    := $(shell find provider/pkg -type f)
+PROVIDER_PKG    := $(shell find provider/cmd/pulumi-resource-kubernetes-the-hard-way -type f)
 
 GOOS ?= $(shell go env GOOS)
 GOARCH ?= $(shell go env GOARCH)
@@ -38,12 +36,14 @@ _ := $(shell mkdir -p .make)
 
 .PHONY: default ensure
 default: provider build_sdks
-ensure: bin/pulumictl .make/provider_mod_download
+ensure: bin/pulumictl
 
 # Binaries
-.PHONY: codegen provider
-codegen: bin/$(CODEGEN)
 provider: bin/$(LOCAL_PROVIDER_FILENAME)
+
+.PHONY: test
+test: .make/install_provider install_sdks bin/gotestfmt
+	cd examples && go test -v -json -timeout 2h . | gotestfmt
 
 .PHONY: install_provider
 install_provider: .make/install_provider
@@ -66,7 +66,7 @@ local_generate_code: generate_go
 local_generate: local_generate_code
 
 .PHONY: build only_build build_sdks build_nodejs build_python build_dotnet build_java build_go
-build: codegen local_generate provider build_sdks
+build: local_generate provider build_sdks
 # Required for the codegen action that runs in pulumi/pulumi
 only_build: build
 build_sdks: build_nodejs build_dotnet build_python build_go build_java
@@ -93,16 +93,11 @@ clean:
 	rm -rf dist
 	rm -rf sdk/dotnet/{bin,obj}
 	rm -rf sdk/nodejs/bin
-	rm -rf sdk/go
 	rm -rf sdk/python/bin
 	rm -rf sdk/java/{.gradle,build}
-	if dotnet nuget list source | grep "$(WORKING_DIR)"; then \
+	@if dotnet nuget list source | grep "$(WORKING_DIR)"; then \
 		dotnet nuget remove source "$(WORKING_DIR)" \
 	; fi
-
-.PHONY: tidy
-tidy:
-	cd provider && go mod tidy
 
 .PHONY: upgrade_tools upgrade_java upgrade_pulumi upgrade_pulumictl upgrade_schematools
 upgrade_tools: upgrade_java upgrade_pulumi upgrade_pulumictl upgrade_schematools
@@ -145,27 +140,28 @@ bin/schema-tools: .schema-tools.version
 	@touch bin/schema-tools
 	@echo "schema-tools" $$(./bin/schema-tools version)
 
-bin/$(CODEGEN): bin/pulumictl .make/provider_mod_download provider/cmd/$(CODEGEN)/* $(PROVIDER_PKG)
-	cd provider && go build -o $(WORKING_DIR)/bin/$(CODEGEN) $(VERSION_FLAGS) $(PROJECT)/provider/cmd/$(CODEGEN)
+bin/gotestfmt:
+	@mkdir -p bin
+	GOBIN="${WORKING_DIR}/bin" go install github.com/gotesttools/gotestfmt/v2/cmd/gotestfmt@v2.5.0
 
-bin/$(LOCAL_PROVIDER_FILENAME): bin/pulumictl .make/provider_mod_download provider/cmd/$(PROVIDER)/*.go $(PROVIDER_PKG)
-	cd provider/cmd/$(PROVIDER) && VERSION=${VERSION_GENERIC} SCHEMA=${SCHEMA_FILE} go generate main.go
-	cd provider && \
-		CGO_ENABLED=0 go build -o $(WORKING_DIR)/bin/$(LOCAL_PROVIDER_FILENAME) $(VERSION_FLAGS) $(PROJECT)/provider/cmd/$(PROVIDER)
+bin/$(LOCAL_PROVIDER_FILENAME): bin/pulumictl provider/cmd/$(PROVIDER)/*.ts $(PROVIDER_PKG)
+	cp ${SCHEMA_FILE} provider/cmd/${PROVIDER}/
+	cd provider/cmd/${PROVIDER}/ && \
+		yarn install && \
+		yarn tsc && \
+		cp package.json schema.yaml ./bin && \
+		sed -i.bak -e "s/\$${VERSION}/$(PROVIDER_VERSION)/g" bin/package.json
 
-bin/linux-amd64/$(PROVIDER): TARGET := linux-amd64
-bin/linux-arm64/$(PROVIDER): TARGET := linux-arm64
-bin/darwin-amd64/$(PROVIDER): TARGET := darwin-amd64
-bin/darwin-arm64/$(PROVIDER): TARGET := darwin-arm64
-bin/windows-amd64/$(PROVIDER).exe: TARGET := windows-amd64
-bin/%/$(PROVIDER) bin/%/$(PROVIDER).exe: bin/pulumictl .make/provider_mod_download provider/cmd/$(PROVIDER)/*.go $(PROVIDER_PKG)
+bin/linux-amd64/$(PROVIDER): TARGET := linuxstatic-x64
+bin/linux-arm64/$(PROVIDER): TARGET := linuxstatic-arm64
+bin/darwin-amd64/$(PROVIDER): TARGET := macos-x64
+bin/darwin-arm64/$(PROVIDER): TARGET := macos-arm64
+bin/windows-amd64/$(PROVIDER).exe: TARGET := win-x64
+bin/%/$(PROVIDER) bin/%/$(PROVIDER).exe: bin/pulumictl provider/cmd/$(PROVIDER)/*.ts $(PROVIDER_PKG)
 	@# check the TARGET is set
 	test $(TARGET)
-	cd provider/cmd/$(PROVIDER) && VERSION=${VERSION_GENERIC} SCHEMA=${SCHEMA_FILE} go generate main.go
-	cd provider && \
-		export GOOS=$$(echo "$(TARGET)" | cut -d "-" -f 1) && \
-		export GOARCH=$$(echo "$(TARGET)" | cut -d "-" -f 2) && \
-		CGO_ENABLED=0 go build -o ${WORKING_DIR}/$@ $(VERSION_FLAGS) $(PROJECT)/provider/cmd/$(PROVIDER)
+	cd provider/cmd/${PROVIDER}/ && \
+		yarn run pkg . ${PKG_ARGS} --target node16-$(TARGET) --output $(WORKING_DIR)/$@
 
 dist/$(PROVIDER)-v$(PROVIDER_VERSION)-linux-amd64.tar.gz: bin/linux-amd64/$(PROVIDER)
 dist/$(PROVIDER)-v$(PROVIDER_VERSION)-linux-arm64.tar.gz: bin/linux-arm64/$(PROVIDER)
@@ -185,64 +181,35 @@ dist: dist/$(PROVIDER)-v$(PROVIDER_VERSION)-windows-amd64.tar.gz
 
 # --------- Sentinel targets --------- #
 
-.make/provider_mod_download: provider/go.mod provider/go.sum
-	cd provider && go mod download
-	@touch $@
-
-.make/generate_java: bin/pulumictl .pulumi/bin/pulumi schema.yaml
+.make/generate_java: bin/pulumictl .pulumi/bin/pulumi $(SCHEMA_FILE)
 	rm -rf sdk/java
 	.pulumi/bin/pulumi package gen-sdk $(SCHEMA_FILE) --language java
 	@touch $@
 
-.make/generate_nodejs: bin/pulumictl .pulumi/bin/pulumi schema.yaml
+.make/generate_nodejs: bin/pulumictl .pulumi/bin/pulumi $(SCHEMA_FILE)
 	rm -rf sdk/nodejs
 	.pulumi/bin/pulumi package gen-sdk $(SCHEMA_FILE) --language nodejs
 	sed -i.bak -e "s/sourceMap/inlineSourceMap/g" sdk/nodejs/tsconfig.json
 	rm sdk/nodejs/tsconfig.json.bak
 	@touch $@
 
-.make/generate_python: bin/pulumictl .pulumi/bin/pulumi schema.yaml
+.make/generate_python: bin/pulumictl .pulumi/bin/pulumi $(SCHEMA_FILE)
 	rm -rf sdk/python
 	.pulumi/bin/pulumi package gen-sdk $(SCHEMA_FILE) --language python
 	cp README.md sdk/python
 	@touch $@
 
-.make/generate_dotnet: bin/pulumictl .pulumi/bin/pulumi schema.yaml
+.make/generate_dotnet: bin/pulumictl .pulumi/bin/pulumi $(SCHEMA_FILE)
 	rm -rf sdk/dotnet
 	.pulumi/bin/pulumi package gen-sdk $(SCHEMA_FILE) --language dotnet
-#	sed -i.bak -e "s/<\/Nullable>/<\/Nullable>\n    <UseSharedCompilation>false<\/UseSharedCompilation>/g" sdk/dotnet/UnMango.KubernetesTheHardWay.csproj
-#	rm sdk/dotnet/UnMango.KubernetesTheHardWay.csproj.bak
+	sed -i.bak -e "s/<\/Nullable>/<\/Nullable>\n    <UseSharedCompilation>false<\/UseSharedCompilation>/g" sdk/dotnet/UnMango.KubernetesTheHardWay.csproj
+	rm sdk/dotnet/UnMango.KubernetesTheHardWay.csproj.bak
 	@touch $@
 
-.make/generate_go: bin/pulumictl .pulumi/bin/pulumi schema.yaml
+.make/generate_go: bin/pulumictl .pulumi/bin/pulumi $(SCHEMA_FILE)
 	rm -rf sdk/go
 	.pulumi/bin/pulumi package gen-sdk $(SCHEMA_FILE) --language go
 	@touch $@
-
-# TODO: Fix or remove if not needed
-#.make/generate_go_local: bin/pulumictl bin/$(CODEGEN)
-#	@mkdir -p sdk/pulumi-${PACK}
-#	@# Unmark this is as an up-to-date local build
-#	rm -f .make/prepublish_go
-#	rm -rf $$(find sdk/pulumi-${PACK} -mindepth 1 -maxdepth 1 ! -name ".git")
-#	bin/$(CODEGEN) go $(VERSION_GENERIC) ${WORKING_DIR}/sdk/pulumi-${PACK} $(SCHEMA_FILE)
-#	@# Tidy up all go.mod files
-#	find sdk/pulumi-${PACK} -type d -maxdepth 1 -exec sh -c "cd \"{}\" && go mod tidy" \;
-#	@touch $@
-
-#.make/prepublish_go:
-#	@# Unmark this is as an up-to-date local build
-#	rm -f .make/generate_go_local
-#	@# Remove go module replacements which are added for local testing
-#	@# Note: must use `sed -i -e` to be portable - but leaves go.mod-e behind on macos
-#	find sdk/pulumi-azure-native-sdk -maxdepth 2 -type f -name go.mod -exec sed -i -e '/replace github\.com\/pulumi\/pulumi-azure-native-sdk/d' {} \;
-#	@# Remove sed backup files if using older sed versions
-#	find sdk/pulumi-azure-native-sdk -maxdepth 2 -type f -name go.mod-e -delete
-#	@# Delete go.sum files as these are not used at the point of publishing.
-#	@# This is because we depend on the root package which will come from the same release commit, that doesn't yet exist.
-#	find sdk/pulumi-azure-native-sdk -maxdepth 2 -type f -name go.sum -delete
-#	cp README.md LICENSE sdk/pulumi-azure-native-sdk/
-#	@touch $@
 
 .make/nodejs_yarn_install: .make/generate_nodejs sdk/nodejs/package.json
 	yarn install --cwd sdk/nodejs
@@ -253,7 +220,6 @@ dist: dist/$(PROVIDER)-v$(PROVIDER_VERSION)-windows-amd64.tar.gz
 	cd sdk/nodejs/ && \
 		NODE_OPTIONS=--max-old-space-size=12288 yarn run tsc --diagnostics --incremental && \
 		cp ../../README.md ../../LICENSE package.json yarn.lock ./bin/ && \
-		mkdir -p bin/scripts && \
 		sed -i.bak -e "s/\$${VERSION}/$(VERSION_JS)/g" ./bin/package.json
 	@touch $@
 
@@ -282,9 +248,8 @@ dist: dist/$(PROVIDER)-v$(PROVIDER_VERSION)-windows-amd64.tar.gz
 		gradle --console=plain -Pversion=$(VERSION_GENERIC) build
 	@touch $@
 
-# TODO: Fix
 .make/build_go: .make/generate_go
-	find sdk/go -maxdepth 1 -type d -exec sh -c "cd \"{}\" && go build" \;
+	cd sdk/go/kubernetes-the-hard-way && go build
 	@touch $@
 
 .make/install_nodejs_sdk: .make/build_nodejs
@@ -299,6 +264,7 @@ dist: dist/$(PROVIDER)-v$(PROVIDER_VERSION)-windows-amd64.tar.gz
 	; fi
 	@touch $@
 
-.make/install_provider: bin/pulumictl .make/provider_mod_download provider/cmd/$(PROVIDER)/* $(PROVIDER_PKG)
-	cd provider && go install $(VERSION_FLAGS) $(PROJECT)/provider/cmd/$(PROVIDER)
+.make/install_provider: bin/pulumictl provider/cmd/$(PROVIDER)/* $(PROVIDER_PKG)
+	cd provider/cmd/${PROVIDER}/ && \
+		yarn run pkg . ${PKG_ARGS} --target node16 --output ${WORKING_DIR}/bin/${PROVIDER}
 	@touch $@

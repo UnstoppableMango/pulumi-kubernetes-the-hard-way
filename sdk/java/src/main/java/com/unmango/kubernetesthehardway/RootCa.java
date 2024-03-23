@@ -11,11 +11,19 @@ import com.pulumi.tls.PrivateKey;
 import com.pulumi.tls.SelfSignedCert;
 import com.unmango.kubernetesthehardway.RootCaArgs;
 import com.unmango.kubernetesthehardway.Utilities;
+import com.unmango.kubernetesthehardway.enums.AllowedUsage;
 import java.lang.String;
+import java.util.List;
 import javax.annotation.Nullable;
 
 @ResourceType(type="kubernetes-the-hard-way:index:RootCa")
 public class RootCa extends com.pulumi.resources.ComponentResource {
+    @Export(name="allowedUses", refs={List.class,AllowedUsage.class}, tree="[0,1]")
+    private Output<List<AllowedUsage>> allowedUses;
+
+    public Output<List<AllowedUsage>> allowedUses() {
+        return this.allowedUses;
+    }
     @Export(name="cert", refs={SelfSignedCert.class}, tree="[0]")
     private Output<SelfSignedCert> cert;
 
@@ -34,11 +42,17 @@ public class RootCa extends com.pulumi.resources.ComponentResource {
     public Output<PrivateKey> key() {
         return this.key;
     }
-    @Export(name="keyPem", refs={String.class}, tree="[0]")
-    private Output<String> keyPem;
+    @Export(name="privateKeyPem", refs={String.class}, tree="[0]")
+    private Output<String> privateKeyPem;
 
-    public Output<String> keyPem() {
-        return this.keyPem;
+    public Output<String> privateKeyPem() {
+        return this.privateKeyPem;
+    }
+    @Export(name="publicKeyPem", refs={String.class}, tree="[0]")
+    private Output<String> publicKeyPem;
+
+    public Output<String> publicKeyPem() {
+        return this.publicKeyPem;
     }
 
     /**

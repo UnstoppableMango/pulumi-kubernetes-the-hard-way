@@ -56,6 +56,14 @@ resources:
       algorithm:
         $ref: "#/types/kubernetes-the-hard-way:index:Algorithm"
         description: Name of the algorithm to use when generating the private key.
+      allowedUses:
+        type: array
+        items:
+          $ref: "#/types/kubernetes-the-hard-way:index:AllowedUsage"
+      caCertPem:
+        type: string
+      caPrivateKeyPem:
+        type: string
       ecdsaCurve:
         $ref: "#/types/kubernetes-the-hard-way:index:EcdsaCurve"
         description: When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
@@ -75,12 +83,16 @@ resources:
         items:
           type: string
         description: List of IP addresses for which a certificate is being requested.
+      isCaCertificate:
+        type: boolean
       setAuthorityKeyId:
         type: boolean
         description: Should the generated certificate include an authority key identifier.
       setSubjectKeyId:
         type: boolean
         description: Should the generated certificate include a subject key identifier.
+      subject:
+        $ref: "/tls/v5.0.0/schema.json#/types/tls:index/CertRequestSubject:CertRequestSubject"
       uris:
         type: array
         items:
@@ -89,19 +101,8 @@ resources:
       validityPeriodHours:
         type: integer
         description: Number of hours, after initial issuing, that the certificate will remain valid.
-      allowedUses:
-        type: array
-        items:
-          $ref: "#/types/kubernetes-the-hard-way:index:AllowedUsage"
-      caCertPem:
-        type: string
-      caPrivateKeyPem:
-        type: string
-      isCaCertificate:
-        type: boolean
-      subject:
-        $ref: "/tls/v5.0.0/schema.json#/types/tls:index/CertRequestSubject:CertRequestSubject"
     requiredInputs:
+      - algorithm
       - allowedUses
       - caCertPem
       - caPrivateKeyPem
@@ -115,14 +116,17 @@ resources:
         $ref: "/tls/v5.0.0/schema.json#/resources/tls:index/certRequest:CertRequest"
       key:
         $ref: "/tls/v5.0.0/schema.json#/resources/tls:index/privateKey:PrivateKey"
-      keyPem:
+      privateKeyPem:
+        type: string
+      publicKeyPem:
         type: string
     required:
       - cert
       - certPem
       - csr
       - key
-      - keyPem
+      - privateKeyPem
+      - publicKeyPem
     methods:
       installOn: kubernetes-the-hard-way:index:Certificate/installOn
   kubernetes-the-hard-way:index:RemoteFile:
@@ -191,19 +195,27 @@ resources:
     requiredInputs:
       - validityPeriodHours
     properties:
+      allowedUses:
+        type: array
+        items:
+          $ref: "#/types/kubernetes-the-hard-way:index:AllowedUsage"
       cert:
         $ref: "/tls/v5.0.0/schema.json#/resources/tls:index/selfSignedCert:SelfSignedCert"
       certPem:
         type: string
       key:
         $ref: "/tls/v5.0.0/schema.json#/resources/tls:index/privateKey:PrivateKey"
-      keyPem:
+      privateKeyPem:
+        type: string
+      publicKeyPem:
         type: string
     required:
+      - allowedUses
       - cert
       - certPem
       - key
-      - keyPem
+      - privateKeyPem
+      - publicKeyPem
     methods:
       createCertificate: kubernetes-the-hard-way:index:RootCa/createCertificate
       installOn: kubernetes-the-hard-way:index:RootCa/installOn
