@@ -43,7 +43,7 @@ jobs:
           skip_dotnet_and_java: "true"
 
       - name: Build binaries
-        run: make codegen provider
+        run: make provider
 
       - name: Artifact capture
         uses: ./.github/actions/prerequisites-artifact-capture
@@ -79,7 +79,7 @@ jobs:
         uses: ./.github/actions/prerequisites-artifact-restore
 
       - name: Mark prerequisites as up-to-date
-        run: make --touch codegen provider
+        run: make --touch provider
 
       - name: Generate SDK
         run: make generate_${{ matrix.language }}
@@ -163,9 +163,6 @@ jobs:
       - name: Prerequisites artifact restore
         uses: ./.github/actions/prerequisites-artifact-restore
 
-      - name: Prebuild provider prerequisites
-        run: make --touch codegen
-
       # Enable when we actually have some tests
       # - name: Test Provider Library
       #   run: |
@@ -196,9 +193,6 @@ jobs:
 
       - name: Prerequisites artifact restore
         uses: ./.github/actions/prerequisites-artifact-restore
-
-      - name: Prerequisites
-        run: make --touch codegen
 
       - name: Build dist packages
         run: make dist --jobs=2
