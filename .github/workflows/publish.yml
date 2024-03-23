@@ -57,11 +57,6 @@ jobs:
       - name: Prerequisites artifact restore
         uses: ./.github/actions/prerequisites-artifact-restore
 
-      - name: Ensure provider build prerequisites
-        run: |
-          # Don't include provider as that's the bit we're going to rebuild
-          make --touch codegen
-
       - name: Build dist packages
         run: make dist --jobs=2
 
