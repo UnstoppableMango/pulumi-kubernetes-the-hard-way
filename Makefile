@@ -42,6 +42,10 @@ ensure: bin/pulumictl
 .PHONY: provider
 provider: bin/$(LOCAL_PROVIDER_FILENAME)
 
+.PHONY: test
+test: provider install_sdks bin/gotestfmt
+	cd examples && PATH=$(WORKING_DIR)/bin:$(PATH) go test -v -json -timeout 2h . | gotestfmt
+
 .PHONY: install_provider
 install_provider: .make/install_provider
 
@@ -137,8 +141,9 @@ bin/schema-tools: .schema-tools.version
 	@touch bin/schema-tools
 	@echo "schema-tools" $$(./bin/schema-tools version)
 
-bin/$(CODEGEN): bin/pulumictl provider/cmd/$(CODEGEN)/* $(PROVIDER_PKG)
-	cd provider && go build -o $(WORKING_DIR)/bin/$(CODEGEN) $(VERSION_FLAGS) $(PROJECT)/provider/cmd/$(CODEGEN)
+bin/gotestfmt:
+	@mkdir -p bin
+	GOBIN="${WORKING_DIR}/bin" go install github.com/gotesttools/gotestfmt/v2/cmd/gotestfmt@v2.5.0
 
 bin/$(LOCAL_PROVIDER_FILENAME): bin/pulumictl provider/cmd/$(PROVIDER)/*.ts $(PROVIDER_PKG)
 	cp ${SCHEMA_FILE} provider/cmd/${PROVIDER}/
