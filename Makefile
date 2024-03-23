@@ -148,19 +148,16 @@ bin/$(LOCAL_PROVIDER_FILENAME): bin/pulumictl provider/cmd/$(PROVIDER)/*.ts $(PR
 		cp package.json schema.yaml ./bin && \
 		sed -i.bak -e "s/\$${VERSION}/$(PROVIDER_VERSION)/g" bin/package.json
 
-bin/linux-amd64/$(PROVIDER): TARGET := linux-amd64
-bin/linux-arm64/$(PROVIDER): TARGET := linux-arm64
-bin/darwin-amd64/$(PROVIDER): TARGET := darwin-amd64
-bin/darwin-arm64/$(PROVIDER): TARGET := darwin-arm64
-bin/windows-amd64/$(PROVIDER).exe: TARGET := windows-amd64
-bin/%/$(PROVIDER) bin/%/$(PROVIDER).exe: bin/pulumictl provider/cmd/$(PROVIDER)/*.go $(PROVIDER_PKG)
+bin/linux-amd64/$(PROVIDER): TARGET := linuxstatic-x64
+bin/linux-arm64/$(PROVIDER): TARGET := linuxstatic-arm64
+bin/darwin-amd64/$(PROVIDER): TARGET := macos-x64
+bin/darwin-arm64/$(PROVIDER): TARGET := macos-arm64
+bin/windows-amd64/$(PROVIDER).exe: TARGET := win-x64
+bin/%/$(PROVIDER) bin/%/$(PROVIDER).exe: bin/pulumictl provider/cmd/$(PROVIDER)/*.ts $(PROVIDER_PKG)
 	@# check the TARGET is set
 	test $(TARGET)
-	cd provider/cmd/$(PROVIDER) && VERSION=${VERSION_GENERIC} SCHEMA=${SCHEMA_FILE} go generate main.go
-	cd provider && \
-		export GOOS=$$(echo "$(TARGET)" | cut -d "-" -f 1) && \
-		export GOARCH=$$(echo "$(TARGET)" | cut -d "-" -f 2) && \
-		CGO_ENABLED=0 go build -o ${WORKING_DIR}/$@ $(VERSION_FLAGS) $(PROJECT)/provider/cmd/$(PROVIDER)
+	cd provider/cmd/${PROVIDER}/ && \
+		yarn run pkg . ${PKG_ARGS} --target node16-$(TARGET) --output $(WORKING_DIR)/$@
 
 dist/$(PROVIDER)-v$(PROVIDER_VERSION)-linux-amd64.tar.gz: bin/linux-amd64/$(PROVIDER)
 dist/$(PROVIDER)-v$(PROVIDER_VERSION)-linux-arm64.tar.gz: bin/linux-arm64/$(PROVIDER)
