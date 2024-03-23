@@ -207,31 +207,6 @@ dist: dist/$(PROVIDER)-v$(PROVIDER_VERSION)-windows-amd64.tar.gz
 	.pulumi/bin/pulumi package gen-sdk $(SCHEMA_FILE) --language go
 	@touch $@
 
-# TODO: Fix or remove if not needed
-#.make/generate_go_local: bin/pulumictl bin/$(CODEGEN)
-#	@mkdir -p sdk/pulumi-${PACK}
-#	@# Unmark this is as an up-to-date local build
-#	rm -f .make/prepublish_go
-#	rm -rf $$(find sdk/pulumi-${PACK} -mindepth 1 -maxdepth 1 ! -name ".git")
-#	bin/$(CODEGEN) go $(VERSION_GENERIC) ${WORKING_DIR}/sdk/pulumi-${PACK} $(SCHEMA_FILE)
-#	@# Tidy up all go.mod files
-#	find sdk/pulumi-${PACK} -type d -maxdepth 1 -exec sh -c "cd \"{}\" && go mod tidy" \;
-#	@touch $@
-
-#.make/prepublish_go:
-#	@# Unmark this is as an up-to-date local build
-#	rm -f .make/generate_go_local
-#	@# Remove go module replacements which are added for local testing
-#	@# Note: must use `sed -i -e` to be portable - but leaves go.mod-e behind on macos
-#	find sdk/pulumi-azure-native-sdk -maxdepth 2 -type f -name go.mod -exec sed -i -e '/replace github\.com\/pulumi\/pulumi-azure-native-sdk/d' {} \;
-#	@# Remove sed backup files if using older sed versions
-#	find sdk/pulumi-azure-native-sdk -maxdepth 2 -type f -name go.mod-e -delete
-#	@# Delete go.sum files as these are not used at the point of publishing.
-#	@# This is because we depend on the root package which will come from the same release commit, that doesn't yet exist.
-#	find sdk/pulumi-azure-native-sdk -maxdepth 2 -type f -name go.sum -delete
-#	cp README.md LICENSE sdk/pulumi-azure-native-sdk/
-#	@touch $@
-
 .make/nodejs_yarn_install: .make/generate_nodejs sdk/nodejs/package.json
 	yarn install --cwd sdk/nodejs
 	@touch $@
