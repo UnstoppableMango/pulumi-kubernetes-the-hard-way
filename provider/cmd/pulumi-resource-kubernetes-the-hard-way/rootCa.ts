@@ -1,4 +1,4 @@
-import { ComponentResourceOptions, Input } from '@pulumi/pulumi';
+import { ComponentResourceOptions, Input, Output } from '@pulumi/pulumi';
 import { SelfSignedCert } from '@pulumi/tls';
 import { KeyPair, KeyPairArgs } from './keypair';
 import { Certificate, CertificateArgs } from './certificate';
@@ -7,17 +7,18 @@ export interface RootCaArgs extends KeyPairArgs { }
 
 export class RootCa extends KeyPair<SelfSignedCert> {
   public readonly cert: SelfSignedCert;
+  public readonly certPem: Output<string>;
 
   constructor(name: string, args: RootCaArgs, opts?: ComponentResourceOptions) {
-    super('thecluster:index:rootCa', name, args, opts);
+    super('kubernetes-the-hard-way:index:RootCa', name, args, opts);
 
     const cert = new SelfSignedCert(name, {
       isCaCertificate: true,
       allowedUses: args.allowedUses,
       privateKeyPem: this.key.privateKeyPem,
-      validityPeriodHours: args.expiry,
+      validityPeriodHours: args.validityPeriodHours,
       subject: {
-        commonName: args.commonName,
+        commonName: 'Kubernetes',
         country: args.country,
         organization: args.organization,
         organizationalUnit: args.organizationalUnit,
@@ -26,8 +27,9 @@ export class RootCa extends KeyPair<SelfSignedCert> {
     }, { parent: this });
 
     this.cert = cert;
+    this.certPem = cert.certPem;
 
-    this.registerOutputs({ cert });
+    this.registerOutputs({ cert, certPem: cert.certPem });
   }
 
   public newCertificate(

@@ -150,6 +150,10 @@ resources:
   kubernetes-the-hard-way:index:RootCa:
     isComponent: true
     inputProperties:
+      allowedUses:
+        type: array
+        items:
+          $ref: "#/types/kubernetes-the-hard-way:index:AllowedUsage"
       algorithm:
         $ref: "#/types/kubernetes-the-hard-way:index:Algorithm"
         description: Name of the algorithm to use when generating the private key.
@@ -189,6 +193,7 @@ resources:
       subject:
         $ref: "/tls/v5.0.0/schema.json#/types/tls:index/SelfSignedCertSubject:SelfSignedCertSubject"
     requiredInputs:
+      - allowedUses
       - validityPeriodHours
     properties:
       cert:

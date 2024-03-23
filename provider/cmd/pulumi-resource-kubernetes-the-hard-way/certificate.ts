@@ -12,16 +12,9 @@ export interface CertificateArgs extends KeyPairArgs {
 }
 
 export class Certificate extends KeyPair<LocallySignedCert> {
+  public readonly certPem: Output<string>;
   public readonly cert: LocallySignedCert;
   public readonly csr: CertRequest;
-
-  public get certPem(): Output<string> {
-    return this.cert.certPem;
-  }
-
-  public get keyPem(): Output<string> {
-    return this.key.privateKeyPem;
-  }
 
   constructor(name: string, args: CertificateArgs, opts?: ComponentResourceOptions) {
     super('thecluster:index:certificate', name, args, opts);
@@ -43,15 +36,16 @@ export class Certificate extends KeyPair<LocallySignedCert> {
     const cert = new LocallySignedCert(name, {
       isCaCertificate: args.isCaCertificate,
       allowedUses: args.allowedUses,
-      validityPeriodHours: args.expiry,
+      validityPeriodHours: args.validityPeriodHours,
       caCertPem: args.caCertPem,
       caPrivateKeyPem: args.caPrivateKeyPem,
       certRequestPem: csr.certRequestPem,
     }, { parent: this });
 
     this.cert = cert;
+    this.certPem = cert.certPem;
     this.csr = csr;
 
-    this.registerOutputs({ cert, csr });
+    this.registerOutputs({ cert, certPem: cert.certPem, csr });
   }
 }

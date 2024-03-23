@@ -44,7 +44,7 @@ provider: bin/$(LOCAL_PROVIDER_FILENAME)
 
 .PHONY: test
 test: provider install_sdks bin/gotestfmt
-	cd examples && PATH=$(WORKING_DIR)/bin:$(PATH) go test -v -json -timeout 2h . | gotestfmt
+	cd examples && PATH=$(WORKING_DIR)/bin:$$PATH go test -v -json -timeout 2h . | gotestfmt
 
 .PHONY: install_provider
 install_provider: .make/install_provider

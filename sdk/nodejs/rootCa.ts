@@ -42,10 +42,14 @@ export class RootCa extends pulumi.ComponentResource {
         let resourceInputs: pulumi.Inputs = {};
         opts = opts || {};
         if (!opts.id) {
+            if ((!args || args.allowedUses === undefined) && !opts.urn) {
+                throw new Error("Missing required property 'allowedUses'");
+            }
             if ((!args || args.validityPeriodHours === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'validityPeriodHours'");
             }
             resourceInputs["algorithm"] = args ? args.algorithm : undefined;
+            resourceInputs["allowedUses"] = args ? args.allowedUses : undefined;
             resourceInputs["dnsNames"] = args ? args.dnsNames : undefined;
             resourceInputs["earlyRenewalHours"] = args ? args.earlyRenewalHours : undefined;
             resourceInputs["ecdsaCurve"] = args ? args.ecdsaCurve : undefined;
@@ -113,6 +117,7 @@ export interface RootCaArgs {
      * Name of the algorithm to use when generating the private key.
      */
     algorithm?: pulumi.Input<enums.Algorithm>;
+    allowedUses: pulumi.Input<pulumi.Input<enums.AllowedUsage>[]>;
     /**
      * List of DNS names for which a certificate is being requested.
      */

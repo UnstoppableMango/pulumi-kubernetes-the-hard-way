@@ -72,6 +72,14 @@ namespace UnMango.KubernetesTheHardWay
         [Input("algorithm")]
         public Input<UnMango.KubernetesTheHardWay.Algorithm>? Algorithm { get; set; }
 
+        [Input("allowedUses", required: true)]
+        private InputList<UnMango.KubernetesTheHardWay.AllowedUsage>? _allowedUses;
+        public InputList<UnMango.KubernetesTheHardWay.AllowedUsage> AllowedUses
+        {
+            get => _allowedUses ?? (_allowedUses = new InputList<UnMango.KubernetesTheHardWay.AllowedUsage>());
+            set => _allowedUses = value;
+        }
+
         [Input("dnsNames")]
         private InputList<string>? _dnsNames;
 

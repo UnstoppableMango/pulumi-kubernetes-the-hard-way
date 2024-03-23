@@ -10,7 +10,7 @@ export interface KeyPairArgs {
   ecdsaCurve?: Input<EcdsaCurve>;
   commonName: Input<string>;
   country?: Input<string>;
-  expiry: Input<number>;
+  validityPeriodHours: Input<number>;
   location?: Input<string>;
   organization?: Input<string>;
   organizationalUnit?: Input<string>;
@@ -23,18 +23,15 @@ type CertType = SelfSignedCert | LocallySignedCert;
 export abstract class KeyPair<TCert extends CertType> extends ComponentResource {
   public readonly allowedUses: Output<Output<AllowedUsage>[]>;
   public abstract readonly cert: TCert;
+  public abstract readonly certPem: Output<string>;
   public readonly key: PrivateKey;
-
-  public get certPem(): Output<string> {
-    return this.cert.certPem;
-  }
-
-  public get keyPem(): Output<string> {
-    return this.key.publicKeyPem;
-  }
+  public readonly keyPem: Output<string>;
 
   constructor(type: string, name: string, args: KeyPairArgs, opts?: ComponentResourceOptions) {
     super(type, name, args, opts);
+  
+    // TODO: Can this be cleaned up?
+    const allowedUses = output(args.allowedUses).apply(x => x.map(y => output(y)));
 
     const key = new PrivateKey(name, {
       algorithm: args.algorithm,
@@ -42,11 +39,11 @@ export abstract class KeyPair<TCert extends CertType> extends ComponentResource 
       ecdsaCurve: args.ecdsaCurve,
     }, { parent: this });
 
-    // TODO: Can this be cleaned up?
-    this.allowedUses = output(args.allowedUses).apply(x => x.map(y => output(y)));
+    this.allowedUses = allowedUses;
     this.key = key;
+    this.keyPem = key.publicKeyPem;
 
-    this.registerOutputs({ key });
+    this.registerOutputs({ allowedUses, key, keyPem: key.publicKeyPem });
   }
 
   public installCert(name: string, args: InstallArgs, opts?: ComponentResourceOptions): RemoteFile {

@@ -19,6 +19,7 @@ __all__ = ['RootCaArgs', 'RootCa']
 @pulumi.input_type
 class RootCaArgs:
     def __init__(__self__, *,
+                 allowed_uses: pulumi.Input[Sequence[pulumi.Input['AllowedUsage']]],
                  validity_period_hours: pulumi.Input[int],
                  algorithm: Optional[pulumi.Input['Algorithm']] = None,
                  dns_names: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
@@ -43,6 +44,7 @@ class RootCaArgs:
         :param pulumi.Input[bool] set_subject_key_id: Should the generated certificate include a subject key identifier.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] uris: List of URIs for which a certificate is being requested.
         """
+        pulumi.set(__self__, "allowed_uses", allowed_uses)
         pulumi.set(__self__, "validity_period_hours", validity_period_hours)
         if algorithm is not None:
             pulumi.set(__self__, "algorithm", algorithm)
@@ -64,6 +66,15 @@ class RootCaArgs:
             pulumi.set(__self__, "subject", subject)
         if uris is not None:
             pulumi.set(__self__, "uris", uris)
+
+    @property
+    @pulumi.getter(name="allowedUses")
+    def allowed_uses(self) -> pulumi.Input[Sequence[pulumi.Input['AllowedUsage']]]:
+        return pulumi.get(self, "allowed_uses")
+
+    @allowed_uses.setter
+    def allowed_uses(self, value: pulumi.Input[Sequence[pulumi.Input['AllowedUsage']]]):
+        pulumi.set(self, "allowed_uses", value)
 
     @property
     @pulumi.getter(name="validityPeriodHours")
@@ -201,6 +212,7 @@ class RootCa(pulumi.ComponentResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  algorithm: Optional[pulumi.Input['Algorithm']] = None,
+                 allowed_uses: Optional[pulumi.Input[Sequence[pulumi.Input['AllowedUsage']]]] = None,
                  dns_names: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  early_renewal_hours: Optional[pulumi.Input[int]] = None,
                  ecdsa_curve: Optional[pulumi.Input['EcdsaCurve']] = None,
@@ -251,6 +263,7 @@ class RootCa(pulumi.ComponentResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  algorithm: Optional[pulumi.Input['Algorithm']] = None,
+                 allowed_uses: Optional[pulumi.Input[Sequence[pulumi.Input['AllowedUsage']]]] = None,
                  dns_names: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  early_renewal_hours: Optional[pulumi.Input[int]] = None,
                  ecdsa_curve: Optional[pulumi.Input['EcdsaCurve']] = None,
@@ -273,6 +286,9 @@ class RootCa(pulumi.ComponentResource):
             __props__ = RootCaArgs.__new__(RootCaArgs)
 
             __props__.__dict__["algorithm"] = algorithm
+            if allowed_uses is None and not opts.urn:
+                raise TypeError("Missing required property 'allowed_uses'")
+            __props__.__dict__["allowed_uses"] = allowed_uses
             __props__.__dict__["dns_names"] = dns_names
             __props__.__dict__["early_renewal_hours"] = early_renewal_hours
             __props__.__dict__["ecdsa_curve"] = ecdsa_curve

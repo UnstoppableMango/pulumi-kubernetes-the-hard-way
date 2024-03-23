@@ -4,7 +4,6 @@
     "@types/node": "^10.0.0"
   },
   "dependencies": {
-    "@pulumi/pulumi": "^3.0.0",
-    "@unmango/pulumi-kubernetes-the-hard-way": "0.0.2"
+    "@pulumi/pulumi": "^3.0.0"
   }
 }

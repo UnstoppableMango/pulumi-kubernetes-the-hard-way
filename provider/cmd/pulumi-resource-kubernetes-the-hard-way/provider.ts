@@ -1,5 +1,5 @@
-import * as pulumi from "@pulumi/pulumi";
-import * as provider from "@pulumi/pulumi/provider";
+import * as pulumi from '@pulumi/pulumi';
+import * as provider from '@pulumi/pulumi/provider';
 import { RootCa, RootCaArgs } from './rootCa';
 
 export class Provider implements provider.Provider {
@@ -8,7 +8,7 @@ export class Provider implements provider.Provider {
     async construct(name: string, type: string, inputs: pulumi.Inputs,
         options: pulumi.ComponentResourceOptions): Promise<provider.ConstructResult> {
         switch (type) {
-            case "kubernetes-the-hard-way:index:RootCa":
+            case 'kubernetes-the-hard-way:index:RootCa':
                 return await constructRootCa(name, inputs, options);
             default:
                 throw new Error(`unknown resource type ${type}`);

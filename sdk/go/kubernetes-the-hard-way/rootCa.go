@@ -29,6 +29,9 @@ func NewRootCa(ctx *pulumi.Context,
 		return nil, errors.New("missing one or more required arguments")
 	}
 
+	if args.AllowedUses == nil {
+		return nil, errors.New("invalid value for required argument 'AllowedUses'")
+	}
 	if args.ValidityPeriodHours == nil {
 		return nil, errors.New("invalid value for required argument 'ValidityPeriodHours'")
 	}
@@ -43,7 +46,8 @@ func NewRootCa(ctx *pulumi.Context,
 
 type rootCaArgs struct {
 	// Name of the algorithm to use when generating the private key.
-	Algorithm *Algorithm `pulumi:"algorithm"`
+	Algorithm   *Algorithm     `pulumi:"algorithm"`
+	AllowedUses []AllowedUsage `pulumi:"allowedUses"`
 	// List of DNS names for which a certificate is being requested.
 	DnsNames []string `pulumi:"dnsNames"`
 	// TODO
@@ -68,7 +72,8 @@ type rootCaArgs struct {
 // The set of arguments for constructing a RootCa resource.
 type RootCaArgs struct {
 	// Name of the algorithm to use when generating the private key.
-	Algorithm AlgorithmPtrInput
+	Algorithm   AlgorithmPtrInput
+	AllowedUses AllowedUsageArrayInput
 	// List of DNS names for which a certificate is being requested.
 	DnsNames pulumi.StringArrayInput
 	// TODO
