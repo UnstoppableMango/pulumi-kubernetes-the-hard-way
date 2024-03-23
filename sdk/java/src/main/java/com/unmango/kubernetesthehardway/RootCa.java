@@ -42,11 +42,17 @@ public class RootCa extends com.pulumi.resources.ComponentResource {
     public Output<PrivateKey> key() {
         return this.key;
     }
-    @Export(name="keyPem", refs={String.class}, tree="[0]")
-    private Output<String> keyPem;
+    @Export(name="privateKeyPem", refs={String.class}, tree="[0]")
+    private Output<String> privateKeyPem;
 
-    public Output<String> keyPem() {
-        return this.keyPem;
+    public Output<String> privateKeyPem() {
+        return this.privateKeyPem;
+    }
+    @Export(name="publicKeyPem", refs={String.class}, tree="[0]")
+    private Output<String> publicKeyPem;
+
+    public Output<String> publicKeyPem() {
+        return this.publicKeyPem;
     }
 
     /**

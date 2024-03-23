@@ -18,11 +18,11 @@ __all__ = ['CertificateArgs', 'Certificate']
 @pulumi.input_type
 class CertificateArgs:
     def __init__(__self__, *,
+                 algorithm: pulumi.Input['Algorithm'],
                  allowed_uses: pulumi.Input[Sequence[pulumi.Input['AllowedUsage']]],
                  ca_cert_pem: pulumi.Input[str],
                  ca_private_key_pem: pulumi.Input[str],
                  validity_period_hours: pulumi.Input[int],
-                 algorithm: Optional[pulumi.Input['Algorithm']] = None,
                  dns_names: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  early_renewal_hours: Optional[pulumi.Input[int]] = None,
                  ecdsa_curve: Optional[pulumi.Input['EcdsaCurve']] = None,
@@ -35,8 +35,8 @@ class CertificateArgs:
                  uris: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None):
         """
         The set of arguments for constructing a Certificate resource.
-        :param pulumi.Input[int] validity_period_hours: Number of hours, after initial issuing, that the certificate will remain valid.
         :param pulumi.Input['Algorithm'] algorithm: Name of the algorithm to use when generating the private key.
+        :param pulumi.Input[int] validity_period_hours: Number of hours, after initial issuing, that the certificate will remain valid.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] dns_names: List of DNS names for which a certificate is being requested.
         :param pulumi.Input[int] early_renewal_hours: TODO
         :param pulumi.Input['EcdsaCurve'] ecdsa_curve: When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
@@ -46,12 +46,11 @@ class CertificateArgs:
         :param pulumi.Input[bool] set_subject_key_id: Should the generated certificate include a subject key identifier.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] uris: List of URIs for which a certificate is being requested.
         """
+        pulumi.set(__self__, "algorithm", algorithm)
         pulumi.set(__self__, "allowed_uses", allowed_uses)
         pulumi.set(__self__, "ca_cert_pem", ca_cert_pem)
         pulumi.set(__self__, "ca_private_key_pem", ca_private_key_pem)
         pulumi.set(__self__, "validity_period_hours", validity_period_hours)
-        if algorithm is not None:
-            pulumi.set(__self__, "algorithm", algorithm)
         if dns_names is not None:
             pulumi.set(__self__, "dns_names", dns_names)
         if early_renewal_hours is not None:
@@ -72,6 +71,18 @@ class CertificateArgs:
             pulumi.set(__self__, "subject", subject)
         if uris is not None:
             pulumi.set(__self__, "uris", uris)
+
+    @property
+    @pulumi.getter
+    def algorithm(self) -> pulumi.Input['Algorithm']:
+        """
+        Name of the algorithm to use when generating the private key.
+        """
+        return pulumi.get(self, "algorithm")
+
+    @algorithm.setter
+    def algorithm(self, value: pulumi.Input['Algorithm']):
+        pulumi.set(self, "algorithm", value)
 
     @property
     @pulumi.getter(name="allowedUses")
@@ -111,18 +122,6 @@ class CertificateArgs:
     @validity_period_hours.setter
     def validity_period_hours(self, value: pulumi.Input[int]):
         pulumi.set(self, "validity_period_hours", value)
-
-    @property
-    @pulumi.getter
-    def algorithm(self) -> Optional[pulumi.Input['Algorithm']]:
-        """
-        Name of the algorithm to use when generating the private key.
-        """
-        return pulumi.get(self, "algorithm")
-
-    @algorithm.setter
-    def algorithm(self, value: Optional[pulumi.Input['Algorithm']]):
-        pulumi.set(self, "algorithm", value)
 
     @property
     @pulumi.getter(name="dnsNames")
@@ -324,6 +323,8 @@ class Certificate(pulumi.ComponentResource):
                 raise TypeError('__props__ is only valid when passed in combination with a valid opts.id to get an existing resource')
             __props__ = CertificateArgs.__new__(CertificateArgs)
 
+            if algorithm is None and not opts.urn:
+                raise TypeError("Missing required property 'algorithm'")
             __props__.__dict__["algorithm"] = algorithm
             if allowed_uses is None and not opts.urn:
                 raise TypeError("Missing required property 'allowed_uses'")
@@ -351,7 +352,8 @@ class Certificate(pulumi.ComponentResource):
             __props__.__dict__["cert_pem"] = None
             __props__.__dict__["csr"] = None
             __props__.__dict__["key"] = None
-            __props__.__dict__["key_pem"] = None
+            __props__.__dict__["private_key_pem"] = None
+            __props__.__dict__["public_key_pem"] = None
         super(Certificate, __self__).__init__(
             'kubernetes-the-hard-way:index:Certificate',
             resource_name,
@@ -380,9 +382,14 @@ class Certificate(pulumi.ComponentResource):
         return pulumi.get(self, "key")
 
     @property
-    @pulumi.getter(name="keyPem")
-    def key_pem(self) -> pulumi.Output[str]:
-        return pulumi.get(self, "key_pem")
+    @pulumi.getter(name="privateKeyPem")
+    def private_key_pem(self) -> pulumi.Output[str]:
+        return pulumi.get(self, "private_key_pem")
+
+    @property
+    @pulumi.getter(name="publicKeyPem")
+    def public_key_pem(self) -> pulumi.Output[str]:
+        return pulumi.get(self, "public_key_pem")
 
     @pulumi.output_type
     class InstallOnResult:

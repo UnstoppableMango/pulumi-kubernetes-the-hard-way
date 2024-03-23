@@ -1,7 +1,7 @@
 import { ComponentResource, ComponentResourceOptions, Input, Inputs, Output, interpolate, output } from '@pulumi/pulumi';
+import { ConstructResult } from '@pulumi/pulumi/provider';
 import { Command } from '@pulumi/command/remote';
 import { remote } from '@pulumi/command/types/input';
-import { ConstructResult } from '@pulumi/pulumi/provider';
 
 export type InstallArgs = Omit<RemoteFileArgs, 'content'>;
 
@@ -15,21 +15,12 @@ export class RemoteFile extends ComponentResource {
   public readonly command: Command;
   public readonly content: Output<string>;
   public readonly path: Output<string>;
-
-  public get stderr(): Output<string> {
-    return this.command.stderr;
-  }
-
-  public get stdin(): Output<string | undefined> {
-    return this.command.stdin;
-  }
-
-  public get stdout(): Output<string> {
-    return this.command.stdout;
-  }
+  public readonly stderr: Output<string>;
+  public readonly stdin: Output<string | undefined>;
+  public readonly stdout: Output<string>;
 
   constructor(name: string, args: RemoteFileArgs, opts?: ComponentResourceOptions) {
-    super('thecluster:index:remoteFile', name, args, opts);
+    super('kubernetes-the-hard-way:index:RemoteFile', name, args, opts);
 
     const content = output(args.content);
     const path = output(args.path);
@@ -44,19 +35,34 @@ export class RemoteFile extends ComponentResource {
     this.command = command;
     this.content = content;
     this.path = path;
+    this.stderr = command.stderr;
+    this.stdin = command.stdin;
+    this.stdout = command.stdout;
 
-    this.registerOutputs({ command, content, path });
+    this.registerOutputs({
+      command, content, path,
+      stderr: command.stderr,
+      stdin: command.stdin,
+      stdout: command.stdout,
+    });
   }
 }
 
-export async function construct(name: string, inputs: Inputs, options: ComponentResourceOptions): Promise<ConstructResult> {
+export async function construct(
+  name: string,
+  inputs: Inputs,
+  options: ComponentResourceOptions,
+): Promise<ConstructResult> {
   const file = new RemoteFile(name, inputs as RemoteFileArgs, options);
   return {
     urn: file.urn,
     state: {
-      allowedUses: file.command,
+      command: file.command,
       content: file.content,
       path: file.path,
+      stderr: file.stderr,
+      stdin: file.stdin,
+      stdout: file.stdout,
     },
   };
 }

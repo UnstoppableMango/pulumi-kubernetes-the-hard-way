@@ -13,7 +13,13 @@
         "forceConsistentCasingInFileNames": true
     },
     "files": [
+        "certificate.ts",
         "index.ts",
-        "provider.ts"
+        "keypair.ts",
+        "provider.ts",
+        "remoteFile.ts",
+        "rootCa.ts",
+        "types.ts",
+        "util.ts"
     ]
 }

@@ -16,11 +16,12 @@ import (
 type RootCa struct {
 	pulumi.ResourceState
 
-	AllowedUses AllowedUsageArrayOutput  `pulumi:"allowedUses"`
-	Cert        tls.SelfSignedCertOutput `pulumi:"cert"`
-	CertPem     pulumi.StringOutput      `pulumi:"certPem"`
-	Key         tls.PrivateKeyOutput     `pulumi:"key"`
-	KeyPem      pulumi.StringOutput      `pulumi:"keyPem"`
+	AllowedUses   AllowedUsageArrayOutput  `pulumi:"allowedUses"`
+	Cert          tls.SelfSignedCertOutput `pulumi:"cert"`
+	CertPem       pulumi.StringOutput      `pulumi:"certPem"`
+	Key           tls.PrivateKeyOutput     `pulumi:"key"`
+	PrivateKeyPem pulumi.StringOutput      `pulumi:"privateKeyPem"`
+	PublicKeyPem  pulumi.StringOutput      `pulumi:"publicKeyPem"`
 }
 
 // NewRootCa registers a new resource with the given unique name, arguments, and options.
@@ -44,8 +45,7 @@ func NewRootCa(ctx *pulumi.Context,
 
 type rootCaArgs struct {
 	// Name of the algorithm to use when generating the private key.
-	Algorithm   *Algorithm     `pulumi:"algorithm"`
-	AllowedUses []AllowedUsage `pulumi:"allowedUses"`
+	Algorithm *Algorithm `pulumi:"algorithm"`
 	// List of DNS names for which a certificate is being requested.
 	DnsNames []string `pulumi:"dnsNames"`
 	// TODO
@@ -70,8 +70,7 @@ type rootCaArgs struct {
 // The set of arguments for constructing a RootCa resource.
 type RootCaArgs struct {
 	// Name of the algorithm to use when generating the private key.
-	Algorithm   AlgorithmPtrInput
-	AllowedUses AllowedUsageArrayInput
+	Algorithm AlgorithmPtrInput
 	// List of DNS names for which a certificate is being requested.
 	DnsNames pulumi.StringArrayInput
 	// TODO
@@ -320,8 +319,12 @@ func (o RootCaOutput) Key() tls.PrivateKeyOutput {
 	return o.ApplyT(func(v *RootCa) tls.PrivateKeyOutput { return v.Key }).(tls.PrivateKeyOutput)
 }
 
-func (o RootCaOutput) KeyPem() pulumi.StringOutput {
-	return o.ApplyT(func(v *RootCa) pulumi.StringOutput { return v.KeyPem }).(pulumi.StringOutput)
+func (o RootCaOutput) PrivateKeyPem() pulumi.StringOutput {
+	return o.ApplyT(func(v *RootCa) pulumi.StringOutput { return v.PrivateKeyPem }).(pulumi.StringOutput)
+}
+
+func (o RootCaOutput) PublicKeyPem() pulumi.StringOutput {
+	return o.ApplyT(func(v *RootCa) pulumi.StringOutput { return v.PublicKeyPem }).(pulumi.StringOutput)
 }
 
 type RootCaArrayOutput struct{ *pulumi.OutputState }

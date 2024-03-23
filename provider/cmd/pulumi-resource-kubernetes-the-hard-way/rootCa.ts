@@ -1,18 +1,25 @@
-import { ComponentResourceOptions, Input, Inputs, Output } from '@pulumi/pulumi';
+import { ComponentResourceOptions, Input, Inputs, Output, output } from '@pulumi/pulumi';
+import { ConstructResult } from '@pulumi/pulumi/provider';
 import { SelfSignedCert } from '@pulumi/tls';
+import { SelfSignedCertSubject } from '@pulumi/tls/types/input';
 import { KeyPair, KeyPairArgs } from './keypair';
 import { Certificate, CertificateArgs } from './certificate';
 import { AllowedUsage } from './types';
-import { ConstructResult } from '@pulumi/pulumi/provider';
+import { toAllowedUsage } from './util';
 
-export interface RootCaArgs extends KeyPairArgs { }
+export interface RootCaArgs extends KeyPairArgs {
+  subject?: Input<SelfSignedCertSubject>;
+}
 
 export class RootCa extends KeyPair<SelfSignedCert> {
+  public readonly allowedUses: Output<AllowedUsage[]>;
   public readonly cert: SelfSignedCert;
   public readonly certPem: Output<string>;
 
   constructor(name: string, args: RootCaArgs, opts?: ComponentResourceOptions) {
     super('kubernetes-the-hard-way:index:RootCa', name, args, opts);
+
+    const key = this.key;
 
     const cert = new SelfSignedCert(name, {
       isCaCertificate: true,
@@ -24,19 +31,29 @@ export class RootCa extends KeyPair<SelfSignedCert> {
       ],
       privateKeyPem: this.key.privateKeyPem,
       validityPeriodHours: args.validityPeriodHours,
-      subject: {
-        commonName: 'Kubernetes',
-        country: args.country,
-        organization: args.organization,
-        organizationalUnit: args.organizationalUnit,
-        province: args.state, // Eh
-      },
+      subject: output(args.subject).apply(subject => ({
+        commonName: subject?.commonName ?? 'Kubernetes',
+        country: subject?.country,
+        locality: subject?.locality,
+        organization: subject?.organization,
+        organizationalUnit: subject?.organizationalUnit,
+        postalCode: subject?.postalCode,
+        province: subject?.province,
+        serialNumber: subject?.serialNumber,
+        streetAddresses: subject?.streetAddresses,
+      })),
     }, { parent: this });
 
+    this.allowedUses = cert.allowedUses.apply(toAllowedUsage);
     this.cert = cert;
     this.certPem = cert.certPem;
 
-    this.registerOutputs({ cert, certPem: cert.certPem });
+    this.registerOutputs({
+      allowedUses: this.allowedUses,
+      cert, certPem: cert.certPem, key,
+      privateKeyPem: key.privateKeyPem,
+      publicKeyPem: key.publicKeyPem,
+    });
   }
 
   public newCertificate(
@@ -52,16 +69,21 @@ export class RootCa extends KeyPair<SelfSignedCert> {
   }
 }
 
-export async function construct(name: string, inputs: Inputs, options: ComponentResourceOptions): Promise<ConstructResult> {
+export async function construct(
+  name: string,
+  inputs: Inputs,
+  options: ComponentResourceOptions,
+): Promise<ConstructResult> {
   const rootCa = new RootCa(name, inputs as RootCaArgs, options);
   return {
-      urn: rootCa.urn,
-      state: {
-          allowedUses: rootCa.allowedUses,
-          cert: rootCa.cert,
-          certPem: rootCa.certPem,
-          key: rootCa.key,
-          keyPem: rootCa.keyPem,
-      },
+    urn: rootCa.urn,
+    state: {
+      allowedUses: rootCa.allowedUses,
+      cert: rootCa.cert,
+      certPem: rootCa.certPem,
+      key: rootCa.key,
+      privateKeyPem: rootCa.privateKeyPem,
+      publicKeyPem: rootCa.publicKeyPem,
+    },
   };
 }

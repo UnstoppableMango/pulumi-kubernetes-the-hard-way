@@ -25,8 +25,11 @@ namespace UnMango.KubernetesTheHardWay
         [Output("key")]
         public Output<Pulumi.Tls.PrivateKey> Key { get; private set; } = null!;
 
-        [Output("keyPem")]
-        public Output<string> KeyPem { get; private set; } = null!;
+        [Output("privateKeyPem")]
+        public Output<string> PrivateKeyPem { get; private set; } = null!;
+
+        [Output("publicKeyPem")]
+        public Output<string> PublicKeyPem { get; private set; } = null!;
 
 
         /// <summary>
@@ -74,14 +77,6 @@ namespace UnMango.KubernetesTheHardWay
         /// </summary>
         [Input("algorithm")]
         public Input<UnMango.KubernetesTheHardWay.Algorithm>? Algorithm { get; set; }
-
-        [Input("allowedUses")]
-        private InputList<UnMango.KubernetesTheHardWay.AllowedUsage>? _allowedUses;
-        public InputList<UnMango.KubernetesTheHardWay.AllowedUsage> AllowedUses
-        {
-            get => _allowedUses ?? (_allowedUses = new InputList<UnMango.KubernetesTheHardWay.AllowedUsage>());
-            set => _allowedUses = value;
-        }
 
         [Input("dnsNames")]
         private InputList<string>? _dnsNames;

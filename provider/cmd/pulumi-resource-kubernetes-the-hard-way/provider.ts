@@ -16,7 +16,7 @@ export class Provider implements provider.Provider {
         switch (type) {
             case 'kubernetes-the-hard-way:index:Certificate':
                 return await cert.construct(name, inputs, options);
-            case 'kubernetes-the-hard-way:index:RemoteFilte':
+            case 'kubernetes-the-hard-way:index:RemoteFile':
                 return await remoteFile.construct(name, inputs, options);
             case 'kubernetes-the-hard-way:index:RootCa':
                 return await rootCa.construct(name, inputs, options);

@@ -5,8 +5,24 @@ const ca = new kthw.RootCa('simple', {
     validityPeriodHours: 256,
 });
 
-export const allowedUses = ca.allowedUses;
-export const cert = ca.cert;
-export const certPem = ca.certPem;
-export const key = ca.key;
-export const keyPem = ca.keyPem;
+const cert = new kthw.Certificate('simple2', {
+    algorithm: 'RSA',
+    allowedUses: [
+        kthw.AllowedUsage.Cert_signing,
+    ],
+    validityPeriodHours: 256,
+    caCertPem: ca.certPem,
+    caPrivateKeyPem: ca.privateKeyPem,
+});
+
+export const caAllowedUses = ca.allowedUses;
+export const caCertPem = ca.certPem;
+export const caKeyPem = ca.publicKeyPem;
+
+export const certPem = cert.certPem;
+export const keyPem = cert.privateKeyPem;
+
+export const caCert = ca.cert;
+export const caKey = ca.key;
+export const certCert = cert.cert;
+export const certKey = cert.key;

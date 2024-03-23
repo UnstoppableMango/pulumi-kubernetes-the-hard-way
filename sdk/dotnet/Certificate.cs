@@ -25,8 +25,11 @@ namespace UnMango.KubernetesTheHardWay
         [Output("key")]
         public Output<Pulumi.Tls.PrivateKey> Key { get; private set; } = null!;
 
-        [Output("keyPem")]
-        public Output<string> KeyPem { get; private set; } = null!;
+        [Output("privateKeyPem")]
+        public Output<string> PrivateKeyPem { get; private set; } = null!;
+
+        [Output("publicKeyPem")]
+        public Output<string> PublicKeyPem { get; private set; } = null!;
 
 
         /// <summary>
@@ -66,8 +69,8 @@ namespace UnMango.KubernetesTheHardWay
         /// <summary>
         /// Name of the algorithm to use when generating the private key.
         /// </summary>
-        [Input("algorithm")]
-        public Input<UnMango.KubernetesTheHardWay.Algorithm>? Algorithm { get; set; }
+        [Input("algorithm", required: true)]
+        public Input<UnMango.KubernetesTheHardWay.Algorithm> Algorithm { get; set; } = null!;
 
         [Input("allowedUses", required: true)]
         private InputList<UnMango.KubernetesTheHardWay.AllowedUsage>? _allowedUses;

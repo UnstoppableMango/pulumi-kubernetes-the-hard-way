@@ -21,7 +21,6 @@ class RootCaArgs:
     def __init__(__self__, *,
                  validity_period_hours: pulumi.Input[int],
                  algorithm: Optional[pulumi.Input['Algorithm']] = None,
-                 allowed_uses: Optional[pulumi.Input[Sequence[pulumi.Input['AllowedUsage']]]] = None,
                  dns_names: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  early_renewal_hours: Optional[pulumi.Input[int]] = None,
                  ecdsa_curve: Optional[pulumi.Input['EcdsaCurve']] = None,
@@ -47,8 +46,6 @@ class RootCaArgs:
         pulumi.set(__self__, "validity_period_hours", validity_period_hours)
         if algorithm is not None:
             pulumi.set(__self__, "algorithm", algorithm)
-        if allowed_uses is not None:
-            pulumi.set(__self__, "allowed_uses", allowed_uses)
         if dns_names is not None:
             pulumi.set(__self__, "dns_names", dns_names)
         if early_renewal_hours is not None:
@@ -91,15 +88,6 @@ class RootCaArgs:
     @algorithm.setter
     def algorithm(self, value: Optional[pulumi.Input['Algorithm']]):
         pulumi.set(self, "algorithm", value)
-
-    @property
-    @pulumi.getter(name="allowedUses")
-    def allowed_uses(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['AllowedUsage']]]]:
-        return pulumi.get(self, "allowed_uses")
-
-    @allowed_uses.setter
-    def allowed_uses(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['AllowedUsage']]]]):
-        pulumi.set(self, "allowed_uses", value)
 
     @property
     @pulumi.getter(name="dnsNames")
@@ -213,7 +201,6 @@ class RootCa(pulumi.ComponentResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  algorithm: Optional[pulumi.Input['Algorithm']] = None,
-                 allowed_uses: Optional[pulumi.Input[Sequence[pulumi.Input['AllowedUsage']]]] = None,
                  dns_names: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  early_renewal_hours: Optional[pulumi.Input[int]] = None,
                  ecdsa_curve: Optional[pulumi.Input['EcdsaCurve']] = None,
@@ -264,7 +251,6 @@ class RootCa(pulumi.ComponentResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  algorithm: Optional[pulumi.Input['Algorithm']] = None,
-                 allowed_uses: Optional[pulumi.Input[Sequence[pulumi.Input['AllowedUsage']]]] = None,
                  dns_names: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  early_renewal_hours: Optional[pulumi.Input[int]] = None,
                  ecdsa_curve: Optional[pulumi.Input['EcdsaCurve']] = None,
@@ -287,7 +273,6 @@ class RootCa(pulumi.ComponentResource):
             __props__ = RootCaArgs.__new__(RootCaArgs)
 
             __props__.__dict__["algorithm"] = algorithm
-            __props__.__dict__["allowed_uses"] = allowed_uses
             __props__.__dict__["dns_names"] = dns_names
             __props__.__dict__["early_renewal_hours"] = early_renewal_hours
             __props__.__dict__["ecdsa_curve"] = ecdsa_curve
@@ -300,10 +285,12 @@ class RootCa(pulumi.ComponentResource):
             if validity_period_hours is None and not opts.urn:
                 raise TypeError("Missing required property 'validity_period_hours'")
             __props__.__dict__["validity_period_hours"] = validity_period_hours
+            __props__.__dict__["allowed_uses"] = None
             __props__.__dict__["cert"] = None
             __props__.__dict__["cert_pem"] = None
             __props__.__dict__["key"] = None
-            __props__.__dict__["key_pem"] = None
+            __props__.__dict__["private_key_pem"] = None
+            __props__.__dict__["public_key_pem"] = None
         super(RootCa, __self__).__init__(
             'kubernetes-the-hard-way:index:RootCa',
             resource_name,
@@ -332,9 +319,14 @@ class RootCa(pulumi.ComponentResource):
         return pulumi.get(self, "key")
 
     @property
-    @pulumi.getter(name="keyPem")
-    def key_pem(self) -> pulumi.Output[str]:
-        return pulumi.get(self, "key_pem")
+    @pulumi.getter(name="privateKeyPem")
+    def private_key_pem(self) -> pulumi.Output[str]:
+        return pulumi.get(self, "private_key_pem")
+
+    @property
+    @pulumi.getter(name="publicKeyPem")
+    def public_key_pem(self) -> pulumi.Output[str]:
+        return pulumi.get(self, "public_key_pem")
 
     @pulumi.output_type
     class CreateCertificateResult:

@@ -27,15 +27,15 @@ public final class CertificateArgs extends com.pulumi.resources.ResourceArgs {
      * Name of the algorithm to use when generating the private key.
      * 
      */
-    @Import(name="algorithm")
-    private @Nullable Output<Algorithm> algorithm;
+    @Import(name="algorithm", required=true)
+    private Output<Algorithm> algorithm;
 
     /**
      * @return Name of the algorithm to use when generating the private key.
      * 
      */
-    public Optional<Output<Algorithm>> algorithm() {
-        return Optional.ofNullable(this.algorithm);
+    public Output<Algorithm> algorithm() {
+        return this.algorithm;
     }
 
     @Import(name="allowedUses", required=true)
@@ -252,7 +252,7 @@ public final class CertificateArgs extends com.pulumi.resources.ResourceArgs {
          * @return builder
          * 
          */
-        public Builder algorithm(@Nullable Output<Algorithm> algorithm) {
+        public Builder algorithm(Output<Algorithm> algorithm) {
             $.algorithm = algorithm;
             return this;
         }
@@ -536,6 +536,9 @@ public final class CertificateArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         public CertificateArgs build() {
+            if ($.algorithm == null) {
+                throw new MissingRequiredPropertyException("CertificateArgs", "algorithm");
+            }
             if ($.allowedUses == null) {
                 throw new MissingRequiredPropertyException("CertificateArgs", "allowedUses");
             }

@@ -8,7 +8,6 @@ import com.pulumi.core.annotations.Import;
 import com.pulumi.exceptions.MissingRequiredPropertyException;
 import com.pulumi.tls.inputs.SelfSignedCertSubjectArgs;
 import com.unmango.kubernetesthehardway.enums.Algorithm;
-import com.unmango.kubernetesthehardway.enums.AllowedUsage;
 import com.unmango.kubernetesthehardway.enums.EcdsaCurve;
 import java.lang.Boolean;
 import java.lang.Integer;
@@ -36,13 +35,6 @@ public final class RootCaArgs extends com.pulumi.resources.ResourceArgs {
      */
     public Optional<Output<Algorithm>> algorithm() {
         return Optional.ofNullable(this.algorithm);
-    }
-
-    @Import(name="allowedUses")
-    private @Nullable Output<List<AllowedUsage>> allowedUses;
-
-    public Optional<Output<List<AllowedUsage>>> allowedUses() {
-        return Optional.ofNullable(this.allowedUses);
     }
 
     /**
@@ -191,7 +183,6 @@ public final class RootCaArgs extends com.pulumi.resources.ResourceArgs {
 
     private RootCaArgs(RootCaArgs $) {
         this.algorithm = $.algorithm;
-        this.allowedUses = $.allowedUses;
         this.dnsNames = $.dnsNames;
         this.earlyRenewalHours = $.earlyRenewalHours;
         this.ecdsaCurve = $.ecdsaCurve;
@@ -241,19 +232,6 @@ public final class RootCaArgs extends com.pulumi.resources.ResourceArgs {
          */
         public Builder algorithm(Algorithm algorithm) {
             return algorithm(Output.of(algorithm));
-        }
-
-        public Builder allowedUses(@Nullable Output<List<AllowedUsage>> allowedUses) {
-            $.allowedUses = allowedUses;
-            return this;
-        }
-
-        public Builder allowedUses(List<AllowedUsage> allowedUses) {
-            return allowedUses(Output.of(allowedUses));
-        }
-
-        public Builder allowedUses(AllowedUsage... allowedUses) {
-            return allowedUses(List.of(allowedUses));
         }
 
         /**
