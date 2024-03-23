@@ -203,7 +203,7 @@ jobs:
         # Therefore we can't publish prereleases without risking breaking customers.
         # All other ecosystems handle prereleases correctly, Maven is the exception.
         if: inputs.prerelease == false
-        uses: gradle/gradle-build-action@2bd30acc50398ddb4c24deba4f10013f9672b8ef
+        uses: gradle/gradle-build-action@942d5e1456472d289f4b112fd3b62244067bac9c
         with:
           arguments: publishToSonatype closeAndReleaseSonatypeStagingRepository
           build-root-directory: ./sdk/java
