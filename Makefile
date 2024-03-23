@@ -39,12 +39,11 @@ default: provider build_sdks
 ensure: bin/pulumictl
 
 # Binaries
-.PHONY: provider
 provider: bin/$(LOCAL_PROVIDER_FILENAME)
 
 .PHONY: test
-test: provider install_sdks bin/gotestfmt
-	cd examples && PATH=$(WORKING_DIR)/bin:$$PATH go test -v -json -timeout 2h . | gotestfmt
+test: .make/install_provider install_sdks bin/gotestfmt
+	cd examples && go test -v -json -timeout 2h . | gotestfmt
 
 .PHONY: install_provider
 install_provider: .make/install_provider
@@ -203,8 +202,8 @@ dist: dist/$(PROVIDER)-v$(PROVIDER_VERSION)-windows-amd64.tar.gz
 .make/generate_dotnet: bin/pulumictl .pulumi/bin/pulumi $(SCHEMA_FILE)
 	rm -rf sdk/dotnet
 	.pulumi/bin/pulumi package gen-sdk $(SCHEMA_FILE) --language dotnet
-#	sed -i.bak -e "s/<\/Nullable>/<\/Nullable>\n    <UseSharedCompilation>false<\/UseSharedCompilation>/g" sdk/dotnet/UnMango.KubernetesTheHardWay.csproj
-#	rm sdk/dotnet/UnMango.KubernetesTheHardWay.csproj.bak
+	sed -i.bak -e "s/<\/Nullable>/<\/Nullable>\n    <UseSharedCompilation>false<\/UseSharedCompilation>/g" sdk/dotnet/UnMango.KubernetesTheHardWay.csproj
+	rm sdk/dotnet/UnMango.KubernetesTheHardWay.csproj.bak
 	@touch $@
 
 .make/generate_go: bin/pulumictl .pulumi/bin/pulumi $(SCHEMA_FILE)
@@ -221,7 +220,6 @@ dist: dist/$(PROVIDER)-v$(PROVIDER_VERSION)-windows-amd64.tar.gz
 	cd sdk/nodejs/ && \
 		NODE_OPTIONS=--max-old-space-size=12288 yarn run tsc --diagnostics --incremental && \
 		cp ../../README.md ../../LICENSE package.json yarn.lock ./bin/ && \
-		mkdir -p bin/scripts && \
 		sed -i.bak -e "s/\$${VERSION}/$(VERSION_JS)/g" ./bin/package.json
 	@touch $@
 
@@ -250,9 +248,8 @@ dist: dist/$(PROVIDER)-v$(PROVIDER_VERSION)-windows-amd64.tar.gz
 		gradle --console=plain -Pversion=$(VERSION_GENERIC) build
 	@touch $@
 
-# TODO: Fix
 .make/build_go: .make/generate_go
-	find sdk/go -maxdepth 1 -type d -exec sh -c "cd \"{}\" && go build" \;
+	cd sdk/go/kubernetes-the-hard-way && go build
 	@touch $@
 
 .make/install_nodejs_sdk: .make/build_nodejs

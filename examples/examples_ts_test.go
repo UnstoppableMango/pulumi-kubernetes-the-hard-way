@@ -8,9 +8,9 @@ import (
 )
 
 func TestSimple(t *testing.T) {
-	test := getJSBaseOptions().
+	test := getJSBaseOptions(t).
 		With(integration.ProgramTestOptions{
-			Dir:           path.Join(getCwd(t), "./simple"),
+			Dir:           path.Join(getCwd(t), "simple"),
 			Quick:         true,
 			SkipRefresh:   true,
 			RunUpdateTest: false,
