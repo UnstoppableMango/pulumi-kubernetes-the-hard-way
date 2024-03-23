@@ -193,9 +193,12 @@ resources:
       subject:
         $ref: "/tls/v5.0.0/schema.json#/types/tls:index/SelfSignedCertSubject:SelfSignedCertSubject"
     requiredInputs:
-      - allowedUses
       - validityPeriodHours
     properties:
+      allowedUses:
+        type: array
+        items:
+          $ref: "#/types/kubernetes-the-hard-way:index:AllowedUsage"
       cert:
         $ref: "/tls/v5.0.0/schema.json#/resources/tls:index/selfSignedCert:SelfSignedCert"
       certPem:
@@ -205,6 +208,7 @@ resources:
       keyPem:
         type: string
     required:
+      - allowedUses
       - cert
       - certPem
       - key

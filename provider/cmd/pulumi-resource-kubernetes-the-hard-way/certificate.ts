@@ -1,6 +1,7 @@
-import { ComponentResourceOptions, Input, Output } from '@pulumi/pulumi';
+import { ComponentResourceOptions, Input, Inputs, Output } from '@pulumi/pulumi';
 import { CertRequest, LocallySignedCert } from '@pulumi/tls';
 import { KeyPair, KeyPairArgs } from './keypair';
+import { ConstructResult } from '@pulumi/pulumi/provider';
 
 export interface CertificateArgs extends KeyPairArgs {
   dnsNames?: Input<Input<string>[]>;
@@ -48,4 +49,19 @@ export class Certificate extends KeyPair<LocallySignedCert> {
 
     this.registerOutputs({ cert, certPem: cert.certPem, csr });
   }
+}
+
+export async function construct(name: string, inputs: Inputs, options: ComponentResourceOptions): Promise<ConstructResult> {
+  const cert = new Certificate(name, inputs as CertificateArgs, options);
+  return {
+      urn: cert.urn,
+      state: {
+          allowedUses: cert.allowedUses,
+          cert: cert.cert,
+          certPem: cert.certPem,
+          csr: cert.csr,
+          key: cert.key,
+          keyPem: cert.keyPem,
+      },
+  };
 }

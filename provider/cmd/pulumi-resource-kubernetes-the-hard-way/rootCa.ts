@@ -1,7 +1,9 @@
-import { ComponentResourceOptions, Input, Output } from '@pulumi/pulumi';
+import { ComponentResourceOptions, Input, Inputs, Output } from '@pulumi/pulumi';
 import { SelfSignedCert } from '@pulumi/tls';
 import { KeyPair, KeyPairArgs } from './keypair';
 import { Certificate, CertificateArgs } from './certificate';
+import { AllowedUsage } from './types';
+import { ConstructResult } from '@pulumi/pulumi/provider';
 
 export interface RootCaArgs extends KeyPairArgs { }
 
@@ -14,7 +16,12 @@ export class RootCa extends KeyPair<SelfSignedCert> {
 
     const cert = new SelfSignedCert(name, {
       isCaCertificate: true,
-      allowedUses: args.allowedUses,
+      allowedUses: [
+        AllowedUsage.Cert_signing,
+        AllowedUsage.Key_encipherment,
+        AllowedUsage.Server_auth,
+        AllowedUsage.Client_auth,
+      ],
       privateKeyPem: this.key.privateKeyPem,
       validityPeriodHours: args.validityPeriodHours,
       subject: {
@@ -43,36 +50,18 @@ export class RootCa extends KeyPair<SelfSignedCert> {
       caPrivateKeyPem: this.key.privateKeyPem,
     }, opts);
   }
+}
 
-  public newAdminCertificate(
-    name: string,
-    args: Omit<
-      CertificateArgs,
-      'caCertPem' | 'caPrivateKeyPem' | 'commonName' | 'organization'
-    >,
-    opts?: ComponentResourceOptions,
-  ): Certificate {
-    return this.newCertificate(`${name}-admin`, {
-      ...args,
-      commonName: 'admin',
-      organization: 'system:masters',
-    }, opts);
-  }
-
-  public newKubeletCertificate(
-    name: string,
-    index: number,
-    ip: string,
-    args: Omit<
-      CertificateArgs,
-      'caCertPem' | 'caPrivateKeyPem' | 'commonName' | 'organization'
-    >,
-    opts?: ComponentResourceOptions,
-  ): Certificate {
-    return this.newCertificate(`${name}-node${index}`, {
-      ...args,
-      commonName: `system:node:${ip}`,
-      organization: 'system:nodes',
-    }, opts);
-  }
+export async function construct(name: string, inputs: Inputs, options: ComponentResourceOptions): Promise<ConstructResult> {
+  const rootCa = new RootCa(name, inputs as RootCaArgs, options);
+  return {
+      urn: rootCa.urn,
+      state: {
+          allowedUses: rootCa.allowedUses,
+          cert: rootCa.cert,
+          certPem: rootCa.certPem,
+          key: rootCa.key,
+          keyPem: rootCa.keyPem,
+      },
+  };
 }

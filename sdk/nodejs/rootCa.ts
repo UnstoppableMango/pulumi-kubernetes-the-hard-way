@@ -26,6 +26,7 @@ export class RootCa extends pulumi.ComponentResource {
         return obj['__pulumiType'] === RootCa.__pulumiType;
     }
 
+    public readonly allowedUses!: pulumi.Output<enums.AllowedUsage[]>;
     public /*out*/ readonly cert!: pulumi.Output<pulumiTls.SelfSignedCert>;
     public /*out*/ readonly certPem!: pulumi.Output<string>;
     public /*out*/ readonly key!: pulumi.Output<pulumiTls.PrivateKey>;
@@ -42,9 +43,6 @@ export class RootCa extends pulumi.ComponentResource {
         let resourceInputs: pulumi.Inputs = {};
         opts = opts || {};
         if (!opts.id) {
-            if ((!args || args.allowedUses === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'allowedUses'");
-            }
             if ((!args || args.validityPeriodHours === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'validityPeriodHours'");
             }
@@ -65,6 +63,7 @@ export class RootCa extends pulumi.ComponentResource {
             resourceInputs["key"] = undefined /*out*/;
             resourceInputs["keyPem"] = undefined /*out*/;
         } else {
+            resourceInputs["allowedUses"] = undefined /*out*/;
             resourceInputs["cert"] = undefined /*out*/;
             resourceInputs["certPem"] = undefined /*out*/;
             resourceInputs["key"] = undefined /*out*/;
@@ -117,7 +116,7 @@ export interface RootCaArgs {
      * Name of the algorithm to use when generating the private key.
      */
     algorithm?: pulumi.Input<enums.Algorithm>;
-    allowedUses: pulumi.Input<pulumi.Input<enums.AllowedUsage>[]>;
+    allowedUses?: pulumi.Input<pulumi.Input<enums.AllowedUsage>[]>;
     /**
      * List of DNS names for which a certificate is being requested.
      */

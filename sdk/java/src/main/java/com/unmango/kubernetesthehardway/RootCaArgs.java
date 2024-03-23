@@ -38,11 +38,11 @@ public final class RootCaArgs extends com.pulumi.resources.ResourceArgs {
         return Optional.ofNullable(this.algorithm);
     }
 
-    @Import(name="allowedUses", required=true)
-    private Output<List<AllowedUsage>> allowedUses;
+    @Import(name="allowedUses")
+    private @Nullable Output<List<AllowedUsage>> allowedUses;
 
-    public Output<List<AllowedUsage>> allowedUses() {
-        return this.allowedUses;
+    public Optional<Output<List<AllowedUsage>>> allowedUses() {
+        return Optional.ofNullable(this.allowedUses);
     }
 
     /**
@@ -243,7 +243,7 @@ public final class RootCaArgs extends com.pulumi.resources.ResourceArgs {
             return algorithm(Output.of(algorithm));
         }
 
-        public Builder allowedUses(Output<List<AllowedUsage>> allowedUses) {
+        public Builder allowedUses(@Nullable Output<List<AllowedUsage>> allowedUses) {
             $.allowedUses = allowedUses;
             return this;
         }
@@ -485,9 +485,6 @@ public final class RootCaArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         public RootCaArgs build() {
-            if ($.allowedUses == null) {
-                throw new MissingRequiredPropertyException("RootCaArgs", "allowedUses");
-            }
             if ($.validityPeriodHours == null) {
                 throw new MissingRequiredPropertyException("RootCaArgs", "validityPeriodHours");
             }

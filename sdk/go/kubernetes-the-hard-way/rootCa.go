@@ -16,10 +16,11 @@ import (
 type RootCa struct {
 	pulumi.ResourceState
 
-	Cert    tls.SelfSignedCertOutput `pulumi:"cert"`
-	CertPem pulumi.StringOutput      `pulumi:"certPem"`
-	Key     tls.PrivateKeyOutput     `pulumi:"key"`
-	KeyPem  pulumi.StringOutput      `pulumi:"keyPem"`
+	AllowedUses AllowedUsageArrayOutput  `pulumi:"allowedUses"`
+	Cert        tls.SelfSignedCertOutput `pulumi:"cert"`
+	CertPem     pulumi.StringOutput      `pulumi:"certPem"`
+	Key         tls.PrivateKeyOutput     `pulumi:"key"`
+	KeyPem      pulumi.StringOutput      `pulumi:"keyPem"`
 }
 
 // NewRootCa registers a new resource with the given unique name, arguments, and options.
@@ -29,9 +30,6 @@ func NewRootCa(ctx *pulumi.Context,
 		return nil, errors.New("missing one or more required arguments")
 	}
 
-	if args.AllowedUses == nil {
-		return nil, errors.New("invalid value for required argument 'AllowedUses'")
-	}
 	if args.ValidityPeriodHours == nil {
 		return nil, errors.New("invalid value for required argument 'ValidityPeriodHours'")
 	}
@@ -304,6 +302,10 @@ func (o RootCaOutput) ToRootCaOutput() RootCaOutput {
 
 func (o RootCaOutput) ToRootCaOutputWithContext(ctx context.Context) RootCaOutput {
 	return o
+}
+
+func (o RootCaOutput) AllowedUses() AllowedUsageArrayOutput {
+	return o.ApplyT(func(v *RootCa) AllowedUsageArrayOutput { return v.AllowedUses }).(AllowedUsageArrayOutput)
 }
 
 func (o RootCaOutput) Cert() tls.SelfSignedCertOutput {

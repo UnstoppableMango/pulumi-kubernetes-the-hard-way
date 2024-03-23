@@ -1,6 +1,7 @@
-import { ComponentResource, ComponentResourceOptions, Input, Output, interpolate, output } from '@pulumi/pulumi';
+import { ComponentResource, ComponentResourceOptions, Input, Inputs, Output, interpolate, output } from '@pulumi/pulumi';
 import { Command } from '@pulumi/command/remote';
 import { remote } from '@pulumi/command/types/input';
+import { ConstructResult } from '@pulumi/pulumi/provider';
 
 export type InstallArgs = Omit<RemoteFileArgs, 'content'>;
 
@@ -46,4 +47,16 @@ export class RemoteFile extends ComponentResource {
 
     this.registerOutputs({ command, content, path });
   }
+}
+
+export async function construct(name: string, inputs: Inputs, options: ComponentResourceOptions): Promise<ConstructResult> {
+  const file = new RemoteFile(name, inputs as RemoteFileArgs, options);
+  return {
+    urn: file.urn,
+    state: {
+      allowedUses: file.command,
+      content: file.content,
+      path: file.path,
+    },
+  };
 }
