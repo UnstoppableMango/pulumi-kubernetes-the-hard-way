@@ -99,8 +99,8 @@ clean:
 		dotnet nuget remove source "$(WORKING_DIR)" \
 	; fi
 
-.PHONY: upgrade_tools upgrade_java upgrade_pulumi upgrade_pulumictl upgrade_schematools
-upgrade_tools: upgrade_java upgrade_pulumi upgrade_pulumictl upgrade_schematools
+.PHONY: upgrade_tools upgrade_java upgrade_pulumi upgrade_pulumictl upgrade_schematools upgrade_yq
+upgrade_tools: upgrade_java upgrade_pulumi upgrade_pulumictl upgrade_schematools upgrade_yq
 upgrade_java:
 	gh release list --repo pulumi/pulumi-java --exclude-drafts --exclude-pre-releases --limit 1 | cut -f1 > .pulumi-java-gen.version
 upgrade_pulumi:
@@ -109,6 +109,8 @@ upgrade_pulumictl:
 	gh release list --repo pulumi/pulumictl --exclude-drafts --exclude-pre-releases --limit 1 | cut -f1 | sed 's/^v//' > .pulumictl.version
 upgrade_schematools:
 	gh release list --repo pulumi/schema-tools --exclude-drafts --exclude-pre-releases --limit 1 | cut -f1 | sed 's/^v//' > .schema-tools.version
+upgrade_yq:
+	gh release list --repo mikefarah/yq --exclude-drafts --exclude-pre-releases --limit 1 | cut -f1 | sed 's/^v//' > .yq.version
 
 # --------- File-based targets --------- #
 
@@ -144,10 +146,20 @@ bin/gotestfmt:
 	@mkdir -p bin
 	GOBIN="${WORKING_DIR}/bin" go install github.com/gotesttools/gotestfmt/v2/cmd/gotestfmt@v2.5.0
 
-bin/$(LOCAL_PROVIDER_FILENAME): bin/pulumictl .make/provider_mod_download provider/cmd/${PROVIDER}/schema.yaml provider/cmd/$(PROVIDER)/*.ts $(PROVIDER_PKG)
+bin/yq: YQ_VERSION := $(shell cat .yq.version)
+bin/yq: PLAT := $(shell go version | sed -En "s/go version go.* (.*)\/(.*)/\1_\2/p")
+bin/yq: BINARY := yq_$(PLAT)
+bin/yq: .yq.version
+	@mkdir -p bin
+	wget https://github.com/mikefarah/yq/releases/download/v$(YQ_VERSION)/${BINARY}.tar.gz -O - |\
+		tar xz && mv ${BINARY} $(WORKING_DIR)/bin/yq
+	@touch bin/yq
+	@./bin/yq --version
+
+bin/$(LOCAL_PROVIDER_FILENAME): bin/pulumictl .make/provider_mod_download provider/cmd/${PROVIDER}/schema.json provider/cmd/$(PROVIDER)/*.ts $(PROVIDER_PKG)
 	cd provider/cmd/${PROVIDER}/ && \
 		yarn tsc && \
-		cp package.json schema.yaml ./bin && \
+		cp package.json schema.json ./bin && \
 		sed -i.bak -e "s/\$${VERSION}/$(PROVIDER_VERSION)/g" bin/package.json && \
 		yarn run pkg . ${PKG_ARGS} --target node16 --output $(WORKING_DIR)/$@
 
@@ -156,12 +168,12 @@ bin/linux-arm64/$(PROVIDER): TARGET := linuxstatic-arm64
 bin/darwin-amd64/$(PROVIDER): TARGET := macos-x64
 bin/darwin-arm64/$(PROVIDER): TARGET := macos-arm64
 bin/windows-amd64/$(PROVIDER).exe: TARGET := win-x64
-bin/%/$(PROVIDER) bin/%/$(PROVIDER).exe: bin/pulumictl .make/provider_mod_download provider/cmd/${PROVIDER}/schema.yaml provider/cmd/$(PROVIDER)/*.ts $(PROVIDER_PKG)
+bin/%/$(PROVIDER) bin/%/$(PROVIDER).exe: bin/pulumictl .make/provider_mod_download provider/cmd/${PROVIDER}/schema.json provider/cmd/$(PROVIDER)/*.ts $(PROVIDER_PKG)
 	@# check the TARGET is set
 	test $(TARGET)
 	cd provider/cmd/${PROVIDER}/ && \
 		yarn tsc && \
-		cp package.json schema.yaml ./bin && \
+		cp package.json schema.json ./bin && \
 		sed -i.bak -e "s/\$${VERSION}/$(PROVIDER_VERSION)/g" bin/package.json && \
 		yarn run pkg . ${PKG_ARGS} --target node16-$(TARGET) --output $(WORKING_DIR)/$@
 
@@ -181,8 +193,8 @@ dist: dist/$(PROVIDER)-v$(PROVIDER_VERSION)-darwin-amd64.tar.gz
 dist: dist/$(PROVIDER)-v$(PROVIDER_VERSION)-darwin-arm64.tar.gz
 dist: dist/$(PROVIDER)-v$(PROVIDER_VERSION)-windows-amd64.tar.gz
 
-provider/cmd/${PROVIDER}/schema.yaml: $(SCHEMA_FILE)
-	cp -u ${SCHEMA_FILE} provider/cmd/${PROVIDER}/
+provider/cmd/${PROVIDER}/schema.json: bin/yq $(SCHEMA_FILE)
+	bin/yq -o json '.' $(SCHEMA_FILE) > provider/cmd/${PROVIDER}/schema.json
 
 # --------- Sentinel targets --------- #
 

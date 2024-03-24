@@ -67,13 +67,18 @@ jobs:
 
       - name: Get Schema Change Summary
         id: schema-summary
+        continue-on-error: true
         shell: bash
         run: |
           # Get latest stable release. Return only first column from result (tag).
           LAST_VERSION=$(gh release view --repo unstoppablemango/pulumi-kubernetes-the-hard-way --json tagName -q .tagName)
           {
             echo 'summary<<EOF'
-            schema-tools compare --provider="kubernetes-the-hard-way" --old-commit="$LAST_VERSION" --new-commit="--local-path=schema.yaml"
+            schema-tools compare \
+              --provider="kubernetes-the-hard-way" \
+              --old-commit="$LAST_VERSION" \
+              --new-commit="--local-path=provider/cmd/pulumi-resource-kubernetes-the-hard-way/schema.json" \
+              --repository="github://api.github.com/unstoppablemango"
             echo 'EOF'
           } >> "$GITHUB_OUTPUT"
 
