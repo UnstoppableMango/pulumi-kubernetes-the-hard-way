@@ -10,6 +10,9 @@ on:
       - v*
       - sdk/*
       - "**"
+  pull_request:
+    branches:
+      - main
   workflow_dispatch:
     inputs:
       short_test:
@@ -34,6 +37,7 @@ jobs:
 
   publish:
     uses: ./.github/workflows/publish.yml
+    if: github.event != 'pull_request'
     secrets: inherit
     needs:
       - version
