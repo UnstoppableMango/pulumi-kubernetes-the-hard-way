@@ -35,7 +35,7 @@ _ := $(shell mkdir -p .make)
 
 .PHONY: default ensure
 default: provider build_sdks
-ensure: bin/pulumictl
+ensure: bin/pulumictl .pulumi/bin/pulumi
 
 # Binaries
 .PHONY: provider
