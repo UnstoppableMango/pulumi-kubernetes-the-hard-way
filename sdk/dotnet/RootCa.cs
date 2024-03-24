@@ -60,14 +60,14 @@ namespace UnMango.KubernetesTheHardWay
         /// <summary>
         /// Creates a Certificate configured for the current authority.
         /// </summary>
-        public global::Pulumi.Output<RootCaCreateCertificateResult> CreateCertificate(RootCaCreateCertificateArgs args)
-            => global::Pulumi.Deployment.Instance.Call<RootCaCreateCertificateResult>("kubernetes-the-hard-way:index:RootCa/createCertificate", args ?? new RootCaCreateCertificateArgs(), this);
+        public global::Pulumi.Output<UnMango.KubernetesTheHardWay.Certificate> CreateCertificate(RootCaCreateCertificateArgs args)
+            => global::Pulumi.Deployment.Instance.Call<RootCaCreateCertificateResult>("kubernetes-the-hard-way:index:RootCa/createCertificate", args ?? new RootCaCreateCertificateArgs(), this).Apply(v => v.Cert);
 
         /// <summary>
         /// Creates a RemoteFile resource representing the copy operation.
         /// </summary>
-        public global::Pulumi.Output<RootCaInstallOnResult> InstallOn(RootCaInstallOnArgs args)
-            => global::Pulumi.Deployment.Instance.Call<RootCaInstallOnResult>("kubernetes-the-hard-way:index:RootCa/installOn", args ?? new RootCaInstallOnArgs(), this);
+        public global::Pulumi.Output<UnMango.KubernetesTheHardWay.RemoteFile> InstallOn(RootCaInstallOnArgs args)
+            => global::Pulumi.Deployment.Instance.Call<RootCaInstallOnResult>("kubernetes-the-hard-way:index:RootCa/installOn", args ?? new RootCaInstallOnArgs(), this).Apply(v => v.File);
     }
 
     public sealed class RootCaArgs : global::Pulumi.ResourceArgs
@@ -269,7 +269,7 @@ namespace UnMango.KubernetesTheHardWay
     /// The results of the <see cref="RootCa.CreateCertificate"/> method.
     /// </summary>
     [OutputType]
-    public sealed class RootCaCreateCertificateResult
+    internal sealed class RootCaCreateCertificateResult
     {
         public readonly UnMango.KubernetesTheHardWay.Certificate Cert;
 
@@ -307,7 +307,7 @@ namespace UnMango.KubernetesTheHardWay
     /// The results of the <see cref="RootCa.InstallOn"/> method.
     /// </summary>
     [OutputType]
-    public sealed class RootCaInstallOnResult
+    internal sealed class RootCaInstallOnResult
     {
         public readonly UnMango.KubernetesTheHardWay.RemoteFile File;
 

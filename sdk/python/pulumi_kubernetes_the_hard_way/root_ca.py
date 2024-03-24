@@ -354,7 +354,7 @@ class RootCa(pulumi.ComponentResource):
                            set_authority_key_id: Optional[pulumi.Input[bool]] = None,
                            set_subject_key_id: Optional[pulumi.Input[bool]] = None,
                            subject: Optional[pulumi.Input['CertRequestSubjectArgs']] = None,
-                           uris: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None) -> pulumi.Output['RootCa.CreateCertificateResult']:
+                           uris: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None) -> pulumi.Output['Certificate']:
         """
         Creates a Certificate configured for the current authority.
 
@@ -386,7 +386,8 @@ class RootCa(pulumi.ComponentResource):
         __args__['setSubjectKeyId'] = set_subject_key_id
         __args__['subject'] = subject
         __args__['uris'] = uris
-        return pulumi.runtime.call('kubernetes-the-hard-way:index:RootCa/createCertificate', __args__, res=__self__, typ=RootCa.CreateCertificateResult)
+        __result__ = pulumi.runtime.call('kubernetes-the-hard-way:index:RootCa/createCertificate', __args__, res=__self__, typ=RootCa.CreateCertificateResult)
+        return __result__.cert
 
     @pulumi.output_type
     class InstallOnResult:
@@ -402,7 +403,7 @@ class RootCa(pulumi.ComponentResource):
 
     def install_on(__self__, *,
                    connection: pulumi.Input['ConnectionArgs'],
-                   path: Optional[pulumi.Input[str]] = None) -> pulumi.Output['RootCa.InstallOnResult']:
+                   path: Optional[pulumi.Input[str]] = None) -> pulumi.Output['RemoteFile']:
         """
         Creates a RemoteFile resource representing the copy operation.
 
@@ -414,5 +415,6 @@ class RootCa(pulumi.ComponentResource):
         __args__['__self__'] = __self__
         __args__['connection'] = connection
         __args__['path'] = path
-        return pulumi.runtime.call('kubernetes-the-hard-way:index:RootCa/installOn', __args__, res=__self__, typ=RootCa.InstallOnResult)
+        __result__ = pulumi.runtime.call('kubernetes-the-hard-way:index:RootCa/installOn', __args__, res=__self__, typ=RootCa.InstallOnResult)
+        return __result__.file
 

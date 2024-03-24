@@ -17,15 +17,18 @@ language:
   csharp:
     rootNamespace: UnMango # TODO: Name that works
     dictionaryConstructors: true
+    liftSingleValueMethodReturns: true
     packageReferences:
       Pulumi: 3.*
       Pulumi.Command: 0.9.*
       Pulumi.Tls: 5.*
   go:
     generateResourceContainerTypes: true
+    liftSingleValueMethodReturns: true
     importBasePath: github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/sdk/go/kubernetes-the-hard-way
   nodejs:
     packageName: "@unmango/pulumi-kubernetes-the-hard-way"
+    liftSingleValueMethodReturns: true
     dependencies:
       "@pulumi/pulumi": "^3.0.0"
       "@pulumi/command": "^0.9.0"
@@ -33,6 +36,7 @@ language:
     devDependencies:
       typescript: "^3.7.0"
   python:
+    liftSingleValueMethodReturns: true
     pyproject:
       enabled: true
     requires:
@@ -42,6 +46,7 @@ language:
   java:
     basePackage: com.unmango # TODO: Name that works
     buildFiles: gradle
+    liftSingleValueMethodReturns: true
     gradleNexusPublishPluginVersion: 1.1.0
     dependencies:
       com.google.code.findbugs:jsr305: 3.0.2
