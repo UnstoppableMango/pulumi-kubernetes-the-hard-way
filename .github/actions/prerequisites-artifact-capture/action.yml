@@ -10,7 +10,6 @@ runs:
       run: >
         tar -zcf bin/artifacts.tar.gz -C bin
         pulumi-resource-kubernetes-the-hard-way
-        pulumi-gen-kubernetes-the-hard-way
 
     - name: Upload artifacts
       uses: actions/upload-artifact@v4
