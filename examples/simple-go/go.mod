@@ -1,8 +1,10 @@
-module simple-go
+module github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/examples/simple-go
 
-go 1.20
+go 1.21
 
 require github.com/pulumi/pulumi/sdk/v3 v3.108.1
+
+replace github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/sdk => ../../sdk
 
 require (
 	dario.cat/mergo v1.0.0 // indirect
