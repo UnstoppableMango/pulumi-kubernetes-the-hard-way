@@ -3,6 +3,7 @@
 name: kubernetes-the-hard-way
 description: "A Pulumi implementation of Kelsey Hightower's Kubernetes the Hard Way"
 repository: https://github.com/UnstoppableMango/pulumi-kubernetes-the-hard-way
+license: Apache-2.0
 keywords:
   - pulumi
   - command

@@ -10,6 +10,7 @@
         "kind/component"
     ],
     "repository": "https://github.com/UnstoppableMango/pulumi-kubernetes-the-hard-way",
+    "license": "Apache-2.0",
     "scripts": {
         "build": "tsc"
     },
