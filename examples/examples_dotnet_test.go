@@ -1,4 +1,4 @@
-//#go:build dotnet || all
+//go:build dotnet || all
 
 package examples
 
