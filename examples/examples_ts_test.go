@@ -1,3 +1,5 @@
+//go:build nodejs || all
+
 package examples
 
 import (
@@ -17,4 +19,16 @@ func TestSimple(t *testing.T) {
 		})
 
 	integration.ProgramTest(t, &test)
+}
+
+func getJSBaseOptions(t *testing.T) integration.ProgramTestOptions {
+	base := getBaseOptions(t)
+	baseJS := base.With(integration.ProgramTestOptions{
+		Dependencies: []string{
+			"@unmango/pulumi-kubernetes-the-hard-way",
+		},
+		Verbose: true,
+	})
+
+	return baseJS
 }

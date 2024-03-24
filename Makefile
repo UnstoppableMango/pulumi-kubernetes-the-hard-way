@@ -54,7 +54,6 @@ generate_java: .make/generate_java
 generate_nodejs: .make/generate_nodejs
 generate_python: .make/generate_python
 generate_dotnet: .make/generate_dotnet
-#generate_go: .make/generate_go_local
 generate_go: .make/generate_go
 
 .PHONY: local_generate_code
