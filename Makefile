@@ -21,7 +21,7 @@ endif
 
 # Input during CI using `make [TARGET] PROVIDER_VERSION=""` or by setting a PROVIDER_VERSION environment variable
 # Local builds will just used this fixed default version unless specified
-PROVIDER_VERSION ?= 0.0.1-alpha.0+dev
+PROVIDER_VERSION ?= 0.0.1
 # Ensure the leading "v" is removed - use this normalised version everywhere rather than the raw input to ensure consistency.
 # These variables are lazy (no `:`) so they're not calculated until after the dependency is installed
 VERSION_GENERIC = $(shell bin/pulumictl convert-version -l generic -v "$(PROVIDER_VERSION)")
@@ -35,15 +35,32 @@ _ := $(shell mkdir -p .make)
 
 .PHONY: default ensure
 default: provider build_sdks
-ensure: bin/pulumictl
+ensure: bin/pulumictl .pulumi/bin/pulumi
 
 # Binaries
 .PHONY: provider
 provider: bin/$(LOCAL_PROVIDER_FILENAME)
 
-.PHONY: test
-test: .make/install_provider install_sdks bin/gotestfmt
-	cd examples && go test -v -json -timeout 2h . | gotestfmt
+.PHONY: test test_dotnet test_python test_go test_nodejs
+# Set TEST_TAGS to override -tags for tests
+TEST_TAGS ?= all
+# Set TEST_NAME to filter tests by name
+TEST_NAME ?=
+TEST_RUN =
+ifneq ($(TEST_NAME),)
+TEST_RUN = -run ^$(TEST_NAME)$$
+endif
+export PULUMI_LOCAL_NUGET=$(WORKING_DIR)/nuget
+test: provider build_python install_sdks bin/gotestfmt
+	cd examples && go test -json -v -tags=$(TEST_TAGS) -timeout 2h $(TEST_RUN) | gotestfmt
+test_dotnet: provider build_dotnet install_dotnet_sdk
+	cd examples && go test -v -tags=dotnet -timeout 2h $(TEST_RUN)
+test_python: provider build_python
+	cd examples && go test -v -tags=python -timeout 2h $(TEST_RUN)
+test_go: provider
+	cd examples && go test -v -tags=go -timeout 2h $(TEST_RUN)
+test_nodejs: provider install_nodejs_sdk
+	cd examples && go test -v -tags=nodejs -timeout 2h $(TEST_RUN)
 
 .PHONY: install_provider
 install_provider: .make/install_provider
@@ -260,7 +277,7 @@ provider/cmd/${PROVIDER}/schema.json: bin/yq $(SCHEMA_FILE)
 .make/build_dotnet: VERSION_DOTNET = $(shell bin/pulumictl convert-version -l dotnet -v "$(PROVIDER_VERSION)")
 .make/build_dotnet: bin/pulumictl .make/generate_dotnet
 	cd sdk/dotnet && \
-		echo "${PACK}\n$(VERSION_DOTNET)" >version.txt && \
+		echo "$(VERSION_DOTNET)" >version.txt && \
 		dotnet build /p:Version=$(VERSION_DOTNET)
 	@touch $@
 

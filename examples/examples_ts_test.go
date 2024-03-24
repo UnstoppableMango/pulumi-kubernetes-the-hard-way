@@ -9,10 +9,10 @@ import (
 	"github.com/pulumi/pulumi/pkg/v3/testing/integration"
 )
 
-func TestSimple(t *testing.T) {
+func TestSimpleTs(t *testing.T) {
 	test := getJSBaseOptions(t).
 		With(integration.ProgramTestOptions{
-			Dir:           path.Join(getCwd(t), "simple"),
+			Dir:           path.Join(getCwd(t), "simple-ts"),
 			Quick:         true,
 			SkipRefresh:   true,
 			RunUpdateTest: false,
@@ -27,7 +27,6 @@ func getJSBaseOptions(t *testing.T) integration.ProgramTestOptions {
 		Dependencies: []string{
 			"@unmango/pulumi-kubernetes-the-hard-way",
 		},
-		Verbose: true,
 	})
 
 	return baseJS
