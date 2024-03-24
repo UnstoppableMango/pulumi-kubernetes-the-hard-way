@@ -41,9 +41,26 @@ ensure: bin/pulumictl
 .PHONY: provider
 provider: bin/$(LOCAL_PROVIDER_FILENAME)
 
-.PHONY: test
-test: .make/install_provider install_sdks bin/gotestfmt
-	cd examples && go test -v -json -timeout 2h . | gotestfmt
+.PHONY: test test_dotnet test_python test_go test_nodejs
+# Set TEST_TAGS to override -tags for tests
+TEST_TAGS ?= all
+# Set TEST_NAME to filter tests by name
+TEST_NAME ?=
+TEST_RUN =
+ifneq ($(TEST_NAME),)
+TEST_RUN = -run ^$(TEST_NAME)$$
+endif
+export PULUMI_LOCAL_NUGET=$(WORKING_DIR)/nuget
+test: provider build_python install_sdks bin/gotestfmt
+	cd examples && go test -json -v -tags=$(TEST_TAGS) -timeout 2h $(TEST_RUN) | gotestfmt
+test_dotnet: provider build_dotnet install_dotnet_sdk
+	cd examples && go test -v -tags=dotnet -timeout 2h $(TEST_RUN)
+test_python: provider build_python
+	cd examples && go test -v -tags=python -timeout 2h $(TEST_RUN)
+test_go: provider
+	cd examples && go test -v -tags=go -timeout 2h $(TEST_RUN)
+test_nodejs: provider install_nodejs_sdk
+	cd examples && go test -v -tags=nodejs -timeout 2h $(TEST_RUN)
 
 .PHONY: install_provider
 install_provider: .make/install_provider

@@ -5,7 +5,7 @@ const ca = new kthw.RootCa('simple', {
     validityPeriodHours: 256,
 });
 
-const cert = new kthw.Certificate('simple2', {
+const cert = new kthw.Certificate('simple', {
     algorithm: 'RSA',
     allowedUses: [
         kthw.AllowedUsage.Cert_signing,
