@@ -7,9 +7,23 @@ on:
     paths-ignore:
       - CHANGELOG.md
 
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  PROVIDER: kubernetes-the-hard-way
+  PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+  PULUMI_LOCAL_NUGET: ${{ github.workspace }}/nuget
+  PULUMI_GO_DEP_ROOT: ${{ github.workspace }}/..
+
 jobs:
+  version:
+    uses: ./.github/workflows/dev-version.yml
+    secrets: inherit
+
   build_test:
     runs-on: ubuntu-latest
+    needs: version
+    env:
+      PROVIDER_VERSION: ${{ needs.version.outputs.version }}
     strategy:
       fail-fast: true
       matrix:
@@ -75,5 +89,3 @@ jobs:
 
       - name: Lint actions
         uses: reviewdog/action-actionlint@v1.36.0
-        with:
-          actionlint_flags: "-config-file .actionlint.yml"
