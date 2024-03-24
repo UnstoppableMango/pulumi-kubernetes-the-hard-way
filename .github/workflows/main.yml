@@ -29,7 +29,7 @@ jobs:
     with:
       ref: ${{ github.ref }}
       version: ${{ needs.version.outputs.version }}
-      short_test: ${{ inputs.short_test }}
+      short_test: ${{ inputs.short_test || false }}
       retention_days: 15
 
   publish:
