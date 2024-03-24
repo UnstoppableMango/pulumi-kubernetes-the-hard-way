@@ -60,6 +60,23 @@ jobs:
       - name: Build dist packages
         run: make dist --jobs=2
 
+      - name: Install Schema Tools
+        uses: jaxxstorm/action-install-gh-release@v1.11.0
+        with:
+          repo: pulumi/schema-tools
+
+      - name: Get Schema Change Summary
+        id: schema-summary
+        shell: bash
+        run: |
+          # Get latest stable release. Return only first column from result (tag).
+          LAST_VERSION=$(gh release view --repo unstoppablemango/pulumi-kubernetes-the-hard-way --json tagName -q .tagName)
+          {
+            echo 'summary<<EOF'
+            schema-tools compare --provider="kubernetes-the-hard-way" --old-commit="$LAST_VERSION" --new-commit="--local-path=schema.yaml"
+            echo 'EOF'
+          } >> "$GITHUB_OUTPUT"
+
       - name: Create GH Release
         uses: softprops/action-gh-release@v2
         if: inputs.publishGhRelease
