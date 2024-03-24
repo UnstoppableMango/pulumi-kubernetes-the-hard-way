@@ -47,6 +47,9 @@ jobs:
       - name: Build binaries
         run: make provider
 
+      - name: Build SDK
+        run: make build_${{ matrix.language }}
+
       # Enable when we actually have some tests
       # - name: Test Provider Library
       #   run: |
@@ -59,6 +62,7 @@ jobs:
       #     CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
       - name: Install Node dependencies
+        if: matrix.language == 'nodejs'
         run: yarn global add typescript
 
       - name: Install Python deps
