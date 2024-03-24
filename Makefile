@@ -150,7 +150,8 @@ bin/$(LOCAL_PROVIDER_FILENAME): bin/pulumictl .make/provider_mod_download provid
 	cd provider/cmd/${PROVIDER}/ && \
 		yarn tsc && \
 		cp package.json schema.yaml ./bin && \
-		sed -i.bak -e "s/\$${VERSION}/$(PROVIDER_VERSION)/g" bin/package.json
+		sed -i.bak -e "s/\$${VERSION}/$(PROVIDER_VERSION)/g" bin/package.json && \
+		yarn run pkg . ${PKG_ARGS} --target node16 --output $(WORKING_DIR)/$@
 
 bin/linux-amd64/$(PROVIDER): TARGET := linuxstatic-x64
 bin/linux-arm64/$(PROVIDER): TARGET := linuxstatic-arm64
@@ -161,6 +162,9 @@ bin/%/$(PROVIDER) bin/%/$(PROVIDER).exe: bin/pulumictl .make/provider_mod_downlo
 	@# check the TARGET is set
 	test $(TARGET)
 	cd provider/cmd/${PROVIDER}/ && \
+		yarn tsc && \
+		cp package.json schema.yaml ./bin && \
+		sed -i.bak -e "s/\$${VERSION}/$(PROVIDER_VERSION)/g" bin/package.json && \
 		yarn run pkg . ${PKG_ARGS} --target node16-$(TARGET) --output $(WORKING_DIR)/$@
 
 dist/$(PROVIDER)-v$(PROVIDER_VERSION)-linux-amd64.tar.gz: bin/linux-amd64/$(PROVIDER)
