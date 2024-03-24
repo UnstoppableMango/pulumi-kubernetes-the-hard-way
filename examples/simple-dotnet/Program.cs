@@ -9,6 +9,14 @@ return await Deployment.RunAsync(() =>
         ValidityPeriodHours = 256,
     });
 
+    var cert = new Certificate("simple", new CertificateArgs {
+        Algorithm = Algorithm.RSA,
+        ValidityPeriodHours = 256,
+        AllowedUses = new[] { AllowedUsage.Cert_signing },
+        CaCertPem = ca.CertPem,
+        CaPrivateKeyPem = ca.PrivateKeyPem,
+    });
+
     // Export outputs here
     return new Dictionary<string, object?>
     {
