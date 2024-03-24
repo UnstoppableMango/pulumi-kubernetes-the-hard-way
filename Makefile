@@ -39,6 +39,7 @@ default: provider build_sdks
 ensure: bin/pulumictl
 
 # Binaries
+.PHONY: provider
 provider: bin/$(LOCAL_PROVIDER_FILENAME)
 
 .PHONY: test
@@ -144,10 +145,9 @@ bin/gotestfmt:
 	@mkdir -p bin
 	GOBIN="${WORKING_DIR}/bin" go install github.com/gotesttools/gotestfmt/v2/cmd/gotestfmt@v2.5.0
 
-bin/$(LOCAL_PROVIDER_FILENAME): bin/pulumictl provider/cmd/$(PROVIDER)/*.ts $(PROVIDER_PKG)
+bin/$(LOCAL_PROVIDER_FILENAME): bin/pulumictl .make/provider_mod_download provider/cmd/$(PROVIDER)/*.ts $(PROVIDER_PKG)
 	cp ${SCHEMA_FILE} provider/cmd/${PROVIDER}/
 	cd provider/cmd/${PROVIDER}/ && \
-		yarn install && \
 		yarn tsc && \
 		cp package.json schema.yaml ./bin && \
 		sed -i.bak -e "s/\$${VERSION}/$(PROVIDER_VERSION)/g" bin/package.json
@@ -157,7 +157,7 @@ bin/linux-arm64/$(PROVIDER): TARGET := linuxstatic-arm64
 bin/darwin-amd64/$(PROVIDER): TARGET := macos-x64
 bin/darwin-arm64/$(PROVIDER): TARGET := macos-arm64
 bin/windows-amd64/$(PROVIDER).exe: TARGET := win-x64
-bin/%/$(PROVIDER) bin/%/$(PROVIDER).exe: bin/pulumictl provider/cmd/$(PROVIDER)/*.ts $(PROVIDER_PKG)
+bin/%/$(PROVIDER) bin/%/$(PROVIDER).exe: bin/pulumictl .make/provider_mod_download provider/cmd/$(PROVIDER)/*.ts $(PROVIDER_PKG)
 	@# check the TARGET is set
 	test $(TARGET)
 	cd provider/cmd/${PROVIDER}/ && \
@@ -180,6 +180,11 @@ dist: dist/$(PROVIDER)-v$(PROVIDER_VERSION)-darwin-arm64.tar.gz
 dist: dist/$(PROVIDER)-v$(PROVIDER_VERSION)-windows-amd64.tar.gz
 
 # --------- Sentinel targets --------- #
+
+.make/provider_mod_download: provider/cmd/${PROVIDER}/package.json
+	cd provider/cmd/${PROVIDER}/ && \
+		yarn install
+	@touch $@
 
 .make/generate_java: bin/pulumictl .pulumi/bin/pulumi $(SCHEMA_FILE)
 	rm -rf sdk/java
