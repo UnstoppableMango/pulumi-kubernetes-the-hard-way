@@ -1,11 +1,9 @@
 import { readFileSync } from 'fs';
-import * as YAML from 'yaml';
 import * as pulumi from '@pulumi/pulumi';
 import { Provider } from './provider';
 
 function main(args: string[]): Promise<void> {
-    const schemaYaml: string = readFileSync(require.resolve('./schema.yaml'), { encoding: 'utf-8' });
-    const schema: string = JSON.stringify(YAML.parse(schemaYaml));
+    const schema: string = readFileSync(require.resolve('./schema.json'), { encoding: 'utf-8' });
     let version: string = require('./package.json').version;
 
     // Node allows for the version to be prefixed by a "v",
