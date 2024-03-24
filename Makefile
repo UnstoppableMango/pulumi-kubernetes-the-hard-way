@@ -144,8 +144,7 @@ bin/gotestfmt:
 	@mkdir -p bin
 	GOBIN="${WORKING_DIR}/bin" go install github.com/gotesttools/gotestfmt/v2/cmd/gotestfmt@v2.5.0
 
-bin/$(LOCAL_PROVIDER_FILENAME): bin/pulumictl .make/provider_mod_download provider/cmd/$(PROVIDER)/*.ts $(PROVIDER_PKG)
-	cp ${SCHEMA_FILE} provider/cmd/${PROVIDER}/
+bin/$(LOCAL_PROVIDER_FILENAME): bin/pulumictl .make/provider_mod_download provider/cmd/${PROVIDER}/schema.yaml provider/cmd/$(PROVIDER)/*.ts $(PROVIDER_PKG)
 	cd provider/cmd/${PROVIDER}/ && \
 		yarn tsc && \
 		cp package.json schema.yaml ./bin && \
@@ -157,10 +156,9 @@ bin/linux-arm64/$(PROVIDER): TARGET := linuxstatic-arm64
 bin/darwin-amd64/$(PROVIDER): TARGET := macos-x64
 bin/darwin-arm64/$(PROVIDER): TARGET := macos-arm64
 bin/windows-amd64/$(PROVIDER).exe: TARGET := win-x64
-bin/%/$(PROVIDER) bin/%/$(PROVIDER).exe: bin/pulumictl .make/provider_mod_download provider/cmd/$(PROVIDER)/*.ts $(PROVIDER_PKG)
+bin/%/$(PROVIDER) bin/%/$(PROVIDER).exe: bin/pulumictl .make/provider_mod_download provider/cmd/${PROVIDER}/schema.yaml provider/cmd/$(PROVIDER)/*.ts $(PROVIDER_PKG)
 	@# check the TARGET is set
 	test $(TARGET)
-	cp -n ${SCHEMA_FILE} provider/cmd/${PROVIDER}/
 	cd provider/cmd/${PROVIDER}/ && \
 		yarn tsc && \
 		cp package.json schema.yaml ./bin && \
@@ -182,6 +180,9 @@ dist: dist/$(PROVIDER)-v$(PROVIDER_VERSION)-linux-arm64.tar.gz
 dist: dist/$(PROVIDER)-v$(PROVIDER_VERSION)-darwin-amd64.tar.gz
 dist: dist/$(PROVIDER)-v$(PROVIDER_VERSION)-darwin-arm64.tar.gz
 dist: dist/$(PROVIDER)-v$(PROVIDER_VERSION)-windows-amd64.tar.gz
+
+provider/cmd/${PROVIDER}/schema.yaml: $(SCHEMA_FILE)
+	cp -u ${SCHEMA_FILE} provider/cmd/${PROVIDER}/
 
 # --------- Sentinel targets --------- #
 
