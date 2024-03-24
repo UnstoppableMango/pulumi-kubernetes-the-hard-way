@@ -79,8 +79,8 @@ export class RootCa extends pulumi.ComponentResource {
     /**
      * Creates a Certificate configured for the current authority.
      */
-    createCertificate(args: RootCa.CreateCertificateArgs): pulumi.Output<RootCa.CreateCertificateResult> {
-        return pulumi.runtime.call("kubernetes-the-hard-way:index:RootCa/createCertificate", {
+    createCertificate(args: RootCa.CreateCertificateArgs): pulumi.Output<Certificate> {
+        const result: pulumi.Output<RootCa.CreateCertificateResult> = pulumi.runtime.call("kubernetes-the-hard-way:index:RootCa/createCertificate", {
             "__self__": this,
             "algorithm": args.algorithm,
             "allowedUses": args.allowedUses,
@@ -97,17 +97,19 @@ export class RootCa extends pulumi.ComponentResource {
             "uris": args.uris,
             "validityPeriodHours": args.validityPeriodHours,
         }, this);
+        return result.cert;
     }
 
     /**
      * Creates a RemoteFile resource representing the copy operation.
      */
-    installOn(args: RootCa.InstallOnArgs): pulumi.Output<RootCa.InstallOnResult> {
-        return pulumi.runtime.call("kubernetes-the-hard-way:index:RootCa/installOn", {
+    installOn(args: RootCa.InstallOnArgs): pulumi.Output<RemoteFile> {
+        const result: pulumi.Output<RootCa.InstallOnResult> = pulumi.runtime.call("kubernetes-the-hard-way:index:RootCa/installOn", {
             "__self__": this,
             "connection": args.connection,
             "path": args.path,
         }, this);
+        return result.file;
     }
 }
 

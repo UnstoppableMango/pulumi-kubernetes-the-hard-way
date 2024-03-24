@@ -117,12 +117,12 @@ func (CertificateArgs) ElementType() reflect.Type {
 }
 
 // Creates a RemoteFile resource representing the copy operation.
-func (r *Certificate) InstallOn(ctx *pulumi.Context, args *CertificateInstallOnArgs) (CertificateInstallOnResultOutput, error) {
-	out, err := ctx.Call("kubernetes-the-hard-way:index:Certificate/installOn", args, CertificateInstallOnResultOutput{}, r)
+func (r *Certificate) InstallOn(ctx *pulumi.Context, args *CertificateInstallOnArgs) (RemoteFileOutput, error) {
+	out, err := ctx.Call("kubernetes-the-hard-way:index:Certificate/installOn", args, certificateInstallOnResultOutput{}, r)
 	if err != nil {
-		return CertificateInstallOnResultOutput{}, err
+		return RemoteFileOutput{}, err
 	}
-	return out.(CertificateInstallOnResultOutput), nil
+	return out.(certificateInstallOnResultOutput).File(), nil
 }
 
 type certificateInstallOnArgs struct {
@@ -146,18 +146,18 @@ func (CertificateInstallOnArgs) ElementType() reflect.Type {
 	return reflect.TypeOf((*certificateInstallOnArgs)(nil)).Elem()
 }
 
-type CertificateInstallOnResult struct {
+type certificateInstallOnResult struct {
 	File *RemoteFile `pulumi:"file"`
 }
 
-type CertificateInstallOnResultOutput struct{ *pulumi.OutputState }
+type certificateInstallOnResultOutput struct{ *pulumi.OutputState }
 
-func (CertificateInstallOnResultOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*CertificateInstallOnResult)(nil)).Elem()
+func (certificateInstallOnResultOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*certificateInstallOnResult)(nil)).Elem()
 }
 
-func (o CertificateInstallOnResultOutput) File() RemoteFileOutput {
-	return o.ApplyT(func(v CertificateInstallOnResult) *RemoteFile { return v.File }).(RemoteFileOutput)
+func (o certificateInstallOnResultOutput) File() RemoteFileOutput {
+	return o.ApplyT(func(v certificateInstallOnResult) *RemoteFile { return v.File }).(RemoteFileOutput)
 }
 
 type CertificateInput interface {
@@ -312,7 +312,7 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*CertificateArrayInput)(nil)).Elem(), CertificateArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*CertificateMapInput)(nil)).Elem(), CertificateMap{})
 	pulumi.RegisterOutputType(CertificateOutput{})
-	pulumi.RegisterOutputType(CertificateInstallOnResultOutput{})
+	pulumi.RegisterOutputType(certificateInstallOnResultOutput{})
 	pulumi.RegisterOutputType(CertificateArrayOutput{})
 	pulumi.RegisterOutputType(CertificateMapOutput{})
 }

@@ -5,7 +5,7 @@
     <Authors>UnstoppableMango</Authors>
     <Company>UnstoppableMango</Company>
     <Description>A Pulumi implementation of Kelsey Hightower's Kubernetes the Hard Way</Description>
-    <PackageLicenseExpression></PackageLicenseExpression>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <PackageProjectUrl></PackageProjectUrl>
     <RepositoryUrl>https://github.com/UnstoppableMango/pulumi-kubernetes-the-hard-way</RepositoryUrl>
     <PackageIcon>logo.png</PackageIcon>

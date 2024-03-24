@@ -97,12 +97,12 @@ func (RootCaArgs) ElementType() reflect.Type {
 }
 
 // Creates a Certificate configured for the current authority.
-func (r *RootCa) CreateCertificate(ctx *pulumi.Context, args *RootCaCreateCertificateArgs) (RootCaCreateCertificateResultOutput, error) {
-	out, err := ctx.Call("kubernetes-the-hard-way:index:RootCa/createCertificate", args, RootCaCreateCertificateResultOutput{}, r)
+func (r *RootCa) CreateCertificate(ctx *pulumi.Context, args *RootCaCreateCertificateArgs) (CertificateOutput, error) {
+	out, err := ctx.Call("kubernetes-the-hard-way:index:RootCa/createCertificate", args, rootCaCreateCertificateResultOutput{}, r)
 	if err != nil {
-		return RootCaCreateCertificateResultOutput{}, err
+		return CertificateOutput{}, err
 	}
-	return out.(RootCaCreateCertificateResultOutput), nil
+	return out.(rootCaCreateCertificateResultOutput).Cert(), nil
 }
 
 type rootCaCreateCertificateArgs struct {
@@ -164,27 +164,27 @@ func (RootCaCreateCertificateArgs) ElementType() reflect.Type {
 	return reflect.TypeOf((*rootCaCreateCertificateArgs)(nil)).Elem()
 }
 
-type RootCaCreateCertificateResult struct {
+type rootCaCreateCertificateResult struct {
 	Cert *Certificate `pulumi:"cert"`
 }
 
-type RootCaCreateCertificateResultOutput struct{ *pulumi.OutputState }
+type rootCaCreateCertificateResultOutput struct{ *pulumi.OutputState }
 
-func (RootCaCreateCertificateResultOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*RootCaCreateCertificateResult)(nil)).Elem()
+func (rootCaCreateCertificateResultOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*rootCaCreateCertificateResult)(nil)).Elem()
 }
 
-func (o RootCaCreateCertificateResultOutput) Cert() CertificateOutput {
-	return o.ApplyT(func(v RootCaCreateCertificateResult) *Certificate { return v.Cert }).(CertificateOutput)
+func (o rootCaCreateCertificateResultOutput) Cert() CertificateOutput {
+	return o.ApplyT(func(v rootCaCreateCertificateResult) *Certificate { return v.Cert }).(CertificateOutput)
 }
 
 // Creates a RemoteFile resource representing the copy operation.
-func (r *RootCa) InstallOn(ctx *pulumi.Context, args *RootCaInstallOnArgs) (RootCaInstallOnResultOutput, error) {
-	out, err := ctx.Call("kubernetes-the-hard-way:index:RootCa/installOn", args, RootCaInstallOnResultOutput{}, r)
+func (r *RootCa) InstallOn(ctx *pulumi.Context, args *RootCaInstallOnArgs) (RemoteFileOutput, error) {
+	out, err := ctx.Call("kubernetes-the-hard-way:index:RootCa/installOn", args, rootCaInstallOnResultOutput{}, r)
 	if err != nil {
-		return RootCaInstallOnResultOutput{}, err
+		return RemoteFileOutput{}, err
 	}
-	return out.(RootCaInstallOnResultOutput), nil
+	return out.(rootCaInstallOnResultOutput).File(), nil
 }
 
 type rootCaInstallOnArgs struct {
@@ -206,18 +206,18 @@ func (RootCaInstallOnArgs) ElementType() reflect.Type {
 	return reflect.TypeOf((*rootCaInstallOnArgs)(nil)).Elem()
 }
 
-type RootCaInstallOnResult struct {
+type rootCaInstallOnResult struct {
 	File *RemoteFile `pulumi:"file"`
 }
 
-type RootCaInstallOnResultOutput struct{ *pulumi.OutputState }
+type rootCaInstallOnResultOutput struct{ *pulumi.OutputState }
 
-func (RootCaInstallOnResultOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*RootCaInstallOnResult)(nil)).Elem()
+func (rootCaInstallOnResultOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*rootCaInstallOnResult)(nil)).Elem()
 }
 
-func (o RootCaInstallOnResultOutput) File() RemoteFileOutput {
-	return o.ApplyT(func(v RootCaInstallOnResult) *RemoteFile { return v.File }).(RemoteFileOutput)
+func (o rootCaInstallOnResultOutput) File() RemoteFileOutput {
+	return o.ApplyT(func(v rootCaInstallOnResult) *RemoteFile { return v.File }).(RemoteFileOutput)
 }
 
 type RootCaInput interface {
@@ -372,8 +372,8 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*RootCaArrayInput)(nil)).Elem(), RootCaArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*RootCaMapInput)(nil)).Elem(), RootCaMap{})
 	pulumi.RegisterOutputType(RootCaOutput{})
-	pulumi.RegisterOutputType(RootCaCreateCertificateResultOutput{})
-	pulumi.RegisterOutputType(RootCaInstallOnResultOutput{})
+	pulumi.RegisterOutputType(rootCaCreateCertificateResultOutput{})
+	pulumi.RegisterOutputType(rootCaInstallOnResultOutput{})
 	pulumi.RegisterOutputType(RootCaArrayOutput{})
 	pulumi.RegisterOutputType(RootCaMapOutput{})
 }

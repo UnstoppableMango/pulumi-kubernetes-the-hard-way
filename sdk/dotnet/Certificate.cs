@@ -60,8 +60,8 @@ namespace UnMango.KubernetesTheHardWay
         /// <summary>
         /// Creates a RemoteFile resource representing the copy operation.
         /// </summary>
-        public global::Pulumi.Output<CertificateInstallOnResult> InstallOn(CertificateInstallOnArgs args)
-            => global::Pulumi.Deployment.Instance.Call<CertificateInstallOnResult>("kubernetes-the-hard-way:index:Certificate/installOn", args ?? new CertificateInstallOnArgs(), this);
+        public global::Pulumi.Output<UnMango.KubernetesTheHardWay.RemoteFile> InstallOn(CertificateInstallOnArgs args)
+            => global::Pulumi.Deployment.Instance.Call<CertificateInstallOnResult>("kubernetes-the-hard-way:index:Certificate/installOn", args ?? new CertificateInstallOnArgs(), this).Apply(v => v.File);
     }
 
     public sealed class CertificateArgs : global::Pulumi.ResourceArgs
@@ -200,7 +200,7 @@ namespace UnMango.KubernetesTheHardWay
     /// The results of the <see cref="Certificate.InstallOn"/> method.
     /// </summary>
     [OutputType]
-    public sealed class CertificateInstallOnResult
+    internal sealed class CertificateInstallOnResult
     {
         public readonly UnMango.KubernetesTheHardWay.RemoteFile File;
 
