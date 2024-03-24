@@ -152,7 +152,7 @@ bin/yq: BINARY := yq_$(PLAT)
 bin/yq: .yq.version
 	@mkdir -p bin
 	wget https://github.com/mikefarah/yq/releases/download/v$(YQ_VERSION)/${BINARY}.tar.gz -O - |\
-		tar xz && mv ${BINARY} $(WORKING_DIR)/bin/yq
+		tar xz ./${BINARY} && mv ${BINARY} $(WORKING_DIR)/bin/yq
 	@touch bin/yq
 	@./bin/yq --version
 
