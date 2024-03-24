@@ -161,6 +161,7 @@ bin/windows-amd64/$(PROVIDER).exe: TARGET := win-x64
 bin/%/$(PROVIDER) bin/%/$(PROVIDER).exe: bin/pulumictl .make/provider_mod_download provider/cmd/$(PROVIDER)/*.ts $(PROVIDER_PKG)
 	@# check the TARGET is set
 	test $(TARGET)
+	cp ${SCHEMA_FILE} provider/cmd/${PROVIDER}/
 	cd provider/cmd/${PROVIDER}/ && \
 		yarn tsc && \
 		cp package.json schema.yaml ./bin && \
