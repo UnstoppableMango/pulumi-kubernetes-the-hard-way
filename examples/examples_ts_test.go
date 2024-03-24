@@ -1,3 +1,5 @@
+//go:build nodejs || all
+
 package examples
 
 import (
