@@ -32,12 +32,12 @@ jobs:
     with:
       ref: ${{ github.ref }}
       version: ${{ needs.version.outputs.version }}
-      short_test: ${{ inputs.short_test || false }}
+      short_test: ${{ inputs.short_test || github.event_name == 'pull_request' }}
       retention_days: 30
 
   publish:
     uses: ./.github/workflows/publish.yml
-    if: github.event != 'pull_request'
+    if: github.event_name != 'pull_request'
     secrets: inherit
     needs:
       - version

@@ -29,14 +29,8 @@ func getCwd(t *testing.T) string {
 	return cwd
 }
 
-func getJSBaseOptions(t *testing.T) integration.ProgramTestOptions {
-	base := getBaseOptions(t)
-	baseJS := base.With(integration.ProgramTestOptions{
-		Dependencies: []string{
-			"@unmango/pulumi-kubernetes-the-hard-way",
-		},
-		Verbose: true,
-	})
-
-	return baseJS
-}
+// func skipIfShort(t *testing.T) {
+// 	if testing.Short() {
+// 		t.Skip("skipping long-running test in short mode")
+// 	}
+// }
