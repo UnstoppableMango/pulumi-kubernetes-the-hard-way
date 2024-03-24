@@ -10,9 +10,6 @@ on:
       - v*
       - sdk/*
       - "**"
-  pull_request:
-    branches:
-      - main
   workflow_dispatch:
     inputs:
       short_test:
@@ -32,8 +29,8 @@ jobs:
     with:
       ref: ${{ github.ref }}
       version: ${{ needs.version.outputs.version }}
-      short_test: ${{ inputs.short_test || github.event_name == 'pull_request' }}
-      retention_days: 30
+      short_test: ${{ inputs.short_test }}
+      retention_days: 15
 
   publish:
     uses: ./.github/workflows/publish.yml
