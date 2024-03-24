@@ -21,7 +21,7 @@ endif
 
 # Input during CI using `make [TARGET] PROVIDER_VERSION=""` or by setting a PROVIDER_VERSION environment variable
 # Local builds will just used this fixed default version unless specified
-PROVIDER_VERSION ?= 0.0.1-alpha.0+dev
+PROVIDER_VERSION ?= 0.0.1
 # Ensure the leading "v" is removed - use this normalised version everywhere rather than the raw input to ensure consistency.
 # These variables are lazy (no `:`) so they're not calculated until after the dependency is installed
 VERSION_GENERIC = $(shell bin/pulumictl convert-version -l generic -v "$(PROVIDER_VERSION)")
@@ -277,7 +277,7 @@ provider/cmd/${PROVIDER}/schema.json: bin/yq $(SCHEMA_FILE)
 .make/build_dotnet: VERSION_DOTNET = $(shell bin/pulumictl convert-version -l dotnet -v "$(PROVIDER_VERSION)")
 .make/build_dotnet: bin/pulumictl .make/generate_dotnet
 	cd sdk/dotnet && \
-		echo "${PACK}\n$(VERSION_DOTNET)" >version.txt && \
+		echo "$(VERSION_DOTNET)" >version.txt && \
 		dotnet build /p:Version=$(VERSION_DOTNET)
 	@touch $@
 

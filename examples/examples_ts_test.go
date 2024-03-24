@@ -12,7 +12,7 @@ import (
 func TestSimpleTs(t *testing.T) {
 	test := getJSBaseOptions(t).
 		With(integration.ProgramTestOptions{
-			Dir:           path.Join(getCwd(t), "simple"),
+			Dir:           path.Join(getCwd(t), "simple-ts"),
 			Quick:         true,
 			SkipRefresh:   true,
 			RunUpdateTest: false,

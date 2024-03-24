@@ -10,8 +10,6 @@ import (
 
 func getBaseOptions(t *testing.T) integration.ProgramTestOptions {
 	return integration.ProgramTestOptions{
-		//ExpectRefreshChanges: true,
-		//RetryFailedSteps:     true,
 		Bin: path.Join(getCwd(t), "..", ".pulumi", "bin", "pulumi"),
 		LocalProviders: []integration.LocalDependency{{
 			Package: "kubernetes-the-hard-way",
