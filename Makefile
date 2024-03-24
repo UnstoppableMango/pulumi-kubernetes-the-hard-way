@@ -5,8 +5,7 @@ PROVIDER        := pulumi-resource-${PACK}
 
 WORKING_DIR     := $(shell pwd)
 SCHEMA_FILE     := ${WORKING_DIR}/schema.yaml
-
-PROVIDER_PKG    := $(shell find provider/cmd/pulumi-resource-kubernetes-the-hard-way -type f)
+PROVIDER_PKG    := ${WORKING_DIR}/provider/cmd/${PROVIDER}/package.json
 
 GOOS ?= $(shell go env GOOS)
 GOARCH ?= $(shell go env GOARCH)
@@ -161,7 +160,7 @@ bin/windows-amd64/$(PROVIDER).exe: TARGET := win-x64
 bin/%/$(PROVIDER) bin/%/$(PROVIDER).exe: bin/pulumictl .make/provider_mod_download provider/cmd/$(PROVIDER)/*.ts $(PROVIDER_PKG)
 	@# check the TARGET is set
 	test $(TARGET)
-	cp ${SCHEMA_FILE} provider/cmd/${PROVIDER}/
+	cp -n ${SCHEMA_FILE} provider/cmd/${PROVIDER}/
 	cd provider/cmd/${PROVIDER}/ && \
 		yarn tsc && \
 		cp package.json schema.yaml ./bin && \
