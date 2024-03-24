@@ -1,4 +1,4 @@
-//#go:build python || all
+//go:build python || all
 
 package examples
 
