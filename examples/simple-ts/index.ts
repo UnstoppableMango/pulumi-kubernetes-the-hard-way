@@ -15,6 +15,13 @@ const cert = new kthw.Certificate('simple', {
     caPrivateKeyPem: ca.privateKeyPem,
 });
 
+const cert2 = ca.newCertificate({
+  name: 'nested',
+  allowedUses: ['cert_signing'],
+  algorithm: 'RSA',
+  validityPeriodHours: 256,
+});
+
 export const caAllowedUses = ca.allowedUses;
 export const caCertPem = ca.certPem;
 export const caKeyPem = ca.publicKeyPem;
