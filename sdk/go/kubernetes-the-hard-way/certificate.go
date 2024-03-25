@@ -117,47 +117,49 @@ func (CertificateArgs) ElementType() reflect.Type {
 }
 
 // Creates a RemoteFile resource representing the copy operation.
-func (r *Certificate) InstallOn(ctx *pulumi.Context, args *CertificateInstallOnArgs) (RemoteFileOutput, error) {
-	out, err := ctx.Call("kubernetes-the-hard-way:index:Certificate/installOn", args, certificateInstallOnResultOutput{}, r)
+func (r *Certificate) InstallCert(ctx *pulumi.Context, args *CertificateInstallCertArgs) (RemoteFileOutput, error) {
+	out, err := ctx.Call("kubernetes-the-hard-way:index:Certificate/installCert", args, certificateInstallCertResultOutput{}, r)
 	if err != nil {
 		return RemoteFileOutput{}, err
 	}
-	return out.(certificateInstallOnResultOutput).File(), nil
+	return out.(certificateInstallCertResultOutput).Result(), nil
 }
 
-type certificateInstallOnArgs struct {
+type certificateInstallCertArgs struct {
 	// The connection details.
-	Connection Connection `pulumi:"connection"`
-	Name       string     `pulumi:"name"`
+	Connection Connection       `pulumi:"connection"`
+	Name       string           `pulumi:"name"`
+	Opts       *ResourceOptions `pulumi:"opts"`
 	// The path to install to.
 	Path *string `pulumi:"path"`
 }
 
-// The set of arguments for the InstallOn method of the Certificate resource.
-type CertificateInstallOnArgs struct {
+// The set of arguments for the InstallCert method of the Certificate resource.
+type CertificateInstallCertArgs struct {
 	// The connection details.
 	Connection ConnectionInput
 	Name       string
+	Opts       *ResourceOptionsArgs
 	// The path to install to.
 	Path pulumi.StringPtrInput
 }
 
-func (CertificateInstallOnArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*certificateInstallOnArgs)(nil)).Elem()
+func (CertificateInstallCertArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*certificateInstallCertArgs)(nil)).Elem()
 }
 
-type certificateInstallOnResult struct {
-	File *RemoteFile `pulumi:"file"`
+type certificateInstallCertResult struct {
+	Result *RemoteFile `pulumi:"result"`
 }
 
-type certificateInstallOnResultOutput struct{ *pulumi.OutputState }
+type certificateInstallCertResultOutput struct{ *pulumi.OutputState }
 
-func (certificateInstallOnResultOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*certificateInstallOnResult)(nil)).Elem()
+func (certificateInstallCertResultOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*certificateInstallCertResult)(nil)).Elem()
 }
 
-func (o certificateInstallOnResultOutput) File() RemoteFileOutput {
-	return o.ApplyT(func(v certificateInstallOnResult) *RemoteFile { return v.File }).(RemoteFileOutput)
+func (o certificateInstallCertResultOutput) Result() RemoteFileOutput {
+	return o.ApplyT(func(v certificateInstallCertResult) *RemoteFile { return v.Result }).(RemoteFileOutput)
 }
 
 type CertificateInput interface {
@@ -312,7 +314,7 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*CertificateArrayInput)(nil)).Elem(), CertificateArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*CertificateMapInput)(nil)).Elem(), CertificateMap{})
 	pulumi.RegisterOutputType(CertificateOutput{})
-	pulumi.RegisterOutputType(certificateInstallOnResultOutput{})
+	pulumi.RegisterOutputType(certificateInstallCertResultOutput{})
 	pulumi.RegisterOutputType(CertificateArrayOutput{})
 	pulumi.RegisterOutputType(CertificateMapOutput{})
 }

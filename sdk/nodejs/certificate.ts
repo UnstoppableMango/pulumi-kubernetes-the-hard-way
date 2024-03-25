@@ -95,14 +95,15 @@ export class Certificate extends pulumi.ComponentResource {
     /**
      * Creates a RemoteFile resource representing the copy operation.
      */
-    installOn(args: Certificate.InstallOnArgs): pulumi.Output<RemoteFile> {
-        const result: pulumi.Output<Certificate.InstallOnResult> = pulumi.runtime.call("kubernetes-the-hard-way:index:Certificate/installOn", {
+    installCert(args: Certificate.InstallCertArgs): pulumi.Output<RemoteFile> {
+        const result: pulumi.Output<Certificate.InstallCertResult> = pulumi.runtime.call("kubernetes-the-hard-way:index:Certificate/installCert", {
             "__self__": this,
             "connection": args.connection,
             "name": args.name,
+            "opts": args.opts,
             "path": args.path,
         }, this);
-        return result.file;
+        return result.result;
     }
 }
 
@@ -159,14 +160,15 @@ export interface CertificateArgs {
 
 export namespace Certificate {
     /**
-     * The set of arguments for the Certificate.installOn method.
+     * The set of arguments for the Certificate.installCert method.
      */
-    export interface InstallOnArgs {
+    export interface InstallCertArgs {
         /**
          * The connection details.
          */
         connection: pulumi.Input<inputs.ConnectionArgs>;
         name: string;
+        opts?: inputs.ResourceOptionsArgs;
         /**
          * The path to install to.
          */
@@ -174,10 +176,10 @@ export namespace Certificate {
     }
 
     /**
-     * The results of the Certificate.installOn method.
+     * The results of the Certificate.installCert method.
      */
-    export interface InstallOnResult {
-        readonly file: RemoteFile;
+    export interface InstallCertResult {
+        readonly result: RemoteFile;
     }
 
 }

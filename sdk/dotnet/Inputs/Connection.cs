@@ -12,7 +12,7 @@ namespace UnMango.KubernetesTheHardWay.Inputs
 {
 
     /// <summary>
-    /// Instructions for how to connect to a remote endpoint.
+    /// Instructions for how to connect to a remote endpoint. Polyfill for `command.ConnectionArgs`.
     /// </summary>
     public sealed class Connection : global::Pulumi.InvokeArgs
     {

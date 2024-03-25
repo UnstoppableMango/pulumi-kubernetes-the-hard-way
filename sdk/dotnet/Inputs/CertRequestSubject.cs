@@ -11,6 +11,9 @@ using Pulumi;
 namespace UnMango.KubernetesTheHardWay.Inputs
 {
 
+    /// <summary>
+    /// Polyfill for `tls.CertRequestSubject`.
+    /// </summary>
     public sealed class CertRequestSubject : global::Pulumi.InvokeArgs
     {
         /// <summary>

@@ -90,6 +90,7 @@ export class RootCa extends pulumi.ComponentResource {
             "ipAddresses": args.ipAddresses,
             "isCaCertificate": args.isCaCertificate,
             "name": args.name,
+            "opts": args.opts,
             "rsaBits": args.rsaBits,
             "setAuthorityKeyId": args.setAuthorityKeyId,
             "setSubjectKeyId": args.setSubjectKeyId,
@@ -97,19 +98,21 @@ export class RootCa extends pulumi.ComponentResource {
             "uris": args.uris,
             "validityPeriodHours": args.validityPeriodHours,
         }, this);
-        return result.cert;
+        return result.result;
     }
 
     /**
      * Creates a RemoteFile resource representing the copy operation.
      */
-    installOn(args: RootCa.InstallOnArgs): pulumi.Output<RemoteFile> {
-        const result: pulumi.Output<RootCa.InstallOnResult> = pulumi.runtime.call("kubernetes-the-hard-way:index:RootCa/installOn", {
+    installCert(args: RootCa.InstallCertArgs): pulumi.Output<RemoteFile> {
+        const result: pulumi.Output<RootCa.InstallCertResult> = pulumi.runtime.call("kubernetes-the-hard-way:index:RootCa/installCert", {
             "__self__": this,
             "connection": args.connection,
+            "name": args.name,
+            "opts": args.opts,
             "path": args.path,
         }, this);
-        return result.file;
+        return result.result;
     }
 }
 
@@ -188,6 +191,7 @@ export namespace RootCa {
         ipAddresses?: pulumi.Input<pulumi.Input<string>[]>;
         isCaCertificate?: pulumi.Input<boolean>;
         name?: string;
+        opts?: inputs.ResourceOptionsArgs;
         /**
          * When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
          */
@@ -215,17 +219,19 @@ export namespace RootCa {
      * The results of the RootCa.createCertificate method.
      */
     export interface CreateCertificateResult {
-        readonly cert: Certificate;
+        readonly result: Certificate;
     }
 
     /**
-     * The set of arguments for the RootCa.installOn method.
+     * The set of arguments for the RootCa.installCert method.
      */
-    export interface InstallOnArgs {
+    export interface InstallCertArgs {
         /**
          * The connection details.
          */
         connection: pulumi.Input<inputs.ConnectionArgs>;
+        name: string;
+        opts?: inputs.ResourceOptionsArgs;
         /**
          * The path to install to.
          */
@@ -233,10 +239,10 @@ export namespace RootCa {
     }
 
     /**
-     * The results of the RootCa.installOn method.
+     * The results of the RootCa.installCert method.
      */
-    export interface InstallOnResult {
-        readonly file: RemoteFile;
+    export interface InstallCertResult {
+        readonly result: RemoteFile;
     }
 
 }

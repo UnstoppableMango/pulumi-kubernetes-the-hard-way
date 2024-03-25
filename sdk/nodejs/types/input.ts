@@ -8,6 +8,9 @@ import * as enums from "../types/enums";
 
 import * as utilities from "../utilities";
 
+/**
+ * Polyfill for `tls.CertRequestSubject`.
+ */
 export interface CertRequestSubject {
     /**
      * Distinguished name: CN
@@ -47,6 +50,9 @@ export interface CertRequestSubject {
     streetAddresses?: string[];
 }
 
+/**
+ * Polyfill for `tls.CertRequestSubject`.
+ */
 export interface CertRequestSubjectArgs {
     /**
      * Distinguished name: CN
@@ -87,7 +93,7 @@ export interface CertRequestSubjectArgs {
 }
 
 /**
- * Instructions for how to connect to a remote endpoint.
+ * Instructions for how to connect to a remote endpoint. Polyfill for `command.ConnectionArgs`.
  */
 export interface Connection {
     /**
@@ -141,7 +147,7 @@ export function connectionProvideDefaults(val: Connection): Connection {
 }
 
 /**
- * Instructions for how to connect to a remote endpoint.
+ * Instructions for how to connect to a remote endpoint. Polyfill for `command.ConnectionArgs`.
  */
 export interface ConnectionArgs {
     /**
@@ -192,4 +198,18 @@ export function connectionArgsProvideDefaults(val: ConnectionArgs): ConnectionAr
         port: (val.port) ?? 22,
         user: (val.user) ?? "root",
     };
+}
+
+/**
+ * Polyfill for `pulumi.ComponentResourceOptions`.
+ */
+export interface ResourceOptions {
+    parent?: any;
+}
+
+/**
+ * Polyfill for `pulumi.ComponentResourceOptions`.
+ */
+export interface ResourceOptionsArgs {
+    parent?: any;
 }

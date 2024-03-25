@@ -102,7 +102,7 @@ func (r *RootCa) CreateCertificate(ctx *pulumi.Context, args *RootCaCreateCertif
 	if err != nil {
 		return CertificateOutput{}, err
 	}
-	return out.(rootCaCreateCertificateResultOutput).Cert(), nil
+	return out.(rootCaCreateCertificateResultOutput).Result(), nil
 }
 
 type rootCaCreateCertificateArgs struct {
@@ -116,9 +116,10 @@ type rootCaCreateCertificateArgs struct {
 	// When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
 	EcdsaCurve *EcdsaCurve `pulumi:"ecdsaCurve"`
 	// List of IP addresses for which a certificate is being requested.
-	IpAddresses     []string `pulumi:"ipAddresses"`
-	IsCaCertificate *bool    `pulumi:"isCaCertificate"`
-	Name            *string  `pulumi:"name"`
+	IpAddresses     []string         `pulumi:"ipAddresses"`
+	IsCaCertificate *bool            `pulumi:"isCaCertificate"`
+	Name            *string          `pulumi:"name"`
+	Opts            *ResourceOptions `pulumi:"opts"`
 	// When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
 	RsaBits *int `pulumi:"rsaBits"`
 	// Should the generated certificate include an authority key identifier.
@@ -147,6 +148,7 @@ type RootCaCreateCertificateArgs struct {
 	IpAddresses     pulumi.StringArrayInput
 	IsCaCertificate pulumi.BoolPtrInput
 	Name            *string
+	Opts            *ResourceOptionsArgs
 	// When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
 	RsaBits pulumi.IntPtrInput
 	// Should the generated certificate include an authority key identifier.
@@ -165,7 +167,7 @@ func (RootCaCreateCertificateArgs) ElementType() reflect.Type {
 }
 
 type rootCaCreateCertificateResult struct {
-	Cert *Certificate `pulumi:"cert"`
+	Result *Certificate `pulumi:"result"`
 }
 
 type rootCaCreateCertificateResultOutput struct{ *pulumi.OutputState }
@@ -174,50 +176,54 @@ func (rootCaCreateCertificateResultOutput) ElementType() reflect.Type {
 	return reflect.TypeOf((*rootCaCreateCertificateResult)(nil)).Elem()
 }
 
-func (o rootCaCreateCertificateResultOutput) Cert() CertificateOutput {
-	return o.ApplyT(func(v rootCaCreateCertificateResult) *Certificate { return v.Cert }).(CertificateOutput)
+func (o rootCaCreateCertificateResultOutput) Result() CertificateOutput {
+	return o.ApplyT(func(v rootCaCreateCertificateResult) *Certificate { return v.Result }).(CertificateOutput)
 }
 
 // Creates a RemoteFile resource representing the copy operation.
-func (r *RootCa) InstallOn(ctx *pulumi.Context, args *RootCaInstallOnArgs) (RemoteFileOutput, error) {
-	out, err := ctx.Call("kubernetes-the-hard-way:index:RootCa/installOn", args, rootCaInstallOnResultOutput{}, r)
+func (r *RootCa) InstallCert(ctx *pulumi.Context, args *RootCaInstallCertArgs) (RemoteFileOutput, error) {
+	out, err := ctx.Call("kubernetes-the-hard-way:index:RootCa/installCert", args, rootCaInstallCertResultOutput{}, r)
 	if err != nil {
 		return RemoteFileOutput{}, err
 	}
-	return out.(rootCaInstallOnResultOutput).File(), nil
+	return out.(rootCaInstallCertResultOutput).Result(), nil
 }
 
-type rootCaInstallOnArgs struct {
+type rootCaInstallCertArgs struct {
 	// The connection details.
-	Connection Connection `pulumi:"connection"`
+	Connection Connection       `pulumi:"connection"`
+	Name       string           `pulumi:"name"`
+	Opts       *ResourceOptions `pulumi:"opts"`
 	// The path to install to.
 	Path *string `pulumi:"path"`
 }
 
-// The set of arguments for the InstallOn method of the RootCa resource.
-type RootCaInstallOnArgs struct {
+// The set of arguments for the InstallCert method of the RootCa resource.
+type RootCaInstallCertArgs struct {
 	// The connection details.
 	Connection ConnectionInput
+	Name       string
+	Opts       *ResourceOptionsArgs
 	// The path to install to.
 	Path pulumi.StringPtrInput
 }
 
-func (RootCaInstallOnArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*rootCaInstallOnArgs)(nil)).Elem()
+func (RootCaInstallCertArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*rootCaInstallCertArgs)(nil)).Elem()
 }
 
-type rootCaInstallOnResult struct {
-	File *RemoteFile `pulumi:"file"`
+type rootCaInstallCertResult struct {
+	Result *RemoteFile `pulumi:"result"`
 }
 
-type rootCaInstallOnResultOutput struct{ *pulumi.OutputState }
+type rootCaInstallCertResultOutput struct{ *pulumi.OutputState }
 
-func (rootCaInstallOnResultOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*rootCaInstallOnResult)(nil)).Elem()
+func (rootCaInstallCertResultOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*rootCaInstallCertResult)(nil)).Elem()
 }
 
-func (o rootCaInstallOnResultOutput) File() RemoteFileOutput {
-	return o.ApplyT(func(v rootCaInstallOnResult) *RemoteFile { return v.File }).(RemoteFileOutput)
+func (o rootCaInstallCertResultOutput) Result() RemoteFileOutput {
+	return o.ApplyT(func(v rootCaInstallCertResult) *RemoteFile { return v.Result }).(RemoteFileOutput)
 }
 
 type RootCaInput interface {
@@ -373,7 +379,7 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*RootCaMapInput)(nil)).Elem(), RootCaMap{})
 	pulumi.RegisterOutputType(RootCaOutput{})
 	pulumi.RegisterOutputType(rootCaCreateCertificateResultOutput{})
-	pulumi.RegisterOutputType(rootCaInstallOnResultOutput{})
+	pulumi.RegisterOutputType(rootCaInstallCertResultOutput{})
 	pulumi.RegisterOutputType(RootCaArrayOutput{})
 	pulumi.RegisterOutputType(RootCaMapOutput{})
 }

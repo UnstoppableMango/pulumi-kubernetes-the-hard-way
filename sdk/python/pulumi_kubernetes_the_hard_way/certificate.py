@@ -392,21 +392,22 @@ class Certificate(pulumi.ComponentResource):
         return pulumi.get(self, "public_key_pem")
 
     @pulumi.output_type
-    class InstallOnResult:
-        def __init__(__self__, file=None):
-            if file and not isinstance(file, RemoteFile):
-                raise TypeError("Expected argument 'file' to be a RemoteFile")
-            pulumi.set(__self__, "file", file)
+    class InstallCertResult:
+        def __init__(__self__, result=None):
+            if result and not isinstance(result, RemoteFile):
+                raise TypeError("Expected argument 'result' to be a RemoteFile")
+            pulumi.set(__self__, "result", result)
 
         @property
         @pulumi.getter
-        def file(self) -> 'RemoteFile':
-            return pulumi.get(self, "file")
+        def result(self) -> 'RemoteFile':
+            return pulumi.get(self, "result")
 
-    def install_on(__self__, *,
-                   connection: pulumi.Input['ConnectionArgs'],
-                   name: str,
-                   path: Optional[pulumi.Input[str]] = None) -> pulumi.Output['RemoteFile']:
+    def install_cert(__self__, *,
+                     connection: pulumi.Input['ConnectionArgs'],
+                     name: str,
+                     opts: Optional['ResourceOptionsArgs'] = None,
+                     path: Optional[pulumi.Input[str]] = None) -> pulumi.Output['RemoteFile']:
         """
         Creates a RemoteFile resource representing the copy operation.
 
@@ -418,7 +419,8 @@ class Certificate(pulumi.ComponentResource):
         __args__['__self__'] = __self__
         __args__['connection'] = connection
         __args__['name'] = name
+        __args__['opts'] = opts
         __args__['path'] = path
-        __result__ = pulumi.runtime.call('kubernetes-the-hard-way:index:Certificate/installOn', __args__, res=__self__, typ=Certificate.InstallOnResult)
-        return __result__.file
+        __result__ = pulumi.runtime.call('kubernetes-the-hard-way:index:Certificate/installCert', __args__, res=__self__, typ=Certificate.InstallCertResult)
+        return __result__.result
 
