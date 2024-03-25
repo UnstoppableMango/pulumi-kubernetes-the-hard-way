@@ -368,6 +368,9 @@ namespace UnMango.KubernetesTheHardWay
     [OutputType]
     internal sealed class RootCaNewCertificateResult
     {
+        /// <summary>
+        /// The issued certificate.
+        /// </summary>
         public readonly UnMango.KubernetesTheHardWay.Certificate Result;
 
         [OutputConstructor]

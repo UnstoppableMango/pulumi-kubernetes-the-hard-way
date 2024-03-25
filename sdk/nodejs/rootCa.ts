@@ -279,6 +279,9 @@ export namespace RootCa {
      * The results of the RootCa.newCertificate method.
      */
     export interface NewCertificateResult {
+        /**
+         * The issued certificate.
+         */
         readonly result: Certificate;
     }
 

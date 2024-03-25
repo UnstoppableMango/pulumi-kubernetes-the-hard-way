@@ -259,6 +259,7 @@ func (RootCaNewCertificateArgs) ElementType() reflect.Type {
 }
 
 type rootCaNewCertificateResult struct {
+	// The issued certificate.
 	Result *Certificate `pulumi:"result"`
 }
 
@@ -268,6 +269,7 @@ func (rootCaNewCertificateResultOutput) ElementType() reflect.Type {
 	return reflect.TypeOf((*rootCaNewCertificateResult)(nil)).Elem()
 }
 
+// The issued certificate.
 func (o rootCaNewCertificateResultOutput) Result() CertificateOutput {
 	return o.ApplyT(func(v rootCaNewCertificateResult) *Certificate { return v.Result }).(CertificateOutput)
 }

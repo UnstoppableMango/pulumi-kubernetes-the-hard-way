@@ -13,9 +13,24 @@ export type ClusterPki = import("./clusterPki").ClusterPki;
 export const ClusterPki: typeof import("./clusterPki").ClusterPki = null as any;
 utilities.lazyLoad(exports, ["ClusterPki"], () => require("./clusterPki"));
 
+export { InstallCertArgs, InstallCertResult, InstallCertOutputArgs } from "./installCert";
+export const installCert: typeof import("./installCert").installCert = null as any;
+export const installCertOutput: typeof import("./installCert").installCertOutput = null as any;
+utilities.lazyLoad(exports, ["installCert","installCertOutput"], () => require("./installCert"));
+
 export { InstallControlPlaneArgs } from "./installControlPlane";
 export const installControlPlane: typeof import("./installControlPlane").installControlPlane = null as any;
 utilities.lazyLoad(exports, ["installControlPlane"], () => require("./installControlPlane"));
+
+export { InstallKeyArgs, InstallKeyResult, InstallKeyOutputArgs } from "./installKey";
+export const installKey: typeof import("./installKey").installKey = null as any;
+export const installKeyOutput: typeof import("./installKey").installKeyOutput = null as any;
+utilities.lazyLoad(exports, ["installKey","installKeyOutput"], () => require("./installKey"));
+
+export { NewCertificateArgs, NewCertificateResult, NewCertificateOutputArgs } from "./newCertificate";
+export const newCertificate: typeof import("./newCertificate").newCertificate = null as any;
+export const newCertificateOutput: typeof import("./newCertificate").newCertificateOutput = null as any;
+utilities.lazyLoad(exports, ["newCertificate","newCertificateOutput"], () => require("./newCertificate"));
 
 export { ProviderArgs } from "./provider";
 export type Provider = import("./provider").Provider;

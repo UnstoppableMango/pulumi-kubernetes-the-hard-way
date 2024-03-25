@@ -404,6 +404,9 @@ class RootCa(pulumi.ComponentResource):
         @property
         @pulumi.getter
         def result(self) -> 'Certificate':
+            """
+            The issued certificate.
+            """
             return pulumi.get(self, "result")
 
     def new_certificate(__self__, *,

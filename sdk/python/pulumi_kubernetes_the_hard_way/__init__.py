@@ -8,7 +8,10 @@ import typing
 from ._enums import *
 from .certificate import *
 from .cluster_pki import *
+from .install_cert import *
 from .install_control_plane import *
+from .install_key import *
+from .new_certificate import *
 from .provider import *
 from .remote_file import *
 from .root_ca import *
