@@ -135,6 +135,7 @@ resources:
       - publicKeyPem
     methods:
       installCert: kubernetes-the-hard-way:index:Certificate/installCert
+      installKey: kubernetes-the-hard-way:index:Certificate/installKey
   kubernetes-the-hard-way:index:RemoteFile:
     isComponent: true
     inputProperties:
@@ -223,8 +224,9 @@ resources:
       - privateKeyPem
       - publicKeyPem
     methods:
-      createCertificate: kubernetes-the-hard-way:index:RootCa/createCertificate
+      newCertificate: kubernetes-the-hard-way:index:RootCa/newCertificate
       installCert: kubernetes-the-hard-way:index:RootCa/installCert
+      installKey: kubernetes-the-hard-way:index:RootCa/installKey
 types:
   kubernetes-the-hard-way:index:Algorithm:
     description: TODO
@@ -362,7 +364,35 @@ functions:
           $ref: "#/resources/kubernetes-the-hard-way:index:RemoteFile"
       required:
         - result
-  kubernetes-the-hard-way:index:RootCa/createCertificate:
+  kubernetes-the-hard-way:index:Certificate/installKey:
+    description: Creates a RemoteFile resource representing the copy operation.
+    inputs:
+      properties:
+        __self__:
+          $ref: "#/resources/kubernetes-the-hard-way:index:Certificate"
+        connection:
+          $ref: "#/types/kubernetes-the-hard-way:index:Connection"
+          description: The connection details.
+        name:
+          type: string
+          plain: true
+        opts:
+          $ref: "#/types/kubernetes-the-hard-way:index:ResourceOptions"
+          plain: true
+        path:
+          type: string
+          description: The path to install to.
+      required:
+        - __self__
+        - connection
+        - name
+    outputs:
+      properties:
+        result:
+          $ref: "#/resources/kubernetes-the-hard-way:index:RemoteFile"
+      required:
+        - result
+  kubernetes-the-hard-way:index:RootCa/newCertificate:
     description: Creates a Certificate configured for the current authority.
     inputs:
       properties:
@@ -430,6 +460,34 @@ functions:
       required:
         - result
   kubernetes-the-hard-way:index:RootCa/installCert:
+    description: Creates a RemoteFile resource representing the copy operation.
+    inputs:
+      properties:
+        __self__:
+          $ref: "#/resources/kubernetes-the-hard-way:index:Certificate"
+        connection:
+          $ref: "#/types/kubernetes-the-hard-way:index:Connection"
+          description: The connection details.
+        name:
+          type: string
+          plain: true
+        opts:
+          $ref: "#/types/kubernetes-the-hard-way:index:ResourceOptions"
+          plain: true
+        path:
+          type: string
+          description: The path to install to.
+      required:
+        - __self__
+        - connection
+        - name
+    outputs:
+      properties:
+        result:
+          $ref: "#/resources/kubernetes-the-hard-way:index:RemoteFile"
+      required:
+        - result
+  kubernetes-the-hard-way:index:RootCa/installKey:
     description: Creates a RemoteFile resource representing the copy operation.
     inputs:
       properties:
