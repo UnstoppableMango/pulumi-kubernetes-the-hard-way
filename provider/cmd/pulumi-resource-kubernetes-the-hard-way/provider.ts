@@ -6,8 +6,7 @@ import * as remoteFile from './remoteFile';
 import * as rootCa from './rootCa';
 
 export class Provider implements provider.Provider {
-  constructor(readonly version: string, readonly schema: string) {
-  }
+  constructor(readonly version: string, readonly schema: string) { }
 
   async construct(
     name: string,
