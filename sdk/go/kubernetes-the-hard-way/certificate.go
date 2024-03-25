@@ -162,6 +162,52 @@ func (o certificateInstallCertResultOutput) Result() RemoteFileOutput {
 	return o.ApplyT(func(v certificateInstallCertResult) *RemoteFile { return v.Result }).(RemoteFileOutput)
 }
 
+// Creates a RemoteFile resource representing the copy operation.
+func (r *Certificate) InstallKey(ctx *pulumi.Context, args *CertificateInstallKeyArgs) (RemoteFileOutput, error) {
+	out, err := ctx.Call("kubernetes-the-hard-way:index:Certificate/installKey", args, certificateInstallKeyResultOutput{}, r)
+	if err != nil {
+		return RemoteFileOutput{}, err
+	}
+	return out.(certificateInstallKeyResultOutput).Result(), nil
+}
+
+type certificateInstallKeyArgs struct {
+	// The connection details.
+	Connection Connection       `pulumi:"connection"`
+	Name       string           `pulumi:"name"`
+	Opts       *ResourceOptions `pulumi:"opts"`
+	// The path to install to.
+	Path *string `pulumi:"path"`
+}
+
+// The set of arguments for the InstallKey method of the Certificate resource.
+type CertificateInstallKeyArgs struct {
+	// The connection details.
+	Connection ConnectionInput
+	Name       string
+	Opts       *ResourceOptionsArgs
+	// The path to install to.
+	Path pulumi.StringPtrInput
+}
+
+func (CertificateInstallKeyArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*certificateInstallKeyArgs)(nil)).Elem()
+}
+
+type certificateInstallKeyResult struct {
+	Result *RemoteFile `pulumi:"result"`
+}
+
+type certificateInstallKeyResultOutput struct{ *pulumi.OutputState }
+
+func (certificateInstallKeyResultOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*certificateInstallKeyResult)(nil)).Elem()
+}
+
+func (o certificateInstallKeyResultOutput) Result() RemoteFileOutput {
+	return o.ApplyT(func(v certificateInstallKeyResult) *RemoteFile { return v.Result }).(RemoteFileOutput)
+}
+
 type CertificateInput interface {
 	pulumi.Input
 
@@ -315,6 +361,7 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*CertificateMapInput)(nil)).Elem(), CertificateMap{})
 	pulumi.RegisterOutputType(CertificateOutput{})
 	pulumi.RegisterOutputType(certificateInstallCertResultOutput{})
+	pulumi.RegisterOutputType(certificateInstallKeyResultOutput{})
 	pulumi.RegisterOutputType(CertificateArrayOutput{})
 	pulumi.RegisterOutputType(CertificateMapOutput{})
 }

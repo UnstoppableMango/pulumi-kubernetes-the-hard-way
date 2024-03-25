@@ -77,10 +77,38 @@ export class RootCa extends pulumi.ComponentResource {
     }
 
     /**
+     * Creates a RemoteFile resource representing the copy operation.
+     */
+    installCert(args: RootCa.InstallCertArgs): pulumi.Output<RemoteFile> {
+        const result: pulumi.Output<RootCa.InstallCertResult> = pulumi.runtime.call("kubernetes-the-hard-way:index:RootCa/installCert", {
+            "__self__": this,
+            "connection": args.connection,
+            "name": args.name,
+            "opts": args.opts,
+            "path": args.path,
+        }, this);
+        return result.result;
+    }
+
+    /**
+     * Creates a RemoteFile resource representing the copy operation.
+     */
+    installKey(args: RootCa.InstallKeyArgs): pulumi.Output<RemoteFile> {
+        const result: pulumi.Output<RootCa.InstallKeyResult> = pulumi.runtime.call("kubernetes-the-hard-way:index:RootCa/installKey", {
+            "__self__": this,
+            "connection": args.connection,
+            "name": args.name,
+            "opts": args.opts,
+            "path": args.path,
+        }, this);
+        return result.result;
+    }
+
+    /**
      * Creates a Certificate configured for the current authority.
      */
-    createCertificate(args: RootCa.CreateCertificateArgs): pulumi.Output<Certificate> {
-        const result: pulumi.Output<RootCa.CreateCertificateResult> = pulumi.runtime.call("kubernetes-the-hard-way:index:RootCa/createCertificate", {
+    newCertificate(args: RootCa.NewCertificateArgs): pulumi.Output<Certificate> {
+        const result: pulumi.Output<RootCa.NewCertificateResult> = pulumi.runtime.call("kubernetes-the-hard-way:index:RootCa/newCertificate", {
             "__self__": this,
             "algorithm": args.algorithm,
             "allowedUses": args.allowedUses,
@@ -97,20 +125,6 @@ export class RootCa extends pulumi.ComponentResource {
             "subject": args.subject,
             "uris": args.uris,
             "validityPeriodHours": args.validityPeriodHours,
-        }, this);
-        return result.result;
-    }
-
-    /**
-     * Creates a RemoteFile resource representing the copy operation.
-     */
-    installCert(args: RootCa.InstallCertArgs): pulumi.Output<RemoteFile> {
-        const result: pulumi.Output<RootCa.InstallCertResult> = pulumi.runtime.call("kubernetes-the-hard-way:index:RootCa/installCert", {
-            "__self__": this,
-            "connection": args.connection,
-            "name": args.name,
-            "opts": args.opts,
-            "path": args.path,
         }, this);
         return result.result;
     }
@@ -165,9 +179,55 @@ export interface RootCaArgs {
 
 export namespace RootCa {
     /**
-     * The set of arguments for the RootCa.createCertificate method.
+     * The set of arguments for the RootCa.installCert method.
      */
-    export interface CreateCertificateArgs {
+    export interface InstallCertArgs {
+        /**
+         * The connection details.
+         */
+        connection: pulumi.Input<inputs.ConnectionArgs>;
+        name: string;
+        opts?: inputs.ResourceOptionsArgs;
+        /**
+         * The path to install to.
+         */
+        path?: pulumi.Input<string>;
+    }
+
+    /**
+     * The results of the RootCa.installCert method.
+     */
+    export interface InstallCertResult {
+        readonly result: RemoteFile;
+    }
+
+    /**
+     * The set of arguments for the RootCa.installKey method.
+     */
+    export interface InstallKeyArgs {
+        /**
+         * The connection details.
+         */
+        connection: pulumi.Input<inputs.ConnectionArgs>;
+        name: string;
+        opts?: inputs.ResourceOptionsArgs;
+        /**
+         * The path to install to.
+         */
+        path?: pulumi.Input<string>;
+    }
+
+    /**
+     * The results of the RootCa.installKey method.
+     */
+    export interface InstallKeyResult {
+        readonly result: RemoteFile;
+    }
+
+    /**
+     * The set of arguments for the RootCa.newCertificate method.
+     */
+    export interface NewCertificateArgs {
         /**
          * Name of the algorithm to use when generating the private key.
          */
@@ -216,33 +276,10 @@ export namespace RootCa {
     }
 
     /**
-     * The results of the RootCa.createCertificate method.
+     * The results of the RootCa.newCertificate method.
      */
-    export interface CreateCertificateResult {
+    export interface NewCertificateResult {
         readonly result: Certificate;
-    }
-
-    /**
-     * The set of arguments for the RootCa.installCert method.
-     */
-    export interface InstallCertArgs {
-        /**
-         * The connection details.
-         */
-        connection: pulumi.Input<inputs.ConnectionArgs>;
-        name: string;
-        opts?: inputs.ResourceOptionsArgs;
-        /**
-         * The path to install to.
-         */
-        path?: pulumi.Input<string>;
-    }
-
-    /**
-     * The results of the RootCa.installCert method.
-     */
-    export interface InstallCertResult {
-        readonly result: RemoteFile;
     }
 
 }

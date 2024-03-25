@@ -424,3 +424,36 @@ class Certificate(pulumi.ComponentResource):
         __result__ = pulumi.runtime.call('kubernetes-the-hard-way:index:Certificate/installCert', __args__, res=__self__, typ=Certificate.InstallCertResult)
         return __result__.result
 
+    @pulumi.output_type
+    class InstallKeyResult:
+        def __init__(__self__, result=None):
+            if result and not isinstance(result, RemoteFile):
+                raise TypeError("Expected argument 'result' to be a RemoteFile")
+            pulumi.set(__self__, "result", result)
+
+        @property
+        @pulumi.getter
+        def result(self) -> 'RemoteFile':
+            return pulumi.get(self, "result")
+
+    def install_key(__self__, *,
+                    connection: pulumi.Input['ConnectionArgs'],
+                    name: str,
+                    opts: Optional['ResourceOptionsArgs'] = None,
+                    path: Optional[pulumi.Input[str]] = None) -> pulumi.Output['RemoteFile']:
+        """
+        Creates a RemoteFile resource representing the copy operation.
+
+
+        :param pulumi.Input['ConnectionArgs'] connection: The connection details.
+        :param pulumi.Input[str] path: The path to install to.
+        """
+        __args__ = dict()
+        __args__['__self__'] = __self__
+        __args__['connection'] = connection
+        __args__['name'] = name
+        __args__['opts'] = opts
+        __args__['path'] = path
+        __result__ = pulumi.runtime.call('kubernetes-the-hard-way:index:Certificate/installKey', __args__, res=__self__, typ=Certificate.InstallKeyResult)
+        return __result__.result
+

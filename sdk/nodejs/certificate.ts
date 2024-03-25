@@ -105,6 +105,20 @@ export class Certificate extends pulumi.ComponentResource {
         }, this);
         return result.result;
     }
+
+    /**
+     * Creates a RemoteFile resource representing the copy operation.
+     */
+    installKey(args: Certificate.InstallKeyArgs): pulumi.Output<RemoteFile> {
+        const result: pulumi.Output<Certificate.InstallKeyResult> = pulumi.runtime.call("kubernetes-the-hard-way:index:Certificate/installKey", {
+            "__self__": this,
+            "connection": args.connection,
+            "name": args.name,
+            "opts": args.opts,
+            "path": args.path,
+        }, this);
+        return result.result;
+    }
 }
 
 /**
@@ -179,6 +193,29 @@ export namespace Certificate {
      * The results of the Certificate.installCert method.
      */
     export interface InstallCertResult {
+        readonly result: RemoteFile;
+    }
+
+    /**
+     * The set of arguments for the Certificate.installKey method.
+     */
+    export interface InstallKeyArgs {
+        /**
+         * The connection details.
+         */
+        connection: pulumi.Input<inputs.ConnectionArgs>;
+        name: string;
+        opts?: inputs.ResourceOptionsArgs;
+        /**
+         * The path to install to.
+         */
+        path?: pulumi.Input<string>;
+    }
+
+    /**
+     * The results of the Certificate.installKey method.
+     */
+    export interface InstallKeyResult {
         readonly result: RemoteFile;
     }
 

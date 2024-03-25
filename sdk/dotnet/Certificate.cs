@@ -62,6 +62,12 @@ namespace UnMango.KubernetesTheHardWay
         /// </summary>
         public global::Pulumi.Output<UnMango.KubernetesTheHardWay.RemoteFile> InstallCert(CertificateInstallCertArgs args)
             => global::Pulumi.Deployment.Instance.Call<CertificateInstallCertResult>("kubernetes-the-hard-way:index:Certificate/installCert", args ?? new CertificateInstallCertArgs(), this).Apply(v => v.Result);
+
+        /// <summary>
+        /// Creates a RemoteFile resource representing the copy operation.
+        /// </summary>
+        public global::Pulumi.Output<UnMango.KubernetesTheHardWay.RemoteFile> InstallKey(CertificateInstallKeyArgs args)
+            => global::Pulumi.Deployment.Instance.Call<CertificateInstallKeyResult>("kubernetes-the-hard-way:index:Certificate/installKey", args ?? new CertificateInstallKeyArgs(), this).Apply(v => v.Result);
     }
 
     public sealed class CertificateArgs : global::Pulumi.ResourceArgs
@@ -209,6 +215,50 @@ namespace UnMango.KubernetesTheHardWay
 
         [OutputConstructor]
         private CertificateInstallCertResult(UnMango.KubernetesTheHardWay.RemoteFile result)
+        {
+            Result = result;
+        }
+    }
+
+    /// <summary>
+    /// The set of arguments for the <see cref="Certificate.InstallKey"/> method.
+    /// </summary>
+    public sealed class CertificateInstallKeyArgs : global::Pulumi.CallArgs
+    {
+        /// <summary>
+        /// The connection details.
+        /// </summary>
+        [Input("connection", required: true)]
+        public Input<Inputs.ConnectionArgs> Connection { get; set; } = null!;
+
+        [Input("name", required: true)]
+        public string Name { get; set; } = null!;
+
+        [Input("opts")]
+        public Inputs.ResourceOptionsArgs? Opts { get; set; }
+
+        /// <summary>
+        /// The path to install to.
+        /// </summary>
+        [Input("path")]
+        public Input<string>? Path { get; set; }
+
+        public CertificateInstallKeyArgs()
+        {
+        }
+        public static new CertificateInstallKeyArgs Empty => new CertificateInstallKeyArgs();
+    }
+
+    /// <summary>
+    /// The results of the <see cref="Certificate.InstallKey"/> method.
+    /// </summary>
+    [OutputType]
+    internal sealed class CertificateInstallKeyResult
+    {
+        public readonly UnMango.KubernetesTheHardWay.RemoteFile Result;
+
+        [OutputConstructor]
+        private CertificateInstallKeyResult(UnMango.KubernetesTheHardWay.RemoteFile result)
         {
             Result = result;
         }
