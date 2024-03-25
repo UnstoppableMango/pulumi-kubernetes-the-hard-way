@@ -134,7 +134,7 @@ resources:
       - privateKeyPem
       - publicKeyPem
     methods:
-      installOn: kubernetes-the-hard-way:index:Certificate/installOn
+      installCert: kubernetes-the-hard-way:index:Certificate/installCert
   kubernetes-the-hard-way:index:RemoteFile:
     isComponent: true
     inputProperties:
@@ -224,7 +224,7 @@ resources:
       - publicKeyPem
     methods:
       createCertificate: kubernetes-the-hard-way:index:RootCa/createCertificate
-      installOn: kubernetes-the-hard-way:index:RootCa/installOn
+      installCert: kubernetes-the-hard-way:index:RootCa/installCert
 types:
   kubernetes-the-hard-way:index:Algorithm:
     description: TODO
@@ -243,16 +243,9 @@ types:
       - value: digital_signature
       - value: key_encipherment
       - value: server_auth
-  kubernetes-the-hard-way:index:EcdsaCurve:
-    description: TODO
-    type: string
-    enum:
-      - value: P224
-      - value: P256
-      - value: P384
-      - value: P521
   # https://github.com/pulumi/pulumi-tls/blob/620cb07a95049672bdaab17bf86fade26db051b1/provider/cmd/pulumi-resource-tls/schema.json#L84-L127
   kubernetes-the-hard-way:index:CertRequestSubject:
+    description: Polyfill for `tls.CertRequestSubject`.
     type: object
     properties:
       commonName:
@@ -284,9 +277,15 @@ types:
         items:
           type: string
         description: "Distinguished name: STREET"
+  kubernetes-the-hard-way:index:ResourceOptions:
+    description: Polyfill for `pulumi.ComponentResourceOptions`.
+    type: object
+    properties:
+      parent:
+        $ref: "pulumi.json#/Any"
   # https://github.com/pulumi/pulumi-command/blob/f122b7ae8d9f2b7649a28b170c6141216a209f04/provider/cmd/pulumi-resource-command/schema.json#L470-L522
   kubernetes-the-hard-way:index:Connection:
-    description: Instructions for how to connect to a remote endpoint.
+    description: Instructions for how to connect to a remote endpoint. Polyfill for `command.ConnectionArgs`.
     type: object
     properties:
       agentSocketPath:
@@ -326,8 +325,16 @@ types:
         description: The user that we should use for the connection.
     required:
       - host
+  kubernetes-the-hard-way:index:EcdsaCurve:
+    description: TODO
+    type: string
+    enum:
+      - value: P224
+      - value: P256
+      - value: P384
+      - value: P521
 functions:
-  kubernetes-the-hard-way:index:Certificate/installOn:
+  kubernetes-the-hard-way:index:Certificate/installCert:
     description: Creates a RemoteFile resource representing the copy operation.
     inputs:
       properties:
@@ -338,6 +345,9 @@ functions:
           description: The connection details.
         name:
           type: string
+          plain: true
+        opts:
+          $ref: "#/types/kubernetes-the-hard-way:index:ResourceOptions"
           plain: true
         path:
           type: string
@@ -348,28 +358,23 @@ functions:
         - name
     outputs:
       properties:
-        file:
+        result:
           $ref: "#/resources/kubernetes-the-hard-way:index:RemoteFile"
       required:
-        - file
+        - result
   kubernetes-the-hard-way:index:RootCa/createCertificate:
     description: Creates a Certificate configured for the current authority.
     inputs:
       properties:
         __self__:
           $ref: "#/resources/kubernetes-the-hard-way:index:RootCa"
-        name:
-          type: string
-          plain: true
         algorithm:
           $ref: "#/types/kubernetes-the-hard-way:index:Algorithm"
           description: Name of the algorithm to use when generating the private key.
-        ecdsaCurve:
-          $ref: "#/types/kubernetes-the-hard-way:index:EcdsaCurve"
-          description: When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
-        rsaBits:
-          type: integer
-          description: When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
+        allowedUses:
+          type: array
+          items:
+            $ref: "#/types/kubernetes-the-hard-way:index:AllowedUsage"
         dnsNames:
           type: array
           items:
@@ -378,17 +383,34 @@ functions:
         earlyRenewalHours:
           type: integer
           description: TODO
+        ecdsaCurve:
+          $ref: "#/types/kubernetes-the-hard-way:index:EcdsaCurve"
+          description: When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
         ipAddresses:
           type: array
           items:
             type: string
           description: List of IP addresses for which a certificate is being requested.
+        isCaCertificate:
+          type: boolean
+        name:
+          type: string
+          plain: true
+        opts:
+          $ref: "#/types/kubernetes-the-hard-way:index:ResourceOptions"
+          plain: true
+        rsaBits:
+          type: integer
+          description: When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
         setAuthorityKeyId:
           type: boolean
           description: Should the generated certificate include an authority key identifier.
         setSubjectKeyId:
           type: boolean
           description: Should the generated certificate include a subject key identifier.
+        subject:
+          # $ref: "/tls/v5.0.0/schema.json#/types/tls:index/CertRequestSubject:CertRequestSubject"
+          $ref: "#/types/kubernetes-the-hard-way:index:CertRequestSubject"
         uris:
           type: array
           items:
@@ -397,43 +419,41 @@ functions:
         validityPeriodHours:
           type: integer
           description: Number of hours, after initial issuing, that the certificate will remain valid.
-        allowedUses:
-          type: array
-          items:
-            $ref: "#/types/kubernetes-the-hard-way:index:AllowedUsage"
-        isCaCertificate:
-          type: boolean
-        subject:
-          # $ref: "/tls/v5.0.0/schema.json#/types/tls:index/CertRequestSubject:CertRequestSubject"
-          $ref: "#/types/kubernetes-the-hard-way:index:CertRequestSubject"
       required:
         - __self__
         - allowedUses
         - validityPeriodHours
     outputs:
       properties:
-        cert:
+        result:
           $ref: "#/resources/kubernetes-the-hard-way:index:Certificate"
       required:
-        - cert
-  kubernetes-the-hard-way:index:RootCa/installOn:
+        - result
+  kubernetes-the-hard-way:index:RootCa/installCert:
     description: Creates a RemoteFile resource representing the copy operation.
     inputs:
       properties:
         __self__:
-          $ref: "#/resources/kubernetes-the-hard-way:index:RootCa"
+          $ref: "#/resources/kubernetes-the-hard-way:index:Certificate"
         connection:
           $ref: "#/types/kubernetes-the-hard-way:index:Connection"
           description: The connection details.
+        name:
+          type: string
+          plain: true
+        opts:
+          $ref: "#/types/kubernetes-the-hard-way:index:ResourceOptions"
+          plain: true
         path:
           type: string
           description: The path to install to.
       required:
         - __self__
         - connection
+        - name
     outputs:
       properties:
-        file:
+        result:
           $ref: "#/resources/kubernetes-the-hard-way:index:RemoteFile"
       required:
-        - file
+        - result
