@@ -51,8 +51,12 @@ export class RemoteFile extends ComponentResource {
   }
 }
 
-export function install({ name, connection, path, opts }: InstallArgs, content: Input<string>): RemoteFile {
-  return new RemoteFile(name, { connection, path, content }, opts);
+export function install({ name, opts, ...rest }: InstallArgs, content: Input<string>): RemoteFile {
+  return new RemoteFile(name, {
+    connection: rest.connection,
+    path: rest.path,
+    content,
+  }, opts);
 }
 
 export async function construct(

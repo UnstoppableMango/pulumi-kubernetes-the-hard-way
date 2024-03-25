@@ -1,4 +1,4 @@
-import { ComponentResource, ComponentResourceOptions, Input, Output, output } from '@pulumi/pulumi';
+import { ComponentResource, ComponentResourceOptions, Input, Output } from '@pulumi/pulumi';
 import { LocallySignedCert, PrivateKey, SelfSignedCert } from '@pulumi/tls';
 import { InstallArgs, RemoteFile, install } from './remoteFile';
 import { Algorithm, EcdsaCurve } from './types';
