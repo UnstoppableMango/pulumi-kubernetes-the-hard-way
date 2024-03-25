@@ -451,7 +451,9 @@ functions:
           description: Number of hours, after initial issuing, that the certificate will remain valid.
       required:
         - __self__
+        - algorithm
         - allowedUses
+        - name
         - validityPeriodHours
     outputs:
       properties:
