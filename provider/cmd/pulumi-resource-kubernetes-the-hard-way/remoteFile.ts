@@ -3,7 +3,10 @@ import { ConstructResult } from '@pulumi/pulumi/provider';
 import { Command } from '@pulumi/command/remote';
 import { remote } from '@pulumi/command/types/input';
 
-export type InstallArgs = Omit<RemoteFileArgs, 'content'>;
+export type InstallArgs = Omit<RemoteFileArgs, 'content'> & {
+  name: string;
+  opts?: ComponentResourceOptions;
+};
 
 export interface RemoteFileArgs {
   connection: Input<remote.ConnectionArgs>;
@@ -46,6 +49,14 @@ export class RemoteFile extends ComponentResource {
       stdout: command.stdout,
     });
   }
+}
+
+export function install({ name, opts, ...rest }: InstallArgs, content: Input<string>): RemoteFile {
+  return new RemoteFile(name, {
+    connection: rest.connection,
+    path: rest.path,
+    content,
+  }, opts);
 }
 
 export async function construct(

@@ -13,6 +13,7 @@ import (
 
 var _ = internal.GetEnvOrDefault
 
+// Polyfill for `tls.CertRequestSubject`.
 type CertRequestSubject struct {
 	// Distinguished name: CN
 	CommonName *string `pulumi:"commonName"`
@@ -45,6 +46,7 @@ type CertRequestSubjectInput interface {
 	ToCertRequestSubjectOutputWithContext(context.Context) CertRequestSubjectOutput
 }
 
+// Polyfill for `tls.CertRequestSubject`.
 type CertRequestSubjectArgs struct {
 	// Distinguished name: CN
 	CommonName pulumi.StringPtrInput `pulumi:"commonName"`
@@ -119,6 +121,7 @@ func (i *certRequestSubjectPtrType) ToCertRequestSubjectPtrOutputWithContext(ctx
 	return pulumi.ToOutputWithContext(ctx, i).(CertRequestSubjectPtrOutput)
 }
 
+// Polyfill for `tls.CertRequestSubject`.
 type CertRequestSubjectOutput struct{ *pulumi.OutputState }
 
 func (CertRequestSubjectOutput) ElementType() reflect.Type {
@@ -302,7 +305,7 @@ func (o CertRequestSubjectPtrOutput) StreetAddresses() pulumi.StringArrayOutput 
 	}).(pulumi.StringArrayOutput)
 }
 
-// Instructions for how to connect to a remote endpoint.
+// Instructions for how to connect to a remote endpoint. Polyfill for `command.ConnectionArgs`.
 type Connection struct {
 	// SSH Agent socket path. Default to environment variable SSH_AUTH_SOCK if present.
 	AgentSocketPath *string `pulumi:"agentSocketPath"`
@@ -360,7 +363,7 @@ type ConnectionInput interface {
 	ToConnectionOutputWithContext(context.Context) ConnectionOutput
 }
 
-// Instructions for how to connect to a remote endpoint.
+// Instructions for how to connect to a remote endpoint. Polyfill for `command.ConnectionArgs`.
 type ConnectionArgs struct {
 	// SSH Agent socket path. Default to environment variable SSH_AUTH_SOCK if present.
 	AgentSocketPath pulumi.StringPtrInput `pulumi:"agentSocketPath"`
@@ -414,7 +417,7 @@ func (i ConnectionArgs) ToConnectionOutputWithContext(ctx context.Context) Conne
 	return pulumi.ToOutputWithContext(ctx, i).(ConnectionOutput)
 }
 
-// Instructions for how to connect to a remote endpoint.
+// Instructions for how to connect to a remote endpoint. Polyfill for `command.ConnectionArgs`.
 type ConnectionOutput struct{ *pulumi.OutputState }
 
 func (ConnectionOutput) ElementType() reflect.Type {
@@ -474,11 +477,151 @@ func (o ConnectionOutput) User() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v Connection) *string { return v.User }).(pulumi.StringPtrOutput)
 }
 
+// Polyfill for `pulumi.ComponentResourceOptions`.
+type ResourceOptions struct {
+	Parent interface{} `pulumi:"parent"`
+}
+
+// ResourceOptionsInput is an input type that accepts ResourceOptionsArgs and ResourceOptionsOutput values.
+// You can construct a concrete instance of `ResourceOptionsInput` via:
+//
+//	ResourceOptionsArgs{...}
+type ResourceOptionsInput interface {
+	pulumi.Input
+
+	ToResourceOptionsOutput() ResourceOptionsOutput
+	ToResourceOptionsOutputWithContext(context.Context) ResourceOptionsOutput
+}
+
+// Polyfill for `pulumi.ComponentResourceOptions`.
+type ResourceOptionsArgs struct {
+	Parent pulumi.Input `pulumi:"parent"`
+}
+
+func (ResourceOptionsArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*ResourceOptions)(nil)).Elem()
+}
+
+func (i ResourceOptionsArgs) ToResourceOptionsOutput() ResourceOptionsOutput {
+	return i.ToResourceOptionsOutputWithContext(context.Background())
+}
+
+func (i ResourceOptionsArgs) ToResourceOptionsOutputWithContext(ctx context.Context) ResourceOptionsOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(ResourceOptionsOutput)
+}
+
+func (i ResourceOptionsArgs) ToResourceOptionsPtrOutput() ResourceOptionsPtrOutput {
+	return i.ToResourceOptionsPtrOutputWithContext(context.Background())
+}
+
+func (i ResourceOptionsArgs) ToResourceOptionsPtrOutputWithContext(ctx context.Context) ResourceOptionsPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(ResourceOptionsOutput).ToResourceOptionsPtrOutputWithContext(ctx)
+}
+
+// ResourceOptionsPtrInput is an input type that accepts ResourceOptionsArgs, ResourceOptionsPtr and ResourceOptionsPtrOutput values.
+// You can construct a concrete instance of `ResourceOptionsPtrInput` via:
+//
+//	        ResourceOptionsArgs{...}
+//
+//	or:
+//
+//	        nil
+type ResourceOptionsPtrInput interface {
+	pulumi.Input
+
+	ToResourceOptionsPtrOutput() ResourceOptionsPtrOutput
+	ToResourceOptionsPtrOutputWithContext(context.Context) ResourceOptionsPtrOutput
+}
+
+type resourceOptionsPtrType ResourceOptionsArgs
+
+func ResourceOptionsPtr(v *ResourceOptionsArgs) ResourceOptionsPtrInput {
+	return (*resourceOptionsPtrType)(v)
+}
+
+func (*resourceOptionsPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**ResourceOptions)(nil)).Elem()
+}
+
+func (i *resourceOptionsPtrType) ToResourceOptionsPtrOutput() ResourceOptionsPtrOutput {
+	return i.ToResourceOptionsPtrOutputWithContext(context.Background())
+}
+
+func (i *resourceOptionsPtrType) ToResourceOptionsPtrOutputWithContext(ctx context.Context) ResourceOptionsPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(ResourceOptionsPtrOutput)
+}
+
+// Polyfill for `pulumi.ComponentResourceOptions`.
+type ResourceOptionsOutput struct{ *pulumi.OutputState }
+
+func (ResourceOptionsOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*ResourceOptions)(nil)).Elem()
+}
+
+func (o ResourceOptionsOutput) ToResourceOptionsOutput() ResourceOptionsOutput {
+	return o
+}
+
+func (o ResourceOptionsOutput) ToResourceOptionsOutputWithContext(ctx context.Context) ResourceOptionsOutput {
+	return o
+}
+
+func (o ResourceOptionsOutput) ToResourceOptionsPtrOutput() ResourceOptionsPtrOutput {
+	return o.ToResourceOptionsPtrOutputWithContext(context.Background())
+}
+
+func (o ResourceOptionsOutput) ToResourceOptionsPtrOutputWithContext(ctx context.Context) ResourceOptionsPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v ResourceOptions) *ResourceOptions {
+		return &v
+	}).(ResourceOptionsPtrOutput)
+}
+
+func (o ResourceOptionsOutput) Parent() pulumi.AnyOutput {
+	return o.ApplyT(func(v ResourceOptions) interface{} { return v.Parent }).(pulumi.AnyOutput)
+}
+
+type ResourceOptionsPtrOutput struct{ *pulumi.OutputState }
+
+func (ResourceOptionsPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**ResourceOptions)(nil)).Elem()
+}
+
+func (o ResourceOptionsPtrOutput) ToResourceOptionsPtrOutput() ResourceOptionsPtrOutput {
+	return o
+}
+
+func (o ResourceOptionsPtrOutput) ToResourceOptionsPtrOutputWithContext(ctx context.Context) ResourceOptionsPtrOutput {
+	return o
+}
+
+func (o ResourceOptionsPtrOutput) Elem() ResourceOptionsOutput {
+	return o.ApplyT(func(v *ResourceOptions) ResourceOptions {
+		if v != nil {
+			return *v
+		}
+		var ret ResourceOptions
+		return ret
+	}).(ResourceOptionsOutput)
+}
+
+func (o ResourceOptionsPtrOutput) Parent() pulumi.AnyOutput {
+	return o.ApplyT(func(v *ResourceOptions) interface{} {
+		if v == nil {
+			return nil
+		}
+		return v.Parent
+	}).(pulumi.AnyOutput)
+}
+
 func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*CertRequestSubjectInput)(nil)).Elem(), CertRequestSubjectArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*CertRequestSubjectPtrInput)(nil)).Elem(), CertRequestSubjectArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*ConnectionInput)(nil)).Elem(), ConnectionArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*ResourceOptionsInput)(nil)).Elem(), ResourceOptionsArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*ResourceOptionsPtrInput)(nil)).Elem(), ResourceOptionsArgs{})
 	pulumi.RegisterOutputType(CertRequestSubjectOutput{})
 	pulumi.RegisterOutputType(CertRequestSubjectPtrOutput{})
 	pulumi.RegisterOutputType(ConnectionOutput{})
+	pulumi.RegisterOutputType(ResourceOptionsOutput{})
+	pulumi.RegisterOutputType(ResourceOptionsPtrOutput{})
 }

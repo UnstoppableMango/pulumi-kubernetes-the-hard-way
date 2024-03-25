@@ -5,23 +5,38 @@ import * as remoteFile from './remoteFile';
 import * as rootCa from './rootCa';
 
 export class Provider implements provider.Provider {
-    constructor(readonly version: string, readonly schema: string) { }
+  constructor(readonly version: string, readonly schema: string) { }
 
-    async construct(
-        name: string,
-        type: string,
-        inputs: pulumi.Inputs,
-        options: pulumi.ComponentResourceOptions
-    ): Promise<provider.ConstructResult> {
-        switch (type) {
-            case 'kubernetes-the-hard-way:index:Certificate':
-                return await cert.construct(name, inputs, options);
-            case 'kubernetes-the-hard-way:index:RemoteFile':
-                return await remoteFile.construct(name, inputs, options);
-            case 'kubernetes-the-hard-way:index:RootCa':
-                return await rootCa.construct(name, inputs, options);
-            default:
-                throw new Error(`unknown resource type ${type}`);
-        }
+  async construct(
+    name: string,
+    type: string,
+    inputs: pulumi.Inputs,
+    options: pulumi.ComponentResourceOptions
+  ): Promise<provider.ConstructResult> {
+    switch (type) {
+      case 'kubernetes-the-hard-way:index:Certificate':
+        return await cert.construct(name, inputs, options);
+      case 'kubernetes-the-hard-way:index:RemoteFile':
+        return await remoteFile.construct(name, inputs, options);
+      case 'kubernetes-the-hard-way:index:RootCa':
+        return await rootCa.construct(name, inputs, options);
+      default:
+        throw new Error(`unknown resource type ${type}`);
     }
+  }
+
+  async call(token: string, inputs: pulumi.Inputs): Promise<provider.InvokeResult> {
+    switch (token) {
+      case 'kubernetes-the-hard-way:index:Certificate/installCert':
+        return await cert.installCert(inputs);
+      case 'kubernetes-the-hard-way:index:Certificate/installKey':
+        return await cert.installKey(inputs);
+      case 'kubernetes-the-hard-way:index:RootCa/newCertificate':
+        return await rootCa.newCertificate(inputs);
+      case 'kubernetes-the-hard-way:index:RootCa/installCert':
+        return await rootCa.installCert(inputs);
+      default:
+        throw new Error(`unknown call token ${token}`);
+    }
+  }
 }

@@ -58,16 +58,22 @@ namespace UnMango.KubernetesTheHardWay
         }
 
         /// <summary>
-        /// Creates a Certificate configured for the current authority.
+        /// Creates a RemoteFile resource representing the copy operation.
         /// </summary>
-        public global::Pulumi.Output<UnMango.KubernetesTheHardWay.Certificate> CreateCertificate(RootCaCreateCertificateArgs args)
-            => global::Pulumi.Deployment.Instance.Call<RootCaCreateCertificateResult>("kubernetes-the-hard-way:index:RootCa/createCertificate", args ?? new RootCaCreateCertificateArgs(), this).Apply(v => v.Cert);
+        public global::Pulumi.Output<UnMango.KubernetesTheHardWay.RemoteFile> InstallCert(RootCaInstallCertArgs args)
+            => global::Pulumi.Deployment.Instance.Call<RootCaInstallCertResult>("kubernetes-the-hard-way:index:RootCa/installCert", args ?? new RootCaInstallCertArgs(), this).Apply(v => v.Result);
 
         /// <summary>
         /// Creates a RemoteFile resource representing the copy operation.
         /// </summary>
-        public global::Pulumi.Output<UnMango.KubernetesTheHardWay.RemoteFile> InstallOn(RootCaInstallOnArgs args)
-            => global::Pulumi.Deployment.Instance.Call<RootCaInstallOnResult>("kubernetes-the-hard-way:index:RootCa/installOn", args ?? new RootCaInstallOnArgs(), this).Apply(v => v.File);
+        public global::Pulumi.Output<UnMango.KubernetesTheHardWay.RemoteFile> InstallKey(RootCaInstallKeyArgs args)
+            => global::Pulumi.Deployment.Instance.Call<RootCaInstallKeyResult>("kubernetes-the-hard-way:index:RootCa/installKey", args ?? new RootCaInstallKeyArgs(), this).Apply(v => v.Result);
+
+        /// <summary>
+        /// Creates a Certificate configured for the current authority.
+        /// </summary>
+        public global::Pulumi.Output<UnMango.KubernetesTheHardWay.Certificate> NewCertificate(RootCaNewCertificateArgs args)
+            => global::Pulumi.Deployment.Instance.Call<RootCaNewCertificateResult>("kubernetes-the-hard-way:index:RootCa/newCertificate", args ?? new RootCaNewCertificateArgs(), this).Apply(v => v.Result);
     }
 
     public sealed class RootCaArgs : global::Pulumi.ResourceArgs
@@ -160,15 +166,103 @@ namespace UnMango.KubernetesTheHardWay
     }
 
     /// <summary>
-    /// The set of arguments for the <see cref="RootCa.CreateCertificate"/> method.
+    /// The set of arguments for the <see cref="RootCa.InstallCert"/> method.
     /// </summary>
-    public sealed class RootCaCreateCertificateArgs : global::Pulumi.CallArgs
+    public sealed class RootCaInstallCertArgs : global::Pulumi.CallArgs
+    {
+        /// <summary>
+        /// The connection details.
+        /// </summary>
+        [Input("connection", required: true)]
+        public Input<Inputs.ConnectionArgs> Connection { get; set; } = null!;
+
+        [Input("name", required: true)]
+        public string Name { get; set; } = null!;
+
+        [Input("opts")]
+        public Inputs.ResourceOptionsArgs? Opts { get; set; }
+
+        /// <summary>
+        /// The path to install to.
+        /// </summary>
+        [Input("path")]
+        public Input<string>? Path { get; set; }
+
+        public RootCaInstallCertArgs()
+        {
+        }
+        public static new RootCaInstallCertArgs Empty => new RootCaInstallCertArgs();
+    }
+
+    /// <summary>
+    /// The results of the <see cref="RootCa.InstallCert"/> method.
+    /// </summary>
+    [OutputType]
+    internal sealed class RootCaInstallCertResult
+    {
+        public readonly UnMango.KubernetesTheHardWay.RemoteFile Result;
+
+        [OutputConstructor]
+        private RootCaInstallCertResult(UnMango.KubernetesTheHardWay.RemoteFile result)
+        {
+            Result = result;
+        }
+    }
+
+    /// <summary>
+    /// The set of arguments for the <see cref="RootCa.InstallKey"/> method.
+    /// </summary>
+    public sealed class RootCaInstallKeyArgs : global::Pulumi.CallArgs
+    {
+        /// <summary>
+        /// The connection details.
+        /// </summary>
+        [Input("connection", required: true)]
+        public Input<Inputs.ConnectionArgs> Connection { get; set; } = null!;
+
+        [Input("name", required: true)]
+        public string Name { get; set; } = null!;
+
+        [Input("opts")]
+        public Inputs.ResourceOptionsArgs? Opts { get; set; }
+
+        /// <summary>
+        /// The path to install to.
+        /// </summary>
+        [Input("path")]
+        public Input<string>? Path { get; set; }
+
+        public RootCaInstallKeyArgs()
+        {
+        }
+        public static new RootCaInstallKeyArgs Empty => new RootCaInstallKeyArgs();
+    }
+
+    /// <summary>
+    /// The results of the <see cref="RootCa.InstallKey"/> method.
+    /// </summary>
+    [OutputType]
+    internal sealed class RootCaInstallKeyResult
+    {
+        public readonly UnMango.KubernetesTheHardWay.RemoteFile Result;
+
+        [OutputConstructor]
+        private RootCaInstallKeyResult(UnMango.KubernetesTheHardWay.RemoteFile result)
+        {
+            Result = result;
+        }
+    }
+
+    /// <summary>
+    /// The set of arguments for the <see cref="RootCa.NewCertificate"/> method.
+    /// </summary>
+    public sealed class RootCaNewCertificateArgs : global::Pulumi.CallArgs
     {
         /// <summary>
         /// Name of the algorithm to use when generating the private key.
         /// </summary>
-        [Input("algorithm")]
-        public Input<UnMango.KubernetesTheHardWay.Algorithm>? Algorithm { get; set; }
+        [Input("algorithm", required: true)]
+        public Input<UnMango.KubernetesTheHardWay.Algorithm> Algorithm { get; set; } = null!;
 
         [Input("allowedUses", required: true)]
         private InputList<UnMango.KubernetesTheHardWay.AllowedUsage>? _allowedUses;
@@ -217,8 +311,11 @@ namespace UnMango.KubernetesTheHardWay
         [Input("isCaCertificate")]
         public Input<bool>? IsCaCertificate { get; set; }
 
-        [Input("name")]
-        public string? Name { get; set; }
+        [Input("name", required: true)]
+        public string Name { get; set; } = null!;
+
+        [Input("opts")]
+        public Inputs.ResourceOptionsArgs? Opts { get; set; }
 
         /// <summary>
         /// When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
@@ -259,62 +356,24 @@ namespace UnMango.KubernetesTheHardWay
         [Input("validityPeriodHours", required: true)]
         public Input<int> ValidityPeriodHours { get; set; } = null!;
 
-        public RootCaCreateCertificateArgs()
+        public RootCaNewCertificateArgs()
         {
         }
-        public static new RootCaCreateCertificateArgs Empty => new RootCaCreateCertificateArgs();
+        public static new RootCaNewCertificateArgs Empty => new RootCaNewCertificateArgs();
     }
 
     /// <summary>
-    /// The results of the <see cref="RootCa.CreateCertificate"/> method.
+    /// The results of the <see cref="RootCa.NewCertificate"/> method.
     /// </summary>
     [OutputType]
-    internal sealed class RootCaCreateCertificateResult
+    internal sealed class RootCaNewCertificateResult
     {
-        public readonly UnMango.KubernetesTheHardWay.Certificate Cert;
+        public readonly UnMango.KubernetesTheHardWay.Certificate Result;
 
         [OutputConstructor]
-        private RootCaCreateCertificateResult(UnMango.KubernetesTheHardWay.Certificate cert)
+        private RootCaNewCertificateResult(UnMango.KubernetesTheHardWay.Certificate result)
         {
-            Cert = cert;
-        }
-    }
-
-    /// <summary>
-    /// The set of arguments for the <see cref="RootCa.InstallOn"/> method.
-    /// </summary>
-    public sealed class RootCaInstallOnArgs : global::Pulumi.CallArgs
-    {
-        /// <summary>
-        /// The connection details.
-        /// </summary>
-        [Input("connection", required: true)]
-        public Input<Inputs.ConnectionArgs> Connection { get; set; } = null!;
-
-        /// <summary>
-        /// The path to install to.
-        /// </summary>
-        [Input("path")]
-        public Input<string>? Path { get; set; }
-
-        public RootCaInstallOnArgs()
-        {
-        }
-        public static new RootCaInstallOnArgs Empty => new RootCaInstallOnArgs();
-    }
-
-    /// <summary>
-    /// The results of the <see cref="RootCa.InstallOn"/> method.
-    /// </summary>
-    [OutputType]
-    internal sealed class RootCaInstallOnResult
-    {
-        public readonly UnMango.KubernetesTheHardWay.RemoteFile File;
-
-        [OutputConstructor]
-        private RootCaInstallOnResult(UnMango.KubernetesTheHardWay.RemoteFile file)
-        {
-            File = file;
+            Result = result;
         }
     }
 }

@@ -329,38 +329,105 @@ class RootCa(pulumi.ComponentResource):
         return pulumi.get(self, "public_key_pem")
 
     @pulumi.output_type
-    class CreateCertificateResult:
-        def __init__(__self__, cert=None):
-            if cert and not isinstance(cert, Certificate):
-                raise TypeError("Expected argument 'cert' to be a Certificate")
-            pulumi.set(__self__, "cert", cert)
+    class InstallCertResult:
+        def __init__(__self__, result=None):
+            if result and not isinstance(result, RemoteFile):
+                raise TypeError("Expected argument 'result' to be a RemoteFile")
+            pulumi.set(__self__, "result", result)
 
         @property
         @pulumi.getter
-        def cert(self) -> 'Certificate':
-            return pulumi.get(self, "cert")
+        def result(self) -> 'RemoteFile':
+            return pulumi.get(self, "result")
 
-    def create_certificate(__self__, *,
-                           allowed_uses: pulumi.Input[Sequence[pulumi.Input['AllowedUsage']]],
-                           validity_period_hours: pulumi.Input[int],
-                           algorithm: Optional[pulumi.Input['Algorithm']] = None,
-                           dns_names: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-                           early_renewal_hours: Optional[pulumi.Input[int]] = None,
-                           ecdsa_curve: Optional[pulumi.Input['EcdsaCurve']] = None,
-                           ip_addresses: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-                           is_ca_certificate: Optional[pulumi.Input[bool]] = None,
-                           name: Optional[str] = None,
-                           rsa_bits: Optional[pulumi.Input[int]] = None,
-                           set_authority_key_id: Optional[pulumi.Input[bool]] = None,
-                           set_subject_key_id: Optional[pulumi.Input[bool]] = None,
-                           subject: Optional[pulumi.Input['CertRequestSubjectArgs']] = None,
-                           uris: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None) -> pulumi.Output['Certificate']:
+    def install_cert(__self__, *,
+                     connection: pulumi.Input['ConnectionArgs'],
+                     name: str,
+                     opts: Optional['ResourceOptionsArgs'] = None,
+                     path: Optional[pulumi.Input[str]] = None) -> pulumi.Output['RemoteFile']:
+        """
+        Creates a RemoteFile resource representing the copy operation.
+
+
+        :param pulumi.Input['ConnectionArgs'] connection: The connection details.
+        :param pulumi.Input[str] path: The path to install to.
+        """
+        __args__ = dict()
+        __args__['__self__'] = __self__
+        __args__['connection'] = connection
+        __args__['name'] = name
+        __args__['opts'] = opts
+        __args__['path'] = path
+        __result__ = pulumi.runtime.call('kubernetes-the-hard-way:index:RootCa/installCert', __args__, res=__self__, typ=RootCa.InstallCertResult)
+        return __result__.result
+
+    @pulumi.output_type
+    class InstallKeyResult:
+        def __init__(__self__, result=None):
+            if result and not isinstance(result, RemoteFile):
+                raise TypeError("Expected argument 'result' to be a RemoteFile")
+            pulumi.set(__self__, "result", result)
+
+        @property
+        @pulumi.getter
+        def result(self) -> 'RemoteFile':
+            return pulumi.get(self, "result")
+
+    def install_key(__self__, *,
+                    connection: pulumi.Input['ConnectionArgs'],
+                    name: str,
+                    opts: Optional['ResourceOptionsArgs'] = None,
+                    path: Optional[pulumi.Input[str]] = None) -> pulumi.Output['RemoteFile']:
+        """
+        Creates a RemoteFile resource representing the copy operation.
+
+
+        :param pulumi.Input['ConnectionArgs'] connection: The connection details.
+        :param pulumi.Input[str] path: The path to install to.
+        """
+        __args__ = dict()
+        __args__['__self__'] = __self__
+        __args__['connection'] = connection
+        __args__['name'] = name
+        __args__['opts'] = opts
+        __args__['path'] = path
+        __result__ = pulumi.runtime.call('kubernetes-the-hard-way:index:RootCa/installKey', __args__, res=__self__, typ=RootCa.InstallKeyResult)
+        return __result__.result
+
+    @pulumi.output_type
+    class NewCertificateResult:
+        def __init__(__self__, result=None):
+            if result and not isinstance(result, Certificate):
+                raise TypeError("Expected argument 'result' to be a Certificate")
+            pulumi.set(__self__, "result", result)
+
+        @property
+        @pulumi.getter
+        def result(self) -> 'Certificate':
+            return pulumi.get(self, "result")
+
+    def new_certificate(__self__, *,
+                        algorithm: pulumi.Input['Algorithm'],
+                        allowed_uses: pulumi.Input[Sequence[pulumi.Input['AllowedUsage']]],
+                        name: str,
+                        validity_period_hours: pulumi.Input[int],
+                        dns_names: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
+                        early_renewal_hours: Optional[pulumi.Input[int]] = None,
+                        ecdsa_curve: Optional[pulumi.Input['EcdsaCurve']] = None,
+                        ip_addresses: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
+                        is_ca_certificate: Optional[pulumi.Input[bool]] = None,
+                        opts: Optional['ResourceOptionsArgs'] = None,
+                        rsa_bits: Optional[pulumi.Input[int]] = None,
+                        set_authority_key_id: Optional[pulumi.Input[bool]] = None,
+                        set_subject_key_id: Optional[pulumi.Input[bool]] = None,
+                        subject: Optional[pulumi.Input['CertRequestSubjectArgs']] = None,
+                        uris: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None) -> pulumi.Output['Certificate']:
         """
         Creates a Certificate configured for the current authority.
 
 
-        :param pulumi.Input[int] validity_period_hours: Number of hours, after initial issuing, that the certificate will remain valid.
         :param pulumi.Input['Algorithm'] algorithm: Name of the algorithm to use when generating the private key.
+        :param pulumi.Input[int] validity_period_hours: Number of hours, after initial issuing, that the certificate will remain valid.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] dns_names: List of DNS names for which a certificate is being requested.
         :param pulumi.Input[int] early_renewal_hours: TODO
         :param pulumi.Input['EcdsaCurve'] ecdsa_curve: When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
@@ -372,49 +439,21 @@ class RootCa(pulumi.ComponentResource):
         """
         __args__ = dict()
         __args__['__self__'] = __self__
-        __args__['allowedUses'] = allowed_uses
-        __args__['validityPeriodHours'] = validity_period_hours
         __args__['algorithm'] = algorithm
+        __args__['allowedUses'] = allowed_uses
+        __args__['name'] = name
+        __args__['validityPeriodHours'] = validity_period_hours
         __args__['dnsNames'] = dns_names
         __args__['earlyRenewalHours'] = early_renewal_hours
         __args__['ecdsaCurve'] = ecdsa_curve
         __args__['ipAddresses'] = ip_addresses
         __args__['isCaCertificate'] = is_ca_certificate
-        __args__['name'] = name
+        __args__['opts'] = opts
         __args__['rsaBits'] = rsa_bits
         __args__['setAuthorityKeyId'] = set_authority_key_id
         __args__['setSubjectKeyId'] = set_subject_key_id
         __args__['subject'] = subject
         __args__['uris'] = uris
-        __result__ = pulumi.runtime.call('kubernetes-the-hard-way:index:RootCa/createCertificate', __args__, res=__self__, typ=RootCa.CreateCertificateResult)
-        return __result__.cert
-
-    @pulumi.output_type
-    class InstallOnResult:
-        def __init__(__self__, file=None):
-            if file and not isinstance(file, RemoteFile):
-                raise TypeError("Expected argument 'file' to be a RemoteFile")
-            pulumi.set(__self__, "file", file)
-
-        @property
-        @pulumi.getter
-        def file(self) -> 'RemoteFile':
-            return pulumi.get(self, "file")
-
-    def install_on(__self__, *,
-                   connection: pulumi.Input['ConnectionArgs'],
-                   path: Optional[pulumi.Input[str]] = None) -> pulumi.Output['RemoteFile']:
-        """
-        Creates a RemoteFile resource representing the copy operation.
-
-
-        :param pulumi.Input['ConnectionArgs'] connection: The connection details.
-        :param pulumi.Input[str] path: The path to install to.
-        """
-        __args__ = dict()
-        __args__['__self__'] = __self__
-        __args__['connection'] = connection
-        __args__['path'] = path
-        __result__ = pulumi.runtime.call('kubernetes-the-hard-way:index:RootCa/installOn', __args__, res=__self__, typ=RootCa.InstallOnResult)
-        return __result__.file
+        __result__ = pulumi.runtime.call('kubernetes-the-hard-way:index:RootCa/newCertificate', __args__, res=__self__, typ=RootCa.NewCertificateResult)
+        return __result__.result
 

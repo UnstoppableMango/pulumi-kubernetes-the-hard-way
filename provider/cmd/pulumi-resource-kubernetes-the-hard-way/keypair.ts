@@ -1,7 +1,6 @@
-import { ComponentResource, ComponentResourceOptions, Input, Output, output } from '@pulumi/pulumi';
+import { ComponentResource, ComponentResourceOptions, Input, Output } from '@pulumi/pulumi';
 import { LocallySignedCert, PrivateKey, SelfSignedCert } from '@pulumi/tls';
-import { remote } from '@pulumi/command/types/input';
-import { InstallArgs, RemoteFile } from './remoteFile';
+import { InstallArgs, RemoteFile, install } from './remoteFile';
 import { Algorithm, EcdsaCurve } from './types';
 
 export interface KeyPairArgs {
@@ -20,7 +19,7 @@ export abstract class KeyPair<TCert extends CertType> extends ComponentResource 
   public readonly privateKeyPem: Output<string>;
   public readonly publicKeyPem: Output<string>;
 
-  constructor(type: string, name: string, args: KeyPairArgs, opts?: ComponentResourceOptions) {
+  protected constructor(type: string, name: string, args: KeyPairArgs, opts?: ComponentResourceOptions) {
     super(type, name, args, opts);
 
     const key = new PrivateKey(name, {
@@ -34,39 +33,19 @@ export abstract class KeyPair<TCert extends CertType> extends ComponentResource 
     this.publicKeyPem = key.publicKeyPem;
   }
 
-  public installCert(name: string, args: InstallArgs, opts?: ComponentResourceOptions): RemoteFile {
-    return installCert(this, name, args, opts);
+  public installCert(args: InstallArgs): RemoteFile {
+    return installCert(this, args);
   }
 
-  public installKey(name: string, args: InstallArgs, opts?: ComponentResourceOptions): RemoteFile {
-    return installKey(this, name, args, opts);
+  public installKey(args: InstallArgs): RemoteFile {
+    return installKey(this, args);
   }
 }
 
-export function installCert<T extends CertType>(
-  pair: KeyPair<T>,
-  name: string,
-  args: InstallArgs,
-  opts?: ComponentResourceOptions
-): RemoteFile {
-  return install(name, args.connection, pair.certPem, args.path, opts);
+export function installCert<T extends CertType>(pair: KeyPair<T>, args: InstallArgs): RemoteFile {
+  return install(args, pair.certPem);
 }
 
-export function installKey<T extends CertType>(
-  pair: KeyPair<T>,
-  name: string,
-  args: InstallArgs,
-  opts?: ComponentResourceOptions
-): RemoteFile {
-  return install(name, args.connection, pair.publicKeyPem, args.path, opts);
-}
-
-function install(
-  name: string,
-  connection: Input<remote.ConnectionArgs>,
-  content: Input<string>,
-  path: Input<string>,
-  opts?: ComponentResourceOptions
-): RemoteFile {
-  return new RemoteFile(name, { connection, path, content }, opts);
+export function installKey<T extends CertType>(pair: KeyPair<T>, args: InstallArgs): RemoteFile {
+  return install(args, pair.publicKeyPem);
 }

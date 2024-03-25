@@ -1,11 +1,16 @@
 import { ComponentResourceOptions, Input, Inputs, Output, output } from '@pulumi/pulumi';
-import { ConstructResult } from '@pulumi/pulumi/provider';
+import { ConstructResult, InvokeResult } from '@pulumi/pulumi/provider';
 import { SelfSignedCert } from '@pulumi/tls';
 import { SelfSignedCertSubject } from '@pulumi/tls/types/input';
 import { KeyPair, KeyPairArgs } from './keypair';
 import { Certificate, CertificateArgs } from './certificate';
 import { AllowedUsage } from './types';
 import { toAllowedUsage } from './util';
+
+export type NewCertificateArgs = Omit<CertificateArgs, 'caCertPem' | 'caPrivateKeyPem'> & {
+  name: string;
+  opts?: ComponentResourceOptions;
+};
 
 export interface RootCaArgs extends KeyPairArgs {
   subject?: Input<SelfSignedCertSubject>;
@@ -56,17 +61,63 @@ export class RootCa extends KeyPair<SelfSignedCert> {
     });
   }
 
-  public newCertificate(
-    name: string,
-    args: Omit<CertificateArgs, 'caCertPem' | 'caPrivateKeyPem'>,
-    opts?: ComponentResourceOptions,
-  ): Certificate {
-    return new Certificate(name, {
-      ...args,
-      caCertPem: this.cert.certPem,
-      caPrivateKeyPem: this.key.privateKeyPem,
-    }, opts);
+  public newCertificate(args: NewCertificateArgs): Certificate {
+    return new Certificate(args.name, {
+      algorithm: args.algorithm,
+      allowedUses: args.allowedUses,
+      validityPeriodHours: args.validityPeriodHours,
+      dnsNames: args.dnsNames,
+      ecdsaCurve: args.ecdsaCurve,
+      ipAddresses: args.ipAddresses,
+      isCaCertificate: args.isCaCertificate,
+      rsaBits: args.rsaBits,
+      subject: args.subject,
+      uris: args.uris,
+      caCertPem: this.certPem,
+      caPrivateKeyPem: this.privateKeyPem,
+    }, args.opts);
   }
+}
+
+export async function newCertificate(inputs: Inputs): Promise<InvokeResult> {
+  const result = (inputs.__self__ as RootCa).newCertificate({
+    algorithm: inputs.algorithm,
+    allowedUses: inputs.allowedUses,
+    name: inputs.name,
+    validityPeriodHours: inputs.validityPeriodHours,
+    dnsNames: inputs.dnsNames,
+    ecdsaCurve: inputs.ecdsaCurve,
+    ipAddresses: inputs.ipAddresses,
+    isCaCertificate: inputs.isCaCertificate,
+    opts: inputs.opts,
+    rsaBits: inputs.rsaBits,
+    subject: inputs.subject,
+    uris: inputs.uris,
+  });
+
+  return { outputs: { result } };
+}
+
+export async function installCert(inputs: Inputs): Promise<InvokeResult> {
+  const result = (inputs.__self__ as RootCa).installCert({
+    connection: inputs.connection,
+    name: inputs.name,
+    path: inputs.path,
+    opts: inputs.opts,
+  });
+
+  return { outputs: { result } };
+}
+
+export async function installKey(inputs: Inputs): Promise<InvokeResult> {
+  const result = (inputs.__self__ as RootCa).installCert({
+    connection: inputs.connection,
+    name: inputs.name,
+    path: inputs.path,
+    opts: inputs.opts,
+  });
+
+  return { outputs: { result } };
 }
 
 export async function construct(

@@ -13,6 +13,7 @@ from ._enums import *
 __all__ = [
     'CertRequestSubject',
     'Connection',
+    'ResourceOptions',
 ]
 
 @pulumi.input_type
@@ -28,6 +29,7 @@ class CertRequestSubject:
                  serial_number: Optional[str] = None,
                  street_addresses: Optional[Sequence[str]] = None):
         """
+        Polyfill for `tls.CertRequestSubject`.
         :param str common_name: Distinguished name: CN
         :param str country: Distinguished name: C
         :param str locality: Distinguished name: L
@@ -179,7 +181,7 @@ class Connection:
                  private_key_password: Optional[str] = None,
                  user: Optional[str] = None):
         """
-        Instructions for how to connect to a remote endpoint.
+        Instructions for how to connect to a remote endpoint. Polyfill for `command.ConnectionArgs`.
         :param str host: The address of the resource to connect to.
         :param str agent_socket_path: SSH Agent socket path. Default to environment variable SSH_AUTH_SOCK if present.
         :param int dial_error_limit: Max allowed errors on trying to dial the remote host. -1 set count to unlimited. Default value is 10.
@@ -323,5 +325,25 @@ class Connection:
     @user.setter
     def user(self, value: Optional[str]):
         pulumi.set(self, "user", value)
+
+
+@pulumi.input_type
+class ResourceOptions:
+    def __init__(__self__, *,
+                 parent: Optional[Any] = None):
+        """
+        Polyfill for `pulumi.ComponentResourceOptions`.
+        """
+        if parent is not None:
+            pulumi.set(__self__, "parent", parent)
+
+    @property
+    @pulumi.getter
+    def parent(self) -> Optional[Any]:
+        return pulumi.get(self, "parent")
+
+    @parent.setter
+    def parent(self, value: Optional[Any]):
+        pulumi.set(self, "parent", value)
 
 
