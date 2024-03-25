@@ -199,7 +199,7 @@ func (r *RootCa) NewCertificate(ctx *pulumi.Context, args *RootCaNewCertificateA
 
 type rootCaNewCertificateArgs struct {
 	// Name of the algorithm to use when generating the private key.
-	Algorithm   *Algorithm     `pulumi:"algorithm"`
+	Algorithm   Algorithm      `pulumi:"algorithm"`
 	AllowedUses []AllowedUsage `pulumi:"allowedUses"`
 	// List of DNS names for which a certificate is being requested.
 	DnsNames []string `pulumi:"dnsNames"`
@@ -210,7 +210,7 @@ type rootCaNewCertificateArgs struct {
 	// List of IP addresses for which a certificate is being requested.
 	IpAddresses     []string         `pulumi:"ipAddresses"`
 	IsCaCertificate *bool            `pulumi:"isCaCertificate"`
-	Name            *string          `pulumi:"name"`
+	Name            string           `pulumi:"name"`
 	Opts            *ResourceOptions `pulumi:"opts"`
 	// When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
 	RsaBits *int `pulumi:"rsaBits"`
@@ -228,7 +228,7 @@ type rootCaNewCertificateArgs struct {
 // The set of arguments for the NewCertificate method of the RootCa resource.
 type RootCaNewCertificateArgs struct {
 	// Name of the algorithm to use when generating the private key.
-	Algorithm   AlgorithmPtrInput
+	Algorithm   AlgorithmInput
 	AllowedUses AllowedUsageArrayInput
 	// List of DNS names for which a certificate is being requested.
 	DnsNames pulumi.StringArrayInput
@@ -239,7 +239,7 @@ type RootCaNewCertificateArgs struct {
 	// List of IP addresses for which a certificate is being requested.
 	IpAddresses     pulumi.StringArrayInput
 	IsCaCertificate pulumi.BoolPtrInput
-	Name            *string
+	Name            string
 	Opts            *ResourceOptionsArgs
 	// When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
 	RsaBits pulumi.IntPtrInput

@@ -231,7 +231,7 @@ export namespace RootCa {
         /**
          * Name of the algorithm to use when generating the private key.
          */
-        algorithm?: pulumi.Input<enums.Algorithm>;
+        algorithm: pulumi.Input<enums.Algorithm>;
         allowedUses: pulumi.Input<pulumi.Input<enums.AllowedUsage>[]>;
         /**
          * List of DNS names for which a certificate is being requested.
@@ -250,7 +250,7 @@ export namespace RootCa {
          */
         ipAddresses?: pulumi.Input<pulumi.Input<string>[]>;
         isCaCertificate?: pulumi.Input<boolean>;
-        name?: string;
+        name: string;
         opts?: inputs.ResourceOptionsArgs;
         /**
          * When `algorithm` is `RSA`, the size of the generated RSA key, in bits.

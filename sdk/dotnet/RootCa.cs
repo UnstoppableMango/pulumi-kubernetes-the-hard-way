@@ -261,8 +261,8 @@ namespace UnMango.KubernetesTheHardWay
         /// <summary>
         /// Name of the algorithm to use when generating the private key.
         /// </summary>
-        [Input("algorithm")]
-        public Input<UnMango.KubernetesTheHardWay.Algorithm>? Algorithm { get; set; }
+        [Input("algorithm", required: true)]
+        public Input<UnMango.KubernetesTheHardWay.Algorithm> Algorithm { get; set; } = null!;
 
         [Input("allowedUses", required: true)]
         private InputList<UnMango.KubernetesTheHardWay.AllowedUsage>? _allowedUses;
@@ -311,8 +311,8 @@ namespace UnMango.KubernetesTheHardWay
         [Input("isCaCertificate")]
         public Input<bool>? IsCaCertificate { get; set; }
 
-        [Input("name")]
-        public string? Name { get; set; }
+        [Input("name", required: true)]
+        public string Name { get; set; } = null!;
 
         [Input("opts")]
         public Inputs.ResourceOptionsArgs? Opts { get; set; }

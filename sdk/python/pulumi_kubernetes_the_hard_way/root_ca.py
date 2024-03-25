@@ -407,15 +407,15 @@ class RootCa(pulumi.ComponentResource):
             return pulumi.get(self, "result")
 
     def new_certificate(__self__, *,
+                        algorithm: pulumi.Input['Algorithm'],
                         allowed_uses: pulumi.Input[Sequence[pulumi.Input['AllowedUsage']]],
+                        name: str,
                         validity_period_hours: pulumi.Input[int],
-                        algorithm: Optional[pulumi.Input['Algorithm']] = None,
                         dns_names: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                         early_renewal_hours: Optional[pulumi.Input[int]] = None,
                         ecdsa_curve: Optional[pulumi.Input['EcdsaCurve']] = None,
                         ip_addresses: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                         is_ca_certificate: Optional[pulumi.Input[bool]] = None,
-                        name: Optional[str] = None,
                         opts: Optional['ResourceOptionsArgs'] = None,
                         rsa_bits: Optional[pulumi.Input[int]] = None,
                         set_authority_key_id: Optional[pulumi.Input[bool]] = None,
@@ -426,8 +426,8 @@ class RootCa(pulumi.ComponentResource):
         Creates a Certificate configured for the current authority.
 
 
-        :param pulumi.Input[int] validity_period_hours: Number of hours, after initial issuing, that the certificate will remain valid.
         :param pulumi.Input['Algorithm'] algorithm: Name of the algorithm to use when generating the private key.
+        :param pulumi.Input[int] validity_period_hours: Number of hours, after initial issuing, that the certificate will remain valid.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] dns_names: List of DNS names for which a certificate is being requested.
         :param pulumi.Input[int] early_renewal_hours: TODO
         :param pulumi.Input['EcdsaCurve'] ecdsa_curve: When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
@@ -439,15 +439,15 @@ class RootCa(pulumi.ComponentResource):
         """
         __args__ = dict()
         __args__['__self__'] = __self__
-        __args__['allowedUses'] = allowed_uses
-        __args__['validityPeriodHours'] = validity_period_hours
         __args__['algorithm'] = algorithm
+        __args__['allowedUses'] = allowed_uses
+        __args__['name'] = name
+        __args__['validityPeriodHours'] = validity_period_hours
         __args__['dnsNames'] = dns_names
         __args__['earlyRenewalHours'] = early_renewal_hours
         __args__['ecdsaCurve'] = ecdsa_curve
         __args__['ipAddresses'] = ip_addresses
         __args__['isCaCertificate'] = is_ca_certificate
-        __args__['name'] = name
         __args__['opts'] = opts
         __args__['rsaBits'] = rsa_bits
         __args__['setAuthorityKeyId'] = set_authority_key_id
