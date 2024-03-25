@@ -8,6 +8,15 @@ import * as utilities from "./utilities";
 export * from "./certificate";
 import { Certificate } from "./certificate";
 
+export { ClusterPkiArgs } from "./clusterPki";
+export type ClusterPki = import("./clusterPki").ClusterPki;
+export const ClusterPki: typeof import("./clusterPki").ClusterPki = null as any;
+utilities.lazyLoad(exports, ["ClusterPki"], () => require("./clusterPki"));
+
+export { InstallControlPlaneArgs } from "./installControlPlane";
+export const installControlPlane: typeof import("./installControlPlane").installControlPlane = null as any;
+utilities.lazyLoad(exports, ["installControlPlane"], () => require("./installControlPlane"));
+
 export { ProviderArgs } from "./provider";
 export type Provider = import("./provider").Provider;
 export const Provider: typeof import("./provider").Provider = null as any;
@@ -38,6 +47,8 @@ const _module = {
         switch (type) {
             case "kubernetes-the-hard-way:index:Certificate":
                 return new Certificate(name, <any>undefined, { urn })
+            case "kubernetes-the-hard-way:index:ClusterPki":
+                return new ClusterPki(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:index:RemoteFile":
                 return new RemoteFile(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:index:RootCa":

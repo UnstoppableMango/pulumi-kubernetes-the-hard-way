@@ -12,6 +12,7 @@ from ._enums import *
 
 __all__ = [
     'CertRequestSubject',
+    'ClusterPkiNodeArgs',
     'Connection',
     'ResourceOptions',
 ]
@@ -166,6 +167,42 @@ class CertRequestSubject:
     @street_addresses.setter
     def street_addresses(self, value: Optional[Sequence[str]]):
         pulumi.set(self, "street_addresses", value)
+
+
+@pulumi.input_type
+class ClusterPkiNodeArgs:
+    def __init__(__self__, *,
+                 ip: Optional[pulumi.Input[str]] = None,
+                 role: Optional[pulumi.Input['NodeRole']] = None):
+        """
+        Node inputs for the PKI.
+        :param pulumi.Input[str] ip: The IP address of the node.
+        """
+        if ip is not None:
+            pulumi.set(__self__, "ip", ip)
+        if role is not None:
+            pulumi.set(__self__, "role", role)
+
+    @property
+    @pulumi.getter
+    def ip(self) -> Optional[pulumi.Input[str]]:
+        """
+        The IP address of the node.
+        """
+        return pulumi.get(self, "ip")
+
+    @ip.setter
+    def ip(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "ip", value)
+
+    @property
+    @pulumi.getter
+    def role(self) -> Optional[pulumi.Input['NodeRole']]:
+        return pulumi.get(self, "role")
+
+    @role.setter
+    def role(self, value: Optional[pulumi.Input['NodeRole']]):
+        pulumi.set(self, "role", value)
 
 
 @pulumi.input_type

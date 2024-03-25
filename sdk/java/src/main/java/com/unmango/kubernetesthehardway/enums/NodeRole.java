@@ -13,17 +13,13 @@ import java.util.StringJoiner;
      * 
      */
     @EnumType
-    public enum AllowedUsage {
-        CertSigning("cert_signing"),
-        ClientAuth("client_auth"),
-        CrlSigning("crl_signing"),
-        DigitalSignature("digital_signature"),
-        KeyEncipherment("key_encipherment"),
-        ServerAuth("server_auth");
+    public enum NodeRole {
+        Controlplane("controlplane"),
+        Worker("worker");
 
         private final String value;
 
-        AllowedUsage(String value) {
+        NodeRole(String value) {
             this.value = Objects.requireNonNull(value);
         }
 
@@ -34,7 +30,7 @@ import java.util.StringJoiner;
 
         @Override
         public String toString() {
-            return new StringJoiner(", ", "AllowedUsage[", "]")
+            return new StringJoiner(", ", "NodeRole[", "]")
                 .add("value='" + this.value + "'")
                 .toString();
         }

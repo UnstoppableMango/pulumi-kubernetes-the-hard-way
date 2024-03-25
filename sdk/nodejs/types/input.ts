@@ -93,6 +93,17 @@ export interface CertRequestSubjectArgs {
 }
 
 /**
+ * Node inputs for the PKI.
+ */
+export interface ClusterPkiNodeArgs {
+    /**
+     * The IP address of the node.
+     */
+    ip?: pulumi.Input<string>;
+    role?: pulumi.Input<enums.NodeRole>;
+}
+
+/**
  * Instructions for how to connect to a remote endpoint. Polyfill for `command.ConnectionArgs`.
  */
 export interface Connection {

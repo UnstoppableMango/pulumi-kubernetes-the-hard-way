@@ -52,12 +52,12 @@ namespace UnMango.KubernetesTheHardWay
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        public static AllowedUsage Cert_signing { get; } = new AllowedUsage("cert_signing");
-        public static AllowedUsage Client_auth { get; } = new AllowedUsage("client_auth");
-        public static AllowedUsage Crl_signing { get; } = new AllowedUsage("crl_signing");
-        public static AllowedUsage Digital_signature { get; } = new AllowedUsage("digital_signature");
-        public static AllowedUsage Key_encipherment { get; } = new AllowedUsage("key_encipherment");
-        public static AllowedUsage Server_auth { get; } = new AllowedUsage("server_auth");
+        public static AllowedUsage CertSigning { get; } = new AllowedUsage("cert_signing");
+        public static AllowedUsage ClientAuth { get; } = new AllowedUsage("client_auth");
+        public static AllowedUsage CrlSigning { get; } = new AllowedUsage("crl_signing");
+        public static AllowedUsage DigitalSignature { get; } = new AllowedUsage("digital_signature");
+        public static AllowedUsage KeyEncipherment { get; } = new AllowedUsage("key_encipherment");
+        public static AllowedUsage ServerAuth { get; } = new AllowedUsage("server_auth");
 
         public static bool operator ==(AllowedUsage left, AllowedUsage right) => left.Equals(right);
         public static bool operator !=(AllowedUsage left, AllowedUsage right) => !left.Equals(right);
@@ -100,6 +100,37 @@ namespace UnMango.KubernetesTheHardWay
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object? obj) => obj is EcdsaCurve other && Equals(other);
         public bool Equals(EcdsaCurve other) => string.Equals(_value, other._value, StringComparison.Ordinal);
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+
+        public override string ToString() => _value;
+    }
+
+    /// <summary>
+    /// TODO
+    /// </summary>
+    [EnumType]
+    public readonly struct NodeRole : IEquatable<NodeRole>
+    {
+        private readonly string _value;
+
+        private NodeRole(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
+        public static NodeRole Controlplane { get; } = new NodeRole("controlplane");
+        public static NodeRole Worker { get; } = new NodeRole("worker");
+
+        public static bool operator ==(NodeRole left, NodeRole right) => left.Equals(right);
+        public static bool operator !=(NodeRole left, NodeRole right) => !left.Equals(right);
+
+        public static explicit operator string(NodeRole value) => value._value;
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object? obj) => obj is NodeRole other && Equals(other);
+        public bool Equals(NodeRole other) => string.Equals(_value, other._value, StringComparison.Ordinal);
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value?.GetHashCode() ?? 0;
