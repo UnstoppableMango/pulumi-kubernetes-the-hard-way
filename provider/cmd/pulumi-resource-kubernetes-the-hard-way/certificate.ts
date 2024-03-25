@@ -1,4 +1,4 @@
-import { ComponentResourceOptions, Input, Inputs, Output, log } from '@pulumi/pulumi';
+import { ComponentResourceOptions, Input, Inputs, Output } from '@pulumi/pulumi';
 import { ConstructResult } from '@pulumi/pulumi/provider';
 import { CertRequest, LocallySignedCert } from '@pulumi/tls';
 import { CertRequestSubject } from '@pulumi/tls/types/input';

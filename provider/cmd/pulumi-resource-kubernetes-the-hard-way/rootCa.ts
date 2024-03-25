@@ -7,6 +7,11 @@ import { Certificate, CertificateArgs } from './certificate';
 import { AllowedUsage } from './types';
 import { toAllowedUsage } from './util';
 
+export type NewCertificateArgs = Omit<CertificateArgs, 'caCertPem' | 'caPrivateKeyPem'> & {
+  name: string;
+  opts?: ComponentResourceOptions;
+};
+
 export interface RootCaArgs extends KeyPairArgs {
   subject?: Input<SelfSignedCertSubject>;
 }
@@ -56,17 +61,26 @@ export class RootCa extends KeyPair<SelfSignedCert> {
     });
   }
 
-  public newCertificate(
-    name: string,
-    args: Omit<CertificateArgs, 'caCertPem' | 'caPrivateKeyPem'>,
-    opts?: ComponentResourceOptions,
-  ): Certificate {
-    return new Certificate(name, {
-      ...args,
-      caCertPem: this.cert.certPem,
-      caPrivateKeyPem: this.key.privateKeyPem,
-    }, opts);
+  public newCertificate(args: NewCertificateArgs): Certificate {
+    return newCertificate(this, args);
   }
+}
+
+export function newCertificate(ca: RootCa, args: NewCertificateArgs): Certificate {
+  return new Certificate(args.name, {
+    algorithm: args.algorithm,
+    allowedUses: args.allowedUses,
+    validityPeriodHours: args.validityPeriodHours,
+    dnsNames: args.dnsNames,
+    ecdsaCurve: args.ecdsaCurve,
+    ipAddresses: args.ipAddresses,
+    isCaCertificate: args.isCaCertificate,
+    rsaBits: args.rsaBits,
+    subject: args.subject,
+    uris: args.uris,
+    caCertPem: ca.certPem,
+    caPrivateKeyPem: ca.privateKeyPem,
+  }, args.opts);
 }
 
 export async function construct(
