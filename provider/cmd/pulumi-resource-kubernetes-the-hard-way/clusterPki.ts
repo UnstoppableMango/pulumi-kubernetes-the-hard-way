@@ -31,7 +31,7 @@ export interface NodeArgs {
   role: Input<NodeRole>;
 }
 
-export interface ClusterPkiArgs<T extends NodeMapInput> {
+export interface ClusterPkiArgs<T extends NodeMapInput = NodeMapInput> {
   algorithm?: Input<Algorithm>;
   clusterName: Input<string>;
   nodes: T;

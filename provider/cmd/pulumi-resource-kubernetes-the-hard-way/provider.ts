@@ -7,7 +7,25 @@ import * as remoteFile from './remoteFile';
 import * as rootCa from './rootCa';
 
 export class Provider implements provider.Provider {
-  constructor(readonly version: string, readonly schema: string) { }
+  constructor(readonly version: string, readonly schema: string) {
+    pulumi.runtime.registerResourceModule('kubernetes-the-hard-way', 'index', {
+      version: version,
+      construct(name, type, urn) {
+        switch (type) {
+          case 'kubernetes-the-hard-way:index:Certificate':
+            return new cert.Certificate(name, {} as cert.CertificateArgs, { urn });
+          case 'kubernetes-the-hard-way:index:ClusterPki':
+            return new pki.ClusterPki(name, {} as pki.ClusterPkiArgs, { urn });
+          case 'kubernetes-the-hard-way:index:RemoteFile':
+            return new remoteFile.RemoteFile(name, {} as remoteFile.RemoteFileArgs, { urn });
+          case 'kubernetes-the-hard-way:index:RootCa':
+            return new rootCa.RootCa(name, {} as rootCa.RootCaArgs, { urn });
+          default:
+            throw new Error(`unknown resource type ${type}`);
+        }
+      },
+    })
+  }
 
   async construct(
     name: string,
