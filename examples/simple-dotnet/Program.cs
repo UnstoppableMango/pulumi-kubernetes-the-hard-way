@@ -17,9 +17,8 @@ return await Deployment.RunAsync(() =>
         CaPrivateKeyPem = ca.PrivateKeyPem,
     });
 
-    // Export outputs here
     return new Dictionary<string, object?>
     {
-        ["outputKey"] = "outputValue"
+        ["outputKey"] = cert.CertPem,
     };
 });

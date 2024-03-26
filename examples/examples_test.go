@@ -13,7 +13,7 @@ func getBaseOptions(t *testing.T) integration.ProgramTestOptions {
 		Bin: path.Join(getCwd(t), "..", ".pulumi", "bin", "pulumi"),
 		LocalProviders: []integration.LocalDependency{{
 			Package: "kubernetes-the-hard-way",
-			Path:    path.Join("..", "bin"),
+			Path:    path.Join(getCwd(t), "..", "bin"),
 		}},
 	}
 }
