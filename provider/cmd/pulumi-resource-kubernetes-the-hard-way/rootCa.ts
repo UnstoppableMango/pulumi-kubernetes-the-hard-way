@@ -9,7 +9,7 @@ import { toAllowedUsage } from './util';
 
 export type NewCertificateArgs = Omit<CertificateArgs, 'caCertPem' | 'caPrivateKeyPem'> & {
   name: string;
-  opts?: ComponentResourceOptions;
+  options?: ComponentResourceOptions;
 };
 
 export interface RootCaArgs extends KeyPairArgs {
@@ -75,7 +75,7 @@ export class RootCa extends KeyPair<SelfSignedCert> {
       uris: args.uris,
       caCertPem: this.certPem,
       caPrivateKeyPem: this.privateKeyPem,
-    }, args.opts);
+    }, args.options);
   }
 }
 
@@ -89,7 +89,7 @@ export async function newCertificate(inputs: Inputs): Promise<InvokeResult> {
     ecdsaCurve: inputs.ecdsaCurve,
     ipAddresses: inputs.ipAddresses,
     isCaCertificate: inputs.isCaCertificate,
-    opts: inputs.opts,
+    options: inputs.opts,
     rsaBits: inputs.rsaBits,
     subject: inputs.subject,
     uris: inputs.uris,
@@ -103,7 +103,7 @@ export async function installCert(inputs: Inputs): Promise<InvokeResult> {
     connection: inputs.connection,
     name: inputs.name,
     path: inputs.path,
-    opts: inputs.opts,
+    options: inputs.options,
   });
 
   return { outputs: { result } };
@@ -114,7 +114,7 @@ export async function installKey(inputs: Inputs): Promise<InvokeResult> {
     connection: inputs.connection,
     name: inputs.name,
     path: inputs.path,
-    opts: inputs.opts,
+    options: inputs.options,
   });
 
   return { outputs: { result } };

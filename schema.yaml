@@ -453,7 +453,7 @@ functions:
         name:
           type: string
           plain: true
-        opts:
+        options:
           $ref: "#/types/kubernetes-the-hard-way:index:ResourceOptions"
           plain: true
         path:
@@ -481,7 +481,7 @@ functions:
         name:
           type: string
           plain: true
-        opts:
+        options:
           $ref: "#/types/kubernetes-the-hard-way:index:ResourceOptions"
           plain: true
         path:
@@ -510,7 +510,7 @@ functions:
         name:
           type: string
           plain: true
-        opts:
+        options:
           $ref: "#/types/kubernetes-the-hard-way:index:ResourceOptions"
           plain: true
         path:
@@ -534,7 +534,7 @@ functions:
         connection:
           $ref: "#/types/kubernetes-the-hard-way:index:Connection"
           description: The connection details.
-        opts:
+        options:
           $ref: "#/types/kubernetes-the-hard-way:index:ResourceOptions"
           plain: true
         pki:
@@ -556,7 +556,7 @@ functions:
         name:
           type: string
           plain: true
-        opts:
+        options:
           $ref: "#/types/kubernetes-the-hard-way:index:ResourceOptions"
           plain: true
         path:
@@ -607,7 +607,7 @@ functions:
         name:
           type: string
           plain: true
-        opts:
+        options:
           $ref: "#/types/kubernetes-the-hard-way:index:ResourceOptions"
           plain: true
         rsaBits:
@@ -676,7 +676,7 @@ functions:
         name:
           type: string
           plain: true
-        opts:
+        options:
           $ref: "#/types/kubernetes-the-hard-way:index:ResourceOptions"
           plain: true
         rsaBits:
@@ -724,7 +724,7 @@ functions:
         name:
           type: string
           plain: true
-        opts:
+        options:
           $ref: "#/types/kubernetes-the-hard-way:index:ResourceOptions"
           plain: true
         path:
@@ -752,7 +752,7 @@ functions:
         name:
           type: string
           plain: true
-        opts:
+        options:
           $ref: "#/types/kubernetes-the-hard-way:index:ResourceOptions"
           plain: true
         path:

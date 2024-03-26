@@ -3,7 +3,6 @@ import { ConstructResult, InvokeResult } from '@pulumi/pulumi/provider';
 import { CertRequest, LocallySignedCert } from '@pulumi/tls';
 import { CertRequestSubject } from '@pulumi/tls/types/input';
 import { KeyPair, KeyPairArgs } from './keypair';
-import { RemoteFile } from './remoteFile';
 import { AllowedUsage } from './types';
 import { toAllowedUsage } from './util';
 
@@ -65,7 +64,7 @@ export async function installCert(inputs: Inputs): Promise<InvokeResult> {
     connection: inputs.connection,
     name: inputs.name,
     path: inputs.path,
-    opts: inputs.opts,
+    options: inputs.options,
   });
 
   return { outputs: { result } };
@@ -76,7 +75,7 @@ export async function installKey(inputs: Inputs): Promise<InvokeResult> {
     connection: inputs.connection,
     name: inputs.name,
     path: inputs.path,
-    opts: inputs.opts,
+    options: inputs.options,
   });
 
   return { outputs: { result } };
