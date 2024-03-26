@@ -1,4 +1,4 @@
-import { ComponentResourceOptions, Input, Inputs, Output, output } from '@pulumi/pulumi';
+import { ComponentResourceOptions, Input, Inputs, Output, log, output } from '@pulumi/pulumi';
 import { ConstructResult, InvokeResult } from '@pulumi/pulumi/provider';
 import { SelfSignedCert } from '@pulumi/tls';
 import { SelfSignedCertSubject } from '@pulumi/tls/types/input';
@@ -66,7 +66,8 @@ export class RootCa extends KeyPair<SelfSignedCert> {
   }
 }
 
-export function newCertificate(ca: RootCa, args: NewCertificateArgs): Certificate {
+export function newCertificate(ca: Input<RootCa>, args: NewCertificateArgs): Certificate {
+  const self = output(ca);
   return new Certificate(args.name, {
     algorithm: args.algorithm,
     allowedUses: args.allowedUses,
@@ -78,8 +79,8 @@ export function newCertificate(ca: RootCa, args: NewCertificateArgs): Certificat
     rsaBits: args.rsaBits,
     subject: args.subject,
     uris: args.uris,
-    caCertPem: ca.certPem,
-    caPrivateKeyPem: ca.privateKeyPem,
+    caCertPem: self.certPem,
+    caPrivateKeyPem: self.privateKeyPem,
   }, args.options);
 }
 
