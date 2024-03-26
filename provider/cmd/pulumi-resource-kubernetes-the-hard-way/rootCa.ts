@@ -2,9 +2,8 @@ import { ComponentResourceOptions, Input, Inputs, Output, output } from '@pulumi
 import { ConstructResult, InvokeResult } from '@pulumi/pulumi/provider';
 import { SelfSignedCert } from '@pulumi/tls';
 import { SelfSignedCertSubject } from '@pulumi/tls/types/input';
-import { KeyPair, KeyPairArgs, installCert, installKey } from './keypair';
+import { KeyPair, KeyPairArgs } from './keypair';
 import { Certificate, CertificateArgs } from './certificate';
-import { InstallArgs } from './remoteFile';
 import { AllowedUsage } from './types';
 import { toAllowedUsage } from './util';
 
@@ -91,16 +90,6 @@ export async function callNewCertificateInstance(inputs: Inputs): Promise<Invoke
 
 export async function callNewCertificateStatic(inputs: Inputs): Promise<InvokeResult> {
   const result = newCertificate(inputs.ca, inputs as NewCertificateArgs);
-  return { outputs: { result } };
-}
-
-export async function callInstallCertStatic(inputs: Inputs): Promise<InvokeResult> {
-  const result = installCert(inputs.ca, inputs as InstallArgs);
-  return { outputs: { result } };
-}
-
-export async function callInstallKeyStatic(inputs: Inputs): Promise<InvokeResult> {
-  const result = installKey(inputs.ca, inputs as InstallArgs);
   return { outputs: { result } };
 }
 

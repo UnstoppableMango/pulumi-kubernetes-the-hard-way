@@ -1,5 +1,5 @@
 import { ComponentResourceOptions, Input, Inputs, Output } from '@pulumi/pulumi';
-import { ConstructResult, InvokeResult } from '@pulumi/pulumi/provider';
+import { ConstructResult } from '@pulumi/pulumi/provider';
 import { CertRequest, LocallySignedCert } from '@pulumi/tls';
 import { CertRequestSubject } from '@pulumi/tls/types/input';
 import { KeyPair, KeyPairArgs } from './keypair';
@@ -57,28 +57,6 @@ export class Certificate extends KeyPair<LocallySignedCert> {
       publicKeyPem: key.publicKeyPem,
     });
   }
-}
-
-export async function installCert(inputs: Inputs): Promise<InvokeResult> {
-  const result = (inputs.__self__ as Certificate).installCert({
-    connection: inputs.connection,
-    name: inputs.name,
-    path: inputs.path,
-    options: inputs.options,
-  });
-
-  return { outputs: { result } };
-}
-
-export async function installKey(inputs: Inputs): Promise<InvokeResult> {
-  const result = (inputs.__self__ as Certificate).installCert({
-    connection: inputs.connection,
-    name: inputs.name,
-    path: inputs.path,
-    options: inputs.options,
-  });
-
-  return { outputs: { result } };
 }
 
 export async function construct(

@@ -56,7 +56,17 @@ export async function callInstallCertInstance(inputs: Inputs): Promise<InvokeRes
   return { outputs: { result } };
 }
 
+export async function callInstallCertStatic(inputs: Inputs): Promise<InvokeResult> {
+  const result = installCert(inputs.keypair, inputs as InstallArgs);
+  return { outputs: { result } };
+}
+
 export async function callInstallKeyInstance(inputs: Inputs): Promise<InvokeResult> {
   const result = installKey(inputs.__self__, inputs as InstallArgs);
+  return { outputs: { result } };
+}
+
+export async function callInstallKeyStatic(inputs: Inputs): Promise<InvokeResult> {
+  const result = installCert(inputs.keypair, inputs as InstallArgs);
   return { outputs: { result } };
 }
