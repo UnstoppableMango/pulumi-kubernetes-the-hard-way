@@ -517,8 +517,8 @@ functions:
     description: Creates a RemoteFile resource representing the copy operation.
     inputs:
       properties:
-        cert:
-          $ref: "#/resources/kubernetes-the-hard-way:index:Certificate"
+        keypair:
+          $ref: "#/types/kubernetes-the-hard-way:index:KeyPair"
           description: The certificate to install at the remote location.
         connection:
           $ref: "#/types/kubernetes-the-hard-way:index:Connection"
@@ -533,7 +533,7 @@ functions:
           type: string
           description: The path to install to.
       required:
-        - cert
+        - keypair
         - connection
         - name
     outputs:
@@ -563,8 +563,8 @@ functions:
     description: Creates a RemoteFile resource representing the copy operation.
     inputs:
       properties:
-        cert:
-          $ref: "#/resources/kubernetes-the-hard-way:index:Certificate"
+        keypair:
+          $ref: "#/types/kubernetes-the-hard-way:index:KeyPair"
           description: The certificate to install.
         connection:
           $ref: "#/types/kubernetes-the-hard-way:index:Connection"
@@ -579,7 +579,7 @@ functions:
           type: string
           description: The path to install to.
       required:
-        - cert
+        - keypair
         - connection
         - name
     outputs:
