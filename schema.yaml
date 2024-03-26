@@ -428,6 +428,22 @@ types:
       - value: P256
       - value: P384
       - value: P521
+  kubernetes-the-hard-way:index:KeyPair:
+    description: A certificate and key pair.
+    type: object
+    properties:
+      certPem:
+        type: string
+        description: The PEM encoded certificate data
+      key:
+        $ref: "/tls/v5.0.0/schema.json#/resources/tls:index/privateKey:PrivateKey"
+        description: The private key.
+      privateKeyPem:
+        type: string
+        description: The PEM encoded private key data.
+      publicKeyPem:
+        type: string
+        description: The PEM encoded public key data.
   kubernetes-the-hard-way:index:NodeRole:
     description: TODO
     type: string
