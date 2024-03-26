@@ -343,7 +343,7 @@ class RootCa(pulumi.ComponentResource):
     def install_cert(__self__, *,
                      connection: pulumi.Input['ConnectionArgs'],
                      name: str,
-                     opts: Optional['ResourceOptionsArgs'] = None,
+                     options: Optional['ResourceOptionsArgs'] = None,
                      path: Optional[pulumi.Input[str]] = None) -> pulumi.Output['RemoteFile']:
         """
         Creates a RemoteFile resource representing the copy operation.
@@ -356,7 +356,7 @@ class RootCa(pulumi.ComponentResource):
         __args__['__self__'] = __self__
         __args__['connection'] = connection
         __args__['name'] = name
-        __args__['opts'] = opts
+        __args__['options'] = options
         __args__['path'] = path
         __result__ = pulumi.runtime.call('kubernetes-the-hard-way:index:RootCa/installCert', __args__, res=__self__, typ=RootCa.InstallCertResult)
         return __result__.result
@@ -376,7 +376,7 @@ class RootCa(pulumi.ComponentResource):
     def install_key(__self__, *,
                     connection: pulumi.Input['ConnectionArgs'],
                     name: str,
-                    opts: Optional['ResourceOptionsArgs'] = None,
+                    options: Optional['ResourceOptionsArgs'] = None,
                     path: Optional[pulumi.Input[str]] = None) -> pulumi.Output['RemoteFile']:
         """
         Creates a RemoteFile resource representing the copy operation.
@@ -389,7 +389,7 @@ class RootCa(pulumi.ComponentResource):
         __args__['__self__'] = __self__
         __args__['connection'] = connection
         __args__['name'] = name
-        __args__['opts'] = opts
+        __args__['options'] = options
         __args__['path'] = path
         __result__ = pulumi.runtime.call('kubernetes-the-hard-way:index:RootCa/installKey', __args__, res=__self__, typ=RootCa.InstallKeyResult)
         return __result__.result
@@ -404,6 +404,9 @@ class RootCa(pulumi.ComponentResource):
         @property
         @pulumi.getter
         def result(self) -> 'Certificate':
+            """
+            The issued certificate.
+            """
             return pulumi.get(self, "result")
 
     def new_certificate(__self__, *,
@@ -416,7 +419,7 @@ class RootCa(pulumi.ComponentResource):
                         ecdsa_curve: Optional[pulumi.Input['EcdsaCurve']] = None,
                         ip_addresses: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                         is_ca_certificate: Optional[pulumi.Input[bool]] = None,
-                        opts: Optional['ResourceOptionsArgs'] = None,
+                        options: Optional['ResourceOptionsArgs'] = None,
                         rsa_bits: Optional[pulumi.Input[int]] = None,
                         set_authority_key_id: Optional[pulumi.Input[bool]] = None,
                         set_subject_key_id: Optional[pulumi.Input[bool]] = None,
@@ -448,7 +451,7 @@ class RootCa(pulumi.ComponentResource):
         __args__['ecdsaCurve'] = ecdsa_curve
         __args__['ipAddresses'] = ip_addresses
         __args__['isCaCertificate'] = is_ca_certificate
-        __args__['opts'] = opts
+        __args__['options'] = options
         __args__['rsaBits'] = rsa_bits
         __args__['setAuthorityKeyId'] = set_authority_key_id
         __args__['setSubjectKeyId'] = set_subject_key_id

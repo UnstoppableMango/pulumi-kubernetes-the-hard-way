@@ -6,6 +6,7 @@ import * as inputs from "../types/input";
 import * as outputs from "../types/output";
 import * as enums from "../types/enums";
 
+import * as pulumiTls from "@pulumi/tls";
 import * as utilities from "../utilities";
 
 /**
@@ -90,6 +91,17 @@ export interface CertRequestSubjectArgs {
      * Distinguished name: STREET
      */
     streetAddresses?: pulumi.Input<pulumi.Input<string>[]>;
+}
+
+/**
+ * Node inputs for the PKI.
+ */
+export interface ClusterPkiNodeArgs {
+    /**
+     * The IP address of the node.
+     */
+    ip?: pulumi.Input<string>;
+    role?: pulumi.Input<enums.NodeRole>;
 }
 
 /**
@@ -198,6 +210,50 @@ export function connectionArgsProvideDefaults(val: ConnectionArgs): ConnectionAr
         port: (val.port) ?? 22,
         user: (val.user) ?? "root",
     };
+}
+
+/**
+ * A certificate and key pair.
+ */
+export interface KeyPair {
+    /**
+     * The PEM encoded certificate data
+     */
+    certPem?: string;
+    /**
+     * The private key.
+     */
+    key?: pulumiTls.PrivateKey;
+    /**
+     * The PEM encoded private key data.
+     */
+    privateKeyPem?: string;
+    /**
+     * The PEM encoded public key data.
+     */
+    publicKeyPem?: string;
+}
+
+/**
+ * A certificate and key pair.
+ */
+export interface KeyPairArgs {
+    /**
+     * The PEM encoded certificate data
+     */
+    certPem?: pulumi.Input<string>;
+    /**
+     * The private key.
+     */
+    key?: pulumi.Input<pulumiTls.PrivateKey>;
+    /**
+     * The PEM encoded private key data.
+     */
+    privateKeyPem?: pulumi.Input<string>;
+    /**
+     * The PEM encoded public key data.
+     */
+    publicKeyPem?: pulumi.Input<string>;
 }
 
 /**

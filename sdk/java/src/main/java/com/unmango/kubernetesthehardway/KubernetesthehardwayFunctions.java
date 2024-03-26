@@ -3,7 +3,136 @@
 
 package com.unmango.kubernetesthehardway;
 
-
+import com.pulumi.core.Output;
+import com.pulumi.core.TypeShape;
+import com.pulumi.deployment.Deployment;
+import com.pulumi.deployment.InvokeOptions;
+import com.unmango.kubernetesthehardway.Utilities;
+import com.unmango.kubernetesthehardway.inputs.InstallCertArgs;
+import com.unmango.kubernetesthehardway.inputs.InstallCertPlainArgs;
+import com.unmango.kubernetesthehardway.inputs.InstallControlPlaneArgs;
+import com.unmango.kubernetesthehardway.inputs.InstallControlPlanePlainArgs;
+import com.unmango.kubernetesthehardway.inputs.InstallKeyArgs;
+import com.unmango.kubernetesthehardway.inputs.InstallKeyPlainArgs;
+import com.unmango.kubernetesthehardway.inputs.NewCertificateArgs;
+import com.unmango.kubernetesthehardway.inputs.NewCertificatePlainArgs;
+import com.unmango.kubernetesthehardway.outputs.InstallCertResult;
+import com.unmango.kubernetesthehardway.outputs.InstallKeyResult;
+import com.unmango.kubernetesthehardway.outputs.NewCertificateResult;
+import java.lang.Void;
+import java.util.concurrent.CompletableFuture;
 
 public final class KubernetesthehardwayFunctions {
+    /**
+     * Creates a RemoteFile resource representing the copy operation.
+     * 
+     */
+    public static Output<InstallCertResult> installCert(InstallCertArgs args) {
+        return installCert(args, InvokeOptions.Empty);
+    }
+    /**
+     * Creates a RemoteFile resource representing the copy operation.
+     * 
+     */
+    public static CompletableFuture<InstallCertResult> installCertPlain(InstallCertPlainArgs args) {
+        return installCertPlain(args, InvokeOptions.Empty);
+    }
+    /**
+     * Creates a RemoteFile resource representing the copy operation.
+     * 
+     */
+    public static Output<InstallCertResult> installCert(InstallCertArgs args, InvokeOptions options) {
+        return Deployment.getInstance().invoke("kubernetes-the-hard-way:index:installCert", TypeShape.of(InstallCertResult.class), args, Utilities.withVersion(options));
+    }
+    /**
+     * Creates a RemoteFile resource representing the copy operation.
+     * 
+     */
+    public static CompletableFuture<InstallCertResult> installCertPlain(InstallCertPlainArgs args, InvokeOptions options) {
+        return Deployment.getInstance().invokeAsync("kubernetes-the-hard-way:index:installCert", TypeShape.of(InstallCertResult.class), args, Utilities.withVersion(options));
+    }
+    /**
+     * Install PKI onto a controlplane node.
+     * 
+     */
+    public static Output<Void> installControlPlane(InstallControlPlaneArgs args) {
+        return installControlPlane(args, InvokeOptions.Empty);
+    }
+    /**
+     * Install PKI onto a controlplane node.
+     * 
+     */
+    public static CompletableFuture<Void> installControlPlanePlain(InstallControlPlanePlainArgs args) {
+        return installControlPlanePlain(args, InvokeOptions.Empty);
+    }
+    /**
+     * Install PKI onto a controlplane node.
+     * 
+     */
+    public static Output<Void> installControlPlane(InstallControlPlaneArgs args, InvokeOptions options) {
+        return Deployment.getInstance().invoke("kubernetes-the-hard-way:index:installControlPlane", TypeShape.of(Void.class), args, Utilities.withVersion(options));
+    }
+    /**
+     * Install PKI onto a controlplane node.
+     * 
+     */
+    public static CompletableFuture<Void> installControlPlanePlain(InstallControlPlanePlainArgs args, InvokeOptions options) {
+        return Deployment.getInstance().invokeAsync("kubernetes-the-hard-way:index:installControlPlane", TypeShape.of(Void.class), args, Utilities.withVersion(options));
+    }
+    /**
+     * Creates a RemoteFile resource representing the copy operation.
+     * 
+     */
+    public static Output<InstallKeyResult> installKey(InstallKeyArgs args) {
+        return installKey(args, InvokeOptions.Empty);
+    }
+    /**
+     * Creates a RemoteFile resource representing the copy operation.
+     * 
+     */
+    public static CompletableFuture<InstallKeyResult> installKeyPlain(InstallKeyPlainArgs args) {
+        return installKeyPlain(args, InvokeOptions.Empty);
+    }
+    /**
+     * Creates a RemoteFile resource representing the copy operation.
+     * 
+     */
+    public static Output<InstallKeyResult> installKey(InstallKeyArgs args, InvokeOptions options) {
+        return Deployment.getInstance().invoke("kubernetes-the-hard-way:index:installKey", TypeShape.of(InstallKeyResult.class), args, Utilities.withVersion(options));
+    }
+    /**
+     * Creates a RemoteFile resource representing the copy operation.
+     * 
+     */
+    public static CompletableFuture<InstallKeyResult> installKeyPlain(InstallKeyPlainArgs args, InvokeOptions options) {
+        return Deployment.getInstance().invokeAsync("kubernetes-the-hard-way:index:installKey", TypeShape.of(InstallKeyResult.class), args, Utilities.withVersion(options));
+    }
+    /**
+     * Creates a Certificate configured for the current authority.
+     * 
+     */
+    public static Output<NewCertificateResult> newCertificate(NewCertificateArgs args) {
+        return newCertificate(args, InvokeOptions.Empty);
+    }
+    /**
+     * Creates a Certificate configured for the current authority.
+     * 
+     */
+    public static CompletableFuture<NewCertificateResult> newCertificatePlain(NewCertificatePlainArgs args) {
+        return newCertificatePlain(args, InvokeOptions.Empty);
+    }
+    /**
+     * Creates a Certificate configured for the current authority.
+     * 
+     */
+    public static Output<NewCertificateResult> newCertificate(NewCertificateArgs args, InvokeOptions options) {
+        return Deployment.getInstance().invoke("kubernetes-the-hard-way:index:newCertificate", TypeShape.of(NewCertificateResult.class), args, Utilities.withVersion(options));
+    }
+    /**
+     * Creates a Certificate configured for the current authority.
+     * 
+     */
+    public static CompletableFuture<NewCertificateResult> newCertificatePlain(NewCertificatePlainArgs args, InvokeOptions options) {
+        return Deployment.getInstance().invokeAsync("kubernetes-the-hard-way:index:newCertificate", TypeShape.of(NewCertificateResult.class), args, Utilities.withVersion(options));
+    }
 }

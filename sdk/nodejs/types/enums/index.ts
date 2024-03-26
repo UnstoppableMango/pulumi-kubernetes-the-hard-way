@@ -14,12 +14,12 @@ export const Algorithm = {
 export type Algorithm = (typeof Algorithm)[keyof typeof Algorithm];
 
 export const AllowedUsage = {
-    Cert_signing: "cert_signing",
-    Client_auth: "client_auth",
-    Crl_signing: "crl_signing",
-    Digital_signature: "digital_signature",
-    Key_encipherment: "key_encipherment",
-    Server_auth: "server_auth",
+    CertSigning: "cert_signing",
+    ClientAuth: "client_auth",
+    CrlSigning: "crl_signing",
+    DigitalSignature: "digital_signature",
+    KeyEncipherment: "key_encipherment",
+    ServerAuth: "server_auth",
 } as const;
 
 /**
@@ -38,3 +38,13 @@ export const EcdsaCurve = {
  * TODO
  */
 export type EcdsaCurve = (typeof EcdsaCurve)[keyof typeof EcdsaCurve];
+
+export const NodeRole = {
+    Controlplane: "controlplane",
+    Worker: "worker",
+} as const;
+
+/**
+ * TODO
+ */
+export type NodeRole = (typeof NodeRole)[keyof typeof NodeRole];

@@ -109,7 +109,7 @@ type rootCaInstallCertArgs struct {
 	// The connection details.
 	Connection Connection       `pulumi:"connection"`
 	Name       string           `pulumi:"name"`
-	Opts       *ResourceOptions `pulumi:"opts"`
+	Options    *ResourceOptions `pulumi:"options"`
 	// The path to install to.
 	Path *string `pulumi:"path"`
 }
@@ -119,7 +119,7 @@ type RootCaInstallCertArgs struct {
 	// The connection details.
 	Connection ConnectionInput
 	Name       string
-	Opts       *ResourceOptionsArgs
+	Options    *ResourceOptionsArgs
 	// The path to install to.
 	Path pulumi.StringPtrInput
 }
@@ -155,7 +155,7 @@ type rootCaInstallKeyArgs struct {
 	// The connection details.
 	Connection Connection       `pulumi:"connection"`
 	Name       string           `pulumi:"name"`
-	Opts       *ResourceOptions `pulumi:"opts"`
+	Options    *ResourceOptions `pulumi:"options"`
 	// The path to install to.
 	Path *string `pulumi:"path"`
 }
@@ -165,7 +165,7 @@ type RootCaInstallKeyArgs struct {
 	// The connection details.
 	Connection ConnectionInput
 	Name       string
-	Opts       *ResourceOptionsArgs
+	Options    *ResourceOptionsArgs
 	// The path to install to.
 	Path pulumi.StringPtrInput
 }
@@ -211,7 +211,7 @@ type rootCaNewCertificateArgs struct {
 	IpAddresses     []string         `pulumi:"ipAddresses"`
 	IsCaCertificate *bool            `pulumi:"isCaCertificate"`
 	Name            string           `pulumi:"name"`
-	Opts            *ResourceOptions `pulumi:"opts"`
+	Options         *ResourceOptions `pulumi:"options"`
 	// When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
 	RsaBits *int `pulumi:"rsaBits"`
 	// Should the generated certificate include an authority key identifier.
@@ -240,7 +240,7 @@ type RootCaNewCertificateArgs struct {
 	IpAddresses     pulumi.StringArrayInput
 	IsCaCertificate pulumi.BoolPtrInput
 	Name            string
-	Opts            *ResourceOptionsArgs
+	Options         *ResourceOptionsArgs
 	// When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
 	RsaBits pulumi.IntPtrInput
 	// Should the generated certificate include an authority key identifier.
@@ -259,6 +259,7 @@ func (RootCaNewCertificateArgs) ElementType() reflect.Type {
 }
 
 type rootCaNewCertificateResult struct {
+	// The issued certificate.
 	Result *Certificate `pulumi:"result"`
 }
 
@@ -268,6 +269,7 @@ func (rootCaNewCertificateResultOutput) ElementType() reflect.Type {
 	return reflect.TypeOf((*rootCaNewCertificateResult)(nil)).Elem()
 }
 
+// The issued certificate.
 func (o rootCaNewCertificateResultOutput) Result() CertificateOutput {
 	return o.ApplyT(func(v rootCaNewCertificateResult) *Certificate { return v.Result }).(CertificateOutput)
 }

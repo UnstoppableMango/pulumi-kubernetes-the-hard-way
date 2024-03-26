@@ -406,7 +406,7 @@ class Certificate(pulumi.ComponentResource):
     def install_cert(__self__, *,
                      connection: pulumi.Input['ConnectionArgs'],
                      name: str,
-                     opts: Optional['ResourceOptionsArgs'] = None,
+                     options: Optional['ResourceOptionsArgs'] = None,
                      path: Optional[pulumi.Input[str]] = None) -> pulumi.Output['RemoteFile']:
         """
         Creates a RemoteFile resource representing the copy operation.
@@ -419,7 +419,7 @@ class Certificate(pulumi.ComponentResource):
         __args__['__self__'] = __self__
         __args__['connection'] = connection
         __args__['name'] = name
-        __args__['opts'] = opts
+        __args__['options'] = options
         __args__['path'] = path
         __result__ = pulumi.runtime.call('kubernetes-the-hard-way:index:Certificate/installCert', __args__, res=__self__, typ=Certificate.InstallCertResult)
         return __result__.result
@@ -439,7 +439,7 @@ class Certificate(pulumi.ComponentResource):
     def install_key(__self__, *,
                     connection: pulumi.Input['ConnectionArgs'],
                     name: str,
-                    opts: Optional['ResourceOptionsArgs'] = None,
+                    options: Optional['ResourceOptionsArgs'] = None,
                     path: Optional[pulumi.Input[str]] = None) -> pulumi.Output['RemoteFile']:
         """
         Creates a RemoteFile resource representing the copy operation.
@@ -452,7 +452,7 @@ class Certificate(pulumi.ComponentResource):
         __args__['__self__'] = __self__
         __args__['connection'] = connection
         __args__['name'] = name
-        __args__['opts'] = opts
+        __args__['options'] = options
         __args__['path'] = path
         __result__ = pulumi.runtime.call('kubernetes-the-hard-way:index:Certificate/installKey', __args__, res=__self__, typ=Certificate.InstallKeyResult)
         return __result__.result

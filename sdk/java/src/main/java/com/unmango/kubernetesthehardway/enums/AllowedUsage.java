@@ -14,12 +14,12 @@ import java.util.StringJoiner;
      */
     @EnumType
     public enum AllowedUsage {
-        Cert_signing("cert_signing"),
-        Client_auth("client_auth"),
-        Crl_signing("crl_signing"),
-        Digital_signature("digital_signature"),
-        Key_encipherment("key_encipherment"),
-        Server_auth("server_auth");
+        CertSigning("cert_signing"),
+        ClientAuth("client_auth"),
+        CrlSigning("crl_signing"),
+        DigitalSignature("digital_signature"),
+        KeyEncipherment("key_encipherment"),
+        ServerAuth("server_auth");
 
         private final String value;
 

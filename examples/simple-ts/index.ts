@@ -8,7 +8,7 @@ const ca = new kthw.RootCa('simple', {
 const cert = new kthw.Certificate('simple', {
     algorithm: 'RSA',
     allowedUses: [
-        kthw.AllowedUsage.Cert_signing,
+        kthw.AllowedUsage.CertSigning,
     ],
     validityPeriodHours: 256,
     caCertPem: ca.certPem,

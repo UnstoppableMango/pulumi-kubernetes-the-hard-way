@@ -129,7 +129,7 @@ type certificateInstallCertArgs struct {
 	// The connection details.
 	Connection Connection       `pulumi:"connection"`
 	Name       string           `pulumi:"name"`
-	Opts       *ResourceOptions `pulumi:"opts"`
+	Options    *ResourceOptions `pulumi:"options"`
 	// The path to install to.
 	Path *string `pulumi:"path"`
 }
@@ -139,7 +139,7 @@ type CertificateInstallCertArgs struct {
 	// The connection details.
 	Connection ConnectionInput
 	Name       string
-	Opts       *ResourceOptionsArgs
+	Options    *ResourceOptionsArgs
 	// The path to install to.
 	Path pulumi.StringPtrInput
 }
@@ -175,7 +175,7 @@ type certificateInstallKeyArgs struct {
 	// The connection details.
 	Connection Connection       `pulumi:"connection"`
 	Name       string           `pulumi:"name"`
-	Opts       *ResourceOptions `pulumi:"opts"`
+	Options    *ResourceOptions `pulumi:"options"`
 	// The path to install to.
 	Path *string `pulumi:"path"`
 }
@@ -185,7 +185,7 @@ type CertificateInstallKeyArgs struct {
 	// The connection details.
 	Connection ConnectionInput
 	Name       string
-	Opts       *ResourceOptionsArgs
+	Options    *ResourceOptionsArgs
 	// The path to install to.
 	Path pulumi.StringPtrInput
 }

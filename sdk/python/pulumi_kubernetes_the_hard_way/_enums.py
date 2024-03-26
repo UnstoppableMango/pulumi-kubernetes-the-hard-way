@@ -8,6 +8,7 @@ __all__ = [
     'Algorithm',
     'AllowedUsage',
     'EcdsaCurve',
+    'NodeRole',
 ]
 
 
@@ -40,3 +41,11 @@ class EcdsaCurve(str, Enum):
     P256 = "P256"
     P384 = "P384"
     P521 = "P521"
+
+
+class NodeRole(str, Enum):
+    """
+    TODO
+    """
+    CONTROLPLANE = "controlplane"
+    WORKER = "worker"

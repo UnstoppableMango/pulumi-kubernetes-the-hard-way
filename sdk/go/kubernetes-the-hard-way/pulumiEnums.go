@@ -182,12 +182,12 @@ func (in *algorithmPtr) ToAlgorithmPtrOutputWithContext(ctx context.Context) Alg
 type AllowedUsage string
 
 const (
-	AllowedUsage_Cert_signing      = AllowedUsage("cert_signing")
-	AllowedUsage_Client_auth       = AllowedUsage("client_auth")
-	AllowedUsage_Crl_signing       = AllowedUsage("crl_signing")
-	AllowedUsage_Digital_signature = AllowedUsage("digital_signature")
-	AllowedUsage_Key_encipherment  = AllowedUsage("key_encipherment")
-	AllowedUsage_Server_auth       = AllowedUsage("server_auth")
+	AllowedUsageCertSigning      = AllowedUsage("cert_signing")
+	AllowedUsageClientAuth       = AllowedUsage("client_auth")
+	AllowedUsageCrlSigning       = AllowedUsage("crl_signing")
+	AllowedUsageDigitalSignature = AllowedUsage("digital_signature")
+	AllowedUsageKeyEncipherment  = AllowedUsage("key_encipherment")
+	AllowedUsageServerAuth       = AllowedUsage("server_auth")
 )
 
 func (AllowedUsage) ElementType() reflect.Type {
@@ -312,12 +312,12 @@ func (o AllowedUsagePtrOutput) ToStringPtrOutputWithContext(ctx context.Context)
 // AllowedUsageInput is an input type that accepts values of the AllowedUsage enum
 // A concrete instance of `AllowedUsageInput` can be one of the following:
 //
-//	AllowedUsage_Cert_signing
-//	AllowedUsage_Client_auth
-//	AllowedUsage_Crl_signing
-//	AllowedUsage_Digital_signature
-//	AllowedUsage_Key_encipherment
-//	AllowedUsage_Server_auth
+//	AllowedUsageCertSigning
+//	AllowedUsageClientAuth
+//	AllowedUsageCrlSigning
+//	AllowedUsageDigitalSignature
+//	AllowedUsageKeyEncipherment
+//	AllowedUsageServerAuth
 type AllowedUsageInput interface {
 	pulumi.Input
 
@@ -567,6 +567,172 @@ func (in *ecdsaCurvePtr) ToEcdsaCurvePtrOutputWithContext(ctx context.Context) E
 	return pulumi.ToOutputWithContext(ctx, in).(EcdsaCurvePtrOutput)
 }
 
+// TODO
+type NodeRole string
+
+const (
+	NodeRoleControlplane = NodeRole("controlplane")
+	NodeRoleWorker       = NodeRole("worker")
+)
+
+func (NodeRole) ElementType() reflect.Type {
+	return reflect.TypeOf((*NodeRole)(nil)).Elem()
+}
+
+func (e NodeRole) ToNodeRoleOutput() NodeRoleOutput {
+	return pulumi.ToOutput(e).(NodeRoleOutput)
+}
+
+func (e NodeRole) ToNodeRoleOutputWithContext(ctx context.Context) NodeRoleOutput {
+	return pulumi.ToOutputWithContext(ctx, e).(NodeRoleOutput)
+}
+
+func (e NodeRole) ToNodeRolePtrOutput() NodeRolePtrOutput {
+	return e.ToNodeRolePtrOutputWithContext(context.Background())
+}
+
+func (e NodeRole) ToNodeRolePtrOutputWithContext(ctx context.Context) NodeRolePtrOutput {
+	return NodeRole(e).ToNodeRoleOutputWithContext(ctx).ToNodeRolePtrOutputWithContext(ctx)
+}
+
+func (e NodeRole) ToStringOutput() pulumi.StringOutput {
+	return pulumi.ToOutput(pulumi.String(e)).(pulumi.StringOutput)
+}
+
+func (e NodeRole) ToStringOutputWithContext(ctx context.Context) pulumi.StringOutput {
+	return pulumi.ToOutputWithContext(ctx, pulumi.String(e)).(pulumi.StringOutput)
+}
+
+func (e NodeRole) ToStringPtrOutput() pulumi.StringPtrOutput {
+	return pulumi.String(e).ToStringPtrOutputWithContext(context.Background())
+}
+
+func (e NodeRole) ToStringPtrOutputWithContext(ctx context.Context) pulumi.StringPtrOutput {
+	return pulumi.String(e).ToStringOutputWithContext(ctx).ToStringPtrOutputWithContext(ctx)
+}
+
+type NodeRoleOutput struct{ *pulumi.OutputState }
+
+func (NodeRoleOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*NodeRole)(nil)).Elem()
+}
+
+func (o NodeRoleOutput) ToNodeRoleOutput() NodeRoleOutput {
+	return o
+}
+
+func (o NodeRoleOutput) ToNodeRoleOutputWithContext(ctx context.Context) NodeRoleOutput {
+	return o
+}
+
+func (o NodeRoleOutput) ToNodeRolePtrOutput() NodeRolePtrOutput {
+	return o.ToNodeRolePtrOutputWithContext(context.Background())
+}
+
+func (o NodeRoleOutput) ToNodeRolePtrOutputWithContext(ctx context.Context) NodeRolePtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v NodeRole) *NodeRole {
+		return &v
+	}).(NodeRolePtrOutput)
+}
+
+func (o NodeRoleOutput) ToStringOutput() pulumi.StringOutput {
+	return o.ToStringOutputWithContext(context.Background())
+}
+
+func (o NodeRoleOutput) ToStringOutputWithContext(ctx context.Context) pulumi.StringOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, e NodeRole) string {
+		return string(e)
+	}).(pulumi.StringOutput)
+}
+
+func (o NodeRoleOutput) ToStringPtrOutput() pulumi.StringPtrOutput {
+	return o.ToStringPtrOutputWithContext(context.Background())
+}
+
+func (o NodeRoleOutput) ToStringPtrOutputWithContext(ctx context.Context) pulumi.StringPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, e NodeRole) *string {
+		v := string(e)
+		return &v
+	}).(pulumi.StringPtrOutput)
+}
+
+type NodeRolePtrOutput struct{ *pulumi.OutputState }
+
+func (NodeRolePtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**NodeRole)(nil)).Elem()
+}
+
+func (o NodeRolePtrOutput) ToNodeRolePtrOutput() NodeRolePtrOutput {
+	return o
+}
+
+func (o NodeRolePtrOutput) ToNodeRolePtrOutputWithContext(ctx context.Context) NodeRolePtrOutput {
+	return o
+}
+
+func (o NodeRolePtrOutput) Elem() NodeRoleOutput {
+	return o.ApplyT(func(v *NodeRole) NodeRole {
+		if v != nil {
+			return *v
+		}
+		var ret NodeRole
+		return ret
+	}).(NodeRoleOutput)
+}
+
+func (o NodeRolePtrOutput) ToStringPtrOutput() pulumi.StringPtrOutput {
+	return o.ToStringPtrOutputWithContext(context.Background())
+}
+
+func (o NodeRolePtrOutput) ToStringPtrOutputWithContext(ctx context.Context) pulumi.StringPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, e *NodeRole) *string {
+		if e == nil {
+			return nil
+		}
+		v := string(*e)
+		return &v
+	}).(pulumi.StringPtrOutput)
+}
+
+// NodeRoleInput is an input type that accepts values of the NodeRole enum
+// A concrete instance of `NodeRoleInput` can be one of the following:
+//
+//	NodeRoleControlplane
+//	NodeRoleWorker
+type NodeRoleInput interface {
+	pulumi.Input
+
+	ToNodeRoleOutput() NodeRoleOutput
+	ToNodeRoleOutputWithContext(context.Context) NodeRoleOutput
+}
+
+var nodeRolePtrType = reflect.TypeOf((**NodeRole)(nil)).Elem()
+
+type NodeRolePtrInput interface {
+	pulumi.Input
+
+	ToNodeRolePtrOutput() NodeRolePtrOutput
+	ToNodeRolePtrOutputWithContext(context.Context) NodeRolePtrOutput
+}
+
+type nodeRolePtr string
+
+func NodeRolePtr(v string) NodeRolePtrInput {
+	return (*nodeRolePtr)(&v)
+}
+
+func (*nodeRolePtr) ElementType() reflect.Type {
+	return nodeRolePtrType
+}
+
+func (in *nodeRolePtr) ToNodeRolePtrOutput() NodeRolePtrOutput {
+	return pulumi.ToOutput(in).(NodeRolePtrOutput)
+}
+
+func (in *nodeRolePtr) ToNodeRolePtrOutputWithContext(ctx context.Context) NodeRolePtrOutput {
+	return pulumi.ToOutputWithContext(ctx, in).(NodeRolePtrOutput)
+}
+
 func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*AlgorithmInput)(nil)).Elem(), Algorithm("RSA"))
 	pulumi.RegisterInputType(reflect.TypeOf((*AlgorithmPtrInput)(nil)).Elem(), Algorithm("RSA"))
@@ -575,6 +741,8 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*AllowedUsageArrayInput)(nil)).Elem(), AllowedUsageArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*EcdsaCurveInput)(nil)).Elem(), EcdsaCurve("P224"))
 	pulumi.RegisterInputType(reflect.TypeOf((*EcdsaCurvePtrInput)(nil)).Elem(), EcdsaCurve("P224"))
+	pulumi.RegisterInputType(reflect.TypeOf((*NodeRoleInput)(nil)).Elem(), NodeRole("controlplane"))
+	pulumi.RegisterInputType(reflect.TypeOf((*NodeRolePtrInput)(nil)).Elem(), NodeRole("controlplane"))
 	pulumi.RegisterOutputType(AlgorithmOutput{})
 	pulumi.RegisterOutputType(AlgorithmPtrOutput{})
 	pulumi.RegisterOutputType(AllowedUsageOutput{})
@@ -582,4 +750,6 @@ func init() {
 	pulumi.RegisterOutputType(AllowedUsageArrayOutput{})
 	pulumi.RegisterOutputType(EcdsaCurveOutput{})
 	pulumi.RegisterOutputType(EcdsaCurvePtrOutput{})
+	pulumi.RegisterOutputType(NodeRoleOutput{})
+	pulumi.RegisterOutputType(NodeRolePtrOutput{})
 }

@@ -6,5 +6,6 @@ import * as inputs from "../types/input";
 import * as outputs from "../types/output";
 import * as enums from "../types/enums";
 
+import * as pulumiTls from "@pulumi/tls";
 import * as utilities from "../utilities";
 

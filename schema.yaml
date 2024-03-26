@@ -136,6 +136,90 @@ resources:
     methods:
       installCert: kubernetes-the-hard-way:index:Certificate/installCert
       installKey: kubernetes-the-hard-way:index:Certificate/installKey
+  kubernetes-the-hard-way:index:ClusterPki:
+    isComponent: true
+    inputProperties:
+      algorithm:
+        $ref: "#/types/kubernetes-the-hard-way:index:Algorithm"
+        description: Name of the algorithm to use when generating the private key.
+        default: RSA
+      clusterName:
+        type: string
+        description: A name to use for the cluster
+      nodes:
+        type: object
+        additionalProperties:
+          $ref: "#/types/kubernetes-the-hard-way:index:ClusterPkiNode"
+        description: Map of node names to node configuration.
+      publicIp:
+        type: string
+        description: Publicly accessible IP address.
+      rsaBits:
+        type: integer
+        description: When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
+        default: 2048
+      validityPeriodHours:
+        type: integer
+        description: Number of hours, after initial issuing, that the certificate will remain valid.
+        default: 8076
+    requiredInputs:
+      - clusterName
+      - nodes
+      - publicIp
+    properties:
+      admin:
+        $ref: "#/resources/kubernetes-the-hard-way:index:Certificate"
+        description: The admin certificate.
+      algorithm:
+        $ref: "#/types/kubernetes-the-hard-way:index:Algorithm"
+        description: Name of the algorithm to use when generating the private key.
+      ca:
+        $ref: "#/resources/kubernetes-the-hard-way:index:RootCa"
+      clusterName:
+        type: string
+      controllerManager:
+        $ref: "#/resources/kubernetes-the-hard-way:index:Certificate"
+        description: The controller manager certificate.
+      kubelet:
+        type: object
+        additionalProperties:
+          $ref: "#/resources/kubernetes-the-hard-way:index:Certificate"
+        description: Map of node name to kubelet certificate.
+      kubeProxy:
+        $ref: "#/resources/kubernetes-the-hard-way:index:Certificate"
+        description: The kube proxy certificate.
+      kubernetes:
+        $ref: "#/resources/kubernetes-the-hard-way:index:Certificate"
+        description: The kubernetes certificate.
+      kubeScheduler:
+        $ref: "#/resources/kubernetes-the-hard-way:index:Certificate"
+        description: The kube scheduler certificate.
+      publicIp:
+        type: string
+        description: The publicly accessible IP for the cluster.
+      rsaBits:
+        type: integer
+        description: When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
+      serviceAccounts:
+        $ref: "#/resources/kubernetes-the-hard-way:index:Certificate"
+        description: The service accounts certificate.
+      validityPeriodHours:
+        type: integer
+        description: Number of hours, after initial issuing, that the certificate will remain valid.
+    required:
+      - admin
+      - algorithm
+      - ca
+      - clusterName
+      - controllerManager
+      - kubelet
+      - kubeProxy
+      - kubernetes
+      - kubeScheduler
+      - publicIp
+      - rsaBits
+      - serviceAccounts
+      - validityPeriodHours
   kubernetes-the-hard-way:index:RemoteFile:
     isComponent: true
     inputProperties:
@@ -239,12 +323,18 @@ types:
     description: TODO
     type: string
     enum:
-      - value: cert_signing
-      - value: client_auth
-      - value: crl_signing
-      - value: digital_signature
-      - value: key_encipherment
-      - value: server_auth
+      - name: certSigning
+        value: cert_signing
+      - name: clientAuth
+        value: client_auth
+      - name: crlSigning
+        value: crl_signing
+      - name: digitalSignature
+        value: digital_signature
+      - name: keyEncipherment
+        value: key_encipherment
+      - name: serverAuth
+        value: server_auth
   # https://github.com/pulumi/pulumi-tls/blob/620cb07a95049672bdaab17bf86fade26db051b1/provider/cmd/pulumi-resource-tls/schema.json#L84-L127
   kubernetes-the-hard-way:index:CertRequestSubject:
     description: Polyfill for `tls.CertRequestSubject`.
@@ -279,12 +369,6 @@ types:
         items:
           type: string
         description: "Distinguished name: STREET"
-  kubernetes-the-hard-way:index:ResourceOptions:
-    description: Polyfill for `pulumi.ComponentResourceOptions`.
-    type: object
-    properties:
-      parent:
-        $ref: "pulumi.json#/Any"
   # https://github.com/pulumi/pulumi-command/blob/f122b7ae8d9f2b7649a28b170c6141216a209f04/provider/cmd/pulumi-resource-command/schema.json#L470-L522
   kubernetes-the-hard-way:index:Connection:
     description: Instructions for how to connect to a remote endpoint. Polyfill for `command.ConnectionArgs`.
@@ -327,6 +411,15 @@ types:
         description: The user that we should use for the connection.
     required:
       - host
+  kubernetes-the-hard-way:index:ClusterPkiNode:
+    type: object
+    description: Node inputs for the PKI.
+    properties:
+      ip:
+        type: string
+        description: The IP address of the node.
+      role:
+        $ref: "#/types/kubernetes-the-hard-way:index:NodeRole"
   kubernetes-the-hard-way:index:EcdsaCurve:
     description: TODO
     type: string
@@ -335,6 +428,34 @@ types:
       - value: P256
       - value: P384
       - value: P521
+  kubernetes-the-hard-way:index:KeyPair:
+    description: A certificate and key pair.
+    type: object
+    properties:
+      certPem:
+        type: string
+        description: The PEM encoded certificate data
+      key:
+        $ref: "/tls/v5.0.0/schema.json#/resources/tls:index/privateKey:PrivateKey"
+        description: The private key.
+      privateKeyPem:
+        type: string
+        description: The PEM encoded private key data.
+      publicKeyPem:
+        type: string
+        description: The PEM encoded public key data.
+  kubernetes-the-hard-way:index:NodeRole:
+    description: TODO
+    type: string
+    enum:
+      - value: controlplane
+      - value: worker
+  kubernetes-the-hard-way:index:ResourceOptions:
+    description: Polyfill for `pulumi.ComponentResourceOptions`.
+    type: object
+    properties:
+      parent:
+        $ref: "pulumi.json#/Any"
 functions:
   kubernetes-the-hard-way:index:Certificate/installCert:
     description: Creates a RemoteFile resource representing the copy operation.
@@ -348,7 +469,7 @@ functions:
         name:
           type: string
           plain: true
-        opts:
+        options:
           $ref: "#/types/kubernetes-the-hard-way:index:ResourceOptions"
           plain: true
         path:
@@ -376,7 +497,7 @@ functions:
         name:
           type: string
           plain: true
-        opts:
+        options:
           $ref: "#/types/kubernetes-the-hard-way:index:ResourceOptions"
           plain: true
         path:
@@ -390,6 +511,151 @@ functions:
       properties:
         result:
           $ref: "#/resources/kubernetes-the-hard-way:index:RemoteFile"
+      required:
+        - result
+  kubernetes-the-hard-way:index:installCert:
+    description: Creates a RemoteFile resource representing the copy operation.
+    inputs:
+      properties:
+        keypair:
+          $ref: "#/types/kubernetes-the-hard-way:index:KeyPair"
+          description: The certificate to install at the remote location.
+        connection:
+          $ref: "#/types/kubernetes-the-hard-way:index:Connection"
+          description: The connection details.
+        name:
+          type: string
+          plain: true
+        options:
+          $ref: "#/types/kubernetes-the-hard-way:index:ResourceOptions"
+          plain: true
+        path:
+          type: string
+          description: The path to install to.
+      required:
+        - keypair
+        - connection
+        - name
+    outputs:
+      properties:
+        result:
+          $ref: "#/resources/kubernetes-the-hard-way:index:RemoteFile"
+          description: A resource representing the the file on the remote machine.
+      required:
+        - result
+  kubernetes-the-hard-way:index:installControlPlane:
+    description: Install PKI onto a controlplane node.
+    inputs:
+      properties:
+        connection:
+          $ref: "#/types/kubernetes-the-hard-way:index:Connection"
+          description: The connection details.
+        options:
+          $ref: "#/types/kubernetes-the-hard-way:index:ResourceOptions"
+          plain: true
+        pki:
+          $ref: "#/resources/kubernetes-the-hard-way:index:ClusterPki"
+          description: The PKI to install
+      required:
+        - connection
+        - pki
+  kubernetes-the-hard-way:index:installKey:
+    description: Creates a RemoteFile resource representing the copy operation.
+    inputs:
+      properties:
+        keypair:
+          $ref: "#/types/kubernetes-the-hard-way:index:KeyPair"
+          description: The certificate to install.
+        connection:
+          $ref: "#/types/kubernetes-the-hard-way:index:Connection"
+          description: The connection details.
+        name:
+          type: string
+          plain: true
+        options:
+          $ref: "#/types/kubernetes-the-hard-way:index:ResourceOptions"
+          plain: true
+        path:
+          type: string
+          description: The path to install to.
+      required:
+        - keypair
+        - connection
+        - name
+    outputs:
+      properties:
+        result:
+          $ref: "#/resources/kubernetes-the-hard-way:index:RemoteFile"
+      required:
+        - result
+  kubernetes-the-hard-way:index:newCertificate:
+    description: Creates a Certificate configured for the current authority.
+    inputs:
+      properties:
+        ca:
+          $ref: "#/resources/kubernetes-the-hard-way:index:RootCa"
+          description: The certificate authority to issue the certificate.
+        algorithm:
+          $ref: "#/types/kubernetes-the-hard-way:index:Algorithm"
+          description: Name of the algorithm to use when generating the private key.
+        allowedUses:
+          type: array
+          items:
+            $ref: "#/types/kubernetes-the-hard-way:index:AllowedUsage"
+        dnsNames:
+          type: array
+          items:
+            type: string
+          description: List of DNS names for which a certificate is being requested.
+        earlyRenewalHours:
+          type: integer
+          description: TODO
+        ecdsaCurve:
+          $ref: "#/types/kubernetes-the-hard-way:index:EcdsaCurve"
+          description: When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
+        ipAddresses:
+          type: array
+          items:
+            type: string
+          description: List of IP addresses for which a certificate is being requested.
+        isCaCertificate:
+          type: boolean
+        name:
+          type: string
+          plain: true
+        options:
+          $ref: "#/types/kubernetes-the-hard-way:index:ResourceOptions"
+          plain: true
+        rsaBits:
+          type: integer
+          description: When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
+        setAuthorityKeyId:
+          type: boolean
+          description: Should the generated certificate include an authority key identifier.
+        setSubjectKeyId:
+          type: boolean
+          description: Should the generated certificate include a subject key identifier.
+        subject:
+          # $ref: "/tls/v5.0.0/schema.json#/types/tls:index/CertRequestSubject:CertRequestSubject"
+          $ref: "#/types/kubernetes-the-hard-way:index:CertRequestSubject"
+        uris:
+          type: array
+          items:
+            type: string
+          description: List of URIs for which a certificate is being requested.
+        validityPeriodHours:
+          type: integer
+          description: Number of hours, after initial issuing, that the certificate will remain valid.
+      required:
+        - algorithm
+        - allowedUses
+        - ca
+        - name
+        - validityPeriodHours
+    outputs:
+      properties:
+        result:
+          $ref: "#/resources/kubernetes-the-hard-way:index:Certificate"
       required:
         - result
   kubernetes-the-hard-way:index:RootCa/newCertificate:
@@ -426,7 +692,7 @@ functions:
         name:
           type: string
           plain: true
-        opts:
+        options:
           $ref: "#/types/kubernetes-the-hard-way:index:ResourceOptions"
           plain: true
         rsaBits:
@@ -459,6 +725,7 @@ functions:
       properties:
         result:
           $ref: "#/resources/kubernetes-the-hard-way:index:Certificate"
+          description: The issued certificate.
       required:
         - result
   kubernetes-the-hard-way:index:RootCa/installCert:
@@ -473,7 +740,7 @@ functions:
         name:
           type: string
           plain: true
-        opts:
+        options:
           $ref: "#/types/kubernetes-the-hard-way:index:ResourceOptions"
           plain: true
         path:
@@ -501,7 +768,7 @@ functions:
         name:
           type: string
           plain: true
-        opts:
+        options:
           $ref: "#/types/kubernetes-the-hard-way:index:ResourceOptions"
           plain: true
         path:

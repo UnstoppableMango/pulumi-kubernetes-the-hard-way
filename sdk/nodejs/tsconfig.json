@@ -14,7 +14,12 @@
     },
     "files": [
         "certificate.ts",
+        "clusterPki.ts",
         "index.ts",
+        "installCert.ts",
+        "installControlPlane.ts",
+        "installKey.ts",
+        "newCertificate.ts",
         "provider.ts",
         "remoteFile.ts",
         "rootCa.ts",

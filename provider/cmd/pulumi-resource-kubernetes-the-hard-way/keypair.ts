@@ -1,4 +1,5 @@
-import { ComponentResource, ComponentResourceOptions, Input, Output } from '@pulumi/pulumi';
+import { ComponentResource, ComponentResourceOptions, Input, Inputs, Output } from '@pulumi/pulumi';
+import { InvokeResult } from '@pulumi/pulumi/provider';
 import { LocallySignedCert, PrivateKey, SelfSignedCert } from '@pulumi/tls';
 import { InstallArgs, RemoteFile, install } from './remoteFile';
 import { Algorithm, EcdsaCurve } from './types';
@@ -42,10 +43,30 @@ export abstract class KeyPair<TCert extends CertType> extends ComponentResource 
   }
 }
 
-export function installCert<T extends CertType>(pair: KeyPair<T>, args: InstallArgs): RemoteFile {
+export function installCert(pair: KeyPair<CertType>, args: InstallArgs): RemoteFile {
   return install(args, pair.certPem);
 }
 
-export function installKey<T extends CertType>(pair: KeyPair<T>, args: InstallArgs): RemoteFile {
+export function installKey(pair: KeyPair<CertType>, args: InstallArgs): RemoteFile {
   return install(args, pair.publicKeyPem);
+}
+
+export async function callInstallCertInstance(inputs: Inputs): Promise<InvokeResult> {
+  const result = installCert(inputs.__self__, inputs as InstallArgs);
+  return { outputs: { result } };
+}
+
+export async function callInstallCertStatic(inputs: Inputs): Promise<InvokeResult> {
+  const result = installCert(inputs.keypair, inputs as InstallArgs);
+  return { outputs: { result } };
+}
+
+export async function callInstallKeyInstance(inputs: Inputs): Promise<InvokeResult> {
+  const result = installKey(inputs.__self__, inputs as InstallArgs);
+  return { outputs: { result } };
+}
+
+export async function callInstallKeyStatic(inputs: Inputs): Promise<InvokeResult> {
+  const result = installCert(inputs.keypair, inputs as InstallArgs);
+  return { outputs: { result } };
 }
