@@ -93,6 +93,7 @@ export class ClusterPki extends pulumi.ComponentResource {
             }
             resourceInputs["algorithm"] = (args ? args.algorithm : undefined) ?? "RSA";
             resourceInputs["clusterName"] = args ? args.clusterName : undefined;
+            resourceInputs["ecdsaCurve"] = args ? args.ecdsaCurve : undefined;
             resourceInputs["nodes"] = args ? args.nodes : undefined;
             resourceInputs["publicIp"] = args ? args.publicIp : undefined;
             resourceInputs["rsaBits"] = (args ? args.rsaBits : undefined) ?? 2048;
@@ -137,6 +138,10 @@ export interface ClusterPkiArgs {
      * A name to use for the cluster
      */
     clusterName: pulumi.Input<string>;
+    /**
+     * When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
+     */
+    ecdsaCurve?: pulumi.Input<enums.EcdsaCurve>;
     /**
      * Map of node names to node configuration.
      */

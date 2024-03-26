@@ -8,6 +8,7 @@ import com.pulumi.core.annotations.Import;
 import com.pulumi.core.internal.Codegen;
 import com.pulumi.exceptions.MissingRequiredPropertyException;
 import com.unmango.kubernetesthehardway.enums.Algorithm;
+import com.unmango.kubernetesthehardway.enums.EcdsaCurve;
 import com.unmango.kubernetesthehardway.inputs.ClusterPkiNodeArgs;
 import java.lang.Integer;
 import java.lang.String;
@@ -49,6 +50,21 @@ public final class ClusterPkiArgs extends com.pulumi.resources.ResourceArgs {
      */
     public Output<String> clusterName() {
         return this.clusterName;
+    }
+
+    /**
+     * When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
+     * 
+     */
+    @Import(name="ecdsaCurve")
+    private @Nullable Output<EcdsaCurve> ecdsaCurve;
+
+    /**
+     * @return When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
+     * 
+     */
+    public Optional<Output<EcdsaCurve>> ecdsaCurve() {
+        return Optional.ofNullable(this.ecdsaCurve);
     }
 
     /**
@@ -116,6 +132,7 @@ public final class ClusterPkiArgs extends com.pulumi.resources.ResourceArgs {
     private ClusterPkiArgs(ClusterPkiArgs $) {
         this.algorithm = $.algorithm;
         this.clusterName = $.clusterName;
+        this.ecdsaCurve = $.ecdsaCurve;
         this.nodes = $.nodes;
         this.publicIp = $.publicIp;
         this.rsaBits = $.rsaBits;
@@ -180,6 +197,27 @@ public final class ClusterPkiArgs extends com.pulumi.resources.ResourceArgs {
          */
         public Builder clusterName(String clusterName) {
             return clusterName(Output.of(clusterName));
+        }
+
+        /**
+         * @param ecdsaCurve When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder ecdsaCurve(@Nullable Output<EcdsaCurve> ecdsaCurve) {
+            $.ecdsaCurve = ecdsaCurve;
+            return this;
+        }
+
+        /**
+         * @param ecdsaCurve When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder ecdsaCurve(EcdsaCurve ecdsaCurve) {
+            return ecdsaCurve(Output.of(ecdsaCurve));
         }
 
         /**

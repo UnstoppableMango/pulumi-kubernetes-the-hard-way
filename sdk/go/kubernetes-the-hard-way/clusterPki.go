@@ -80,6 +80,8 @@ type clusterPkiArgs struct {
 	Algorithm *Algorithm `pulumi:"algorithm"`
 	// A name to use for the cluster
 	ClusterName string `pulumi:"clusterName"`
+	// When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
+	EcdsaCurve *EcdsaCurve `pulumi:"ecdsaCurve"`
 	// Map of node names to node configuration.
 	Nodes map[string]ClusterPkiNode `pulumi:"nodes"`
 	// Publicly accessible IP address.
@@ -96,6 +98,8 @@ type ClusterPkiArgs struct {
 	Algorithm AlgorithmPtrInput
 	// A name to use for the cluster
 	ClusterName pulumi.StringInput
+	// When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
+	EcdsaCurve EcdsaCurvePtrInput
 	// Map of node names to node configuration.
 	Nodes ClusterPkiNodeMapInput
 	// Publicly accessible IP address.
