@@ -1,6 +1,7 @@
 import * as pulumi from '@pulumi/pulumi';
 import * as provider from '@pulumi/pulumi/provider';
 import * as cert from './certificate';
+import * as pki from './clusterPki';
 import * as keypair from './keypair';
 import * as remoteFile from './remoteFile';
 import * as rootCa from './rootCa';
@@ -17,6 +18,8 @@ export class Provider implements provider.Provider {
     switch (type) {
       case 'kubernetes-the-hard-way:index:Certificate':
         return await cert.construct(name, inputs, options);
+      case 'kubernetes-the-hard-way:index:ClusterPki':
+        return await pki.construct(name, inputs, options);
       case 'kubernetes-the-hard-way:index:RemoteFile':
         return await remoteFile.construct(name, inputs, options);
       case 'kubernetes-the-hard-way:index:RootCa':

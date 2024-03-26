@@ -126,6 +126,12 @@ namespace UnMango.KubernetesTheHardWay
         [Input("clusterName", required: true)]
         public Input<string> ClusterName { get; set; } = null!;
 
+        /// <summary>
+        /// When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
+        /// </summary>
+        [Input("ecdsaCurve")]
+        public Input<UnMango.KubernetesTheHardWay.EcdsaCurve>? EcdsaCurve { get; set; }
+
         [Input("nodes", required: true)]
         private InputMap<Inputs.ClusterPkiNodeArgs>? _nodes;
 

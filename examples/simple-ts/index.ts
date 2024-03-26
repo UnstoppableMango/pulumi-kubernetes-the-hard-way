@@ -23,6 +23,17 @@ const cert = new kthw.Certificate('simple', {
 //   validityPeriodHours: 256,
 // });
 
+const pki = new kthw.ClusterPki('simple', {
+  clusterName: 'simple-cluster',
+  nodes: {
+    myNode: {
+      ip: '10.0.69.3',
+      role: 'controlplane',
+    },
+  },
+  publicIp: '10.0.69.2',
+});
+
 export const caAllowedUses = ca.allowedUses;
 export const caCertPem = ca.certPem;
 export const caKeyPem = ca.publicKeyPem;

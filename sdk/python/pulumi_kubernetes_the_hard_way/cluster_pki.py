@@ -22,6 +22,7 @@ class ClusterPkiArgs:
                  nodes: pulumi.Input[Mapping[str, pulumi.Input['ClusterPkiNodeArgs']]],
                  public_ip: pulumi.Input[str],
                  algorithm: Optional[pulumi.Input['Algorithm']] = None,
+                 ecdsa_curve: Optional[pulumi.Input['EcdsaCurve']] = None,
                  rsa_bits: Optional[pulumi.Input[int]] = None,
                  validity_period_hours: Optional[pulumi.Input[int]] = None):
         """
@@ -30,6 +31,7 @@ class ClusterPkiArgs:
         :param pulumi.Input[Mapping[str, pulumi.Input['ClusterPkiNodeArgs']]] nodes: Map of node names to node configuration.
         :param pulumi.Input[str] public_ip: Publicly accessible IP address.
         :param pulumi.Input['Algorithm'] algorithm: Name of the algorithm to use when generating the private key.
+        :param pulumi.Input['EcdsaCurve'] ecdsa_curve: When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
         :param pulumi.Input[int] rsa_bits: When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
         :param pulumi.Input[int] validity_period_hours: Number of hours, after initial issuing, that the certificate will remain valid.
         """
@@ -40,6 +42,8 @@ class ClusterPkiArgs:
             algorithm = 'RSA'
         if algorithm is not None:
             pulumi.set(__self__, "algorithm", algorithm)
+        if ecdsa_curve is not None:
+            pulumi.set(__self__, "ecdsa_curve", ecdsa_curve)
         if rsa_bits is None:
             rsa_bits = 2048
         if rsa_bits is not None:
@@ -98,6 +102,18 @@ class ClusterPkiArgs:
         pulumi.set(self, "algorithm", value)
 
     @property
+    @pulumi.getter(name="ecdsaCurve")
+    def ecdsa_curve(self) -> Optional[pulumi.Input['EcdsaCurve']]:
+        """
+        When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
+        """
+        return pulumi.get(self, "ecdsa_curve")
+
+    @ecdsa_curve.setter
+    def ecdsa_curve(self, value: Optional[pulumi.Input['EcdsaCurve']]):
+        pulumi.set(self, "ecdsa_curve", value)
+
+    @property
     @pulumi.getter(name="rsaBits")
     def rsa_bits(self) -> Optional[pulumi.Input[int]]:
         """
@@ -129,6 +145,7 @@ class ClusterPki(pulumi.ComponentResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  algorithm: Optional[pulumi.Input['Algorithm']] = None,
                  cluster_name: Optional[pulumi.Input[str]] = None,
+                 ecdsa_curve: Optional[pulumi.Input['EcdsaCurve']] = None,
                  nodes: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['ClusterPkiNodeArgs']]]]] = None,
                  public_ip: Optional[pulumi.Input[str]] = None,
                  rsa_bits: Optional[pulumi.Input[int]] = None,
@@ -140,6 +157,7 @@ class ClusterPki(pulumi.ComponentResource):
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input['Algorithm'] algorithm: Name of the algorithm to use when generating the private key.
         :param pulumi.Input[str] cluster_name: A name to use for the cluster
+        :param pulumi.Input['EcdsaCurve'] ecdsa_curve: When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
         :param pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['ClusterPkiNodeArgs']]]] nodes: Map of node names to node configuration.
         :param pulumi.Input[str] public_ip: Publicly accessible IP address.
         :param pulumi.Input[int] rsa_bits: When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
@@ -170,6 +188,7 @@ class ClusterPki(pulumi.ComponentResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  algorithm: Optional[pulumi.Input['Algorithm']] = None,
                  cluster_name: Optional[pulumi.Input[str]] = None,
+                 ecdsa_curve: Optional[pulumi.Input['EcdsaCurve']] = None,
                  nodes: Optional[pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['ClusterPkiNodeArgs']]]]] = None,
                  public_ip: Optional[pulumi.Input[str]] = None,
                  rsa_bits: Optional[pulumi.Input[int]] = None,
@@ -191,6 +210,7 @@ class ClusterPki(pulumi.ComponentResource):
             if cluster_name is None and not opts.urn:
                 raise TypeError("Missing required property 'cluster_name'")
             __props__.__dict__["cluster_name"] = cluster_name
+            __props__.__dict__["ecdsa_curve"] = ecdsa_curve
             if nodes is None and not opts.urn:
                 raise TypeError("Missing required property 'nodes'")
             __props__.__dict__["nodes"] = nodes

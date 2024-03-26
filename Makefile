@@ -51,8 +51,8 @@ ifneq ($(TEST_NAME),)
 TEST_RUN = -run ^$(TEST_NAME)$$
 endif
 export PULUMI_LOCAL_NUGET=$(WORKING_DIR)/nuget
-test: provider build_python install_sdks bin/gotestfmt
-	cd examples && go test -json -v -tags=$(TEST_TAGS) -timeout 2h $(TEST_RUN) | gotestfmt
+test: provider build_dotnet build_python install_sdks bin/gotestfmt
+	cd examples && go test -json -v -tags=$(TEST_TAGS) -timeout 2h $(TEST_RUN) | tee /tmp/gotest.log | gotestfmt
 test_dotnet: provider build_dotnet install_dotnet_sdk
 	cd examples && go test -v -tags=dotnet -timeout 2h $(TEST_RUN)
 test_python: provider build_python
