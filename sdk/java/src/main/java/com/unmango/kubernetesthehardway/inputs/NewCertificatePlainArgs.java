@@ -135,11 +135,11 @@ public final class NewCertificatePlainArgs extends com.pulumi.resources.InvokeAr
         return this.name;
     }
 
-    @Import(name="opts")
-    private @Nullable ResourceOptions opts;
+    @Import(name="options")
+    private @Nullable ResourceOptions options;
 
-    public Optional<ResourceOptions> opts() {
-        return Optional.ofNullable(this.opts);
+    public Optional<ResourceOptions> options() {
+        return Optional.ofNullable(this.options);
     }
 
     /**
@@ -236,7 +236,7 @@ public final class NewCertificatePlainArgs extends com.pulumi.resources.InvokeAr
         this.ipAddresses = $.ipAddresses;
         this.isCaCertificate = $.isCaCertificate;
         this.name = $.name;
-        this.opts = $.opts;
+        this.options = $.options;
         this.rsaBits = $.rsaBits;
         this.setAuthorityKeyId = $.setAuthorityKeyId;
         this.setSubjectKeyId = $.setSubjectKeyId;
@@ -368,8 +368,8 @@ public final class NewCertificatePlainArgs extends com.pulumi.resources.InvokeAr
             return this;
         }
 
-        public Builder opts(@Nullable ResourceOptions opts) {
-            $.opts = opts;
+        public Builder options(@Nullable ResourceOptions options) {
+            $.options = options;
             return this;
         }
 

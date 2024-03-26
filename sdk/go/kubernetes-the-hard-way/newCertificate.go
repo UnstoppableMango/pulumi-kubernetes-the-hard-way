@@ -38,7 +38,7 @@ type CreateCertificateArgs struct {
 	IpAddresses     []string         `pulumi:"ipAddresses"`
 	IsCaCertificate *bool            `pulumi:"isCaCertificate"`
 	Name            string           `pulumi:"name"`
-	Opts            *ResourceOptions `pulumi:"opts"`
+	Options         *ResourceOptions `pulumi:"options"`
 	// When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
 	RsaBits *int `pulumi:"rsaBits"`
 	// Should the generated certificate include an authority key identifier.
@@ -85,7 +85,7 @@ type CreateCertificateOutputArgs struct {
 	IpAddresses     pulumi.StringArrayInput `pulumi:"ipAddresses"`
 	IsCaCertificate pulumi.BoolPtrInput     `pulumi:"isCaCertificate"`
 	Name            string                  `pulumi:"name"`
-	Opts            *ResourceOptionsArgs    `pulumi:"opts"`
+	Options         *ResourceOptionsArgs    `pulumi:"options"`
 	// When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
 	RsaBits pulumi.IntPtrInput `pulumi:"rsaBits"`
 	// Should the generated certificate include an authority key identifier.

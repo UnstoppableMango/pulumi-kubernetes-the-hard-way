@@ -19,7 +19,7 @@ export function installKey(args: InstallKeyArgs, opts?: pulumi.InvokeOptions): P
         "cert": args.cert,
         "connection": args.connection ? inputs.connectionProvideDefaults(args.connection) : undefined,
         "name": args.name,
-        "opts": args.opts,
+        "options": args.options,
         "path": args.path,
     }, opts);
 }
@@ -34,7 +34,7 @@ export interface InstallKeyArgs {
      */
     connection: inputs.Connection;
     name: string;
-    opts?: inputs.ResourceOptions;
+    options?: inputs.ResourceOptions;
     /**
      * The path to install to.
      */
@@ -61,7 +61,7 @@ export interface InstallKeyOutputArgs {
      */
     connection: pulumi.Input<inputs.ConnectionArgs>;
     name: string;
-    opts?: inputs.ResourceOptionsArgs;
+    options?: inputs.ResourceOptionsArgs;
     /**
      * The path to install to.
      */

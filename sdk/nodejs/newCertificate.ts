@@ -25,7 +25,7 @@ export function newCertificate(args: NewCertificateArgs, opts?: pulumi.InvokeOpt
         "ipAddresses": args.ipAddresses,
         "isCaCertificate": args.isCaCertificate,
         "name": args.name,
-        "opts": args.opts,
+        "options": args.options,
         "rsaBits": args.rsaBits,
         "setAuthorityKeyId": args.setAuthorityKeyId,
         "setSubjectKeyId": args.setSubjectKeyId,
@@ -63,7 +63,7 @@ export interface NewCertificateArgs {
     ipAddresses?: string[];
     isCaCertificate?: boolean;
     name: string;
-    opts?: inputs.ResourceOptions;
+    options?: inputs.ResourceOptions;
     /**
      * When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
      */
@@ -125,7 +125,7 @@ export interface NewCertificateOutputArgs {
     ipAddresses?: pulumi.Input<pulumi.Input<string>[]>;
     isCaCertificate?: pulumi.Input<boolean>;
     name: string;
-    opts?: inputs.ResourceOptionsArgs;
+    options?: inputs.ResourceOptionsArgs;
     /**
      * When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
      */

@@ -33,11 +33,11 @@ public final class InstallControlPlaneArgs extends com.pulumi.resources.InvokeAr
         return this.connection;
     }
 
-    @Import(name="opts")
-    private @Nullable ResourceOptionsArgs opts;
+    @Import(name="options")
+    private @Nullable ResourceOptionsArgs options;
 
-    public Optional<ResourceOptionsArgs> opts() {
-        return Optional.ofNullable(this.opts);
+    public Optional<ResourceOptionsArgs> options() {
+        return Optional.ofNullable(this.options);
     }
 
     /**
@@ -59,7 +59,7 @@ public final class InstallControlPlaneArgs extends com.pulumi.resources.InvokeAr
 
     private InstallControlPlaneArgs(InstallControlPlaneArgs $) {
         this.connection = $.connection;
-        this.opts = $.opts;
+        this.options = $.options;
         this.pki = $.pki;
     }
 
@@ -102,8 +102,8 @@ public final class InstallControlPlaneArgs extends com.pulumi.resources.InvokeAr
             return connection(Output.of(connection));
         }
 
-        public Builder opts(@Nullable ResourceOptionsArgs opts) {
-            $.opts = opts;
+        public Builder options(@Nullable ResourceOptionsArgs options) {
+            $.options = options;
             return this;
         }
 

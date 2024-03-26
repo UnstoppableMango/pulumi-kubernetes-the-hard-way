@@ -100,7 +100,7 @@ export class Certificate extends pulumi.ComponentResource {
             "__self__": this,
             "connection": args.connection,
             "name": args.name,
-            "opts": args.opts,
+            "options": args.options,
             "path": args.path,
         }, this);
         return result.result;
@@ -114,7 +114,7 @@ export class Certificate extends pulumi.ComponentResource {
             "__self__": this,
             "connection": args.connection,
             "name": args.name,
-            "opts": args.opts,
+            "options": args.options,
             "path": args.path,
         }, this);
         return result.result;
@@ -182,7 +182,7 @@ export namespace Certificate {
          */
         connection: pulumi.Input<inputs.ConnectionArgs>;
         name: string;
-        opts?: inputs.ResourceOptionsArgs;
+        options?: inputs.ResourceOptionsArgs;
         /**
          * The path to install to.
          */
@@ -205,7 +205,7 @@ export namespace Certificate {
          */
         connection: pulumi.Input<inputs.ConnectionArgs>;
         name: string;
-        opts?: inputs.ResourceOptionsArgs;
+        options?: inputs.ResourceOptionsArgs;
         /**
          * The path to install to.
          */

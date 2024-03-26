@@ -179,8 +179,8 @@ namespace UnMango.KubernetesTheHardWay
         [Input("name", required: true)]
         public string Name { get; set; } = null!;
 
-        [Input("opts")]
-        public Inputs.ResourceOptionsArgs? Opts { get; set; }
+        [Input("options")]
+        public Inputs.ResourceOptionsArgs? Options { get; set; }
 
         /// <summary>
         /// The path to install to.
@@ -223,8 +223,8 @@ namespace UnMango.KubernetesTheHardWay
         [Input("name", required: true)]
         public string Name { get; set; } = null!;
 
-        [Input("opts")]
-        public Inputs.ResourceOptionsArgs? Opts { get; set; }
+        [Input("options")]
+        public Inputs.ResourceOptionsArgs? Options { get; set; }
 
         /// <summary>
         /// The path to install to.
@@ -314,8 +314,8 @@ namespace UnMango.KubernetesTheHardWay
         [Input("name", required: true)]
         public string Name { get; set; } = null!;
 
-        [Input("opts")]
-        public Inputs.ResourceOptionsArgs? Opts { get; set; }
+        [Input("options")]
+        public Inputs.ResourceOptionsArgs? Options { get; set; }
 
         /// <summary>
         /// When `algorithm` is `RSA`, the size of the generated RSA key, in bits.

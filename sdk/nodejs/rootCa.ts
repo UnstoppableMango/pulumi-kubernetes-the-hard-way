@@ -84,7 +84,7 @@ export class RootCa extends pulumi.ComponentResource {
             "__self__": this,
             "connection": args.connection,
             "name": args.name,
-            "opts": args.opts,
+            "options": args.options,
             "path": args.path,
         }, this);
         return result.result;
@@ -98,7 +98,7 @@ export class RootCa extends pulumi.ComponentResource {
             "__self__": this,
             "connection": args.connection,
             "name": args.name,
-            "opts": args.opts,
+            "options": args.options,
             "path": args.path,
         }, this);
         return result.result;
@@ -118,7 +118,7 @@ export class RootCa extends pulumi.ComponentResource {
             "ipAddresses": args.ipAddresses,
             "isCaCertificate": args.isCaCertificate,
             "name": args.name,
-            "opts": args.opts,
+            "options": args.options,
             "rsaBits": args.rsaBits,
             "setAuthorityKeyId": args.setAuthorityKeyId,
             "setSubjectKeyId": args.setSubjectKeyId,
@@ -187,7 +187,7 @@ export namespace RootCa {
          */
         connection: pulumi.Input<inputs.ConnectionArgs>;
         name: string;
-        opts?: inputs.ResourceOptionsArgs;
+        options?: inputs.ResourceOptionsArgs;
         /**
          * The path to install to.
          */
@@ -210,7 +210,7 @@ export namespace RootCa {
          */
         connection: pulumi.Input<inputs.ConnectionArgs>;
         name: string;
-        opts?: inputs.ResourceOptionsArgs;
+        options?: inputs.ResourceOptionsArgs;
         /**
          * The path to install to.
          */
@@ -251,7 +251,7 @@ export namespace RootCa {
         ipAddresses?: pulumi.Input<pulumi.Input<string>[]>;
         isCaCertificate?: pulumi.Input<boolean>;
         name: string;
-        opts?: inputs.ResourceOptionsArgs;
+        options?: inputs.ResourceOptionsArgs;
         /**
          * When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
          */

@@ -56,11 +56,11 @@ public final class InstallCertArgs extends com.pulumi.resources.InvokeArgs {
         return this.name;
     }
 
-    @Import(name="opts")
-    private @Nullable ResourceOptionsArgs opts;
+    @Import(name="options")
+    private @Nullable ResourceOptionsArgs options;
 
-    public Optional<ResourceOptionsArgs> opts() {
-        return Optional.ofNullable(this.opts);
+    public Optional<ResourceOptionsArgs> options() {
+        return Optional.ofNullable(this.options);
     }
 
     /**
@@ -84,7 +84,7 @@ public final class InstallCertArgs extends com.pulumi.resources.InvokeArgs {
         this.cert = $.cert;
         this.connection = $.connection;
         this.name = $.name;
-        this.opts = $.opts;
+        this.options = $.options;
         this.path = $.path;
     }
 
@@ -153,8 +153,8 @@ public final class InstallCertArgs extends com.pulumi.resources.InvokeArgs {
             return this;
         }
 
-        public Builder opts(@Nullable ResourceOptionsArgs opts) {
-            $.opts = opts;
+        public Builder options(@Nullable ResourceOptionsArgs options) {
+            $.options = options;
             return this;
         }
 

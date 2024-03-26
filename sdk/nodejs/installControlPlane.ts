@@ -17,7 +17,7 @@ export function installControlPlane(args: InstallControlPlaneArgs, opts?: pulumi
     opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
     return pulumi.runtime.invoke("kubernetes-the-hard-way:index:installControlPlane", {
         "connection": args.connection ? inputs.connectionProvideDefaults(args.connection) : undefined,
-        "opts": args.opts,
+        "options": args.options,
         "pki": args.pki,
     }, opts);
 }
@@ -27,7 +27,7 @@ export interface InstallControlPlaneArgs {
      * The connection details.
      */
     connection: inputs.Connection;
-    opts?: inputs.ResourceOptions;
+    options?: inputs.ResourceOptions;
     /**
      * The PKI to install
      */

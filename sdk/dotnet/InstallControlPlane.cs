@@ -28,8 +28,8 @@ namespace UnMango.KubernetesTheHardWay
         [Input("connection", required: true)]
         public Inputs.Connection Connection { get; set; } = null!;
 
-        [Input("opts")]
-        public Inputs.ResourceOptions? Opts { get; set; }
+        [Input("options")]
+        public Inputs.ResourceOptions? Options { get; set; }
 
         /// <summary>
         /// The PKI to install

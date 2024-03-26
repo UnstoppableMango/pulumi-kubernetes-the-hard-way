@@ -19,7 +19,7 @@ func InstallControlPlane(ctx *pulumi.Context, args *InstallControlPlaneArgs, opt
 type InstallControlPlaneArgs struct {
 	// The connection details.
 	Connection Connection       `pulumi:"connection"`
-	Opts       *ResourceOptions `pulumi:"opts"`
+	Options    *ResourceOptions `pulumi:"options"`
 	// The PKI to install
 	Pki *ClusterPki `pulumi:"pki"`
 }

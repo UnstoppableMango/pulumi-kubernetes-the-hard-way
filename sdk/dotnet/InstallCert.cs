@@ -43,8 +43,8 @@ namespace UnMango.KubernetesTheHardWay
         [Input("name", required: true)]
         public string Name { get; set; } = null!;
 
-        [Input("opts")]
-        public Inputs.ResourceOptions? Opts { get; set; }
+        [Input("options")]
+        public Inputs.ResourceOptions? Options { get; set; }
 
         /// <summary>
         /// The path to install to.
@@ -75,8 +75,8 @@ namespace UnMango.KubernetesTheHardWay
         [Input("name", required: true)]
         public string Name { get; set; } = null!;
 
-        [Input("opts")]
-        public Inputs.ResourceOptionsArgs? Opts { get; set; }
+        [Input("options")]
+        public Inputs.ResourceOptionsArgs? Options { get; set; }
 
         /// <summary>
         /// The path to install to.

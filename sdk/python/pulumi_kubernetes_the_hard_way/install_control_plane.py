@@ -16,7 +16,7 @@ __all__ = [
 ]
 
 def install_control_plane(connection: Optional[pulumi.InputType['Connection']] = None,
-                          opts: Optional[pulumi.InputType['ResourceOptions']] = None,
+                          options: Optional[pulumi.InputType['ResourceOptions']] = None,
                           pki: Optional['ClusterPki'] = None,
                           opts: Optional[pulumi.InvokeOptions] = None) -> Awaitable[None]:
     """
@@ -28,7 +28,7 @@ def install_control_plane(connection: Optional[pulumi.InputType['Connection']] =
     """
     __args__ = dict()
     __args__['connection'] = connection
-    __args__['opts'] = opts
+    __args__['options'] = options
     __args__['pki'] = pki
     opts = pulumi.InvokeOptions.merge(_utilities.get_invoke_opts_defaults(), opts)
     __ret__ = pulumi.runtime.invoke('kubernetes-the-hard-way:index:installControlPlane', __args__, opts=opts).value

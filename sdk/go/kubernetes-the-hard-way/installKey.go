@@ -28,7 +28,7 @@ type InstallKeyArgs struct {
 	// The connection details.
 	Connection Connection       `pulumi:"connection"`
 	Name       string           `pulumi:"name"`
-	Opts       *ResourceOptions `pulumi:"opts"`
+	Options    *ResourceOptions `pulumi:"options"`
 	// The path to install to.
 	Path *string `pulumi:"path"`
 }
@@ -67,7 +67,7 @@ type InstallKeyOutputArgs struct {
 	// The connection details.
 	Connection ConnectionInput      `pulumi:"connection"`
 	Name       string               `pulumi:"name"`
-	Opts       *ResourceOptionsArgs `pulumi:"opts"`
+	Options    *ResourceOptionsArgs `pulumi:"options"`
 	// The path to install to.
 	Path pulumi.StringPtrInput `pulumi:"path"`
 }

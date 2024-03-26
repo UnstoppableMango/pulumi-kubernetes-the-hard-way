@@ -44,7 +44,7 @@ class AwaitableInstallKeyResult(InstallKeyResult):
 def install_key(cert: Optional['Certificate'] = None,
                 connection: Optional[pulumi.InputType['Connection']] = None,
                 name: Optional[str] = None,
-                opts: Optional[pulumi.InputType['ResourceOptions']] = None,
+                options: Optional[pulumi.InputType['ResourceOptions']] = None,
                 path: Optional[str] = None,
                 opts: Optional[pulumi.InvokeOptions] = None) -> AwaitableInstallKeyResult:
     """
@@ -59,7 +59,7 @@ def install_key(cert: Optional['Certificate'] = None,
     __args__['cert'] = cert
     __args__['connection'] = connection
     __args__['name'] = name
-    __args__['opts'] = opts
+    __args__['options'] = options
     __args__['path'] = path
     opts = pulumi.InvokeOptions.merge(_utilities.get_invoke_opts_defaults(), opts)
     __ret__ = pulumi.runtime.invoke('kubernetes-the-hard-way:index:installKey', __args__, opts=opts, typ=InstallKeyResult).value
@@ -72,7 +72,7 @@ def install_key(cert: Optional['Certificate'] = None,
 def install_key_output(cert: Optional[pulumi.Input['Certificate']] = None,
                        connection: Optional[pulumi.Input[pulumi.InputType['Connection']]] = None,
                        name: Optional[pulumi.Input[str]] = None,
-                       opts: Optional[pulumi.Input[Optional[pulumi.InputType['ResourceOptions']]]] = None,
+                       options: Optional[pulumi.Input[Optional[pulumi.InputType['ResourceOptions']]]] = None,
                        path: Optional[pulumi.Input[Optional[str]]] = None,
                        opts: Optional[pulumi.InvokeOptions] = None) -> pulumi.Output[InstallKeyResult]:
     """
