@@ -146,6 +146,9 @@ resources:
       clusterName:
         type: string
         description: A name to use for the cluster
+      ecdsaCurve:
+        $ref: "#/types/kubernetes-the-hard-way:index:EcdsaCurve"
+        description: When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
       nodes:
         type: object
         additionalProperties:
