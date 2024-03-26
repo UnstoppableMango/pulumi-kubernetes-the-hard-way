@@ -7,6 +7,7 @@ import (
 	"context"
 	"reflect"
 
+	"github.com/pulumi/pulumi-tls/sdk/v5/go/tls"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 	"github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/sdk/go/kubernetes-the-hard-way/internal"
 )
@@ -581,6 +582,18 @@ func (o ConnectionOutput) PrivateKeyPassword() pulumi.StringPtrOutput {
 // The user that we should use for the connection.
 func (o ConnectionOutput) User() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v Connection) *string { return v.User }).(pulumi.StringPtrOutput)
+}
+
+// A certificate and key pair.
+type KeyPair struct {
+	// The PEM encoded certificate data
+	CertPem *string `pulumi:"certPem"`
+	// The private key.
+	Key *tls.PrivateKey `pulumi:"key"`
+	// The PEM encoded private key data.
+	PrivateKeyPem *string `pulumi:"privateKeyPem"`
+	// The PEM encoded public key data.
+	PublicKeyPem *string `pulumi:"publicKeyPem"`
 }
 
 // Polyfill for `pulumi.ComponentResourceOptions`.
