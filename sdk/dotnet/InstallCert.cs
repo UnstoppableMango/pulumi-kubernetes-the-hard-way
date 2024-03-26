@@ -29,16 +29,16 @@ namespace UnMango.KubernetesTheHardWay
     public sealed class InstallCertArgs : global::Pulumi.InvokeArgs
     {
         /// <summary>
-        /// The certificate to install at the remote location.
-        /// </summary>
-        [Input("cert", required: true)]
-        public UnMango.KubernetesTheHardWay.Certificate Cert { get; set; } = null!;
-
-        /// <summary>
         /// The connection details.
         /// </summary>
         [Input("connection", required: true)]
         public Inputs.Connection Connection { get; set; } = null!;
+
+        /// <summary>
+        /// The certificate to install at the remote location.
+        /// </summary>
+        [Input("keypair", required: true)]
+        public Inputs.KeyPair Keypair { get; set; } = null!;
 
         [Input("name", required: true)]
         public string Name { get; set; } = null!;
@@ -61,16 +61,16 @@ namespace UnMango.KubernetesTheHardWay
     public sealed class InstallCertInvokeArgs : global::Pulumi.InvokeArgs
     {
         /// <summary>
-        /// The certificate to install at the remote location.
-        /// </summary>
-        [Input("cert", required: true)]
-        public Input<UnMango.KubernetesTheHardWay.Certificate> Cert { get; set; } = null!;
-
-        /// <summary>
         /// The connection details.
         /// </summary>
         [Input("connection", required: true)]
         public Input<Inputs.ConnectionArgs> Connection { get; set; } = null!;
+
+        /// <summary>
+        /// The certificate to install at the remote location.
+        /// </summary>
+        [Input("keypair", required: true)]
+        public Input<Inputs.KeyPairArgs> Keypair { get; set; } = null!;
 
         [Input("name", required: true)]
         public string Name { get; set; } = null!;

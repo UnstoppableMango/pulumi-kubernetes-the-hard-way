@@ -23,12 +23,12 @@ func InstallCert(ctx *pulumi.Context, args *InstallCertArgs, opts ...pulumi.Invo
 }
 
 type InstallCertArgs struct {
-	// The certificate to install at the remote location.
-	Cert *Certificate `pulumi:"cert"`
 	// The connection details.
-	Connection Connection       `pulumi:"connection"`
-	Name       string           `pulumi:"name"`
-	Options    *ResourceOptions `pulumi:"options"`
+	Connection Connection `pulumi:"connection"`
+	// The certificate to install at the remote location.
+	Keypair KeyPair          `pulumi:"keypair"`
+	Name    string           `pulumi:"name"`
+	Options *ResourceOptions `pulumi:"options"`
 	// The path to install to.
 	Path *string `pulumi:"path"`
 }
@@ -63,12 +63,12 @@ func InstallCertOutput(ctx *pulumi.Context, args InstallCertOutputArgs, opts ...
 }
 
 type InstallCertOutputArgs struct {
-	// The certificate to install at the remote location.
-	Cert CertificateInput `pulumi:"cert"`
 	// The connection details.
-	Connection ConnectionInput      `pulumi:"connection"`
-	Name       string               `pulumi:"name"`
-	Options    *ResourceOptionsArgs `pulumi:"options"`
+	Connection ConnectionInput `pulumi:"connection"`
+	// The certificate to install at the remote location.
+	Keypair KeyPairInput         `pulumi:"keypair"`
+	Name    string               `pulumi:"name"`
+	Options *ResourceOptionsArgs `pulumi:"options"`
 	// The path to install to.
 	Path pulumi.StringPtrInput `pulumi:"path"`
 }

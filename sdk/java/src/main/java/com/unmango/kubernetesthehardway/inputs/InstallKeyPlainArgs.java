@@ -5,8 +5,8 @@ package com.unmango.kubernetesthehardway.inputs;
 
 import com.pulumi.core.annotations.Import;
 import com.pulumi.exceptions.MissingRequiredPropertyException;
-import com.unmango.kubernetesthehardway.Certificate;
 import com.unmango.kubernetesthehardway.inputs.Connection;
+import com.unmango.kubernetesthehardway.inputs.KeyPair;
 import com.unmango.kubernetesthehardway.inputs.ResourceOptions;
 import java.lang.String;
 import java.util.Objects;
@@ -17,21 +17,6 @@ import javax.annotation.Nullable;
 public final class InstallKeyPlainArgs extends com.pulumi.resources.InvokeArgs {
 
     public static final InstallKeyPlainArgs Empty = new InstallKeyPlainArgs();
-
-    /**
-     * The certificate to install.
-     * 
-     */
-    @Import(name="cert", required=true)
-    private Certificate cert;
-
-    /**
-     * @return The certificate to install.
-     * 
-     */
-    public Certificate cert() {
-        return this.cert;
-    }
 
     /**
      * The connection details.
@@ -46,6 +31,21 @@ public final class InstallKeyPlainArgs extends com.pulumi.resources.InvokeArgs {
      */
     public Connection connection() {
         return this.connection;
+    }
+
+    /**
+     * The certificate to install.
+     * 
+     */
+    @Import(name="keypair", required=true)
+    private KeyPair keypair;
+
+    /**
+     * @return The certificate to install.
+     * 
+     */
+    public KeyPair keypair() {
+        return this.keypair;
     }
 
     @Import(name="name", required=true)
@@ -80,8 +80,8 @@ public final class InstallKeyPlainArgs extends com.pulumi.resources.InvokeArgs {
     private InstallKeyPlainArgs() {}
 
     private InstallKeyPlainArgs(InstallKeyPlainArgs $) {
-        this.cert = $.cert;
         this.connection = $.connection;
+        this.keypair = $.keypair;
         this.name = $.name;
         this.options = $.options;
         this.path = $.path;
@@ -106,17 +106,6 @@ public final class InstallKeyPlainArgs extends com.pulumi.resources.InvokeArgs {
         }
 
         /**
-         * @param cert The certificate to install.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder cert(Certificate cert) {
-            $.cert = cert;
-            return this;
-        }
-
-        /**
          * @param connection The connection details.
          * 
          * @return builder
@@ -124,6 +113,17 @@ public final class InstallKeyPlainArgs extends com.pulumi.resources.InvokeArgs {
          */
         public Builder connection(Connection connection) {
             $.connection = connection;
+            return this;
+        }
+
+        /**
+         * @param keypair The certificate to install.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder keypair(KeyPair keypair) {
+            $.keypair = keypair;
             return this;
         }
 
@@ -149,11 +149,11 @@ public final class InstallKeyPlainArgs extends com.pulumi.resources.InvokeArgs {
         }
 
         public InstallKeyPlainArgs build() {
-            if ($.cert == null) {
-                throw new MissingRequiredPropertyException("InstallKeyPlainArgs", "cert");
-            }
             if ($.connection == null) {
                 throw new MissingRequiredPropertyException("InstallKeyPlainArgs", "connection");
+            }
+            if ($.keypair == null) {
+                throw new MissingRequiredPropertyException("InstallKeyPlainArgs", "keypair");
             }
             if ($.name == null) {
                 throw new MissingRequiredPropertyException("InstallKeyPlainArgs", "name");

@@ -9,8 +9,8 @@ import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
 from . import _utilities
 from ._inputs import *
-from .certificate import Certificate
 from .remote_file import RemoteFile
+import pulumi_tls
 
 __all__ = [
     'InstallCertResult',
@@ -44,8 +44,8 @@ class AwaitableInstallCertResult(InstallCertResult):
             result=self.result)
 
 
-def install_cert(cert: Optional['Certificate'] = None,
-                 connection: Optional[pulumi.InputType['Connection']] = None,
+def install_cert(connection: Optional[pulumi.InputType['Connection']] = None,
+                 keypair: Optional[pulumi.InputType['KeyPair']] = None,
                  name: Optional[str] = None,
                  options: Optional[pulumi.InputType['ResourceOptions']] = None,
                  path: Optional[str] = None,
@@ -54,13 +54,13 @@ def install_cert(cert: Optional['Certificate'] = None,
     Creates a RemoteFile resource representing the copy operation.
 
 
-    :param 'Certificate' cert: The certificate to install at the remote location.
     :param pulumi.InputType['Connection'] connection: The connection details.
+    :param pulumi.InputType['KeyPair'] keypair: The certificate to install at the remote location.
     :param str path: The path to install to.
     """
     __args__ = dict()
-    __args__['cert'] = cert
     __args__['connection'] = connection
+    __args__['keypair'] = keypair
     __args__['name'] = name
     __args__['options'] = options
     __args__['path'] = path
@@ -72,8 +72,8 @@ def install_cert(cert: Optional['Certificate'] = None,
 
 
 @_utilities.lift_output_func(install_cert)
-def install_cert_output(cert: Optional[pulumi.Input['Certificate']] = None,
-                        connection: Optional[pulumi.Input[pulumi.InputType['Connection']]] = None,
+def install_cert_output(connection: Optional[pulumi.Input[pulumi.InputType['Connection']]] = None,
+                        keypair: Optional[pulumi.Input[pulumi.InputType['KeyPair']]] = None,
                         name: Optional[pulumi.Input[str]] = None,
                         options: Optional[pulumi.Input[Optional[pulumi.InputType['ResourceOptions']]]] = None,
                         path: Optional[pulumi.Input[Optional[str]]] = None,
@@ -82,8 +82,8 @@ def install_cert_output(cert: Optional[pulumi.Input['Certificate']] = None,
     Creates a RemoteFile resource representing the copy operation.
 
 
-    :param 'Certificate' cert: The certificate to install at the remote location.
     :param pulumi.InputType['Connection'] connection: The connection details.
+    :param pulumi.InputType['KeyPair'] keypair: The certificate to install at the remote location.
     :param str path: The path to install to.
     """
     ...

@@ -7,7 +7,9 @@ import * as outputs from "./types/output";
 import * as enums from "./types/enums";
 import * as utilities from "./utilities";
 
-import {Certificate, RemoteFile} from "./index";
+import * as pulumiTls from "@pulumi/tls";
+
+import {RemoteFile} from "./index";
 
 /**
  * Creates a RemoteFile resource representing the copy operation.
@@ -16,8 +18,8 @@ export function installKey(args: InstallKeyArgs, opts?: pulumi.InvokeOptions): P
 
     opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
     return pulumi.runtime.invoke("kubernetes-the-hard-way:index:installKey", {
-        "cert": args.cert,
         "connection": args.connection ? inputs.connectionProvideDefaults(args.connection) : undefined,
+        "keypair": args.keypair,
         "name": args.name,
         "options": args.options,
         "path": args.path,
@@ -26,13 +28,13 @@ export function installKey(args: InstallKeyArgs, opts?: pulumi.InvokeOptions): P
 
 export interface InstallKeyArgs {
     /**
-     * The certificate to install.
-     */
-    cert: Certificate;
-    /**
      * The connection details.
      */
     connection: inputs.Connection;
+    /**
+     * The certificate to install.
+     */
+    keypair: inputs.KeyPair;
     name: string;
     options?: inputs.ResourceOptions;
     /**
@@ -53,13 +55,13 @@ export function installKeyOutput(args: InstallKeyOutputArgs, opts?: pulumi.Invok
 
 export interface InstallKeyOutputArgs {
     /**
-     * The certificate to install.
-     */
-    cert: pulumi.Input<Certificate>;
-    /**
      * The connection details.
      */
     connection: pulumi.Input<inputs.ConnectionArgs>;
+    /**
+     * The certificate to install.
+     */
+    keypair: pulumi.Input<inputs.KeyPairArgs>;
     name: string;
     options?: inputs.ResourceOptionsArgs;
     /**

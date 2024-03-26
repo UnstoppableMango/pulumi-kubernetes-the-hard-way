@@ -23,12 +23,12 @@ func InstallKey(ctx *pulumi.Context, args *InstallKeyArgs, opts ...pulumi.Invoke
 }
 
 type InstallKeyArgs struct {
-	// The certificate to install.
-	Cert *Certificate `pulumi:"cert"`
 	// The connection details.
-	Connection Connection       `pulumi:"connection"`
-	Name       string           `pulumi:"name"`
-	Options    *ResourceOptions `pulumi:"options"`
+	Connection Connection `pulumi:"connection"`
+	// The certificate to install.
+	Keypair KeyPair          `pulumi:"keypair"`
+	Name    string           `pulumi:"name"`
+	Options *ResourceOptions `pulumi:"options"`
 	// The path to install to.
 	Path *string `pulumi:"path"`
 }
@@ -62,12 +62,12 @@ func InstallKeyOutput(ctx *pulumi.Context, args InstallKeyOutputArgs, opts ...pu
 }
 
 type InstallKeyOutputArgs struct {
-	// The certificate to install.
-	Cert CertificateInput `pulumi:"cert"`
 	// The connection details.
-	Connection ConnectionInput      `pulumi:"connection"`
-	Name       string               `pulumi:"name"`
-	Options    *ResourceOptionsArgs `pulumi:"options"`
+	Connection ConnectionInput `pulumi:"connection"`
+	// The certificate to install.
+	Keypair KeyPairInput         `pulumi:"keypair"`
+	Name    string               `pulumi:"name"`
+	Options *ResourceOptionsArgs `pulumi:"options"`
 	// The path to install to.
 	Path pulumi.StringPtrInput `pulumi:"path"`
 }

@@ -6,8 +6,8 @@ package com.unmango.kubernetesthehardway.inputs;
 import com.pulumi.core.Output;
 import com.pulumi.core.annotations.Import;
 import com.pulumi.exceptions.MissingRequiredPropertyException;
-import com.unmango.kubernetesthehardway.Certificate;
 import com.unmango.kubernetesthehardway.inputs.ConnectionArgs;
+import com.unmango.kubernetesthehardway.inputs.KeyPairArgs;
 import com.unmango.kubernetesthehardway.inputs.ResourceOptionsArgs;
 import java.lang.String;
 import java.util.Objects;
@@ -18,21 +18,6 @@ import javax.annotation.Nullable;
 public final class InstallKeyArgs extends com.pulumi.resources.InvokeArgs {
 
     public static final InstallKeyArgs Empty = new InstallKeyArgs();
-
-    /**
-     * The certificate to install.
-     * 
-     */
-    @Import(name="cert", required=true)
-    private Output<Certificate> cert;
-
-    /**
-     * @return The certificate to install.
-     * 
-     */
-    public Output<Certificate> cert() {
-        return this.cert;
-    }
 
     /**
      * The connection details.
@@ -47,6 +32,21 @@ public final class InstallKeyArgs extends com.pulumi.resources.InvokeArgs {
      */
     public Output<ConnectionArgs> connection() {
         return this.connection;
+    }
+
+    /**
+     * The certificate to install.
+     * 
+     */
+    @Import(name="keypair", required=true)
+    private Output<KeyPairArgs> keypair;
+
+    /**
+     * @return The certificate to install.
+     * 
+     */
+    public Output<KeyPairArgs> keypair() {
+        return this.keypair;
     }
 
     @Import(name="name", required=true)
@@ -81,8 +81,8 @@ public final class InstallKeyArgs extends com.pulumi.resources.InvokeArgs {
     private InstallKeyArgs() {}
 
     private InstallKeyArgs(InstallKeyArgs $) {
-        this.cert = $.cert;
         this.connection = $.connection;
+        this.keypair = $.keypair;
         this.name = $.name;
         this.options = $.options;
         this.path = $.path;
@@ -107,27 +107,6 @@ public final class InstallKeyArgs extends com.pulumi.resources.InvokeArgs {
         }
 
         /**
-         * @param cert The certificate to install.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder cert(Output<Certificate> cert) {
-            $.cert = cert;
-            return this;
-        }
-
-        /**
-         * @param cert The certificate to install.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder cert(Certificate cert) {
-            return cert(Output.of(cert));
-        }
-
-        /**
          * @param connection The connection details.
          * 
          * @return builder
@@ -146,6 +125,27 @@ public final class InstallKeyArgs extends com.pulumi.resources.InvokeArgs {
          */
         public Builder connection(ConnectionArgs connection) {
             return connection(Output.of(connection));
+        }
+
+        /**
+         * @param keypair The certificate to install.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder keypair(Output<KeyPairArgs> keypair) {
+            $.keypair = keypair;
+            return this;
+        }
+
+        /**
+         * @param keypair The certificate to install.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder keypair(KeyPairArgs keypair) {
+            return keypair(Output.of(keypair));
         }
 
         public Builder name(String name) {
@@ -180,11 +180,11 @@ public final class InstallKeyArgs extends com.pulumi.resources.InvokeArgs {
         }
 
         public InstallKeyArgs build() {
-            if ($.cert == null) {
-                throw new MissingRequiredPropertyException("InstallKeyArgs", "cert");
-            }
             if ($.connection == null) {
                 throw new MissingRequiredPropertyException("InstallKeyArgs", "connection");
+            }
+            if ($.keypair == null) {
+                throw new MissingRequiredPropertyException("InstallKeyArgs", "keypair");
             }
             if ($.name == null) {
                 throw new MissingRequiredPropertyException("InstallKeyArgs", "name");
