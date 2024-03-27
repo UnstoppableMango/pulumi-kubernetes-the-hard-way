@@ -19,6 +19,7 @@
         "keypair.ts",
         "provider.ts",
         "remoteFile.ts",
+        "resources.ts",
         "rootCa.ts",
         "types.ts",
         "util.ts"
