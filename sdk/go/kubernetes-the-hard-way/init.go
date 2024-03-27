@@ -25,6 +25,8 @@ func (m *module) Construct(ctx *pulumi.Context, name, typ, urn string) (r pulumi
 		r = &Certificate{}
 	case "kubernetes-the-hard-way:index:ClusterPki":
 		r = &ClusterPki{}
+	case "kubernetes-the-hard-way:index:EncryptionKey":
+		r = &EncryptionKey{}
 	case "kubernetes-the-hard-way:index:RemoteFile":
 		r = &RemoteFile{}
 	case "kubernetes-the-hard-way:index:RootCa":

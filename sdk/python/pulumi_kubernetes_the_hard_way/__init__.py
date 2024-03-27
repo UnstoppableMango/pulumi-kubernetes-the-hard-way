@@ -8,6 +8,7 @@ import typing
 from ._enums import *
 from .certificate import *
 from .cluster_pki import *
+from .encryption_key import *
 from .install_cert import *
 from .install_control_plane import *
 from .install_key import *
@@ -26,6 +27,7 @@ _utilities.register(
   "classes": {
    "kubernetes-the-hard-way:index:Certificate": "Certificate",
    "kubernetes-the-hard-way:index:ClusterPki": "ClusterPki",
+   "kubernetes-the-hard-way:index:EncryptionKey": "EncryptionKey",
    "kubernetes-the-hard-way:index:RemoteFile": "RemoteFile",
    "kubernetes-the-hard-way:index:RootCa": "RootCa"
   }

@@ -15,6 +15,7 @@
     "files": [
         "certificate.ts",
         "clusterPki.ts",
+        "encryptionKey.ts",
         "index.ts",
         "installCert.ts",
         "installControlPlane.ts",
