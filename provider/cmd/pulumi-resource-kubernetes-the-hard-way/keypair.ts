@@ -16,12 +16,15 @@ type CertType = SelfSignedCert | LocallySignedCert;
 export abstract class KeyPair<TCert extends CertType> extends ComponentResource {
   public abstract readonly cert: TCert;
   public abstract readonly certPem: Output<string>;
-  public readonly key: PrivateKey;
-  public readonly privateKeyPem: Output<string>;
-  public readonly publicKeyPem: Output<string>;
+  public readonly key!: PrivateKey;
+  public readonly privateKeyPem!: Output<string>;
+  public readonly publicKeyPem!: Output<string>;
 
-  protected constructor(type: string, name: string, args: KeyPairArgs, opts?: ComponentResourceOptions) {
+  protected constructor(type: string, name: string, args: Inputs, opts?: ComponentResourceOptions) {
     super(type, name, args, opts);
+
+    // Rehydrating
+    if (opts?.urn) return;
 
     const key = new PrivateKey(name, {
       algorithm: args.algorithm,

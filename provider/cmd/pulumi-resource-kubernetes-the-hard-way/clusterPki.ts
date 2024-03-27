@@ -31,7 +31,7 @@ export interface NodeArgs {
   role: Input<NodeRole>;
 }
 
-export interface ClusterPkiArgs<T extends NodeMapInput> {
+export interface ClusterPkiArgs<T extends NodeMapInput = NodeMapInput> {
   algorithm?: Input<Algorithm>;
   clusterName: Input<string>;
   nodes: T;
@@ -49,22 +49,25 @@ export class ClusterPki<T extends NodeMapInput = NodeMapInput> extends Component
   public static readonly defaultExpiry: number = 8760;
   public static readonly defaultRsaBits: number = 2048;
 
-  public readonly admin: Certificate;
-  public readonly algorithm: Output<Algorithm>;
-  public readonly clusterName: Output<string>;
-  public readonly controllerManager: Certificate;
-  public readonly validityPeriodHours: Output<number>;
-  public readonly kubelet: CertMap<T>;
-  public readonly kubeProxy: Certificate;
-  public readonly kubernetes: Certificate;
-  public readonly kubeScheduler: Certificate;
-  public readonly publicIp: Output<string>;
-  public readonly rootCa: RootCa;
-  public readonly serviceAccounts: Certificate;
-  public readonly rsaBits: Output<number>;
+  public readonly admin!: Certificate;
+  public readonly algorithm!: Output<Algorithm>;
+  public readonly clusterName!: Output<string>;
+  public readonly controllerManager!: Certificate;
+  public readonly validityPeriodHours!: Output<number>;
+  public readonly kubelet!: CertMap<T>;
+  public readonly kubeProxy!: Certificate;
+  public readonly kubernetes!: Certificate;
+  public readonly kubeScheduler!: Certificate;
+  public readonly publicIp!: Output<string>;
+  public readonly rootCa!: RootCa;
+  public readonly serviceAccounts!: Certificate;
+  public readonly rsaBits!: Output<number>;
 
   constructor(private name: string, args: ClusterPkiArgs<T>, opts?: ComponentResourceOptions) {
     super('thecluster:index:clusterPki', name, args, opts);
+
+    // Rehydrating
+    if (opts?.urn) return;
 
     const algorithm = output(args.algorithm ?? ClusterPki.defaultAlgorithm);
     const clusterName = output(args.clusterName);

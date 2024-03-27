@@ -18,13 +18,16 @@ export interface CertificateArgs extends KeyPairArgs {
 }
 
 export class Certificate extends KeyPair<LocallySignedCert> {
-  public readonly allowedUses: Output<AllowedUsage[]>;
-  public readonly certPem: Output<string>;
-  public readonly cert: LocallySignedCert;
-  public readonly csr: CertRequest;
+  public readonly allowedUses!: Output<AllowedUsage[]>;
+  public readonly certPem!: Output<string>;
+  public readonly cert!: LocallySignedCert;
+  public readonly csr!: CertRequest;
 
   constructor(name: string, args: CertificateArgs, opts?: ComponentResourceOptions) {
     super('kubernetes-the-hard-way:index:Certificate', name, args, opts);
+
+    // Rehydrating
+    if (opts?.urn) return;
 
     const key = this.key;
 
