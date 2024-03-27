@@ -6,6 +6,11 @@ function main(args: string[]): Promise<void> {
     const schema: string = readFileSync(require.resolve('./schema.json'), { encoding: 'utf-8' });
     let version: string = require('./package.json').version;
 
+    if (version === "${VERSION}" && require("inspector")?.url() !== undefined) {
+      // We're running in debug mode so just use a valid placeholder version.
+      version = "0.0.0";
+    }
+
     // Node allows for the version to be prefixed by a "v",
     // while semver doesn't. If there is a v, strip it off.
     if (version.startsWith('v')) {

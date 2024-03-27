@@ -5,6 +5,8 @@ import * as pki from './clusterPki';
 import * as keypair from './keypair';
 import * as remoteFile from './remoteFile';
 import * as rootCa from './rootCa';
+import { construct } from './resources';
+import { resourceToConstructResult } from './util';
 
 export class Provider implements provider.Provider {
   constructor(readonly version: string, readonly schema: string) {
@@ -13,13 +15,13 @@ export class Provider implements provider.Provider {
       construct(name, type, urn) {
         switch (type) {
           case 'kubernetes-the-hard-way:index:Certificate':
-            return new cert.Certificate(name, {} as cert.CertificateArgs, { urn });
+            return new cert.Certificate(name, <any>undefined, { urn });
           case 'kubernetes-the-hard-way:index:ClusterPki':
-            return new pki.ClusterPki(name, {} as pki.ClusterPkiArgs, { urn });
+            return new pki.ClusterPki(name, <any>undefined, { urn });
           case 'kubernetes-the-hard-way:index:RemoteFile':
-            return new remoteFile.RemoteFile(name, {} as remoteFile.RemoteFileArgs, { urn });
+            return new remoteFile.RemoteFile(name, <any>undefined, { urn });
           case 'kubernetes-the-hard-way:index:RootCa':
-            return new rootCa.RootCa(name, {} as rootCa.RootCaArgs, { urn });
+            return new rootCa.RootCa(name, <any>undefined, { urn });
           default:
             throw new Error(`unknown resource type ${type}`);
         }
@@ -33,18 +35,12 @@ export class Provider implements provider.Provider {
     inputs: pulumi.Inputs,
     options: pulumi.ComponentResourceOptions
   ): Promise<provider.ConstructResult> {
-    switch (type) {
-      case 'kubernetes-the-hard-way:index:Certificate':
-        return await cert.construct(name, inputs, options);
-      case 'kubernetes-the-hard-way:index:ClusterPki':
-        return await pki.construct(name, inputs, options);
-      case 'kubernetes-the-hard-way:index:RemoteFile':
-        return await remoteFile.construct(name, inputs, options);
-      case 'kubernetes-the-hard-way:index:RootCa':
-        return await rootCa.construct(name, inputs, options);
-      default:
-        throw new Error(`unknown resource type ${type}`);
+    const resource = construct(name, type, inputs, options);
+    if (resource === undefined) {
+      throw new Error(`unknown resource type ${type}`);
     }
+
+    return resourceToConstructResult(resource);
   }
 
   async call(token: string, inputs: pulumi.Inputs): Promise<provider.InvokeResult> {
