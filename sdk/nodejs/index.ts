@@ -55,9 +55,11 @@ import { RootCa } from "./rootCa";
 export * from "./types/enums";
 
 // Export sub-modules:
+import * as tools from "./tools";
 import * as types from "./types";
 
 export {
+    tools,
     types,
 };
 

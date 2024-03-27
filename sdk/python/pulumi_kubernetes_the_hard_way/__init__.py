@@ -17,6 +17,14 @@ from .provider import *
 from .remote_file import *
 from .root_ca import *
 from ._inputs import *
+
+# Make subpackages available:
+if typing.TYPE_CHECKING:
+    import pulumi_kubernetes_the_hard_way.tools as __tools
+    tools = __tools
+else:
+    tools = _utilities.lazy_import('pulumi_kubernetes_the_hard_way.tools')
+
 _utilities.register(
     resource_modules="""
 [
@@ -30,6 +38,15 @@ _utilities.register(
    "kubernetes-the-hard-way:index:EncryptionKey": "EncryptionKey",
    "kubernetes-the-hard-way:index:RemoteFile": "RemoteFile",
    "kubernetes-the-hard-way:index:RootCa": "RootCa"
+  }
+ },
+ {
+  "pkg": "kubernetes-the-hard-way",
+  "mod": "tools",
+  "fqn": "pulumi_kubernetes_the_hard_way.tools",
+  "classes": {
+   "kubernetes-the-hard-way:tools:Tar": "Tar",
+   "kubernetes-the-hard-way:tools:Wget": "Wget"
   }
  }
 ]
