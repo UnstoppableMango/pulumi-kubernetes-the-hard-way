@@ -333,6 +333,126 @@ resources:
       newCertificate: kubernetes-the-hard-way:index:RootCa/newCertificate
       installCert: kubernetes-the-hard-way:index:RootCa/installCert
       installKey: kubernetes-the-hard-way:index:RootCa/installKey
+  kubernetes-the-hard-way:tools:Tar:
+    isComponent: true
+    description: Abstracion over the `tar` utility on a remote system.
+    inputProperties:
+      archive:
+        type: string
+        description: Corresponds to the [ARCHIVE] argument.
+      connection:
+        $ref: "/command/v0.9.0/schema.json#/types/command:remote:Connection"
+        description: Connection details for the remote system.
+      directory:
+        type: string
+        description: Corresponds to the --directory option.
+      extract:
+        type: boolean
+        description: Corresponds to the --extract option.
+      gzip:
+        type: boolean
+        description: Corresponds to the --gzip option.
+    requiredInputs:
+      - archive
+      - connection
+    properties:
+      archive:
+        type: string
+        description: Corresponds to the [ARCHIVE] argument.
+      command:
+        $ref: "/command/v0.9.0/schema.json#/resources/command:remote:Command"
+        description: Represents the remote `tar` operation.
+      directory:
+        type: string
+        description: Corresponds to the --directory option.
+      extract:
+        type: boolean
+        description: Corresponds to the --extract option.
+      gzip:
+        type: boolean
+        description: Corresponds to the --gzip option.
+      stderr:
+        type: string
+        description: The process' stderr.
+      stdin:
+        type: string
+        description: The process' stdin.
+      stdout:
+        type: string
+        description: The process' stdout.
+    required:
+      - archive
+      - command
+      - extract
+      - stderr
+      - stdout
+  kubernetes-the-hard-way:tools:Wget:
+    isComponent: true
+    description: Abstraction over the `wget` utility on a remote system.
+    inputProperties:
+      connection:
+        $ref: "/command/v0.9.0/schema.json#/types/command:remote:Connection"
+        description: Connection details for the remote system.
+      directoryPrefix:
+        type: string
+        description: Corresponds to the --directory-prefix option.
+      httpsOnly:
+        type: boolean
+        description: Corresponds to the --https-only option.
+      outputDocument:
+        type: string
+        description: Corresponds to the --output-document option.
+      quiet:
+        type: boolean
+        description: Corresponds to the --quiet option.
+      timestamping:
+        type: boolean
+        description: Corresponds to the --timestamping option.
+      url:
+        type: string
+        description: Corresponse to the [URL] argument.
+    requiredInputs:
+      - connection
+      - url
+    properties:
+      command:
+        $ref: "/command/v0.9.0/schema.json#/resources/command:remote:Command"
+        description: Represents the remote `tar` operation.
+      directoryPrefix:
+        type: string
+        description: Corresponds to the --directory-prefix option.
+      httpsOnly:
+        type: boolean
+        description: Corresponds to the --https-only option.
+      outputDocument:
+        type: string
+        description: Corresponds to the --output-document option.
+      quiet:
+        type: boolean
+        description: Corresponds to the --quiet option.
+      stderr:
+        type: string
+        description: The process' stderr.
+      stdin:
+        type: string
+        description: The process' stdin.
+      stdout:
+        type: string
+        description: The process' stdout.
+      timestamping:
+        type: boolean
+        description: Corresponds to the --timestamping option.
+      url:
+        type: string
+        description: Corresponse to the [URL] argument.
+    required:
+      - command
+      - httpsOnly
+      - quiet
+      - stderr
+      - stdout
+      - timestamping
+      - url
 types:
   kubernetes-the-hard-way:index:Algorithm:
     description: TODO
