@@ -13,28 +13,22 @@ export interface WgetArgs {
 }
 
 export class Wget extends ComponentResource {
-  public readonly command: Command;
-  public readonly directoryPrefix: Output<string | undefined>;
-  public readonly httpsOnly: Output<boolean>;
-  public readonly outputDocument: Output<string | undefined>;
-  public readonly quiet: Output<boolean>;
-  public readonly timestamping: Output<boolean>;
-  public readonly url: Output<string>;
-
-  public get stderr(): Output<string> {
-    return this.command.stderr;
-  }
-
-  public get stdin(): Output<string | undefined> {
-    return this.command.stdin;
-  }
-
-  public get stdout(): Output<string> {
-    return this.command.stdout;
-  }
+  public readonly command!: Command;
+  public readonly directoryPrefix!: Output<string | undefined>;
+  public readonly httpsOnly!: Output<boolean>;
+  public readonly outputDocument!: Output<string | undefined>;
+  public readonly quiet!: Output<boolean>;
+  public readonly stderr!: Output<string>;
+  public readonly stdin!: Output<string | undefined>;
+  public readonly stdout!: Output<string>;
+  public readonly timestamping!: Output<boolean>;
+  public readonly url!: Output<string>;
 
   constructor(name: string, args: WgetArgs, opts?: ComponentResourceOptions) {
-    super('thecluster:index:wget', name, args, opts);
+    super('kubernetes-the-hard-way:tools:wget', name, args, opts);
+
+    // Rehydrating
+    if (opts?.urn) return;
 
     const directoryprefix = output(args.directoryPrefix);
     const httpsOnly = output(args.httpsOnly ?? true);
@@ -71,12 +65,18 @@ export class Wget extends ComponentResource {
     this.httpsOnly = httpsOnly;
     this.outputDocument = outputDocument;
     this.quiet = quiet;
+    this.stderr = command.stderr;
+    this.stdin = command.stdin;
+    this.stdout = command.stdout;
     this.timestamping = timestamping;
     this.url = url;
 
     this.registerOutputs({
       command, httpsOnly, outputDocument,
       quiet, timestamping, url,
+      stderr: this.stderr,
+      stdin: this.stdin,
+      stdout: this.stdout,
     });
   }
 }

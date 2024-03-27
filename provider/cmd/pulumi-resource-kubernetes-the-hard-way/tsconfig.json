@@ -13,6 +13,9 @@
         "forceConsistentCasingInFileNames": true
     },
     "files": [
+        "tools/index.ts",
+        "tools/tar.ts",
+        "tools/wget.ts",
         "certificate.ts",
         "clusterPki.ts",
         "encryption.ts",
