@@ -15,6 +15,7 @@
     "files": [
         "certificate.ts",
         "clusterPki.ts",
+        "encryption.ts",
         "index.ts",
         "keypair.ts",
         "provider.ts",
