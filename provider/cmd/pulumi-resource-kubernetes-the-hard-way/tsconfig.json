@@ -18,6 +18,7 @@
         "encryption.ts",
         "index.ts",
         "keypair.ts",
+        "kubeconfig.ts",
         "provider.ts",
         "remoteFile.ts",
         "resources.ts",

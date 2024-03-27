@@ -79,7 +79,7 @@ function getKubeconfig(
     clusters: [{
       name: pki.clusterName,
       cluster: {
-        certificateAuthorityData: pki.rootCa.cert.certPem,
+        certificateAuthorityData: pki.rootCa.certPem,
         server: interpolate`https://${ip}:6443`,
       },
     }],
@@ -94,7 +94,7 @@ function getKubeconfig(
       name: output(username),
       user: {
         clientCertificateData: cert.certPem,
-        clientKeyData: cert.keyPem,
+        clientKeyData: cert.privateKeyPem,
       },
     }],
   };
