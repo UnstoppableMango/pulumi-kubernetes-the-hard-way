@@ -1,17 +1,28 @@
 import { ComponentResource, ComponentResourceOptions, Inputs } from '@pulumi/pulumi';
 import { Certificate } from './certificate';
 import { ClusterPki } from './clusterPki';
-import { RemoteFile } from './remoteFile';
-import { RootCa } from './rootCa';
+import { InstallArgs, RemoteFile } from './remoteFile';
+import { NewCertificateArgs, RootCa } from './rootCa';
 
 export type ConstructComponent<T extends ComponentResource = ComponentResource>
   = (name: string, inputs: any, options: ComponentResourceOptions) => T;
 
-export type ResourceConstructor = {
+type ResourceConstructor = {
   readonly 'kubernetes-the-hard-way:index:Certificate': ConstructComponent<Certificate>;
   readonly 'kubernetes-the-hard-way:index:ClusterPki': ConstructComponent<ClusterPki>;
   readonly 'kubernetes-the-hard-way:index:RemoteFile': ConstructComponent<RemoteFile>;
   readonly 'kubernetes-the-hard-way:index:RootCa': ConstructComponent<RootCa>;
+};
+
+type Functions = {
+  'kubernetes-the-hard-way:index:Certificate/installCert': (inputs: InstallArgs) => Promise<RemoteFile>;
+  'kubernetes-the-hard-way:index:Certificate/installKey': (inputs: InstallArgs) => Promise<RemoteFile>;
+  'kubernetes-the-hard-way:index:installCert': (inputs: InstallArgs) => Promise<RemoteFile>;
+  'kubernetes-the-hard-way:index:newCertificate': (inputs: NewCertificateArgs) => Promise<Certificate>;
+  'kubernetes-the-hard-way:index:installKey': (inputs: InstallArgs) => Promise<RemoteFile>;
+  'kubernetes-the-hard-way:index:RootCa/newCertificate': (inputs: NewCertificateArgs) => Promise<Certificate>;
+  'kubernetes-the-hard-way:index:RootCa/installCert': (inputs: InstallArgs) => Promise<RemoteFile>;
+  'kubernetes-the-hard-way:index:RootCa/installKey': (inputs: InstallArgs) => Promise<RemoteFile>;
 };
 
 const resources: ResourceConstructor = {
@@ -20,6 +31,8 @@ const resources: ResourceConstructor = {
   "kubernetes-the-hard-way:index:RemoteFile": (...args) => new RemoteFile(...args),
   "kubernetes-the-hard-way:index:RootCa": (...args) => new RootCa(...args),
 };
+
+const functions: Functions = {};
 
 export function construct(
   name: string,
