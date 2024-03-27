@@ -71,4 +71,8 @@ export class Provider implements provider.Provider {
         throw new Error(`unknown call token ${token}`);
     }
   }
+
+  async invoke(token: string, inputs: pulumi.Inputs): Promise<provider.InvokeResult> {
+    return this.call(token, inputs);
+  }
 }
