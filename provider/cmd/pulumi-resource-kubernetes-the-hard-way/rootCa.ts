@@ -22,16 +22,7 @@ export class RootCa extends KeyPair<SelfSignedCert> {
   public readonly certPem!: Output<string>;
 
   constructor(name: string, args: RootCaArgs, opts?: ComponentResourceOptions) {
-    const props = opts?.urn ? {
-      allowedUses: undefined,
-      cert: undefined,
-      certPem: undefined,
-      key: undefined,
-      privateKeyPem: undefined,
-      publicKeyPem: undefined,
-    } : { name, args, opts };
-
-    super('kubernetes-the-hard-way:index:RootCa', name, props, opts);
+    super('kubernetes-the-hard-way:index:RootCa', name, args, opts);
 
     // Rehydrating
     if (opts?.urn) return;
