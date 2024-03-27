@@ -16,12 +16,12 @@ const cert = new kthw.Certificate('simple', {
 });
 
 // TODO: Fix
-// const cert2 = ca.newCertificate({
-//   name: 'nested',
-//   allowedUses: ['cert_signing'],
-//   algorithm: 'RSA',
-//   validityPeriodHours: 256,
-// });
+const cert2 = ca.newCertificate({
+  name: 'nested',
+  allowedUses: ['cert_signing'],
+  algorithm: 'RSA',
+  validityPeriodHours: 256,
+});
 
 const pki = new kthw.ClusterPki('simple', {
   clusterName: 'simple-cluster',

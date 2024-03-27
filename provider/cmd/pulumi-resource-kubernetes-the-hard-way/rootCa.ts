@@ -17,12 +17,24 @@ export interface RootCaArgs extends KeyPairArgs {
 }
 
 export class RootCa extends KeyPair<SelfSignedCert> {
-  public readonly allowedUses: Output<AllowedUsage[]>;
-  public readonly cert: SelfSignedCert;
-  public readonly certPem: Output<string>;
+  public readonly allowedUses!: Output<AllowedUsage[]>;
+  public readonly cert!: SelfSignedCert;
+  public readonly certPem!: Output<string>;
 
   constructor(name: string, args: RootCaArgs, opts?: ComponentResourceOptions) {
-    super('kubernetes-the-hard-way:index:RootCa', name, args, opts);
+    const props = opts?.urn ? {
+      allowedUses: undefined,
+      cert: undefined,
+      certPem: undefined,
+      key: undefined,
+      privateKeyPem: undefined,
+      publicKeyPem: undefined,
+    } : { name, args, opts };
+
+    super('kubernetes-the-hard-way:index:RootCa', name, props, opts);
+
+    // Rehydrating
+    if (opts?.urn) return;
 
     const key = this.key;
 
@@ -34,7 +46,7 @@ export class RootCa extends KeyPair<SelfSignedCert> {
         AllowedUsage.Server_auth,
         AllowedUsage.Client_auth,
       ],
-      privateKeyPem: this.key.privateKeyPem,
+      privateKeyPem: key.privateKeyPem,
       validityPeriodHours: args.validityPeriodHours,
       subject: output(args.subject).apply(subject => ({
         commonName: subject?.commonName ?? 'Kubernetes',
@@ -68,6 +80,12 @@ export class RootCa extends KeyPair<SelfSignedCert> {
 
 export function newCertificate(ca: Input<RootCa>, args: NewCertificateArgs): Certificate {
   const self = output(ca);
+  // self.apply(x => log.error(`SELF: ${JSON.stringify(x)}`));
+  // self.certPem.apply(x => log.error(`CERTPEM: ${x}`));
+  // self.privateKeyPem.apply(x => log.error(`PKPEM: ${x}`));
+  // self.allowedUses.apply(x => log.error(`USES: ${x}`));
+  // self.cert.apply(x => log.error(`CERT: ${x}`));
+  // self.key.apply(x => log.error(`KEY: ${x}`));
   return new Certificate(args.name, {
     algorithm: args.algorithm,
     allowedUses: args.allowedUses,

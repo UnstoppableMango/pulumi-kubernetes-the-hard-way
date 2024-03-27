@@ -15,15 +15,18 @@ export interface RemoteFileArgs {
 }
 
 export class RemoteFile extends ComponentResource {
-  public readonly command: Command;
-  public readonly content: Output<string>;
-  public readonly path: Output<string>;
-  public readonly stderr: Output<string>;
-  public readonly stdin: Output<string | undefined>;
-  public readonly stdout: Output<string>;
+  public readonly command!: Command;
+  public readonly content!: Output<string>;
+  public readonly path!: Output<string>;
+  public readonly stderr!: Output<string>;
+  public readonly stdin!: Output<string | undefined>;
+  public readonly stdout!: Output<string>;
 
   constructor(name: string, args: RemoteFileArgs, opts?: ComponentResourceOptions) {
     super('kubernetes-the-hard-way:index:RemoteFile', name, args, opts);
+
+    // Rehydrating
+    if (opts?.urn) return;
 
     const content = output(args.content);
     const path = output(args.path);

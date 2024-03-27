@@ -11,6 +11,8 @@ export class Provider implements provider.Provider {
     pulumi.runtime.registerResourceModule('kubernetes-the-hard-way', 'index', {
       version: version,
       construct(name, type, urn) {
+        pulumi.log.error(`REHYDRATING ${name} MAYBE`);
+        pulumi.log.error(`REHYDRATE URN: ${urn}`)
         switch (type) {
           case 'kubernetes-the-hard-way:index:Certificate':
             return new cert.Certificate(name, {} as cert.CertificateArgs, { urn });
