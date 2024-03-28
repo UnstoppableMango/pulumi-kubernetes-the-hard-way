@@ -71,6 +71,10 @@ test_go: provider
 test_nodejs: provider install_nodejs_sdk .make/examples_dockerfile
 	cd examples && go test -v $(TEST_SHORT) -tags=nodejs -timeout 2h $(TEST_RUN)
 
+.PHONY: provider_test
+provider_test: provider install_sdks
+	cd provider && PATH=$(WORKING_DIR)/bin:$(PATH) go test
+
 .PHONY: install_provider
 install_provider: .make/install_provider
 
