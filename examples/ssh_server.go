@@ -54,10 +54,11 @@ func StartSshServer(ctx context.Context, opts ...SshServerOption) (SshServer, er
 			"PUID":            "1000",
 			"PGID":            "1000",
 			"TZ":              "America/Chicago",
-			"PUBLIC_KEY":      options.PublicKey,
-			"PASSWORD_ACCESS": strconv.FormatBool(options.Password != ""),
 			"USER_NAME":       options.Username,
+			"PASSWORD_ACCESS": strconv.FormatBool(options.Password != ""),
 			"USER_PASSWORD":   options.Password,
+			"PUBLIC_KEY":      options.PublicKey,
+			"SUDO_ACCESS":     "true",
 		},
 		WaitingFor: wait.ForExposedPort(), // TODO: What's a good condition
 	}

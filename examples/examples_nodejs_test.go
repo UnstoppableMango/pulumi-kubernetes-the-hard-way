@@ -50,7 +50,7 @@ func TestRemoteFileTs(t *testing.T) {
 				"user":     username,
 				"password": password,
 				"content":  "Some test content idk",
-				"path":     "/home/testuser/remote-file-test",
+				"path":     "/config/remote-file-test",
 			},
 		})
 
