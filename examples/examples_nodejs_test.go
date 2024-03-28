@@ -4,6 +4,7 @@ package examples
 
 import (
 	"context"
+	"path"
 	"testing"
 
 	"github.com/pulumi/pulumi/pkg/v3/testing/integration"
@@ -23,26 +24,37 @@ import (
 // }
 
 func TestRemoteFileTs(t *testing.T) {
+	const username = "test-user"
+	const password = "test-password"
+
 	ctx := context.Background()
-	server, err := startSshServer(ctx)
+	server, err := StartSshServer(ctx,
+		WithSshUsername(username),
+		WithSshPassword(password))
 	assert.NoError(t, err)
 
-	defer stopSshServer(ctx, server) // TODO: Error handling?
+	port, err := server.Port(ctx)
+	assert.NoError(t, err)
 
-	// test := getJSBaseOptions(t).
-	// 	With(integration.ProgramTestOptions{
-	// 		Dir:           path.Join(getCwd(t), "remote-file"),
-	// 		Quick:         true,
-	// 		SkipRefresh:   true,
-	// 		RunUpdateTest: false,
-	// 		Config: map[string]string{
-	// 			"host":    "localhost",
-	// 			"content": "Some test content idk",
-	// 			"path":    "/home/testuser/remote-file-test",
-	// 		},
-	// 	})
+	defer StopSshServer(ctx, server) // TODO: Error handling?
 
-	// integration.ProgramTest(t, &test)
+	test := getJSBaseOptions(t).
+		With(integration.ProgramTestOptions{
+			Dir:           path.Join(getCwd(t), "remote-file"),
+			Quick:         true,
+			SkipRefresh:   true,
+			RunUpdateTest: false,
+			Config: map[string]string{
+				"host":     "localhost",
+				"port":     port,
+				"user":     username,
+				"password": password,
+				"content":  "Some test content idk",
+				"path":     "/home/testuser/remote-file-test",
+			},
+		})
+
+	integration.ProgramTest(t, &test)
 }
 
 func getJSBaseOptions(t *testing.T) integration.ProgramTestOptions {

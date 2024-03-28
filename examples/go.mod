@@ -3,6 +3,7 @@ module github.com/UnstoppableMango/pulumi-kubernetes-the-hard-way/examples
 go 1.21
 
 require (
+	github.com/docker/go-connections v0.5.0
 	github.com/pulumi/pulumi/pkg/v3 v3.111.0
 	github.com/pulumi/pulumi/sdk/v3 v3.111.1
 	github.com/stretchr/testify v1.9.0
@@ -69,7 +70,6 @@ require (
 	github.com/distribution/reference v0.5.0 // indirect
 	github.com/djherbis/times v1.5.0 // indirect
 	github.com/docker/docker v25.0.3+incompatible // indirect
-	github.com/docker/go-connections v0.5.0 // indirect
 	github.com/docker/go-units v0.5.0 // indirect
 	github.com/edsrzf/mmap-go v1.1.0 // indirect
 	github.com/emirpasic/gods v1.18.1 // indirect
