@@ -23,9 +23,12 @@ import (
 // 	integration.ProgramTest(t, &test)
 // }
 
-func TestRemoteFileTs(t *testing.T) {
-	const username = "test-user"
-	const password = "test-password"
+func TestRemoteTs(t *testing.T) {
+	const (
+		username = "test-user"
+		password = "test-password"
+		content  = "Some content idk"
+	)
 
 	ctx := context.Background()
 	server, err := StartSshServer(ctx,
@@ -40,7 +43,7 @@ func TestRemoteFileTs(t *testing.T) {
 
 	test := getJSBaseOptions(t).
 		With(integration.ProgramTestOptions{
-			Dir:           path.Join(getCwd(t), "remote-file"),
+			Dir:           path.Join(getCwd(t), "remote-ts"),
 			Quick:         true,
 			SkipRefresh:   true,
 			RunUpdateTest: false,
@@ -49,8 +52,12 @@ func TestRemoteFileTs(t *testing.T) {
 				"port":     port,
 				"user":     username,
 				"password": password,
-				"content":  "Some test content idk",
+				"content":  content,
 				"path":     "/config/remote-file-test",
+			},
+			ExtraRuntimeValidation: func(t *testing.T, stack integration.RuntimeValidationStackInfo) {
+				assert.Equal(t, content, stack.Outputs["stdout"])
+				assert.Empty(t, stack.Outputs["stderr"])
 			},
 		})
 
