@@ -13,6 +13,11 @@ export type ClusterPki = import("./clusterPki").ClusterPki;
 export const ClusterPki: typeof import("./clusterPki").ClusterPki = null as any;
 utilities.lazyLoad(exports, ["ClusterPki"], () => require("./clusterPki"));
 
+export { EncryptionKeyArgs } from "./encryptionKey";
+export type EncryptionKey = import("./encryptionKey").EncryptionKey;
+export const EncryptionKey: typeof import("./encryptionKey").EncryptionKey = null as any;
+utilities.lazyLoad(exports, ["EncryptionKey"], () => require("./encryptionKey"));
+
 export { InstallCertArgs, InstallCertResult, InstallCertOutputArgs } from "./installCert";
 export const installCert: typeof import("./installCert").installCert = null as any;
 export const installCertOutput: typeof import("./installCert").installCertOutput = null as any;
@@ -50,9 +55,11 @@ import { RootCa } from "./rootCa";
 export * from "./types/enums";
 
 // Export sub-modules:
+import * as tools from "./tools";
 import * as types from "./types";
 
 export {
+    tools,
     types,
 };
 
@@ -64,6 +71,8 @@ const _module = {
                 return new Certificate(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:index:ClusterPki":
                 return new ClusterPki(name, <any>undefined, { urn })
+            case "kubernetes-the-hard-way:index:EncryptionKey":
+                return new EncryptionKey(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:index:RemoteFile":
                 return new RemoteFile(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:index:RootCa":
