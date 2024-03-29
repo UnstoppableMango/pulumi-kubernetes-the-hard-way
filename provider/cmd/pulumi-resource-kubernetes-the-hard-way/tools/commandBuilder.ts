@@ -38,7 +38,8 @@ export class CommandBuilder {
   }
 }
 
-function toArray(x: string | Input<string>[]): Output<string[]> {
+// Ideally would like for this to not be exported
+export function toArray(x: string | Input<string>[]): Output<string[]> {
   if (typeof x === 'string') {
     return output([x]);
   }
