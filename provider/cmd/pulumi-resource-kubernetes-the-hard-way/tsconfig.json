@@ -19,6 +19,7 @@
         "tools/wget.ts",
         "certificate.ts",
         "clusterPki.ts",
+        "commandBuilder.ts",
         "encryption.ts",
         "index.ts",
         "keypair.ts",
