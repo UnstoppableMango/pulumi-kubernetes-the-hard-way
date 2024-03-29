@@ -39,12 +39,12 @@ export class CommandBuilder {
 }
 
 // Ideally would like for this to not be exported
-export function toArray(x: string | Input<string>[]): Output<string[]> {
+export function toArray(x: string | Input<string>[] | undefined): Output<string[]> {
   if (typeof x === 'string') {
     return output([x]);
   }
 
-  return x?.length > 0 ? all(x) : output([]);
+  return x && x.length > 0 ? all(x) : output([]);
 }
 
 function prepend(a: Input<string[]>): (b: string[]) => Output<string[]> {
