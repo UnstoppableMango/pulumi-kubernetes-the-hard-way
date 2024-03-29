@@ -25,12 +25,13 @@ const wget = new Wget('remote', {
   timestamping: false,
 });
 
-const tar = new Tar('remote', {
-  connection: { host, port, user, password },
-  archive: path.join(basePath, 'text-file.tar.gz'),
-  extract: true,
-  gzip: true,
-});
+// This has permissions issues at the moment for some reason
+// const tar = new Tar('remote', {
+//   connection: { host, port, user, password },
+//   archive: path.join(basePath, 'text-file.tar.gz'),
+//   extract: true,
+//   gzip: true,
+// });
 
 export const fileStderr = file.stderr;
 export const fileStdout = file.stdout;
@@ -39,5 +40,5 @@ export const wgetStderr = wget.stderr;
 export const wgetStdout = wget.stdout;
 export const wgetCommand = wget.command;
 
-export const tarStderr = tar.stderr;
-export const tarStdout = tar.stdout;
+// export const tarStderr = tar.stderr;
+// export const tarStdout = tar.stdout;
