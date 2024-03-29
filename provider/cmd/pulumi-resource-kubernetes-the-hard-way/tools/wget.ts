@@ -1,6 +1,7 @@
-import { ComponentResource, ComponentResourceOptions, Input, Output, all, interpolate, output } from '@pulumi/pulumi';
+import { ComponentResource, ComponentResourceOptions, Input, Output, output } from '@pulumi/pulumi';
 import { Command } from '@pulumi/command/remote';
 import { remote } from '@pulumi/command/types/input';
+import { CommandBuilder } from './commandBuilder';
 
 export interface WgetArgs {
   connection: Input<remote.ConnectionArgs>;
@@ -40,29 +41,18 @@ export class Wget extends ComponentResource {
     const timestamping = output(args.timestamping ?? true);
     const url = output(args.url);
 
-    const options: Output<string> = all([
-      directoryprefix,
-      httpsOnly,
-      noVerbose,
-      outputDocument,
-      quiet,
-      timestamping,
-    ]).apply(([directoryPrefix, httpsOnly, noVerbose, outputDocument, quiet, timestamping]) => {
-      const options: string[] = [];
-
-      if (directoryPrefix) options.push(`--directory-prefix '${directoryPrefix}'`);
-      if (httpsOnly) options.push('--https-only');
-      if (noVerbose) options.push('--no-verbose');
-      if (outputDocument) options.push(`--output-document '${outputDocument}'`);
-      if (quiet) options.push('--quiet');
-      if (timestamping ?? true) options.push('--timestamping');
-
-      return options.join(' ');
-    });
+    const builder = new CommandBuilder('wget')
+      .option('--directory-prefix', directoryprefix)
+      .option('--https-only', httpsOnly)
+      .option('--no-verbose', noVerbose)
+      .option('--outputDocument', outputDocument)
+      .option('--quiet', quiet)
+      .option('--timestamping', timestamping)
+      .arg(url);
 
     const command = new Command(name, {
       connection: args.connection,
-      create: interpolate`wget ${options} '${url}'`,
+      create: builder.command,
     }, { parent: this });
 
     this.command = command;
