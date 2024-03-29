@@ -15,17 +15,17 @@ import (
 //go:embed test-data/example.com.html
 var exampleComHtml string
 
-// func TestSimpleTs(t *testing.T) {
-// 	test := getJSBaseOptions(t).
-// 		With(integration.ProgramTestOptions{
-// 			Dir:           path.Join(getCwd(t), "simple-ts"),
-// 			Quick:         true,
-// 			SkipRefresh:   true,
-// 			RunUpdateTest: false,
-// 		})
+func TestSimpleTs(t *testing.T) {
+	test := getJSBaseOptions(t).
+		With(integration.ProgramTestOptions{
+			Dir:           path.Join(getCwd(t), "simple-ts"),
+			Quick:         true,
+			SkipRefresh:   true,
+			RunUpdateTest: false,
+		})
 
-// 	integration.ProgramTest(t, &test)
-// }
+	integration.ProgramTest(t, &test)
+}
 
 func TestRemoteTs(t *testing.T) {
 	const (
