@@ -4,13 +4,11 @@
 package com.unmango.kubernetesthehardway.tools;
 
 import com.pulumi.command.remote.inputs.ConnectionArgs;
-import com.pulumi.core.Either;
 import com.pulumi.core.Output;
 import com.pulumi.core.annotations.Import;
 import com.pulumi.exceptions.MissingRequiredPropertyException;
 import java.lang.Boolean;
 import java.lang.String;
-import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import javax.annotation.Nullable;
@@ -81,21 +79,6 @@ public final class TarArgs extends com.pulumi.resources.ResourceArgs {
     }
 
     /**
-     * Corresponds to the [FILE] argument.
-     * 
-     */
-    @Import(name="files")
-    private @Nullable Output<Either<List<String>,String>> files;
-
-    /**
-     * @return Corresponds to the [FILE] argument.
-     * 
-     */
-    public Optional<Output<Either<List<String>,String>>> files() {
-        return Optional.ofNullable(this.files);
-    }
-
-    /**
      * Corresponds to the --gzip option.
      * 
      */
@@ -117,7 +100,6 @@ public final class TarArgs extends com.pulumi.resources.ResourceArgs {
         this.connection = $.connection;
         this.directory = $.directory;
         this.extract = $.extract;
-        this.files = $.files;
         this.gzip = $.gzip;
     }
 
@@ -221,47 +203,6 @@ public final class TarArgs extends com.pulumi.resources.ResourceArgs {
          */
         public Builder extract(Boolean extract) {
             return extract(Output.of(extract));
-        }
-
-        /**
-         * @param files Corresponds to the [FILE] argument.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder files(@Nullable Output<Either<List<String>,String>> files) {
-            $.files = files;
-            return this;
-        }
-
-        /**
-         * @param files Corresponds to the [FILE] argument.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder files(Either<List<String>,String> files) {
-            return files(Output.of(files));
-        }
-
-        /**
-         * @param files Corresponds to the [FILE] argument.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder files(List<String> files) {
-            return files(Either.ofLeft(files));
-        }
-
-        /**
-         * @param files Corresponds to the [FILE] argument.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder files(String files) {
-            return files(Either.ofRight(files));
         }
 
         /**

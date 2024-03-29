@@ -41,10 +41,6 @@ export class Tar extends pulumi.ComponentResource {
      */
     public readonly extract!: pulumi.Output<boolean>;
     /**
-     * Corresponds to the [FILE] argument.
-     */
-    public readonly files!: pulumi.Output<string[]>;
-    /**
      * Corresponds to the --gzip option.
      */
     public readonly gzip!: pulumi.Output<boolean | undefined>;
@@ -82,7 +78,6 @@ export class Tar extends pulumi.ComponentResource {
             resourceInputs["connection"] = args ? (args.connection ? pulumi.output(args.connection).apply(pulumiCommand.types.input.remote.connectionArgsProvideDefaults) : undefined) : undefined;
             resourceInputs["directory"] = args ? args.directory : undefined;
             resourceInputs["extract"] = args ? args.extract : undefined;
-            resourceInputs["files"] = args ? args.files : undefined;
             resourceInputs["gzip"] = args ? args.gzip : undefined;
             resourceInputs["command"] = undefined /*out*/;
             resourceInputs["stderr"] = undefined /*out*/;
@@ -93,7 +88,6 @@ export class Tar extends pulumi.ComponentResource {
             resourceInputs["command"] = undefined /*out*/;
             resourceInputs["directory"] = undefined /*out*/;
             resourceInputs["extract"] = undefined /*out*/;
-            resourceInputs["files"] = undefined /*out*/;
             resourceInputs["gzip"] = undefined /*out*/;
             resourceInputs["stderr"] = undefined /*out*/;
             resourceInputs["stdin"] = undefined /*out*/;
@@ -124,10 +118,6 @@ export interface TarArgs {
      * Corresponds to the --extract option.
      */
     extract?: pulumi.Input<boolean>;
-    /**
-     * Corresponds to the [FILE] argument.
-     */
-    files?: pulumi.Input<pulumi.Input<string>[] | string>;
     /**
      * Corresponds to the --gzip option.
      */

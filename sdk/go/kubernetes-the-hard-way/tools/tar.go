@@ -25,8 +25,6 @@ type Tar struct {
 	Directory pulumi.StringPtrOutput `pulumi:"directory"`
 	// Corresponds to the --extract option.
 	Extract pulumi.BoolOutput `pulumi:"extract"`
-	// Corresponds to the [FILE] argument.
-	Files pulumi.StringArrayOutput `pulumi:"files"`
 	// Corresponds to the --gzip option.
 	Gzip pulumi.BoolPtrOutput `pulumi:"gzip"`
 	// The process' stderr.
@@ -69,8 +67,6 @@ type tarArgs struct {
 	Directory *string `pulumi:"directory"`
 	// Corresponds to the --extract option.
 	Extract *bool `pulumi:"extract"`
-	// Corresponds to the [FILE] argument.
-	Files interface{} `pulumi:"files"`
 	// Corresponds to the --gzip option.
 	Gzip *bool `pulumi:"gzip"`
 }
@@ -85,8 +81,6 @@ type TarArgs struct {
 	Directory pulumi.StringPtrInput
 	// Corresponds to the --extract option.
 	Extract pulumi.BoolPtrInput
-	// Corresponds to the [FILE] argument.
-	Files pulumi.Input
 	// Corresponds to the --gzip option.
 	Gzip pulumi.BoolPtrInput
 }
@@ -196,11 +190,6 @@ func (o TarOutput) Directory() pulumi.StringPtrOutput {
 // Corresponds to the --extract option.
 func (o TarOutput) Extract() pulumi.BoolOutput {
 	return o.ApplyT(func(v *Tar) pulumi.BoolOutput { return v.Extract }).(pulumi.BoolOutput)
-}
-
-// Corresponds to the [FILE] argument.
-func (o TarOutput) Files() pulumi.StringArrayOutput {
-	return o.ApplyT(func(v *Tar) pulumi.StringArrayOutput { return v.Files }).(pulumi.StringArrayOutput)
 }
 
 // Corresponds to the --gzip option.

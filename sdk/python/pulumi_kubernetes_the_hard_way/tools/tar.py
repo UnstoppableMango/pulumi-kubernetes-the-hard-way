@@ -19,7 +19,6 @@ class TarArgs:
                  connection: pulumi.Input['pulumi_command.remote.ConnectionArgs'],
                  directory: Optional[pulumi.Input[str]] = None,
                  extract: Optional[pulumi.Input[bool]] = None,
-                 files: Optional[pulumi.Input[Union[Sequence[pulumi.Input[str]], str]]] = None,
                  gzip: Optional[pulumi.Input[bool]] = None):
         """
         The set of arguments for constructing a Tar resource.
@@ -27,7 +26,6 @@ class TarArgs:
         :param pulumi.Input['pulumi_command.remote.ConnectionArgs'] connection: Connection details for the remote system.
         :param pulumi.Input[str] directory: Corresponds to the --directory option.
         :param pulumi.Input[bool] extract: Corresponds to the --extract option.
-        :param pulumi.Input[Union[Sequence[pulumi.Input[str]], str]] files: Corresponds to the [FILE] argument.
         :param pulumi.Input[bool] gzip: Corresponds to the --gzip option.
         """
         pulumi.set(__self__, "archive", archive)
@@ -36,8 +34,6 @@ class TarArgs:
             pulumi.set(__self__, "directory", directory)
         if extract is not None:
             pulumi.set(__self__, "extract", extract)
-        if files is not None:
-            pulumi.set(__self__, "files", files)
         if gzip is not None:
             pulumi.set(__self__, "gzip", gzip)
 
@@ -91,18 +87,6 @@ class TarArgs:
 
     @property
     @pulumi.getter
-    def files(self) -> Optional[pulumi.Input[Union[Sequence[pulumi.Input[str]], str]]]:
-        """
-        Corresponds to the [FILE] argument.
-        """
-        return pulumi.get(self, "files")
-
-    @files.setter
-    def files(self, value: Optional[pulumi.Input[Union[Sequence[pulumi.Input[str]], str]]]):
-        pulumi.set(self, "files", value)
-
-    @property
-    @pulumi.getter
     def gzip(self) -> Optional[pulumi.Input[bool]]:
         """
         Corresponds to the --gzip option.
@@ -123,7 +107,6 @@ class Tar(pulumi.ComponentResource):
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
                  directory: Optional[pulumi.Input[str]] = None,
                  extract: Optional[pulumi.Input[bool]] = None,
-                 files: Optional[pulumi.Input[Union[Sequence[pulumi.Input[str]], str]]] = None,
                  gzip: Optional[pulumi.Input[bool]] = None,
                  __props__=None):
         """
@@ -135,7 +118,6 @@ class Tar(pulumi.ComponentResource):
         :param pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']] connection: Connection details for the remote system.
         :param pulumi.Input[str] directory: Corresponds to the --directory option.
         :param pulumi.Input[bool] extract: Corresponds to the --extract option.
-        :param pulumi.Input[Union[Sequence[pulumi.Input[str]], str]] files: Corresponds to the [FILE] argument.
         :param pulumi.Input[bool] gzip: Corresponds to the --gzip option.
         """
         ...
@@ -166,7 +148,6 @@ class Tar(pulumi.ComponentResource):
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
                  directory: Optional[pulumi.Input[str]] = None,
                  extract: Optional[pulumi.Input[bool]] = None,
-                 files: Optional[pulumi.Input[Union[Sequence[pulumi.Input[str]], str]]] = None,
                  gzip: Optional[pulumi.Input[bool]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
@@ -187,7 +168,6 @@ class Tar(pulumi.ComponentResource):
             __props__.__dict__["connection"] = connection
             __props__.__dict__["directory"] = directory
             __props__.__dict__["extract"] = extract
-            __props__.__dict__["files"] = files
             __props__.__dict__["gzip"] = gzip
             __props__.__dict__["command"] = None
             __props__.__dict__["stderr"] = None
@@ -231,14 +211,6 @@ class Tar(pulumi.ComponentResource):
         Corresponds to the --extract option.
         """
         return pulumi.get(self, "extract")
-
-    @property
-    @pulumi.getter
-    def files(self) -> pulumi.Output[Sequence[str]]:
-        """
-        Corresponds to the [FILE] argument.
-        """
-        return pulumi.get(self, "files")
 
     @property
     @pulumi.getter
