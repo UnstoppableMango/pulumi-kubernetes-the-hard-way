@@ -418,6 +418,9 @@ resources:
       httpsOnly:
         type: boolean
         description: Corresponds to the --https-only option.
+      noVerbose:
+        type: boolean
+        description: Corresponds t- the --no-verbose option.
       outputDocument:
         type: string
         description: Corresponds to the --output-document option.
@@ -443,6 +446,9 @@ resources:
       httpsOnly:
         type: boolean
         description: Corresponds to the --https-only option.
+      noVerbose:
+        type: boolean
+        description: Corresponds to the --no-verbose option.
       outputDocument:
         type: string
         description: Corresponds to the --output-document option.
