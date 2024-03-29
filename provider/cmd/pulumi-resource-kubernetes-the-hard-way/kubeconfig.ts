@@ -4,7 +4,7 @@ import { ComponentResourceOptions, Input, Output, interpolate, output } from '@p
 import { remote } from '@pulumi/command/types/input';
 import { ClusterPki, NodeMapInput } from './clusterPki';
 import { Certificate } from './certificate';
-import { RemoteFile } from './remoteFile';
+import { RemoteFile } from './remote/remoteFile';
 
 export interface Kubeconfig {
   clusters: {

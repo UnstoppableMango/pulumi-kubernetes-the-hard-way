@@ -27,7 +27,7 @@
         "provider.ts",
         "remote/download.ts",
         "remote/index.ts",
-        "remoteFile.ts",
+        "remote/remoteFile.ts",
         "resources.ts",
         "rootCa.ts",
         "types.ts",

@@ -23,7 +23,7 @@ export class RemoteFile extends ComponentResource {
   public readonly stdout!: Output<string>;
 
   constructor(name: string, args: RemoteFileArgs, opts?: ComponentResourceOptions) {
-    super('kubernetes-the-hard-way:index:RemoteFile', name, args, opts);
+    super('kubernetes-the-hard-way:remote:File', name, args, opts);
 
     // Rehydrating
     if (opts?.urn) return;

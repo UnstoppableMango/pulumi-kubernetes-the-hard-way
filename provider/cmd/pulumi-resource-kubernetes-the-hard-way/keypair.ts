@@ -1,7 +1,7 @@
 import { ComponentResource, ComponentResourceOptions, Input, Inputs, Output } from '@pulumi/pulumi';
 import { InvokeResult } from '@pulumi/pulumi/provider';
 import { LocallySignedCert, PrivateKey, SelfSignedCert } from '@pulumi/tls';
-import { InstallArgs, RemoteFile, install } from './remoteFile';
+import { InstallArgs, RemoteFile, install } from './remote/remoteFile';
 import { Algorithm, EcdsaCurve } from './types';
 
 export interface KeyPairArgs {

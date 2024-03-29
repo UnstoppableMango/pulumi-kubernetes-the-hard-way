@@ -3,7 +3,7 @@ import * as YAML from 'yaml';
 import { ComponentResource, ComponentResourceOptions, Input, Output, output } from '@pulumi/pulumi';
 import { RandomBytes } from '@pulumi/random';
 import { remote } from '@pulumi/command/types/input';
-import { RemoteFile } from './remoteFile';
+import { RemoteFile } from './remote/remoteFile';
 
 export interface EncryptionKeyArgs {
   bytes?: Input<number>;
