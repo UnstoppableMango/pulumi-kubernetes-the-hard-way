@@ -45,6 +45,11 @@ func TestRemoteTs(t *testing.T) {
 
 	defer StopSshServer(ctx, server) // TODO: Error handling?
 
+	err = server.CopyFile(ctx,
+		path.Join(getCwd(t), "test-data", "text-file.tar.gz"),
+		path.Join("/config", "text-file.tar.gz"))
+	assert.NoError(t, err)
+
 	test := getJSBaseOptions(t).
 		With(integration.ProgramTestOptions{
 			Dir:           path.Join(getCwd(t), "remote-ts"),
@@ -70,6 +75,9 @@ func TestRemoteTs(t *testing.T) {
 				data, err := server.ReadFile(ctx, "/config/index.html")
 				assert.NoError(t, err)
 				assert.Equal(t, exampleComHtml, data)
+
+				// assert.Empty(t, stack.Outputs["tarStdout"])
+				// assert.Empty(t, stack.Outputs["tarStderr"])
 			},
 		})
 
