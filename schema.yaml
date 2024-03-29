@@ -368,13 +368,6 @@ resources:
       extract:
         type: boolean
         description: Corresponds to the --extract option.
-      files:
-        oneOf:
-          - type: array
-            items:
-              type: string
-          - type: string
-        description: Corresponds to the [FILE] argument.
       gzip:
         type: boolean
         description: Corresponds to the --gzip option.
@@ -394,11 +387,6 @@ resources:
       extract:
         type: boolean
         description: Corresponds to the --extract option.
-      files:
-        type: array
-        items:
-          type: string
-        description: Corresponds to the [FILE] argument.
       gzip:
         type: boolean
         description: Corresponds to the --gzip option.
@@ -415,7 +403,6 @@ resources:
       - archive
       - command
       - extract
-      - files
       - stderr
       - stdout
   kubernetes-the-hard-way:tools:Wget:
