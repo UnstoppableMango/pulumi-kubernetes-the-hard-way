@@ -1,7 +1,7 @@
 import { ComponentResourceOptions, Input, Inputs, Output, all, output } from '@pulumi/pulumi';
 import { InvokeResult } from '@pulumi/pulumi/provider';
 import { SelfSignedCert } from '@pulumi/tls';
-import { AllowedUsage, CertificateArgs, RootCaArgs } from './sdk';
+import { AllowedUsage, CertificateArgs, RootCaArgs } from 'sdk';
 import { KeyPair } from './keypair';
 import { Certificate } from './certificate';
 

@@ -3,6 +3,9 @@
     "license": "Apache-2.0",
     "version": "${VERSION}",
     "bin": "bin/index.js",
+    "scripts": {
+        "build": "tsc --build"
+    },
     "dependencies": {
         "@pulumi/command": "^0.9.2",
         "@pulumi/pulumi": "^3.111.1",

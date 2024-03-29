@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "composite": true,
+    "rootDir": "./nodejs",
+    "declaration": true
+  },
+  "include": [
+    "**/*.ts"
+  ]
+}

@@ -1,6 +1,6 @@
 import { ComponentResource } from '@pulumi/pulumi';
 import { ConstructResult } from '@pulumi/pulumi/provider';
-import { AllowedUsage } from './sdk';
+import { AllowedUsage } from 'sdk';
 
 export function isAllowedUsage(value: string): value is AllowedUsage {
   return Object.values(AllowedUsage).some(x => x === value);

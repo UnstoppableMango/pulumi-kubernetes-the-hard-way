@@ -1,6 +1,6 @@
 import { ComponentResource, ComponentResourceOptions, Output, output } from '@pulumi/pulumi';
 import { Command } from '@pulumi/command/remote';
-import { WgetArgs } from '../sdk';
+import { WgetArgs } from 'sdk/tools';
 import { CommandBuilder } from './commandBuilder';
 
 export class Wget extends ComponentResource {

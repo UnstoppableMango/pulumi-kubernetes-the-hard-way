@@ -1,6 +1,6 @@
 import { ComponentResource, ComponentResourceOptions, Output, all, output } from '@pulumi/pulumi';
 import { Command } from '@pulumi/command/remote';
-import { MkdirArgs } from '../sdk';
+import { MkdirArgs } from 'sdk/tools';
 import { CommandBuilder } from './commandBuilder';
 
 export class Mkdir extends ComponentResource {

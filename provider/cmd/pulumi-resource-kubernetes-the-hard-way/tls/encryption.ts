@@ -3,7 +3,7 @@ import * as YAML from 'yaml';
 import { ComponentResource, ComponentResourceOptions, Output, output } from '@pulumi/pulumi';
 import { RandomBytes } from '@pulumi/random';
 import { remote } from '@pulumi/command/types/input';
-import { EncryptionKeyArgs } from './sdk';
+import { EncryptionKeyArgs } from 'sdk';
 import { File } from '../remote/file';
 
 export class EncryptionKey extends ComponentResource {

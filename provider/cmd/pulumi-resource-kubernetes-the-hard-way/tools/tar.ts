@@ -1,6 +1,6 @@
-import { ComponentResource, ComponentResourceOptions, Input, Output, output } from '@pulumi/pulumi';
+import { ComponentResource, ComponentResourceOptions, Output, output } from '@pulumi/pulumi';
 import { Command } from '@pulumi/command/remote';
-import { TarArgs } from '../sdk';
+import { TarArgs } from 'sdk/tools';
 import { CommandBuilder, toArray } from './commandBuilder';
 
 export class Tar extends ComponentResource {

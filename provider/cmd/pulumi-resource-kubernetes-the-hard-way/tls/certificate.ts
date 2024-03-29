@@ -1,10 +1,7 @@
-import { ComponentResourceOptions, Inputs, Output, all, output } from '@pulumi/pulumi';
-import { ConstructResult } from '@pulumi/pulumi/provider';
+import { ComponentResourceOptions, Output, output } from '@pulumi/pulumi';
 import { CertRequest, LocallySignedCert } from '@pulumi/tls';
-import { AllowedUsage, CertificateArgs } from './sdk';
+import { AllowedUsage, CertificateArgs } from 'sdk';
 import { KeyPair } from './keypair';
-import { AllowedUsage } from '../types';
-import { toAllowedUsage } from '../util';
 
 export class Certificate extends KeyPair<LocallySignedCert> {
   public readonly allowedUses!: Output<AllowedUsage[]>;

@@ -1,5 +1,5 @@
 import { ComponentResource, ComponentResourceOptions, Input, Output, interpolate, output } from '@pulumi/pulumi';
-import * as sdk from './sdk';
+import * as sdk from 'sdk';
 import { RootCa } from './rootCa';
 import { Certificate } from './certificate';
 

@@ -1,6 +1,6 @@
 import { ComponentResource, ComponentResourceOptions, Input, Output, interpolate, output } from '@pulumi/pulumi';
 import { Command } from '@pulumi/command/remote';
-import { RemoteFileArgs } from './sdk';
+import { RemoteFileArgs } from 'sdk';
 
 export type InstallArgs = Omit<FileArgs, 'content'> & {
   name: string;

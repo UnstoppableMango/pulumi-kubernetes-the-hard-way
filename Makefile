@@ -180,7 +180,7 @@ bin/yq: .yq.version
 
 bin/$(LOCAL_PROVIDER_FILENAME): bin/pulumictl .make/provider_mod_download provider/cmd/${PROVIDER}/schema.json provider/cmd/$(PROVIDER)/*.ts $(PROVIDER_PKG)
 	cd provider/cmd/${PROVIDER}/ && \
-		yarn tsc && \
+		yarn build && \
 		cp package.json schema.json ./bin && \
 		sed -i.bak -e "s/\$${VERSION}/$(PROVIDER_VERSION)/g" bin/package.json && \
 		yarn run pkg . ${PKG_ARGS} --target node16 --output $(WORKING_DIR)/$@
