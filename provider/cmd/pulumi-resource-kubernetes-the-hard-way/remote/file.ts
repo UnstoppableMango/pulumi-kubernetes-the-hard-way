@@ -61,22 +61,3 @@ export function install({ name, options, ...rest }: InstallArgs, content: Input<
     content,
   }, options);
 }
-
-export async function construct(
-  name: string,
-  inputs: Inputs,
-  options: ComponentResourceOptions,
-): Promise<ConstructResult> {
-  const file = new File(name, inputs as FileArgs, options);
-  return {
-    urn: file.urn,
-    state: {
-      command: file.command,
-      content: file.content,
-      path: file.path,
-      stderr: file.stderr,
-      stdin: file.stdin,
-      stdout: file.stdout,
-    },
-  };
-}
