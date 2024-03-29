@@ -27,6 +27,8 @@ func (m *module) Construct(ctx *pulumi.Context, name, typ, urn string) (r pulumi
 		r = &ClusterPki{}
 	case "kubernetes-the-hard-way:index:EncryptionKey":
 		r = &EncryptionKey{}
+	case "kubernetes-the-hard-way:index:RemoteDownload":
+		r = &RemoteDownload{}
 	case "kubernetes-the-hard-way:index:RemoteFile":
 		r = &RemoteFile{}
 	case "kubernetes-the-hard-way:index:RootCa":

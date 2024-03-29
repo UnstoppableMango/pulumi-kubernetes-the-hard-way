@@ -14,6 +14,7 @@ from .install_control_plane import *
 from .install_key import *
 from .new_certificate import *
 from .provider import *
+from .remote_download import *
 from .remote_file import *
 from .root_ca import *
 from ._inputs import *
@@ -36,6 +37,7 @@ _utilities.register(
    "kubernetes-the-hard-way:index:Certificate": "Certificate",
    "kubernetes-the-hard-way:index:ClusterPki": "ClusterPki",
    "kubernetes-the-hard-way:index:EncryptionKey": "EncryptionKey",
+   "kubernetes-the-hard-way:index:RemoteDownload": "RemoteDownload",
    "kubernetes-the-hard-way:index:RemoteFile": "RemoteFile",
    "kubernetes-the-hard-way:index:RootCa": "RootCa"
   }
