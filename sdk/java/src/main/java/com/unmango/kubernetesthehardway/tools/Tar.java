@@ -12,6 +12,7 @@ import com.unmango.kubernetesthehardway.Utilities;
 import com.unmango.kubernetesthehardway.tools.TarArgs;
 import java.lang.Boolean;
 import java.lang.String;
+import java.util.List;
 import java.util.Optional;
 import javax.annotation.Nullable;
 
@@ -76,6 +77,20 @@ public class Tar extends com.pulumi.resources.ComponentResource {
      */
     public Output<Boolean> extract() {
         return this.extract;
+    }
+    /**
+     * Corresponds to the [FILE] argument.
+     * 
+     */
+    @Export(name="files", refs={List.class,String.class}, tree="[0,1]")
+    private Output<List<String>> files;
+
+    /**
+     * @return Corresponds to the [FILE] argument.
+     * 
+     */
+    public Output<List<String>> files() {
+        return this.files;
     }
     /**
      * Corresponds to the --gzip option.

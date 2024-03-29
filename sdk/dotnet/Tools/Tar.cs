@@ -41,6 +41,12 @@ namespace UnMango.KubernetesTheHardWay.Tools
         public Output<bool> Extract { get; private set; } = null!;
 
         /// <summary>
+        /// Corresponds to the [FILE] argument.
+        /// </summary>
+        [Output("files")]
+        public Output<ImmutableArray<string>> Files { get; private set; } = null!;
+
+        /// <summary>
         /// Corresponds to the --gzip option.
         /// </summary>
         [Output("gzip")]
@@ -116,6 +122,12 @@ namespace UnMango.KubernetesTheHardWay.Tools
         /// </summary>
         [Input("extract")]
         public Input<bool>? Extract { get; set; }
+
+        /// <summary>
+        /// Corresponds to the [FILE] argument.
+        /// </summary>
+        [Input("files")]
+        public InputUnion<ImmutableArray<string>, string>? Files { get; set; }
 
         /// <summary>
         /// Corresponds to the --gzip option.
