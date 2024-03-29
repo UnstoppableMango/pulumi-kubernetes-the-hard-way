@@ -35,6 +35,12 @@ namespace UnMango.KubernetesTheHardWay.Tools
         public Output<bool> HttpsOnly { get; private set; } = null!;
 
         /// <summary>
+        /// Corresponds to the --no-verbose option.
+        /// </summary>
+        [Output("noVerbose")]
+        public Output<bool?> NoVerbose { get; private set; } = null!;
+
+        /// <summary>
         /// Corresponds to the --output-document option.
         /// </summary>
         [Output("outputDocument")]
@@ -122,6 +128,12 @@ namespace UnMango.KubernetesTheHardWay.Tools
         /// </summary>
         [Input("httpsOnly")]
         public Input<bool>? HttpsOnly { get; set; }
+
+        /// <summary>
+        /// Corresponds t- the --no-verbose option.
+        /// </summary>
+        [Input("noVerbose")]
+        public Input<bool>? NoVerbose { get; set; }
 
         /// <summary>
         /// Corresponds to the --output-document option.

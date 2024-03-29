@@ -23,6 +23,8 @@ type Wget struct {
 	DirectoryPrefix pulumi.StringPtrOutput `pulumi:"directoryPrefix"`
 	// Corresponds to the --https-only option.
 	HttpsOnly pulumi.BoolOutput `pulumi:"httpsOnly"`
+	// Corresponds to the --no-verbose option.
+	NoVerbose pulumi.BoolPtrOutput `pulumi:"noVerbose"`
 	// Corresponds to the --output-document option.
 	OutputDocument pulumi.StringPtrOutput `pulumi:"outputDocument"`
 	// Corresponds to the --quiet option.
@@ -69,6 +71,8 @@ type wgetArgs struct {
 	DirectoryPrefix *string `pulumi:"directoryPrefix"`
 	// Corresponds to the --https-only option.
 	HttpsOnly *bool `pulumi:"httpsOnly"`
+	// Corresponds t- the --no-verbose option.
+	NoVerbose *bool `pulumi:"noVerbose"`
 	// Corresponds to the --output-document option.
 	OutputDocument *string `pulumi:"outputDocument"`
 	// Corresponds to the --quiet option.
@@ -87,6 +91,8 @@ type WgetArgs struct {
 	DirectoryPrefix pulumi.StringPtrInput
 	// Corresponds to the --https-only option.
 	HttpsOnly pulumi.BoolPtrInput
+	// Corresponds t- the --no-verbose option.
+	NoVerbose pulumi.BoolPtrInput
 	// Corresponds to the --output-document option.
 	OutputDocument pulumi.StringPtrInput
 	// Corresponds to the --quiet option.
@@ -197,6 +203,11 @@ func (o WgetOutput) DirectoryPrefix() pulumi.StringPtrOutput {
 // Corresponds to the --https-only option.
 func (o WgetOutput) HttpsOnly() pulumi.BoolOutput {
 	return o.ApplyT(func(v *Wget) pulumi.BoolOutput { return v.HttpsOnly }).(pulumi.BoolOutput)
+}
+
+// Corresponds to the --no-verbose option.
+func (o WgetOutput) NoVerbose() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *Wget) pulumi.BoolPtrOutput { return v.NoVerbose }).(pulumi.BoolPtrOutput)
 }
 
 // Corresponds to the --output-document option.
