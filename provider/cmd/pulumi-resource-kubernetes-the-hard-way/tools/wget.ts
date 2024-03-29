@@ -33,12 +33,13 @@ export class Wget extends ComponentResource {
     // Rehydrating
     if (opts?.urn) return;
 
+    // TODO: Account for wget version and supported options
     const directoryprefix = output(args.directoryPrefix);
-    const httpsOnly = output(args.httpsOnly ?? true);
+    const httpsOnly = output(args.httpsOnly ?? false);
     const noVerbose = output(args.noVerbose ?? true);
     const outputDocument = output(args.outputDocument);
     const quiet = output(args.quiet ?? false);
-    const timestamping = output(args.timestamping ?? true);
+    const timestamping = output(args.timestamping ?? false);
     const url = output(args.url);
 
     const builder = new CommandBuilder('wget')
