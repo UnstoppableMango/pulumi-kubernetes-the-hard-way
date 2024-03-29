@@ -31,7 +31,6 @@
         "remote/file.ts",
         "resources.ts",
         "tls/rootCa.ts",
-        "types.ts",
         "util.ts"
     ]
 }

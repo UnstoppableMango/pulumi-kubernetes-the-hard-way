@@ -2,7 +2,6 @@ import { ComponentResource, ComponentResourceOptions, Input, Output, interpolate
 import * as sdk from './sdk';
 import { RootCa } from './rootCa';
 import { Certificate } from './certificate';
-import { Algorithm } from '../types';
 
 // export interface WorkerCerts {
 //   ca: RemoteFile;
@@ -39,12 +38,12 @@ type CertMap<T> = {
 }
 
 export class ClusterPki<T extends NodeMapInput = NodeMapInput> extends ComponentResource {
-  public static readonly defaultAlgorithm: Algorithm = 'RSA';
+  public static readonly defaultAlgorithm: sdk.Algorithm = 'RSA';
   public static readonly defaultExpiry: number = 8760;
   public static readonly defaultRsaBits: number = 2048;
 
   public readonly admin!: Certificate;
-  public readonly algorithm!: Output<Algorithm>;
+  public readonly algorithm!: Output<sdk.Algorithm>;
   public readonly clusterName!: Output<string>;
   public readonly controllerManager!: Certificate;
   public readonly validityPeriodHours!: Output<number>;

@@ -1,7 +1,7 @@
-import { ComponentResourceOptions, Inputs, Output } from '@pulumi/pulumi';
+import { ComponentResourceOptions, Inputs, Output, all, output } from '@pulumi/pulumi';
 import { ConstructResult } from '@pulumi/pulumi/provider';
 import { CertRequest, LocallySignedCert } from '@pulumi/tls';
-import { CertificateArgs } from './sdk';
+import { AllowedUsage, CertificateArgs } from './sdk';
 import { KeyPair } from './keypair';
 import { AllowedUsage } from '../types';
 import { toAllowedUsage } from '../util';
@@ -19,6 +19,7 @@ export class Certificate extends KeyPair<LocallySignedCert> {
     if (opts?.urn) return;
 
     const key = this.key;
+    const allowedUses = output(args.allowedUses);
 
     const csr = new CertRequest(name, {
       privateKeyPem: key.privateKeyPem,
@@ -30,43 +31,23 @@ export class Certificate extends KeyPair<LocallySignedCert> {
 
     const cert = new LocallySignedCert(name, {
       isCaCertificate: args.isCaCertificate,
-      allowedUses: args.allowedUses,
+      allowedUses,
       validityPeriodHours: args.validityPeriodHours,
       caCertPem: args.caCertPem,
       caPrivateKeyPem: args.caPrivateKeyPem,
       certRequestPem: csr.certRequestPem,
     }, { parent: this });
 
-    this.allowedUses = cert.allowedUses.apply(toAllowedUsage);
+    this.allowedUses = allowedUses;
     this.cert = cert;
     this.certPem = cert.certPem;
     this.csr = csr;
 
     this.registerOutputs({
-      allowedUses: this.allowedUses,
+      allowedUses,
       cert, certPem: cert.certPem, csr, key,
       privateKeyPem: key.privateKeyPem,
       publicKeyPem: key.publicKeyPem,
     });
   }
-}
-
-export async function construct(
-  name: string,
-  inputs: Inputs,
-  options: ComponentResourceOptions,
-): Promise<ConstructResult> {
-  const cert = new Certificate(name, inputs as CertificateArgs, options);
-  return {
-    urn: cert.urn,
-    state: {
-      allowedUses: cert.allowedUses,
-      cert: cert.cert,
-      certPem: cert.certPem,
-      csr: cert.csr,
-      key: cert.key,
-      privateKeyPem: cert.privateKeyPem,
-      publicKeyPem: cert.publicKeyPem,
-    },
-  };
 }

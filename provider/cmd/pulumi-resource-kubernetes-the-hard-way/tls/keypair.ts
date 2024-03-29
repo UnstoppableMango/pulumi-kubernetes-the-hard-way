@@ -2,7 +2,7 @@ import { ComponentResource, ComponentResourceOptions, Input, Inputs, Output } fr
 import { InvokeResult } from '@pulumi/pulumi/provider';
 import { LocallySignedCert, PrivateKey, SelfSignedCert } from '@pulumi/tls';
 import { InstallArgs, File, install } from '../remote/file';
-import { Algorithm, EcdsaCurve } from '../types';
+import { Algorithm, EcdsaCurve } from './sdk';
 
 export interface KeyPairArgs {
   algorithm: Input<Algorithm>;

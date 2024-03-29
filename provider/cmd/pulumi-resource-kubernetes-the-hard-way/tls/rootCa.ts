@@ -1,11 +1,9 @@
-import { ComponentResourceOptions, Input, Inputs, Output, output } from '@pulumi/pulumi';
+import { ComponentResourceOptions, Input, Inputs, Output, all, output } from '@pulumi/pulumi';
 import { InvokeResult } from '@pulumi/pulumi/provider';
 import { SelfSignedCert } from '@pulumi/tls';
-import { CertificateArgs, RootCaArgs } from './sdk';
+import { AllowedUsage, CertificateArgs, RootCaArgs } from './sdk';
 import { KeyPair } from './keypair';
 import { Certificate } from './certificate';
-import { AllowedUsage } from '../types';
-import { toAllowedUsage } from '../util';
 
 export type NewCertificateArgs = Omit<CertificateArgs, 'caCertPem' | 'caPrivateKeyPem'> & {
   name: string;
@@ -24,15 +22,16 @@ export class RootCa extends KeyPair<SelfSignedCert> {
     if (opts?.urn) return;
 
     const key = this.key;
+    const allowedUses = all([
+      AllowedUsage.CertSigning,
+      AllowedUsage.KeyEncipherment,
+      AllowedUsage.ServerAuth,
+      AllowedUsage.ClientAuth,
+    ]);
 
     const cert = new SelfSignedCert(name, {
       isCaCertificate: true,
-      allowedUses: [
-        AllowedUsage.Cert_signing,
-        AllowedUsage.Key_encipherment,
-        AllowedUsage.Server_auth,
-        AllowedUsage.Client_auth,
-      ],
+      allowedUses,
       privateKeyPem: key.privateKeyPem,
       validityPeriodHours: args.validityPeriodHours,
       subject: output(args.subject).apply(subject => ({
@@ -48,12 +47,12 @@ export class RootCa extends KeyPair<SelfSignedCert> {
       })),
     }, { parent: this });
 
-    this.allowedUses = cert.allowedUses.apply(toAllowedUsage);
+    this.allowedUses = allowedUses;
     this.cert = cert;
     this.certPem = cert.certPem;
 
     this.registerOutputs({
-      allowedUses: this.allowedUses,
+      allowedUses,
       cert, certPem: cert.certPem, key,
       privateKeyPem: key.privateKeyPem,
       publicKeyPem: key.publicKeyPem,
