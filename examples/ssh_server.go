@@ -95,3 +95,7 @@ func (s *SshServer) ReadFile(ctx context.Context, filePath string) (string, erro
 
 	return string(data), nil
 }
+
+func (s *SshServer) CopyFile(ctx context.Context, source, target string) error {
+	return s.Container.CopyFileToContainer(ctx, source, target, 666)
+}
