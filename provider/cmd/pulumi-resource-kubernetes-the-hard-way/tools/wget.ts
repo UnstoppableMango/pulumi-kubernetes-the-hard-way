@@ -27,7 +27,7 @@ export class Wget extends ComponentResource {
   public readonly url!: Output<string>;
 
   constructor(name: string, args: WgetArgs, opts?: ComponentResourceOptions) {
-    super('kubernetes-the-hard-way:tools:wget', name, args, opts);
+    super('kubernetes-the-hard-way:tools:Wget', name, args, opts);
 
     // Rehydrating
     if (opts?.urn) return;
