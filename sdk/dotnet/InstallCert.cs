@@ -97,10 +97,10 @@ namespace UnMango.KubernetesTheHardWay
         /// <summary>
         /// A resource representing the the file on the remote machine.
         /// </summary>
-        public readonly UnMango.KubernetesTheHardWay.RemoteFile Result;
+        public readonly UnMango.KubernetesTheHardWay.Remote.File Result;
 
         [OutputConstructor]
-        private InstallCertResult(UnMango.KubernetesTheHardWay.RemoteFile result)
+        private InstallCertResult(UnMango.KubernetesTheHardWay.Remote.File result)
         {
             Result = result;
         }

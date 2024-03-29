@@ -9,7 +9,7 @@ import * as utilities from "./utilities";
 
 import * as pulumiTls from "@pulumi/tls";
 
-import {RemoteFile} from "./index";
+import {File} from "remote";
 
 /**
  * Creates a RemoteFile resource representing the copy operation.
@@ -47,7 +47,7 @@ export interface InstallCertResult {
     /**
      * A resource representing the the file on the remote machine.
      */
-    readonly result: RemoteFile;
+    readonly result: File;
 }
 /**
  * Creates a RemoteFile resource representing the copy operation.

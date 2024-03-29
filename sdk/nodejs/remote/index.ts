@@ -10,6 +10,11 @@ export type Download = import("./download").Download;
 export const Download: typeof import("./download").Download = null as any;
 utilities.lazyLoad(exports, ["Download"], () => require("./download"));
 
+export { FileArgs } from "./file";
+export type File = import("./file").File;
+export const File: typeof import("./file").File = null as any;
+utilities.lazyLoad(exports, ["File"], () => require("./file"));
+
 
 const _module = {
     version: utilities.getVersion(),
@@ -17,6 +22,8 @@ const _module = {
         switch (type) {
             case "kubernetes-the-hard-way:remote:Download":
                 return new Download(name, <any>undefined, { urn })
+            case "kubernetes-the-hard-way:remote:File":
+                return new File(name, <any>undefined, { urn })
             default:
                 throw new Error(`unknown resource type ${type}`);
         }

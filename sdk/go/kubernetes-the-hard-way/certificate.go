@@ -11,6 +11,7 @@ import (
 	"github.com/pulumi/pulumi-tls/sdk/v5/go/tls"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 	"github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/sdk/go/kubernetes-the-hard-way/internal"
+	"github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/sdk/go/kubernetes-the-hard-way/remote"
 )
 
 type Certificate struct {
@@ -117,10 +118,10 @@ func (CertificateArgs) ElementType() reflect.Type {
 }
 
 // Creates a RemoteFile resource representing the copy operation.
-func (r *Certificate) InstallCert(ctx *pulumi.Context, args *CertificateInstallCertArgs) (RemoteFileOutput, error) {
+func (r *Certificate) InstallCert(ctx *pulumi.Context, args *CertificateInstallCertArgs) (remote.FileOutput, error) {
 	out, err := ctx.Call("kubernetes-the-hard-way:index:Certificate/installCert", args, certificateInstallCertResultOutput{}, r)
 	if err != nil {
-		return RemoteFileOutput{}, err
+		return remote.FileOutput{}, err
 	}
 	return out.(certificateInstallCertResultOutput).Result(), nil
 }
@@ -149,7 +150,7 @@ func (CertificateInstallCertArgs) ElementType() reflect.Type {
 }
 
 type certificateInstallCertResult struct {
-	Result *RemoteFile `pulumi:"result"`
+	Result *remote.File `pulumi:"result"`
 }
 
 type certificateInstallCertResultOutput struct{ *pulumi.OutputState }
@@ -158,15 +159,15 @@ func (certificateInstallCertResultOutput) ElementType() reflect.Type {
 	return reflect.TypeOf((*certificateInstallCertResult)(nil)).Elem()
 }
 
-func (o certificateInstallCertResultOutput) Result() RemoteFileOutput {
-	return o.ApplyT(func(v certificateInstallCertResult) *RemoteFile { return v.Result }).(RemoteFileOutput)
+func (o certificateInstallCertResultOutput) Result() remote.FileOutput {
+	return o.ApplyT(func(v certificateInstallCertResult) *remote.File { return v.Result }).(remote.FileOutput)
 }
 
 // Creates a RemoteFile resource representing the copy operation.
-func (r *Certificate) InstallKey(ctx *pulumi.Context, args *CertificateInstallKeyArgs) (RemoteFileOutput, error) {
+func (r *Certificate) InstallKey(ctx *pulumi.Context, args *CertificateInstallKeyArgs) (remote.FileOutput, error) {
 	out, err := ctx.Call("kubernetes-the-hard-way:index:Certificate/installKey", args, certificateInstallKeyResultOutput{}, r)
 	if err != nil {
-		return RemoteFileOutput{}, err
+		return remote.FileOutput{}, err
 	}
 	return out.(certificateInstallKeyResultOutput).Result(), nil
 }
@@ -195,7 +196,7 @@ func (CertificateInstallKeyArgs) ElementType() reflect.Type {
 }
 
 type certificateInstallKeyResult struct {
-	Result *RemoteFile `pulumi:"result"`
+	Result *remote.File `pulumi:"result"`
 }
 
 type certificateInstallKeyResultOutput struct{ *pulumi.OutputState }
@@ -204,8 +205,8 @@ func (certificateInstallKeyResultOutput) ElementType() reflect.Type {
 	return reflect.TypeOf((*certificateInstallKeyResult)(nil)).Elem()
 }
 
-func (o certificateInstallKeyResultOutput) Result() RemoteFileOutput {
-	return o.ApplyT(func(v certificateInstallKeyResult) *RemoteFile { return v.Result }).(RemoteFileOutput)
+func (o certificateInstallKeyResultOutput) Result() remote.FileOutput {
+	return o.ApplyT(func(v certificateInstallKeyResult) *remote.File { return v.Result }).(remote.FileOutput)
 }
 
 type CertificateInput interface {

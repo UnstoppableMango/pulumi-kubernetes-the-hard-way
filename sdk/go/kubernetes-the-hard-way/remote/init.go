@@ -23,6 +23,8 @@ func (m *module) Construct(ctx *pulumi.Context, name, typ, urn string) (r pulumi
 	switch typ {
 	case "kubernetes-the-hard-way:remote:Download":
 		r = &Download{}
+	case "kubernetes-the-hard-way:remote:File":
+		r = &File{}
 	default:
 		return nil, fmt.Errorf("unknown resource type: %s", typ)
 	}

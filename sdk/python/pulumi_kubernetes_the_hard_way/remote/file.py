@@ -7,19 +7,19 @@ import warnings
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
-from . import _utilities
+from .. import _utilities
 import pulumi_command
 
-__all__ = ['RemoteFileArgs', 'RemoteFile']
+__all__ = ['FileArgs', 'File']
 
 @pulumi.input_type
-class RemoteFileArgs:
+class FileArgs:
     def __init__(__self__, *,
                  connection: pulumi.Input['pulumi_command.remote.ConnectionArgs'],
                  content: pulumi.Input[str],
                  path: pulumi.Input[str]):
         """
-        The set of arguments for constructing a RemoteFile resource.
+        The set of arguments for constructing a File resource.
         :param pulumi.Input['pulumi_command.remote.ConnectionArgs'] connection: The connection details.
         :param pulumi.Input[str] content: The content of the file.
         :param pulumi.Input[str] path: The path to the file on the remote host.
@@ -65,7 +65,7 @@ class RemoteFileArgs:
         pulumi.set(self, "path", value)
 
 
-class RemoteFile(pulumi.ComponentResource):
+class File(pulumi.ComponentResource):
     @overload
     def __init__(__self__,
                  resource_name: str,
@@ -75,7 +75,7 @@ class RemoteFile(pulumi.ComponentResource):
                  path: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         """
-        Create a RemoteFile resource with the given unique name, props, and options.
+        Create a File resource with the given unique name, props, and options.
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']] connection: The connection details.
@@ -86,17 +86,17 @@ class RemoteFile(pulumi.ComponentResource):
     @overload
     def __init__(__self__,
                  resource_name: str,
-                 args: RemoteFileArgs,
+                 args: FileArgs,
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
-        Create a RemoteFile resource with the given unique name, props, and options.
+        Create a File resource with the given unique name, props, and options.
         :param str resource_name: The name of the resource.
-        :param RemoteFileArgs args: The arguments to use to populate this resource's properties.
+        :param FileArgs args: The arguments to use to populate this resource's properties.
         :param pulumi.ResourceOptions opts: Options for the resource.
         """
         ...
     def __init__(__self__, resource_name: str, *args, **kwargs):
-        resource_args, opts = _utilities.get_resource_args_opts(RemoteFileArgs, pulumi.ResourceOptions, *args, **kwargs)
+        resource_args, opts = _utilities.get_resource_args_opts(FileArgs, pulumi.ResourceOptions, *args, **kwargs)
         if resource_args is not None:
             __self__._internal_init(resource_name, opts, **resource_args.__dict__)
         else:
@@ -117,7 +117,7 @@ class RemoteFile(pulumi.ComponentResource):
         else:
             if __props__ is not None:
                 raise TypeError('__props__ is only valid when passed in combination with a valid opts.id to get an existing resource')
-            __props__ = RemoteFileArgs.__new__(RemoteFileArgs)
+            __props__ = FileArgs.__new__(FileArgs)
 
             if connection is None and not opts.urn:
                 raise TypeError("Missing required property 'connection'")
@@ -132,8 +132,8 @@ class RemoteFile(pulumi.ComponentResource):
             __props__.__dict__["stderr"] = None
             __props__.__dict__["stdin"] = None
             __props__.__dict__["stdout"] = None
-        super(RemoteFile, __self__).__init__(
-            'kubernetes-the-hard-way:index:RemoteFile',
+        super(File, __self__).__init__(
+            'kubernetes-the-hard-way:remote:File',
             resource_name,
             __props__,
             opts,

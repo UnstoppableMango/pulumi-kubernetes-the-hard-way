@@ -60,13 +60,13 @@ namespace UnMango.KubernetesTheHardWay
         /// <summary>
         /// Creates a RemoteFile resource representing the copy operation.
         /// </summary>
-        public global::Pulumi.Output<UnMango.KubernetesTheHardWay.RemoteFile> InstallCert(CertificateInstallCertArgs args)
+        public global::Pulumi.Output<UnMango.KubernetesTheHardWay.Remote.File> InstallCert(CertificateInstallCertArgs args)
             => global::Pulumi.Deployment.Instance.Call<CertificateInstallCertResult>("kubernetes-the-hard-way:index:Certificate/installCert", args ?? new CertificateInstallCertArgs(), this).Apply(v => v.Result);
 
         /// <summary>
         /// Creates a RemoteFile resource representing the copy operation.
         /// </summary>
-        public global::Pulumi.Output<UnMango.KubernetesTheHardWay.RemoteFile> InstallKey(CertificateInstallKeyArgs args)
+        public global::Pulumi.Output<UnMango.KubernetesTheHardWay.Remote.File> InstallKey(CertificateInstallKeyArgs args)
             => global::Pulumi.Deployment.Instance.Call<CertificateInstallKeyResult>("kubernetes-the-hard-way:index:Certificate/installKey", args ?? new CertificateInstallKeyArgs(), this).Apply(v => v.Result);
     }
 
@@ -211,10 +211,10 @@ namespace UnMango.KubernetesTheHardWay
     [OutputType]
     internal sealed class CertificateInstallCertResult
     {
-        public readonly UnMango.KubernetesTheHardWay.RemoteFile Result;
+        public readonly UnMango.KubernetesTheHardWay.Remote.File Result;
 
         [OutputConstructor]
-        private CertificateInstallCertResult(UnMango.KubernetesTheHardWay.RemoteFile result)
+        private CertificateInstallCertResult(UnMango.KubernetesTheHardWay.Remote.File result)
         {
             Result = result;
         }
@@ -255,10 +255,10 @@ namespace UnMango.KubernetesTheHardWay
     [OutputType]
     internal sealed class CertificateInstallKeyResult
     {
-        public readonly UnMango.KubernetesTheHardWay.RemoteFile Result;
+        public readonly UnMango.KubernetesTheHardWay.Remote.File Result;
 
         [OutputConstructor]
-        private CertificateInstallKeyResult(UnMango.KubernetesTheHardWay.RemoteFile result)
+        private CertificateInstallKeyResult(UnMango.KubernetesTheHardWay.Remote.File result)
         {
             Result = result;
         }

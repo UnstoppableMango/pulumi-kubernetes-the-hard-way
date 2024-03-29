@@ -9,6 +9,7 @@ import (
 
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 	"github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/sdk/go/kubernetes-the-hard-way/internal"
+	"github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/sdk/go/kubernetes-the-hard-way/remote"
 )
 
 // Creates a RemoteFile resource representing the copy operation.
@@ -46,7 +47,7 @@ func (val *InstallCertArgs) Defaults() *InstallCertArgs {
 
 type InstallCertResult struct {
 	// A resource representing the the file on the remote machine.
-	Result *RemoteFile `pulumi:"result"`
+	Result *remote.File `pulumi:"result"`
 }
 
 func InstallCertOutput(ctx *pulumi.Context, args InstallCertOutputArgs, opts ...pulumi.InvokeOption) InstallCertResultOutput {
@@ -92,8 +93,8 @@ func (o InstallCertResultOutput) ToInstallCertResultOutputWithContext(ctx contex
 }
 
 // A resource representing the the file on the remote machine.
-func (o InstallCertResultOutput) Result() RemoteFileOutput {
-	return o.ApplyT(func(v InstallCertResult) *RemoteFile { return v.Result }).(RemoteFileOutput)
+func (o InstallCertResultOutput) Result() remote.FileOutput {
+	return o.ApplyT(func(v InstallCertResult) *remote.File { return v.Result }).(remote.FileOutput)
 }
 
 func init() {

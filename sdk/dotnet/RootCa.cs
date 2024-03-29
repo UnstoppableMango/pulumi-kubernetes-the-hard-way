@@ -60,13 +60,13 @@ namespace UnMango.KubernetesTheHardWay
         /// <summary>
         /// Creates a RemoteFile resource representing the copy operation.
         /// </summary>
-        public global::Pulumi.Output<UnMango.KubernetesTheHardWay.RemoteFile> InstallCert(RootCaInstallCertArgs args)
+        public global::Pulumi.Output<UnMango.KubernetesTheHardWay.Remote.File> InstallCert(RootCaInstallCertArgs args)
             => global::Pulumi.Deployment.Instance.Call<RootCaInstallCertResult>("kubernetes-the-hard-way:index:RootCa/installCert", args ?? new RootCaInstallCertArgs(), this).Apply(v => v.Result);
 
         /// <summary>
         /// Creates a RemoteFile resource representing the copy operation.
         /// </summary>
-        public global::Pulumi.Output<UnMango.KubernetesTheHardWay.RemoteFile> InstallKey(RootCaInstallKeyArgs args)
+        public global::Pulumi.Output<UnMango.KubernetesTheHardWay.Remote.File> InstallKey(RootCaInstallKeyArgs args)
             => global::Pulumi.Deployment.Instance.Call<RootCaInstallKeyResult>("kubernetes-the-hard-way:index:RootCa/installKey", args ?? new RootCaInstallKeyArgs(), this).Apply(v => v.Result);
 
         /// <summary>
@@ -200,10 +200,10 @@ namespace UnMango.KubernetesTheHardWay
     [OutputType]
     internal sealed class RootCaInstallCertResult
     {
-        public readonly UnMango.KubernetesTheHardWay.RemoteFile Result;
+        public readonly UnMango.KubernetesTheHardWay.Remote.File Result;
 
         [OutputConstructor]
-        private RootCaInstallCertResult(UnMango.KubernetesTheHardWay.RemoteFile result)
+        private RootCaInstallCertResult(UnMango.KubernetesTheHardWay.Remote.File result)
         {
             Result = result;
         }
@@ -244,10 +244,10 @@ namespace UnMango.KubernetesTheHardWay
     [OutputType]
     internal sealed class RootCaInstallKeyResult
     {
-        public readonly UnMango.KubernetesTheHardWay.RemoteFile Result;
+        public readonly UnMango.KubernetesTheHardWay.Remote.File Result;
 
         [OutputConstructor]
-        private RootCaInstallKeyResult(UnMango.KubernetesTheHardWay.RemoteFile result)
+        private RootCaInstallKeyResult(UnMango.KubernetesTheHardWay.Remote.File result)
         {
             Result = result;
         }
