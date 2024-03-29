@@ -21,6 +21,7 @@ const wget = new Wget('remote', {
   url: 'https://www.example.com',
   directoryPrefix: basePath,
   // The container image seems to have an old version
+  // These two options aren't supported
   httpsOnly: false,
   timestamping: false,
 });
