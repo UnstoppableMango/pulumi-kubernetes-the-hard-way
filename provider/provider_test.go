@@ -23,6 +23,8 @@ func test(dir string, opts ...providertest.Option) *providertest.ProviderTest {
 	opts = append(opts,
 		providertest.WithProviderName("kubernetes-the-hard-way"),
 		providertest.WithE2eOptions(func(option *integration.ProgramTestOptions) {
+			// This is killing us
+			// https://github.com/pulumi/providertest/blob/f71d02aa2656e4b3b7c964656e14b4c06b96673b/upgrade.go#L514
 			option.Dependencies = []string{"@unmango/kubernetes-the-hard-way"}
 		}),
 		providertest.WithSkippedUpgradeTestMode(
