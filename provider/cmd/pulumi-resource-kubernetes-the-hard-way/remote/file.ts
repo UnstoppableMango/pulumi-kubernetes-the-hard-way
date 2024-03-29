@@ -1,5 +1,4 @@
-import { ComponentResource, ComponentResourceOptions, Input, Inputs, Output, interpolate, output } from '@pulumi/pulumi';
-import { ConstructResult } from '@pulumi/pulumi/provider';
+import { ComponentResource, ComponentResourceOptions, Input, Output, interpolate, output } from '@pulumi/pulumi';
 import { Command } from '@pulumi/command/remote';
 import { remote } from '@pulumi/command/types/input';
 
