@@ -2,6 +2,7 @@ import * as path from 'node:path';
 import { Config } from '@pulumi/pulumi';
 import { RemoteFile } from '@unmango/pulumi-kubernetes-the-hard-way';
 import { Mkdir, Tar, Wget } from '@unmango/pulumi-kubernetes-the-hard-way/tools';
+import { RemoteDownload } from '@unmango/pulumi-kubernetes-the-hard-way/remote';
 
 const config = new Config();
 const host = config.require('host');
@@ -30,7 +31,14 @@ const mkdir = new Mkdir('remote', {
   connection: { host, port, user, password },
   directory: path.join(basePath, 'test-dir', 'subdir'),
   parents: true,
-})
+});
+
+const download = new RemoteDownload('remote', {
+  connection: { host, port, user, password },
+  destination: path.join(basePath, 'download'),
+  url: 'https://www.example.com',
+  removeOnDelete: true,
+});
 
 // This has permissions issues at the moment for some reason
 // const tar = new Tar('remote', {

@@ -55,10 +55,12 @@ import { RootCa } from "./rootCa";
 export * from "./types/enums";
 
 // Export sub-modules:
+import * as remote from "./remote";
 import * as tools from "./tools";
 import * as types from "./types";
 
 export {
+    remote,
     tools,
     types,
 };

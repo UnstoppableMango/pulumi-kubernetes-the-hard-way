@@ -242,6 +242,50 @@ resources:
     required:
       - config
       - key
+  kubernetes-the-hard-way:remote:RemoteDownload:
+    isComponent: true
+    description: Represents a file to be downloaded on a remote system.
+    inputProperties:
+      connection:
+        $ref: "/command/v0.9.0/schema.json#/types/command:remote:Connection"
+        description: Connection details for the remote system
+      destination:
+        type: string
+        description: The fully qualified path on the remote system where the file
+          should be downloaded to.
+      removeOnDelete:
+        type: boolean
+        description: Remove the downloaded file when the resource is deleted.
+      url:
+        type: string
+        description: The URL for the file to be downloaded.
+    requiredInputs:
+      - connection
+      - destination
+      - url
+    properties:
+      connection:
+        $ref: "/command/v0.9.0/schema.json#/types/command:remote:Connection"
+        description: Connection details for the remote system
+      destination:
+        type: string
+        description: The fully qualified path on the remote system where the file
+          should be downloaded to.
+      mkdir:
+        $ref: "#/resources/kubernetes-the-hard-way:tools:Mkdir"
+        description: Represents the command used to create the remote directory.
+      url:
+        type: string
+        description: The URL for the file to be downloaded.
+      wget:
+        $ref: "#/resources/kubernetes-the-hard-way:tools:Wget"
+        description: Represents the wget command used to download the file.
+    required:
+      - connection
+      - destination
+      - mkdir
+      - url
+      - wget
   kubernetes-the-hard-way:index:RemoteFile:
     isComponent: true
     inputProperties:

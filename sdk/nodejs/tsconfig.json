@@ -22,6 +22,8 @@
         "installKey.ts",
         "newCertificate.ts",
         "provider.ts",
+        "remote/index.ts",
+        "remote/remoteDownload.ts",
         "remoteFile.ts",
         "rootCa.ts",
         "tools/index.ts",
