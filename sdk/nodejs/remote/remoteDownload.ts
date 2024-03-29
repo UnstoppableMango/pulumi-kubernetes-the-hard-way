@@ -2,18 +2,18 @@
 // *** Do not edit by hand unless you're certain you know what you are doing! ***
 
 import * as pulumi from "@pulumi/pulumi";
-import * as utilities from "./utilities";
+import * as utilities from "../utilities";
 
 import * as pulumiCommand from "@pulumi/command";
 
-import {Mkdir, Wget} from "tools";
+import {Mkdir, Wget} from "../tools";
 
 /**
  * Represents a file to be downloaded on a remote system.
  */
 export class RemoteDownload extends pulumi.ComponentResource {
     /** @internal */
-    public static readonly __pulumiType = 'kubernetes-the-hard-way:index:RemoteDownload';
+    public static readonly __pulumiType = 'kubernetes-the-hard-way:remote:RemoteDownload';
 
     /**
      * Returns true if the given object is an instance of RemoteDownload.  This is designed to work even

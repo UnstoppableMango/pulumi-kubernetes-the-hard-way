@@ -42,11 +42,6 @@ export type Provider = import("./provider").Provider;
 export const Provider: typeof import("./provider").Provider = null as any;
 utilities.lazyLoad(exports, ["Provider"], () => require("./provider"));
 
-export { RemoteDownloadArgs } from "./remoteDownload";
-export type RemoteDownload = import("./remoteDownload").RemoteDownload;
-export const RemoteDownload: typeof import("./remoteDownload").RemoteDownload = null as any;
-utilities.lazyLoad(exports, ["RemoteDownload"], () => require("./remoteDownload"));
-
 export { RemoteFileArgs } from "./remoteFile";
 export type RemoteFile = import("./remoteFile").RemoteFile;
 export const RemoteFile: typeof import("./remoteFile").RemoteFile = null as any;
@@ -60,10 +55,12 @@ import { RootCa } from "./rootCa";
 export * from "./types/enums";
 
 // Export sub-modules:
+import * as remote from "./remote";
 import * as tools from "./tools";
 import * as types from "./types";
 
 export {
+    remote,
     tools,
     types,
 };
@@ -78,8 +75,6 @@ const _module = {
                 return new ClusterPki(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:index:EncryptionKey":
                 return new EncryptionKey(name, <any>undefined, { urn })
-            case "kubernetes-the-hard-way:index:RemoteDownload":
-                return new RemoteDownload(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:index:RemoteFile":
                 return new RemoteFile(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:index:RootCa":

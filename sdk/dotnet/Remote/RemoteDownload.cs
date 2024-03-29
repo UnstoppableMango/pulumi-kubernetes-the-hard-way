@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 using Pulumi.Serialization;
 using Pulumi;
 
-namespace UnMango.KubernetesTheHardWay
+namespace UnMango.KubernetesTheHardWay.Remote
 {
     /// <summary>
     /// Represents a file to be downloaded on a remote system.
     /// </summary>
-    [KubernetesTheHardWayResourceType("kubernetes-the-hard-way:index:RemoteDownload")]
+    [KubernetesTheHardWayResourceType("kubernetes-the-hard-way:remote:RemoteDownload")]
     public partial class RemoteDownload : global::Pulumi.ComponentResource
     {
         /// <summary>
@@ -55,7 +55,7 @@ namespace UnMango.KubernetesTheHardWay
         /// <param name="args">The arguments used to populate this resource's properties</param>
         /// <param name="options">A bag of options that control this resource's behavior</param>
         public RemoteDownload(string name, RemoteDownloadArgs args, ComponentResourceOptions? options = null)
-            : base("kubernetes-the-hard-way:index:RemoteDownload", name, args ?? new RemoteDownloadArgs(), MakeResourceOptions(options, ""), remote: true)
+            : base("kubernetes-the-hard-way:remote:RemoteDownload", name, args ?? new RemoteDownloadArgs(), MakeResourceOptions(options, ""), remote: true)
         {
         }
 
