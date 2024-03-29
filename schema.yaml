@@ -242,7 +242,7 @@ resources:
     required:
       - config
       - key
-  kubernetes-the-hard-way:remote:RemoteDownload:
+  kubernetes-the-hard-way:remote:Download:
     isComponent: true
     description: Represents a file to be downloaded on a remote system.
     inputProperties:

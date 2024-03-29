@@ -1,1 +1,1 @@
-export * from './remoteDownload';
+export * from './download';
