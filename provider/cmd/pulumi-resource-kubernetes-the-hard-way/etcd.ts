@@ -1,8 +1,7 @@
 import { ComponentResource, ComponentResourceOptions, Input, Output, interpolate, output } from '@pulumi/pulumi';
 import { remote } from '@pulumi/command/types/input';
-import { Wget } from './wget';
+import { Tar, Wget } from './tools';
 import { Download } from './Download';
-import { Tar } from './tar';
 
 export type Architecture = 'amd64' | 'arm64';
 

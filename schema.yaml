@@ -239,6 +239,9 @@ resources:
     required:
       - config
       - key
+  kubernetes-the-hard-way:index:Etcd:
+    isComponent: true
+    description: Represents an etcd binary on a remote system.
   kubernetes-the-hard-way:remote:Download:
     isComponent: true
     description: Represents a file to be downloaded on a remote system.

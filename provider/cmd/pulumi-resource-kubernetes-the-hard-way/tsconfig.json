@@ -21,6 +21,7 @@
         "tls/certificate.ts",
         "tls/clusterPki.ts",
         "tls/encryption.ts",
+        "etcd.ts",
         "index.ts",
         "tls/keypair.ts",
         "kubeconfig.ts",
