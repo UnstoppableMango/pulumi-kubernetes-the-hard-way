@@ -352,6 +352,51 @@ resources:
       newCertificate: kubernetes-the-hard-way:index:RootCa/newCertificate
       installCert: kubernetes-the-hard-way:index:RootCa/installCert
       installKey: kubernetes-the-hard-way:index:RootCa/installKey
+  kubernetes-the-hard-way:tools:Mkdir:
+    isComponent: true
+    description: Represents the `mkdir` utility.
+    inputProperties:
+      connection:
+        $ref: "/command/v0.9.0/schema.json#/types/command:remote:Connection"
+        description: The connection details for the remote system.
+      directory:
+        type: string
+        description: The fully qualified path of the directory on the remote system.
+      parents:
+        type: boolean
+        description: Corresponds to the `--parents` option.
+      removeOnDelete:
+        type: boolean
+        description: Remove the created directory when the `Mkdir` resource is deleted or updated.
+    requiredInputs:
+      - connection
+      - directory
+    properties:
+      command:
+        $ref: "/command/v0.9.0/schema.json#/resources/command:remote:Command"
+        description: The remote command.
+      directory:
+        type: string
+        description: The fully qualified path of the directory on the remote system.
+      parents:
+        type: boolean
+        description: Corresponds to the `--parents` option.
+      removeOnDelete:
+        type: boolean
+        description: Remove the created directory when the `Mkdir` resource is deleted or updated.
+      stderr:
+        type: string
+        description: The command's stderr.
+      stdout:
+        type: string
+        description: The command's stdout.
+    required:
+      - command
+      - directory
+      - parents
+      - removeOnDelete
+      - stderr
+      - stdout
   kubernetes-the-hard-way:tools:Tar:
     isComponent: true
     description: Abstracion over the `tar` utility on a remote system.
