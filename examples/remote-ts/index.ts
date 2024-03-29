@@ -1,7 +1,7 @@
+import * as path from 'node:path';
 import { Config } from '@pulumi/pulumi';
 import { RemoteFile } from '@unmango/pulumi-kubernetes-the-hard-way';
-import { Wget } from '@unmango/pulumi-kubernetes-the-hard-way/tools';
-import path = require('path');
+import { Tar, Wget } from '@unmango/pulumi-kubernetes-the-hard-way/tools';
 
 const config = new Config();
 const host = config.require('host');
@@ -25,9 +25,19 @@ const wget = new Wget('remote', {
   timestamping: false,
 });
 
+const tar = new Tar('remote', {
+  connection: { host, port, user, password },
+  archive: path.join(basePath, 'text-file.tar.gz'),
+  extract: true,
+  gzip: true,
+});
+
 export const fileStderr = file.stderr;
 export const fileStdout = file.stdout;
 
 export const wgetStderr = wget.stderr;
 export const wgetStdout = wget.stdout;
 export const wgetCommand = wget.command;
+
+export const tarStderr = tar.stderr;
+export const tarStdout = tar.stdout;
