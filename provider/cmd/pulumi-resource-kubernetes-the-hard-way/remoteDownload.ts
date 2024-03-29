@@ -1,7 +1,6 @@
-import { ComponentResource, ComponentResourceOptions, Input, Output, output, interpolate } from '@pulumi/pulumi';
-import { Command } from '@pulumi/command/remote';
+import { ComponentResource, ComponentResourceOptions, Input, Output, output } from '@pulumi/pulumi';
 import { remote } from '@pulumi/command/types/input';
-import { Wget } from './wget';
+import { Mkdir, Wget } from './tools';
 
 export interface RemoteDownloadArgs {
   connection: Input<remote.ConnectionArgs>;
@@ -10,28 +9,29 @@ export interface RemoteDownloadArgs {
 }
 
 export class RemoteDownload extends ComponentResource {
-  public readonly mkdir: Command;
+  public readonly mkdir: Mkdir;
   public readonly destination: Output<string>
   public readonly url: Output<string>;
   public readonly wget: Wget;
 
   constructor(name: string, args: RemoteDownloadArgs, opts?: ComponentResourceOptions) {
-    super('thecluster:index:remoteDownload', name, args, opts);
+    super('kubernetes-the-hard-way:index:remoteDownload', name, args, opts);
 
     const destination = output(args.destination);
     const url = output(args.url);
 
-    const mkdir = new Command(name, {
+    const mkdir = new Mkdir(name, {
       connection: args.connection,
-      create: interpolate`mkdir -p ${destination}`,
-      // Do we want to clean up the directory on update/delete?
+      directory: destination,
+      parents: true,
+      removeOnDelete: false, // TODO: Review
     }, { parent: this });
 
     const wget = new Wget(name, {
       connection: args.connection,
       url: args.url,
-      directoryPrefix: args.destination,
-    }, { parent: this, dependsOn: mkdir });
+      directoryPrefix: mkdir.directory,
+    }, { parent: this });
 
     this.mkdir = mkdir;
     this.destination = destination;

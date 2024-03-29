@@ -25,6 +25,7 @@
         "keypair.ts",
         "kubeconfig.ts",
         "provider.ts",
+        "remoteDownload.ts",
         "remoteFile.ts",
         "resources.ts",
         "rootCa.ts",
