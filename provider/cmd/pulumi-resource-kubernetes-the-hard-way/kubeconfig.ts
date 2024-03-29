@@ -4,7 +4,7 @@ import { ComponentResourceOptions, Input, Output, interpolate, output } from '@p
 import { remote } from '@pulumi/command/types/input';
 import { ClusterPki, NodeMapInput } from './clusterPki';
 import { Certificate } from './certificate';
-import { RemoteFile } from './remote/file';
+import { File } from './remote/file';
 
 export interface Kubeconfig {
   clusters: {
@@ -57,9 +57,9 @@ export function installOn(
   name: string,
   connection: remote.ConnectionArgs,
   opts?: ComponentResourceOptions
-): RemoteFile {
+): File {
   const target = path.join('home', 'kthw');
-  return new RemoteFile(name, {
+  return new File(name, {
     connection,
     content: output(config).apply(x => YAML.stringify(x)),
     path: path.join(target, `${name}.kubeconfig`),

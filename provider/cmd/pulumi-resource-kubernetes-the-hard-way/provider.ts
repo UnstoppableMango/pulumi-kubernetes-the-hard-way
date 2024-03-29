@@ -19,7 +19,7 @@ export class Provider implements provider.Provider {
           case 'kubernetes-the-hard-way:index:ClusterPki':
             return new pki.ClusterPki(name, <any>undefined, { urn });
           case 'kubernetes-the-hard-way:remote:File':
-            return new remoteFile.RemoteFile(name, <any>undefined, { urn });
+            return new remoteFile.File(name, <any>undefined, { urn });
           case 'kubernetes-the-hard-way:index:RootCa':
             return new rootCa.RootCa(name, <any>undefined, { urn });
           default:
