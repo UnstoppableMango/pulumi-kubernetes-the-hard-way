@@ -1,6 +1,6 @@
 import { ComponentResource, ComponentResourceOptions, Input, Output, output } from '@pulumi/pulumi';
 import { remote } from '@pulumi/command/types/input';
-import { Mkdir, Wget } from './tools';
+import { Mkdir, Wget } from '../tools';
 
 export interface RemoteDownloadArgs {
   connection: Input<remote.ConnectionArgs>;
@@ -16,7 +16,7 @@ export class RemoteDownload extends ComponentResource {
   public readonly wget: Wget;
 
   constructor(name: string, args: RemoteDownloadArgs, opts?: ComponentResourceOptions) {
-    super('kubernetes-the-hard-way:index:RemoteDownload', name, args, opts);
+    super('kubernetes-the-hard-way:remote:RemoteDownload', name, args, opts);
 
     const destination = output(args.destination);
     const removeOnDelete = output(args.removeOnDelete ?? false);
