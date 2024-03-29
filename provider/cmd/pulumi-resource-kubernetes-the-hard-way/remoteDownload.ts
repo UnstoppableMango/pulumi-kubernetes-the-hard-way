@@ -15,7 +15,7 @@ export class RemoteDownload extends ComponentResource {
   public readonly wget: Wget;
 
   constructor(name: string, args: RemoteDownloadArgs, opts?: ComponentResourceOptions) {
-    super('kubernetes-the-hard-way:index:remoteDownload', name, args, opts);
+    super('kubernetes-the-hard-way:index:RemoteDownload', name, args, opts);
 
     const destination = output(args.destination);
     const url = output(args.url);
