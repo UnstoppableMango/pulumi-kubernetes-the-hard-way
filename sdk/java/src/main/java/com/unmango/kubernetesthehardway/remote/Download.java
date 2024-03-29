@@ -9,7 +9,7 @@ import com.pulumi.core.annotations.Export;
 import com.pulumi.core.annotations.ResourceType;
 import com.pulumi.core.internal.Codegen;
 import com.unmango.kubernetesthehardway.Utilities;
-import com.unmango.kubernetesthehardway.remote.RemoteDownloadArgs;
+import com.unmango.kubernetesthehardway.remote.DownloadArgs;
 import com.unmango.kubernetesthehardway.tools.Mkdir;
 import com.unmango.kubernetesthehardway.tools.Wget;
 import java.lang.String;
@@ -19,8 +19,8 @@ import javax.annotation.Nullable;
  * Represents a file to be downloaded on a remote system.
  * 
  */
-@ResourceType(type="kubernetes-the-hard-way:remote:RemoteDownload")
-public class RemoteDownload extends com.pulumi.resources.ComponentResource {
+@ResourceType(type="kubernetes-the-hard-way:remote:Download")
+public class Download extends com.pulumi.resources.ComponentResource {
     /**
      * Connection details for the remote system
      * 
@@ -96,15 +96,15 @@ public class RemoteDownload extends com.pulumi.resources.ComponentResource {
      *
      * @param name The _unique_ name of the resulting resource.
      */
-    public RemoteDownload(String name) {
-        this(name, RemoteDownloadArgs.Empty);
+    public Download(String name) {
+        this(name, DownloadArgs.Empty);
     }
     /**
      *
      * @param name The _unique_ name of the resulting resource.
      * @param args The arguments to use to populate this resource's properties.
      */
-    public RemoteDownload(String name, RemoteDownloadArgs args) {
+    public Download(String name, DownloadArgs args) {
         this(name, args, null);
     }
     /**
@@ -113,8 +113,8 @@ public class RemoteDownload extends com.pulumi.resources.ComponentResource {
      * @param args The arguments to use to populate this resource's properties.
      * @param options A bag of options that control this resource's behavior.
      */
-    public RemoteDownload(String name, RemoteDownloadArgs args, @Nullable com.pulumi.resources.ComponentResourceOptions options) {
-        super("kubernetes-the-hard-way:remote:RemoteDownload", name, args == null ? RemoteDownloadArgs.Empty : args, makeResourceOptions(options, Codegen.empty()), true);
+    public Download(String name, DownloadArgs args, @Nullable com.pulumi.resources.ComponentResourceOptions options) {
+        super("kubernetes-the-hard-way:remote:Download", name, args == null ? DownloadArgs.Empty : args, makeResourceOptions(options, Codegen.empty()), true);
     }
 
     private static com.pulumi.resources.ComponentResourceOptions makeResourceOptions(@Nullable com.pulumi.resources.ComponentResourceOptions options, @Nullable Output<String> id) {

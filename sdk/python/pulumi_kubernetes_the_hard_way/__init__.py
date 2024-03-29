@@ -48,7 +48,7 @@ _utilities.register(
   "mod": "remote",
   "fqn": "pulumi_kubernetes_the_hard_way.remote",
   "classes": {
-   "kubernetes-the-hard-way:remote:RemoteDownload": "RemoteDownload"
+   "kubernetes-the-hard-way:remote:Download": "Download"
   }
  },
  {

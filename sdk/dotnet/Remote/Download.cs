@@ -13,8 +13,8 @@ namespace UnMango.KubernetesTheHardWay.Remote
     /// <summary>
     /// Represents a file to be downloaded on a remote system.
     /// </summary>
-    [KubernetesTheHardWayResourceType("kubernetes-the-hard-way:remote:RemoteDownload")]
-    public partial class RemoteDownload : global::Pulumi.ComponentResource
+    [KubernetesTheHardWayResourceType("kubernetes-the-hard-way:remote:Download")]
+    public partial class Download : global::Pulumi.ComponentResource
     {
         /// <summary>
         /// Connection details for the remote system
@@ -48,14 +48,14 @@ namespace UnMango.KubernetesTheHardWay.Remote
 
 
         /// <summary>
-        /// Create a RemoteDownload resource with the given unique name, arguments, and options.
+        /// Create a Download resource with the given unique name, arguments, and options.
         /// </summary>
         ///
         /// <param name="name">The unique name of the resource</param>
         /// <param name="args">The arguments used to populate this resource's properties</param>
         /// <param name="options">A bag of options that control this resource's behavior</param>
-        public RemoteDownload(string name, RemoteDownloadArgs args, ComponentResourceOptions? options = null)
-            : base("kubernetes-the-hard-way:remote:RemoteDownload", name, args ?? new RemoteDownloadArgs(), MakeResourceOptions(options, ""), remote: true)
+        public Download(string name, DownloadArgs args, ComponentResourceOptions? options = null)
+            : base("kubernetes-the-hard-way:remote:Download", name, args ?? new DownloadArgs(), MakeResourceOptions(options, ""), remote: true)
         {
         }
 
@@ -73,7 +73,7 @@ namespace UnMango.KubernetesTheHardWay.Remote
         }
     }
 
-    public sealed class RemoteDownloadArgs : global::Pulumi.ResourceArgs
+    public sealed class DownloadArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
         /// Connection details for the remote system
@@ -99,9 +99,9 @@ namespace UnMango.KubernetesTheHardWay.Remote
         [Input("url", required: true)]
         public Input<string> Url { get; set; } = null!;
 
-        public RemoteDownloadArgs()
+        public DownloadArgs()
         {
         }
-        public static new RemoteDownloadArgs Empty => new RemoteDownloadArgs();
+        public static new DownloadArgs Empty => new DownloadArgs();
     }
 }

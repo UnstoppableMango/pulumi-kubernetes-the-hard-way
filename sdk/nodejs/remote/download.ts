@@ -11,19 +11,19 @@ import {Mkdir, Wget} from "../tools";
 /**
  * Represents a file to be downloaded on a remote system.
  */
-export class RemoteDownload extends pulumi.ComponentResource {
+export class Download extends pulumi.ComponentResource {
     /** @internal */
-    public static readonly __pulumiType = 'kubernetes-the-hard-way:remote:RemoteDownload';
+    public static readonly __pulumiType = 'kubernetes-the-hard-way:remote:Download';
 
     /**
-     * Returns true if the given object is an instance of RemoteDownload.  This is designed to work even
+     * Returns true if the given object is an instance of Download.  This is designed to work even
      * when multiple copies of the Pulumi SDK have been loaded into the same process.
      */
-    public static isInstance(obj: any): obj is RemoteDownload {
+    public static isInstance(obj: any): obj is Download {
         if (obj === undefined || obj === null) {
             return false;
         }
-        return obj['__pulumiType'] === RemoteDownload.__pulumiType;
+        return obj['__pulumiType'] === Download.__pulumiType;
     }
 
     /**
@@ -48,13 +48,13 @@ export class RemoteDownload extends pulumi.ComponentResource {
     public /*out*/ readonly wget!: pulumi.Output<Wget>;
 
     /**
-     * Create a RemoteDownload resource with the given unique name, arguments, and options.
+     * Create a Download resource with the given unique name, arguments, and options.
      *
      * @param name The _unique_ name of the resource.
      * @param args The arguments to use to populate this resource's properties.
      * @param opts A bag of options that control this resource's behavior.
      */
-    constructor(name: string, args: RemoteDownloadArgs, opts?: pulumi.ComponentResourceOptions) {
+    constructor(name: string, args: DownloadArgs, opts?: pulumi.ComponentResourceOptions) {
         let resourceInputs: pulumi.Inputs = {};
         opts = opts || {};
         if (!opts.id) {
@@ -81,14 +81,14 @@ export class RemoteDownload extends pulumi.ComponentResource {
             resourceInputs["wget"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
-        super(RemoteDownload.__pulumiType, name, resourceInputs, opts, true /*remote*/);
+        super(Download.__pulumiType, name, resourceInputs, opts, true /*remote*/);
     }
 }
 
 /**
- * The set of arguments for constructing a RemoteDownload resource.
+ * The set of arguments for constructing a Download resource.
  */
-export interface RemoteDownloadArgs {
+export interface DownloadArgs {
     /**
      * Connection details for the remote system
      */
