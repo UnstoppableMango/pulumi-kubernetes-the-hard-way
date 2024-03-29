@@ -1,13 +1,14 @@
-import { ComponentResource, ComponentResourceOptions, Input, Output, all, output, interpolate } from '@pulumi/pulumi';
+import { ComponentResource, ComponentResourceOptions, Input, Output, output } from '@pulumi/pulumi';
 import { Command } from '@pulumi/command/remote';
 import { remote } from '@pulumi/command/types/input';
+import { CommandBuilder, toArray } from './commandBuilder';
 
 export interface TarArgs {
   archive?: Input<string>;
   connection: Input<remote.ConnectionArgs>;
   directory?: Input<string>;
   extract?: Input<boolean>;
-  files: Input<Input<string>[] | string>;
+  files: Input<string> | Input<Input<string>[]>;
   gzip?: Input<boolean>;
 }
 
@@ -30,31 +31,19 @@ export class Tar extends ComponentResource {
     const archive = output(args.archive);
     const directory = output(args.directory);
     const extract = output(args.extract ?? true); // Is this a sane default?
-    const files = output(args.files).apply(toArray);
+    const files = output(args.files).apply(toArray); // TODO: Can we get types happy without the `toArray`?
     const gzip = output(args.gzip ?? false);
 
-    const options: Output<string> = all([archive, directory, extract, gzip]).apply(([archive, directory, extract, gzip]) => {
-      const options: string[] = [];
-
-      if (archive) options.push(`--file '${archive}'`);
-      if (directory) options.push(`--directory '${directory}'`);
-      if (extract) options.push('--extract');
-      if (gzip) options.push('--gzip');
-
-      return options.join(' ');
-    });
-
-    const create = all([interpolate`tar ${options}`, files]).apply(([x, files]) => {
-      const result = [x];
-      if (files.length > 0) {
-        result.push(...files.map(f => `'${f}'`));
-      }
-      return result.join(' ');
-    });
+    const builder = new CommandBuilder('tar')
+      .option('--file', archive)
+      .option('--directory', directory)
+      .option('--extract', extract)
+      .option('--gzip', gzip)
+      .arg(files);
 
     const command = new Command(name, {
       connection: args.connection,
-      create,
+      create: builder.command,
       // TODO: Should we clean anything up on delete/update?
     }, { parent: this });
 
@@ -74,12 +63,4 @@ export class Tar extends ComponentResource {
       stdout: this.stdout,
     });
   }
-}
-
-function toArray(x: string | Input<string>[]): Output<string[]> {
-  if (typeof x === 'string') {
-    return output([x]);
-  }
-
-  return x?.length > 0 ? all(x) : output([]);
 }
