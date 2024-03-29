@@ -18,6 +18,16 @@ type RemoteFile struct {
 
 	// The command resource.
 	Command remote.CommandOutput `pulumi:"command"`
+	// The contents of the remote file.
+	Content pulumi.StringOutput `pulumi:"content"`
+	// The path to the file on the remote filesystem.
+	Path pulumi.StringOutput `pulumi:"path"`
+	// The process' stderr.
+	Stderr pulumi.StringOutput `pulumi:"stderr"`
+	// The process' stdin.
+	Stdin pulumi.StringPtrOutput `pulumi:"stdin"`
+	// The process' stdout.
+	Stdout pulumi.StringOutput `pulumi:"stdout"`
 }
 
 // NewRemoteFile registers a new resource with the given unique name, arguments, and options.
@@ -155,6 +165,31 @@ func (o RemoteFileOutput) ToRemoteFileOutputWithContext(ctx context.Context) Rem
 // The command resource.
 func (o RemoteFileOutput) Command() remote.CommandOutput {
 	return o.ApplyT(func(v *RemoteFile) remote.CommandOutput { return v.Command }).(remote.CommandOutput)
+}
+
+// The contents of the remote file.
+func (o RemoteFileOutput) Content() pulumi.StringOutput {
+	return o.ApplyT(func(v *RemoteFile) pulumi.StringOutput { return v.Content }).(pulumi.StringOutput)
+}
+
+// The path to the file on the remote filesystem.
+func (o RemoteFileOutput) Path() pulumi.StringOutput {
+	return o.ApplyT(func(v *RemoteFile) pulumi.StringOutput { return v.Path }).(pulumi.StringOutput)
+}
+
+// The process' stderr.
+func (o RemoteFileOutput) Stderr() pulumi.StringOutput {
+	return o.ApplyT(func(v *RemoteFile) pulumi.StringOutput { return v.Stderr }).(pulumi.StringOutput)
+}
+
+// The process' stdin.
+func (o RemoteFileOutput) Stdin() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *RemoteFile) pulumi.StringPtrOutput { return v.Stdin }).(pulumi.StringPtrOutput)
+}
+
+// The process' stdout.
+func (o RemoteFileOutput) Stdout() pulumi.StringOutput {
+	return o.ApplyT(func(v *RemoteFile) pulumi.StringOutput { return v.Stdout }).(pulumi.StringOutput)
 }
 
 type RemoteFileArrayOutput struct{ *pulumi.OutputState }

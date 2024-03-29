@@ -262,8 +262,27 @@ resources:
       command:
         $ref: "/command/v0.9.0/schema.json#/resources/command:remote:Command"
         description: The command resource.
+      content:
+        type: string
+        description: The contents of the remote file.
+      path:
+        type: string
+        description: The path to the file on the remote filesystem.
+      stderr:
+        type: string
+        description: The process' stderr.
+      stdin:
+        type: string
+        description: The process' stdin.
+      stdout:
+        type: string
+        description: The process' stdout.
     required:
       - command
+      - content
+      - path
+      - stderr
+      - stdout
   kubernetes-the-hard-way:index:RootCa:
     isComponent: true
     inputProperties:
@@ -399,6 +418,9 @@ resources:
       httpsOnly:
         type: boolean
         description: Corresponds to the --https-only option.
+      noVerbose:
+        type: boolean
+        description: Corresponds t- the --no-verbose option.
       outputDocument:
         type: string
         description: Corresponds to the --output-document option.
@@ -424,6 +446,9 @@ resources:
       httpsOnly:
         type: boolean
         description: Corresponds to the --https-only option.
+      noVerbose:
+        type: boolean
+        description: Corresponds to the --no-verbose option.
       outputDocument:
         type: string
         description: Corresponds to the --output-document option.

@@ -129,6 +129,9 @@ class RemoteFile(pulumi.ComponentResource):
                 raise TypeError("Missing required property 'path'")
             __props__.__dict__["path"] = path
             __props__.__dict__["command"] = None
+            __props__.__dict__["stderr"] = None
+            __props__.__dict__["stdin"] = None
+            __props__.__dict__["stdout"] = None
         super(RemoteFile, __self__).__init__(
             'kubernetes-the-hard-way:index:RemoteFile',
             resource_name,
@@ -143,4 +146,44 @@ class RemoteFile(pulumi.ComponentResource):
         The command resource.
         """
         return pulumi.get(self, "command")
+
+    @property
+    @pulumi.getter
+    def content(self) -> pulumi.Output[str]:
+        """
+        The contents of the remote file.
+        """
+        return pulumi.get(self, "content")
+
+    @property
+    @pulumi.getter
+    def path(self) -> pulumi.Output[str]:
+        """
+        The path to the file on the remote filesystem.
+        """
+        return pulumi.get(self, "path")
+
+    @property
+    @pulumi.getter
+    def stderr(self) -> pulumi.Output[str]:
+        """
+        The process' stderr.
+        """
+        return pulumi.get(self, "stderr")
+
+    @property
+    @pulumi.getter
+    def stdin(self) -> pulumi.Output[Optional[str]]:
+        """
+        The process' stdin.
+        """
+        return pulumi.get(self, "stdin")
+
+    @property
+    @pulumi.getter
+    def stdout(self) -> pulumi.Output[str]:
+        """
+        The process' stdout.
+        """
+        return pulumi.get(self, "stdout")
 

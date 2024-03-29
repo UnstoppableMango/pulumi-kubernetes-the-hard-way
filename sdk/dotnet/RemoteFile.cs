@@ -19,6 +19,36 @@ namespace UnMango.KubernetesTheHardWay
         [Output("command")]
         public Output<Pulumi.Command.Remote.Command> Command { get; private set; } = null!;
 
+        /// <summary>
+        /// The contents of the remote file.
+        /// </summary>
+        [Output("content")]
+        public Output<string> Content { get; private set; } = null!;
+
+        /// <summary>
+        /// The path to the file on the remote filesystem.
+        /// </summary>
+        [Output("path")]
+        public Output<string> Path { get; private set; } = null!;
+
+        /// <summary>
+        /// The process' stderr.
+        /// </summary>
+        [Output("stderr")]
+        public Output<string> Stderr { get; private set; } = null!;
+
+        /// <summary>
+        /// The process' stdin.
+        /// </summary>
+        [Output("stdin")]
+        public Output<string?> Stdin { get; private set; } = null!;
+
+        /// <summary>
+        /// The process' stdout.
+        /// </summary>
+        [Output("stdout")]
+        public Output<string> Stdout { get; private set; } = null!;
+
 
         /// <summary>
         /// Create a RemoteFile resource with the given unique name, arguments, and options.

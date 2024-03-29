@@ -10,6 +10,8 @@ import com.pulumi.core.annotations.ResourceType;
 import com.pulumi.core.internal.Codegen;
 import com.unmango.kubernetesthehardway.RemoteFileArgs;
 import com.unmango.kubernetesthehardway.Utilities;
+import java.lang.String;
+import java.util.Optional;
 import javax.annotation.Nullable;
 
 @ResourceType(type="kubernetes-the-hard-way:index:RemoteFile")
@@ -27,6 +29,76 @@ public class RemoteFile extends com.pulumi.resources.ComponentResource {
      */
     public Output<Command> command() {
         return this.command;
+    }
+    /**
+     * The contents of the remote file.
+     * 
+     */
+    @Export(name="content", refs={String.class}, tree="[0]")
+    private Output<String> content;
+
+    /**
+     * @return The contents of the remote file.
+     * 
+     */
+    public Output<String> content() {
+        return this.content;
+    }
+    /**
+     * The path to the file on the remote filesystem.
+     * 
+     */
+    @Export(name="path", refs={String.class}, tree="[0]")
+    private Output<String> path;
+
+    /**
+     * @return The path to the file on the remote filesystem.
+     * 
+     */
+    public Output<String> path() {
+        return this.path;
+    }
+    /**
+     * The process&#39; stderr.
+     * 
+     */
+    @Export(name="stderr", refs={String.class}, tree="[0]")
+    private Output<String> stderr;
+
+    /**
+     * @return The process&#39; stderr.
+     * 
+     */
+    public Output<String> stderr() {
+        return this.stderr;
+    }
+    /**
+     * The process&#39; stdin.
+     * 
+     */
+    @Export(name="stdin", refs={String.class}, tree="[0]")
+    private Output</* @Nullable */ String> stdin;
+
+    /**
+     * @return The process&#39; stdin.
+     * 
+     */
+    public Output<Optional<String>> stdin() {
+        return Codegen.optional(this.stdin);
+    }
+    /**
+     * The process&#39; stdout.
+     * 
+     */
+    @Export(name="stdout", refs={String.class}, tree="[0]")
+    private Output<String> stdout;
+
+    /**
+     * @return The process&#39; stdout.
+     * 
+     */
+    public Output<String> stdout() {
+        return this.stdout;
     }
 
     /**

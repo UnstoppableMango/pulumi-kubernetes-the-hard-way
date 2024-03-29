@@ -37,6 +37,10 @@ export class Wget extends pulumi.ComponentResource {
      */
     public readonly httpsOnly!: pulumi.Output<boolean>;
     /**
+     * Corresponds to the --no-verbose option.
+     */
+    public readonly noVerbose!: pulumi.Output<boolean | undefined>;
+    /**
      * Corresponds to the --output-document option.
      */
     public readonly outputDocument!: pulumi.Output<string | undefined>;
@@ -85,6 +89,7 @@ export class Wget extends pulumi.ComponentResource {
             resourceInputs["connection"] = args ? (args.connection ? pulumi.output(args.connection).apply(pulumiCommand.types.input.remote.connectionArgsProvideDefaults) : undefined) : undefined;
             resourceInputs["directoryPrefix"] = args ? args.directoryPrefix : undefined;
             resourceInputs["httpsOnly"] = args ? args.httpsOnly : undefined;
+            resourceInputs["noVerbose"] = args ? args.noVerbose : undefined;
             resourceInputs["outputDocument"] = args ? args.outputDocument : undefined;
             resourceInputs["quiet"] = args ? args.quiet : undefined;
             resourceInputs["timestamping"] = args ? args.timestamping : undefined;
@@ -97,6 +102,7 @@ export class Wget extends pulumi.ComponentResource {
             resourceInputs["command"] = undefined /*out*/;
             resourceInputs["directoryPrefix"] = undefined /*out*/;
             resourceInputs["httpsOnly"] = undefined /*out*/;
+            resourceInputs["noVerbose"] = undefined /*out*/;
             resourceInputs["outputDocument"] = undefined /*out*/;
             resourceInputs["quiet"] = undefined /*out*/;
             resourceInputs["stderr"] = undefined /*out*/;
@@ -126,6 +132,10 @@ export interface WgetArgs {
      * Corresponds to the --https-only option.
      */
     httpsOnly?: pulumi.Input<boolean>;
+    /**
+     * Corresponds t- the --no-verbose option.
+     */
+    noVerbose?: pulumi.Input<boolean>;
     /**
      * Corresponds to the --output-document option.
      */

@@ -64,6 +64,20 @@ public class Wget extends com.pulumi.resources.ComponentResource {
         return this.httpsOnly;
     }
     /**
+     * Corresponds to the --no-verbose option.
+     * 
+     */
+    @Export(name="noVerbose", refs={Boolean.class}, tree="[0]")
+    private Output</* @Nullable */ Boolean> noVerbose;
+
+    /**
+     * @return Corresponds to the --no-verbose option.
+     * 
+     */
+    public Output<Optional<Boolean>> noVerbose() {
+        return Codegen.optional(this.noVerbose);
+    }
+    /**
      * Corresponds to the --output-document option.
      * 
      */

@@ -25,6 +25,26 @@ export class RemoteFile extends pulumi.ComponentResource {
      * The command resource.
      */
     public /*out*/ readonly command!: pulumi.Output<pulumiCommand.remote.Command>;
+    /**
+     * The contents of the remote file.
+     */
+    public readonly content!: pulumi.Output<string>;
+    /**
+     * The path to the file on the remote filesystem.
+     */
+    public readonly path!: pulumi.Output<string>;
+    /**
+     * The process' stderr.
+     */
+    public /*out*/ readonly stderr!: pulumi.Output<string>;
+    /**
+     * The process' stdin.
+     */
+    public /*out*/ readonly stdin!: pulumi.Output<string | undefined>;
+    /**
+     * The process' stdout.
+     */
+    public /*out*/ readonly stdout!: pulumi.Output<string>;
 
     /**
      * Create a RemoteFile resource with the given unique name, arguments, and options.
@@ -50,8 +70,16 @@ export class RemoteFile extends pulumi.ComponentResource {
             resourceInputs["content"] = args ? args.content : undefined;
             resourceInputs["path"] = args ? args.path : undefined;
             resourceInputs["command"] = undefined /*out*/;
+            resourceInputs["stderr"] = undefined /*out*/;
+            resourceInputs["stdin"] = undefined /*out*/;
+            resourceInputs["stdout"] = undefined /*out*/;
         } else {
             resourceInputs["command"] = undefined /*out*/;
+            resourceInputs["content"] = undefined /*out*/;
+            resourceInputs["path"] = undefined /*out*/;
+            resourceInputs["stderr"] = undefined /*out*/;
+            resourceInputs["stdin"] = undefined /*out*/;
+            resourceInputs["stdout"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         super(RemoteFile.__pulumiType, name, resourceInputs, opts, true /*remote*/);

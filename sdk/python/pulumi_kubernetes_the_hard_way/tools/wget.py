@@ -19,6 +19,7 @@ class WgetArgs:
                  url: pulumi.Input[str],
                  directory_prefix: Optional[pulumi.Input[str]] = None,
                  https_only: Optional[pulumi.Input[bool]] = None,
+                 no_verbose: Optional[pulumi.Input[bool]] = None,
                  output_document: Optional[pulumi.Input[str]] = None,
                  quiet: Optional[pulumi.Input[bool]] = None,
                  timestamping: Optional[pulumi.Input[bool]] = None):
@@ -28,6 +29,7 @@ class WgetArgs:
         :param pulumi.Input[str] url: Corresponse to the [URL] argument.
         :param pulumi.Input[str] directory_prefix: Corresponds to the --directory-prefix option.
         :param pulumi.Input[bool] https_only: Corresponds to the --https-only option.
+        :param pulumi.Input[bool] no_verbose: Corresponds t- the --no-verbose option.
         :param pulumi.Input[str] output_document: Corresponds to the --output-document option.
         :param pulumi.Input[bool] quiet: Corresponds to the --quiet option.
         :param pulumi.Input[bool] timestamping: Corresponds to the --timestamping option.
@@ -38,6 +40,8 @@ class WgetArgs:
             pulumi.set(__self__, "directory_prefix", directory_prefix)
         if https_only is not None:
             pulumi.set(__self__, "https_only", https_only)
+        if no_verbose is not None:
+            pulumi.set(__self__, "no_verbose", no_verbose)
         if output_document is not None:
             pulumi.set(__self__, "output_document", output_document)
         if quiet is not None:
@@ -94,6 +98,18 @@ class WgetArgs:
         pulumi.set(self, "https_only", value)
 
     @property
+    @pulumi.getter(name="noVerbose")
+    def no_verbose(self) -> Optional[pulumi.Input[bool]]:
+        """
+        Corresponds t- the --no-verbose option.
+        """
+        return pulumi.get(self, "no_verbose")
+
+    @no_verbose.setter
+    def no_verbose(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "no_verbose", value)
+
+    @property
     @pulumi.getter(name="outputDocument")
     def output_document(self) -> Optional[pulumi.Input[str]]:
         """
@@ -138,6 +154,7 @@ class Wget(pulumi.ComponentResource):
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
                  directory_prefix: Optional[pulumi.Input[str]] = None,
                  https_only: Optional[pulumi.Input[bool]] = None,
+                 no_verbose: Optional[pulumi.Input[bool]] = None,
                  output_document: Optional[pulumi.Input[str]] = None,
                  quiet: Optional[pulumi.Input[bool]] = None,
                  timestamping: Optional[pulumi.Input[bool]] = None,
@@ -151,6 +168,7 @@ class Wget(pulumi.ComponentResource):
         :param pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']] connection: Connection details for the remote system.
         :param pulumi.Input[str] directory_prefix: Corresponds to the --directory-prefix option.
         :param pulumi.Input[bool] https_only: Corresponds to the --https-only option.
+        :param pulumi.Input[bool] no_verbose: Corresponds t- the --no-verbose option.
         :param pulumi.Input[str] output_document: Corresponds to the --output-document option.
         :param pulumi.Input[bool] quiet: Corresponds to the --quiet option.
         :param pulumi.Input[bool] timestamping: Corresponds to the --timestamping option.
@@ -183,6 +201,7 @@ class Wget(pulumi.ComponentResource):
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
                  directory_prefix: Optional[pulumi.Input[str]] = None,
                  https_only: Optional[pulumi.Input[bool]] = None,
+                 no_verbose: Optional[pulumi.Input[bool]] = None,
                  output_document: Optional[pulumi.Input[str]] = None,
                  quiet: Optional[pulumi.Input[bool]] = None,
                  timestamping: Optional[pulumi.Input[bool]] = None,
@@ -203,6 +222,7 @@ class Wget(pulumi.ComponentResource):
             __props__.__dict__["connection"] = connection
             __props__.__dict__["directory_prefix"] = directory_prefix
             __props__.__dict__["https_only"] = https_only
+            __props__.__dict__["no_verbose"] = no_verbose
             __props__.__dict__["output_document"] = output_document
             __props__.__dict__["quiet"] = quiet
             __props__.__dict__["timestamping"] = timestamping
@@ -243,6 +263,14 @@ class Wget(pulumi.ComponentResource):
         Corresponds to the --https-only option.
         """
         return pulumi.get(self, "https_only")
+
+    @property
+    @pulumi.getter(name="noVerbose")
+    def no_verbose(self) -> pulumi.Output[Optional[bool]]:
+        """
+        Corresponds to the --no-verbose option.
+        """
+        return pulumi.get(self, "no_verbose")
 
     @property
     @pulumi.getter(name="outputDocument")

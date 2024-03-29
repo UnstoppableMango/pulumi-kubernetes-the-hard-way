@@ -64,6 +64,21 @@ public final class WgetArgs extends com.pulumi.resources.ResourceArgs {
     }
 
     /**
+     * Corresponds t- the --no-verbose option.
+     * 
+     */
+    @Import(name="noVerbose")
+    private @Nullable Output<Boolean> noVerbose;
+
+    /**
+     * @return Corresponds t- the --no-verbose option.
+     * 
+     */
+    public Optional<Output<Boolean>> noVerbose() {
+        return Optional.ofNullable(this.noVerbose);
+    }
+
+    /**
      * Corresponds to the --output-document option.
      * 
      */
@@ -129,6 +144,7 @@ public final class WgetArgs extends com.pulumi.resources.ResourceArgs {
         this.connection = $.connection;
         this.directoryPrefix = $.directoryPrefix;
         this.httpsOnly = $.httpsOnly;
+        this.noVerbose = $.noVerbose;
         this.outputDocument = $.outputDocument;
         this.quiet = $.quiet;
         this.timestamping = $.timestamping;
@@ -214,6 +230,27 @@ public final class WgetArgs extends com.pulumi.resources.ResourceArgs {
          */
         public Builder httpsOnly(Boolean httpsOnly) {
             return httpsOnly(Output.of(httpsOnly));
+        }
+
+        /**
+         * @param noVerbose Corresponds t- the --no-verbose option.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder noVerbose(@Nullable Output<Boolean> noVerbose) {
+            $.noVerbose = noVerbose;
+            return this;
+        }
+
+        /**
+         * @param noVerbose Corresponds t- the --no-verbose option.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder noVerbose(Boolean noVerbose) {
+            return noVerbose(Output.of(noVerbose));
         }
 
         /**
