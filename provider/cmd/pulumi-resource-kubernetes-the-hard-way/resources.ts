@@ -1,7 +1,7 @@
 import { ComponentResource, ComponentResourceOptions, Inputs } from '@pulumi/pulumi';
 import { Certificate } from './certificate';
 import { ClusterPki } from './clusterPki';
-import { RemoteFile } from './remote/remoteFile';
+import { RemoteFile } from './remote/file';
 import { RootCa } from './rootCa';
 import { Download } from './remote';
 import { Mkdir, Tar, Wget } from './tools';

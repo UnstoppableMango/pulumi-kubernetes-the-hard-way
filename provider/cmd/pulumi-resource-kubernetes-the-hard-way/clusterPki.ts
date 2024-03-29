@@ -4,7 +4,7 @@ import { remote } from '@pulumi/command/types/input';
 import { RootCa } from './rootCa';
 import { Certificate } from './certificate';
 import { Algorithm } from './types';
-import { InstallArgs, RemoteFile } from './remote/remoteFile';
+import { InstallArgs, RemoteFile } from './remote/file';
 import { ConstructResult } from '@pulumi/pulumi/provider';
 
 // export interface WorkerCerts {

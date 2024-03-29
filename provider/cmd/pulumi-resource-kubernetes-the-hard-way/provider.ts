@@ -3,7 +3,7 @@ import * as provider from '@pulumi/pulumi/provider';
 import * as cert from './certificate';
 import * as pki from './clusterPki';
 import * as keypair from './keypair';
-import * as remoteFile from './remote/remoteFile';
+import * as remoteFile from './remote/file';
 import * as rootCa from './rootCa';
 import { construct } from './resources';
 import { resourceToConstructResult } from './util';
