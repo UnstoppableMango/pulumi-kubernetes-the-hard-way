@@ -1,7 +1,7 @@
 import { ComponentResource, ComponentResourceOptions, Input, Output, all, output } from '@pulumi/pulumi';
 import { remote } from '@pulumi/command/types/input';
 import { Command } from '@pulumi/command/remote';
-import { CommandBuilder } from '../commandBuilder';
+import { CommandBuilder } from './commandBuilder';
 
 export interface MkdirArgs {
   connection: Input<remote.ConnectionArgs>;
