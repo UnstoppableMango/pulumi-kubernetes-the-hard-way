@@ -13,7 +13,9 @@
         "forceConsistentCasingInFileNames": true
     },
     "files": [
+        "tools/commandBuilder.ts",
         "tools/index.ts",
+        "tools/mkdir.ts",
         "tools/tar.ts",
         "tools/wget.ts",
         "certificate.ts",

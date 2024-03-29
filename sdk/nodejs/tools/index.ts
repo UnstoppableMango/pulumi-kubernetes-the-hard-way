@@ -5,6 +5,11 @@ import * as pulumi from "@pulumi/pulumi";
 import * as utilities from "../utilities";
 
 // Export members:
+export { MkdirArgs } from "./mkdir";
+export type Mkdir = import("./mkdir").Mkdir;
+export const Mkdir: typeof import("./mkdir").Mkdir = null as any;
+utilities.lazyLoad(exports, ["Mkdir"], () => require("./mkdir"));
+
 export { TarArgs } from "./tar";
 export type Tar = import("./tar").Tar;
 export const Tar: typeof import("./tar").Tar = null as any;
@@ -20,6 +25,8 @@ const _module = {
     version: utilities.getVersion(),
     construct: (name: string, type: string, urn: string): pulumi.Resource => {
         switch (type) {
+            case "kubernetes-the-hard-way:tools:Mkdir":
+                return new Mkdir(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:tools:Tar":
                 return new Tar(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:tools:Wget":

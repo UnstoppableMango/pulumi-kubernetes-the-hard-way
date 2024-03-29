@@ -1,7 +1,7 @@
 import * as path from 'node:path';
 import { Config } from '@pulumi/pulumi';
 import { RemoteFile } from '@unmango/pulumi-kubernetes-the-hard-way';
-import { Tar, Wget } from '@unmango/pulumi-kubernetes-the-hard-way/tools';
+import { Mkdir, Tar, Wget } from '@unmango/pulumi-kubernetes-the-hard-way/tools';
 
 const config = new Config();
 const host = config.require('host');
@@ -21,9 +21,16 @@ const wget = new Wget('remote', {
   url: 'https://www.example.com',
   directoryPrefix: basePath,
   // The container image seems to have an old version
+  // These two options aren't supported
   httpsOnly: false,
   timestamping: false,
 });
+
+const mkdir = new Mkdir('remote', {
+  connection: { host, port, user, password },
+  directory: path.join(basePath, 'test-dir', 'subdir'),
+  parents: true,
+})
 
 // This has permissions issues at the moment for some reason
 // const tar = new Tar('remote', {
