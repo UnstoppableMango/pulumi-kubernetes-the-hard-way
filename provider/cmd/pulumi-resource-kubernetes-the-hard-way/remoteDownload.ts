@@ -5,6 +5,7 @@ import { Mkdir, Wget } from './tools';
 export interface RemoteDownloadArgs {
   connection: Input<remote.ConnectionArgs>;
   destination: Input<string>;
+  removeOnDelete?: Input<boolean>;
   url: Input<string>;
 }
 
@@ -18,13 +19,14 @@ export class RemoteDownload extends ComponentResource {
     super('kubernetes-the-hard-way:index:RemoteDownload', name, args, opts);
 
     const destination = output(args.destination);
+    const removeOnDelete = output(args.removeOnDelete ?? false);
     const url = output(args.url);
 
     const mkdir = new Mkdir(name, {
       connection: args.connection,
       directory: destination,
       parents: true,
-      removeOnDelete: false, // TODO: Review
+      removeOnDelete,
     }, { parent: this });
 
     const wget = new Wget(name, {

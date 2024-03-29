@@ -253,6 +253,9 @@ resources:
         type: string
         description: The fully qualified path on the remote system where the file
           should be downloaded to.
+      removeOnDelete:
+        type: boolean
+        description: Remove the downloaded file when the resource is deleted.
       url:
         type: string
         description: The URL for the file to be downloaded.
