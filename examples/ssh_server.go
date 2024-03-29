@@ -2,6 +2,7 @@ package examples
 
 import (
 	"context"
+	"io"
 	"strconv"
 
 	"github.com/docker/go-connections/nat"
@@ -79,4 +80,18 @@ func (s *SshServer) Port(ctx context.Context) (string, error) {
 	port, err := s.Container.MappedPort(ctx, nat.Port(internalPort))
 
 	return port.Port(), err
+}
+
+func (s *SshServer) ReadFile(ctx context.Context, filePath string) (string, error) {
+	reader, err := s.Container.CopyFileFromContainer(ctx, filePath)
+	if err != nil {
+		return "", err
+	}
+
+	data, err := io.ReadAll(reader)
+	if err != nil {
+		return "", err
+	}
+
+	return string(data), nil
 }
