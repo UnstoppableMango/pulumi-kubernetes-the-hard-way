@@ -1,21 +1,10 @@
-import { ComponentResourceOptions, Input, Inputs, Output } from '@pulumi/pulumi';
+import { ComponentResourceOptions, Inputs, Output } from '@pulumi/pulumi';
 import { ConstructResult } from '@pulumi/pulumi/provider';
 import { CertRequest, LocallySignedCert } from '@pulumi/tls';
-import { CertRequestSubject } from '@pulumi/tls/types/input';
-import { KeyPair, KeyPairArgs } from './keypair';
+import { CertificateArgs } from './sdk';
+import { KeyPair } from './keypair';
 import { AllowedUsage } from '../types';
 import { toAllowedUsage } from '../util';
-
-export interface CertificateArgs extends KeyPairArgs {
-  allowedUses: Input<Input<AllowedUsage>[]>;
-  dnsNames?: Input<Input<string>[]>;
-  caCertPem: Input<string>;
-  caPrivateKeyPem: Input<string>;
-  ipAddresses?: Input<Input<string>[]>;
-  isCaCertificate?: Input<boolean>;
-  uris?: Input<Input<string>[]>;
-  subject?: Input<CertRequestSubject>;
-}
 
 export class Certificate extends KeyPair<LocallySignedCert> {
   public readonly allowedUses!: Output<AllowedUsage[]>;

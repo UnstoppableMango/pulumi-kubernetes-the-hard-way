@@ -1,11 +1,8 @@
-import * as path from 'node:path';
-import { ComponentResource, ComponentResourceOptions, Input, Inputs, Output, interpolate, output } from '@pulumi/pulumi';
-import { remote } from '@pulumi/command/types/input';
+import { ComponentResource, ComponentResourceOptions, Input, Output, interpolate, output } from '@pulumi/pulumi';
+import * as sdk from './sdk';
 import { RootCa } from './rootCa';
 import { Certificate } from './certificate';
 import { Algorithm } from '../types';
-import { InstallArgs, File } from '../remote/file';
-import { ConstructResult } from '@pulumi/pulumi/provider';
 
 // export interface WorkerCerts {
 //   ca: RemoteFile;
@@ -31,13 +28,10 @@ export interface NodeArgs {
   role: Input<NodeRole>;
 }
 
-export interface ClusterPkiArgs<T extends NodeMapInput = NodeMapInput> {
-  algorithm?: Input<Algorithm>;
-  clusterName: Input<string>;
+export interface ClusterPkiArgs<
+  T extends NodeMapInput = NodeMapInput
+> extends sdk.ClusterPkiArgs {
   nodes: T;
-  publicIp: Input<string>;
-  rsaBits?: Input<number>;
-  validityPeriodHours?: Input<number>;
 }
 
 type CertMap<T> = {
@@ -265,29 +259,3 @@ export class ClusterPki<T extends NodeMapInput = NodeMapInput> extends Component
 //     key: cert.installKey(`${node}-key`, { connection, path: keyPath }, opts),
 //   };
 // }
-
-export async function construct(
-  name: string,
-  inputs: Inputs,
-  options: ComponentResourceOptions,
-): Promise<ConstructResult> {
-  const pki = new ClusterPki(name, inputs as ClusterPkiArgs<NodeMapInput>, options);
-  return {
-    urn: pki.urn,
-    state: {
-      admin: pki.admin,
-      algorithm: pki.algorithm,
-      clusterName: pki.clusterName,
-      controllerManager: pki.controllerManager,
-      validityPeriodHours: pki.validityPeriodHours,
-      kubeProxy: pki.kubeProxy,
-      kubeScheduler: pki.kubeScheduler,
-      kubelet: pki.kubelet,
-      kubernetes: pki.kubernetes,
-      publicIp: pki.publicIp,
-      rootCa: pki.rootCa,
-      rsaBits: pki.rsaBits,
-      serviceAccounts: pki.serviceAccounts,
-    },
-  };
-}

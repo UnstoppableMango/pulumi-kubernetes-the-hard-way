@@ -1,18 +1,7 @@
-import { ComponentResource, ComponentResourceOptions, Input, Output, output } from '@pulumi/pulumi';
+import { ComponentResource, ComponentResourceOptions, Output, output } from '@pulumi/pulumi';
 import { Command } from '@pulumi/command/remote';
-import { remote } from '@pulumi/command/types/input';
+import { WgetArgs } from '../sdk';
 import { CommandBuilder } from './commandBuilder';
-
-export interface WgetArgs {
-  connection: Input<remote.ConnectionArgs>;
-  directoryPrefix?: Input<string>;
-  httpsOnly?: Input<boolean>;
-  noVerbose?: Input<boolean>;
-  outputDocument?: Input<string>;
-  quiet?: Input<boolean>;
-  timestamping?: Input<boolean>;
-  url: Input<string>;
-}
 
 export class Wget extends ComponentResource {
   public readonly command!: Command;

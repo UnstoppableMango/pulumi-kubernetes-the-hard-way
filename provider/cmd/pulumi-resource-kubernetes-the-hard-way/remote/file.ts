@@ -1,17 +1,11 @@
 import { ComponentResource, ComponentResourceOptions, Input, Output, interpolate, output } from '@pulumi/pulumi';
 import { Command } from '@pulumi/command/remote';
-import { remote } from '@pulumi/command/types/input';
+import { RemoteFileArgs } from './sdk';
 
 export type InstallArgs = Omit<FileArgs, 'content'> & {
   name: string;
   options?: ComponentResourceOptions;
 };
-
-export interface FileArgs {
-  connection: Input<remote.ConnectionArgs>;
-  path: Input<string>;
-  content: Input<string>;
-}
 
 export class File extends ComponentResource {
   public readonly command!: Command;

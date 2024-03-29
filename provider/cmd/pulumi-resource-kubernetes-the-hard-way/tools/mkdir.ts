@@ -1,14 +1,7 @@
-import { ComponentResource, ComponentResourceOptions, Input, Output, all, output } from '@pulumi/pulumi';
-import { remote } from '@pulumi/command/types/input';
+import { ComponentResource, ComponentResourceOptions, Output, all, output } from '@pulumi/pulumi';
 import { Command } from '@pulumi/command/remote';
+import { MkdirArgs } from '../sdk';
 import { CommandBuilder } from './commandBuilder';
-
-export interface MkdirArgs {
-  connection: Input<remote.ConnectionArgs>;
-  directory: Input<string>;
-  parents?: Input<boolean>;
-  removeOnDelete?: Input<boolean>;
-}
 
 export class Mkdir extends ComponentResource {
   public readonly command!: Command;

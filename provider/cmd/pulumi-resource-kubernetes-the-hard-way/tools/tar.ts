@@ -1,16 +1,7 @@
 import { ComponentResource, ComponentResourceOptions, Input, Output, output } from '@pulumi/pulumi';
 import { Command } from '@pulumi/command/remote';
-import { remote } from '@pulumi/command/types/input';
+import { TarArgs } from '../sdk';
 import { CommandBuilder, toArray } from './commandBuilder';
-
-export interface TarArgs {
-  archive?: Input<string>;
-  connection: Input<remote.ConnectionArgs>;
-  directory?: Input<string>;
-  extract?: Input<boolean>;
-  files: Input<string> | Input<Input<string>[]>;
-  gzip?: Input<boolean>;
-}
 
 export class Tar extends ComponentResource {
   public readonly archive!: Output<string | undefined>;
