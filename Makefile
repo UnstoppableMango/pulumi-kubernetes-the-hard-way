@@ -235,6 +235,7 @@ provider/cmd/${PROVIDER}/schema.json: bin/yq $(SCHEMA_FILE)
 	.pulumi/bin/pulumi package gen-sdk $(SCHEMA_FILE) --language nodejs
 	sed -i.bak -e "s/sourceMap/inlineSourceMap/g" sdk/nodejs/tsconfig.json
 	sed -i.bak -e 's/"remote"/".\/remote"/g' sdk/nodejs/*.ts
+	sed -i.bak -e 's/"tls"/".\/tls"/g' sdk/nodejs/*.ts
 	rm sdk/nodejs/*.bak
 	@touch $@
 
