@@ -5,7 +5,7 @@ import { File } from './remote/file';
 import { RootCa } from './tls/rootCa';
 import { Download } from './remote';
 import { Mkdir, Tar, Wget } from './tools';
-import { EncryptionKey } from './tls/encryption';
+import { EncryptionKey } from './tls/encryptionKey';
 
 export type ConstructComponent<T extends ComponentResource = ComponentResource>
   = (name: string, inputs: any, options: ComponentResourceOptions) => T;

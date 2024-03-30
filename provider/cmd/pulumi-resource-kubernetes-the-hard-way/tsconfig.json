@@ -20,7 +20,7 @@
         "tools/wget.ts",
         "tls/certificate.ts",
         "tls/clusterPki.ts",
-        "tls/encryption.ts",
+        "tls/encryptionKey.ts",
         "etcd.ts",
         "index.ts",
         "tls/keypair.ts",
