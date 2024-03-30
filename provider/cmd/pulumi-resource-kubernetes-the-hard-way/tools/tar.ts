@@ -8,7 +8,7 @@ export interface TarArgs {
   connection: Input<remote.ConnectionArgs>;
   directory?: Input<string>;
   extract?: Input<boolean>;
-  files: Input<string> | Input<Input<string>[]>;
+  files?: Input<string> | Input<Input<string>[]>;
   gzip?: Input<boolean>;
 }
 
