@@ -35,9 +35,9 @@ export class Tar extends ComponentResource {
     const gzip = output(args.gzip ?? false);
 
     const builder = new CommandBuilder('tar')
+      .option('--extract', extract)
       .option('--file', archive)
       .option('--directory', directory)
-      .option('--extract', extract)
       .option('--gzip', gzip)
       .arg(files);
 
