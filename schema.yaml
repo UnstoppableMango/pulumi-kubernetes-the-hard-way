@@ -60,22 +60,22 @@ language:
       com.pulumi:random: 4.16.0
       com.pulumi:tls: 5.0.0
 resources:
-  kubernetes-the-hard-way:index:Certificate:
+  kubernetes-the-hard-way:tls:Certificate:
     isComponent: true
     inputProperties:
       algorithm:
-        $ref: "#/types/kubernetes-the-hard-way:index:Algorithm"
+        $ref: "#/types/kubernetes-the-hard-way:tls:Algorithm"
         description: Name of the algorithm to use when generating the private key.
       allowedUses:
         type: array
         items:
-          $ref: "#/types/kubernetes-the-hard-way:index:AllowedUsage"
+          $ref: "#/types/kubernetes-the-hard-way:tls:AllowedUsage"
       caCertPem:
         type: string
       caPrivateKeyPem:
         type: string
       ecdsaCurve:
-        $ref: "#/types/kubernetes-the-hard-way:index:EcdsaCurve"
+        $ref: "#/types/kubernetes-the-hard-way:tls:EcdsaCurve"
         description: When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
       rsaBits:
         type: integer
@@ -138,25 +138,25 @@ resources:
       - privateKeyPem
       - publicKeyPem
     methods:
-      installCert: kubernetes-the-hard-way:index:Certificate/installCert
-      installKey: kubernetes-the-hard-way:index:Certificate/installKey
-  kubernetes-the-hard-way:index:ClusterPki:
+      installCert: kubernetes-the-hard-way:tls:Certificate/installCert
+      installKey: kubernetes-the-hard-way:tls:Certificate/installKey
+  kubernetes-the-hard-way:tls:ClusterPki:
     isComponent: true
     inputProperties:
       algorithm:
-        $ref: "#/types/kubernetes-the-hard-way:index:Algorithm"
+        $ref: "#/types/kubernetes-the-hard-way:tls:Algorithm"
         description: Name of the algorithm to use when generating the private key.
         default: RSA
       clusterName:
         type: string
         description: A name to use for the cluster
       ecdsaCurve:
-        $ref: "#/types/kubernetes-the-hard-way:index:EcdsaCurve"
+        $ref: "#/types/kubernetes-the-hard-way:tls:EcdsaCurve"
         description: When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
       nodes:
         type: object
         additionalProperties:
-          $ref: "#/types/kubernetes-the-hard-way:index:ClusterPkiNode"
+          $ref: "#/types/kubernetes-the-hard-way:tls:ClusterPkiNode"
         description: Map of node names to node configuration.
       publicIp:
         type: string
@@ -175,31 +175,31 @@ resources:
       - publicIp
     properties:
       admin:
-        $ref: "#/resources/kubernetes-the-hard-way:index:Certificate"
+        $ref: "#/resources/kubernetes-the-hard-way:tls:Certificate"
         description: The admin certificate.
       algorithm:
-        $ref: "#/types/kubernetes-the-hard-way:index:Algorithm"
+        $ref: "#/types/kubernetes-the-hard-way:tls:Algorithm"
         description: Name of the algorithm to use when generating the private key.
       ca:
-        $ref: "#/resources/kubernetes-the-hard-way:index:RootCa"
+        $ref: "#/resources/kubernetes-the-hard-way:tls:RootCa"
       clusterName:
         type: string
       controllerManager:
-        $ref: "#/resources/kubernetes-the-hard-way:index:Certificate"
+        $ref: "#/resources/kubernetes-the-hard-way:tls:Certificate"
         description: The controller manager certificate.
       kubelet:
         type: object
         additionalProperties:
-          $ref: "#/resources/kubernetes-the-hard-way:index:Certificate"
+          $ref: "#/resources/kubernetes-the-hard-way:tls:Certificate"
         description: Map of node name to kubelet certificate.
       kubeProxy:
-        $ref: "#/resources/kubernetes-the-hard-way:index:Certificate"
+        $ref: "#/resources/kubernetes-the-hard-way:tls:Certificate"
         description: The kube proxy certificate.
       kubernetes:
-        $ref: "#/resources/kubernetes-the-hard-way:index:Certificate"
+        $ref: "#/resources/kubernetes-the-hard-way:tls:Certificate"
         description: The kubernetes certificate.
       kubeScheduler:
-        $ref: "#/resources/kubernetes-the-hard-way:index:Certificate"
+        $ref: "#/resources/kubernetes-the-hard-way:tls:Certificate"
         description: The kube scheduler certificate.
       publicIp:
         type: string
@@ -208,7 +208,7 @@ resources:
         type: integer
         description: When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
       serviceAccounts:
-        $ref: "#/resources/kubernetes-the-hard-way:index:Certificate"
+        $ref: "#/resources/kubernetes-the-hard-way:tls:Certificate"
         description: The service accounts certificate.
       validityPeriodHours:
         type: integer
@@ -227,7 +227,7 @@ resources:
       - rsaBits
       - serviceAccounts
       - validityPeriodHours
-  kubernetes-the-hard-way:index:EncryptionKey:
+  kubernetes-the-hard-way:tls:EncryptionKey:
     isComponent: true
     inputProperties:
       bytes:
@@ -327,14 +327,14 @@ resources:
       - path
       - stderr
       - stdout
-  kubernetes-the-hard-way:index:RootCa:
+  kubernetes-the-hard-way:tls:RootCa:
     isComponent: true
     inputProperties:
       algorithm:
-        $ref: "#/types/kubernetes-the-hard-way:index:Algorithm"
+        $ref: "#/types/kubernetes-the-hard-way:tls:Algorithm"
         description: Name of the algorithm to use when generating the private key.
       ecdsaCurve:
-        $ref: "#/types/kubernetes-the-hard-way:index:EcdsaCurve"
+        $ref: "#/types/kubernetes-the-hard-way:tls:EcdsaCurve"
         description: When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
       rsaBits:
         type: integer
@@ -374,7 +374,7 @@ resources:
       allowedUses:
         type: array
         items:
-          $ref: "#/types/kubernetes-the-hard-way:index:AllowedUsage"
+          $ref: "#/types/kubernetes-the-hard-way:tls:AllowedUsage"
       cert:
         $ref: "/tls/v5.0.0/schema.json#/resources/tls:index/selfSignedCert:SelfSignedCert"
       certPem:
@@ -393,9 +393,9 @@ resources:
       - privateKeyPem
       - publicKeyPem
     methods:
-      newCertificate: kubernetes-the-hard-way:index:RootCa/newCertificate
-      installCert: kubernetes-the-hard-way:index:RootCa/installCert
-      installKey: kubernetes-the-hard-way:index:RootCa/installKey
+      newCertificate: kubernetes-the-hard-way:tls:RootCa/newCertificate
+      installCert: kubernetes-the-hard-way:tls:RootCa/installCert
+      installKey: kubernetes-the-hard-way:tls:RootCa/installKey
   kubernetes-the-hard-way:tools:Mkdir:
     isComponent: true
     description: Represents the `mkdir` utility.
@@ -581,14 +581,14 @@ resources:
       - timestamping
       - url
 types:
-  kubernetes-the-hard-way:index:Algorithm:
+  kubernetes-the-hard-way:tls:Algorithm:
     description: TODO
     type: string
     enum:
       - value: RSA
       - value: ECDSA
       - value: ED25519
-  kubernetes-the-hard-way:index:AllowedUsage:
+  kubernetes-the-hard-way:tls:AllowedUsage:
     description: TODO
     type: string
     enum:
@@ -680,7 +680,7 @@ types:
         description: The user that we should use for the connection.
     required:
       - host
-  kubernetes-the-hard-way:index:ClusterPkiNode:
+  kubernetes-the-hard-way:tls:ClusterPkiNode:
     type: object
     description: Node inputs for the PKI.
     properties:
@@ -688,8 +688,8 @@ types:
         type: string
         description: The IP address of the node.
       role:
-        $ref: "#/types/kubernetes-the-hard-way:index:NodeRole"
-  kubernetes-the-hard-way:index:EcdsaCurve:
+        $ref: "#/types/kubernetes-the-hard-way:tls:NodeRole"
+  kubernetes-the-hard-way:tls:EcdsaCurve:
     description: TODO
     type: string
     enum:
@@ -713,7 +713,7 @@ types:
       publicKeyPem:
         type: string
         description: The PEM encoded public key data.
-  kubernetes-the-hard-way:index:NodeRole:
+  kubernetes-the-hard-way:tls:NodeRole:
     description: TODO
     type: string
     enum:
@@ -726,12 +726,12 @@ types:
       parent:
         $ref: "pulumi.json#/Any"
 functions:
-  kubernetes-the-hard-way:index:Certificate/installCert:
+  kubernetes-the-hard-way:tls:Certificate/installCert:
     description: Creates a RemoteFile resource representing the copy operation.
     inputs:
       properties:
         __self__:
-          $ref: "#/resources/kubernetes-the-hard-way:index:Certificate"
+          $ref: "#/resources/kubernetes-the-hard-way:tls:Certificate"
         connection:
           $ref: "#/types/kubernetes-the-hard-way:index:Connection"
           description: The connection details.
@@ -754,12 +754,12 @@ functions:
           $ref: "#/resources/kubernetes-the-hard-way:remote:File"
       required:
         - result
-  kubernetes-the-hard-way:index:Certificate/installKey:
+  kubernetes-the-hard-way:tls:Certificate/installKey:
     description: Creates a RemoteFile resource representing the copy operation.
     inputs:
       properties:
         __self__:
-          $ref: "#/resources/kubernetes-the-hard-way:index:Certificate"
+          $ref: "#/resources/kubernetes-the-hard-way:tls:Certificate"
         connection:
           $ref: "#/types/kubernetes-the-hard-way:index:Connection"
           description: The connection details.
@@ -823,7 +823,7 @@ functions:
           $ref: "#/types/kubernetes-the-hard-way:index:ResourceOptions"
           plain: true
         pki:
-          $ref: "#/resources/kubernetes-the-hard-way:index:ClusterPki"
+          $ref: "#/resources/kubernetes-the-hard-way:tls:ClusterPki"
           description: The PKI to install
       required:
         - connection
@@ -862,15 +862,15 @@ functions:
     inputs:
       properties:
         ca:
-          $ref: "#/resources/kubernetes-the-hard-way:index:RootCa"
+          $ref: "#/resources/kubernetes-the-hard-way:tls:RootCa"
           description: The certificate authority to issue the certificate.
         algorithm:
-          $ref: "#/types/kubernetes-the-hard-way:index:Algorithm"
+          $ref: "#/types/kubernetes-the-hard-way:tls:Algorithm"
           description: Name of the algorithm to use when generating the private key.
         allowedUses:
           type: array
           items:
-            $ref: "#/types/kubernetes-the-hard-way:index:AllowedUsage"
+            $ref: "#/types/kubernetes-the-hard-way:tls:AllowedUsage"
         dnsNames:
           type: array
           items:
@@ -880,7 +880,7 @@ functions:
           type: integer
           description: TODO
         ecdsaCurve:
-          $ref: "#/types/kubernetes-the-hard-way:index:EcdsaCurve"
+          $ref: "#/types/kubernetes-the-hard-way:tls:EcdsaCurve"
           description: When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
         ipAddresses:
           type: array
@@ -924,22 +924,22 @@ functions:
     outputs:
       properties:
         result:
-          $ref: "#/resources/kubernetes-the-hard-way:index:Certificate"
+          $ref: "#/resources/kubernetes-the-hard-way:tls:Certificate"
       required:
         - result
-  kubernetes-the-hard-way:index:RootCa/newCertificate:
+  kubernetes-the-hard-way:tls:RootCa/newCertificate:
     description: Creates a Certificate configured for the current authority.
     inputs:
       properties:
         __self__:
-          $ref: "#/resources/kubernetes-the-hard-way:index:RootCa"
+          $ref: "#/resources/kubernetes-the-hard-way:tls:RootCa"
         algorithm:
-          $ref: "#/types/kubernetes-the-hard-way:index:Algorithm"
+          $ref: "#/types/kubernetes-the-hard-way:tls:Algorithm"
           description: Name of the algorithm to use when generating the private key.
         allowedUses:
           type: array
           items:
-            $ref: "#/types/kubernetes-the-hard-way:index:AllowedUsage"
+            $ref: "#/types/kubernetes-the-hard-way:tls:AllowedUsage"
         dnsNames:
           type: array
           items:
@@ -949,7 +949,7 @@ functions:
           type: integer
           description: TODO
         ecdsaCurve:
-          $ref: "#/types/kubernetes-the-hard-way:index:EcdsaCurve"
+          $ref: "#/types/kubernetes-the-hard-way:tls:EcdsaCurve"
           description: When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
         ipAddresses:
           type: array
@@ -993,16 +993,16 @@ functions:
     outputs:
       properties:
         result:
-          $ref: "#/resources/kubernetes-the-hard-way:index:Certificate"
+          $ref: "#/resources/kubernetes-the-hard-way:tls:Certificate"
           description: The issued certificate.
       required:
         - result
-  kubernetes-the-hard-way:index:RootCa/installCert:
+  kubernetes-the-hard-way:tls:RootCa/installCert:
     description: Creates a RemoteFile resource representing the copy operation.
     inputs:
       properties:
         __self__:
-          $ref: "#/resources/kubernetes-the-hard-way:index:Certificate"
+          $ref: "#/resources/kubernetes-the-hard-way:tls:Certificate"
         connection:
           $ref: "#/types/kubernetes-the-hard-way:index:Connection"
           description: The connection details.
@@ -1025,12 +1025,12 @@ functions:
           $ref: "#/resources/kubernetes-the-hard-way:remote:File"
       required:
         - result
-  kubernetes-the-hard-way:index:RootCa/installKey:
+  kubernetes-the-hard-way:tls:RootCa/installKey:
     description: Creates a RemoteFile resource representing the copy operation.
     inputs:
       properties:
         __self__:
-          $ref: "#/resources/kubernetes-the-hard-way:index:Certificate"
+          $ref: "#/resources/kubernetes-the-hard-way:tls:Certificate"
         connection:
           $ref: "#/types/kubernetes-the-hard-way:index:Connection"
           description: The connection details.
