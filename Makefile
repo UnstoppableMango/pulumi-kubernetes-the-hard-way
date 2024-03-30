@@ -236,6 +236,7 @@ provider/cmd/${PROVIDER}/schema.json: bin/yq $(SCHEMA_FILE)
 	sed -i.bak -e "s/sourceMap/inlineSourceMap/g" sdk/nodejs/tsconfig.json
 	sed -i.bak -e 's/"remote"/".\/remote"/g' sdk/nodejs/*.ts
 	sed -i.bak -e 's/"tls"/".\/tls"/g' sdk/nodejs/*.ts
+	sed -i.bak -e 's/"tools"/".\/tools"/g' sdk/nodejs/*.ts
 	rm sdk/nodejs/*.bak
 	@touch $@
 

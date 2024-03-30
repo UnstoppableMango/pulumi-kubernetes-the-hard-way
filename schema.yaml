@@ -242,6 +242,48 @@ resources:
   kubernetes-the-hard-way:index:Etcd:
     isComponent: true
     description: Represents an etcd binary on a remote system.
+    inputProperties:
+      architecture:
+        $ref: "#/types/kubernetes-the-hard-way:index:Architecture"
+        description: The etcd CPU architecture.
+      connection:
+        $ref: "/command/v0.9.0/schema.json#/types/command:remote:Connection"
+        description: The connection details.
+      version:
+        type: string
+        description: The version of etcd to install.
+    requiredInputs:
+      - connection
+    properties:
+      architecture:
+        $ref: "#/types/kubernetes-the-hard-wawy:index:Architecture"
+        description: The etcd CPU architecture.
+      download:
+        $ref: "#/resources/kubernetes-the-hard-way:remote:Download"
+        description: The etcd download operation.
+      downloadDirectory:
+        type: string
+        description: The directory where the etcd binary was downloaded to.
+      filename:
+        type: string
+        description: The name of the etcd binary file.
+      tar:
+        $ref: "#/resources/kubernetes-the-hard-way:tools:Tar"
+        description: The tar operation.
+      url:
+        type: string
+        description: The url used to download etcd.
+      version:
+        type: string
+        description: The version of etcd downloaded.
+    required:
+      - architecture
+      - download
+      - downloadDirectory
+      - filename
+      - tar
+      - url
+      - version
   kubernetes-the-hard-way:remote:Download:
     isComponent: true
     description: Represents a file to be downloaded on a remote system.
@@ -600,6 +642,12 @@ types:
         value: key_encipherment
       - name: serverAuth
         value: server_auth
+  kubernetes-the-hard-way:index:Architecture:
+    description: CPU architecture
+    type: string
+    enum:
+      - value: amd64
+      - value: arm64
   # https://github.com/pulumi/pulumi-tls/blob/620cb07a95049672bdaab17bf86fade26db051b1/provider/cmd/pulumi-resource-tls/schema.json#L84-L127
   kubernetes-the-hard-way:index:CertRequestSubject:
     description: Polyfill for `tls.CertRequestSubject`.
