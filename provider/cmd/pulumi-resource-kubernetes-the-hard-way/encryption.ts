@@ -3,7 +3,7 @@ import * as YAML from 'yaml';
 import { ComponentResource, ComponentResourceOptions, Input, Output, output } from '@pulumi/pulumi';
 import { RandomBytes } from '@pulumi/random';
 import { remote } from '@pulumi/command/types/input';
-import { RemoteFile } from './remoteFile';
+import { File } from './remote/file';
 
 export interface EncryptionKeyArgs {
   bytes?: Input<number>;
@@ -43,7 +43,7 @@ export class EncryptionKey extends ComponentResource {
     this.registerOutputs({ config, key });
   }
 
-  public install(name: string, connection: remote.ConnectionArgs, opts?: ComponentResourceOptions): RemoteFile {
+  public install(name: string, connection: remote.ConnectionArgs, opts?: ComponentResourceOptions): File {
     return install(this, name, connection, opts);
   }
 }
@@ -53,9 +53,9 @@ export function install(
   name: string,
   connection: remote.ConnectionArgs,
   opts?: ComponentResourceOptions,
-): RemoteFile {
+): File {
   const target = path.join('home', 'kthw'); // TODO
-  return new RemoteFile(name, {
+  return new File(name, {
     connection,
     content: key.config,
     path: path.join(target, 'encryption-config.yaml'),

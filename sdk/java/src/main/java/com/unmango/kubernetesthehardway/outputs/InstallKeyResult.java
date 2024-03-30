@@ -5,15 +5,15 @@ package com.unmango.kubernetesthehardway.outputs;
 
 import com.pulumi.core.annotations.CustomType;
 import com.pulumi.exceptions.MissingRequiredPropertyException;
-import com.unmango.kubernetesthehardway.RemoteFile;
+import com.unmango.kubernetesthehardway.remote.File;
 import java.util.Objects;
 
 @CustomType
 public final class InstallKeyResult {
-    private RemoteFile result;
+    private File result;
 
     private InstallKeyResult() {}
-    public RemoteFile result() {
+    public File result() {
         return this.result;
     }
 
@@ -26,7 +26,7 @@ public final class InstallKeyResult {
     }
     @CustomType.Builder
     public static final class Builder {
-        private RemoteFile result;
+        private File result;
         public Builder() {}
         public Builder(InstallKeyResult defaults) {
     	      Objects.requireNonNull(defaults);
@@ -34,7 +34,7 @@ public final class InstallKeyResult {
         }
 
         @CustomType.Setter
-        public Builder result(RemoteFile result) {
+        public Builder result(File result) {
             if (result == null) {
               throw new MissingRequiredPropertyException("InstallKeyResult", "result");
             }

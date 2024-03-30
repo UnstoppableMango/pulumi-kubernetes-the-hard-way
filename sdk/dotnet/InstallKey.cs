@@ -94,10 +94,10 @@ namespace UnMango.KubernetesTheHardWay
     [OutputType]
     public sealed class InstallKeyResult
     {
-        public readonly UnMango.KubernetesTheHardWay.RemoteFile Result;
+        public readonly UnMango.KubernetesTheHardWay.Remote.File Result;
 
         [OutputConstructor]
-        private InstallKeyResult(UnMango.KubernetesTheHardWay.RemoteFile result)
+        private InstallKeyResult(UnMango.KubernetesTheHardWay.Remote.File result)
         {
             Result = result;
         }

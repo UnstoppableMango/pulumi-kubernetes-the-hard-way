@@ -1,7 +1,7 @@
 import { ComponentResource, ComponentResourceOptions, Input, Inputs, Output } from '@pulumi/pulumi';
 import { InvokeResult } from '@pulumi/pulumi/provider';
 import { LocallySignedCert, PrivateKey, SelfSignedCert } from '@pulumi/tls';
-import { InstallArgs, RemoteFile, install } from './remoteFile';
+import { InstallArgs, File, install } from './remote/file';
 import { Algorithm, EcdsaCurve } from './types';
 
 export interface KeyPairArgs {
@@ -37,20 +37,20 @@ export abstract class KeyPair<TCert extends CertType> extends ComponentResource 
     this.publicKeyPem = key.publicKeyPem;
   }
 
-  public installCert(args: InstallArgs): RemoteFile {
+  public installCert(args: InstallArgs): File {
     return installCert(this, args);
   }
 
-  public installKey(args: InstallArgs): RemoteFile {
+  public installKey(args: InstallArgs): File {
     return installKey(this, args);
   }
 }
 
-export function installCert(pair: KeyPair<CertType>, args: InstallArgs): RemoteFile {
+export function installCert(pair: KeyPair<CertType>, args: InstallArgs): File {
   return install(args, pair.certPem);
 }
 
-export function installKey(pair: KeyPair<CertType>, args: InstallArgs): RemoteFile {
+export function installKey(pair: KeyPair<CertType>, args: InstallArgs): File {
   return install(args, pair.publicKeyPem);
 }
 

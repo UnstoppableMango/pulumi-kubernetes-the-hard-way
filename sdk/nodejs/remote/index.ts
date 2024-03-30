@@ -5,18 +5,25 @@ import * as pulumi from "@pulumi/pulumi";
 import * as utilities from "../utilities";
 
 // Export members:
-export { RemoteDownloadArgs } from "./remoteDownload";
-export type RemoteDownload = import("./remoteDownload").RemoteDownload;
-export const RemoteDownload: typeof import("./remoteDownload").RemoteDownload = null as any;
-utilities.lazyLoad(exports, ["RemoteDownload"], () => require("./remoteDownload"));
+export { DownloadArgs } from "./download";
+export type Download = import("./download").Download;
+export const Download: typeof import("./download").Download = null as any;
+utilities.lazyLoad(exports, ["Download"], () => require("./download"));
+
+export { FileArgs } from "./file";
+export type File = import("./file").File;
+export const File: typeof import("./file").File = null as any;
+utilities.lazyLoad(exports, ["File"], () => require("./file"));
 
 
 const _module = {
     version: utilities.getVersion(),
     construct: (name: string, type: string, urn: string): pulumi.Resource => {
         switch (type) {
-            case "kubernetes-the-hard-way:remote:RemoteDownload":
-                return new RemoteDownload(name, <any>undefined, { urn })
+            case "kubernetes-the-hard-way:remote:Download":
+                return new Download(name, <any>undefined, { urn })
+            case "kubernetes-the-hard-way:remote:File":
+                return new File(name, <any>undefined, { urn })
             default:
                 throw new Error(`unknown resource type ${type}`);
         }

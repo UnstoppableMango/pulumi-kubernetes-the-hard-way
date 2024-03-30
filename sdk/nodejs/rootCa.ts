@@ -9,7 +9,8 @@ import * as utilities from "./utilities";
 
 import * as pulumiTls from "@pulumi/tls";
 
-import {Certificate, RemoteFile} from "./index";
+import {Certificate} from "./index";
+import {File} from "./remote";
 
 export class RootCa extends pulumi.ComponentResource {
     /** @internal */
@@ -79,7 +80,7 @@ export class RootCa extends pulumi.ComponentResource {
     /**
      * Creates a RemoteFile resource representing the copy operation.
      */
-    installCert(args: RootCa.InstallCertArgs): pulumi.Output<RemoteFile> {
+    installCert(args: RootCa.InstallCertArgs): pulumi.Output<File> {
         const result: pulumi.Output<RootCa.InstallCertResult> = pulumi.runtime.call("kubernetes-the-hard-way:index:RootCa/installCert", {
             "__self__": this,
             "connection": args.connection,
@@ -93,7 +94,7 @@ export class RootCa extends pulumi.ComponentResource {
     /**
      * Creates a RemoteFile resource representing the copy operation.
      */
-    installKey(args: RootCa.InstallKeyArgs): pulumi.Output<RemoteFile> {
+    installKey(args: RootCa.InstallKeyArgs): pulumi.Output<File> {
         const result: pulumi.Output<RootCa.InstallKeyResult> = pulumi.runtime.call("kubernetes-the-hard-way:index:RootCa/installKey", {
             "__self__": this,
             "connection": args.connection,
@@ -198,7 +199,7 @@ export namespace RootCa {
      * The results of the RootCa.installCert method.
      */
     export interface InstallCertResult {
-        readonly result: RemoteFile;
+        readonly result: File;
     }
 
     /**
@@ -221,7 +222,7 @@ export namespace RootCa {
      * The results of the RootCa.installKey method.
      */
     export interface InstallKeyResult {
-        readonly result: RemoteFile;
+        readonly result: File;
     }
 
     /**

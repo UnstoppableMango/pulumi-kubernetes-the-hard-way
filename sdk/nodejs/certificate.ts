@@ -9,7 +9,7 @@ import * as utilities from "./utilities";
 
 import * as pulumiTls from "@pulumi/tls";
 
-import {RemoteFile} from "./index";
+import {File} from "./remote";
 
 export class Certificate extends pulumi.ComponentResource {
     /** @internal */
@@ -95,7 +95,7 @@ export class Certificate extends pulumi.ComponentResource {
     /**
      * Creates a RemoteFile resource representing the copy operation.
      */
-    installCert(args: Certificate.InstallCertArgs): pulumi.Output<RemoteFile> {
+    installCert(args: Certificate.InstallCertArgs): pulumi.Output<File> {
         const result: pulumi.Output<Certificate.InstallCertResult> = pulumi.runtime.call("kubernetes-the-hard-way:index:Certificate/installCert", {
             "__self__": this,
             "connection": args.connection,
@@ -109,7 +109,7 @@ export class Certificate extends pulumi.ComponentResource {
     /**
      * Creates a RemoteFile resource representing the copy operation.
      */
-    installKey(args: Certificate.InstallKeyArgs): pulumi.Output<RemoteFile> {
+    installKey(args: Certificate.InstallKeyArgs): pulumi.Output<File> {
         const result: pulumi.Output<Certificate.InstallKeyResult> = pulumi.runtime.call("kubernetes-the-hard-way:index:Certificate/installKey", {
             "__self__": this,
             "connection": args.connection,
@@ -193,7 +193,7 @@ export namespace Certificate {
      * The results of the Certificate.installCert method.
      */
     export interface InstallCertResult {
-        readonly result: RemoteFile;
+        readonly result: File;
     }
 
     /**
@@ -216,7 +216,7 @@ export namespace Certificate {
      * The results of the Certificate.installKey method.
      */
     export interface InstallKeyResult {
-        readonly result: RemoteFile;
+        readonly result: File;
     }
 
 }

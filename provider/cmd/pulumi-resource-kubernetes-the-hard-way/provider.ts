@@ -3,7 +3,7 @@ import * as provider from '@pulumi/pulumi/provider';
 import * as cert from './certificate';
 import * as pki from './clusterPki';
 import * as keypair from './keypair';
-import * as remoteFile from './remoteFile';
+import * as remoteFile from './remote/file';
 import * as rootCa from './rootCa';
 import { construct } from './resources';
 import { resourceToConstructResult } from './util';
@@ -18,8 +18,8 @@ export class Provider implements provider.Provider {
             return new cert.Certificate(name, <any>undefined, { urn });
           case 'kubernetes-the-hard-way:index:ClusterPki':
             return new pki.ClusterPki(name, <any>undefined, { urn });
-          case 'kubernetes-the-hard-way:index:RemoteFile':
-            return new remoteFile.RemoteFile(name, <any>undefined, { urn });
+          case 'kubernetes-the-hard-way:remote:File':
+            return new remoteFile.File(name, <any>undefined, { urn });
           case 'kubernetes-the-hard-way:index:RootCa':
             return new rootCa.RootCa(name, <any>undefined, { urn });
           default:

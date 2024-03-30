@@ -11,6 +11,7 @@ import (
 	"github.com/pulumi/pulumi-tls/sdk/v5/go/tls"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 	"github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/sdk/go/kubernetes-the-hard-way/internal"
+	"github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/sdk/go/kubernetes-the-hard-way/remote"
 )
 
 type RootCa struct {
@@ -97,10 +98,10 @@ func (RootCaArgs) ElementType() reflect.Type {
 }
 
 // Creates a RemoteFile resource representing the copy operation.
-func (r *RootCa) InstallCert(ctx *pulumi.Context, args *RootCaInstallCertArgs) (RemoteFileOutput, error) {
+func (r *RootCa) InstallCert(ctx *pulumi.Context, args *RootCaInstallCertArgs) (remote.FileOutput, error) {
 	out, err := ctx.Call("kubernetes-the-hard-way:index:RootCa/installCert", args, rootCaInstallCertResultOutput{}, r)
 	if err != nil {
-		return RemoteFileOutput{}, err
+		return remote.FileOutput{}, err
 	}
 	return out.(rootCaInstallCertResultOutput).Result(), nil
 }
@@ -129,7 +130,7 @@ func (RootCaInstallCertArgs) ElementType() reflect.Type {
 }
 
 type rootCaInstallCertResult struct {
-	Result *RemoteFile `pulumi:"result"`
+	Result *remote.File `pulumi:"result"`
 }
 
 type rootCaInstallCertResultOutput struct{ *pulumi.OutputState }
@@ -138,15 +139,15 @@ func (rootCaInstallCertResultOutput) ElementType() reflect.Type {
 	return reflect.TypeOf((*rootCaInstallCertResult)(nil)).Elem()
 }
 
-func (o rootCaInstallCertResultOutput) Result() RemoteFileOutput {
-	return o.ApplyT(func(v rootCaInstallCertResult) *RemoteFile { return v.Result }).(RemoteFileOutput)
+func (o rootCaInstallCertResultOutput) Result() remote.FileOutput {
+	return o.ApplyT(func(v rootCaInstallCertResult) *remote.File { return v.Result }).(remote.FileOutput)
 }
 
 // Creates a RemoteFile resource representing the copy operation.
-func (r *RootCa) InstallKey(ctx *pulumi.Context, args *RootCaInstallKeyArgs) (RemoteFileOutput, error) {
+func (r *RootCa) InstallKey(ctx *pulumi.Context, args *RootCaInstallKeyArgs) (remote.FileOutput, error) {
 	out, err := ctx.Call("kubernetes-the-hard-way:index:RootCa/installKey", args, rootCaInstallKeyResultOutput{}, r)
 	if err != nil {
-		return RemoteFileOutput{}, err
+		return remote.FileOutput{}, err
 	}
 	return out.(rootCaInstallKeyResultOutput).Result(), nil
 }
@@ -175,7 +176,7 @@ func (RootCaInstallKeyArgs) ElementType() reflect.Type {
 }
 
 type rootCaInstallKeyResult struct {
-	Result *RemoteFile `pulumi:"result"`
+	Result *remote.File `pulumi:"result"`
 }
 
 type rootCaInstallKeyResultOutput struct{ *pulumi.OutputState }
@@ -184,8 +185,8 @@ func (rootCaInstallKeyResultOutput) ElementType() reflect.Type {
 	return reflect.TypeOf((*rootCaInstallKeyResult)(nil)).Elem()
 }
 
-func (o rootCaInstallKeyResultOutput) Result() RemoteFileOutput {
-	return o.ApplyT(func(v rootCaInstallKeyResult) *RemoteFile { return v.Result }).(RemoteFileOutput)
+func (o rootCaInstallKeyResultOutput) Result() remote.FileOutput {
+	return o.ApplyT(func(v rootCaInstallKeyResult) *remote.File { return v.Result }).(remote.FileOutput)
 }
 
 // Creates a Certificate configured for the current authority.

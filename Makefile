@@ -234,7 +234,8 @@ provider/cmd/${PROVIDER}/schema.json: bin/yq $(SCHEMA_FILE)
 	rm -rf sdk/nodejs
 	.pulumi/bin/pulumi package gen-sdk $(SCHEMA_FILE) --language nodejs
 	sed -i.bak -e "s/sourceMap/inlineSourceMap/g" sdk/nodejs/tsconfig.json
-	rm sdk/nodejs/tsconfig.json.bak
+	sed -i.bak -e 's/"remote"/".\/remote"/g' sdk/nodejs/*.ts
+	rm sdk/nodejs/*.bak
 	@touch $@
 
 .make/generate_python: bin/pulumictl .pulumi/bin/pulumi $(SCHEMA_FILE)

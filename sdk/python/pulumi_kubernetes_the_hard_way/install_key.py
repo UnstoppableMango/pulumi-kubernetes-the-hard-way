@@ -8,8 +8,8 @@ import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
 from . import _utilities
+from . import remote as _remote
 from ._inputs import *
-from .remote_file import RemoteFile
 import pulumi_tls
 
 __all__ = [
@@ -22,13 +22,13 @@ __all__ = [
 @pulumi.output_type
 class InstallKeyResult:
     def __init__(__self__, result=None):
-        if result and not isinstance(result, RemoteFile):
-            raise TypeError("Expected argument 'result' to be a RemoteFile")
+        if result and not isinstance(result, _remote.File):
+            raise TypeError("Expected argument 'result' to be a _remote.File")
         pulumi.set(__self__, "result", result)
 
     @property
     @pulumi.getter
-    def result(self) -> 'RemoteFile':
+    def result(self) -> '_remote.File':
         return pulumi.get(self, "result")
 
 

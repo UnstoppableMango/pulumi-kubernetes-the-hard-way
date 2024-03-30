@@ -1,8 +1,7 @@
 import * as path from 'node:path';
 import { Config } from '@pulumi/pulumi';
-import { RemoteFile } from '@unmango/pulumi-kubernetes-the-hard-way';
 import { Mkdir, Tar, Wget } from '@unmango/pulumi-kubernetes-the-hard-way/tools';
-import { RemoteDownload } from '@unmango/pulumi-kubernetes-the-hard-way/remote';
+import { Download, File } from '@unmango/pulumi-kubernetes-the-hard-way/remote';
 
 const config = new Config();
 const host = config.require('host');
@@ -11,7 +10,7 @@ const user = config.require('user');
 const password = config.require('password');
 const basePath = config.require('basePath');
 
-const file = new RemoteFile('remote', {
+const file = new File('remote', {
   connection: { host, port, user, password },
   content: config.require('content'),
   path: path.join(basePath, 'remote-file'),
@@ -33,7 +32,7 @@ const mkdir = new Mkdir('remote', {
   parents: true,
 });
 
-const download = new RemoteDownload('remote', {
+const download = new Download('remote', {
   connection: { host, port, user, password },
   destination: path.join(basePath, 'download'),
   url: 'https://www.example.com',

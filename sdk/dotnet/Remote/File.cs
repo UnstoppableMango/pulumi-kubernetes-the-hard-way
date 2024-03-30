@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 using Pulumi.Serialization;
 using Pulumi;
 
-namespace UnMango.KubernetesTheHardWay
+namespace UnMango.KubernetesTheHardWay.Remote
 {
-    [KubernetesTheHardWayResourceType("kubernetes-the-hard-way:index:RemoteFile")]
-    public partial class RemoteFile : global::Pulumi.ComponentResource
+    [KubernetesTheHardWayResourceType("kubernetes-the-hard-way:remote:File")]
+    public partial class File : global::Pulumi.ComponentResource
     {
         /// <summary>
         /// The command resource.
@@ -51,14 +51,14 @@ namespace UnMango.KubernetesTheHardWay
 
 
         /// <summary>
-        /// Create a RemoteFile resource with the given unique name, arguments, and options.
+        /// Create a File resource with the given unique name, arguments, and options.
         /// </summary>
         ///
         /// <param name="name">The unique name of the resource</param>
         /// <param name="args">The arguments used to populate this resource's properties</param>
         /// <param name="options">A bag of options that control this resource's behavior</param>
-        public RemoteFile(string name, RemoteFileArgs args, ComponentResourceOptions? options = null)
-            : base("kubernetes-the-hard-way:index:RemoteFile", name, args ?? new RemoteFileArgs(), MakeResourceOptions(options, ""), remote: true)
+        public File(string name, FileArgs args, ComponentResourceOptions? options = null)
+            : base("kubernetes-the-hard-way:remote:File", name, args ?? new FileArgs(), MakeResourceOptions(options, ""), remote: true)
         {
         }
 
@@ -76,7 +76,7 @@ namespace UnMango.KubernetesTheHardWay
         }
     }
 
-    public sealed class RemoteFileArgs : global::Pulumi.ResourceArgs
+    public sealed class FileArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
         /// The connection details.
@@ -96,9 +96,9 @@ namespace UnMango.KubernetesTheHardWay
         [Input("path", required: true)]
         public Input<string> Path { get; set; } = null!;
 
-        public RemoteFileArgs()
+        public FileArgs()
         {
         }
-        public static new RemoteFileArgs Empty => new RemoteFileArgs();
+        public static new FileArgs Empty => new FileArgs();
     }
 }

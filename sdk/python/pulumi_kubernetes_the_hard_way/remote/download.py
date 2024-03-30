@@ -11,17 +11,17 @@ from .. import _utilities
 from .. import tools as _tools
 import pulumi_command
 
-__all__ = ['RemoteDownloadArgs', 'RemoteDownload']
+__all__ = ['DownloadArgs', 'Download']
 
 @pulumi.input_type
-class RemoteDownloadArgs:
+class DownloadArgs:
     def __init__(__self__, *,
                  connection: pulumi.Input['pulumi_command.remote.ConnectionArgs'],
                  destination: pulumi.Input[str],
                  url: pulumi.Input[str],
                  remove_on_delete: Optional[pulumi.Input[bool]] = None):
         """
-        The set of arguments for constructing a RemoteDownload resource.
+        The set of arguments for constructing a Download resource.
         :param pulumi.Input['pulumi_command.remote.ConnectionArgs'] connection: Connection details for the remote system
         :param pulumi.Input[str] destination: The fully qualified path on the remote system where the file should be downloaded to.
         :param pulumi.Input[str] url: The URL for the file to be downloaded.
@@ -82,7 +82,7 @@ class RemoteDownloadArgs:
         pulumi.set(self, "remove_on_delete", value)
 
 
-class RemoteDownload(pulumi.ComponentResource):
+class Download(pulumi.ComponentResource):
     @overload
     def __init__(__self__,
                  resource_name: str,
@@ -106,18 +106,18 @@ class RemoteDownload(pulumi.ComponentResource):
     @overload
     def __init__(__self__,
                  resource_name: str,
-                 args: RemoteDownloadArgs,
+                 args: DownloadArgs,
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
         Represents a file to be downloaded on a remote system.
 
         :param str resource_name: The name of the resource.
-        :param RemoteDownloadArgs args: The arguments to use to populate this resource's properties.
+        :param DownloadArgs args: The arguments to use to populate this resource's properties.
         :param pulumi.ResourceOptions opts: Options for the resource.
         """
         ...
     def __init__(__self__, resource_name: str, *args, **kwargs):
-        resource_args, opts = _utilities.get_resource_args_opts(RemoteDownloadArgs, pulumi.ResourceOptions, *args, **kwargs)
+        resource_args, opts = _utilities.get_resource_args_opts(DownloadArgs, pulumi.ResourceOptions, *args, **kwargs)
         if resource_args is not None:
             __self__._internal_init(resource_name, opts, **resource_args.__dict__)
         else:
@@ -139,7 +139,7 @@ class RemoteDownload(pulumi.ComponentResource):
         else:
             if __props__ is not None:
                 raise TypeError('__props__ is only valid when passed in combination with a valid opts.id to get an existing resource')
-            __props__ = RemoteDownloadArgs.__new__(RemoteDownloadArgs)
+            __props__ = DownloadArgs.__new__(DownloadArgs)
 
             if connection is None and not opts.urn:
                 raise TypeError("Missing required property 'connection'")
@@ -153,8 +153,8 @@ class RemoteDownload(pulumi.ComponentResource):
             __props__.__dict__["url"] = url
             __props__.__dict__["mkdir"] = None
             __props__.__dict__["wget"] = None
-        super(RemoteDownload, __self__).__init__(
-            'kubernetes-the-hard-way:remote:RemoteDownload',
+        super(Download, __self__).__init__(
+            'kubernetes-the-hard-way:remote:Download',
             resource_name,
             __props__,
             opts,

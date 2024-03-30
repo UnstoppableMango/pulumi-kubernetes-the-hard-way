@@ -9,6 +9,7 @@ import (
 
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 	"github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/sdk/go/kubernetes-the-hard-way/internal"
+	"github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/sdk/go/kubernetes-the-hard-way/remote"
 )
 
 // Creates a RemoteFile resource representing the copy operation.
@@ -45,7 +46,7 @@ func (val *InstallKeyArgs) Defaults() *InstallKeyArgs {
 }
 
 type InstallKeyResult struct {
-	Result *RemoteFile `pulumi:"result"`
+	Result *remote.File `pulumi:"result"`
 }
 
 func InstallKeyOutput(ctx *pulumi.Context, args InstallKeyOutputArgs, opts ...pulumi.InvokeOption) InstallKeyResultOutput {
@@ -90,8 +91,8 @@ func (o InstallKeyResultOutput) ToInstallKeyResultOutputWithContext(ctx context.
 	return o
 }
 
-func (o InstallKeyResultOutput) Result() RemoteFileOutput {
-	return o.ApplyT(func(v InstallKeyResult) *RemoteFile { return v.Result }).(RemoteFileOutput)
+func (o InstallKeyResultOutput) Result() remote.FileOutput {
+	return o.ApplyT(func(v InstallKeyResult) *remote.File { return v.Result }).(remote.FileOutput)
 }
 
 func init() {

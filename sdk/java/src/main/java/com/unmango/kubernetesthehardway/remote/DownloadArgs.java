@@ -14,9 +14,9 @@ import java.util.Optional;
 import javax.annotation.Nullable;
 
 
-public final class RemoteDownloadArgs extends com.pulumi.resources.ResourceArgs {
+public final class DownloadArgs extends com.pulumi.resources.ResourceArgs {
 
-    public static final RemoteDownloadArgs Empty = new RemoteDownloadArgs();
+    public static final DownloadArgs Empty = new DownloadArgs();
 
     /**
      * Connection details for the remote system
@@ -78,9 +78,9 @@ public final class RemoteDownloadArgs extends com.pulumi.resources.ResourceArgs 
         return this.url;
     }
 
-    private RemoteDownloadArgs() {}
+    private DownloadArgs() {}
 
-    private RemoteDownloadArgs(RemoteDownloadArgs $) {
+    private DownloadArgs(DownloadArgs $) {
         this.connection = $.connection;
         this.destination = $.destination;
         this.removeOnDelete = $.removeOnDelete;
@@ -90,19 +90,19 @@ public final class RemoteDownloadArgs extends com.pulumi.resources.ResourceArgs 
     public static Builder builder() {
         return new Builder();
     }
-    public static Builder builder(RemoteDownloadArgs defaults) {
+    public static Builder builder(DownloadArgs defaults) {
         return new Builder(defaults);
     }
 
     public static final class Builder {
-        private RemoteDownloadArgs $;
+        private DownloadArgs $;
 
         public Builder() {
-            $ = new RemoteDownloadArgs();
+            $ = new DownloadArgs();
         }
 
-        public Builder(RemoteDownloadArgs defaults) {
-            $ = new RemoteDownloadArgs(Objects.requireNonNull(defaults));
+        public Builder(DownloadArgs defaults) {
+            $ = new DownloadArgs(Objects.requireNonNull(defaults));
         }
 
         /**
@@ -189,15 +189,15 @@ public final class RemoteDownloadArgs extends com.pulumi.resources.ResourceArgs 
             return url(Output.of(url));
         }
 
-        public RemoteDownloadArgs build() {
+        public DownloadArgs build() {
             if ($.connection == null) {
-                throw new MissingRequiredPropertyException("RemoteDownloadArgs", "connection");
+                throw new MissingRequiredPropertyException("DownloadArgs", "connection");
             }
             if ($.destination == null) {
-                throw new MissingRequiredPropertyException("RemoteDownloadArgs", "destination");
+                throw new MissingRequiredPropertyException("DownloadArgs", "destination");
             }
             if ($.url == null) {
-                throw new MissingRequiredPropertyException("RemoteDownloadArgs", "url");
+                throw new MissingRequiredPropertyException("DownloadArgs", "url");
             }
             return $;
         }
