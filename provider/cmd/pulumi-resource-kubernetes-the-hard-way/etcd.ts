@@ -1,6 +1,7 @@
 import { ComponentResource, ComponentResourceOptions, Input, Output, interpolate, output } from '@pulumi/pulumi';
+import { RandomString } from '@pulumi/random';
 import { remote } from '@pulumi/command/types/input';
-import { Tar } from './tools';
+import { Mkdir, Tar } from './tools';
 import { Download } from './remote';
 
 export type Architecture = 'amd64' | 'arm64';
@@ -8,6 +9,7 @@ export type Architecture = 'amd64' | 'arm64';
 export interface EtcdArgs {
   architecture?: Input<Architecture>;
   connection: Input<remote.ConnectionArgs>;
+  downloadDirectory?: Input<string>;
   version?: Input<string>;
 }
 
@@ -19,6 +21,8 @@ export class Etcd extends ComponentResource {
   public readonly download!: Download;
   public readonly downloadDirectory!: Output<string>;
   public readonly filename!: Output<string>;
+  public readonly mkdir!: Mkdir;
+  public readonly name!: string;
   public readonly tar!: Tar;
   public readonly url!: Output<string>;
   public readonly version!: Output<string>;
@@ -29,24 +33,32 @@ export class Etcd extends ComponentResource {
     // Rehydrating
     if (opts?.urn) return;
 
+    this.name = name;
     const architecture = output(args.architecture ?? Etcd.defaultArch);
-    const downloadDirectory = interpolate`/tmp`; // TODO: Temp directory
+    const downloadDirectory = this.getDownloadDirectory(args.downloadDirectory);
     const version = output(args.version ?? Etcd.defaultVersion);
     const filename = interpolate`etcd-v${version}-linux-${architecture}.tar.gz`;
     const url = interpolate`https://github.com/etcd-io/etcd/releases/download/v${version}/${filename}`;
+
+    const mkdir = new Mkdir(name, {
+      connection: args.connection,
+      directory: downloadDirectory,
+      parents: true,
+      removeOnDelete: true,
+    }, { parent: this });
 
     const download = new Download(name, {
       connection: args.connection,
       destination: downloadDirectory,
       url,
-    }, { parent: this });
+    }, { parent: this, dependsOn: mkdir });
 
     const tar = new Tar(name, {
       connection: args.connection,
       archive: interpolate`${download.destination}/${filename}`,
       directory: interpolate`/tmp`, // TODO: Allow customizing base dir
       gzip: true,
-    }, { parent: this });
+    }, { parent: this, dependsOn: download });
 
     // TODO: Move to /usr/local/bin?
     // Reminder: The archive contains etcdctl and etcd
@@ -55,6 +67,7 @@ export class Etcd extends ComponentResource {
     this.download = download;
     this.downloadDirectory = downloadDirectory;
     this.filename = filename;
+    this.mkdir = mkdir;
     this.tar = tar;
     this.url = url;
     this.version = version;
@@ -68,5 +81,18 @@ export class Etcd extends ComponentResource {
       url,
       version,
     });
+  }
+
+
+  private getDownloadDirectory(input?: Input<string>): Output<string> {
+    if (input) {
+      return output(input);
+    }
+
+    const random = new RandomString(this.name, {
+      length: 8,
+    }, { parent: this });
+
+    return interpolate`/tmp/${random.result}`;
   }
 }
