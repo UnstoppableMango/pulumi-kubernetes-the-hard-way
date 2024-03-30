@@ -3,7 +3,7 @@ import * as YAML from 'yaml';
 import { ComponentResource, ComponentResourceOptions, Input, Output, output } from '@pulumi/pulumi';
 import { RandomBytes } from '@pulumi/random';
 import { remote } from '@pulumi/command/types/input';
-import { File } from './remote/file';
+import { File } from '../remote/file';
 
 export interface EncryptionKeyArgs {
   bytes?: Input<number>;
@@ -16,7 +16,7 @@ export class EncryptionKey extends ComponentResource {
   public readonly key: RandomBytes;
 
   constructor(name: string, args: EncryptionKeyArgs, opts?: ComponentResourceOptions) {
-    super('kubernetes-the-hard-way:index:encryptionKey', name, args, opts);
+    super('kubernetes-the-hard-way:tls:encryptionKey', name, args, opts);
 
     const bytes = output(args.bytes ?? EncryptionKey.defaultBytes);
     const key = new RandomBytes(name, { length: bytes }, { parent: this });

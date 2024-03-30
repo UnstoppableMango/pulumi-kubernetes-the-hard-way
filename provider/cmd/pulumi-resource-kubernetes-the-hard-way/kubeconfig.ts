@@ -2,8 +2,8 @@ import * as path from 'node:path';
 import * as YAML from 'yaml';
 import { ComponentResourceOptions, Input, Output, interpolate, output } from '@pulumi/pulumi';
 import { remote } from '@pulumi/command/types/input';
-import { ClusterPki, NodeMapInput } from './clusterPki';
-import { Certificate } from './certificate';
+import { ClusterPki, NodeMapInput } from './tls/clusterPki';
+import { Certificate } from './tls/certificate';
 import { File } from './remote/file';
 
 export interface Kubeconfig {

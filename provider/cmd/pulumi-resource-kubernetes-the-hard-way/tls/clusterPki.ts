@@ -3,8 +3,8 @@ import { ComponentResource, ComponentResourceOptions, Input, Inputs, Output, int
 import { remote } from '@pulumi/command/types/input';
 import { RootCa } from './rootCa';
 import { Certificate } from './certificate';
-import { Algorithm } from './types';
-import { InstallArgs, File } from './remote/file';
+import { Algorithm } from '../types';
+import { InstallArgs, File } from '../remote/file';
 import { ConstructResult } from '@pulumi/pulumi/provider';
 
 // export interface WorkerCerts {
@@ -64,7 +64,7 @@ export class ClusterPki<T extends NodeMapInput = NodeMapInput> extends Component
   public readonly rsaBits!: Output<number>;
 
   constructor(private name: string, args: ClusterPkiArgs<T>, opts?: ComponentResourceOptions) {
-    super('thecluster:index:clusterPki', name, args, opts);
+    super('kubernetes-the-hard-way:tls:ClusterPki', name, args, opts);
 
     // Rehydrating
     if (opts?.urn) return;

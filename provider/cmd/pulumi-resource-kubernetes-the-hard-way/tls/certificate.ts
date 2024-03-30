@@ -3,8 +3,8 @@ import { ConstructResult } from '@pulumi/pulumi/provider';
 import { CertRequest, LocallySignedCert } from '@pulumi/tls';
 import { CertRequestSubject } from '@pulumi/tls/types/input';
 import { KeyPair, KeyPairArgs } from './keypair';
-import { AllowedUsage } from './types';
-import { toAllowedUsage } from './util';
+import { AllowedUsage } from '../types';
+import { toAllowedUsage } from '../util';
 
 export interface CertificateArgs extends KeyPairArgs {
   allowedUses: Input<Input<AllowedUsage>[]>;
@@ -24,7 +24,7 @@ export class Certificate extends KeyPair<LocallySignedCert> {
   public readonly csr!: CertRequest;
 
   constructor(name: string, args: CertificateArgs, opts?: ComponentResourceOptions) {
-    super('kubernetes-the-hard-way:index:Certificate', name, args, opts);
+    super('kubernetes-the-hard-way:tls:Certificate', name, args, opts);
 
     // Rehydrating
     if (opts?.urn) return;

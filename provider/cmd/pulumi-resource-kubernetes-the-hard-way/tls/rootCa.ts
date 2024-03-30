@@ -4,8 +4,8 @@ import { SelfSignedCert } from '@pulumi/tls';
 import { SelfSignedCertSubject } from '@pulumi/tls/types/input';
 import { KeyPair, KeyPairArgs } from './keypair';
 import { Certificate, CertificateArgs } from './certificate';
-import { AllowedUsage } from './types';
-import { toAllowedUsage } from './util';
+import { AllowedUsage } from '../types';
+import { toAllowedUsage } from '../util';
 
 export type NewCertificateArgs = Omit<CertificateArgs, 'caCertPem' | 'caPrivateKeyPem'> & {
   name: string;
@@ -22,7 +22,7 @@ export class RootCa extends KeyPair<SelfSignedCert> {
   public readonly certPem!: Output<string>;
 
   constructor(name: string, args: RootCaArgs, opts?: ComponentResourceOptions) {
-    super('kubernetes-the-hard-way:index:RootCa', name, args, opts);
+    super('kubernetes-the-hard-way:tls:RootCa', name, args, opts);
 
     // Rehydrating
     if (opts?.urn) return;
