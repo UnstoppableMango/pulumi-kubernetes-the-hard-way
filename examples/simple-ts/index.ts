@@ -1,14 +1,15 @@
 import * as kthw from '@unmango/pulumi-kubernetes-the-hard-way';
+import { AllowedUsage, Certificate, ClusterPki, RootCa } from '@unmango/pulumi-kubernetes-the-hard-way/tls';
 
-const ca = new kthw.RootCa('simple', {
+const ca = new RootCa('simple', {
     algorithm: 'RSA',
     validityPeriodHours: 256,
 });
 
-const cert = new kthw.Certificate('simple', {
+const cert = new Certificate('simple', {
     algorithm: 'RSA',
     allowedUses: [
-        kthw.AllowedUsage.CertSigning,
+        AllowedUsage.CertSigning,
     ],
     validityPeriodHours: 256,
     caCertPem: ca.certPem,
@@ -23,7 +24,7 @@ const cert = new kthw.Certificate('simple', {
 //   validityPeriodHours: 256,
 // });
 
-const pki = new kthw.ClusterPki('simple', {
+const pki = new ClusterPki('simple', {
   clusterName: 'simple-cluster',
   nodes: {
     myNode: {

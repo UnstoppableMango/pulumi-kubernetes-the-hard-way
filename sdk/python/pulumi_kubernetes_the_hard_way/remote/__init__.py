@@ -7,3 +7,6 @@ import typing
 # Export this package's modules as members:
 from .download import *
 from .file import *
+from .install_cert import *
+from .install_control_plane import *
+from .install_key import *

@@ -1,10 +1,10 @@
 import * as pulumi from '@pulumi/pulumi';
 import * as provider from '@pulumi/pulumi/provider';
-import * as cert from './certificate';
-import * as pki from './clusterPki';
-import * as keypair from './keypair';
+import * as cert from './tls/certificate';
+import * as pki from './tls/clusterPki';
+import * as keypair from './tls/keypair';
 import * as remoteFile from './remote/file';
-import * as rootCa from './rootCa';
+import * as rootCa from './tls/rootCa';
 import { construct } from './resources';
 import { resourceToConstructResult } from './util';
 
@@ -14,13 +14,13 @@ export class Provider implements provider.Provider {
       version: version,
       construct(name, type, urn) {
         switch (type) {
-          case 'kubernetes-the-hard-way:index:Certificate':
+          case 'kubernetes-the-hard-way:tls:Certificate':
             return new cert.Certificate(name, <any>undefined, { urn });
-          case 'kubernetes-the-hard-way:index:ClusterPki':
+          case 'kubernetes-the-hard-way:tls:ClusterPki':
             return new pki.ClusterPki(name, <any>undefined, { urn });
           case 'kubernetes-the-hard-way:remote:File':
             return new remoteFile.File(name, <any>undefined, { urn });
-          case 'kubernetes-the-hard-way:index:RootCa':
+          case 'kubernetes-the-hard-way:tls:RootCa':
             return new rootCa.RootCa(name, <any>undefined, { urn });
           default:
             throw new Error(`unknown resource type ${type}`);
@@ -45,21 +45,21 @@ export class Provider implements provider.Provider {
 
   async call(token: string, inputs: pulumi.Inputs): Promise<provider.InvokeResult> {
     switch (token) {
-      case 'kubernetes-the-hard-way:index:Certificate/installCert':
+      case 'kubernetes-the-hard-way:tls:Certificate/installCert':
         return await keypair.callInstallCertInstance(inputs);
-      case 'kubernetes-the-hard-way:index:Certificate/installKey':
+      case 'kubernetes-the-hard-way:tls:Certificate/installKey':
         return await keypair.callInstallKeyInstance(inputs);
-      case 'kubernetes-the-hard-way:index:installCert':
+      case 'kubernetes-the-hard-way:remote:installCert':
         return await keypair.callInstallCertStatic(inputs);
-      case 'kubernetes-the-hard-way:index:newCertificate':
+      case 'kubernetes-the-hard-way:tls:newCertificate':
         return await rootCa.callNewCertificateStatic(inputs);
-      case 'kubernetes-the-hard-way:index:installKey':
+      case 'kubernetes-the-hard-way:remote:installKey':
         return await keypair.callInstallKeyStatic(inputs);
-      case 'kubernetes-the-hard-way:index:RootCa/newCertificate':
+      case 'kubernetes-the-hard-way:tls:RootCa/newCertificate':
         return await rootCa.callNewCertificateInstance(inputs);
-      case 'kubernetes-the-hard-way:index:RootCa/installCert':
+      case 'kubernetes-the-hard-way:tls:RootCa/installCert':
         return await keypair.callInstallCertInstance(inputs);
-      case 'kubernetes-the-hard-way:index:RootCa/installKey':
+      case 'kubernetes-the-hard-way:tls:RootCa/installKey':
         return await keypair.callInstallKeyInstance(inputs);
       default:
         throw new Error(`unknown call token ${token}`);

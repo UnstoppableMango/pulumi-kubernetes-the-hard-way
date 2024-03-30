@@ -15,6 +15,20 @@ export type File = import("./file").File;
 export const File: typeof import("./file").File = null as any;
 utilities.lazyLoad(exports, ["File"], () => require("./file"));
 
+export { InstallCertArgs, InstallCertResult, InstallCertOutputArgs } from "./installCert";
+export const installCert: typeof import("./installCert").installCert = null as any;
+export const installCertOutput: typeof import("./installCert").installCertOutput = null as any;
+utilities.lazyLoad(exports, ["installCert","installCertOutput"], () => require("./installCert"));
+
+export { InstallControlPlaneArgs } from "./installControlPlane";
+export const installControlPlane: typeof import("./installControlPlane").installControlPlane = null as any;
+utilities.lazyLoad(exports, ["installControlPlane"], () => require("./installControlPlane"));
+
+export { InstallKeyArgs, InstallKeyResult, InstallKeyOutputArgs } from "./installKey";
+export const installKey: typeof import("./installKey").installKey = null as any;
+export const installKeyOutput: typeof import("./installKey").installKeyOutput = null as any;
+utilities.lazyLoad(exports, ["installKey","installKeyOutput"], () => require("./installKey"));
+
 
 const _module = {
     version: utilities.getVersion(),

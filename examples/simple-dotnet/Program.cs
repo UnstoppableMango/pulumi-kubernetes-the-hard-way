@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Pulumi;
-using UnMango.KubernetesTheHardWay;
+using UnMango.KubernetesTheHardWay.Tls;
 
 return await Deployment.RunAsync(() =>
 {
