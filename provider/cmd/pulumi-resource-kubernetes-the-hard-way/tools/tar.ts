@@ -31,7 +31,7 @@ export class Tar extends ComponentResource {
     const archive = output(args.archive);
     const directory = output(args.directory);
     const extract = output(args.extract ?? true); // Is this a sane default?
-    const files = output(args.files).apply(toArray); // TODO: Can we get types happy without the `toArray`?
+    const files = output(args.files ?? []).apply(toArray); // TODO: Can we get types happy without the `toArray`?
     const gzip = output(args.gzip ?? false);
 
     const builder = new CommandBuilder('tar')
