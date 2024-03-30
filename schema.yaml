@@ -697,7 +697,7 @@ types:
       - value: P256
       - value: P384
       - value: P521
-  kubernetes-the-hard-way:index:KeyPair:
+  kubernetes-the-hard-way:tls:KeyPair:
     description: A certificate and key pair.
     type: object
     properties:
@@ -782,12 +782,12 @@ functions:
           $ref: "#/resources/kubernetes-the-hard-way:remote:File"
       required:
         - result
-  kubernetes-the-hard-way:index:installCert:
+  kubernetes-the-hard-way:remote:installCert:
     description: Creates a RemoteFile resource representing the copy operation.
     inputs:
       properties:
         keypair:
-          $ref: "#/types/kubernetes-the-hard-way:index:KeyPair"
+          $ref: "#/types/kubernetes-the-hard-way:tls:KeyPair"
           description: The certificate to install at the remote location.
         connection:
           $ref: "#/types/kubernetes-the-hard-way:index:Connection"
@@ -812,7 +812,7 @@ functions:
           description: A resource representing the the file on the remote machine.
       required:
         - result
-  kubernetes-the-hard-way:index:installControlPlane:
+  kubernetes-the-hard-way:remote:installControlPlane:
     description: Install PKI onto a controlplane node.
     inputs:
       properties:
@@ -828,12 +828,12 @@ functions:
       required:
         - connection
         - pki
-  kubernetes-the-hard-way:index:installKey:
+  kubernetes-the-hard-way:remote:installKey:
     description: Creates a RemoteFile resource representing the copy operation.
     inputs:
       properties:
         keypair:
-          $ref: "#/types/kubernetes-the-hard-way:index:KeyPair"
+          $ref: "#/types/kubernetes-the-hard-way:tls:KeyPair"
           description: The certificate to install.
         connection:
           $ref: "#/types/kubernetes-the-hard-way:index:Connection"
@@ -857,7 +857,7 @@ functions:
           $ref: "#/resources/kubernetes-the-hard-way:remote:File"
       required:
         - result
-  kubernetes-the-hard-way:index:newCertificate:
+  kubernetes-the-hard-way:tls:newCertificate:
     description: Creates a Certificate configured for the current authority.
     inputs:
       properties:
