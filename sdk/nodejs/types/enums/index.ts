@@ -7,3 +7,13 @@ import * as tls from "./tls";
 export {
     tls,
 };
+
+export const Architecture = {
+    Amd64: "amd64",
+    Arm64: "arm64",
+} as const;
+
+/**
+ * CPU architecture
+ */
+export type Architecture = (typeof Architecture)[keyof typeof Architecture];

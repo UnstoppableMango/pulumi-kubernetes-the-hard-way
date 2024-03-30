@@ -13,6 +13,7 @@
         "strict": true
     },
     "files": [
+        "etcd.ts",
         "index.ts",
         "provider.ts",
         "remote/download.ts",
