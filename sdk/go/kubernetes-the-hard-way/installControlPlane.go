@@ -6,6 +6,7 @@ package kubernetesthehardway
 import (
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 	"github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/sdk/go/kubernetes-the-hard-way/internal"
+	"github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/sdk/go/kubernetes-the-hard-way/tls"
 )
 
 // Install PKI onto a controlplane node.
@@ -21,7 +22,7 @@ type InstallControlPlaneArgs struct {
 	Connection Connection       `pulumi:"connection"`
 	Options    *ResourceOptions `pulumi:"options"`
 	// The PKI to install
-	Pki *ClusterPki `pulumi:"pki"`
+	Pki *tls.ClusterPki `pulumi:"pki"`
 }
 
 // Defaults sets the appropriate defaults for InstallControlPlaneArgs

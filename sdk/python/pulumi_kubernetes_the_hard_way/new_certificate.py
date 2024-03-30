@@ -8,10 +8,9 @@ import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
 from . import _utilities
-from ._enums import *
+from . import tls
+from . import tls as _tls
 from ._inputs import *
-from .certificate import Certificate
-from .root_ca import RootCa
 
 __all__ = [
     'NewCertificateResult',
@@ -23,13 +22,13 @@ __all__ = [
 @pulumi.output_type
 class NewCertificateResult:
     def __init__(__self__, result=None):
-        if result and not isinstance(result, Certificate):
-            raise TypeError("Expected argument 'result' to be a Certificate")
+        if result and not isinstance(result, _tls.Certificate):
+            raise TypeError("Expected argument 'result' to be a _tls.Certificate")
         pulumi.set(__self__, "result", result)
 
     @property
     @pulumi.getter
-    def result(self) -> 'Certificate':
+    def result(self) -> '_tls.Certificate':
         return pulumi.get(self, "result")
 
 
@@ -42,12 +41,12 @@ class AwaitableNewCertificateResult(NewCertificateResult):
             result=self.result)
 
 
-def new_certificate(algorithm: Optional['Algorithm'] = None,
-                    allowed_uses: Optional[Sequence['AllowedUsage']] = None,
-                    ca: Optional['RootCa'] = None,
+def new_certificate(algorithm: Optional['tls.Algorithm'] = None,
+                    allowed_uses: Optional[Sequence['tls.AllowedUsage']] = None,
+                    ca: Optional['_tls.RootCa'] = None,
                     dns_names: Optional[Sequence[str]] = None,
                     early_renewal_hours: Optional[int] = None,
-                    ecdsa_curve: Optional['EcdsaCurve'] = None,
+                    ecdsa_curve: Optional['tls.EcdsaCurve'] = None,
                     ip_addresses: Optional[Sequence[str]] = None,
                     is_ca_certificate: Optional[bool] = None,
                     name: Optional[str] = None,
@@ -63,11 +62,11 @@ def new_certificate(algorithm: Optional['Algorithm'] = None,
     Creates a Certificate configured for the current authority.
 
 
-    :param 'Algorithm' algorithm: Name of the algorithm to use when generating the private key.
-    :param 'RootCa' ca: The certificate authority to issue the certificate.
+    :param 'tls.Algorithm' algorithm: Name of the algorithm to use when generating the private key.
+    :param '_tls.RootCa' ca: The certificate authority to issue the certificate.
     :param Sequence[str] dns_names: List of DNS names for which a certificate is being requested.
     :param int early_renewal_hours: TODO
-    :param 'EcdsaCurve' ecdsa_curve: When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
+    :param 'tls.EcdsaCurve' ecdsa_curve: When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
     :param Sequence[str] ip_addresses: List of IP addresses for which a certificate is being requested.
     :param int rsa_bits: When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
     :param bool set_authority_key_id: Should the generated certificate include an authority key identifier.
@@ -100,12 +99,12 @@ def new_certificate(algorithm: Optional['Algorithm'] = None,
 
 
 @_utilities.lift_output_func(new_certificate)
-def new_certificate_output(algorithm: Optional[pulumi.Input['Algorithm']] = None,
-                           allowed_uses: Optional[pulumi.Input[Sequence['AllowedUsage']]] = None,
-                           ca: Optional[pulumi.Input['RootCa']] = None,
+def new_certificate_output(algorithm: Optional[pulumi.Input['tls.Algorithm']] = None,
+                           allowed_uses: Optional[pulumi.Input[Sequence['tls.AllowedUsage']]] = None,
+                           ca: Optional[pulumi.Input['_tls.RootCa']] = None,
                            dns_names: Optional[pulumi.Input[Optional[Sequence[str]]]] = None,
                            early_renewal_hours: Optional[pulumi.Input[Optional[int]]] = None,
-                           ecdsa_curve: Optional[pulumi.Input[Optional['EcdsaCurve']]] = None,
+                           ecdsa_curve: Optional[pulumi.Input[Optional['tls.EcdsaCurve']]] = None,
                            ip_addresses: Optional[pulumi.Input[Optional[Sequence[str]]]] = None,
                            is_ca_certificate: Optional[pulumi.Input[Optional[bool]]] = None,
                            name: Optional[pulumi.Input[str]] = None,
@@ -121,11 +120,11 @@ def new_certificate_output(algorithm: Optional[pulumi.Input['Algorithm']] = None
     Creates a Certificate configured for the current authority.
 
 
-    :param 'Algorithm' algorithm: Name of the algorithm to use when generating the private key.
-    :param 'RootCa' ca: The certificate authority to issue the certificate.
+    :param 'tls.Algorithm' algorithm: Name of the algorithm to use when generating the private key.
+    :param '_tls.RootCa' ca: The certificate authority to issue the certificate.
     :param Sequence[str] dns_names: List of DNS names for which a certificate is being requested.
     :param int early_renewal_hours: TODO
-    :param 'EcdsaCurve' ecdsa_curve: When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
+    :param 'tls.EcdsaCurve' ecdsa_curve: When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
     :param Sequence[str] ip_addresses: List of IP addresses for which a certificate is being requested.
     :param int rsa_bits: When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
     :param bool set_authority_key_id: Should the generated certificate include an authority key identifier.

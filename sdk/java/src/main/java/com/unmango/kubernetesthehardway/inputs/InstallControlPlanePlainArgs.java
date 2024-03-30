@@ -5,9 +5,9 @@ package com.unmango.kubernetesthehardway.inputs;
 
 import com.pulumi.core.annotations.Import;
 import com.pulumi.exceptions.MissingRequiredPropertyException;
-import com.unmango.kubernetesthehardway.ClusterPki;
 import com.unmango.kubernetesthehardway.inputs.Connection;
 import com.unmango.kubernetesthehardway.inputs.ResourceOptions;
+import com.unmango.kubernetesthehardway.tls.ClusterPki;
 import java.util.Objects;
 import java.util.Optional;
 import javax.annotation.Nullable;

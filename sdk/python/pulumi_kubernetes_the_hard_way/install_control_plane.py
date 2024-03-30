@@ -8,8 +8,8 @@ import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload, Awaitable
 from . import _utilities
+from . import tls as _tls
 from ._inputs import *
-from .cluster_pki import ClusterPki
 
 __all__ = [
     'install_control_plane',
@@ -17,14 +17,14 @@ __all__ = [
 
 def install_control_plane(connection: Optional[pulumi.InputType['Connection']] = None,
                           options: Optional[pulumi.InputType['ResourceOptions']] = None,
-                          pki: Optional['ClusterPki'] = None,
+                          pki: Optional['_tls.ClusterPki'] = None,
                           opts: Optional[pulumi.InvokeOptions] = None) -> Awaitable[None]:
     """
     Install PKI onto a controlplane node.
 
 
     :param pulumi.InputType['Connection'] connection: The connection details.
-    :param 'ClusterPki' pki: The PKI to install
+    :param '_tls.ClusterPki' pki: The PKI to install
     """
     __args__ = dict()
     __args__['connection'] = connection

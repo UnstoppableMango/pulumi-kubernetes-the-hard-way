@@ -5,7 +5,7 @@ package com.unmango.kubernetesthehardway.outputs;
 
 import com.pulumi.core.annotations.CustomType;
 import com.pulumi.exceptions.MissingRequiredPropertyException;
-import com.unmango.kubernetesthehardway.Certificate;
+import com.unmango.kubernetesthehardway.tls.Certificate;
 import java.util.Objects;
 
 @CustomType

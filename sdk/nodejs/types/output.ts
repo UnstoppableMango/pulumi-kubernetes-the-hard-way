@@ -9,3 +9,5 @@ import * as enums from "../types/enums";
 import * as pulumiTls from "@pulumi/tls";
 import * as utilities from "../utilities";
 
+export namespace tls {
+}

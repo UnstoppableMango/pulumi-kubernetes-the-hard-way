@@ -7,7 +7,7 @@ import * as outputs from "./types/output";
 import * as enums from "./types/enums";
 import * as utilities from "./utilities";
 
-import {Certificate, RootCa} from "./index";
+import {Certificate, RootCa} from "tls";
 
 /**
  * Creates a Certificate configured for the current authority.
@@ -39,8 +39,8 @@ export interface NewCertificateArgs {
     /**
      * Name of the algorithm to use when generating the private key.
      */
-    algorithm: enums.Algorithm;
-    allowedUses: enums.AllowedUsage[];
+    algorithm: enums.tls.Algorithm;
+    allowedUses: enums.tls.AllowedUsage[];
     /**
      * The certificate authority to issue the certificate.
      */
@@ -56,7 +56,7 @@ export interface NewCertificateArgs {
     /**
      * When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
      */
-    ecdsaCurve?: enums.EcdsaCurve;
+    ecdsaCurve?: enums.tls.EcdsaCurve;
     /**
      * List of IP addresses for which a certificate is being requested.
      */
@@ -101,8 +101,8 @@ export interface NewCertificateOutputArgs {
     /**
      * Name of the algorithm to use when generating the private key.
      */
-    algorithm: pulumi.Input<enums.Algorithm>;
-    allowedUses: pulumi.Input<pulumi.Input<enums.AllowedUsage>[]>;
+    algorithm: pulumi.Input<enums.tls.Algorithm>;
+    allowedUses: pulumi.Input<pulumi.Input<enums.tls.AllowedUsage>[]>;
     /**
      * The certificate authority to issue the certificate.
      */
@@ -118,7 +118,7 @@ export interface NewCertificateOutputArgs {
     /**
      * When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
      */
-    ecdsaCurve?: pulumi.Input<enums.EcdsaCurve>;
+    ecdsaCurve?: pulumi.Input<enums.tls.EcdsaCurve>;
     /**
      * List of IP addresses for which a certificate is being requested.
      */

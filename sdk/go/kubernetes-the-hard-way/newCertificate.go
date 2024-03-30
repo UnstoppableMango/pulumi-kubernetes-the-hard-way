@@ -9,12 +9,13 @@ import (
 
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 	"github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/sdk/go/kubernetes-the-hard-way/internal"
+	"github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/sdk/go/kubernetes-the-hard-way/tls"
 )
 
 // Creates a Certificate configured for the current authority.
-func CreateCertificate(ctx *pulumi.Context, args *CreateCertificateArgs, opts ...pulumi.InvokeOption) (*CreateCertificateResult, error) {
+func NewCertificate(ctx *pulumi.Context, args *NewCertificateArgs, opts ...pulumi.InvokeOption) (*NewCertificateResult, error) {
 	opts = internal.PkgInvokeDefaultOpts(opts)
-	var rv CreateCertificateResult
+	var rv NewCertificateResult
 	err := ctx.Invoke("kubernetes-the-hard-way:index:newCertificate", args, &rv, opts...)
 	if err != nil {
 		return nil, err
@@ -22,18 +23,18 @@ func CreateCertificate(ctx *pulumi.Context, args *CreateCertificateArgs, opts ..
 	return &rv, nil
 }
 
-type CreateCertificateArgs struct {
+type NewCertificateArgs struct {
 	// Name of the algorithm to use when generating the private key.
-	Algorithm   Algorithm      `pulumi:"algorithm"`
-	AllowedUses []AllowedUsage `pulumi:"allowedUses"`
+	Algorithm   tls.Algorithm      `pulumi:"algorithm"`
+	AllowedUses []tls.AllowedUsage `pulumi:"allowedUses"`
 	// The certificate authority to issue the certificate.
-	Ca *RootCa `pulumi:"ca"`
+	Ca *tls.RootCa `pulumi:"ca"`
 	// List of DNS names for which a certificate is being requested.
 	DnsNames []string `pulumi:"dnsNames"`
 	// TODO
 	EarlyRenewalHours *int `pulumi:"earlyRenewalHours"`
 	// When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
-	EcdsaCurve *EcdsaCurve `pulumi:"ecdsaCurve"`
+	EcdsaCurve *tls.EcdsaCurve `pulumi:"ecdsaCurve"`
 	// List of IP addresses for which a certificate is being requested.
 	IpAddresses     []string         `pulumi:"ipAddresses"`
 	IsCaCertificate *bool            `pulumi:"isCaCertificate"`
@@ -52,35 +53,35 @@ type CreateCertificateArgs struct {
 	ValidityPeriodHours int `pulumi:"validityPeriodHours"`
 }
 
-type CreateCertificateResult struct {
-	Result *Certificate `pulumi:"result"`
+type NewCertificateResult struct {
+	Result *tls.Certificate `pulumi:"result"`
 }
 
-func CreateCertificateOutput(ctx *pulumi.Context, args CreateCertificateOutputArgs, opts ...pulumi.InvokeOption) CreateCertificateResultOutput {
+func NewCertificateOutput(ctx *pulumi.Context, args NewCertificateOutputArgs, opts ...pulumi.InvokeOption) NewCertificateResultOutput {
 	return pulumi.ToOutputWithContext(context.Background(), args).
-		ApplyT(func(v interface{}) (CreateCertificateResult, error) {
-			args := v.(CreateCertificateArgs)
-			r, err := CreateCertificate(ctx, &args, opts...)
-			var s CreateCertificateResult
+		ApplyT(func(v interface{}) (NewCertificateResult, error) {
+			args := v.(NewCertificateArgs)
+			r, err := NewCertificate(ctx, &args, opts...)
+			var s NewCertificateResult
 			if r != nil {
 				s = *r
 			}
 			return s, err
-		}).(CreateCertificateResultOutput)
+		}).(NewCertificateResultOutput)
 }
 
-type CreateCertificateOutputArgs struct {
+type NewCertificateOutputArgs struct {
 	// Name of the algorithm to use when generating the private key.
-	Algorithm   AlgorithmInput         `pulumi:"algorithm"`
-	AllowedUses AllowedUsageArrayInput `pulumi:"allowedUses"`
+	Algorithm   tls.AlgorithmInput         `pulumi:"algorithm"`
+	AllowedUses tls.AllowedUsageArrayInput `pulumi:"allowedUses"`
 	// The certificate authority to issue the certificate.
-	Ca RootCaInput `pulumi:"ca"`
+	Ca tls.RootCaInput `pulumi:"ca"`
 	// List of DNS names for which a certificate is being requested.
 	DnsNames pulumi.StringArrayInput `pulumi:"dnsNames"`
 	// TODO
 	EarlyRenewalHours pulumi.IntPtrInput `pulumi:"earlyRenewalHours"`
 	// When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
-	EcdsaCurve EcdsaCurvePtrInput `pulumi:"ecdsaCurve"`
+	EcdsaCurve tls.EcdsaCurvePtrInput `pulumi:"ecdsaCurve"`
 	// List of IP addresses for which a certificate is being requested.
 	IpAddresses     pulumi.StringArrayInput `pulumi:"ipAddresses"`
 	IsCaCertificate pulumi.BoolPtrInput     `pulumi:"isCaCertificate"`
@@ -99,28 +100,28 @@ type CreateCertificateOutputArgs struct {
 	ValidityPeriodHours pulumi.IntInput `pulumi:"validityPeriodHours"`
 }
 
-func (CreateCertificateOutputArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*CreateCertificateArgs)(nil)).Elem()
+func (NewCertificateOutputArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*NewCertificateArgs)(nil)).Elem()
 }
 
-type CreateCertificateResultOutput struct{ *pulumi.OutputState }
+type NewCertificateResultOutput struct{ *pulumi.OutputState }
 
-func (CreateCertificateResultOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*CreateCertificateResult)(nil)).Elem()
+func (NewCertificateResultOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*NewCertificateResult)(nil)).Elem()
 }
 
-func (o CreateCertificateResultOutput) ToCreateCertificateResultOutput() CreateCertificateResultOutput {
+func (o NewCertificateResultOutput) ToNewCertificateResultOutput() NewCertificateResultOutput {
 	return o
 }
 
-func (o CreateCertificateResultOutput) ToCreateCertificateResultOutputWithContext(ctx context.Context) CreateCertificateResultOutput {
+func (o NewCertificateResultOutput) ToNewCertificateResultOutputWithContext(ctx context.Context) NewCertificateResultOutput {
 	return o
 }
 
-func (o CreateCertificateResultOutput) Result() CertificateOutput {
-	return o.ApplyT(func(v CreateCertificateResult) *Certificate { return v.Result }).(CertificateOutput)
+func (o NewCertificateResultOutput) Result() tls.CertificateOutput {
+	return o.ApplyT(func(v NewCertificateResult) *tls.Certificate { return v.Result }).(tls.CertificateOutput)
 }
 
 func init() {
-	pulumi.RegisterOutputType(CreateCertificateResultOutput{})
+	pulumi.RegisterOutputType(NewCertificateResultOutput{})
 }

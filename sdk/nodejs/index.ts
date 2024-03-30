@@ -5,19 +5,6 @@ import * as pulumi from "@pulumi/pulumi";
 import * as utilities from "./utilities";
 
 // Export members:
-export * from "./certificate";
-import { Certificate } from "./certificate";
-
-export { ClusterPkiArgs } from "./clusterPki";
-export type ClusterPki = import("./clusterPki").ClusterPki;
-export const ClusterPki: typeof import("./clusterPki").ClusterPki = null as any;
-utilities.lazyLoad(exports, ["ClusterPki"], () => require("./clusterPki"));
-
-export { EncryptionKeyArgs } from "./encryptionKey";
-export type EncryptionKey = import("./encryptionKey").EncryptionKey;
-export const EncryptionKey: typeof import("./encryptionKey").EncryptionKey = null as any;
-utilities.lazyLoad(exports, ["EncryptionKey"], () => require("./encryptionKey"));
-
 export { InstallCertArgs, InstallCertResult, InstallCertOutputArgs } from "./installCert";
 export const installCert: typeof import("./installCert").installCert = null as any;
 export const installCertOutput: typeof import("./installCert").installCertOutput = null as any;
@@ -42,42 +29,19 @@ export type Provider = import("./provider").Provider;
 export const Provider: typeof import("./provider").Provider = null as any;
 utilities.lazyLoad(exports, ["Provider"], () => require("./provider"));
 
-export * from "./rootCa";
-import { RootCa } from "./rootCa";
-
-
-// Export enums:
-export * from "./types/enums";
 
 // Export sub-modules:
 import * as remote from "./remote";
+import * as tls from "./tls";
 import * as tools from "./tools";
 import * as types from "./types";
 
 export {
     remote,
+    tls,
     tools,
     types,
 };
-
-const _module = {
-    version: utilities.getVersion(),
-    construct: (name: string, type: string, urn: string): pulumi.Resource => {
-        switch (type) {
-            case "kubernetes-the-hard-way:index:Certificate":
-                return new Certificate(name, <any>undefined, { urn })
-            case "kubernetes-the-hard-way:index:ClusterPki":
-                return new ClusterPki(name, <any>undefined, { urn })
-            case "kubernetes-the-hard-way:index:EncryptionKey":
-                return new EncryptionKey(name, <any>undefined, { urn })
-            case "kubernetes-the-hard-way:index:RootCa":
-                return new RootCa(name, <any>undefined, { urn })
-            default:
-                throw new Error(`unknown resource type ${type}`);
-        }
-    },
-};
-pulumi.runtime.registerResourceModule("kubernetes-the-hard-way", "index", _module)
 pulumi.runtime.registerResourcePackage("kubernetes-the-hard-way", {
     version: utilities.getVersion(),
     constructProvider: (name: string, type: string, urn: string): pulumi.ProviderResource => {

@@ -5,12 +5,12 @@ package com.unmango.kubernetesthehardway.inputs;
 
 import com.pulumi.core.annotations.Import;
 import com.pulumi.exceptions.MissingRequiredPropertyException;
-import com.unmango.kubernetesthehardway.RootCa;
-import com.unmango.kubernetesthehardway.enums.Algorithm;
-import com.unmango.kubernetesthehardway.enums.AllowedUsage;
-import com.unmango.kubernetesthehardway.enums.EcdsaCurve;
 import com.unmango.kubernetesthehardway.inputs.CertRequestSubject;
 import com.unmango.kubernetesthehardway.inputs.ResourceOptions;
+import com.unmango.kubernetesthehardway.tls.RootCa;
+import com.unmango.kubernetesthehardway.tls.enums.Algorithm;
+import com.unmango.kubernetesthehardway.tls.enums.AllowedUsage;
+import com.unmango.kubernetesthehardway.tls.enums.EcdsaCurve;
 import java.lang.Boolean;
 import java.lang.Integer;
 import java.lang.String;

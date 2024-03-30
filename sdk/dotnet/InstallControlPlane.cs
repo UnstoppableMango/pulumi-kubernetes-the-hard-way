@@ -35,7 +35,7 @@ namespace UnMango.KubernetesTheHardWay
         /// The PKI to install
         /// </summary>
         [Input("pki", required: true)]
-        public UnMango.KubernetesTheHardWay.ClusterPki Pki { get; set; } = null!;
+        public UnMango.KubernetesTheHardWay.Tls.ClusterPki Pki { get; set; } = null!;
 
         public InstallControlPlaneArgs()
         {

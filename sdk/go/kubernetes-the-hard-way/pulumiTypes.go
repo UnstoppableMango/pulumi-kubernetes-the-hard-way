@@ -306,112 +306,6 @@ func (o CertRequestSubjectPtrOutput) StreetAddresses() pulumi.StringArrayOutput 
 	}).(pulumi.StringArrayOutput)
 }
 
-// Node inputs for the PKI.
-type ClusterPkiNode struct {
-	// The IP address of the node.
-	Ip   *string   `pulumi:"ip"`
-	Role *NodeRole `pulumi:"role"`
-}
-
-// ClusterPkiNodeInput is an input type that accepts ClusterPkiNodeArgs and ClusterPkiNodeOutput values.
-// You can construct a concrete instance of `ClusterPkiNodeInput` via:
-//
-//	ClusterPkiNodeArgs{...}
-type ClusterPkiNodeInput interface {
-	pulumi.Input
-
-	ToClusterPkiNodeOutput() ClusterPkiNodeOutput
-	ToClusterPkiNodeOutputWithContext(context.Context) ClusterPkiNodeOutput
-}
-
-// Node inputs for the PKI.
-type ClusterPkiNodeArgs struct {
-	// The IP address of the node.
-	Ip   pulumi.StringPtrInput `pulumi:"ip"`
-	Role NodeRolePtrInput      `pulumi:"role"`
-}
-
-func (ClusterPkiNodeArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*ClusterPkiNode)(nil)).Elem()
-}
-
-func (i ClusterPkiNodeArgs) ToClusterPkiNodeOutput() ClusterPkiNodeOutput {
-	return i.ToClusterPkiNodeOutputWithContext(context.Background())
-}
-
-func (i ClusterPkiNodeArgs) ToClusterPkiNodeOutputWithContext(ctx context.Context) ClusterPkiNodeOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(ClusterPkiNodeOutput)
-}
-
-// ClusterPkiNodeMapInput is an input type that accepts ClusterPkiNodeMap and ClusterPkiNodeMapOutput values.
-// You can construct a concrete instance of `ClusterPkiNodeMapInput` via:
-//
-//	ClusterPkiNodeMap{ "key": ClusterPkiNodeArgs{...} }
-type ClusterPkiNodeMapInput interface {
-	pulumi.Input
-
-	ToClusterPkiNodeMapOutput() ClusterPkiNodeMapOutput
-	ToClusterPkiNodeMapOutputWithContext(context.Context) ClusterPkiNodeMapOutput
-}
-
-type ClusterPkiNodeMap map[string]ClusterPkiNodeInput
-
-func (ClusterPkiNodeMap) ElementType() reflect.Type {
-	return reflect.TypeOf((*map[string]ClusterPkiNode)(nil)).Elem()
-}
-
-func (i ClusterPkiNodeMap) ToClusterPkiNodeMapOutput() ClusterPkiNodeMapOutput {
-	return i.ToClusterPkiNodeMapOutputWithContext(context.Background())
-}
-
-func (i ClusterPkiNodeMap) ToClusterPkiNodeMapOutputWithContext(ctx context.Context) ClusterPkiNodeMapOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(ClusterPkiNodeMapOutput)
-}
-
-// Node inputs for the PKI.
-type ClusterPkiNodeOutput struct{ *pulumi.OutputState }
-
-func (ClusterPkiNodeOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*ClusterPkiNode)(nil)).Elem()
-}
-
-func (o ClusterPkiNodeOutput) ToClusterPkiNodeOutput() ClusterPkiNodeOutput {
-	return o
-}
-
-func (o ClusterPkiNodeOutput) ToClusterPkiNodeOutputWithContext(ctx context.Context) ClusterPkiNodeOutput {
-	return o
-}
-
-// The IP address of the node.
-func (o ClusterPkiNodeOutput) Ip() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v ClusterPkiNode) *string { return v.Ip }).(pulumi.StringPtrOutput)
-}
-
-func (o ClusterPkiNodeOutput) Role() NodeRolePtrOutput {
-	return o.ApplyT(func(v ClusterPkiNode) *NodeRole { return v.Role }).(NodeRolePtrOutput)
-}
-
-type ClusterPkiNodeMapOutput struct{ *pulumi.OutputState }
-
-func (ClusterPkiNodeMapOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*map[string]ClusterPkiNode)(nil)).Elem()
-}
-
-func (o ClusterPkiNodeMapOutput) ToClusterPkiNodeMapOutput() ClusterPkiNodeMapOutput {
-	return o
-}
-
-func (o ClusterPkiNodeMapOutput) ToClusterPkiNodeMapOutputWithContext(ctx context.Context) ClusterPkiNodeMapOutput {
-	return o
-}
-
-func (o ClusterPkiNodeMapOutput) MapIndex(k pulumi.StringInput) ClusterPkiNodeOutput {
-	return pulumi.All(o, k).ApplyT(func(vs []interface{}) ClusterPkiNode {
-		return vs[0].(map[string]ClusterPkiNode)[vs[1].(string)]
-	}).(ClusterPkiNodeOutput)
-}
-
 // Instructions for how to connect to a remote endpoint. Polyfill for `command.ConnectionArgs`.
 type Connection struct {
 	// SSH Agent socket path. Default to environment variable SSH_AUTH_SOCK if present.
@@ -805,16 +699,12 @@ func (o ResourceOptionsPtrOutput) Parent() pulumi.AnyOutput {
 func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*CertRequestSubjectInput)(nil)).Elem(), CertRequestSubjectArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*CertRequestSubjectPtrInput)(nil)).Elem(), CertRequestSubjectArgs{})
-	pulumi.RegisterInputType(reflect.TypeOf((*ClusterPkiNodeInput)(nil)).Elem(), ClusterPkiNodeArgs{})
-	pulumi.RegisterInputType(reflect.TypeOf((*ClusterPkiNodeMapInput)(nil)).Elem(), ClusterPkiNodeMap{})
 	pulumi.RegisterInputType(reflect.TypeOf((*ConnectionInput)(nil)).Elem(), ConnectionArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*KeyPairInput)(nil)).Elem(), KeyPairArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*ResourceOptionsInput)(nil)).Elem(), ResourceOptionsArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*ResourceOptionsPtrInput)(nil)).Elem(), ResourceOptionsArgs{})
 	pulumi.RegisterOutputType(CertRequestSubjectOutput{})
 	pulumi.RegisterOutputType(CertRequestSubjectPtrOutput{})
-	pulumi.RegisterOutputType(ClusterPkiNodeOutput{})
-	pulumi.RegisterOutputType(ClusterPkiNodeMapOutput{})
 	pulumi.RegisterOutputType(ConnectionOutput{})
 	pulumi.RegisterOutputType(KeyPairOutput{})
 	pulumi.RegisterOutputType(ResourceOptionsOutput{})

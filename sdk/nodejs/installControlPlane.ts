@@ -7,7 +7,7 @@ import * as outputs from "./types/output";
 import * as enums from "./types/enums";
 import * as utilities from "./utilities";
 
-import {ClusterPki} from "./index";
+import {ClusterPki} from "tls";
 
 /**
  * Install PKI onto a controlplane node.

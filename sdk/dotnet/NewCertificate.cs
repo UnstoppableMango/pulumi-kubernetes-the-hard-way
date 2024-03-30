@@ -32,13 +32,13 @@ namespace UnMango.KubernetesTheHardWay
         /// Name of the algorithm to use when generating the private key.
         /// </summary>
         [Input("algorithm", required: true)]
-        public UnMango.KubernetesTheHardWay.Algorithm Algorithm { get; set; }
+        public UnMango.KubernetesTheHardWay.Tls.Algorithm Algorithm { get; set; }
 
         [Input("allowedUses", required: true)]
-        private List<UnMango.KubernetesTheHardWay.AllowedUsage>? _allowedUses;
-        public List<UnMango.KubernetesTheHardWay.AllowedUsage> AllowedUses
+        private List<UnMango.KubernetesTheHardWay.Tls.AllowedUsage>? _allowedUses;
+        public List<UnMango.KubernetesTheHardWay.Tls.AllowedUsage> AllowedUses
         {
-            get => _allowedUses ?? (_allowedUses = new List<UnMango.KubernetesTheHardWay.AllowedUsage>());
+            get => _allowedUses ?? (_allowedUses = new List<UnMango.KubernetesTheHardWay.Tls.AllowedUsage>());
             set => _allowedUses = value;
         }
 
@@ -46,7 +46,7 @@ namespace UnMango.KubernetesTheHardWay
         /// The certificate authority to issue the certificate.
         /// </summary>
         [Input("ca", required: true)]
-        public UnMango.KubernetesTheHardWay.RootCa Ca { get; set; } = null!;
+        public UnMango.KubernetesTheHardWay.Tls.RootCa Ca { get; set; } = null!;
 
         [Input("dnsNames")]
         private List<string>? _dnsNames;
@@ -70,7 +70,7 @@ namespace UnMango.KubernetesTheHardWay
         /// When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
         /// </summary>
         [Input("ecdsaCurve")]
-        public UnMango.KubernetesTheHardWay.EcdsaCurve? EcdsaCurve { get; set; }
+        public UnMango.KubernetesTheHardWay.Tls.EcdsaCurve? EcdsaCurve { get; set; }
 
         [Input("ipAddresses")]
         private List<string>? _ipAddresses;
@@ -144,13 +144,13 @@ namespace UnMango.KubernetesTheHardWay
         /// Name of the algorithm to use when generating the private key.
         /// </summary>
         [Input("algorithm", required: true)]
-        public Input<UnMango.KubernetesTheHardWay.Algorithm> Algorithm { get; set; } = null!;
+        public Input<UnMango.KubernetesTheHardWay.Tls.Algorithm> Algorithm { get; set; } = null!;
 
         [Input("allowedUses", required: true)]
-        private InputList<UnMango.KubernetesTheHardWay.AllowedUsage>? _allowedUses;
-        public InputList<UnMango.KubernetesTheHardWay.AllowedUsage> AllowedUses
+        private InputList<UnMango.KubernetesTheHardWay.Tls.AllowedUsage>? _allowedUses;
+        public InputList<UnMango.KubernetesTheHardWay.Tls.AllowedUsage> AllowedUses
         {
-            get => _allowedUses ?? (_allowedUses = new InputList<UnMango.KubernetesTheHardWay.AllowedUsage>());
+            get => _allowedUses ?? (_allowedUses = new InputList<UnMango.KubernetesTheHardWay.Tls.AllowedUsage>());
             set => _allowedUses = value;
         }
 
@@ -158,7 +158,7 @@ namespace UnMango.KubernetesTheHardWay
         /// The certificate authority to issue the certificate.
         /// </summary>
         [Input("ca", required: true)]
-        public Input<UnMango.KubernetesTheHardWay.RootCa> Ca { get; set; } = null!;
+        public Input<UnMango.KubernetesTheHardWay.Tls.RootCa> Ca { get; set; } = null!;
 
         [Input("dnsNames")]
         private InputList<string>? _dnsNames;
@@ -182,7 +182,7 @@ namespace UnMango.KubernetesTheHardWay
         /// When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
         /// </summary>
         [Input("ecdsaCurve")]
-        public Input<UnMango.KubernetesTheHardWay.EcdsaCurve>? EcdsaCurve { get; set; }
+        public Input<UnMango.KubernetesTheHardWay.Tls.EcdsaCurve>? EcdsaCurve { get; set; }
 
         [Input("ipAddresses")]
         private InputList<string>? _ipAddresses;
@@ -254,10 +254,10 @@ namespace UnMango.KubernetesTheHardWay
     [OutputType]
     public sealed class NewCertificateResult
     {
-        public readonly UnMango.KubernetesTheHardWay.Certificate Result;
+        public readonly UnMango.KubernetesTheHardWay.Tls.Certificate Result;
 
         [OutputConstructor]
-        private NewCertificateResult(UnMango.KubernetesTheHardWay.Certificate result)
+        private NewCertificateResult(UnMango.KubernetesTheHardWay.Tls.Certificate result)
         {
             Result = result;
         }
