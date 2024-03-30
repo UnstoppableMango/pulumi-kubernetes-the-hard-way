@@ -9,5 +9,6 @@ from ._enums import *
 from .certificate import *
 from .cluster_pki import *
 from .encryption_key import *
+from .new_certificate import *
 from .root_ca import *
 from ._inputs import *

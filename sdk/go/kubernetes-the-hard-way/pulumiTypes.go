@@ -7,7 +7,6 @@ import (
 	"context"
 	"reflect"
 
-	"github.com/pulumi/pulumi-tls/sdk/v5/go/tls"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 	"github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/sdk/go/kubernetes-the-hard-way/internal"
 )
@@ -478,88 +477,6 @@ func (o ConnectionOutput) User() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v Connection) *string { return v.User }).(pulumi.StringPtrOutput)
 }
 
-// A certificate and key pair.
-type KeyPair struct {
-	// The PEM encoded certificate data
-	CertPem *string `pulumi:"certPem"`
-	// The private key.
-	Key *tls.PrivateKey `pulumi:"key"`
-	// The PEM encoded private key data.
-	PrivateKeyPem *string `pulumi:"privateKeyPem"`
-	// The PEM encoded public key data.
-	PublicKeyPem *string `pulumi:"publicKeyPem"`
-}
-
-// KeyPairInput is an input type that accepts KeyPairArgs and KeyPairOutput values.
-// You can construct a concrete instance of `KeyPairInput` via:
-//
-//	KeyPairArgs{...}
-type KeyPairInput interface {
-	pulumi.Input
-
-	ToKeyPairOutput() KeyPairOutput
-	ToKeyPairOutputWithContext(context.Context) KeyPairOutput
-}
-
-// A certificate and key pair.
-type KeyPairArgs struct {
-	// The PEM encoded certificate data
-	CertPem pulumi.StringPtrInput `pulumi:"certPem"`
-	// The private key.
-	Key tls.PrivateKeyInput `pulumi:"key"`
-	// The PEM encoded private key data.
-	PrivateKeyPem pulumi.StringPtrInput `pulumi:"privateKeyPem"`
-	// The PEM encoded public key data.
-	PublicKeyPem pulumi.StringPtrInput `pulumi:"publicKeyPem"`
-}
-
-func (KeyPairArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*KeyPair)(nil)).Elem()
-}
-
-func (i KeyPairArgs) ToKeyPairOutput() KeyPairOutput {
-	return i.ToKeyPairOutputWithContext(context.Background())
-}
-
-func (i KeyPairArgs) ToKeyPairOutputWithContext(ctx context.Context) KeyPairOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(KeyPairOutput)
-}
-
-// A certificate and key pair.
-type KeyPairOutput struct{ *pulumi.OutputState }
-
-func (KeyPairOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*KeyPair)(nil)).Elem()
-}
-
-func (o KeyPairOutput) ToKeyPairOutput() KeyPairOutput {
-	return o
-}
-
-func (o KeyPairOutput) ToKeyPairOutputWithContext(ctx context.Context) KeyPairOutput {
-	return o
-}
-
-// The PEM encoded certificate data
-func (o KeyPairOutput) CertPem() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v KeyPair) *string { return v.CertPem }).(pulumi.StringPtrOutput)
-}
-
-// The private key.
-func (o KeyPairOutput) Key() tls.PrivateKeyOutput {
-	return o.ApplyT(func(v KeyPair) *tls.PrivateKey { return v.Key }).(tls.PrivateKeyOutput)
-}
-
-// The PEM encoded private key data.
-func (o KeyPairOutput) PrivateKeyPem() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v KeyPair) *string { return v.PrivateKeyPem }).(pulumi.StringPtrOutput)
-}
-
-// The PEM encoded public key data.
-func (o KeyPairOutput) PublicKeyPem() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v KeyPair) *string { return v.PublicKeyPem }).(pulumi.StringPtrOutput)
-}
-
 // Polyfill for `pulumi.ComponentResourceOptions`.
 type ResourceOptions struct {
 	Parent interface{} `pulumi:"parent"`
@@ -700,13 +617,11 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*CertRequestSubjectInput)(nil)).Elem(), CertRequestSubjectArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*CertRequestSubjectPtrInput)(nil)).Elem(), CertRequestSubjectArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*ConnectionInput)(nil)).Elem(), ConnectionArgs{})
-	pulumi.RegisterInputType(reflect.TypeOf((*KeyPairInput)(nil)).Elem(), KeyPairArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*ResourceOptionsInput)(nil)).Elem(), ResourceOptionsArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*ResourceOptionsPtrInput)(nil)).Elem(), ResourceOptionsArgs{})
 	pulumi.RegisterOutputType(CertRequestSubjectOutput{})
 	pulumi.RegisterOutputType(CertRequestSubjectPtrOutput{})
 	pulumi.RegisterOutputType(ConnectionOutput{})
-	pulumi.RegisterOutputType(KeyPairOutput{})
 	pulumi.RegisterOutputType(ResourceOptionsOutput{})
 	pulumi.RegisterOutputType(ResourceOptionsPtrOutput{})
 }

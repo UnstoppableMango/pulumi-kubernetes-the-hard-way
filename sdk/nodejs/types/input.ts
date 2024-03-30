@@ -202,50 +202,6 @@ export function connectionArgsProvideDefaults(val: ConnectionArgs): ConnectionAr
 }
 
 /**
- * A certificate and key pair.
- */
-export interface KeyPair {
-    /**
-     * The PEM encoded certificate data
-     */
-    certPem?: string;
-    /**
-     * The private key.
-     */
-    key?: pulumiTls.PrivateKey;
-    /**
-     * The PEM encoded private key data.
-     */
-    privateKeyPem?: string;
-    /**
-     * The PEM encoded public key data.
-     */
-    publicKeyPem?: string;
-}
-
-/**
- * A certificate and key pair.
- */
-export interface KeyPairArgs {
-    /**
-     * The PEM encoded certificate data
-     */
-    certPem?: pulumi.Input<string>;
-    /**
-     * The private key.
-     */
-    key?: pulumi.Input<pulumiTls.PrivateKey>;
-    /**
-     * The PEM encoded private key data.
-     */
-    privateKeyPem?: pulumi.Input<string>;
-    /**
-     * The PEM encoded public key data.
-     */
-    publicKeyPem?: pulumi.Input<string>;
-}
-
-/**
  * Polyfill for `pulumi.ComponentResourceOptions`.
  */
 export interface ResourceOptions {
@@ -268,5 +224,49 @@ export namespace tls {
          */
         ip?: pulumi.Input<string>;
         role?: pulumi.Input<enums.tls.NodeRole>;
+    }
+
+    /**
+     * A certificate and key pair.
+     */
+    export interface KeyPair {
+        /**
+         * The PEM encoded certificate data
+         */
+        certPem?: string;
+        /**
+         * The private key.
+         */
+        key?: pulumiTls.PrivateKey;
+        /**
+         * The PEM encoded private key data.
+         */
+        privateKeyPem?: string;
+        /**
+         * The PEM encoded public key data.
+         */
+        publicKeyPem?: string;
+    }
+
+    /**
+     * A certificate and key pair.
+     */
+    export interface KeyPairArgs {
+        /**
+         * The PEM encoded certificate data
+         */
+        certPem?: pulumi.Input<string>;
+        /**
+         * The private key.
+         */
+        key?: pulumi.Input<pulumiTls.PrivateKey>;
+        /**
+         * The PEM encoded private key data.
+         */
+        privateKeyPem?: pulumi.Input<string>;
+        /**
+         * The PEM encoded public key data.
+         */
+        publicKeyPem?: pulumi.Input<string>;
     }
 }

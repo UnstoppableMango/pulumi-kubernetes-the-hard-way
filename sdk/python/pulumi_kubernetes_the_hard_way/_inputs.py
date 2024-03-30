@@ -8,12 +8,10 @@ import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
 from . import _utilities
-import pulumi_tls
 
 __all__ = [
     'CertRequestSubject',
     'Connection',
-    'KeyPair',
     'ResourceOptions',
 ]
 
@@ -326,78 +324,6 @@ class Connection:
     @user.setter
     def user(self, value: Optional[str]):
         pulumi.set(self, "user", value)
-
-
-@pulumi.input_type
-class KeyPair:
-    def __init__(__self__, *,
-                 cert_pem: Optional[str] = None,
-                 key: Optional['pulumi_tls.PrivateKey'] = None,
-                 private_key_pem: Optional[str] = None,
-                 public_key_pem: Optional[str] = None):
-        """
-        A certificate and key pair.
-        :param str cert_pem: The PEM encoded certificate data
-        :param 'pulumi_tls.PrivateKey' key: The private key.
-        :param str private_key_pem: The PEM encoded private key data.
-        :param str public_key_pem: The PEM encoded public key data.
-        """
-        if cert_pem is not None:
-            pulumi.set(__self__, "cert_pem", cert_pem)
-        if key is not None:
-            pulumi.set(__self__, "key", key)
-        if private_key_pem is not None:
-            pulumi.set(__self__, "private_key_pem", private_key_pem)
-        if public_key_pem is not None:
-            pulumi.set(__self__, "public_key_pem", public_key_pem)
-
-    @property
-    @pulumi.getter(name="certPem")
-    def cert_pem(self) -> Optional[str]:
-        """
-        The PEM encoded certificate data
-        """
-        return pulumi.get(self, "cert_pem")
-
-    @cert_pem.setter
-    def cert_pem(self, value: Optional[str]):
-        pulumi.set(self, "cert_pem", value)
-
-    @property
-    @pulumi.getter
-    def key(self) -> Optional['pulumi_tls.PrivateKey']:
-        """
-        The private key.
-        """
-        return pulumi.get(self, "key")
-
-    @key.setter
-    def key(self, value: Optional['pulumi_tls.PrivateKey']):
-        pulumi.set(self, "key", value)
-
-    @property
-    @pulumi.getter(name="privateKeyPem")
-    def private_key_pem(self) -> Optional[str]:
-        """
-        The PEM encoded private key data.
-        """
-        return pulumi.get(self, "private_key_pem")
-
-    @private_key_pem.setter
-    def private_key_pem(self, value: Optional[str]):
-        pulumi.set(self, "private_key_pem", value)
-
-    @property
-    @pulumi.getter(name="publicKeyPem")
-    def public_key_pem(self) -> Optional[str]:
-        """
-        The PEM encoded public key data.
-        """
-        return pulumi.get(self, "public_key_pem")
-
-    @public_key_pem.setter
-    def public_key_pem(self, value: Optional[str]):
-        pulumi.set(self, "public_key_pem", value)
 
 
 @pulumi.input_type
