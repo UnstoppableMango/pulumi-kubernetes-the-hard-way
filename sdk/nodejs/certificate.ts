@@ -9,7 +9,7 @@ import * as utilities from "./utilities";
 
 import * as pulumiTls from "@pulumi/tls";
 
-import {File} from "remote";
+import {File} from "./remote";
 
 export class Certificate extends pulumi.ComponentResource {
     /** @internal */

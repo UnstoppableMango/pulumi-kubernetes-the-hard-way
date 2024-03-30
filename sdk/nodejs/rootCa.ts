@@ -10,7 +10,7 @@ import * as utilities from "./utilities";
 import * as pulumiTls from "@pulumi/tls";
 
 import {Certificate} from "./index";
-import {File} from "remote";
+import {File} from "./remote";
 
 export class RootCa extends pulumi.ComponentResource {
     /** @internal */

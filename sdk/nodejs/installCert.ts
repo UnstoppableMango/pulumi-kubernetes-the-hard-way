@@ -9,7 +9,7 @@ import * as utilities from "./utilities";
 
 import * as pulumiTls from "@pulumi/tls";
 
-import {File} from "remote";
+import {File} from "./remote";
 
 /**
  * Creates a RemoteFile resource representing the copy operation.
