@@ -24,7 +24,7 @@ export class Etcd extends ComponentResource {
   public readonly version!: Output<string>;
 
   constructor(name: string, args: EtcdArgs, opts?: ComponentResourceOptions) {
-    super('thecluster:index:etcd', name, args, opts);
+    super('kubernetes-the-hard-way:index:Etcd', name, args, opts);
 
     // Rehydrating
     if (opts?.urn) return;
