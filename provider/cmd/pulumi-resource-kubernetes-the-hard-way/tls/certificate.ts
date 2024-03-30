@@ -61,23 +61,3 @@ export class Certificate extends KeyPair<LocallySignedCert> {
     });
   }
 }
-
-export async function construct(
-  name: string,
-  inputs: Inputs,
-  options: ComponentResourceOptions,
-): Promise<ConstructResult> {
-  const cert = new Certificate(name, inputs as CertificateArgs, options);
-  return {
-    urn: cert.urn,
-    state: {
-      allowedUses: cert.allowedUses,
-      cert: cert.cert,
-      certPem: cert.certPem,
-      csr: cert.csr,
-      key: cert.key,
-      privateKeyPem: cert.privateKeyPem,
-      publicKeyPem: cert.publicKeyPem,
-    },
-  };
-}
