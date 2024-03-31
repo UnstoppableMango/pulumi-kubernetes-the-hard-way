@@ -41,6 +41,12 @@ namespace UnMango.KubernetesTheHardWay
         public Output<string> Filename { get; private set; } = null!;
 
         /// <summary>
+        /// Directory to install the `etcd` and `etcdctl` binaries.
+        /// </summary>
+        [Output("installDirectory")]
+        public Output<string> InstallDirectory { get; private set; } = null!;
+
+        /// <summary>
         /// The tar operation.
         /// </summary>
         [Output("tar")]
@@ -100,6 +106,18 @@ namespace UnMango.KubernetesTheHardWay
         public Input<Pulumi.Command.Remote.Inputs.ConnectionArgs> Connection { get; set; } = null!;
 
         /// <summary>
+        /// Temporary directory to download files to. Defaults to `/tmp/&lt;random string&gt;`.
+        /// </summary>
+        [Input("downloadDirectory")]
+        public Input<string>? DownloadDirectory { get; set; }
+
+        /// <summary>
+        /// Directory to install the `etcd` and `etcdctl` binaries.
+        /// </summary>
+        [Input("installDirectory")]
+        public Input<string>? InstallDirectory { get; set; }
+
+        /// <summary>
         /// The version of etcd to install.
         /// </summary>
         [Input("version")]
@@ -107,6 +125,7 @@ namespace UnMango.KubernetesTheHardWay
 
         public EtcdArgs()
         {
+            InstallDirectory = "/usr/local/bin";
         }
         public static new EtcdArgs Empty => new EtcdArgs();
     }

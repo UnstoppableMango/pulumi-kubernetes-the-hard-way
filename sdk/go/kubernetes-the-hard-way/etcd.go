@@ -27,6 +27,8 @@ type Etcd struct {
 	DownloadDirectory pulumi.StringOutput `pulumi:"downloadDirectory"`
 	// The name of the etcd binary file.
 	Filename pulumi.StringOutput `pulumi:"filename"`
+	// Directory to install the `etcd` and `etcdctl` binaries.
+	InstallDirectory pulumi.StringOutput `pulumi:"installDirectory"`
 	// The tar operation.
 	Tar tools.TarOutput `pulumi:"tar"`
 	// The url used to download etcd.
@@ -46,6 +48,9 @@ func NewEtcd(ctx *pulumi.Context,
 		return nil, errors.New("invalid value for required argument 'Connection'")
 	}
 	args.Connection = args.Connection.ToConnectionOutput().ApplyT(func(v pulumiCommand.Connection) pulumiCommand.Connection { return *v.Defaults() }).(pulumiCommand.ConnectionOutput)
+	if args.InstallDirectory == nil {
+		args.InstallDirectory = pulumi.StringPtr("/usr/local/bin")
+	}
 	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource Etcd
 	err := ctx.RegisterRemoteComponentResource("kubernetes-the-hard-way:index:Etcd", name, args, &resource, opts...)
@@ -60,6 +65,10 @@ type etcdArgs struct {
 	Architecture *Architecture `pulumi:"architecture"`
 	// The connection details.
 	Connection pulumiCommand.Connection `pulumi:"connection"`
+	// Temporary directory to download files to. Defaults to `/tmp/<random string>`.
+	DownloadDirectory *string `pulumi:"downloadDirectory"`
+	// Directory to install the `etcd` and `etcdctl` binaries.
+	InstallDirectory *string `pulumi:"installDirectory"`
 	// The version of etcd to install.
 	Version *string `pulumi:"version"`
 }
@@ -70,6 +79,10 @@ type EtcdArgs struct {
 	Architecture ArchitecturePtrInput
 	// The connection details.
 	Connection pulumiCommand.ConnectionInput
+	// Temporary directory to download files to. Defaults to `/tmp/<random string>`.
+	DownloadDirectory pulumi.StringPtrInput
+	// Directory to install the `etcd` and `etcdctl` binaries.
+	InstallDirectory pulumi.StringPtrInput
 	// The version of etcd to install.
 	Version pulumi.StringPtrInput
 }
@@ -179,6 +192,11 @@ func (o EtcdOutput) DownloadDirectory() pulumi.StringOutput {
 // The name of the etcd binary file.
 func (o EtcdOutput) Filename() pulumi.StringOutput {
 	return o.ApplyT(func(v *Etcd) pulumi.StringOutput { return v.Filename }).(pulumi.StringOutput)
+}
+
+// Directory to install the `etcd` and `etcdctl` binaries.
+func (o EtcdOutput) InstallDirectory() pulumi.StringOutput {
+	return o.ApplyT(func(v *Etcd) pulumi.StringOutput { return v.InstallDirectory }).(pulumi.StringOutput)
 }
 
 // The tar operation.

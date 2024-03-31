@@ -78,6 +78,20 @@ public class Etcd extends com.pulumi.resources.ComponentResource {
         return this.filename;
     }
     /**
+     * Directory to install the `etcd` and `etcdctl` binaries.
+     * 
+     */
+    @Export(name="installDirectory", refs={String.class}, tree="[0]")
+    private Output<String> installDirectory;
+
+    /**
+     * @return Directory to install the `etcd` and `etcdctl` binaries.
+     * 
+     */
+    public Output<String> installDirectory() {
+        return this.installDirectory;
+    }
+    /**
      * The tar operation.
      * 
      */

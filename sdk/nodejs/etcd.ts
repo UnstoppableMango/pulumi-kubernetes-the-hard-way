@@ -41,11 +41,15 @@ export class Etcd extends pulumi.ComponentResource {
     /**
      * The directory where the etcd binary was downloaded to.
      */
-    public /*out*/ readonly downloadDirectory!: pulumi.Output<string>;
+    public readonly downloadDirectory!: pulumi.Output<string>;
     /**
      * The name of the etcd binary file.
      */
     public /*out*/ readonly filename!: pulumi.Output<string>;
+    /**
+     * Directory to install the `etcd` and `etcdctl` binaries.
+     */
+    public readonly installDirectory!: pulumi.Output<string>;
     /**
      * The tar operation.
      */
@@ -75,9 +79,10 @@ export class Etcd extends pulumi.ComponentResource {
             }
             resourceInputs["architecture"] = args ? args.architecture : undefined;
             resourceInputs["connection"] = args ? (args.connection ? pulumi.output(args.connection).apply(pulumiCommand.types.input.remote.connectionArgsProvideDefaults) : undefined) : undefined;
+            resourceInputs["downloadDirectory"] = args ? args.downloadDirectory : undefined;
+            resourceInputs["installDirectory"] = (args ? args.installDirectory : undefined) ?? "/usr/local/bin";
             resourceInputs["version"] = args ? args.version : undefined;
             resourceInputs["download"] = undefined /*out*/;
-            resourceInputs["downloadDirectory"] = undefined /*out*/;
             resourceInputs["filename"] = undefined /*out*/;
             resourceInputs["tar"] = undefined /*out*/;
             resourceInputs["url"] = undefined /*out*/;
@@ -86,6 +91,7 @@ export class Etcd extends pulumi.ComponentResource {
             resourceInputs["download"] = undefined /*out*/;
             resourceInputs["downloadDirectory"] = undefined /*out*/;
             resourceInputs["filename"] = undefined /*out*/;
+            resourceInputs["installDirectory"] = undefined /*out*/;
             resourceInputs["tar"] = undefined /*out*/;
             resourceInputs["url"] = undefined /*out*/;
             resourceInputs["version"] = undefined /*out*/;
@@ -107,6 +113,14 @@ export interface EtcdArgs {
      * The connection details.
      */
     connection: pulumi.Input<pulumiCommand.types.input.remote.ConnectionArgs>;
+    /**
+     * Temporary directory to download files to. Defaults to `/tmp/<random string>`.
+     */
+    downloadDirectory?: pulumi.Input<string>;
+    /**
+     * Directory to install the `etcd` and `etcdctl` binaries.
+     */
+    installDirectory?: pulumi.Input<string>;
     /**
      * The version of etcd to install.
      */
