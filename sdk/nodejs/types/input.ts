@@ -12,28 +12,28 @@ import * as utilities from "../utilities";
 export namespace config {
     export interface KubeconfigAdminOptionsArgs {
         publicIp?: pulumi.Input<string>;
-        type?: pulumi.Input<"admin">;
+        type: "admin";
     }
 
     export interface KubeconfigKubeControllerManagerOptionsArgs {
         publicIp?: pulumi.Input<string>;
-        type?: pulumi.Input<"kube-controller-manager">;
+        type: "kube-controller-manager";
     }
 
     export interface KubeconfigKubeProxyOptionsArgs {
         publicIp?: pulumi.Input<string>;
-        type?: pulumi.Input<"kube-proxy">;
+        type: "kube-proxy";
     }
 
     export interface KubeconfigKubeSchedulerOptionsArgs {
         publicIp?: pulumi.Input<string>;
-        type?: pulumi.Input<"kube-scheduler">;
+        type: "kube-scheduler";
     }
 
     export interface KubeconfigWorkerOptionsArgs {
         name: pulumi.Input<string>;
         publicIp: pulumi.Input<string>;
-        type?: pulumi.Input<"worker">;
+        type?: "worker";
     }
 
 }

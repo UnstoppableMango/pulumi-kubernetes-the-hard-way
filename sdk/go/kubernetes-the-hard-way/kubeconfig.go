@@ -32,9 +32,6 @@ func NewKubeconfig(ctx *pulumi.Context,
 		return nil, errors.New("missing one or more required arguments")
 	}
 
-	if args.Options == nil {
-		return nil, errors.New("invalid value for required argument 'Options'")
-	}
 	if args.Pki == nil {
 		return nil, errors.New("invalid value for required argument 'Pki'")
 	}
@@ -55,7 +52,7 @@ type kubeconfigArgs struct {
 
 // The set of arguments for constructing a Kubeconfig resource.
 type KubeconfigArgs struct {
-	Options pulumi.Input
+	Options interface{}
 	// The PKI containing certificate data.
 	Pki tls.ClusterPkiInput
 }

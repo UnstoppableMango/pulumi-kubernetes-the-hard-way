@@ -21,9 +21,9 @@ public final class KubeconfigArgs extends com.pulumi.resources.ResourceArgs {
     public static final KubeconfigArgs Empty = new KubeconfigArgs();
 
     @Import(name="options", required=true)
-    private Output<Object> options;
+    private Object options;
 
-    public Output<Object> options() {
+    public Object options() {
         return this.options;
     }
 
@@ -67,13 +67,9 @@ public final class KubeconfigArgs extends com.pulumi.resources.ResourceArgs {
             $ = new KubeconfigArgs(Objects.requireNonNull(defaults));
         }
 
-        public Builder options(Output<Object> options) {
+        public Builder options(Object options) {
             $.options = options;
             return this;
-        }
-
-        public Builder options(Object options) {
-            return options(Output.of(options));
         }
 
         /**

@@ -17,7 +17,7 @@ __all__ = ['KubeconfigArgs', 'Kubeconfig']
 @pulumi.input_type
 class KubeconfigArgs:
     def __init__(__self__, *,
-                 options: pulumi.Input[Union['_config.KubeconfigAdminOptionsArgs', '_config.KubeconfigKubeControllerManagerOptionsArgs', '_config.KubeconfigKubeProxyOptionsArgs', '_config.KubeconfigKubeSchedulerOptionsArgs', '_config.KubeconfigWorkerOptionsArgs']],
+                 options: Union[pulumi.Input['_config.KubeconfigAdminOptionsArgs'], pulumi.Input['_config.KubeconfigKubeControllerManagerOptionsArgs'], pulumi.Input['_config.KubeconfigKubeProxyOptionsArgs'], pulumi.Input['_config.KubeconfigKubeSchedulerOptionsArgs'], pulumi.Input['_config.KubeconfigWorkerOptionsArgs']],
                  pki: pulumi.Input['_tls.ClusterPki']):
         """
         The set of arguments for constructing a Kubeconfig resource.
@@ -28,11 +28,11 @@ class KubeconfigArgs:
 
     @property
     @pulumi.getter
-    def options(self) -> pulumi.Input[Union['_config.KubeconfigAdminOptionsArgs', '_config.KubeconfigKubeControllerManagerOptionsArgs', '_config.KubeconfigKubeProxyOptionsArgs', '_config.KubeconfigKubeSchedulerOptionsArgs', '_config.KubeconfigWorkerOptionsArgs']]:
+    def options(self) -> Union[pulumi.Input['_config.KubeconfigAdminOptionsArgs'], pulumi.Input['_config.KubeconfigKubeControllerManagerOptionsArgs'], pulumi.Input['_config.KubeconfigKubeProxyOptionsArgs'], pulumi.Input['_config.KubeconfigKubeSchedulerOptionsArgs'], pulumi.Input['_config.KubeconfigWorkerOptionsArgs']]:
         return pulumi.get(self, "options")
 
     @options.setter
-    def options(self, value: pulumi.Input[Union['_config.KubeconfigAdminOptionsArgs', '_config.KubeconfigKubeControllerManagerOptionsArgs', '_config.KubeconfigKubeProxyOptionsArgs', '_config.KubeconfigKubeSchedulerOptionsArgs', '_config.KubeconfigWorkerOptionsArgs']]):
+    def options(self, value: Union[pulumi.Input['_config.KubeconfigAdminOptionsArgs'], pulumi.Input['_config.KubeconfigKubeControllerManagerOptionsArgs'], pulumi.Input['_config.KubeconfigKubeProxyOptionsArgs'], pulumi.Input['_config.KubeconfigKubeSchedulerOptionsArgs'], pulumi.Input['_config.KubeconfigWorkerOptionsArgs']]):
         pulumi.set(self, "options", value)
 
     @property
@@ -53,7 +53,7 @@ class Kubeconfig(pulumi.ComponentResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 options: Optional[pulumi.Input[Union[pulumi.InputType['_config.KubeconfigAdminOptionsArgs'], pulumi.InputType['_config.KubeconfigKubeControllerManagerOptionsArgs'], pulumi.InputType['_config.KubeconfigKubeProxyOptionsArgs'], pulumi.InputType['_config.KubeconfigKubeSchedulerOptionsArgs'], pulumi.InputType['_config.KubeconfigWorkerOptionsArgs']]]] = None,
+                 options: Optional[Union[pulumi.Input[pulumi.InputType['_config.KubeconfigAdminOptionsArgs']], pulumi.Input[pulumi.InputType['_config.KubeconfigKubeControllerManagerOptionsArgs']], pulumi.Input[pulumi.InputType['_config.KubeconfigKubeProxyOptionsArgs']], pulumi.Input[pulumi.InputType['_config.KubeconfigKubeSchedulerOptionsArgs']], pulumi.Input[pulumi.InputType['_config.KubeconfigWorkerOptionsArgs']]]] = None,
                  pki: Optional[pulumi.Input['_tls.ClusterPki']] = None,
                  __props__=None):
         """
@@ -87,7 +87,7 @@ class Kubeconfig(pulumi.ComponentResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 options: Optional[pulumi.Input[Union[pulumi.InputType['_config.KubeconfigAdminOptionsArgs'], pulumi.InputType['_config.KubeconfigKubeControllerManagerOptionsArgs'], pulumi.InputType['_config.KubeconfigKubeProxyOptionsArgs'], pulumi.InputType['_config.KubeconfigKubeSchedulerOptionsArgs'], pulumi.InputType['_config.KubeconfigWorkerOptionsArgs']]]] = None,
+                 options: Optional[Union[pulumi.Input[pulumi.InputType['_config.KubeconfigAdminOptionsArgs']], pulumi.Input[pulumi.InputType['_config.KubeconfigKubeControllerManagerOptionsArgs']], pulumi.Input[pulumi.InputType['_config.KubeconfigKubeProxyOptionsArgs']], pulumi.Input[pulumi.InputType['_config.KubeconfigKubeSchedulerOptionsArgs']], pulumi.Input[pulumi.InputType['_config.KubeconfigWorkerOptionsArgs']]]] = None,
                  pki: Optional[pulumi.Input['_tls.ClusterPki']] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)

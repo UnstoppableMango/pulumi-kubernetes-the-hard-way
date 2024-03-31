@@ -73,7 +73,7 @@ export class Kubeconfig extends pulumi.ComponentResource {
  * The set of arguments for constructing a Kubeconfig resource.
  */
 export interface KubeconfigArgs {
-    options: pulumi.Input<inputs.config.KubeconfigAdminOptionsArgs | inputs.config.KubeconfigKubeControllerManagerOptionsArgs | inputs.config.KubeconfigKubeProxyOptionsArgs | inputs.config.KubeconfigKubeSchedulerOptionsArgs | inputs.config.KubeconfigWorkerOptionsArgs>;
+    options: pulumi.Input<inputs.config.KubeconfigAdminOptionsArgs> | pulumi.Input<inputs.config.KubeconfigKubeControllerManagerOptionsArgs> | pulumi.Input<inputs.config.KubeconfigKubeProxyOptionsArgs> | pulumi.Input<inputs.config.KubeconfigKubeSchedulerOptionsArgs> | pulumi.Input<inputs.config.KubeconfigWorkerOptionsArgs>;
     /**
      * The PKI containing certificate data.
      */

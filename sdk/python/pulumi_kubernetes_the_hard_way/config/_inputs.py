@@ -21,12 +21,20 @@ __all__ = [
 @pulumi.input_type
 class KubeconfigAdminOptionsArgs:
     def __init__(__self__, *,
-                 public_ip: Optional[pulumi.Input[str]] = None,
-                 type: Optional[pulumi.Input[str]] = None):
+                 type: str,
+                 public_ip: Optional[pulumi.Input[str]] = None):
+        pulumi.set(__self__, "type", 'admin')
         if public_ip is not None:
             pulumi.set(__self__, "public_ip", public_ip)
-        if type is not None:
-            pulumi.set(__self__, "type", 'admin')
+
+    @property
+    @pulumi.getter
+    def type(self) -> str:
+        return pulumi.get(self, "type")
+
+    @type.setter
+    def type(self, value: str):
+        pulumi.set(self, "type", value)
 
     @property
     @pulumi.getter(name="publicIp")
@@ -36,26 +44,25 @@ class KubeconfigAdminOptionsArgs:
     @public_ip.setter
     def public_ip(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "public_ip", value)
-
-    @property
-    @pulumi.getter
-    def type(self) -> Optional[pulumi.Input[str]]:
-        return pulumi.get(self, "type")
-
-    @type.setter
-    def type(self, value: Optional[pulumi.Input[str]]):
-        pulumi.set(self, "type", value)
 
 
 @pulumi.input_type
 class KubeconfigKubeControllerManagerOptionsArgs:
     def __init__(__self__, *,
-                 public_ip: Optional[pulumi.Input[str]] = None,
-                 type: Optional[pulumi.Input[str]] = None):
+                 type: str,
+                 public_ip: Optional[pulumi.Input[str]] = None):
+        pulumi.set(__self__, "type", 'kube-controller-manager')
         if public_ip is not None:
             pulumi.set(__self__, "public_ip", public_ip)
-        if type is not None:
-            pulumi.set(__self__, "type", 'kube-controller-manager')
+
+    @property
+    @pulumi.getter
+    def type(self) -> str:
+        return pulumi.get(self, "type")
+
+    @type.setter
+    def type(self, value: str):
+        pulumi.set(self, "type", value)
 
     @property
     @pulumi.getter(name="publicIp")
@@ -65,26 +72,25 @@ class KubeconfigKubeControllerManagerOptionsArgs:
     @public_ip.setter
     def public_ip(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "public_ip", value)
-
-    @property
-    @pulumi.getter
-    def type(self) -> Optional[pulumi.Input[str]]:
-        return pulumi.get(self, "type")
-
-    @type.setter
-    def type(self, value: Optional[pulumi.Input[str]]):
-        pulumi.set(self, "type", value)
 
 
 @pulumi.input_type
 class KubeconfigKubeProxyOptionsArgs:
     def __init__(__self__, *,
-                 public_ip: Optional[pulumi.Input[str]] = None,
-                 type: Optional[pulumi.Input[str]] = None):
+                 type: str,
+                 public_ip: Optional[pulumi.Input[str]] = None):
+        pulumi.set(__self__, "type", 'kube-proxy')
         if public_ip is not None:
             pulumi.set(__self__, "public_ip", public_ip)
-        if type is not None:
-            pulumi.set(__self__, "type", 'kube-proxy')
+
+    @property
+    @pulumi.getter
+    def type(self) -> str:
+        return pulumi.get(self, "type")
+
+    @type.setter
+    def type(self, value: str):
+        pulumi.set(self, "type", value)
 
     @property
     @pulumi.getter(name="publicIp")
@@ -94,26 +100,25 @@ class KubeconfigKubeProxyOptionsArgs:
     @public_ip.setter
     def public_ip(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "public_ip", value)
-
-    @property
-    @pulumi.getter
-    def type(self) -> Optional[pulumi.Input[str]]:
-        return pulumi.get(self, "type")
-
-    @type.setter
-    def type(self, value: Optional[pulumi.Input[str]]):
-        pulumi.set(self, "type", value)
 
 
 @pulumi.input_type
 class KubeconfigKubeSchedulerOptionsArgs:
     def __init__(__self__, *,
-                 public_ip: Optional[pulumi.Input[str]] = None,
-                 type: Optional[pulumi.Input[str]] = None):
+                 type: str,
+                 public_ip: Optional[pulumi.Input[str]] = None):
+        pulumi.set(__self__, "type", 'kube-scheduler')
         if public_ip is not None:
             pulumi.set(__self__, "public_ip", public_ip)
-        if type is not None:
-            pulumi.set(__self__, "type", 'kube-scheduler')
+
+    @property
+    @pulumi.getter
+    def type(self) -> str:
+        return pulumi.get(self, "type")
+
+    @type.setter
+    def type(self, value: str):
+        pulumi.set(self, "type", value)
 
     @property
     @pulumi.getter(name="publicIp")
@@ -123,15 +128,6 @@ class KubeconfigKubeSchedulerOptionsArgs:
     @public_ip.setter
     def public_ip(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "public_ip", value)
-
-    @property
-    @pulumi.getter
-    def type(self) -> Optional[pulumi.Input[str]]:
-        return pulumi.get(self, "type")
-
-    @type.setter
-    def type(self, value: Optional[pulumi.Input[str]]):
-        pulumi.set(self, "type", value)
 
 
 @pulumi.input_type
@@ -139,7 +135,7 @@ class KubeconfigWorkerOptionsArgs:
     def __init__(__self__, *,
                  name: pulumi.Input[str],
                  public_ip: pulumi.Input[str],
-                 type: Optional[pulumi.Input[str]] = None):
+                 type: Optional[str] = None):
         pulumi.set(__self__, "name", name)
         pulumi.set(__self__, "public_ip", public_ip)
         if type is not None:
@@ -165,11 +161,11 @@ class KubeconfigWorkerOptionsArgs:
 
     @property
     @pulumi.getter
-    def type(self) -> Optional[pulumi.Input[str]]:
+    def type(self) -> Optional[str]:
         return pulumi.get(self, "type")
 
     @type.setter
-    def type(self, value: Optional[pulumi.Input[str]]):
+    def type(self, value: Optional[str]):
         pulumi.set(self, "type", value)
 
 

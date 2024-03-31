@@ -16,8 +16,8 @@ namespace UnMango.KubernetesTheHardWay.Config.Inputs
         [Input("publicIp")]
         public Input<string>? PublicIp { get; set; }
 
-        [Input("type")]
-        public Input<string>? Type { get; set; }
+        [Input("type", required: true)]
+        public string Type { get; set; } = null!;
 
         public KubeconfigAdminOptionsArgs()
         {

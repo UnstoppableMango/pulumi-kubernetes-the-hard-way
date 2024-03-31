@@ -32,9 +32,9 @@ public final class KubeconfigWorkerOptionsArgs extends com.pulumi.resources.Reso
     }
 
     @Import(name="type")
-    private @Nullable Output<String> type;
+    private @Nullable String type;
 
-    public Optional<Output<String>> type() {
+    public Optional<String> type() {
         return Optional.ofNullable(this.type);
     }
 
@@ -82,13 +82,9 @@ public final class KubeconfigWorkerOptionsArgs extends com.pulumi.resources.Reso
             return publicIp(Output.of(publicIp));
         }
 
-        public Builder type(@Nullable Output<String> type) {
+        public Builder type(@Nullable String type) {
             $.type = type;
             return this;
-        }
-
-        public Builder type(String type) {
-            return type(Output.of(type));
         }
 
         public KubeconfigWorkerOptionsArgs build() {
@@ -98,7 +94,7 @@ public final class KubeconfigWorkerOptionsArgs extends com.pulumi.resources.Reso
             if ($.publicIp == null) {
                 throw new MissingRequiredPropertyException("KubeconfigWorkerOptionsArgs", "publicIp");
             }
-            $.type = Codegen.stringProp("type").output().arg($.type).getNullable();
+            $.type = Codegen.stringProp("type").arg($.type).getNullable();
             return $;
         }
     }

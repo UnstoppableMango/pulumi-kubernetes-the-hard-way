@@ -195,7 +195,7 @@ func (o KubeconfigOutput) Users() UserArrayOutput {
 
 type KubeconfigAdminOptions struct {
 	PublicIp *string `pulumi:"publicIp"`
-	Type     *string `pulumi:"type"`
+	Type     string  `pulumi:"type"`
 }
 
 // KubeconfigAdminOptionsInput is an input type that accepts KubeconfigAdminOptionsArgs and KubeconfigAdminOptionsOutput values.
@@ -211,7 +211,7 @@ type KubeconfigAdminOptionsInput interface {
 
 type KubeconfigAdminOptionsArgs struct {
 	PublicIp pulumi.StringPtrInput `pulumi:"publicIp"`
-	Type     pulumi.StringPtrInput `pulumi:"type"`
+	Type     string                `pulumi:"type"`
 }
 
 func (KubeconfigAdminOptionsArgs) ElementType() reflect.Type {
@@ -244,13 +244,13 @@ func (o KubeconfigAdminOptionsOutput) PublicIp() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v KubeconfigAdminOptions) *string { return v.PublicIp }).(pulumi.StringPtrOutput)
 }
 
-func (o KubeconfigAdminOptionsOutput) Type() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v KubeconfigAdminOptions) *string { return v.Type }).(pulumi.StringPtrOutput)
+func (o KubeconfigAdminOptionsOutput) Type() pulumi.StringOutput {
+	return o.ApplyT(func(v KubeconfigAdminOptions) string { return v.Type }).(pulumi.StringOutput)
 }
 
 type KubeconfigKubeControllerManagerOptions struct {
 	PublicIp *string `pulumi:"publicIp"`
-	Type     *string `pulumi:"type"`
+	Type     string  `pulumi:"type"`
 }
 
 // KubeconfigKubeControllerManagerOptionsInput is an input type that accepts KubeconfigKubeControllerManagerOptionsArgs and KubeconfigKubeControllerManagerOptionsOutput values.
@@ -266,7 +266,7 @@ type KubeconfigKubeControllerManagerOptionsInput interface {
 
 type KubeconfigKubeControllerManagerOptionsArgs struct {
 	PublicIp pulumi.StringPtrInput `pulumi:"publicIp"`
-	Type     pulumi.StringPtrInput `pulumi:"type"`
+	Type     string                `pulumi:"type"`
 }
 
 func (KubeconfigKubeControllerManagerOptionsArgs) ElementType() reflect.Type {
@@ -299,13 +299,13 @@ func (o KubeconfigKubeControllerManagerOptionsOutput) PublicIp() pulumi.StringPt
 	return o.ApplyT(func(v KubeconfigKubeControllerManagerOptions) *string { return v.PublicIp }).(pulumi.StringPtrOutput)
 }
 
-func (o KubeconfigKubeControllerManagerOptionsOutput) Type() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v KubeconfigKubeControllerManagerOptions) *string { return v.Type }).(pulumi.StringPtrOutput)
+func (o KubeconfigKubeControllerManagerOptionsOutput) Type() pulumi.StringOutput {
+	return o.ApplyT(func(v KubeconfigKubeControllerManagerOptions) string { return v.Type }).(pulumi.StringOutput)
 }
 
 type KubeconfigKubeProxyOptions struct {
 	PublicIp *string `pulumi:"publicIp"`
-	Type     *string `pulumi:"type"`
+	Type     string  `pulumi:"type"`
 }
 
 // KubeconfigKubeProxyOptionsInput is an input type that accepts KubeconfigKubeProxyOptionsArgs and KubeconfigKubeProxyOptionsOutput values.
@@ -321,7 +321,7 @@ type KubeconfigKubeProxyOptionsInput interface {
 
 type KubeconfigKubeProxyOptionsArgs struct {
 	PublicIp pulumi.StringPtrInput `pulumi:"publicIp"`
-	Type     pulumi.StringPtrInput `pulumi:"type"`
+	Type     string                `pulumi:"type"`
 }
 
 func (KubeconfigKubeProxyOptionsArgs) ElementType() reflect.Type {
@@ -354,13 +354,13 @@ func (o KubeconfigKubeProxyOptionsOutput) PublicIp() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v KubeconfigKubeProxyOptions) *string { return v.PublicIp }).(pulumi.StringPtrOutput)
 }
 
-func (o KubeconfigKubeProxyOptionsOutput) Type() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v KubeconfigKubeProxyOptions) *string { return v.Type }).(pulumi.StringPtrOutput)
+func (o KubeconfigKubeProxyOptionsOutput) Type() pulumi.StringOutput {
+	return o.ApplyT(func(v KubeconfigKubeProxyOptions) string { return v.Type }).(pulumi.StringOutput)
 }
 
 type KubeconfigKubeSchedulerOptions struct {
 	PublicIp *string `pulumi:"publicIp"`
-	Type     *string `pulumi:"type"`
+	Type     string  `pulumi:"type"`
 }
 
 // KubeconfigKubeSchedulerOptionsInput is an input type that accepts KubeconfigKubeSchedulerOptionsArgs and KubeconfigKubeSchedulerOptionsOutput values.
@@ -376,7 +376,7 @@ type KubeconfigKubeSchedulerOptionsInput interface {
 
 type KubeconfigKubeSchedulerOptionsArgs struct {
 	PublicIp pulumi.StringPtrInput `pulumi:"publicIp"`
-	Type     pulumi.StringPtrInput `pulumi:"type"`
+	Type     string                `pulumi:"type"`
 }
 
 func (KubeconfigKubeSchedulerOptionsArgs) ElementType() reflect.Type {
@@ -409,8 +409,8 @@ func (o KubeconfigKubeSchedulerOptionsOutput) PublicIp() pulumi.StringPtrOutput 
 	return o.ApplyT(func(v KubeconfigKubeSchedulerOptions) *string { return v.PublicIp }).(pulumi.StringPtrOutput)
 }
 
-func (o KubeconfigKubeSchedulerOptionsOutput) Type() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v KubeconfigKubeSchedulerOptions) *string { return v.Type }).(pulumi.StringPtrOutput)
+func (o KubeconfigKubeSchedulerOptionsOutput) Type() pulumi.StringOutput {
+	return o.ApplyT(func(v KubeconfigKubeSchedulerOptions) string { return v.Type }).(pulumi.StringOutput)
 }
 
 type KubeconfigWorkerOptions struct {
@@ -431,9 +431,9 @@ type KubeconfigWorkerOptionsInput interface {
 }
 
 type KubeconfigWorkerOptionsArgs struct {
-	Name     pulumi.StringInput    `pulumi:"name"`
-	PublicIp pulumi.StringInput    `pulumi:"publicIp"`
-	Type     pulumi.StringPtrInput `pulumi:"type"`
+	Name     pulumi.StringInput `pulumi:"name"`
+	PublicIp pulumi.StringInput `pulumi:"publicIp"`
+	Type     *string            `pulumi:"type"`
 }
 
 func (KubeconfigWorkerOptionsArgs) ElementType() reflect.Type {

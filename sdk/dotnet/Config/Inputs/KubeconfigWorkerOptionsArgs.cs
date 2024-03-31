@@ -20,7 +20,7 @@ namespace UnMango.KubernetesTheHardWay.Config.Inputs
         public Input<string> PublicIp { get; set; } = null!;
 
         [Input("type")]
-        public Input<string>? Type { get; set; }
+        public string? Type { get; set; }
 
         public KubeconfigWorkerOptionsArgs()
         {
