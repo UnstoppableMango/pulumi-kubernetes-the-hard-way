@@ -28,6 +28,8 @@ language:
     generateResourceContainerTypes: true
     liftSingleValueMethodReturns: true
     importBasePath: github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/sdk/go/kubernetes-the-hard-way
+    packageImportAliases:
+      github.com/pulumi/pulumi-command/sdk/go/command/remote: pulumiCommand
   nodejs:
     packageName: "@unmango/pulumi-kubernetes-the-hard-way"
     liftSingleValueMethodReturns: true
