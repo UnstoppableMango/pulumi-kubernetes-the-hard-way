@@ -481,6 +481,62 @@ resources:
       - removeOnDelete
       - stderr
       - stdout
+  kubernetes-the-hard-way:tools:Mktemp:
+    isComponent: true
+    description: Abstracion over the `mktemp` utility on a remote system.
+    inputProperties:
+      connection:
+        $ref: "/command/v0.9.0/schema.json#/types/command:remote:Connection"
+        description: Connection details for the remote system.
+      directory:
+        type: boolean
+        description: Corresponds to the --directory option.
+      dryRun:
+        type: boolean
+        description: Corresponds to the --dry-run option.
+      quiet:
+        type: boolean
+        description: Corresponds to the --quiet option.
+      suffix:
+        type: string
+        description: Corresponds to the --suffix option.
+      template:
+        type: string
+        description: Corresponds to the [TEMPLATE] arg.
+      tmpdir:
+        type: string
+        description: Corresponds to the --tmpdir option.
+    requiredInputs:
+      - connection
+      - template
+    properties:
+      command:
+        $ref: "/command/v0.9.0/schema.json#/resources/command:remote:Command"
+        description: Represents the remote `tar` operation.
+      directory:
+        type: boolean
+        description: Corresponds to the --directory option.
+      dryRun:
+        type: boolean
+        description: Corresponds to the --dry-run option.
+      quiet:
+        type: boolean
+        description: Corresponds to the --quiet option.
+      suffix:
+        type: string
+        description: Corresponds to the --suffix option.
+      template:
+        type: string
+        description: Corresponds to the [TEMPLATE] arg.
+      tmpdir:
+        type: string
+        description: Corresponds to the --tmpdir option.
+    required:
+      - command
+      - directory
+      - dryRun
+      - quiet
+      - template
   kubernetes-the-hard-way:tools:Tar:
     isComponent: true
     description: Abstracion over the `tar` utility on a remote system.
