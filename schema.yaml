@@ -329,10 +329,8 @@ resources:
     isComponent: true
     description: Kubeconfig
     inputProperties:
-      pki:
-        $ref: "#/resources/kubernetes-the-hard-way:tls:ClusterPki"
-        description: The PKI containing certificate data.
       options:
+        plain: true
         oneOf:
           - $ref: "#/types/kubernetes-the-hard-way:config:KubeconfigAdminOptions"
           - $ref: "#/types/kubernetes-the-hard-way:config:KubeconfigKubeControllerManagerOptions"
@@ -347,9 +345,12 @@ resources:
             kube-proxy: "#/types/kubernetes-the-hard-way:config:KubeconfigKubeProxyOptions"
             kube-scheduler: "#/types/kubernetes-the-hard-way:config:KubeconfigKubeSchedulerOptions"
             worker: "#/types/kubernetes-the-hard-way:config:KubeconfigWorkerOptions"
+      pki:
+        $ref: "#/resources/kubernetes-the-hard-way:tls:ClusterPki"
+        description: The PKI containing certificate data.
     requiredInputs:
-      - pki
       - options
+      - pki
     properties:
       type:
         $ref: "#/types/kubernetes-the-hard-way:config:KubeconfigType"
@@ -1146,38 +1147,51 @@ types:
       type:
         type: string
         const: admin
+        plain: true
       publicIp:
         type: string
+    required:
+      - type
   kubernetes-the-hard-way:config:KubeconfigKubeControllerManagerOptions:
     type: object
     properties:
       type:
         type: string
         const: kube-controller-manager
+        plain: true
       publicIp:
         type: string
+    required:
+      - type
   kubernetes-the-hard-way:config:KubeconfigKubeProxyOptions:
     type: object
     properties:
       type:
         type: string
         const: kube-proxy
+        plain: true
       publicIp:
         type: string
+    required:
+      - type
   kubernetes-the-hard-way:config:KubeconfigKubeSchedulerOptions:
     type: object
     properties:
       type:
         type: string
         const: kube-scheduler
+        plain: true
       publicIp:
         type: string
+    required:
+      - type
   kubernetes-the-hard-way:config:KubeconfigWorkerOptions:
     type: object
     properties:
       type:
         type: string
         const: worker
+        plain: true
       name:
         type: string
       publicIp:
