@@ -1,3 +1,6 @@
+import { Input } from '@pulumi/pulumi';
+import { KubeconfigType } from '../types';
+
 export interface ClusterCluster {
   certificateAuthorityData: string;
   server: string;
@@ -32,4 +35,30 @@ export interface Kubeconfig {
   clusters: Cluster[];
   contexts: Context[];
   users: User[];
+}
+
+export interface KubeconfigAdminOptions {
+  type: Input<'admin'>;
+  publicIp?: Input<string>;
+}
+
+export interface KubeconfigKubeControllerManagerOptions {
+  type: Input<'kube-controller-manager'>;
+  publicIp?: Input<string>;
+}
+
+export interface KubeconfigKubeProxyOptions {
+  type: Input<'kube-proxy'>;
+  publicIp?: Input<string>;
+}
+
+export interface KubeconfigKubeSchedulerOptions {
+  type: Input<'kube-scheduler'>;
+  publicIp?: Input<string>;
+}
+
+export interface KubeconfigWorkerOptions {
+  type: Input<'worker'>;
+  name: Input<string>;
+  publicIp: Input<string>;
 }

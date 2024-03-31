@@ -1,55 +1,123 @@
 import * as path from 'node:path';
 import * as YAML from 'yaml';
-import { ComponentResourceOptions, Input, Output, interpolate, output } from '@pulumi/pulumi';
+import { ComponentResource, ComponentResourceOptions, Input, Output, all, output } from '@pulumi/pulumi';
 import { remote } from '@pulumi/command/types/input';
-import { ClusterPki, NodeMapInput } from './tls/clusterPki';
-import { Certificate } from './tls/certificate';
-import { File } from './remote/file';
+import * as config from './config';
+import { ClusterPki } from './tls';
+import { File } from './remote';
+import { KubeconfigType } from './types';
 
-export interface Kubeconfig {
-  clusters: {
-    cluster: {
-      certificateAuthorityData: Output<string>;
-      server: Output<string>;
-    },
-    name: Output<string>;
-  }[];
-  contexts: {
-    context: {
-      cluster: Output<string>;
-      user: Output<string>;
-    };
-    name: Output<string>;
-  }[];
-  users: {
-    name: Output<string>;
-    user: {
-      clientCertificateData: Output<string>;
-      clientKeyData: Output<string>;
-    };
-  }[];
+type Options =
+  | config.KubeconfigAdminOptions
+  | config.KubeconfigKubeControllerManagerOptions
+  | config.KubeconfigKubeProxyOptions
+  | config.KubeconfigKubeSchedulerOptions
+  | config.KubeconfigWorkerOptions;
+
+export interface KubeconfigArgs {
+  pki: Input<ClusterPki>;
+  options: Input<Options>;
 }
 
 const localhost = '127.0.0.1';
 
-export function getWorkerKubeconfig<T extends NodeMapInput = NodeMapInput>(node: keyof T, pki: ClusterPki<T>): Kubeconfig {
-  return getKubeconfig(pki, `system:node:${String(node)}`, pki.publicIp, pki.kubelet[node]);
-}
+export class Kubeconfig extends ComponentResource {
+  public static readonly defaultContextName = 'default';
 
-export function getKubeProxyKubeconfig(pki: ClusterPki): Kubeconfig {
-  return getKubeconfig(pki, 'system:kube-proxy', pki.publicIp, pki.kubeProxy);
-}
+  public readonly type!: Output<KubeconfigType>;
+  public readonly value!: Output<config.Kubeconfig>;
+  public readonly yaml!: Output<string>;
 
-export function getKubeControllerManagerKubeconfig(pki: ClusterPki): Kubeconfig {
-  return getKubeconfig(pki, 'system:kube-controller-manager', localhost, pki.controllerManager);
-}
+  constructor(name: string, args: KubeconfigArgs, opts?: ComponentResourceOptions) {
+    super('kubernetes-the-hard-way:index:Kubeconfig', name, args, opts);
 
-export function getKubeSchedulerKubeconfig(pki: ClusterPki): Kubeconfig {
-  return getKubeconfig(pki, 'system:kube-scheduler', localhost, pki.kubeScheduler);
-}
+    // Rehydrating
+    if (opts?.urn) return;
 
-export function getAdminKubeconfig(pki: ClusterPki): Kubeconfig {
-  return getKubeconfig(pki, 'admin', localhost, pki.admin);
+    const pki = output(args.pki);
+    const options = output(args.options);
+
+    const cert = all([pki, options]).apply(([pki, options]) => {
+      switch (options.type) {
+        case 'admin':
+          return pki.admin;
+        case 'kube-controller-manager':
+          return pki.controllerManager;
+        case 'kube-proxy':
+          return pki.kubeProxy;
+        case 'kube-scheduler':
+          return pki.kubeScheduler;
+        case 'worker':
+          return pki.kubelet[options.name];
+      }
+    });
+
+    const server = options.apply(o => {
+      switch (o.type) {
+        case 'worker':
+          return `https://${o.publicIp}:6443`;
+        default:
+          return `https://${o.publicIp ?? localhost}:6443`;
+      }
+    });
+
+    const username = options.apply(o => {
+      switch (o.type) {
+        case 'admin':
+          return 'admin';
+        case 'kube-controller-manager':
+          return 'system:kube-controller-manager';
+        case 'kube-proxy':
+          return 'system:kube-proxy';
+        case 'kube-scheduler':
+          return 'system:kube-scheduler';
+        case 'worker':
+          return `system:node:${o.name}`
+        default:
+          throw new Error('unsupported kubeconfig type');
+      }
+    });
+
+    const clusterName = pki.clusterName;
+    const caData = pki.rootCa.certPem;
+    const clientCertPem = cert.certPem;
+    const clientKeyPem = cert.privateKeyPem;
+
+    const kubeconfig = all([clusterName, caData, server, username, clientCertPem, clientKeyPem])
+      .apply<config.Kubeconfig>(([clusterName, caData, server, username, clientCertPem, clientKeyPem]) => ({
+        clusters: [{
+          name: clusterName,
+          cluster: {
+            certificateAuthorityData: caData,
+            server,
+          },
+        }],
+        contexts: [{
+          name: Kubeconfig.defaultContextName,
+          context: {
+            cluster: clusterName,
+            user: username,
+          },
+        }],
+        users: [{
+          name: username,
+          user: {
+            clientCertificateData: clientCertPem,
+            clientKeyData: clientKeyPem,
+          },
+        }],
+      }));
+
+    const type = options.type;
+    const value = kubeconfig;
+    const yaml = kubeconfig.apply(YAML.stringify);
+
+    this.type = type;
+    this.value = value;
+    this.yaml = yaml;
+
+    this.registerOutputs({ type, value, yaml });
+  }
 }
 
 export function installOn(
@@ -64,38 +132,4 @@ export function installOn(
     content: output(config).apply(x => YAML.stringify(x)),
     path: path.join(target, `${name}.kubeconfig`),
   }, opts);
-}
-
-// TODO: Install worker certs
-// TODO: Install controlplane certs
-
-function getKubeconfig(
-  pki: ClusterPki,
-  username: Input<string>,
-  ip: Input<string>,
-  cert: Certificate
-): Kubeconfig {
-  return {
-    clusters: [{
-      name: pki.clusterName,
-      cluster: {
-        certificateAuthorityData: pki.rootCa.certPem,
-        server: interpolate`https://${ip}:6443`,
-      },
-    }],
-    contexts: [{
-      name: output('default'),
-      context: {
-        cluster: pki.clusterName,
-        user: output(username),
-      },
-    }],
-    users: [{
-      name: output(username),
-      user: {
-        clientCertificateData: cert.certPem,
-        clientKeyData: cert.privateKeyPem,
-      },
-    }],
-  };
 }
