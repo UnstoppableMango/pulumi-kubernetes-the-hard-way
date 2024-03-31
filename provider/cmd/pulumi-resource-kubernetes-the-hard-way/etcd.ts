@@ -90,6 +90,8 @@ export class Etcd extends ComponentResource {
 
     const random = new RandomString(this.name, {
       length: 8,
+      special: false,
+      upper: false,
     }, { parent: this });
 
     return interpolate`/tmp/${random.result}`;
