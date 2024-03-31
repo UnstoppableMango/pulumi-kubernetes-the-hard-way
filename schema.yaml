@@ -226,6 +226,8 @@ resources:
       - rsaBits
       - serviceAccounts
       - validityPeriodHours
+    methods:
+      getKubeconfig: kubernetes-the-hard-way:tls:ClusterPki/getKubeconfig
   kubernetes-the-hard-way:tls:EncryptionKey:
     isComponent: true
     inputProperties:
@@ -325,45 +327,6 @@ resources:
       - tar
       - url
       - version
-  kubernetes-the-hard-way:index:Kubeconfig:
-    isComponent: true
-    description: Kubeconfig
-    inputProperties:
-      options:
-        plain: true
-        oneOf:
-          - $ref: "#/types/kubernetes-the-hard-way:config:KubeconfigAdminOptions"
-          - $ref: "#/types/kubernetes-the-hard-way:config:KubeconfigKubeControllerManagerOptions"
-          - $ref: "#/types/kubernetes-the-hard-way:config:KubeconfigKubeProxyOptions"
-          - $ref: "#/types/kubernetes-the-hard-way:config:KubeconfigKubeSchedulerOptions"
-          - $ref: "#/types/kubernetes-the-hard-way:config:KubeconfigWorkerOptions"
-        discriminator:
-          propertyName: type
-          mapping:
-            admin: "#/types/kubernetes-the-hard-way:config:KubeconfigAdminOptions"
-            kube-controller-manager: "#/types/kubernetes-the-hard-way:config:KubeconfigKubeControllerManagerOptions"
-            kube-proxy: "#/types/kubernetes-the-hard-way:config:KubeconfigKubeProxyOptions"
-            kube-scheduler: "#/types/kubernetes-the-hard-way:config:KubeconfigKubeSchedulerOptions"
-            worker: "#/types/kubernetes-the-hard-way:config:KubeconfigWorkerOptions"
-      pki:
-        $ref: "#/resources/kubernetes-the-hard-way:tls:ClusterPki"
-        plain: true
-        description: The PKI containing certificate data.
-    requiredInputs:
-      - options
-      - pki
-    properties:
-      type:
-        $ref: "#/types/kubernetes-the-hard-way:config:KubeconfigType"
-        description: The type of config this resource is intended for.
-      value:
-        $ref: "#/types/kubernetes-the-hard-way:config:Kubeconfig"
-      yaml:
-        type: string
-        description: The yaml representation of the kubeconfig.
-    required:
-      - value
-      - yaml
   kubernetes-the-hard-way:remote:Download:
     isComponent: true
     description: Represents a file to be downloaded on a remote system.
@@ -1232,3 +1195,35 @@ types:
     required:
       - clientCertificateData
       - clientKeyData
+functions:
+  kubernetes-the-hard-way:tls:ClusterPki/getKubeconfig:
+    inputs:
+      properties:
+        __self__:
+          $ref: "#/resources/kubernetes-the-hard-way:tls:ClusterPki"
+          description: The pki used to configure the kubeconfig.
+        options:
+          plain: true
+          oneOf:
+            - $ref: "#/types/kubernetes-the-hard-way:config:KubeconfigAdminOptions"
+            - $ref: "#/types/kubernetes-the-hard-way:config:KubeconfigKubeControllerManagerOptions"
+            - $ref: "#/types/kubernetes-the-hard-way:config:KubeconfigKubeProxyOptions"
+            - $ref: "#/types/kubernetes-the-hard-way:config:KubeconfigKubeSchedulerOptions"
+            - $ref: "#/types/kubernetes-the-hard-way:config:KubeconfigWorkerOptions"
+          discriminator:
+            propertyName: type
+            mapping:
+              admin: "#/types/kubernetes-the-hard-way:config:KubeconfigAdminOptions"
+              kube-controller-manager: "#/types/kubernetes-the-hard-way:config:KubeconfigKubeControllerManagerOptions"
+              kube-proxy: "#/types/kubernetes-the-hard-way:config:KubeconfigKubeProxyOptions"
+              kube-scheduler: "#/types/kubernetes-the-hard-way:config:KubeconfigKubeSchedulerOptions"
+              worker: "#/types/kubernetes-the-hard-way:config:KubeconfigWorkerOptions"
+      required:
+        - __self__
+        - options
+    outputs:
+      properties:
+        result:
+          $ref: "#/types/kubernetes-the-hard-way:config:Kubeconfig"
+      required:
+        - result
