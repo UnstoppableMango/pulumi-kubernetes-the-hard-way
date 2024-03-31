@@ -1,8 +1,9 @@
 import * as path from 'node:path';
-import { ComponentResource, ComponentResourceOptions, Input, Output, interpolate, output } from '@pulumi/pulumi';
+import { ComponentResource, ComponentResourceOptions, Input, Output, all, interpolate, output } from '@pulumi/pulumi';
 import { remote } from '@pulumi/command/types/input';
 import { RootCa, newCertificate } from './rootCa';
 import { Certificate } from './certificate';
+import { Kubeconfig, KubeconfigOptions } from '../config';
 import { Algorithm } from '../types';
 import { InstallInputs, File } from '../remote/file';
 
@@ -199,7 +200,87 @@ export class ClusterPki<T extends NodeMapInput = NodeMapInput> extends Component
     });
   }
 
+  public getKubeconfig(options: KubeconfigOptions): Output<Kubeconfig> {
+    const cert = this.getCert(options);
+    const ip = getIp(options);
+    const username = getUsername(options);
+
+    const caData = this.rootCa.certPem;
+    const clientCertPem = cert.certPem;
+    const clientKeyPem = cert.privateKeyPem;
+    const clusterName = this.clusterName;
+    const server = interpolate`https://${ip}:6443`;
+
+    return all([clusterName, caData, server, username, clientCertPem, clientKeyPem])
+      .apply<Kubeconfig>(([clusterName, caData, server, username, clientCertPem, clientKeyPem]) => ({
+        clusters: [{
+          name: clusterName,
+          cluster: {
+            certificateAuthorityData: caData,
+            server,
+          },
+        }],
+        contexts: [{
+          name: 'default',
+          context: {
+            cluster: clusterName,
+            user: username,
+          },
+        }],
+        users: [{
+          name: username,
+          user: {
+            clientCertificateData: clientCertPem,
+            clientKeyData: clientKeyPem,
+          },
+        }],
+      }));
+  }
+
   private certName(type: string): string {
     return `${this.name}-${type}`;
+  }
+
+  private getCert(options: KubeconfigOptions): Output<Certificate> {
+    switch (options.type) {
+      case 'admin':
+        return output(this.admin);
+      case 'kube-controller-manager':
+        return output(this.controllerManager);
+      case 'kube-proxy':
+        return output(this.kubeProxy);
+      case 'kube-scheduler':
+        return output(this.kubeScheduler);
+      case 'worker':
+        return output(options.name).apply(n => this.kubelet[n]);
+      default:
+        throw new Error('unsupported kubeconfig type');
+    }
+  }
+}
+
+function getIp(options: KubeconfigOptions): Output<string> {
+  // TODO: Is the ternary really necessary?
+  const result = options.type === 'worker'
+    ? options.publicIp
+    : options.publicIp ?? '127.0.0.1';
+
+  return output(result);
+}
+
+function getUsername(options: KubeconfigOptions): Output<string> {
+  switch (options.type) {
+    case 'admin':
+      return output('admin');
+    case 'kube-controller-manager':
+      return output('system:kube-controller-manager');
+    case 'kube-proxy':
+      return output('system:kube-proxy');
+    case 'kube-scheduler':
+      return output('system:kube-scheduler');
+    case 'worker':
+      return interpolate`system:node:${options.name}`
+    default:
+      throw new Error('unsupported kubeconfig type');
   }
 }

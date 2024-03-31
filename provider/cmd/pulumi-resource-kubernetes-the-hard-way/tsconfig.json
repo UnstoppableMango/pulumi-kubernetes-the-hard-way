@@ -14,6 +14,7 @@
     },
     "files": [
         "config/index.ts",
+        "config/kubeconfig.ts",
         "tools/commandBuilder.ts",
         "tools/index.ts",
         "tools/mkdir.ts",
@@ -29,7 +30,6 @@
         "functions.ts",
         "index.ts",
         "tls/keypair.ts",
-        "kubeconfig.ts",
         "provider.ts",
         "remote/download.ts",
         "remote/index.ts",
