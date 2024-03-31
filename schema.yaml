@@ -351,6 +351,9 @@ resources:
       - pki
       - options
     properties:
+      type:
+        $ref: "#/types/kubernetes-the-hard-way:config:KubeconfigType"
+        description: The type of config this resource is intended for.
       value:
         $ref: "#/types/kubernetes-the-hard-way:config:Kubeconfig"
       yaml:
