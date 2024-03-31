@@ -16,6 +16,12 @@ namespace UnMango.KubernetesTheHardWay
     [KubernetesTheHardWayResourceType("kubernetes-the-hard-way:index:Kubeconfig")]
     public partial class Kubeconfig : global::Pulumi.ComponentResource
     {
+        /// <summary>
+        /// The type of config this resource is intended for.
+        /// </summary>
+        [Output("type")]
+        public Output<UnMango.KubernetesTheHardWay.Config.KubeconfigType?> Type { get; private set; } = null!;
+
         [Output("value")]
         public Output<UnMango.KubernetesTheHardWay.Config.Outputs.Kubeconfig> Value { get; private set; } = null!;
 

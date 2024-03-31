@@ -18,7 +18,9 @@ import (
 type Kubeconfig struct {
 	pulumi.ResourceState
 
-	Value config.KubeconfigOutput `pulumi:"value"`
+	// The type of config this resource is intended for.
+	Type  config.KubeconfigTypePtrOutput `pulumi:"type"`
+	Value config.KubeconfigOutput        `pulumi:"value"`
 	// The yaml representation of the kubeconfig.
 	Yaml pulumi.StringOutput `pulumi:"yaml"`
 }
@@ -143,6 +145,11 @@ func (o KubeconfigOutput) ToKubeconfigOutput() KubeconfigOutput {
 
 func (o KubeconfigOutput) ToKubeconfigOutputWithContext(ctx context.Context) KubeconfigOutput {
 	return o
+}
+
+// The type of config this resource is intended for.
+func (o KubeconfigOutput) Type() config.KubeconfigTypePtrOutput {
+	return o.ApplyT(func(v *Kubeconfig) config.KubeconfigTypePtrOutput { return v.Type }).(config.KubeconfigTypePtrOutput)
 }
 
 func (o KubeconfigOutput) Value() config.KubeconfigOutput {

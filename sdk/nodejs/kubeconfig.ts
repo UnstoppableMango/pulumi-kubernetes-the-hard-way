@@ -27,6 +27,10 @@ export class Kubeconfig extends pulumi.ComponentResource {
         return obj['__pulumiType'] === Kubeconfig.__pulumiType;
     }
 
+    /**
+     * The type of config this resource is intended for.
+     */
+    public /*out*/ readonly type!: pulumi.Output<enums.config.KubeconfigType | undefined>;
     public /*out*/ readonly value!: pulumi.Output<outputs.config.Kubeconfig>;
     /**
      * The yaml representation of the kubeconfig.
@@ -52,9 +56,11 @@ export class Kubeconfig extends pulumi.ComponentResource {
             }
             resourceInputs["options"] = args ? args.options : undefined;
             resourceInputs["pki"] = args ? args.pki : undefined;
+            resourceInputs["type"] = undefined /*out*/;
             resourceInputs["value"] = undefined /*out*/;
             resourceInputs["yaml"] = undefined /*out*/;
         } else {
+            resourceInputs["type"] = undefined /*out*/;
             resourceInputs["value"] = undefined /*out*/;
             resourceInputs["yaml"] = undefined /*out*/;
         }

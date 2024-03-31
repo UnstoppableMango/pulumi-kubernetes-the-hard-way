@@ -9,7 +9,9 @@ import com.pulumi.core.annotations.ResourceType;
 import com.pulumi.core.internal.Codegen;
 import com.unmango.kubernetesthehardway.KubeconfigArgs;
 import com.unmango.kubernetesthehardway.Utilities;
+import com.unmango.kubernetesthehardway.config.enums.KubeconfigType;
 import java.lang.String;
+import java.util.Optional;
 import javax.annotation.Nullable;
 
 /**
@@ -18,6 +20,20 @@ import javax.annotation.Nullable;
  */
 @ResourceType(type="kubernetes-the-hard-way:index:Kubeconfig")
 public class Kubeconfig extends com.pulumi.resources.ComponentResource {
+    /**
+     * The type of config this resource is intended for.
+     * 
+     */
+    @Export(name="type", refs={KubeconfigType.class}, tree="[0]")
+    private Output</* @Nullable */ KubeconfigType> type;
+
+    /**
+     * @return The type of config this resource is intended for.
+     * 
+     */
+    public Output<Optional<KubeconfigType>> type() {
+        return Codegen.optional(this.type);
+    }
     @Export(name="value", refs={com.unmango.kubernetesthehardway.config.outputs.Kubeconfig.class}, tree="[0]")
     private Output<com.unmango.kubernetesthehardway.config.outputs.Kubeconfig> value;
 

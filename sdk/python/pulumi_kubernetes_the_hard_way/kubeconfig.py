@@ -8,6 +8,7 @@ import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
 from . import _utilities
+from . import config
 from . import config as _config
 from . import tls as _tls
 
@@ -105,6 +106,7 @@ class Kubeconfig(pulumi.ComponentResource):
             if pki is None and not opts.urn:
                 raise TypeError("Missing required property 'pki'")
             __props__.__dict__["pki"] = pki
+            __props__.__dict__["type"] = None
             __props__.__dict__["value"] = None
             __props__.__dict__["yaml"] = None
         super(Kubeconfig, __self__).__init__(
@@ -113,6 +115,14 @@ class Kubeconfig(pulumi.ComponentResource):
             __props__,
             opts,
             remote=True)
+
+    @property
+    @pulumi.getter
+    def type(self) -> pulumi.Output[Optional['config.KubeconfigType']]:
+        """
+        The type of config this resource is intended for.
+        """
+        return pulumi.get(self, "type")
 
     @property
     @pulumi.getter
