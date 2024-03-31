@@ -132,81 +132,9 @@ type KeyPair struct {
 	PublicKeyPem *string `pulumi:"publicKeyPem"`
 }
 
-// KeyPairInput is an input type that accepts KeyPairArgs and KeyPairOutput values.
-// You can construct a concrete instance of `KeyPairInput` via:
-//
-//	KeyPairArgs{...}
-type KeyPairInput interface {
-	pulumi.Input
-
-	ToKeyPairOutput() KeyPairOutput
-	ToKeyPairOutputWithContext(context.Context) KeyPairOutput
-}
-
-// A certificate and key pair.
-type KeyPairArgs struct {
-	// The PEM encoded certificate data
-	CertPem pulumi.StringPtrInput `pulumi:"certPem"`
-	// The private key.
-	Key tls.PrivateKeyInput `pulumi:"key"`
-	// The PEM encoded private key data.
-	PrivateKeyPem pulumi.StringPtrInput `pulumi:"privateKeyPem"`
-	// The PEM encoded public key data.
-	PublicKeyPem pulumi.StringPtrInput `pulumi:"publicKeyPem"`
-}
-
-func (KeyPairArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*KeyPair)(nil)).Elem()
-}
-
-func (i KeyPairArgs) ToKeyPairOutput() KeyPairOutput {
-	return i.ToKeyPairOutputWithContext(context.Background())
-}
-
-func (i KeyPairArgs) ToKeyPairOutputWithContext(ctx context.Context) KeyPairOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(KeyPairOutput)
-}
-
-// A certificate and key pair.
-type KeyPairOutput struct{ *pulumi.OutputState }
-
-func (KeyPairOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*KeyPair)(nil)).Elem()
-}
-
-func (o KeyPairOutput) ToKeyPairOutput() KeyPairOutput {
-	return o
-}
-
-func (o KeyPairOutput) ToKeyPairOutputWithContext(ctx context.Context) KeyPairOutput {
-	return o
-}
-
-// The PEM encoded certificate data
-func (o KeyPairOutput) CertPem() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v KeyPair) *string { return v.CertPem }).(pulumi.StringPtrOutput)
-}
-
-// The private key.
-func (o KeyPairOutput) Key() tls.PrivateKeyOutput {
-	return o.ApplyT(func(v KeyPair) *tls.PrivateKey { return v.Key }).(tls.PrivateKeyOutput)
-}
-
-// The PEM encoded private key data.
-func (o KeyPairOutput) PrivateKeyPem() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v KeyPair) *string { return v.PrivateKeyPem }).(pulumi.StringPtrOutput)
-}
-
-// The PEM encoded public key data.
-func (o KeyPairOutput) PublicKeyPem() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v KeyPair) *string { return v.PublicKeyPem }).(pulumi.StringPtrOutput)
-}
-
 func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*ClusterPkiNodeInput)(nil)).Elem(), ClusterPkiNodeArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*ClusterPkiNodeMapInput)(nil)).Elem(), ClusterPkiNodeMap{})
-	pulumi.RegisterInputType(reflect.TypeOf((*KeyPairInput)(nil)).Elem(), KeyPairArgs{})
 	pulumi.RegisterOutputType(ClusterPkiNodeOutput{})
 	pulumi.RegisterOutputType(ClusterPkiNodeMapOutput{})
-	pulumi.RegisterOutputType(KeyPairOutput{})
 }

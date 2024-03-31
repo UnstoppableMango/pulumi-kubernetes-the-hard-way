@@ -5,8 +5,10 @@ import * as pulumi from "@pulumi/pulumi";
 import * as utilities from "../utilities";
 
 // Export members:
-export * from "./certificate";
-import { Certificate } from "./certificate";
+export { CertificateArgs } from "./certificate";
+export type Certificate = import("./certificate").Certificate;
+export const Certificate: typeof import("./certificate").Certificate = null as any;
+utilities.lazyLoad(exports, ["Certificate"], () => require("./certificate"));
 
 export { ClusterPkiArgs } from "./clusterPki";
 export type ClusterPki = import("./clusterPki").ClusterPki;
@@ -18,13 +20,10 @@ export type EncryptionKey = import("./encryptionKey").EncryptionKey;
 export const EncryptionKey: typeof import("./encryptionKey").EncryptionKey = null as any;
 utilities.lazyLoad(exports, ["EncryptionKey"], () => require("./encryptionKey"));
 
-export { NewCertificateArgs, NewCertificateResult, NewCertificateOutputArgs } from "./newCertificate";
-export const newCertificate: typeof import("./newCertificate").newCertificate = null as any;
-export const newCertificateOutput: typeof import("./newCertificate").newCertificateOutput = null as any;
-utilities.lazyLoad(exports, ["newCertificate","newCertificateOutput"], () => require("./newCertificate"));
-
-export * from "./rootCa";
-import { RootCa } from "./rootCa";
+export { RootCaArgs } from "./rootCa";
+export type RootCa = import("./rootCa").RootCa;
+export const RootCa: typeof import("./rootCa").RootCa = null as any;
+utilities.lazyLoad(exports, ["RootCa"], () => require("./rootCa"));
 
 
 // Export enums:

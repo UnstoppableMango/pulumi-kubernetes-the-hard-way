@@ -56,18 +56,6 @@ namespace UnMango.KubernetesTheHardWay.Tls
             merged.Id = id ?? merged.Id;
             return merged;
         }
-
-        /// <summary>
-        /// Creates a RemoteFile resource representing the copy operation.
-        /// </summary>
-        public global::Pulumi.Output<UnMango.KubernetesTheHardWay.Remote.File> InstallCert(CertificateInstallCertArgs args)
-            => global::Pulumi.Deployment.Instance.Call<CertificateInstallCertResult>("kubernetes-the-hard-way:tls:Certificate/installCert", args ?? new CertificateInstallCertArgs(), this).Apply(v => v.Result);
-
-        /// <summary>
-        /// Creates a RemoteFile resource representing the copy operation.
-        /// </summary>
-        public global::Pulumi.Output<UnMango.KubernetesTheHardWay.Remote.File> InstallKey(CertificateInstallKeyArgs args)
-            => global::Pulumi.Deployment.Instance.Call<CertificateInstallKeyResult>("kubernetes-the-hard-way:tls:Certificate/installKey", args ?? new CertificateInstallKeyArgs(), this).Apply(v => v.Result);
     }
 
     public sealed class CertificateArgs : global::Pulumi.ResourceArgs
@@ -174,93 +162,5 @@ namespace UnMango.KubernetesTheHardWay.Tls
         {
         }
         public static new CertificateArgs Empty => new CertificateArgs();
-    }
-
-    /// <summary>
-    /// The set of arguments for the <see cref="Certificate.InstallCert"/> method.
-    /// </summary>
-    public sealed class CertificateInstallCertArgs : global::Pulumi.CallArgs
-    {
-        /// <summary>
-        /// The connection details.
-        /// </summary>
-        [Input("connection", required: true)]
-        public Input<UnMango.KubernetesTheHardWay.Inputs.ConnectionArgs> Connection { get; set; } = null!;
-
-        [Input("name", required: true)]
-        public string Name { get; set; } = null!;
-
-        [Input("options")]
-        public UnMango.KubernetesTheHardWay.Inputs.ResourceOptionsArgs? Options { get; set; }
-
-        /// <summary>
-        /// The path to install to.
-        /// </summary>
-        [Input("path")]
-        public Input<string>? Path { get; set; }
-
-        public CertificateInstallCertArgs()
-        {
-        }
-        public static new CertificateInstallCertArgs Empty => new CertificateInstallCertArgs();
-    }
-
-    /// <summary>
-    /// The results of the <see cref="Certificate.InstallCert"/> method.
-    /// </summary>
-    [OutputType]
-    internal sealed class CertificateInstallCertResult
-    {
-        public readonly UnMango.KubernetesTheHardWay.Remote.File Result;
-
-        [OutputConstructor]
-        private CertificateInstallCertResult(UnMango.KubernetesTheHardWay.Remote.File result)
-        {
-            Result = result;
-        }
-    }
-
-    /// <summary>
-    /// The set of arguments for the <see cref="Certificate.InstallKey"/> method.
-    /// </summary>
-    public sealed class CertificateInstallKeyArgs : global::Pulumi.CallArgs
-    {
-        /// <summary>
-        /// The connection details.
-        /// </summary>
-        [Input("connection", required: true)]
-        public Input<UnMango.KubernetesTheHardWay.Inputs.ConnectionArgs> Connection { get; set; } = null!;
-
-        [Input("name", required: true)]
-        public string Name { get; set; } = null!;
-
-        [Input("options")]
-        public UnMango.KubernetesTheHardWay.Inputs.ResourceOptionsArgs? Options { get; set; }
-
-        /// <summary>
-        /// The path to install to.
-        /// </summary>
-        [Input("path")]
-        public Input<string>? Path { get; set; }
-
-        public CertificateInstallKeyArgs()
-        {
-        }
-        public static new CertificateInstallKeyArgs Empty => new CertificateInstallKeyArgs();
-    }
-
-    /// <summary>
-    /// The results of the <see cref="Certificate.InstallKey"/> method.
-    /// </summary>
-    [OutputType]
-    internal sealed class CertificateInstallKeyResult
-    {
-        public readonly UnMango.KubernetesTheHardWay.Remote.File Result;
-
-        [OutputConstructor]
-        private CertificateInstallKeyResult(UnMango.KubernetesTheHardWay.Remote.File result)
-        {
-            Result = result;
-        }
     }
 }

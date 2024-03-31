@@ -9,9 +9,6 @@ import * as utilities from "../utilities";
 
 import * as pulumiTls from "@pulumi/tls";
 
-import {File} from "../remote";
-import {Certificate} from "./index";
-
 export class RootCa extends pulumi.ComponentResource {
     /** @internal */
     public static readonly __pulumiType = 'kubernetes-the-hard-way:tls:RootCa';
@@ -76,59 +73,6 @@ export class RootCa extends pulumi.ComponentResource {
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         super(RootCa.__pulumiType, name, resourceInputs, opts, true /*remote*/);
     }
-
-    /**
-     * Creates a RemoteFile resource representing the copy operation.
-     */
-    installCert(args: RootCa.InstallCertArgs): pulumi.Output<File> {
-        const result: pulumi.Output<RootCa.InstallCertResult> = pulumi.runtime.call("kubernetes-the-hard-way:tls:RootCa/installCert", {
-            "__self__": this,
-            "connection": args.connection,
-            "name": args.name,
-            "options": args.options,
-            "path": args.path,
-        }, this);
-        return result.result;
-    }
-
-    /**
-     * Creates a RemoteFile resource representing the copy operation.
-     */
-    installKey(args: RootCa.InstallKeyArgs): pulumi.Output<File> {
-        const result: pulumi.Output<RootCa.InstallKeyResult> = pulumi.runtime.call("kubernetes-the-hard-way:tls:RootCa/installKey", {
-            "__self__": this,
-            "connection": args.connection,
-            "name": args.name,
-            "options": args.options,
-            "path": args.path,
-        }, this);
-        return result.result;
-    }
-
-    /**
-     * Creates a Certificate configured for the current authority.
-     */
-    newCertificate(args: RootCa.NewCertificateArgs): pulumi.Output<Certificate> {
-        const result: pulumi.Output<RootCa.NewCertificateResult> = pulumi.runtime.call("kubernetes-the-hard-way:tls:RootCa/newCertificate", {
-            "__self__": this,
-            "algorithm": args.algorithm,
-            "allowedUses": args.allowedUses,
-            "dnsNames": args.dnsNames,
-            "earlyRenewalHours": args.earlyRenewalHours,
-            "ecdsaCurve": args.ecdsaCurve,
-            "ipAddresses": args.ipAddresses,
-            "isCaCertificate": args.isCaCertificate,
-            "name": args.name,
-            "options": args.options,
-            "rsaBits": args.rsaBits,
-            "setAuthorityKeyId": args.setAuthorityKeyId,
-            "setSubjectKeyId": args.setSubjectKeyId,
-            "subject": args.subject,
-            "uris": args.uris,
-            "validityPeriodHours": args.validityPeriodHours,
-        }, this);
-        return result.result;
-    }
 }
 
 /**
@@ -176,114 +120,4 @@ export interface RootCaArgs {
      * Number of hours, after initial issuing, that the certificate will remain valid.
      */
     validityPeriodHours: pulumi.Input<number>;
-}
-
-export namespace RootCa {
-    /**
-     * The set of arguments for the RootCa.installCert method.
-     */
-    export interface InstallCertArgs {
-        /**
-         * The connection details.
-         */
-        connection: pulumi.Input<inputs.ConnectionArgs>;
-        name: string;
-        options?: inputs.ResourceOptionsArgs;
-        /**
-         * The path to install to.
-         */
-        path?: pulumi.Input<string>;
-    }
-
-    /**
-     * The results of the RootCa.installCert method.
-     */
-    export interface InstallCertResult {
-        readonly result: File;
-    }
-
-    /**
-     * The set of arguments for the RootCa.installKey method.
-     */
-    export interface InstallKeyArgs {
-        /**
-         * The connection details.
-         */
-        connection: pulumi.Input<inputs.ConnectionArgs>;
-        name: string;
-        options?: inputs.ResourceOptionsArgs;
-        /**
-         * The path to install to.
-         */
-        path?: pulumi.Input<string>;
-    }
-
-    /**
-     * The results of the RootCa.installKey method.
-     */
-    export interface InstallKeyResult {
-        readonly result: File;
-    }
-
-    /**
-     * The set of arguments for the RootCa.newCertificate method.
-     */
-    export interface NewCertificateArgs {
-        /**
-         * Name of the algorithm to use when generating the private key.
-         */
-        algorithm: pulumi.Input<enums.tls.Algorithm>;
-        allowedUses: pulumi.Input<pulumi.Input<enums.tls.AllowedUsage>[]>;
-        /**
-         * List of DNS names for which a certificate is being requested.
-         */
-        dnsNames?: pulumi.Input<pulumi.Input<string>[]>;
-        /**
-         * TODO
-         */
-        earlyRenewalHours?: pulumi.Input<number>;
-        /**
-         * When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
-         */
-        ecdsaCurve?: pulumi.Input<enums.tls.EcdsaCurve>;
-        /**
-         * List of IP addresses for which a certificate is being requested.
-         */
-        ipAddresses?: pulumi.Input<pulumi.Input<string>[]>;
-        isCaCertificate?: pulumi.Input<boolean>;
-        name: string;
-        options?: inputs.ResourceOptionsArgs;
-        /**
-         * When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
-         */
-        rsaBits?: pulumi.Input<number>;
-        /**
-         * Should the generated certificate include an authority key identifier.
-         */
-        setAuthorityKeyId?: pulumi.Input<boolean>;
-        /**
-         * Should the generated certificate include a subject key identifier.
-         */
-        setSubjectKeyId?: pulumi.Input<boolean>;
-        subject?: pulumi.Input<inputs.CertRequestSubjectArgs>;
-        /**
-         * List of URIs for which a certificate is being requested.
-         */
-        uris?: pulumi.Input<pulumi.Input<string>[]>;
-        /**
-         * Number of hours, after initial issuing, that the certificate will remain valid.
-         */
-        validityPeriodHours: pulumi.Input<number>;
-    }
-
-    /**
-     * The results of the RootCa.newCertificate method.
-     */
-    export interface NewCertificateResult {
-        /**
-         * The issued certificate.
-         */
-        readonly result: Certificate;
-    }
-
 }

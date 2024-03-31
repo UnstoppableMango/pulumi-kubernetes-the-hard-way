@@ -6,7 +6,6 @@ from . import _utilities
 import typing
 # Export this package's modules as members:
 from .provider import *
-from ._inputs import *
 
 # Make subpackages available:
 if typing.TYPE_CHECKING:

@@ -8,8 +8,6 @@ import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
 from .. import _utilities
-from .. import _inputs as _root_inputs
-from .. import remote as _remote
 from ._enums import *
 import pulumi_tls
 
@@ -390,70 +388,4 @@ class Certificate(pulumi.ComponentResource):
     @pulumi.getter(name="publicKeyPem")
     def public_key_pem(self) -> pulumi.Output[str]:
         return pulumi.get(self, "public_key_pem")
-
-    @pulumi.output_type
-    class InstallCertResult:
-        def __init__(__self__, result=None):
-            if result and not isinstance(result, _remote.File):
-                raise TypeError("Expected argument 'result' to be a _remote.File")
-            pulumi.set(__self__, "result", result)
-
-        @property
-        @pulumi.getter
-        def result(self) -> '_remote.File':
-            return pulumi.get(self, "result")
-
-    def install_cert(__self__, *,
-                     connection: pulumi.Input['_root_inputs.ConnectionArgs'],
-                     name: str,
-                     options: Optional['_root_inputs.ResourceOptionsArgs'] = None,
-                     path: Optional[pulumi.Input[str]] = None) -> pulumi.Output['_remote.File']:
-        """
-        Creates a RemoteFile resource representing the copy operation.
-
-
-        :param pulumi.Input['_root_inputs.ConnectionArgs'] connection: The connection details.
-        :param pulumi.Input[str] path: The path to install to.
-        """
-        __args__ = dict()
-        __args__['__self__'] = __self__
-        __args__['connection'] = connection
-        __args__['name'] = name
-        __args__['options'] = options
-        __args__['path'] = path
-        __result__ = pulumi.runtime.call('kubernetes-the-hard-way:tls:Certificate/installCert', __args__, res=__self__, typ=Certificate.InstallCertResult)
-        return __result__.result
-
-    @pulumi.output_type
-    class InstallKeyResult:
-        def __init__(__self__, result=None):
-            if result and not isinstance(result, _remote.File):
-                raise TypeError("Expected argument 'result' to be a _remote.File")
-            pulumi.set(__self__, "result", result)
-
-        @property
-        @pulumi.getter
-        def result(self) -> '_remote.File':
-            return pulumi.get(self, "result")
-
-    def install_key(__self__, *,
-                    connection: pulumi.Input['_root_inputs.ConnectionArgs'],
-                    name: str,
-                    options: Optional['_root_inputs.ResourceOptionsArgs'] = None,
-                    path: Optional[pulumi.Input[str]] = None) -> pulumi.Output['_remote.File']:
-        """
-        Creates a RemoteFile resource representing the copy operation.
-
-
-        :param pulumi.Input['_root_inputs.ConnectionArgs'] connection: The connection details.
-        :param pulumi.Input[str] path: The path to install to.
-        """
-        __args__ = dict()
-        __args__['__self__'] = __self__
-        __args__['connection'] = connection
-        __args__['name'] = name
-        __args__['options'] = options
-        __args__['path'] = path
-        __result__ = pulumi.runtime.call('kubernetes-the-hard-way:tls:Certificate/installKey', __args__, res=__self__, typ=Certificate.InstallKeyResult)
-        return __result__.result
 

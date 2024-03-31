@@ -9,8 +9,6 @@ import * as utilities from "../utilities";
 
 import * as pulumiTls from "@pulumi/tls";
 
-import {File} from "../remote";
-
 export class Certificate extends pulumi.ComponentResource {
     /** @internal */
     public static readonly __pulumiType = 'kubernetes-the-hard-way:tls:Certificate';
@@ -91,34 +89,6 @@ export class Certificate extends pulumi.ComponentResource {
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         super(Certificate.__pulumiType, name, resourceInputs, opts, true /*remote*/);
     }
-
-    /**
-     * Creates a RemoteFile resource representing the copy operation.
-     */
-    installCert(args: Certificate.InstallCertArgs): pulumi.Output<File> {
-        const result: pulumi.Output<Certificate.InstallCertResult> = pulumi.runtime.call("kubernetes-the-hard-way:tls:Certificate/installCert", {
-            "__self__": this,
-            "connection": args.connection,
-            "name": args.name,
-            "options": args.options,
-            "path": args.path,
-        }, this);
-        return result.result;
-    }
-
-    /**
-     * Creates a RemoteFile resource representing the copy operation.
-     */
-    installKey(args: Certificate.InstallKeyArgs): pulumi.Output<File> {
-        const result: pulumi.Output<Certificate.InstallKeyResult> = pulumi.runtime.call("kubernetes-the-hard-way:tls:Certificate/installKey", {
-            "__self__": this,
-            "connection": args.connection,
-            "name": args.name,
-            "options": args.options,
-            "path": args.path,
-        }, this);
-        return result.result;
-    }
 }
 
 /**
@@ -170,53 +140,4 @@ export interface CertificateArgs {
      * Number of hours, after initial issuing, that the certificate will remain valid.
      */
     validityPeriodHours: pulumi.Input<number>;
-}
-
-export namespace Certificate {
-    /**
-     * The set of arguments for the Certificate.installCert method.
-     */
-    export interface InstallCertArgs {
-        /**
-         * The connection details.
-         */
-        connection: pulumi.Input<inputs.ConnectionArgs>;
-        name: string;
-        options?: inputs.ResourceOptionsArgs;
-        /**
-         * The path to install to.
-         */
-        path?: pulumi.Input<string>;
-    }
-
-    /**
-     * The results of the Certificate.installCert method.
-     */
-    export interface InstallCertResult {
-        readonly result: File;
-    }
-
-    /**
-     * The set of arguments for the Certificate.installKey method.
-     */
-    export interface InstallKeyArgs {
-        /**
-         * The connection details.
-         */
-        connection: pulumi.Input<inputs.ConnectionArgs>;
-        name: string;
-        options?: inputs.ResourceOptionsArgs;
-        /**
-         * The path to install to.
-         */
-        path?: pulumi.Input<string>;
-    }
-
-    /**
-     * The results of the Certificate.installKey method.
-     */
-    export interface InstallKeyResult {
-        readonly result: File;
-    }
-
 }
