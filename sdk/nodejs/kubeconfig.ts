@@ -77,5 +77,5 @@ export interface KubeconfigArgs {
     /**
      * The PKI containing certificate data.
      */
-    pki: pulumi.Input<ClusterPki>;
+    pki: ClusterPki;
 }

@@ -3,7 +3,6 @@
 
 package com.unmango.kubernetesthehardway;
 
-import com.pulumi.core.Output;
 import com.pulumi.core.annotations.Import;
 import com.pulumi.exceptions.MissingRequiredPropertyException;
 import com.unmango.kubernetesthehardway.config.inputs.KubeconfigAdminOptionsArgs;
@@ -32,13 +31,13 @@ public final class KubeconfigArgs extends com.pulumi.resources.ResourceArgs {
      * 
      */
     @Import(name="pki", required=true)
-    private Output<ClusterPki> pki;
+    private ClusterPki pki;
 
     /**
      * @return The PKI containing certificate data.
      * 
      */
-    public Output<ClusterPki> pki() {
+    public ClusterPki pki() {
         return this.pki;
     }
 
@@ -78,19 +77,9 @@ public final class KubeconfigArgs extends com.pulumi.resources.ResourceArgs {
          * @return builder
          * 
          */
-        public Builder pki(Output<ClusterPki> pki) {
+        public Builder pki(ClusterPki pki) {
             $.pki = pki;
             return this;
-        }
-
-        /**
-         * @param pki The PKI containing certificate data.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder pki(ClusterPki pki) {
-            return pki(Output.of(pki));
         }
 
         public KubeconfigArgs build() {

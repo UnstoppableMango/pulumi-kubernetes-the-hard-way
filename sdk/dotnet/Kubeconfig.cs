@@ -67,7 +67,7 @@ namespace UnMango.KubernetesTheHardWay
         /// The PKI containing certificate data.
         /// </summary>
         [Input("pki", required: true)]
-        public Input<UnMango.KubernetesTheHardWay.Tls.ClusterPki> Pki { get; set; } = null!;
+        public UnMango.KubernetesTheHardWay.Tls.ClusterPki Pki { get; set; } = null!;
 
         public KubeconfigArgs()
         {

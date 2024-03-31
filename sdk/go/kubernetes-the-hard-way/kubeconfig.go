@@ -54,7 +54,7 @@ type kubeconfigArgs struct {
 type KubeconfigArgs struct {
 	Options interface{}
 	// The PKI containing certificate data.
-	Pki tls.ClusterPkiInput
+	Pki *tls.ClusterPki
 }
 
 func (KubeconfigArgs) ElementType() reflect.Type {
