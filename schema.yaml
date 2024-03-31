@@ -481,6 +481,121 @@ resources:
       - removeOnDelete
       - stderr
       - stdout
+  kubernetes-the-hard-way:tools:Mktemp:
+    isComponent: true
+    description: Abstracion over the `mktemp` utility on a remote system.
+    inputProperties:
+      connection:
+        $ref: "/command/v0.9.0/schema.json#/types/command:remote:Connection"
+        description: Connection details for the remote system.
+      directory:
+        type: boolean
+        description: Corresponds to the --directory option.
+      dryRun:
+        type: boolean
+        description: Corresponds to the --dry-run option.
+      quiet:
+        type: boolean
+        description: Corresponds to the --quiet option.
+      suffix:
+        type: string
+        description: Corresponds to the --suffix option.
+      template:
+        type: string
+        description: Corresponds to the [TEMPLATE] arg.
+      tmpdir:
+        type: string
+        description: Corresponds to the --tmpdir option.
+    requiredInputs:
+      - connection
+    properties:
+      command:
+        $ref: "/command/v0.9.0/schema.json#/resources/command:remote:Command"
+        description: Represents the remote `tar` operation.
+      directory:
+        type: boolean
+        description: Corresponds to the --directory option.
+      dryRun:
+        type: boolean
+        description: Corresponds to the --dry-run option.
+      quiet:
+        type: boolean
+        description: Corresponds to the --quiet option.
+      suffix:
+        type: string
+        description: Corresponds to the --suffix option.
+      template:
+        type: string
+        description: Corresponds to the [TEMPLATE] arg.
+      tmpdir:
+        type: string
+        description: Corresponds to the --tmpdir option.
+    required:
+      - command
+      - directory
+      - dryRun
+      - quiet
+  kubernetes-the-hard-way:tools:Rm:
+    isComponent: true
+    description: Abstraction over the `rm` utility on a remote system.
+    inputProperties:
+      connection:
+        $ref: "/command/v0.9.0/schema.json#/types/command:remote:Connection"
+        description: Connection details for the remote system.
+      dir:
+        type: boolean
+        description: Corresponds to the --dir option.
+      files:
+        oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Corresponds to the [FILE] argument.
+      force:
+        type: boolean
+        description: Corresponds to the --force option.
+      onDelete:
+        type: boolean
+        plain: true
+        description: Whether rm should be run when the resource is created or deleted.
+      recursive:
+        type: boolean
+        description: Corresponds to the --recursive option.
+      verbose:
+        type: boolean
+        description: Corresponds to the --verbose option.
+    requiredInputs:
+      - connection
+      - files
+    properties:
+      dir:
+        type: string
+        description: Corresponds to the --dir option.
+      files:
+        type: array
+        items:
+          type: string
+        description: Corresponds to the [FILE] argument.
+      force:
+        type: boolean
+        description: Corresponds to the --force option.
+      onDelete:
+        type: boolean
+        description: Whether rm should be run when the resource is created or deleted.
+      recursive:
+        type: boolean
+        description: Corresponds to the --recursive option.
+      verbose:
+        type: boolean
+        description: Corresponds to the --verbose option.
+    required:
+      - dir
+      - files
+      - force
+      - onDelete
+      - recursive
+      - verbose
   kubernetes-the-hard-way:tools:Tar:
     isComponent: true
     description: Abstracion over the `tar` utility on a remote system.

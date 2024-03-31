@@ -25,7 +25,7 @@ export class Mkdir extends ComponentResource {
     const directory = output(args.directory);
     const parents = output(args.parents ?? false);
     const deleteCmd = all([args.removeOnDelete, directory])
-      .apply(([remove, dir]) => remove ? `rm -rf ${dir}` : '');
+      .apply(([remove, dir]) => remove ? `rm -rf ${dir}` : ':');
 
     const builder = new CommandBuilder('mkdir')
       .option('--parents', parents)
@@ -41,6 +41,6 @@ export class Mkdir extends ComponentResource {
     this.directory = directory;
     this.parents = parents;
 
-    this.registerOutputs({ command, directory });
+    this.registerOutputs({ command, directory, parents });
   }
 }

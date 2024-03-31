@@ -26,6 +26,8 @@
         "tls/rootCa.ts",
         "tools/index.ts",
         "tools/mkdir.ts",
+        "tools/mktemp.ts",
+        "tools/rm.ts",
         "tools/tar.ts",
         "tools/wget.ts",
         "types/enums/index.ts",

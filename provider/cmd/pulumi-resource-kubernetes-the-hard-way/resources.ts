@@ -4,7 +4,7 @@ import { ClusterPki } from './tls/clusterPki';
 import { File } from './remote/file';
 import { RootCa } from './tls/rootCa';
 import { Download } from './remote';
-import { Mkdir, Tar, Wget } from './tools';
+import { Mkdir, Mktemp, Rm, Tar, Wget } from './tools';
 import { EncryptionKey } from './tls/encryptionKey';
 import { Etcd } from './etcd';
 
@@ -20,6 +20,8 @@ export type ResourceConstructor = {
   readonly 'kubernetes-the-hard-way:tls:EncryptionKey': ConstructComponent<EncryptionKey>;
   readonly 'kubernetes-the-hard-way:tls:RootCa': ConstructComponent<RootCa>;
   readonly 'kubernetes-the-hard-way:tools:Mkdir': ConstructComponent<Mkdir>;
+  readonly 'kubernetes-the-hard-way:tools:Mktemp': ConstructComponent<Mktemp>;
+  readonly 'kubernetes-the-hard-way:tools:Rm': ConstructComponent<Rm>;
   readonly 'kubernetes-the-hard-way:tools:Tar': ConstructComponent<Tar>;
   readonly 'kubernetes-the-hard-way:tools:Wget': ConstructComponent<Wget>;
 };
@@ -33,6 +35,8 @@ const resources: ResourceConstructor = {
   'kubernetes-the-hard-way:tls:EncryptionKey': (...args) => new EncryptionKey(...args),
   'kubernetes-the-hard-way:tls:RootCa': (...args) => new RootCa(...args),
   'kubernetes-the-hard-way:tools:Mkdir': (...args) => new Mkdir(...args),
+  'kubernetes-the-hard-way:tools:Mktemp': (...args) => new Mktemp(...args),
+  'kubernetes-the-hard-way:tools:Rm': (...args) => new Rm(...args),
   'kubernetes-the-hard-way:tools:Tar': (...args) => new Tar(...args),
   'kubernetes-the-hard-way:tools:Wget': (...args) => new Wget(...args),
 };
