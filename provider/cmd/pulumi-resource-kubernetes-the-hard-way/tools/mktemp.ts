@@ -9,7 +9,7 @@ export interface MktempArgs {
   dryRun?: Input<boolean>;
   quiet?: Input<boolean>;
   suffix?: Input<string>;
-  template: Input<string>;
+  template?: Input<string>;
   tmpdir?: Input<string>;
 }
 
