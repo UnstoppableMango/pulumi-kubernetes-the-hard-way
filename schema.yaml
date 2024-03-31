@@ -325,6 +325,45 @@ resources:
       - tar
       - url
       - version
+  kubernetes-the-hard-way:index:Kubeconfig:
+    isComponent: true
+    description: Kubeconfig
+    inputProperties:
+      options:
+        plain: true
+        oneOf:
+          - $ref: "#/types/kubernetes-the-hard-way:config:KubeconfigAdminOptions"
+          - $ref: "#/types/kubernetes-the-hard-way:config:KubeconfigKubeControllerManagerOptions"
+          - $ref: "#/types/kubernetes-the-hard-way:config:KubeconfigKubeProxyOptions"
+          - $ref: "#/types/kubernetes-the-hard-way:config:KubeconfigKubeSchedulerOptions"
+          - $ref: "#/types/kubernetes-the-hard-way:config:KubeconfigWorkerOptions"
+        discriminator:
+          propertyName: type
+          mapping:
+            admin: "#/types/kubernetes-the-hard-way:config:KubeconfigAdminOptions"
+            kube-controller-manager: "#/types/kubernetes-the-hard-way:config:KubeconfigKubeControllerManagerOptions"
+            kube-proxy: "#/types/kubernetes-the-hard-way:config:KubeconfigKubeProxyOptions"
+            kube-scheduler: "#/types/kubernetes-the-hard-way:config:KubeconfigKubeSchedulerOptions"
+            worker: "#/types/kubernetes-the-hard-way:config:KubeconfigWorkerOptions"
+      pki:
+        $ref: "#/resources/kubernetes-the-hard-way:tls:ClusterPki"
+        plain: true
+        description: The PKI containing certificate data.
+    requiredInputs:
+      - options
+      - pki
+    properties:
+      type:
+        $ref: "#/types/kubernetes-the-hard-way:config:KubeconfigType"
+        description: The type of config this resource is intended for.
+      value:
+        $ref: "#/types/kubernetes-the-hard-way:config:Kubeconfig"
+      yaml:
+        type: string
+        description: The yaml representation of the kubeconfig.
+    required:
+      - value
+      - yaml
   kubernetes-the-hard-way:remote:Download:
     isComponent: true
     description: Represents a file to be downloaded on a remote system.
@@ -898,14 +937,14 @@ resources:
       - url
 types:
   kubernetes-the-hard-way:tls:Algorithm:
-    description: TODO
+    description: Private key algorithm.
     type: string
     enum:
       - value: RSA
       - value: ECDSA
       - value: ED25519
   kubernetes-the-hard-way:tls:AllowedUsage:
-    description: TODO
+    description: Certificate allowed usage.
     type: string
     enum:
       - name: certSigning
@@ -1002,6 +1041,26 @@ types:
         description: The user that we should use for the connection.
     required:
       - host
+  kubernetes-the-hard-way:config:KubeconfigCluster:
+    type: object
+    properties:
+      cluster:
+        $ref: "#/types/kubernetes-the-hard-way:config:Cluster"
+      name:
+        type: string
+    required:
+      - cluster
+      - name
+  kubernetes-the-hard-way:config:Cluster:
+    type: object
+    properties:
+      certificateAuthorityData:
+        type: string
+      server:
+        type: string
+    required:
+      - certificateAuthorityData
+      - server
   kubernetes-the-hard-way:tls:ClusterPkiNode:
     type: object
     description: Node inputs for the PKI.
@@ -1011,6 +1070,26 @@ types:
         description: The IP address of the node.
       role:
         $ref: "#/types/kubernetes-the-hard-way:tls:NodeRole"
+  kubernetes-the-hard-way:config:KubeconfigContext:
+    type: object
+    properties:
+      context:
+        $ref: "#/types/kubernetes-the-hard-way:config:Context"
+      name:
+        type: string
+    required:
+      - context
+      - name
+  kubernetes-the-hard-way:config:Context:
+    type: object
+    properties:
+      cluster:
+        type: string
+      user:
+        type: string
+    required:
+      - cluster
+      - user
   kubernetes-the-hard-way:tls:EcdsaCurve:
     description: TODO
     type: string
@@ -1035,6 +1114,92 @@ types:
       publicKeyPem:
         type: string
         description: The PEM encoded public key data.
+  kubernetes-the-hard-way:config:Kubeconfig:
+    type: object
+    properties:
+      clusters:
+        type: array
+        items:
+          $ref: "#/types/kubernetes-the-hard-way:config:Cluster"
+      contexts:
+        type: array
+        items:
+          $ref: "#/types/kubernetes-the-hard-way:config:Context"
+      users:
+        type: array
+        items:
+          $ref: "#/types/kubernetes-the-hard-way:config:User"
+    required:
+      - clusters
+      - contexts
+      - users
+  kubernetes-the-hard-way:config:KubeconfigType:
+    type: string
+    enum:
+      - value: worker
+      - value: kube-proxy
+      - value: kube-controller-manager
+      - value: kube-scheduler
+      - value: admin
+    description: Kubeconfig type
+  kubernetes-the-hard-way:config:KubeconfigAdminOptions:
+    type: object
+    properties:
+      type:
+        type: string
+        const: admin
+        plain: true
+      publicIp:
+        type: string
+    required:
+      - type
+  kubernetes-the-hard-way:config:KubeconfigKubeControllerManagerOptions:
+    type: object
+    properties:
+      type:
+        type: string
+        const: kube-controller-manager
+        plain: true
+      publicIp:
+        type: string
+    required:
+      - type
+  kubernetes-the-hard-way:config:KubeconfigKubeProxyOptions:
+    type: object
+    properties:
+      type:
+        type: string
+        const: kube-proxy
+        plain: true
+      publicIp:
+        type: string
+    required:
+      - type
+  kubernetes-the-hard-way:config:KubeconfigKubeSchedulerOptions:
+    type: object
+    properties:
+      type:
+        type: string
+        const: kube-scheduler
+        plain: true
+      publicIp:
+        type: string
+    required:
+      - type
+  kubernetes-the-hard-way:config:KubeconfigWorkerOptions:
+    type: object
+    properties:
+      type:
+        type: string
+        const: worker
+        plain: true
+      name:
+        type: string
+      publicIp:
+        type: string
+    required:
+      - name
+      - publicIp
   kubernetes-the-hard-way:tls:NodeRole:
     description: TODO
     type: string
@@ -1047,3 +1212,23 @@ types:
     properties:
       parent:
         $ref: "pulumi.json#/Any"
+  kubernetes-the-hard-way:config:KubeconfigUser:
+    type: object
+    properties:
+      name:
+        type: string
+      user:
+        $ref: "#/types/kubernetes-the-hard-way:config:User"
+    required:
+      - name
+      - user
+  kubernetes-the-hard-way:config:User:
+    type: object
+    properties:
+      clientCertificateData:
+        type: string
+      clientKeyData:
+        type: string
+    required:
+      - clientCertificateData
+      - clientKeyData

@@ -2,9 +2,11 @@
 // *** Do not edit by hand unless you're certain you know what you are doing! ***
 
 // Export sub-modules:
+import * as config from "./config";
 import * as tls from "./tls";
 
 export {
+    config,
     tls,
 };
 

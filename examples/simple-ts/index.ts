@@ -1,4 +1,4 @@
-import * as kthw from '@unmango/pulumi-kubernetes-the-hard-way';
+import { Kubeconfig } from '@unmango/pulumi-kubernetes-the-hard-way';
 import { AllowedUsage, Certificate, ClusterPki, RootCa } from '@unmango/pulumi-kubernetes-the-hard-way/tls';
 
 const ca = new RootCa('simple', {
@@ -35,6 +35,13 @@ const pki = new ClusterPki('simple', {
   publicIp: '10.0.69.2',
 });
 
+const kubeconfig = new Kubeconfig('simple', {
+  pki,
+  options: {
+    type: 'kube-controller-manager',
+  },
+});
+
 export const caAllowedUses = ca.allowedUses;
 export const caCertPem = ca.certPem;
 export const caKeyPem = ca.publicKeyPem;
@@ -46,3 +53,5 @@ export const caCert = ca.cert;
 export const caKey = ca.key;
 export const certCert = cert.cert;
 export const certKey = cert.key;
+
+export const kubeconfigYaml = kubeconfig.yaml;

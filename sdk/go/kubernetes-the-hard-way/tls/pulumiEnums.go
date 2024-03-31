@@ -10,7 +10,7 @@ import (
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
-// TODO
+// Private key algorithm.
 type Algorithm string
 
 const (
@@ -178,7 +178,7 @@ func (in *algorithmPtr) ToAlgorithmPtrOutputWithContext(ctx context.Context) Alg
 	return pulumi.ToOutputWithContext(ctx, in).(AlgorithmPtrOutput)
 }
 
-// TODO
+// Certificate allowed usage.
 type AllowedUsage string
 
 const (

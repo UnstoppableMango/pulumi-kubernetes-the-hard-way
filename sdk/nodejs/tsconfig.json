@@ -13,8 +13,10 @@
         "strict": true
     },
     "files": [
+        "config/index.ts",
         "etcd.ts",
         "index.ts",
+        "kubeconfig.ts",
         "provider.ts",
         "remote/download.ts",
         "remote/file.ts",
@@ -31,6 +33,7 @@
         "tools/rm.ts",
         "tools/tar.ts",
         "tools/wget.ts",
+        "types/enums/config/index.ts",
         "types/enums/index.ts",
         "types/enums/tls/index.ts",
         "types/index.ts",

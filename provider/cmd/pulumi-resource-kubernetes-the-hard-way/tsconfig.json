@@ -13,6 +13,7 @@
         "forceConsistentCasingInFileNames": true
     },
     "files": [
+        "config/index.ts",
         "tools/commandBuilder.ts",
         "tools/index.ts",
         "tools/mkdir.ts",

@@ -9,5 +9,29 @@ import * as enums from "../types/enums";
 import * as pulumiTls from "@pulumi/tls";
 import * as utilities from "../utilities";
 
+export namespace config {
+    export interface Cluster {
+        certificateAuthorityData: string;
+        server: string;
+    }
+
+    export interface Context {
+        cluster: string;
+        user: string;
+    }
+
+    export interface Kubeconfig {
+        clusters: outputs.config.Cluster[];
+        contexts: outputs.config.Context[];
+        users: outputs.config.User[];
+    }
+
+    export interface User {
+        clientCertificateData: string;
+        clientKeyData: string;
+    }
+
+}
+
 export namespace tls {
 }

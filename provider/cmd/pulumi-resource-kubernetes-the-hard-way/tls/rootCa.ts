@@ -32,10 +32,10 @@ export class RootCa extends KeyPair<SelfSignedCert> {
     const cert = new SelfSignedCert(name, {
       isCaCertificate: true,
       allowedUses: [
-        AllowedUsage.Cert_signing,
-        AllowedUsage.Key_encipherment,
-        AllowedUsage.Server_auth,
-        AllowedUsage.Client_auth,
+        AllowedUsage.CertSigning,
+        AllowedUsage.KeyEncipherment,
+        AllowedUsage.ServerAuth,
+        AllowedUsage.ClientAuth,
       ],
       privateKeyPem: key.privateKeyPem,
       validityPeriodHours: args.validityPeriodHours,

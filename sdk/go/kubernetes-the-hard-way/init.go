@@ -23,6 +23,8 @@ func (m *module) Construct(ctx *pulumi.Context, name, typ, urn string) (r pulumi
 	switch typ {
 	case "kubernetes-the-hard-way:index:Etcd":
 		r = &Etcd{}
+	case "kubernetes-the-hard-way:index:Kubeconfig":
+		r = &Kubeconfig{}
 	default:
 		return nil, fmt.Errorf("unknown resource type: %s", typ)
 	}

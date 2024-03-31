@@ -1,18 +1,16 @@
 import { ComponentResource, ComponentResourceOptions, Inputs } from '@pulumi/pulumi';
-import { Certificate } from './tls/certificate';
-import { ClusterPki } from './tls/clusterPki';
-import { File } from './remote/file';
-import { RootCa } from './tls/rootCa';
-import { Download } from './remote';
+import { Download, File } from './remote';
+import { Certificate, ClusterPki, EncryptionKey, RootCa } from './tls';
 import { Mkdir, Mktemp, Rm, Tar, Wget } from './tools';
-import { EncryptionKey } from './tls/encryptionKey';
 import { Etcd } from './etcd';
+import { Kubeconfig } from './kubeconfig';
 
 export type ConstructComponent<T extends ComponentResource = ComponentResource>
   = (name: string, inputs: any, options: ComponentResourceOptions) => T;
 
 export type ResourceConstructor = {
   readonly 'kubernetes-the-hard-way:index:Etcd': ConstructComponent<Etcd>;
+  readonly 'kubernetes-the-hard-way:index:Kubeconfig': ConstructComponent<Kubeconfig>;
   readonly 'kubernetes-the-hard-way:remote:Download': ConstructComponent<Download>;
   readonly 'kubernetes-the-hard-way:remote:File': ConstructComponent<File>;
   readonly 'kubernetes-the-hard-way:tls:Certificate': ConstructComponent<Certificate>;
@@ -28,6 +26,7 @@ export type ResourceConstructor = {
 
 const resources: ResourceConstructor = {
   'kubernetes-the-hard-way:index:Etcd': (...args) => new Etcd(...args),
+  'kubernetes-the-hard-way:index:Kubeconfig': (...args) => new Kubeconfig(...args),
   'kubernetes-the-hard-way:remote:Download': (...args) => new Download(...args),
   'kubernetes-the-hard-way:remote:File': (...args) => new File(...args),
   'kubernetes-the-hard-way:tls:Certificate': (...args) => new Certificate(...args),
