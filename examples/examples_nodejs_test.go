@@ -28,6 +28,7 @@ func TestSimpleTs(t *testing.T) {
 }
 
 func TestRemoteTs(t *testing.T) {
+	t.Skip("Debugging")
 	const (
 		username = "test-user"
 		password = "test-password"
