@@ -9,7 +9,7 @@ export const Algorithm = {
 } as const;
 
 /**
- * TODO
+ * Private key algorithm.
  */
 export type Algorithm = (typeof Algorithm)[keyof typeof Algorithm];
 
@@ -23,7 +23,7 @@ export const AllowedUsage = {
 } as const;
 
 /**
- * TODO
+ * Certificate allowed usage.
  */
 export type AllowedUsage = (typeof AllowedUsage)[keyof typeof AllowedUsage];
 

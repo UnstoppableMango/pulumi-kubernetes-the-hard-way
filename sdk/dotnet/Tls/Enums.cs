@@ -8,7 +8,7 @@ using Pulumi;
 namespace UnMango.KubernetesTheHardWay.Tls
 {
     /// <summary>
-    /// TODO
+    /// Private key algorithm.
     /// </summary>
     [EnumType]
     public readonly struct Algorithm : IEquatable<Algorithm>
@@ -40,7 +40,7 @@ namespace UnMango.KubernetesTheHardWay.Tls
     }
 
     /// <summary>
-    /// TODO
+    /// Certificate allowed usage.
     /// </summary>
     [EnumType]
     public readonly struct AllowedUsage : IEquatable<AllowedUsage>

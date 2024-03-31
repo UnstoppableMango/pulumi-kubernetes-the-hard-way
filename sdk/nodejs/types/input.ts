@@ -9,6 +9,35 @@ import * as enums from "../types/enums";
 import * as pulumiTls from "@pulumi/tls";
 import * as utilities from "../utilities";
 
+export namespace config {
+    export interface KubeconfigAdminOptionsArgs {
+        publicIp?: pulumi.Input<string>;
+        type?: pulumi.Input<"kube-controller-manager">;
+    }
+
+    export interface KubeconfigKubeControllerManagerOptionsArgs {
+        publicIp?: pulumi.Input<string>;
+        type?: pulumi.Input<"kube-controller-manager">;
+    }
+
+    export interface KubeconfigKubeProxyOptionsArgs {
+        publicIp?: pulumi.Input<string>;
+        type?: pulumi.Input<"kube-proxy">;
+    }
+
+    export interface KubeconfigKubeSchedulerOptionsArgs {
+        publicIp?: pulumi.Input<string>;
+        type?: pulumi.Input<"kube-scheduler">;
+    }
+
+    export interface KubeconfigWorkerOptionsArgs {
+        name: pulumi.Input<string>;
+        publicIp: pulumi.Input<string>;
+        type?: pulumi.Input<"worker">;
+    }
+
+}
+
 export namespace tls {
     /**
      * Node inputs for the PKI.

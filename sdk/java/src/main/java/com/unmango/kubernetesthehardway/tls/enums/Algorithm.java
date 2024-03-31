@@ -9,7 +9,7 @@ import java.util.Objects;
 import java.util.StringJoiner;
 
     /**
-     * TODO
+     * Private key algorithm.
      * 
      */
     @EnumType

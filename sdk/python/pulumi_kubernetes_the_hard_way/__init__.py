@@ -7,10 +7,13 @@ import typing
 # Export this package's modules as members:
 from ._enums import *
 from .etcd import *
+from .kubeconfig import *
 from .provider import *
 
 # Make subpackages available:
 if typing.TYPE_CHECKING:
+    import pulumi_kubernetes_the_hard_way.config as __config
+    config = __config
     import pulumi_kubernetes_the_hard_way.remote as __remote
     remote = __remote
     import pulumi_kubernetes_the_hard_way.tls as __tls
@@ -18,6 +21,7 @@ if typing.TYPE_CHECKING:
     import pulumi_kubernetes_the_hard_way.tools as __tools
     tools = __tools
 else:
+    config = _utilities.lazy_import('pulumi_kubernetes_the_hard_way.config')
     remote = _utilities.lazy_import('pulumi_kubernetes_the_hard_way.remote')
     tls = _utilities.lazy_import('pulumi_kubernetes_the_hard_way.tls')
     tools = _utilities.lazy_import('pulumi_kubernetes_the_hard_way.tools')
@@ -30,7 +34,8 @@ _utilities.register(
   "mod": "index",
   "fqn": "pulumi_kubernetes_the_hard_way",
   "classes": {
-   "kubernetes-the-hard-way:index:Etcd": "Etcd"
+   "kubernetes-the-hard-way:index:Etcd": "Etcd",
+   "kubernetes-the-hard-way:index:Kubeconfig": "Kubeconfig"
   }
  },
  {

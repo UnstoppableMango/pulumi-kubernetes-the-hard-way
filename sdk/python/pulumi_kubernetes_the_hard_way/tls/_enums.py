@@ -14,7 +14,7 @@ __all__ = [
 
 class Algorithm(str, Enum):
     """
-    TODO
+    Private key algorithm.
     """
     RSA = "RSA"
     ECDSA = "ECDSA"
@@ -23,7 +23,7 @@ class Algorithm(str, Enum):
 
 class AllowedUsage(str, Enum):
     """
-    TODO
+    Certificate allowed usage.
     """
     CERT_SIGNING = "cert_signing"
     CLIENT_AUTH = "client_auth"
