@@ -652,7 +652,7 @@ resources:
         type: boolean
         description: Corresponds to the --verbose option.
     required:
-      - backkup
+      - backup
       - command
       - context
       - force
