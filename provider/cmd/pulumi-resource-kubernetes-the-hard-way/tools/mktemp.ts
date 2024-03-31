@@ -19,7 +19,7 @@ export class Mktemp extends ComponentResource {
   public readonly dryRun!: Output<boolean>;
   public readonly quiet!: Output<boolean>;
   public readonly suffix!: Output<string | undefined>;
-  public readonly template!: Output<string>;
+  public readonly template!: Output<string | undefined>;
   public readonly tmpdir!: Output<string | undefined>;
 
   constructor(name: string, args: MktempArgs, opts?: ComponentResourceOptions) {
