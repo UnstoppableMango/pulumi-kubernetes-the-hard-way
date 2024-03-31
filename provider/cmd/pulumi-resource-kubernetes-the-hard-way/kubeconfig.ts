@@ -16,7 +16,7 @@ type Options =
 
 export interface KubeconfigArgs {
   pki: Input<ClusterPki>;
-  options: Input<Options>;
+  options: Options;
 }
 
 const localhost = '127.0.0.1';

@@ -38,27 +38,27 @@ export interface Kubeconfig {
 }
 
 export interface KubeconfigAdminOptions {
-  type: Input<'admin'>;
+  type: 'admin';
   publicIp?: Input<string>;
 }
 
 export interface KubeconfigKubeControllerManagerOptions {
-  type: Input<'kube-controller-manager'>;
+  type: 'kube-controller-manager';
   publicIp?: Input<string>;
 }
 
 export interface KubeconfigKubeProxyOptions {
-  type: Input<'kube-proxy'>;
+  type: 'kube-proxy';
   publicIp?: Input<string>;
 }
 
 export interface KubeconfigKubeSchedulerOptions {
-  type: Input<'kube-scheduler'>;
+  type: 'kube-scheduler';
   publicIp?: Input<string>;
 }
 
 export interface KubeconfigWorkerOptions {
-  type: Input<'worker'>;
+  type: 'worker';
   name: Input<string>;
   publicIp: Input<string>;
 }
