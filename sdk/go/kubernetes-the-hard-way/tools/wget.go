@@ -8,7 +8,7 @@ import (
 	"reflect"
 
 	"errors"
-	"github.com/pulumi/pulumi-command/sdk/go/command/remote"
+	pulumiCommand "github.com/pulumi/pulumi-command/sdk/go/command/remote"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 	"github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/sdk/go/kubernetes-the-hard-way/internal"
 )
@@ -18,7 +18,7 @@ type Wget struct {
 	pulumi.ResourceState
 
 	// Represents the remote `tar` operation.
-	Command remote.CommandOutput `pulumi:"command"`
+	Command pulumiCommand.CommandOutput `pulumi:"command"`
 	// Corresponds to the --directory-prefix option.
 	DirectoryPrefix pulumi.StringPtrOutput `pulumi:"directoryPrefix"`
 	// Corresponds to the --https-only option.
@@ -54,7 +54,7 @@ func NewWget(ctx *pulumi.Context,
 	if args.Url == nil {
 		return nil, errors.New("invalid value for required argument 'Url'")
 	}
-	args.Connection = args.Connection.ToConnectionOutput().ApplyT(func(v remote.Connection) remote.Connection { return *v.Defaults() }).(remote.ConnectionOutput)
+	args.Connection = args.Connection.ToConnectionOutput().ApplyT(func(v pulumiCommand.Connection) pulumiCommand.Connection { return *v.Defaults() }).(pulumiCommand.ConnectionOutput)
 	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource Wget
 	err := ctx.RegisterRemoteComponentResource("kubernetes-the-hard-way:tools:Wget", name, args, &resource, opts...)
@@ -66,7 +66,7 @@ func NewWget(ctx *pulumi.Context,
 
 type wgetArgs struct {
 	// Connection details for the remote system.
-	Connection remote.Connection `pulumi:"connection"`
+	Connection pulumiCommand.Connection `pulumi:"connection"`
 	// Corresponds to the --directory-prefix option.
 	DirectoryPrefix *string `pulumi:"directoryPrefix"`
 	// Corresponds to the --https-only option.
@@ -86,7 +86,7 @@ type wgetArgs struct {
 // The set of arguments for constructing a Wget resource.
 type WgetArgs struct {
 	// Connection details for the remote system.
-	Connection remote.ConnectionInput
+	Connection pulumiCommand.ConnectionInput
 	// Corresponds to the --directory-prefix option.
 	DirectoryPrefix pulumi.StringPtrInput
 	// Corresponds to the --https-only option.
@@ -191,8 +191,8 @@ func (o WgetOutput) ToWgetOutputWithContext(ctx context.Context) WgetOutput {
 }
 
 // Represents the remote `tar` operation.
-func (o WgetOutput) Command() remote.CommandOutput {
-	return o.ApplyT(func(v *Wget) remote.CommandOutput { return v.Command }).(remote.CommandOutput)
+func (o WgetOutput) Command() pulumiCommand.CommandOutput {
+	return o.ApplyT(func(v *Wget) pulumiCommand.CommandOutput { return v.Command }).(pulumiCommand.CommandOutput)
 }
 
 // Corresponds to the --directory-prefix option.

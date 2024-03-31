@@ -5,30 +5,33 @@ import { File } from './remote/file';
 import { RootCa } from './tls/rootCa';
 import { Download } from './remote';
 import { Mkdir, Tar, Wget } from './tools';
-import { EncryptionKey } from './tls/encryption';
+import { EncryptionKey } from './tls/encryptionKey';
+import { Etcd } from './etcd';
 
 export type ConstructComponent<T extends ComponentResource = ComponentResource>
   = (name: string, inputs: any, options: ComponentResourceOptions) => T;
 
 export type ResourceConstructor = {
+  readonly 'kubernetes-the-hard-way:index:Etcd': ConstructComponent<Etcd>;
+  readonly 'kubernetes-the-hard-way:remote:Download': ConstructComponent<Download>;
+  readonly 'kubernetes-the-hard-way:remote:File': ConstructComponent<File>;
   readonly 'kubernetes-the-hard-way:tls:Certificate': ConstructComponent<Certificate>;
   readonly 'kubernetes-the-hard-way:tls:ClusterPki': ConstructComponent<ClusterPki>;
-  readonly 'kubernetes-the-hard-way:remote:File': ConstructComponent<File>;
-  readonly 'kubernetes-the-hard-way:tls:RootCa': ConstructComponent<RootCa>;
-  readonly 'kubernetes-the-hard-way:remote:Download': ConstructComponent<Download>;
   readonly 'kubernetes-the-hard-way:tls:EncryptionKey': ConstructComponent<EncryptionKey>;
+  readonly 'kubernetes-the-hard-way:tls:RootCa': ConstructComponent<RootCa>;
   readonly 'kubernetes-the-hard-way:tools:Mkdir': ConstructComponent<Mkdir>;
   readonly 'kubernetes-the-hard-way:tools:Tar': ConstructComponent<Tar>;
   readonly 'kubernetes-the-hard-way:tools:Wget': ConstructComponent<Wget>;
 };
 
 const resources: ResourceConstructor = {
+  'kubernetes-the-hard-way:index:Etcd': (...args) => new Etcd(...args),
+  'kubernetes-the-hard-way:remote:Download': (...args) => new Download(...args),
+  'kubernetes-the-hard-way:remote:File': (...args) => new File(...args),
   'kubernetes-the-hard-way:tls:Certificate': (...args) => new Certificate(...args),
   'kubernetes-the-hard-way:tls:ClusterPki': (...args) => new ClusterPki(...args),
-  'kubernetes-the-hard-way:remote:File': (...args) => new File(...args),
-  'kubernetes-the-hard-way:tls:RootCa': (...args) => new RootCa(...args),
-  'kubernetes-the-hard-way:remote:Download': (...args) => new Download(...args),
   'kubernetes-the-hard-way:tls:EncryptionKey': (...args) => new EncryptionKey(...args),
+  'kubernetes-the-hard-way:tls:RootCa': (...args) => new RootCa(...args),
   'kubernetes-the-hard-way:tools:Mkdir': (...args) => new Mkdir(...args),
   'kubernetes-the-hard-way:tools:Tar': (...args) => new Tar(...args),
   'kubernetes-the-hard-way:tools:Wget': (...args) => new Wget(...args),

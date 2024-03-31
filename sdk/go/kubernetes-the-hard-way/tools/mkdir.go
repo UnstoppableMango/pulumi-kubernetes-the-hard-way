@@ -8,7 +8,7 @@ import (
 	"reflect"
 
 	"errors"
-	"github.com/pulumi/pulumi-command/sdk/go/command/remote"
+	pulumiCommand "github.com/pulumi/pulumi-command/sdk/go/command/remote"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 	"github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/sdk/go/kubernetes-the-hard-way/internal"
 )
@@ -18,7 +18,7 @@ type Mkdir struct {
 	pulumi.ResourceState
 
 	// The remote command.
-	Command remote.CommandOutput `pulumi:"command"`
+	Command pulumiCommand.CommandOutput `pulumi:"command"`
 	// The fully qualified path of the directory on the remote system.
 	Directory pulumi.StringOutput `pulumi:"directory"`
 	// Corresponds to the `--parents` option.
@@ -44,7 +44,7 @@ func NewMkdir(ctx *pulumi.Context,
 	if args.Directory == nil {
 		return nil, errors.New("invalid value for required argument 'Directory'")
 	}
-	args.Connection = args.Connection.ToConnectionOutput().ApplyT(func(v remote.Connection) remote.Connection { return *v.Defaults() }).(remote.ConnectionOutput)
+	args.Connection = args.Connection.ToConnectionOutput().ApplyT(func(v pulumiCommand.Connection) pulumiCommand.Connection { return *v.Defaults() }).(pulumiCommand.ConnectionOutput)
 	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource Mkdir
 	err := ctx.RegisterRemoteComponentResource("kubernetes-the-hard-way:tools:Mkdir", name, args, &resource, opts...)
@@ -56,7 +56,7 @@ func NewMkdir(ctx *pulumi.Context,
 
 type mkdirArgs struct {
 	// The connection details for the remote system.
-	Connection remote.Connection `pulumi:"connection"`
+	Connection pulumiCommand.Connection `pulumi:"connection"`
 	// The fully qualified path of the directory on the remote system.
 	Directory string `pulumi:"directory"`
 	// Corresponds to the `--parents` option.
@@ -68,7 +68,7 @@ type mkdirArgs struct {
 // The set of arguments for constructing a Mkdir resource.
 type MkdirArgs struct {
 	// The connection details for the remote system.
-	Connection remote.ConnectionInput
+	Connection pulumiCommand.ConnectionInput
 	// The fully qualified path of the directory on the remote system.
 	Directory pulumi.StringInput
 	// Corresponds to the `--parents` option.
@@ -165,8 +165,8 @@ func (o MkdirOutput) ToMkdirOutputWithContext(ctx context.Context) MkdirOutput {
 }
 
 // The remote command.
-func (o MkdirOutput) Command() remote.CommandOutput {
-	return o.ApplyT(func(v *Mkdir) remote.CommandOutput { return v.Command }).(remote.CommandOutput)
+func (o MkdirOutput) Command() pulumiCommand.CommandOutput {
+	return o.ApplyT(func(v *Mkdir) pulumiCommand.CommandOutput { return v.Command }).(pulumiCommand.CommandOutput)
 }
 
 // The fully qualified path of the directory on the remote system.

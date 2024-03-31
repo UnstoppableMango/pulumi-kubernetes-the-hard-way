@@ -1,5 +1,6 @@
 import * as path from 'node:path';
 import { Config } from '@pulumi/pulumi';
+import { Etcd } from '@unmango/pulumi-kubernetes-the-hard-way';
 import { Mkdir, Tar, Wget } from '@unmango/pulumi-kubernetes-the-hard-way/tools';
 import { Download, File } from '@unmango/pulumi-kubernetes-the-hard-way/remote';
 
@@ -46,6 +47,10 @@ const download = new Download('remote', {
 //   extract: true,
 //   gzip: true,
 // });
+
+const etcd = new Etcd('remote', {
+  connection: { host, port, user, password },
+});
 
 export const fileStderr = file.stderr;
 export const fileStdout = file.stdout;

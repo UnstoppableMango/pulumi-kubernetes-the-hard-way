@@ -8,7 +8,7 @@ export interface TarArgs {
   connection: Input<remote.ConnectionArgs>;
   directory?: Input<string>;
   extract?: Input<boolean>;
-  files: Input<string> | Input<Input<string>[]>;
+  files?: Input<string> | Input<Input<string>[]>;
   gzip?: Input<boolean>;
 }
 
@@ -31,13 +31,13 @@ export class Tar extends ComponentResource {
     const archive = output(args.archive);
     const directory = output(args.directory);
     const extract = output(args.extract ?? true); // Is this a sane default?
-    const files = output(args.files).apply(toArray); // TODO: Can we get types happy without the `toArray`?
+    const files = output(args.files ?? []).apply(toArray); // TODO: Can we get types happy without the `toArray`?
     const gzip = output(args.gzip ?? false);
 
     const builder = new CommandBuilder('tar')
+      .option('--extract', extract)
       .option('--file', archive)
       .option('--directory', directory)
-      .option('--extract', extract)
       .option('--gzip', gzip)
       .arg(files);
 

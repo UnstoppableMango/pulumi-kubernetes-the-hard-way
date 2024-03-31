@@ -8,7 +8,7 @@ import (
 	"reflect"
 
 	"errors"
-	"github.com/pulumi/pulumi-command/sdk/go/command/remote"
+	pulumiCommand "github.com/pulumi/pulumi-command/sdk/go/command/remote"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 	"github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/sdk/go/kubernetes-the-hard-way/internal"
 	"github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/sdk/go/kubernetes-the-hard-way/tools"
@@ -19,7 +19,7 @@ type Download struct {
 	pulumi.ResourceState
 
 	// Connection details for the remote system
-	Connection remote.ConnectionOutput `pulumi:"connection"`
+	Connection pulumiCommand.ConnectionOutput `pulumi:"connection"`
 	// The fully qualified path on the remote system where the file should be downloaded to.
 	Destination pulumi.StringOutput `pulumi:"destination"`
 	// Represents the command used to create the remote directory.
@@ -46,7 +46,7 @@ func NewDownload(ctx *pulumi.Context,
 	if args.Url == nil {
 		return nil, errors.New("invalid value for required argument 'Url'")
 	}
-	args.Connection = args.Connection.ToConnectionOutput().ApplyT(func(v remote.Connection) remote.Connection { return *v.Defaults() }).(remote.ConnectionOutput)
+	args.Connection = args.Connection.ToConnectionOutput().ApplyT(func(v pulumiCommand.Connection) pulumiCommand.Connection { return *v.Defaults() }).(pulumiCommand.ConnectionOutput)
 	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource Download
 	err := ctx.RegisterRemoteComponentResource("kubernetes-the-hard-way:remote:Download", name, args, &resource, opts...)
@@ -58,7 +58,7 @@ func NewDownload(ctx *pulumi.Context,
 
 type downloadArgs struct {
 	// Connection details for the remote system
-	Connection remote.Connection `pulumi:"connection"`
+	Connection pulumiCommand.Connection `pulumi:"connection"`
 	// The fully qualified path on the remote system where the file should be downloaded to.
 	Destination string `pulumi:"destination"`
 	// Remove the downloaded file when the resource is deleted.
@@ -70,7 +70,7 @@ type downloadArgs struct {
 // The set of arguments for constructing a Download resource.
 type DownloadArgs struct {
 	// Connection details for the remote system
-	Connection remote.ConnectionInput
+	Connection pulumiCommand.ConnectionInput
 	// The fully qualified path on the remote system where the file should be downloaded to.
 	Destination pulumi.StringInput
 	// Remove the downloaded file when the resource is deleted.
@@ -167,8 +167,8 @@ func (o DownloadOutput) ToDownloadOutputWithContext(ctx context.Context) Downloa
 }
 
 // Connection details for the remote system
-func (o DownloadOutput) Connection() remote.ConnectionOutput {
-	return o.ApplyT(func(v *Download) remote.ConnectionOutput { return v.Connection }).(remote.ConnectionOutput)
+func (o DownloadOutput) Connection() pulumiCommand.ConnectionOutput {
+	return o.ApplyT(func(v *Download) pulumiCommand.ConnectionOutput { return v.Connection }).(pulumiCommand.ConnectionOutput)
 }
 
 // The fully qualified path on the remote system where the file should be downloaded to.
