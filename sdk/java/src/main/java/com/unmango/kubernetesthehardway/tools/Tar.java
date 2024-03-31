@@ -11,6 +11,7 @@ import com.pulumi.core.internal.Codegen;
 import com.unmango.kubernetesthehardway.Utilities;
 import com.unmango.kubernetesthehardway.tools.TarArgs;
 import java.lang.Boolean;
+import java.lang.Integer;
 import java.lang.String;
 import java.util.List;
 import java.util.Optional;
@@ -147,6 +148,20 @@ public class Tar extends com.pulumi.resources.ComponentResource {
      */
     public Output<String> stdout() {
         return this.stdout;
+    }
+    /**
+     * Corresponds to the --strip-components option.
+     * 
+     */
+    @Export(name="stripComponents", refs={Integer.class}, tree="[0]")
+    private Output</* @Nullable */ Integer> stripComponents;
+
+    /**
+     * @return Corresponds to the --strip-components option.
+     * 
+     */
+    public Output<Optional<Integer>> stripComponents() {
+        return Codegen.optional(this.stripComponents);
     }
 
     /**

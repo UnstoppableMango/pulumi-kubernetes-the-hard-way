@@ -70,6 +70,12 @@ namespace UnMango.KubernetesTheHardWay.Tools
         [Output("stdout")]
         public Output<string> Stdout { get; private set; } = null!;
 
+        /// <summary>
+        /// Corresponds to the --strip-components option.
+        /// </summary>
+        [Output("stripComponents")]
+        public Output<int?> StripComponents { get; private set; } = null!;
+
 
         /// <summary>
         /// Create a Tar resource with the given unique name, arguments, and options.
@@ -134,6 +140,12 @@ namespace UnMango.KubernetesTheHardWay.Tools
         /// </summary>
         [Input("gzip")]
         public Input<bool>? Gzip { get; set; }
+
+        /// <summary>
+        /// Corresponds to the --strip-components option.
+        /// </summary>
+        [Input("stripComponents")]
+        public Input<int>? StripComponents { get; set; }
 
         public TarArgs()
         {
