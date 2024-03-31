@@ -175,8 +175,15 @@ class Etcd(pulumi.ComponentResource):
                 install_directory = '/usr/local/bin'
             __props__.__dict__["install_directory"] = install_directory
             __props__.__dict__["version"] = version
+            __props__.__dict__["archive_name"] = None
             __props__.__dict__["download"] = None
-            __props__.__dict__["filename"] = None
+            __props__.__dict__["download_mkdir"] = None
+            __props__.__dict__["etcd_path"] = None
+            __props__.__dict__["etcdctl_path"] = None
+            __props__.__dict__["install_mkdir"] = None
+            __props__.__dict__["mv_etcd"] = None
+            __props__.__dict__["mv_etcdctl"] = None
+            __props__.__dict__["name"] = None
             __props__.__dict__["tar"] = None
             __props__.__dict__["url"] = None
         super(Etcd, __self__).__init__(
@@ -195,6 +202,14 @@ class Etcd(pulumi.ComponentResource):
         return pulumi.get(self, "architecture")
 
     @property
+    @pulumi.getter(name="archiveName")
+    def archive_name(self) -> pulumi.Output[str]:
+        """
+        The name of the etcd release archive.
+        """
+        return pulumi.get(self, "archive_name")
+
+    @property
     @pulumi.getter
     def download(self) -> pulumi.Output['_remote.Download']:
         """
@@ -211,12 +226,28 @@ class Etcd(pulumi.ComponentResource):
         return pulumi.get(self, "download_directory")
 
     @property
-    @pulumi.getter
-    def filename(self) -> pulumi.Output[str]:
+    @pulumi.getter(name="downloadMkdir")
+    def download_mkdir(self) -> pulumi.Output['_tools.Mkdir']:
         """
-        The name of the etcd binary file.
+        The operation to create the download directory.
         """
-        return pulumi.get(self, "filename")
+        return pulumi.get(self, "download_mkdir")
+
+    @property
+    @pulumi.getter(name="etcdPath")
+    def etcd_path(self) -> pulumi.Output[str]:
+        """
+        The path to the etcd binary on the remote system.
+        """
+        return pulumi.get(self, "etcd_path")
+
+    @property
+    @pulumi.getter(name="etcdctlPath")
+    def etcdctl_path(self) -> pulumi.Output[str]:
+        """
+        The path to the etcdctl binary on the remote system.
+        """
+        return pulumi.get(self, "etcdctl_path")
 
     @property
     @pulumi.getter(name="installDirectory")
@@ -225,6 +256,38 @@ class Etcd(pulumi.ComponentResource):
         Directory to install the `etcd` and `etcdctl` binaries.
         """
         return pulumi.get(self, "install_directory")
+
+    @property
+    @pulumi.getter(name="installMkdir")
+    def install_mkdir(self) -> pulumi.Output['_tools.Mkdir']:
+        """
+        The operation to create the install directory.
+        """
+        return pulumi.get(self, "install_mkdir")
+
+    @property
+    @pulumi.getter(name="mvEtcd")
+    def mv_etcd(self) -> pulumi.Output['_tools.Mv']:
+        """
+        The operation to move the etcd binary to the install directory.
+        """
+        return pulumi.get(self, "mv_etcd")
+
+    @property
+    @pulumi.getter(name="mvEtcdctl")
+    def mv_etcdctl(self) -> pulumi.Output['_tools.Mv']:
+        """
+        The operation to move the etcdctl binary to the install directory.
+        """
+        return pulumi.get(self, "mv_etcdctl")
+
+    @property
+    @pulumi.getter
+    def name(self) -> pulumi.Output[str]:
+        """
+        The name of the resource.
+        """
+        return pulumi.get(self, "name")
 
     @property
     @pulumi.getter

@@ -10,7 +10,7 @@ import * as utilities from "./utilities";
 import * as pulumiCommand from "@pulumi/command";
 
 import {Download} from "./remote";
-import {Tar} from "./tools";
+import {Mkdir, Mv, Tar} from "./tools";
 
 /**
  * Represents an etcd binary on a remote system.
@@ -35,6 +35,10 @@ export class Etcd extends pulumi.ComponentResource {
      */
     public readonly architecture!: pulumi.Output<enums.Architecture>;
     /**
+     * The name of the etcd release archive.
+     */
+    public /*out*/ readonly archiveName!: pulumi.Output<string>;
+    /**
      * The etcd download operation.
      */
     public /*out*/ readonly download!: pulumi.Output<Download>;
@@ -43,13 +47,37 @@ export class Etcd extends pulumi.ComponentResource {
      */
     public readonly downloadDirectory!: pulumi.Output<string>;
     /**
-     * The name of the etcd binary file.
+     * The operation to create the download directory.
      */
-    public /*out*/ readonly filename!: pulumi.Output<string>;
+    public /*out*/ readonly downloadMkdir!: pulumi.Output<Mkdir>;
+    /**
+     * The path to the etcd binary on the remote system.
+     */
+    public /*out*/ readonly etcdPath!: pulumi.Output<string>;
+    /**
+     * The path to the etcdctl binary on the remote system.
+     */
+    public /*out*/ readonly etcdctlPath!: pulumi.Output<string>;
     /**
      * Directory to install the `etcd` and `etcdctl` binaries.
      */
     public readonly installDirectory!: pulumi.Output<string>;
+    /**
+     * The operation to create the install directory.
+     */
+    public /*out*/ readonly installMkdir!: pulumi.Output<Mkdir>;
+    /**
+     * The operation to move the etcd binary to the install directory.
+     */
+    public /*out*/ readonly mvEtcd!: pulumi.Output<Mv>;
+    /**
+     * The operation to move the etcdctl binary to the install directory.
+     */
+    public /*out*/ readonly mvEtcdctl!: pulumi.Output<Mv>;
+    /**
+     * The name of the resource.
+     */
+    public /*out*/ readonly name!: pulumi.Output<string>;
     /**
      * The tar operation.
      */
@@ -82,16 +110,30 @@ export class Etcd extends pulumi.ComponentResource {
             resourceInputs["downloadDirectory"] = args ? args.downloadDirectory : undefined;
             resourceInputs["installDirectory"] = (args ? args.installDirectory : undefined) ?? "/usr/local/bin";
             resourceInputs["version"] = args ? args.version : undefined;
+            resourceInputs["archiveName"] = undefined /*out*/;
             resourceInputs["download"] = undefined /*out*/;
-            resourceInputs["filename"] = undefined /*out*/;
+            resourceInputs["downloadMkdir"] = undefined /*out*/;
+            resourceInputs["etcdPath"] = undefined /*out*/;
+            resourceInputs["etcdctlPath"] = undefined /*out*/;
+            resourceInputs["installMkdir"] = undefined /*out*/;
+            resourceInputs["mvEtcd"] = undefined /*out*/;
+            resourceInputs["mvEtcdctl"] = undefined /*out*/;
+            resourceInputs["name"] = undefined /*out*/;
             resourceInputs["tar"] = undefined /*out*/;
             resourceInputs["url"] = undefined /*out*/;
         } else {
             resourceInputs["architecture"] = undefined /*out*/;
+            resourceInputs["archiveName"] = undefined /*out*/;
             resourceInputs["download"] = undefined /*out*/;
             resourceInputs["downloadDirectory"] = undefined /*out*/;
-            resourceInputs["filename"] = undefined /*out*/;
+            resourceInputs["downloadMkdir"] = undefined /*out*/;
+            resourceInputs["etcdPath"] = undefined /*out*/;
+            resourceInputs["etcdctlPath"] = undefined /*out*/;
             resourceInputs["installDirectory"] = undefined /*out*/;
+            resourceInputs["installMkdir"] = undefined /*out*/;
+            resourceInputs["mvEtcd"] = undefined /*out*/;
+            resourceInputs["mvEtcdctl"] = undefined /*out*/;
+            resourceInputs["name"] = undefined /*out*/;
             resourceInputs["tar"] = undefined /*out*/;
             resourceInputs["url"] = undefined /*out*/;
             resourceInputs["version"] = undefined /*out*/;

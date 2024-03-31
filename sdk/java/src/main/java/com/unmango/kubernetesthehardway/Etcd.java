@@ -11,6 +11,8 @@ import com.unmango.kubernetesthehardway.EtcdArgs;
 import com.unmango.kubernetesthehardway.Utilities;
 import com.unmango.kubernetesthehardway.enums.Architecture;
 import com.unmango.kubernetesthehardway.remote.Download;
+import com.unmango.kubernetesthehardway.tools.Mkdir;
+import com.unmango.kubernetesthehardway.tools.Mv;
 import com.unmango.kubernetesthehardway.tools.Tar;
 import java.lang.String;
 import javax.annotation.Nullable;
@@ -34,6 +36,20 @@ public class Etcd extends com.pulumi.resources.ComponentResource {
      */
     public Output<Architecture> architecture() {
         return this.architecture;
+    }
+    /**
+     * The name of the etcd release archive.
+     * 
+     */
+    @Export(name="archiveName", refs={String.class}, tree="[0]")
+    private Output<String> archiveName;
+
+    /**
+     * @return The name of the etcd release archive.
+     * 
+     */
+    public Output<String> archiveName() {
+        return this.archiveName;
     }
     /**
      * The etcd download operation.
@@ -64,18 +80,46 @@ public class Etcd extends com.pulumi.resources.ComponentResource {
         return this.downloadDirectory;
     }
     /**
-     * The name of the etcd binary file.
+     * The operation to create the download directory.
      * 
      */
-    @Export(name="filename", refs={String.class}, tree="[0]")
-    private Output<String> filename;
+    @Export(name="downloadMkdir", refs={Mkdir.class}, tree="[0]")
+    private Output<Mkdir> downloadMkdir;
 
     /**
-     * @return The name of the etcd binary file.
+     * @return The operation to create the download directory.
      * 
      */
-    public Output<String> filename() {
-        return this.filename;
+    public Output<Mkdir> downloadMkdir() {
+        return this.downloadMkdir;
+    }
+    /**
+     * The path to the etcd binary on the remote system.
+     * 
+     */
+    @Export(name="etcdPath", refs={String.class}, tree="[0]")
+    private Output<String> etcdPath;
+
+    /**
+     * @return The path to the etcd binary on the remote system.
+     * 
+     */
+    public Output<String> etcdPath() {
+        return this.etcdPath;
+    }
+    /**
+     * The path to the etcdctl binary on the remote system.
+     * 
+     */
+    @Export(name="etcdctlPath", refs={String.class}, tree="[0]")
+    private Output<String> etcdctlPath;
+
+    /**
+     * @return The path to the etcdctl binary on the remote system.
+     * 
+     */
+    public Output<String> etcdctlPath() {
+        return this.etcdctlPath;
     }
     /**
      * Directory to install the `etcd` and `etcdctl` binaries.
@@ -90,6 +134,62 @@ public class Etcd extends com.pulumi.resources.ComponentResource {
      */
     public Output<String> installDirectory() {
         return this.installDirectory;
+    }
+    /**
+     * The operation to create the install directory.
+     * 
+     */
+    @Export(name="installMkdir", refs={Mkdir.class}, tree="[0]")
+    private Output<Mkdir> installMkdir;
+
+    /**
+     * @return The operation to create the install directory.
+     * 
+     */
+    public Output<Mkdir> installMkdir() {
+        return this.installMkdir;
+    }
+    /**
+     * The operation to move the etcd binary to the install directory.
+     * 
+     */
+    @Export(name="mvEtcd", refs={Mv.class}, tree="[0]")
+    private Output<Mv> mvEtcd;
+
+    /**
+     * @return The operation to move the etcd binary to the install directory.
+     * 
+     */
+    public Output<Mv> mvEtcd() {
+        return this.mvEtcd;
+    }
+    /**
+     * The operation to move the etcdctl binary to the install directory.
+     * 
+     */
+    @Export(name="mvEtcdctl", refs={Mv.class}, tree="[0]")
+    private Output<Mv> mvEtcdctl;
+
+    /**
+     * @return The operation to move the etcdctl binary to the install directory.
+     * 
+     */
+    public Output<Mv> mvEtcdctl() {
+        return this.mvEtcdctl;
+    }
+    /**
+     * The name of the resource.
+     * 
+     */
+    @Export(name="name", refs={String.class}, tree="[0]")
+    private Output<String> name;
+
+    /**
+     * @return The name of the resource.
+     * 
+     */
+    public Output<String> name() {
+        return this.name;
     }
     /**
      * The tar operation.
