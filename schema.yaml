@@ -1145,7 +1145,7 @@ types:
     properties:
       type:
         type: string
-        const: kube-controller-manager
+        const: admin
       publicIp:
         type: string
   kubernetes-the-hard-way:config:KubeconfigKubeControllerManagerOptions:
