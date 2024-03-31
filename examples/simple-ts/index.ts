@@ -53,3 +53,5 @@ export const caCert = ca.cert;
 export const caKey = ca.key;
 export const certCert = cert.cert;
 export const certKey = cert.key;
+
+export const kubeconfigYaml = kubeconfig.yaml;
