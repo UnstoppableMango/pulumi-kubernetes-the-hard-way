@@ -1041,17 +1041,17 @@ types:
         description: The user that we should use for the connection.
     required:
       - host
-  kubernetes-the-hard-way:config:Cluster:
+  kubernetes-the-hard-way:config:KubeconfigCluster:
     type: object
     properties:
       cluster:
-        $ref: "#/types/kubernetes-the-hard-way:config:ClusterCluster"
+        $ref: "#/types/kubernetes-the-hard-way:config:Cluster"
       name:
         type: string
     required:
       - cluster
       - name
-  kubernetes-the-hard-way:config:ClusterCluster:
+  kubernetes-the-hard-way:config:Cluster:
     type: object
     properties:
       certificateAuthorityData:
@@ -1070,17 +1070,17 @@ types:
         description: The IP address of the node.
       role:
         $ref: "#/types/kubernetes-the-hard-way:tls:NodeRole"
-  kubernetes-the-hard-way:config:Context:
+  kubernetes-the-hard-way:config:KubeconfigContext:
     type: object
     properties:
       context:
-        $ref: "#/types/kubernetes-the-hard-way:config:ContextContext"
+        $ref: "#/types/kubernetes-the-hard-way:config:Context"
       name:
         type: string
     required:
       - context
       - name
-  kubernetes-the-hard-way:config:ContextContext:
+  kubernetes-the-hard-way:config:Context:
     type: object
     properties:
       cluster:
@@ -1212,17 +1212,17 @@ types:
     properties:
       parent:
         $ref: "pulumi.json#/Any"
-  kubernetes-the-hard-way:config:User:
+  kubernetes-the-hard-way:config:KubeconfigUser:
     type: object
     properties:
       name:
         type: string
       user:
-        $ref: "#/types/kubernetes-the-hard-way:config:UserUser"
+        $ref: "#/types/kubernetes-the-hard-way:config:User"
     required:
       - name
       - user
-  kubernetes-the-hard-way:config:UserUser:
+  kubernetes-the-hard-way:config:User:
     type: object
     properties:
       clientCertificateData:

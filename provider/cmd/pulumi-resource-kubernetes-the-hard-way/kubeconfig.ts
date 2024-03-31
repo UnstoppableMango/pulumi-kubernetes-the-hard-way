@@ -15,7 +15,7 @@ type Options =
   | config.KubeconfigWorkerOptions;
 
 export interface KubeconfigArgs {
-  pki: Input<ClusterPki>;
+  pki: ClusterPki;
   options: Options;
 }
 

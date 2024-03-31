@@ -1,40 +1,40 @@
 import { Input } from '@pulumi/pulumi';
 import { KubeconfigType } from '../types';
 
-export interface ClusterCluster {
+export interface Cluster {
   certificateAuthorityData: string;
   server: string;
 }
 
-export interface Cluster {
-  cluster: ClusterCluster;
+export interface KubeconfigCluster {
+  cluster: Cluster;
   name: string;
 }
 
-export interface ContextContext {
+export interface Context {
   cluster: string;
   user: string;
 }
 
-export interface Context {
-  context: ContextContext;
+export interface KubeconfigContext {
+  context: Context;
   name: string;
 }
 
-export interface UserUser {
+export interface User {
   clientCertificateData: string;
   clientKeyData: string;
 }
 
-export interface User {
+export interface KubeconfigUser {
   name: string;
-  user: UserUser;
+  user: User;
 }
 
 export interface Kubeconfig {
-  clusters: Cluster[];
-  contexts: Context[];
-  users: User[];
+  clusters: KubeconfigCluster[];
+  contexts: KubeconfigContext[];
+  users: KubeconfigUser[];
 }
 
 export interface KubeconfigAdminOptions {
