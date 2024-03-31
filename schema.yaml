@@ -137,9 +137,6 @@ resources:
       - key
       - privateKeyPem
       - publicKeyPem
-    methods:
-      installCert: kubernetes-the-hard-way:tls:Certificate/installCert
-      installKey: kubernetes-the-hard-way:tls:Certificate/installKey
   kubernetes-the-hard-way:tls:ClusterPki:
     isComponent: true
     inputProperties:
@@ -392,10 +389,6 @@ resources:
       - key
       - privateKeyPem
       - publicKeyPem
-    methods:
-      newCertificate: kubernetes-the-hard-way:tls:RootCa/newCertificate
-      installCert: kubernetes-the-hard-way:tls:RootCa/installCert
-      installKey: kubernetes-the-hard-way:tls:RootCa/installKey
   kubernetes-the-hard-way:tools:Mkdir:
     isComponent: true
     description: Represents the `mkdir` utility.
