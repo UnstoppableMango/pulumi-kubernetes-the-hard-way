@@ -10,6 +10,42 @@ import * as pulumiTls from "@pulumi/tls";
 import * as utilities from "../utilities";
 
 export namespace config {
+    export interface Cluster {
+        cluster: outputs.config.ClusterCluster;
+        name: string;
+    }
+
+    export interface ClusterCluster {
+        certificateAuthorityData: string;
+        server: string;
+    }
+
+    export interface Context {
+        context: outputs.config.ContextContext;
+        name: string;
+    }
+
+    export interface ContextContext {
+        cluster: string;
+        user: string;
+    }
+
+    export interface Kubeconfig {
+        clusters: outputs.config.Cluster[];
+        contexts: outputs.config.Context[];
+        users: outputs.config.User[];
+    }
+
+    export interface User {
+        name: string;
+        user: outputs.config.UserUser;
+    }
+
+    export interface UserUser {
+        clientCertificateData: string;
+        clientKeyData: string;
+    }
+
 }
 
 export namespace tls {

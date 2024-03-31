@@ -7,6 +7,7 @@ import (
 	"context"
 	"reflect"
 
+	"errors"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 	"github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/sdk/go/kubernetes-the-hard-way/config"
 	"github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/sdk/go/kubernetes-the-hard-way/internal"
@@ -16,15 +17,25 @@ import (
 // Kubeconfig
 type Kubeconfig struct {
 	pulumi.ResourceState
+
+	Value config.KubeconfigOutput `pulumi:"value"`
+	// The yaml representation of the kubeconfig.
+	Yaml pulumi.StringOutput `pulumi:"yaml"`
 }
 
 // NewKubeconfig registers a new resource with the given unique name, arguments, and options.
 func NewKubeconfig(ctx *pulumi.Context,
 	name string, args *KubeconfigArgs, opts ...pulumi.ResourceOption) (*Kubeconfig, error) {
 	if args == nil {
-		args = &KubeconfigArgs{}
+		return nil, errors.New("missing one or more required arguments")
 	}
 
+	if args.Options == nil {
+		return nil, errors.New("invalid value for required argument 'Options'")
+	}
+	if args.Pki == nil {
+		return nil, errors.New("invalid value for required argument 'Pki'")
+	}
 	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource Kubeconfig
 	err := ctx.RegisterRemoteComponentResource("kubernetes-the-hard-way:index:Kubeconfig", name, args, &resource, opts...)
@@ -132,6 +143,15 @@ func (o KubeconfigOutput) ToKubeconfigOutput() KubeconfigOutput {
 
 func (o KubeconfigOutput) ToKubeconfigOutputWithContext(ctx context.Context) KubeconfigOutput {
 	return o
+}
+
+func (o KubeconfigOutput) Value() config.KubeconfigOutput {
+	return o.ApplyT(func(v *Kubeconfig) config.KubeconfigOutput { return v.Value }).(config.KubeconfigOutput)
+}
+
+// The yaml representation of the kubeconfig.
+func (o KubeconfigOutput) Yaml() pulumi.StringOutput {
+	return o.ApplyT(func(v *Kubeconfig) pulumi.StringOutput { return v.Yaml }).(pulumi.StringOutput)
 }
 
 type KubeconfigArrayOutput struct{ *pulumi.OutputState }

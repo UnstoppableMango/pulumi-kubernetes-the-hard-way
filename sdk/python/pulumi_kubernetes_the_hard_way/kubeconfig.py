@@ -16,36 +16,34 @@ __all__ = ['KubeconfigArgs', 'Kubeconfig']
 @pulumi.input_type
 class KubeconfigArgs:
     def __init__(__self__, *,
-                 options: Optional[pulumi.Input[Union['_config.KubeconfigAdminOptionsArgs', '_config.KubeconfigKubeControllerManagerOptionsArgs', '_config.KubeconfigKubeProxyOptionsArgs', '_config.KubeconfigKubeSchedulerOptionsArgs', '_config.KubeconfigWorkerOptionsArgs']]] = None,
-                 pki: Optional[pulumi.Input['_tls.ClusterPki']] = None):
+                 options: pulumi.Input[Union['_config.KubeconfigAdminOptionsArgs', '_config.KubeconfigKubeControllerManagerOptionsArgs', '_config.KubeconfigKubeProxyOptionsArgs', '_config.KubeconfigKubeSchedulerOptionsArgs', '_config.KubeconfigWorkerOptionsArgs']],
+                 pki: pulumi.Input['_tls.ClusterPki']):
         """
         The set of arguments for constructing a Kubeconfig resource.
         :param pulumi.Input['_tls.ClusterPki'] pki: The PKI containing certificate data.
         """
-        if options is not None:
-            pulumi.set(__self__, "options", options)
-        if pki is not None:
-            pulumi.set(__self__, "pki", pki)
+        pulumi.set(__self__, "options", options)
+        pulumi.set(__self__, "pki", pki)
 
     @property
     @pulumi.getter
-    def options(self) -> Optional[pulumi.Input[Union['_config.KubeconfigAdminOptionsArgs', '_config.KubeconfigKubeControllerManagerOptionsArgs', '_config.KubeconfigKubeProxyOptionsArgs', '_config.KubeconfigKubeSchedulerOptionsArgs', '_config.KubeconfigWorkerOptionsArgs']]]:
+    def options(self) -> pulumi.Input[Union['_config.KubeconfigAdminOptionsArgs', '_config.KubeconfigKubeControllerManagerOptionsArgs', '_config.KubeconfigKubeProxyOptionsArgs', '_config.KubeconfigKubeSchedulerOptionsArgs', '_config.KubeconfigWorkerOptionsArgs']]:
         return pulumi.get(self, "options")
 
     @options.setter
-    def options(self, value: Optional[pulumi.Input[Union['_config.KubeconfigAdminOptionsArgs', '_config.KubeconfigKubeControllerManagerOptionsArgs', '_config.KubeconfigKubeProxyOptionsArgs', '_config.KubeconfigKubeSchedulerOptionsArgs', '_config.KubeconfigWorkerOptionsArgs']]]):
+    def options(self, value: pulumi.Input[Union['_config.KubeconfigAdminOptionsArgs', '_config.KubeconfigKubeControllerManagerOptionsArgs', '_config.KubeconfigKubeProxyOptionsArgs', '_config.KubeconfigKubeSchedulerOptionsArgs', '_config.KubeconfigWorkerOptionsArgs']]):
         pulumi.set(self, "options", value)
 
     @property
     @pulumi.getter
-    def pki(self) -> Optional[pulumi.Input['_tls.ClusterPki']]:
+    def pki(self) -> pulumi.Input['_tls.ClusterPki']:
         """
         The PKI containing certificate data.
         """
         return pulumi.get(self, "pki")
 
     @pki.setter
-    def pki(self, value: Optional[pulumi.Input['_tls.ClusterPki']]):
+    def pki(self, value: pulumi.Input['_tls.ClusterPki']):
         pulumi.set(self, "pki", value)
 
 
@@ -68,7 +66,7 @@ class Kubeconfig(pulumi.ComponentResource):
     @overload
     def __init__(__self__,
                  resource_name: str,
-                 args: Optional[KubeconfigArgs] = None,
+                 args: KubeconfigArgs,
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
         Kubeconfig
@@ -101,12 +99,31 @@ class Kubeconfig(pulumi.ComponentResource):
                 raise TypeError('__props__ is only valid when passed in combination with a valid opts.id to get an existing resource')
             __props__ = KubeconfigArgs.__new__(KubeconfigArgs)
 
+            if options is None and not opts.urn:
+                raise TypeError("Missing required property 'options'")
             __props__.__dict__["options"] = options
+            if pki is None and not opts.urn:
+                raise TypeError("Missing required property 'pki'")
             __props__.__dict__["pki"] = pki
+            __props__.__dict__["value"] = None
+            __props__.__dict__["yaml"] = None
         super(Kubeconfig, __self__).__init__(
             'kubernetes-the-hard-way:index:Kubeconfig',
             resource_name,
             __props__,
             opts,
             remote=True)
+
+    @property
+    @pulumi.getter
+    def value(self) -> pulumi.Output['_config.outputs.Kubeconfig']:
+        return pulumi.get(self, "value")
+
+    @property
+    @pulumi.getter
+    def yaml(self) -> pulumi.Output[str]:
+        """
+        The yaml representation of the kubeconfig.
+        """
+        return pulumi.get(self, "yaml")
 

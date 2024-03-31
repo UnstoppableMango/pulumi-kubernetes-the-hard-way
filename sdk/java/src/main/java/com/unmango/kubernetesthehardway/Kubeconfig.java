@@ -4,10 +4,12 @@
 package com.unmango.kubernetesthehardway;
 
 import com.pulumi.core.Output;
+import com.pulumi.core.annotations.Export;
 import com.pulumi.core.annotations.ResourceType;
 import com.pulumi.core.internal.Codegen;
 import com.unmango.kubernetesthehardway.KubeconfigArgs;
 import com.unmango.kubernetesthehardway.Utilities;
+import java.lang.String;
 import javax.annotation.Nullable;
 
 /**
@@ -16,6 +18,27 @@ import javax.annotation.Nullable;
  */
 @ResourceType(type="kubernetes-the-hard-way:index:Kubeconfig")
 public class Kubeconfig extends com.pulumi.resources.ComponentResource {
+    @Export(name="value", refs={com.unmango.kubernetesthehardway.config.outputs.Kubeconfig.class}, tree="[0]")
+    private Output<com.unmango.kubernetesthehardway.config.outputs.Kubeconfig> value;
+
+    public Output<com.unmango.kubernetesthehardway.config.outputs.Kubeconfig> value() {
+        return this.value;
+    }
+    /**
+     * The yaml representation of the kubeconfig.
+     * 
+     */
+    @Export(name="yaml", refs={String.class}, tree="[0]")
+    private Output<String> yaml;
+
+    /**
+     * @return The yaml representation of the kubeconfig.
+     * 
+     */
+    public Output<String> yaml() {
+        return this.yaml;
+    }
+
     /**
      *
      * @param name The _unique_ name of the resulting resource.
@@ -28,7 +51,7 @@ public class Kubeconfig extends com.pulumi.resources.ComponentResource {
      * @param name The _unique_ name of the resulting resource.
      * @param args The arguments to use to populate this resource's properties.
      */
-    public Kubeconfig(String name, @Nullable KubeconfigArgs args) {
+    public Kubeconfig(String name, KubeconfigArgs args) {
         this(name, args, null);
     }
     /**
@@ -37,7 +60,7 @@ public class Kubeconfig extends com.pulumi.resources.ComponentResource {
      * @param args The arguments to use to populate this resource's properties.
      * @param options A bag of options that control this resource's behavior.
      */
-    public Kubeconfig(String name, @Nullable KubeconfigArgs args, @Nullable com.pulumi.resources.ComponentResourceOptions options) {
+    public Kubeconfig(String name, KubeconfigArgs args, @Nullable com.pulumi.resources.ComponentResourceOptions options) {
         super("kubernetes-the-hard-way:index:Kubeconfig", name, args == null ? KubeconfigArgs.Empty : args, makeResourceOptions(options, Codegen.empty()), true);
     }
 

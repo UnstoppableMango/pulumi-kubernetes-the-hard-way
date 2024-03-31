@@ -5,6 +5,7 @@ package com.unmango.kubernetesthehardway;
 
 import com.pulumi.core.Output;
 import com.pulumi.core.annotations.Import;
+import com.pulumi.exceptions.MissingRequiredPropertyException;
 import com.unmango.kubernetesthehardway.config.inputs.KubeconfigAdminOptionsArgs;
 import com.unmango.kubernetesthehardway.config.inputs.KubeconfigKubeControllerManagerOptionsArgs;
 import com.unmango.kubernetesthehardway.config.inputs.KubeconfigKubeProxyOptionsArgs;
@@ -13,34 +14,32 @@ import com.unmango.kubernetesthehardway.config.inputs.KubeconfigWorkerOptionsArg
 import com.unmango.kubernetesthehardway.tls.ClusterPki;
 import java.lang.Object;
 import java.util.Objects;
-import java.util.Optional;
-import javax.annotation.Nullable;
 
 
 public final class KubeconfigArgs extends com.pulumi.resources.ResourceArgs {
 
     public static final KubeconfigArgs Empty = new KubeconfigArgs();
 
-    @Import(name="options")
-    private @Nullable Output<Object> options;
+    @Import(name="options", required=true)
+    private Output<Object> options;
 
-    public Optional<Output<Object>> options() {
-        return Optional.ofNullable(this.options);
+    public Output<Object> options() {
+        return this.options;
     }
 
     /**
      * The PKI containing certificate data.
      * 
      */
-    @Import(name="pki")
-    private @Nullable Output<ClusterPki> pki;
+    @Import(name="pki", required=true)
+    private Output<ClusterPki> pki;
 
     /**
      * @return The PKI containing certificate data.
      * 
      */
-    public Optional<Output<ClusterPki>> pki() {
-        return Optional.ofNullable(this.pki);
+    public Output<ClusterPki> pki() {
+        return this.pki;
     }
 
     private KubeconfigArgs() {}
@@ -68,7 +67,7 @@ public final class KubeconfigArgs extends com.pulumi.resources.ResourceArgs {
             $ = new KubeconfigArgs(Objects.requireNonNull(defaults));
         }
 
-        public Builder options(@Nullable Output<Object> options) {
+        public Builder options(Output<Object> options) {
             $.options = options;
             return this;
         }
@@ -83,7 +82,7 @@ public final class KubeconfigArgs extends com.pulumi.resources.ResourceArgs {
          * @return builder
          * 
          */
-        public Builder pki(@Nullable Output<ClusterPki> pki) {
+        public Builder pki(Output<ClusterPki> pki) {
             $.pki = pki;
             return this;
         }
@@ -99,6 +98,12 @@ public final class KubeconfigArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         public KubeconfigArgs build() {
+            if ($.options == null) {
+                throw new MissingRequiredPropertyException("KubeconfigArgs", "options");
+            }
+            if ($.pki == null) {
+                throw new MissingRequiredPropertyException("KubeconfigArgs", "pki");
+            }
             return $;
         }
     }

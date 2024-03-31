@@ -16,6 +16,16 @@ namespace UnMango.KubernetesTheHardWay
     [KubernetesTheHardWayResourceType("kubernetes-the-hard-way:index:Kubeconfig")]
     public partial class Kubeconfig : global::Pulumi.ComponentResource
     {
+        [Output("value")]
+        public Output<UnMango.KubernetesTheHardWay.Config.Outputs.Kubeconfig> Value { get; private set; } = null!;
+
+        /// <summary>
+        /// The yaml representation of the kubeconfig.
+        /// </summary>
+        [Output("yaml")]
+        public Output<string> Yaml { get; private set; } = null!;
+
+
         /// <summary>
         /// Create a Kubeconfig resource with the given unique name, arguments, and options.
         /// </summary>
@@ -23,7 +33,7 @@ namespace UnMango.KubernetesTheHardWay
         /// <param name="name">The unique name of the resource</param>
         /// <param name="args">The arguments used to populate this resource's properties</param>
         /// <param name="options">A bag of options that control this resource's behavior</param>
-        public Kubeconfig(string name, KubeconfigArgs? args = null, ComponentResourceOptions? options = null)
+        public Kubeconfig(string name, KubeconfigArgs args, ComponentResourceOptions? options = null)
             : base("kubernetes-the-hard-way:index:Kubeconfig", name, args ?? new KubeconfigArgs(), MakeResourceOptions(options, ""), remote: true)
         {
         }
@@ -44,14 +54,14 @@ namespace UnMango.KubernetesTheHardWay
 
     public sealed class KubeconfigArgs : global::Pulumi.ResourceArgs
     {
-        [Input("options")]
-        public object? Options { get; set; }
+        [Input("options", required: true)]
+        public object Options { get; set; } = null!;
 
         /// <summary>
         /// The PKI containing certificate data.
         /// </summary>
-        [Input("pki")]
-        public Input<UnMango.KubernetesTheHardWay.Tls.ClusterPki>? Pki { get; set; }
+        [Input("pki", required: true)]
+        public Input<UnMango.KubernetesTheHardWay.Tls.ClusterPki> Pki { get; set; } = null!;
 
         public KubeconfigArgs()
         {

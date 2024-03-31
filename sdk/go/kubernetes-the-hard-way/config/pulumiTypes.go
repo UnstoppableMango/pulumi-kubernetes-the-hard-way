@@ -18,9 +18,73 @@ type Cluster struct {
 	Name    string         `pulumi:"name"`
 }
 
+type ClusterOutput struct{ *pulumi.OutputState }
+
+func (ClusterOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*Cluster)(nil)).Elem()
+}
+
+func (o ClusterOutput) ToClusterOutput() ClusterOutput {
+	return o
+}
+
+func (o ClusterOutput) ToClusterOutputWithContext(ctx context.Context) ClusterOutput {
+	return o
+}
+
+func (o ClusterOutput) Cluster() ClusterClusterOutput {
+	return o.ApplyT(func(v Cluster) ClusterCluster { return v.Cluster }).(ClusterClusterOutput)
+}
+
+func (o ClusterOutput) Name() pulumi.StringOutput {
+	return o.ApplyT(func(v Cluster) string { return v.Name }).(pulumi.StringOutput)
+}
+
+type ClusterArrayOutput struct{ *pulumi.OutputState }
+
+func (ClusterArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]Cluster)(nil)).Elem()
+}
+
+func (o ClusterArrayOutput) ToClusterArrayOutput() ClusterArrayOutput {
+	return o
+}
+
+func (o ClusterArrayOutput) ToClusterArrayOutputWithContext(ctx context.Context) ClusterArrayOutput {
+	return o
+}
+
+func (o ClusterArrayOutput) Index(i pulumi.IntInput) ClusterOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) Cluster {
+		return vs[0].([]Cluster)[vs[1].(int)]
+	}).(ClusterOutput)
+}
+
 type ClusterCluster struct {
 	CertificateAuthorityData string `pulumi:"certificateAuthorityData"`
 	Server                   string `pulumi:"server"`
+}
+
+type ClusterClusterOutput struct{ *pulumi.OutputState }
+
+func (ClusterClusterOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*ClusterCluster)(nil)).Elem()
+}
+
+func (o ClusterClusterOutput) ToClusterClusterOutput() ClusterClusterOutput {
+	return o
+}
+
+func (o ClusterClusterOutput) ToClusterClusterOutputWithContext(ctx context.Context) ClusterClusterOutput {
+	return o
+}
+
+func (o ClusterClusterOutput) CertificateAuthorityData() pulumi.StringOutput {
+	return o.ApplyT(func(v ClusterCluster) string { return v.CertificateAuthorityData }).(pulumi.StringOutput)
+}
+
+func (o ClusterClusterOutput) Server() pulumi.StringOutput {
+	return o.ApplyT(func(v ClusterCluster) string { return v.Server }).(pulumi.StringOutput)
 }
 
 type Context struct {
@@ -28,15 +92,105 @@ type Context struct {
 	Name    string         `pulumi:"name"`
 }
 
+type ContextOutput struct{ *pulumi.OutputState }
+
+func (ContextOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*Context)(nil)).Elem()
+}
+
+func (o ContextOutput) ToContextOutput() ContextOutput {
+	return o
+}
+
+func (o ContextOutput) ToContextOutputWithContext(ctx context.Context) ContextOutput {
+	return o
+}
+
+func (o ContextOutput) Context() ContextContextOutput {
+	return o.ApplyT(func(v Context) ContextContext { return v.Context }).(ContextContextOutput)
+}
+
+func (o ContextOutput) Name() pulumi.StringOutput {
+	return o.ApplyT(func(v Context) string { return v.Name }).(pulumi.StringOutput)
+}
+
+type ContextArrayOutput struct{ *pulumi.OutputState }
+
+func (ContextArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]Context)(nil)).Elem()
+}
+
+func (o ContextArrayOutput) ToContextArrayOutput() ContextArrayOutput {
+	return o
+}
+
+func (o ContextArrayOutput) ToContextArrayOutputWithContext(ctx context.Context) ContextArrayOutput {
+	return o
+}
+
+func (o ContextArrayOutput) Index(i pulumi.IntInput) ContextOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) Context {
+		return vs[0].([]Context)[vs[1].(int)]
+	}).(ContextOutput)
+}
+
 type ContextContext struct {
 	Cluster string `pulumi:"cluster"`
 	User    string `pulumi:"user"`
+}
+
+type ContextContextOutput struct{ *pulumi.OutputState }
+
+func (ContextContextOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*ContextContext)(nil)).Elem()
+}
+
+func (o ContextContextOutput) ToContextContextOutput() ContextContextOutput {
+	return o
+}
+
+func (o ContextContextOutput) ToContextContextOutputWithContext(ctx context.Context) ContextContextOutput {
+	return o
+}
+
+func (o ContextContextOutput) Cluster() pulumi.StringOutput {
+	return o.ApplyT(func(v ContextContext) string { return v.Cluster }).(pulumi.StringOutput)
+}
+
+func (o ContextContextOutput) User() pulumi.StringOutput {
+	return o.ApplyT(func(v ContextContext) string { return v.User }).(pulumi.StringOutput)
 }
 
 type Kubeconfig struct {
 	Clusters []Cluster `pulumi:"clusters"`
 	Contexts []Context `pulumi:"contexts"`
 	Users    []User    `pulumi:"users"`
+}
+
+type KubeconfigOutput struct{ *pulumi.OutputState }
+
+func (KubeconfigOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*Kubeconfig)(nil)).Elem()
+}
+
+func (o KubeconfigOutput) ToKubeconfigOutput() KubeconfigOutput {
+	return o
+}
+
+func (o KubeconfigOutput) ToKubeconfigOutputWithContext(ctx context.Context) KubeconfigOutput {
+	return o
+}
+
+func (o KubeconfigOutput) Clusters() ClusterArrayOutput {
+	return o.ApplyT(func(v Kubeconfig) []Cluster { return v.Clusters }).(ClusterArrayOutput)
+}
+
+func (o KubeconfigOutput) Contexts() ContextArrayOutput {
+	return o.ApplyT(func(v Kubeconfig) []Context { return v.Contexts }).(ContextArrayOutput)
+}
+
+func (o KubeconfigOutput) Users() UserArrayOutput {
+	return o.ApplyT(func(v Kubeconfig) []User { return v.Users }).(UserArrayOutput)
 }
 
 type KubeconfigAdminOptions struct {
@@ -72,47 +226,6 @@ func (i KubeconfigAdminOptionsArgs) ToKubeconfigAdminOptionsOutputWithContext(ct
 	return pulumi.ToOutputWithContext(ctx, i).(KubeconfigAdminOptionsOutput)
 }
 
-func (i KubeconfigAdminOptionsArgs) ToKubeconfigAdminOptionsPtrOutput() KubeconfigAdminOptionsPtrOutput {
-	return i.ToKubeconfigAdminOptionsPtrOutputWithContext(context.Background())
-}
-
-func (i KubeconfigAdminOptionsArgs) ToKubeconfigAdminOptionsPtrOutputWithContext(ctx context.Context) KubeconfigAdminOptionsPtrOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(KubeconfigAdminOptionsOutput).ToKubeconfigAdminOptionsPtrOutputWithContext(ctx)
-}
-
-// KubeconfigAdminOptionsPtrInput is an input type that accepts KubeconfigAdminOptionsArgs, KubeconfigAdminOptionsPtr and KubeconfigAdminOptionsPtrOutput values.
-// You can construct a concrete instance of `KubeconfigAdminOptionsPtrInput` via:
-//
-//	        KubeconfigAdminOptionsArgs{...}
-//
-//	or:
-//
-//	        nil
-type KubeconfigAdminOptionsPtrInput interface {
-	pulumi.Input
-
-	ToKubeconfigAdminOptionsPtrOutput() KubeconfigAdminOptionsPtrOutput
-	ToKubeconfigAdminOptionsPtrOutputWithContext(context.Context) KubeconfigAdminOptionsPtrOutput
-}
-
-type kubeconfigAdminOptionsPtrType KubeconfigAdminOptionsArgs
-
-func KubeconfigAdminOptionsPtr(v *KubeconfigAdminOptionsArgs) KubeconfigAdminOptionsPtrInput {
-	return (*kubeconfigAdminOptionsPtrType)(v)
-}
-
-func (*kubeconfigAdminOptionsPtrType) ElementType() reflect.Type {
-	return reflect.TypeOf((**KubeconfigAdminOptions)(nil)).Elem()
-}
-
-func (i *kubeconfigAdminOptionsPtrType) ToKubeconfigAdminOptionsPtrOutput() KubeconfigAdminOptionsPtrOutput {
-	return i.ToKubeconfigAdminOptionsPtrOutputWithContext(context.Background())
-}
-
-func (i *kubeconfigAdminOptionsPtrType) ToKubeconfigAdminOptionsPtrOutputWithContext(ctx context.Context) KubeconfigAdminOptionsPtrOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(KubeconfigAdminOptionsPtrOutput)
-}
-
 type KubeconfigAdminOptionsOutput struct{ *pulumi.OutputState }
 
 func (KubeconfigAdminOptionsOutput) ElementType() reflect.Type {
@@ -127,64 +240,12 @@ func (o KubeconfigAdminOptionsOutput) ToKubeconfigAdminOptionsOutputWithContext(
 	return o
 }
 
-func (o KubeconfigAdminOptionsOutput) ToKubeconfigAdminOptionsPtrOutput() KubeconfigAdminOptionsPtrOutput {
-	return o.ToKubeconfigAdminOptionsPtrOutputWithContext(context.Background())
-}
-
-func (o KubeconfigAdminOptionsOutput) ToKubeconfigAdminOptionsPtrOutputWithContext(ctx context.Context) KubeconfigAdminOptionsPtrOutput {
-	return o.ApplyTWithContext(ctx, func(_ context.Context, v KubeconfigAdminOptions) *KubeconfigAdminOptions {
-		return &v
-	}).(KubeconfigAdminOptionsPtrOutput)
-}
-
 func (o KubeconfigAdminOptionsOutput) PublicIp() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v KubeconfigAdminOptions) *string { return v.PublicIp }).(pulumi.StringPtrOutput)
 }
 
 func (o KubeconfigAdminOptionsOutput) Type() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v KubeconfigAdminOptions) *string { return v.Type }).(pulumi.StringPtrOutput)
-}
-
-type KubeconfigAdminOptionsPtrOutput struct{ *pulumi.OutputState }
-
-func (KubeconfigAdminOptionsPtrOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((**KubeconfigAdminOptions)(nil)).Elem()
-}
-
-func (o KubeconfigAdminOptionsPtrOutput) ToKubeconfigAdminOptionsPtrOutput() KubeconfigAdminOptionsPtrOutput {
-	return o
-}
-
-func (o KubeconfigAdminOptionsPtrOutput) ToKubeconfigAdminOptionsPtrOutputWithContext(ctx context.Context) KubeconfigAdminOptionsPtrOutput {
-	return o
-}
-
-func (o KubeconfigAdminOptionsPtrOutput) Elem() KubeconfigAdminOptionsOutput {
-	return o.ApplyT(func(v *KubeconfigAdminOptions) KubeconfigAdminOptions {
-		if v != nil {
-			return *v
-		}
-		var ret KubeconfigAdminOptions
-		return ret
-	}).(KubeconfigAdminOptionsOutput)
-}
-
-func (o KubeconfigAdminOptionsPtrOutput) PublicIp() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *KubeconfigAdminOptions) *string {
-		if v == nil {
-			return nil
-		}
-		return v.PublicIp
-	}).(pulumi.StringPtrOutput)
-}
-
-func (o KubeconfigAdminOptionsPtrOutput) Type() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *KubeconfigAdminOptions) *string {
-		if v == nil {
-			return nil
-		}
-		return v.Type
-	}).(pulumi.StringPtrOutput)
 }
 
 type KubeconfigKubeControllerManagerOptions struct {
@@ -220,47 +281,6 @@ func (i KubeconfigKubeControllerManagerOptionsArgs) ToKubeconfigKubeControllerMa
 	return pulumi.ToOutputWithContext(ctx, i).(KubeconfigKubeControllerManagerOptionsOutput)
 }
 
-func (i KubeconfigKubeControllerManagerOptionsArgs) ToKubeconfigKubeControllerManagerOptionsPtrOutput() KubeconfigKubeControllerManagerOptionsPtrOutput {
-	return i.ToKubeconfigKubeControllerManagerOptionsPtrOutputWithContext(context.Background())
-}
-
-func (i KubeconfigKubeControllerManagerOptionsArgs) ToKubeconfigKubeControllerManagerOptionsPtrOutputWithContext(ctx context.Context) KubeconfigKubeControllerManagerOptionsPtrOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(KubeconfigKubeControllerManagerOptionsOutput).ToKubeconfigKubeControllerManagerOptionsPtrOutputWithContext(ctx)
-}
-
-// KubeconfigKubeControllerManagerOptionsPtrInput is an input type that accepts KubeconfigKubeControllerManagerOptionsArgs, KubeconfigKubeControllerManagerOptionsPtr and KubeconfigKubeControllerManagerOptionsPtrOutput values.
-// You can construct a concrete instance of `KubeconfigKubeControllerManagerOptionsPtrInput` via:
-//
-//	        KubeconfigKubeControllerManagerOptionsArgs{...}
-//
-//	or:
-//
-//	        nil
-type KubeconfigKubeControllerManagerOptionsPtrInput interface {
-	pulumi.Input
-
-	ToKubeconfigKubeControllerManagerOptionsPtrOutput() KubeconfigKubeControllerManagerOptionsPtrOutput
-	ToKubeconfigKubeControllerManagerOptionsPtrOutputWithContext(context.Context) KubeconfigKubeControllerManagerOptionsPtrOutput
-}
-
-type kubeconfigKubeControllerManagerOptionsPtrType KubeconfigKubeControllerManagerOptionsArgs
-
-func KubeconfigKubeControllerManagerOptionsPtr(v *KubeconfigKubeControllerManagerOptionsArgs) KubeconfigKubeControllerManagerOptionsPtrInput {
-	return (*kubeconfigKubeControllerManagerOptionsPtrType)(v)
-}
-
-func (*kubeconfigKubeControllerManagerOptionsPtrType) ElementType() reflect.Type {
-	return reflect.TypeOf((**KubeconfigKubeControllerManagerOptions)(nil)).Elem()
-}
-
-func (i *kubeconfigKubeControllerManagerOptionsPtrType) ToKubeconfigKubeControllerManagerOptionsPtrOutput() KubeconfigKubeControllerManagerOptionsPtrOutput {
-	return i.ToKubeconfigKubeControllerManagerOptionsPtrOutputWithContext(context.Background())
-}
-
-func (i *kubeconfigKubeControllerManagerOptionsPtrType) ToKubeconfigKubeControllerManagerOptionsPtrOutputWithContext(ctx context.Context) KubeconfigKubeControllerManagerOptionsPtrOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(KubeconfigKubeControllerManagerOptionsPtrOutput)
-}
-
 type KubeconfigKubeControllerManagerOptionsOutput struct{ *pulumi.OutputState }
 
 func (KubeconfigKubeControllerManagerOptionsOutput) ElementType() reflect.Type {
@@ -275,64 +295,12 @@ func (o KubeconfigKubeControllerManagerOptionsOutput) ToKubeconfigKubeController
 	return o
 }
 
-func (o KubeconfigKubeControllerManagerOptionsOutput) ToKubeconfigKubeControllerManagerOptionsPtrOutput() KubeconfigKubeControllerManagerOptionsPtrOutput {
-	return o.ToKubeconfigKubeControllerManagerOptionsPtrOutputWithContext(context.Background())
-}
-
-func (o KubeconfigKubeControllerManagerOptionsOutput) ToKubeconfigKubeControllerManagerOptionsPtrOutputWithContext(ctx context.Context) KubeconfigKubeControllerManagerOptionsPtrOutput {
-	return o.ApplyTWithContext(ctx, func(_ context.Context, v KubeconfigKubeControllerManagerOptions) *KubeconfigKubeControllerManagerOptions {
-		return &v
-	}).(KubeconfigKubeControllerManagerOptionsPtrOutput)
-}
-
 func (o KubeconfigKubeControllerManagerOptionsOutput) PublicIp() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v KubeconfigKubeControllerManagerOptions) *string { return v.PublicIp }).(pulumi.StringPtrOutput)
 }
 
 func (o KubeconfigKubeControllerManagerOptionsOutput) Type() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v KubeconfigKubeControllerManagerOptions) *string { return v.Type }).(pulumi.StringPtrOutput)
-}
-
-type KubeconfigKubeControllerManagerOptionsPtrOutput struct{ *pulumi.OutputState }
-
-func (KubeconfigKubeControllerManagerOptionsPtrOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((**KubeconfigKubeControllerManagerOptions)(nil)).Elem()
-}
-
-func (o KubeconfigKubeControllerManagerOptionsPtrOutput) ToKubeconfigKubeControllerManagerOptionsPtrOutput() KubeconfigKubeControllerManagerOptionsPtrOutput {
-	return o
-}
-
-func (o KubeconfigKubeControllerManagerOptionsPtrOutput) ToKubeconfigKubeControllerManagerOptionsPtrOutputWithContext(ctx context.Context) KubeconfigKubeControllerManagerOptionsPtrOutput {
-	return o
-}
-
-func (o KubeconfigKubeControllerManagerOptionsPtrOutput) Elem() KubeconfigKubeControllerManagerOptionsOutput {
-	return o.ApplyT(func(v *KubeconfigKubeControllerManagerOptions) KubeconfigKubeControllerManagerOptions {
-		if v != nil {
-			return *v
-		}
-		var ret KubeconfigKubeControllerManagerOptions
-		return ret
-	}).(KubeconfigKubeControllerManagerOptionsOutput)
-}
-
-func (o KubeconfigKubeControllerManagerOptionsPtrOutput) PublicIp() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *KubeconfigKubeControllerManagerOptions) *string {
-		if v == nil {
-			return nil
-		}
-		return v.PublicIp
-	}).(pulumi.StringPtrOutput)
-}
-
-func (o KubeconfigKubeControllerManagerOptionsPtrOutput) Type() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *KubeconfigKubeControllerManagerOptions) *string {
-		if v == nil {
-			return nil
-		}
-		return v.Type
-	}).(pulumi.StringPtrOutput)
 }
 
 type KubeconfigKubeProxyOptions struct {
@@ -368,47 +336,6 @@ func (i KubeconfigKubeProxyOptionsArgs) ToKubeconfigKubeProxyOptionsOutputWithCo
 	return pulumi.ToOutputWithContext(ctx, i).(KubeconfigKubeProxyOptionsOutput)
 }
 
-func (i KubeconfigKubeProxyOptionsArgs) ToKubeconfigKubeProxyOptionsPtrOutput() KubeconfigKubeProxyOptionsPtrOutput {
-	return i.ToKubeconfigKubeProxyOptionsPtrOutputWithContext(context.Background())
-}
-
-func (i KubeconfigKubeProxyOptionsArgs) ToKubeconfigKubeProxyOptionsPtrOutputWithContext(ctx context.Context) KubeconfigKubeProxyOptionsPtrOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(KubeconfigKubeProxyOptionsOutput).ToKubeconfigKubeProxyOptionsPtrOutputWithContext(ctx)
-}
-
-// KubeconfigKubeProxyOptionsPtrInput is an input type that accepts KubeconfigKubeProxyOptionsArgs, KubeconfigKubeProxyOptionsPtr and KubeconfigKubeProxyOptionsPtrOutput values.
-// You can construct a concrete instance of `KubeconfigKubeProxyOptionsPtrInput` via:
-//
-//	        KubeconfigKubeProxyOptionsArgs{...}
-//
-//	or:
-//
-//	        nil
-type KubeconfigKubeProxyOptionsPtrInput interface {
-	pulumi.Input
-
-	ToKubeconfigKubeProxyOptionsPtrOutput() KubeconfigKubeProxyOptionsPtrOutput
-	ToKubeconfigKubeProxyOptionsPtrOutputWithContext(context.Context) KubeconfigKubeProxyOptionsPtrOutput
-}
-
-type kubeconfigKubeProxyOptionsPtrType KubeconfigKubeProxyOptionsArgs
-
-func KubeconfigKubeProxyOptionsPtr(v *KubeconfigKubeProxyOptionsArgs) KubeconfigKubeProxyOptionsPtrInput {
-	return (*kubeconfigKubeProxyOptionsPtrType)(v)
-}
-
-func (*kubeconfigKubeProxyOptionsPtrType) ElementType() reflect.Type {
-	return reflect.TypeOf((**KubeconfigKubeProxyOptions)(nil)).Elem()
-}
-
-func (i *kubeconfigKubeProxyOptionsPtrType) ToKubeconfigKubeProxyOptionsPtrOutput() KubeconfigKubeProxyOptionsPtrOutput {
-	return i.ToKubeconfigKubeProxyOptionsPtrOutputWithContext(context.Background())
-}
-
-func (i *kubeconfigKubeProxyOptionsPtrType) ToKubeconfigKubeProxyOptionsPtrOutputWithContext(ctx context.Context) KubeconfigKubeProxyOptionsPtrOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(KubeconfigKubeProxyOptionsPtrOutput)
-}
-
 type KubeconfigKubeProxyOptionsOutput struct{ *pulumi.OutputState }
 
 func (KubeconfigKubeProxyOptionsOutput) ElementType() reflect.Type {
@@ -423,64 +350,12 @@ func (o KubeconfigKubeProxyOptionsOutput) ToKubeconfigKubeProxyOptionsOutputWith
 	return o
 }
 
-func (o KubeconfigKubeProxyOptionsOutput) ToKubeconfigKubeProxyOptionsPtrOutput() KubeconfigKubeProxyOptionsPtrOutput {
-	return o.ToKubeconfigKubeProxyOptionsPtrOutputWithContext(context.Background())
-}
-
-func (o KubeconfigKubeProxyOptionsOutput) ToKubeconfigKubeProxyOptionsPtrOutputWithContext(ctx context.Context) KubeconfigKubeProxyOptionsPtrOutput {
-	return o.ApplyTWithContext(ctx, func(_ context.Context, v KubeconfigKubeProxyOptions) *KubeconfigKubeProxyOptions {
-		return &v
-	}).(KubeconfigKubeProxyOptionsPtrOutput)
-}
-
 func (o KubeconfigKubeProxyOptionsOutput) PublicIp() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v KubeconfigKubeProxyOptions) *string { return v.PublicIp }).(pulumi.StringPtrOutput)
 }
 
 func (o KubeconfigKubeProxyOptionsOutput) Type() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v KubeconfigKubeProxyOptions) *string { return v.Type }).(pulumi.StringPtrOutput)
-}
-
-type KubeconfigKubeProxyOptionsPtrOutput struct{ *pulumi.OutputState }
-
-func (KubeconfigKubeProxyOptionsPtrOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((**KubeconfigKubeProxyOptions)(nil)).Elem()
-}
-
-func (o KubeconfigKubeProxyOptionsPtrOutput) ToKubeconfigKubeProxyOptionsPtrOutput() KubeconfigKubeProxyOptionsPtrOutput {
-	return o
-}
-
-func (o KubeconfigKubeProxyOptionsPtrOutput) ToKubeconfigKubeProxyOptionsPtrOutputWithContext(ctx context.Context) KubeconfigKubeProxyOptionsPtrOutput {
-	return o
-}
-
-func (o KubeconfigKubeProxyOptionsPtrOutput) Elem() KubeconfigKubeProxyOptionsOutput {
-	return o.ApplyT(func(v *KubeconfigKubeProxyOptions) KubeconfigKubeProxyOptions {
-		if v != nil {
-			return *v
-		}
-		var ret KubeconfigKubeProxyOptions
-		return ret
-	}).(KubeconfigKubeProxyOptionsOutput)
-}
-
-func (o KubeconfigKubeProxyOptionsPtrOutput) PublicIp() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *KubeconfigKubeProxyOptions) *string {
-		if v == nil {
-			return nil
-		}
-		return v.PublicIp
-	}).(pulumi.StringPtrOutput)
-}
-
-func (o KubeconfigKubeProxyOptionsPtrOutput) Type() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *KubeconfigKubeProxyOptions) *string {
-		if v == nil {
-			return nil
-		}
-		return v.Type
-	}).(pulumi.StringPtrOutput)
 }
 
 type KubeconfigKubeSchedulerOptions struct {
@@ -516,47 +391,6 @@ func (i KubeconfigKubeSchedulerOptionsArgs) ToKubeconfigKubeSchedulerOptionsOutp
 	return pulumi.ToOutputWithContext(ctx, i).(KubeconfigKubeSchedulerOptionsOutput)
 }
 
-func (i KubeconfigKubeSchedulerOptionsArgs) ToKubeconfigKubeSchedulerOptionsPtrOutput() KubeconfigKubeSchedulerOptionsPtrOutput {
-	return i.ToKubeconfigKubeSchedulerOptionsPtrOutputWithContext(context.Background())
-}
-
-func (i KubeconfigKubeSchedulerOptionsArgs) ToKubeconfigKubeSchedulerOptionsPtrOutputWithContext(ctx context.Context) KubeconfigKubeSchedulerOptionsPtrOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(KubeconfigKubeSchedulerOptionsOutput).ToKubeconfigKubeSchedulerOptionsPtrOutputWithContext(ctx)
-}
-
-// KubeconfigKubeSchedulerOptionsPtrInput is an input type that accepts KubeconfigKubeSchedulerOptionsArgs, KubeconfigKubeSchedulerOptionsPtr and KubeconfigKubeSchedulerOptionsPtrOutput values.
-// You can construct a concrete instance of `KubeconfigKubeSchedulerOptionsPtrInput` via:
-//
-//	        KubeconfigKubeSchedulerOptionsArgs{...}
-//
-//	or:
-//
-//	        nil
-type KubeconfigKubeSchedulerOptionsPtrInput interface {
-	pulumi.Input
-
-	ToKubeconfigKubeSchedulerOptionsPtrOutput() KubeconfigKubeSchedulerOptionsPtrOutput
-	ToKubeconfigKubeSchedulerOptionsPtrOutputWithContext(context.Context) KubeconfigKubeSchedulerOptionsPtrOutput
-}
-
-type kubeconfigKubeSchedulerOptionsPtrType KubeconfigKubeSchedulerOptionsArgs
-
-func KubeconfigKubeSchedulerOptionsPtr(v *KubeconfigKubeSchedulerOptionsArgs) KubeconfigKubeSchedulerOptionsPtrInput {
-	return (*kubeconfigKubeSchedulerOptionsPtrType)(v)
-}
-
-func (*kubeconfigKubeSchedulerOptionsPtrType) ElementType() reflect.Type {
-	return reflect.TypeOf((**KubeconfigKubeSchedulerOptions)(nil)).Elem()
-}
-
-func (i *kubeconfigKubeSchedulerOptionsPtrType) ToKubeconfigKubeSchedulerOptionsPtrOutput() KubeconfigKubeSchedulerOptionsPtrOutput {
-	return i.ToKubeconfigKubeSchedulerOptionsPtrOutputWithContext(context.Background())
-}
-
-func (i *kubeconfigKubeSchedulerOptionsPtrType) ToKubeconfigKubeSchedulerOptionsPtrOutputWithContext(ctx context.Context) KubeconfigKubeSchedulerOptionsPtrOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(KubeconfigKubeSchedulerOptionsPtrOutput)
-}
-
 type KubeconfigKubeSchedulerOptionsOutput struct{ *pulumi.OutputState }
 
 func (KubeconfigKubeSchedulerOptionsOutput) ElementType() reflect.Type {
@@ -571,64 +405,12 @@ func (o KubeconfigKubeSchedulerOptionsOutput) ToKubeconfigKubeSchedulerOptionsOu
 	return o
 }
 
-func (o KubeconfigKubeSchedulerOptionsOutput) ToKubeconfigKubeSchedulerOptionsPtrOutput() KubeconfigKubeSchedulerOptionsPtrOutput {
-	return o.ToKubeconfigKubeSchedulerOptionsPtrOutputWithContext(context.Background())
-}
-
-func (o KubeconfigKubeSchedulerOptionsOutput) ToKubeconfigKubeSchedulerOptionsPtrOutputWithContext(ctx context.Context) KubeconfigKubeSchedulerOptionsPtrOutput {
-	return o.ApplyTWithContext(ctx, func(_ context.Context, v KubeconfigKubeSchedulerOptions) *KubeconfigKubeSchedulerOptions {
-		return &v
-	}).(KubeconfigKubeSchedulerOptionsPtrOutput)
-}
-
 func (o KubeconfigKubeSchedulerOptionsOutput) PublicIp() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v KubeconfigKubeSchedulerOptions) *string { return v.PublicIp }).(pulumi.StringPtrOutput)
 }
 
 func (o KubeconfigKubeSchedulerOptionsOutput) Type() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v KubeconfigKubeSchedulerOptions) *string { return v.Type }).(pulumi.StringPtrOutput)
-}
-
-type KubeconfigKubeSchedulerOptionsPtrOutput struct{ *pulumi.OutputState }
-
-func (KubeconfigKubeSchedulerOptionsPtrOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((**KubeconfigKubeSchedulerOptions)(nil)).Elem()
-}
-
-func (o KubeconfigKubeSchedulerOptionsPtrOutput) ToKubeconfigKubeSchedulerOptionsPtrOutput() KubeconfigKubeSchedulerOptionsPtrOutput {
-	return o
-}
-
-func (o KubeconfigKubeSchedulerOptionsPtrOutput) ToKubeconfigKubeSchedulerOptionsPtrOutputWithContext(ctx context.Context) KubeconfigKubeSchedulerOptionsPtrOutput {
-	return o
-}
-
-func (o KubeconfigKubeSchedulerOptionsPtrOutput) Elem() KubeconfigKubeSchedulerOptionsOutput {
-	return o.ApplyT(func(v *KubeconfigKubeSchedulerOptions) KubeconfigKubeSchedulerOptions {
-		if v != nil {
-			return *v
-		}
-		var ret KubeconfigKubeSchedulerOptions
-		return ret
-	}).(KubeconfigKubeSchedulerOptionsOutput)
-}
-
-func (o KubeconfigKubeSchedulerOptionsPtrOutput) PublicIp() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *KubeconfigKubeSchedulerOptions) *string {
-		if v == nil {
-			return nil
-		}
-		return v.PublicIp
-	}).(pulumi.StringPtrOutput)
-}
-
-func (o KubeconfigKubeSchedulerOptionsPtrOutput) Type() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *KubeconfigKubeSchedulerOptions) *string {
-		if v == nil {
-			return nil
-		}
-		return v.Type
-	}).(pulumi.StringPtrOutput)
 }
 
 type KubeconfigWorkerOptions struct {
@@ -666,47 +448,6 @@ func (i KubeconfigWorkerOptionsArgs) ToKubeconfigWorkerOptionsOutputWithContext(
 	return pulumi.ToOutputWithContext(ctx, i).(KubeconfigWorkerOptionsOutput)
 }
 
-func (i KubeconfigWorkerOptionsArgs) ToKubeconfigWorkerOptionsPtrOutput() KubeconfigWorkerOptionsPtrOutput {
-	return i.ToKubeconfigWorkerOptionsPtrOutputWithContext(context.Background())
-}
-
-func (i KubeconfigWorkerOptionsArgs) ToKubeconfigWorkerOptionsPtrOutputWithContext(ctx context.Context) KubeconfigWorkerOptionsPtrOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(KubeconfigWorkerOptionsOutput).ToKubeconfigWorkerOptionsPtrOutputWithContext(ctx)
-}
-
-// KubeconfigWorkerOptionsPtrInput is an input type that accepts KubeconfigWorkerOptionsArgs, KubeconfigWorkerOptionsPtr and KubeconfigWorkerOptionsPtrOutput values.
-// You can construct a concrete instance of `KubeconfigWorkerOptionsPtrInput` via:
-//
-//	        KubeconfigWorkerOptionsArgs{...}
-//
-//	or:
-//
-//	        nil
-type KubeconfigWorkerOptionsPtrInput interface {
-	pulumi.Input
-
-	ToKubeconfigWorkerOptionsPtrOutput() KubeconfigWorkerOptionsPtrOutput
-	ToKubeconfigWorkerOptionsPtrOutputWithContext(context.Context) KubeconfigWorkerOptionsPtrOutput
-}
-
-type kubeconfigWorkerOptionsPtrType KubeconfigWorkerOptionsArgs
-
-func KubeconfigWorkerOptionsPtr(v *KubeconfigWorkerOptionsArgs) KubeconfigWorkerOptionsPtrInput {
-	return (*kubeconfigWorkerOptionsPtrType)(v)
-}
-
-func (*kubeconfigWorkerOptionsPtrType) ElementType() reflect.Type {
-	return reflect.TypeOf((**KubeconfigWorkerOptions)(nil)).Elem()
-}
-
-func (i *kubeconfigWorkerOptionsPtrType) ToKubeconfigWorkerOptionsPtrOutput() KubeconfigWorkerOptionsPtrOutput {
-	return i.ToKubeconfigWorkerOptionsPtrOutputWithContext(context.Background())
-}
-
-func (i *kubeconfigWorkerOptionsPtrType) ToKubeconfigWorkerOptionsPtrOutputWithContext(ctx context.Context) KubeconfigWorkerOptionsPtrOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(KubeconfigWorkerOptionsPtrOutput)
-}
-
 type KubeconfigWorkerOptionsOutput struct{ *pulumi.OutputState }
 
 func (KubeconfigWorkerOptionsOutput) ElementType() reflect.Type {
@@ -721,16 +462,6 @@ func (o KubeconfigWorkerOptionsOutput) ToKubeconfigWorkerOptionsOutputWithContex
 	return o
 }
 
-func (o KubeconfigWorkerOptionsOutput) ToKubeconfigWorkerOptionsPtrOutput() KubeconfigWorkerOptionsPtrOutput {
-	return o.ToKubeconfigWorkerOptionsPtrOutputWithContext(context.Background())
-}
-
-func (o KubeconfigWorkerOptionsOutput) ToKubeconfigWorkerOptionsPtrOutputWithContext(ctx context.Context) KubeconfigWorkerOptionsPtrOutput {
-	return o.ApplyTWithContext(ctx, func(_ context.Context, v KubeconfigWorkerOptions) *KubeconfigWorkerOptions {
-		return &v
-	}).(KubeconfigWorkerOptionsPtrOutput)
-}
-
 func (o KubeconfigWorkerOptionsOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v KubeconfigWorkerOptions) string { return v.Name }).(pulumi.StringOutput)
 }
@@ -743,60 +474,51 @@ func (o KubeconfigWorkerOptionsOutput) Type() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v KubeconfigWorkerOptions) *string { return v.Type }).(pulumi.StringPtrOutput)
 }
 
-type KubeconfigWorkerOptionsPtrOutput struct{ *pulumi.OutputState }
-
-func (KubeconfigWorkerOptionsPtrOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((**KubeconfigWorkerOptions)(nil)).Elem()
-}
-
-func (o KubeconfigWorkerOptionsPtrOutput) ToKubeconfigWorkerOptionsPtrOutput() KubeconfigWorkerOptionsPtrOutput {
-	return o
-}
-
-func (o KubeconfigWorkerOptionsPtrOutput) ToKubeconfigWorkerOptionsPtrOutputWithContext(ctx context.Context) KubeconfigWorkerOptionsPtrOutput {
-	return o
-}
-
-func (o KubeconfigWorkerOptionsPtrOutput) Elem() KubeconfigWorkerOptionsOutput {
-	return o.ApplyT(func(v *KubeconfigWorkerOptions) KubeconfigWorkerOptions {
-		if v != nil {
-			return *v
-		}
-		var ret KubeconfigWorkerOptions
-		return ret
-	}).(KubeconfigWorkerOptionsOutput)
-}
-
-func (o KubeconfigWorkerOptionsPtrOutput) Name() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *KubeconfigWorkerOptions) *string {
-		if v == nil {
-			return nil
-		}
-		return &v.Name
-	}).(pulumi.StringPtrOutput)
-}
-
-func (o KubeconfigWorkerOptionsPtrOutput) PublicIp() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *KubeconfigWorkerOptions) *string {
-		if v == nil {
-			return nil
-		}
-		return &v.PublicIp
-	}).(pulumi.StringPtrOutput)
-}
-
-func (o KubeconfigWorkerOptionsPtrOutput) Type() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *KubeconfigWorkerOptions) *string {
-		if v == nil {
-			return nil
-		}
-		return v.Type
-	}).(pulumi.StringPtrOutput)
-}
-
 type User struct {
 	Name string   `pulumi:"name"`
 	User UserUser `pulumi:"user"`
+}
+
+type UserOutput struct{ *pulumi.OutputState }
+
+func (UserOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*User)(nil)).Elem()
+}
+
+func (o UserOutput) ToUserOutput() UserOutput {
+	return o
+}
+
+func (o UserOutput) ToUserOutputWithContext(ctx context.Context) UserOutput {
+	return o
+}
+
+func (o UserOutput) Name() pulumi.StringOutput {
+	return o.ApplyT(func(v User) string { return v.Name }).(pulumi.StringOutput)
+}
+
+func (o UserOutput) User() UserUserOutput {
+	return o.ApplyT(func(v User) UserUser { return v.User }).(UserUserOutput)
+}
+
+type UserArrayOutput struct{ *pulumi.OutputState }
+
+func (UserArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]User)(nil)).Elem()
+}
+
+func (o UserArrayOutput) ToUserArrayOutput() UserArrayOutput {
+	return o
+}
+
+func (o UserArrayOutput) ToUserArrayOutputWithContext(ctx context.Context) UserArrayOutput {
+	return o
+}
+
+func (o UserArrayOutput) Index(i pulumi.IntInput) UserOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) User {
+		return vs[0].([]User)[vs[1].(int)]
+	}).(UserOutput)
 }
 
 type UserUser struct {
@@ -804,25 +526,47 @@ type UserUser struct {
 	ClientKeyData         string `pulumi:"clientKeyData"`
 }
 
+type UserUserOutput struct{ *pulumi.OutputState }
+
+func (UserUserOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*UserUser)(nil)).Elem()
+}
+
+func (o UserUserOutput) ToUserUserOutput() UserUserOutput {
+	return o
+}
+
+func (o UserUserOutput) ToUserUserOutputWithContext(ctx context.Context) UserUserOutput {
+	return o
+}
+
+func (o UserUserOutput) ClientCertificateData() pulumi.StringOutput {
+	return o.ApplyT(func(v UserUser) string { return v.ClientCertificateData }).(pulumi.StringOutput)
+}
+
+func (o UserUserOutput) ClientKeyData() pulumi.StringOutput {
+	return o.ApplyT(func(v UserUser) string { return v.ClientKeyData }).(pulumi.StringOutput)
+}
+
 func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*KubeconfigAdminOptionsInput)(nil)).Elem(), KubeconfigAdminOptionsArgs{})
-	pulumi.RegisterInputType(reflect.TypeOf((*KubeconfigAdminOptionsPtrInput)(nil)).Elem(), KubeconfigAdminOptionsArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*KubeconfigKubeControllerManagerOptionsInput)(nil)).Elem(), KubeconfigKubeControllerManagerOptionsArgs{})
-	pulumi.RegisterInputType(reflect.TypeOf((*KubeconfigKubeControllerManagerOptionsPtrInput)(nil)).Elem(), KubeconfigKubeControllerManagerOptionsArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*KubeconfigKubeProxyOptionsInput)(nil)).Elem(), KubeconfigKubeProxyOptionsArgs{})
-	pulumi.RegisterInputType(reflect.TypeOf((*KubeconfigKubeProxyOptionsPtrInput)(nil)).Elem(), KubeconfigKubeProxyOptionsArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*KubeconfigKubeSchedulerOptionsInput)(nil)).Elem(), KubeconfigKubeSchedulerOptionsArgs{})
-	pulumi.RegisterInputType(reflect.TypeOf((*KubeconfigKubeSchedulerOptionsPtrInput)(nil)).Elem(), KubeconfigKubeSchedulerOptionsArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*KubeconfigWorkerOptionsInput)(nil)).Elem(), KubeconfigWorkerOptionsArgs{})
-	pulumi.RegisterInputType(reflect.TypeOf((*KubeconfigWorkerOptionsPtrInput)(nil)).Elem(), KubeconfigWorkerOptionsArgs{})
+	pulumi.RegisterOutputType(ClusterOutput{})
+	pulumi.RegisterOutputType(ClusterArrayOutput{})
+	pulumi.RegisterOutputType(ClusterClusterOutput{})
+	pulumi.RegisterOutputType(ContextOutput{})
+	pulumi.RegisterOutputType(ContextArrayOutput{})
+	pulumi.RegisterOutputType(ContextContextOutput{})
+	pulumi.RegisterOutputType(KubeconfigOutput{})
 	pulumi.RegisterOutputType(KubeconfigAdminOptionsOutput{})
-	pulumi.RegisterOutputType(KubeconfigAdminOptionsPtrOutput{})
 	pulumi.RegisterOutputType(KubeconfigKubeControllerManagerOptionsOutput{})
-	pulumi.RegisterOutputType(KubeconfigKubeControllerManagerOptionsPtrOutput{})
 	pulumi.RegisterOutputType(KubeconfigKubeProxyOptionsOutput{})
-	pulumi.RegisterOutputType(KubeconfigKubeProxyOptionsPtrOutput{})
 	pulumi.RegisterOutputType(KubeconfigKubeSchedulerOptionsOutput{})
-	pulumi.RegisterOutputType(KubeconfigKubeSchedulerOptionsPtrOutput{})
 	pulumi.RegisterOutputType(KubeconfigWorkerOptionsOutput{})
-	pulumi.RegisterOutputType(KubeconfigWorkerOptionsPtrOutput{})
+	pulumi.RegisterOutputType(UserOutput{})
+	pulumi.RegisterOutputType(UserArrayOutput{})
+	pulumi.RegisterOutputType(UserUserOutput{})
 }

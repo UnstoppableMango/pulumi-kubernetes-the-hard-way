@@ -27,6 +27,11 @@ export class Kubeconfig extends pulumi.ComponentResource {
         return obj['__pulumiType'] === Kubeconfig.__pulumiType;
     }
 
+    public /*out*/ readonly value!: pulumi.Output<outputs.config.Kubeconfig>;
+    /**
+     * The yaml representation of the kubeconfig.
+     */
+    public /*out*/ readonly yaml!: pulumi.Output<string>;
 
     /**
      * Create a Kubeconfig resource with the given unique name, arguments, and options.
@@ -35,13 +40,23 @@ export class Kubeconfig extends pulumi.ComponentResource {
      * @param args The arguments to use to populate this resource's properties.
      * @param opts A bag of options that control this resource's behavior.
      */
-    constructor(name: string, args?: KubeconfigArgs, opts?: pulumi.ComponentResourceOptions) {
+    constructor(name: string, args: KubeconfigArgs, opts?: pulumi.ComponentResourceOptions) {
         let resourceInputs: pulumi.Inputs = {};
         opts = opts || {};
         if (!opts.id) {
+            if ((!args || args.options === undefined) && !opts.urn) {
+                throw new Error("Missing required property 'options'");
+            }
+            if ((!args || args.pki === undefined) && !opts.urn) {
+                throw new Error("Missing required property 'pki'");
+            }
             resourceInputs["options"] = args ? args.options : undefined;
             resourceInputs["pki"] = args ? args.pki : undefined;
+            resourceInputs["value"] = undefined /*out*/;
+            resourceInputs["yaml"] = undefined /*out*/;
         } else {
+            resourceInputs["value"] = undefined /*out*/;
+            resourceInputs["yaml"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         super(Kubeconfig.__pulumiType, name, resourceInputs, opts, true /*remote*/);
@@ -52,9 +67,9 @@ export class Kubeconfig extends pulumi.ComponentResource {
  * The set of arguments for constructing a Kubeconfig resource.
  */
 export interface KubeconfigArgs {
-    options?: pulumi.Input<inputs.config.KubeconfigAdminOptionsArgs | inputs.config.KubeconfigKubeControllerManagerOptionsArgs | inputs.config.KubeconfigKubeProxyOptionsArgs | inputs.config.KubeconfigKubeSchedulerOptionsArgs | inputs.config.KubeconfigWorkerOptionsArgs>;
+    options: pulumi.Input<inputs.config.KubeconfigAdminOptionsArgs | inputs.config.KubeconfigKubeControllerManagerOptionsArgs | inputs.config.KubeconfigKubeProxyOptionsArgs | inputs.config.KubeconfigKubeSchedulerOptionsArgs | inputs.config.KubeconfigWorkerOptionsArgs>;
     /**
      * The PKI containing certificate data.
      */
-    pki?: pulumi.Input<ClusterPki>;
+    pki: pulumi.Input<ClusterPki>;
 }
