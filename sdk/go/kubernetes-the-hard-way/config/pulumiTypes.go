@@ -14,8 +14,8 @@ import (
 var _ = internal.GetEnvOrDefault
 
 type Cluster struct {
-	Cluster ClusterCluster `pulumi:"cluster"`
-	Name    string         `pulumi:"name"`
+	CertificateAuthorityData string `pulumi:"certificateAuthorityData"`
+	Server                   string `pulumi:"server"`
 }
 
 type ClusterOutput struct{ *pulumi.OutputState }
@@ -32,12 +32,12 @@ func (o ClusterOutput) ToClusterOutputWithContext(ctx context.Context) ClusterOu
 	return o
 }
 
-func (o ClusterOutput) Cluster() ClusterClusterOutput {
-	return o.ApplyT(func(v Cluster) ClusterCluster { return v.Cluster }).(ClusterClusterOutput)
+func (o ClusterOutput) CertificateAuthorityData() pulumi.StringOutput {
+	return o.ApplyT(func(v Cluster) string { return v.CertificateAuthorityData }).(pulumi.StringOutput)
 }
 
-func (o ClusterOutput) Name() pulumi.StringOutput {
-	return o.ApplyT(func(v Cluster) string { return v.Name }).(pulumi.StringOutput)
+func (o ClusterOutput) Server() pulumi.StringOutput {
+	return o.ApplyT(func(v Cluster) string { return v.Server }).(pulumi.StringOutput)
 }
 
 type ClusterArrayOutput struct{ *pulumi.OutputState }
@@ -60,36 +60,9 @@ func (o ClusterArrayOutput) Index(i pulumi.IntInput) ClusterOutput {
 	}).(ClusterOutput)
 }
 
-type ClusterCluster struct {
-	CertificateAuthorityData string `pulumi:"certificateAuthorityData"`
-	Server                   string `pulumi:"server"`
-}
-
-type ClusterClusterOutput struct{ *pulumi.OutputState }
-
-func (ClusterClusterOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*ClusterCluster)(nil)).Elem()
-}
-
-func (o ClusterClusterOutput) ToClusterClusterOutput() ClusterClusterOutput {
-	return o
-}
-
-func (o ClusterClusterOutput) ToClusterClusterOutputWithContext(ctx context.Context) ClusterClusterOutput {
-	return o
-}
-
-func (o ClusterClusterOutput) CertificateAuthorityData() pulumi.StringOutput {
-	return o.ApplyT(func(v ClusterCluster) string { return v.CertificateAuthorityData }).(pulumi.StringOutput)
-}
-
-func (o ClusterClusterOutput) Server() pulumi.StringOutput {
-	return o.ApplyT(func(v ClusterCluster) string { return v.Server }).(pulumi.StringOutput)
-}
-
 type Context struct {
-	Context ContextContext `pulumi:"context"`
-	Name    string         `pulumi:"name"`
+	Cluster string `pulumi:"cluster"`
+	User    string `pulumi:"user"`
 }
 
 type ContextOutput struct{ *pulumi.OutputState }
@@ -106,12 +79,12 @@ func (o ContextOutput) ToContextOutputWithContext(ctx context.Context) ContextOu
 	return o
 }
 
-func (o ContextOutput) Context() ContextContextOutput {
-	return o.ApplyT(func(v Context) ContextContext { return v.Context }).(ContextContextOutput)
+func (o ContextOutput) Cluster() pulumi.StringOutput {
+	return o.ApplyT(func(v Context) string { return v.Cluster }).(pulumi.StringOutput)
 }
 
-func (o ContextOutput) Name() pulumi.StringOutput {
-	return o.ApplyT(func(v Context) string { return v.Name }).(pulumi.StringOutput)
+func (o ContextOutput) User() pulumi.StringOutput {
+	return o.ApplyT(func(v Context) string { return v.User }).(pulumi.StringOutput)
 }
 
 type ContextArrayOutput struct{ *pulumi.OutputState }
@@ -132,33 +105,6 @@ func (o ContextArrayOutput) Index(i pulumi.IntInput) ContextOutput {
 	return pulumi.All(o, i).ApplyT(func(vs []interface{}) Context {
 		return vs[0].([]Context)[vs[1].(int)]
 	}).(ContextOutput)
-}
-
-type ContextContext struct {
-	Cluster string `pulumi:"cluster"`
-	User    string `pulumi:"user"`
-}
-
-type ContextContextOutput struct{ *pulumi.OutputState }
-
-func (ContextContextOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*ContextContext)(nil)).Elem()
-}
-
-func (o ContextContextOutput) ToContextContextOutput() ContextContextOutput {
-	return o
-}
-
-func (o ContextContextOutput) ToContextContextOutputWithContext(ctx context.Context) ContextContextOutput {
-	return o
-}
-
-func (o ContextContextOutput) Cluster() pulumi.StringOutput {
-	return o.ApplyT(func(v ContextContext) string { return v.Cluster }).(pulumi.StringOutput)
-}
-
-func (o ContextContextOutput) User() pulumi.StringOutput {
-	return o.ApplyT(func(v ContextContext) string { return v.User }).(pulumi.StringOutput)
 }
 
 type Kubeconfig struct {
@@ -246,6 +192,16 @@ func (o KubeconfigAdminOptionsOutput) PublicIp() pulumi.StringPtrOutput {
 
 func (o KubeconfigAdminOptionsOutput) Type() pulumi.StringOutput {
 	return o.ApplyT(func(v KubeconfigAdminOptions) string { return v.Type }).(pulumi.StringOutput)
+}
+
+type KubeconfigCluster struct {
+	Cluster Cluster `pulumi:"cluster"`
+	Name    string  `pulumi:"name"`
+}
+
+type KubeconfigContext struct {
+	Context Context `pulumi:"context"`
+	Name    string  `pulumi:"name"`
 }
 
 type KubeconfigKubeControllerManagerOptions struct {
@@ -413,6 +369,11 @@ func (o KubeconfigKubeSchedulerOptionsOutput) Type() pulumi.StringOutput {
 	return o.ApplyT(func(v KubeconfigKubeSchedulerOptions) string { return v.Type }).(pulumi.StringOutput)
 }
 
+type KubeconfigUser struct {
+	Name string `pulumi:"name"`
+	User User   `pulumi:"user"`
+}
+
 type KubeconfigWorkerOptions struct {
 	Name     string  `pulumi:"name"`
 	PublicIp string  `pulumi:"publicIp"`
@@ -475,8 +436,8 @@ func (o KubeconfigWorkerOptionsOutput) Type() pulumi.StringPtrOutput {
 }
 
 type User struct {
-	Name string   `pulumi:"name"`
-	User UserUser `pulumi:"user"`
+	ClientCertificateData string `pulumi:"clientCertificateData"`
+	ClientKeyData         string `pulumi:"clientKeyData"`
 }
 
 type UserOutput struct{ *pulumi.OutputState }
@@ -493,12 +454,12 @@ func (o UserOutput) ToUserOutputWithContext(ctx context.Context) UserOutput {
 	return o
 }
 
-func (o UserOutput) Name() pulumi.StringOutput {
-	return o.ApplyT(func(v User) string { return v.Name }).(pulumi.StringOutput)
+func (o UserOutput) ClientCertificateData() pulumi.StringOutput {
+	return o.ApplyT(func(v User) string { return v.ClientCertificateData }).(pulumi.StringOutput)
 }
 
-func (o UserOutput) User() UserUserOutput {
-	return o.ApplyT(func(v User) UserUser { return v.User }).(UserUserOutput)
+func (o UserOutput) ClientKeyData() pulumi.StringOutput {
+	return o.ApplyT(func(v User) string { return v.ClientKeyData }).(pulumi.StringOutput)
 }
 
 type UserArrayOutput struct{ *pulumi.OutputState }
@@ -521,33 +482,6 @@ func (o UserArrayOutput) Index(i pulumi.IntInput) UserOutput {
 	}).(UserOutput)
 }
 
-type UserUser struct {
-	ClientCertificateData string `pulumi:"clientCertificateData"`
-	ClientKeyData         string `pulumi:"clientKeyData"`
-}
-
-type UserUserOutput struct{ *pulumi.OutputState }
-
-func (UserUserOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*UserUser)(nil)).Elem()
-}
-
-func (o UserUserOutput) ToUserUserOutput() UserUserOutput {
-	return o
-}
-
-func (o UserUserOutput) ToUserUserOutputWithContext(ctx context.Context) UserUserOutput {
-	return o
-}
-
-func (o UserUserOutput) ClientCertificateData() pulumi.StringOutput {
-	return o.ApplyT(func(v UserUser) string { return v.ClientCertificateData }).(pulumi.StringOutput)
-}
-
-func (o UserUserOutput) ClientKeyData() pulumi.StringOutput {
-	return o.ApplyT(func(v UserUser) string { return v.ClientKeyData }).(pulumi.StringOutput)
-}
-
 func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*KubeconfigAdminOptionsInput)(nil)).Elem(), KubeconfigAdminOptionsArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*KubeconfigKubeControllerManagerOptionsInput)(nil)).Elem(), KubeconfigKubeControllerManagerOptionsArgs{})
@@ -556,10 +490,8 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*KubeconfigWorkerOptionsInput)(nil)).Elem(), KubeconfigWorkerOptionsArgs{})
 	pulumi.RegisterOutputType(ClusterOutput{})
 	pulumi.RegisterOutputType(ClusterArrayOutput{})
-	pulumi.RegisterOutputType(ClusterClusterOutput{})
 	pulumi.RegisterOutputType(ContextOutput{})
 	pulumi.RegisterOutputType(ContextArrayOutput{})
-	pulumi.RegisterOutputType(ContextContextOutput{})
 	pulumi.RegisterOutputType(KubeconfigOutput{})
 	pulumi.RegisterOutputType(KubeconfigAdminOptionsOutput{})
 	pulumi.RegisterOutputType(KubeconfigKubeControllerManagerOptionsOutput{})
@@ -568,5 +500,4 @@ func init() {
 	pulumi.RegisterOutputType(KubeconfigWorkerOptionsOutput{})
 	pulumi.RegisterOutputType(UserOutput{})
 	pulumi.RegisterOutputType(UserArrayOutput{})
-	pulumi.RegisterOutputType(UserUserOutput{})
 }

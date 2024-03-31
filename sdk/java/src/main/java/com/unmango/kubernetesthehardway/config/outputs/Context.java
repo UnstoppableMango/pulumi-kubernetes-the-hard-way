@@ -5,21 +5,20 @@ package com.unmango.kubernetesthehardway.config.outputs;
 
 import com.pulumi.core.annotations.CustomType;
 import com.pulumi.exceptions.MissingRequiredPropertyException;
-import com.unmango.kubernetesthehardway.config.outputs.ContextContext;
 import java.lang.String;
 import java.util.Objects;
 
 @CustomType
 public final class Context {
-    private ContextContext context;
-    private String name;
+    private String cluster;
+    private String user;
 
     private Context() {}
-    public ContextContext context() {
-        return this.context;
+    public String cluster() {
+        return this.cluster;
     }
-    public String name() {
-        return this.name;
+    public String user() {
+        return this.user;
     }
 
     public static Builder builder() {
@@ -31,35 +30,35 @@ public final class Context {
     }
     @CustomType.Builder
     public static final class Builder {
-        private ContextContext context;
-        private String name;
+        private String cluster;
+        private String user;
         public Builder() {}
         public Builder(Context defaults) {
     	      Objects.requireNonNull(defaults);
-    	      this.context = defaults.context;
-    	      this.name = defaults.name;
+    	      this.cluster = defaults.cluster;
+    	      this.user = defaults.user;
         }
 
         @CustomType.Setter
-        public Builder context(ContextContext context) {
-            if (context == null) {
-              throw new MissingRequiredPropertyException("Context", "context");
+        public Builder cluster(String cluster) {
+            if (cluster == null) {
+              throw new MissingRequiredPropertyException("Context", "cluster");
             }
-            this.context = context;
+            this.cluster = cluster;
             return this;
         }
         @CustomType.Setter
-        public Builder name(String name) {
-            if (name == null) {
-              throw new MissingRequiredPropertyException("Context", "name");
+        public Builder user(String user) {
+            if (user == null) {
+              throw new MissingRequiredPropertyException("Context", "user");
             }
-            this.name = name;
+            this.user = user;
             return this;
         }
         public Context build() {
             final var _resultValue = new Context();
-            _resultValue.context = context;
-            _resultValue.name = name;
+            _resultValue.cluster = cluster;
+            _resultValue.user = user;
             return _resultValue;
         }
     }

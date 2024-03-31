@@ -13,35 +13,13 @@ from ._enums import *
 
 __all__ = [
     'Cluster',
-    'ClusterCluster',
     'Context',
-    'ContextContext',
     'Kubeconfig',
     'User',
-    'UserUser',
 ]
 
 @pulumi.output_type
 class Cluster(dict):
-    def __init__(__self__, *,
-                 cluster: 'outputs.ClusterCluster',
-                 name: str):
-        pulumi.set(__self__, "cluster", cluster)
-        pulumi.set(__self__, "name", name)
-
-    @property
-    @pulumi.getter
-    def cluster(self) -> 'outputs.ClusterCluster':
-        return pulumi.get(self, "cluster")
-
-    @property
-    @pulumi.getter
-    def name(self) -> str:
-        return pulumi.get(self, "name")
-
-
-@pulumi.output_type
-class ClusterCluster(dict):
     @staticmethod
     def __key_warning(key: str):
         suggest = None
@@ -49,14 +27,14 @@ class ClusterCluster(dict):
             suggest = "certificate_authority_data"
 
         if suggest:
-            pulumi.log.warn(f"Key '{key}' not found in ClusterCluster. Access the value via the '{suggest}' property getter instead.")
+            pulumi.log.warn(f"Key '{key}' not found in Cluster. Access the value via the '{suggest}' property getter instead.")
 
     def __getitem__(self, key: str) -> Any:
-        ClusterCluster.__key_warning(key)
+        Cluster.__key_warning(key)
         return super().__getitem__(key)
 
     def get(self, key: str, default = None) -> Any:
-        ClusterCluster.__key_warning(key)
+        Cluster.__key_warning(key)
         return super().get(key, default)
 
     def __init__(__self__, *,
@@ -78,25 +56,6 @@ class ClusterCluster(dict):
 
 @pulumi.output_type
 class Context(dict):
-    def __init__(__self__, *,
-                 context: 'outputs.ContextContext',
-                 name: str):
-        pulumi.set(__self__, "context", context)
-        pulumi.set(__self__, "name", name)
-
-    @property
-    @pulumi.getter
-    def context(self) -> 'outputs.ContextContext':
-        return pulumi.get(self, "context")
-
-    @property
-    @pulumi.getter
-    def name(self) -> str:
-        return pulumi.get(self, "name")
-
-
-@pulumi.output_type
-class ContextContext(dict):
     def __init__(__self__, *,
                  cluster: str,
                  user: str):
@@ -142,25 +101,6 @@ class Kubeconfig(dict):
 
 @pulumi.output_type
 class User(dict):
-    def __init__(__self__, *,
-                 name: str,
-                 user: 'outputs.UserUser'):
-        pulumi.set(__self__, "name", name)
-        pulumi.set(__self__, "user", user)
-
-    @property
-    @pulumi.getter
-    def name(self) -> str:
-        return pulumi.get(self, "name")
-
-    @property
-    @pulumi.getter
-    def user(self) -> 'outputs.UserUser':
-        return pulumi.get(self, "user")
-
-
-@pulumi.output_type
-class UserUser(dict):
     @staticmethod
     def __key_warning(key: str):
         suggest = None
@@ -170,14 +110,14 @@ class UserUser(dict):
             suggest = "client_key_data"
 
         if suggest:
-            pulumi.log.warn(f"Key '{key}' not found in UserUser. Access the value via the '{suggest}' property getter instead.")
+            pulumi.log.warn(f"Key '{key}' not found in User. Access the value via the '{suggest}' property getter instead.")
 
     def __getitem__(self, key: str) -> Any:
-        UserUser.__key_warning(key)
+        User.__key_warning(key)
         return super().__getitem__(key)
 
     def get(self, key: str, default = None) -> Any:
-        UserUser.__key_warning(key)
+        User.__key_warning(key)
         return super().get(key, default)
 
     def __init__(__self__, *,

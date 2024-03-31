@@ -14,17 +14,17 @@ namespace UnMango.KubernetesTheHardWay.Config.Outputs
     [OutputType]
     public sealed class Cluster
     {
-        public readonly Outputs.ClusterCluster Cluster;
-        public readonly string Name;
+        public readonly string CertificateAuthorityData;
+        public readonly string Server;
 
         [OutputConstructor]
         private Cluster(
-            Outputs.ClusterCluster cluster,
+            string certificateAuthorityData,
 
-            string name)
+            string server)
         {
-            Cluster = cluster;
-            Name = name;
+            CertificateAuthorityData = certificateAuthorityData;
+            Server = server;
         }
     }
 }

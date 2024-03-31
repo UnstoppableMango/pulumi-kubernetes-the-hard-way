@@ -5,21 +5,20 @@ package com.unmango.kubernetesthehardway.config.outputs;
 
 import com.pulumi.core.annotations.CustomType;
 import com.pulumi.exceptions.MissingRequiredPropertyException;
-import com.unmango.kubernetesthehardway.config.outputs.ClusterCluster;
 import java.lang.String;
 import java.util.Objects;
 
 @CustomType
 public final class Cluster {
-    private ClusterCluster cluster;
-    private String name;
+    private String certificateAuthorityData;
+    private String server;
 
     private Cluster() {}
-    public ClusterCluster cluster() {
-        return this.cluster;
+    public String certificateAuthorityData() {
+        return this.certificateAuthorityData;
     }
-    public String name() {
-        return this.name;
+    public String server() {
+        return this.server;
     }
 
     public static Builder builder() {
@@ -31,35 +30,35 @@ public final class Cluster {
     }
     @CustomType.Builder
     public static final class Builder {
-        private ClusterCluster cluster;
-        private String name;
+        private String certificateAuthorityData;
+        private String server;
         public Builder() {}
         public Builder(Cluster defaults) {
     	      Objects.requireNonNull(defaults);
-    	      this.cluster = defaults.cluster;
-    	      this.name = defaults.name;
+    	      this.certificateAuthorityData = defaults.certificateAuthorityData;
+    	      this.server = defaults.server;
         }
 
         @CustomType.Setter
-        public Builder cluster(ClusterCluster cluster) {
-            if (cluster == null) {
-              throw new MissingRequiredPropertyException("Cluster", "cluster");
+        public Builder certificateAuthorityData(String certificateAuthorityData) {
+            if (certificateAuthorityData == null) {
+              throw new MissingRequiredPropertyException("Cluster", "certificateAuthorityData");
             }
-            this.cluster = cluster;
+            this.certificateAuthorityData = certificateAuthorityData;
             return this;
         }
         @CustomType.Setter
-        public Builder name(String name) {
-            if (name == null) {
-              throw new MissingRequiredPropertyException("Cluster", "name");
+        public Builder server(String server) {
+            if (server == null) {
+              throw new MissingRequiredPropertyException("Cluster", "server");
             }
-            this.name = name;
+            this.server = server;
             return this;
         }
         public Cluster build() {
             final var _resultValue = new Cluster();
-            _resultValue.cluster = cluster;
-            _resultValue.name = name;
+            _resultValue.certificateAuthorityData = certificateAuthorityData;
+            _resultValue.server = server;
             return _resultValue;
         }
     }

@@ -14,17 +14,17 @@ namespace UnMango.KubernetesTheHardWay.Config.Outputs
     [OutputType]
     public sealed class Context
     {
-        public readonly Outputs.ContextContext Context;
-        public readonly string Name;
+        public readonly string Cluster;
+        public readonly string User;
 
         [OutputConstructor]
         private Context(
-            Outputs.ContextContext context,
+            string cluster,
 
-            string name)
+            string user)
         {
-            Context = context;
-            Name = name;
+            Cluster = cluster;
+            User = user;
         }
     }
 }

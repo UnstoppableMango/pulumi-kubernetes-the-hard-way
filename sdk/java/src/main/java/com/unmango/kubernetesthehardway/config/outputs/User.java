@@ -5,21 +5,20 @@ package com.unmango.kubernetesthehardway.config.outputs;
 
 import com.pulumi.core.annotations.CustomType;
 import com.pulumi.exceptions.MissingRequiredPropertyException;
-import com.unmango.kubernetesthehardway.config.outputs.UserUser;
 import java.lang.String;
 import java.util.Objects;
 
 @CustomType
 public final class User {
-    private String name;
-    private UserUser user;
+    private String clientCertificateData;
+    private String clientKeyData;
 
     private User() {}
-    public String name() {
-        return this.name;
+    public String clientCertificateData() {
+        return this.clientCertificateData;
     }
-    public UserUser user() {
-        return this.user;
+    public String clientKeyData() {
+        return this.clientKeyData;
     }
 
     public static Builder builder() {
@@ -31,35 +30,35 @@ public final class User {
     }
     @CustomType.Builder
     public static final class Builder {
-        private String name;
-        private UserUser user;
+        private String clientCertificateData;
+        private String clientKeyData;
         public Builder() {}
         public Builder(User defaults) {
     	      Objects.requireNonNull(defaults);
-    	      this.name = defaults.name;
-    	      this.user = defaults.user;
+    	      this.clientCertificateData = defaults.clientCertificateData;
+    	      this.clientKeyData = defaults.clientKeyData;
         }
 
         @CustomType.Setter
-        public Builder name(String name) {
-            if (name == null) {
-              throw new MissingRequiredPropertyException("User", "name");
+        public Builder clientCertificateData(String clientCertificateData) {
+            if (clientCertificateData == null) {
+              throw new MissingRequiredPropertyException("User", "clientCertificateData");
             }
-            this.name = name;
+            this.clientCertificateData = clientCertificateData;
             return this;
         }
         @CustomType.Setter
-        public Builder user(UserUser user) {
-            if (user == null) {
-              throw new MissingRequiredPropertyException("User", "user");
+        public Builder clientKeyData(String clientKeyData) {
+            if (clientKeyData == null) {
+              throw new MissingRequiredPropertyException("User", "clientKeyData");
             }
-            this.user = user;
+            this.clientKeyData = clientKeyData;
             return this;
         }
         public User build() {
             final var _resultValue = new User();
-            _resultValue.name = name;
-            _resultValue.user = user;
+            _resultValue.clientCertificateData = clientCertificateData;
+            _resultValue.clientKeyData = clientKeyData;
             return _resultValue;
         }
     }
