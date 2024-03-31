@@ -325,6 +325,28 @@ resources:
       - tar
       - url
       - version
+  kubernetes-the-hard-way:index:Kubeconfig:
+    isComponent: true
+    description: Kubeconfig
+    inputProperties:
+      pki:
+        $ref: "#/resources/kubernetes-the-hard-way:tls:ClusterPki"
+        description: The PKI containing certificate data.
+      options:
+        oneOf:
+          - $ref: "#/types/kubernetes-the-hard-way:config:KubeconfigAdminOptions"
+          - $ref: "#/types/kubernetes-the-hard-way:config:KubeconfigKubeControllerManagerOptions"
+          - $ref: "#/types/kubernetes-the-hard-way:config:KubeconfigKubeProxyOptions"
+          - $ref: "#/types/kubernetes-the-hard-way:config:KubeconfigKubeSchedulerOptions"
+          - $ref: "#/types/kubernetes-the-hard-way:config:KubeconfigWorkerOptions"
+        discriminator:
+          propertyName: type
+          mapping:
+            admin: "#/types/kubernetes-the-hard-way:config:KubeconfigAdminOptions"
+            kube-controller-manager: "#/types/kubernetes-the-hard-way:config:KubeconfigKubeControllerManagerOptions"
+            kube-proxy: "#/types/kubernetes-the-hard-way:config:KubeconfigKubeProxyOptions"
+            kube-scheduler: "#/types/kubernetes-the-hard-way:config:KubeconfigKubeSchedulerOptions"
+            worker: "#/types/kubernetes-the-hard-way:config:KubeconfigWorkerOptions"
   kubernetes-the-hard-way:remote:Download:
     isComponent: true
     description: Represents a file to be downloaded on a remote system.
@@ -1103,6 +1125,51 @@ types:
       - value: kube-scheduler
       - value: admin
     description: Kubeconfig type
+  kubernetes-the-hard-way:config:KubeconfigAdminOptions:
+    type: object
+    properties:
+      type:
+        type: string
+        const: kube-controller-manager
+      publicIp:
+        type: string
+  kubernetes-the-hard-way:config:KubeconfigKubeControllerManagerOptions:
+    type: object
+    properties:
+      type:
+        type: string
+        const: kube-controller-manager
+      publicIp:
+        type: string
+  kubernetes-the-hard-way:config:KubeconfigKubeProxyOptions:
+    type: object
+    properties:
+      type:
+        type: string
+        const: kube-proxy
+      publicIp:
+        type: string
+  kubernetes-the-hard-way:config:KubeconfigKubeSchedulerOptions:
+    type: object
+    properties:
+      type:
+        type: string
+        const: kube-scheduler
+      publicIp:
+        type: string
+  kubernetes-the-hard-way:config:KubeconfigWorkerOptions:
+    type: object
+    properties:
+      type:
+        type: string
+        const: worker
+      name:
+        type: string
+      publicIp:
+        type: string
+    required:
+      - name
+      - publicIp
   kubernetes-the-hard-way:tls:NodeRole:
     description: TODO
     type: string
