@@ -83,7 +83,6 @@ export class Etcd extends ComponentResource {
     });
   }
 
-
   private getDownloadDirectory(input?: Input<string>): Output<string> {
     if (input) {
       return output(input);
