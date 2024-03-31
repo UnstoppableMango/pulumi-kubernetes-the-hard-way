@@ -10,6 +10,11 @@ export type Mkdir = import("./mkdir").Mkdir;
 export const Mkdir: typeof import("./mkdir").Mkdir = null as any;
 utilities.lazyLoad(exports, ["Mkdir"], () => require("./mkdir"));
 
+export { MktempArgs } from "./mktemp";
+export type Mktemp = import("./mktemp").Mktemp;
+export const Mktemp: typeof import("./mktemp").Mktemp = null as any;
+utilities.lazyLoad(exports, ["Mktemp"], () => require("./mktemp"));
+
 export { TarArgs } from "./tar";
 export type Tar = import("./tar").Tar;
 export const Tar: typeof import("./tar").Tar = null as any;
@@ -27,6 +32,8 @@ const _module = {
         switch (type) {
             case "kubernetes-the-hard-way:tools:Mkdir":
                 return new Mkdir(name, <any>undefined, { urn })
+            case "kubernetes-the-hard-way:tools:Mktemp":
+                return new Mktemp(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:tools:Tar":
                 return new Tar(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:tools:Wget":

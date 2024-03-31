@@ -59,6 +59,7 @@ _utilities.register(
   "fqn": "pulumi_kubernetes_the_hard_way.tools",
   "classes": {
    "kubernetes-the-hard-way:tools:Mkdir": "Mkdir",
+   "kubernetes-the-hard-way:tools:Mktemp": "Mktemp",
    "kubernetes-the-hard-way:tools:Tar": "Tar",
    "kubernetes-the-hard-way:tools:Wget": "Wget"
   }

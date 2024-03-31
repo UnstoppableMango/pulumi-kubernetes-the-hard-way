@@ -6,5 +6,6 @@ from .. import _utilities
 import typing
 # Export this package's modules as members:
 from .mkdir import *
+from .mktemp import *
 from .tar import *
 from .wget import *
