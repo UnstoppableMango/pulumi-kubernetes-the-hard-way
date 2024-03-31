@@ -250,7 +250,8 @@ provider/cmd/${PROVIDER}/schema.json: bin/yq $(SCHEMA_FILE)
 	rm -rf sdk/dotnet
 	.pulumi/bin/pulumi package gen-sdk $(SCHEMA_FILE) --language dotnet
 	sed -i.bak -e "s/<\/Nullable>/<\/Nullable>\n    <UseSharedCompilation>false<\/UseSharedCompilation>/g" sdk/dotnet/UnMango.KubernetesTheHardWay.csproj
-	rm sdk/dotnet/UnMango.KubernetesTheHardWay.csproj.bak
+	sed -i.bak -e "s/UnMango.KubernetesTheHardWay.Config.Kubeconfig/UnMango.KubernetesTheHardWay.Config.Outputs.Kubeconfig/g" sdk/dotnet/Tls/ClusterPki.cs
+	rm sdk/dotnet/*.bak sdk/dotnet/**/*.bak
 	@touch $@
 
 .make/generate_go: bin/pulumictl .pulumi/bin/pulumi $(SCHEMA_FILE)

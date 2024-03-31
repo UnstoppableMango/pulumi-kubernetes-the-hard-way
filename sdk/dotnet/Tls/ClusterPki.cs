@@ -111,7 +111,7 @@ namespace UnMango.KubernetesTheHardWay.Tls
             return merged;
         }
 
-        public global::Pulumi.Output<UnMango.KubernetesTheHardWay.Config.Kubeconfig> GetKubeconfig(ClusterPkiGetKubeconfigArgs args)
+        public global::Pulumi.Output<UnMango.KubernetesTheHardWay.Config.Outputs.Kubeconfig> GetKubeconfig(ClusterPkiGetKubeconfigArgs args)
             => global::Pulumi.Deployment.Instance.Call<ClusterPkiGetKubeconfigResult>("kubernetes-the-hard-way:tls:ClusterPki/getKubeconfig", args ?? new ClusterPkiGetKubeconfigArgs(), this).Apply(v => v.Result);
     }
 
