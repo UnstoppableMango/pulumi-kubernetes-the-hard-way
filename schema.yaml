@@ -1002,6 +1002,26 @@ types:
         description: The user that we should use for the connection.
     required:
       - host
+  kubernetes-the-hard-way:config:Cluster:
+    type: object
+    properties:
+      cluster:
+        $ref: "#/types/kubernetes-the-hard-way:config:ClusterCluster"
+      name:
+        type: string
+    required:
+      - cluster
+      - name
+  kubernetes-the-hard-way:config:ClusterCluster:
+    type: object
+    properties:
+      certificateAuthorityData:
+        type: string
+      server:
+        type: string
+    required:
+      - certificateAuthorityData
+      - server
   kubernetes-the-hard-way:tls:ClusterPkiNode:
     type: object
     description: Node inputs for the PKI.
@@ -1011,6 +1031,26 @@ types:
         description: The IP address of the node.
       role:
         $ref: "#/types/kubernetes-the-hard-way:tls:NodeRole"
+  kubernetes-the-hard-way:config:Context:
+    type: object
+    properties:
+      context:
+        $ref: "#/types/kubernetes-the-hard-way:config:ContextContext"
+      name:
+        type: string
+    required:
+      - context
+      - name
+  kubernetes-the-hard-way:config:ContextContext:
+    type: object
+    properties:
+      cluster:
+        type: string
+      user:
+        type: string
+    required:
+      - cluster
+      - user
   kubernetes-the-hard-way:tls:EcdsaCurve:
     description: TODO
     type: string
@@ -1035,6 +1075,25 @@ types:
       publicKeyPem:
         type: string
         description: The PEM encoded public key data.
+  kubernetes-the-hard-way:config:Kubeconfig:
+    type: object
+    properties:
+      clusters:
+        type: array
+        items:
+          $ref: "#/types/kubernetes-the-hard-way:config:Cluster"
+      contexts:
+        type: array
+        items:
+          $ref: "#/types/kubernetes-the-hard-way:config:Context"
+      users:
+        type: array
+        items:
+          $ref: "#/types/kubernetes-the-hard-way:config:User"
+    required:
+      - clusters
+      - contexts
+      - users
   kubernetes-the-hard-way:tls:NodeRole:
     description: TODO
     type: string
@@ -1047,3 +1106,23 @@ types:
     properties:
       parent:
         $ref: "pulumi.json#/Any"
+  kubernetes-the-hard-way:config:User:
+    type: object
+    properties:
+      name:
+        type: string
+      user:
+        $ref: "#/types/kubernetes-the-hard-way:config:UserUser"
+    required:
+      - name
+      - user
+  kubernetes-the-hard-way:config:UserUser:
+    type: object
+    properties:
+      clientCertificateData:
+        type: string
+      clientKeyData:
+        type: string
+    required:
+      - clientCertificateData
+      - clientKeyData
