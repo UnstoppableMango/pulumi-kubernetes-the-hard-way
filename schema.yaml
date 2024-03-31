@@ -347,6 +347,7 @@ resources:
             worker: "#/types/kubernetes-the-hard-way:config:KubeconfigWorkerOptions"
       pki:
         $ref: "#/resources/kubernetes-the-hard-way:tls:ClusterPki"
+        plain: true
         description: The PKI containing certificate data.
     requiredInputs:
       - options
