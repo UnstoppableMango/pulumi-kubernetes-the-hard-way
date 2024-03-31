@@ -347,6 +347,18 @@ resources:
             kube-proxy: "#/types/kubernetes-the-hard-way:config:KubeconfigKubeProxyOptions"
             kube-scheduler: "#/types/kubernetes-the-hard-way:config:KubeconfigKubeSchedulerOptions"
             worker: "#/types/kubernetes-the-hard-way:config:KubeconfigWorkerOptions"
+    requiredInputs:
+      - pki
+      - options
+    properties:
+      value:
+        $ref: "#/types/kubernetes-the-hard-way:config:Kubeconfig"
+      yaml:
+        type: string
+        description: The yaml representation of the kubeconfig.
+    required:
+      - value
+      - yaml
   kubernetes-the-hard-way:remote:Download:
     isComponent: true
     description: Represents a file to be downloaded on a remote system.
