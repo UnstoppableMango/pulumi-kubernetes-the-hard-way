@@ -20,7 +20,8 @@ class TarArgs:
                  directory: Optional[pulumi.Input[str]] = None,
                  extract: Optional[pulumi.Input[bool]] = None,
                  files: Optional[pulumi.Input[Union[Sequence[pulumi.Input[str]], str]]] = None,
-                 gzip: Optional[pulumi.Input[bool]] = None):
+                 gzip: Optional[pulumi.Input[bool]] = None,
+                 strip_components: Optional[pulumi.Input[int]] = None):
         """
         The set of arguments for constructing a Tar resource.
         :param pulumi.Input[str] archive: Corresponds to the [ARCHIVE] argument.
@@ -29,6 +30,7 @@ class TarArgs:
         :param pulumi.Input[bool] extract: Corresponds to the --extract option.
         :param pulumi.Input[Union[Sequence[pulumi.Input[str]], str]] files: Corresponds to the [FILE] argument.
         :param pulumi.Input[bool] gzip: Corresponds to the --gzip option.
+        :param pulumi.Input[int] strip_components: Corresponds to the --strip-components option.
         """
         pulumi.set(__self__, "archive", archive)
         pulumi.set(__self__, "connection", connection)
@@ -40,6 +42,8 @@ class TarArgs:
             pulumi.set(__self__, "files", files)
         if gzip is not None:
             pulumi.set(__self__, "gzip", gzip)
+        if strip_components is not None:
+            pulumi.set(__self__, "strip_components", strip_components)
 
     @property
     @pulumi.getter
@@ -113,6 +117,18 @@ class TarArgs:
     def gzip(self, value: Optional[pulumi.Input[bool]]):
         pulumi.set(self, "gzip", value)
 
+    @property
+    @pulumi.getter(name="stripComponents")
+    def strip_components(self) -> Optional[pulumi.Input[int]]:
+        """
+        Corresponds to the --strip-components option.
+        """
+        return pulumi.get(self, "strip_components")
+
+    @strip_components.setter
+    def strip_components(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "strip_components", value)
+
 
 class Tar(pulumi.ComponentResource):
     @overload
@@ -125,6 +141,7 @@ class Tar(pulumi.ComponentResource):
                  extract: Optional[pulumi.Input[bool]] = None,
                  files: Optional[pulumi.Input[Union[Sequence[pulumi.Input[str]], str]]] = None,
                  gzip: Optional[pulumi.Input[bool]] = None,
+                 strip_components: Optional[pulumi.Input[int]] = None,
                  __props__=None):
         """
         Abstracion over the `tar` utility on a remote system.
@@ -137,6 +154,7 @@ class Tar(pulumi.ComponentResource):
         :param pulumi.Input[bool] extract: Corresponds to the --extract option.
         :param pulumi.Input[Union[Sequence[pulumi.Input[str]], str]] files: Corresponds to the [FILE] argument.
         :param pulumi.Input[bool] gzip: Corresponds to the --gzip option.
+        :param pulumi.Input[int] strip_components: Corresponds to the --strip-components option.
         """
         ...
     @overload
@@ -168,6 +186,7 @@ class Tar(pulumi.ComponentResource):
                  extract: Optional[pulumi.Input[bool]] = None,
                  files: Optional[pulumi.Input[Union[Sequence[pulumi.Input[str]], str]]] = None,
                  gzip: Optional[pulumi.Input[bool]] = None,
+                 strip_components: Optional[pulumi.Input[int]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):
@@ -189,6 +208,7 @@ class Tar(pulumi.ComponentResource):
             __props__.__dict__["extract"] = extract
             __props__.__dict__["files"] = files
             __props__.__dict__["gzip"] = gzip
+            __props__.__dict__["strip_components"] = strip_components
             __props__.__dict__["command"] = None
             __props__.__dict__["stderr"] = None
             __props__.__dict__["stdin"] = None
@@ -271,4 +291,12 @@ class Tar(pulumi.ComponentResource):
         The process' stdout.
         """
         return pulumi.get(self, "stdout")
+
+    @property
+    @pulumi.getter(name="stripComponents")
+    def strip_components(self) -> pulumi.Output[Optional[int]]:
+        """
+        Corresponds to the --strip-components option.
+        """
+        return pulumi.get(self, "strip_components")
 

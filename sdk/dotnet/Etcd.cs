@@ -23,6 +23,12 @@ namespace UnMango.KubernetesTheHardWay
         public Output<UnMango.KubernetesTheHardWay.Architecture> Architecture { get; private set; } = null!;
 
         /// <summary>
+        /// The name of the etcd release archive.
+        /// </summary>
+        [Output("archiveName")]
+        public Output<string> ArchiveName { get; private set; } = null!;
+
+        /// <summary>
         /// The etcd download operation.
         /// </summary>
         [Output("download")]
@@ -35,10 +41,52 @@ namespace UnMango.KubernetesTheHardWay
         public Output<string> DownloadDirectory { get; private set; } = null!;
 
         /// <summary>
-        /// The name of the etcd binary file.
+        /// The operation to create the download directory.
         /// </summary>
-        [Output("filename")]
-        public Output<string> Filename { get; private set; } = null!;
+        [Output("downloadMkdir")]
+        public Output<UnMango.KubernetesTheHardWay.Tools.Mkdir> DownloadMkdir { get; private set; } = null!;
+
+        /// <summary>
+        /// The path to the etcd binary on the remote system.
+        /// </summary>
+        [Output("etcdPath")]
+        public Output<string> EtcdPath { get; private set; } = null!;
+
+        /// <summary>
+        /// The path to the etcdctl binary on the remote system.
+        /// </summary>
+        [Output("etcdctlPath")]
+        public Output<string> EtcdctlPath { get; private set; } = null!;
+
+        /// <summary>
+        /// Directory to install the `etcd` and `etcdctl` binaries.
+        /// </summary>
+        [Output("installDirectory")]
+        public Output<string> InstallDirectory { get; private set; } = null!;
+
+        /// <summary>
+        /// The operation to create the install directory.
+        /// </summary>
+        [Output("installMkdir")]
+        public Output<UnMango.KubernetesTheHardWay.Tools.Mkdir> InstallMkdir { get; private set; } = null!;
+
+        /// <summary>
+        /// The operation to move the etcd binary to the install directory.
+        /// </summary>
+        [Output("mvEtcd")]
+        public Output<UnMango.KubernetesTheHardWay.Tools.Mv> MvEtcd { get; private set; } = null!;
+
+        /// <summary>
+        /// The operation to move the etcdctl binary to the install directory.
+        /// </summary>
+        [Output("mvEtcdctl")]
+        public Output<UnMango.KubernetesTheHardWay.Tools.Mv> MvEtcdctl { get; private set; } = null!;
+
+        /// <summary>
+        /// The name of the resource.
+        /// </summary>
+        [Output("name")]
+        public Output<string> Name { get; private set; } = null!;
 
         /// <summary>
         /// The tar operation.
@@ -100,6 +148,18 @@ namespace UnMango.KubernetesTheHardWay
         public Input<Pulumi.Command.Remote.Inputs.ConnectionArgs> Connection { get; set; } = null!;
 
         /// <summary>
+        /// Temporary directory to download files to. Defaults to `/tmp/&lt;random string&gt;`.
+        /// </summary>
+        [Input("downloadDirectory")]
+        public Input<string>? DownloadDirectory { get; set; }
+
+        /// <summary>
+        /// Directory to install the `etcd` and `etcdctl` binaries.
+        /// </summary>
+        [Input("installDirectory")]
+        public Input<string>? InstallDirectory { get; set; }
+
+        /// <summary>
         /// The version of etcd to install.
         /// </summary>
         [Input("version")]
@@ -107,6 +167,7 @@ namespace UnMango.KubernetesTheHardWay
 
         public EtcdArgs()
         {
+            InstallDirectory = "/usr/local/bin";
         }
         public static new EtcdArgs Empty => new EtcdArgs();
     }

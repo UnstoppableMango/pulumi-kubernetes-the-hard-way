@@ -20,16 +20,26 @@ class EtcdArgs:
     def __init__(__self__, *,
                  connection: pulumi.Input['pulumi_command.remote.ConnectionArgs'],
                  architecture: Optional[pulumi.Input['Architecture']] = None,
+                 download_directory: Optional[pulumi.Input[str]] = None,
+                 install_directory: Optional[pulumi.Input[str]] = None,
                  version: Optional[pulumi.Input[str]] = None):
         """
         The set of arguments for constructing a Etcd resource.
         :param pulumi.Input['pulumi_command.remote.ConnectionArgs'] connection: The connection details.
         :param pulumi.Input['Architecture'] architecture: The etcd CPU architecture.
+        :param pulumi.Input[str] download_directory: Temporary directory to download files to. Defaults to `/tmp/<random string>`.
+        :param pulumi.Input[str] install_directory: Directory to install the `etcd` and `etcdctl` binaries.
         :param pulumi.Input[str] version: The version of etcd to install.
         """
         pulumi.set(__self__, "connection", connection)
         if architecture is not None:
             pulumi.set(__self__, "architecture", architecture)
+        if download_directory is not None:
+            pulumi.set(__self__, "download_directory", download_directory)
+        if install_directory is None:
+            install_directory = '/usr/local/bin'
+        if install_directory is not None:
+            pulumi.set(__self__, "install_directory", install_directory)
         if version is not None:
             pulumi.set(__self__, "version", version)
 
@@ -58,6 +68,30 @@ class EtcdArgs:
         pulumi.set(self, "architecture", value)
 
     @property
+    @pulumi.getter(name="downloadDirectory")
+    def download_directory(self) -> Optional[pulumi.Input[str]]:
+        """
+        Temporary directory to download files to. Defaults to `/tmp/<random string>`.
+        """
+        return pulumi.get(self, "download_directory")
+
+    @download_directory.setter
+    def download_directory(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "download_directory", value)
+
+    @property
+    @pulumi.getter(name="installDirectory")
+    def install_directory(self) -> Optional[pulumi.Input[str]]:
+        """
+        Directory to install the `etcd` and `etcdctl` binaries.
+        """
+        return pulumi.get(self, "install_directory")
+
+    @install_directory.setter
+    def install_directory(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "install_directory", value)
+
+    @property
     @pulumi.getter
     def version(self) -> Optional[pulumi.Input[str]]:
         """
@@ -77,6 +111,8 @@ class Etcd(pulumi.ComponentResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  architecture: Optional[pulumi.Input['Architecture']] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
+                 download_directory: Optional[pulumi.Input[str]] = None,
+                 install_directory: Optional[pulumi.Input[str]] = None,
                  version: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         """
@@ -86,6 +122,8 @@ class Etcd(pulumi.ComponentResource):
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input['Architecture'] architecture: The etcd CPU architecture.
         :param pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']] connection: The connection details.
+        :param pulumi.Input[str] download_directory: Temporary directory to download files to. Defaults to `/tmp/<random string>`.
+        :param pulumi.Input[str] install_directory: Directory to install the `etcd` and `etcdctl` binaries.
         :param pulumi.Input[str] version: The version of etcd to install.
         """
         ...
@@ -114,6 +152,8 @@ class Etcd(pulumi.ComponentResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  architecture: Optional[pulumi.Input['Architecture']] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
+                 download_directory: Optional[pulumi.Input[str]] = None,
+                 install_directory: Optional[pulumi.Input[str]] = None,
                  version: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
@@ -130,10 +170,20 @@ class Etcd(pulumi.ComponentResource):
             if connection is None and not opts.urn:
                 raise TypeError("Missing required property 'connection'")
             __props__.__dict__["connection"] = connection
+            __props__.__dict__["download_directory"] = download_directory
+            if install_directory is None:
+                install_directory = '/usr/local/bin'
+            __props__.__dict__["install_directory"] = install_directory
             __props__.__dict__["version"] = version
+            __props__.__dict__["archive_name"] = None
             __props__.__dict__["download"] = None
-            __props__.__dict__["download_directory"] = None
-            __props__.__dict__["filename"] = None
+            __props__.__dict__["download_mkdir"] = None
+            __props__.__dict__["etcd_path"] = None
+            __props__.__dict__["etcdctl_path"] = None
+            __props__.__dict__["install_mkdir"] = None
+            __props__.__dict__["mv_etcd"] = None
+            __props__.__dict__["mv_etcdctl"] = None
+            __props__.__dict__["name"] = None
             __props__.__dict__["tar"] = None
             __props__.__dict__["url"] = None
         super(Etcd, __self__).__init__(
@@ -152,6 +202,14 @@ class Etcd(pulumi.ComponentResource):
         return pulumi.get(self, "architecture")
 
     @property
+    @pulumi.getter(name="archiveName")
+    def archive_name(self) -> pulumi.Output[str]:
+        """
+        The name of the etcd release archive.
+        """
+        return pulumi.get(self, "archive_name")
+
+    @property
     @pulumi.getter
     def download(self) -> pulumi.Output['_remote.Download']:
         """
@@ -168,12 +226,68 @@ class Etcd(pulumi.ComponentResource):
         return pulumi.get(self, "download_directory")
 
     @property
+    @pulumi.getter(name="downloadMkdir")
+    def download_mkdir(self) -> pulumi.Output['_tools.Mkdir']:
+        """
+        The operation to create the download directory.
+        """
+        return pulumi.get(self, "download_mkdir")
+
+    @property
+    @pulumi.getter(name="etcdPath")
+    def etcd_path(self) -> pulumi.Output[str]:
+        """
+        The path to the etcd binary on the remote system.
+        """
+        return pulumi.get(self, "etcd_path")
+
+    @property
+    @pulumi.getter(name="etcdctlPath")
+    def etcdctl_path(self) -> pulumi.Output[str]:
+        """
+        The path to the etcdctl binary on the remote system.
+        """
+        return pulumi.get(self, "etcdctl_path")
+
+    @property
+    @pulumi.getter(name="installDirectory")
+    def install_directory(self) -> pulumi.Output[str]:
+        """
+        Directory to install the `etcd` and `etcdctl` binaries.
+        """
+        return pulumi.get(self, "install_directory")
+
+    @property
+    @pulumi.getter(name="installMkdir")
+    def install_mkdir(self) -> pulumi.Output['_tools.Mkdir']:
+        """
+        The operation to create the install directory.
+        """
+        return pulumi.get(self, "install_mkdir")
+
+    @property
+    @pulumi.getter(name="mvEtcd")
+    def mv_etcd(self) -> pulumi.Output['_tools.Mv']:
+        """
+        The operation to move the etcd binary to the install directory.
+        """
+        return pulumi.get(self, "mv_etcd")
+
+    @property
+    @pulumi.getter(name="mvEtcdctl")
+    def mv_etcdctl(self) -> pulumi.Output['_tools.Mv']:
+        """
+        The operation to move the etcdctl binary to the install directory.
+        """
+        return pulumi.get(self, "mv_etcdctl")
+
+    @property
     @pulumi.getter
-    def filename(self) -> pulumi.Output[str]:
+    def name(self) -> pulumi.Output[str]:
         """
-        The name of the etcd binary file.
+        The name of the resource.
         """
-        return pulumi.get(self, "filename")
+        return pulumi.get(self, "name")
 
     @property
     @pulumi.getter

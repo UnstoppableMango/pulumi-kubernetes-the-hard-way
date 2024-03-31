@@ -35,6 +35,8 @@ type Tar struct {
 	Stdin pulumi.StringPtrOutput `pulumi:"stdin"`
 	// The process' stdout.
 	Stdout pulumi.StringOutput `pulumi:"stdout"`
+	// Corresponds to the --strip-components option.
+	StripComponents pulumi.IntPtrOutput `pulumi:"stripComponents"`
 }
 
 // NewTar registers a new resource with the given unique name, arguments, and options.
@@ -73,6 +75,8 @@ type tarArgs struct {
 	Files interface{} `pulumi:"files"`
 	// Corresponds to the --gzip option.
 	Gzip *bool `pulumi:"gzip"`
+	// Corresponds to the --strip-components option.
+	StripComponents *int `pulumi:"stripComponents"`
 }
 
 // The set of arguments for constructing a Tar resource.
@@ -89,6 +93,8 @@ type TarArgs struct {
 	Files pulumi.Input
 	// Corresponds to the --gzip option.
 	Gzip pulumi.BoolPtrInput
+	// Corresponds to the --strip-components option.
+	StripComponents pulumi.IntPtrInput
 }
 
 func (TarArgs) ElementType() reflect.Type {
@@ -221,6 +227,11 @@ func (o TarOutput) Stdin() pulumi.StringPtrOutput {
 // The process' stdout.
 func (o TarOutput) Stdout() pulumi.StringOutput {
 	return o.ApplyT(func(v *Tar) pulumi.StringOutput { return v.Stdout }).(pulumi.StringOutput)
+}
+
+// Corresponds to the --strip-components option.
+func (o TarOutput) StripComponents() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *Tar) pulumi.IntPtrOutput { return v.StripComponents }).(pulumi.IntPtrOutput)
 }
 
 type TarArrayOutput struct{ *pulumi.OutputState }

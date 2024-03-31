@@ -10,6 +10,7 @@ export interface TarArgs {
   extract?: Input<boolean>;
   files?: Input<string> | Input<Input<string>[]>;
   gzip?: Input<boolean>;
+  stripComponents?: Input<number>;
 }
 
 export class Tar extends ComponentResource {
@@ -21,6 +22,7 @@ export class Tar extends ComponentResource {
   public readonly stderr!: Output<string>;
   public readonly stdin!: Output<string | undefined>;
   public readonly stdout!: Output<string>;
+  public readonly stripComponents!: Output<number | undefined>;
 
   constructor(name: string, args: TarArgs, opts?: ComponentResourceOptions) {
     super('kubernetes-the-hard-way:tools:Tar', name, args, opts);
@@ -33,12 +35,14 @@ export class Tar extends ComponentResource {
     const extract = output(args.extract ?? true); // Is this a sane default?
     const files = output(args.files ?? []).apply(toArray); // TODO: Can we get types happy without the `toArray`?
     const gzip = output(args.gzip ?? false);
+    const stripComponents = output(args.stripComponents);
 
     const builder = new CommandBuilder('tar')
       .option('--extract', extract)
+      .option('--gzip', gzip)
       .option('--file', archive)
       .option('--directory', directory)
-      .option('--gzip', gzip)
+      .option('--strip-components', stripComponents.apply(x => x?.toString()))
       .arg(files);
 
     const command = new Command(name, {
@@ -55,9 +59,11 @@ export class Tar extends ComponentResource {
     this.stderr = command.stderr;
     this.stdin = command.stdin;
     this.stdout = command.stdout;
+    this.stripComponents = stripComponents;
 
     this.registerOutputs({
-      archive, command, extract,
+      archive, command, directory, extract,
+      files, stripComponents,
       stderr: this.stderr,
       stdin: this.stdin,
       stdout: this.stdout,

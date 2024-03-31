@@ -9,6 +9,7 @@ import com.pulumi.core.Output;
 import com.pulumi.core.annotations.Import;
 import com.pulumi.exceptions.MissingRequiredPropertyException;
 import java.lang.Boolean;
+import java.lang.Integer;
 import java.lang.String;
 import java.util.List;
 import java.util.Objects;
@@ -110,6 +111,21 @@ public final class TarArgs extends com.pulumi.resources.ResourceArgs {
         return Optional.ofNullable(this.gzip);
     }
 
+    /**
+     * Corresponds to the --strip-components option.
+     * 
+     */
+    @Import(name="stripComponents")
+    private @Nullable Output<Integer> stripComponents;
+
+    /**
+     * @return Corresponds to the --strip-components option.
+     * 
+     */
+    public Optional<Output<Integer>> stripComponents() {
+        return Optional.ofNullable(this.stripComponents);
+    }
+
     private TarArgs() {}
 
     private TarArgs(TarArgs $) {
@@ -119,6 +135,7 @@ public final class TarArgs extends com.pulumi.resources.ResourceArgs {
         this.extract = $.extract;
         this.files = $.files;
         this.gzip = $.gzip;
+        this.stripComponents = $.stripComponents;
     }
 
     public static Builder builder() {
@@ -283,6 +300,27 @@ public final class TarArgs extends com.pulumi.resources.ResourceArgs {
          */
         public Builder gzip(Boolean gzip) {
             return gzip(Output.of(gzip));
+        }
+
+        /**
+         * @param stripComponents Corresponds to the --strip-components option.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder stripComponents(@Nullable Output<Integer> stripComponents) {
+            $.stripComponents = stripComponents;
+            return this;
+        }
+
+        /**
+         * @param stripComponents Corresponds to the --strip-components option.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder stripComponents(Integer stripComponents) {
+            return stripComponents(Output.of(stripComponents));
         }
 
         public TarArgs build() {

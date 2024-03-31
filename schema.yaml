@@ -251,6 +251,13 @@ resources:
       connection:
         $ref: "/command/v0.9.0/schema.json#/types/command:remote:Connection"
         description: The connection details.
+      downloadDirectory:
+        type: string
+        description: Temporary directory to download files to. Defaults to `/tmp/<random string>`.
+      installDirectory:
+        type: string
+        description: Directory to install the `etcd` and `etcdctl` binaries.
+        default: /usr/local/bin
       version:
         type: string
         description: The version of etcd to install.
@@ -260,15 +267,39 @@ resources:
       architecture:
         $ref: "#/types/kubernetes-the-hard-way:index:Architecture"
         description: The etcd CPU architecture.
+      archiveName:
+        type: string
+        description: The name of the etcd release archive.
       download:
         $ref: "#/resources/kubernetes-the-hard-way:remote:Download"
         description: The etcd download operation.
       downloadDirectory:
         type: string
         description: The directory where the etcd binary was downloaded to.
-      filename:
+      downloadMkdir:
+        $ref: "#/resources/kubernetes-the-hard-way:tools:Mkdir"
+        description: The operation to create the download directory.
+      etcdPath:
         type: string
-        description: The name of the etcd binary file.
+        description: The path to the etcd binary on the remote system.
+      etcdctlPath:
+        type: string
+        description: The path to the etcdctl binary on the remote system.
+      installDirectory:
+        type: string
+        description: Directory to install the `etcd` and `etcdctl` binaries.
+      installMkdir:
+        $ref: "#/resources/kubernetes-the-hard-way:tools:Mkdir"
+        description: The operation to create the install directory.
+      mvEtcd:
+        $ref: "#/resources/kubernetes-the-hard-way:tools:Mv"
+        description: The operation to move the etcd binary to the install directory.
+      mvEtcdctl:
+        $ref: "#/resources/kubernetes-the-hard-way:tools:Mv"
+        description: The operation to move the etcdctl binary to the install directory.
+      name:
+        type: string
+        description: The name of the resource.
       tar:
         $ref: "#/resources/kubernetes-the-hard-way:tools:Tar"
         description: The tar operation.
@@ -280,9 +311,17 @@ resources:
         description: The version of etcd downloaded.
     required:
       - architecture
+      - archiveName
       - download
       - downloadDirectory
-      - filename
+      - downloadMkdir
+      - etcdPath
+      - etcdctlPath
+      - installDirectory
+      - installMkdir
+      - mvEtcd
+      - mvEtcdctl
+      - name
       - tar
       - url
       - version
@@ -535,6 +574,122 @@ resources:
       - directory
       - dryRun
       - quiet
+  kubernetes-the-hard-way:tools:Mv:
+    isComponent: true
+    description: Abstraction over the `mv` utility on a remote system.
+    inputProperties:
+      backup:
+        type: boolean
+        plain: true
+        description: Corresponds to both the -b and --backup options depending on whether [CONTROL] is supplied.
+      connection:
+        $ref: "/command/v0.9.0/schema.json#/types/command:remote:Connection"
+        description: Connection details for the remote system.
+      context:
+        type: boolean
+        description: Corresponds to the --context option.
+      control:
+        type: string
+        description: Corresponds to the [CONTROL] argument for the --backup option.
+      dest:
+        type: string
+        description: Corresponds to the [DEST] argument.
+      directory:
+        type: string
+        description: Corresponds to the [DIRECTORY] argument.
+      force:
+        type: boolean
+        description: Corresponds to the --force option.
+      noClobber:
+        type: boolean
+        description: Corresponds to the --no-clobber option.
+      noTargetDirectory:
+        type: boolean
+        description: Corresponds to the --no-target-directory option.
+      source:
+        oneOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+        description: Corresponds to the [SOURCE] argument.
+      stripTrailingSlashes:
+        type: boolean
+        description: Corresponds to the --strip-trailing-suffix option.
+      suffix:
+        type: string
+        description: Corresponds to the --suffix option.
+      targetDirectory:
+        type: string
+        description: Corresponds to the --target-directory option.
+      update:
+        type: boolean
+        description: Corresponds to the --update option.
+      verbose:
+        type: boolean
+        description: Corresponds to the --verbose option.
+    requiredInputs:
+      - connection
+      - source
+    properties:
+      backup:
+        type: boolean
+        description: Corresponds to both the -b and --backup options depending on whether [CONTROL] is supplied.
+      command:
+        $ref: "/command/v0.9.0/schema.json#/resources/command:remote:Command"
+        description: Represents the command run on the remote system.
+      context:
+        type: boolean
+        description: Corresponds to the --context option.
+      control:
+        type: string
+        description: Corresponds to the [CONTROL] argument for the --backup option.
+      dest:
+        type: string
+        description: Corresponds to the [DEST] argument.
+      directory:
+        type: string
+        description: Corresponds to the [DIRECTORY] argument.
+      force:
+        type: boolean
+        description: Corresponds to the --force option.
+      noClobber:
+        type: boolean
+        description: Corresponds to the --no-clobber option.
+      noTargetDirectory:
+        type: boolean
+        description: Corresponds to the --no-target-directory option.
+      source:
+        type: array
+        items:
+          type: string
+        description: Corresponds to the [SOURCE] argument.
+      stripTrailingSlashes:
+        type: boolean
+        description: Corresponds to the --strip-trailing-suffix option.
+      suffix:
+        type: string
+        description: Corresponds to the --suffix option.
+      targetDirectory:
+        type: string
+        description: Corresponds to the --target-directory option.
+      update:
+        type: boolean
+        description: Corresponds to the --update option.
+      verbose:
+        type: boolean
+        description: Corresponds to the --verbose option.
+    required:
+      - backup
+      - command
+      - context
+      - force
+      - noClobber
+      - noTargetDirectory
+      - source
+      - stripTrailingSlashes
+      - update
+      - verbose
   kubernetes-the-hard-way:tools:Rm:
     isComponent: true
     description: Abstraction over the `rm` utility on a remote system.
@@ -622,6 +777,9 @@ resources:
       gzip:
         type: boolean
         description: Corresponds to the --gzip option.
+      stripComponents:
+        type: integer
+        description: Corresponds to the --strip-components option.
     requiredInputs:
       - archive
       - connection
@@ -655,6 +813,9 @@ resources:
       stdout:
         type: string
         description: The process' stdout.
+      stripComponents:
+        type: integer
+        description: Corresponds to the --strip-components option.
     required:
       - archive
       - command

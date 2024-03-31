@@ -60,6 +60,10 @@ export class Tar extends pulumi.ComponentResource {
      * The process' stdout.
      */
     public /*out*/ readonly stdout!: pulumi.Output<string>;
+    /**
+     * Corresponds to the --strip-components option.
+     */
+    public readonly stripComponents!: pulumi.Output<number | undefined>;
 
     /**
      * Create a Tar resource with the given unique name, arguments, and options.
@@ -84,6 +88,7 @@ export class Tar extends pulumi.ComponentResource {
             resourceInputs["extract"] = args ? args.extract : undefined;
             resourceInputs["files"] = args ? args.files : undefined;
             resourceInputs["gzip"] = args ? args.gzip : undefined;
+            resourceInputs["stripComponents"] = args ? args.stripComponents : undefined;
             resourceInputs["command"] = undefined /*out*/;
             resourceInputs["stderr"] = undefined /*out*/;
             resourceInputs["stdin"] = undefined /*out*/;
@@ -98,6 +103,7 @@ export class Tar extends pulumi.ComponentResource {
             resourceInputs["stderr"] = undefined /*out*/;
             resourceInputs["stdin"] = undefined /*out*/;
             resourceInputs["stdout"] = undefined /*out*/;
+            resourceInputs["stripComponents"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         super(Tar.__pulumiType, name, resourceInputs, opts, true /*remote*/);
@@ -132,4 +138,8 @@ export interface TarArgs {
      * Corresponds to the --gzip option.
      */
     gzip?: pulumi.Input<boolean>;
+    /**
+     * Corresponds to the --strip-components option.
+     */
+    stripComponents?: pulumi.Input<number>;
 }

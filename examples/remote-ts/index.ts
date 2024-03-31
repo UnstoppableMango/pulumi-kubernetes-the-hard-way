@@ -50,6 +50,7 @@ const download = new Download('remote', {
 
 const etcd = new Etcd('remote', {
   connection: { host, port, user, password },
+  installDirectory: path.join(basePath, 'etcd'),
 });
 
 export const fileStderr = file.stderr;

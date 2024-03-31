@@ -6,6 +6,7 @@ package com.unmango.kubernetesthehardway;
 import com.pulumi.command.remote.inputs.ConnectionArgs;
 import com.pulumi.core.Output;
 import com.pulumi.core.annotations.Import;
+import com.pulumi.core.internal.Codegen;
 import com.pulumi.exceptions.MissingRequiredPropertyException;
 import com.unmango.kubernetesthehardway.enums.Architecture;
 import java.lang.String;
@@ -49,6 +50,36 @@ public final class EtcdArgs extends com.pulumi.resources.ResourceArgs {
     }
 
     /**
+     * Temporary directory to download files to. Defaults to `/tmp/&lt;random string&gt;`.
+     * 
+     */
+    @Import(name="downloadDirectory")
+    private @Nullable Output<String> downloadDirectory;
+
+    /**
+     * @return Temporary directory to download files to. Defaults to `/tmp/&lt;random string&gt;`.
+     * 
+     */
+    public Optional<Output<String>> downloadDirectory() {
+        return Optional.ofNullable(this.downloadDirectory);
+    }
+
+    /**
+     * Directory to install the `etcd` and `etcdctl` binaries.
+     * 
+     */
+    @Import(name="installDirectory")
+    private @Nullable Output<String> installDirectory;
+
+    /**
+     * @return Directory to install the `etcd` and `etcdctl` binaries.
+     * 
+     */
+    public Optional<Output<String>> installDirectory() {
+        return Optional.ofNullable(this.installDirectory);
+    }
+
+    /**
      * The version of etcd to install.
      * 
      */
@@ -68,6 +99,8 @@ public final class EtcdArgs extends com.pulumi.resources.ResourceArgs {
     private EtcdArgs(EtcdArgs $) {
         this.architecture = $.architecture;
         this.connection = $.connection;
+        this.downloadDirectory = $.downloadDirectory;
+        this.installDirectory = $.installDirectory;
         this.version = $.version;
     }
 
@@ -132,6 +165,48 @@ public final class EtcdArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
+         * @param downloadDirectory Temporary directory to download files to. Defaults to `/tmp/&lt;random string&gt;`.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder downloadDirectory(@Nullable Output<String> downloadDirectory) {
+            $.downloadDirectory = downloadDirectory;
+            return this;
+        }
+
+        /**
+         * @param downloadDirectory Temporary directory to download files to. Defaults to `/tmp/&lt;random string&gt;`.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder downloadDirectory(String downloadDirectory) {
+            return downloadDirectory(Output.of(downloadDirectory));
+        }
+
+        /**
+         * @param installDirectory Directory to install the `etcd` and `etcdctl` binaries.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder installDirectory(@Nullable Output<String> installDirectory) {
+            $.installDirectory = installDirectory;
+            return this;
+        }
+
+        /**
+         * @param installDirectory Directory to install the `etcd` and `etcdctl` binaries.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder installDirectory(String installDirectory) {
+            return installDirectory(Output.of(installDirectory));
+        }
+
+        /**
          * @param version The version of etcd to install.
          * 
          * @return builder
@@ -156,6 +231,7 @@ public final class EtcdArgs extends com.pulumi.resources.ResourceArgs {
             if ($.connection == null) {
                 throw new MissingRequiredPropertyException("EtcdArgs", "connection");
             }
+            $.installDirectory = Codegen.stringProp("installDirectory").output().arg($.installDirectory).def("/usr/local/bin").getNullable();
             return $;
         }
     }
