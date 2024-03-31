@@ -71,6 +71,7 @@ export class Etcd extends ComponentResource {
       archive: interpolate`${download.destination}/${archiveName}`,
       directory: download.destination,
       gzip: true,
+      stripComponents: 1,
     }, { parent: this, dependsOn: download });
 
     const installMkdir = new Mkdir(`${name}-install`, {
