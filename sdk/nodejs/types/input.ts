@@ -12,7 +12,7 @@ import * as utilities from "../utilities";
 export namespace config {
     export interface KubeconfigAdminOptionsArgs {
         publicIp?: pulumi.Input<string>;
-        type?: pulumi.Input<"kube-controller-manager">;
+        type?: pulumi.Input<"admin">;
     }
 
     export interface KubeconfigKubeControllerManagerOptionsArgs {

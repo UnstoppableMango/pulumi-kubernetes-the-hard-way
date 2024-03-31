@@ -26,7 +26,7 @@ class KubeconfigAdminOptionsArgs:
         if public_ip is not None:
             pulumi.set(__self__, "public_ip", public_ip)
         if type is not None:
-            pulumi.set(__self__, "type", 'kube-controller-manager')
+            pulumi.set(__self__, "type", 'admin')
 
     @property
     @pulumi.getter(name="publicIp")
