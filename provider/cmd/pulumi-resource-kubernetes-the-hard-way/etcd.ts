@@ -52,6 +52,8 @@ export class Etcd extends ComponentResource {
     const url = interpolate`https://github.com/etcd-io/etcd/releases/download/v${version}/${archiveName}`;
 
     // TODO: Permission checks?
+    // TODO: Caching? Put archive/bins into ~/.kthw/cache so i.e. installDirectory changes, tarball doesn't need to be re-downloaded.
+    // TODO: General update logic
 
     const downloadMkdir = new Mkdir(`${name}-download`, {
       connection: args.connection,
