@@ -8,7 +8,7 @@ import (
 	"reflect"
 
 	"errors"
-	"github.com/pulumi/pulumi-command/sdk/go/command/remote"
+	pulumiCommand "github.com/pulumi/pulumi-command/sdk/go/command/remote"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 	"github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/sdk/go/kubernetes-the-hard-way/internal"
 )
@@ -17,7 +17,7 @@ type File struct {
 	pulumi.ResourceState
 
 	// The command resource.
-	Command remote.CommandOutput `pulumi:"command"`
+	Command pulumiCommand.CommandOutput `pulumi:"command"`
 	// The contents of the remote file.
 	Content pulumi.StringOutput `pulumi:"content"`
 	// The path to the file on the remote filesystem.
@@ -46,7 +46,7 @@ func NewFile(ctx *pulumi.Context,
 	if args.Path == nil {
 		return nil, errors.New("invalid value for required argument 'Path'")
 	}
-	args.Connection = args.Connection.ToConnectionOutput().ApplyT(func(v remote.Connection) remote.Connection { return *v.Defaults() }).(remote.ConnectionOutput)
+	args.Connection = args.Connection.ToConnectionOutput().ApplyT(func(v pulumiCommand.Connection) pulumiCommand.Connection { return *v.Defaults() }).(pulumiCommand.ConnectionOutput)
 	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource File
 	err := ctx.RegisterRemoteComponentResource("kubernetes-the-hard-way:remote:File", name, args, &resource, opts...)
@@ -58,7 +58,7 @@ func NewFile(ctx *pulumi.Context,
 
 type fileArgs struct {
 	// The connection details.
-	Connection remote.Connection `pulumi:"connection"`
+	Connection pulumiCommand.Connection `pulumi:"connection"`
 	// The content of the file.
 	Content string `pulumi:"content"`
 	// The path to the file on the remote host.
@@ -68,7 +68,7 @@ type fileArgs struct {
 // The set of arguments for constructing a File resource.
 type FileArgs struct {
 	// The connection details.
-	Connection remote.ConnectionInput
+	Connection pulumiCommand.ConnectionInput
 	// The content of the file.
 	Content pulumi.StringInput
 	// The path to the file on the remote host.
@@ -163,8 +163,8 @@ func (o FileOutput) ToFileOutputWithContext(ctx context.Context) FileOutput {
 }
 
 // The command resource.
-func (o FileOutput) Command() remote.CommandOutput {
-	return o.ApplyT(func(v *File) remote.CommandOutput { return v.Command }).(remote.CommandOutput)
+func (o FileOutput) Command() pulumiCommand.CommandOutput {
+	return o.ApplyT(func(v *File) pulumiCommand.CommandOutput { return v.Command }).(pulumiCommand.CommandOutput)
 }
 
 // The contents of the remote file.

@@ -8,7 +8,7 @@ import (
 	"reflect"
 
 	"errors"
-	"github.com/pulumi/pulumi-command/sdk/go/command/remote"
+	pulumiCommand "github.com/pulumi/pulumi-command/sdk/go/command/remote"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 	"github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/sdk/go/kubernetes-the-hard-way/internal"
 )
@@ -20,7 +20,7 @@ type Tar struct {
 	// Corresponds to the [ARCHIVE] argument.
 	Archive pulumi.StringOutput `pulumi:"archive"`
 	// Represents the remote `tar` operation.
-	Command remote.CommandOutput `pulumi:"command"`
+	Command pulumiCommand.CommandOutput `pulumi:"command"`
 	// Corresponds to the --directory option.
 	Directory pulumi.StringPtrOutput `pulumi:"directory"`
 	// Corresponds to the --extract option.
@@ -50,7 +50,7 @@ func NewTar(ctx *pulumi.Context,
 	if args.Connection == nil {
 		return nil, errors.New("invalid value for required argument 'Connection'")
 	}
-	args.Connection = args.Connection.ToConnectionOutput().ApplyT(func(v remote.Connection) remote.Connection { return *v.Defaults() }).(remote.ConnectionOutput)
+	args.Connection = args.Connection.ToConnectionOutput().ApplyT(func(v pulumiCommand.Connection) pulumiCommand.Connection { return *v.Defaults() }).(pulumiCommand.ConnectionOutput)
 	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource Tar
 	err := ctx.RegisterRemoteComponentResource("kubernetes-the-hard-way:tools:Tar", name, args, &resource, opts...)
@@ -64,7 +64,7 @@ type tarArgs struct {
 	// Corresponds to the [ARCHIVE] argument.
 	Archive string `pulumi:"archive"`
 	// Connection details for the remote system.
-	Connection remote.Connection `pulumi:"connection"`
+	Connection pulumiCommand.Connection `pulumi:"connection"`
 	// Corresponds to the --directory option.
 	Directory *string `pulumi:"directory"`
 	// Corresponds to the --extract option.
@@ -80,7 +80,7 @@ type TarArgs struct {
 	// Corresponds to the [ARCHIVE] argument.
 	Archive pulumi.StringInput
 	// Connection details for the remote system.
-	Connection remote.ConnectionInput
+	Connection pulumiCommand.ConnectionInput
 	// Corresponds to the --directory option.
 	Directory pulumi.StringPtrInput
 	// Corresponds to the --extract option.
@@ -184,8 +184,8 @@ func (o TarOutput) Archive() pulumi.StringOutput {
 }
 
 // Represents the remote `tar` operation.
-func (o TarOutput) Command() remote.CommandOutput {
-	return o.ApplyT(func(v *Tar) remote.CommandOutput { return v.Command }).(remote.CommandOutput)
+func (o TarOutput) Command() pulumiCommand.CommandOutput {
+	return o.ApplyT(func(v *Tar) pulumiCommand.CommandOutput { return v.Command }).(pulumiCommand.CommandOutput)
 }
 
 // Corresponds to the --directory option.

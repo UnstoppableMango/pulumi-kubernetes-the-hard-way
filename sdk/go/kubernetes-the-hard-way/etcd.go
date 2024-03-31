@@ -8,7 +8,7 @@ import (
 	"reflect"
 
 	"errors"
-	"github.com/pulumi/pulumi-command/sdk/go/command/remote"
+	pulumiCommand "github.com/pulumi/pulumi-command/sdk/go/command/remote"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 	"github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/sdk/go/kubernetes-the-hard-way/internal"
 	"github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/sdk/go/kubernetes-the-hard-way/remote"
@@ -45,7 +45,7 @@ func NewEtcd(ctx *pulumi.Context,
 	if args.Connection == nil {
 		return nil, errors.New("invalid value for required argument 'Connection'")
 	}
-	args.Connection = args.Connection.ToConnectionOutput().ApplyT(func(v remote.Connection) remote.Connection { return *v.Defaults() }).(remote.ConnectionOutput)
+	args.Connection = args.Connection.ToConnectionOutput().ApplyT(func(v pulumiCommand.Connection) pulumiCommand.Connection { return *v.Defaults() }).(pulumiCommand.ConnectionOutput)
 	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource Etcd
 	err := ctx.RegisterRemoteComponentResource("kubernetes-the-hard-way:index:Etcd", name, args, &resource, opts...)
@@ -59,7 +59,7 @@ type etcdArgs struct {
 	// The etcd CPU architecture.
 	Architecture *Architecture `pulumi:"architecture"`
 	// The connection details.
-	Connection remote.Connection `pulumi:"connection"`
+	Connection pulumiCommand.Connection `pulumi:"connection"`
 	// The version of etcd to install.
 	Version *string `pulumi:"version"`
 }
@@ -69,7 +69,7 @@ type EtcdArgs struct {
 	// The etcd CPU architecture.
 	Architecture ArchitecturePtrInput
 	// The connection details.
-	Connection remote.ConnectionInput
+	Connection pulumiCommand.ConnectionInput
 	// The version of etcd to install.
 	Version pulumi.StringPtrInput
 }
