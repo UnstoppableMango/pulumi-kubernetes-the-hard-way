@@ -187,6 +187,8 @@ jobs:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
   publish-java-sdk:
+    # Need to learn how this works
+    if: false
     runs-on: ubuntu-latest
     name: publish-java-sdk
     needs: publish-provider
