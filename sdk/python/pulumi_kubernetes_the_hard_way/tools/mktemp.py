@@ -16,24 +16,23 @@ __all__ = ['MktempArgs', 'Mktemp']
 class MktempArgs:
     def __init__(__self__, *,
                  connection: pulumi.Input['pulumi_command.remote.ConnectionArgs'],
-                 template: pulumi.Input[str],
                  directory: Optional[pulumi.Input[bool]] = None,
                  dry_run: Optional[pulumi.Input[bool]] = None,
                  quiet: Optional[pulumi.Input[bool]] = None,
                  suffix: Optional[pulumi.Input[str]] = None,
+                 template: Optional[pulumi.Input[str]] = None,
                  tmpdir: Optional[pulumi.Input[str]] = None):
         """
         The set of arguments for constructing a Mktemp resource.
         :param pulumi.Input['pulumi_command.remote.ConnectionArgs'] connection: Connection details for the remote system.
-        :param pulumi.Input[str] template: Corresponds to the [TEMPLATE] arg.
         :param pulumi.Input[bool] directory: Corresponds to the --directory option.
         :param pulumi.Input[bool] dry_run: Corresponds to the --dry-run option.
         :param pulumi.Input[bool] quiet: Corresponds to the --quiet option.
         :param pulumi.Input[str] suffix: Corresponds to the --suffix option.
+        :param pulumi.Input[str] template: Corresponds to the [TEMPLATE] arg.
         :param pulumi.Input[str] tmpdir: Corresponds to the --tmpdir option.
         """
         pulumi.set(__self__, "connection", connection)
-        pulumi.set(__self__, "template", template)
         if directory is not None:
             pulumi.set(__self__, "directory", directory)
         if dry_run is not None:
@@ -42,6 +41,8 @@ class MktempArgs:
             pulumi.set(__self__, "quiet", quiet)
         if suffix is not None:
             pulumi.set(__self__, "suffix", suffix)
+        if template is not None:
+            pulumi.set(__self__, "template", template)
         if tmpdir is not None:
             pulumi.set(__self__, "tmpdir", tmpdir)
 
@@ -56,18 +57,6 @@ class MktempArgs:
     @connection.setter
     def connection(self, value: pulumi.Input['pulumi_command.remote.ConnectionArgs']):
         pulumi.set(self, "connection", value)
-
-    @property
-    @pulumi.getter
-    def template(self) -> pulumi.Input[str]:
-        """
-        Corresponds to the [TEMPLATE] arg.
-        """
-        return pulumi.get(self, "template")
-
-    @template.setter
-    def template(self, value: pulumi.Input[str]):
-        pulumi.set(self, "template", value)
 
     @property
     @pulumi.getter
@@ -116,6 +105,18 @@ class MktempArgs:
     @suffix.setter
     def suffix(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "suffix", value)
+
+    @property
+    @pulumi.getter
+    def template(self) -> Optional[pulumi.Input[str]]:
+        """
+        Corresponds to the [TEMPLATE] arg.
+        """
+        return pulumi.get(self, "template")
+
+    @template.setter
+    def template(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "template", value)
 
     @property
     @pulumi.getter
@@ -205,8 +206,6 @@ class Mktemp(pulumi.ComponentResource):
             __props__.__dict__["dry_run"] = dry_run
             __props__.__dict__["quiet"] = quiet
             __props__.__dict__["suffix"] = suffix
-            if template is None and not opts.urn:
-                raise TypeError("Missing required property 'template'")
             __props__.__dict__["template"] = template
             __props__.__dict__["tmpdir"] = tmpdir
             __props__.__dict__["command"] = None
@@ -259,7 +258,7 @@ class Mktemp(pulumi.ComponentResource):
 
     @property
     @pulumi.getter
-    def template(self) -> pulumi.Output[str]:
+    def template(self) -> pulumi.Output[Optional[str]]:
         """
         Corresponds to the [TEMPLATE] arg.
         """

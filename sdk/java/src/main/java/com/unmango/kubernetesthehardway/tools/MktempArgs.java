@@ -97,15 +97,15 @@ public final class MktempArgs extends com.pulumi.resources.ResourceArgs {
      * Corresponds to the [TEMPLATE] arg.
      * 
      */
-    @Import(name="template", required=true)
-    private Output<String> template;
+    @Import(name="template")
+    private @Nullable Output<String> template;
 
     /**
      * @return Corresponds to the [TEMPLATE] arg.
      * 
      */
-    public Output<String> template() {
-        return this.template;
+    public Optional<Output<String>> template() {
+        return Optional.ofNullable(this.template);
     }
 
     /**
@@ -264,7 +264,7 @@ public final class MktempArgs extends com.pulumi.resources.ResourceArgs {
          * @return builder
          * 
          */
-        public Builder template(Output<String> template) {
+        public Builder template(@Nullable Output<String> template) {
             $.template = template;
             return this;
         }
@@ -303,9 +303,6 @@ public final class MktempArgs extends com.pulumi.resources.ResourceArgs {
         public MktempArgs build() {
             if ($.connection == null) {
                 throw new MissingRequiredPropertyException("MktempArgs", "connection");
-            }
-            if ($.template == null) {
-                throw new MissingRequiredPropertyException("MktempArgs", "template");
             }
             return $;
         }

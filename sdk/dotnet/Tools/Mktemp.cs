@@ -50,7 +50,7 @@ namespace UnMango.KubernetesTheHardWay.Tools
         /// Corresponds to the [TEMPLATE] arg.
         /// </summary>
         [Output("template")]
-        public Output<string> Template { get; private set; } = null!;
+        public Output<string?> Template { get; private set; } = null!;
 
         /// <summary>
         /// Corresponds to the --tmpdir option.
@@ -120,8 +120,8 @@ namespace UnMango.KubernetesTheHardWay.Tools
         /// <summary>
         /// Corresponds to the [TEMPLATE] arg.
         /// </summary>
-        [Input("template", required: true)]
-        public Input<string> Template { get; set; } = null!;
+        [Input("template")]
+        public Input<string>? Template { get; set; }
 
         /// <summary>
         /// Corresponds to the --tmpdir option.

@@ -47,7 +47,7 @@ export class Mktemp extends pulumi.ComponentResource {
     /**
      * Corresponds to the [TEMPLATE] arg.
      */
-    public readonly template!: pulumi.Output<string>;
+    public readonly template!: pulumi.Output<string | undefined>;
     /**
      * Corresponds to the --tmpdir option.
      */
@@ -66,9 +66,6 @@ export class Mktemp extends pulumi.ComponentResource {
         if (!opts.id) {
             if ((!args || args.connection === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'connection'");
-            }
-            if ((!args || args.template === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'template'");
             }
             resourceInputs["connection"] = args ? (args.connection ? pulumi.output(args.connection).apply(pulumiCommand.types.input.remote.connectionArgsProvideDefaults) : undefined) : undefined;
             resourceInputs["directory"] = args ? args.directory : undefined;
@@ -119,7 +116,7 @@ export interface MktempArgs {
     /**
      * Corresponds to the [TEMPLATE] arg.
      */
-    template: pulumi.Input<string>;
+    template?: pulumi.Input<string>;
     /**
      * Corresponds to the --tmpdir option.
      */

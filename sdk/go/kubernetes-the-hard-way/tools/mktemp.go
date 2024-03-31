@@ -28,7 +28,7 @@ type Mktemp struct {
 	// Corresponds to the --suffix option.
 	Suffix pulumi.StringPtrOutput `pulumi:"suffix"`
 	// Corresponds to the [TEMPLATE] arg.
-	Template pulumi.StringOutput `pulumi:"template"`
+	Template pulumi.StringPtrOutput `pulumi:"template"`
 	// Corresponds to the --tmpdir option.
 	Tmpdir pulumi.StringPtrOutput `pulumi:"tmpdir"`
 }
@@ -42,9 +42,6 @@ func NewMktemp(ctx *pulumi.Context,
 
 	if args.Connection == nil {
 		return nil, errors.New("invalid value for required argument 'Connection'")
-	}
-	if args.Template == nil {
-		return nil, errors.New("invalid value for required argument 'Template'")
 	}
 	args.Connection = args.Connection.ToConnectionOutput().ApplyT(func(v remote.Connection) remote.Connection { return *v.Defaults() }).(remote.ConnectionOutput)
 	opts = internal.PkgResourceDefaultOpts(opts)
@@ -68,7 +65,7 @@ type mktempArgs struct {
 	// Corresponds to the --suffix option.
 	Suffix *string `pulumi:"suffix"`
 	// Corresponds to the [TEMPLATE] arg.
-	Template string `pulumi:"template"`
+	Template *string `pulumi:"template"`
 	// Corresponds to the --tmpdir option.
 	Tmpdir *string `pulumi:"tmpdir"`
 }
@@ -86,7 +83,7 @@ type MktempArgs struct {
 	// Corresponds to the --suffix option.
 	Suffix pulumi.StringPtrInput
 	// Corresponds to the [TEMPLATE] arg.
-	Template pulumi.StringInput
+	Template pulumi.StringPtrInput
 	// Corresponds to the --tmpdir option.
 	Tmpdir pulumi.StringPtrInput
 }
@@ -204,8 +201,8 @@ func (o MktempOutput) Suffix() pulumi.StringPtrOutput {
 }
 
 // Corresponds to the [TEMPLATE] arg.
-func (o MktempOutput) Template() pulumi.StringOutput {
-	return o.ApplyT(func(v *Mktemp) pulumi.StringOutput { return v.Template }).(pulumi.StringOutput)
+func (o MktempOutput) Template() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mktemp) pulumi.StringPtrOutput { return v.Template }).(pulumi.StringPtrOutput)
 }
 
 // Corresponds to the --tmpdir option.

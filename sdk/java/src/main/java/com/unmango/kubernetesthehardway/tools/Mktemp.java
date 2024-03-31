@@ -96,14 +96,14 @@ public class Mktemp extends com.pulumi.resources.ComponentResource {
      * 
      */
     @Export(name="template", refs={String.class}, tree="[0]")
-    private Output<String> template;
+    private Output</* @Nullable */ String> template;
 
     /**
      * @return Corresponds to the [TEMPLATE] arg.
      * 
      */
-    public Output<String> template() {
-        return this.template;
+    public Output<Optional<String>> template() {
+        return Codegen.optional(this.template);
     }
     /**
      * Corresponds to the --tmpdir option.
