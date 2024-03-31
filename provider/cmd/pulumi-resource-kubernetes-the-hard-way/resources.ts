@@ -1,11 +1,7 @@
 import { ComponentResource, ComponentResourceOptions, Inputs } from '@pulumi/pulumi';
-import { Certificate } from './tls/certificate';
-import { ClusterPki } from './tls/clusterPki';
-import { File } from './remote/file';
-import { RootCa } from './tls/rootCa';
-import { Download } from './remote';
+import { Download, File } from './remote';
+import { Certificate, ClusterPki, EncryptionKey, RootCa } from './tls';
 import { Mkdir, Mktemp, Rm, Tar, Wget } from './tools';
-import { EncryptionKey } from './tls/encryptionKey';
 import { Etcd } from './etcd';
 import { Kubeconfig } from './kubeconfig';
 
