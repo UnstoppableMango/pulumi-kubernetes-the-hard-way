@@ -60,6 +60,7 @@ _utilities.register(
   "classes": {
    "kubernetes-the-hard-way:tools:Mkdir": "Mkdir",
    "kubernetes-the-hard-way:tools:Mktemp": "Mktemp",
+   "kubernetes-the-hard-way:tools:Rm": "Rm",
    "kubernetes-the-hard-way:tools:Tar": "Tar",
    "kubernetes-the-hard-way:tools:Wget": "Wget"
   }

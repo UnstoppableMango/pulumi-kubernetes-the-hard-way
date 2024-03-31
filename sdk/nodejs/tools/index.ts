@@ -15,6 +15,11 @@ export type Mktemp = import("./mktemp").Mktemp;
 export const Mktemp: typeof import("./mktemp").Mktemp = null as any;
 utilities.lazyLoad(exports, ["Mktemp"], () => require("./mktemp"));
 
+export { RmArgs } from "./rm";
+export type Rm = import("./rm").Rm;
+export const Rm: typeof import("./rm").Rm = null as any;
+utilities.lazyLoad(exports, ["Rm"], () => require("./rm"));
+
 export { TarArgs } from "./tar";
 export type Tar = import("./tar").Tar;
 export const Tar: typeof import("./tar").Tar = null as any;
@@ -34,6 +39,8 @@ const _module = {
                 return new Mkdir(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:tools:Mktemp":
                 return new Mktemp(name, <any>undefined, { urn })
+            case "kubernetes-the-hard-way:tools:Rm":
+                return new Rm(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:tools:Tar":
                 return new Tar(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:tools:Wget":

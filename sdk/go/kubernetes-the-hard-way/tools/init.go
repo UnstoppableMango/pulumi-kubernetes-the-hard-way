@@ -25,6 +25,8 @@ func (m *module) Construct(ctx *pulumi.Context, name, typ, urn string) (r pulumi
 		r = &Mkdir{}
 	case "kubernetes-the-hard-way:tools:Mktemp":
 		r = &Mktemp{}
+	case "kubernetes-the-hard-way:tools:Rm":
+		r = &Rm{}
 	case "kubernetes-the-hard-way:tools:Tar":
 		r = &Tar{}
 	case "kubernetes-the-hard-way:tools:Wget":
