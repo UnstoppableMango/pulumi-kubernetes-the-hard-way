@@ -110,9 +110,15 @@ export class Etcd extends ComponentResource {
 
     this.registerOutputs({
       architecture,
+      archiveName,
       download,
       downloadDirectory,
-      filename: archiveName,
+      downloadMkdir,
+      installDirectory,
+      installMkdir,
+      mvEtcd,
+      mvEtcdctl,
+      name,
       tar,
       url,
       version,
