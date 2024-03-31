@@ -1,4 +1,4 @@
-import { ComponentResourceOptions, Input, Inputs, Output, log, output } from '@pulumi/pulumi';
+import { ComponentResourceOptions, Input, Inputs, Output, output } from '@pulumi/pulumi';
 import { ConstructResult, InvokeResult } from '@pulumi/pulumi/provider';
 import { SelfSignedCert } from '@pulumi/tls';
 import { SelfSignedCertSubject } from '@pulumi/tls/types/input';
