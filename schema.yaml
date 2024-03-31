@@ -898,14 +898,14 @@ resources:
       - url
 types:
   kubernetes-the-hard-way:tls:Algorithm:
-    description: TODO
+    description: Private key algorithm.
     type: string
     enum:
       - value: RSA
       - value: ECDSA
       - value: ED25519
   kubernetes-the-hard-way:tls:AllowedUsage:
-    description: TODO
+    description: Certificate allowed usage.
     type: string
     enum:
       - name: certSigning
@@ -1094,6 +1094,15 @@ types:
       - clusters
       - contexts
       - users
+  kubernetes-the-hard-way:config:KubeconfigType:
+    type: string
+    enum:
+      - value: worker
+      - value: kube-proxy
+      - value: kube-controller-manager
+      - value: kube-scheduler
+      - value: admin
+    description: Kubeconfig type
   kubernetes-the-hard-way:tls:NodeRole:
     description: TODO
     type: string
