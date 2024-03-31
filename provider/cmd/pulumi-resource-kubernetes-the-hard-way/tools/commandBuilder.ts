@@ -26,8 +26,13 @@ export class CommandBuilder {
     this.cmd = all(cmd);
   }
 
-  public arg(arg: Input<string> | Input<Input<string>[]>): CommandBuilder {
-    this.args = output(arg).apply(toArray).apply(prepend(this.args));
+  public arg(arg?: Input<string> | Input<Input<string>[]>): CommandBuilder {
+    if (arg) {
+      this.args = output(arg)
+        .apply(toArray)
+        .apply(prepend(this.args));
+    }
+
     return this;
   }
 

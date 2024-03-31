@@ -41,7 +41,7 @@ export class Mktemp extends ComponentResource {
       .option('--quiet', quiet)
       .option('--suffix', suffix)
       .option('--tmpdir', tmpdir)
-      .arg(template);
+      .arg(args.template);
 
     const command = new Command(name, {
       connection: args.connection,
