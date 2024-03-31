@@ -8,7 +8,7 @@ import (
 	"reflect"
 
 	"errors"
-	"github.com/pulumi/pulumi-command/sdk/go/command/remote"
+	pulumiCommand "github.com/pulumi/pulumi-command/sdk/go/command/remote"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 	"github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/sdk/go/kubernetes-the-hard-way/internal"
 )
@@ -18,7 +18,7 @@ type Mktemp struct {
 	pulumi.ResourceState
 
 	// Represents the remote `tar` operation.
-	Command remote.CommandOutput `pulumi:"command"`
+	Command pulumiCommand.CommandOutput `pulumi:"command"`
 	// Corresponds to the --directory option.
 	Directory pulumi.BoolOutput `pulumi:"directory"`
 	// Corresponds to the --dry-run option.
@@ -43,7 +43,7 @@ func NewMktemp(ctx *pulumi.Context,
 	if args.Connection == nil {
 		return nil, errors.New("invalid value for required argument 'Connection'")
 	}
-	args.Connection = args.Connection.ToConnectionOutput().ApplyT(func(v remote.Connection) remote.Connection { return *v.Defaults() }).(remote.ConnectionOutput)
+	args.Connection = args.Connection.ToConnectionOutput().ApplyT(func(v pulumiCommand.Connection) pulumiCommand.Connection { return *v.Defaults() }).(pulumiCommand.ConnectionOutput)
 	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource Mktemp
 	err := ctx.RegisterRemoteComponentResource("kubernetes-the-hard-way:tools:Mktemp", name, args, &resource, opts...)
@@ -55,7 +55,7 @@ func NewMktemp(ctx *pulumi.Context,
 
 type mktempArgs struct {
 	// Connection details for the remote system.
-	Connection remote.Connection `pulumi:"connection"`
+	Connection pulumiCommand.Connection `pulumi:"connection"`
 	// Corresponds to the --directory option.
 	Directory *bool `pulumi:"directory"`
 	// Corresponds to the --dry-run option.
@@ -73,7 +73,7 @@ type mktempArgs struct {
 // The set of arguments for constructing a Mktemp resource.
 type MktempArgs struct {
 	// Connection details for the remote system.
-	Connection remote.ConnectionInput
+	Connection pulumiCommand.ConnectionInput
 	// Corresponds to the --directory option.
 	Directory pulumi.BoolPtrInput
 	// Corresponds to the --dry-run option.
@@ -176,8 +176,8 @@ func (o MktempOutput) ToMktempOutputWithContext(ctx context.Context) MktempOutpu
 }
 
 // Represents the remote `tar` operation.
-func (o MktempOutput) Command() remote.CommandOutput {
-	return o.ApplyT(func(v *Mktemp) remote.CommandOutput { return v.Command }).(remote.CommandOutput)
+func (o MktempOutput) Command() pulumiCommand.CommandOutput {
+	return o.ApplyT(func(v *Mktemp) pulumiCommand.CommandOutput { return v.Command }).(pulumiCommand.CommandOutput)
 }
 
 // Corresponds to the --directory option.

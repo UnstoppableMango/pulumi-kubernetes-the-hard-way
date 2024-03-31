@@ -8,7 +8,7 @@ import (
 	"reflect"
 
 	"errors"
-	"github.com/pulumi/pulumi-command/sdk/go/command/remote"
+	pulumiCommand "github.com/pulumi/pulumi-command/sdk/go/command/remote"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 	"github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/sdk/go/kubernetes-the-hard-way/internal"
 )
@@ -44,7 +44,7 @@ func NewRm(ctx *pulumi.Context,
 	if args.Files == nil {
 		return nil, errors.New("invalid value for required argument 'Files'")
 	}
-	args.Connection = args.Connection.ToConnectionOutput().ApplyT(func(v remote.Connection) remote.Connection { return *v.Defaults() }).(remote.ConnectionOutput)
+	args.Connection = args.Connection.ToConnectionOutput().ApplyT(func(v pulumiCommand.Connection) pulumiCommand.Connection { return *v.Defaults() }).(pulumiCommand.ConnectionOutput)
 	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource Rm
 	err := ctx.RegisterRemoteComponentResource("kubernetes-the-hard-way:tools:Rm", name, args, &resource, opts...)
@@ -56,7 +56,7 @@ func NewRm(ctx *pulumi.Context,
 
 type rmArgs struct {
 	// Connection details for the remote system.
-	Connection remote.Connection `pulumi:"connection"`
+	Connection pulumiCommand.Connection `pulumi:"connection"`
 	// Corresponds to the --dir option.
 	Dir *bool `pulumi:"dir"`
 	// Corresponds to the [FILE] argument.
@@ -74,7 +74,7 @@ type rmArgs struct {
 // The set of arguments for constructing a Rm resource.
 type RmArgs struct {
 	// Connection details for the remote system.
-	Connection remote.ConnectionInput
+	Connection pulumiCommand.ConnectionInput
 	// Corresponds to the --dir option.
 	Dir pulumi.BoolPtrInput
 	// Corresponds to the [FILE] argument.
