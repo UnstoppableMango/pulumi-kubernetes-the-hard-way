@@ -267,18 +267,33 @@ resources:
       architecture:
         $ref: "#/types/kubernetes-the-hard-way:index:Architecture"
         description: The etcd CPU architecture.
+      archiveName:
+        type: string
+        description: The name of the etcd release archive.
       download:
         $ref: "#/resources/kubernetes-the-hard-way:remote:Download"
         description: The etcd download operation.
       downloadDirectory:
         type: string
         description: The directory where the etcd binary was downloaded to.
+      downloadMkdir:
+        $ref: "#/resources/kubernetes-the-hard-way:tools:Mkdir"
+        description: The operation to create the download directory.
+      etcdPath:
+        type: string
+        description: The path to the etcd binary on the remote system.
+      etcdctlPath:
+        type: string
+        description: The path to the etcdctl binary on the remote system.
       installDirectory:
         type: string
         description: Directory to install the `etcd` and `etcdctl` binaries.
-      filename:
+      installMkdir:
+        $ref: "#/resources/kubernetes-the-hard-way:tools:Mkdir"
+        description: The operation to create the install directory.
+      name:
         type: string
-        description: The name of the etcd binary file.
+        description: The name of the resource.
       tar:
         $ref: "#/resources/kubernetes-the-hard-way:tools:Tar"
         description: The tar operation.
@@ -290,10 +305,17 @@ resources:
         description: The version of etcd downloaded.
     required:
       - architecture
+      - archiveName
       - download
       - downloadDirectory
+      - downloadMkdir
+      - etcdPath
+      - etcdctlPath
       - installDirectory
-      - filename
+      - installMkdir
+      - mvEtcd
+      - mvEtcdctl
+      - name
       - tar
       - url
       - version

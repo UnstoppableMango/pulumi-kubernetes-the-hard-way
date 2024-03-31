@@ -14,7 +14,7 @@ export interface MvArgs {
   noClobber?: Input<boolean>;
   noTargetDirectory?: Input<boolean>;
   source: Input<string | Input<string>[]>;
-  stripTrailingSlashes: Input<boolean>;
+  stripTrailingSlashes?: Input<boolean>;
   suffix?: Input<string>;
   targetDirectory?: Input<string>;
   update?: Input<boolean>;
