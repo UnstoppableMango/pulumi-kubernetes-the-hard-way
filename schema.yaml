@@ -777,6 +777,9 @@ resources:
       gzip:
         type: boolean
         description: Corresponds to the --gzip option.
+      stripComponents:
+        type: integer
+        description: Corresponds to the --strip-components option.
     requiredInputs:
       - archive
       - connection
@@ -810,6 +813,9 @@ resources:
       stdout:
         type: string
         description: The process' stdout.
+      stripComponents:
+        type: integer
+        description: Corresponds to the --strip-components option.
     required:
       - archive
       - command
