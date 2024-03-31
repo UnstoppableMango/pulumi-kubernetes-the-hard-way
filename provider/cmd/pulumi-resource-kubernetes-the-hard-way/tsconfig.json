@@ -17,6 +17,7 @@
         "tools/index.ts",
         "tools/mkdir.ts",
         "tools/mktemp.ts",
+        "tools/mv.ts",
         "tools/rm.ts",
         "tools/tar.ts",
         "tools/wget.ts",

@@ -251,6 +251,13 @@ resources:
       connection:
         $ref: "/command/v0.9.0/schema.json#/types/command:remote:Connection"
         description: The connection details.
+      downloadDirectory:
+        type: string
+        description: Temporary directory to download files to. Defaults to `/tmp/<random string>`.
+      installDirectory:
+        type: string
+        description: Directory to install the `etcd` and `etcdctl` binaries.
+        default: /usr/local/bin
       version:
         type: string
         description: The version of etcd to install.
@@ -266,6 +273,9 @@ resources:
       downloadDirectory:
         type: string
         description: The directory where the etcd binary was downloaded to.
+      installDirectory:
+        type: string
+        description: Directory to install the `etcd` and `etcdctl` binaries.
       filename:
         type: string
         description: The name of the etcd binary file.
@@ -282,6 +292,7 @@ resources:
       - architecture
       - download
       - downloadDirectory
+      - installDirectory
       - filename
       - tar
       - url
@@ -535,6 +546,122 @@ resources:
       - directory
       - dryRun
       - quiet
+  kubernetes-the-hard-way:tools:Mv:
+    isComponent: true
+    description: Abstraction over the `mv` utility on a remote system.
+    inputProperties:
+      backup:
+        type: boolean
+        plain: true
+        description: Corresponds to both the -b and --backup options depending on whether [CONTROL] is supplied.
+      connection:
+        $ref: "/command/v0.9.0/schema.json#/types/command:remote:Connection"
+        description: Connection details for the remote system.
+      context:
+        type: boolean
+        description: Corresponds to the --context option.
+      control:
+        type: string
+        description: Corresponds to the [CONTROL] argument for the --backup option.
+      dest:
+        type: string
+        description: Corresponds to the [DEST] argument.
+      directory:
+        type: string
+        description: Corresponds to the [DIRECTORY] argument.
+      force:
+        type: boolean
+        description: Corresponds to the --force option.
+      noClobber:
+        type: boolean
+        description: Corresponds to the --no-clobber option.
+      noTargetDirectory:
+        type: boolean
+        description: Corresponds to the --no-target-directory option.
+      source:
+        oneOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+        description: Corresponds to the [SOURCE] argument.
+      stripTrailingSlashes:
+        type: boolean
+        description: Corresponds to the --strip-trailing-suffix option.
+      suffix:
+        type: string
+        description: Corresponds to the --suffix option.
+      targetDirectory:
+        type: string
+        description: Corresponds to the --target-directory option.
+      update:
+        type: boolean
+        description: Corresponds to the --update option.
+      verbose:
+        type: boolean
+        description: Corresponds to the --verbose option.
+    requiredInputs:
+      - connection
+      - source
+    properties:
+      backup:
+        type: boolean
+        description: Corresponds to both the -b and --backup options depending on whether [CONTROL] is supplied.
+      command:
+        $ref: "/command/v0.9.0/schema.json#/resources/command:remote:Command"
+        description: Represents the command run on the remote system.
+      context:
+        type: boolean
+        description: Corresponds to the --context option.
+      control:
+        type: string
+        description: Corresponds to the [CONTROL] argument for the --backup option.
+      dest:
+        type: string
+        description: Corresponds to the [DEST] argument.
+      directory:
+        type: string
+        description: Corresponds to the [DIRECTORY] argument.
+      force:
+        type: boolean
+        description: Corresponds to the --force option.
+      noClobber:
+        type: boolean
+        description: Corresponds to the --no-clobber option.
+      noTargetDirectory:
+        type: boolean
+        description: Corresponds to the --no-target-directory option.
+      source:
+        type: array
+        items:
+          type: string
+        description: Corresponds to the [SOURCE] argument.
+      stripTrailingSlashes:
+        type: boolean
+        description: Corresponds to the --strip-trailing-suffix option.
+      suffix:
+        type: string
+        description: Corresponds to the --suffix option.
+      targetDirectory:
+        type: string
+        description: Corresponds to the --target-directory option.
+      update:
+        type: boolean
+        description: Corresponds to the --update option.
+      verbose:
+        type: boolean
+        description: Corresponds to the --verbose option.
+    required:
+      - backkup
+      - command
+      - context
+      - force
+      - noClobber
+      - noTargetDirectory
+      - source
+      - stripTrailingSlashes
+      - update
+      - verbose
   kubernetes-the-hard-way:tools:Rm:
     isComponent: true
     description: Abstraction over the `rm` utility on a remote system.
