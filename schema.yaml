@@ -256,7 +256,7 @@ resources:
       - connection
     properties:
       architecture:
-        $ref: "#/types/kubernetes-the-hard-wawy:index:Architecture"
+        $ref: "#/types/kubernetes-the-hard-way:index:Architecture"
         description: The etcd CPU architecture.
       download:
         $ref: "#/resources/kubernetes-the-hard-way:remote:Download"
