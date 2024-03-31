@@ -41,6 +41,6 @@ export class Mkdir extends ComponentResource {
     this.directory = directory;
     this.parents = parents;
 
-    this.registerOutputs({ command, directory });
+    this.registerOutputs({ command, directory, parents });
   }
 }
