@@ -20,7 +20,7 @@ namespace UnMango.KubernetesTheHardWay
         /// The etcd CPU architecture.
         /// </summary>
         [Output("architecture")]
-        public Output<UnMango.KubernetesTheHardWawy.Outputs.Architecture> Architecture { get; private set; } = null!;
+        public Output<UnMango.KubernetesTheHardWay.Architecture> Architecture { get; private set; } = null!;
 
         /// <summary>
         /// The etcd download operation.

@@ -9,7 +9,6 @@ import * as utilities from "./utilities";
 
 import * as pulumiCommand from "@pulumi/command";
 
-import {Architecture} from "./index";
 import {Download} from "./remote";
 import {Tar} from "./tools";
 
@@ -34,7 +33,7 @@ export class Etcd extends pulumi.ComponentResource {
     /**
      * The etcd CPU architecture.
      */
-    public readonly architecture!: pulumi.Output<Architecture>;
+    public readonly architecture!: pulumi.Output<enums.Architecture>;
     /**
      * The etcd download operation.
      */

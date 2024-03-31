@@ -145,7 +145,7 @@ class Etcd(pulumi.ComponentResource):
 
     @property
     @pulumi.getter
-    def architecture(self) -> pulumi.Output[Any]:
+    def architecture(self) -> pulumi.Output['Architecture']:
         """
         The etcd CPU architecture.
         """
