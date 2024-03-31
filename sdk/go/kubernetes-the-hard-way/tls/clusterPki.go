@@ -9,6 +9,7 @@ import (
 
 	"errors"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/sdk/go/kubernetes-the-hard-way/config"
 	"github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/sdk/go/kubernetes-the-hard-way/internal"
 )
 
@@ -112,6 +113,41 @@ type ClusterPkiArgs struct {
 
 func (ClusterPkiArgs) ElementType() reflect.Type {
 	return reflect.TypeOf((*clusterPkiArgs)(nil)).Elem()
+}
+
+func (r *ClusterPki) GetKubeconfig(ctx *pulumi.Context, args *ClusterPkiGetKubeconfigArgs) (config.KubeconfigOutput, error) {
+	out, err := ctx.Call("kubernetes-the-hard-way:tls:ClusterPki/getKubeconfig", args, clusterPkiGetKubeconfigResultOutput{}, r)
+	if err != nil {
+		return config.KubeconfigOutput{}, err
+	}
+	return out.(clusterPkiGetKubeconfigResultOutput).Result(), nil
+}
+
+type clusterPkiGetKubeconfigArgs struct {
+	Options interface{} `pulumi:"options"`
+}
+
+// The set of arguments for the GetKubeconfig method of the ClusterPki resource.
+type ClusterPkiGetKubeconfigArgs struct {
+	Options interface{}
+}
+
+func (ClusterPkiGetKubeconfigArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*clusterPkiGetKubeconfigArgs)(nil)).Elem()
+}
+
+type clusterPkiGetKubeconfigResult struct {
+	Result config.Kubeconfig `pulumi:"result"`
+}
+
+type clusterPkiGetKubeconfigResultOutput struct{ *pulumi.OutputState }
+
+func (clusterPkiGetKubeconfigResultOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*clusterPkiGetKubeconfigResult)(nil)).Elem()
+}
+
+func (o clusterPkiGetKubeconfigResultOutput) Result() config.KubeconfigOutput {
+	return o.ApplyT(func(v clusterPkiGetKubeconfigResult) config.Kubeconfig { return v.Result }).(config.KubeconfigOutput)
 }
 
 type ClusterPkiInput interface {
@@ -305,6 +341,7 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*ClusterPkiArrayInput)(nil)).Elem(), ClusterPkiArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*ClusterPkiMapInput)(nil)).Elem(), ClusterPkiMap{})
 	pulumi.RegisterOutputType(ClusterPkiOutput{})
+	pulumi.RegisterOutputType(clusterPkiGetKubeconfigResultOutput{})
 	pulumi.RegisterOutputType(ClusterPkiArrayOutput{})
 	pulumi.RegisterOutputType(ClusterPkiMapOutput{})
 }

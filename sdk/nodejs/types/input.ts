@@ -10,9 +10,19 @@ import * as pulumiTls from "@pulumi/tls";
 import * as utilities from "../utilities";
 
 export namespace config {
+    export interface KubeconfigAdminOptions {
+        publicIp?: string;
+        type: "admin";
+    }
+
     export interface KubeconfigAdminOptionsArgs {
         publicIp?: pulumi.Input<string>;
         type: "admin";
+    }
+
+    export interface KubeconfigKubeControllerManagerOptions {
+        publicIp?: string;
+        type: "kube-controller-manager";
     }
 
     export interface KubeconfigKubeControllerManagerOptionsArgs {
@@ -20,14 +30,30 @@ export namespace config {
         type: "kube-controller-manager";
     }
 
+    export interface KubeconfigKubeProxyOptions {
+        publicIp?: string;
+        type: "kube-proxy";
+    }
+
     export interface KubeconfigKubeProxyOptionsArgs {
         publicIp?: pulumi.Input<string>;
         type: "kube-proxy";
     }
 
+    export interface KubeconfigKubeSchedulerOptions {
+        publicIp?: string;
+        type: "kube-scheduler";
+    }
+
     export interface KubeconfigKubeSchedulerOptionsArgs {
         publicIp?: pulumi.Input<string>;
         type: "kube-scheduler";
+    }
+
+    export interface KubeconfigWorkerOptions {
+        name: string;
+        publicIp: string;
+        type?: "worker";
     }
 
     export interface KubeconfigWorkerOptionsArgs {

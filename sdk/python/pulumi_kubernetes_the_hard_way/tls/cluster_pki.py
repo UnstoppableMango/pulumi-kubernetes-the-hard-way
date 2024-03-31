@@ -8,6 +8,7 @@ import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
 from .. import _utilities
+from .. import config as _config
 from ._enums import *
 from ._inputs import *
 from .certificate import Certificate
@@ -335,4 +336,24 @@ class ClusterPki(pulumi.ComponentResource):
         Number of hours, after initial issuing, that the certificate will remain valid.
         """
         return pulumi.get(self, "validity_period_hours")
+
+    @pulumi.output_type
+    class GetKubeconfigResult:
+        def __init__(__self__, result=None):
+            if result and not isinstance(result, dict):
+                raise TypeError("Expected argument 'result' to be a dict")
+            pulumi.set(__self__, "result", result)
+
+        @property
+        @pulumi.getter
+        def result(self) -> '_config.outputs.Kubeconfig':
+            return pulumi.get(self, "result")
+
+    def get_kubeconfig(__self__, *,
+                       options: Union[pulumi.Input['_config.KubeconfigAdminOptionsArgs'], pulumi.Input['_config.KubeconfigKubeControllerManagerOptionsArgs'], pulumi.Input['_config.KubeconfigKubeProxyOptionsArgs'], pulumi.Input['_config.KubeconfigKubeSchedulerOptionsArgs'], pulumi.Input['_config.KubeconfigWorkerOptionsArgs']]) -> pulumi.Output['dict']:
+        __args__ = dict()
+        __args__['__self__'] = __self__
+        __args__['options'] = options
+        __result__ = pulumi.runtime.call('kubernetes-the-hard-way:tls:ClusterPki/getKubeconfig', __args__, res=__self__, typ=ClusterPki.GetKubeconfigResult)
+        return __result__.result
 
