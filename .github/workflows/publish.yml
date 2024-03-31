@@ -97,8 +97,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   publish-python-sdk:
-    # I'll figure this out later
-    if: false
     runs-on: ubuntu-latest
     name: publish-python-sdk
     needs: publish-provider
@@ -113,11 +111,11 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: python-sdk.tar.gz
-          path: ${{ github.workspace}}/sdk/
+          path: ${{ github.workspace }}/sdk/
 
       - name: Uncompress python SDK
-        run: tar -zxf ${{github.workspace}}/sdk/python.tar.gz -C
-          ${{github.workspace}}/sdk/python
+        run: tar -zxf ${{github.workspace }}/sdk/python.tar.gz -C
+          ${{github.workspace }}/sdk/python
 
       - name: Install Twine
         run: python -m pip install pip twine
@@ -132,8 +130,6 @@ jobs:
           --verbose
 
   publish-dotnet-sdk:
-    # I'll figure this out later
-    if: false
     runs-on: ubuntu-latest
     name: publish-dotnet-sdk
     needs: publish-provider
@@ -148,11 +144,11 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: dotnet-sdk.tar.gz
-          path: ${{ github.workspace}}/sdk/
+          path: ${{ github.workspace }}/sdk/
 
       - name: Uncompress dotnet SDK
-        run: tar -zxf ${{github.workspace}}/sdk/dotnet.tar.gz -C
-          ${{github.workspace}}/sdk/dotnet
+        run: tar -zxf ${{github.workspace }}/sdk/dotnet.tar.gz -C
+          ${{github.workspace }}/sdk/dotnet
 
       - name: Publish NuGet Package
         run: | # TODO: Update here if the namespace jank ever gets worked out
@@ -174,11 +170,11 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: nodejs-sdk.tar.gz
-          path: ${{ github.workspace}}/sdk/
+          path: ${{ github.workspace }}/sdk/
 
       - name: Uncompress nodejs SDK
-        run: tar -zxf ${{github.workspace}}/sdk/nodejs.tar.gz -C
-          ${{github.workspace}}/sdk/nodejs
+        run: tar -zxf ${{github.workspace }}/sdk/nodejs.tar.gz -C
+          ${{github.workspace }}/sdk/nodejs
 
       - name: Calculate tag
         id: tag
@@ -191,8 +187,6 @@ jobs:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
   publish-java-sdk:
-    # I'll figure this out later
-    if: false
     runs-on: ubuntu-latest
     name: publish-java-sdk
     needs: publish-provider
@@ -209,11 +203,11 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: java-sdk.tar.gz
-          path: ${{ github.workspace}}/sdk/
+          path: ${{ github.workspace }}/sdk/
 
       - name: Uncompress java SDK
-        run: tar -zxf ${{github.workspace}}/sdk/java.tar.gz -C
-          ${{github.workspace}}/sdk/java
+        run: tar -zxf ${{github.workspace }}/sdk/java.tar.gz -C
+          ${{github.workspace }}/sdk/java
 
       - name: Publish Java SDK
         # Maven doesn't use lock files and version ranges can't exclude prereleases.
@@ -257,12 +251,12 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: pulumi-kubernetes-the-hard-way.tar.gz
-          path: ${{ github.workspace}}/sdk/
+          path: ${{ github.workspace }}/sdk/
 
       - name: UnTar Go SDK artifact
         run: |
-          mkdir -p ${{github.workspace}}/sdk/go
-          tar -zxf ${{ github.workspace}}/sdk/pulumi-kubernetes-the-hard-way.tar.gz -C ${{github.workspace}}/sdk/go
+          mkdir -p ${{github.workspace }}/sdk/go
+          tar -zxf ${{ github.workspace }}/sdk/pulumi-kubernetes-the-hard-way.tar.gz -C ${{ github.workspace }}/sdk/go
 
       - name: Prepare for publishing
         run: make prepublish_go
@@ -279,7 +273,7 @@ jobs:
         working-directory: sdk/go
         run: git push -u origin ${{ inputs.version }} --tags
 
-      - name: Publish to master branch
+      - name: Publish to main branch
         if: inputs.prerelease == false
         working-directory: sdk/go
         run: git push -u origin main --tags
