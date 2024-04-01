@@ -2,10 +2,14 @@ import { ComponentResource, ComponentResourceOptions, Input, Output, interpolate
 import { Command } from '@pulumi/command/remote';
 import { remote } from '@pulumi/command/types/input';
 
-export type InstallArgs = Omit<FileArgs, 'content'> & {
+export type InstallInputs = Omit<FileArgs, 'content'> & {
   name: string;
   options?: ComponentResourceOptions;
 };
+
+export interface InstallOutputs {
+  result: File;
+}
 
 export interface FileArgs {
   connection: Input<remote.ConnectionArgs>;
@@ -53,7 +57,7 @@ export class File extends ComponentResource {
   }
 }
 
-export function install({ name, options, ...rest }: InstallArgs, content: Input<string>): File {
+export function install({ name, options, ...rest }: InstallInputs, content: Input<string>): File {
   return new File(name, {
     connection: rest.connection,
     path: rest.path,
