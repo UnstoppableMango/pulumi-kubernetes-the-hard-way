@@ -1,5 +1,4 @@
 import { ComponentResourceOptions, Input, Inputs, Output, output } from '@pulumi/pulumi';
-import { ConstructResult, InvokeResult } from '@pulumi/pulumi/provider';
 import { SelfSignedCert } from '@pulumi/tls';
 import { SelfSignedCertSubject } from '@pulumi/tls/types/input';
 import { KeyPair, KeyPairArgs } from './keypair';
@@ -104,33 +103,4 @@ export function newCertificate(ca: Input<RootCa>, args: NewCertificateInputs): C
     caCertPem: self.certPem,
     caPrivateKeyPem: self.privateKeyPem,
   }, args.options);
-}
-
-export async function callNewCertificateInstance(inputs: Inputs): Promise<InvokeResult> {
-  const result = newCertificate(inputs.__self__, inputs as NewCertificateInputs);
-  return { outputs: { result } };
-}
-
-export async function callNewCertificateStatic(inputs: Inputs): Promise<InvokeResult> {
-  const result = newCertificate(inputs.ca, inputs as NewCertificateInputs);
-  return { outputs: { result } };
-}
-
-export async function construct(
-  name: string,
-  inputs: Inputs,
-  options: ComponentResourceOptions,
-): Promise<ConstructResult> {
-  const rootCa = new RootCa(name, inputs as RootCaArgs, options);
-  return {
-    urn: rootCa.urn,
-    state: {
-      allowedUses: rootCa.allowedUses,
-      cert: rootCa.cert,
-      certPem: rootCa.certPem,
-      key: rootCa.key,
-      privateKeyPem: rootCa.privateKeyPem,
-      publicKeyPem: rootCa.publicKeyPem,
-    },
-  };
 }

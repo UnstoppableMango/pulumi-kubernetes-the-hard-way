@@ -1,12 +1,12 @@
 import * as pulumi from '@pulumi/pulumi';
+import { ComponentResourceOptions, Inputs } from '@pulumi/pulumi';
 import * as provider from '@pulumi/pulumi/provider';
-import * as cert from './tls/certificate';
-import * as pki from './tls/clusterPki';
-import * as remoteFile from './remote/file';
-import * as rootCa from './tls/rootCa';
+import { ConstructResult, InvokeResult } from '@pulumi/pulumi/provider';
+import { File } from './remote';
+import { Certificate, ClusterPki, RootCa } from './tls';
 import { construct } from './resources';
-import { resourceToConstructResult } from './util';
 import { functions } from './functions';
+import { resourceToConstructResult } from './util';
 
 export class Provider implements provider.Provider {
   constructor(readonly version: string, readonly schema: string) {
@@ -15,13 +15,13 @@ export class Provider implements provider.Provider {
       construct(name, type, urn) {
         switch (type) {
           case 'kubernetes-the-hard-way:tls:Certificate':
-            return new cert.Certificate(name, <any>undefined, { urn });
+            return new Certificate(name, <any>undefined, { urn });
           case 'kubernetes-the-hard-way:tls:ClusterPki':
-            return new pki.ClusterPki(name, <any>undefined, { urn });
+            return new ClusterPki(name, <any>undefined, { urn });
           case 'kubernetes-the-hard-way:remote:File':
-            return new remoteFile.File(name, <any>undefined, { urn });
+            return new File(name, <any>undefined, { urn });
           case 'kubernetes-the-hard-way:tls:RootCa':
-            return new rootCa.RootCa(name, <any>undefined, { urn });
+            return new RootCa(name, <any>undefined, { urn });
           default:
             throw new Error(`unknown resource type ${type}`);
         }
@@ -29,12 +29,7 @@ export class Provider implements provider.Provider {
     })
   }
 
-  async construct(
-    name: string,
-    type: string,
-    inputs: pulumi.Inputs,
-    options: pulumi.ComponentResourceOptions
-  ): Promise<provider.ConstructResult> {
+  async construct(name: string, type: string, inputs: Inputs, options: ComponentResourceOptions): Promise<ConstructResult> {
     const resource = construct(name, type, inputs, options);
     if (resource === undefined) {
       throw new Error(`unknown resource type ${type}`);
@@ -43,7 +38,7 @@ export class Provider implements provider.Provider {
     return resourceToConstructResult(resource);
   }
 
-  async call(token: string, inputs: pulumi.Inputs): Promise<provider.InvokeResult> {
+  async call(token: string, inputs: pulumi.Inputs): Promise<InvokeResult> {
     const untypedFunctions: Record<string, (inputs: any) => Promise<any>> = functions;
     const handler = untypedFunctions[token];
     if (!handler) {
@@ -53,7 +48,7 @@ export class Provider implements provider.Provider {
     return { outputs };
   }
 
-  async invoke(token: string, inputs: pulumi.Inputs): Promise<provider.InvokeResult> {
+  async invoke(token: string, inputs: pulumi.Inputs): Promise<InvokeResult> {
     return this.call(token, inputs); // Why do both of these functions exist
   }
 }
