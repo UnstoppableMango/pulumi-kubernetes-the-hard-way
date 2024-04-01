@@ -124,6 +124,14 @@ export class ClusterPki extends pulumi.ComponentResource {
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         super(ClusterPki.__pulumiType, name, resourceInputs, opts, true /*remote*/);
     }
+
+    getKubeconfig(args: ClusterPki.GetKubeconfigArgs): pulumi.Output<outputs.config.Kubeconfig> {
+        const result: pulumi.Output<ClusterPki.GetKubeconfigResult> = pulumi.runtime.call("kubernetes-the-hard-way:tls:ClusterPki/getKubeconfig", {
+            "__self__": this,
+            "options": args.options,
+        }, this);
+        return result.result;
+    }
 }
 
 /**
@@ -158,4 +166,21 @@ export interface ClusterPkiArgs {
      * Number of hours, after initial issuing, that the certificate will remain valid.
      */
     validityPeriodHours?: pulumi.Input<number>;
+}
+
+export namespace ClusterPki {
+    /**
+     * The set of arguments for the ClusterPki.getKubeconfig method.
+     */
+    export interface GetKubeconfigArgs {
+        options: pulumi.Input<inputs.config.KubeconfigAdminOptionsArgs> | pulumi.Input<inputs.config.KubeconfigKubeControllerManagerOptionsArgs> | pulumi.Input<inputs.config.KubeconfigKubeProxyOptionsArgs> | pulumi.Input<inputs.config.KubeconfigKubeSchedulerOptionsArgs> | pulumi.Input<inputs.config.KubeconfigWorkerOptionsArgs>;
+    }
+
+    /**
+     * The results of the ClusterPki.getKubeconfig method.
+     */
+    export interface GetKubeconfigResult {
+        readonly result: outputs.config.Kubeconfig;
+    }
+
 }

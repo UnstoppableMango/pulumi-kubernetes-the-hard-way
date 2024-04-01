@@ -16,7 +16,6 @@
         "config/index.ts",
         "etcd.ts",
         "index.ts",
-        "kubeconfig.ts",
         "provider.ts",
         "remote/download.ts",
         "remote/file.ts",

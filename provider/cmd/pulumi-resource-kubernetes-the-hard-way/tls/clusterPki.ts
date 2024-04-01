@@ -1,27 +1,17 @@
-import * as path from 'node:path';
-import { ComponentResource, ComponentResourceOptions, Input, Output, interpolate, output } from '@pulumi/pulumi';
-import { remote } from '@pulumi/command/types/input';
+import { ComponentResource, ComponentResourceOptions, Input, InvokeOptions, Output, all, interpolate, log, output } from '@pulumi/pulumi';
 import { RootCa, newCertificate } from './rootCa';
 import { Certificate } from './certificate';
+import { Kubeconfig, KubeconfigOptions } from '../config';
 import { Algorithm } from '../types';
-import { InstallInputs, File } from '../remote/file';
 
-// export interface WorkerCerts {
-//   ca: RemoteFile;
-//   cert: RemoteFile;
-//   key: RemoteFile;
-// }
+export interface GetKubeconfigInputs {
+  options: KubeconfigOptions;
+}
 
-// export interface ControlPlaneCerts {
-//   ca: RemoteFile;
-//   caKey: RemoteFile;
-//   kubernetesCert: RemoteFile;
-//   kubernetesKey: RemoteFile;
-//   serviceAccountsCert: RemoteFile;
-//   serviceAccountsKey: RemoteFile;
-// }
+export interface GetKubeconfigOutputs {
+  result: Output<Kubeconfig>;
+}
 
-// export type ClusterPkiInstallArgs = Omit<InstallArgs, 'path'>;
 export type NodeRole = 'worker' | 'controlplane';
 export type NodeMapInput = Record<string, Input<NodeArgs>>;
 
@@ -44,6 +34,7 @@ type CertMap<T> = {
 }
 
 export class ClusterPki<T extends NodeMapInput = NodeMapInput> extends ComponentResource {
+  public static readonly __pulumiType: string = 'kubernetes-the-hard-way:tls:ClusterPki';
   public static readonly defaultAlgorithm: Algorithm = 'RSA';
   public static readonly defaultExpiry: number = 8760;
   public static readonly defaultRsaBits: number = 2048;
@@ -63,7 +54,23 @@ export class ClusterPki<T extends NodeMapInput = NodeMapInput> extends Component
   public readonly rsaBits!: Output<number>;
 
   constructor(private name: string, args: ClusterPkiArgs<T>, opts?: ComponentResourceOptions) {
-    super('kubernetes-the-hard-way:tls:ClusterPki', name, args, opts);
+    const props = {
+      admin: undefined,
+      algorithm: undefined,
+      clusterName: undefined,
+      controllerManager: undefined,
+      validityPeriodHours: undefined,
+      kubelet: undefined,
+      kubeProxy: undefined,
+      kubernetes: undefined,
+      kubeScheduler: undefined,
+      publicIp: undefined,
+      rootCa: undefined,
+      serviceAccounts: undefined,
+      rsaBits: undefined,
+    };
+
+    super(ClusterPki.__pulumiType, name, opts?.urn ? props : args, opts);
 
     // Rehydrating
     if (opts?.urn) return;
@@ -193,13 +200,95 @@ export class ClusterPki<T extends NodeMapInput = NodeMapInput> extends Component
     this.rsaBits = rsaBits;
 
     this.registerOutputs({
-      admin, algorithm, controllerManager, clusterName, expiry: validityPeriodHours,
+      admin, algorithm, controllerManager, clusterName,
       kubeProxy, kubeScheduler, kubernetes, publicIp, rootCa,
-      serviceAccounts, rsaBits,
+      serviceAccounts, rsaBits, validityPeriodHours,
     });
+  }
+
+  public async getKubeconfig({ options }: GetKubeconfigInputs): Promise<GetKubeconfigOutputs> {
+    const cert = this.getCert(options);
+    const ip = getIp(options);
+    const username = getUsername(options);
+
+    const caData = this.rootCa.certPem;
+    const clientCertPem = cert.certPem;
+    const clientKeyPem = cert.privateKeyPem;
+    const clusterName = this.clusterName;
+    const server = interpolate`https://${ip}:6443`;
+
+    const kubeconfig = all([clusterName, caData, server, username, clientCertPem, clientKeyPem])
+      .apply<Kubeconfig>(([clusterName, caData, server, username, clientCertPem, clientKeyPem]) => ({
+        clusters: [{
+          name: clusterName,
+          cluster: {
+            certificateAuthorityData: caData,
+            server,
+          },
+        }],
+        contexts: [{
+          name: 'default',
+          context: {
+            cluster: clusterName,
+            user: username,
+          },
+        }],
+        users: [{
+          name: username,
+          user: {
+            clientCertificateData: clientCertPem,
+            clientKeyData: clientKeyPem,
+          },
+        }],
+      }));
+
+    return { result: kubeconfig };
   }
 
   private certName(type: string): string {
     return `${this.name}-${type}`;
+  }
+
+  private getCert(options: KubeconfigOptions): Output<Certificate> {
+    switch (options.type) {
+      case 'admin':
+        return output(this.admin);
+      case 'kube-controller-manager':
+        return output(this.controllerManager);
+      case 'kube-proxy':
+        return output(this.kubeProxy);
+      case 'kube-scheduler':
+        return output(this.kubeScheduler);
+      case 'worker':
+        return output(options.name).apply(n => this.kubelet[n]);
+      default:
+        throw new Error('unsupported kubeconfig type');
+    }
+  }
+}
+
+function getIp(options: KubeconfigOptions): Output<string> {
+  // TODO: Is the ternary really necessary?
+  const result = options.type === 'worker'
+    ? options.publicIp
+    : options.publicIp ?? '127.0.0.1';
+
+  return output(result);
+}
+
+function getUsername(options: KubeconfigOptions): Output<string> {
+  switch (options.type) {
+    case 'admin':
+      return output('admin');
+    case 'kube-controller-manager':
+      return output('system:kube-controller-manager');
+    case 'kube-proxy':
+      return output('system:kube-proxy');
+    case 'kube-scheduler':
+      return output('system:kube-scheduler');
+    case 'worker':
+      return interpolate`system:node:${options.name}`
+    default:
+      throw new Error('unsupported kubeconfig type');
   }
 }

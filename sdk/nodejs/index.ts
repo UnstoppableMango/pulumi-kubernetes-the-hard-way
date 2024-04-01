@@ -10,11 +10,6 @@ export type Etcd = import("./etcd").Etcd;
 export const Etcd: typeof import("./etcd").Etcd = null as any;
 utilities.lazyLoad(exports, ["Etcd"], () => require("./etcd"));
 
-export { KubeconfigArgs } from "./kubeconfig";
-export type Kubeconfig = import("./kubeconfig").Kubeconfig;
-export const Kubeconfig: typeof import("./kubeconfig").Kubeconfig = null as any;
-utilities.lazyLoad(exports, ["Kubeconfig"], () => require("./kubeconfig"));
-
 export { ProviderArgs } from "./provider";
 export type Provider = import("./provider").Provider;
 export const Provider: typeof import("./provider").Provider = null as any;
@@ -45,8 +40,6 @@ const _module = {
         switch (type) {
             case "kubernetes-the-hard-way:index:Etcd":
                 return new Etcd(name, <any>undefined, { urn })
-            case "kubernetes-the-hard-way:index:Kubeconfig":
-                return new Kubeconfig(name, <any>undefined, { urn })
             default:
                 throw new Error(`unknown resource type ${type}`);
         }

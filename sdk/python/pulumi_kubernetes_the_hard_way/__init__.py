@@ -7,7 +7,6 @@ import typing
 # Export this package's modules as members:
 from ._enums import *
 from .etcd import *
-from .kubeconfig import *
 from .provider import *
 
 # Make subpackages available:
@@ -34,8 +33,7 @@ _utilities.register(
   "mod": "index",
   "fqn": "pulumi_kubernetes_the_hard_way",
   "classes": {
-   "kubernetes-the-hard-way:index:Etcd": "Etcd",
-   "kubernetes-the-hard-way:index:Kubeconfig": "Kubeconfig"
+   "kubernetes-the-hard-way:index:Etcd": "Etcd"
   }
  },
  {

@@ -35,7 +35,3 @@ export const KubeconfigType = {
 } as const;
 
 export type KubeconfigType = (typeof KubeconfigType)[keyof typeof KubeconfigType];
-
-export interface InstanceFunctionInputs {
-  __self__: any; // Eh...
-}

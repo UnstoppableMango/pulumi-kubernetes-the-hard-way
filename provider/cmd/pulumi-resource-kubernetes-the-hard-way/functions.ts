@@ -1,9 +1,10 @@
 import { Inputs } from '@pulumi/pulumi';
 import { InvokeResult } from '@pulumi/pulumi/provider';
-import { Certificate, NewCertificateInputs, NewCertificateOutputs, RootCa } from './tls';
+import { Certificate, ClusterPki, GetKubeconfigInputs, GetKubeconfigOutputs, NewCertificateInputs, NewCertificateOutputs, RootCa } from './tls';
 import { InstallInputs, InstallOutputs } from './remote';
 
 type Functions = {
+  'kubernetes-the-hard-way:tls:ClusterPki/getKubeconfig': (inputs: GetKubeconfigInputs) => Promise<GetKubeconfigOutputs>;
   'kubernetes-the-hard-way:tls:Certificate/installCert': (inputs: InstallInputs) => Promise<InstallOutputs>;
   'kubernetes-the-hard-way:tls:Certificate/installKey': (inputs: InstallInputs) => Promise<InstallOutputs>;
   // 'kubernetes-the-hard-way:tls:installCert': (inputs: InstallInputs) => Promise<InstallOutputs>;
@@ -17,6 +18,7 @@ type Functions = {
 export const functions: Functions = {
   'kubernetes-the-hard-way:tls:Certificate/installCert': (i) => self<Certificate>(i).installCert(i),
   'kubernetes-the-hard-way:tls:Certificate/installKey': (i) => self<Certificate>(i).installKey(i),
+  'kubernetes-the-hard-way:tls:ClusterPki/getKubeconfig': (i) => self<ClusterPki>(i).getKubeconfig(i),
   // 'kubernetes-the-hard-way:tls:installCert': (i) => keypair.installCert()
   // 'kubernetes-the-hard-way:tls:newCertificate':
   // 'kubernetes-the-hard-way:tls:installKey':

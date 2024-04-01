@@ -110,6 +110,9 @@ namespace UnMango.KubernetesTheHardWay.Tls
             merged.Id = id ?? merged.Id;
             return merged;
         }
+
+        public global::Pulumi.Output<UnMango.KubernetesTheHardWay.Config.Outputs.Kubeconfig> GetKubeconfig(ClusterPkiGetKubeconfigArgs args)
+            => global::Pulumi.Deployment.Instance.Call<ClusterPkiGetKubeconfigResult>("kubernetes-the-hard-way:tls:ClusterPki/getKubeconfig", args ?? new ClusterPkiGetKubeconfigArgs(), this).Apply(v => v.Result);
     }
 
     public sealed class ClusterPkiArgs : global::Pulumi.ResourceArgs
@@ -169,5 +172,34 @@ namespace UnMango.KubernetesTheHardWay.Tls
             ValidityPeriodHours = 8076;
         }
         public static new ClusterPkiArgs Empty => new ClusterPkiArgs();
+    }
+
+    /// <summary>
+    /// The set of arguments for the <see cref="ClusterPki.GetKubeconfig"/> method.
+    /// </summary>
+    public sealed class ClusterPkiGetKubeconfigArgs : global::Pulumi.CallArgs
+    {
+        [Input("options", required: true)]
+        public object Options { get; set; } = null!;
+
+        public ClusterPkiGetKubeconfigArgs()
+        {
+        }
+        public static new ClusterPkiGetKubeconfigArgs Empty => new ClusterPkiGetKubeconfigArgs();
+    }
+
+    /// <summary>
+    /// The results of the <see cref="ClusterPki.GetKubeconfig"/> method.
+    /// </summary>
+    [OutputType]
+    internal sealed class ClusterPkiGetKubeconfigResult
+    {
+        public readonly UnMango.KubernetesTheHardWay.Config.Outputs.Kubeconfig Result;
+
+        [OutputConstructor]
+        private ClusterPkiGetKubeconfigResult(UnMango.KubernetesTheHardWay.Config.Outputs.Kubeconfig result)
+        {
+            Result = result;
+        }
     }
 }

@@ -10,10 +10,8 @@ export type Certificate = import("./certificate").Certificate;
 export const Certificate: typeof import("./certificate").Certificate = null as any;
 utilities.lazyLoad(exports, ["Certificate"], () => require("./certificate"));
 
-export { ClusterPkiArgs } from "./clusterPki";
-export type ClusterPki = import("./clusterPki").ClusterPki;
-export const ClusterPki: typeof import("./clusterPki").ClusterPki = null as any;
-utilities.lazyLoad(exports, ["ClusterPki"], () => require("./clusterPki"));
+export * from "./clusterPki";
+import { ClusterPki } from "./clusterPki";
 
 export { EncryptionKeyArgs } from "./encryptionKey";
 export type EncryptionKey = import("./encryptionKey").EncryptionKey;
