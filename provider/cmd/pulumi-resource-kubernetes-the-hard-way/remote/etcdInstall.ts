@@ -1,8 +1,8 @@
 import { ComponentResource, ComponentResourceOptions, Input, Output, interpolate, output } from '@pulumi/pulumi';
 import { RandomString } from '@pulumi/random';
 import { remote } from '@pulumi/command/types/input';
-import { Mkdir, Mv, Tar } from './tools';
-import { Download } from './remote';
+import { Mkdir, Mv, Tar } from '../tools';
+import { Download } from './download';
 
 export type Architecture = 'amd64' | 'arm64';
 
@@ -14,10 +14,11 @@ export interface EtcdArgs {
   version?: Input<string>;
 }
 
-export class Etcd extends ComponentResource {
+export class EtcdInstall extends ComponentResource {
+  public static readonly __pulumiType: string = 'kubernetes-the-hard-way:remote:EtcdInstall';
   public static readonly defaultArch: Architecture = 'amd64';
   public static readonly defaultInstallDirectory: string = '/usr/local/bin';
-  public static readonly defaultVersion: string = '3.4.15';
+  public static readonly defaultVersion: string = '3.4.15'; // TODO: Versioning
 
   private readonly _nameInput: string;
 
@@ -38,16 +39,16 @@ export class Etcd extends ComponentResource {
   public readonly version!: Output<string>;
 
   constructor(name: string, args: EtcdArgs, opts?: ComponentResourceOptions) {
-    super('kubernetes-the-hard-way:index:Etcd', name, args, opts);
+    super(EtcdInstall.__pulumiType, name, args, opts);
     this._nameInput = name;
 
     // Rehydrating
     if (opts?.urn) return;
 
-    const architecture = output(args.architecture ?? Etcd.defaultArch);
+    const architecture = output(args.architecture ?? EtcdInstall.defaultArch);
     const downloadDirectory = this.getDownloadDirectory(args.downloadDirectory);
-    const installDirectory = output(args.installDirectory ?? Etcd.defaultInstallDirectory);
-    const version = output(args.version ?? Etcd.defaultVersion); // TODO: Stateful versioning?
+    const installDirectory = output(args.installDirectory ?? EtcdInstall.defaultInstallDirectory);
+    const version = output(args.version ?? EtcdInstall.defaultVersion); // TODO: Stateful versioning?
     const archiveName = interpolate`etcd-v${version}-linux-${architecture}.tar.gz`;
     const url = interpolate`https://github.com/etcd-io/etcd/releases/download/v${version}/${archiveName}`;
 
@@ -96,6 +97,8 @@ export class Etcd extends ComponentResource {
       source: interpolate`${download.destination}/etcdctl`,
       dest: etcdctlPath,
     }, { parent: this, dependsOn: [tar, installMkdir] });
+
+    // TODO: Rm archive or tmp dir?
 
     this.architecture = architecture;
     this.archiveName = archiveName;

@@ -2,14 +2,14 @@ import { ComponentResource, ComponentResourceOptions, Inputs } from '@pulumi/pul
 import { Download, File } from './remote';
 import { Certificate, ClusterPki, EncryptionKey, RootCa } from './tls';
 import { Mkdir, Mktemp, Rm, Tar, Wget } from './tools';
-import { Etcd } from './etcd';
+import { EtcdInstall } from './remote/etcdInstall';
 
 export type ConstructComponent<T extends ComponentResource = ComponentResource>
   = (name: string, inputs: any, options: ComponentResourceOptions) => T;
 
 export type ResourceConstructor = {
-  readonly 'kubernetes-the-hard-way:index:Etcd': ConstructComponent<Etcd>;
   readonly 'kubernetes-the-hard-way:remote:Download': ConstructComponent<Download>;
+  readonly 'kubernetes-the-hard-way:remote:EtcdInstall': ConstructComponent<EtcdInstall>;
   readonly 'kubernetes-the-hard-way:remote:File': ConstructComponent<File>;
   readonly 'kubernetes-the-hard-way:tls:Certificate': ConstructComponent<Certificate>;
   readonly 'kubernetes-the-hard-way:tls:ClusterPki': ConstructComponent<ClusterPki>;
@@ -23,8 +23,8 @@ export type ResourceConstructor = {
 };
 
 const resources: ResourceConstructor = {
-  'kubernetes-the-hard-way:index:Etcd': (...args) => new Etcd(...args),
   'kubernetes-the-hard-way:remote:Download': (...args) => new Download(...args),
+  'kubernetes-the-hard-way:remote:EtcdInstall': (...args) => new EtcdInstall(...args),
   'kubernetes-the-hard-way:remote:File': (...args) => new File(...args),
   'kubernetes-the-hard-way:tls:Certificate': (...args) => new Certificate(...args),
   'kubernetes-the-hard-way:tls:ClusterPki': (...args) => new ClusterPki(...args),
