@@ -1,7 +1,7 @@
 import * as path from 'node:path';
 import { ComponentResource, ComponentResourceOptions, Input, Output, interpolate, output } from '@pulumi/pulumi';
 import { remote } from '@pulumi/command/types/input';
-import { RootCa } from './rootCa';
+import { RootCa, newCertificate } from './rootCa';
 import { Certificate } from './certificate';
 import { Algorithm } from '../types';
 import { InstallInputs, File } from '../remote/file';
@@ -81,7 +81,7 @@ export class ClusterPki<T extends NodeMapInput = NodeMapInput> extends Component
       },
     }, { parent: this });
 
-    const admin = rootCa.newCertificate({
+    const admin = newCertificate(rootCa, {
       name: this.certName('admin'),
       algorithm, rsaBits,
       validityPeriodHours,
@@ -93,7 +93,7 @@ export class ClusterPki<T extends NodeMapInput = NodeMapInput> extends Component
       options: { parent: this },
     });
 
-    const controllerManager = rootCa.newCertificate({
+    const controllerManager = newCertificate(rootCa, {
       name: this.certName('controller-manager'),
       algorithm, rsaBits, validityPeriodHours,
       allowedUses: rootCa.allowedUses, // TODO
@@ -107,7 +107,7 @@ export class ClusterPki<T extends NodeMapInput = NodeMapInput> extends Component
     const kubelet: Partial<CertMap<T>> = {};
     for (const key in args.nodes) {
       const node = output(args.nodes[key]);
-      kubelet[key] = rootCa.newCertificate({
+      kubelet[key] = newCertificate(rootCa, {
         name: this.certName(`${key}-worker`),
         algorithm, rsaBits, validityPeriodHours,
         allowedUses: rootCa.allowedUses, // TODO
@@ -120,7 +120,7 @@ export class ClusterPki<T extends NodeMapInput = NodeMapInput> extends Component
       });
     }
 
-    const kubeProxy = rootCa.newCertificate({
+    const kubeProxy = newCertificate(rootCa, {
       name: this.certName('kube-proxy'),
       algorithm, rsaBits, validityPeriodHours,
       allowedUses: rootCa.allowedUses, // TODO
@@ -131,7 +131,7 @@ export class ClusterPki<T extends NodeMapInput = NodeMapInput> extends Component
       options: { parent: this },
     });
 
-    const kubeScheduler = rootCa.newCertificate({
+    const kubeScheduler = newCertificate(rootCa, {
       name: this.certName('kube-scheduler'),
       algorithm, rsaBits, validityPeriodHours,
       allowedUses: rootCa.allowedUses, // TODO
@@ -142,7 +142,7 @@ export class ClusterPki<T extends NodeMapInput = NodeMapInput> extends Component
       options: { parent: this },
     });
 
-    const kubernetes = rootCa.newCertificate({
+    const kubernetes = newCertificate(rootCa, {
       name: this.certName('kubernetes'),
       algorithm, rsaBits, validityPeriodHours,
       allowedUses: rootCa.allowedUses, // TODO
@@ -167,7 +167,7 @@ export class ClusterPki<T extends NodeMapInput = NodeMapInput> extends Component
       options: { parent: this },
     });
 
-    const serviceAccounts = rootCa.newCertificate({
+    const serviceAccounts = newCertificate(rootCa, {
       name: this.certName('service-accounts'),
       algorithm, rsaBits, validityPeriodHours,
       allowedUses: rootCa.allowedUses, // TODO
