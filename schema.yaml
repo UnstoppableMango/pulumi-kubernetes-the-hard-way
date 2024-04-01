@@ -30,6 +30,7 @@ language:
     importBasePath: github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/sdk/go/kubernetes-the-hard-way
     packageImportAliases:
       github.com/pulumi/pulumi-command/sdk/go/command/remote: pulumiCommand
+      github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/sdk/go/kubernetes-the-hard-way: kthw
   nodejs:
     packageName: "@unmango/pulumi-kubernetes-the-hard-way"
     liftSingleValueMethodReturns: true
@@ -248,7 +249,7 @@ resources:
     description: Represents an etcd binary on a remote system.
     inputProperties:
       architecture:
-        $ref: "#/types/kubernetes-the-hard-way:index:Architecture"
+        $ref: "#/types/kubernetes-the-hard-way:remote:Architecture"
         description: The etcd CPU architecture.
       connection:
         $ref: "/command/v0.9.0/schema.json#/types/command:remote:Connection"
@@ -267,7 +268,7 @@ resources:
       - connection
     properties:
       architecture:
-        $ref: "#/types/kubernetes-the-hard-way:index:Architecture"
+        $ref: "#/types/kubernetes-the-hard-way:remote:Architecture"
         description: The etcd CPU architecture.
       archiveName:
         type: string
@@ -922,7 +923,7 @@ types:
         value: key_encipherment
       - name: serverAuth
         value: server_auth
-  kubernetes-the-hard-way:index:Architecture:
+  kubernetes-the-hard-way:remote:Architecture:
     description: CPU architecture
     type: string
     enum:
