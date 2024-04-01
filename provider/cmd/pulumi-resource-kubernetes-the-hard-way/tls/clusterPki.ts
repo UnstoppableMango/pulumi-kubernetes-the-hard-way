@@ -34,6 +34,7 @@ type CertMap<T> = {
 }
 
 export class ClusterPki<T extends NodeMapInput = NodeMapInput> extends ComponentResource {
+  public static readonly __pulumiType: string = 'kubernetes-the-hard-way:tls:ClusterPki';
   public static readonly defaultAlgorithm: Algorithm = 'RSA';
   public static readonly defaultExpiry: number = 8760;
   public static readonly defaultRsaBits: number = 2048;
@@ -53,7 +54,23 @@ export class ClusterPki<T extends NodeMapInput = NodeMapInput> extends Component
   public readonly rsaBits!: Output<number>;
 
   constructor(private name: string, args: ClusterPkiArgs<T>, opts?: ComponentResourceOptions) {
-    super('kubernetes-the-hard-way:tls:ClusterPki', name, args, opts);
+    const props = {
+      admin: undefined,
+      algorithm: undefined,
+      clusterName: undefined,
+      controllerManager: undefined,
+      validityPeriodHours: undefined,
+      kubelet: undefined,
+      kubeProxy: undefined,
+      kubernetes: undefined,
+      kubeScheduler: undefined,
+      publicIp: undefined,
+      rootCa: undefined,
+      serviceAccounts: undefined,
+      rsaBits: undefined,
+    };
+
+    super(ClusterPki.__pulumiType, name, opts?.urn ? props : args, opts);
 
     // Rehydrating
     if (opts?.urn) return;
@@ -190,8 +207,8 @@ export class ClusterPki<T extends NodeMapInput = NodeMapInput> extends Component
   }
 
   public async getKubeconfig(inputs: GetKubeconfigInputs): Promise<GetKubeconfigOutputs> {
-    log.error('inputs: ' + Object.entries(this).map(([k]) => k));
-    log.error('is pki: ' + ClusterPki.isInstance(this));
+    log.error('NOTICEABLE A: ' + this.clusterName);
+    log.error('NOTICEABLE B: ' + this.kubelet);
     const options = inputs.options;
     const cert = this.getCert(options);
     const ip = getIp(options);
