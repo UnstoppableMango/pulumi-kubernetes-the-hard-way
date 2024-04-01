@@ -10,23 +10,33 @@ import { resourceToConstructResult } from './util';
 
 export class Provider implements provider.Provider {
   constructor(readonly version: string, readonly schema: string) {
-    pulumi.runtime.registerResourceModule('kubernetes-the-hard-way', 'index', {
+    pulumi.runtime.registerResourceModule('kubernetes-the-hard-way', 'tls', {
       version: version,
       construct(name, type, urn) {
         switch (type) {
           case 'kubernetes-the-hard-way:tls:Certificate':
             return new Certificate(name, <any>undefined, { urn });
           case 'kubernetes-the-hard-way:tls:ClusterPki':
-            return new ClusterPki(name, <any>undefined, { urn });
-          case 'kubernetes-the-hard-way:remote:File':
-            return new File(name, <any>undefined, { urn });
+            return new pki.ClusterPki(name, <any>undefined, { urn });
           case 'kubernetes-the-hard-way:tls:RootCa':
             return new RootCa(name, <any>undefined, { urn });
           default:
             throw new Error(`unknown resource type ${type}`);
         }
       },
-    })
+    });
+
+    pulumi.runtime.registerResourceModule('kubernetes-the-hard-way', 'remote', {
+      version: version,
+      construct(name, type, urn) {
+        switch (type)  {
+          case 'kubernetes-the-hard-way:remote:File':
+            return new remoteFile.File(name, <any>undefined, { urn });
+          default:
+            throw new Error(`unknown resource type ${type}`);
+        }
+      }
+    });
   }
 
   async construct(name: string, type: string, inputs: Inputs, options: ComponentResourceOptions): Promise<ConstructResult> {
