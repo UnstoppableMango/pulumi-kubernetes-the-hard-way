@@ -65,13 +65,14 @@ test_nodejs: provider install_nodejs_sdk
 .PHONY: install_provider
 install_provider: .make/install_provider
 
-.PHONY: generate generate_java generate_nodejs generate_python generate_dotnet generate_go
+.PHONY: generate generate_java generate_nodejs generate_python generate_dotnet generate_go generate_types
 generate: generate_java generate_nodejs generate_python generate_dotnet generate_go
 generate_java: .make/generate_java
 generate_nodejs: .make/generate_nodejs
 generate_python: .make/generate_python
 generate_dotnet: .make/generate_dotnet
 generate_go: .make/generate_go
+generate_types: .make/generate_types
 
 .PHONY: local_generate_code
 local_generate_code: generate_java
@@ -113,6 +114,7 @@ clean:
 	rm -rf .make
 	rm -rf bin
 	rm -rf dist
+	rm -rf provider/scripts/vendor
 	rm -rf sdk/dotnet/{bin,obj}
 	rm -rf sdk/nodejs/bin
 	rm -rf sdk/python/bin
@@ -120,6 +122,8 @@ clean:
 	@if dotnet nuget list source | grep "$(WORKING_DIR)"; then \
 		dotnet nuget remove source "$(WORKING_DIR)" \
 	; fi
+
+vendor: provider/scripts/vendor/generate-provider-types.ts provider/scripts/vendor/pulumi-schema.d.ts
 
 .PHONY: upgrade_tools upgrade_java upgrade_pulumi upgrade_pulumictl upgrade_schematools upgrade_yq
 upgrade_tools: upgrade_java upgrade_pulumi upgrade_pulumictl upgrade_schematools upgrade_yq
@@ -218,6 +222,18 @@ dist: dist/$(PROVIDER)-v$(PROVIDER_VERSION)-windows-amd64.tar.gz
 provider/cmd/${PROVIDER}/schema.json: bin/yq $(SCHEMA_FILE)
 	bin/yq -o json '.' $(SCHEMA_FILE) > provider/cmd/${PROVIDER}/schema.json
 
+provider/scripts/vendor/generate-provider-types.ts: AWSX_VERSION := $(shell cat .awsx.version)
+provider/scripts/vendor/generate-provider-types.ts: .awsx.version
+	@mkdir -p provider/scripts/vendor
+	curl -sSL 'https://raw.githubusercontent.com/pulumi/pulumi-awsx/v$(AWSX_VERSION)/awsx/scripts/generate-provider-types.ts' > provider/scripts/vendor/generate-provider-types.ts
+	sed -i.bak -e 's/import path = require("path");/import * as path from "path";/g' provider/scripts/vendor/generate-provider-types.ts
+	@rm provider/scripts/vendor/generate-provider-types.ts.bak
+
+provider/scripts/vendor/pulumi-schema.d.ts: AWSX_VERSION := $(shell cat .awsx.version)
+provider/scripts/vendor/pulumi-schema.d.ts: .awsx.version
+	@mkdir -p provider/scripts/vendor
+	curl -sSL 'https://raw.githubusercontent.com/pulumi/pulumi-awsx/v$(AWSX_VERSION)/awsx/scripts/pulumi-schema.d.ts' > provider/scripts/vendor/pulumi-schema.d.ts
+
 # --------- Sentinel targets --------- #
 
 .make/provider_mod_download: provider/cmd/${PROVIDER}/package.json
@@ -257,6 +273,10 @@ provider/cmd/${PROVIDER}/schema.json: bin/yq $(SCHEMA_FILE)
 .make/generate_go: bin/pulumictl .pulumi/bin/pulumi $(SCHEMA_FILE)
 	rm -rf sdk/go
 	.pulumi/bin/pulumi package gen-sdk $(SCHEMA_FILE) --language go
+	@touch $@
+
+.make/generate_types: vendor
+	cd provider/scripts && yarn gen-types
 	@touch $@
 
 .make/nodejs_yarn_install: .make/generate_nodejs sdk/nodejs/package.json
