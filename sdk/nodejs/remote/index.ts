@@ -10,11 +10,19 @@ export type Download = import("./download").Download;
 export const Download: typeof import("./download").Download = null as any;
 utilities.lazyLoad(exports, ["Download"], () => require("./download"));
 
+export { EtcdInstallArgs } from "./etcdInstall";
+export type EtcdInstall = import("./etcdInstall").EtcdInstall;
+export const EtcdInstall: typeof import("./etcdInstall").EtcdInstall = null as any;
+utilities.lazyLoad(exports, ["EtcdInstall"], () => require("./etcdInstall"));
+
 export { FileArgs } from "./file";
 export type File = import("./file").File;
 export const File: typeof import("./file").File = null as any;
 utilities.lazyLoad(exports, ["File"], () => require("./file"));
 
+
+// Export enums:
+export * from "../types/enums/remote";
 
 const _module = {
     version: utilities.getVersion(),
@@ -22,6 +30,8 @@ const _module = {
         switch (type) {
             case "kubernetes-the-hard-way:remote:Download":
                 return new Download(name, <any>undefined, { urn })
+            case "kubernetes-the-hard-way:remote:EtcdInstall":
+                return new EtcdInstall(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:remote:File":
                 return new File(name, <any>undefined, { urn })
             default:

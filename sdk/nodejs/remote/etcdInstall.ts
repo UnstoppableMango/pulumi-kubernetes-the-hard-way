@@ -2,38 +2,38 @@
 // *** Do not edit by hand unless you're certain you know what you are doing! ***
 
 import * as pulumi from "@pulumi/pulumi";
-import * as inputs from "./types/input";
-import * as outputs from "./types/output";
-import * as enums from "./types/enums";
-import * as utilities from "./utilities";
+import * as inputs from "../types/input";
+import * as outputs from "../types/output";
+import * as enums from "../types/enums";
+import * as utilities from "../utilities";
 
 import * as pulumiCommand from "@pulumi/command";
 
-import {Download} from "./remote";
-import {Mkdir, Mv, Tar} from "./tools";
+import {Mkdir, Mv, Tar} from "../tools";
+import {Download} from "./index";
 
 /**
  * Represents an etcd binary on a remote system.
  */
-export class Etcd extends pulumi.ComponentResource {
+export class EtcdInstall extends pulumi.ComponentResource {
     /** @internal */
-    public static readonly __pulumiType = 'kubernetes-the-hard-way:index:Etcd';
+    public static readonly __pulumiType = 'kubernetes-the-hard-way:remote:EtcdInstall';
 
     /**
-     * Returns true if the given object is an instance of Etcd.  This is designed to work even
+     * Returns true if the given object is an instance of EtcdInstall.  This is designed to work even
      * when multiple copies of the Pulumi SDK have been loaded into the same process.
      */
-    public static isInstance(obj: any): obj is Etcd {
+    public static isInstance(obj: any): obj is EtcdInstall {
         if (obj === undefined || obj === null) {
             return false;
         }
-        return obj['__pulumiType'] === Etcd.__pulumiType;
+        return obj['__pulumiType'] === EtcdInstall.__pulumiType;
     }
 
     /**
      * The etcd CPU architecture.
      */
-    public readonly architecture!: pulumi.Output<enums.Architecture>;
+    public readonly architecture!: pulumi.Output<enums.remote.Architecture>;
     /**
      * The name of the etcd release archive.
      */
@@ -92,13 +92,13 @@ export class Etcd extends pulumi.ComponentResource {
     public readonly version!: pulumi.Output<string>;
 
     /**
-     * Create a Etcd resource with the given unique name, arguments, and options.
+     * Create a EtcdInstall resource with the given unique name, arguments, and options.
      *
      * @param name The _unique_ name of the resource.
      * @param args The arguments to use to populate this resource's properties.
      * @param opts A bag of options that control this resource's behavior.
      */
-    constructor(name: string, args: EtcdArgs, opts?: pulumi.ComponentResourceOptions) {
+    constructor(name: string, args: EtcdInstallArgs, opts?: pulumi.ComponentResourceOptions) {
         let resourceInputs: pulumi.Inputs = {};
         opts = opts || {};
         if (!opts.id) {
@@ -139,18 +139,18 @@ export class Etcd extends pulumi.ComponentResource {
             resourceInputs["version"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
-        super(Etcd.__pulumiType, name, resourceInputs, opts, true /*remote*/);
+        super(EtcdInstall.__pulumiType, name, resourceInputs, opts, true /*remote*/);
     }
 }
 
 /**
- * The set of arguments for constructing a Etcd resource.
+ * The set of arguments for constructing a EtcdInstall resource.
  */
-export interface EtcdArgs {
+export interface EtcdInstallArgs {
     /**
      * The etcd CPU architecture.
      */
-    architecture?: pulumi.Input<enums.Architecture>;
+    architecture?: pulumi.Input<enums.remote.Architecture>;
     /**
      * The connection details.
      */

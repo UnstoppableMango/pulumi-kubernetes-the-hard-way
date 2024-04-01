@@ -2,7 +2,7 @@ import * as pulumi from '@pulumi/pulumi';
 import { ComponentResourceOptions, Inputs } from '@pulumi/pulumi';
 import * as provider from '@pulumi/pulumi/provider';
 import { ConstructResult, InvokeResult } from '@pulumi/pulumi/provider';
-import { File } from './remote';
+import { EtcdInstall, File } from './remote';
 import { Certificate, ClusterPki, RootCa } from './tls';
 import { construct } from './resources';
 import { functions } from './functions';
@@ -30,6 +30,8 @@ export class Provider implements provider.Provider {
       version: version,
       construct(name, type, urn) {
         switch (type) {
+          case 'kubernetes-the-hard-way:remote:EtcdInstall':
+            return new EtcdInstall(name, <any>undefined, { urn });
           case 'kubernetes-the-hard-way:remote:File':
             return new File(name, <any>undefined, { urn });
           default:
