@@ -27,10 +27,10 @@ import * as command from "@pulumi/command";
 import * as random from "@pulumi/random";
 import * as tls from "@pulumi/tls";
 export abstract class Certificate<TData = any> extends pulumi.ComponentResource<TData> {
-    public cert!: unknown | pulumi.Output<unknown>;
+    public cert!: tls.index.LocallySignedCert | pulumi.Output<tls.index.LocallySignedCert>;
     public certPem!: string | pulumi.Output<string>;
-    public csr!: unknown | pulumi.Output<unknown>;
-    public key!: unknown | pulumi.Output<unknown>;
+    public csr!: tls.index.CertRequest | pulumi.Output<tls.index.CertRequest>;
+    public key!: tls.index.PrivateKey | pulumi.Output<tls.index.PrivateKey>;
     public privateKeyPem!: string | pulumi.Output<string>;
     public publicKeyPem!: string | pulumi.Output<string>;
     constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
@@ -50,7 +50,7 @@ export interface CertificateArgs {
     readonly isCaCertificate?: pulumi.Input<boolean>;
     readonly setAuthorityKeyId?: pulumi.Input<boolean>;
     readonly setSubjectKeyId?: pulumi.Input<boolean>;
-    readonly subject?: pulumi.Input<unknown>;
+    readonly subject?: pulumi.Input<tls.types.input.index.CertRequestSubject>;
     readonly uris?: pulumi.Input<pulumi.Input<string>[]>;
     readonly validityPeriodHours: pulumi.Input<number>;
 }
@@ -83,7 +83,7 @@ export interface ClusterPkiArgs {
 }
 export abstract class EncryptionKey<TData = any> extends pulumi.ComponentResource<TData> {
     public config!: string | pulumi.Output<string>;
-    public key!: unknown | pulumi.Output<unknown>;
+    public key!: random.index.RandomBytes | pulumi.Output<random.index.RandomBytes>;
     constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
         super("kubernetes-the-hard-way:tls:EncryptionKey", name, opts.urn ? { config: undefined, key: undefined } : { name, args, opts }, opts);
     }
@@ -113,13 +113,13 @@ export abstract class EtcdInstall<TData = any> extends pulumi.ComponentResource<
 }
 export interface EtcdInstallArgs {
     readonly architecture?: pulumi.Input<ArchitectureInputs>;
-    readonly connection: pulumi.Input<unknown>;
+    readonly connection: pulumi.Input<command.types.input.Connection>;
     readonly downloadDirectory?: pulumi.Input<string>;
     readonly installDirectory?: pulumi.Input<string>;
     readonly version?: pulumi.Input<string>;
 }
 export abstract class Download<TData = any> extends pulumi.ComponentResource<TData> {
-    public connection!: unknown | pulumi.Output<unknown>;
+    public connection!: command.types.output.Connection | pulumi.Output<command.types.output.Connection>;
     public destination!: string | pulumi.Output<string>;
     public mkdir!: Mkdir | pulumi.Output<Mkdir>;
     public url!: string | pulumi.Output<string>;
@@ -129,13 +129,13 @@ export abstract class Download<TData = any> extends pulumi.ComponentResource<TDa
     }
 }
 export interface DownloadArgs {
-    readonly connection: pulumi.Input<unknown>;
+    readonly connection: pulumi.Input<command.types.input.Connection>;
     readonly destination: pulumi.Input<string>;
     readonly removeOnDelete?: pulumi.Input<boolean>;
     readonly url: pulumi.Input<string>;
 }
 export abstract class File<TData = any> extends pulumi.ComponentResource<TData> {
-    public command!: unknown | pulumi.Output<unknown>;
+    public command!: command.Command | pulumi.Output<command.Command>;
     public content!: string | pulumi.Output<string>;
     public path!: string | pulumi.Output<string>;
     public stderr!: string | pulumi.Output<string>;
@@ -146,15 +146,15 @@ export abstract class File<TData = any> extends pulumi.ComponentResource<TData> 
     }
 }
 export interface FileArgs {
-    readonly connection: pulumi.Input<unknown>;
+    readonly connection: pulumi.Input<command.types.input.Connection>;
     readonly content: pulumi.Input<string>;
     readonly path: pulumi.Input<string>;
 }
 export abstract class RootCa<TData = any> extends pulumi.ComponentResource<TData> {
     public allowedUses!: AllowedUsageOutputs[] | pulumi.Output<AllowedUsageOutputs[]>;
-    public cert!: unknown | pulumi.Output<unknown>;
+    public cert!: tls.index.SelfSignedCert | pulumi.Output<tls.index.SelfSignedCert>;
     public certPem!: string | pulumi.Output<string>;
-    public key!: unknown | pulumi.Output<unknown>;
+    public key!: tls.index.PrivateKey | pulumi.Output<tls.index.PrivateKey>;
     public privateKeyPem!: string | pulumi.Output<string>;
     public publicKeyPem!: string | pulumi.Output<string>;
     constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
@@ -172,10 +172,10 @@ export interface RootCaArgs {
     readonly setSubjectKeyId?: pulumi.Input<boolean>;
     readonly uris?: pulumi.Input<pulumi.Input<string>[]>;
     readonly validityPeriodHours: pulumi.Input<number>;
-    readonly subject?: pulumi.Input<unknown>;
+    readonly subject?: pulumi.Input<tls.types.input.index.SelfSignedCertSubject>;
 }
 export abstract class Mkdir<TData = any> extends pulumi.ComponentResource<TData> {
-    public command!: unknown | pulumi.Output<unknown>;
+    public command!: command.Command | pulumi.Output<command.Command>;
     public directory!: string | pulumi.Output<string>;
     public parents!: boolean | pulumi.Output<boolean>;
     public removeOnDelete!: boolean | pulumi.Output<boolean>;
@@ -186,13 +186,13 @@ export abstract class Mkdir<TData = any> extends pulumi.ComponentResource<TData>
     }
 }
 export interface MkdirArgs {
-    readonly connection: pulumi.Input<unknown>;
+    readonly connection: pulumi.Input<command.types.input.Connection>;
     readonly directory: pulumi.Input<string>;
     readonly parents?: pulumi.Input<boolean>;
     readonly removeOnDelete?: pulumi.Input<boolean>;
 }
 export abstract class Mktemp<TData = any> extends pulumi.ComponentResource<TData> {
-    public command!: unknown | pulumi.Output<unknown>;
+    public command!: command.Command | pulumi.Output<command.Command>;
     public directory!: boolean | pulumi.Output<boolean>;
     public dryRun!: boolean | pulumi.Output<boolean>;
     public quiet!: boolean | pulumi.Output<boolean>;
@@ -204,7 +204,7 @@ export abstract class Mktemp<TData = any> extends pulumi.ComponentResource<TData
     }
 }
 export interface MktempArgs {
-    readonly connection: pulumi.Input<unknown>;
+    readonly connection: pulumi.Input<command.types.input.Connection>;
     readonly directory?: pulumi.Input<boolean>;
     readonly dryRun?: pulumi.Input<boolean>;
     readonly quiet?: pulumi.Input<boolean>;
@@ -214,7 +214,7 @@ export interface MktempArgs {
 }
 export abstract class Mv<TData = any> extends pulumi.ComponentResource<TData> {
     public backup!: boolean | pulumi.Output<boolean>;
-    public command!: unknown | pulumi.Output<unknown>;
+    public command!: command.Command | pulumi.Output<command.Command>;
     public context!: boolean | pulumi.Output<boolean>;
     public control?: string | pulumi.Output<string>;
     public dest?: string | pulumi.Output<string>;
@@ -234,7 +234,7 @@ export abstract class Mv<TData = any> extends pulumi.ComponentResource<TData> {
 }
 export interface MvArgs {
     readonly backup?: boolean;
-    readonly connection: pulumi.Input<unknown>;
+    readonly connection: pulumi.Input<command.types.input.Connection>;
     readonly context?: pulumi.Input<boolean>;
     readonly control?: pulumi.Input<string>;
     readonly dest?: pulumi.Input<string>;
@@ -261,7 +261,7 @@ export abstract class Rm<TData = any> extends pulumi.ComponentResource<TData> {
     }
 }
 export interface RmArgs {
-    readonly connection: pulumi.Input<unknown>;
+    readonly connection: pulumi.Input<command.types.input.Connection>;
     readonly dir?: pulumi.Input<boolean>;
     readonly files: pulumi.Input<unknown>;
     readonly force?: pulumi.Input<boolean>;
@@ -271,7 +271,7 @@ export interface RmArgs {
 }
 export abstract class Tar<TData = any> extends pulumi.ComponentResource<TData> {
     public archive!: string | pulumi.Output<string>;
-    public command!: unknown | pulumi.Output<unknown>;
+    public command!: command.Command | pulumi.Output<command.Command>;
     public directory?: string | pulumi.Output<string>;
     public extract!: boolean | pulumi.Output<boolean>;
     public files!: string[] | pulumi.Output<string[]>;
@@ -286,7 +286,7 @@ export abstract class Tar<TData = any> extends pulumi.ComponentResource<TData> {
 }
 export interface TarArgs {
     readonly archive: pulumi.Input<string>;
-    readonly connection: pulumi.Input<unknown>;
+    readonly connection: pulumi.Input<command.types.input.Connection>;
     readonly directory?: pulumi.Input<string>;
     readonly extract?: pulumi.Input<boolean>;
     readonly files?: pulumi.Input<unknown>;
@@ -294,7 +294,7 @@ export interface TarArgs {
     readonly stripComponents?: pulumi.Input<number>;
 }
 export abstract class Wget<TData = any> extends pulumi.ComponentResource<TData> {
-    public command!: unknown | pulumi.Output<unknown>;
+    public command!: command.Command | pulumi.Output<command.Command>;
     public directoryPrefix?: string | pulumi.Output<string>;
     public httpsOnly!: boolean | pulumi.Output<boolean>;
     public noVerbose?: boolean | pulumi.Output<boolean>;
@@ -310,7 +310,7 @@ export abstract class Wget<TData = any> extends pulumi.ComponentResource<TData> 
     }
 }
 export interface WgetArgs {
-    readonly connection: pulumi.Input<unknown>;
+    readonly connection: pulumi.Input<command.types.input.Connection>;
     readonly directoryPrefix?: pulumi.Input<string>;
     readonly httpsOnly?: pulumi.Input<boolean>;
     readonly noVerbose?: pulumi.Input<boolean>;
@@ -413,13 +413,13 @@ export type EcdsaCurveInputs = "P224" | "P256" | "P384" | "P521";
 export type EcdsaCurveOutputs = "P224" | "P256" | "P384" | "P521";
 export interface KeyPairInputs {
     readonly certPem?: pulumi.Input<string>;
-    readonly key?: pulumi.Input<unknown>;
+    readonly key?: pulumi.Input<tls.index.PrivateKey>;
     readonly privateKeyPem?: pulumi.Input<string>;
     readonly publicKeyPem?: pulumi.Input<string>;
 }
 export interface KeyPairOutputs {
     readonly certPem?: pulumi.Output<string>;
-    readonly key?: pulumi.Output<unknown>;
+    readonly key?: pulumi.Output<tls.index.PrivateKey>;
     readonly privateKeyPem?: pulumi.Output<string>;
     readonly publicKeyPem?: pulumi.Output<string>;
 }
