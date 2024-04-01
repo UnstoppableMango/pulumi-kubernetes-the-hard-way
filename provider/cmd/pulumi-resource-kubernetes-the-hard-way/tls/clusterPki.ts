@@ -1,28 +1,17 @@
-import * as path from 'node:path';
-import { ComponentResource, ComponentResourceOptions, Input, Output, all, interpolate, output } from '@pulumi/pulumi';
-import { remote } from '@pulumi/command/types/input';
+import { ComponentResource, ComponentResourceOptions, Input, InvokeOptions, Output, all, interpolate, log, output } from '@pulumi/pulumi';
 import { RootCa, newCertificate } from './rootCa';
 import { Certificate } from './certificate';
 import { Kubeconfig, KubeconfigOptions } from '../config';
 import { Algorithm } from '../types';
-import { InstallInputs, File } from '../remote/file';
 
-// export interface WorkerCerts {
-//   ca: RemoteFile;
-//   cert: RemoteFile;
-//   key: RemoteFile;
-// }
+export interface GetKubeconfigInputs {
+  options: KubeconfigOptions;
+}
 
-// export interface ControlPlaneCerts {
-//   ca: RemoteFile;
-//   caKey: RemoteFile;
-//   kubernetesCert: RemoteFile;
-//   kubernetesKey: RemoteFile;
-//   serviceAccountsCert: RemoteFile;
-//   serviceAccountsKey: RemoteFile;
-// }
+export interface GetKubeconfigOutputs {
+  result: Output<Kubeconfig>;
+}
 
-// export type ClusterPkiInstallArgs = Omit<InstallArgs, 'path'>;
 export type NodeRole = 'worker' | 'controlplane';
 export type NodeMapInput = Record<string, Input<NodeArgs>>;
 
@@ -194,13 +183,16 @@ export class ClusterPki<T extends NodeMapInput = NodeMapInput> extends Component
     this.rsaBits = rsaBits;
 
     this.registerOutputs({
-      admin, algorithm, controllerManager, clusterName, expiry: validityPeriodHours,
+      admin, algorithm, controllerManager, clusterName,
       kubeProxy, kubeScheduler, kubernetes, publicIp, rootCa,
-      serviceAccounts, rsaBits,
+      serviceAccounts, rsaBits, validityPeriodHours,
     });
   }
 
-  public getKubeconfig(options: KubeconfigOptions): Output<Kubeconfig> {
+  public async getKubeconfig(inputs: GetKubeconfigInputs): Promise<GetKubeconfigOutputs> {
+    log.error('inputs: ' + Object.entries(this).map(([k]) => k));
+    log.error('is pki: ' + ClusterPki.isInstance(this));
+    const options = inputs.options;
     const cert = this.getCert(options);
     const ip = getIp(options);
     const username = getUsername(options);
@@ -211,7 +203,7 @@ export class ClusterPki<T extends NodeMapInput = NodeMapInput> extends Component
     const clusterName = this.clusterName;
     const server = interpolate`https://${ip}:6443`;
 
-    return all([clusterName, caData, server, username, clientCertPem, clientKeyPem])
+    const kubeconfig = all([clusterName, caData, server, username, clientCertPem, clientKeyPem])
       .apply<Kubeconfig>(([clusterName, caData, server, username, clientCertPem, clientKeyPem]) => ({
         clusters: [{
           name: clusterName,
@@ -235,6 +227,8 @@ export class ClusterPki<T extends NodeMapInput = NodeMapInput> extends Component
           },
         }],
       }));
+
+    return { result: kubeconfig };
   }
 
   private certName(type: string): string {

@@ -17,7 +17,7 @@ export class Provider implements provider.Provider {
           case 'kubernetes-the-hard-way:tls:Certificate':
             return new Certificate(name, <any>undefined, { urn });
           case 'kubernetes-the-hard-way:tls:ClusterPki':
-            return new pki.ClusterPki(name, <any>undefined, { urn });
+            return new ClusterPki(name, <any>undefined, { urn });
           case 'kubernetes-the-hard-way:tls:RootCa':
             return new RootCa(name, <any>undefined, { urn });
           default:
@@ -29,9 +29,9 @@ export class Provider implements provider.Provider {
     pulumi.runtime.registerResourceModule('kubernetes-the-hard-way', 'remote', {
       version: version,
       construct(name, type, urn) {
-        switch (type)  {
+        switch (type) {
           case 'kubernetes-the-hard-way:remote:File':
-            return new remoteFile.File(name, <any>undefined, { urn });
+            return new File(name, <any>undefined, { urn });
           default:
             throw new Error(`unknown resource type ${type}`);
         }
