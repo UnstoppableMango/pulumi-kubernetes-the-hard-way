@@ -1,7 +1,7 @@
-34,36c34,35
-<   addRef("command");
-<   addRef("random");
-<   addRef("tls");
+34,35c34,36
+<   addRef("aws");
+<   addRef("docker");
 ---
->   addRef("aws");
->   addRef("docker");
+>   addRef("command");
+>   addRef("random");
+>   addRef("tls");
