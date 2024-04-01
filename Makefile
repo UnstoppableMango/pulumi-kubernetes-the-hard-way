@@ -66,7 +66,7 @@ test_nodejs: provider install_nodejs_sdk
 install_provider: .make/install_provider
 
 .PHONY: generate generate_java generate_nodejs generate_python generate_dotnet generate_go generate_types
-generate: generate_java generate_nodejs generate_python generate_dotnet generate_go
+generate: generate_java generate_nodejs generate_python generate_dotnet generate_go generate_types
 generate_java: .make/generate_java
 generate_nodejs: .make/generate_nodejs
 generate_python: .make/generate_python
@@ -80,6 +80,7 @@ local_generate_code: generate_nodejs
 local_generate_code: generate_python
 local_generate_code: generate_dotnet
 local_generate_code: generate_go
+local_generate_code: generate_types
 local_generate: local_generate_code
 
 .PHONY: build only_build build_sdks build_nodejs build_python build_dotnet build_java build_go
@@ -277,7 +278,7 @@ provider/scripts/vendor/pulumi-schema.d.ts: .awsx.version
 	.pulumi/bin/pulumi package gen-sdk $(SCHEMA_FILE) --language go
 	@touch $@
 
-.make/generate_types: vendor
+.make/generate_types: vendor provider/cmd/${PROVIDER}/schema.json
 	cd provider/scripts && yarn gen-types
 	@touch $@
 
