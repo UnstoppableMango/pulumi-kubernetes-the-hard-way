@@ -24,17 +24,6 @@ export type ResourceConstructor = {
   readonly 'kubernetes-the-hard-way:tools:Wget': ConstructComponent<Wget>;
 };
 
-type Functions = {
-  'kubernetes-the-hard-way:index:Certificate/installCert': (inputs: InstallArgs) => Promise<RemoteFile>;
-  'kubernetes-the-hard-way:index:Certificate/installKey': (inputs: InstallArgs) => Promise<RemoteFile>;
-  'kubernetes-the-hard-way:index:installCert': (inputs: InstallArgs) => Promise<RemoteFile>;
-  'kubernetes-the-hard-way:index:newCertificate': (inputs: NewCertificateArgs) => Promise<Certificate>;
-  'kubernetes-the-hard-way:index:installKey': (inputs: InstallArgs) => Promise<RemoteFile>;
-  'kubernetes-the-hard-way:index:RootCa/newCertificate': (inputs: NewCertificateArgs) => Promise<Certificate>;
-  'kubernetes-the-hard-way:index:RootCa/installCert': (inputs: InstallArgs) => Promise<RemoteFile>;
-  'kubernetes-the-hard-way:index:RootCa/installKey': (inputs: InstallArgs) => Promise<RemoteFile>;
-};
-
 const resources: ResourceConstructor = {
   'kubernetes-the-hard-way:index:Etcd': (...args) => new Etcd(...args),
   'kubernetes-the-hard-way:index:Kubeconfig': (...args) => new Kubeconfig(...args),
@@ -50,8 +39,6 @@ const resources: ResourceConstructor = {
   'kubernetes-the-hard-way:tools:Tar': (...args) => new Tar(...args),
   'kubernetes-the-hard-way:tools:Wget': (...args) => new Wget(...args),
 };
-
-const functions: Functions = {};
 
 export function construct(
   name: string,

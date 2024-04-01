@@ -1,7 +1,7 @@
 import { ComponentResource, ComponentResourceOptions, Input, Inputs, Output } from '@pulumi/pulumi';
 import { InvokeResult } from '@pulumi/pulumi/provider';
 import { LocallySignedCert, PrivateKey, SelfSignedCert } from '@pulumi/tls';
-import { InstallArgs, File, install } from '../remote';
+import { InstallInputs, File, install, InstallOutputs } from '../remote';
 import { Algorithm, EcdsaCurve } from '../types';
 
 export interface KeyPairArgs {
@@ -37,39 +37,39 @@ export abstract class KeyPair<TCert extends CertType> extends ComponentResource 
     this.publicKeyPem = key.publicKeyPem;
   }
 
-  public installCert(args: InstallArgs): File {
-    return installCert(this, args);
+  public async installCert(args: InstallInputs): Promise<InstallOutputs> {
+    return { result: installCert(this, args) };
   }
 
-  public installKey(args: InstallArgs): File {
-    return installKey(this, args);
+  public async installKey(args: InstallInputs): Promise<InstallOutputs> {
+    return { result: installKey(this, args) };
   }
 }
 
-export function installCert(pair: KeyPair<CertType>, args: InstallArgs): File {
+export function installCert(pair: KeyPair<CertType>, args: InstallInputs): File {
   return install(args, pair.certPem);
 }
 
-export function installKey(pair: KeyPair<CertType>, args: InstallArgs): File {
+export function installKey(pair: KeyPair<CertType>, args: InstallInputs): File {
   return install(args, pair.publicKeyPem);
 }
 
 export async function callInstallCertInstance(inputs: Inputs): Promise<InvokeResult> {
-  const result = installCert(inputs.__self__, inputs as InstallArgs);
+  const result = installCert(inputs.__self__, inputs as InstallInputs);
   return { outputs: { result } };
 }
 
 export async function callInstallCertStatic(inputs: Inputs): Promise<InvokeResult> {
-  const result = installCert(inputs.keypair, inputs as InstallArgs);
+  const result = installCert(inputs.keypair, inputs as InstallInputs);
   return { outputs: { result } };
 }
 
 export async function callInstallKeyInstance(inputs: Inputs): Promise<InvokeResult> {
-  const result = installKey(inputs.__self__, inputs as InstallArgs);
+  const result = installKey(inputs.__self__, inputs as InstallInputs);
   return { outputs: { result } };
 }
 
 export async function callInstallKeyStatic(inputs: Inputs): Promise<InvokeResult> {
-  const result = installCert(inputs.keypair, inputs as InstallArgs);
+  const result = installCert(inputs.keypair, inputs as InstallInputs);
   return { outputs: { result } };
 }

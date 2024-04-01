@@ -7,10 +7,14 @@ import { Certificate, CertificateArgs } from './certificate';
 import { AllowedUsage } from '../types';
 import { toAllowedUsage } from '../util';
 
-export type NewCertificateArgs = Omit<CertificateArgs, 'caCertPem' | 'caPrivateKeyPem'> & {
+export type NewCertificateInputs = Omit<CertificateArgs, 'caCertPem' | 'caPrivateKeyPem'> & {
   name: string;
   options?: ComponentResourceOptions;
 };
+
+export interface NewCertificateOutputs {
+  result: Certificate;
+}
 
 export interface RootCaArgs extends KeyPairArgs {
   subject?: Input<SelfSignedCertSubject>;
@@ -64,19 +68,28 @@ export class RootCa extends KeyPair<SelfSignedCert> {
     });
   }
 
-  public newCertificate(args: NewCertificateArgs): Certificate {
-    return newCertificate(this, args);
+  public async newCertificate(args: NewCertificateInputs): Promise<NewCertificateOutputs> {
+    const cert = new Certificate(args.name, {
+      algorithm: args.algorithm,
+      allowedUses: args.allowedUses,
+      validityPeriodHours: args.validityPeriodHours,
+      dnsNames: args.dnsNames,
+      ecdsaCurve: args.ecdsaCurve,
+      ipAddresses: args.ipAddresses,
+      isCaCertificate: args.isCaCertificate,
+      rsaBits: args.rsaBits,
+      subject: args.subject,
+      uris: args.uris,
+      caCertPem: this.certPem,
+      caPrivateKeyPem: this.privateKeyPem,
+    }, args.options);
+
+    return { result: cert };
   }
 }
 
-export function newCertificate(ca: Input<RootCa>, args: NewCertificateArgs): Certificate {
+export function newCertificate(ca: Input<RootCa>, args: NewCertificateInputs): Certificate {
   const self = output(ca);
-  // self.apply(x => log.error(`SELF: ${JSON.stringify(x)}`));
-  // self.certPem.apply(x => log.error(`CERTPEM: ${x}`));
-  // self.privateKeyPem.apply(x => log.error(`PKPEM: ${x}`));
-  // self.allowedUses.apply(x => log.error(`USES: ${x}`));
-  // self.cert.apply(x => log.error(`CERT: ${x}`));
-  // self.key.apply(x => log.error(`KEY: ${x}`));
   return new Certificate(args.name, {
     algorithm: args.algorithm,
     allowedUses: args.allowedUses,
@@ -94,12 +107,12 @@ export function newCertificate(ca: Input<RootCa>, args: NewCertificateArgs): Cer
 }
 
 export async function callNewCertificateInstance(inputs: Inputs): Promise<InvokeResult> {
-  const result = newCertificate(inputs.__self__, inputs as NewCertificateArgs);
+  const result = newCertificate(inputs.__self__, inputs as NewCertificateInputs);
   return { outputs: { result } };
 }
 
 export async function callNewCertificateStatic(inputs: Inputs): Promise<InvokeResult> {
-  const result = newCertificate(inputs.ca, inputs as NewCertificateArgs);
+  const result = newCertificate(inputs.ca, inputs as NewCertificateInputs);
   return { outputs: { result } };
 }
 

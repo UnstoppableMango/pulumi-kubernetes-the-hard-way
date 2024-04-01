@@ -4,7 +4,7 @@ import { remote } from '@pulumi/command/types/input';
 import { RootCa } from './rootCa';
 import { Certificate } from './certificate';
 import { Algorithm } from '../types';
-import { InstallArgs, File } from '../remote/file';
+import { InstallInputs, File } from '../remote/file';
 
 // export interface WorkerCerts {
 //   ca: RemoteFile;
@@ -199,68 +199,7 @@ export class ClusterPki<T extends NodeMapInput = NodeMapInput> extends Component
     });
   }
 
-  // public installControlPlane(connection: remote.ConnectionArgs, opts?: ComponentResourceOptions): ControlPlaneCerts {
-  //   return installControlPlane(this, { connection }, opts);
-  // }
-
-  // public installWorker(node: keyof T, connection: remote.ConnectionArgs, opts?: ComponentResourceOptions): WorkerCerts {
-  //   return installWorker(this, node, { connection }, opts);
-  // }
-
   private certName(type: string): string {
     return `${this.name}-${type}`;
   }
 }
-
-// export function installControlPlane(
-//   pki: ClusterPki,
-//   args: ClusterPkiInstallArgs,
-//   opts?: ComponentResourceOptions,
-// ): ControlPlaneCerts {
-
-//   const connection = output(args.connection);
-//   // TODO: Filenames
-//   const target = path.join('home', 'kthw'); // TODO: Paths
-//   const caPath = path.join(target, 'ca.pem');
-//   const caKeyPath = path.join(target, 'ca.key');
-//   const kubePath = path.join(target, 'kubernetes.pem');
-//   const kubeKeyPath = path.join(target, 'kubernetes-key.pem');
-//   const serviceAccountsPath = path.join(target, 'service-accounts.pem');
-//   const serviceAccountsKeyPath = path.join(target, 'service-accounts-key.pem');
-
-//   // TODO: Standardize RemoteFile names
-//   return {
-//     ca: pki.rootCa.installCert(`ca`, { connection, path: caPath }, opts),
-//     caKey: pki.rootCa.installKey(`ca-key`, { connection, path: caKeyPath }, opts),
-//     kubernetesCert: pki.kubernetes.installCert(`kubernetes.pem`, { connection, path: kubePath }, opts),
-//     kubernetesKey: pki.kubernetes.installKey(`kubernetes-key.pem`, { connection, path: kubeKeyPath }, opts),
-//     serviceAccountsCert: pki.serviceAccounts.installCert(`service-accounts.pem`, { connection, path: serviceAccountsPath }, opts),
-//     serviceAccountsKey: pki.serviceAccounts.installKey(`service-accounts-key.pem`, { connection, path: serviceAccountsKeyPath }, opts),
-//   };
-// }
-
-// export function installWorker<T extends NodeMapInput = NodeMapInput>(
-//   pki: ClusterPki<T>,
-//   node: keyof T,
-//   args: ClusterPkiInstallArgs,
-//   opts?: ComponentResourceOptions,
-// ): WorkerCerts {
-//   if (typeof node !== 'string') {
-//     throw new Error('Need to narrow this type better');
-//   }
-
-//   const connection = output(args.connection);
-//   const cert: Certificate = pki.kubelet[node];
-//   // TODO: Filenames
-//   const target = path.join('home', 'kthw'); // TODO: Paths
-//   const caPath = path.join(target, 'ca.pem');
-//   const certPath = path.join(target, 'cert.pem');
-//   const keyPath = path.join(target, 'key.pem');
-
-//   // TODO: Standardize RemoteFile names
-//   return {
-//     ca: pki.rootCa.installCert(`${node}-ca`, { connection, path: caPath }, opts),
-//     cert: cert.installCert(`${node}-cert`, { connection, path: certPath }, opts),
-//     key: cert.installKey(`${node}-key`, { connection, path: keyPath }, opts),
-//   };
-// }

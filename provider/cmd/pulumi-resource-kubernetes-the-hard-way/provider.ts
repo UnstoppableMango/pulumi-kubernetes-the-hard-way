@@ -2,11 +2,11 @@ import * as pulumi from '@pulumi/pulumi';
 import * as provider from '@pulumi/pulumi/provider';
 import * as cert from './tls/certificate';
 import * as pki from './tls/clusterPki';
-import * as keypair from './tls/keypair';
 import * as remoteFile from './remote/file';
 import * as rootCa from './tls/rootCa';
 import { construct } from './resources';
 import { resourceToConstructResult } from './util';
+import { functions } from './functions';
 
 export class Provider implements provider.Provider {
   constructor(readonly version: string, readonly schema: string) {
@@ -44,29 +44,16 @@ export class Provider implements provider.Provider {
   }
 
   async call(token: string, inputs: pulumi.Inputs): Promise<provider.InvokeResult> {
-    switch (token) {
-      case 'kubernetes-the-hard-way:tls:Certificate/installCert':
-        return await keypair.callInstallCertInstance(inputs);
-      case 'kubernetes-the-hard-way:tls:Certificate/installKey':
-        return await keypair.callInstallKeyInstance(inputs);
-      case 'kubernetes-the-hard-way:remote:installCert':
-        return await keypair.callInstallCertStatic(inputs);
-      case 'kubernetes-the-hard-way:tls:newCertificate':
-        return await rootCa.callNewCertificateStatic(inputs);
-      case 'kubernetes-the-hard-way:remote:installKey':
-        return await keypair.callInstallKeyStatic(inputs);
-      case 'kubernetes-the-hard-way:tls:RootCa/newCertificate':
-        return await rootCa.callNewCertificateInstance(inputs);
-      case 'kubernetes-the-hard-way:tls:RootCa/installCert':
-        return await keypair.callInstallCertInstance(inputs);
-      case 'kubernetes-the-hard-way:tls:RootCa/installKey':
-        return await keypair.callInstallKeyInstance(inputs);
-      default:
-        throw new Error(`unknown call token ${token}`);
+    const untypedFunctions: Record<string, (inputs: any) => Promise<any>> = functions;
+    const handler = untypedFunctions[token];
+    if (!handler) {
+      throw new Error(`unknown method ${token}`);
     }
+    const outputs = await handler(inputs);
+    return { outputs };
   }
 
   async invoke(token: string, inputs: pulumi.Inputs): Promise<provider.InvokeResult> {
-    return this.call(token, inputs);
+    return this.call(token, inputs); // Why do both of these functions exist
   }
 }
