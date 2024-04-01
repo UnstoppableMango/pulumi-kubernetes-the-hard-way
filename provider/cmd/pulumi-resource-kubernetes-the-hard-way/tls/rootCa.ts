@@ -20,12 +20,23 @@ export interface RootCaArgs extends KeyPairArgs {
 }
 
 export class RootCa extends KeyPair<SelfSignedCert> {
+  public static readonly __pulumiType: string = 'kubernetes-the-hard-way:tls:RootCa';
+
   public readonly allowedUses!: Output<AllowedUsage[]>;
   public readonly cert!: SelfSignedCert;
   public readonly certPem!: Output<string>;
 
   constructor(name: string, args: RootCaArgs, opts?: ComponentResourceOptions) {
-    super('kubernetes-the-hard-way:tls:RootCa', name, args, opts);
+    const props = {
+      allowedUses: undefined,
+      cert: undefined,
+      certPem: undefined,
+      key: undefined,
+      privateKeyPem: undefined,
+      publicKeyPem: undefined,
+    };
+
+    super(RootCa.__pulumiType, name, opts?.urn ? props : args, opts);
 
     // Rehydrating
     if (opts?.urn) return;

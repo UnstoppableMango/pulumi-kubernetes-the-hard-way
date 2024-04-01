@@ -22,6 +22,11 @@ func TestSimpleTs(t *testing.T) {
 			Quick:         true,
 			SkipRefresh:   true,
 			RunUpdateTest: false,
+			ExtraRuntimeValidation: func(t *testing.T, stack integration.RuntimeValidationStackInfo) {
+				assert.NotEmpty(t, stack.Outputs["certPem"])
+				assert.NotEmpty(t, stack.Outputs["keyPem"])
+				assert.NotEmpty(t, stack.Outputs["kubeconfigJson"])
+			},
 		})
 
 	integration.ProgramTest(t, &test)

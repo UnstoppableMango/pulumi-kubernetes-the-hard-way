@@ -206,10 +206,7 @@ export class ClusterPki<T extends NodeMapInput = NodeMapInput> extends Component
     });
   }
 
-  public async getKubeconfig(inputs: GetKubeconfigInputs): Promise<GetKubeconfigOutputs> {
-    log.error('NOTICEABLE A: ' + this.clusterName);
-    log.error('NOTICEABLE B: ' + this.kubelet);
-    const options = inputs.options;
+  public async getKubeconfig({ options }: GetKubeconfigInputs): Promise<GetKubeconfigOutputs> {
     const cert = this.getCert(options);
     const ip = getIp(options);
     const username = getUsername(options);

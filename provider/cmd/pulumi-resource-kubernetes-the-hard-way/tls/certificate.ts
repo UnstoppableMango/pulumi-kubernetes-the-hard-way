@@ -18,13 +18,25 @@ export interface CertificateArgs extends KeyPairArgs {
 }
 
 export class Certificate extends KeyPair<LocallySignedCert> {
+  public static readonly __pulumiType: string = 'kubernetes-the-hard-way:tls:Certificate';
+
   public readonly allowedUses!: Output<AllowedUsage[]>;
   public readonly certPem!: Output<string>;
   public readonly cert!: LocallySignedCert;
   public readonly csr!: CertRequest;
 
   constructor(name: string, args: CertificateArgs, opts?: ComponentResourceOptions) {
-    super('kubernetes-the-hard-way:tls:Certificate', name, args, opts);
+    const props = {
+      allowedUses: undefined,
+      certPem: undefined,
+      cert: undefined,
+      csr: undefined,
+      key: undefined,
+      privateKeyPem: undefined,
+      publicKeyPem: undefined,
+    };
+
+    super(Certificate.__pulumiType, name, opts?.urn ? props : args, opts);
 
     // Rehydrating
     if (opts?.urn) return;
