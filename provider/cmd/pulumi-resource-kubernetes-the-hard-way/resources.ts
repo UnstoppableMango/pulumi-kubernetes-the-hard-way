@@ -1,8 +1,7 @@
 import { ComponentResource, ComponentResourceOptions, Inputs } from '@pulumi/pulumi';
-import { Download, File } from './remote';
+import { Download, EtcdInstall, File } from './remote';
 import { Certificate, ClusterPki, EncryptionKey, RootCa } from './tls';
 import { Mkdir, Mktemp, Rm, Tar, Wget } from './tools';
-import { EtcdInstall } from './remote/etcdInstall';
 
 export type ConstructComponent<T extends ComponentResource = ComponentResource>
   = (name: string, inputs: any, options: ComponentResourceOptions) => T;

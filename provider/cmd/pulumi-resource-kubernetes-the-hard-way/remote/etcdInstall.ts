@@ -39,7 +39,25 @@ export class EtcdInstall extends ComponentResource {
   public readonly version!: Output<string>;
 
   constructor(name: string, args: EtcdArgs, opts?: ComponentResourceOptions) {
-    super(EtcdInstall.__pulumiType, name, args, opts);
+    const props = {
+      architecture: undefined,
+      archiveName: undefined,
+      download: undefined,
+      downloadDirectory: undefined,
+      downloadMkdir: undefined,
+      etcdPath: undefined,
+      etcdctlPath: undefined,
+      installDirectory: undefined,
+      installMkdir: undefined,
+      mvEtcd: undefined,
+      mvEtcdctl: undefined,
+      name: undefined,
+      tar: undefined,
+      url: undefined,
+      version: undefined,
+    };
+
+    super(EtcdInstall.__pulumiType, name, opts?.urn ? props : args, opts);
     this._nameInput = name;
 
     // Rehydrating
