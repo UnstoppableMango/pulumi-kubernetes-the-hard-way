@@ -1,8 +1,7 @@
 import * as path from 'node:path';
 import { Config } from '@pulumi/pulumi';
-import { Etcd } from '@unmango/pulumi-kubernetes-the-hard-way';
 import { Mkdir, Tar, Wget } from '@unmango/pulumi-kubernetes-the-hard-way/tools';
-import { Download, File } from '@unmango/pulumi-kubernetes-the-hard-way/remote';
+import { Download, EtcdInstall, File } from '@unmango/pulumi-kubernetes-the-hard-way/remote';
 
 const config = new Config();
 const host = config.require('host');
@@ -48,7 +47,7 @@ const download = new Download('remote', {
 //   gzip: true,
 // });
 
-const etcd = new Etcd('remote', {
+const etcd = new EtcdInstall('remote', {
   connection: { host, port, user, password },
   installDirectory: path.join(basePath, 'etcd'),
 });
