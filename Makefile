@@ -225,9 +225,9 @@ provider/cmd/${PROVIDER}/schema.json: bin/yq $(SCHEMA_FILE)
 provider/scripts/vendor/generate-provider-types.ts: AWSX_VERSION := $(shell cat .awsx.version)
 provider/scripts/vendor/generate-provider-types.ts: .awsx.version
 	@mkdir -p provider/scripts/vendor
-	curl -sSL 'https://raw.githubusercontent.com/pulumi/pulumi-awsx/v$(AWSX_VERSION)/awsx/scripts/generate-provider-types.ts' > provider/scripts/vendor/generate-provider-types.ts
-	sed -i.bak -e 's/import path = require("path");/import * as path from "path";/g' provider/scripts/vendor/generate-provider-types.ts
-	@rm provider/scripts/vendor/generate-provider-types.ts.bak
+	cd provider/scripts && \
+		curl -sSL 'https://raw.githubusercontent.com/pulumi/pulumi-awsx/v$(AWSX_VERSION)/awsx/scripts/generate-provider-types.ts' > vendor/generate-provider-types.ts && \
+		patch -R vendor/generate-provider-types.ts patches/0001-addRefs.patch
 
 provider/scripts/vendor/pulumi-schema.d.ts: AWSX_VERSION := $(shell cat .awsx.version)
 provider/scripts/vendor/pulumi-schema.d.ts: .awsx.version
