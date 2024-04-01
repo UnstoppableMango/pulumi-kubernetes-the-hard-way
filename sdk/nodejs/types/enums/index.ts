@@ -3,19 +3,11 @@
 
 // Export sub-modules:
 import * as config from "./config";
+import * as remote from "./remote";
 import * as tls from "./tls";
 
 export {
     config,
+    remote,
     tls,
 };
-
-export const Architecture = {
-    Amd64: "amd64",
-    Arm64: "arm64",
-} as const;
-
-/**
- * CPU architecture
- */
-export type Architecture = (typeof Architecture)[keyof typeof Architecture];

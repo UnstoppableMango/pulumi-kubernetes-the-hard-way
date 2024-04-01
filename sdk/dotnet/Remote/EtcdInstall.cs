@@ -8,19 +8,19 @@ using System.Threading.Tasks;
 using Pulumi.Serialization;
 using Pulumi;
 
-namespace UnMango.KubernetesTheHardWay
+namespace UnMango.KubernetesTheHardWay.Remote
 {
     /// <summary>
     /// Represents an etcd binary on a remote system.
     /// </summary>
-    [KubernetesTheHardWayResourceType("kubernetes-the-hard-way:index:Etcd")]
-    public partial class Etcd : global::Pulumi.ComponentResource
+    [KubernetesTheHardWayResourceType("kubernetes-the-hard-way:remote:EtcdInstall")]
+    public partial class EtcdInstall : global::Pulumi.ComponentResource
     {
         /// <summary>
         /// The etcd CPU architecture.
         /// </summary>
         [Output("architecture")]
-        public Output<UnMango.KubernetesTheHardWay.Architecture> Architecture { get; private set; } = null!;
+        public Output<UnMango.KubernetesTheHardWay.Remote.Architecture> Architecture { get; private set; } = null!;
 
         /// <summary>
         /// The name of the etcd release archive.
@@ -108,14 +108,14 @@ namespace UnMango.KubernetesTheHardWay
 
 
         /// <summary>
-        /// Create a Etcd resource with the given unique name, arguments, and options.
+        /// Create a EtcdInstall resource with the given unique name, arguments, and options.
         /// </summary>
         ///
         /// <param name="name">The unique name of the resource</param>
         /// <param name="args">The arguments used to populate this resource's properties</param>
         /// <param name="options">A bag of options that control this resource's behavior</param>
-        public Etcd(string name, EtcdArgs args, ComponentResourceOptions? options = null)
-            : base("kubernetes-the-hard-way:index:Etcd", name, args ?? new EtcdArgs(), MakeResourceOptions(options, ""), remote: true)
+        public EtcdInstall(string name, EtcdInstallArgs args, ComponentResourceOptions? options = null)
+            : base("kubernetes-the-hard-way:remote:EtcdInstall", name, args ?? new EtcdInstallArgs(), MakeResourceOptions(options, ""), remote: true)
         {
         }
 
@@ -133,13 +133,13 @@ namespace UnMango.KubernetesTheHardWay
         }
     }
 
-    public sealed class EtcdArgs : global::Pulumi.ResourceArgs
+    public sealed class EtcdInstallArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
         /// The etcd CPU architecture.
         /// </summary>
         [Input("architecture")]
-        public Input<UnMango.KubernetesTheHardWay.Architecture>? Architecture { get; set; }
+        public Input<UnMango.KubernetesTheHardWay.Remote.Architecture>? Architecture { get; set; }
 
         /// <summary>
         /// The connection details.
@@ -165,10 +165,10 @@ namespace UnMango.KubernetesTheHardWay
         [Input("version")]
         public Input<string>? Version { get; set; }
 
-        public EtcdArgs()
+        public EtcdInstallArgs()
         {
             InstallDirectory = "/usr/local/bin";
         }
-        public static new EtcdArgs Empty => new EtcdArgs();
+        public static new EtcdInstallArgs Empty => new EtcdInstallArgs();
     }
 }

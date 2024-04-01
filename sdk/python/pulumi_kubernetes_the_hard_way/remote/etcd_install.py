@@ -7,16 +7,16 @@ import warnings
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
-from . import _utilities
-from . import remote as _remote
-from . import tools as _tools
+from .. import _utilities
+from .. import tools as _tools
 from ._enums import *
+from .download import Download
 import pulumi_command
 
-__all__ = ['EtcdArgs', 'Etcd']
+__all__ = ['EtcdInstallArgs', 'EtcdInstall']
 
 @pulumi.input_type
-class EtcdArgs:
+class EtcdInstallArgs:
     def __init__(__self__, *,
                  connection: pulumi.Input['pulumi_command.remote.ConnectionArgs'],
                  architecture: Optional[pulumi.Input['Architecture']] = None,
@@ -24,7 +24,7 @@ class EtcdArgs:
                  install_directory: Optional[pulumi.Input[str]] = None,
                  version: Optional[pulumi.Input[str]] = None):
         """
-        The set of arguments for constructing a Etcd resource.
+        The set of arguments for constructing a EtcdInstall resource.
         :param pulumi.Input['pulumi_command.remote.ConnectionArgs'] connection: The connection details.
         :param pulumi.Input['Architecture'] architecture: The etcd CPU architecture.
         :param pulumi.Input[str] download_directory: Temporary directory to download files to. Defaults to `/tmp/<random string>`.
@@ -104,7 +104,7 @@ class EtcdArgs:
         pulumi.set(self, "version", value)
 
 
-class Etcd(pulumi.ComponentResource):
+class EtcdInstall(pulumi.ComponentResource):
     @overload
     def __init__(__self__,
                  resource_name: str,
@@ -130,18 +130,18 @@ class Etcd(pulumi.ComponentResource):
     @overload
     def __init__(__self__,
                  resource_name: str,
-                 args: EtcdArgs,
+                 args: EtcdInstallArgs,
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
         Represents an etcd binary on a remote system.
 
         :param str resource_name: The name of the resource.
-        :param EtcdArgs args: The arguments to use to populate this resource's properties.
+        :param EtcdInstallArgs args: The arguments to use to populate this resource's properties.
         :param pulumi.ResourceOptions opts: Options for the resource.
         """
         ...
     def __init__(__self__, resource_name: str, *args, **kwargs):
-        resource_args, opts = _utilities.get_resource_args_opts(EtcdArgs, pulumi.ResourceOptions, *args, **kwargs)
+        resource_args, opts = _utilities.get_resource_args_opts(EtcdInstallArgs, pulumi.ResourceOptions, *args, **kwargs)
         if resource_args is not None:
             __self__._internal_init(resource_name, opts, **resource_args.__dict__)
         else:
@@ -164,7 +164,7 @@ class Etcd(pulumi.ComponentResource):
         else:
             if __props__ is not None:
                 raise TypeError('__props__ is only valid when passed in combination with a valid opts.id to get an existing resource')
-            __props__ = EtcdArgs.__new__(EtcdArgs)
+            __props__ = EtcdInstallArgs.__new__(EtcdInstallArgs)
 
             __props__.__dict__["architecture"] = architecture
             if connection is None and not opts.urn:
@@ -186,8 +186,8 @@ class Etcd(pulumi.ComponentResource):
             __props__.__dict__["name"] = None
             __props__.__dict__["tar"] = None
             __props__.__dict__["url"] = None
-        super(Etcd, __self__).__init__(
-            'kubernetes-the-hard-way:index:Etcd',
+        super(EtcdInstall, __self__).__init__(
+            'kubernetes-the-hard-way:remote:EtcdInstall',
             resource_name,
             __props__,
             opts,
@@ -211,7 +211,7 @@ class Etcd(pulumi.ComponentResource):
 
     @property
     @pulumi.getter
-    def download(self) -> pulumi.Output['_remote.Download']:
+    def download(self) -> pulumi.Output['Download']:
         """
         The etcd download operation.
         """

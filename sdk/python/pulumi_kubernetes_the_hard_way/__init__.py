@@ -5,8 +5,6 @@
 from . import _utilities
 import typing
 # Export this package's modules as members:
-from ._enums import *
-from .etcd import *
 from .provider import *
 
 # Make subpackages available:
@@ -30,18 +28,11 @@ _utilities.register(
 [
  {
   "pkg": "kubernetes-the-hard-way",
-  "mod": "index",
-  "fqn": "pulumi_kubernetes_the_hard_way",
-  "classes": {
-   "kubernetes-the-hard-way:index:Etcd": "Etcd"
-  }
- },
- {
-  "pkg": "kubernetes-the-hard-way",
   "mod": "remote",
   "fqn": "pulumi_kubernetes_the_hard_way.remote",
   "classes": {
    "kubernetes-the-hard-way:remote:Download": "Download",
+   "kubernetes-the-hard-way:remote:EtcdInstall": "EtcdInstall",
    "kubernetes-the-hard-way:remote:File": "File"
   }
  },

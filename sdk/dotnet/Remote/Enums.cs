@@ -5,7 +5,7 @@ using System;
 using System.ComponentModel;
 using Pulumi;
 
-namespace UnMango.KubernetesTheHardWay
+namespace UnMango.KubernetesTheHardWay.Remote
 {
     /// <summary>
     /// CPU architecture
