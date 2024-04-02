@@ -3,6 +3,7 @@ import { RandomString } from '@pulumi/random';
 import * as schema from '../schema-types';
 import { Mkdir, Mv, Tar } from '../tools';
 import { Download } from './download';
+import { File } from './file';
 
 export type Architecture = 'amd64' | 'arm64';
 
@@ -20,8 +21,10 @@ export class EtcdInstall extends schema.EtcdInstall {
     if (opts?.urn) return;
 
     const architecture = output(args.architecture ?? EtcdInstall.defaultArch);
+    const configurationDirectory = output(args.configurationDirectory); // Default value?
     const downloadDirectory = this.getDownloadDirectory(args.downloadDirectory);
     const installDirectory = output(args.installDirectory ?? EtcdInstall.defaultInstallDirectory);
+    const internalIp = output(args.internalIp);
     const version = output(args.version ?? EtcdInstall.defaultVersion); // TODO: Stateful versioning?
     const archiveName = interpolate`etcd-v${version}-linux-${architecture}.tar.gz`;
     const url = interpolate`https://github.com/etcd-io/etcd/releases/download/v${version}/${archiveName}`;
@@ -74,13 +77,39 @@ export class EtcdInstall extends schema.EtcdInstall {
 
     // TODO: Rm archive or tmp dir?
 
+    const caFilePath = interpolate`${configurationDirectory}/ca.pem`;
+    const certFilePath = interpolate`${configurationDirectory}/kubernetes.pem`;
+    const keyFilePath = interpolate`${configurationDirectory}/kubernetes-key.pem`;
+
+    const caFile = new File(`${name}-ca`, {
+      connection: args.connection,
+      content: args.caPem,
+      path: caFilePath,
+    }, { parent: this });
+
+    const certFile = new File(`${name}-cert`, {
+      connection: args.connection,
+      content: args.certPem,
+      path: certFilePath,
+    }, { parent: this });
+
+    const keyFile = new File(`${name}-key`, {
+      connection: args.connection,
+      content: args.keyPem,
+      path: keyFilePath,
+    }, { parent: this });
+
     this.architecture = architecture;
     this.archiveName = archiveName;
+    this.caFile = caFile;
+    this.certFile = certFile;
     this.download = download;
     this.downloadDirectory = downloadDirectory;
     this.downloadMkdir = downloadMkdir;
     this.installDirectory = installDirectory;
     this.installMkdir = installMkdir;
+    this.internalIp = internalIp;
+    this.keyFile = keyFile;
     this.mvEtcd = mvEtcd;
     this.mvEtcdctl = mvEtcdctl;
     this.name = output(name);
@@ -120,4 +149,38 @@ export class EtcdInstall extends schema.EtcdInstall {
 
     return interpolate`/tmp/${random.result}`;
   }
+}
+
+function systemdFile(nodeName: string, internalIp: Input<string>): Output<string> {
+  return interpolate`
+[Unit]
+Description=etcd
+Documentation=https://github.com/etcd-io/etcd
+
+[Service]
+Type=notify
+ExecStart=/usr/local/bin/etcd \\
+  --name ${nodeName} \\
+  --cert-file=/etc/etcd/kubernetes.pem \\
+  --key-file=/etc/etcd/kubernetes-key.pem \\
+  --peer-cert-file=/etc/etcd/kubernetes.pem \\
+  --peer-key-file=/etc/etcd/kubernetes-key.pem \\
+  --trusted-ca-file=/etc/etcd/ca.pem \\
+  --peer-trusted-ca-file=/etc/etcd/ca.pem \\
+  --peer-client-cert-auth \\
+  --client-cert-auth \\
+  --initial-advertise-peer-urls https://${internalIp}:2380 \\
+  --listen-peer-urls https://${internalIp}:2380 \\
+  --listen-client-urls https://${internalIp}:2379,https://127.0.0.1:2379 \\
+  --advertise-client-urls https://${internalIp}:2379 \\
+  --initial-cluster-token etcd-cluster-0 \\
+  --initial-cluster controller-0=https://10.240.0.10:2380,controller-1=https://10.240.0.11:2380,controller-2=https://10.240.0.12:2380 \\
+  --initial-cluster-state new \\
+  --data-dir=/var/lib/etcd
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
+`;
 }
