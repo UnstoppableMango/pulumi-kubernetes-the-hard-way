@@ -10,6 +10,7 @@ import com.pulumi.core.internal.Codegen;
 import com.unmango.kubernetesthehardway.Utilities;
 import com.unmango.kubernetesthehardway.remote.Download;
 import com.unmango.kubernetesthehardway.remote.EtcdInstallArgs;
+import com.unmango.kubernetesthehardway.remote.File;
 import com.unmango.kubernetesthehardway.remote.enums.Architecture;
 import com.unmango.kubernetesthehardway.tools.Mkdir;
 import com.unmango.kubernetesthehardway.tools.Mv;
@@ -150,6 +151,20 @@ public class EtcdInstall extends com.pulumi.resources.ComponentResource {
         return this.installMkdir;
     }
     /**
+     * IP used to serve client requests and communicate with etcd peers.
+     * 
+     */
+    @Export(name="internalIp", refs={String.class}, tree="[0]")
+    private Output<String> internalIp;
+
+    /**
+     * @return IP used to serve client requests and communicate with etcd peers.
+     * 
+     */
+    public Output<String> internalIp() {
+        return this.internalIp;
+    }
+    /**
      * The operation to move the etcd binary to the install directory.
      * 
      */
@@ -190,6 +205,20 @@ public class EtcdInstall extends com.pulumi.resources.ComponentResource {
      */
     public Output<String> name() {
         return this.name;
+    }
+    /**
+     * The remote systemd service file.
+     * 
+     */
+    @Export(name="systemdServiceFile", refs={File.class}, tree="[0]")
+    private Output<File> systemdServiceFile;
+
+    /**
+     * @return The remote systemd service file.
+     * 
+     */
+    public Output<File> systemdServiceFile() {
+        return this.systemdServiceFile;
     }
     /**
      * The tar operation.

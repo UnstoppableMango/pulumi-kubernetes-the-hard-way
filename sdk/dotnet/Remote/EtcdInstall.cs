@@ -71,6 +71,12 @@ namespace UnMango.KubernetesTheHardWay.Remote
         public Output<UnMango.KubernetesTheHardWay.Tools.Mkdir> InstallMkdir { get; private set; } = null!;
 
         /// <summary>
+        /// IP used to serve client requests and communicate with etcd peers.
+        /// </summary>
+        [Output("internalIp")]
+        public Output<string> InternalIp { get; private set; } = null!;
+
+        /// <summary>
         /// The operation to move the etcd binary to the install directory.
         /// </summary>
         [Output("mvEtcd")]
@@ -87,6 +93,12 @@ namespace UnMango.KubernetesTheHardWay.Remote
         /// </summary>
         [Output("name")]
         public Output<string> Name { get; private set; } = null!;
+
+        /// <summary>
+        /// The remote systemd service file.
+        /// </summary>
+        [Output("systemdServiceFile")]
+        public Output<UnMango.KubernetesTheHardWay.Remote.File> SystemdServiceFile { get; private set; } = null!;
 
         /// <summary>
         /// The tar operation.
@@ -142,10 +154,34 @@ namespace UnMango.KubernetesTheHardWay.Remote
         public Input<UnMango.KubernetesTheHardWay.Remote.Architecture>? Architecture { get; set; }
 
         /// <summary>
+        /// The PEM encoded CA data.
+        /// </summary>
+        [Input("caPem", required: true)]
+        public Input<string> CaPem { get; set; } = null!;
+
+        /// <summary>
+        /// The PEM encoded certificate data.
+        /// </summary>
+        [Input("certPem", required: true)]
+        public Input<string> CertPem { get; set; } = null!;
+
+        /// <summary>
+        /// The directory to store etcd configuration.
+        /// </summary>
+        [Input("configurationDirectory")]
+        public Input<string>? ConfigurationDirectory { get; set; }
+
+        /// <summary>
         /// The connection details.
         /// </summary>
         [Input("connection", required: true)]
         public Input<Pulumi.Command.Remote.Inputs.ConnectionArgs> Connection { get; set; } = null!;
+
+        /// <summary>
+        /// The directory etcd will use.
+        /// </summary>
+        [Input("dataDirectory")]
+        public Input<string>? DataDirectory { get; set; }
 
         /// <summary>
         /// Temporary directory to download files to. Defaults to `/tmp/&lt;random string&gt;`.
@@ -160,6 +196,18 @@ namespace UnMango.KubernetesTheHardWay.Remote
         public Input<string>? InstallDirectory { get; set; }
 
         /// <summary>
+        /// IP used to serve client requests and communicate with etcd peers.
+        /// </summary>
+        [Input("internalIp", required: true)]
+        public Input<string> InternalIp { get; set; } = null!;
+
+        /// <summary>
+        /// The PEM encoded key data.
+        /// </summary>
+        [Input("keyPem", required: true)]
+        public Input<string> KeyPem { get; set; } = null!;
+
+        /// <summary>
         /// The version of etcd to install.
         /// </summary>
         [Input("version")]
@@ -167,6 +215,8 @@ namespace UnMango.KubernetesTheHardWay.Remote
 
         public EtcdInstallArgs()
         {
+            ConfigurationDirectory = "/etc/etcd";
+            DataDirectory = "/var/lib/etcd";
             InstallDirectory = "/usr/local/bin";
         }
         public static new EtcdInstallArgs Empty => new EtcdInstallArgs();

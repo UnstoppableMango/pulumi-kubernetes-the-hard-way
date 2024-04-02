@@ -11,6 +11,7 @@ from .. import _utilities
 from .. import tools as _tools
 from ._enums import *
 from .download import Download
+from .file import File
 import pulumi_command
 
 __all__ = ['EtcdInstallArgs', 'EtcdInstall']
@@ -18,22 +19,46 @@ __all__ = ['EtcdInstallArgs', 'EtcdInstall']
 @pulumi.input_type
 class EtcdInstallArgs:
     def __init__(__self__, *,
+                 ca_pem: pulumi.Input[str],
+                 cert_pem: pulumi.Input[str],
                  connection: pulumi.Input['pulumi_command.remote.ConnectionArgs'],
+                 internal_ip: pulumi.Input[str],
+                 key_pem: pulumi.Input[str],
                  architecture: Optional[pulumi.Input['Architecture']] = None,
+                 configuration_directory: Optional[pulumi.Input[str]] = None,
+                 data_directory: Optional[pulumi.Input[str]] = None,
                  download_directory: Optional[pulumi.Input[str]] = None,
                  install_directory: Optional[pulumi.Input[str]] = None,
                  version: Optional[pulumi.Input[str]] = None):
         """
         The set of arguments for constructing a EtcdInstall resource.
+        :param pulumi.Input[str] ca_pem: The PEM encoded CA data.
+        :param pulumi.Input[str] cert_pem: The PEM encoded certificate data.
         :param pulumi.Input['pulumi_command.remote.ConnectionArgs'] connection: The connection details.
+        :param pulumi.Input[str] internal_ip: IP used to serve client requests and communicate with etcd peers.
+        :param pulumi.Input[str] key_pem: The PEM encoded key data.
         :param pulumi.Input['Architecture'] architecture: The etcd CPU architecture.
+        :param pulumi.Input[str] configuration_directory: The directory to store etcd configuration.
+        :param pulumi.Input[str] data_directory: The directory etcd will use.
         :param pulumi.Input[str] download_directory: Temporary directory to download files to. Defaults to `/tmp/<random string>`.
         :param pulumi.Input[str] install_directory: Directory to install the `etcd` and `etcdctl` binaries.
         :param pulumi.Input[str] version: The version of etcd to install.
         """
+        pulumi.set(__self__, "ca_pem", ca_pem)
+        pulumi.set(__self__, "cert_pem", cert_pem)
         pulumi.set(__self__, "connection", connection)
+        pulumi.set(__self__, "internal_ip", internal_ip)
+        pulumi.set(__self__, "key_pem", key_pem)
         if architecture is not None:
             pulumi.set(__self__, "architecture", architecture)
+        if configuration_directory is None:
+            configuration_directory = '/etc/etcd'
+        if configuration_directory is not None:
+            pulumi.set(__self__, "configuration_directory", configuration_directory)
+        if data_directory is None:
+            data_directory = '/var/lib/etcd'
+        if data_directory is not None:
+            pulumi.set(__self__, "data_directory", data_directory)
         if download_directory is not None:
             pulumi.set(__self__, "download_directory", download_directory)
         if install_directory is None:
@@ -42,6 +67,30 @@ class EtcdInstallArgs:
             pulumi.set(__self__, "install_directory", install_directory)
         if version is not None:
             pulumi.set(__self__, "version", version)
+
+    @property
+    @pulumi.getter(name="caPem")
+    def ca_pem(self) -> pulumi.Input[str]:
+        """
+        The PEM encoded CA data.
+        """
+        return pulumi.get(self, "ca_pem")
+
+    @ca_pem.setter
+    def ca_pem(self, value: pulumi.Input[str]):
+        pulumi.set(self, "ca_pem", value)
+
+    @property
+    @pulumi.getter(name="certPem")
+    def cert_pem(self) -> pulumi.Input[str]:
+        """
+        The PEM encoded certificate data.
+        """
+        return pulumi.get(self, "cert_pem")
+
+    @cert_pem.setter
+    def cert_pem(self, value: pulumi.Input[str]):
+        pulumi.set(self, "cert_pem", value)
 
     @property
     @pulumi.getter
@@ -56,6 +105,30 @@ class EtcdInstallArgs:
         pulumi.set(self, "connection", value)
 
     @property
+    @pulumi.getter(name="internalIp")
+    def internal_ip(self) -> pulumi.Input[str]:
+        """
+        IP used to serve client requests and communicate with etcd peers.
+        """
+        return pulumi.get(self, "internal_ip")
+
+    @internal_ip.setter
+    def internal_ip(self, value: pulumi.Input[str]):
+        pulumi.set(self, "internal_ip", value)
+
+    @property
+    @pulumi.getter(name="keyPem")
+    def key_pem(self) -> pulumi.Input[str]:
+        """
+        The PEM encoded key data.
+        """
+        return pulumi.get(self, "key_pem")
+
+    @key_pem.setter
+    def key_pem(self, value: pulumi.Input[str]):
+        pulumi.set(self, "key_pem", value)
+
+    @property
     @pulumi.getter
     def architecture(self) -> Optional[pulumi.Input['Architecture']]:
         """
@@ -66,6 +139,30 @@ class EtcdInstallArgs:
     @architecture.setter
     def architecture(self, value: Optional[pulumi.Input['Architecture']]):
         pulumi.set(self, "architecture", value)
+
+    @property
+    @pulumi.getter(name="configurationDirectory")
+    def configuration_directory(self) -> Optional[pulumi.Input[str]]:
+        """
+        The directory to store etcd configuration.
+        """
+        return pulumi.get(self, "configuration_directory")
+
+    @configuration_directory.setter
+    def configuration_directory(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "configuration_directory", value)
+
+    @property
+    @pulumi.getter(name="dataDirectory")
+    def data_directory(self) -> Optional[pulumi.Input[str]]:
+        """
+        The directory etcd will use.
+        """
+        return pulumi.get(self, "data_directory")
+
+    @data_directory.setter
+    def data_directory(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "data_directory", value)
 
     @property
     @pulumi.getter(name="downloadDirectory")
@@ -110,9 +207,15 @@ class EtcdInstall(pulumi.ComponentResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  architecture: Optional[pulumi.Input['Architecture']] = None,
+                 ca_pem: Optional[pulumi.Input[str]] = None,
+                 cert_pem: Optional[pulumi.Input[str]] = None,
+                 configuration_directory: Optional[pulumi.Input[str]] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
+                 data_directory: Optional[pulumi.Input[str]] = None,
                  download_directory: Optional[pulumi.Input[str]] = None,
                  install_directory: Optional[pulumi.Input[str]] = None,
+                 internal_ip: Optional[pulumi.Input[str]] = None,
+                 key_pem: Optional[pulumi.Input[str]] = None,
                  version: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         """
@@ -121,9 +224,15 @@ class EtcdInstall(pulumi.ComponentResource):
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input['Architecture'] architecture: The etcd CPU architecture.
+        :param pulumi.Input[str] ca_pem: The PEM encoded CA data.
+        :param pulumi.Input[str] cert_pem: The PEM encoded certificate data.
+        :param pulumi.Input[str] configuration_directory: The directory to store etcd configuration.
         :param pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']] connection: The connection details.
+        :param pulumi.Input[str] data_directory: The directory etcd will use.
         :param pulumi.Input[str] download_directory: Temporary directory to download files to. Defaults to `/tmp/<random string>`.
         :param pulumi.Input[str] install_directory: Directory to install the `etcd` and `etcdctl` binaries.
+        :param pulumi.Input[str] internal_ip: IP used to serve client requests and communicate with etcd peers.
+        :param pulumi.Input[str] key_pem: The PEM encoded key data.
         :param pulumi.Input[str] version: The version of etcd to install.
         """
         ...
@@ -151,9 +260,15 @@ class EtcdInstall(pulumi.ComponentResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  architecture: Optional[pulumi.Input['Architecture']] = None,
+                 ca_pem: Optional[pulumi.Input[str]] = None,
+                 cert_pem: Optional[pulumi.Input[str]] = None,
+                 configuration_directory: Optional[pulumi.Input[str]] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
+                 data_directory: Optional[pulumi.Input[str]] = None,
                  download_directory: Optional[pulumi.Input[str]] = None,
                  install_directory: Optional[pulumi.Input[str]] = None,
+                 internal_ip: Optional[pulumi.Input[str]] = None,
+                 key_pem: Optional[pulumi.Input[str]] = None,
                  version: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
@@ -167,13 +282,31 @@ class EtcdInstall(pulumi.ComponentResource):
             __props__ = EtcdInstallArgs.__new__(EtcdInstallArgs)
 
             __props__.__dict__["architecture"] = architecture
+            if ca_pem is None and not opts.urn:
+                raise TypeError("Missing required property 'ca_pem'")
+            __props__.__dict__["ca_pem"] = ca_pem
+            if cert_pem is None and not opts.urn:
+                raise TypeError("Missing required property 'cert_pem'")
+            __props__.__dict__["cert_pem"] = cert_pem
+            if configuration_directory is None:
+                configuration_directory = '/etc/etcd'
+            __props__.__dict__["configuration_directory"] = configuration_directory
             if connection is None and not opts.urn:
                 raise TypeError("Missing required property 'connection'")
             __props__.__dict__["connection"] = connection
+            if data_directory is None:
+                data_directory = '/var/lib/etcd'
+            __props__.__dict__["data_directory"] = data_directory
             __props__.__dict__["download_directory"] = download_directory
             if install_directory is None:
                 install_directory = '/usr/local/bin'
             __props__.__dict__["install_directory"] = install_directory
+            if internal_ip is None and not opts.urn:
+                raise TypeError("Missing required property 'internal_ip'")
+            __props__.__dict__["internal_ip"] = internal_ip
+            if key_pem is None and not opts.urn:
+                raise TypeError("Missing required property 'key_pem'")
+            __props__.__dict__["key_pem"] = key_pem
             __props__.__dict__["version"] = version
             __props__.__dict__["archive_name"] = None
             __props__.__dict__["download"] = None
@@ -184,6 +317,7 @@ class EtcdInstall(pulumi.ComponentResource):
             __props__.__dict__["mv_etcd"] = None
             __props__.__dict__["mv_etcdctl"] = None
             __props__.__dict__["name"] = None
+            __props__.__dict__["systemd_service_file"] = None
             __props__.__dict__["tar"] = None
             __props__.__dict__["url"] = None
         super(EtcdInstall, __self__).__init__(
@@ -266,6 +400,14 @@ class EtcdInstall(pulumi.ComponentResource):
         return pulumi.get(self, "install_mkdir")
 
     @property
+    @pulumi.getter(name="internalIp")
+    def internal_ip(self) -> pulumi.Output[str]:
+        """
+        IP used to serve client requests and communicate with etcd peers.
+        """
+        return pulumi.get(self, "internal_ip")
+
+    @property
     @pulumi.getter(name="mvEtcd")
     def mv_etcd(self) -> pulumi.Output['_tools.Mv']:
         """
@@ -288,6 +430,14 @@ class EtcdInstall(pulumi.ComponentResource):
         The name of the resource.
         """
         return pulumi.get(self, "name")
+
+    @property
+    @pulumi.getter(name="systemdServiceFile")
+    def systemd_service_file(self) -> pulumi.Output['File']:
+        """
+        The remote systemd service file.
+        """
+        return pulumi.get(self, "systemd_service_file")
 
     @property
     @pulumi.getter

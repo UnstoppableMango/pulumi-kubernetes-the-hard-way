@@ -10,7 +10,7 @@ import * as utilities from "../utilities";
 import * as pulumiCommand from "@pulumi/command";
 
 import {Mkdir, Mv, Tar} from "../tools";
-import {Download} from "./index";
+import {Download, File} from "./index";
 
 /**
  * Represents an etcd binary on a remote system.
@@ -67,6 +67,10 @@ export class EtcdInstall extends pulumi.ComponentResource {
      */
     public /*out*/ readonly installMkdir!: pulumi.Output<Mkdir>;
     /**
+     * IP used to serve client requests and communicate with etcd peers.
+     */
+    public readonly internalIp!: pulumi.Output<string>;
+    /**
      * The operation to move the etcd binary to the install directory.
      */
     public /*out*/ readonly mvEtcd!: pulumi.Output<Mv>;
@@ -78,6 +82,10 @@ export class EtcdInstall extends pulumi.ComponentResource {
      * The name of the resource.
      */
     public /*out*/ readonly name!: pulumi.Output<string>;
+    /**
+     * The remote systemd service file.
+     */
+    public /*out*/ readonly systemdServiceFile!: pulumi.Output<File>;
     /**
      * The tar operation.
      */
@@ -102,13 +110,31 @@ export class EtcdInstall extends pulumi.ComponentResource {
         let resourceInputs: pulumi.Inputs = {};
         opts = opts || {};
         if (!opts.id) {
+            if ((!args || args.caPem === undefined) && !opts.urn) {
+                throw new Error("Missing required property 'caPem'");
+            }
+            if ((!args || args.certPem === undefined) && !opts.urn) {
+                throw new Error("Missing required property 'certPem'");
+            }
             if ((!args || args.connection === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'connection'");
             }
+            if ((!args || args.internalIp === undefined) && !opts.urn) {
+                throw new Error("Missing required property 'internalIp'");
+            }
+            if ((!args || args.keyPem === undefined) && !opts.urn) {
+                throw new Error("Missing required property 'keyPem'");
+            }
             resourceInputs["architecture"] = args ? args.architecture : undefined;
+            resourceInputs["caPem"] = args ? args.caPem : undefined;
+            resourceInputs["certPem"] = args ? args.certPem : undefined;
+            resourceInputs["configurationDirectory"] = (args ? args.configurationDirectory : undefined) ?? "/etc/etcd";
             resourceInputs["connection"] = args ? (args.connection ? pulumi.output(args.connection).apply(pulumiCommand.types.input.remote.connectionArgsProvideDefaults) : undefined) : undefined;
+            resourceInputs["dataDirectory"] = (args ? args.dataDirectory : undefined) ?? "/var/lib/etcd";
             resourceInputs["downloadDirectory"] = args ? args.downloadDirectory : undefined;
             resourceInputs["installDirectory"] = (args ? args.installDirectory : undefined) ?? "/usr/local/bin";
+            resourceInputs["internalIp"] = args ? args.internalIp : undefined;
+            resourceInputs["keyPem"] = args ? args.keyPem : undefined;
             resourceInputs["version"] = args ? args.version : undefined;
             resourceInputs["archiveName"] = undefined /*out*/;
             resourceInputs["download"] = undefined /*out*/;
@@ -119,6 +145,7 @@ export class EtcdInstall extends pulumi.ComponentResource {
             resourceInputs["mvEtcd"] = undefined /*out*/;
             resourceInputs["mvEtcdctl"] = undefined /*out*/;
             resourceInputs["name"] = undefined /*out*/;
+            resourceInputs["systemdServiceFile"] = undefined /*out*/;
             resourceInputs["tar"] = undefined /*out*/;
             resourceInputs["url"] = undefined /*out*/;
         } else {
@@ -131,9 +158,11 @@ export class EtcdInstall extends pulumi.ComponentResource {
             resourceInputs["etcdctlPath"] = undefined /*out*/;
             resourceInputs["installDirectory"] = undefined /*out*/;
             resourceInputs["installMkdir"] = undefined /*out*/;
+            resourceInputs["internalIp"] = undefined /*out*/;
             resourceInputs["mvEtcd"] = undefined /*out*/;
             resourceInputs["mvEtcdctl"] = undefined /*out*/;
             resourceInputs["name"] = undefined /*out*/;
+            resourceInputs["systemdServiceFile"] = undefined /*out*/;
             resourceInputs["tar"] = undefined /*out*/;
             resourceInputs["url"] = undefined /*out*/;
             resourceInputs["version"] = undefined /*out*/;
@@ -152,9 +181,25 @@ export interface EtcdInstallArgs {
      */
     architecture?: pulumi.Input<enums.remote.Architecture>;
     /**
+     * The PEM encoded CA data.
+     */
+    caPem: pulumi.Input<string>;
+    /**
+     * The PEM encoded certificate data.
+     */
+    certPem: pulumi.Input<string>;
+    /**
+     * The directory to store etcd configuration.
+     */
+    configurationDirectory?: pulumi.Input<string>;
+    /**
      * The connection details.
      */
     connection: pulumi.Input<pulumiCommand.types.input.remote.ConnectionArgs>;
+    /**
+     * The directory etcd will use.
+     */
+    dataDirectory?: pulumi.Input<string>;
     /**
      * Temporary directory to download files to. Defaults to `/tmp/<random string>`.
      */
@@ -163,6 +208,14 @@ export interface EtcdInstallArgs {
      * Directory to install the `etcd` and `etcdctl` binaries.
      */
     installDirectory?: pulumi.Input<string>;
+    /**
+     * IP used to serve client requests and communicate with etcd peers.
+     */
+    internalIp: pulumi.Input<string>;
+    /**
+     * The PEM encoded key data.
+     */
+    keyPem: pulumi.Input<string>;
     /**
      * The version of etcd to install.
      */

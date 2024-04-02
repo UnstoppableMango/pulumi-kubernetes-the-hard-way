@@ -101,21 +101,29 @@ export abstract class EtcdInstall<TData = any> extends pulumi.ComponentResource<
     public etcdctlPath!: string | pulumi.Output<string>;
     public installDirectory!: string | pulumi.Output<string>;
     public installMkdir!: Mkdir | pulumi.Output<Mkdir>;
+    public internalIp!: string | pulumi.Output<string>;
     public mvEtcd!: Mv | pulumi.Output<Mv>;
     public mvEtcdctl!: Mv | pulumi.Output<Mv>;
     public name!: string | pulumi.Output<string>;
+    public systemdServiceFile!: File | pulumi.Output<File>;
     public tar!: Tar | pulumi.Output<Tar>;
     public url!: string | pulumi.Output<string>;
     public version!: string | pulumi.Output<string>;
     constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
-        super("kubernetes-the-hard-way:remote:EtcdInstall", name, opts.urn ? { architecture: undefined, archiveName: undefined, download: undefined, downloadDirectory: undefined, downloadMkdir: undefined, etcdPath: undefined, etcdctlPath: undefined, installDirectory: undefined, installMkdir: undefined, mvEtcd: undefined, mvEtcdctl: undefined, name: undefined, tar: undefined, url: undefined, version: undefined } : { name, args, opts }, opts);
+        super("kubernetes-the-hard-way:remote:EtcdInstall", name, opts.urn ? { architecture: undefined, archiveName: undefined, download: undefined, downloadDirectory: undefined, downloadMkdir: undefined, etcdPath: undefined, etcdctlPath: undefined, installDirectory: undefined, installMkdir: undefined, internalIp: undefined, mvEtcd: undefined, mvEtcdctl: undefined, name: undefined, systemdServiceFile: undefined, tar: undefined, url: undefined, version: undefined } : { name, args, opts }, opts);
     }
 }
 export interface EtcdInstallArgs {
     readonly architecture?: pulumi.Input<ArchitectureInputs>;
+    readonly caPem: pulumi.Input<string>;
+    readonly certPem: pulumi.Input<string>;
+    readonly configurationDirectory?: pulumi.Input<string>;
+    readonly dataDirectory?: pulumi.Input<string>;
     readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
     readonly downloadDirectory?: pulumi.Input<string>;
     readonly installDirectory?: pulumi.Input<string>;
+    readonly internalIp: pulumi.Input<string>;
+    readonly keyPem: pulumi.Input<string>;
     readonly version?: pulumi.Input<string>;
 }
 export abstract class Download<TData = any> extends pulumi.ComponentResource<TData> {
