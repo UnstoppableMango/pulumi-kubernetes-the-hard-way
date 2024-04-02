@@ -17,8 +17,10 @@ import (
 type Rm struct {
 	pulumi.ResourceState
 
+	// Represents the command run on the remote system.
+	Command pulumiCommand.CommandOutput `pulumi:"command"`
 	// Corresponds to the --dir option.
-	Dir pulumi.StringOutput `pulumi:"dir"`
+	Dir pulumi.BoolOutput `pulumi:"dir"`
 	// Corresponds to the [FILE] argument.
 	Files pulumi.StringArrayOutput `pulumi:"files"`
 	// Corresponds to the --force option.
@@ -176,9 +178,14 @@ func (o RmOutput) ToRmOutputWithContext(ctx context.Context) RmOutput {
 	return o
 }
 
+// Represents the command run on the remote system.
+func (o RmOutput) Command() pulumiCommand.CommandOutput {
+	return o.ApplyT(func(v *Rm) pulumiCommand.CommandOutput { return v.Command }).(pulumiCommand.CommandOutput)
+}
+
 // Corresponds to the --dir option.
-func (o RmOutput) Dir() pulumi.StringOutput {
-	return o.ApplyT(func(v *Rm) pulumi.StringOutput { return v.Dir }).(pulumi.StringOutput)
+func (o RmOutput) Dir() pulumi.BoolOutput {
+	return o.ApplyT(func(v *Rm) pulumi.BoolOutput { return v.Dir }).(pulumi.BoolOutput)
 }
 
 // Corresponds to the [FILE] argument.

@@ -3,6 +3,7 @@
 
 package com.unmango.kubernetesthehardway.tools;
 
+import com.pulumi.command.remote.Command;
 import com.pulumi.core.Output;
 import com.pulumi.core.annotations.Export;
 import com.pulumi.core.annotations.ResourceType;
@@ -12,6 +13,7 @@ import com.unmango.kubernetesthehardway.tools.RmArgs;
 import java.lang.Boolean;
 import java.lang.String;
 import java.util.List;
+import java.util.Optional;
 import javax.annotation.Nullable;
 
 /**
@@ -21,17 +23,31 @@ import javax.annotation.Nullable;
 @ResourceType(type="kubernetes-the-hard-way:tools:Rm")
 public class Rm extends com.pulumi.resources.ComponentResource {
     /**
+     * Represents the command run on the remote system.
+     * 
+     */
+    @Export(name="command", refs={Command.class}, tree="[0]")
+    private Output</* @Nullable */ Command> command;
+
+    /**
+     * @return Represents the command run on the remote system.
+     * 
+     */
+    public Output<Optional<Command>> command() {
+        return Codegen.optional(this.command);
+    }
+    /**
      * Corresponds to the --dir option.
      * 
      */
-    @Export(name="dir", refs={String.class}, tree="[0]")
-    private Output<String> dir;
+    @Export(name="dir", refs={Boolean.class}, tree="[0]")
+    private Output<Boolean> dir;
 
     /**
      * @return Corresponds to the --dir option.
      * 
      */
-    public Output<String> dir() {
+    public Output<Boolean> dir() {
         return this.dir;
     }
     /**

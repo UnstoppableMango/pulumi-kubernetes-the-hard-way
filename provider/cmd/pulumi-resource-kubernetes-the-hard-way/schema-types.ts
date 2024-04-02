@@ -250,14 +250,15 @@ export interface MvArgs {
     readonly verbose?: pulumi.Input<boolean>;
 }
 export abstract class Rm<TData = any> extends pulumi.ComponentResource<TData> {
-    public dir!: string | pulumi.Output<string>;
+    public command?: command.remote.Command | pulumi.Output<command.remote.Command>;
+    public dir!: boolean | pulumi.Output<boolean>;
     public files!: string[] | pulumi.Output<string[]>;
     public force!: boolean | pulumi.Output<boolean>;
     public onDelete!: boolean | pulumi.Output<boolean>;
     public recursive!: boolean | pulumi.Output<boolean>;
     public verbose!: boolean | pulumi.Output<boolean>;
     constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
-        super("kubernetes-the-hard-way:tools:Rm", name, opts.urn ? { dir: undefined, files: undefined, force: undefined, onDelete: undefined, recursive: undefined, verbose: undefined } : { name, args, opts }, opts);
+        super("kubernetes-the-hard-way:tools:Rm", name, opts.urn ? { command: undefined, dir: undefined, files: undefined, force: undefined, onDelete: undefined, recursive: undefined, verbose: undefined } : { name, args, opts }, opts);
     }
 }
 export interface RmArgs {
