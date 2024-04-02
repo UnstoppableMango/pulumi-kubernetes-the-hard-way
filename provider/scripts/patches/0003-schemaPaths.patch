@@ -1,6 +1,0 @@
-579,580c579,580
-<   schema: "../schema.json",
-<   out: "schema-types.ts",
----
->   schema: path.join(__dirname, "..", "..", "cmd", "pulumi-resource-kubernetes-the-hard-way", "schema.json"),
->   out: path.join(__dirname, "..", "..", "cmd", "pulumi-resource-kubernetes-the-hard-way", "schema-types.ts"),
