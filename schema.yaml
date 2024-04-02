@@ -297,6 +297,12 @@ resources:
       archiveName:
         type: string
         description: The name of the etcd release archive.
+      caFile:
+        $ref: "#/resources/kubernetes-the-hard-way:remote:File"
+        description: The remote certificate authority file.
+      certFile:
+        $ref: "#/resources/kubernetes-the-hard-way:remote:File"
+        description: The remote certificate file.
       download:
         $ref: "#/resources/kubernetes-the-hard-way:remote:Download"
         description: The etcd download operation.
@@ -321,6 +327,9 @@ resources:
       internalIp:
         type: string
         description: IP used to serve client requests and communicate with etcd peers.
+      keyFile:
+        $ref: "#/resources/kubernetes-the-hard-way:remote:File"
+        description: The remote key file.
       mvEtcd:
         $ref: "#/resources/kubernetes-the-hard-way:tools:Mv"
         description: The operation to move the etcd binary to the install directory.
