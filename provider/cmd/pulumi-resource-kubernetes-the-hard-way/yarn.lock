@@ -453,7 +453,7 @@
   resolved "https://registry.yarnpkg.com/@protobufjs/utf8/-/utf8-1.1.0.tgz#a777360b5b39a1a2e5106f8e858f2fd2d060c570"
   integrity sha512-Vvn3zZrhQZkkBE8LSuW3em98c0FwgO4nxzv6OdSxPKJIEKY2bGbHn+mhGIPerzI4twdxaP8/0+06HBpwf345Lw==
 
-"@pulumi/command@^0.9.2":
+"@pulumi/command@0.9.2":
   version "0.9.2"
   resolved "https://registry.yarnpkg.com/@pulumi/command/-/command-0.9.2.tgz#68875b68637da91709fc537292bbaece648a9acb"
   integrity sha512-9RaGDiy8jFCiaarj4EOrMW/fVCM/AgBigzwM6CKzlR49x8UFiRDmKrXfEVHb8r2P9IpC4IaAZf5VbNNAHwN/rA==
@@ -503,17 +503,17 @@
   resolved "https://registry.yarnpkg.com/@pulumi/query/-/query-0.3.0.tgz#f496608e86a18c3dd31b6c533408e2441c29071d"
   integrity sha512-xfo+yLRM2zVjVEA4p23IjQWzyWl1ZhWOGobsBqRpIarzLvwNH/RAGaoehdxlhx4X92302DrpdIFgTICMN4P38w==
 
-"@pulumi/random@^4.16.0":
+"@pulumi/random@4.16.0":
   version "4.16.0"
   resolved "https://registry.yarnpkg.com/@pulumi/random/-/random-4.16.0.tgz#a9fd085d08fa0a16e66afad558c3e5dc69010de5"
   integrity sha512-cHwlhy/+xTWCt7gwlJoG0q1l234YLxWtSWI61MzekWSsthbtcYruXo2bUlgcXWX5V4/lHjvQG84l5n1aTNZJoA==
   dependencies:
     "@pulumi/pulumi" "^3.0.0"
 
-"@pulumi/tls@^5.0.1":
-  version "5.0.2"
-  resolved "https://registry.yarnpkg.com/@pulumi/tls/-/tls-5.0.2.tgz#16cba5696cf0e25469bdd19c4c481e7f970fd49a"
-  integrity sha512-0gTZebrteV5Z82ETwjyYhyfDoSV1b55wrXU6v6jMbuARXTuHojC8zIwb/Ys3+Ydq0RubjwNoZkWVkQ98imTKdA==
+"@pulumi/tls@5.0.1":
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/@pulumi/tls/-/tls-5.0.1.tgz#3cf555ccb0441f6115e34cf1276a88c21fc361e6"
+  integrity sha512-nux7M/8BqIeOKbdJDKewwNVy6ngf5N1oVCB+h+Am1ntJF/CjHS7Z7rJtF50ocdnt5FjzzpdHyP1YKP9LdQh6Jw==
   dependencies:
     "@pulumi/pulumi" "^3.0.0"
 

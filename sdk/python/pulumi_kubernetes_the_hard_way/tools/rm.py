@@ -209,6 +209,7 @@ class Rm(pulumi.ComponentResource):
             __props__.__dict__["on_delete"] = on_delete
             __props__.__dict__["recursive"] = recursive
             __props__.__dict__["verbose"] = verbose
+            __props__.__dict__["command"] = None
         super(Rm, __self__).__init__(
             'kubernetes-the-hard-way:tools:Rm',
             resource_name,
@@ -218,7 +219,15 @@ class Rm(pulumi.ComponentResource):
 
     @property
     @pulumi.getter
-    def dir(self) -> pulumi.Output[str]:
+    def command(self) -> pulumi.Output[Optional['pulumi_command.remote.Command']]:
+        """
+        Represents the command run on the remote system.
+        """
+        return pulumi.get(self, "command")
+
+    @property
+    @pulumi.getter
+    def dir(self) -> pulumi.Output[bool]:
         """
         Corresponds to the --dir option.
         """

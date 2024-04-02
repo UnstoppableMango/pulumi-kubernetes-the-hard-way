@@ -24,6 +24,7 @@
         "remote/file.ts",
         "remote/index.ts",
         "resources.ts",
+        "schema-types.ts",
         "tools/index.ts",
         "tools/mkdir.ts",
         "tools/mktemp.ts",

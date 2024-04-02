@@ -17,10 +17,16 @@ namespace UnMango.KubernetesTheHardWay.Tools
     public partial class Rm : global::Pulumi.ComponentResource
     {
         /// <summary>
+        /// Represents the command run on the remote system.
+        /// </summary>
+        [Output("command")]
+        public Output<Pulumi.Command.Remote.Command?> Command { get; private set; } = null!;
+
+        /// <summary>
         /// Corresponds to the --dir option.
         /// </summary>
         [Output("dir")]
-        public Output<string> Dir { get; private set; } = null!;
+        public Output<bool> Dir { get; private set; } = null!;
 
         /// <summary>
         /// Corresponds to the [FILE] argument.

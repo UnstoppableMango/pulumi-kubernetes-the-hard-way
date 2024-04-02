@@ -25,9 +25,13 @@ export class Rm extends pulumi.ComponentResource {
     }
 
     /**
+     * Represents the command run on the remote system.
+     */
+    public /*out*/ readonly command!: pulumi.Output<pulumiCommand.remote.Command | undefined>;
+    /**
      * Corresponds to the --dir option.
      */
-    public readonly dir!: pulumi.Output<string>;
+    public readonly dir!: pulumi.Output<boolean>;
     /**
      * Corresponds to the [FILE] argument.
      */
@@ -73,7 +77,9 @@ export class Rm extends pulumi.ComponentResource {
             resourceInputs["onDelete"] = args ? args.onDelete : undefined;
             resourceInputs["recursive"] = args ? args.recursive : undefined;
             resourceInputs["verbose"] = args ? args.verbose : undefined;
+            resourceInputs["command"] = undefined /*out*/;
         } else {
+            resourceInputs["command"] = undefined /*out*/;
             resourceInputs["dir"] = undefined /*out*/;
             resourceInputs["files"] = undefined /*out*/;
             resourceInputs["force"] = undefined /*out*/;
