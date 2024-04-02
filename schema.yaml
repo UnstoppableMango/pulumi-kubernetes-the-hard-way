@@ -318,6 +318,9 @@ resources:
       installMkdir:
         $ref: "#/resources/kubernetes-the-hard-way:tools:Mkdir"
         description: The operation to create the install directory.
+      internalIp:
+        type: string
+        description: IP used to serve client requests and communicate with etcd peers.
       mvEtcd:
         $ref: "#/resources/kubernetes-the-hard-way:tools:Mv"
         description: The operation to move the etcd binary to the install directory.
