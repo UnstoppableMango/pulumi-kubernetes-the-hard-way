@@ -1,63 +1,19 @@
-import { ComponentResource, ComponentResourceOptions, Input, Output, interpolate, output } from '@pulumi/pulumi';
+import { ComponentResourceOptions, Input, Output, interpolate, output } from '@pulumi/pulumi';
 import { RandomString } from '@pulumi/random';
-import { remote } from '@pulumi/command/types/input';
+import * as types from '../schema-types';
 import { Mkdir, Mv, Tar } from '../tools';
 import { Download } from './download';
 
 export type Architecture = 'amd64' | 'arm64';
 
-export interface EtcdArgs {
-  architecture?: Input<Architecture>;
-  connection: Input<remote.ConnectionArgs>;
-  downloadDirectory?: Input<string>;
-  installDirectory?: Input<string>;
-  version?: Input<string>;
-}
-
-export class EtcdInstall extends ComponentResource {
-  public static readonly __pulumiType: string = 'kubernetes-the-hard-way:remote:EtcdInstall';
+export class EtcdInstall extends types.EtcdInstall {
   public static readonly defaultArch: Architecture = 'amd64';
   public static readonly defaultInstallDirectory: string = '/usr/local/bin';
   public static readonly defaultVersion: string = '3.4.15'; // TODO: Versioning
-
   private readonly _nameInput: string;
 
-  public readonly architecture!: Output<Architecture>;
-  public readonly archiveName!: Output<string>;
-  public readonly download!: Download;
-  public readonly downloadDirectory!: Output<string>;
-  public readonly downloadMkdir!: Mkdir;
-  public readonly etcdPath!: Output<string>;
-  public readonly etcdctlPath!: Output<string>;
-  public readonly installDirectory!: Output<string>;
-  public readonly installMkdir!: Mkdir;
-  public readonly mvEtcd!: Mv;
-  public readonly mvEtcdctl!: Mv;
-  public readonly name!: Output<string>;
-  public readonly tar!: Tar;
-  public readonly url!: Output<string>;
-  public readonly version!: Output<string>;
-
-  constructor(name: string, args: EtcdArgs, opts?: ComponentResourceOptions) {
-    const props = {
-      architecture: undefined,
-      archiveName: undefined,
-      download: undefined,
-      downloadDirectory: undefined,
-      downloadMkdir: undefined,
-      etcdPath: undefined,
-      etcdctlPath: undefined,
-      installDirectory: undefined,
-      installMkdir: undefined,
-      mvEtcd: undefined,
-      mvEtcdctl: undefined,
-      name: undefined,
-      tar: undefined,
-      url: undefined,
-      version: undefined,
-    };
-
-    super(EtcdInstall.__pulumiType, name, opts?.urn ? props : args, opts);
+  constructor(name: string, args: types.EtcdInstallArgs, opts?: ComponentResourceOptions) {
+    super(name, args, opts);
     this._nameInput = name;
 
     // Rehydrating

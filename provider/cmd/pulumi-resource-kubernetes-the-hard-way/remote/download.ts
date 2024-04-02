@@ -1,22 +1,10 @@
-import { ComponentResource, ComponentResourceOptions, Input, Output, output } from '@pulumi/pulumi';
-import { remote } from '@pulumi/command/types/input';
+import { ComponentResourceOptions, output } from '@pulumi/pulumi';
 import { Mkdir, Wget } from '../tools';
+import * as types from '../schema-types';
 
-export interface DownloadArgs {
-  connection: Input<remote.ConnectionArgs>;
-  destination: Input<string>;
-  removeOnDelete?: Input<boolean>;
-  url: Input<string>;
-}
-
-export class Download extends ComponentResource {
-  public readonly mkdir: Mkdir;
-  public readonly destination: Output<string>
-  public readonly url: Output<string>;
-  public readonly wget: Wget;
-
-  constructor(name: string, args: DownloadArgs, opts?: ComponentResourceOptions) {
-    super('kubernetes-the-hard-way:remote:Download', name, args, opts);
+export class Download extends types.Download {
+  constructor(name: string, args: types.DownloadArgs, opts?: ComponentResourceOptions) {
+    super(name, args, opts);
 
     const destination = output(args.destination);
     const removeOnDelete = output(args.removeOnDelete ?? false);

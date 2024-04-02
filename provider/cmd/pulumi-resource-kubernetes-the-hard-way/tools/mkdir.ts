@@ -1,23 +1,16 @@
-import { ComponentResource, ComponentResourceOptions, Input, Output, all, output } from '@pulumi/pulumi';
-import { remote } from '@pulumi/command/types/input';
+import { ComponentResourceOptions, Output, all, output } from '@pulumi/pulumi';
 import { Command } from '@pulumi/command/remote';
+import * as types from '../schema-types';
 import { CommandBuilder } from './commandBuilder';
 
-export interface MkdirArgs {
-  connection: Input<remote.ConnectionArgs>;
-  directory: Input<string>;
-  parents?: Input<boolean>;
-  removeOnDelete?: Input<boolean>;
-}
-
-export class Mkdir extends ComponentResource {
+export class Mkdir extends types.Mkdir {
   public readonly command!: Command;
   public readonly directory!: Output<string>;
   public readonly parents!: Output<boolean>;
   public readonly removeOnDelete!: Output<boolean>;
 
-  constructor(name: string, args: MkdirArgs, opts?: ComponentResourceOptions) {
-    super('kubernetes-the-hard:tools:Mkdir', name, args, opts);
+  constructor(name: string, args: types.MkdirArgs, opts?: ComponentResourceOptions) {
+    super(name, args, opts);
 
     // Rehydrating
     if (opts?.urn) return;

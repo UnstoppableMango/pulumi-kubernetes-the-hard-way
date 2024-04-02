@@ -1,34 +1,11 @@
-import { ComponentResource, ComponentResourceOptions, Input, Output, output } from '@pulumi/pulumi';
+import { ComponentResourceOptions, Output, output } from '@pulumi/pulumi';
 import { Command } from '@pulumi/command/remote';
-import { remote } from '@pulumi/command/types/input';
+import * as types from '../schema-types';
 import { CommandBuilder } from './commandBuilder';
 
-export interface WgetArgs {
-  connection: Input<remote.ConnectionArgs>;
-  directoryPrefix?: Input<string>;
-  httpsOnly?: Input<boolean>;
-  noVerbose?: Input<boolean>;
-  outputDocument?: Input<string>;
-  quiet?: Input<boolean>;
-  timestamping?: Input<boolean>;
-  url: Input<string>;
-}
-
-export class Wget extends ComponentResource {
-  public readonly command!: Command;
-  public readonly directoryPrefix!: Output<string | undefined>;
-  public readonly httpsOnly!: Output<boolean>;
-  public readonly noVerbose!: Output<boolean>;
-  public readonly outputDocument!: Output<string | undefined>;
-  public readonly quiet!: Output<boolean>;
-  public readonly stderr!: Output<string>;
-  public readonly stdin!: Output<string | undefined>;
-  public readonly stdout!: Output<string>;
-  public readonly timestamping!: Output<boolean>;
-  public readonly url!: Output<string>;
-
-  constructor(name: string, args: WgetArgs, opts?: ComponentResourceOptions) {
-    super('kubernetes-the-hard-way:tools:Wget', name, args, opts);
+export class Wget extends types.Wget {
+  constructor(name: string, args: types.WgetArgs, opts?: ComponentResourceOptions) {
+    super(name, args, opts);
 
     // Rehydrating
     if (opts?.urn) return;
@@ -57,12 +34,12 @@ export class Wget extends ComponentResource {
     }, { parent: this });
 
     this.command = command;
-    this.directoryPrefix = directoryprefix;
+    this.directoryPrefix = directoryprefix as Output<string>;
     this.httpsOnly = httpsOnly;
-    this.outputDocument = outputDocument;
+    this.outputDocument = outputDocument as Output<string>;
     this.quiet = quiet;
     this.stderr = command.stderr;
-    this.stdin = command.stdin;
+    this.stdin = command.stdin as Output<string>;
     this.stdout = command.stdout;
     this.timestamping = timestamping;
     this.url = url;

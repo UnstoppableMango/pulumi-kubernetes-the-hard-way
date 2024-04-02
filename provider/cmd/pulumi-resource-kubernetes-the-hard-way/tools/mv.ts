@@ -1,45 +1,15 @@
-import { ComponentResource, ComponentResourceOptions, Input, Output, output } from '@pulumi/pulumi';
+import { ComponentResourceOptions, Input, output } from '@pulumi/pulumi';
 import { Command } from '@pulumi/command/remote';
-import { remote } from '@pulumi/command/types/input';
+import * as types from '../schema-types';
 import { CommandBuilder, toArray } from './commandBuilder';
 
-export interface MvArgs {
-  backup?: boolean;
-  connection: Input<remote.ConnectionArgs>;
-  context?: Input<boolean>;
-  control?: Input<string>;
-  dest?: Input<string>;
-  directory?: Input<string>;
-  force?: Input<boolean>;
-  noClobber?: Input<boolean>;
-  noTargetDirectory?: Input<boolean>;
+export type MvArgs = types.MvArgs & {
   source: Input<string | Input<string>[]>;
-  stripTrailingSlashes?: Input<boolean>;
-  suffix?: Input<string>;
-  targetDirectory?: Input<string>;
-  update?: Input<boolean>;
-  verbose?: Input<boolean>;
-}
+};
 
-export class Mv extends ComponentResource {
-  public readonly backup!: Output<boolean>;
-  public readonly command!: Output<Command>;
-  public readonly context!: Output<boolean>;
-  public readonly control!: Output<string | undefined>;
-  public readonly dest!: Output<string | undefined>;
-  public readonly directory!: Output<string | undefined>;
-  public readonly force!: Output<boolean>;
-  public readonly noClobber!: Output<boolean>;
-  public readonly noTargetDirectory!: Output<boolean>;
-  public readonly source!: Output<string[]>;
-  public readonly stripTrailingSlashes!: Output<boolean>;
-  public readonly suffix!: Output<string | undefined>;
-  public readonly targetDirectory!: Output<string | undefined>;
-  public readonly update!: Output<boolean>;
-  public readonly verbose!: Output<boolean>;
-
+export class Mv extends types.Mv {
   constructor(name: string, args: MvArgs, opts?: ComponentResourceOptions) {
-    super('kubernetes-the-hard-way:tools:Mv', name, args, opts);
+    super(name, args, opts);
 
     // Rehydrating
     if (opts?.urn) return;
@@ -88,18 +58,19 @@ export class Mv extends ComponentResource {
 
     this.backup = backup;
     this.context = context;
-    this.control = control;
-    this.dest = dest;
-    this.directory = directory;
     this.force = force;
     this.noClobber = noClobber;
     this.noTargetDirectory = noTargetDirectory;
     this.source = source;
     this.stripTrailingSlashes = stripTrailingSlashes;
-    this.suffix = suffix;
-    this.targetDirectory = targetDirectory;
     this.update = update;
     this.verbose = verbose;
+
+    if (args.control) this.control = output(args.control);
+    if (args.dest) this.dest = output(args.dest);
+    if (args.directory) this.directory = output(args.directory);
+    if (args.suffix) this.suffix = output(args.suffix);
+    if (args.targetDirectory) this.targetDirectory = output(args.targetDirectory);
 
     this.registerOutputs({
       backup,
