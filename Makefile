@@ -279,8 +279,8 @@ provider/scripts/vendor/pulumi-schema.d.ts: .awsx.version
 	@touch $@
 
 .make/generate_types: vendor provider/cmd/${PROVIDER}/schema.json
-	cd provider/scripts && yarn gen-types
-	cd provider/cmd/${PROVIDER} && sed -i.bak 's/tls.index/tls/g' schema-types.ts && rm schema-types.ts.bak
+	cd provider/scripts && yarn install && yarn gen-types
+	cd provider/cmd/${PROVIDER} && sed -i.bak 's/input.remote.Connection/input.remote.ConnectionArgs/g' schema-types.ts && rm schema-types.ts.bak
 	@touch $@
 
 .make/nodejs_yarn_install: .make/generate_nodejs sdk/nodejs/package.json
