@@ -4,6 +4,7 @@ import * as schema from '../schema-types';
 import { Mkdir, Mv, Tar } from '../tools';
 import { Download } from './download';
 import { File } from './file';
+import { CommandBuilder } from '../tools/commandBuilder';
 
 export type Architecture = 'amd64' | 'arm64';
 
@@ -21,7 +22,8 @@ export class EtcdInstall extends schema.EtcdInstall {
     if (opts?.urn) return;
 
     const architecture = output(args.architecture ?? EtcdInstall.defaultArch);
-    const configurationDirectory = output(args.configurationDirectory); // Default value?
+    const configurationDirectory = output(args.configurationDirectory ?? '/etc/etcd'); // Default value from schema?
+    const dataDirectory = output(args.dataDirectory ?? '/var/lib/etcd'); // Default value from schema?
     const downloadDirectory = this.getDownloadDirectory(args.downloadDirectory);
     const installDirectory = output(args.installDirectory ?? EtcdInstall.defaultInstallDirectory);
     const internalIp = output(args.internalIp);
@@ -77,6 +79,18 @@ export class EtcdInstall extends schema.EtcdInstall {
 
     // TODO: Rm archive or tmp dir?
 
+    const configurationMkdir = new Mkdir(`${name}-config`, {
+      connection: args.connection,
+      directory: configurationDirectory,
+      parents: true,
+    }, { parent: this });
+
+    const dataMkdir = new Mkdir(`${name}-config`, {
+      connection: args.connection,
+      directory: configurationDirectory,
+      parents: true,
+    }, { parent: this });
+
     const caFilePath = interpolate`${configurationDirectory}/ca.pem`;
     const certFilePath = interpolate`${configurationDirectory}/kubernetes.pem`;
     const keyFilePath = interpolate`${configurationDirectory}/kubernetes-key.pem`;
@@ -85,24 +99,28 @@ export class EtcdInstall extends schema.EtcdInstall {
       connection: args.connection,
       content: args.caPem,
       path: caFilePath,
-    }, { parent: this });
+    }, { parent: this, dependsOn: configurationMkdir });
 
     const certFile = new File(`${name}-cert`, {
       connection: args.connection,
       content: args.certPem,
       path: certFilePath,
-    }, { parent: this });
+    }, { parent: this, dependsOn: configurationMkdir });
 
     const keyFile = new File(`${name}-key`, {
       connection: args.connection,
       content: args.keyPem,
       path: keyFilePath,
-    }, { parent: this });
+    }, { parent: this, dependsOn: configurationMkdir });
 
     this.architecture = architecture;
     this.archiveName = archiveName;
     this.caFile = caFile;
     this.certFile = certFile;
+    this.configurationDirectory = configurationDirectory;
+    this.configurationMkdir = configurationMkdir;
+    this.dataDirectory = dataDirectory;
+    this.dataMkdir = dataMkdir;
     this.download = download;
     this.downloadDirectory = downloadDirectory;
     this.downloadMkdir = downloadMkdir;
@@ -150,6 +168,49 @@ export class EtcdInstall extends schema.EtcdInstall {
     return interpolate`/tmp/${random.result}`;
   }
 }
+
+const execStart = (
+  etcdPath: Input<string>,
+  nodeName: Input<string>,
+  caPath: Input<string>,
+  certPath: Input<string>,
+  keyPath: Input<string>,
+  dataDirectory: Input<string>,
+  internalIp: Input<number>,
+  peers: Record<string, Input<number>>,
+  peerPort: number = 2380,
+  clientPort: number = 2379
+): Output<string> => {
+  const peerUrl = interpolate`https://${internalIp}:${peerPort}`;
+  const clientUrl = interpolate`https://${internalIp}:${clientPort}`;
+  const localhostUrl = interpolate`https://127.0.0.1:${clientPort}`;
+
+  const peerMapping = Object.entries(peers).map(([name, ip]) => {
+    return interpolate`${name}=https://${ip}:${peerPort}`;
+  }).concat(interpolate`${nodeName}=${peerUrl}`);
+
+  const initialCluster = output(peerMapping).apply(m => m.join(','));
+
+  return new CommandBuilder(etcdPath)
+    .option('--name', nodeName)
+    .option('--cert-file', certPath)
+    .option('--key-file', keyPath)
+    .option('--peer-cert-file', certPath)
+    .option('--peer-key-file', keyPath)
+    .option('--trusted-ca-file', caPath)
+    .option('--peer-trusted-ca-file', caPath)
+    .option('--peer-client-cert-auth', true)
+    .option('--client-cert-auth', true)
+    .option('--initial-advertise-peer-urls', peerUrl)
+    .option('--listen-peer-urls', peerUrl)
+    .option('--listen-client-urls', interpolate`${clientUrl},${localhostUrl}`)
+    .option('--advertise-client-urls', clientUrl)
+    .option('--initial-cluster-token', 'etcd-cluster-0') // TODO
+    .option('--initial-cluster', initialCluster)
+    .option('--initial-cluster-state', 'new')
+    .option('--data-dir', dataDirectory)
+    .command;
+};
 
 function systemdFile(nodeName: string, internalIp: Input<string>): Output<string> {
   return interpolate`
