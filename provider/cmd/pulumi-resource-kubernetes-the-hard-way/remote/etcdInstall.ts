@@ -1,18 +1,18 @@
 import { ComponentResourceOptions, Input, Output, interpolate, output } from '@pulumi/pulumi';
 import { RandomString } from '@pulumi/random';
-import * as types from '../schema-types';
+import * as schema from '../schema-types';
 import { Mkdir, Mv, Tar } from '../tools';
 import { Download } from './download';
 
 export type Architecture = 'amd64' | 'arm64';
 
-export class EtcdInstall extends types.EtcdInstall {
+export class EtcdInstall extends schema.EtcdInstall {
   public static readonly defaultArch: Architecture = 'amd64';
   public static readonly defaultInstallDirectory: string = '/usr/local/bin';
   public static readonly defaultVersion: string = '3.4.15'; // TODO: Versioning
   private readonly _nameInput: string;
 
-  constructor(name: string, args: types.EtcdInstallArgs, opts?: ComponentResourceOptions) {
+  constructor(name: string, args: schema.EtcdInstallArgs, opts?: ComponentResourceOptions) {
     super(name, args, opts);
     this._nameInput = name;
 
