@@ -41,6 +41,30 @@ namespace UnMango.KubernetesTheHardWay.Remote
         public Output<UnMango.KubernetesTheHardWay.Remote.File?> CertFile { get; private set; } = null!;
 
         /// <summary>
+        /// The directory to store etcd configuration.
+        /// </summary>
+        [Output("configurationDirectory")]
+        public Output<string> ConfigurationDirectory { get; private set; } = null!;
+
+        /// <summary>
+        /// The command used to create the configuration directory.
+        /// </summary>
+        [Output("configurationMkdir")]
+        public Output<UnMango.KubernetesTheHardWay.Tools.Mkdir> ConfigurationMkdir { get; private set; } = null!;
+
+        /// <summary>
+        /// The directory etcd will use.
+        /// </summary>
+        [Output("dataDirectory")]
+        public Output<string> DataDirectory { get; private set; } = null!;
+
+        /// <summary>
+        /// The command used to create the data directory.
+        /// </summary>
+        [Output("dataMkdir")]
+        public Output<UnMango.KubernetesTheHardWay.Tools.Mkdir> DataMkdir { get; private set; } = null!;
+
+        /// <summary>
         /// The etcd download operation.
         /// </summary>
         [Output("download")]

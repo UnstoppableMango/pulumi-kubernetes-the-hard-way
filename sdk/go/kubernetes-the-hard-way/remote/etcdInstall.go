@@ -26,6 +26,14 @@ type EtcdInstall struct {
 	CaFile FileOutput `pulumi:"caFile"`
 	// The remote certificate file.
 	CertFile FileOutput `pulumi:"certFile"`
+	// The directory to store etcd configuration.
+	ConfigurationDirectory pulumi.StringOutput `pulumi:"configurationDirectory"`
+	// The command used to create the configuration directory.
+	ConfigurationMkdir tools.MkdirOutput `pulumi:"configurationMkdir"`
+	// The directory etcd will use.
+	DataDirectory pulumi.StringOutput `pulumi:"dataDirectory"`
+	// The command used to create the data directory.
+	DataMkdir tools.MkdirOutput `pulumi:"dataMkdir"`
 	// The etcd download operation.
 	Download DownloadOutput `pulumi:"download"`
 	// The directory where the etcd binary was downloaded to.
@@ -257,6 +265,26 @@ func (o EtcdInstallOutput) CaFile() FileOutput {
 // The remote certificate file.
 func (o EtcdInstallOutput) CertFile() FileOutput {
 	return o.ApplyT(func(v *EtcdInstall) FileOutput { return v.CertFile }).(FileOutput)
+}
+
+// The directory to store etcd configuration.
+func (o EtcdInstallOutput) ConfigurationDirectory() pulumi.StringOutput {
+	return o.ApplyT(func(v *EtcdInstall) pulumi.StringOutput { return v.ConfigurationDirectory }).(pulumi.StringOutput)
+}
+
+// The command used to create the configuration directory.
+func (o EtcdInstallOutput) ConfigurationMkdir() tools.MkdirOutput {
+	return o.ApplyT(func(v *EtcdInstall) tools.MkdirOutput { return v.ConfigurationMkdir }).(tools.MkdirOutput)
+}
+
+// The directory etcd will use.
+func (o EtcdInstallOutput) DataDirectory() pulumi.StringOutput {
+	return o.ApplyT(func(v *EtcdInstall) pulumi.StringOutput { return v.DataDirectory }).(pulumi.StringOutput)
+}
+
+// The command used to create the data directory.
+func (o EtcdInstallOutput) DataMkdir() tools.MkdirOutput {
+	return o.ApplyT(func(v *EtcdInstall) tools.MkdirOutput { return v.DataMkdir }).(tools.MkdirOutput)
 }
 
 // The etcd download operation.

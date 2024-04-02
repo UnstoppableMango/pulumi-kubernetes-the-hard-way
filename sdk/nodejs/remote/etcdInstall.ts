@@ -47,6 +47,22 @@ export class EtcdInstall extends pulumi.ComponentResource {
      */
     public /*out*/ readonly certFile!: pulumi.Output<File | undefined>;
     /**
+     * The directory to store etcd configuration.
+     */
+    public readonly configurationDirectory!: pulumi.Output<string>;
+    /**
+     * The command used to create the configuration directory.
+     */
+    public /*out*/ readonly configurationMkdir!: pulumi.Output<Mkdir>;
+    /**
+     * The directory etcd will use.
+     */
+    public readonly dataDirectory!: pulumi.Output<string>;
+    /**
+     * The command used to create the data directory.
+     */
+    public /*out*/ readonly dataMkdir!: pulumi.Output<Mkdir>;
+    /**
      * The etcd download operation.
      */
     public /*out*/ readonly download!: pulumi.Output<Download>;
@@ -151,6 +167,8 @@ export class EtcdInstall extends pulumi.ComponentResource {
             resourceInputs["archiveName"] = undefined /*out*/;
             resourceInputs["caFile"] = undefined /*out*/;
             resourceInputs["certFile"] = undefined /*out*/;
+            resourceInputs["configurationMkdir"] = undefined /*out*/;
+            resourceInputs["dataMkdir"] = undefined /*out*/;
             resourceInputs["download"] = undefined /*out*/;
             resourceInputs["downloadMkdir"] = undefined /*out*/;
             resourceInputs["etcdPath"] = undefined /*out*/;
@@ -168,6 +186,10 @@ export class EtcdInstall extends pulumi.ComponentResource {
             resourceInputs["archiveName"] = undefined /*out*/;
             resourceInputs["caFile"] = undefined /*out*/;
             resourceInputs["certFile"] = undefined /*out*/;
+            resourceInputs["configurationDirectory"] = undefined /*out*/;
+            resourceInputs["configurationMkdir"] = undefined /*out*/;
+            resourceInputs["dataDirectory"] = undefined /*out*/;
+            resourceInputs["dataMkdir"] = undefined /*out*/;
             resourceInputs["download"] = undefined /*out*/;
             resourceInputs["downloadDirectory"] = undefined /*out*/;
             resourceInputs["downloadMkdir"] = undefined /*out*/;

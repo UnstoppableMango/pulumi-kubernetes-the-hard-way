@@ -96,6 +96,10 @@ export abstract class EtcdInstall<TData = any> extends pulumi.ComponentResource<
     public archiveName!: string | pulumi.Output<string>;
     public caFile?: File | pulumi.Output<File>;
     public certFile?: File | pulumi.Output<File>;
+    public configurationDirectory!: string | pulumi.Output<string>;
+    public configurationMkdir!: Mkdir | pulumi.Output<Mkdir>;
+    public dataDirectory!: string | pulumi.Output<string>;
+    public dataMkdir!: Mkdir | pulumi.Output<Mkdir>;
     public download!: Download | pulumi.Output<Download>;
     public downloadDirectory!: string | pulumi.Output<string>;
     public downloadMkdir!: Mkdir | pulumi.Output<Mkdir>;
@@ -113,7 +117,7 @@ export abstract class EtcdInstall<TData = any> extends pulumi.ComponentResource<
     public url!: string | pulumi.Output<string>;
     public version!: string | pulumi.Output<string>;
     constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
-        super("kubernetes-the-hard-way:remote:EtcdInstall", name, opts.urn ? { architecture: undefined, archiveName: undefined, caFile: undefined, certFile: undefined, download: undefined, downloadDirectory: undefined, downloadMkdir: undefined, etcdPath: undefined, etcdctlPath: undefined, installDirectory: undefined, installMkdir: undefined, internalIp: undefined, keyFile: undefined, mvEtcd: undefined, mvEtcdctl: undefined, name: undefined, systemdServiceFile: undefined, tar: undefined, url: undefined, version: undefined } : { name, args, opts }, opts);
+        super("kubernetes-the-hard-way:remote:EtcdInstall", name, opts.urn ? { architecture: undefined, archiveName: undefined, caFile: undefined, certFile: undefined, configurationDirectory: undefined, configurationMkdir: undefined, dataDirectory: undefined, dataMkdir: undefined, download: undefined, downloadDirectory: undefined, downloadMkdir: undefined, etcdPath: undefined, etcdctlPath: undefined, installDirectory: undefined, installMkdir: undefined, internalIp: undefined, keyFile: undefined, mvEtcd: undefined, mvEtcdctl: undefined, name: undefined, systemdServiceFile: undefined, tar: undefined, url: undefined, version: undefined } : { name, args, opts }, opts);
     }
 }
 export interface EtcdInstallArgs {

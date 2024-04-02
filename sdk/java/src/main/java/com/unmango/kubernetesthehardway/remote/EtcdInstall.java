@@ -82,6 +82,62 @@ public class EtcdInstall extends com.pulumi.resources.ComponentResource {
         return Codegen.optional(this.certFile);
     }
     /**
+     * The directory to store etcd configuration.
+     * 
+     */
+    @Export(name="configurationDirectory", refs={String.class}, tree="[0]")
+    private Output<String> configurationDirectory;
+
+    /**
+     * @return The directory to store etcd configuration.
+     * 
+     */
+    public Output<String> configurationDirectory() {
+        return this.configurationDirectory;
+    }
+    /**
+     * The command used to create the configuration directory.
+     * 
+     */
+    @Export(name="configurationMkdir", refs={Mkdir.class}, tree="[0]")
+    private Output<Mkdir> configurationMkdir;
+
+    /**
+     * @return The command used to create the configuration directory.
+     * 
+     */
+    public Output<Mkdir> configurationMkdir() {
+        return this.configurationMkdir;
+    }
+    /**
+     * The directory etcd will use.
+     * 
+     */
+    @Export(name="dataDirectory", refs={String.class}, tree="[0]")
+    private Output<String> dataDirectory;
+
+    /**
+     * @return The directory etcd will use.
+     * 
+     */
+    public Output<String> dataDirectory() {
+        return this.dataDirectory;
+    }
+    /**
+     * The command used to create the data directory.
+     * 
+     */
+    @Export(name="dataMkdir", refs={Mkdir.class}, tree="[0]")
+    private Output<Mkdir> dataMkdir;
+
+    /**
+     * @return The command used to create the data directory.
+     * 
+     */
+    public Output<Mkdir> dataMkdir() {
+        return this.dataMkdir;
+    }
+    /**
      * The etcd download operation.
      * 
      */

@@ -311,6 +311,8 @@ class EtcdInstall(pulumi.ComponentResource):
             __props__.__dict__["archive_name"] = None
             __props__.__dict__["ca_file"] = None
             __props__.__dict__["cert_file"] = None
+            __props__.__dict__["configuration_mkdir"] = None
+            __props__.__dict__["data_mkdir"] = None
             __props__.__dict__["download"] = None
             __props__.__dict__["download_mkdir"] = None
             __props__.__dict__["etcd_path"] = None
@@ -361,6 +363,38 @@ class EtcdInstall(pulumi.ComponentResource):
         The remote certificate file.
         """
         return pulumi.get(self, "cert_file")
+
+    @property
+    @pulumi.getter(name="configurationDirectory")
+    def configuration_directory(self) -> pulumi.Output[str]:
+        """
+        The directory to store etcd configuration.
+        """
+        return pulumi.get(self, "configuration_directory")
+
+    @property
+    @pulumi.getter(name="configurationMkdir")
+    def configuration_mkdir(self) -> pulumi.Output['_tools.Mkdir']:
+        """
+        The command used to create the configuration directory.
+        """
+        return pulumi.get(self, "configuration_mkdir")
+
+    @property
+    @pulumi.getter(name="dataDirectory")
+    def data_directory(self) -> pulumi.Output[str]:
+        """
+        The directory etcd will use.
+        """
+        return pulumi.get(self, "data_directory")
+
+    @property
+    @pulumi.getter(name="dataMkdir")
+    def data_mkdir(self) -> pulumi.Output['_tools.Mkdir']:
+        """
+        The command used to create the data directory.
+        """
+        return pulumi.get(self, "data_mkdir")
 
     @property
     @pulumi.getter
