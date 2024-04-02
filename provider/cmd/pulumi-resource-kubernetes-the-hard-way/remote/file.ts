@@ -1,8 +1,8 @@
-import { ComponentResource, ComponentResourceOptions, Input, Output, interpolate, output } from '@pulumi/pulumi';
+import { ComponentResourceOptions, Input, Output, interpolate, output } from '@pulumi/pulumi';
 import { Command } from '@pulumi/command/remote';
-import { remote } from '@pulumi/command/types/input';
+import * as schema from '../schema-types';
 
-export type InstallInputs = Omit<FileArgs, 'content'> & {
+export type InstallInputs = Omit<schema.FileArgs, 'content'> & {
   name: string;
   options?: ComponentResourceOptions;
 };
@@ -11,22 +11,9 @@ export interface InstallOutputs {
   result: File;
 }
 
-export interface FileArgs {
-  connection: Input<remote.ConnectionArgs>;
-  path: Input<string>;
-  content: Input<string>;
-}
-
-export class File extends ComponentResource {
-  public readonly command!: Command;
-  public readonly content!: Output<string>;
-  public readonly path!: Output<string>;
-  public readonly stderr!: Output<string>;
-  public readonly stdin!: Output<string | undefined>;
-  public readonly stdout!: Output<string>;
-
-  constructor(name: string, args: FileArgs, opts?: ComponentResourceOptions) {
-    super('kubernetes-the-hard-way:remote:File', name, args, opts);
+export class File extends schema.File {
+  constructor(name: string, args: schema.FileArgs, opts?: ComponentResourceOptions) {
+    super(name, args, opts);
 
     // Rehydrating
     if (opts?.urn) return;
@@ -45,7 +32,7 @@ export class File extends ComponentResource {
     this.content = content;
     this.path = path;
     this.stderr = command.stderr;
-    this.stdin = command.stdin;
+    this.stdin = command.stdin as Output<string>;
     this.stdout = command.stdout;
 
     this.registerOutputs({
