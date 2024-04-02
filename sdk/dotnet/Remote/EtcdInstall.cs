@@ -29,6 +29,18 @@ namespace UnMango.KubernetesTheHardWay.Remote
         public Output<string> ArchiveName { get; private set; } = null!;
 
         /// <summary>
+        /// The remote certificate authority file.
+        /// </summary>
+        [Output("caFile")]
+        public Output<UnMango.KubernetesTheHardWay.Remote.File?> CaFile { get; private set; } = null!;
+
+        /// <summary>
+        /// The remote certificate file.
+        /// </summary>
+        [Output("certFile")]
+        public Output<UnMango.KubernetesTheHardWay.Remote.File?> CertFile { get; private set; } = null!;
+
+        /// <summary>
         /// The etcd download operation.
         /// </summary>
         [Output("download")]
@@ -75,6 +87,12 @@ namespace UnMango.KubernetesTheHardWay.Remote
         /// </summary>
         [Output("internalIp")]
         public Output<string> InternalIp { get; private set; } = null!;
+
+        /// <summary>
+        /// The remote key file.
+        /// </summary>
+        [Output("keyFile")]
+        public Output<UnMango.KubernetesTheHardWay.Remote.File?> KeyFile { get; private set; } = null!;
 
         /// <summary>
         /// The operation to move the etcd binary to the install directory.

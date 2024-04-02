@@ -39,6 +39,14 @@ export class EtcdInstall extends pulumi.ComponentResource {
      */
     public /*out*/ readonly archiveName!: pulumi.Output<string>;
     /**
+     * The remote certificate authority file.
+     */
+    public /*out*/ readonly caFile!: pulumi.Output<File | undefined>;
+    /**
+     * The remote certificate file.
+     */
+    public /*out*/ readonly certFile!: pulumi.Output<File | undefined>;
+    /**
      * The etcd download operation.
      */
     public /*out*/ readonly download!: pulumi.Output<Download>;
@@ -70,6 +78,10 @@ export class EtcdInstall extends pulumi.ComponentResource {
      * IP used to serve client requests and communicate with etcd peers.
      */
     public readonly internalIp!: pulumi.Output<string>;
+    /**
+     * The remote key file.
+     */
+    public /*out*/ readonly keyFile!: pulumi.Output<File | undefined>;
     /**
      * The operation to move the etcd binary to the install directory.
      */
@@ -137,11 +149,14 @@ export class EtcdInstall extends pulumi.ComponentResource {
             resourceInputs["keyPem"] = args ? args.keyPem : undefined;
             resourceInputs["version"] = args ? args.version : undefined;
             resourceInputs["archiveName"] = undefined /*out*/;
+            resourceInputs["caFile"] = undefined /*out*/;
+            resourceInputs["certFile"] = undefined /*out*/;
             resourceInputs["download"] = undefined /*out*/;
             resourceInputs["downloadMkdir"] = undefined /*out*/;
             resourceInputs["etcdPath"] = undefined /*out*/;
             resourceInputs["etcdctlPath"] = undefined /*out*/;
             resourceInputs["installMkdir"] = undefined /*out*/;
+            resourceInputs["keyFile"] = undefined /*out*/;
             resourceInputs["mvEtcd"] = undefined /*out*/;
             resourceInputs["mvEtcdctl"] = undefined /*out*/;
             resourceInputs["name"] = undefined /*out*/;
@@ -151,6 +166,8 @@ export class EtcdInstall extends pulumi.ComponentResource {
         } else {
             resourceInputs["architecture"] = undefined /*out*/;
             resourceInputs["archiveName"] = undefined /*out*/;
+            resourceInputs["caFile"] = undefined /*out*/;
+            resourceInputs["certFile"] = undefined /*out*/;
             resourceInputs["download"] = undefined /*out*/;
             resourceInputs["downloadDirectory"] = undefined /*out*/;
             resourceInputs["downloadMkdir"] = undefined /*out*/;
@@ -159,6 +176,7 @@ export class EtcdInstall extends pulumi.ComponentResource {
             resourceInputs["installDirectory"] = undefined /*out*/;
             resourceInputs["installMkdir"] = undefined /*out*/;
             resourceInputs["internalIp"] = undefined /*out*/;
+            resourceInputs["keyFile"] = undefined /*out*/;
             resourceInputs["mvEtcd"] = undefined /*out*/;
             resourceInputs["mvEtcdctl"] = undefined /*out*/;
             resourceInputs["name"] = undefined /*out*/;

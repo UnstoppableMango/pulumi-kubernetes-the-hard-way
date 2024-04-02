@@ -309,11 +309,14 @@ class EtcdInstall(pulumi.ComponentResource):
             __props__.__dict__["key_pem"] = key_pem
             __props__.__dict__["version"] = version
             __props__.__dict__["archive_name"] = None
+            __props__.__dict__["ca_file"] = None
+            __props__.__dict__["cert_file"] = None
             __props__.__dict__["download"] = None
             __props__.__dict__["download_mkdir"] = None
             __props__.__dict__["etcd_path"] = None
             __props__.__dict__["etcdctl_path"] = None
             __props__.__dict__["install_mkdir"] = None
+            __props__.__dict__["key_file"] = None
             __props__.__dict__["mv_etcd"] = None
             __props__.__dict__["mv_etcdctl"] = None
             __props__.__dict__["name"] = None
@@ -342,6 +345,22 @@ class EtcdInstall(pulumi.ComponentResource):
         The name of the etcd release archive.
         """
         return pulumi.get(self, "archive_name")
+
+    @property
+    @pulumi.getter(name="caFile")
+    def ca_file(self) -> pulumi.Output[Optional['File']]:
+        """
+        The remote certificate authority file.
+        """
+        return pulumi.get(self, "ca_file")
+
+    @property
+    @pulumi.getter(name="certFile")
+    def cert_file(self) -> pulumi.Output[Optional['File']]:
+        """
+        The remote certificate file.
+        """
+        return pulumi.get(self, "cert_file")
 
     @property
     @pulumi.getter
@@ -406,6 +425,14 @@ class EtcdInstall(pulumi.ComponentResource):
         IP used to serve client requests and communicate with etcd peers.
         """
         return pulumi.get(self, "internal_ip")
+
+    @property
+    @pulumi.getter(name="keyFile")
+    def key_file(self) -> pulumi.Output[Optional['File']]:
+        """
+        The remote key file.
+        """
+        return pulumi.get(self, "key_file")
 
     @property
     @pulumi.getter(name="mvEtcd")

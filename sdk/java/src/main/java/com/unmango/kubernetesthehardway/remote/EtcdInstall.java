@@ -16,6 +16,7 @@ import com.unmango.kubernetesthehardway.tools.Mkdir;
 import com.unmango.kubernetesthehardway.tools.Mv;
 import com.unmango.kubernetesthehardway.tools.Tar;
 import java.lang.String;
+import java.util.Optional;
 import javax.annotation.Nullable;
 
 /**
@@ -51,6 +52,34 @@ public class EtcdInstall extends com.pulumi.resources.ComponentResource {
      */
     public Output<String> archiveName() {
         return this.archiveName;
+    }
+    /**
+     * The remote certificate authority file.
+     * 
+     */
+    @Export(name="caFile", refs={File.class}, tree="[0]")
+    private Output</* @Nullable */ File> caFile;
+
+    /**
+     * @return The remote certificate authority file.
+     * 
+     */
+    public Output<Optional<File>> caFile() {
+        return Codegen.optional(this.caFile);
+    }
+    /**
+     * The remote certificate file.
+     * 
+     */
+    @Export(name="certFile", refs={File.class}, tree="[0]")
+    private Output</* @Nullable */ File> certFile;
+
+    /**
+     * @return The remote certificate file.
+     * 
+     */
+    public Output<Optional<File>> certFile() {
+        return Codegen.optional(this.certFile);
     }
     /**
      * The etcd download operation.
@@ -163,6 +192,20 @@ public class EtcdInstall extends com.pulumi.resources.ComponentResource {
      */
     public Output<String> internalIp() {
         return this.internalIp;
+    }
+    /**
+     * The remote key file.
+     * 
+     */
+    @Export(name="keyFile", refs={File.class}, tree="[0]")
+    private Output</* @Nullable */ File> keyFile;
+
+    /**
+     * @return The remote key file.
+     * 
+     */
+    public Output<Optional<File>> keyFile() {
+        return Codegen.optional(this.keyFile);
     }
     /**
      * The operation to move the etcd binary to the install directory.

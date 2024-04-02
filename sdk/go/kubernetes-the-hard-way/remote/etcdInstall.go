@@ -22,6 +22,10 @@ type EtcdInstall struct {
 	Architecture ArchitectureOutput `pulumi:"architecture"`
 	// The name of the etcd release archive.
 	ArchiveName pulumi.StringOutput `pulumi:"archiveName"`
+	// The remote certificate authority file.
+	CaFile FileOutput `pulumi:"caFile"`
+	// The remote certificate file.
+	CertFile FileOutput `pulumi:"certFile"`
 	// The etcd download operation.
 	Download DownloadOutput `pulumi:"download"`
 	// The directory where the etcd binary was downloaded to.
@@ -38,6 +42,8 @@ type EtcdInstall struct {
 	InstallMkdir tools.MkdirOutput `pulumi:"installMkdir"`
 	// IP used to serve client requests and communicate with etcd peers.
 	InternalIp pulumi.StringOutput `pulumi:"internalIp"`
+	// The remote key file.
+	KeyFile FileOutput `pulumi:"keyFile"`
 	// The operation to move the etcd binary to the install directory.
 	MvEtcd tools.MvOutput `pulumi:"mvEtcd"`
 	// The operation to move the etcdctl binary to the install directory.
@@ -243,6 +249,16 @@ func (o EtcdInstallOutput) ArchiveName() pulumi.StringOutput {
 	return o.ApplyT(func(v *EtcdInstall) pulumi.StringOutput { return v.ArchiveName }).(pulumi.StringOutput)
 }
 
+// The remote certificate authority file.
+func (o EtcdInstallOutput) CaFile() FileOutput {
+	return o.ApplyT(func(v *EtcdInstall) FileOutput { return v.CaFile }).(FileOutput)
+}
+
+// The remote certificate file.
+func (o EtcdInstallOutput) CertFile() FileOutput {
+	return o.ApplyT(func(v *EtcdInstall) FileOutput { return v.CertFile }).(FileOutput)
+}
+
 // The etcd download operation.
 func (o EtcdInstallOutput) Download() DownloadOutput {
 	return o.ApplyT(func(v *EtcdInstall) DownloadOutput { return v.Download }).(DownloadOutput)
@@ -281,6 +297,11 @@ func (o EtcdInstallOutput) InstallMkdir() tools.MkdirOutput {
 // IP used to serve client requests and communicate with etcd peers.
 func (o EtcdInstallOutput) InternalIp() pulumi.StringOutput {
 	return o.ApplyT(func(v *EtcdInstall) pulumi.StringOutput { return v.InternalIp }).(pulumi.StringOutput)
+}
+
+// The remote key file.
+func (o EtcdInstallOutput) KeyFile() FileOutput {
+	return o.ApplyT(func(v *EtcdInstall) FileOutput { return v.KeyFile }).(FileOutput)
 }
 
 // The operation to move the etcd binary to the install directory.

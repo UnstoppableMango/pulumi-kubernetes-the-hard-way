@@ -94,6 +94,8 @@ export interface EncryptionKeyArgs {
 export abstract class EtcdInstall<TData = any> extends pulumi.ComponentResource<TData> {
     public architecture!: ArchitectureOutputs | pulumi.Output<ArchitectureOutputs>;
     public archiveName!: string | pulumi.Output<string>;
+    public caFile?: File | pulumi.Output<File>;
+    public certFile?: File | pulumi.Output<File>;
     public download!: Download | pulumi.Output<Download>;
     public downloadDirectory!: string | pulumi.Output<string>;
     public downloadMkdir!: Mkdir | pulumi.Output<Mkdir>;
@@ -102,6 +104,7 @@ export abstract class EtcdInstall<TData = any> extends pulumi.ComponentResource<
     public installDirectory!: string | pulumi.Output<string>;
     public installMkdir!: Mkdir | pulumi.Output<Mkdir>;
     public internalIp!: string | pulumi.Output<string>;
+    public keyFile?: File | pulumi.Output<File>;
     public mvEtcd!: Mv | pulumi.Output<Mv>;
     public mvEtcdctl!: Mv | pulumi.Output<Mv>;
     public name!: string | pulumi.Output<string>;
@@ -110,7 +113,7 @@ export abstract class EtcdInstall<TData = any> extends pulumi.ComponentResource<
     public url!: string | pulumi.Output<string>;
     public version!: string | pulumi.Output<string>;
     constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
-        super("kubernetes-the-hard-way:remote:EtcdInstall", name, opts.urn ? { architecture: undefined, archiveName: undefined, download: undefined, downloadDirectory: undefined, downloadMkdir: undefined, etcdPath: undefined, etcdctlPath: undefined, installDirectory: undefined, installMkdir: undefined, internalIp: undefined, mvEtcd: undefined, mvEtcdctl: undefined, name: undefined, systemdServiceFile: undefined, tar: undefined, url: undefined, version: undefined } : { name, args, opts }, opts);
+        super("kubernetes-the-hard-way:remote:EtcdInstall", name, opts.urn ? { architecture: undefined, archiveName: undefined, caFile: undefined, certFile: undefined, download: undefined, downloadDirectory: undefined, downloadMkdir: undefined, etcdPath: undefined, etcdctlPath: undefined, installDirectory: undefined, installMkdir: undefined, internalIp: undefined, keyFile: undefined, mvEtcd: undefined, mvEtcdctl: undefined, name: undefined, systemdServiceFile: undefined, tar: undefined, url: undefined, version: undefined } : { name, args, opts }, opts);
     }
 }
 export interface EtcdInstallArgs {
