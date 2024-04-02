@@ -303,6 +303,18 @@ resources:
       certFile:
         $ref: "#/resources/kubernetes-the-hard-way:remote:File"
         description: The remote certificate file.
+      configurationDirectory:
+        type: string
+        description: The directory to store etcd configuration.
+      configurationMkdir:
+        $ref: "#/resources/kubernetes-the-hard-way:tools:Mkdir"
+        description: The command used to create the configuration directory.
+      dataDirectory:
+        type: string
+        description: The directory etcd will use.
+      dataMkdir:
+        $ref: "#/resources/kubernetes-the-hard-way:tools:Mkdir"
+        description: The command used to create the data directory.
       download:
         $ref: "#/resources/kubernetes-the-hard-way:remote:Download"
         description: The etcd download operation.
@@ -354,6 +366,10 @@ resources:
     required:
       - architecture
       - archiveName
+      - configurationDirectory
+      - configurationMkdir
+      - dataDirectory
+      - dataMkdir
       - download
       - downloadDirectory
       - downloadMkdir
