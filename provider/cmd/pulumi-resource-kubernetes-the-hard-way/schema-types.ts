@@ -12,6 +12,7 @@ export type ResourceConstructor = {
     readonly "kubernetes-the-hard-way:remote:EtcdInstall": ConstructComponent<EtcdInstall>;
     readonly "kubernetes-the-hard-way:remote:Download": ConstructComponent<Download>;
     readonly "kubernetes-the-hard-way:remote:File": ConstructComponent<File>;
+    readonly "kubernetes-the-hard-way:remote:SystemdService": ConstructComponent<SystemdService>;
     readonly "kubernetes-the-hard-way:tls:RootCa": ConstructComponent<RootCa>;
     readonly "kubernetes-the-hard-way:tools:Mkdir": ConstructComponent<Mkdir>;
     readonly "kubernetes-the-hard-way:tools:Mktemp": ConstructComponent<Mktemp>;
@@ -165,6 +166,17 @@ export interface FileArgs {
     readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
     readonly content: pulumi.Input<string>;
     readonly path: pulumi.Input<string>;
+}
+export abstract class SystemdService<TData = any> extends pulumi.ComponentResource<TData> {
+    constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
+        super("kubernetes-the-hard-way:remote:SystemdService", name, opts.urn ? {} : { name, args, opts }, opts);
+    }
+}
+export interface SystemdServiceArgs {
+    readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
+    readonly install?: pulumi.Input<SystemdInstallSectionInputs>;
+    readonly service: pulumi.Input<SystemdServiceSectionInputs>;
+    readonly unit?: pulumi.Input<SystemdUnitSectionInputs>;
 }
 export abstract class RootCa<TData = any> extends pulumi.ComponentResource<TData> {
     public allowedUses!: AllowedUsageOutputs[] | pulumi.Output<AllowedUsageOutputs[]>;
@@ -517,6 +529,48 @@ export interface UserInputs {
 export interface UserOutputs {
     readonly clientCertificateData: pulumi.Output<string>;
     readonly clientKeyData: pulumi.Output<string>;
+}
+export interface SystemdInstallSectionInputs {
+    readonly wantedBy?: pulumi.Input<pulumi.Input<string>[]>;
+}
+export interface SystemdInstallSectionOutputs {
+    readonly wantedBy?: pulumi.Output<string[]>;
+}
+export type SystemdServiceExitTypeInputs = "main" | "cgroup";
+export type SystemdServiceExitTypeOutputs = "main" | "cgroup";
+export type SystemdServiceRestartInputs = "no" | "on-success" | "on-failure" | "on-abnormal" | "on-watchdog" | "on-abort" | "always";
+export type SystemdServiceRestartOutputs = "no" | "on-success" | "on-failure" | "on-abnormal" | "on-watchdog" | "on-abort" | "always";
+export type SystemdServiceTypeInputs = "simple" | "exec" | "forking" | "oneshot" | "dbus" | "notify" | "notify-reload" | "idle";
+export type SystemdServiceTypeOutputs = "simple" | "exec" | "forking" | "oneshot" | "dbus" | "notify" | "notify-reload" | "idle";
+export interface SystemdServiceSectionInputs {
+    readonly execStart?: pulumi.Input<string>;
+    readonly exitType?: pulumi.Input<SystemdServiceExitTypeInputs>;
+    readonly restart?: pulumi.Input<SystemdServiceRestartInputs>;
+    readonly restartSec?: pulumi.Input<string>;
+    readonly type?: pulumi.Input<SystemdServiceTypeInputs>;
+}
+export interface SystemdServiceSectionOutputs {
+    readonly execStart?: pulumi.Output<string>;
+    readonly exitType?: pulumi.Output<SystemdServiceExitTypeOutputs>;
+    readonly restart?: pulumi.Output<SystemdServiceRestartOutputs>;
+    readonly restartSec?: pulumi.Output<string>;
+    readonly type?: pulumi.Output<SystemdServiceTypeOutputs>;
+}
+export interface SystemdUnitSectionInputs {
+    readonly bindsTo?: pulumi.Input<pulumi.Input<string>[]>;
+    readonly description?: pulumi.Input<string>;
+    readonly documentation?: pulumi.Input<pulumi.Input<string>[]>;
+    readonly requires?: pulumi.Input<pulumi.Input<string>[]>;
+    readonly requisite?: pulumi.Input<pulumi.Input<string>[]>;
+    readonly wants?: pulumi.Input<pulumi.Input<string>[]>;
+}
+export interface SystemdUnitSectionOutputs {
+    readonly bindsTo?: pulumi.Output<string[]>;
+    readonly description?: pulumi.Output<string>;
+    readonly documentation?: pulumi.Output<string[]>;
+    readonly requires?: pulumi.Output<string[]>;
+    readonly requisite?: pulumi.Output<string[]>;
+    readonly wants?: pulumi.Output<string[]>;
 }
 export interface ClusterPki_getKubeconfigInputs {
     readonly __self__: pulumi.Input<ClusterPki>;
