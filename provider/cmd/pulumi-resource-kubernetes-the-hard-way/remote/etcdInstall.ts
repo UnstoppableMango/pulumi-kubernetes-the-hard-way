@@ -5,6 +5,7 @@ import { Mkdir, Mv, Tar } from '../tools';
 import { Download } from './download';
 import { File } from './file';
 import { CommandBuilder } from '../tools/commandBuilder';
+import { SystemdService } from './systemdService';
 
 export type Architecture = 'amd64' | 'arm64';
 
@@ -126,10 +127,22 @@ export class EtcdInstall extends schema.EtcdInstall {
       {}, // TODO: Peers
     );
 
-    const systemdFile = new File(`${name}-systemd`, {
+    const systemdFile = new SystemdService(name, {
       connection: args.connection,
-      content: formatSystemdFile(execStart),
-      path: interpolate`${systemdDirectory}/etcd.service`,
+      directory: systemdDirectory,
+      unit: {
+        description: 'etcd',
+        documentation: ['https://github.com/etcd-io/etcd'],
+      },
+      service: {
+        type: 'notify',
+        execStart,
+        restart: 'on-failure',
+        restartSec: '5',
+      },
+      install: {
+        wantedBy: ['multi-user.target'],
+      },
     }, { parent: this });
 
     this.architecture = architecture;
@@ -150,7 +163,7 @@ export class EtcdInstall extends schema.EtcdInstall {
     this.mvEtcd = mvEtcd;
     this.mvEtcdctl = mvEtcdctl;
     this.name = output(name);
-    this.systemdServiceFile = systemdFile,
+    this.systemdService = systemdFile,
     this.tar = tar;
     this.url = url;
     this.version = version;
