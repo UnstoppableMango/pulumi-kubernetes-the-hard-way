@@ -251,9 +251,23 @@ resources:
       architecture:
         $ref: "#/types/kubernetes-the-hard-way:remote:Architecture"
         description: The etcd CPU architecture.
+      caPem:
+        type: string
+        description: The PEM encoded CA data.
+      certPem:
+        type: string
+        description: The PEM encoded certificate data.
+      configurationDirectory:
+        type: string
+        description: The directory to store etcd configuration.
+        default: /etc/etcd
       connection:
         $ref: "/command/v0.9.2/schema.json#/types/command:remote:Connection"
         description: The connection details.
+      dataDirectory:
+        type: string
+        description: The directory etcd will use.
+        default: /var/lib/etcd
       downloadDirectory:
         type: string
         description: Temporary directory to download files to. Defaults to `/tmp/<random string>`.
@@ -261,11 +275,25 @@ resources:
         type: string
         description: Directory to install the `etcd` and `etcdctl` binaries.
         default: /usr/local/bin
+      internalIp:
+        type: string
+        description: IP used to serve client requests and communicate with etcd peers.
+      keyPem:
+        type: string
+        description: The PEM encoded key data.
+      systemdDirectory:
+        type: string
+        description: The systemd service file dirctory.
+        default: /etc/system/systemd
       version:
         type: string
         description: The version of etcd to install.
     requiredInputs:
+      - caPem
+      - certPem
       - connection
+      - internalIp
+      - keyPem
     properties:
       architecture:
         $ref: "#/types/kubernetes-the-hard-way:remote:Architecture"
@@ -273,6 +301,24 @@ resources:
       archiveName:
         type: string
         description: The name of the etcd release archive.
+      caFile:
+        $ref: "#/resources/kubernetes-the-hard-way:remote:File"
+        description: The remote certificate authority file.
+      certFile:
+        $ref: "#/resources/kubernetes-the-hard-way:remote:File"
+        description: The remote certificate file.
+      configurationDirectory:
+        type: string
+        description: The directory to store etcd configuration.
+      configurationMkdir:
+        $ref: "#/resources/kubernetes-the-hard-way:tools:Mkdir"
+        description: The command used to create the configuration directory.
+      dataDirectory:
+        type: string
+        description: The directory etcd will use.
+      dataMkdir:
+        $ref: "#/resources/kubernetes-the-hard-way:tools:Mkdir"
+        description: The command used to create the data directory.
       download:
         $ref: "#/resources/kubernetes-the-hard-way:remote:Download"
         description: The etcd download operation.
@@ -294,6 +340,12 @@ resources:
       installMkdir:
         $ref: "#/resources/kubernetes-the-hard-way:tools:Mkdir"
         description: The operation to create the install directory.
+      internalIp:
+        type: string
+        description: IP used to serve client requests and communicate with etcd peers.
+      keyFile:
+        $ref: "#/resources/kubernetes-the-hard-way:remote:File"
+        description: The remote key file.
       mvEtcd:
         $ref: "#/resources/kubernetes-the-hard-way:tools:Mv"
         description: The operation to move the etcd binary to the install directory.
@@ -303,6 +355,9 @@ resources:
       name:
         type: string
         description: The name of the resource.
+      systemdServiceFile:
+        $ref: "#/resources/kubernetes-the-hard-way:remote:File"
+        description: The remote systemd service file.
       tar:
         $ref: "#/resources/kubernetes-the-hard-way:tools:Tar"
         description: The tar operation.
@@ -315,6 +370,10 @@ resources:
     required:
       - architecture
       - archiveName
+      - configurationDirectory
+      - configurationMkdir
+      - dataDirectory
+      - dataMkdir
       - download
       - downloadDirectory
       - downloadMkdir
@@ -322,9 +381,11 @@ resources:
       - etcdctlPath
       - installDirectory
       - installMkdir
+      - internalIp
       - mvEtcd
       - mvEtcdctl
       - name
+      - systemdServiceFile
       - tar
       - url
       - version

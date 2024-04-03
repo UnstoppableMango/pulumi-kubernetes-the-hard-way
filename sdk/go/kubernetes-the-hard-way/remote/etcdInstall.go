@@ -22,6 +22,18 @@ type EtcdInstall struct {
 	Architecture ArchitectureOutput `pulumi:"architecture"`
 	// The name of the etcd release archive.
 	ArchiveName pulumi.StringOutput `pulumi:"archiveName"`
+	// The remote certificate authority file.
+	CaFile FileOutput `pulumi:"caFile"`
+	// The remote certificate file.
+	CertFile FileOutput `pulumi:"certFile"`
+	// The directory to store etcd configuration.
+	ConfigurationDirectory pulumi.StringOutput `pulumi:"configurationDirectory"`
+	// The command used to create the configuration directory.
+	ConfigurationMkdir tools.MkdirOutput `pulumi:"configurationMkdir"`
+	// The directory etcd will use.
+	DataDirectory pulumi.StringOutput `pulumi:"dataDirectory"`
+	// The command used to create the data directory.
+	DataMkdir tools.MkdirOutput `pulumi:"dataMkdir"`
 	// The etcd download operation.
 	Download DownloadOutput `pulumi:"download"`
 	// The directory where the etcd binary was downloaded to.
@@ -36,12 +48,18 @@ type EtcdInstall struct {
 	InstallDirectory pulumi.StringOutput `pulumi:"installDirectory"`
 	// The operation to create the install directory.
 	InstallMkdir tools.MkdirOutput `pulumi:"installMkdir"`
+	// IP used to serve client requests and communicate with etcd peers.
+	InternalIp pulumi.StringOutput `pulumi:"internalIp"`
+	// The remote key file.
+	KeyFile FileOutput `pulumi:"keyFile"`
 	// The operation to move the etcd binary to the install directory.
 	MvEtcd tools.MvOutput `pulumi:"mvEtcd"`
 	// The operation to move the etcdctl binary to the install directory.
 	MvEtcdctl tools.MvOutput `pulumi:"mvEtcdctl"`
 	// The name of the resource.
 	Name pulumi.StringOutput `pulumi:"name"`
+	// The remote systemd service file.
+	SystemdServiceFile FileOutput `pulumi:"systemdServiceFile"`
 	// The tar operation.
 	Tar tools.TarOutput `pulumi:"tar"`
 	// The url used to download etcd.
@@ -57,12 +75,33 @@ func NewEtcdInstall(ctx *pulumi.Context,
 		return nil, errors.New("missing one or more required arguments")
 	}
 
+	if args.CaPem == nil {
+		return nil, errors.New("invalid value for required argument 'CaPem'")
+	}
+	if args.CertPem == nil {
+		return nil, errors.New("invalid value for required argument 'CertPem'")
+	}
 	if args.Connection == nil {
 		return nil, errors.New("invalid value for required argument 'Connection'")
 	}
+	if args.InternalIp == nil {
+		return nil, errors.New("invalid value for required argument 'InternalIp'")
+	}
+	if args.KeyPem == nil {
+		return nil, errors.New("invalid value for required argument 'KeyPem'")
+	}
+	if args.ConfigurationDirectory == nil {
+		args.ConfigurationDirectory = pulumi.StringPtr("/etc/etcd")
+	}
 	args.Connection = args.Connection.ToConnectionOutput().ApplyT(func(v pulumiCommand.Connection) pulumiCommand.Connection { return *v.Defaults() }).(pulumiCommand.ConnectionOutput)
+	if args.DataDirectory == nil {
+		args.DataDirectory = pulumi.StringPtr("/var/lib/etcd")
+	}
 	if args.InstallDirectory == nil {
 		args.InstallDirectory = pulumi.StringPtr("/usr/local/bin")
+	}
+	if args.SystemdDirectory == nil {
+		args.SystemdDirectory = pulumi.StringPtr("/etc/system/systemd")
 	}
 	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource EtcdInstall
@@ -76,12 +115,26 @@ func NewEtcdInstall(ctx *pulumi.Context,
 type etcdInstallArgs struct {
 	// The etcd CPU architecture.
 	Architecture *Architecture `pulumi:"architecture"`
+	// The PEM encoded CA data.
+	CaPem string `pulumi:"caPem"`
+	// The PEM encoded certificate data.
+	CertPem string `pulumi:"certPem"`
+	// The directory to store etcd configuration.
+	ConfigurationDirectory *string `pulumi:"configurationDirectory"`
 	// The connection details.
 	Connection pulumiCommand.Connection `pulumi:"connection"`
+	// The directory etcd will use.
+	DataDirectory *string `pulumi:"dataDirectory"`
 	// Temporary directory to download files to. Defaults to `/tmp/<random string>`.
 	DownloadDirectory *string `pulumi:"downloadDirectory"`
 	// Directory to install the `etcd` and `etcdctl` binaries.
 	InstallDirectory *string `pulumi:"installDirectory"`
+	// IP used to serve client requests and communicate with etcd peers.
+	InternalIp string `pulumi:"internalIp"`
+	// The PEM encoded key data.
+	KeyPem string `pulumi:"keyPem"`
+	// The systemd service file dirctory.
+	SystemdDirectory *string `pulumi:"systemdDirectory"`
 	// The version of etcd to install.
 	Version *string `pulumi:"version"`
 }
@@ -90,12 +143,26 @@ type etcdInstallArgs struct {
 type EtcdInstallArgs struct {
 	// The etcd CPU architecture.
 	Architecture ArchitecturePtrInput
+	// The PEM encoded CA data.
+	CaPem pulumi.StringInput
+	// The PEM encoded certificate data.
+	CertPem pulumi.StringInput
+	// The directory to store etcd configuration.
+	ConfigurationDirectory pulumi.StringPtrInput
 	// The connection details.
 	Connection pulumiCommand.ConnectionInput
+	// The directory etcd will use.
+	DataDirectory pulumi.StringPtrInput
 	// Temporary directory to download files to. Defaults to `/tmp/<random string>`.
 	DownloadDirectory pulumi.StringPtrInput
 	// Directory to install the `etcd` and `etcdctl` binaries.
 	InstallDirectory pulumi.StringPtrInput
+	// IP used to serve client requests and communicate with etcd peers.
+	InternalIp pulumi.StringInput
+	// The PEM encoded key data.
+	KeyPem pulumi.StringInput
+	// The systemd service file dirctory.
+	SystemdDirectory pulumi.StringPtrInput
 	// The version of etcd to install.
 	Version pulumi.StringPtrInput
 }
@@ -197,6 +264,36 @@ func (o EtcdInstallOutput) ArchiveName() pulumi.StringOutput {
 	return o.ApplyT(func(v *EtcdInstall) pulumi.StringOutput { return v.ArchiveName }).(pulumi.StringOutput)
 }
 
+// The remote certificate authority file.
+func (o EtcdInstallOutput) CaFile() FileOutput {
+	return o.ApplyT(func(v *EtcdInstall) FileOutput { return v.CaFile }).(FileOutput)
+}
+
+// The remote certificate file.
+func (o EtcdInstallOutput) CertFile() FileOutput {
+	return o.ApplyT(func(v *EtcdInstall) FileOutput { return v.CertFile }).(FileOutput)
+}
+
+// The directory to store etcd configuration.
+func (o EtcdInstallOutput) ConfigurationDirectory() pulumi.StringOutput {
+	return o.ApplyT(func(v *EtcdInstall) pulumi.StringOutput { return v.ConfigurationDirectory }).(pulumi.StringOutput)
+}
+
+// The command used to create the configuration directory.
+func (o EtcdInstallOutput) ConfigurationMkdir() tools.MkdirOutput {
+	return o.ApplyT(func(v *EtcdInstall) tools.MkdirOutput { return v.ConfigurationMkdir }).(tools.MkdirOutput)
+}
+
+// The directory etcd will use.
+func (o EtcdInstallOutput) DataDirectory() pulumi.StringOutput {
+	return o.ApplyT(func(v *EtcdInstall) pulumi.StringOutput { return v.DataDirectory }).(pulumi.StringOutput)
+}
+
+// The command used to create the data directory.
+func (o EtcdInstallOutput) DataMkdir() tools.MkdirOutput {
+	return o.ApplyT(func(v *EtcdInstall) tools.MkdirOutput { return v.DataMkdir }).(tools.MkdirOutput)
+}
+
 // The etcd download operation.
 func (o EtcdInstallOutput) Download() DownloadOutput {
 	return o.ApplyT(func(v *EtcdInstall) DownloadOutput { return v.Download }).(DownloadOutput)
@@ -232,6 +329,16 @@ func (o EtcdInstallOutput) InstallMkdir() tools.MkdirOutput {
 	return o.ApplyT(func(v *EtcdInstall) tools.MkdirOutput { return v.InstallMkdir }).(tools.MkdirOutput)
 }
 
+// IP used to serve client requests and communicate with etcd peers.
+func (o EtcdInstallOutput) InternalIp() pulumi.StringOutput {
+	return o.ApplyT(func(v *EtcdInstall) pulumi.StringOutput { return v.InternalIp }).(pulumi.StringOutput)
+}
+
+// The remote key file.
+func (o EtcdInstallOutput) KeyFile() FileOutput {
+	return o.ApplyT(func(v *EtcdInstall) FileOutput { return v.KeyFile }).(FileOutput)
+}
+
 // The operation to move the etcd binary to the install directory.
 func (o EtcdInstallOutput) MvEtcd() tools.MvOutput {
 	return o.ApplyT(func(v *EtcdInstall) tools.MvOutput { return v.MvEtcd }).(tools.MvOutput)
@@ -245,6 +352,11 @@ func (o EtcdInstallOutput) MvEtcdctl() tools.MvOutput {
 // The name of the resource.
 func (o EtcdInstallOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v *EtcdInstall) pulumi.StringOutput { return v.Name }).(pulumi.StringOutput)
+}
+
+// The remote systemd service file.
+func (o EtcdInstallOutput) SystemdServiceFile() FileOutput {
+	return o.ApplyT(func(v *EtcdInstall) FileOutput { return v.SystemdServiceFile }).(FileOutput)
 }
 
 // The tar operation.

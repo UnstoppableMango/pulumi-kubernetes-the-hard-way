@@ -35,6 +35,51 @@ public final class EtcdInstallArgs extends com.pulumi.resources.ResourceArgs {
     }
 
     /**
+     * The PEM encoded CA data.
+     * 
+     */
+    @Import(name="caPem", required=true)
+    private Output<String> caPem;
+
+    /**
+     * @return The PEM encoded CA data.
+     * 
+     */
+    public Output<String> caPem() {
+        return this.caPem;
+    }
+
+    /**
+     * The PEM encoded certificate data.
+     * 
+     */
+    @Import(name="certPem", required=true)
+    private Output<String> certPem;
+
+    /**
+     * @return The PEM encoded certificate data.
+     * 
+     */
+    public Output<String> certPem() {
+        return this.certPem;
+    }
+
+    /**
+     * The directory to store etcd configuration.
+     * 
+     */
+    @Import(name="configurationDirectory")
+    private @Nullable Output<String> configurationDirectory;
+
+    /**
+     * @return The directory to store etcd configuration.
+     * 
+     */
+    public Optional<Output<String>> configurationDirectory() {
+        return Optional.ofNullable(this.configurationDirectory);
+    }
+
+    /**
      * The connection details.
      * 
      */
@@ -47,6 +92,21 @@ public final class EtcdInstallArgs extends com.pulumi.resources.ResourceArgs {
      */
     public Output<ConnectionArgs> connection() {
         return this.connection;
+    }
+
+    /**
+     * The directory etcd will use.
+     * 
+     */
+    @Import(name="dataDirectory")
+    private @Nullable Output<String> dataDirectory;
+
+    /**
+     * @return The directory etcd will use.
+     * 
+     */
+    public Optional<Output<String>> dataDirectory() {
+        return Optional.ofNullable(this.dataDirectory);
     }
 
     /**
@@ -80,6 +140,51 @@ public final class EtcdInstallArgs extends com.pulumi.resources.ResourceArgs {
     }
 
     /**
+     * IP used to serve client requests and communicate with etcd peers.
+     * 
+     */
+    @Import(name="internalIp", required=true)
+    private Output<String> internalIp;
+
+    /**
+     * @return IP used to serve client requests and communicate with etcd peers.
+     * 
+     */
+    public Output<String> internalIp() {
+        return this.internalIp;
+    }
+
+    /**
+     * The PEM encoded key data.
+     * 
+     */
+    @Import(name="keyPem", required=true)
+    private Output<String> keyPem;
+
+    /**
+     * @return The PEM encoded key data.
+     * 
+     */
+    public Output<String> keyPem() {
+        return this.keyPem;
+    }
+
+    /**
+     * The systemd service file dirctory.
+     * 
+     */
+    @Import(name="systemdDirectory")
+    private @Nullable Output<String> systemdDirectory;
+
+    /**
+     * @return The systemd service file dirctory.
+     * 
+     */
+    public Optional<Output<String>> systemdDirectory() {
+        return Optional.ofNullable(this.systemdDirectory);
+    }
+
+    /**
      * The version of etcd to install.
      * 
      */
@@ -98,9 +203,16 @@ public final class EtcdInstallArgs extends com.pulumi.resources.ResourceArgs {
 
     private EtcdInstallArgs(EtcdInstallArgs $) {
         this.architecture = $.architecture;
+        this.caPem = $.caPem;
+        this.certPem = $.certPem;
+        this.configurationDirectory = $.configurationDirectory;
         this.connection = $.connection;
+        this.dataDirectory = $.dataDirectory;
         this.downloadDirectory = $.downloadDirectory;
         this.installDirectory = $.installDirectory;
+        this.internalIp = $.internalIp;
+        this.keyPem = $.keyPem;
+        this.systemdDirectory = $.systemdDirectory;
         this.version = $.version;
     }
 
@@ -144,6 +256,69 @@ public final class EtcdInstallArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
+         * @param caPem The PEM encoded CA data.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder caPem(Output<String> caPem) {
+            $.caPem = caPem;
+            return this;
+        }
+
+        /**
+         * @param caPem The PEM encoded CA data.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder caPem(String caPem) {
+            return caPem(Output.of(caPem));
+        }
+
+        /**
+         * @param certPem The PEM encoded certificate data.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder certPem(Output<String> certPem) {
+            $.certPem = certPem;
+            return this;
+        }
+
+        /**
+         * @param certPem The PEM encoded certificate data.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder certPem(String certPem) {
+            return certPem(Output.of(certPem));
+        }
+
+        /**
+         * @param configurationDirectory The directory to store etcd configuration.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder configurationDirectory(@Nullable Output<String> configurationDirectory) {
+            $.configurationDirectory = configurationDirectory;
+            return this;
+        }
+
+        /**
+         * @param configurationDirectory The directory to store etcd configuration.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder configurationDirectory(String configurationDirectory) {
+            return configurationDirectory(Output.of(configurationDirectory));
+        }
+
+        /**
          * @param connection The connection details.
          * 
          * @return builder
@@ -162,6 +337,27 @@ public final class EtcdInstallArgs extends com.pulumi.resources.ResourceArgs {
          */
         public Builder connection(ConnectionArgs connection) {
             return connection(Output.of(connection));
+        }
+
+        /**
+         * @param dataDirectory The directory etcd will use.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder dataDirectory(@Nullable Output<String> dataDirectory) {
+            $.dataDirectory = dataDirectory;
+            return this;
+        }
+
+        /**
+         * @param dataDirectory The directory etcd will use.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder dataDirectory(String dataDirectory) {
+            return dataDirectory(Output.of(dataDirectory));
         }
 
         /**
@@ -207,6 +403,69 @@ public final class EtcdInstallArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
+         * @param internalIp IP used to serve client requests and communicate with etcd peers.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder internalIp(Output<String> internalIp) {
+            $.internalIp = internalIp;
+            return this;
+        }
+
+        /**
+         * @param internalIp IP used to serve client requests and communicate with etcd peers.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder internalIp(String internalIp) {
+            return internalIp(Output.of(internalIp));
+        }
+
+        /**
+         * @param keyPem The PEM encoded key data.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder keyPem(Output<String> keyPem) {
+            $.keyPem = keyPem;
+            return this;
+        }
+
+        /**
+         * @param keyPem The PEM encoded key data.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder keyPem(String keyPem) {
+            return keyPem(Output.of(keyPem));
+        }
+
+        /**
+         * @param systemdDirectory The systemd service file dirctory.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder systemdDirectory(@Nullable Output<String> systemdDirectory) {
+            $.systemdDirectory = systemdDirectory;
+            return this;
+        }
+
+        /**
+         * @param systemdDirectory The systemd service file dirctory.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder systemdDirectory(String systemdDirectory) {
+            return systemdDirectory(Output.of(systemdDirectory));
+        }
+
+        /**
          * @param version The version of etcd to install.
          * 
          * @return builder
@@ -228,10 +487,25 @@ public final class EtcdInstallArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         public EtcdInstallArgs build() {
+            if ($.caPem == null) {
+                throw new MissingRequiredPropertyException("EtcdInstallArgs", "caPem");
+            }
+            if ($.certPem == null) {
+                throw new MissingRequiredPropertyException("EtcdInstallArgs", "certPem");
+            }
+            $.configurationDirectory = Codegen.stringProp("configurationDirectory").output().arg($.configurationDirectory).def("/etc/etcd").getNullable();
             if ($.connection == null) {
                 throw new MissingRequiredPropertyException("EtcdInstallArgs", "connection");
             }
+            $.dataDirectory = Codegen.stringProp("dataDirectory").output().arg($.dataDirectory).def("/var/lib/etcd").getNullable();
             $.installDirectory = Codegen.stringProp("installDirectory").output().arg($.installDirectory).def("/usr/local/bin").getNullable();
+            if ($.internalIp == null) {
+                throw new MissingRequiredPropertyException("EtcdInstallArgs", "internalIp");
+            }
+            if ($.keyPem == null) {
+                throw new MissingRequiredPropertyException("EtcdInstallArgs", "keyPem");
+            }
+            $.systemdDirectory = Codegen.stringProp("systemdDirectory").output().arg($.systemdDirectory).def("/etc/system/systemd").getNullable();
             return $;
         }
     }

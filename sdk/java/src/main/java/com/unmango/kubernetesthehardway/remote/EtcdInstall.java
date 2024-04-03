@@ -10,11 +10,13 @@ import com.pulumi.core.internal.Codegen;
 import com.unmango.kubernetesthehardway.Utilities;
 import com.unmango.kubernetesthehardway.remote.Download;
 import com.unmango.kubernetesthehardway.remote.EtcdInstallArgs;
+import com.unmango.kubernetesthehardway.remote.File;
 import com.unmango.kubernetesthehardway.remote.enums.Architecture;
 import com.unmango.kubernetesthehardway.tools.Mkdir;
 import com.unmango.kubernetesthehardway.tools.Mv;
 import com.unmango.kubernetesthehardway.tools.Tar;
 import java.lang.String;
+import java.util.Optional;
 import javax.annotation.Nullable;
 
 /**
@@ -50,6 +52,90 @@ public class EtcdInstall extends com.pulumi.resources.ComponentResource {
      */
     public Output<String> archiveName() {
         return this.archiveName;
+    }
+    /**
+     * The remote certificate authority file.
+     * 
+     */
+    @Export(name="caFile", refs={File.class}, tree="[0]")
+    private Output</* @Nullable */ File> caFile;
+
+    /**
+     * @return The remote certificate authority file.
+     * 
+     */
+    public Output<Optional<File>> caFile() {
+        return Codegen.optional(this.caFile);
+    }
+    /**
+     * The remote certificate file.
+     * 
+     */
+    @Export(name="certFile", refs={File.class}, tree="[0]")
+    private Output</* @Nullable */ File> certFile;
+
+    /**
+     * @return The remote certificate file.
+     * 
+     */
+    public Output<Optional<File>> certFile() {
+        return Codegen.optional(this.certFile);
+    }
+    /**
+     * The directory to store etcd configuration.
+     * 
+     */
+    @Export(name="configurationDirectory", refs={String.class}, tree="[0]")
+    private Output<String> configurationDirectory;
+
+    /**
+     * @return The directory to store etcd configuration.
+     * 
+     */
+    public Output<String> configurationDirectory() {
+        return this.configurationDirectory;
+    }
+    /**
+     * The command used to create the configuration directory.
+     * 
+     */
+    @Export(name="configurationMkdir", refs={Mkdir.class}, tree="[0]")
+    private Output<Mkdir> configurationMkdir;
+
+    /**
+     * @return The command used to create the configuration directory.
+     * 
+     */
+    public Output<Mkdir> configurationMkdir() {
+        return this.configurationMkdir;
+    }
+    /**
+     * The directory etcd will use.
+     * 
+     */
+    @Export(name="dataDirectory", refs={String.class}, tree="[0]")
+    private Output<String> dataDirectory;
+
+    /**
+     * @return The directory etcd will use.
+     * 
+     */
+    public Output<String> dataDirectory() {
+        return this.dataDirectory;
+    }
+    /**
+     * The command used to create the data directory.
+     * 
+     */
+    @Export(name="dataMkdir", refs={Mkdir.class}, tree="[0]")
+    private Output<Mkdir> dataMkdir;
+
+    /**
+     * @return The command used to create the data directory.
+     * 
+     */
+    public Output<Mkdir> dataMkdir() {
+        return this.dataMkdir;
     }
     /**
      * The etcd download operation.
@@ -150,6 +236,34 @@ public class EtcdInstall extends com.pulumi.resources.ComponentResource {
         return this.installMkdir;
     }
     /**
+     * IP used to serve client requests and communicate with etcd peers.
+     * 
+     */
+    @Export(name="internalIp", refs={String.class}, tree="[0]")
+    private Output<String> internalIp;
+
+    /**
+     * @return IP used to serve client requests and communicate with etcd peers.
+     * 
+     */
+    public Output<String> internalIp() {
+        return this.internalIp;
+    }
+    /**
+     * The remote key file.
+     * 
+     */
+    @Export(name="keyFile", refs={File.class}, tree="[0]")
+    private Output</* @Nullable */ File> keyFile;
+
+    /**
+     * @return The remote key file.
+     * 
+     */
+    public Output<Optional<File>> keyFile() {
+        return Codegen.optional(this.keyFile);
+    }
+    /**
      * The operation to move the etcd binary to the install directory.
      * 
      */
@@ -190,6 +304,20 @@ public class EtcdInstall extends com.pulumi.resources.ComponentResource {
      */
     public Output<String> name() {
         return this.name;
+    }
+    /**
+     * The remote systemd service file.
+     * 
+     */
+    @Export(name="systemdServiceFile", refs={File.class}, tree="[0]")
+    private Output<File> systemdServiceFile;
+
+    /**
+     * @return The remote systemd service file.
+     * 
+     */
+    public Output<File> systemdServiceFile() {
+        return this.systemdServiceFile;
     }
     /**
      * The tar operation.

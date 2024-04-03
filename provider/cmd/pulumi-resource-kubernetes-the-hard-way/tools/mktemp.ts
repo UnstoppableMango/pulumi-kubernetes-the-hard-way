@@ -1,29 +1,11 @@
-import { ComponentResource, ComponentResourceOptions, Input, Output, output } from '@pulumi/pulumi';
+import { ComponentResourceOptions, output } from '@pulumi/pulumi';
 import { Command } from '@pulumi/command/remote';
-import { remote } from '@pulumi/command/types/input';
+import * as types from '../schema-types';
 import { CommandBuilder } from './commandBuilder';
 
-export interface MktempArgs {
-  connection: Input<remote.ConnectionArgs>;
-  directory?: Input<boolean>;
-  dryRun?: Input<boolean>;
-  quiet?: Input<boolean>;
-  suffix?: Input<string>;
-  template?: Input<string>;
-  tmpdir?: Input<string>;
-}
-
-export class Mktemp extends ComponentResource {
-  public readonly command!: Command;
-  public readonly directory!: Output<boolean>;
-  public readonly dryRun!: Output<boolean>;
-  public readonly quiet!: Output<boolean>;
-  public readonly suffix!: Output<string | undefined>;
-  public readonly template!: Output<string | undefined>;
-  public readonly tmpdir!: Output<string | undefined>;
-
-  constructor(name: string, args: MktempArgs, opts?: ComponentResourceOptions) {
-    super('kubernetes-the-hard-way:tools:Mktemp', name, args, opts);
+export class Mktemp extends types.Mktemp {
+  constructor(name: string, args: types.MktempArgs, opts?: ComponentResourceOptions) {
+    super(name, args, opts);
 
     // Rehydrating
     if (opts?.urn) return;
@@ -52,9 +34,10 @@ export class Mktemp extends ComponentResource {
     this.directory = directory;
     this.dryRun = dryRun;
     this.quiet = quiet;
-    this.suffix = suffix;
-    this.template = template;
-    this.tmpdir = tmpdir;
+
+    if (args.suffix) this.suffix = output(args.suffix);
+    if (args.template) this.template = output(args.template);
+    if (args.tmpdir) this.tmpdir = output(args.tmpdir);
 
     this.registerOutputs({
       command,

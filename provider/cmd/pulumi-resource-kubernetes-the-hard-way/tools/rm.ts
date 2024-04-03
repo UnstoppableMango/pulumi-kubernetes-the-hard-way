@@ -1,29 +1,15 @@
-import { ComponentResource, ComponentResourceOptions, Input, Output, output } from '@pulumi/pulumi';
+import { ComponentResourceOptions, Input, output } from '@pulumi/pulumi';
 import { Command } from '@pulumi/command/remote';
-import { remote } from '@pulumi/command/types/input';
+import * as types from '../schema-types';
 import { CommandBuilder, toArray } from './commandBuilder';
 
-export interface RmArgs {
-  connection: Input<remote.ConnectionArgs>;
-  dir?: Input<boolean>;
+export type RmArgs = types.RmArgs & {
   files: Input<string | Input<string>[]>;
-  force?: Input<boolean>;
-  onDelete?: boolean;
-  recursive?: Input<boolean>;
-  verbose?: Input<boolean>;
-}
+};
 
-export class Rm extends ComponentResource {
-  public readonly command!: Command;
-  public readonly dir!: Output<boolean>;
-  public readonly files!: Output<string[]>;
-  public readonly force!: Output<boolean>;
-  public readonly onDelete!: Output<boolean>;
-  public readonly recursive!: Output<boolean>;
-  public readonly verbose!: Output<boolean>;
-
+export class Rm extends types.Rm {
   constructor(name: string, args: RmArgs, opts?: ComponentResourceOptions) {
-    super('kubernetes-the-hard-way:tools:Rm', name, args, opts);
+    super(name, args, opts);
 
     // Rehydrating
     if (opts?.urn) return;
