@@ -137,10 +137,10 @@ namespace UnMango.KubernetesTheHardWay.Remote
         public Output<string> Name { get; private set; } = null!;
 
         /// <summary>
-        /// The remote systemd service file.
+        /// The remote systemd service.
         /// </summary>
-        [Output("systemdServiceFile")]
-        public Output<UnMango.KubernetesTheHardWay.Remote.File> SystemdServiceFile { get; private set; } = null!;
+        [Output("systemdService")]
+        public Output<UnMango.KubernetesTheHardWay.Remote.SystemdService> SystemdService { get; private set; } = null!;
 
         /// <summary>
         /// The tar operation.

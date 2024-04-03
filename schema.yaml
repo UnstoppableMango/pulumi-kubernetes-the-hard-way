@@ -355,9 +355,9 @@ resources:
       name:
         type: string
         description: The name of the resource.
-      systemdServiceFile:
-        $ref: "#/resources/kubernetes-the-hard-way:remote:File"
-        description: The remote systemd service file.
+      systemdService:
+        $ref: "#/resources/kubernetes-the-hard-way:remote:SystemdService"
+        description: The remote systemd service.
       tar:
         $ref: "#/resources/kubernetes-the-hard-way:tools:Tar"
         description: The tar operation.
@@ -385,7 +385,7 @@ resources:
       - mvEtcd
       - mvEtcdctl
       - name
-      - systemdServiceFile
+      - systemdService
       - tar
       - url
       - version

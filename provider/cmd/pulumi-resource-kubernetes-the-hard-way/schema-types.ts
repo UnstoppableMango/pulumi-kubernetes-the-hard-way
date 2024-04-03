@@ -27,7 +27,7 @@ export type Functions = {
 import * as command from "@pulumi/command";
 import * as random from "@pulumi/random";
 import * as tls from "@pulumi/tls";
-export abstract class Certificate<TData = any> extends pulumi.ComponentResource<TData> {
+export abstract class Certificate<TData = any> extends (pulumi.ComponentResource)<TData> {
     public cert!: tls.LocallySignedCert | pulumi.Output<tls.LocallySignedCert>;
     public certPem!: string | pulumi.Output<string>;
     public csr!: tls.CertRequest | pulumi.Output<tls.CertRequest>;
@@ -55,7 +55,7 @@ export interface CertificateArgs {
     readonly uris?: pulumi.Input<pulumi.Input<string>[]>;
     readonly validityPeriodHours: pulumi.Input<number>;
 }
-export abstract class ClusterPki<TData = any> extends pulumi.ComponentResource<TData> {
+export abstract class ClusterPki<TData = any> extends (pulumi.ComponentResource)<TData> {
     public admin!: Certificate | pulumi.Output<Certificate>;
     public algorithm!: AlgorithmOutputs | pulumi.Output<AlgorithmOutputs>;
     public ca!: RootCa | pulumi.Output<RootCa>;
@@ -82,7 +82,7 @@ export interface ClusterPkiArgs {
     readonly rsaBits?: pulumi.Input<number>;
     readonly validityPeriodHours?: pulumi.Input<number>;
 }
-export abstract class EncryptionKey<TData = any> extends pulumi.ComponentResource<TData> {
+export abstract class EncryptionKey<TData = any> extends (pulumi.ComponentResource)<TData> {
     public config!: string | pulumi.Output<string>;
     public key!: random.RandomBytes | pulumi.Output<random.RandomBytes>;
     constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
@@ -92,7 +92,7 @@ export abstract class EncryptionKey<TData = any> extends pulumi.ComponentResourc
 export interface EncryptionKeyArgs {
     readonly bytes?: pulumi.Input<number>;
 }
-export abstract class EtcdInstall<TData = any> extends pulumi.ComponentResource<TData> {
+export abstract class EtcdInstall<TData = any> extends (pulumi.ComponentResource)<TData> {
     public architecture!: ArchitectureOutputs | pulumi.Output<ArchitectureOutputs>;
     public archiveName!: string | pulumi.Output<string>;
     public caFile?: File | pulumi.Output<File>;
@@ -113,12 +113,12 @@ export abstract class EtcdInstall<TData = any> extends pulumi.ComponentResource<
     public mvEtcd!: Mv | pulumi.Output<Mv>;
     public mvEtcdctl!: Mv | pulumi.Output<Mv>;
     public name!: string | pulumi.Output<string>;
-    public systemdServiceFile!: File | pulumi.Output<File>;
+    public systemdService!: SystemdService | pulumi.Output<SystemdService>;
     public tar!: Tar | pulumi.Output<Tar>;
     public url!: string | pulumi.Output<string>;
     public version!: string | pulumi.Output<string>;
     constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
-        super("kubernetes-the-hard-way:remote:EtcdInstall", name, opts.urn ? { architecture: undefined, archiveName: undefined, caFile: undefined, certFile: undefined, configurationDirectory: undefined, configurationMkdir: undefined, dataDirectory: undefined, dataMkdir: undefined, download: undefined, downloadDirectory: undefined, downloadMkdir: undefined, etcdPath: undefined, etcdctlPath: undefined, installDirectory: undefined, installMkdir: undefined, internalIp: undefined, keyFile: undefined, mvEtcd: undefined, mvEtcdctl: undefined, name: undefined, systemdServiceFile: undefined, tar: undefined, url: undefined, version: undefined } : { name, args, opts }, opts);
+        super("kubernetes-the-hard-way:remote:EtcdInstall", name, opts.urn ? { architecture: undefined, archiveName: undefined, caFile: undefined, certFile: undefined, configurationDirectory: undefined, configurationMkdir: undefined, dataDirectory: undefined, dataMkdir: undefined, download: undefined, downloadDirectory: undefined, downloadMkdir: undefined, etcdPath: undefined, etcdctlPath: undefined, installDirectory: undefined, installMkdir: undefined, internalIp: undefined, keyFile: undefined, mvEtcd: undefined, mvEtcdctl: undefined, name: undefined, systemdService: undefined, tar: undefined, url: undefined, version: undefined } : { name, args, opts }, opts);
     }
 }
 export interface EtcdInstallArgs {
@@ -135,7 +135,7 @@ export interface EtcdInstallArgs {
     readonly systemdDirectory?: pulumi.Input<string>;
     readonly version?: pulumi.Input<string>;
 }
-export abstract class Download<TData = any> extends pulumi.ComponentResource<TData> {
+export abstract class Download<TData = any> extends (pulumi.ComponentResource)<TData> {
     public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
     public destination!: string | pulumi.Output<string>;
     public mkdir!: Mkdir | pulumi.Output<Mkdir>;
@@ -151,7 +151,7 @@ export interface DownloadArgs {
     readonly removeOnDelete?: pulumi.Input<boolean>;
     readonly url: pulumi.Input<string>;
 }
-export abstract class File<TData = any> extends pulumi.ComponentResource<TData> {
+export abstract class File<TData = any> extends (pulumi.ComponentResource)<TData> {
     public command!: command.remote.Command | pulumi.Output<command.remote.Command>;
     public content!: string | pulumi.Output<string>;
     public path!: string | pulumi.Output<string>;
@@ -167,7 +167,7 @@ export interface FileArgs {
     readonly content: pulumi.Input<string>;
     readonly path: pulumi.Input<string>;
 }
-export abstract class SystemdService<TData = any> extends pulumi.ComponentResource<TData> {
+export abstract class SystemdService<TData = any> extends (pulumi.ComponentResource)<TData> {
     public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
     public directory!: string | pulumi.Output<string>;
     public file!: File | pulumi.Output<File>;
@@ -185,7 +185,7 @@ export interface SystemdServiceArgs {
     readonly service: pulumi.Input<SystemdServiceSectionInputs>;
     readonly unit?: pulumi.Input<SystemdUnitSectionInputs>;
 }
-export abstract class RootCa<TData = any> extends pulumi.ComponentResource<TData> {
+export abstract class RootCa<TData = any> extends (pulumi.ComponentResource)<TData> {
     public allowedUses!: AllowedUsageOutputs[] | pulumi.Output<AllowedUsageOutputs[]>;
     public cert!: tls.SelfSignedCert | pulumi.Output<tls.SelfSignedCert>;
     public certPem!: string | pulumi.Output<string>;
@@ -209,7 +209,7 @@ export interface RootCaArgs {
     readonly validityPeriodHours: pulumi.Input<number>;
     readonly subject?: pulumi.Input<tls.types.input.SelfSignedCertSubject>;
 }
-export abstract class Mkdir<TData = any> extends pulumi.ComponentResource<TData> {
+export abstract class Mkdir<TData = any> extends (pulumi.ComponentResource)<TData> {
     public command!: command.remote.Command | pulumi.Output<command.remote.Command>;
     public directory!: string | pulumi.Output<string>;
     public parents!: boolean | pulumi.Output<boolean>;
@@ -226,7 +226,7 @@ export interface MkdirArgs {
     readonly parents?: pulumi.Input<boolean>;
     readonly removeOnDelete?: pulumi.Input<boolean>;
 }
-export abstract class Mktemp<TData = any> extends pulumi.ComponentResource<TData> {
+export abstract class Mktemp<TData = any> extends (pulumi.ComponentResource)<TData> {
     public command!: command.remote.Command | pulumi.Output<command.remote.Command>;
     public directory!: boolean | pulumi.Output<boolean>;
     public dryRun!: boolean | pulumi.Output<boolean>;
@@ -247,7 +247,7 @@ export interface MktempArgs {
     readonly template?: pulumi.Input<string>;
     readonly tmpdir?: pulumi.Input<string>;
 }
-export abstract class Mv<TData = any> extends pulumi.ComponentResource<TData> {
+export abstract class Mv<TData = any> extends (pulumi.ComponentResource)<TData> {
     public backup!: boolean | pulumi.Output<boolean>;
     public command!: command.remote.Command | pulumi.Output<command.remote.Command>;
     public context!: boolean | pulumi.Output<boolean>;
@@ -284,7 +284,7 @@ export interface MvArgs {
     readonly update?: pulumi.Input<boolean>;
     readonly verbose?: pulumi.Input<boolean>;
 }
-export abstract class Rm<TData = any> extends pulumi.ComponentResource<TData> {
+export abstract class Rm<TData = any> extends (pulumi.ComponentResource)<TData> {
     public command?: command.remote.Command | pulumi.Output<command.remote.Command>;
     public dir!: boolean | pulumi.Output<boolean>;
     public files!: string[] | pulumi.Output<string[]>;
@@ -305,7 +305,7 @@ export interface RmArgs {
     readonly recursive?: pulumi.Input<boolean>;
     readonly verbose?: pulumi.Input<boolean>;
 }
-export abstract class Tar<TData = any> extends pulumi.ComponentResource<TData> {
+export abstract class Tar<TData = any> extends (pulumi.ComponentResource)<TData> {
     public archive!: string | pulumi.Output<string>;
     public command!: command.remote.Command | pulumi.Output<command.remote.Command>;
     public directory?: string | pulumi.Output<string>;
@@ -329,7 +329,7 @@ export interface TarArgs {
     readonly gzip?: pulumi.Input<boolean>;
     readonly stripComponents?: pulumi.Input<number>;
 }
-export abstract class Wget<TData = any> extends pulumi.ComponentResource<TData> {
+export abstract class Wget<TData = any> extends (pulumi.ComponentResource)<TData> {
     public command!: command.remote.Command | pulumi.Output<command.remote.Command>;
     public directoryPrefix?: string | pulumi.Output<string>;
     public httpsOnly!: boolean | pulumi.Output<boolean>;

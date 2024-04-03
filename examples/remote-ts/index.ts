@@ -59,7 +59,7 @@ const etcd = new EtcdInstall('remote', {
   systemdDirectory: basePath,
 });
 
-const systemdService = new SystemdService('remote', {
+const systemdService = new SystemdService('remote-test', {
   connection: { host, port, user, password },
   directory: basePath,
   service: {
