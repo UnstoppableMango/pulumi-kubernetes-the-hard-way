@@ -105,7 +105,7 @@ resources:
         type: boolean
         description: Should the generated certificate include a subject key identifier.
       subject:
-        $ref: "/tls/v5.0.1/schema.json#/types/tls:index/CertRequestSubject:CertRequestSubject"
+        $ref: "/tls/v5.0.2/schema.json#/types/tls:index/CertRequestSubject:CertRequestSubject"
       uris:
         type: array
         items:
@@ -122,13 +122,13 @@ resources:
       - validityPeriodHours
     properties:
       cert:
-        $ref: "/tls/v5.0.1/schema.json#/resources/tls:index/locallySignedCert:LocallySignedCert"
+        $ref: "/tls/v5.0.2/schema.json#/resources/tls:index/locallySignedCert:LocallySignedCert"
       certPem:
         type: string
       csr:
-        $ref: "/tls/v5.0.1/schema.json#/resources/tls:index/certRequest:CertRequest"
+        $ref: "/tls/v5.0.2/schema.json#/resources/tls:index/certRequest:CertRequest"
       key:
-        $ref: "/tls/v5.0.1/schema.json#/resources/tls:index/privateKey:PrivateKey"
+        $ref: "/tls/v5.0.2/schema.json#/resources/tls:index/privateKey:PrivateKey"
       privateKeyPem:
         type: string
       publicKeyPem:
@@ -561,7 +561,7 @@ resources:
         type: integer
         description: Number of hours, after initial issuing, that the certificate will remain valid.
       subject:
-        $ref: "/tls/v5.0.1/schema.json#/types/tls:index/SelfSignedCertSubject:SelfSignedCertSubject"
+        $ref: "/tls/v5.0.2/schema.json#/types/tls:index/SelfSignedCertSubject:SelfSignedCertSubject"
     requiredInputs:
       - validityPeriodHours
     properties:
@@ -570,11 +570,11 @@ resources:
         items:
           $ref: "#/types/kubernetes-the-hard-way:tls:AllowedUsage"
       cert:
-        $ref: "/tls/v5.0.1/schema.json#/resources/tls:index/selfSignedCert:SelfSignedCert"
+        $ref: "/tls/v5.0.2/schema.json#/resources/tls:index/selfSignedCert:SelfSignedCert"
       certPem:
         type: string
       key:
-        $ref: "/tls/v5.0.1/schema.json#/resources/tls:index/privateKey:PrivateKey"
+        $ref: "/tls/v5.0.2/schema.json#/resources/tls:index/privateKey:PrivateKey"
       privateKeyPem:
         type: string
       publicKeyPem:
@@ -1181,7 +1181,7 @@ types:
         type: string
         description: The PEM encoded certificate data
       key:
-        $ref: "/tls/v5.0.1/schema.json#/resources/tls:index/privateKey:PrivateKey"
+        $ref: "/tls/v5.0.2/schema.json#/resources/tls:index/privateKey:PrivateKey"
         description: The private key.
       privateKeyPem:
         type: string
