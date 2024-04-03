@@ -27,6 +27,7 @@ export class EtcdInstall extends schema.EtcdInstall {
     const downloadDirectory = this.getDownloadDirectory(args.downloadDirectory);
     const installDirectory = output(args.installDirectory ?? EtcdInstall.defaultInstallDirectory);
     const internalIp = output(args.internalIp);
+    const systemdDirectory = output(args.systemdDirectory ?? '/etc/systemd/system');
     const version = output(args.version ?? EtcdInstall.defaultVersion); // TODO: Stateful versioning?
     const archiveName = interpolate`etcd-v${version}-linux-${architecture}.tar.gz`;
     const url = interpolate`https://github.com/etcd-io/etcd/releases/download/v${version}/${archiveName}`;
@@ -85,7 +86,7 @@ export class EtcdInstall extends schema.EtcdInstall {
       parents: true,
     }, { parent: this });
 
-    const dataMkdir = new Mkdir(`${name}-config`, {
+    const dataMkdir = new Mkdir(`${name}-data`, {
       connection: args.connection,
       directory: configurationDirectory,
       parents: true,
@@ -113,6 +114,24 @@ export class EtcdInstall extends schema.EtcdInstall {
       path: keyFilePath,
     }, { parent: this, dependsOn: configurationMkdir });
 
+    // TODO: Pretty print like the guide?
+    const execStart = formatExecStart(
+      etcdPath,
+      name, // TODO: Review
+      caFilePath,
+      certFilePath,
+      keyFilePath,
+      dataDirectory,
+      internalIp,
+      {}, // TODO: Peers
+    );
+
+    const systemdFile = new File(`${name}-systemd`, {
+      connection: args.connection,
+      content: formatSystemdFile(execStart),
+      path: interpolate`${systemdDirectory}/etcd.service`,
+    }, { parent: this });
+
     this.architecture = architecture;
     this.archiveName = archiveName;
     this.caFile = caFile;
@@ -131,6 +150,7 @@ export class EtcdInstall extends schema.EtcdInstall {
     this.mvEtcd = mvEtcd;
     this.mvEtcdctl = mvEtcdctl;
     this.name = output(name);
+    this.systemdServiceFile = systemdFile,
     this.tar = tar;
     this.url = url;
     this.version = version;
@@ -169,15 +189,15 @@ export class EtcdInstall extends schema.EtcdInstall {
   }
 }
 
-const execStart = (
+const formatExecStart = (
   etcdPath: Input<string>,
   nodeName: Input<string>,
   caPath: Input<string>,
   certPath: Input<string>,
   keyPath: Input<string>,
   dataDirectory: Input<string>,
-  internalIp: Input<number>,
-  peers: Record<string, Input<number>>,
+  internalIp: Input<string>,
+  peers: Record<string, Input<string>>,
   peerPort: number = 2380,
   clientPort: number = 2379
 ): Output<string> => {
@@ -212,32 +232,15 @@ const execStart = (
     .command;
 };
 
-function systemdFile(nodeName: string, internalIp: Input<string>): Output<string> {
-  return interpolate`
-[Unit]
+function formatSystemdFile(execStart: Input<string>): Output<string> {
+  // Would be nice to not have [Unit] hangout up here all alone
+  return interpolate`[Unit]
 Description=etcd
 Documentation=https://github.com/etcd-io/etcd
 
 [Service]
 Type=notify
-ExecStart=/usr/local/bin/etcd \\
-  --name ${nodeName} \\
-  --cert-file=/etc/etcd/kubernetes.pem \\
-  --key-file=/etc/etcd/kubernetes-key.pem \\
-  --peer-cert-file=/etc/etcd/kubernetes.pem \\
-  --peer-key-file=/etc/etcd/kubernetes-key.pem \\
-  --trusted-ca-file=/etc/etcd/ca.pem \\
-  --peer-trusted-ca-file=/etc/etcd/ca.pem \\
-  --peer-client-cert-auth \\
-  --client-cert-auth \\
-  --initial-advertise-peer-urls https://${internalIp}:2380 \\
-  --listen-peer-urls https://${internalIp}:2380 \\
-  --listen-client-urls https://${internalIp}:2379,https://127.0.0.1:2379 \\
-  --advertise-client-urls https://${internalIp}:2379 \\
-  --initial-cluster-token etcd-cluster-0 \\
-  --initial-cluster controller-0=https://10.240.0.10:2380,controller-1=https://10.240.0.11:2380,controller-2=https://10.240.0.12:2380 \\
-  --initial-cluster-state new \\
-  --data-dir=/var/lib/etcd
+ExecStart=${execStart}
 Restart=on-failure
 RestartSec=5
 
