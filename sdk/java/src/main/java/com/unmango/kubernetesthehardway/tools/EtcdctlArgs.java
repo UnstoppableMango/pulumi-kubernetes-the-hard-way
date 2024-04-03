@@ -10,6 +10,7 @@ import com.pulumi.exceptions.MissingRequiredPropertyException;
 import com.unmango.kubernetesthehardway.tools.enums.EtcdctlCommand;
 import java.lang.String;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import javax.annotation.Nullable;
@@ -62,6 +63,13 @@ public final class EtcdctlArgs extends com.pulumi.resources.ResourceArgs {
         return Optional.ofNullable(this.endpoints);
     }
 
+    @Import(name="env")
+    private @Nullable Output<Map<String,String>> env;
+
+    public Optional<Output<Map<String,String>>> env() {
+        return Optional.ofNullable(this.env);
+    }
+
     @Import(name="key")
     private @Nullable Output<String> key;
 
@@ -77,6 +85,7 @@ public final class EtcdctlArgs extends com.pulumi.resources.ResourceArgs {
         this.commands = $.commands;
         this.connection = $.connection;
         this.endpoints = $.endpoints;
+        this.env = $.env;
         this.key = $.key;
     }
 
@@ -157,6 +166,15 @@ public final class EtcdctlArgs extends com.pulumi.resources.ResourceArgs {
 
         public Builder endpoints(String endpoints) {
             return endpoints(Output.of(endpoints));
+        }
+
+        public Builder env(@Nullable Output<Map<String,String>> env) {
+            $.env = env;
+            return this;
+        }
+
+        public Builder env(Map<String,String> env) {
+            return env(Output.of(env));
         }
 
         public Builder key(@Nullable Output<String> key) {

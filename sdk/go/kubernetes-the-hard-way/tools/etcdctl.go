@@ -50,6 +50,7 @@ type etcdctlArgs struct {
 	// Connection details for the remote system.
 	Connection pulumiCommand.Connection `pulumi:"connection"`
 	Endpoints  *string                  `pulumi:"endpoints"`
+	Env        map[string]string        `pulumi:"env"`
 	Key        *string                  `pulumi:"key"`
 }
 
@@ -61,6 +62,7 @@ type EtcdctlArgs struct {
 	// Connection details for the remote system.
 	Connection pulumiCommand.ConnectionInput
 	Endpoints  pulumi.StringPtrInput
+	Env        pulumi.StringMapInput
 	Key        pulumi.StringPtrInput
 }
 

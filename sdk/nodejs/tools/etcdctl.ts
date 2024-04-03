@@ -55,6 +55,7 @@ export class Etcdctl extends pulumi.ComponentResource {
             resourceInputs["commands"] = args ? args.commands : undefined;
             resourceInputs["connection"] = args ? (args.connection ? pulumi.output(args.connection).apply(pulumiCommand.types.input.remote.connectionArgsProvideDefaults) : undefined) : undefined;
             resourceInputs["endpoints"] = args ? args.endpoints : undefined;
+            resourceInputs["env"] = args ? args.env : undefined;
             resourceInputs["key"] = args ? args.key : undefined;
             resourceInputs["command"] = undefined /*out*/;
         } else {
@@ -78,5 +79,6 @@ export interface EtcdctlArgs {
      */
     connection: pulumi.Input<pulumiCommand.types.input.remote.ConnectionArgs>;
     endpoints?: pulumi.Input<string>;
+    env?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     key?: pulumi.Input<string>;
 }

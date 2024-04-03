@@ -80,6 +80,14 @@ namespace UnMango.KubernetesTheHardWay.Tools
         [Input("endpoints")]
         public Input<string>? Endpoints { get; set; }
 
+        [Input("env")]
+        private InputMap<string>? _env;
+        public InputMap<string> Env
+        {
+            get => _env ?? (_env = new InputMap<string>());
+            set => _env = value;
+        }
+
         [Input("key")]
         public Input<string>? Key { get; set; }
 

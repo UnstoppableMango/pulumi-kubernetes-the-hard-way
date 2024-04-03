@@ -227,6 +227,7 @@ export interface EtcdctlArgs {
     readonly commands?: pulumi.Input<pulumi.Input<EtcdctlCommandInputs>[]>;
     readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
     readonly endpoints?: pulumi.Input<string>;
+    readonly env?: pulumi.Input<Record<string, pulumi.Input<string>>>;
     readonly caCert?: pulumi.Input<string>;
     readonly cert?: pulumi.Input<string>;
     readonly key?: pulumi.Input<string>;
