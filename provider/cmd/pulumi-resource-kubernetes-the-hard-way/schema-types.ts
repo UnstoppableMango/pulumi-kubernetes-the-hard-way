@@ -25,6 +25,9 @@ export type ResourceConstructor = {
 };
 export type Functions = {
     "kubernetes-the-hard-way:tls:ClusterPki/getKubeconfig": (inputs: ClusterPki_getKubeconfigInputs) => Promise<ClusterPki_getKubeconfigOutputs>;
+    "kubernetes-the-hard-way:remote:SystemdService/disable": (inputs: SystemdService_disableInputs) => Promise<SystemdService_disableOutputs>;
+    "kubernetes-the-hard-way:remote:SystemdService/enable": (inputs: SystemdService_enableInputs) => Promise<SystemdService_enableOutputs>;
+    "kubernetes-the-hard-way:remote:SystemdService/start": (inputs: SystemdService_startInputs) => Promise<SystemdService_startOutputs>;
 };
 import * as command from "@pulumi/command";
 import * as random from "@pulumi/random";
@@ -614,10 +617,38 @@ export interface SystemdUnitSectionOutputs {
 }
 export type EtcdctlCommandInputs = "member" | "list";
 export type EtcdctlCommandOutputs = "member" | "list";
+export interface BundleInputs {
+    readonly caPem: pulumi.Input<string>;
+    readonly certPem: pulumi.Input<string>;
+    readonly keyPem: pulumi.Input<string>;
+}
+export interface BundleOutputs {
+    readonly caPem: pulumi.Output<string>;
+    readonly certPem: pulumi.Output<string>;
+    readonly keyPem: pulumi.Output<string>;
+}
 export interface ClusterPki_getKubeconfigInputs {
     readonly __self__: pulumi.Input<ClusterPki>;
     readonly options: unknown;
 }
 export interface ClusterPki_getKubeconfigOutputs {
     readonly result: pulumi.Output<KubeconfigOutputs>;
+}
+export interface SystemdService_disableInputs {
+    readonly __self__?: pulumi.Input<SystemdService>;
+}
+export interface SystemdService_disableOutputs {
+    readonly result?: pulumi.Output<Systemctl>;
+}
+export interface SystemdService_enableInputs {
+    readonly __self__?: pulumi.Input<SystemdService>;
+}
+export interface SystemdService_enableOutputs {
+    readonly result?: pulumi.Output<Systemctl>;
+}
+export interface SystemdService_startInputs {
+    readonly __self__?: pulumi.Input<SystemdService>;
+}
+export interface SystemdService_startOutputs {
+    readonly result?: pulumi.Output<Systemctl>;
 }

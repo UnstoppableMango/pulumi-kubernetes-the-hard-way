@@ -14,6 +14,12 @@ import (
 
 var _ = internal.GetEnvOrDefault
 
+type Bundle struct {
+	CaPem   string `pulumi:"caPem"`
+	CertPem string `pulumi:"certPem"`
+	KeyPem  string `pulumi:"keyPem"`
+}
+
 // Node inputs for the PKI.
 type ClusterPkiNode struct {
 	// The IP address of the node.

@@ -20,10 +20,8 @@ export type File = import("./file").File;
 export const File: typeof import("./file").File = null as any;
 utilities.lazyLoad(exports, ["File"], () => require("./file"));
 
-export { SystemdServiceArgs } from "./systemdService";
-export type SystemdService = import("./systemdService").SystemdService;
-export const SystemdService: typeof import("./systemdService").SystemdService = null as any;
-utilities.lazyLoad(exports, ["SystemdService"], () => require("./systemdService"));
+export * from "./systemdService";
+import { SystemdService } from "./systemdService";
 
 
 // Export enums:

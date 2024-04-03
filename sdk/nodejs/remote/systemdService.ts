@@ -9,6 +9,7 @@ import * as utilities from "../utilities";
 
 import * as pulumiCommand from "@pulumi/command";
 
+import {Systemctl} from "../tools";
 import {File} from "./index";
 
 export class SystemdService extends pulumi.ComponentResource {
@@ -85,6 +86,27 @@ export class SystemdService extends pulumi.ComponentResource {
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         super(SystemdService.__pulumiType, name, resourceInputs, opts, true /*remote*/);
     }
+
+    disable(): pulumi.Output<Systemctl | undefined> {
+        const result: pulumi.Output<SystemdService.DisableResult> = pulumi.runtime.call("kubernetes-the-hard-way:remote:SystemdService/disable", {
+            "__self__": this,
+        }, this);
+        return result.result;
+    }
+
+    enable(): pulumi.Output<Systemctl | undefined> {
+        const result: pulumi.Output<SystemdService.EnableResult> = pulumi.runtime.call("kubernetes-the-hard-way:remote:SystemdService/enable", {
+            "__self__": this,
+        }, this);
+        return result.result;
+    }
+
+    start(): pulumi.Output<Systemctl | undefined> {
+        const result: pulumi.Output<SystemdService.StartResult> = pulumi.runtime.call("kubernetes-the-hard-way:remote:SystemdService/start", {
+            "__self__": this,
+        }, this);
+        return result.result;
+    }
 }
 
 /**
@@ -111,4 +133,28 @@ export interface SystemdServiceArgs {
      * Describes the [Unit] section of a systemd service file.
      */
     unit?: pulumi.Input<inputs.remote.SystemdUnitSectionArgs>;
+}
+
+export namespace SystemdService {
+    /**
+     * The results of the SystemdService.disable method.
+     */
+    export interface DisableResult {
+        readonly result?: Systemctl;
+    }
+
+    /**
+     * The results of the SystemdService.enable method.
+     */
+    export interface EnableResult {
+        readonly result?: Systemctl;
+    }
+
+    /**
+     * The results of the SystemdService.start method.
+     */
+    export interface StartResult {
+        readonly result?: Systemctl;
+    }
+
 }
