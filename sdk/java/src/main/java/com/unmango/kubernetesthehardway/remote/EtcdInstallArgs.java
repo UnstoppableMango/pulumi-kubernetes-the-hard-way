@@ -170,6 +170,21 @@ public final class EtcdInstallArgs extends com.pulumi.resources.ResourceArgs {
     }
 
     /**
+     * The systemd service file dirctory.
+     * 
+     */
+    @Import(name="systemdDirectory")
+    private @Nullable Output<String> systemdDirectory;
+
+    /**
+     * @return The systemd service file dirctory.
+     * 
+     */
+    public Optional<Output<String>> systemdDirectory() {
+        return Optional.ofNullable(this.systemdDirectory);
+    }
+
+    /**
      * The version of etcd to install.
      * 
      */
@@ -197,6 +212,7 @@ public final class EtcdInstallArgs extends com.pulumi.resources.ResourceArgs {
         this.installDirectory = $.installDirectory;
         this.internalIp = $.internalIp;
         this.keyPem = $.keyPem;
+        this.systemdDirectory = $.systemdDirectory;
         this.version = $.version;
     }
 
@@ -429,6 +445,27 @@ public final class EtcdInstallArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
+         * @param systemdDirectory The systemd service file dirctory.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder systemdDirectory(@Nullable Output<String> systemdDirectory) {
+            $.systemdDirectory = systemdDirectory;
+            return this;
+        }
+
+        /**
+         * @param systemdDirectory The systemd service file dirctory.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder systemdDirectory(String systemdDirectory) {
+            return systemdDirectory(Output.of(systemdDirectory));
+        }
+
+        /**
          * @param version The version of etcd to install.
          * 
          * @return builder
@@ -468,6 +505,7 @@ public final class EtcdInstallArgs extends com.pulumi.resources.ResourceArgs {
             if ($.keyPem == null) {
                 throw new MissingRequiredPropertyException("EtcdInstallArgs", "keyPem");
             }
+            $.systemdDirectory = Codegen.stringProp("systemdDirectory").output().arg($.systemdDirectory).def("/etc/system/systemd").getNullable();
             return $;
         }
     }

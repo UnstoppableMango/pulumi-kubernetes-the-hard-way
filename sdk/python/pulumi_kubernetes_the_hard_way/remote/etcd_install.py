@@ -29,6 +29,7 @@ class EtcdInstallArgs:
                  data_directory: Optional[pulumi.Input[str]] = None,
                  download_directory: Optional[pulumi.Input[str]] = None,
                  install_directory: Optional[pulumi.Input[str]] = None,
+                 systemd_directory: Optional[pulumi.Input[str]] = None,
                  version: Optional[pulumi.Input[str]] = None):
         """
         The set of arguments for constructing a EtcdInstall resource.
@@ -42,6 +43,7 @@ class EtcdInstallArgs:
         :param pulumi.Input[str] data_directory: The directory etcd will use.
         :param pulumi.Input[str] download_directory: Temporary directory to download files to. Defaults to `/tmp/<random string>`.
         :param pulumi.Input[str] install_directory: Directory to install the `etcd` and `etcdctl` binaries.
+        :param pulumi.Input[str] systemd_directory: The systemd service file dirctory.
         :param pulumi.Input[str] version: The version of etcd to install.
         """
         pulumi.set(__self__, "ca_pem", ca_pem)
@@ -65,6 +67,10 @@ class EtcdInstallArgs:
             install_directory = '/usr/local/bin'
         if install_directory is not None:
             pulumi.set(__self__, "install_directory", install_directory)
+        if systemd_directory is None:
+            systemd_directory = '/etc/system/systemd'
+        if systemd_directory is not None:
+            pulumi.set(__self__, "systemd_directory", systemd_directory)
         if version is not None:
             pulumi.set(__self__, "version", version)
 
@@ -189,6 +195,18 @@ class EtcdInstallArgs:
         pulumi.set(self, "install_directory", value)
 
     @property
+    @pulumi.getter(name="systemdDirectory")
+    def systemd_directory(self) -> Optional[pulumi.Input[str]]:
+        """
+        The systemd service file dirctory.
+        """
+        return pulumi.get(self, "systemd_directory")
+
+    @systemd_directory.setter
+    def systemd_directory(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "systemd_directory", value)
+
+    @property
     @pulumi.getter
     def version(self) -> Optional[pulumi.Input[str]]:
         """
@@ -216,6 +234,7 @@ class EtcdInstall(pulumi.ComponentResource):
                  install_directory: Optional[pulumi.Input[str]] = None,
                  internal_ip: Optional[pulumi.Input[str]] = None,
                  key_pem: Optional[pulumi.Input[str]] = None,
+                 systemd_directory: Optional[pulumi.Input[str]] = None,
                  version: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         """
@@ -233,6 +252,7 @@ class EtcdInstall(pulumi.ComponentResource):
         :param pulumi.Input[str] install_directory: Directory to install the `etcd` and `etcdctl` binaries.
         :param pulumi.Input[str] internal_ip: IP used to serve client requests and communicate with etcd peers.
         :param pulumi.Input[str] key_pem: The PEM encoded key data.
+        :param pulumi.Input[str] systemd_directory: The systemd service file dirctory.
         :param pulumi.Input[str] version: The version of etcd to install.
         """
         ...
@@ -269,6 +289,7 @@ class EtcdInstall(pulumi.ComponentResource):
                  install_directory: Optional[pulumi.Input[str]] = None,
                  internal_ip: Optional[pulumi.Input[str]] = None,
                  key_pem: Optional[pulumi.Input[str]] = None,
+                 systemd_directory: Optional[pulumi.Input[str]] = None,
                  version: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
@@ -307,6 +328,9 @@ class EtcdInstall(pulumi.ComponentResource):
             if key_pem is None and not opts.urn:
                 raise TypeError("Missing required property 'key_pem'")
             __props__.__dict__["key_pem"] = key_pem
+            if systemd_directory is None:
+                systemd_directory = '/etc/system/systemd'
+            __props__.__dict__["systemd_directory"] = systemd_directory
             __props__.__dict__["version"] = version
             __props__.__dict__["archive_name"] = None
             __props__.__dict__["ca_file"] = None

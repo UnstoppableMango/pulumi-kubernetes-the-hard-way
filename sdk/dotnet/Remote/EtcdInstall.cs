@@ -250,6 +250,12 @@ namespace UnMango.KubernetesTheHardWay.Remote
         public Input<string> KeyPem { get; set; } = null!;
 
         /// <summary>
+        /// The systemd service file dirctory.
+        /// </summary>
+        [Input("systemdDirectory")]
+        public Input<string>? SystemdDirectory { get; set; }
+
+        /// <summary>
         /// The version of etcd to install.
         /// </summary>
         [Input("version")]
@@ -260,6 +266,7 @@ namespace UnMango.KubernetesTheHardWay.Remote
             ConfigurationDirectory = "/etc/etcd";
             DataDirectory = "/var/lib/etcd";
             InstallDirectory = "/usr/local/bin";
+            SystemdDirectory = "/etc/system/systemd";
         }
         public static new EtcdInstallArgs Empty => new EtcdInstallArgs();
     }

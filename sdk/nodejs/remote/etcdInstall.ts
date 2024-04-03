@@ -163,6 +163,7 @@ export class EtcdInstall extends pulumi.ComponentResource {
             resourceInputs["installDirectory"] = (args ? args.installDirectory : undefined) ?? "/usr/local/bin";
             resourceInputs["internalIp"] = args ? args.internalIp : undefined;
             resourceInputs["keyPem"] = args ? args.keyPem : undefined;
+            resourceInputs["systemdDirectory"] = (args ? args.systemdDirectory : undefined) ?? "/etc/system/systemd";
             resourceInputs["version"] = args ? args.version : undefined;
             resourceInputs["archiveName"] = undefined /*out*/;
             resourceInputs["caFile"] = undefined /*out*/;
@@ -256,6 +257,10 @@ export interface EtcdInstallArgs {
      * The PEM encoded key data.
      */
     keyPem: pulumi.Input<string>;
+    /**
+     * The systemd service file dirctory.
+     */
+    systemdDirectory?: pulumi.Input<string>;
     /**
      * The version of etcd to install.
      */

@@ -100,6 +100,9 @@ func NewEtcdInstall(ctx *pulumi.Context,
 	if args.InstallDirectory == nil {
 		args.InstallDirectory = pulumi.StringPtr("/usr/local/bin")
 	}
+	if args.SystemdDirectory == nil {
+		args.SystemdDirectory = pulumi.StringPtr("/etc/system/systemd")
+	}
 	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource EtcdInstall
 	err := ctx.RegisterRemoteComponentResource("kubernetes-the-hard-way:remote:EtcdInstall", name, args, &resource, opts...)
@@ -130,6 +133,8 @@ type etcdInstallArgs struct {
 	InternalIp string `pulumi:"internalIp"`
 	// The PEM encoded key data.
 	KeyPem string `pulumi:"keyPem"`
+	// The systemd service file dirctory.
+	SystemdDirectory *string `pulumi:"systemdDirectory"`
 	// The version of etcd to install.
 	Version *string `pulumi:"version"`
 }
@@ -156,6 +161,8 @@ type EtcdInstallArgs struct {
 	InternalIp pulumi.StringInput
 	// The PEM encoded key data.
 	KeyPem pulumi.StringInput
+	// The systemd service file dirctory.
+	SystemdDirectory pulumi.StringPtrInput
 	// The version of etcd to install.
 	Version pulumi.StringPtrInput
 }

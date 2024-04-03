@@ -125,12 +125,13 @@ export interface EtcdInstallArgs {
     readonly caPem: pulumi.Input<string>;
     readonly certPem: pulumi.Input<string>;
     readonly configurationDirectory?: pulumi.Input<string>;
-    readonly dataDirectory?: pulumi.Input<string>;
     readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
+    readonly dataDirectory?: pulumi.Input<string>;
     readonly downloadDirectory?: pulumi.Input<string>;
     readonly installDirectory?: pulumi.Input<string>;
     readonly internalIp: pulumi.Input<string>;
     readonly keyPem: pulumi.Input<string>;
+    readonly systemdDirectory?: pulumi.Input<string>;
     readonly version?: pulumi.Input<string>;
 }
 export abstract class Download<TData = any> extends pulumi.ComponentResource<TData> {
