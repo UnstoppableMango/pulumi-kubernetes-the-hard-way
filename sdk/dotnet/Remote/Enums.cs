@@ -37,4 +37,99 @@ namespace UnMango.KubernetesTheHardWay.Remote
 
         public override string ToString() => _value;
     }
+
+    [EnumType]
+    public readonly struct SystemdServiceExitType : IEquatable<SystemdServiceExitType>
+    {
+        private readonly string _value;
+
+        private SystemdServiceExitType(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
+        public static SystemdServiceExitType Main { get; } = new SystemdServiceExitType("main");
+        public static SystemdServiceExitType Cgroup { get; } = new SystemdServiceExitType("cgroup");
+
+        public static bool operator ==(SystemdServiceExitType left, SystemdServiceExitType right) => left.Equals(right);
+        public static bool operator !=(SystemdServiceExitType left, SystemdServiceExitType right) => !left.Equals(right);
+
+        public static explicit operator string(SystemdServiceExitType value) => value._value;
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object? obj) => obj is SystemdServiceExitType other && Equals(other);
+        public bool Equals(SystemdServiceExitType other) => string.Equals(_value, other._value, StringComparison.Ordinal);
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+
+        public override string ToString() => _value;
+    }
+
+    [EnumType]
+    public readonly struct SystemdServiceRestart : IEquatable<SystemdServiceRestart>
+    {
+        private readonly string _value;
+
+        private SystemdServiceRestart(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
+        public static SystemdServiceRestart No { get; } = new SystemdServiceRestart("no");
+        public static SystemdServiceRestart On_success { get; } = new SystemdServiceRestart("on-success");
+        public static SystemdServiceRestart On_failure { get; } = new SystemdServiceRestart("on-failure");
+        public static SystemdServiceRestart On_abnormal { get; } = new SystemdServiceRestart("on-abnormal");
+        public static SystemdServiceRestart On_watchdog { get; } = new SystemdServiceRestart("on-watchdog");
+        public static SystemdServiceRestart On_abort { get; } = new SystemdServiceRestart("on-abort");
+        public static SystemdServiceRestart Always { get; } = new SystemdServiceRestart("always");
+
+        public static bool operator ==(SystemdServiceRestart left, SystemdServiceRestart right) => left.Equals(right);
+        public static bool operator !=(SystemdServiceRestart left, SystemdServiceRestart right) => !left.Equals(right);
+
+        public static explicit operator string(SystemdServiceRestart value) => value._value;
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object? obj) => obj is SystemdServiceRestart other && Equals(other);
+        public bool Equals(SystemdServiceRestart other) => string.Equals(_value, other._value, StringComparison.Ordinal);
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+
+        public override string ToString() => _value;
+    }
+
+    [EnumType]
+    public readonly struct SystemdServiceType : IEquatable<SystemdServiceType>
+    {
+        private readonly string _value;
+
+        private SystemdServiceType(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
+        public static SystemdServiceType Simple { get; } = new SystemdServiceType("simple");
+        public static SystemdServiceType Exec { get; } = new SystemdServiceType("exec");
+        public static SystemdServiceType Forking { get; } = new SystemdServiceType("forking");
+        public static SystemdServiceType Oneshot { get; } = new SystemdServiceType("oneshot");
+        public static SystemdServiceType Dbus { get; } = new SystemdServiceType("dbus");
+        public static SystemdServiceType Notify { get; } = new SystemdServiceType("notify");
+        public static SystemdServiceType Notify_reload { get; } = new SystemdServiceType("notify-reload");
+        public static SystemdServiceType Idle { get; } = new SystemdServiceType("idle");
+
+        public static bool operator ==(SystemdServiceType left, SystemdServiceType right) => left.Equals(right);
+        public static bool operator !=(SystemdServiceType left, SystemdServiceType right) => !left.Equals(right);
+
+        public static explicit operator string(SystemdServiceType value) => value._value;
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object? obj) => obj is SystemdServiceType other && Equals(other);
+        public bool Equals(SystemdServiceType other) => string.Equals(_value, other._value, StringComparison.Ordinal);
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+
+        public override string ToString() => _value;
+    }
 }

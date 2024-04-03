@@ -33,5 +33,8 @@ export namespace config {
 
 }
 
+export namespace remote {
+}
+
 export namespace tls {
 }

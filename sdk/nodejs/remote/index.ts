@@ -20,6 +20,11 @@ export type File = import("./file").File;
 export const File: typeof import("./file").File = null as any;
 utilities.lazyLoad(exports, ["File"], () => require("./file"));
 
+export { SystemdServiceArgs } from "./systemdService";
+export type SystemdService = import("./systemdService").SystemdService;
+export const SystemdService: typeof import("./systemdService").SystemdService = null as any;
+utilities.lazyLoad(exports, ["SystemdService"], () => require("./systemdService"));
+
 
 // Export enums:
 export * from "../types/enums/remote";
@@ -34,6 +39,8 @@ const _module = {
                 return new EtcdInstall(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:remote:File":
                 return new File(name, <any>undefined, { urn })
+            case "kubernetes-the-hard-way:remote:SystemdService":
+                return new SystemdService(name, <any>undefined, { urn })
             default:
                 throw new Error(`unknown resource type ${type}`);
         }

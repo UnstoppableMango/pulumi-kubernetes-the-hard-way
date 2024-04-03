@@ -11,3 +11,35 @@ export const Architecture = {
  * CPU architecture
  */
 export type Architecture = (typeof Architecture)[keyof typeof Architecture];
+
+export const SystemdServiceExitType = {
+    Main: "main",
+    Cgroup: "cgroup",
+} as const;
+
+export type SystemdServiceExitType = (typeof SystemdServiceExitType)[keyof typeof SystemdServiceExitType];
+
+export const SystemdServiceRestart = {
+    No: "no",
+    On_success: "on-success",
+    On_failure: "on-failure",
+    On_abnormal: "on-abnormal",
+    On_watchdog: "on-watchdog",
+    On_abort: "on-abort",
+    Always: "always",
+} as const;
+
+export type SystemdServiceRestart = (typeof SystemdServiceRestart)[keyof typeof SystemdServiceRestart];
+
+export const SystemdServiceType = {
+    Simple: "simple",
+    Exec: "exec",
+    Forking: "forking",
+    Oneshot: "oneshot",
+    Dbus: "dbus",
+    Notify: "notify",
+    Notify_reload: "notify-reload",
+    Idle: "idle",
+} as const;
+
+export type SystemdServiceType = (typeof SystemdServiceType)[keyof typeof SystemdServiceType];
