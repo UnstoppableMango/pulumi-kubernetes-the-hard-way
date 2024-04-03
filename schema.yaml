@@ -521,6 +521,10 @@ resources:
       - directory
       - file
       - service
+    methods:
+      disable: kubernetes-the-hard-way:remote:SystemdService/disable
+      enable: kubernetes-the-hard-way:remote:SystemdService/enable
+      start: kubernetes-the-hard-way:remote:SystemdService/start
   kubernetes-the-hard-way:tls:RootCa:
     isComponent: true
     inputProperties:
@@ -1461,6 +1465,19 @@ types:
     enum:
       - value: member
       - value: list
+  kubernetes-the-hard-way:tls:Bundle:
+    type: object
+    properties:
+      caPem:
+        type: string
+      certPem:
+        type: string
+      keyPem:
+        type: string
+    required:
+      - caPem
+      - certPem
+      - keyPem
 functions:
   kubernetes-the-hard-way:tls:ClusterPki/getKubeconfig:
     inputs:
@@ -1493,3 +1510,30 @@ functions:
           $ref: "#/types/kubernetes-the-hard-way:config:Kubeconfig"
       required:
         - result
+  kubernetes-the-hard-way:remote:SystemdService/disable:
+    inputs:
+      properties:
+        __self__:
+          $ref: "#/resources/kubernetes-the-hard-way:remote:SystemdService"
+    outputs:
+      properties:
+        result:
+          $ref: "#/resources/kubernetes-the-hard-way:tools:Systemctl"
+  kubernetes-the-hard-way:remote:SystemdService/enable:
+    inputs:
+      properties:
+        __self__:
+          $ref: "#/resources/kubernetes-the-hard-way:remote:SystemdService"
+    outputs:
+      properties:
+        result:
+          $ref: "#/resources/kubernetes-the-hard-way:tools:Systemctl"
+  kubernetes-the-hard-way:remote:SystemdService/start:
+    inputs:
+      properties:
+        __self__:
+          $ref: "#/resources/kubernetes-the-hard-way:remote:SystemdService"
+    outputs:
+      properties:
+        result:
+          $ref: "#/resources/kubernetes-the-hard-way:tools:Systemctl"
