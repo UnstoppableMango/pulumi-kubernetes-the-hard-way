@@ -6,9 +6,18 @@ from enum import Enum
 
 __all__ = [
     'EtcdctlCommand',
+    'SystemctlCommand',
 ]
 
 
 class EtcdctlCommand(str, Enum):
     MEMBER = "member"
     LIST = "list"
+
+
+class SystemctlCommand(str, Enum):
+    DAEMON_RELOAD = "daemon-reload"
+    DISABLE = "disable"
+    ENABLE = "enable"
+    START = "start"
+    STOP = "stop"

@@ -34,4 +34,35 @@ namespace UnMango.KubernetesTheHardWay.Tools
 
         public override string ToString() => _value;
     }
+
+    [EnumType]
+    public readonly struct SystemctlCommand : IEquatable<SystemctlCommand>
+    {
+        private readonly string _value;
+
+        private SystemctlCommand(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
+        public static SystemctlCommand Daemon_reload { get; } = new SystemctlCommand("daemon-reload");
+        public static SystemctlCommand Disable { get; } = new SystemctlCommand("disable");
+        public static SystemctlCommand Enable { get; } = new SystemctlCommand("enable");
+        public static SystemctlCommand Start { get; } = new SystemctlCommand("start");
+        public static SystemctlCommand Stop { get; } = new SystemctlCommand("stop");
+
+        public static bool operator ==(SystemctlCommand left, SystemctlCommand right) => left.Equals(right);
+        public static bool operator !=(SystemctlCommand left, SystemctlCommand right) => !left.Equals(right);
+
+        public static explicit operator string(SystemctlCommand value) => value._value;
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object? obj) => obj is SystemctlCommand other && Equals(other);
+        public bool Equals(SystemctlCommand other) => string.Equals(_value, other._value, StringComparison.Ordinal);
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+
+        public override string ToString() => _value;
+    }
 }

@@ -549,3 +549,21 @@ class EtcdInstall(pulumi.ComponentResource):
         """
         return pulumi.get(self, "version")
 
+    @pulumi.output_type
+    class EtcdctlResult:
+        def __init__(__self__, result=None):
+            if result and not isinstance(result, _tools.Etcdctl):
+                raise TypeError("Expected argument 'result' to be a _tools.Etcdctl")
+            pulumi.set(__self__, "result", result)
+
+        @property
+        @pulumi.getter
+        def result(self) -> Optional['_tools.Etcdctl']:
+            return pulumi.get(self, "result")
+
+    def etcdctl(__self__) -> pulumi.Output['_tools.Etcdctl']:
+        __args__ = dict()
+        __args__['__self__'] = __self__
+        __result__ = pulumi.runtime.call('kubernetes-the-hard-way:remote:EtcdInstall/etcdctl', __args__, res=__self__, typ=EtcdInstall.EtcdctlResult)
+        return __result__.result
+

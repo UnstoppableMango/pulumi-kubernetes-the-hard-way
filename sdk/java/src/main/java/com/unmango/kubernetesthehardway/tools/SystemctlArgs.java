@@ -7,8 +7,9 @@ import com.pulumi.command.remote.inputs.ConnectionArgs;
 import com.pulumi.core.Output;
 import com.pulumi.core.annotations.Import;
 import com.pulumi.exceptions.MissingRequiredPropertyException;
-import java.lang.Boolean;
+import com.unmango.kubernetesthehardway.tools.enums.SystemctlCommand;
 import java.lang.String;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import javax.annotation.Nullable;
@@ -17,6 +18,13 @@ import javax.annotation.Nullable;
 public final class SystemctlArgs extends com.pulumi.resources.ResourceArgs {
 
     public static final SystemctlArgs Empty = new SystemctlArgs();
+
+    @Import(name="commands", required=true)
+    private Output<List<SystemctlCommand>> commands;
+
+    public Output<List<SystemctlCommand>> commands() {
+        return this.commands;
+    }
 
     /**
      * Connection details for the remote system.
@@ -33,34 +41,19 @@ public final class SystemctlArgs extends com.pulumi.resources.ResourceArgs {
         return this.connection;
     }
 
-    @Import(name="daemonReload")
-    private @Nullable Output<Boolean> daemonReload;
+    @Import(name="serviceName")
+    private @Nullable Output<String> serviceName;
 
-    public Optional<Output<Boolean>> daemonReload() {
-        return Optional.ofNullable(this.daemonReload);
-    }
-
-    @Import(name="enable")
-    private @Nullable Output<String> enable;
-
-    public Optional<Output<String>> enable() {
-        return Optional.ofNullable(this.enable);
-    }
-
-    @Import(name="start")
-    private @Nullable Output<String> start;
-
-    public Optional<Output<String>> start() {
-        return Optional.ofNullable(this.start);
+    public Optional<Output<String>> serviceName() {
+        return Optional.ofNullable(this.serviceName);
     }
 
     private SystemctlArgs() {}
 
     private SystemctlArgs(SystemctlArgs $) {
+        this.commands = $.commands;
         this.connection = $.connection;
-        this.daemonReload = $.daemonReload;
-        this.enable = $.enable;
-        this.start = $.start;
+        this.serviceName = $.serviceName;
     }
 
     public static Builder builder() {
@@ -79,6 +72,19 @@ public final class SystemctlArgs extends com.pulumi.resources.ResourceArgs {
 
         public Builder(SystemctlArgs defaults) {
             $ = new SystemctlArgs(Objects.requireNonNull(defaults));
+        }
+
+        public Builder commands(Output<List<SystemctlCommand>> commands) {
+            $.commands = commands;
+            return this;
+        }
+
+        public Builder commands(List<SystemctlCommand> commands) {
+            return commands(Output.of(commands));
+        }
+
+        public Builder commands(SystemctlCommand... commands) {
+            return commands(List.of(commands));
         }
 
         /**
@@ -102,34 +108,19 @@ public final class SystemctlArgs extends com.pulumi.resources.ResourceArgs {
             return connection(Output.of(connection));
         }
 
-        public Builder daemonReload(@Nullable Output<Boolean> daemonReload) {
-            $.daemonReload = daemonReload;
+        public Builder serviceName(@Nullable Output<String> serviceName) {
+            $.serviceName = serviceName;
             return this;
         }
 
-        public Builder daemonReload(Boolean daemonReload) {
-            return daemonReload(Output.of(daemonReload));
-        }
-
-        public Builder enable(@Nullable Output<String> enable) {
-            $.enable = enable;
-            return this;
-        }
-
-        public Builder enable(String enable) {
-            return enable(Output.of(enable));
-        }
-
-        public Builder start(@Nullable Output<String> start) {
-            $.start = start;
-            return this;
-        }
-
-        public Builder start(String start) {
-            return start(Output.of(start));
+        public Builder serviceName(String serviceName) {
+            return serviceName(Output.of(serviceName));
         }
 
         public SystemctlArgs build() {
+            if ($.commands == null) {
+                throw new MissingRequiredPropertyException("SystemctlArgs", "commands");
+            }
             if ($.connection == null) {
                 throw new MissingRequiredPropertyException("SystemctlArgs", "connection");
             }

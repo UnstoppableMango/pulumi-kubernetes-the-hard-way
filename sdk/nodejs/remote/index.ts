@@ -10,10 +10,8 @@ export type Download = import("./download").Download;
 export const Download: typeof import("./download").Download = null as any;
 utilities.lazyLoad(exports, ["Download"], () => require("./download"));
 
-export { EtcdInstallArgs } from "./etcdInstall";
-export type EtcdInstall = import("./etcdInstall").EtcdInstall;
-export const EtcdInstall: typeof import("./etcdInstall").EtcdInstall = null as any;
-utilities.lazyLoad(exports, ["EtcdInstall"], () => require("./etcdInstall"));
+export * from "./etcdInstall";
+import { EtcdInstall } from "./etcdInstall";
 
 export { FileArgs } from "./file";
 export type File = import("./file").File;

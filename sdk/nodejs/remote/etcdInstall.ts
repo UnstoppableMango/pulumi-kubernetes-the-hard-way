@@ -9,7 +9,7 @@ import * as utilities from "../utilities";
 
 import * as pulumiCommand from "@pulumi/command";
 
-import {Mkdir, Mv, Tar} from "../tools";
+import {Etcdctl, Mkdir, Mv, Tar} from "../tools";
 import {Download, File, SystemdService} from "./index";
 
 /**
@@ -211,6 +211,13 @@ export class EtcdInstall extends pulumi.ComponentResource {
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         super(EtcdInstall.__pulumiType, name, resourceInputs, opts, true /*remote*/);
     }
+
+    etcdctl(): pulumi.Output<Etcdctl | undefined> {
+        const result: pulumi.Output<EtcdInstall.EtcdctlResult> = pulumi.runtime.call("kubernetes-the-hard-way:remote:EtcdInstall/etcdctl", {
+            "__self__": this,
+        }, this);
+        return result.result;
+    }
 }
 
 /**
@@ -265,4 +272,14 @@ export interface EtcdInstallArgs {
      * The version of etcd to install.
      */
     version?: pulumi.Input<string>;
+}
+
+export namespace EtcdInstall {
+    /**
+     * The results of the EtcdInstall.etcdctl method.
+     */
+    export interface EtcdctlResult {
+        readonly result?: Etcdctl;
+    }
+
 }

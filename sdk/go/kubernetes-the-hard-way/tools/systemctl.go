@@ -18,12 +18,11 @@ type Systemctl struct {
 	pulumi.ResourceState
 
 	// Represents the command run on the remote system.
-	Command pulumiCommand.CommandOutput `pulumi:"command"`
+	Command  pulumiCommand.CommandOutput `pulumi:"command"`
+	Commands SystemctlCommandArrayOutput `pulumi:"commands"`
 	// Connection details for the remote system.
-	Connection   pulumiCommand.ConnectionOutput `pulumi:"connection"`
-	DaemonReload pulumi.BoolOutput              `pulumi:"daemonReload"`
-	Enable       pulumi.StringOutput            `pulumi:"enable"`
-	Start        pulumi.StringOutput            `pulumi:"start"`
+	Connection  pulumiCommand.ConnectionOutput `pulumi:"connection"`
+	ServiceName pulumi.StringPtrOutput         `pulumi:"serviceName"`
 }
 
 // NewSystemctl registers a new resource with the given unique name, arguments, and options.
@@ -33,6 +32,9 @@ func NewSystemctl(ctx *pulumi.Context,
 		return nil, errors.New("missing one or more required arguments")
 	}
 
+	if args.Commands == nil {
+		return nil, errors.New("invalid value for required argument 'Commands'")
+	}
 	if args.Connection == nil {
 		return nil, errors.New("invalid value for required argument 'Connection'")
 	}
@@ -47,20 +49,18 @@ func NewSystemctl(ctx *pulumi.Context,
 }
 
 type systemctlArgs struct {
+	Commands []SystemctlCommand `pulumi:"commands"`
 	// Connection details for the remote system.
-	Connection   pulumiCommand.Connection `pulumi:"connection"`
-	DaemonReload *bool                    `pulumi:"daemonReload"`
-	Enable       *string                  `pulumi:"enable"`
-	Start        *string                  `pulumi:"start"`
+	Connection  pulumiCommand.Connection `pulumi:"connection"`
+	ServiceName *string                  `pulumi:"serviceName"`
 }
 
 // The set of arguments for constructing a Systemctl resource.
 type SystemctlArgs struct {
+	Commands SystemctlCommandArrayInput
 	// Connection details for the remote system.
-	Connection   pulumiCommand.ConnectionInput
-	DaemonReload pulumi.BoolPtrInput
-	Enable       pulumi.StringPtrInput
-	Start        pulumi.StringPtrInput
+	Connection  pulumiCommand.ConnectionInput
+	ServiceName pulumi.StringPtrInput
 }
 
 func (SystemctlArgs) ElementType() reflect.Type {
@@ -155,21 +155,17 @@ func (o SystemctlOutput) Command() pulumiCommand.CommandOutput {
 	return o.ApplyT(func(v *Systemctl) pulumiCommand.CommandOutput { return v.Command }).(pulumiCommand.CommandOutput)
 }
 
+func (o SystemctlOutput) Commands() SystemctlCommandArrayOutput {
+	return o.ApplyT(func(v *Systemctl) SystemctlCommandArrayOutput { return v.Commands }).(SystemctlCommandArrayOutput)
+}
+
 // Connection details for the remote system.
 func (o SystemctlOutput) Connection() pulumiCommand.ConnectionOutput {
 	return o.ApplyT(func(v *Systemctl) pulumiCommand.ConnectionOutput { return v.Connection }).(pulumiCommand.ConnectionOutput)
 }
 
-func (o SystemctlOutput) DaemonReload() pulumi.BoolOutput {
-	return o.ApplyT(func(v *Systemctl) pulumi.BoolOutput { return v.DaemonReload }).(pulumi.BoolOutput)
-}
-
-func (o SystemctlOutput) Enable() pulumi.StringOutput {
-	return o.ApplyT(func(v *Systemctl) pulumi.StringOutput { return v.Enable }).(pulumi.StringOutput)
-}
-
-func (o SystemctlOutput) Start() pulumi.StringOutput {
-	return o.ApplyT(func(v *Systemctl) pulumi.StringOutput { return v.Start }).(pulumi.StringOutput)
+func (o SystemctlOutput) ServiceName() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Systemctl) pulumi.StringPtrOutput { return v.ServiceName }).(pulumi.StringPtrOutput)
 }
 
 type SystemctlArrayOutput struct{ *pulumi.OutputState }

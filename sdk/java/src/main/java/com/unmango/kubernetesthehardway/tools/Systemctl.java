@@ -11,8 +11,10 @@ import com.pulumi.core.annotations.ResourceType;
 import com.pulumi.core.internal.Codegen;
 import com.unmango.kubernetesthehardway.Utilities;
 import com.unmango.kubernetesthehardway.tools.SystemctlArgs;
-import java.lang.Boolean;
+import com.unmango.kubernetesthehardway.tools.enums.SystemctlCommand;
 import java.lang.String;
+import java.util.List;
+import java.util.Optional;
 import javax.annotation.Nullable;
 
 /**
@@ -35,6 +37,12 @@ public class Systemctl extends com.pulumi.resources.ComponentResource {
     public Output<Command> command() {
         return this.command;
     }
+    @Export(name="commands", refs={List.class,SystemctlCommand.class}, tree="[0,1]")
+    private Output<List<SystemctlCommand>> commands;
+
+    public Output<List<SystemctlCommand>> commands() {
+        return this.commands;
+    }
     /**
      * Connection details for the remote system.
      * 
@@ -49,23 +57,11 @@ public class Systemctl extends com.pulumi.resources.ComponentResource {
     public Output<Connection> connection() {
         return this.connection;
     }
-    @Export(name="daemonReload", refs={Boolean.class}, tree="[0]")
-    private Output<Boolean> daemonReload;
+    @Export(name="serviceName", refs={String.class}, tree="[0]")
+    private Output</* @Nullable */ String> serviceName;
 
-    public Output<Boolean> daemonReload() {
-        return this.daemonReload;
-    }
-    @Export(name="enable", refs={String.class}, tree="[0]")
-    private Output<String> enable;
-
-    public Output<String> enable() {
-        return this.enable;
-    }
-    @Export(name="start", refs={String.class}, tree="[0]")
-    private Output<String> start;
-
-    public Output<String> start() {
-        return this.start;
+    public Output<Optional<String>> serviceName() {
+        return Codegen.optional(this.serviceName);
     }
 
     /**

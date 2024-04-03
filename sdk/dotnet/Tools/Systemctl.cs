@@ -22,20 +22,17 @@ namespace UnMango.KubernetesTheHardWay.Tools
         [Output("command")]
         public Output<Pulumi.Command.Remote.Command> Command { get; private set; } = null!;
 
+        [Output("commands")]
+        public Output<ImmutableArray<UnMango.KubernetesTheHardWay.Tools.SystemctlCommand>> Commands { get; private set; } = null!;
+
         /// <summary>
         /// Connection details for the remote system.
         /// </summary>
         [Output("connection")]
         public Output<Pulumi.Command.Remote.Outputs.Connection> Connection { get; private set; } = null!;
 
-        [Output("daemonReload")]
-        public Output<bool> DaemonReload { get; private set; } = null!;
-
-        [Output("enable")]
-        public Output<string> Enable { get; private set; } = null!;
-
-        [Output("start")]
-        public Output<string> Start { get; private set; } = null!;
+        [Output("serviceName")]
+        public Output<string?> ServiceName { get; private set; } = null!;
 
 
         /// <summary>
@@ -66,20 +63,22 @@ namespace UnMango.KubernetesTheHardWay.Tools
 
     public sealed class SystemctlArgs : global::Pulumi.ResourceArgs
     {
+        [Input("commands", required: true)]
+        private InputList<UnMango.KubernetesTheHardWay.Tools.SystemctlCommand>? _commands;
+        public InputList<UnMango.KubernetesTheHardWay.Tools.SystemctlCommand> Commands
+        {
+            get => _commands ?? (_commands = new InputList<UnMango.KubernetesTheHardWay.Tools.SystemctlCommand>());
+            set => _commands = value;
+        }
+
         /// <summary>
         /// Connection details for the remote system.
         /// </summary>
         [Input("connection", required: true)]
         public Input<Pulumi.Command.Remote.Inputs.ConnectionArgs> Connection { get; set; } = null!;
 
-        [Input("daemonReload")]
-        public Input<bool>? DaemonReload { get; set; }
-
-        [Input("enable")]
-        public Input<string>? Enable { get; set; }
-
-        [Input("start")]
-        public Input<string>? Start { get; set; }
+        [Input("serviceName")]
+        public Input<string>? ServiceName { get; set; }
 
         public SystemctlArgs()
         {

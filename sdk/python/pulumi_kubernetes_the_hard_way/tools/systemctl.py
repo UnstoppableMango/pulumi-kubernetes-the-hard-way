@@ -8,6 +8,7 @@ import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
 from .. import _utilities
+from ._enums import *
 import pulumi_command
 
 __all__ = ['SystemctlArgs', 'Systemctl']
@@ -15,21 +16,26 @@ __all__ = ['SystemctlArgs', 'Systemctl']
 @pulumi.input_type
 class SystemctlArgs:
     def __init__(__self__, *,
+                 commands: pulumi.Input[Sequence[pulumi.Input['SystemctlCommand']]],
                  connection: pulumi.Input['pulumi_command.remote.ConnectionArgs'],
-                 daemon_reload: Optional[pulumi.Input[bool]] = None,
-                 enable: Optional[pulumi.Input[str]] = None,
-                 start: Optional[pulumi.Input[str]] = None):
+                 service_name: Optional[pulumi.Input[str]] = None):
         """
         The set of arguments for constructing a Systemctl resource.
         :param pulumi.Input['pulumi_command.remote.ConnectionArgs'] connection: Connection details for the remote system.
         """
+        pulumi.set(__self__, "commands", commands)
         pulumi.set(__self__, "connection", connection)
-        if daemon_reload is not None:
-            pulumi.set(__self__, "daemon_reload", daemon_reload)
-        if enable is not None:
-            pulumi.set(__self__, "enable", enable)
-        if start is not None:
-            pulumi.set(__self__, "start", start)
+        if service_name is not None:
+            pulumi.set(__self__, "service_name", service_name)
+
+    @property
+    @pulumi.getter
+    def commands(self) -> pulumi.Input[Sequence[pulumi.Input['SystemctlCommand']]]:
+        return pulumi.get(self, "commands")
+
+    @commands.setter
+    def commands(self, value: pulumi.Input[Sequence[pulumi.Input['SystemctlCommand']]]):
+        pulumi.set(self, "commands", value)
 
     @property
     @pulumi.getter
@@ -44,31 +50,13 @@ class SystemctlArgs:
         pulumi.set(self, "connection", value)
 
     @property
-    @pulumi.getter(name="daemonReload")
-    def daemon_reload(self) -> Optional[pulumi.Input[bool]]:
-        return pulumi.get(self, "daemon_reload")
+    @pulumi.getter(name="serviceName")
+    def service_name(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "service_name")
 
-    @daemon_reload.setter
-    def daemon_reload(self, value: Optional[pulumi.Input[bool]]):
-        pulumi.set(self, "daemon_reload", value)
-
-    @property
-    @pulumi.getter
-    def enable(self) -> Optional[pulumi.Input[str]]:
-        return pulumi.get(self, "enable")
-
-    @enable.setter
-    def enable(self, value: Optional[pulumi.Input[str]]):
-        pulumi.set(self, "enable", value)
-
-    @property
-    @pulumi.getter
-    def start(self) -> Optional[pulumi.Input[str]]:
-        return pulumi.get(self, "start")
-
-    @start.setter
-    def start(self, value: Optional[pulumi.Input[str]]):
-        pulumi.set(self, "start", value)
+    @service_name.setter
+    def service_name(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "service_name", value)
 
 
 class Systemctl(pulumi.ComponentResource):
@@ -76,10 +64,9 @@ class Systemctl(pulumi.ComponentResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
+                 commands: Optional[pulumi.Input[Sequence[pulumi.Input['SystemctlCommand']]]] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
-                 daemon_reload: Optional[pulumi.Input[bool]] = None,
-                 enable: Optional[pulumi.Input[str]] = None,
-                 start: Optional[pulumi.Input[str]] = None,
+                 service_name: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         """
         Abstraction over the `systemctl` utility on a remote system.
@@ -112,10 +99,9 @@ class Systemctl(pulumi.ComponentResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
+                 commands: Optional[pulumi.Input[Sequence[pulumi.Input['SystemctlCommand']]]] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
-                 daemon_reload: Optional[pulumi.Input[bool]] = None,
-                 enable: Optional[pulumi.Input[str]] = None,
-                 start: Optional[pulumi.Input[str]] = None,
+                 service_name: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):
@@ -127,12 +113,13 @@ class Systemctl(pulumi.ComponentResource):
                 raise TypeError('__props__ is only valid when passed in combination with a valid opts.id to get an existing resource')
             __props__ = SystemctlArgs.__new__(SystemctlArgs)
 
+            if commands is None and not opts.urn:
+                raise TypeError("Missing required property 'commands'")
+            __props__.__dict__["commands"] = commands
             if connection is None and not opts.urn:
                 raise TypeError("Missing required property 'connection'")
             __props__.__dict__["connection"] = connection
-            __props__.__dict__["daemon_reload"] = daemon_reload
-            __props__.__dict__["enable"] = enable
-            __props__.__dict__["start"] = start
+            __props__.__dict__["service_name"] = service_name
             __props__.__dict__["command"] = None
         super(Systemctl, __self__).__init__(
             'kubernetes-the-hard-way:tools:Systemctl',
@@ -151,6 +138,11 @@ class Systemctl(pulumi.ComponentResource):
 
     @property
     @pulumi.getter
+    def commands(self) -> pulumi.Output[Sequence['SystemctlCommand']]:
+        return pulumi.get(self, "commands")
+
+    @property
+    @pulumi.getter
     def connection(self) -> pulumi.Output['pulumi_command.remote.outputs.Connection']:
         """
         Connection details for the remote system.
@@ -158,17 +150,7 @@ class Systemctl(pulumi.ComponentResource):
         return pulumi.get(self, "connection")
 
     @property
-    @pulumi.getter(name="daemonReload")
-    def daemon_reload(self) -> pulumi.Output[bool]:
-        return pulumi.get(self, "daemon_reload")
-
-    @property
-    @pulumi.getter
-    def enable(self) -> pulumi.Output[str]:
-        return pulumi.get(self, "enable")
-
-    @property
-    @pulumi.getter
-    def start(self) -> pulumi.Output[str]:
-        return pulumi.get(self, "start")
+    @pulumi.getter(name="serviceName")
+    def service_name(self) -> pulumi.Output[Optional[str]]:
+        return pulumi.get(self, "service_name")
 

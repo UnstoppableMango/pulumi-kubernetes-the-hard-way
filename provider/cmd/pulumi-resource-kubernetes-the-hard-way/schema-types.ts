@@ -25,6 +25,7 @@ export type ResourceConstructor = {
 };
 export type Functions = {
     "kubernetes-the-hard-way:tls:ClusterPki/getKubeconfig": (inputs: ClusterPki_getKubeconfigInputs) => Promise<ClusterPki_getKubeconfigOutputs>;
+    "kubernetes-the-hard-way:remote:EtcdInstall/etcdctl": (inputs: EtcdInstall_etcdctlInputs) => Promise<EtcdInstall_etcdctlOutputs>;
     "kubernetes-the-hard-way:remote:SystemdService/disable": (inputs: SystemdService_disableInputs) => Promise<SystemdService_disableOutputs>;
     "kubernetes-the-hard-way:remote:SystemdService/enable": (inputs: SystemdService_enableInputs) => Promise<SystemdService_enableOutputs>;
     "kubernetes-the-hard-way:remote:SystemdService/start": (inputs: SystemdService_startInputs) => Promise<SystemdService_startOutputs>;
@@ -327,19 +328,17 @@ export interface RmArgs {
 }
 export abstract class Systemctl<TData = any> extends (pulumi.ComponentResource)<TData> {
     public command!: command.remote.Command | pulumi.Output<command.remote.Command>;
+    public commands!: SystemctlCommandOutputs[] | pulumi.Output<SystemctlCommandOutputs[]>;
     public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
-    public daemonReload!: boolean | pulumi.Output<boolean>;
-    public enable!: string | pulumi.Output<string>;
-    public start!: string | pulumi.Output<string>;
+    public serviceName?: string | pulumi.Output<string>;
     constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
-        super("kubernetes-the-hard-way:tools:Systemctl", name, opts.urn ? { command: undefined, connection: undefined, daemonReload: undefined, enable: undefined, start: undefined } : { name, args, opts }, opts);
+        super("kubernetes-the-hard-way:tools:Systemctl", name, opts.urn ? { command: undefined, commands: undefined, connection: undefined, serviceName: undefined } : { name, args, opts }, opts);
     }
 }
 export interface SystemctlArgs {
+    readonly commands: pulumi.Input<pulumi.Input<SystemctlCommandInputs>[]>;
     readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
-    readonly daemonReload?: pulumi.Input<boolean>;
-    readonly enable?: pulumi.Input<string>;
-    readonly start?: pulumi.Input<string>;
+    readonly serviceName?: pulumi.Input<string>;
 }
 export abstract class Tar<TData = any> extends (pulumi.ComponentResource)<TData> {
     public archive!: string | pulumi.Output<string>;
@@ -627,12 +626,20 @@ export interface BundleOutputs {
     readonly certPem: pulumi.Output<string>;
     readonly keyPem: pulumi.Output<string>;
 }
+export type SystemctlCommandInputs = "daemon-reload" | "disable" | "enable" | "start" | "stop";
+export type SystemctlCommandOutputs = "daemon-reload" | "disable" | "enable" | "start" | "stop";
 export interface ClusterPki_getKubeconfigInputs {
     readonly __self__: pulumi.Input<ClusterPki>;
     readonly options: unknown;
 }
 export interface ClusterPki_getKubeconfigOutputs {
     readonly result: pulumi.Output<KubeconfigOutputs>;
+}
+export interface EtcdInstall_etcdctlInputs {
+    readonly __self__: pulumi.Input<EtcdInstall>;
+}
+export interface EtcdInstall_etcdctlOutputs {
+    readonly result?: pulumi.Output<Etcdctl>;
 }
 export interface SystemdService_disableInputs {
     readonly __self__?: pulumi.Input<SystemdService>;

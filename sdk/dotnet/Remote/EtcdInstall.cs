@@ -185,6 +185,9 @@ namespace UnMango.KubernetesTheHardWay.Remote
             merged.Id = id ?? merged.Id;
             return merged;
         }
+
+        public global::Pulumi.Output<UnMango.KubernetesTheHardWay.Tools.Etcdctl?> Etcdctl()
+            => global::Pulumi.Deployment.Instance.Call<EtcdInstallEtcdctlResult>("kubernetes-the-hard-way:remote:EtcdInstall/etcdctl", CallArgs.Empty, this).Apply(v => v.Result);
     }
 
     public sealed class EtcdInstallArgs : global::Pulumi.ResourceArgs
@@ -269,5 +272,20 @@ namespace UnMango.KubernetesTheHardWay.Remote
             SystemdDirectory = "/etc/system/systemd";
         }
         public static new EtcdInstallArgs Empty => new EtcdInstallArgs();
+    }
+
+    /// <summary>
+    /// The results of the <see cref="EtcdInstall.Etcdctl"/> method.
+    /// </summary>
+    [OutputType]
+    internal sealed class EtcdInstallEtcdctlResult
+    {
+        public readonly UnMango.KubernetesTheHardWay.Tools.Etcdctl? Result;
+
+        [OutputConstructor]
+        private EtcdInstallEtcdctlResult(UnMango.KubernetesTheHardWay.Tools.Etcdctl? result)
+        {
+            Result = result;
+        }
     }
 }

@@ -2,6 +2,9 @@
 // *** Do not edit by hand unless you're certain you know what you are doing! ***
 
 import * as pulumi from "@pulumi/pulumi";
+import * as inputs from "../types/input";
+import * as outputs from "../types/output";
+import * as enums from "../types/enums";
 import * as utilities from "../utilities";
 
 import * as pulumiCommand from "@pulumi/command";
@@ -28,13 +31,12 @@ export class Systemctl extends pulumi.ComponentResource {
      * Represents the command run on the remote system.
      */
     public /*out*/ readonly command!: pulumi.Output<pulumiCommand.remote.Command>;
+    public readonly commands!: pulumi.Output<enums.tools.SystemctlCommand[]>;
     /**
      * Connection details for the remote system.
      */
     public readonly connection!: pulumi.Output<pulumiCommand.types.output.remote.Connection>;
-    public readonly daemonReload!: pulumi.Output<boolean>;
-    public readonly enable!: pulumi.Output<string>;
-    public readonly start!: pulumi.Output<string>;
+    public readonly serviceName!: pulumi.Output<string | undefined>;
 
     /**
      * Create a Systemctl resource with the given unique name, arguments, and options.
@@ -47,20 +49,21 @@ export class Systemctl extends pulumi.ComponentResource {
         let resourceInputs: pulumi.Inputs = {};
         opts = opts || {};
         if (!opts.id) {
+            if ((!args || args.commands === undefined) && !opts.urn) {
+                throw new Error("Missing required property 'commands'");
+            }
             if ((!args || args.connection === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'connection'");
             }
+            resourceInputs["commands"] = args ? args.commands : undefined;
             resourceInputs["connection"] = args ? (args.connection ? pulumi.output(args.connection).apply(pulumiCommand.types.input.remote.connectionArgsProvideDefaults) : undefined) : undefined;
-            resourceInputs["daemonReload"] = args ? args.daemonReload : undefined;
-            resourceInputs["enable"] = args ? args.enable : undefined;
-            resourceInputs["start"] = args ? args.start : undefined;
+            resourceInputs["serviceName"] = args ? args.serviceName : undefined;
             resourceInputs["command"] = undefined /*out*/;
         } else {
             resourceInputs["command"] = undefined /*out*/;
+            resourceInputs["commands"] = undefined /*out*/;
             resourceInputs["connection"] = undefined /*out*/;
-            resourceInputs["daemonReload"] = undefined /*out*/;
-            resourceInputs["enable"] = undefined /*out*/;
-            resourceInputs["start"] = undefined /*out*/;
+            resourceInputs["serviceName"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         super(Systemctl.__pulumiType, name, resourceInputs, opts, true /*remote*/);
@@ -71,11 +74,10 @@ export class Systemctl extends pulumi.ComponentResource {
  * The set of arguments for constructing a Systemctl resource.
  */
 export interface SystemctlArgs {
+    commands: pulumi.Input<pulumi.Input<enums.tools.SystemctlCommand>[]>;
     /**
      * Connection details for the remote system.
      */
     connection: pulumi.Input<pulumiCommand.types.input.remote.ConnectionArgs>;
-    daemonReload?: pulumi.Input<boolean>;
-    enable?: pulumi.Input<string>;
-    start?: pulumi.Input<string>;
+    serviceName?: pulumi.Input<string>;
 }

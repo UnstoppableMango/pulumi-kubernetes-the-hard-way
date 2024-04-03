@@ -8,3 +8,13 @@ export const EtcdctlCommand = {
 } as const;
 
 export type EtcdctlCommand = (typeof EtcdctlCommand)[keyof typeof EtcdctlCommand];
+
+export const SystemctlCommand = {
+    Daemon_reload: "daemon-reload",
+    Disable: "disable",
+    Enable: "enable",
+    Start: "start",
+    Stop: "stop",
+} as const;
+
+export type SystemctlCommand = (typeof SystemctlCommand)[keyof typeof SystemctlCommand];
