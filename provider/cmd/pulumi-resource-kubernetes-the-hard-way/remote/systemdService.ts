@@ -8,7 +8,7 @@ export class SystemdService extends schema.SystemdService {
     super(name, args, opts);
 
     const connection = output(args.connection);
-    const directory = output(args.directory);
+    const directory = output(args.directory ?? '/etc/systemd/system');
     const install = output(args.install);
     const service = output(args.service);
     const unit = output(args.unit);
