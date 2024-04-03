@@ -586,6 +586,34 @@ resources:
       - key
       - privateKeyPem
       - publicKeyPem
+  kubernetes-the-hard-way:tools:Etcdctl:
+    isComponent: true
+    description: Abstraction over the `etcdctl` utility on a remote system.
+    inputProperties:
+      commands:
+        type: array
+        items:
+          $ref: "#/types/kubernetes-the-hard-way:tools:EtcdctlCommand"
+      connection:
+        $ref: "/command/v0.9.2/schema.json#/types/command:remote:Connection"
+        description: Connection details for the remote system.
+      endpoints:
+        type: string
+      caCert:
+        type: string
+      cert:
+        type: string
+      key:
+        type: string
+    requiredInputs:
+      - connection
+    properties:
+      command:
+        $ref: "/command/v0.9.2/schema.json#/resources/command:remote:Command"
+        description: Represents the command run on the remote system.
+      connection:
+        $ref: "/command/v0.9.2/schema.json#/types/command:remote:Connection"
+        description: Connection details for the remote system.
   kubernetes-the-hard-way:tools:Mkdir:
     isComponent: true
     description: Represents the `mkdir` utility.
@@ -865,6 +893,40 @@ resources:
       - onDelete
       - recursive
       - verbose
+  kubernetes-the-hard-way:tools:Systemctl:
+    isComponent: true
+    description: Abstraction over the `systemctl` utility on a remote system.
+    inputProperties:
+      connection:
+        $ref: "/command/v0.9.2/schema.json#/types/command:remote:Connection"
+        description: Connection details for the remote system.
+      daemonReload:
+        type: boolean
+      enable:
+        type: string
+      start:
+        type: string
+    requiredInputs:
+      - connection
+    properties:
+      command:
+        $ref: "/command/v0.9.2/schema.json#/resources/command:remote:Command"
+        description: Represents the command run on the remote system.
+      connection:
+        $ref: "/command/v0.9.2/schema.json#/types/command:remote:Connection"
+        description: Connection details for the remote system.
+      daemonReload:
+        type: boolean
+      enable:
+        type: string
+      start:
+        type: string
+    required:
+      - command
+      - connection
+      - daemonReload
+      - enable
+      - start
   kubernetes-the-hard-way:tools:Tar:
     isComponent: true
     description: Abstracion over the `tar` utility on a remote system.
@@ -1394,6 +1456,11 @@ types:
         items:
           type: string
         description: Configures (weak) requirement dependencies on other units.
+  kubernetes-the-hard-way:tools:EtcdctlCommand:
+    type: string
+    enum:
+      - value: member
+      - value: list
 functions:
   kubernetes-the-hard-way:tls:ClusterPki/getKubeconfig:
     inputs:
