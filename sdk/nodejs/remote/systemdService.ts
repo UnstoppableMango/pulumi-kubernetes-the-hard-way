@@ -33,7 +33,7 @@ export class SystemdService extends pulumi.ComponentResource {
     /**
      * The location to create the service file.
      */
-    public readonly directory!: pulumi.Output<string>;
+    public readonly directory!: pulumi.Output<string | undefined>;
     /**
      * Represents the service file on the remote machine.
      */

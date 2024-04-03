@@ -23,7 +23,7 @@ namespace UnMango.KubernetesTheHardWay.Remote
         /// The location to create the service file.
         /// </summary>
         [Output("directory")]
-        public Output<string> Directory { get; private set; } = null!;
+        public Output<string?> Directory { get; private set; } = null!;
 
         /// <summary>
         /// Represents the service file on the remote machine.

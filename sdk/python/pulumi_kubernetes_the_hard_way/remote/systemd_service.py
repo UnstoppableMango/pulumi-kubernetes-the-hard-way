@@ -194,7 +194,7 @@ class SystemdService(pulumi.ComponentResource):
 
     @property
     @pulumi.getter
-    def directory(self) -> pulumi.Output[str]:
+    def directory(self) -> pulumi.Output[Optional[str]]:
         """
         The location to create the service file.
         """

@@ -19,7 +19,7 @@ type SystemdService struct {
 	// The connection details.
 	Connection pulumiCommand.ConnectionOutput `pulumi:"connection"`
 	// The location to create the service file.
-	Directory pulumi.StringOutput `pulumi:"directory"`
+	Directory pulumi.StringPtrOutput `pulumi:"directory"`
 	// Represents the service file on the remote machine.
 	File FileOutput `pulumi:"file"`
 	// Describes the [Install] section of a systemd service file.
@@ -176,8 +176,8 @@ func (o SystemdServiceOutput) Connection() pulumiCommand.ConnectionOutput {
 }
 
 // The location to create the service file.
-func (o SystemdServiceOutput) Directory() pulumi.StringOutput {
-	return o.ApplyT(func(v *SystemdService) pulumi.StringOutput { return v.Directory }).(pulumi.StringOutput)
+func (o SystemdServiceOutput) Directory() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *SystemdService) pulumi.StringPtrOutput { return v.Directory }).(pulumi.StringPtrOutput)
 }
 
 // Represents the service file on the remote machine.
