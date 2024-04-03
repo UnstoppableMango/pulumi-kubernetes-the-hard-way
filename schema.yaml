@@ -389,6 +389,8 @@ resources:
       - tar
       - url
       - version
+    methods:
+      etcdctl: kubernetes-the-hard-way:remote:EtcdInstall/etcdctl
   kubernetes-the-hard-way:remote:Download:
     isComponent: true
     description: Represents a file to be downloaded on a remote system.
@@ -901,36 +903,35 @@ resources:
     isComponent: true
     description: Abstraction over the `systemctl` utility on a remote system.
     inputProperties:
+      commands:
+        type: array
+        items:
+          $ref: "#/types/kubernetes-the-hard-way:tools:SystemctlCommand"
       connection:
         $ref: "/command/v0.9.2/schema.json#/types/command:remote:Connection"
         description: Connection details for the remote system.
-      daemonReload:
-        type: boolean
-      enable:
-        type: string
-      start:
+      serviceName:
         type: string
     requiredInputs:
+      - commands
       - connection
     properties:
       command:
         $ref: "/command/v0.9.2/schema.json#/resources/command:remote:Command"
         description: Represents the command run on the remote system.
+      commands:
+        type: array
+        items:
+          $ref: "#/types/kubernetes-the-hard-way:tools:SystemctlCommand"
       connection:
         $ref: "/command/v0.9.2/schema.json#/types/command:remote:Connection"
         description: Connection details for the remote system.
-      daemonReload:
-        type: boolean
-      enable:
-        type: string
-      start:
+      serviceName:
         type: string
     required:
       - command
+      - commands
       - connection
-      - daemonReload
-      - enable
-      - start
   kubernetes-the-hard-way:tools:Tar:
     isComponent: true
     description: Abstracion over the `tar` utility on a remote system.
@@ -1478,6 +1479,14 @@ types:
       - caPem
       - certPem
       - keyPem
+  kubernetes-the-hard-way:tools:SystemctlCommand:
+    type: string
+    enum:
+      - value: daemon-reload
+      - value: disable
+      - value: enable
+      - value: start
+      - value: stop
 functions:
   kubernetes-the-hard-way:tls:ClusterPki/getKubeconfig:
     inputs:
@@ -1510,6 +1519,17 @@ functions:
           $ref: "#/types/kubernetes-the-hard-way:config:Kubeconfig"
       required:
         - result
+  kubernetes-the-hard-way:remote:EtcdInstall/etcdctl:
+    inputs:
+      properties:
+        __self__:
+          $ref: "#/resources/kubernetes-the-hard-way:remote:EtcdInstall"
+      required:
+        - __self__
+    outputs:
+      properties:
+        result:
+          $ref: "#/resources/kubernetes-the-hard-way:tools:Etcdctl"
   kubernetes-the-hard-way:remote:SystemdService/disable:
     inputs:
       properties:
