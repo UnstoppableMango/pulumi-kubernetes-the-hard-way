@@ -58,8 +58,8 @@ type EtcdInstall struct {
 	MvEtcdctl tools.MvOutput `pulumi:"mvEtcdctl"`
 	// The name of the resource.
 	Name pulumi.StringOutput `pulumi:"name"`
-	// The remote systemd service file.
-	SystemdServiceFile FileOutput `pulumi:"systemdServiceFile"`
+	// The remote systemd service.
+	SystemdService SystemdServiceOutput `pulumi:"systemdService"`
 	// The tar operation.
 	Tar tools.TarOutput `pulumi:"tar"`
 	// The url used to download etcd.
@@ -354,9 +354,9 @@ func (o EtcdInstallOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v *EtcdInstall) pulumi.StringOutput { return v.Name }).(pulumi.StringOutput)
 }
 
-// The remote systemd service file.
-func (o EtcdInstallOutput) SystemdServiceFile() FileOutput {
-	return o.ApplyT(func(v *EtcdInstall) FileOutput { return v.SystemdServiceFile }).(FileOutput)
+// The remote systemd service.
+func (o EtcdInstallOutput) SystemdService() SystemdServiceOutput {
+	return o.ApplyT(func(v *EtcdInstall) SystemdServiceOutput { return v.SystemdService }).(SystemdServiceOutput)
 }
 
 // The tar operation.

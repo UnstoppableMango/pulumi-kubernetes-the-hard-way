@@ -113,12 +113,12 @@ export abstract class EtcdInstall<TData = any> extends (pulumi.ComponentResource
     public mvEtcd!: Mv | pulumi.Output<Mv>;
     public mvEtcdctl!: Mv | pulumi.Output<Mv>;
     public name!: string | pulumi.Output<string>;
-    public systemdServiceFile!: File | pulumi.Output<File>;
+    public systemdService!: SystemdService | pulumi.Output<SystemdService>;
     public tar!: Tar | pulumi.Output<Tar>;
     public url!: string | pulumi.Output<string>;
     public version!: string | pulumi.Output<string>;
     constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
-        super("kubernetes-the-hard-way:remote:EtcdInstall", name, opts.urn ? { architecture: undefined, archiveName: undefined, caFile: undefined, certFile: undefined, configurationDirectory: undefined, configurationMkdir: undefined, dataDirectory: undefined, dataMkdir: undefined, download: undefined, downloadDirectory: undefined, downloadMkdir: undefined, etcdPath: undefined, etcdctlPath: undefined, installDirectory: undefined, installMkdir: undefined, internalIp: undefined, keyFile: undefined, mvEtcd: undefined, mvEtcdctl: undefined, name: undefined, systemdServiceFile: undefined, tar: undefined, url: undefined, version: undefined } : { name, args, opts }, opts);
+        super("kubernetes-the-hard-way:remote:EtcdInstall", name, opts.urn ? { architecture: undefined, archiveName: undefined, caFile: undefined, certFile: undefined, configurationDirectory: undefined, configurationMkdir: undefined, dataDirectory: undefined, dataMkdir: undefined, download: undefined, downloadDirectory: undefined, downloadMkdir: undefined, etcdPath: undefined, etcdctlPath: undefined, installDirectory: undefined, installMkdir: undefined, internalIp: undefined, keyFile: undefined, mvEtcd: undefined, mvEtcdctl: undefined, name: undefined, systemdService: undefined, tar: undefined, url: undefined, version: undefined } : { name, args, opts }, opts);
     }
 }
 export interface EtcdInstallArgs {

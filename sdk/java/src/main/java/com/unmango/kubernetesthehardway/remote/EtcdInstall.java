@@ -11,6 +11,7 @@ import com.unmango.kubernetesthehardway.Utilities;
 import com.unmango.kubernetesthehardway.remote.Download;
 import com.unmango.kubernetesthehardway.remote.EtcdInstallArgs;
 import com.unmango.kubernetesthehardway.remote.File;
+import com.unmango.kubernetesthehardway.remote.SystemdService;
 import com.unmango.kubernetesthehardway.remote.enums.Architecture;
 import com.unmango.kubernetesthehardway.tools.Mkdir;
 import com.unmango.kubernetesthehardway.tools.Mv;
@@ -306,18 +307,18 @@ public class EtcdInstall extends com.pulumi.resources.ComponentResource {
         return this.name;
     }
     /**
-     * The remote systemd service file.
+     * The remote systemd service.
      * 
      */
-    @Export(name="systemdServiceFile", refs={File.class}, tree="[0]")
-    private Output<File> systemdServiceFile;
+    @Export(name="systemdService", refs={SystemdService.class}, tree="[0]")
+    private Output<SystemdService> systemdService;
 
     /**
-     * @return The remote systemd service file.
+     * @return The remote systemd service.
      * 
      */
-    public Output<File> systemdServiceFile() {
-        return this.systemdServiceFile;
+    public Output<SystemdService> systemdService() {
+        return this.systemdService;
     }
     /**
      * The tar operation.

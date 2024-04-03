@@ -12,6 +12,7 @@ from .. import tools as _tools
 from ._enums import *
 from .download import Download
 from .file import File
+from .systemd_service import SystemdService
 import pulumi_command
 
 __all__ = ['EtcdInstallArgs', 'EtcdInstall']
@@ -346,7 +347,7 @@ class EtcdInstall(pulumi.ComponentResource):
             __props__.__dict__["mv_etcd"] = None
             __props__.__dict__["mv_etcdctl"] = None
             __props__.__dict__["name"] = None
-            __props__.__dict__["systemd_service_file"] = None
+            __props__.__dict__["systemd_service"] = None
             __props__.__dict__["tar"] = None
             __props__.__dict__["url"] = None
         super(EtcdInstall, __self__).__init__(
@@ -517,12 +518,12 @@ class EtcdInstall(pulumi.ComponentResource):
         return pulumi.get(self, "name")
 
     @property
-    @pulumi.getter(name="systemdServiceFile")
-    def systemd_service_file(self) -> pulumi.Output['File']:
+    @pulumi.getter(name="systemdService")
+    def systemd_service(self) -> pulumi.Output['SystemdService']:
         """
-        The remote systemd service file.
+        The remote systemd service.
         """
-        return pulumi.get(self, "systemd_service_file")
+        return pulumi.get(self, "systemd_service")
 
     @property
     @pulumi.getter

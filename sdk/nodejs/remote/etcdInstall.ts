@@ -10,7 +10,7 @@ import * as utilities from "../utilities";
 import * as pulumiCommand from "@pulumi/command";
 
 import {Mkdir, Mv, Tar} from "../tools";
-import {Download, File} from "./index";
+import {Download, File, SystemdService} from "./index";
 
 /**
  * Represents an etcd binary on a remote system.
@@ -111,9 +111,9 @@ export class EtcdInstall extends pulumi.ComponentResource {
      */
     public /*out*/ readonly name!: pulumi.Output<string>;
     /**
-     * The remote systemd service file.
+     * The remote systemd service.
      */
-    public /*out*/ readonly systemdServiceFile!: pulumi.Output<File>;
+    public /*out*/ readonly systemdService!: pulumi.Output<SystemdService>;
     /**
      * The tar operation.
      */
@@ -179,7 +179,7 @@ export class EtcdInstall extends pulumi.ComponentResource {
             resourceInputs["mvEtcd"] = undefined /*out*/;
             resourceInputs["mvEtcdctl"] = undefined /*out*/;
             resourceInputs["name"] = undefined /*out*/;
-            resourceInputs["systemdServiceFile"] = undefined /*out*/;
+            resourceInputs["systemdService"] = undefined /*out*/;
             resourceInputs["tar"] = undefined /*out*/;
             resourceInputs["url"] = undefined /*out*/;
         } else {
@@ -203,7 +203,7 @@ export class EtcdInstall extends pulumi.ComponentResource {
             resourceInputs["mvEtcd"] = undefined /*out*/;
             resourceInputs["mvEtcdctl"] = undefined /*out*/;
             resourceInputs["name"] = undefined /*out*/;
-            resourceInputs["systemdServiceFile"] = undefined /*out*/;
+            resourceInputs["systemdService"] = undefined /*out*/;
             resourceInputs["tar"] = undefined /*out*/;
             resourceInputs["url"] = undefined /*out*/;
             resourceInputs["version"] = undefined /*out*/;
