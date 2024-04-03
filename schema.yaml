@@ -261,13 +261,13 @@ resources:
         type: string
         description: The directory to store etcd configuration.
         default: /etc/etcd
+      connection:
+        $ref: "/command/v0.9.2/schema.json#/types/command:remote:Connection"
+        description: The connection details.
       dataDirectory:
         type: string
         description: The directory etcd will use.
         default: /var/lib/etcd
-      connection:
-        $ref: "/command/v0.9.2/schema.json#/types/command:remote:Connection"
-        description: The connection details.
       downloadDirectory:
         type: string
         description: Temporary directory to download files to. Defaults to `/tmp/<random string>`.
@@ -281,6 +281,10 @@ resources:
       keyPem:
         type: string
         description: The PEM encoded key data.
+      systemdDirectory:
+        type: string
+        description: The systemd service file dirctory.
+        default: /etc/system/systemd
       version:
         type: string
         description: The version of etcd to install.
