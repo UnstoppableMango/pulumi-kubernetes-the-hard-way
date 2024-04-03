@@ -9,6 +9,8 @@ import * as utilities from "../utilities";
 
 import * as pulumiCommand from "@pulumi/command";
 
+import {File} from "./index";
+
 export class SystemdService extends pulumi.ComponentResource {
     /** @internal */
     public static readonly __pulumiType = 'kubernetes-the-hard-way:remote:SystemdService';
@@ -24,6 +26,30 @@ export class SystemdService extends pulumi.ComponentResource {
         return obj['__pulumiType'] === SystemdService.__pulumiType;
     }
 
+    /**
+     * The connection details.
+     */
+    public readonly connection!: pulumi.Output<pulumiCommand.types.output.remote.Connection>;
+    /**
+     * The location to create the service file.
+     */
+    public readonly directory!: pulumi.Output<string>;
+    /**
+     * Represents the service file on the remote machine.
+     */
+    public /*out*/ readonly file!: pulumi.Output<File>;
+    /**
+     * Describes the [Install] section of a systemd service file.
+     */
+    public readonly install!: pulumi.Output<outputs.remote.SystemdInstallSection | undefined>;
+    /**
+     * Describes the [Service] section of a systemd service file.
+     */
+    public readonly service!: pulumi.Output<outputs.remote.SystemdServiceSection>;
+    /**
+     * Describes the [Unit] section of a systemd service file.
+     */
+    public readonly unit!: pulumi.Output<outputs.remote.SystemdUnitSection | undefined>;
 
     /**
      * Create a SystemdService resource with the given unique name, arguments, and options.
@@ -39,14 +65,25 @@ export class SystemdService extends pulumi.ComponentResource {
             if ((!args || args.connection === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'connection'");
             }
+            if ((!args || args.directory === undefined) && !opts.urn) {
+                throw new Error("Missing required property 'directory'");
+            }
             if ((!args || args.service === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'service'");
             }
             resourceInputs["connection"] = args ? (args.connection ? pulumi.output(args.connection).apply(pulumiCommand.types.input.remote.connectionArgsProvideDefaults) : undefined) : undefined;
+            resourceInputs["directory"] = (args ? args.directory : undefined) ?? "/etc/systemd/system";
             resourceInputs["install"] = args ? args.install : undefined;
             resourceInputs["service"] = args ? args.service : undefined;
             resourceInputs["unit"] = args ? args.unit : undefined;
+            resourceInputs["file"] = undefined /*out*/;
         } else {
+            resourceInputs["connection"] = undefined /*out*/;
+            resourceInputs["directory"] = undefined /*out*/;
+            resourceInputs["file"] = undefined /*out*/;
+            resourceInputs["install"] = undefined /*out*/;
+            resourceInputs["service"] = undefined /*out*/;
+            resourceInputs["unit"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         super(SystemdService.__pulumiType, name, resourceInputs, opts, true /*remote*/);
@@ -61,6 +98,10 @@ export interface SystemdServiceArgs {
      * The connection details.
      */
     connection: pulumi.Input<pulumiCommand.types.input.remote.ConnectionArgs>;
+    /**
+     * The location to create the service file.
+     */
+    directory: pulumi.Input<string>;
     /**
      * Describes the [Install] section of a systemd service file.
      */

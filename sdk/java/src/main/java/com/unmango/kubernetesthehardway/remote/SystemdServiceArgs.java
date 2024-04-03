@@ -6,10 +6,12 @@ package com.unmango.kubernetesthehardway.remote;
 import com.pulumi.command.remote.inputs.ConnectionArgs;
 import com.pulumi.core.Output;
 import com.pulumi.core.annotations.Import;
+import com.pulumi.core.internal.Codegen;
 import com.pulumi.exceptions.MissingRequiredPropertyException;
 import com.unmango.kubernetesthehardway.remote.inputs.SystemdInstallSectionArgs;
 import com.unmango.kubernetesthehardway.remote.inputs.SystemdServiceSectionArgs;
 import com.unmango.kubernetesthehardway.remote.inputs.SystemdUnitSectionArgs;
+import java.lang.String;
 import java.util.Objects;
 import java.util.Optional;
 import javax.annotation.Nullable;
@@ -32,6 +34,21 @@ public final class SystemdServiceArgs extends com.pulumi.resources.ResourceArgs 
      */
     public Output<ConnectionArgs> connection() {
         return this.connection;
+    }
+
+    /**
+     * The location to create the service file.
+     * 
+     */
+    @Import(name="directory", required=true)
+    private Output<String> directory;
+
+    /**
+     * @return The location to create the service file.
+     * 
+     */
+    public Output<String> directory() {
+        return this.directory;
     }
 
     /**
@@ -83,6 +100,7 @@ public final class SystemdServiceArgs extends com.pulumi.resources.ResourceArgs 
 
     private SystemdServiceArgs(SystemdServiceArgs $) {
         this.connection = $.connection;
+        this.directory = $.directory;
         this.install = $.install;
         this.service = $.service;
         this.unit = $.unit;
@@ -125,6 +143,27 @@ public final class SystemdServiceArgs extends com.pulumi.resources.ResourceArgs 
          */
         public Builder connection(ConnectionArgs connection) {
             return connection(Output.of(connection));
+        }
+
+        /**
+         * @param directory The location to create the service file.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder directory(Output<String> directory) {
+            $.directory = directory;
+            return this;
+        }
+
+        /**
+         * @param directory The location to create the service file.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder directory(String directory) {
+            return directory(Output.of(directory));
         }
 
         /**
@@ -194,6 +233,7 @@ public final class SystemdServiceArgs extends com.pulumi.resources.ResourceArgs 
             if ($.connection == null) {
                 throw new MissingRequiredPropertyException("SystemdServiceArgs", "connection");
             }
+            $.directory = Codegen.stringProp("directory").output().arg($.directory).def("/etc/systemd/system").require();
             if ($.service == null) {
                 throw new MissingRequiredPropertyException("SystemdServiceArgs", "service");
             }

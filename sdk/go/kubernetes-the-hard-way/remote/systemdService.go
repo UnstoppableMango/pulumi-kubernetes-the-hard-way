@@ -15,6 +15,19 @@ import (
 
 type SystemdService struct {
 	pulumi.ResourceState
+
+	// The connection details.
+	Connection pulumiCommand.ConnectionOutput `pulumi:"connection"`
+	// The location to create the service file.
+	Directory pulumi.StringOutput `pulumi:"directory"`
+	// Represents the service file on the remote machine.
+	File FileOutput `pulumi:"file"`
+	// Describes the [Install] section of a systemd service file.
+	Install SystemdInstallSectionPtrOutput `pulumi:"install"`
+	// Describes the [Service] section of a systemd service file.
+	Service SystemdServiceSectionOutput `pulumi:"service"`
+	// Describes the [Unit] section of a systemd service file.
+	Unit SystemdUnitSectionPtrOutput `pulumi:"unit"`
 }
 
 // NewSystemdService registers a new resource with the given unique name, arguments, and options.
@@ -31,6 +44,9 @@ func NewSystemdService(ctx *pulumi.Context,
 		return nil, errors.New("invalid value for required argument 'Service'")
 	}
 	args.Connection = args.Connection.ToConnectionOutput().ApplyT(func(v pulumiCommand.Connection) pulumiCommand.Connection { return *v.Defaults() }).(pulumiCommand.ConnectionOutput)
+	if args.Directory == nil {
+		args.Directory = pulumi.String("/etc/systemd/system")
+	}
 	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource SystemdService
 	err := ctx.RegisterRemoteComponentResource("kubernetes-the-hard-way:remote:SystemdService", name, args, &resource, opts...)
@@ -43,6 +59,8 @@ func NewSystemdService(ctx *pulumi.Context,
 type systemdServiceArgs struct {
 	// The connection details.
 	Connection pulumiCommand.Connection `pulumi:"connection"`
+	// The location to create the service file.
+	Directory string `pulumi:"directory"`
 	// Describes the [Install] section of a systemd service file.
 	Install *SystemdInstallSection `pulumi:"install"`
 	// Describes the [Service] section of a systemd service file.
@@ -55,6 +73,8 @@ type systemdServiceArgs struct {
 type SystemdServiceArgs struct {
 	// The connection details.
 	Connection pulumiCommand.ConnectionInput
+	// The location to create the service file.
+	Directory pulumi.StringInput
 	// Describes the [Install] section of a systemd service file.
 	Install SystemdInstallSectionPtrInput
 	// Describes the [Service] section of a systemd service file.
@@ -148,6 +168,36 @@ func (o SystemdServiceOutput) ToSystemdServiceOutput() SystemdServiceOutput {
 
 func (o SystemdServiceOutput) ToSystemdServiceOutputWithContext(ctx context.Context) SystemdServiceOutput {
 	return o
+}
+
+// The connection details.
+func (o SystemdServiceOutput) Connection() pulumiCommand.ConnectionOutput {
+	return o.ApplyT(func(v *SystemdService) pulumiCommand.ConnectionOutput { return v.Connection }).(pulumiCommand.ConnectionOutput)
+}
+
+// The location to create the service file.
+func (o SystemdServiceOutput) Directory() pulumi.StringOutput {
+	return o.ApplyT(func(v *SystemdService) pulumi.StringOutput { return v.Directory }).(pulumi.StringOutput)
+}
+
+// Represents the service file on the remote machine.
+func (o SystemdServiceOutput) File() FileOutput {
+	return o.ApplyT(func(v *SystemdService) FileOutput { return v.File }).(FileOutput)
+}
+
+// Describes the [Install] section of a systemd service file.
+func (o SystemdServiceOutput) Install() SystemdInstallSectionPtrOutput {
+	return o.ApplyT(func(v *SystemdService) SystemdInstallSectionPtrOutput { return v.Install }).(SystemdInstallSectionPtrOutput)
+}
+
+// Describes the [Service] section of a systemd service file.
+func (o SystemdServiceOutput) Service() SystemdServiceSectionOutput {
+	return o.ApplyT(func(v *SystemdService) SystemdServiceSectionOutput { return v.Service }).(SystemdServiceSectionOutput)
+}
+
+// Describes the [Unit] section of a systemd service file.
+func (o SystemdServiceOutput) Unit() SystemdUnitSectionPtrOutput {
+	return o.ApplyT(func(v *SystemdService) SystemdUnitSectionPtrOutput { return v.Unit }).(SystemdUnitSectionPtrOutput)
 }
 
 type SystemdServiceArrayOutput struct{ *pulumi.OutputState }

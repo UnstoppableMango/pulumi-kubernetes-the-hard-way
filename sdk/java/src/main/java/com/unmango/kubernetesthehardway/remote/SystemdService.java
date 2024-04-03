@@ -3,15 +3,108 @@
 
 package com.unmango.kubernetesthehardway.remote;
 
+import com.pulumi.command.remote.outputs.Connection;
 import com.pulumi.core.Output;
+import com.pulumi.core.annotations.Export;
 import com.pulumi.core.annotations.ResourceType;
 import com.pulumi.core.internal.Codegen;
 import com.unmango.kubernetesthehardway.Utilities;
+import com.unmango.kubernetesthehardway.remote.File;
 import com.unmango.kubernetesthehardway.remote.SystemdServiceArgs;
+import com.unmango.kubernetesthehardway.remote.outputs.SystemdInstallSection;
+import com.unmango.kubernetesthehardway.remote.outputs.SystemdServiceSection;
+import com.unmango.kubernetesthehardway.remote.outputs.SystemdUnitSection;
+import java.lang.String;
+import java.util.Optional;
 import javax.annotation.Nullable;
 
 @ResourceType(type="kubernetes-the-hard-way:remote:SystemdService")
 public class SystemdService extends com.pulumi.resources.ComponentResource {
+    /**
+     * The connection details.
+     * 
+     */
+    @Export(name="connection", refs={Connection.class}, tree="[0]")
+    private Output<Connection> connection;
+
+    /**
+     * @return The connection details.
+     * 
+     */
+    public Output<Connection> connection() {
+        return this.connection;
+    }
+    /**
+     * The location to create the service file.
+     * 
+     */
+    @Export(name="directory", refs={String.class}, tree="[0]")
+    private Output<String> directory;
+
+    /**
+     * @return The location to create the service file.
+     * 
+     */
+    public Output<String> directory() {
+        return this.directory;
+    }
+    /**
+     * Represents the service file on the remote machine.
+     * 
+     */
+    @Export(name="file", refs={File.class}, tree="[0]")
+    private Output<File> file;
+
+    /**
+     * @return Represents the service file on the remote machine.
+     * 
+     */
+    public Output<File> file() {
+        return this.file;
+    }
+    /**
+     * Describes the [Install] section of a systemd service file.
+     * 
+     */
+    @Export(name="install", refs={SystemdInstallSection.class}, tree="[0]")
+    private Output</* @Nullable */ SystemdInstallSection> install;
+
+    /**
+     * @return Describes the [Install] section of a systemd service file.
+     * 
+     */
+    public Output<Optional<SystemdInstallSection>> install() {
+        return Codegen.optional(this.install);
+    }
+    /**
+     * Describes the [Service] section of a systemd service file.
+     * 
+     */
+    @Export(name="service", refs={SystemdServiceSection.class}, tree="[0]")
+    private Output<SystemdServiceSection> service;
+
+    /**
+     * @return Describes the [Service] section of a systemd service file.
+     * 
+     */
+    public Output<SystemdServiceSection> service() {
+        return this.service;
+    }
+    /**
+     * Describes the [Unit] section of a systemd service file.
+     * 
+     */
+    @Export(name="unit", refs={SystemdUnitSection.class}, tree="[0]")
+    private Output</* @Nullable */ SystemdUnitSection> unit;
+
+    /**
+     * @return Describes the [Unit] section of a systemd service file.
+     * 
+     */
+    public Output<Optional<SystemdUnitSection>> unit() {
+        return Codegen.optional(this.unit);
+    }
+
     /**
      *
      * @param name The _unique_ name of the resulting resource.

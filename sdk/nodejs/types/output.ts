@@ -34,6 +34,72 @@ export namespace config {
 }
 
 export namespace remote {
+    /**
+     * https://www.freedesktop.org/software/systemd/man/latest/systemd.unit.html#%5BInstall%5D%20Section%20Options
+     */
+    export interface SystemdInstallSection {
+        /**
+         * A symbolic link is created in the .wants/, .requires/, or .upholds/ directory of each of the listed units when this unit is installed by systemctl enable.
+         */
+        wantedBy?: string[];
+    }
+
+    /**
+     * https://www.freedesktop.org/software/systemd/man/latest/systemd.service.html#
+     */
+    export interface SystemdServiceSection {
+        /**
+         * Commands that are executed when this service is started.
+         */
+        execStart?: string;
+        /**
+         * Specifies when the manager should consider the service to be finished.
+         */
+        exitType?: enums.remote.SystemdServiceExitType;
+        /**
+         * Configures whether the service shall be restarted when the service process exits, is killed, or a timeout is reached.
+         */
+        restart?: enums.remote.SystemdServiceRestart;
+        /**
+         * Configures the time to sleep before restarting a service (as configured with Restart=).
+         */
+        restartSec?: string;
+        /**
+         * Configures the mechanism via which the service notifies the manager that the service start-up has finished.
+         */
+        type?: enums.remote.SystemdServiceType;
+    }
+
+    /**
+     * https://www.freedesktop.org/software/systemd/man/latest/systemd.unit.html#
+     */
+    export interface SystemdUnitSection {
+        /**
+         * Configures requirement dependencies, very similar in style to Requires=.
+         */
+        bindsTo?: string[];
+        /**
+         * A short human readable title of the unit.
+         */
+        description?: string;
+        /**
+         * A space-separated list of URIs referencing documentation for this unit or its configuration.
+         */
+        documentation?: string[];
+        /**
+         * Similar to Wants=, but declares a stronger requirement dependency.
+         */
+        requires?: string[];
+        /**
+         * Similar to Requires=. However, if the units listed here are not started already, they will not be started and the starting of this unit will fail immediately.
+         */
+        requisite?: string[];
+        /**
+         * Configures (weak) requirement dependencies on other units.
+         */
+        wants?: string[];
+    }
+
 }
 
 export namespace tls {

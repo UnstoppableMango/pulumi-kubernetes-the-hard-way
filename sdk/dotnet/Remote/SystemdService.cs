@@ -14,6 +14,43 @@ namespace UnMango.KubernetesTheHardWay.Remote
     public partial class SystemdService : global::Pulumi.ComponentResource
     {
         /// <summary>
+        /// The connection details.
+        /// </summary>
+        [Output("connection")]
+        public Output<Pulumi.Command.Remote.Outputs.Connection> Connection { get; private set; } = null!;
+
+        /// <summary>
+        /// The location to create the service file.
+        /// </summary>
+        [Output("directory")]
+        public Output<string> Directory { get; private set; } = null!;
+
+        /// <summary>
+        /// Represents the service file on the remote machine.
+        /// </summary>
+        [Output("file")]
+        public Output<UnMango.KubernetesTheHardWay.Remote.File> File { get; private set; } = null!;
+
+        /// <summary>
+        /// Describes the [Install] section of a systemd service file.
+        /// </summary>
+        [Output("install")]
+        public Output<Outputs.SystemdInstallSection?> Install { get; private set; } = null!;
+
+        /// <summary>
+        /// Describes the [Service] section of a systemd service file.
+        /// </summary>
+        [Output("service")]
+        public Output<Outputs.SystemdServiceSection> Service { get; private set; } = null!;
+
+        /// <summary>
+        /// Describes the [Unit] section of a systemd service file.
+        /// </summary>
+        [Output("unit")]
+        public Output<Outputs.SystemdUnitSection?> Unit { get; private set; } = null!;
+
+
+        /// <summary>
         /// Create a SystemdService resource with the given unique name, arguments, and options.
         /// </summary>
         ///
@@ -48,6 +85,12 @@ namespace UnMango.KubernetesTheHardWay.Remote
         public Input<Pulumi.Command.Remote.Inputs.ConnectionArgs> Connection { get; set; } = null!;
 
         /// <summary>
+        /// The location to create the service file.
+        /// </summary>
+        [Input("directory", required: true)]
+        public Input<string> Directory { get; set; } = null!;
+
+        /// <summary>
         /// Describes the [Install] section of a systemd service file.
         /// </summary>
         [Input("install")]
@@ -67,6 +110,7 @@ namespace UnMango.KubernetesTheHardWay.Remote
 
         public SystemdServiceArgs()
         {
+            Directory = "/etc/systemd/system";
         }
         public static new SystemdServiceArgs Empty => new SystemdServiceArgs();
     }
