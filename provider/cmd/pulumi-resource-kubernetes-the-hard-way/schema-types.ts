@@ -14,10 +14,12 @@ export type ResourceConstructor = {
     readonly "kubernetes-the-hard-way:remote:File": ConstructComponent<File>;
     readonly "kubernetes-the-hard-way:remote:SystemdService": ConstructComponent<SystemdService>;
     readonly "kubernetes-the-hard-way:tls:RootCa": ConstructComponent<RootCa>;
+    readonly "kubernetes-the-hard-way:tools:Etcdctl": ConstructComponent<Etcdctl>;
     readonly "kubernetes-the-hard-way:tools:Mkdir": ConstructComponent<Mkdir>;
     readonly "kubernetes-the-hard-way:tools:Mktemp": ConstructComponent<Mktemp>;
     readonly "kubernetes-the-hard-way:tools:Mv": ConstructComponent<Mv>;
     readonly "kubernetes-the-hard-way:tools:Rm": ConstructComponent<Rm>;
+    readonly "kubernetes-the-hard-way:tools:Systemctl": ConstructComponent<Systemctl>;
     readonly "kubernetes-the-hard-way:tools:Tar": ConstructComponent<Tar>;
     readonly "kubernetes-the-hard-way:tools:Wget": ConstructComponent<Wget>;
 };
@@ -209,6 +211,21 @@ export interface RootCaArgs {
     readonly validityPeriodHours: pulumi.Input<number>;
     readonly subject?: pulumi.Input<tls.types.input.SelfSignedCertSubject>;
 }
+export abstract class Etcdctl<TData = any> extends (pulumi.ComponentResource)<TData> {
+    public command?: command.remote.Command | pulumi.Output<command.remote.Command>;
+    public connection?: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
+    constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
+        super("kubernetes-the-hard-way:tools:Etcdctl", name, opts.urn ? { command: undefined, connection: undefined } : { name, args, opts }, opts);
+    }
+}
+export interface EtcdctlArgs {
+    readonly commands?: pulumi.Input<pulumi.Input<EtcdctlCommandInputs>[]>;
+    readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
+    readonly endpoints?: pulumi.Input<string>;
+    readonly caCert?: pulumi.Input<string>;
+    readonly cert?: pulumi.Input<string>;
+    readonly key?: pulumi.Input<string>;
+}
 export abstract class Mkdir<TData = any> extends (pulumi.ComponentResource)<TData> {
     public command!: command.remote.Command | pulumi.Output<command.remote.Command>;
     public directory!: string | pulumi.Output<string>;
@@ -304,6 +321,22 @@ export interface RmArgs {
     readonly onDelete?: boolean;
     readonly recursive?: pulumi.Input<boolean>;
     readonly verbose?: pulumi.Input<boolean>;
+}
+export abstract class Systemctl<TData = any> extends (pulumi.ComponentResource)<TData> {
+    public command!: command.remote.Command | pulumi.Output<command.remote.Command>;
+    public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
+    public daemonReload!: boolean | pulumi.Output<boolean>;
+    public enable!: string | pulumi.Output<string>;
+    public start!: string | pulumi.Output<string>;
+    constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
+        super("kubernetes-the-hard-way:tools:Systemctl", name, opts.urn ? { command: undefined, connection: undefined, daemonReload: undefined, enable: undefined, start: undefined } : { name, args, opts }, opts);
+    }
+}
+export interface SystemctlArgs {
+    readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
+    readonly daemonReload?: pulumi.Input<boolean>;
+    readonly enable?: pulumi.Input<string>;
+    readonly start?: pulumi.Input<string>;
 }
 export abstract class Tar<TData = any> extends (pulumi.ComponentResource)<TData> {
     public archive!: string | pulumi.Output<string>;
@@ -579,6 +612,8 @@ export interface SystemdUnitSectionOutputs {
     readonly requisite?: pulumi.Output<string[]>;
     readonly wants?: pulumi.Output<string[]>;
 }
+export type EtcdctlCommandInputs = "member" | "list";
+export type EtcdctlCommandOutputs = "member" | "list";
 export interface ClusterPki_getKubeconfigInputs {
     readonly __self__: pulumi.Input<ClusterPki>;
     readonly options: unknown;

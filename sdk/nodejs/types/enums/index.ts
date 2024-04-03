@@ -5,9 +5,11 @@
 import * as config from "./config";
 import * as remote from "./remote";
 import * as tls from "./tls";
+import * as tools from "./tools";
 
 export {
     config,
     remote,
     tls,
+    tools,
 };
