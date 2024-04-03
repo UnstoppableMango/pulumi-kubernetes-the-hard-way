@@ -474,6 +474,53 @@ resources:
       - path
       - stderr
       - stdout
+  kubernetes-the-hard-way:remote:SystemdService:
+    isComponent: true
+    inputProperties:
+      connection:
+        $ref: "/command/v0.9.2/schema.json#/types/command:remote:Connection"
+        description: The connection details.
+      directory:
+        type: string
+        default: /etc/systemd/system
+        description: The location to create the service file.
+      install:
+        $ref: "#/types/kubernetes-the-hard-way:remote:SystemdInstallSection"
+        description: Describes the [Install] section of a systemd service file.
+      service:
+        $ref: "#/types/kubernetes-the-hard-way:remote:SystemdServiceSection"
+        description: Describes the [Service] section of a systemd service file.
+      unit:
+        $ref: "#/types/kubernetes-the-hard-way:remote:SystemdUnitSection"
+        description: Describes the [Unit] section of a systemd service file.
+    requiredInputs:
+      - connection
+      - service
+    properties:
+      connection:
+        $ref: "/command/v0.9.2/schema.json#/types/command:remote:Connection"
+        description: The connection details.
+      directory:
+        type: string
+        default: /etc/systemd/system
+        description: The location to create the service file.
+      file:
+        $ref: "#/resources/kubernetes-the-hard-way:remote:File"
+        description: Represents the service file on the remote machine.
+      install:
+        $ref: "#/types/kubernetes-the-hard-way:remote:SystemdInstallSection"
+        description: Describes the [Install] section of a systemd service file.
+      service:
+        $ref: "#/types/kubernetes-the-hard-way:remote:SystemdServiceSection"
+        description: Describes the [Service] section of a systemd service file.
+      unit:
+        $ref: "#/types/kubernetes-the-hard-way:remote:SystemdUnitSection"
+        description: Describes the [Unit] section of a systemd service file.
+    required:
+      - connection
+      - directory
+      - file
+      - service
   kubernetes-the-hard-way:tls:RootCa:
     isComponent: true
     inputProperties:
@@ -1260,6 +1307,93 @@ types:
     required:
       - clientCertificateData
       - clientKeyData
+  kubernetes-the-hard-way:remote:SystemdInstallSection:
+    type: object
+    description: https://www.freedesktop.org/software/systemd/man/latest/systemd.unit.html#%5BInstall%5D%20Section%20Options
+    properties:
+      wantedBy:
+        type: array
+        items:
+          type: string
+        description: A symbolic link is created in the .wants/, .requires/, or .upholds/ directory
+          of each of the listed units when this unit is installed by systemctl enable.
+  kubernetes-the-hard-way:remote:SystemdServiceExitType:
+    type: string
+    enum:
+      - value: main
+      - value: cgroup
+  kubernetes-the-hard-way:remote:SystemdServiceRestart:
+    type: string
+    enum:
+      - value: "no"
+      - value: on-success
+      - value: on-failure
+      - value: on-abnormal
+      - value: on-watchdog
+      - value: on-abort
+      - value: always
+  kubernetes-the-hard-way:remote:SystemdServiceType:
+    type: string
+    enum:
+      - value: simple
+      - value: exec
+      - value: forking
+      - value: oneshot
+      - value: dbus
+      - value: notify
+      - value: notify-reload
+      - value: idle
+  kubernetes-the-hard-way:remote:SystemdServiceSection:
+    type: object
+    description: https://www.freedesktop.org/software/systemd/man/latest/systemd.service.html#
+    properties:
+      execStart:
+        type: string # This can technically be an array when type is oneshot
+        description: Commands that are executed when this service is started.
+      exitType:
+        $ref: "#/types/kubernetes-the-hard-way:remote:SystemdServiceExitType"
+        description: Specifies when the manager should consider the service to be finished.
+      restart:
+        $ref: "#/types/kubernetes-the-hard-way:remote:SystemdServiceRestart"
+        description: Configures whether the service shall be restarted when the service process exits, is killed, or a timeout is reached.
+      restartSec:
+        type: string
+        description: Configures the time to sleep before restarting a service (as configured with Restart=).
+      type:
+        $ref: "#/types/kubernetes-the-hard-way:remote:SystemdServiceType"
+        description: Configures the mechanism via which the service notifies the manager that the service start-up has finished.
+  kubernetes-the-hard-way:remote:SystemdUnitSection:
+    type: object
+    description: https://www.freedesktop.org/software/systemd/man/latest/systemd.unit.html#
+    properties:
+      bindsTo:
+        type: array
+        items:
+          type: string
+        description: Configures requirement dependencies, very similar in style to Requires=.
+      description:
+        type: string
+        description: A short human readable title of the unit.
+      documentation:
+        type: array
+        items:
+          type: string
+        description: A space-separated list of URIs referencing documentation for this unit or its configuration.
+      requires:
+        type: array
+        items:
+          type: string
+        description: Similar to Wants=, but declares a stronger requirement dependency.
+      requisite:
+        type: array
+        items:
+          type: string
+        description: Similar to Requires=. However, if the units listed here are not started already, they will not be started and the starting of this unit will fail immediately.
+      wants:
+        type: array
+        items:
+          type: string
+        description: Configures (weak) requirement dependencies on other units.
 functions:
   kubernetes-the-hard-way:tls:ClusterPki/getKubeconfig:
     inputs:

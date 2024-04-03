@@ -33,7 +33,8 @@ _utilities.register(
   "classes": {
    "kubernetes-the-hard-way:remote:Download": "Download",
    "kubernetes-the-hard-way:remote:EtcdInstall": "EtcdInstall",
-   "kubernetes-the-hard-way:remote:File": "File"
+   "kubernetes-the-hard-way:remote:File": "File",
+   "kubernetes-the-hard-way:remote:SystemdService": "SystemdService"
   }
  },
  {

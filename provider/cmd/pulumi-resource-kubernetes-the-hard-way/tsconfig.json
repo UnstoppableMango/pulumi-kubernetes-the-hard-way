@@ -23,6 +23,7 @@
         "remote/etcdInstall.ts",
         "remote/file.ts",
         "remote/index.ts",
+        "remote/systemdService.ts",
         "resources.ts",
         "schema-types.ts",
         "tools/index.ts",

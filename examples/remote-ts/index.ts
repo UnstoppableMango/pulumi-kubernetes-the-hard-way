@@ -1,7 +1,7 @@
 import * as path from 'node:path';
 import { Config } from '@pulumi/pulumi';
 import { Mkdir, Tar, Wget } from '@unmango/pulumi-kubernetes-the-hard-way/tools';
-import { Download, EtcdInstall, File } from '@unmango/pulumi-kubernetes-the-hard-way/remote';
+import { Download, EtcdInstall, File, SystemdService } from '@unmango/pulumi-kubernetes-the-hard-way/remote';
 
 const config = new Config();
 const host = config.require('host');
@@ -57,6 +57,14 @@ const etcd = new EtcdInstall('remote', {
   configurationDirectory: path.join(basePath, 'etc', 'etcd'),
   dataDirectory: path.join(basePath, 'var', 'lib', 'etcd'),
   systemdDirectory: basePath,
+});
+
+const systemdService = new SystemdService('remote', {
+  connection: { host, port, user, password },
+  directory: basePath,
+  service: {
+    execStart: 'test',
+  },
 });
 
 export const fileStderr = file.stderr;

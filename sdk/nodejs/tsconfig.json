@@ -20,6 +20,7 @@
         "remote/etcdInstall.ts",
         "remote/file.ts",
         "remote/index.ts",
+        "remote/systemdService.ts",
         "tls/certificate.ts",
         "tls/clusterPki.ts",
         "tls/encryptionKey.ts",

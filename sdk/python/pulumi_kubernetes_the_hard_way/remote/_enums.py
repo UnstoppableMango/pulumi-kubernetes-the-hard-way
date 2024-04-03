@@ -6,6 +6,9 @@ from enum import Enum
 
 __all__ = [
     'Architecture',
+    'SystemdServiceExitType',
+    'SystemdServiceRestart',
+    'SystemdServiceType',
 ]
 
 
@@ -15,3 +18,29 @@ class Architecture(str, Enum):
     """
     AMD64 = "amd64"
     ARM64 = "arm64"
+
+
+class SystemdServiceExitType(str, Enum):
+    MAIN = "main"
+    CGROUP = "cgroup"
+
+
+class SystemdServiceRestart(str, Enum):
+    NO = "no"
+    ON_SUCCESS = "on-success"
+    ON_FAILURE = "on-failure"
+    ON_ABNORMAL = "on-abnormal"
+    ON_WATCHDOG = "on-watchdog"
+    ON_ABORT = "on-abort"
+    ALWAYS = "always"
+
+
+class SystemdServiceType(str, Enum):
+    SIMPLE = "simple"
+    EXEC_ = "exec"
+    FORKING = "forking"
+    ONESHOT = "oneshot"
+    DBUS = "dbus"
+    NOTIFY = "notify"
+    NOTIFY_RELOAD = "notify-reload"
+    IDLE = "idle"
