@@ -1710,6 +1710,122 @@ types:
       - value: create
       - value: update
       - value: delete
+  kubernetes-the-hard-way:tools:KubeApiServerCommandOptions:
+    type: object
+    properties:
+      advertiseAddress:
+        type: string
+      allowPrivileged:
+        type: boolean
+      apiServerCount:
+        type: number
+      auditLogMaxAge:
+        type: number
+      auditLogMaxBackup:
+        type: number
+      auditLogMaxSize:
+        type: number
+      auditLogPath:
+        type: string
+      authorizationMode:
+        type: array
+        items:
+          type: string
+      bindAddress:
+        type: string
+      clientCaFile:
+        type: string
+      enableAdmissionPlugins:
+        type: array
+        items:
+          type: string
+      etcdCaFile:
+        type: string
+      etcdCertFile:
+        type: string
+      etcdServers:
+        type: array
+        items:
+          type: string
+      eventTtl:
+        type: string
+      encryptionProviderConfig:
+        type: string
+      kubeletCertificateAuthority:
+        type: string
+      kubeletClientCertificate:
+        type: string
+      kubeletClientKey:
+        type: string
+      runtimeConfig:
+        type: string
+      serviceAccountKeyFile:
+        type: string
+      serviceAccountSigningKeyFile:
+        type: string
+      serviceAccountIssuer:
+        type: string
+      serviceClusterIpRange:
+        type: string
+      serviceNodePortRange:
+        type: string
+      tlsCertFile:
+        type: string
+      tlsPrivateKeyFile:
+        type: string
+      v: # TODO: What does this refer to
+        type: number
+  kubernetes-the-hard-way:tools:KubeApiServerConfiguration:
+    type: object
+    properties:
+      caPem:
+        type: string
+      caKeyPem:
+        type: string
+      keyPem:
+        type: string
+      certPem:
+        type: string
+      saKeyPem:
+        type: string
+      saPem:
+        type: string
+      encryptionConfig:
+        type: string
+  kubernetes-the-hard-way:tools:KubeControllerManagerCommandOptions:
+    type: object
+    properties:
+      bindAddress:
+        type: string
+      clusterCidr:
+        type: string
+      clusterName:
+        type: string
+      clusterSigningCertFile:
+        type: string
+      clusterSigningKeyFile:
+        type: string
+      kubeconfig:
+        type: string
+      leaderElect:
+        type: boolean
+      rootCaFile:
+        type: string
+      serviceAccountPrivateKeyFile:
+        type: string
+      serviceClusterIpRange:
+        type: string
+      useServiceAccountCredentials:
+        type: boolean
+      v: # TODO: What does this refer to
+        type: number
+  kubernetes-the-hard-way:tools:KubeSchedulerCommandOptions:
+    type: object
+    properties:
+      config:
+        type: string
+      v: # TODO: What does this refer to
+        type: number
 functions:
   kubernetes-the-hard-way:tls:ClusterPki/getKubeconfig:
     inputs:
