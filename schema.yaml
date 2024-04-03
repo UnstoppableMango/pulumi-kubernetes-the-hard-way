@@ -605,6 +605,10 @@ resources:
         description: Connection details for the remote system.
       endpoints:
         type: string
+      env:
+        type: object
+        additionalProperties:
+          type: string
       caCert:
         type: string
       cert:
