@@ -18,6 +18,21 @@ export type File = import("./file").File;
 export const File: typeof import("./file").File = null as any;
 utilities.lazyLoad(exports, ["File"], () => require("./file"));
 
+export { KubeApiServerInstallArgs } from "./kubeApiServerInstall";
+export type KubeApiServerInstall = import("./kubeApiServerInstall").KubeApiServerInstall;
+export const KubeApiServerInstall: typeof import("./kubeApiServerInstall").KubeApiServerInstall = null as any;
+utilities.lazyLoad(exports, ["KubeApiServerInstall"], () => require("./kubeApiServerInstall"));
+
+export { KubeControllerManagerInstallArgs } from "./kubeControllerManagerInstall";
+export type KubeControllerManagerInstall = import("./kubeControllerManagerInstall").KubeControllerManagerInstall;
+export const KubeControllerManagerInstall: typeof import("./kubeControllerManagerInstall").KubeControllerManagerInstall = null as any;
+utilities.lazyLoad(exports, ["KubeControllerManagerInstall"], () => require("./kubeControllerManagerInstall"));
+
+export { KubeSchedulerInstallArgs } from "./kubeSchedulerInstall";
+export type KubeSchedulerInstall = import("./kubeSchedulerInstall").KubeSchedulerInstall;
+export const KubeSchedulerInstall: typeof import("./kubeSchedulerInstall").KubeSchedulerInstall = null as any;
+utilities.lazyLoad(exports, ["KubeSchedulerInstall"], () => require("./kubeSchedulerInstall"));
+
 export * from "./systemdService";
 import { SystemdService } from "./systemdService";
 
@@ -35,6 +50,12 @@ const _module = {
                 return new EtcdInstall(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:remote:File":
                 return new File(name, <any>undefined, { urn })
+            case "kubernetes-the-hard-way:remote:KubeApiServerInstall":
+                return new KubeApiServerInstall(name, <any>undefined, { urn })
+            case "kubernetes-the-hard-way:remote:KubeControllerManagerInstall":
+                return new KubeControllerManagerInstall(name, <any>undefined, { urn })
+            case "kubernetes-the-hard-way:remote:KubeSchedulerInstall":
+                return new KubeSchedulerInstall(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:remote:SystemdService":
                 return new SystemdService(name, <any>undefined, { urn })
             default:

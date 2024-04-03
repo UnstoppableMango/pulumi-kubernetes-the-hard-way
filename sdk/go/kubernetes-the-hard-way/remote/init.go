@@ -27,6 +27,12 @@ func (m *module) Construct(ctx *pulumi.Context, name, typ, urn string) (r pulumi
 		r = &EtcdInstall{}
 	case "kubernetes-the-hard-way:remote:File":
 		r = &File{}
+	case "kubernetes-the-hard-way:remote:KubeApiServerInstall":
+		r = &KubeApiServerInstall{}
+	case "kubernetes-the-hard-way:remote:KubeControllerManagerInstall":
+		r = &KubeControllerManagerInstall{}
+	case "kubernetes-the-hard-way:remote:KubeSchedulerInstall":
+		r = &KubeSchedulerInstall{}
 	case "kubernetes-the-hard-way:remote:SystemdService":
 		r = &SystemdService{}
 	default:
