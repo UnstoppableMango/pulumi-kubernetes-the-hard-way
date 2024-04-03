@@ -1004,6 +1004,92 @@ resources:
       - files
       - stderr
       - stdout
+  kubernetes-the-hard-way:tools:Tee:
+    isComponent: true
+    description: Read from standard input and write to standard output and files.
+    inputProperties:
+      append:
+        type: boolean
+        description: Append to the given FILEs, do not overwrite.
+      connection:
+        $ref: "/command/v0.9.2/schema.json#/types/command:remote:Connection"
+        description: Connection details for the remote system.
+      files:
+        oneOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+        description: The file(s) to write to.
+      ignoreInterrupts:
+        type: boolean
+        description: Ignore interrupt signals.
+      lifecycle:
+        oneOf:
+          - $ref: "#/types/kubernetes-the-hard-way:tools:CommandLifecycle"
+          - type: array
+            items:
+              $ref: "#/types/kubernetes-the-hard-way:tools:CommandLifecycle"
+        plain: true
+        default: create
+        description: At what stage(s) in the resource lifecycle should the command be run.
+      outputError:
+        $ref: "#/types/kubernetes-the-hard-way:tools:TeeMode"
+        description: Set behavior on write error.
+      pipe:
+        type: boolean
+        description: Operate in a more appropriate MODE with pipes.
+      stdin:
+        type: string
+      version:
+        type: boolean
+        description: Output version information and exit.
+    requiredInputs:
+      - connection
+      - files
+      - stdin
+    properties:
+      append:
+        type: boolean
+        description: Append to the given FILEs, do not overwrite.
+      command:
+        $ref: "/command/v0.9.2/schema.json#/resources/command:remote:Command"
+        description: Represents the command run on the remote system.
+      connection:
+        $ref: "/command/v0.9.2/schema.json#/types/command:remote:Connection"
+        description: Connection details for the remote system.
+      files:
+        oneOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+        description: The file(s) to write to.
+      ignoreInterrupts:
+        type: boolean
+        description: Ignore interrupt signals.
+      lifecycle:
+        type: array
+        items:
+          $ref: "#/types/kubernetes-the-hard-way:tools:CommandLifecycle"
+        description: At what stage(s) in the resource lifecycle should the command be run.
+      outputError:
+        $ref: "#/types/kubernetes-the-hard-way:tools:TeeMode"
+        description: Set behavior on write error.
+      pipe:
+        type: boolean
+        description: Operate in a more appropriate MODE with pipes.
+      stdin:
+        type: string
+    required:
+      - append
+      - command
+      - connection
+      - files
+      - ignoreInterrupts
+      - lifecycle
+      - pipe
+      - stdin
   kubernetes-the-hard-way:tools:Wget:
     isComponent: true
     description: Abstraction over the `wget` utility on a remote system.
@@ -1487,6 +1573,19 @@ types:
       - value: enable
       - value: start
       - value: stop
+  kubernetes-the-hard-way:tools:TeeMode:
+    type: string
+    enum:
+      - value: warn
+      - value: warn-nopipe
+      - value: exit
+      - value: exit-nopipe
+  kubernetes-the-hard-way:tools:CommandLifecycle:
+    type: string
+    enum:
+      - value: create
+      - value: update
+      - value: delete
 functions:
   kubernetes-the-hard-way:tls:ClusterPki/getKubeconfig:
     inputs:
