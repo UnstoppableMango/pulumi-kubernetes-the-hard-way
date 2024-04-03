@@ -40,6 +40,11 @@ export type Tar = import("./tar").Tar;
 export const Tar: typeof import("./tar").Tar = null as any;
 utilities.lazyLoad(exports, ["Tar"], () => require("./tar"));
 
+export { TeeArgs } from "./tee";
+export type Tee = import("./tee").Tee;
+export const Tee: typeof import("./tee").Tee = null as any;
+utilities.lazyLoad(exports, ["Tee"], () => require("./tee"));
+
 export { WgetArgs } from "./wget";
 export type Wget = import("./wget").Wget;
 export const Wget: typeof import("./wget").Wget = null as any;
@@ -67,6 +72,8 @@ const _module = {
                 return new Systemctl(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:tools:Tar":
                 return new Tar(name, <any>undefined, { urn })
+            case "kubernetes-the-hard-way:tools:Tee":
+                return new Tee(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:tools:Wget":
                 return new Wget(name, <any>undefined, { urn })
             default:

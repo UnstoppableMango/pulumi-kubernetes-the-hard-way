@@ -13,4 +13,5 @@ from .mv import *
 from .rm import *
 from .systemctl import *
 from .tar import *
+from .tee import *
 from .wget import *

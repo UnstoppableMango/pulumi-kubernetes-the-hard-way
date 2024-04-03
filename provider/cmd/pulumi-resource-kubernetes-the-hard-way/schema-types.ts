@@ -21,6 +21,7 @@ export type ResourceConstructor = {
     readonly "kubernetes-the-hard-way:tools:Rm": ConstructComponent<Rm>;
     readonly "kubernetes-the-hard-way:tools:Systemctl": ConstructComponent<Systemctl>;
     readonly "kubernetes-the-hard-way:tools:Tar": ConstructComponent<Tar>;
+    readonly "kubernetes-the-hard-way:tools:Tee": ConstructComponent<Tee>;
     readonly "kubernetes-the-hard-way:tools:Wget": ConstructComponent<Wget>;
 };
 export type Functions = {
@@ -364,6 +365,31 @@ export interface TarArgs {
     readonly gzip?: pulumi.Input<boolean>;
     readonly stripComponents?: pulumi.Input<number>;
 }
+export abstract class Tee<TData = any> extends (pulumi.ComponentResource)<TData> {
+    public append!: boolean | pulumi.Output<boolean>;
+    public command!: command.remote.Command | pulumi.Output<command.remote.Command>;
+    public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
+    public files!: unknown | pulumi.Output<unknown>;
+    public ignoreInterrupts!: boolean | pulumi.Output<boolean>;
+    public lifecycle!: CommandLifecycleOutputs[] | pulumi.Output<CommandLifecycleOutputs[]>;
+    public outputError?: TeeModeOutputs | pulumi.Output<TeeModeOutputs>;
+    public pipe!: boolean | pulumi.Output<boolean>;
+    public stdin!: string | pulumi.Output<string>;
+    constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
+        super("kubernetes-the-hard-way:tools:Tee", name, opts.urn ? { append: undefined, command: undefined, connection: undefined, files: undefined, ignoreInterrupts: undefined, lifecycle: undefined, outputError: undefined, pipe: undefined, stdin: undefined } : { name, args, opts }, opts);
+    }
+}
+export interface TeeArgs {
+    readonly append?: pulumi.Input<boolean>;
+    readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
+    readonly files: pulumi.Input<unknown>;
+    readonly ignoreInterrupts?: pulumi.Input<boolean>;
+    readonly lifecycle?: unknown;
+    readonly outputError?: pulumi.Input<TeeModeInputs>;
+    readonly pipe?: pulumi.Input<boolean>;
+    readonly stdin: pulumi.Input<string>;
+    readonly version?: pulumi.Input<boolean>;
+}
 export abstract class Wget<TData = any> extends (pulumi.ComponentResource)<TData> {
     public command!: command.remote.Command | pulumi.Output<command.remote.Command>;
     public directoryPrefix?: string | pulumi.Output<string>;
@@ -628,6 +654,10 @@ export interface BundleOutputs {
 }
 export type SystemctlCommandInputs = "daemon-reload" | "disable" | "enable" | "start" | "stop";
 export type SystemctlCommandOutputs = "daemon-reload" | "disable" | "enable" | "start" | "stop";
+export type TeeModeInputs = "warn" | "warn-nopipe" | "exit" | "exit-nopipe";
+export type TeeModeOutputs = "warn" | "warn-nopipe" | "exit" | "exit-nopipe";
+export type CommandLifecycleInputs = "create" | "update" | "delete";
+export type CommandLifecycleOutputs = "create" | "update" | "delete";
 export interface ClusterPki_getKubeconfigInputs {
     readonly __self__: pulumi.Input<ClusterPki>;
     readonly options: unknown;

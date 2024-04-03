@@ -60,6 +60,7 @@ _utilities.register(
    "kubernetes-the-hard-way:tools:Rm": "Rm",
    "kubernetes-the-hard-way:tools:Systemctl": "Systemctl",
    "kubernetes-the-hard-way:tools:Tar": "Tar",
+   "kubernetes-the-hard-way:tools:Tee": "Tee",
    "kubernetes-the-hard-way:tools:Wget": "Wget"
   }
  }

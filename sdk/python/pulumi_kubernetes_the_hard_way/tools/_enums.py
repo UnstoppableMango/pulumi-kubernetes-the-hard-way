@@ -5,9 +5,17 @@
 from enum import Enum
 
 __all__ = [
+    'CommandLifecycle',
     'EtcdctlCommand',
     'SystemctlCommand',
+    'TeeMode',
 ]
+
+
+class CommandLifecycle(str, Enum):
+    CREATE = "create"
+    UPDATE = "update"
+    DELETE = "delete"
 
 
 class EtcdctlCommand(str, Enum):
@@ -21,3 +29,10 @@ class SystemctlCommand(str, Enum):
     ENABLE = "enable"
     START = "start"
     STOP = "stop"
+
+
+class TeeMode(str, Enum):
+    WARN = "warn"
+    WARN_NOPIPE = "warn-nopipe"
+    EXIT = "exit"
+    EXIT_NOPIPE = "exit-nopipe"

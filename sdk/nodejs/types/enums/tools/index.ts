@@ -2,6 +2,14 @@
 // *** Do not edit by hand unless you're certain you know what you are doing! ***
 
 
+export const CommandLifecycle = {
+    Create: "create",
+    Update: "update",
+    Delete: "delete",
+} as const;
+
+export type CommandLifecycle = (typeof CommandLifecycle)[keyof typeof CommandLifecycle];
+
 export const EtcdctlCommand = {
     Member: "member",
     List: "list",
@@ -18,3 +26,12 @@ export const SystemctlCommand = {
 } as const;
 
 export type SystemctlCommand = (typeof SystemctlCommand)[keyof typeof SystemctlCommand];
+
+export const TeeMode = {
+    Warn: "warn",
+    Warn_nopipe: "warn-nopipe",
+    Exit: "exit",
+    Exit_nopipe: "exit-nopipe",
+} as const;
+
+export type TeeMode = (typeof TeeMode)[keyof typeof TeeMode];

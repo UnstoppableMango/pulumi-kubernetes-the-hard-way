@@ -34,6 +34,7 @@
         "tools/rm.ts",
         "tools/systemctl.ts",
         "tools/tar.ts",
+        "tools/tee.ts",
         "tools/wget.ts",
         "types/enums/config/index.ts",
         "types/enums/index.ts",

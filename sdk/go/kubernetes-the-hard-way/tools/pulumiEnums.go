@@ -10,6 +10,218 @@ import (
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
+type CommandLifecycle string
+
+const (
+	CommandLifecycleCreate = CommandLifecycle("create")
+	CommandLifecycleUpdate = CommandLifecycle("update")
+	CommandLifecycleDelete = CommandLifecycle("delete")
+)
+
+func (CommandLifecycle) ElementType() reflect.Type {
+	return reflect.TypeOf((*CommandLifecycle)(nil)).Elem()
+}
+
+func (e CommandLifecycle) ToCommandLifecycleOutput() CommandLifecycleOutput {
+	return pulumi.ToOutput(e).(CommandLifecycleOutput)
+}
+
+func (e CommandLifecycle) ToCommandLifecycleOutputWithContext(ctx context.Context) CommandLifecycleOutput {
+	return pulumi.ToOutputWithContext(ctx, e).(CommandLifecycleOutput)
+}
+
+func (e CommandLifecycle) ToCommandLifecyclePtrOutput() CommandLifecyclePtrOutput {
+	return e.ToCommandLifecyclePtrOutputWithContext(context.Background())
+}
+
+func (e CommandLifecycle) ToCommandLifecyclePtrOutputWithContext(ctx context.Context) CommandLifecyclePtrOutput {
+	return CommandLifecycle(e).ToCommandLifecycleOutputWithContext(ctx).ToCommandLifecyclePtrOutputWithContext(ctx)
+}
+
+func (e CommandLifecycle) ToStringOutput() pulumi.StringOutput {
+	return pulumi.ToOutput(pulumi.String(e)).(pulumi.StringOutput)
+}
+
+func (e CommandLifecycle) ToStringOutputWithContext(ctx context.Context) pulumi.StringOutput {
+	return pulumi.ToOutputWithContext(ctx, pulumi.String(e)).(pulumi.StringOutput)
+}
+
+func (e CommandLifecycle) ToStringPtrOutput() pulumi.StringPtrOutput {
+	return pulumi.String(e).ToStringPtrOutputWithContext(context.Background())
+}
+
+func (e CommandLifecycle) ToStringPtrOutputWithContext(ctx context.Context) pulumi.StringPtrOutput {
+	return pulumi.String(e).ToStringOutputWithContext(ctx).ToStringPtrOutputWithContext(ctx)
+}
+
+type CommandLifecycleOutput struct{ *pulumi.OutputState }
+
+func (CommandLifecycleOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*CommandLifecycle)(nil)).Elem()
+}
+
+func (o CommandLifecycleOutput) ToCommandLifecycleOutput() CommandLifecycleOutput {
+	return o
+}
+
+func (o CommandLifecycleOutput) ToCommandLifecycleOutputWithContext(ctx context.Context) CommandLifecycleOutput {
+	return o
+}
+
+func (o CommandLifecycleOutput) ToCommandLifecyclePtrOutput() CommandLifecyclePtrOutput {
+	return o.ToCommandLifecyclePtrOutputWithContext(context.Background())
+}
+
+func (o CommandLifecycleOutput) ToCommandLifecyclePtrOutputWithContext(ctx context.Context) CommandLifecyclePtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v CommandLifecycle) *CommandLifecycle {
+		return &v
+	}).(CommandLifecyclePtrOutput)
+}
+
+func (o CommandLifecycleOutput) ToStringOutput() pulumi.StringOutput {
+	return o.ToStringOutputWithContext(context.Background())
+}
+
+func (o CommandLifecycleOutput) ToStringOutputWithContext(ctx context.Context) pulumi.StringOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, e CommandLifecycle) string {
+		return string(e)
+	}).(pulumi.StringOutput)
+}
+
+func (o CommandLifecycleOutput) ToStringPtrOutput() pulumi.StringPtrOutput {
+	return o.ToStringPtrOutputWithContext(context.Background())
+}
+
+func (o CommandLifecycleOutput) ToStringPtrOutputWithContext(ctx context.Context) pulumi.StringPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, e CommandLifecycle) *string {
+		v := string(e)
+		return &v
+	}).(pulumi.StringPtrOutput)
+}
+
+type CommandLifecyclePtrOutput struct{ *pulumi.OutputState }
+
+func (CommandLifecyclePtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**CommandLifecycle)(nil)).Elem()
+}
+
+func (o CommandLifecyclePtrOutput) ToCommandLifecyclePtrOutput() CommandLifecyclePtrOutput {
+	return o
+}
+
+func (o CommandLifecyclePtrOutput) ToCommandLifecyclePtrOutputWithContext(ctx context.Context) CommandLifecyclePtrOutput {
+	return o
+}
+
+func (o CommandLifecyclePtrOutput) Elem() CommandLifecycleOutput {
+	return o.ApplyT(func(v *CommandLifecycle) CommandLifecycle {
+		if v != nil {
+			return *v
+		}
+		var ret CommandLifecycle
+		return ret
+	}).(CommandLifecycleOutput)
+}
+
+func (o CommandLifecyclePtrOutput) ToStringPtrOutput() pulumi.StringPtrOutput {
+	return o.ToStringPtrOutputWithContext(context.Background())
+}
+
+func (o CommandLifecyclePtrOutput) ToStringPtrOutputWithContext(ctx context.Context) pulumi.StringPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, e *CommandLifecycle) *string {
+		if e == nil {
+			return nil
+		}
+		v := string(*e)
+		return &v
+	}).(pulumi.StringPtrOutput)
+}
+
+// CommandLifecycleInput is an input type that accepts values of the CommandLifecycle enum
+// A concrete instance of `CommandLifecycleInput` can be one of the following:
+//
+//	CommandLifecycleCreate
+//	CommandLifecycleUpdate
+//	CommandLifecycleDelete
+type CommandLifecycleInput interface {
+	pulumi.Input
+
+	ToCommandLifecycleOutput() CommandLifecycleOutput
+	ToCommandLifecycleOutputWithContext(context.Context) CommandLifecycleOutput
+}
+
+var commandLifecyclePtrType = reflect.TypeOf((**CommandLifecycle)(nil)).Elem()
+
+type CommandLifecyclePtrInput interface {
+	pulumi.Input
+
+	ToCommandLifecyclePtrOutput() CommandLifecyclePtrOutput
+	ToCommandLifecyclePtrOutputWithContext(context.Context) CommandLifecyclePtrOutput
+}
+
+type commandLifecyclePtr string
+
+func CommandLifecyclePtr(v string) CommandLifecyclePtrInput {
+	return (*commandLifecyclePtr)(&v)
+}
+
+func (*commandLifecyclePtr) ElementType() reflect.Type {
+	return commandLifecyclePtrType
+}
+
+func (in *commandLifecyclePtr) ToCommandLifecyclePtrOutput() CommandLifecyclePtrOutput {
+	return pulumi.ToOutput(in).(CommandLifecyclePtrOutput)
+}
+
+func (in *commandLifecyclePtr) ToCommandLifecyclePtrOutputWithContext(ctx context.Context) CommandLifecyclePtrOutput {
+	return pulumi.ToOutputWithContext(ctx, in).(CommandLifecyclePtrOutput)
+}
+
+// CommandLifecycleArrayInput is an input type that accepts CommandLifecycleArray and CommandLifecycleArrayOutput values.
+// You can construct a concrete instance of `CommandLifecycleArrayInput` via:
+//
+//	CommandLifecycleArray{ CommandLifecycleArgs{...} }
+type CommandLifecycleArrayInput interface {
+	pulumi.Input
+
+	ToCommandLifecycleArrayOutput() CommandLifecycleArrayOutput
+	ToCommandLifecycleArrayOutputWithContext(context.Context) CommandLifecycleArrayOutput
+}
+
+type CommandLifecycleArray []CommandLifecycle
+
+func (CommandLifecycleArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]CommandLifecycle)(nil)).Elem()
+}
+
+func (i CommandLifecycleArray) ToCommandLifecycleArrayOutput() CommandLifecycleArrayOutput {
+	return i.ToCommandLifecycleArrayOutputWithContext(context.Background())
+}
+
+func (i CommandLifecycleArray) ToCommandLifecycleArrayOutputWithContext(ctx context.Context) CommandLifecycleArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CommandLifecycleArrayOutput)
+}
+
+type CommandLifecycleArrayOutput struct{ *pulumi.OutputState }
+
+func (CommandLifecycleArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]CommandLifecycle)(nil)).Elem()
+}
+
+func (o CommandLifecycleArrayOutput) ToCommandLifecycleArrayOutput() CommandLifecycleArrayOutput {
+	return o
+}
+
+func (o CommandLifecycleArrayOutput) ToCommandLifecycleArrayOutputWithContext(ctx context.Context) CommandLifecycleArrayOutput {
+	return o
+}
+
+func (o CommandLifecycleArrayOutput) Index(i pulumi.IntInput) CommandLifecycleOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) CommandLifecycle {
+		return vs[0].([]CommandLifecycle)[vs[1].(int)]
+	}).(CommandLifecycleOutput)
+}
+
 type EtcdctlCommand string
 
 const (
@@ -436,17 +648,196 @@ func (o SystemctlCommandArrayOutput) Index(i pulumi.IntInput) SystemctlCommandOu
 	}).(SystemctlCommandOutput)
 }
 
+type TeeMode string
+
+const (
+	TeeModeWarn         = TeeMode("warn")
+	TeeMode_Warn_Nopipe = TeeMode("warn-nopipe")
+	TeeModeExit         = TeeMode("exit")
+	TeeMode_Exit_Nopipe = TeeMode("exit-nopipe")
+)
+
+func (TeeMode) ElementType() reflect.Type {
+	return reflect.TypeOf((*TeeMode)(nil)).Elem()
+}
+
+func (e TeeMode) ToTeeModeOutput() TeeModeOutput {
+	return pulumi.ToOutput(e).(TeeModeOutput)
+}
+
+func (e TeeMode) ToTeeModeOutputWithContext(ctx context.Context) TeeModeOutput {
+	return pulumi.ToOutputWithContext(ctx, e).(TeeModeOutput)
+}
+
+func (e TeeMode) ToTeeModePtrOutput() TeeModePtrOutput {
+	return e.ToTeeModePtrOutputWithContext(context.Background())
+}
+
+func (e TeeMode) ToTeeModePtrOutputWithContext(ctx context.Context) TeeModePtrOutput {
+	return TeeMode(e).ToTeeModeOutputWithContext(ctx).ToTeeModePtrOutputWithContext(ctx)
+}
+
+func (e TeeMode) ToStringOutput() pulumi.StringOutput {
+	return pulumi.ToOutput(pulumi.String(e)).(pulumi.StringOutput)
+}
+
+func (e TeeMode) ToStringOutputWithContext(ctx context.Context) pulumi.StringOutput {
+	return pulumi.ToOutputWithContext(ctx, pulumi.String(e)).(pulumi.StringOutput)
+}
+
+func (e TeeMode) ToStringPtrOutput() pulumi.StringPtrOutput {
+	return pulumi.String(e).ToStringPtrOutputWithContext(context.Background())
+}
+
+func (e TeeMode) ToStringPtrOutputWithContext(ctx context.Context) pulumi.StringPtrOutput {
+	return pulumi.String(e).ToStringOutputWithContext(ctx).ToStringPtrOutputWithContext(ctx)
+}
+
+type TeeModeOutput struct{ *pulumi.OutputState }
+
+func (TeeModeOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*TeeMode)(nil)).Elem()
+}
+
+func (o TeeModeOutput) ToTeeModeOutput() TeeModeOutput {
+	return o
+}
+
+func (o TeeModeOutput) ToTeeModeOutputWithContext(ctx context.Context) TeeModeOutput {
+	return o
+}
+
+func (o TeeModeOutput) ToTeeModePtrOutput() TeeModePtrOutput {
+	return o.ToTeeModePtrOutputWithContext(context.Background())
+}
+
+func (o TeeModeOutput) ToTeeModePtrOutputWithContext(ctx context.Context) TeeModePtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v TeeMode) *TeeMode {
+		return &v
+	}).(TeeModePtrOutput)
+}
+
+func (o TeeModeOutput) ToStringOutput() pulumi.StringOutput {
+	return o.ToStringOutputWithContext(context.Background())
+}
+
+func (o TeeModeOutput) ToStringOutputWithContext(ctx context.Context) pulumi.StringOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, e TeeMode) string {
+		return string(e)
+	}).(pulumi.StringOutput)
+}
+
+func (o TeeModeOutput) ToStringPtrOutput() pulumi.StringPtrOutput {
+	return o.ToStringPtrOutputWithContext(context.Background())
+}
+
+func (o TeeModeOutput) ToStringPtrOutputWithContext(ctx context.Context) pulumi.StringPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, e TeeMode) *string {
+		v := string(e)
+		return &v
+	}).(pulumi.StringPtrOutput)
+}
+
+type TeeModePtrOutput struct{ *pulumi.OutputState }
+
+func (TeeModePtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**TeeMode)(nil)).Elem()
+}
+
+func (o TeeModePtrOutput) ToTeeModePtrOutput() TeeModePtrOutput {
+	return o
+}
+
+func (o TeeModePtrOutput) ToTeeModePtrOutputWithContext(ctx context.Context) TeeModePtrOutput {
+	return o
+}
+
+func (o TeeModePtrOutput) Elem() TeeModeOutput {
+	return o.ApplyT(func(v *TeeMode) TeeMode {
+		if v != nil {
+			return *v
+		}
+		var ret TeeMode
+		return ret
+	}).(TeeModeOutput)
+}
+
+func (o TeeModePtrOutput) ToStringPtrOutput() pulumi.StringPtrOutput {
+	return o.ToStringPtrOutputWithContext(context.Background())
+}
+
+func (o TeeModePtrOutput) ToStringPtrOutputWithContext(ctx context.Context) pulumi.StringPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, e *TeeMode) *string {
+		if e == nil {
+			return nil
+		}
+		v := string(*e)
+		return &v
+	}).(pulumi.StringPtrOutput)
+}
+
+// TeeModeInput is an input type that accepts values of the TeeMode enum
+// A concrete instance of `TeeModeInput` can be one of the following:
+//
+//	TeeModeWarn
+//	TeeMode_Warn_Nopipe
+//	TeeModeExit
+//	TeeMode_Exit_Nopipe
+type TeeModeInput interface {
+	pulumi.Input
+
+	ToTeeModeOutput() TeeModeOutput
+	ToTeeModeOutputWithContext(context.Context) TeeModeOutput
+}
+
+var teeModePtrType = reflect.TypeOf((**TeeMode)(nil)).Elem()
+
+type TeeModePtrInput interface {
+	pulumi.Input
+
+	ToTeeModePtrOutput() TeeModePtrOutput
+	ToTeeModePtrOutputWithContext(context.Context) TeeModePtrOutput
+}
+
+type teeModePtr string
+
+func TeeModePtr(v string) TeeModePtrInput {
+	return (*teeModePtr)(&v)
+}
+
+func (*teeModePtr) ElementType() reflect.Type {
+	return teeModePtrType
+}
+
+func (in *teeModePtr) ToTeeModePtrOutput() TeeModePtrOutput {
+	return pulumi.ToOutput(in).(TeeModePtrOutput)
+}
+
+func (in *teeModePtr) ToTeeModePtrOutputWithContext(ctx context.Context) TeeModePtrOutput {
+	return pulumi.ToOutputWithContext(ctx, in).(TeeModePtrOutput)
+}
+
 func init() {
+	pulumi.RegisterInputType(reflect.TypeOf((*CommandLifecycleInput)(nil)).Elem(), CommandLifecycle("create"))
+	pulumi.RegisterInputType(reflect.TypeOf((*CommandLifecyclePtrInput)(nil)).Elem(), CommandLifecycle("create"))
+	pulumi.RegisterInputType(reflect.TypeOf((*CommandLifecycleArrayInput)(nil)).Elem(), CommandLifecycleArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*EtcdctlCommandInput)(nil)).Elem(), EtcdctlCommand("member"))
 	pulumi.RegisterInputType(reflect.TypeOf((*EtcdctlCommandPtrInput)(nil)).Elem(), EtcdctlCommand("member"))
 	pulumi.RegisterInputType(reflect.TypeOf((*EtcdctlCommandArrayInput)(nil)).Elem(), EtcdctlCommandArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*SystemctlCommandInput)(nil)).Elem(), SystemctlCommand("daemon-reload"))
 	pulumi.RegisterInputType(reflect.TypeOf((*SystemctlCommandPtrInput)(nil)).Elem(), SystemctlCommand("daemon-reload"))
 	pulumi.RegisterInputType(reflect.TypeOf((*SystemctlCommandArrayInput)(nil)).Elem(), SystemctlCommandArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*TeeModeInput)(nil)).Elem(), TeeMode("warn"))
+	pulumi.RegisterInputType(reflect.TypeOf((*TeeModePtrInput)(nil)).Elem(), TeeMode("warn"))
+	pulumi.RegisterOutputType(CommandLifecycleOutput{})
+	pulumi.RegisterOutputType(CommandLifecyclePtrOutput{})
+	pulumi.RegisterOutputType(CommandLifecycleArrayOutput{})
 	pulumi.RegisterOutputType(EtcdctlCommandOutput{})
 	pulumi.RegisterOutputType(EtcdctlCommandPtrOutput{})
 	pulumi.RegisterOutputType(EtcdctlCommandArrayOutput{})
 	pulumi.RegisterOutputType(SystemctlCommandOutput{})
 	pulumi.RegisterOutputType(SystemctlCommandPtrOutput{})
 	pulumi.RegisterOutputType(SystemctlCommandArrayOutput{})
+	pulumi.RegisterOutputType(TeeModeOutput{})
+	pulumi.RegisterOutputType(TeeModePtrOutput{})
 }
