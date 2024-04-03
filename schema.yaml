@@ -495,7 +495,6 @@ resources:
         description: Describes the [Unit] section of a systemd service file.
     requiredInputs:
       - connection
-      - directory
       - service
     properties:
       connection:
@@ -519,6 +518,7 @@ resources:
         description: Describes the [Unit] section of a systemd service file.
     required:
       - connection
+      - directory
       - file
       - service
   kubernetes-the-hard-way:tls:RootCa:
