@@ -39,14 +39,14 @@ public class SystemdService extends com.pulumi.resources.ComponentResource {
      * 
      */
     @Export(name="directory", refs={String.class}, tree="[0]")
-    private Output</* @Nullable */ String> directory;
+    private Output<String> directory;
 
     /**
      * @return The location to create the service file.
      * 
      */
-    public Output<Optional<String>> directory() {
-        return Codegen.optional(this.directory);
+    public Output<String> directory() {
+        return this.directory;
     }
     /**
      * Represents the service file on the remote machine.

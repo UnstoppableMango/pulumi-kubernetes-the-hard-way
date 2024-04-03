@@ -40,15 +40,15 @@ public final class SystemdServiceArgs extends com.pulumi.resources.ResourceArgs 
      * The location to create the service file.
      * 
      */
-    @Import(name="directory", required=true)
-    private Output<String> directory;
+    @Import(name="directory")
+    private @Nullable Output<String> directory;
 
     /**
      * @return The location to create the service file.
      * 
      */
-    public Output<String> directory() {
-        return this.directory;
+    public Optional<Output<String>> directory() {
+        return Optional.ofNullable(this.directory);
     }
 
     /**
@@ -151,7 +151,7 @@ public final class SystemdServiceArgs extends com.pulumi.resources.ResourceArgs 
          * @return builder
          * 
          */
-        public Builder directory(Output<String> directory) {
+        public Builder directory(@Nullable Output<String> directory) {
             $.directory = directory;
             return this;
         }
@@ -233,7 +233,7 @@ public final class SystemdServiceArgs extends com.pulumi.resources.ResourceArgs 
             if ($.connection == null) {
                 throw new MissingRequiredPropertyException("SystemdServiceArgs", "connection");
             }
-            $.directory = Codegen.stringProp("directory").output().arg($.directory).def("/etc/systemd/system").require();
+            $.directory = Codegen.stringProp("directory").output().arg($.directory).def("/etc/systemd/system").getNullable();
             if ($.service == null) {
                 throw new MissingRequiredPropertyException("SystemdServiceArgs", "service");
             }

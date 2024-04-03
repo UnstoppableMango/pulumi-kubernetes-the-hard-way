@@ -33,7 +33,7 @@ export class SystemdService extends pulumi.ComponentResource {
     /**
      * The location to create the service file.
      */
-    public readonly directory!: pulumi.Output<string | undefined>;
+    public readonly directory!: pulumi.Output<string>;
     /**
      * Represents the service file on the remote machine.
      */
@@ -64,9 +64,6 @@ export class SystemdService extends pulumi.ComponentResource {
         if (!opts.id) {
             if ((!args || args.connection === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'connection'");
-            }
-            if ((!args || args.directory === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'directory'");
             }
             if ((!args || args.service === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'service'");
@@ -101,7 +98,7 @@ export interface SystemdServiceArgs {
     /**
      * The location to create the service file.
      */
-    directory: pulumi.Input<string>;
+    directory?: pulumi.Input<string>;
     /**
      * Describes the [Install] section of a systemd service file.
      */

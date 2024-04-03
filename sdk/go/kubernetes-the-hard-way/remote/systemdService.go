@@ -19,7 +19,7 @@ type SystemdService struct {
 	// The connection details.
 	Connection pulumiCommand.ConnectionOutput `pulumi:"connection"`
 	// The location to create the service file.
-	Directory pulumi.StringPtrOutput `pulumi:"directory"`
+	Directory pulumi.StringOutput `pulumi:"directory"`
 	// Represents the service file on the remote machine.
 	File FileOutput `pulumi:"file"`
 	// Describes the [Install] section of a systemd service file.
@@ -45,7 +45,7 @@ func NewSystemdService(ctx *pulumi.Context,
 	}
 	args.Connection = args.Connection.ToConnectionOutput().ApplyT(func(v pulumiCommand.Connection) pulumiCommand.Connection { return *v.Defaults() }).(pulumiCommand.ConnectionOutput)
 	if args.Directory == nil {
-		args.Directory = pulumi.String("/etc/systemd/system")
+		args.Directory = pulumi.StringPtr("/etc/systemd/system")
 	}
 	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource SystemdService
@@ -60,7 +60,7 @@ type systemdServiceArgs struct {
 	// The connection details.
 	Connection pulumiCommand.Connection `pulumi:"connection"`
 	// The location to create the service file.
-	Directory string `pulumi:"directory"`
+	Directory *string `pulumi:"directory"`
 	// Describes the [Install] section of a systemd service file.
 	Install *SystemdInstallSection `pulumi:"install"`
 	// Describes the [Service] section of a systemd service file.
@@ -74,7 +74,7 @@ type SystemdServiceArgs struct {
 	// The connection details.
 	Connection pulumiCommand.ConnectionInput
 	// The location to create the service file.
-	Directory pulumi.StringInput
+	Directory pulumi.StringPtrInput
 	// Describes the [Install] section of a systemd service file.
 	Install SystemdInstallSectionPtrInput
 	// Describes the [Service] section of a systemd service file.
@@ -176,8 +176,8 @@ func (o SystemdServiceOutput) Connection() pulumiCommand.ConnectionOutput {
 }
 
 // The location to create the service file.
-func (o SystemdServiceOutput) Directory() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *SystemdService) pulumi.StringPtrOutput { return v.Directory }).(pulumi.StringPtrOutput)
+func (o SystemdServiceOutput) Directory() pulumi.StringOutput {
+	return o.ApplyT(func(v *SystemdService) pulumi.StringOutput { return v.Directory }).(pulumi.StringOutput)
 }
 
 // Represents the service file on the remote machine.

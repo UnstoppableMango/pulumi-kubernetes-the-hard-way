@@ -169,7 +169,7 @@ export interface FileArgs {
 }
 export abstract class SystemdService<TData = any> extends pulumi.ComponentResource<TData> {
     public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
-    public directory?: string | pulumi.Output<string>;
+    public directory!: string | pulumi.Output<string>;
     public file!: File | pulumi.Output<File>;
     public install?: SystemdInstallSectionOutputs | pulumi.Output<SystemdInstallSectionOutputs>;
     public service!: SystemdServiceSectionOutputs | pulumi.Output<SystemdServiceSectionOutputs>;
@@ -180,7 +180,7 @@ export abstract class SystemdService<TData = any> extends pulumi.ComponentResour
 }
 export interface SystemdServiceArgs {
     readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
-    readonly directory: pulumi.Input<string>;
+    readonly directory?: pulumi.Input<string>;
     readonly install?: pulumi.Input<SystemdInstallSectionInputs>;
     readonly service: pulumi.Input<SystemdServiceSectionInputs>;
     readonly unit?: pulumi.Input<SystemdUnitSectionInputs>;

@@ -20,23 +20,24 @@ __all__ = ['SystemdServiceArgs', 'SystemdService']
 class SystemdServiceArgs:
     def __init__(__self__, *,
                  connection: pulumi.Input['pulumi_command.remote.ConnectionArgs'],
-                 directory: Optional[pulumi.Input[str]] = None,
                  service: pulumi.Input['SystemdServiceSectionArgs'],
+                 directory: Optional[pulumi.Input[str]] = None,
                  install: Optional[pulumi.Input['SystemdInstallSectionArgs']] = None,
                  unit: Optional[pulumi.Input['SystemdUnitSectionArgs']] = None):
         """
         The set of arguments for constructing a SystemdService resource.
         :param pulumi.Input['pulumi_command.remote.ConnectionArgs'] connection: The connection details.
-        :param pulumi.Input[str] directory: The location to create the service file.
         :param pulumi.Input['SystemdServiceSectionArgs'] service: Describes the [Service] section of a systemd service file.
+        :param pulumi.Input[str] directory: The location to create the service file.
         :param pulumi.Input['SystemdInstallSectionArgs'] install: Describes the [Install] section of a systemd service file.
         :param pulumi.Input['SystemdUnitSectionArgs'] unit: Describes the [Unit] section of a systemd service file.
         """
         pulumi.set(__self__, "connection", connection)
+        pulumi.set(__self__, "service", service)
         if directory is None:
             directory = '/etc/systemd/system'
-        pulumi.set(__self__, "directory", directory)
-        pulumi.set(__self__, "service", service)
+        if directory is not None:
+            pulumi.set(__self__, "directory", directory)
         if install is not None:
             pulumi.set(__self__, "install", install)
         if unit is not None:
@@ -56,18 +57,6 @@ class SystemdServiceArgs:
 
     @property
     @pulumi.getter
-    def directory(self) -> pulumi.Input[str]:
-        """
-        The location to create the service file.
-        """
-        return pulumi.get(self, "directory")
-
-    @directory.setter
-    def directory(self, value: pulumi.Input[str]):
-        pulumi.set(self, "directory", value)
-
-    @property
-    @pulumi.getter
     def service(self) -> pulumi.Input['SystemdServiceSectionArgs']:
         """
         Describes the [Service] section of a systemd service file.
@@ -77,6 +66,18 @@ class SystemdServiceArgs:
     @service.setter
     def service(self, value: pulumi.Input['SystemdServiceSectionArgs']):
         pulumi.set(self, "service", value)
+
+    @property
+    @pulumi.getter
+    def directory(self) -> Optional[pulumi.Input[str]]:
+        """
+        The location to create the service file.
+        """
+        return pulumi.get(self, "directory")
+
+    @directory.setter
+    def directory(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "directory", value)
 
     @property
     @pulumi.getter
@@ -168,8 +169,6 @@ class SystemdService(pulumi.ComponentResource):
             __props__.__dict__["connection"] = connection
             if directory is None:
                 directory = '/etc/systemd/system'
-            if directory is None and not opts.urn:
-                raise TypeError("Missing required property 'directory'")
             __props__.__dict__["directory"] = directory
             __props__.__dict__["install"] = install
             if service is None and not opts.urn:
@@ -194,7 +193,7 @@ class SystemdService(pulumi.ComponentResource):
 
     @property
     @pulumi.getter
-    def directory(self) -> pulumi.Output[Optional[str]]:
+    def directory(self) -> pulumi.Output[str]:
         """
         The location to create the service file.
         """
