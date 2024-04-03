@@ -168,12 +168,19 @@ export interface FileArgs {
     readonly path: pulumi.Input<string>;
 }
 export abstract class SystemdService<TData = any> extends pulumi.ComponentResource<TData> {
+    public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
+    public directory!: string | pulumi.Output<string>;
+    public file!: File | pulumi.Output<File>;
+    public install?: SystemdInstallSectionOutputs | pulumi.Output<SystemdInstallSectionOutputs>;
+    public service!: SystemdServiceSectionOutputs | pulumi.Output<SystemdServiceSectionOutputs>;
+    public unit?: SystemdUnitSectionOutputs | pulumi.Output<SystemdUnitSectionOutputs>;
     constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
-        super("kubernetes-the-hard-way:remote:SystemdService", name, opts.urn ? {} : { name, args, opts }, opts);
+        super("kubernetes-the-hard-way:remote:SystemdService", name, opts.urn ? { connection: undefined, directory: undefined, file: undefined, install: undefined, service: undefined, unit: undefined } : { name, args, opts }, opts);
     }
 }
 export interface SystemdServiceArgs {
     readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
+    readonly directory: pulumi.Input<string>;
     readonly install?: pulumi.Input<SystemdInstallSectionInputs>;
     readonly service: pulumi.Input<SystemdServiceSectionInputs>;
     readonly unit?: pulumi.Input<SystemdUnitSectionInputs>;
