@@ -7,7 +7,6 @@ import com.pulumi.command.remote.inputs.ConnectionArgs;
 import com.pulumi.core.Either;
 import com.pulumi.core.Output;
 import com.pulumi.core.annotations.Import;
-import com.pulumi.core.internal.Codegen;
 import com.pulumi.exceptions.MissingRequiredPropertyException;
 import com.unmango.kubernetesthehardway.tools.enums.CommandLifecycle;
 import com.unmango.kubernetesthehardway.tools.enums.TeeMode;
@@ -396,7 +395,6 @@ public final class TeeArgs extends com.pulumi.resources.ResourceArgs {
             if ($.files == null) {
                 throw new MissingRequiredPropertyException("TeeArgs", "files");
             }
-            $.lifecycle = Codegen.objectProp("lifecycle", CommandLifecycle.class).left(List.class).arg($.lifecycle).def(CommandLifecycle.Create).getNullable();
             if ($.stdin == null) {
                 throw new MissingRequiredPropertyException("TeeArgs", "stdin");
             }

@@ -53,10 +53,6 @@ func NewTee(ctx *pulumi.Context,
 		return nil, errors.New("invalid value for required argument 'Stdin'")
 	}
 	args.Connection = args.Connection.ToConnectionOutput().ApplyT(func(v pulumiCommand.Connection) pulumiCommand.Connection { return *v.Defaults() }).(pulumiCommand.ConnectionOutput)
-	if args.Lifecycle == nil {
-		lifecycle_ := "create"
-		args.Lifecycle = &lifecycle_
-	}
 	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource Tee
 	err := ctx.RegisterRemoteComponentResource("kubernetes-the-hard-way:tools:Tee", name, args, &resource, opts...)

@@ -75,13 +75,13 @@ namespace UnMango.KubernetesTheHardWay.Remote
             return merged;
         }
 
-        public global::Pulumi.Output<UnMango.KubernetesTheHardWay.Tools.Systemctl?> Disable()
+        public global::Pulumi.Output<UnMango.KubernetesTheHardWay.Tools.Systemctl> Disable()
             => global::Pulumi.Deployment.Instance.Call<SystemdServiceDisableResult>("kubernetes-the-hard-way:remote:SystemdService/disable", CallArgs.Empty, this).Apply(v => v.Result);
 
-        public global::Pulumi.Output<UnMango.KubernetesTheHardWay.Tools.Systemctl?> Enable()
+        public global::Pulumi.Output<UnMango.KubernetesTheHardWay.Tools.Systemctl> Enable()
             => global::Pulumi.Deployment.Instance.Call<SystemdServiceEnableResult>("kubernetes-the-hard-way:remote:SystemdService/enable", CallArgs.Empty, this).Apply(v => v.Result);
 
-        public global::Pulumi.Output<UnMango.KubernetesTheHardWay.Tools.Systemctl?> Start()
+        public global::Pulumi.Output<UnMango.KubernetesTheHardWay.Tools.Systemctl> Start()
             => global::Pulumi.Deployment.Instance.Call<SystemdServiceStartResult>("kubernetes-the-hard-way:remote:SystemdService/start", CallArgs.Empty, this).Apply(v => v.Result);
     }
 
@@ -130,10 +130,10 @@ namespace UnMango.KubernetesTheHardWay.Remote
     [OutputType]
     internal sealed class SystemdServiceDisableResult
     {
-        public readonly UnMango.KubernetesTheHardWay.Tools.Systemctl? Result;
+        public readonly UnMango.KubernetesTheHardWay.Tools.Systemctl Result;
 
         [OutputConstructor]
-        private SystemdServiceDisableResult(UnMango.KubernetesTheHardWay.Tools.Systemctl? result)
+        private SystemdServiceDisableResult(UnMango.KubernetesTheHardWay.Tools.Systemctl result)
         {
             Result = result;
         }
@@ -145,10 +145,10 @@ namespace UnMango.KubernetesTheHardWay.Remote
     [OutputType]
     internal sealed class SystemdServiceEnableResult
     {
-        public readonly UnMango.KubernetesTheHardWay.Tools.Systemctl? Result;
+        public readonly UnMango.KubernetesTheHardWay.Tools.Systemctl Result;
 
         [OutputConstructor]
-        private SystemdServiceEnableResult(UnMango.KubernetesTheHardWay.Tools.Systemctl? result)
+        private SystemdServiceEnableResult(UnMango.KubernetesTheHardWay.Tools.Systemctl result)
         {
             Result = result;
         }
@@ -160,10 +160,10 @@ namespace UnMango.KubernetesTheHardWay.Remote
     [OutputType]
     internal sealed class SystemdServiceStartResult
     {
-        public readonly UnMango.KubernetesTheHardWay.Tools.Systemctl? Result;
+        public readonly UnMango.KubernetesTheHardWay.Tools.Systemctl Result;
 
         [OutputConstructor]
-        private SystemdServiceStartResult(UnMango.KubernetesTheHardWay.Tools.Systemctl? result)
+        private SystemdServiceStartResult(UnMango.KubernetesTheHardWay.Tools.Systemctl result)
         {
             Result = result;
         }

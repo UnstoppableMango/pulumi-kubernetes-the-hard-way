@@ -710,6 +710,120 @@ export type TeeModeInputs = "warn" | "warn-nopipe" | "exit" | "exit-nopipe";
 export type TeeModeOutputs = "warn" | "warn-nopipe" | "exit" | "exit-nopipe";
 export type CommandLifecycleInputs = "create" | "update" | "delete";
 export type CommandLifecycleOutputs = "create" | "update" | "delete";
+export interface KubeApiServerCommandOptionsInputs {
+    readonly advertiseAddress?: pulumi.Input<string>;
+    readonly allowPrivileged?: pulumi.Input<boolean>;
+    readonly apiServerCount?: pulumi.Input<number>;
+    readonly auditLogMaxAge?: pulumi.Input<number>;
+    readonly auditLogMaxBackup?: pulumi.Input<number>;
+    readonly auditLogMaxSize?: pulumi.Input<number>;
+    readonly auditLogPath?: pulumi.Input<string>;
+    readonly authorizationMode?: pulumi.Input<pulumi.Input<string>[]>;
+    readonly bindAddress?: pulumi.Input<string>;
+    readonly clientCaFile?: pulumi.Input<string>;
+    readonly enableAdmissionPlugins?: pulumi.Input<pulumi.Input<string>[]>;
+    readonly etcdCaFile?: pulumi.Input<string>;
+    readonly etcdCertFile?: pulumi.Input<string>;
+    readonly etcdServers?: pulumi.Input<pulumi.Input<string>[]>;
+    readonly eventTtl?: pulumi.Input<string>;
+    readonly encryptionProviderConfig?: pulumi.Input<string>;
+    readonly kubeletCertificateAuthority?: pulumi.Input<string>;
+    readonly kubeletClientCertificate?: pulumi.Input<string>;
+    readonly kubeletClientKey?: pulumi.Input<string>;
+    readonly runtimeConfig?: pulumi.Input<string>;
+    readonly serviceAccountKeyFile?: pulumi.Input<string>;
+    readonly serviceAccountSigningKeyFile?: pulumi.Input<string>;
+    readonly serviceAccountIssuer?: pulumi.Input<string>;
+    readonly serviceClusterIpRange?: pulumi.Input<string>;
+    readonly serviceNodePortRange?: pulumi.Input<string>;
+    readonly tlsCertFile?: pulumi.Input<string>;
+    readonly tlsPrivateKeyFile?: pulumi.Input<string>;
+    readonly v?: pulumi.Input<number>;
+}
+export interface KubeApiServerCommandOptionsOutputs {
+    readonly advertiseAddress?: pulumi.Output<string>;
+    readonly allowPrivileged?: pulumi.Output<boolean>;
+    readonly apiServerCount?: pulumi.Output<number>;
+    readonly auditLogMaxAge?: pulumi.Output<number>;
+    readonly auditLogMaxBackup?: pulumi.Output<number>;
+    readonly auditLogMaxSize?: pulumi.Output<number>;
+    readonly auditLogPath?: pulumi.Output<string>;
+    readonly authorizationMode?: pulumi.Output<string[]>;
+    readonly bindAddress?: pulumi.Output<string>;
+    readonly clientCaFile?: pulumi.Output<string>;
+    readonly enableAdmissionPlugins?: pulumi.Output<string[]>;
+    readonly etcdCaFile?: pulumi.Output<string>;
+    readonly etcdCertFile?: pulumi.Output<string>;
+    readonly etcdServers?: pulumi.Output<string[]>;
+    readonly eventTtl?: pulumi.Output<string>;
+    readonly encryptionProviderConfig?: pulumi.Output<string>;
+    readonly kubeletCertificateAuthority?: pulumi.Output<string>;
+    readonly kubeletClientCertificate?: pulumi.Output<string>;
+    readonly kubeletClientKey?: pulumi.Output<string>;
+    readonly runtimeConfig?: pulumi.Output<string>;
+    readonly serviceAccountKeyFile?: pulumi.Output<string>;
+    readonly serviceAccountSigningKeyFile?: pulumi.Output<string>;
+    readonly serviceAccountIssuer?: pulumi.Output<string>;
+    readonly serviceClusterIpRange?: pulumi.Output<string>;
+    readonly serviceNodePortRange?: pulumi.Output<string>;
+    readonly tlsCertFile?: pulumi.Output<string>;
+    readonly tlsPrivateKeyFile?: pulumi.Output<string>;
+    readonly v?: pulumi.Output<number>;
+}
+export interface KubeApiServerConfigurationInputs {
+    readonly caPem?: pulumi.Input<string>;
+    readonly caKeyPem?: pulumi.Input<string>;
+    readonly keyPem?: pulumi.Input<string>;
+    readonly certPem?: pulumi.Input<string>;
+    readonly saKeyPem?: pulumi.Input<string>;
+    readonly saPem?: pulumi.Input<string>;
+    readonly encryptionConfig?: pulumi.Input<string>;
+}
+export interface KubeApiServerConfigurationOutputs {
+    readonly caPem?: pulumi.Output<string>;
+    readonly caKeyPem?: pulumi.Output<string>;
+    readonly keyPem?: pulumi.Output<string>;
+    readonly certPem?: pulumi.Output<string>;
+    readonly saKeyPem?: pulumi.Output<string>;
+    readonly saPem?: pulumi.Output<string>;
+    readonly encryptionConfig?: pulumi.Output<string>;
+}
+export interface KubeControllerManagerCommandOptionsInputs {
+    readonly bindAddress?: pulumi.Input<string>;
+    readonly clusterCidr?: pulumi.Input<string>;
+    readonly clusterName?: pulumi.Input<string>;
+    readonly clusterSigningCertFile?: pulumi.Input<string>;
+    readonly clusterSigningKeyFile?: pulumi.Input<string>;
+    readonly kubeconfig?: pulumi.Input<string>;
+    readonly leaderElect?: pulumi.Input<boolean>;
+    readonly rootCaFile?: pulumi.Input<string>;
+    readonly serviceAccountPrivateKeyFile?: pulumi.Input<string>;
+    readonly serviceClusterIpRange?: pulumi.Input<string>;
+    readonly useServiceAccountCredentials?: pulumi.Input<boolean>;
+    readonly v?: pulumi.Input<number>;
+}
+export interface KubeControllerManagerCommandOptionsOutputs {
+    readonly bindAddress?: pulumi.Output<string>;
+    readonly clusterCidr?: pulumi.Output<string>;
+    readonly clusterName?: pulumi.Output<string>;
+    readonly clusterSigningCertFile?: pulumi.Output<string>;
+    readonly clusterSigningKeyFile?: pulumi.Output<string>;
+    readonly kubeconfig?: pulumi.Output<string>;
+    readonly leaderElect?: pulumi.Output<boolean>;
+    readonly rootCaFile?: pulumi.Output<string>;
+    readonly serviceAccountPrivateKeyFile?: pulumi.Output<string>;
+    readonly serviceClusterIpRange?: pulumi.Output<string>;
+    readonly useServiceAccountCredentials?: pulumi.Output<boolean>;
+    readonly v?: pulumi.Output<number>;
+}
+export interface KubeSchedulerCommandOptionsInputs {
+    readonly config?: pulumi.Input<string>;
+    readonly v?: pulumi.Input<number>;
+}
+export interface KubeSchedulerCommandOptionsOutputs {
+    readonly config?: pulumi.Output<string>;
+    readonly v?: pulumi.Output<number>;
+}
 export interface ClusterPki_getKubeconfigInputs {
     readonly __self__: pulumi.Input<ClusterPki>;
     readonly options: unknown;
@@ -721,23 +835,23 @@ export interface EtcdInstall_etcdctlInputs {
     readonly __self__: pulumi.Input<EtcdInstall>;
 }
 export interface EtcdInstall_etcdctlOutputs {
-    readonly result?: pulumi.Output<Etcdctl>;
+    readonly result: pulumi.Output<Etcdctl>;
 }
 export interface SystemdService_disableInputs {
-    readonly __self__?: pulumi.Input<SystemdService>;
+    readonly __self__: pulumi.Input<SystemdService>;
 }
 export interface SystemdService_disableOutputs {
-    readonly result?: pulumi.Output<Systemctl>;
+    readonly result: pulumi.Output<Systemctl>;
 }
 export interface SystemdService_enableInputs {
-    readonly __self__?: pulumi.Input<SystemdService>;
+    readonly __self__: pulumi.Input<SystemdService>;
 }
 export interface SystemdService_enableOutputs {
-    readonly result?: pulumi.Output<Systemctl>;
+    readonly result: pulumi.Output<Systemctl>;
 }
 export interface SystemdService_startInputs {
-    readonly __self__?: pulumi.Input<SystemdService>;
+    readonly __self__: pulumi.Input<SystemdService>;
 }
 export interface SystemdService_startOutputs {
-    readonly result?: pulumi.Output<Systemctl>;
+    readonly result: pulumi.Output<Systemctl>;
 }

@@ -85,7 +85,7 @@ export class Tee extends pulumi.ComponentResource {
             resourceInputs["connection"] = args ? (args.connection ? pulumi.output(args.connection).apply(pulumiCommand.types.input.remote.connectionArgsProvideDefaults) : undefined) : undefined;
             resourceInputs["files"] = args ? args.files : undefined;
             resourceInputs["ignoreInterrupts"] = args ? args.ignoreInterrupts : undefined;
-            resourceInputs["lifecycle"] = (args ? args.lifecycle : undefined) ?? "create";
+            resourceInputs["lifecycle"] = args ? args.lifecycle : undefined;
             resourceInputs["outputError"] = args ? args.outputError : undefined;
             resourceInputs["pipe"] = args ? args.pipe : undefined;
             resourceInputs["stdin"] = args ? args.stdin : undefined;
@@ -130,7 +130,7 @@ export interface TeeArgs {
     /**
      * At what stage(s) in the resource lifecycle should the command be run.
      */
-    lifecycle?: pulumi.Input<enums.tools.CommandLifecycle> | pulumi.Input<pulumi.Input<enums.tools.CommandLifecycle>[]>;
+    lifecycle?: pulumi.Input<enums.tools.CommandLifecycle> | pulumi.Input<enums.tools.CommandLifecycle>[];
     /**
      * Set behavior on write error.
      */

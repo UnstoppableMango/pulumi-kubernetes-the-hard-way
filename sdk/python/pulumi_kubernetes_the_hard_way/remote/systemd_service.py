@@ -241,7 +241,7 @@ class SystemdService(pulumi.ComponentResource):
 
         @property
         @pulumi.getter
-        def result(self) -> Optional['_tools.Systemctl']:
+        def result(self) -> '_tools.Systemctl':
             return pulumi.get(self, "result")
 
     def disable(__self__) -> pulumi.Output['_tools.Systemctl']:
@@ -259,7 +259,7 @@ class SystemdService(pulumi.ComponentResource):
 
         @property
         @pulumi.getter
-        def result(self) -> Optional['_tools.Systemctl']:
+        def result(self) -> '_tools.Systemctl':
             return pulumi.get(self, "result")
 
     def enable(__self__) -> pulumi.Output['_tools.Systemctl']:
@@ -277,7 +277,7 @@ class SystemdService(pulumi.ComponentResource):
 
         @property
         @pulumi.getter
-        def result(self) -> Optional['_tools.Systemctl']:
+        def result(self) -> '_tools.Systemctl':
             return pulumi.get(self, "result")
 
     def start(__self__) -> pulumi.Output['_tools.Systemctl']:

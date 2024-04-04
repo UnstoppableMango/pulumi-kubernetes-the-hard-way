@@ -87,21 +87,21 @@ export class SystemdService extends pulumi.ComponentResource {
         super(SystemdService.__pulumiType, name, resourceInputs, opts, true /*remote*/);
     }
 
-    disable(): pulumi.Output<Systemctl | undefined> {
+    disable(): pulumi.Output<Systemctl> {
         const result: pulumi.Output<SystemdService.DisableResult> = pulumi.runtime.call("kubernetes-the-hard-way:remote:SystemdService/disable", {
             "__self__": this,
         }, this);
         return result.result;
     }
 
-    enable(): pulumi.Output<Systemctl | undefined> {
+    enable(): pulumi.Output<Systemctl> {
         const result: pulumi.Output<SystemdService.EnableResult> = pulumi.runtime.call("kubernetes-the-hard-way:remote:SystemdService/enable", {
             "__self__": this,
         }, this);
         return result.result;
     }
 
-    start(): pulumi.Output<Systemctl | undefined> {
+    start(): pulumi.Output<Systemctl> {
         const result: pulumi.Output<SystemdService.StartResult> = pulumi.runtime.call("kubernetes-the-hard-way:remote:SystemdService/start", {
             "__self__": this,
         }, this);
@@ -140,21 +140,21 @@ export namespace SystemdService {
      * The results of the SystemdService.disable method.
      */
     export interface DisableResult {
-        readonly result?: Systemctl;
+        readonly result: Systemctl;
     }
 
     /**
      * The results of the SystemdService.enable method.
      */
     export interface EnableResult {
-        readonly result?: Systemctl;
+        readonly result: Systemctl;
     }
 
     /**
      * The results of the SystemdService.start method.
      */
     export interface StartResult {
-        readonly result?: Systemctl;
+        readonly result: Systemctl;
     }
 
 }

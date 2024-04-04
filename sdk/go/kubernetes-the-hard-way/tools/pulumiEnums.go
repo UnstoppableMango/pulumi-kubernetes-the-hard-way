@@ -177,31 +177,6 @@ func (in *commandLifecyclePtr) ToCommandLifecyclePtrOutputWithContext(ctx contex
 	return pulumi.ToOutputWithContext(ctx, in).(CommandLifecyclePtrOutput)
 }
 
-// CommandLifecycleArrayInput is an input type that accepts CommandLifecycleArray and CommandLifecycleArrayOutput values.
-// You can construct a concrete instance of `CommandLifecycleArrayInput` via:
-//
-//	CommandLifecycleArray{ CommandLifecycleArgs{...} }
-type CommandLifecycleArrayInput interface {
-	pulumi.Input
-
-	ToCommandLifecycleArrayOutput() CommandLifecycleArrayOutput
-	ToCommandLifecycleArrayOutputWithContext(context.Context) CommandLifecycleArrayOutput
-}
-
-type CommandLifecycleArray []CommandLifecycle
-
-func (CommandLifecycleArray) ElementType() reflect.Type {
-	return reflect.TypeOf((*[]CommandLifecycle)(nil)).Elem()
-}
-
-func (i CommandLifecycleArray) ToCommandLifecycleArrayOutput() CommandLifecycleArrayOutput {
-	return i.ToCommandLifecycleArrayOutputWithContext(context.Background())
-}
-
-func (i CommandLifecycleArray) ToCommandLifecycleArrayOutputWithContext(ctx context.Context) CommandLifecycleArrayOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(CommandLifecycleArrayOutput)
-}
-
 type CommandLifecycleArrayOutput struct{ *pulumi.OutputState }
 
 func (CommandLifecycleArrayOutput) ElementType() reflect.Type {
@@ -820,7 +795,6 @@ func (in *teeModePtr) ToTeeModePtrOutputWithContext(ctx context.Context) TeeMode
 func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*CommandLifecycleInput)(nil)).Elem(), CommandLifecycle("create"))
 	pulumi.RegisterInputType(reflect.TypeOf((*CommandLifecyclePtrInput)(nil)).Elem(), CommandLifecycle("create"))
-	pulumi.RegisterInputType(reflect.TypeOf((*CommandLifecycleArrayInput)(nil)).Elem(), CommandLifecycleArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*EtcdctlCommandInput)(nil)).Elem(), EtcdctlCommand("member"))
 	pulumi.RegisterInputType(reflect.TypeOf((*EtcdctlCommandPtrInput)(nil)).Elem(), EtcdctlCommand("member"))
 	pulumi.RegisterInputType(reflect.TypeOf((*EtcdctlCommandArrayInput)(nil)).Elem(), EtcdctlCommandArray{})

@@ -186,7 +186,7 @@ namespace UnMango.KubernetesTheHardWay.Remote
             return merged;
         }
 
-        public global::Pulumi.Output<UnMango.KubernetesTheHardWay.Tools.Etcdctl?> Etcdctl()
+        public global::Pulumi.Output<UnMango.KubernetesTheHardWay.Tools.Etcdctl> Etcdctl()
             => global::Pulumi.Deployment.Instance.Call<EtcdInstallEtcdctlResult>("kubernetes-the-hard-way:remote:EtcdInstall/etcdctl", CallArgs.Empty, this).Apply(v => v.Result);
     }
 
@@ -280,10 +280,10 @@ namespace UnMango.KubernetesTheHardWay.Remote
     [OutputType]
     internal sealed class EtcdInstallEtcdctlResult
     {
-        public readonly UnMango.KubernetesTheHardWay.Tools.Etcdctl? Result;
+        public readonly UnMango.KubernetesTheHardWay.Tools.Etcdctl Result;
 
         [OutputConstructor]
-        private EtcdInstallEtcdctlResult(UnMango.KubernetesTheHardWay.Tools.Etcdctl? result)
+        private EtcdInstallEtcdctlResult(UnMango.KubernetesTheHardWay.Tools.Etcdctl result)
         {
             Result = result;
         }

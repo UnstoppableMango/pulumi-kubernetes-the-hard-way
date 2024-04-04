@@ -124,7 +124,7 @@ namespace UnMango.KubernetesTheHardWay.Tools
         /// At what stage(s) in the resource lifecycle should the command be run.
         /// </summary>
         [Input("lifecycle")]
-        public Union<Input<UnMango.KubernetesTheHardWay.Tools.CommandLifecycle>, InputList<UnMango.KubernetesTheHardWay.Tools.CommandLifecycle>>? Lifecycle { get; set; }
+        public Union<UnMango.KubernetesTheHardWay.Tools.CommandLifecycle, ImmutableArray<UnMango.KubernetesTheHardWay.Tools.CommandLifecycle>>? Lifecycle { get; set; }
 
         /// <summary>
         /// Set behavior on write error.
@@ -149,7 +149,6 @@ namespace UnMango.KubernetesTheHardWay.Tools
 
         public TeeArgs()
         {
-            Lifecycle = "create";
         }
         public static new TeeArgs Empty => new TeeArgs();
     }

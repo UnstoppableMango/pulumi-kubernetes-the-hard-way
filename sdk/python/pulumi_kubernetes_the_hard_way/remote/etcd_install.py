@@ -558,7 +558,7 @@ class EtcdInstall(pulumi.ComponentResource):
 
         @property
         @pulumi.getter
-        def result(self) -> Optional['_tools.Etcdctl']:
+        def result(self) -> '_tools.Etcdctl':
             return pulumi.get(self, "result")
 
     def etcdctl(__self__) -> pulumi.Output['_tools.Etcdctl']:

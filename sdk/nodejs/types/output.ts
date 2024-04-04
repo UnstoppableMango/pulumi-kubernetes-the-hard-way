@@ -104,3 +104,6 @@ export namespace remote {
 
 export namespace tls {
 }
+
+export namespace tools {
+}

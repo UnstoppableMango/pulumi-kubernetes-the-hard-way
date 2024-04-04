@@ -212,7 +212,7 @@ export class EtcdInstall extends pulumi.ComponentResource {
         super(EtcdInstall.__pulumiType, name, resourceInputs, opts, true /*remote*/);
     }
 
-    etcdctl(): pulumi.Output<Etcdctl | undefined> {
+    etcdctl(): pulumi.Output<Etcdctl> {
         const result: pulumi.Output<EtcdInstall.EtcdctlResult> = pulumi.runtime.call("kubernetes-the-hard-way:remote:EtcdInstall/etcdctl", {
             "__self__": this,
         }, this);
@@ -279,7 +279,7 @@ export namespace EtcdInstall {
      * The results of the EtcdInstall.etcdctl method.
      */
     export interface EtcdctlResult {
-        readonly result?: Etcdctl;
+        readonly result: Etcdctl;
     }
 
 }
