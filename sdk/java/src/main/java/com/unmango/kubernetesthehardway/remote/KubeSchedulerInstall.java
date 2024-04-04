@@ -3,7 +3,6 @@
 
 package com.unmango.kubernetesthehardway.remote;
 
-import com.pulumi.command.remote.Command;
 import com.pulumi.command.remote.outputs.Connection;
 import com.pulumi.core.Output;
 import com.pulumi.core.annotations.Export;
@@ -34,20 +33,6 @@ public class KubeSchedulerInstall extends com.pulumi.resources.ComponentResource
      */
     public Output<Architecture> architecture() {
         return this.architecture;
-    }
-    /**
-     * The command resource.
-     * 
-     */
-    @Export(name="command", refs={Command.class}, tree="[0]")
-    private Output<Command> command;
-
-    /**
-     * @return The command resource.
-     * 
-     */
-    public Output<Command> command() {
-        return this.command;
     }
     /**
      * The connection details.
@@ -104,7 +89,7 @@ public class KubeSchedulerInstall extends com.pulumi.resources.ComponentResource
      * @param name The _unique_ name of the resulting resource.
      * @param args The arguments to use to populate this resource's properties.
      */
-    public KubeSchedulerInstall(String name, @Nullable KubeSchedulerInstallArgs args) {
+    public KubeSchedulerInstall(String name, KubeSchedulerInstallArgs args) {
         this(name, args, null);
     }
     /**
@@ -113,7 +98,7 @@ public class KubeSchedulerInstall extends com.pulumi.resources.ComponentResource
      * @param args The arguments to use to populate this resource's properties.
      * @param options A bag of options that control this resource's behavior.
      */
-    public KubeSchedulerInstall(String name, @Nullable KubeSchedulerInstallArgs args, @Nullable com.pulumi.resources.ComponentResourceOptions options) {
+    public KubeSchedulerInstall(String name, KubeSchedulerInstallArgs args, @Nullable com.pulumi.resources.ComponentResourceOptions options) {
         super("kubernetes-the-hard-way:remote:KubeSchedulerInstall", name, args == null ? KubeSchedulerInstallArgs.Empty : args, makeResourceOptions(options, Codegen.empty()), true);
     }
 

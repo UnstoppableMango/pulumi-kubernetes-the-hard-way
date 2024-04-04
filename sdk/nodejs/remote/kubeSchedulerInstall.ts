@@ -32,10 +32,6 @@ export class KubeSchedulerInstall extends pulumi.ComponentResource {
      */
     public readonly architecture!: pulumi.Output<enums.remote.Architecture>;
     /**
-     * The command resource.
-     */
-    public /*out*/ readonly command!: pulumi.Output<pulumiCommand.remote.Command>;
-    /**
      * The connection details.
      */
     public readonly connection!: pulumi.Output<pulumiCommand.types.output.remote.Connection>;
@@ -55,18 +51,19 @@ export class KubeSchedulerInstall extends pulumi.ComponentResource {
      * @param args The arguments to use to populate this resource's properties.
      * @param opts A bag of options that control this resource's behavior.
      */
-    constructor(name: string, args?: KubeSchedulerInstallArgs, opts?: pulumi.ComponentResourceOptions) {
+    constructor(name: string, args: KubeSchedulerInstallArgs, opts?: pulumi.ComponentResourceOptions) {
         let resourceInputs: pulumi.Inputs = {};
         opts = opts || {};
         if (!opts.id) {
+            if ((!args || args.connection === undefined) && !opts.urn) {
+                throw new Error("Missing required property 'connection'");
+            }
             resourceInputs["architecture"] = args ? args.architecture : undefined;
             resourceInputs["connection"] = args ? (args.connection ? pulumi.output(args.connection).apply(pulumiCommand.types.input.remote.connectionArgsProvideDefaults) : undefined) : undefined;
             resourceInputs["installDirectory"] = (args ? args.installDirectory : undefined) ?? "/usr/local/bin";
             resourceInputs["version"] = args ? args.version : undefined;
-            resourceInputs["command"] = undefined /*out*/;
         } else {
             resourceInputs["architecture"] = undefined /*out*/;
-            resourceInputs["command"] = undefined /*out*/;
             resourceInputs["connection"] = undefined /*out*/;
             resourceInputs["installDirectory"] = undefined /*out*/;
             resourceInputs["version"] = undefined /*out*/;
@@ -87,7 +84,7 @@ export interface KubeSchedulerInstallArgs {
     /**
      * The connection details.
      */
-    connection?: pulumi.Input<pulumiCommand.types.input.remote.ConnectionArgs>;
+    connection: pulumi.Input<pulumiCommand.types.input.remote.ConnectionArgs>;
     /**
      * Directory to install the `kube-scheduler` binary.
      */

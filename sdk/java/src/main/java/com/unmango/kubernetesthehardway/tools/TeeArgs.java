@@ -87,13 +87,13 @@ public final class TeeArgs extends com.pulumi.resources.ResourceArgs {
      * 
      */
     @Import(name="lifecycle")
-    private @Nullable Either<CommandLifecycle,List<CommandLifecycle>> lifecycle;
+    private @Nullable CommandLifecycle lifecycle;
 
     /**
      * @return At what stage(s) in the resource lifecycle should the command be run.
      * 
      */
-    public Optional<Either<CommandLifecycle,List<CommandLifecycle>>> lifecycle() {
+    public Optional<CommandLifecycle> lifecycle() {
         return Optional.ofNullable(this.lifecycle);
     }
 
@@ -291,29 +291,9 @@ public final class TeeArgs extends com.pulumi.resources.ResourceArgs {
          * @return builder
          * 
          */
-        public Builder lifecycle(@Nullable Either<CommandLifecycle,List<CommandLifecycle>> lifecycle) {
+        public Builder lifecycle(@Nullable CommandLifecycle lifecycle) {
             $.lifecycle = lifecycle;
             return this;
-        }
-
-        /**
-         * @param lifecycle At what stage(s) in the resource lifecycle should the command be run.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder lifecycle(CommandLifecycle lifecycle) {
-            return lifecycle(Either.ofLeft(lifecycle));
-        }
-
-        /**
-         * @param lifecycle At what stage(s) in the resource lifecycle should the command be run.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder lifecycle(List<CommandLifecycle> lifecycle) {
-            return lifecycle(Either.ofRight(lifecycle));
         }
 
         /**

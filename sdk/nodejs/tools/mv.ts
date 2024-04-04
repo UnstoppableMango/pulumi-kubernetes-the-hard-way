@@ -2,6 +2,9 @@
 // *** Do not edit by hand unless you're certain you know what you are doing! ***
 
 import * as pulumi from "@pulumi/pulumi";
+import * as inputs from "../types/input";
+import * as outputs from "../types/output";
+import * as enums from "../types/enums";
 import * as utilities from "../utilities";
 
 import * as pulumiCommand from "@pulumi/command";
@@ -52,6 +55,10 @@ export class Mv extends pulumi.ComponentResource {
      * Corresponds to the --force option.
      */
     public readonly force!: pulumi.Output<boolean>;
+    /**
+     * At what stage(s) in the resource lifecycle should the command be run.
+     */
+    public /*out*/ readonly lifecycle!: pulumi.Output<enums.tools.CommandLifecycle | undefined>;
     /**
      * Corresponds to the --no-clobber option.
      */
@@ -118,6 +125,7 @@ export class Mv extends pulumi.ComponentResource {
             resourceInputs["update"] = args ? args.update : undefined;
             resourceInputs["verbose"] = args ? args.verbose : undefined;
             resourceInputs["command"] = undefined /*out*/;
+            resourceInputs["lifecycle"] = undefined /*out*/;
         } else {
             resourceInputs["backup"] = undefined /*out*/;
             resourceInputs["command"] = undefined /*out*/;
@@ -126,6 +134,7 @@ export class Mv extends pulumi.ComponentResource {
             resourceInputs["dest"] = undefined /*out*/;
             resourceInputs["directory"] = undefined /*out*/;
             resourceInputs["force"] = undefined /*out*/;
+            resourceInputs["lifecycle"] = undefined /*out*/;
             resourceInputs["noClobber"] = undefined /*out*/;
             resourceInputs["noTargetDirectory"] = undefined /*out*/;
             resourceInputs["source"] = undefined /*out*/;

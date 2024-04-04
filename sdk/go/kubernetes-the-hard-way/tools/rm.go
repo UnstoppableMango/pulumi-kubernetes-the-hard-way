@@ -65,6 +65,8 @@ type rmArgs struct {
 	Files interface{} `pulumi:"files"`
 	// Corresponds to the --force option.
 	Force *bool `pulumi:"force"`
+	// At what stage(s) in the resource lifecycle should the command be run.
+	Lifecycle *CommandLifecycle `pulumi:"lifecycle"`
 	// Whether rm should be run when the resource is created or deleted.
 	OnDelete *bool `pulumi:"onDelete"`
 	// Corresponds to the --recursive option.
@@ -83,6 +85,8 @@ type RmArgs struct {
 	Files pulumi.Input
 	// Corresponds to the --force option.
 	Force pulumi.BoolPtrInput
+	// At what stage(s) in the resource lifecycle should the command be run.
+	Lifecycle *CommandLifecycle
 	// Whether rm should be run when the resource is created or deleted.
 	OnDelete *bool
 	// Corresponds to the --recursive option.

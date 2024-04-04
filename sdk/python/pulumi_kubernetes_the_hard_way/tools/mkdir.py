@@ -8,6 +8,7 @@ import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
 from .. import _utilities
+from ._enums import *
 import pulumi_command
 
 __all__ = ['MkdirArgs', 'Mkdir']
@@ -17,17 +18,21 @@ class MkdirArgs:
     def __init__(__self__, *,
                  connection: pulumi.Input['pulumi_command.remote.ConnectionArgs'],
                  directory: pulumi.Input[str],
+                 lifecycle: Optional['CommandLifecycle'] = None,
                  parents: Optional[pulumi.Input[bool]] = None,
                  remove_on_delete: Optional[pulumi.Input[bool]] = None):
         """
         The set of arguments for constructing a Mkdir resource.
         :param pulumi.Input['pulumi_command.remote.ConnectionArgs'] connection: The connection details for the remote system.
         :param pulumi.Input[str] directory: The fully qualified path of the directory on the remote system.
+        :param 'CommandLifecycle' lifecycle: At what stage(s) in the resource lifecycle should the command be run.
         :param pulumi.Input[bool] parents: Corresponds to the `--parents` option.
         :param pulumi.Input[bool] remove_on_delete: Remove the created directory when the `Mkdir` resource is deleted or updated.
         """
         pulumi.set(__self__, "connection", connection)
         pulumi.set(__self__, "directory", directory)
+        if lifecycle is not None:
+            pulumi.set(__self__, "lifecycle", lifecycle)
         if parents is not None:
             pulumi.set(__self__, "parents", parents)
         if remove_on_delete is not None:
@@ -56,6 +61,18 @@ class MkdirArgs:
     @directory.setter
     def directory(self, value: pulumi.Input[str]):
         pulumi.set(self, "directory", value)
+
+    @property
+    @pulumi.getter
+    def lifecycle(self) -> Optional['CommandLifecycle']:
+        """
+        At what stage(s) in the resource lifecycle should the command be run.
+        """
+        return pulumi.get(self, "lifecycle")
+
+    @lifecycle.setter
+    def lifecycle(self, value: Optional['CommandLifecycle']):
+        pulumi.set(self, "lifecycle", value)
 
     @property
     @pulumi.getter
@@ -89,6 +106,7 @@ class Mkdir(pulumi.ComponentResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
                  directory: Optional[pulumi.Input[str]] = None,
+                 lifecycle: Optional['CommandLifecycle'] = None,
                  parents: Optional[pulumi.Input[bool]] = None,
                  remove_on_delete: Optional[pulumi.Input[bool]] = None,
                  __props__=None):
@@ -99,6 +117,7 @@ class Mkdir(pulumi.ComponentResource):
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']] connection: The connection details for the remote system.
         :param pulumi.Input[str] directory: The fully qualified path of the directory on the remote system.
+        :param 'CommandLifecycle' lifecycle: At what stage(s) in the resource lifecycle should the command be run.
         :param pulumi.Input[bool] parents: Corresponds to the `--parents` option.
         :param pulumi.Input[bool] remove_on_delete: Remove the created directory when the `Mkdir` resource is deleted or updated.
         """
@@ -128,6 +147,7 @@ class Mkdir(pulumi.ComponentResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
                  directory: Optional[pulumi.Input[str]] = None,
+                 lifecycle: Optional['CommandLifecycle'] = None,
                  parents: Optional[pulumi.Input[bool]] = None,
                  remove_on_delete: Optional[pulumi.Input[bool]] = None,
                  __props__=None):
@@ -147,6 +167,7 @@ class Mkdir(pulumi.ComponentResource):
             if directory is None and not opts.urn:
                 raise TypeError("Missing required property 'directory'")
             __props__.__dict__["directory"] = directory
+            __props__.__dict__["lifecycle"] = lifecycle
             __props__.__dict__["parents"] = parents
             __props__.__dict__["remove_on_delete"] = remove_on_delete
             __props__.__dict__["command"] = None

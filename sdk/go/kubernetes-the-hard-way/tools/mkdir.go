@@ -59,6 +59,8 @@ type mkdirArgs struct {
 	Connection pulumiCommand.Connection `pulumi:"connection"`
 	// The fully qualified path of the directory on the remote system.
 	Directory string `pulumi:"directory"`
+	// At what stage(s) in the resource lifecycle should the command be run.
+	Lifecycle *CommandLifecycle `pulumi:"lifecycle"`
 	// Corresponds to the `--parents` option.
 	Parents *bool `pulumi:"parents"`
 	// Remove the created directory when the `Mkdir` resource is deleted or updated.
@@ -71,6 +73,8 @@ type MkdirArgs struct {
 	Connection pulumiCommand.ConnectionInput
 	// The fully qualified path of the directory on the remote system.
 	Directory pulumi.StringInput
+	// At what stage(s) in the resource lifecycle should the command be run.
+	Lifecycle *CommandLifecycle
 	// Corresponds to the `--parents` option.
 	Parents pulumi.BoolPtrInput
 	// Remove the created directory when the `Mkdir` resource is deleted or updated.

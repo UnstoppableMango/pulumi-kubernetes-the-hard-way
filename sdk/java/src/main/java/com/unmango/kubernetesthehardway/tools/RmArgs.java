@@ -8,6 +8,7 @@ import com.pulumi.core.Either;
 import com.pulumi.core.Output;
 import com.pulumi.core.annotations.Import;
 import com.pulumi.exceptions.MissingRequiredPropertyException;
+import com.unmango.kubernetesthehardway.tools.enums.CommandLifecycle;
 import java.lang.Boolean;
 import java.lang.String;
 import java.util.List;
@@ -81,6 +82,21 @@ public final class RmArgs extends com.pulumi.resources.ResourceArgs {
     }
 
     /**
+     * At what stage(s) in the resource lifecycle should the command be run.
+     * 
+     */
+    @Import(name="lifecycle")
+    private @Nullable CommandLifecycle lifecycle;
+
+    /**
+     * @return At what stage(s) in the resource lifecycle should the command be run.
+     * 
+     */
+    public Optional<CommandLifecycle> lifecycle() {
+        return Optional.ofNullable(this.lifecycle);
+    }
+
+    /**
      * Whether rm should be run when the resource is created or deleted.
      * 
      */
@@ -132,6 +148,7 @@ public final class RmArgs extends com.pulumi.resources.ResourceArgs {
         this.dir = $.dir;
         this.files = $.files;
         this.force = $.force;
+        this.lifecycle = $.lifecycle;
         this.onDelete = $.onDelete;
         this.recursive = $.recursive;
         this.verbose = $.verbose;
@@ -257,6 +274,17 @@ public final class RmArgs extends com.pulumi.resources.ResourceArgs {
          */
         public Builder force(Boolean force) {
             return force(Output.of(force));
+        }
+
+        /**
+         * @param lifecycle At what stage(s) in the resource lifecycle should the command be run.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder lifecycle(@Nullable CommandLifecycle lifecycle) {
+            $.lifecycle = lifecycle;
+            return this;
         }
 
         /**

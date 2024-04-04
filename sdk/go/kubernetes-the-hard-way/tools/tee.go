@@ -28,7 +28,7 @@ type Tee struct {
 	// Ignore interrupt signals.
 	IgnoreInterrupts pulumi.BoolOutput `pulumi:"ignoreInterrupts"`
 	// At what stage(s) in the resource lifecycle should the command be run.
-	Lifecycle CommandLifecycleArrayOutput `pulumi:"lifecycle"`
+	Lifecycle CommandLifecyclePtrOutput `pulumi:"lifecycle"`
 	// Set behavior on write error.
 	OutputError TeeModePtrOutput `pulumi:"outputError"`
 	// Operate in a more appropriate MODE with pipes.
@@ -72,7 +72,7 @@ type teeArgs struct {
 	// Ignore interrupt signals.
 	IgnoreInterrupts *bool `pulumi:"ignoreInterrupts"`
 	// At what stage(s) in the resource lifecycle should the command be run.
-	Lifecycle *string `pulumi:"lifecycle"`
+	Lifecycle *CommandLifecycle `pulumi:"lifecycle"`
 	// Set behavior on write error.
 	OutputError *TeeMode `pulumi:"outputError"`
 	// Operate in a more appropriate MODE with pipes.
@@ -93,7 +93,7 @@ type TeeArgs struct {
 	// Ignore interrupt signals.
 	IgnoreInterrupts pulumi.BoolPtrInput
 	// At what stage(s) in the resource lifecycle should the command be run.
-	Lifecycle interface{}
+	Lifecycle *CommandLifecycle
 	// Set behavior on write error.
 	OutputError TeeModePtrInput
 	// Operate in a more appropriate MODE with pipes.
@@ -216,8 +216,8 @@ func (o TeeOutput) IgnoreInterrupts() pulumi.BoolOutput {
 }
 
 // At what stage(s) in the resource lifecycle should the command be run.
-func (o TeeOutput) Lifecycle() CommandLifecycleArrayOutput {
-	return o.ApplyT(func(v *Tee) CommandLifecycleArrayOutput { return v.Lifecycle }).(CommandLifecycleArrayOutput)
+func (o TeeOutput) Lifecycle() CommandLifecyclePtrOutput {
+	return o.ApplyT(func(v *Tee) CommandLifecyclePtrOutput { return v.Lifecycle }).(CommandLifecyclePtrOutput)
 }
 
 // Set behavior on write error.

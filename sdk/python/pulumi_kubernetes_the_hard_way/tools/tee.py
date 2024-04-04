@@ -21,7 +21,7 @@ class TeeArgs:
                  stdin: pulumi.Input[str],
                  append: Optional[pulumi.Input[bool]] = None,
                  ignore_interrupts: Optional[pulumi.Input[bool]] = None,
-                 lifecycle: Optional[Union[pulumi.Input['CommandLifecycle'], Sequence[pulumi.Input['CommandLifecycle']]]] = None,
+                 lifecycle: Optional['CommandLifecycle'] = None,
                  output_error: Optional[pulumi.Input['TeeMode']] = None,
                  pipe: Optional[pulumi.Input[bool]] = None,
                  version: Optional[pulumi.Input[bool]] = None):
@@ -31,7 +31,7 @@ class TeeArgs:
         :param pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]] files: The file(s) to write to.
         :param pulumi.Input[bool] append: Append to the given FILEs, do not overwrite.
         :param pulumi.Input[bool] ignore_interrupts: Ignore interrupt signals.
-        :param Union[pulumi.Input['CommandLifecycle'], Sequence[pulumi.Input['CommandLifecycle']]] lifecycle: At what stage(s) in the resource lifecycle should the command be run.
+        :param 'CommandLifecycle' lifecycle: At what stage(s) in the resource lifecycle should the command be run.
         :param pulumi.Input['TeeMode'] output_error: Set behavior on write error.
         :param pulumi.Input[bool] pipe: Operate in a more appropriate MODE with pipes.
         :param pulumi.Input[bool] version: Output version information and exit.
@@ -111,14 +111,14 @@ class TeeArgs:
 
     @property
     @pulumi.getter
-    def lifecycle(self) -> Optional[Union[pulumi.Input['CommandLifecycle'], Sequence[pulumi.Input['CommandLifecycle']]]]:
+    def lifecycle(self) -> Optional['CommandLifecycle']:
         """
         At what stage(s) in the resource lifecycle should the command be run.
         """
         return pulumi.get(self, "lifecycle")
 
     @lifecycle.setter
-    def lifecycle(self, value: Optional[Union[pulumi.Input['CommandLifecycle'], Sequence[pulumi.Input['CommandLifecycle']]]]):
+    def lifecycle(self, value: Optional['CommandLifecycle']):
         pulumi.set(self, "lifecycle", value)
 
     @property
@@ -167,7 +167,7 @@ class Tee(pulumi.ComponentResource):
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
                  files: Optional[pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]]] = None,
                  ignore_interrupts: Optional[pulumi.Input[bool]] = None,
-                 lifecycle: Optional[Union[pulumi.Input['CommandLifecycle'], Sequence[pulumi.Input['CommandLifecycle']]]] = None,
+                 lifecycle: Optional['CommandLifecycle'] = None,
                  output_error: Optional[pulumi.Input['TeeMode']] = None,
                  pipe: Optional[pulumi.Input[bool]] = None,
                  stdin: Optional[pulumi.Input[str]] = None,
@@ -182,7 +182,7 @@ class Tee(pulumi.ComponentResource):
         :param pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']] connection: Connection details for the remote system.
         :param pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]] files: The file(s) to write to.
         :param pulumi.Input[bool] ignore_interrupts: Ignore interrupt signals.
-        :param Union[pulumi.Input['CommandLifecycle'], Sequence[pulumi.Input['CommandLifecycle']]] lifecycle: At what stage(s) in the resource lifecycle should the command be run.
+        :param 'CommandLifecycle' lifecycle: At what stage(s) in the resource lifecycle should the command be run.
         :param pulumi.Input['TeeMode'] output_error: Set behavior on write error.
         :param pulumi.Input[bool] pipe: Operate in a more appropriate MODE with pipes.
         :param pulumi.Input[bool] version: Output version information and exit.
@@ -215,7 +215,7 @@ class Tee(pulumi.ComponentResource):
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
                  files: Optional[pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]]] = None,
                  ignore_interrupts: Optional[pulumi.Input[bool]] = None,
-                 lifecycle: Optional[Union[pulumi.Input['CommandLifecycle'], Sequence[pulumi.Input['CommandLifecycle']]]] = None,
+                 lifecycle: Optional['CommandLifecycle'] = None,
                  output_error: Optional[pulumi.Input['TeeMode']] = None,
                  pipe: Optional[pulumi.Input[bool]] = None,
                  stdin: Optional[pulumi.Input[str]] = None,
@@ -296,7 +296,7 @@ class Tee(pulumi.ComponentResource):
 
     @property
     @pulumi.getter
-    def lifecycle(self) -> pulumi.Output[Sequence['CommandLifecycle']]:
+    def lifecycle(self) -> pulumi.Output[Optional['CommandLifecycle']]:
         """
         At what stage(s) in the resource lifecycle should the command be run.
         """

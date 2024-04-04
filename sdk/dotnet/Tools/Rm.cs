@@ -112,6 +112,12 @@ namespace UnMango.KubernetesTheHardWay.Tools
         public Input<bool>? Force { get; set; }
 
         /// <summary>
+        /// At what stage(s) in the resource lifecycle should the command be run.
+        /// </summary>
+        [Input("lifecycle")]
+        public UnMango.KubernetesTheHardWay.Tools.CommandLifecycle? Lifecycle { get; set; }
+
+        /// <summary>
         /// Whether rm should be run when the resource is created or deleted.
         /// </summary>
         [Input("onDelete")]

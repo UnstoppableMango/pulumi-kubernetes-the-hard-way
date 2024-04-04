@@ -50,7 +50,7 @@ export class Tee extends pulumi.ComponentResource {
     /**
      * At what stage(s) in the resource lifecycle should the command be run.
      */
-    public readonly lifecycle!: pulumi.Output<enums.tools.CommandLifecycle[]>;
+    public readonly lifecycle!: pulumi.Output<enums.tools.CommandLifecycle | undefined>;
     /**
      * Set behavior on write error.
      */
@@ -130,7 +130,7 @@ export interface TeeArgs {
     /**
      * At what stage(s) in the resource lifecycle should the command be run.
      */
-    lifecycle?: pulumi.Input<enums.tools.CommandLifecycle> | pulumi.Input<enums.tools.CommandLifecycle>[];
+    lifecycle?: enums.tools.CommandLifecycle;
     /**
      * Set behavior on write error.
      */

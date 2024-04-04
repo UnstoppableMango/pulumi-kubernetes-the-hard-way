@@ -3,7 +3,6 @@
 
 package com.unmango.kubernetesthehardway.remote;
 
-import com.pulumi.command.remote.Command;
 import com.pulumi.command.remote.outputs.Connection;
 import com.pulumi.core.Output;
 import com.pulumi.core.annotations.Export;
@@ -34,20 +33,6 @@ public class KubeApiServerInstall extends com.pulumi.resources.ComponentResource
      */
     public Output<Architecture> architecture() {
         return this.architecture;
-    }
-    /**
-     * The command resource.
-     * 
-     */
-    @Export(name="command", refs={Command.class}, tree="[0]")
-    private Output<Command> command;
-
-    /**
-     * @return The command resource.
-     * 
-     */
-    public Output<Command> command() {
-        return this.command;
     }
     /**
      * The connection details.
@@ -104,7 +89,7 @@ public class KubeApiServerInstall extends com.pulumi.resources.ComponentResource
      * @param name The _unique_ name of the resulting resource.
      * @param args The arguments to use to populate this resource's properties.
      */
-    public KubeApiServerInstall(String name, @Nullable KubeApiServerInstallArgs args) {
+    public KubeApiServerInstall(String name, KubeApiServerInstallArgs args) {
         this(name, args, null);
     }
     /**
@@ -113,7 +98,7 @@ public class KubeApiServerInstall extends com.pulumi.resources.ComponentResource
      * @param args The arguments to use to populate this resource's properties.
      * @param options A bag of options that control this resource's behavior.
      */
-    public KubeApiServerInstall(String name, @Nullable KubeApiServerInstallArgs args, @Nullable com.pulumi.resources.ComponentResourceOptions options) {
+    public KubeApiServerInstall(String name, KubeApiServerInstallArgs args, @Nullable com.pulumi.resources.ComponentResourceOptions options) {
         super("kubernetes-the-hard-way:remote:KubeApiServerInstall", name, args == null ? KubeApiServerInstallArgs.Empty : args, makeResourceOptions(options, Codegen.empty()), true);
     }
 

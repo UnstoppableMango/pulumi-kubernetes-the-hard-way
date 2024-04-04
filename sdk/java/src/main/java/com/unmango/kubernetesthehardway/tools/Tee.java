@@ -100,15 +100,15 @@ public class Tee extends com.pulumi.resources.ComponentResource {
      * At what stage(s) in the resource lifecycle should the command be run.
      * 
      */
-    @Export(name="lifecycle", refs={List.class,CommandLifecycle.class}, tree="[0,1]")
-    private Output<List<CommandLifecycle>> lifecycle;
+    @Export(name="lifecycle", refs={CommandLifecycle.class}, tree="[0]")
+    private Output</* @Nullable */ CommandLifecycle> lifecycle;
 
     /**
      * @return At what stage(s) in the resource lifecycle should the command be run.
      * 
      */
-    public Output<List<CommandLifecycle>> lifecycle() {
-        return this.lifecycle;
+    public Output<Optional<CommandLifecycle>> lifecycle() {
+        return Codegen.optional(this.lifecycle);
     }
     /**
      * Set behavior on write error.

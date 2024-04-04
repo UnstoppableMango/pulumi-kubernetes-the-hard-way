@@ -7,6 +7,7 @@ import com.pulumi.command.remote.inputs.ConnectionArgs;
 import com.pulumi.core.Output;
 import com.pulumi.core.annotations.Import;
 import com.pulumi.core.internal.Codegen;
+import com.pulumi.exceptions.MissingRequiredPropertyException;
 import com.unmango.kubernetesthehardway.remote.enums.Architecture;
 import java.lang.String;
 import java.util.Objects;
@@ -37,15 +38,15 @@ public final class KubeControllerManagerInstallArgs extends com.pulumi.resources
      * The connection details.
      * 
      */
-    @Import(name="connection")
-    private @Nullable Output<ConnectionArgs> connection;
+    @Import(name="connection", required=true)
+    private Output<ConnectionArgs> connection;
 
     /**
      * @return The connection details.
      * 
      */
-    public Optional<Output<ConnectionArgs>> connection() {
-        return Optional.ofNullable(this.connection);
+    public Output<ConnectionArgs> connection() {
+        return this.connection;
     }
 
     /**
@@ -132,7 +133,7 @@ public final class KubeControllerManagerInstallArgs extends com.pulumi.resources
          * @return builder
          * 
          */
-        public Builder connection(@Nullable Output<ConnectionArgs> connection) {
+        public Builder connection(Output<ConnectionArgs> connection) {
             $.connection = connection;
             return this;
         }
@@ -190,6 +191,9 @@ public final class KubeControllerManagerInstallArgs extends com.pulumi.resources
         }
 
         public KubeControllerManagerInstallArgs build() {
+            if ($.connection == null) {
+                throw new MissingRequiredPropertyException("KubeControllerManagerInstallArgs", "connection");
+            }
             $.installDirectory = Codegen.stringProp("installDirectory").output().arg($.installDirectory).def("/usr/local/bin").getNullable();
             return $;
         }

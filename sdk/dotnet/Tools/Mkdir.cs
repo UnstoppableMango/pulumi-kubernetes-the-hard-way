@@ -94,6 +94,12 @@ namespace UnMango.KubernetesTheHardWay.Tools
         public Input<string> Directory { get; set; } = null!;
 
         /// <summary>
+        /// At what stage(s) in the resource lifecycle should the command be run.
+        /// </summary>
+        [Input("lifecycle")]
+        public UnMango.KubernetesTheHardWay.Tools.CommandLifecycle? Lifecycle { get; set; }
+
+        /// <summary>
         /// Corresponds to the `--parents` option.
         /// </summary>
         [Input("parents")]

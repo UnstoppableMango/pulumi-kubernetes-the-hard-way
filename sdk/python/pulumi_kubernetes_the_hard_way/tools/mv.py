@@ -8,6 +8,7 @@ import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
 from .. import _utilities
+from ._enums import *
 import pulumi_command
 
 __all__ = ['MvArgs', 'Mv']
@@ -370,6 +371,7 @@ class Mv(pulumi.ComponentResource):
             __props__.__dict__["update"] = update
             __props__.__dict__["verbose"] = verbose
             __props__.__dict__["command"] = None
+            __props__.__dict__["lifecycle"] = None
         super(Mv, __self__).__init__(
             'kubernetes-the-hard-way:tools:Mv',
             resource_name,
@@ -432,6 +434,14 @@ class Mv(pulumi.ComponentResource):
         Corresponds to the --force option.
         """
         return pulumi.get(self, "force")
+
+    @property
+    @pulumi.getter
+    def lifecycle(self) -> pulumi.Output[Optional['CommandLifecycle']]:
+        """
+        At what stage(s) in the resource lifecycle should the command be run.
+        """
+        return pulumi.get(self, "lifecycle")
 
     @property
     @pulumi.getter(name="noClobber")

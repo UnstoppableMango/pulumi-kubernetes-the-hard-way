@@ -18,42 +18,6 @@ const (
 	CommandLifecycleDelete = CommandLifecycle("delete")
 )
 
-func (CommandLifecycle) ElementType() reflect.Type {
-	return reflect.TypeOf((*CommandLifecycle)(nil)).Elem()
-}
-
-func (e CommandLifecycle) ToCommandLifecycleOutput() CommandLifecycleOutput {
-	return pulumi.ToOutput(e).(CommandLifecycleOutput)
-}
-
-func (e CommandLifecycle) ToCommandLifecycleOutputWithContext(ctx context.Context) CommandLifecycleOutput {
-	return pulumi.ToOutputWithContext(ctx, e).(CommandLifecycleOutput)
-}
-
-func (e CommandLifecycle) ToCommandLifecyclePtrOutput() CommandLifecyclePtrOutput {
-	return e.ToCommandLifecyclePtrOutputWithContext(context.Background())
-}
-
-func (e CommandLifecycle) ToCommandLifecyclePtrOutputWithContext(ctx context.Context) CommandLifecyclePtrOutput {
-	return CommandLifecycle(e).ToCommandLifecycleOutputWithContext(ctx).ToCommandLifecyclePtrOutputWithContext(ctx)
-}
-
-func (e CommandLifecycle) ToStringOutput() pulumi.StringOutput {
-	return pulumi.ToOutput(pulumi.String(e)).(pulumi.StringOutput)
-}
-
-func (e CommandLifecycle) ToStringOutputWithContext(ctx context.Context) pulumi.StringOutput {
-	return pulumi.ToOutputWithContext(ctx, pulumi.String(e)).(pulumi.StringOutput)
-}
-
-func (e CommandLifecycle) ToStringPtrOutput() pulumi.StringPtrOutput {
-	return pulumi.String(e).ToStringPtrOutputWithContext(context.Background())
-}
-
-func (e CommandLifecycle) ToStringPtrOutputWithContext(ctx context.Context) pulumi.StringPtrOutput {
-	return pulumi.String(e).ToStringOutputWithContext(ctx).ToStringPtrOutputWithContext(ctx)
-}
-
 type CommandLifecycleOutput struct{ *pulumi.OutputState }
 
 func (CommandLifecycleOutput) ElementType() reflect.Type {
@@ -135,66 +99,6 @@ func (o CommandLifecyclePtrOutput) ToStringPtrOutputWithContext(ctx context.Cont
 		v := string(*e)
 		return &v
 	}).(pulumi.StringPtrOutput)
-}
-
-// CommandLifecycleInput is an input type that accepts values of the CommandLifecycle enum
-// A concrete instance of `CommandLifecycleInput` can be one of the following:
-//
-//	CommandLifecycleCreate
-//	CommandLifecycleUpdate
-//	CommandLifecycleDelete
-type CommandLifecycleInput interface {
-	pulumi.Input
-
-	ToCommandLifecycleOutput() CommandLifecycleOutput
-	ToCommandLifecycleOutputWithContext(context.Context) CommandLifecycleOutput
-}
-
-var commandLifecyclePtrType = reflect.TypeOf((**CommandLifecycle)(nil)).Elem()
-
-type CommandLifecyclePtrInput interface {
-	pulumi.Input
-
-	ToCommandLifecyclePtrOutput() CommandLifecyclePtrOutput
-	ToCommandLifecyclePtrOutputWithContext(context.Context) CommandLifecyclePtrOutput
-}
-
-type commandLifecyclePtr string
-
-func CommandLifecyclePtr(v string) CommandLifecyclePtrInput {
-	return (*commandLifecyclePtr)(&v)
-}
-
-func (*commandLifecyclePtr) ElementType() reflect.Type {
-	return commandLifecyclePtrType
-}
-
-func (in *commandLifecyclePtr) ToCommandLifecyclePtrOutput() CommandLifecyclePtrOutput {
-	return pulumi.ToOutput(in).(CommandLifecyclePtrOutput)
-}
-
-func (in *commandLifecyclePtr) ToCommandLifecyclePtrOutputWithContext(ctx context.Context) CommandLifecyclePtrOutput {
-	return pulumi.ToOutputWithContext(ctx, in).(CommandLifecyclePtrOutput)
-}
-
-type CommandLifecycleArrayOutput struct{ *pulumi.OutputState }
-
-func (CommandLifecycleArrayOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*[]CommandLifecycle)(nil)).Elem()
-}
-
-func (o CommandLifecycleArrayOutput) ToCommandLifecycleArrayOutput() CommandLifecycleArrayOutput {
-	return o
-}
-
-func (o CommandLifecycleArrayOutput) ToCommandLifecycleArrayOutputWithContext(ctx context.Context) CommandLifecycleArrayOutput {
-	return o
-}
-
-func (o CommandLifecycleArrayOutput) Index(i pulumi.IntInput) CommandLifecycleOutput {
-	return pulumi.All(o, i).ApplyT(func(vs []interface{}) CommandLifecycle {
-		return vs[0].([]CommandLifecycle)[vs[1].(int)]
-	}).(CommandLifecycleOutput)
 }
 
 type EtcdctlCommand string
@@ -793,8 +697,6 @@ func (in *teeModePtr) ToTeeModePtrOutputWithContext(ctx context.Context) TeeMode
 }
 
 func init() {
-	pulumi.RegisterInputType(reflect.TypeOf((*CommandLifecycleInput)(nil)).Elem(), CommandLifecycle("create"))
-	pulumi.RegisterInputType(reflect.TypeOf((*CommandLifecyclePtrInput)(nil)).Elem(), CommandLifecycle("create"))
 	pulumi.RegisterInputType(reflect.TypeOf((*EtcdctlCommandInput)(nil)).Elem(), EtcdctlCommand("member"))
 	pulumi.RegisterInputType(reflect.TypeOf((*EtcdctlCommandPtrInput)(nil)).Elem(), EtcdctlCommand("member"))
 	pulumi.RegisterInputType(reflect.TypeOf((*EtcdctlCommandArrayInput)(nil)).Elem(), EtcdctlCommandArray{})
@@ -805,7 +707,6 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*TeeModePtrInput)(nil)).Elem(), TeeMode("warn"))
 	pulumi.RegisterOutputType(CommandLifecycleOutput{})
 	pulumi.RegisterOutputType(CommandLifecyclePtrOutput{})
-	pulumi.RegisterOutputType(CommandLifecycleArrayOutput{})
 	pulumi.RegisterOutputType(EtcdctlCommandOutput{})
 	pulumi.RegisterOutputType(EtcdctlCommandPtrOutput{})
 	pulumi.RegisterOutputType(EtcdctlCommandArrayOutput{})

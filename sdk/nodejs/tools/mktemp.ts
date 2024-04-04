@@ -2,6 +2,9 @@
 // *** Do not edit by hand unless you're certain you know what you are doing! ***
 
 import * as pulumi from "@pulumi/pulumi";
+import * as inputs from "../types/input";
+import * as outputs from "../types/output";
+import * as enums from "../types/enums";
 import * as utilities from "../utilities";
 
 import * as pulumiCommand from "@pulumi/command";
@@ -40,6 +43,8 @@ export class Mktemp extends pulumi.ComponentResource {
      * Corresponds to the --quiet option.
      */
     public readonly quiet!: pulumi.Output<boolean>;
+    public /*out*/ readonly stderr!: pulumi.Output<string>;
+    public /*out*/ readonly stdout!: pulumi.Output<string>;
     /**
      * Corresponds to the --suffix option.
      */
@@ -70,16 +75,22 @@ export class Mktemp extends pulumi.ComponentResource {
             resourceInputs["connection"] = args ? (args.connection ? pulumi.output(args.connection).apply(pulumiCommand.types.input.remote.connectionArgsProvideDefaults) : undefined) : undefined;
             resourceInputs["directory"] = args ? args.directory : undefined;
             resourceInputs["dryRun"] = args ? args.dryRun : undefined;
+            resourceInputs["lifecycle"] = args ? args.lifecycle : undefined;
             resourceInputs["quiet"] = args ? args.quiet : undefined;
             resourceInputs["suffix"] = args ? args.suffix : undefined;
             resourceInputs["template"] = args ? args.template : undefined;
             resourceInputs["tmpdir"] = args ? args.tmpdir : undefined;
+            resourceInputs["triggers"] = args ? args.triggers : undefined;
             resourceInputs["command"] = undefined /*out*/;
+            resourceInputs["stderr"] = undefined /*out*/;
+            resourceInputs["stdout"] = undefined /*out*/;
         } else {
             resourceInputs["command"] = undefined /*out*/;
             resourceInputs["directory"] = undefined /*out*/;
             resourceInputs["dryRun"] = undefined /*out*/;
             resourceInputs["quiet"] = undefined /*out*/;
+            resourceInputs["stderr"] = undefined /*out*/;
+            resourceInputs["stdout"] = undefined /*out*/;
             resourceInputs["suffix"] = undefined /*out*/;
             resourceInputs["template"] = undefined /*out*/;
             resourceInputs["tmpdir"] = undefined /*out*/;
@@ -106,6 +117,10 @@ export interface MktempArgs {
      */
     dryRun?: pulumi.Input<boolean>;
     /**
+     * At what stage(s) in the resource lifecycle should the command be run.
+     */
+    lifecycle?: enums.tools.CommandLifecycle;
+    /**
      * Corresponds to the --quiet option.
      */
     quiet?: pulumi.Input<boolean>;
@@ -121,4 +136,5 @@ export interface MktempArgs {
      * Corresponds to the --tmpdir option.
      */
     tmpdir?: pulumi.Input<string>;
+    triggers?: pulumi.Input<any[]>;
 }

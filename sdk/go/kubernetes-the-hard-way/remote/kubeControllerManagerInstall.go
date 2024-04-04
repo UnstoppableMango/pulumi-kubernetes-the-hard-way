@@ -7,6 +7,7 @@ import (
 	"context"
 	"reflect"
 
+	"errors"
 	pulumiCommand "github.com/pulumi/pulumi-command/sdk/go/command/remote"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 	"github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/sdk/go/kubernetes-the-hard-way/internal"
@@ -18,8 +19,6 @@ type KubeControllerManagerInstall struct {
 
 	// The kube-controller-manager CPU architecture.
 	Architecture ArchitectureOutput `pulumi:"architecture"`
-	// The command resource.
-	Command pulumiCommand.CommandOutput `pulumi:"command"`
 	// The connection details.
 	Connection pulumiCommand.ConnectionOutput `pulumi:"connection"`
 	// Directory to install the `kube-controller-manager` binary.
@@ -32,12 +31,13 @@ type KubeControllerManagerInstall struct {
 func NewKubeControllerManagerInstall(ctx *pulumi.Context,
 	name string, args *KubeControllerManagerInstallArgs, opts ...pulumi.ResourceOption) (*KubeControllerManagerInstall, error) {
 	if args == nil {
-		args = &KubeControllerManagerInstallArgs{}
+		return nil, errors.New("missing one or more required arguments")
 	}
 
-	if args.Connection != nil {
-		args.Connection = args.Connection.ToConnectionOutput().ApplyT(func(v *pulumiCommand.Connection) *pulumiCommand.Connection { return v.Defaults() }).(*pulumiCommand.ConnectionOutput)
+	if args.Connection == nil {
+		return nil, errors.New("invalid value for required argument 'Connection'")
 	}
+	args.Connection = args.Connection.ToConnectionOutput().ApplyT(func(v pulumiCommand.Connection) pulumiCommand.Connection { return *v.Defaults() }).(pulumiCommand.ConnectionOutput)
 	if args.InstallDirectory == nil {
 		args.InstallDirectory = pulumi.StringPtr("/usr/local/bin")
 	}
@@ -54,7 +54,7 @@ type kubeControllerManagerInstallArgs struct {
 	// The kube-controller-manager CPU architecture.
 	Architecture *Architecture `pulumi:"architecture"`
 	// The connection details.
-	Connection *pulumiCommand.Connection `pulumi:"connection"`
+	Connection pulumiCommand.Connection `pulumi:"connection"`
 	// Directory to install the `kube-controller-manager` binary.
 	InstallDirectory *string `pulumi:"installDirectory"`
 	// The version of kube-controller-manager to install.
@@ -66,7 +66,7 @@ type KubeControllerManagerInstallArgs struct {
 	// The kube-controller-manager CPU architecture.
 	Architecture ArchitecturePtrInput
 	// The connection details.
-	Connection *pulumiCommand.ConnectionInput
+	Connection pulumiCommand.ConnectionInput
 	// Directory to install the `kube-controller-manager` binary.
 	InstallDirectory pulumi.StringPtrInput
 	// The version of kube-controller-manager to install.
@@ -163,11 +163,6 @@ func (o KubeControllerManagerInstallOutput) ToKubeControllerManagerInstallOutput
 // The kube-controller-manager CPU architecture.
 func (o KubeControllerManagerInstallOutput) Architecture() ArchitectureOutput {
 	return o.ApplyT(func(v *KubeControllerManagerInstall) ArchitectureOutput { return v.Architecture }).(ArchitectureOutput)
-}
-
-// The command resource.
-func (o KubeControllerManagerInstallOutput) Command() pulumiCommand.CommandOutput {
-	return o.ApplyT(func(v *KubeControllerManagerInstall) pulumiCommand.CommandOutput { return v.Command }).(pulumiCommand.CommandOutput)
 }
 
 // The connection details.

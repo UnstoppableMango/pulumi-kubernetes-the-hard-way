@@ -23,12 +23,6 @@ namespace UnMango.KubernetesTheHardWay.Remote
         public Output<UnMango.KubernetesTheHardWay.Remote.Architecture> Architecture { get; private set; } = null!;
 
         /// <summary>
-        /// The command resource.
-        /// </summary>
-        [Output("command")]
-        public Output<Pulumi.Command.Remote.Command> Command { get; private set; } = null!;
-
-        /// <summary>
         /// The connection details.
         /// </summary>
         [Output("connection")]
@@ -54,7 +48,7 @@ namespace UnMango.KubernetesTheHardWay.Remote
         /// <param name="name">The unique name of the resource</param>
         /// <param name="args">The arguments used to populate this resource's properties</param>
         /// <param name="options">A bag of options that control this resource's behavior</param>
-        public KubeControllerManagerInstall(string name, KubeControllerManagerInstallArgs? args = null, ComponentResourceOptions? options = null)
+        public KubeControllerManagerInstall(string name, KubeControllerManagerInstallArgs args, ComponentResourceOptions? options = null)
             : base("kubernetes-the-hard-way:remote:KubeControllerManagerInstall", name, args ?? new KubeControllerManagerInstallArgs(), MakeResourceOptions(options, ""), remote: true)
         {
         }
@@ -84,8 +78,8 @@ namespace UnMango.KubernetesTheHardWay.Remote
         /// <summary>
         /// The connection details.
         /// </summary>
-        [Input("connection")]
-        public Input<Pulumi.Command.Remote.Inputs.ConnectionArgs>? Connection { get; set; }
+        [Input("connection", required: true)]
+        public Input<Pulumi.Command.Remote.Inputs.ConnectionArgs> Connection { get; set; } = null!;
 
         /// <summary>
         /// Directory to install the `kube-controller-manager` binary.

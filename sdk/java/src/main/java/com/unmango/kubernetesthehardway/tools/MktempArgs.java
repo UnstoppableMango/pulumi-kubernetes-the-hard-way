@@ -7,8 +7,11 @@ import com.pulumi.command.remote.inputs.ConnectionArgs;
 import com.pulumi.core.Output;
 import com.pulumi.core.annotations.Import;
 import com.pulumi.exceptions.MissingRequiredPropertyException;
+import com.unmango.kubernetesthehardway.tools.enums.CommandLifecycle;
 import java.lang.Boolean;
+import java.lang.Object;
 import java.lang.String;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import javax.annotation.Nullable;
@@ -61,6 +64,21 @@ public final class MktempArgs extends com.pulumi.resources.ResourceArgs {
      */
     public Optional<Output<Boolean>> dryRun() {
         return Optional.ofNullable(this.dryRun);
+    }
+
+    /**
+     * At what stage(s) in the resource lifecycle should the command be run.
+     * 
+     */
+    @Import(name="lifecycle")
+    private @Nullable CommandLifecycle lifecycle;
+
+    /**
+     * @return At what stage(s) in the resource lifecycle should the command be run.
+     * 
+     */
+    public Optional<CommandLifecycle> lifecycle() {
+        return Optional.ofNullable(this.lifecycle);
     }
 
     /**
@@ -123,16 +141,25 @@ public final class MktempArgs extends com.pulumi.resources.ResourceArgs {
         return Optional.ofNullable(this.tmpdir);
     }
 
+    @Import(name="triggers")
+    private @Nullable Output<List<Object>> triggers;
+
+    public Optional<Output<List<Object>>> triggers() {
+        return Optional.ofNullable(this.triggers);
+    }
+
     private MktempArgs() {}
 
     private MktempArgs(MktempArgs $) {
         this.connection = $.connection;
         this.directory = $.directory;
         this.dryRun = $.dryRun;
+        this.lifecycle = $.lifecycle;
         this.quiet = $.quiet;
         this.suffix = $.suffix;
         this.template = $.template;
         this.tmpdir = $.tmpdir;
+        this.triggers = $.triggers;
     }
 
     public static Builder builder() {
@@ -217,6 +244,17 @@ public final class MktempArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
+         * @param lifecycle At what stage(s) in the resource lifecycle should the command be run.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder lifecycle(@Nullable CommandLifecycle lifecycle) {
+            $.lifecycle = lifecycle;
+            return this;
+        }
+
+        /**
          * @param quiet Corresponds to the --quiet option.
          * 
          * @return builder
@@ -298,6 +336,19 @@ public final class MktempArgs extends com.pulumi.resources.ResourceArgs {
          */
         public Builder tmpdir(String tmpdir) {
             return tmpdir(Output.of(tmpdir));
+        }
+
+        public Builder triggers(@Nullable Output<List<Object>> triggers) {
+            $.triggers = triggers;
+            return this;
+        }
+
+        public Builder triggers(List<Object> triggers) {
+            return triggers(Output.of(triggers));
+        }
+
+        public Builder triggers(Object... triggers) {
+            return triggers(List.of(triggers));
         }
 
         public MktempArgs build() {

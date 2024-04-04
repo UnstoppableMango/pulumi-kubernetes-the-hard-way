@@ -77,6 +77,18 @@ public class Mktemp extends com.pulumi.resources.ComponentResource {
     public Output<Boolean> quiet() {
         return this.quiet;
     }
+    @Export(name="stderr", refs={String.class}, tree="[0]")
+    private Output<String> stderr;
+
+    public Output<String> stderr() {
+        return this.stderr;
+    }
+    @Export(name="stdout", refs={String.class}, tree="[0]")
+    private Output<String> stdout;
+
+    public Output<String> stdout() {
+        return this.stdout;
+    }
     /**
      * Corresponds to the --suffix option.
      * 

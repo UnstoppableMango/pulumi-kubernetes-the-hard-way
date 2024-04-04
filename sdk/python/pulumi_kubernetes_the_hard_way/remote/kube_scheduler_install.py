@@ -16,27 +16,38 @@ __all__ = ['KubeSchedulerInstallArgs', 'KubeSchedulerInstall']
 @pulumi.input_type
 class KubeSchedulerInstallArgs:
     def __init__(__self__, *,
+                 connection: pulumi.Input['pulumi_command.remote.ConnectionArgs'],
                  architecture: Optional[pulumi.Input['Architecture']] = None,
-                 connection: Optional[pulumi.Input['pulumi_command.remote.ConnectionArgs']] = None,
                  install_directory: Optional[pulumi.Input[str]] = None,
                  version: Optional[pulumi.Input[str]] = None):
         """
         The set of arguments for constructing a KubeSchedulerInstall resource.
-        :param pulumi.Input['Architecture'] architecture: The kube-scheduler CPU architecture.
         :param pulumi.Input['pulumi_command.remote.ConnectionArgs'] connection: The connection details.
+        :param pulumi.Input['Architecture'] architecture: The kube-scheduler CPU architecture.
         :param pulumi.Input[str] install_directory: Directory to install the `kube-scheduler` binary.
         :param pulumi.Input[str] version: The version of kube-scheduler to install.
         """
+        pulumi.set(__self__, "connection", connection)
         if architecture is not None:
             pulumi.set(__self__, "architecture", architecture)
-        if connection is not None:
-            pulumi.set(__self__, "connection", connection)
         if install_directory is None:
             install_directory = '/usr/local/bin'
         if install_directory is not None:
             pulumi.set(__self__, "install_directory", install_directory)
         if version is not None:
             pulumi.set(__self__, "version", version)
+
+    @property
+    @pulumi.getter
+    def connection(self) -> pulumi.Input['pulumi_command.remote.ConnectionArgs']:
+        """
+        The connection details.
+        """
+        return pulumi.get(self, "connection")
+
+    @connection.setter
+    def connection(self, value: pulumi.Input['pulumi_command.remote.ConnectionArgs']):
+        pulumi.set(self, "connection", value)
 
     @property
     @pulumi.getter
@@ -49,18 +60,6 @@ class KubeSchedulerInstallArgs:
     @architecture.setter
     def architecture(self, value: Optional[pulumi.Input['Architecture']]):
         pulumi.set(self, "architecture", value)
-
-    @property
-    @pulumi.getter
-    def connection(self) -> Optional[pulumi.Input['pulumi_command.remote.ConnectionArgs']]:
-        """
-        The connection details.
-        """
-        return pulumi.get(self, "connection")
-
-    @connection.setter
-    def connection(self, value: Optional[pulumi.Input['pulumi_command.remote.ConnectionArgs']]):
-        pulumi.set(self, "connection", value)
 
     @property
     @pulumi.getter(name="installDirectory")
@@ -111,7 +110,7 @@ class KubeSchedulerInstall(pulumi.ComponentResource):
     @overload
     def __init__(__self__,
                  resource_name: str,
-                 args: Optional[KubeSchedulerInstallArgs] = None,
+                 args: KubeSchedulerInstallArgs,
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
         Installs kube-scheduler on a remote system.
@@ -147,12 +146,13 @@ class KubeSchedulerInstall(pulumi.ComponentResource):
             __props__ = KubeSchedulerInstallArgs.__new__(KubeSchedulerInstallArgs)
 
             __props__.__dict__["architecture"] = architecture
+            if connection is None and not opts.urn:
+                raise TypeError("Missing required property 'connection'")
             __props__.__dict__["connection"] = connection
             if install_directory is None:
                 install_directory = '/usr/local/bin'
             __props__.__dict__["install_directory"] = install_directory
             __props__.__dict__["version"] = version
-            __props__.__dict__["command"] = None
         super(KubeSchedulerInstall, __self__).__init__(
             'kubernetes-the-hard-way:remote:KubeSchedulerInstall',
             resource_name,
@@ -167,14 +167,6 @@ class KubeSchedulerInstall(pulumi.ComponentResource):
         The kube-scheduler CPU architecture.
         """
         return pulumi.get(self, "architecture")
-
-    @property
-    @pulumi.getter
-    def command(self) -> pulumi.Output['pulumi_command.remote.Command']:
-        """
-        The command resource.
-        """
-        return pulumi.get(self, "command")
 
     @property
     @pulumi.getter
