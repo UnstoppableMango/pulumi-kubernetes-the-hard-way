@@ -2,6 +2,7 @@ import { ComponentResourceOptions, interpolate, output } from '@pulumi/pulumi';
 import * as schema from '../schema-types';
 import { Mkdir, Mktemp, Mv, Rm } from '../tools';
 import { Download } from './download';
+import { Command } from '@pulumi/command/remote';
 
 export class KubeApiServerInstall extends schema.KubeApiServerInstall {
   constructor(name: string, args: schema.KubeApiServerInstallArgs, opts?: ComponentResourceOptions) {
@@ -11,10 +12,11 @@ export class KubeApiServerInstall extends schema.KubeApiServerInstall {
     const connection = output(args.connection);
     const installDirectory = output(args.installDirectory ?? '/usr/local/bin');
     const version = output(args.version ?? '1.29.2');
-    const url = interpolate`https://storage.googleapis.com/kubernetes-release/release/v${version}/bin/linux/${architecture}/kube-apiserver`
+    const url = interpolate`https://storage.googleapis.com/kubernetes-release/release/v${version}/bin/linux/${architecture}/kube-apiserver`;
 
     const tmp = new Mktemp(name, {
       connection,
+      directory: true,
     }, { parent: this });
 
     const tmpDir = tmp.stdout;
@@ -29,7 +31,6 @@ export class KubeApiServerInstall extends schema.KubeApiServerInstall {
       connection,
       directory: installDirectory,
       parents: true,
-      removeOnDelete: true,
     }, { parent: this });
 
     const binPath = interpolate`${installDirectory}/kube-apiserver`;
@@ -38,14 +39,14 @@ export class KubeApiServerInstall extends schema.KubeApiServerInstall {
       connection,
       source: interpolate`${download.destination}/kube-apiserver`,
       dest: binPath,
-    }, { parent: this, dependsOn: [tmp, mkdir] });
+    }, { parent: this, dependsOn: [tmp, mkdir, download] });
 
     const rm = new Rm(name, {
       connection,
       files: tmpDir,
       force: true,
       recursive: true,
-    }, { parent: this });
+    }, { parent: this, dependsOn: mv });
 
     this.architecture = architecture;
     this.connection = connection;
