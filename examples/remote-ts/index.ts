@@ -1,7 +1,7 @@
 import * as path from 'node:path';
 import { Config } from '@pulumi/pulumi';
-import { Mkdir, Tar, Wget } from '@unmango/pulumi-kubernetes-the-hard-way/tools';
-import { Download, EtcdInstall, File, SystemdService } from '@unmango/pulumi-kubernetes-the-hard-way/remote';
+import { Mkdir, Mktemp, Tar, Wget } from '@unmango/pulumi-kubernetes-the-hard-way/tools';
+import { Download, EtcdInstall, File, KubeApiServerInstall, SystemdService } from '@unmango/pulumi-kubernetes-the-hard-way/remote';
 
 const config = new Config();
 const host = config.require('host');
@@ -20,16 +20,16 @@ const wget = new Wget('remote', {
   connection: { host, port, user, password },
   url: 'https://www.example.com',
   directoryPrefix: basePath,
-  // The container image seems to have an old version
-  // These two options aren't supported
-  httpsOnly: false,
-  timestamping: false,
 });
 
 const mkdir = new Mkdir('remote', {
   connection: { host, port, user, password },
   directory: path.join(basePath, 'test-dir', 'subdir'),
   parents: true,
+});
+
+const tmp = new Mktemp('remote', {
+  connection: { host, port, user, password },
 });
 
 const download = new Download('remote', {
@@ -67,6 +67,11 @@ const systemdService = new SystemdService('remote-test', {
   },
 });
 
+const apiServer = new KubeApiServerInstall('remote', {
+  connection: { host, port, user, password },
+  installDirectory: path.join(basePath, 'kube-apiserver'),
+});
+
 export const fileStderr = file.stderr;
 export const fileStdout = file.stdout;
 
@@ -76,3 +81,5 @@ export const wgetCommand = wget.command;
 
 // export const tarStderr = tar.stderr;
 // export const tarStdout = tar.stdout;
+
+export const mktemp = tmp.stdout;
