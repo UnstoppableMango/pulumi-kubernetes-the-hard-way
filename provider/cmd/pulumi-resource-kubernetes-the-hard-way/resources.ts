@@ -1,5 +1,5 @@
 import { ComponentResource, ComponentResourceOptions, Inputs } from '@pulumi/pulumi';
-import { Download, EtcdInstall, File, KubeApiServerInstall, KubeControllerManagerInstall, SystemdService } from './remote';
+import { Download, EtcdInstall, File, KubeApiServerInstall, KubeControllerManagerInstall, KubeSchedulerInstall, SystemdService } from './remote';
 import { Certificate, ClusterPki, EncryptionKey, RootCa } from './tls';
 import { Mkdir, Mktemp, Rm, Tar, Wget } from './tools';
 
@@ -12,6 +12,7 @@ export type ResourceConstructor = {
   readonly 'kubernetes-the-hard-way:remote:File': ConstructComponent<File>;
   readonly 'kubernetes-the-hard-way:remote:KubeApiServerInstall': ConstructComponent<KubeApiServerInstall>;
   readonly 'kubernetes-the-hard-way:remote:KubeControllerManagerInstall': ConstructComponent<KubeControllerManagerInstall>;
+  readonly 'kubernetes-the-hard-way:remote:KubeSchedulerInstall': ConstructComponent<KubeSchedulerInstall>;
   readonly 'kubernetes-the-hard-way:remote:SystemdService': ConstructComponent<SystemdService>;
   readonly 'kubernetes-the-hard-way:tls:Certificate': ConstructComponent<Certificate>;
   readonly 'kubernetes-the-hard-way:tls:ClusterPki': ConstructComponent<ClusterPki>;
@@ -30,6 +31,7 @@ const resources: ResourceConstructor = {
   'kubernetes-the-hard-way:remote:File': (...args) => new File(...args),
   'kubernetes-the-hard-way:remote:KubeApiServerInstall': (...args) => new KubeApiServerInstall(...args),
   'kubernetes-the-hard-way:remote:KubeControllerManagerInstall': (...args) => new KubeControllerManagerInstall(...args),
+  'kubernetes-the-hard-way:remote:KubeSchedulerInstall': (...args) => new KubeSchedulerInstall(...args),
   'kubernetes-the-hard-way:remote:SystemdService': (...args) => new SystemdService(...args),
   'kubernetes-the-hard-way:tls:Certificate': (...args) => new Certificate(...args),
   'kubernetes-the-hard-way:tls:ClusterPki': (...args) => new ClusterPki(...args),

@@ -8,10 +8,11 @@ export class KubeSchedulerInstall extends schema.KubeSchedulerInstall {
     super(name, args, opts);
 
     const architecture = output(args.architecture ?? 'amd64');
+    const binName = 'kube-scheduler';
     const connection = output(args.connection);
     const installDirectory = output(args.installDirectory ?? '/usr/local/bin');
     const version = output(args.version ?? '1.29.2');
-    const url = interpolate`https://storage.googleapis.com/kubernetes-release/release/v${version}/bin/linux/${architecture}/kube-apiserver`;
+    const url = interpolate`https://storage.googleapis.com/kubernetes-release/release/v${version}/bin/linux/${architecture}/${binName}`;
 
     const tmp = new Mktemp(name, {
       connection,
@@ -32,11 +33,11 @@ export class KubeSchedulerInstall extends schema.KubeSchedulerInstall {
       parents: true,
     }, { parent: this });
 
-    const binPath = interpolate`${installDirectory}/kube-apiserver`;
+    const binPath = interpolate`${installDirectory}/${binName}`;
 
     const mv = new Mv(name, {
       connection,
-      source: interpolate`${download.destination}/kube-apiserver`,
+      source: interpolate`${download.destination}/${binName}`,
       dest: binPath,
     }, { parent: this, dependsOn: [tmp, mkdir, download] });
 
