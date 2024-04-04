@@ -1151,11 +1151,13 @@ resources:
       lifecycle:
         oneOf:
           - $ref: "#/types/kubernetes-the-hard-way:tools:CommandLifecycle"
+            plain: true
           - type: array
+            plain: true
             items:
               $ref: "#/types/kubernetes-the-hard-way:tools:CommandLifecycle"
+              plain: true
         plain: true
-        default: create
         description: At what stage(s) in the resource lifecycle should the command be run.
       outputError:
         $ref: "#/types/kubernetes-the-hard-way:tools:TeeMode"
@@ -1869,30 +1871,44 @@ functions:
       properties:
         result:
           $ref: "#/resources/kubernetes-the-hard-way:tools:Etcdctl"
+      required:
+        - result
   kubernetes-the-hard-way:remote:SystemdService/disable:
     inputs:
       properties:
         __self__:
           $ref: "#/resources/kubernetes-the-hard-way:remote:SystemdService"
+      required:
+        - __self__
     outputs:
       properties:
         result:
           $ref: "#/resources/kubernetes-the-hard-way:tools:Systemctl"
+      required:
+        - result
   kubernetes-the-hard-way:remote:SystemdService/enable:
     inputs:
       properties:
         __self__:
           $ref: "#/resources/kubernetes-the-hard-way:remote:SystemdService"
+      required:
+        - __self__
     outputs:
       properties:
         result:
           $ref: "#/resources/kubernetes-the-hard-way:tools:Systemctl"
+      required:
+        - result
   kubernetes-the-hard-way:remote:SystemdService/start:
     inputs:
       properties:
         __self__:
           $ref: "#/resources/kubernetes-the-hard-way:remote:SystemdService"
+      required:
+        - __self__
     outputs:
       properties:
         result:
           $ref: "#/resources/kubernetes-the-hard-way:tools:Systemctl"
+      required:
+        - result
