@@ -24,6 +24,8 @@
         "remote/file.ts",
         "remote/index.ts",
         "remote/kubeApiServerInstall.ts",
+        "remote/kubeControllerManagerInstall.ts",
+        "remote/kubeSchedulerInstall.ts",
         "remote/systemdService.ts",
         "resources.ts",
         "schema-types.ts",
