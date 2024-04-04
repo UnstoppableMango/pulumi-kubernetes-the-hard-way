@@ -6,9 +6,6 @@
 import * as pulumi from "@pulumi/pulumi";
 export type ConstructComponent<T extends pulumi.ComponentResource = pulumi.ComponentResource> = (name: string, inputs: any, options: pulumi.ComponentResourceOptions) => T;
 export type ResourceConstructor = {
-    readonly "kubernetes-the-hard-way:tls:Certificate": ConstructComponent<Certificate>;
-    readonly "kubernetes-the-hard-way:tls:ClusterPki": ConstructComponent<ClusterPki>;
-    readonly "kubernetes-the-hard-way:tls:EncryptionKey": ConstructComponent<EncryptionKey>;
     readonly "kubernetes-the-hard-way:remote:EtcdInstall": ConstructComponent<EtcdInstall>;
     readonly "kubernetes-the-hard-way:remote:Download": ConstructComponent<Download>;
     readonly "kubernetes-the-hard-way:remote:File": ConstructComponent<File>;
@@ -16,6 +13,9 @@ export type ResourceConstructor = {
     readonly "kubernetes-the-hard-way:remote:KubeControllerManagerInstall": ConstructComponent<KubeControllerManagerInstall>;
     readonly "kubernetes-the-hard-way:remote:KubeSchedulerInstall": ConstructComponent<KubeSchedulerInstall>;
     readonly "kubernetes-the-hard-way:remote:SystemdService": ConstructComponent<SystemdService>;
+    readonly "kubernetes-the-hard-way:tls:Certificate": ConstructComponent<Certificate>;
+    readonly "kubernetes-the-hard-way:tls:ClusterPki": ConstructComponent<ClusterPki>;
+    readonly "kubernetes-the-hard-way:tls:EncryptionKey": ConstructComponent<EncryptionKey>;
     readonly "kubernetes-the-hard-way:tls:RootCa": ConstructComponent<RootCa>;
     readonly "kubernetes-the-hard-way:tools:Etcdctl": ConstructComponent<Etcdctl>;
     readonly "kubernetes-the-hard-way:tools:Mkdir": ConstructComponent<Mkdir>;
@@ -37,71 +37,6 @@ export type Functions = {
 import * as command from "@pulumi/command";
 import * as random from "@pulumi/random";
 import * as tls from "@pulumi/tls";
-export abstract class Certificate<TData = any> extends (pulumi.ComponentResource)<TData> {
-    public cert!: tls.LocallySignedCert | pulumi.Output<tls.LocallySignedCert>;
-    public certPem!: string | pulumi.Output<string>;
-    public csr!: tls.CertRequest | pulumi.Output<tls.CertRequest>;
-    public key!: tls.PrivateKey | pulumi.Output<tls.PrivateKey>;
-    public privateKeyPem!: string | pulumi.Output<string>;
-    public publicKeyPem!: string | pulumi.Output<string>;
-    constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
-        super("kubernetes-the-hard-way:tls:Certificate", name, opts.urn ? { cert: undefined, certPem: undefined, csr: undefined, key: undefined, privateKeyPem: undefined, publicKeyPem: undefined } : { name, args, opts }, opts);
-    }
-}
-export interface CertificateArgs {
-    readonly algorithm: pulumi.Input<AlgorithmInputs>;
-    readonly allowedUses: pulumi.Input<pulumi.Input<AllowedUsageInputs>[]>;
-    readonly caCertPem: pulumi.Input<string>;
-    readonly caPrivateKeyPem: pulumi.Input<string>;
-    readonly ecdsaCurve?: pulumi.Input<EcdsaCurveInputs>;
-    readonly rsaBits?: pulumi.Input<number>;
-    readonly dnsNames?: pulumi.Input<pulumi.Input<string>[]>;
-    readonly earlyRenewalHours?: pulumi.Input<number>;
-    readonly ipAddresses?: pulumi.Input<pulumi.Input<string>[]>;
-    readonly isCaCertificate?: pulumi.Input<boolean>;
-    readonly setAuthorityKeyId?: pulumi.Input<boolean>;
-    readonly setSubjectKeyId?: pulumi.Input<boolean>;
-    readonly subject?: pulumi.Input<tls.types.input.CertRequestSubject>;
-    readonly uris?: pulumi.Input<pulumi.Input<string>[]>;
-    readonly validityPeriodHours: pulumi.Input<number>;
-}
-export abstract class ClusterPki<TData = any> extends (pulumi.ComponentResource)<TData> {
-    public admin!: Certificate | pulumi.Output<Certificate>;
-    public algorithm!: AlgorithmOutputs | pulumi.Output<AlgorithmOutputs>;
-    public ca!: RootCa | pulumi.Output<RootCa>;
-    public clusterName!: string | pulumi.Output<string>;
-    public controllerManager!: Certificate | pulumi.Output<Certificate>;
-    public kubelet!: Record<string, Certificate> | pulumi.Output<Record<string, Certificate>>;
-    public kubeProxy!: Certificate | pulumi.Output<Certificate>;
-    public kubernetes!: Certificate | pulumi.Output<Certificate>;
-    public kubeScheduler!: Certificate | pulumi.Output<Certificate>;
-    public publicIp!: string | pulumi.Output<string>;
-    public rsaBits!: number | pulumi.Output<number>;
-    public serviceAccounts!: Certificate | pulumi.Output<Certificate>;
-    public validityPeriodHours!: number | pulumi.Output<number>;
-    constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
-        super("kubernetes-the-hard-way:tls:ClusterPki", name, opts.urn ? { admin: undefined, algorithm: undefined, ca: undefined, clusterName: undefined, controllerManager: undefined, kubelet: undefined, kubeProxy: undefined, kubernetes: undefined, kubeScheduler: undefined, publicIp: undefined, rsaBits: undefined, serviceAccounts: undefined, validityPeriodHours: undefined } : { name, args, opts }, opts);
-    }
-}
-export interface ClusterPkiArgs {
-    readonly algorithm?: pulumi.Input<AlgorithmInputs>;
-    readonly clusterName: pulumi.Input<string>;
-    readonly ecdsaCurve?: pulumi.Input<EcdsaCurveInputs>;
-    readonly nodes: pulumi.Input<Record<string, pulumi.Input<ClusterPkiNodeInputs>>>;
-    readonly publicIp: pulumi.Input<string>;
-    readonly rsaBits?: pulumi.Input<number>;
-    readonly validityPeriodHours?: pulumi.Input<number>;
-}
-export abstract class EncryptionKey<TData = any> extends (pulumi.ComponentResource)<TData> {
-    public config!: string | pulumi.Output<string>;
-    public key!: random.RandomBytes | pulumi.Output<random.RandomBytes>;
-    constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
-        super("kubernetes-the-hard-way:tls:EncryptionKey", name, opts.urn ? { config: undefined, key: undefined } : { name, args, opts }, opts);
-    }
-}
-export interface EncryptionKeyArgs {
-    readonly bytes?: pulumi.Input<number>;
-}
 export abstract class EtcdInstall<TData = any> extends (pulumi.ComponentResource)<TData> {
     public architecture!: ArchitectureOutputs | pulumi.Output<ArchitectureOutputs>;
     public archiveName!: string | pulumi.Output<string>;
@@ -179,49 +114,46 @@ export interface FileArgs {
 }
 export abstract class KubeApiServerInstall<TData = any> extends (pulumi.ComponentResource)<TData> {
     public architecture!: ArchitectureOutputs | pulumi.Output<ArchitectureOutputs>;
-    public command!: command.remote.Command | pulumi.Output<command.remote.Command>;
     public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
     public installDirectory!: string | pulumi.Output<string>;
     public version!: string | pulumi.Output<string>;
     constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
-        super("kubernetes-the-hard-way:remote:KubeApiServerInstall", name, opts.urn ? { architecture: undefined, command: undefined, connection: undefined, installDirectory: undefined, version: undefined } : { name, args, opts }, opts);
+        super("kubernetes-the-hard-way:remote:KubeApiServerInstall", name, opts.urn ? { architecture: undefined, connection: undefined, installDirectory: undefined, version: undefined } : { name, args, opts }, opts);
     }
 }
 export interface KubeApiServerInstallArgs {
     readonly architecture?: pulumi.Input<ArchitectureInputs>;
-    readonly connection?: pulumi.Input<command.types.input.remote.ConnectionArgs>;
+    readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
     readonly installDirectory?: pulumi.Input<string>;
     readonly version?: pulumi.Input<string>;
 }
 export abstract class KubeControllerManagerInstall<TData = any> extends (pulumi.ComponentResource)<TData> {
     public architecture!: ArchitectureOutputs | pulumi.Output<ArchitectureOutputs>;
-    public command!: command.remote.Command | pulumi.Output<command.remote.Command>;
     public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
     public installDirectory!: string | pulumi.Output<string>;
     public version!: string | pulumi.Output<string>;
     constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
-        super("kubernetes-the-hard-way:remote:KubeControllerManagerInstall", name, opts.urn ? { architecture: undefined, command: undefined, connection: undefined, installDirectory: undefined, version: undefined } : { name, args, opts }, opts);
+        super("kubernetes-the-hard-way:remote:KubeControllerManagerInstall", name, opts.urn ? { architecture: undefined, connection: undefined, installDirectory: undefined, version: undefined } : { name, args, opts }, opts);
     }
 }
 export interface KubeControllerManagerInstallArgs {
     readonly architecture?: pulumi.Input<ArchitectureInputs>;
-    readonly connection?: pulumi.Input<command.types.input.remote.ConnectionArgs>;
+    readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
     readonly installDirectory?: pulumi.Input<string>;
     readonly version?: pulumi.Input<string>;
 }
 export abstract class KubeSchedulerInstall<TData = any> extends (pulumi.ComponentResource)<TData> {
     public architecture!: ArchitectureOutputs | pulumi.Output<ArchitectureOutputs>;
-    public command!: command.remote.Command | pulumi.Output<command.remote.Command>;
     public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
     public installDirectory!: string | pulumi.Output<string>;
     public version!: string | pulumi.Output<string>;
     constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
-        super("kubernetes-the-hard-way:remote:KubeSchedulerInstall", name, opts.urn ? { architecture: undefined, command: undefined, connection: undefined, installDirectory: undefined, version: undefined } : { name, args, opts }, opts);
+        super("kubernetes-the-hard-way:remote:KubeSchedulerInstall", name, opts.urn ? { architecture: undefined, connection: undefined, installDirectory: undefined, version: undefined } : { name, args, opts }, opts);
     }
 }
 export interface KubeSchedulerInstallArgs {
     readonly architecture?: pulumi.Input<ArchitectureInputs>;
-    readonly connection?: pulumi.Input<command.types.input.remote.ConnectionArgs>;
+    readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
     readonly installDirectory?: pulumi.Input<string>;
     readonly version?: pulumi.Input<string>;
 }
@@ -242,6 +174,71 @@ export interface SystemdServiceArgs {
     readonly install?: pulumi.Input<SystemdInstallSectionInputs>;
     readonly service: pulumi.Input<SystemdServiceSectionInputs>;
     readonly unit?: pulumi.Input<SystemdUnitSectionInputs>;
+}
+export abstract class Certificate<TData = any> extends (pulumi.ComponentResource)<TData> {
+    public cert!: tls.LocallySignedCert | pulumi.Output<tls.LocallySignedCert>;
+    public certPem!: string | pulumi.Output<string>;
+    public csr!: tls.CertRequest | pulumi.Output<tls.CertRequest>;
+    public key!: tls.PrivateKey | pulumi.Output<tls.PrivateKey>;
+    public privateKeyPem!: string | pulumi.Output<string>;
+    public publicKeyPem!: string | pulumi.Output<string>;
+    constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
+        super("kubernetes-the-hard-way:tls:Certificate", name, opts.urn ? { cert: undefined, certPem: undefined, csr: undefined, key: undefined, privateKeyPem: undefined, publicKeyPem: undefined } : { name, args, opts }, opts);
+    }
+}
+export interface CertificateArgs {
+    readonly algorithm: pulumi.Input<AlgorithmInputs>;
+    readonly allowedUses: pulumi.Input<pulumi.Input<AllowedUsageInputs>[]>;
+    readonly caCertPem: pulumi.Input<string>;
+    readonly caPrivateKeyPem: pulumi.Input<string>;
+    readonly ecdsaCurve?: pulumi.Input<EcdsaCurveInputs>;
+    readonly rsaBits?: pulumi.Input<number>;
+    readonly dnsNames?: pulumi.Input<pulumi.Input<string>[]>;
+    readonly earlyRenewalHours?: pulumi.Input<number>;
+    readonly ipAddresses?: pulumi.Input<pulumi.Input<string>[]>;
+    readonly isCaCertificate?: pulumi.Input<boolean>;
+    readonly setAuthorityKeyId?: pulumi.Input<boolean>;
+    readonly setSubjectKeyId?: pulumi.Input<boolean>;
+    readonly subject?: pulumi.Input<tls.types.input.CertRequestSubject>;
+    readonly uris?: pulumi.Input<pulumi.Input<string>[]>;
+    readonly validityPeriodHours: pulumi.Input<number>;
+}
+export abstract class ClusterPki<TData = any> extends (pulumi.ComponentResource)<TData> {
+    public admin!: Certificate | pulumi.Output<Certificate>;
+    public algorithm!: AlgorithmOutputs | pulumi.Output<AlgorithmOutputs>;
+    public ca!: RootCa | pulumi.Output<RootCa>;
+    public clusterName!: string | pulumi.Output<string>;
+    public controllerManager!: Certificate | pulumi.Output<Certificate>;
+    public kubelet!: Record<string, Certificate> | pulumi.Output<Record<string, Certificate>>;
+    public kubeProxy!: Certificate | pulumi.Output<Certificate>;
+    public kubernetes!: Certificate | pulumi.Output<Certificate>;
+    public kubeScheduler!: Certificate | pulumi.Output<Certificate>;
+    public publicIp!: string | pulumi.Output<string>;
+    public rsaBits!: number | pulumi.Output<number>;
+    public serviceAccounts!: Certificate | pulumi.Output<Certificate>;
+    public validityPeriodHours!: number | pulumi.Output<number>;
+    constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
+        super("kubernetes-the-hard-way:tls:ClusterPki", name, opts.urn ? { admin: undefined, algorithm: undefined, ca: undefined, clusterName: undefined, controllerManager: undefined, kubelet: undefined, kubeProxy: undefined, kubernetes: undefined, kubeScheduler: undefined, publicIp: undefined, rsaBits: undefined, serviceAccounts: undefined, validityPeriodHours: undefined } : { name, args, opts }, opts);
+    }
+}
+export interface ClusterPkiArgs {
+    readonly algorithm?: pulumi.Input<AlgorithmInputs>;
+    readonly clusterName: pulumi.Input<string>;
+    readonly ecdsaCurve?: pulumi.Input<EcdsaCurveInputs>;
+    readonly nodes: pulumi.Input<Record<string, pulumi.Input<ClusterPkiNodeInputs>>>;
+    readonly publicIp: pulumi.Input<string>;
+    readonly rsaBits?: pulumi.Input<number>;
+    readonly validityPeriodHours?: pulumi.Input<number>;
+}
+export abstract class EncryptionKey<TData = any> extends (pulumi.ComponentResource)<TData> {
+    public config!: string | pulumi.Output<string>;
+    public key!: random.RandomBytes | pulumi.Output<random.RandomBytes>;
+    constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
+        super("kubernetes-the-hard-way:tls:EncryptionKey", name, opts.urn ? { config: undefined, key: undefined } : { name, args, opts }, opts);
+    }
+}
+export interface EncryptionKeyArgs {
+    readonly bytes?: pulumi.Input<number>;
 }
 export abstract class RootCa<TData = any> extends (pulumi.ComponentResource)<TData> {
     public allowedUses!: AllowedUsageOutputs[] | pulumi.Output<AllowedUsageOutputs[]>;
@@ -297,6 +294,7 @@ export abstract class Mkdir<TData = any> extends (pulumi.ComponentResource)<TDat
 export interface MkdirArgs {
     readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
     readonly directory: pulumi.Input<string>;
+    readonly lifecycle?: CommandLifecycleInputs;
     readonly parents?: pulumi.Input<boolean>;
     readonly removeOnDelete?: pulumi.Input<boolean>;
 }
@@ -305,21 +303,25 @@ export abstract class Mktemp<TData = any> extends (pulumi.ComponentResource)<TDa
     public directory!: boolean | pulumi.Output<boolean>;
     public dryRun!: boolean | pulumi.Output<boolean>;
     public quiet!: boolean | pulumi.Output<boolean>;
+    public stderr!: string | pulumi.Output<string>;
+    public stdout!: string | pulumi.Output<string>;
     public suffix?: string | pulumi.Output<string>;
     public template?: string | pulumi.Output<string>;
     public tmpdir?: string | pulumi.Output<string>;
     constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
-        super("kubernetes-the-hard-way:tools:Mktemp", name, opts.urn ? { command: undefined, directory: undefined, dryRun: undefined, quiet: undefined, suffix: undefined, template: undefined, tmpdir: undefined } : { name, args, opts }, opts);
+        super("kubernetes-the-hard-way:tools:Mktemp", name, opts.urn ? { command: undefined, directory: undefined, dryRun: undefined, quiet: undefined, stderr: undefined, stdout: undefined, suffix: undefined, template: undefined, tmpdir: undefined } : { name, args, opts }, opts);
     }
 }
 export interface MktempArgs {
     readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
     readonly directory?: pulumi.Input<boolean>;
     readonly dryRun?: pulumi.Input<boolean>;
+    readonly lifecycle?: CommandLifecycleInputs;
     readonly quiet?: pulumi.Input<boolean>;
     readonly suffix?: pulumi.Input<string>;
     readonly template?: pulumi.Input<string>;
     readonly tmpdir?: pulumi.Input<string>;
+    readonly triggers?: pulumi.Input<pulumi.Input<any>[]>;
 }
 export abstract class Mv<TData = any> extends (pulumi.ComponentResource)<TData> {
     public backup!: boolean | pulumi.Output<boolean>;
@@ -329,6 +331,7 @@ export abstract class Mv<TData = any> extends (pulumi.ComponentResource)<TData> 
     public dest?: string | pulumi.Output<string>;
     public directory?: string | pulumi.Output<string>;
     public force!: boolean | pulumi.Output<boolean>;
+    public lifecycle?: CommandLifecycleOutputs | CommandLifecycleOutputs;
     public noClobber!: boolean | pulumi.Output<boolean>;
     public noTargetDirectory!: boolean | pulumi.Output<boolean>;
     public source!: string[] | pulumi.Output<string[]>;
@@ -338,7 +341,7 @@ export abstract class Mv<TData = any> extends (pulumi.ComponentResource)<TData> 
     public update!: boolean | pulumi.Output<boolean>;
     public verbose!: boolean | pulumi.Output<boolean>;
     constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
-        super("kubernetes-the-hard-way:tools:Mv", name, opts.urn ? { backup: undefined, command: undefined, context: undefined, control: undefined, dest: undefined, directory: undefined, force: undefined, noClobber: undefined, noTargetDirectory: undefined, source: undefined, stripTrailingSlashes: undefined, suffix: undefined, targetDirectory: undefined, update: undefined, verbose: undefined } : { name, args, opts }, opts);
+        super("kubernetes-the-hard-way:tools:Mv", name, opts.urn ? { backup: undefined, command: undefined, context: undefined, control: undefined, dest: undefined, directory: undefined, force: undefined, lifecycle: undefined, noClobber: undefined, noTargetDirectory: undefined, source: undefined, stripTrailingSlashes: undefined, suffix: undefined, targetDirectory: undefined, update: undefined, verbose: undefined } : { name, args, opts }, opts);
     }
 }
 export interface MvArgs {
@@ -375,6 +378,7 @@ export interface RmArgs {
     readonly dir?: pulumi.Input<boolean>;
     readonly files: pulumi.Input<unknown>;
     readonly force?: pulumi.Input<boolean>;
+    readonly lifecycle?: CommandLifecycleInputs;
     readonly onDelete?: boolean;
     readonly recursive?: pulumi.Input<boolean>;
     readonly verbose?: pulumi.Input<boolean>;
@@ -423,7 +427,7 @@ export abstract class Tee<TData = any> extends (pulumi.ComponentResource)<TData>
     public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
     public files!: unknown | pulumi.Output<unknown>;
     public ignoreInterrupts!: boolean | pulumi.Output<boolean>;
-    public lifecycle!: CommandLifecycleOutputs[] | pulumi.Output<CommandLifecycleOutputs[]>;
+    public lifecycle?: CommandLifecycleOutputs | CommandLifecycleOutputs;
     public outputError?: TeeModeOutputs | pulumi.Output<TeeModeOutputs>;
     public pipe!: boolean | pulumi.Output<boolean>;
     public stdin!: string | pulumi.Output<string>;
@@ -436,7 +440,7 @@ export interface TeeArgs {
     readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
     readonly files: pulumi.Input<unknown>;
     readonly ignoreInterrupts?: pulumi.Input<boolean>;
-    readonly lifecycle?: unknown;
+    readonly lifecycle?: CommandLifecycleInputs;
     readonly outputError?: pulumi.Input<TeeModeInputs>;
     readonly pipe?: pulumi.Input<boolean>;
     readonly stdin: pulumi.Input<string>;
