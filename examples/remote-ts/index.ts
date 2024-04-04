@@ -1,7 +1,7 @@
 import * as path from 'node:path';
 import { Config } from '@pulumi/pulumi';
 import { Mkdir, Mktemp, Tar, Wget } from '@unmango/pulumi-kubernetes-the-hard-way/tools';
-import { Download, EtcdInstall, File, KubeApiServerInstall, SystemdService } from '@unmango/pulumi-kubernetes-the-hard-way/remote';
+import { Download, EtcdInstall, File, KubeApiServerInstall, KubeControllerManagerInstall, KubeSchedulerInstall, SystemdService } from '@unmango/pulumi-kubernetes-the-hard-way/remote';
 
 const config = new Config();
 const host = config.require('host');
@@ -70,6 +70,16 @@ const systemdService = new SystemdService('remote-test', {
 const apiServer = new KubeApiServerInstall('remote', {
   connection: { host, port, user, password },
   installDirectory: path.join(basePath, 'kube-apiserver'),
+});
+
+const controllerManager = new KubeControllerManagerInstall('remote', {
+  connection: { host, port, user, password },
+  installDirectory: path.join(basePath, 'kube-controller-manager'),
+});
+
+const scheduler = new KubeSchedulerInstall('remote', {
+  connection: { host, port, user, password },
+  installDirectory: path.join(basePath, 'kube-scheduler'),
 });
 
 export const fileStderr = file.stderr;
