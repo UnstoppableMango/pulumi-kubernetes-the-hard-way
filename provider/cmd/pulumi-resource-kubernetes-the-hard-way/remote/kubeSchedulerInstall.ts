@@ -2,6 +2,7 @@ import { ComponentResourceOptions, interpolate, output } from '@pulumi/pulumi';
 import * as schema from '../schema-types';
 import { Mkdir, Mktemp, Mv, Rm } from '../tools';
 import { Download } from './download';
+import { binaryInstall } from './binaryInstall';
 
 export class KubeSchedulerInstall extends schema.KubeSchedulerInstall {
   constructor(name: string, args: schema.KubeSchedulerInstallArgs, opts?: ComponentResourceOptions) {
@@ -14,39 +15,12 @@ export class KubeSchedulerInstall extends schema.KubeSchedulerInstall {
     const version = output(args.version ?? '1.29.2');
     const url = interpolate`https://storage.googleapis.com/kubernetes-release/release/v${version}/bin/linux/${architecture}/${binName}`;
 
-    const tmp = new Mktemp(name, {
+    binaryInstall(name, {
+      binName,
       connection,
-      directory: true,
-    }, { parent: this });
-
-    const tmpDir = tmp.stdout;
-
-    const download = new Download(name, {
-      connection,
-      destination: tmpDir,
+      installDirectory,
       url,
-    }, { parent: this, dependsOn: tmp });
-
-    const mkdir = new Mkdir(name, {
-      connection,
-      directory: installDirectory,
-      parents: true,
-    }, { parent: this });
-
-    const binPath = interpolate`${installDirectory}/${binName}`;
-
-    const mv = new Mv(name, {
-      connection,
-      source: interpolate`${download.destination}/${binName}`,
-      dest: binPath,
-    }, { parent: this, dependsOn: [tmp, mkdir, download] });
-
-    const rm = new Rm(name, {
-      connection,
-      files: tmpDir,
-      force: true,
-      recursive: true,
-    }, { parent: this, dependsOn: mv });
+    }, this);
 
     this.architecture = architecture;
     this.connection = connection;
