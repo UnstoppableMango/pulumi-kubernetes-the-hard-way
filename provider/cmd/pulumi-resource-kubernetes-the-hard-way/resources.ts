@@ -1,7 +1,7 @@
 import { ComponentResource, ComponentResourceOptions, Inputs } from '@pulumi/pulumi';
 import { Download, EtcdInstall, File, KubeApiServerInstall, KubeControllerManagerInstall, KubeSchedulerInstall, SystemdService } from './remote';
 import { Certificate, ClusterPki, EncryptionKey, RootCa } from './tls';
-import { Mkdir, Mktemp, Rm, Tar, Wget } from './tools';
+import { Etcdctl, Mkdir, Mktemp, Rm, Tar, Wget } from './tools';
 
 export type ConstructComponent<T extends ComponentResource = ComponentResource>
   = (name: string, inputs: any, options: ComponentResourceOptions) => T;
@@ -18,6 +18,7 @@ export type ResourceConstructor = {
   readonly 'kubernetes-the-hard-way:tls:ClusterPki': ConstructComponent<ClusterPki>;
   readonly 'kubernetes-the-hard-way:tls:EncryptionKey': ConstructComponent<EncryptionKey>;
   readonly 'kubernetes-the-hard-way:tls:RootCa': ConstructComponent<RootCa>;
+  readonly 'kubernetes-the-hard-way:tools:Etcdctl': ConstructComponent<Etcdctl>;
   readonly 'kubernetes-the-hard-way:tools:Mkdir': ConstructComponent<Mkdir>;
   readonly 'kubernetes-the-hard-way:tools:Mktemp': ConstructComponent<Mktemp>;
   readonly 'kubernetes-the-hard-way:tools:Rm': ConstructComponent<Rm>;
@@ -37,6 +38,7 @@ const resources: ResourceConstructor = {
   'kubernetes-the-hard-way:tls:ClusterPki': (...args) => new ClusterPki(...args),
   'kubernetes-the-hard-way:tls:EncryptionKey': (...args) => new EncryptionKey(...args),
   'kubernetes-the-hard-way:tls:RootCa': (...args) => new RootCa(...args),
+  'kubernetes-the-hard-way:tools:Etcdctl': (...args) => new Etcdctl(...args),
   'kubernetes-the-hard-way:tools:Mkdir': (...args) => new Mkdir(...args),
   'kubernetes-the-hard-way:tools:Mktemp': (...args) => new Mktemp(...args),
   'kubernetes-the-hard-way:tools:Rm': (...args) => new Rm(...args),

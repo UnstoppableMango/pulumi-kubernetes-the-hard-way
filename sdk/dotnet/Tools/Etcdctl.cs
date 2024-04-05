@@ -16,17 +16,20 @@ namespace UnMango.KubernetesTheHardWay.Tools
     [KubernetesTheHardWayResourceType("kubernetes-the-hard-way:tools:Etcdctl")]
     public partial class Etcdctl : global::Pulumi.ComponentResource
     {
+        [Output("binaryPath")]
+        public Output<string> BinaryPath { get; private set; } = null!;
+
         /// <summary>
         /// Represents the command run on the remote system.
         /// </summary>
         [Output("command")]
-        public Output<Pulumi.Command.Remote.Command?> Command { get; private set; } = null!;
+        public Output<Pulumi.Command.Remote.Command> Command { get; private set; } = null!;
 
         /// <summary>
         /// Connection details for the remote system.
         /// </summary>
         [Output("connection")]
-        public Output<Pulumi.Command.Remote.Outputs.Connection?> Connection { get; private set; } = null!;
+        public Output<Pulumi.Command.Remote.Outputs.Connection> Connection { get; private set; } = null!;
 
 
         /// <summary>
@@ -57,6 +60,9 @@ namespace UnMango.KubernetesTheHardWay.Tools
 
     public sealed class EtcdctlArgs : global::Pulumi.ResourceArgs
     {
+        [Input("binaryPath")]
+        public Input<string>? BinaryPath { get; set; }
+
         [Input("caCert")]
         public Input<string>? CaCert { get; set; }
 

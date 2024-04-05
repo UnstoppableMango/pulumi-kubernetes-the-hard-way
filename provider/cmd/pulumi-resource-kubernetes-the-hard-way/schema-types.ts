@@ -265,13 +265,15 @@ export interface RootCaArgs {
     readonly subject?: pulumi.Input<tls.types.input.SelfSignedCertSubject>;
 }
 export abstract class Etcdctl<TData = any> extends (pulumi.ComponentResource)<TData> {
-    public command?: command.remote.Command | pulumi.Output<command.remote.Command>;
-    public connection?: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
+    public binaryPath!: string | pulumi.Output<string>;
+    public command!: command.remote.Command | pulumi.Output<command.remote.Command>;
+    public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
     constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
-        super("kubernetes-the-hard-way:tools:Etcdctl", name, opts.urn ? { command: undefined, connection: undefined } : { name, args, opts }, opts);
+        super("kubernetes-the-hard-way:tools:Etcdctl", name, opts.urn ? { binaryPath: undefined, command: undefined, connection: undefined } : { name, args, opts }, opts);
     }
 }
 export interface EtcdctlArgs {
+    readonly binaryPath?: pulumi.Input<string>;
     readonly commands?: pulumi.Input<pulumi.Input<EtcdctlCommandInputs>[]>;
     readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
     readonly endpoints?: pulumi.Input<string>;

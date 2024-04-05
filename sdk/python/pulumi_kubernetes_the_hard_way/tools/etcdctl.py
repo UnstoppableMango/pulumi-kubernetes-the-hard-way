@@ -17,6 +17,7 @@ __all__ = ['EtcdctlArgs', 'Etcdctl']
 class EtcdctlArgs:
     def __init__(__self__, *,
                  connection: pulumi.Input['pulumi_command.remote.ConnectionArgs'],
+                 binary_path: Optional[pulumi.Input[str]] = None,
                  ca_cert: Optional[pulumi.Input[str]] = None,
                  cert: Optional[pulumi.Input[str]] = None,
                  commands: Optional[pulumi.Input[Sequence[pulumi.Input['EtcdctlCommand']]]] = None,
@@ -28,6 +29,8 @@ class EtcdctlArgs:
         :param pulumi.Input['pulumi_command.remote.ConnectionArgs'] connection: Connection details for the remote system.
         """
         pulumi.set(__self__, "connection", connection)
+        if binary_path is not None:
+            pulumi.set(__self__, "binary_path", binary_path)
         if ca_cert is not None:
             pulumi.set(__self__, "ca_cert", ca_cert)
         if cert is not None:
@@ -52,6 +55,15 @@ class EtcdctlArgs:
     @connection.setter
     def connection(self, value: pulumi.Input['pulumi_command.remote.ConnectionArgs']):
         pulumi.set(self, "connection", value)
+
+    @property
+    @pulumi.getter(name="binaryPath")
+    def binary_path(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "binary_path")
+
+    @binary_path.setter
+    def binary_path(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "binary_path", value)
 
     @property
     @pulumi.getter(name="caCert")
@@ -113,6 +125,7 @@ class Etcdctl(pulumi.ComponentResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
+                 binary_path: Optional[pulumi.Input[str]] = None,
                  ca_cert: Optional[pulumi.Input[str]] = None,
                  cert: Optional[pulumi.Input[str]] = None,
                  commands: Optional[pulumi.Input[Sequence[pulumi.Input['EtcdctlCommand']]]] = None,
@@ -152,6 +165,7 @@ class Etcdctl(pulumi.ComponentResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
+                 binary_path: Optional[pulumi.Input[str]] = None,
                  ca_cert: Optional[pulumi.Input[str]] = None,
                  cert: Optional[pulumi.Input[str]] = None,
                  commands: Optional[pulumi.Input[Sequence[pulumi.Input['EtcdctlCommand']]]] = None,
@@ -170,6 +184,7 @@ class Etcdctl(pulumi.ComponentResource):
                 raise TypeError('__props__ is only valid when passed in combination with a valid opts.id to get an existing resource')
             __props__ = EtcdctlArgs.__new__(EtcdctlArgs)
 
+            __props__.__dict__["binary_path"] = binary_path
             __props__.__dict__["ca_cert"] = ca_cert
             __props__.__dict__["cert"] = cert
             __props__.__dict__["commands"] = commands
@@ -188,8 +203,13 @@ class Etcdctl(pulumi.ComponentResource):
             remote=True)
 
     @property
+    @pulumi.getter(name="binaryPath")
+    def binary_path(self) -> pulumi.Output[str]:
+        return pulumi.get(self, "binary_path")
+
+    @property
     @pulumi.getter
-    def command(self) -> pulumi.Output[Optional['pulumi_command.remote.Command']]:
+    def command(self) -> pulumi.Output['pulumi_command.remote.Command']:
         """
         Represents the command run on the remote system.
         """
@@ -197,7 +217,7 @@ class Etcdctl(pulumi.ComponentResource):
 
     @property
     @pulumi.getter
-    def connection(self) -> pulumi.Output[Optional['pulumi_command.remote.outputs.Connection']]:
+    def connection(self) -> pulumi.Output['pulumi_command.remote.outputs.Connection']:
         """
         Connection details for the remote system.
         """

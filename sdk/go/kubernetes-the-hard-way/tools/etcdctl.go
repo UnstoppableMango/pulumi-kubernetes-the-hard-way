@@ -17,10 +17,11 @@ import (
 type Etcdctl struct {
 	pulumi.ResourceState
 
+	BinaryPath pulumi.StringOutput `pulumi:"binaryPath"`
 	// Represents the command run on the remote system.
 	Command pulumiCommand.CommandOutput `pulumi:"command"`
 	// Connection details for the remote system.
-	Connection *pulumiCommand.ConnectionOutput `pulumi:"connection"`
+	Connection pulumiCommand.ConnectionOutput `pulumi:"connection"`
 }
 
 // NewEtcdctl registers a new resource with the given unique name, arguments, and options.
@@ -44,9 +45,10 @@ func NewEtcdctl(ctx *pulumi.Context,
 }
 
 type etcdctlArgs struct {
-	CaCert   *string          `pulumi:"caCert"`
-	Cert     *string          `pulumi:"cert"`
-	Commands []EtcdctlCommand `pulumi:"commands"`
+	BinaryPath *string          `pulumi:"binaryPath"`
+	CaCert     *string          `pulumi:"caCert"`
+	Cert       *string          `pulumi:"cert"`
+	Commands   []EtcdctlCommand `pulumi:"commands"`
 	// Connection details for the remote system.
 	Connection pulumiCommand.Connection `pulumi:"connection"`
 	Endpoints  *string                  `pulumi:"endpoints"`
@@ -56,9 +58,10 @@ type etcdctlArgs struct {
 
 // The set of arguments for constructing a Etcdctl resource.
 type EtcdctlArgs struct {
-	CaCert   pulumi.StringPtrInput
-	Cert     pulumi.StringPtrInput
-	Commands EtcdctlCommandArrayInput
+	BinaryPath pulumi.StringPtrInput
+	CaCert     pulumi.StringPtrInput
+	Cert       pulumi.StringPtrInput
+	Commands   EtcdctlCommandArrayInput
 	// Connection details for the remote system.
 	Connection pulumiCommand.ConnectionInput
 	Endpoints  pulumi.StringPtrInput
@@ -153,14 +156,18 @@ func (o EtcdctlOutput) ToEtcdctlOutputWithContext(ctx context.Context) EtcdctlOu
 	return o
 }
 
+func (o EtcdctlOutput) BinaryPath() pulumi.StringOutput {
+	return o.ApplyT(func(v *Etcdctl) pulumi.StringOutput { return v.BinaryPath }).(pulumi.StringOutput)
+}
+
 // Represents the command run on the remote system.
 func (o EtcdctlOutput) Command() pulumiCommand.CommandOutput {
 	return o.ApplyT(func(v *Etcdctl) pulumiCommand.CommandOutput { return v.Command }).(pulumiCommand.CommandOutput)
 }
 
 // Connection details for the remote system.
-func (o EtcdctlOutput) Connection() *pulumiCommand.ConnectionOutput {
-	return o.ApplyT(func(v *Etcdctl) *pulumiCommand.ConnectionOutput { return v.Connection }).(*pulumiCommand.ConnectionOutput)
+func (o EtcdctlOutput) Connection() pulumiCommand.ConnectionOutput {
+	return o.ApplyT(func(v *Etcdctl) pulumiCommand.ConnectionOutput { return v.Connection }).(pulumiCommand.ConnectionOutput)
 }
 
 type EtcdctlArrayOutput struct{ *pulumi.OutputState }

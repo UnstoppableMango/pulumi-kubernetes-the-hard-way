@@ -11,7 +11,7 @@ import com.pulumi.core.annotations.ResourceType;
 import com.pulumi.core.internal.Codegen;
 import com.unmango.kubernetesthehardway.Utilities;
 import com.unmango.kubernetesthehardway.tools.EtcdctlArgs;
-import java.util.Optional;
+import java.lang.String;
 import javax.annotation.Nullable;
 
 /**
@@ -20,33 +20,39 @@ import javax.annotation.Nullable;
  */
 @ResourceType(type="kubernetes-the-hard-way:tools:Etcdctl")
 public class Etcdctl extends com.pulumi.resources.ComponentResource {
+    @Export(name="binaryPath", refs={String.class}, tree="[0]")
+    private Output<String> binaryPath;
+
+    public Output<String> binaryPath() {
+        return this.binaryPath;
+    }
     /**
      * Represents the command run on the remote system.
      * 
      */
     @Export(name="command", refs={Command.class}, tree="[0]")
-    private Output</* @Nullable */ Command> command;
+    private Output<Command> command;
 
     /**
      * @return Represents the command run on the remote system.
      * 
      */
-    public Output<Optional<Command>> command() {
-        return Codegen.optional(this.command);
+    public Output<Command> command() {
+        return this.command;
     }
     /**
      * Connection details for the remote system.
      * 
      */
     @Export(name="connection", refs={Connection.class}, tree="[0]")
-    private Output</* @Nullable */ Connection> connection;
+    private Output<Connection> connection;
 
     /**
      * @return Connection details for the remote system.
      * 
      */
-    public Output<Optional<Connection>> connection() {
-        return Codegen.optional(this.connection);
+    public Output<Connection> connection() {
+        return this.connection;
     }
 
     /**

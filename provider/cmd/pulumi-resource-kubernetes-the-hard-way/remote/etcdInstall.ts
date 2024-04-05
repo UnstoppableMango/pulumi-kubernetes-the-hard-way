@@ -156,6 +156,8 @@ export class EtcdInstall extends schema.EtcdInstall {
     this.download = download;
     this.downloadDirectory = downloadDirectory;
     this.downloadMkdir = downloadMkdir;
+    this.etcdPath = etcdPath;
+    this.etcdctlPath = etcdctlPath;
     this.installDirectory = installDirectory;
     this.installMkdir = installMkdir;
     this.internalIp = internalIp;
@@ -174,6 +176,8 @@ export class EtcdInstall extends schema.EtcdInstall {
       download,
       downloadDirectory,
       downloadMkdir,
+      etcdPath,
+      etcdctlPath,
       installDirectory,
       installMkdir,
       mvEtcd,

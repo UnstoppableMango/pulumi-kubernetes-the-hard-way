@@ -27,14 +27,15 @@ export class Etcdctl extends pulumi.ComponentResource {
         return obj['__pulumiType'] === Etcdctl.__pulumiType;
     }
 
+    public readonly binaryPath!: pulumi.Output<string>;
     /**
      * Represents the command run on the remote system.
      */
-    public /*out*/ readonly command!: pulumi.Output<pulumiCommand.remote.Command | undefined>;
+    public /*out*/ readonly command!: pulumi.Output<pulumiCommand.remote.Command>;
     /**
      * Connection details for the remote system.
      */
-    public readonly connection!: pulumi.Output<pulumiCommand.types.output.remote.Connection | undefined>;
+    public readonly connection!: pulumi.Output<pulumiCommand.types.output.remote.Connection>;
 
     /**
      * Create a Etcdctl resource with the given unique name, arguments, and options.
@@ -50,6 +51,7 @@ export class Etcdctl extends pulumi.ComponentResource {
             if ((!args || args.connection === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'connection'");
             }
+            resourceInputs["binaryPath"] = args ? args.binaryPath : undefined;
             resourceInputs["caCert"] = args ? args.caCert : undefined;
             resourceInputs["cert"] = args ? args.cert : undefined;
             resourceInputs["commands"] = args ? args.commands : undefined;
@@ -59,6 +61,7 @@ export class Etcdctl extends pulumi.ComponentResource {
             resourceInputs["key"] = args ? args.key : undefined;
             resourceInputs["command"] = undefined /*out*/;
         } else {
+            resourceInputs["binaryPath"] = undefined /*out*/;
             resourceInputs["command"] = undefined /*out*/;
             resourceInputs["connection"] = undefined /*out*/;
         }
@@ -71,6 +74,7 @@ export class Etcdctl extends pulumi.ComponentResource {
  * The set of arguments for constructing a Etcdctl resource.
  */
 export interface EtcdctlArgs {
+    binaryPath?: pulumi.Input<string>;
     caCert?: pulumi.Input<string>;
     cert?: pulumi.Input<string>;
     commands?: pulumi.Input<pulumi.Input<enums.tools.EtcdctlCommand>[]>;

@@ -1,3 +1,4 @@
+export * from './etcdctl';
 export * from './mkdir';
 export * from './mktemp';
 export * from './mv';

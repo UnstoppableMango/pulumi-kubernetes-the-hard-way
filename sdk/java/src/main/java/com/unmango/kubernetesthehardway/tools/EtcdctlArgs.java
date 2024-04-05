@@ -20,6 +20,13 @@ public final class EtcdctlArgs extends com.pulumi.resources.ResourceArgs {
 
     public static final EtcdctlArgs Empty = new EtcdctlArgs();
 
+    @Import(name="binaryPath")
+    private @Nullable Output<String> binaryPath;
+
+    public Optional<Output<String>> binaryPath() {
+        return Optional.ofNullable(this.binaryPath);
+    }
+
     @Import(name="caCert")
     private @Nullable Output<String> caCert;
 
@@ -80,6 +87,7 @@ public final class EtcdctlArgs extends com.pulumi.resources.ResourceArgs {
     private EtcdctlArgs() {}
 
     private EtcdctlArgs(EtcdctlArgs $) {
+        this.binaryPath = $.binaryPath;
         this.caCert = $.caCert;
         this.cert = $.cert;
         this.commands = $.commands;
@@ -105,6 +113,15 @@ public final class EtcdctlArgs extends com.pulumi.resources.ResourceArgs {
 
         public Builder(EtcdctlArgs defaults) {
             $ = new EtcdctlArgs(Objects.requireNonNull(defaults));
+        }
+
+        public Builder binaryPath(@Nullable Output<String> binaryPath) {
+            $.binaryPath = binaryPath;
+            return this;
+        }
+
+        public Builder binaryPath(String binaryPath) {
+            return binaryPath(Output.of(binaryPath));
         }
 
         public Builder caCert(@Nullable Output<String> caCert) {

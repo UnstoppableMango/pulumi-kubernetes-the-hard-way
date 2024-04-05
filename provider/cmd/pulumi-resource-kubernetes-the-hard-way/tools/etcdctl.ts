@@ -1,12 +1,13 @@
 import { ComponentResourceOptions, output } from '@pulumi/pulumi';
+import { Command } from '@pulumi/command/remote';
 import * as schema from '../schema-types';
 import { CommandBuilder } from './commandBuilder';
-import { Command } from '@pulumi/command/remote';
 
 export class Etcdctl extends schema.Etcdctl {
   constructor(name: string, args: schema.EtcdctlArgs, opts?: ComponentResourceOptions) {
     super(name, args, opts);
 
+    const binaryPath = output(args.binaryPath ?? 'etcdctl');
     const caCert = output(args.caCert);
     const cert = output(args.cert);
     const connection = output(args.connection);
@@ -14,7 +15,7 @@ export class Etcdctl extends schema.Etcdctl {
     const env = output(args.env ?? {}); // TODO: Fix generated type
     const key = output(args.key);
 
-    const builder = new CommandBuilder('etcdctl')
+    const builder = new CommandBuilder(binaryPath)
       .arg(args.commands)
       .option('--ca-cert', caCert)
       .option('--cert', cert)
@@ -26,5 +27,11 @@ export class Etcdctl extends schema.Etcdctl {
       environment: env,
       create: builder.command,
     }, { parent: this });
+
+    this.binaryPath = binaryPath;
+    this.command = command;
+    this.connection = connection;
+
+    this.registerOutputs({ command, connection });
   }
 }
