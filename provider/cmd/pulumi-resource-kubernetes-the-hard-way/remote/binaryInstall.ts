@@ -1,7 +1,7 @@
 import { Input, Resource, interpolate } from '@pulumi/pulumi';
+import { remote } from '@pulumi/command/types/input';
 import { Mkdir, Mktemp, Mv, Rm } from '../tools';
 import { Download } from './download';
-import { remote } from '@pulumi/command/types/input';
 
 interface BinaryInstallArgs {
   binName: Input<string>;
@@ -44,7 +44,7 @@ export function binaryInstall(name: string, args: BinaryInstallArgs, parent: Res
     connection: args.connection,
     source: interpolate`${download.destination}/${args.binName}`,
     dest: binPath,
-  }, { parent, dependsOn: [mktemp, mkdir, download] });
+  }, { parent, dependsOn: [download, mkdir] });
 
   const rm = new Rm(name, {
     connection: args.connection,
