@@ -2,10 +2,10 @@ import { ComponentResourceOptions, Input, Output, interpolate, output } from '@p
 import { RandomString } from '@pulumi/random';
 import * as schema from '../schema-types';
 import { Etcdctl, Mkdir, Mv, Tar } from '../tools';
-import { Download } from './download';
 import { File } from './file';
 import { CommandBuilder } from '../tools/commandBuilder';
 import { SystemdService } from './systemdService';
+import { archiveInstall } from './archiveInstall';
 
 export type Architecture = 'amd64' | 'arm64';
 
@@ -23,6 +23,7 @@ export class EtcdInstall extends schema.EtcdInstall {
     if (opts?.urn) return;
 
     const architecture = output(args.architecture ?? EtcdInstall.defaultArch);
+    const connection = output(args.connection);
     const configurationDirectory = output(args.configurationDirectory ?? '/etc/etcd'); // Default value from schema?
     const dataDirectory = output(args.dataDirectory ?? '/var/lib/etcd'); // Default value from schema?
     const downloadDirectory = this.getDownloadDirectory(args.downloadDirectory);
@@ -37,49 +38,13 @@ export class EtcdInstall extends schema.EtcdInstall {
     // TODO: Caching? Put archive/bins into ~/.kthw/cache so i.e. installDirectory changes, tarball doesn't need to be re-downloaded.
     // TODO: General update logic
 
-    const downloadMkdir = new Mkdir(`${name}-download`, {
-      connection: args.connection,
-      directory: downloadDirectory,
-      parents: true,
-      removeOnDelete: true,
-    }, { parent: this });
-
-    const download = new Download(name, {
-      connection: args.connection,
-      destination: downloadDirectory,
+    const install = archiveInstall(name, {
+      archiveName,
+      binaries: ['etcd', 'etcdctl'] as const,
+      connection,
+      installDirectory,
       url,
-    }, { parent: this, dependsOn: downloadMkdir });
-
-    const tar = new Tar(name, {
-      connection: args.connection,
-      archive: interpolate`${download.destination}/${archiveName}`,
-      directory: download.destination,
-      gzip: true,
-      stripComponents: 1,
-    }, { parent: this, dependsOn: download });
-
-    const installMkdir = new Mkdir(`${name}-install`, {
-      connection: args.connection,
-      directory: installDirectory,
-      parents: true,
-    }, { parent: this });
-
-    const etcdPath = interpolate`${installDirectory}/etcd`;
-    const etcdctlPath = interpolate`${installDirectory}/etcdctl`;
-
-    const mvEtcd = new Mv(`${name}-etcd`, {
-      connection: args.connection,
-      source: interpolate`${download.destination}/etcd`,
-      dest: etcdPath,
-    }, { parent: this, dependsOn: [tar, installMkdir] });
-
-    const mvEtcdctl = new Mv(`${name}-etcdctl`, {
-      connection: args.connection,
-      source: interpolate`${download.destination}/etcdctl`,
-      dest: etcdctlPath,
-    }, { parent: this, dependsOn: [tar, installMkdir] });
-
-    // TODO: Rm archive or tmp dir?
+    }, this);
 
     const configurationMkdir = new Mkdir(`${name}-config`, {
       connection: args.connection,
@@ -117,7 +82,7 @@ export class EtcdInstall extends schema.EtcdInstall {
 
     // TODO: Pretty print like the guide?
     const execStart = formatExecStart(
-      etcdPath,
+      install.mvs.etcd.dest ?? '', // TODO
       name, // TODO: Review
       caFilePath,
       certFilePath,
@@ -153,20 +118,19 @@ export class EtcdInstall extends schema.EtcdInstall {
     this.configurationMkdir = configurationMkdir;
     this.dataDirectory = dataDirectory;
     this.dataMkdir = dataMkdir;
-    this.download = download;
+    this.download = install.download;
     this.downloadDirectory = downloadDirectory;
-    this.downloadMkdir = downloadMkdir;
     this.etcdPath = etcdPath;
     this.etcdctlPath = etcdctlPath;
     this.installDirectory = installDirectory;
-    this.installMkdir = installMkdir;
+    this.installMkdir = install.mkdir;
     this.internalIp = internalIp;
     this.keyFile = keyFile;
-    this.mvEtcd = mvEtcd;
-    this.mvEtcdctl = mvEtcdctl;
+    this.mvEtcd = install.mvs.etcd;
+    this.mvEtcdctl = install.mvs.etcdctl;
     this.name = output(name);
     this.systemdService = systemdFile,
-    this.tar = tar;
+    this.tar = install.tar;
     this.url = url;
     this.version = version;
 

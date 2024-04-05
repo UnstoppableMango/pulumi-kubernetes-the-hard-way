@@ -18,6 +18,7 @@
     "functions.ts",
     "index.ts",
     "provider.ts",
+    "remote/archiveInstall.ts",
     "remote/binaryInstall.ts",
     "remote/download.ts",
     "remote/etcdInstall.ts",
