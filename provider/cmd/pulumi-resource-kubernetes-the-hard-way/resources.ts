@@ -4,9 +4,6 @@ import { Download, EtcdInstall, File, KubeApiServerInstall, KubeControllerManage
 import { Certificate, ClusterPki, EncryptionKey, RootCa } from './tls';
 import { Etcdctl, Mkdir, Mktemp, Mv, Rm, Systemctl, Tar, Tee, Wget } from './tools';
 
-export type ConstructComponent<T extends ComponentResource = ComponentResource>
-  = (name: string, inputs: any, options: ComponentResourceOptions) => T;
-
 const resources: schema.ResourceConstructor = {
   'kubernetes-the-hard-way:remote:Download': (...args) => new Download(...args),
   'kubernetes-the-hard-way:remote:EtcdInstall': (...args) => new EtcdInstall(...args),
@@ -36,7 +33,7 @@ export function construct(
   inputs: Inputs,
   options: ComponentResourceOptions,
 ): ComponentResource | undefined {
-  const genericResources: Record<string, ConstructComponent> = resources;
+  const genericResources: Record<string, schema.ConstructComponent> = resources;
   const resource = genericResources[type];
   if (resource === undefined) {
     return undefined;
