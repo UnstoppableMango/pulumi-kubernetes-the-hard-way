@@ -18,6 +18,7 @@ class TarArgs:
                  archive: pulumi.Input[str],
                  connection: pulumi.Input['pulumi_command.remote.ConnectionArgs'],
                  directory: Optional[pulumi.Input[str]] = None,
+                 environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  extract: Optional[pulumi.Input[bool]] = None,
                  files: Optional[pulumi.Input[Union[Sequence[pulumi.Input[str]], str]]] = None,
                  gzip: Optional[pulumi.Input[bool]] = None,
@@ -36,6 +37,8 @@ class TarArgs:
         pulumi.set(__self__, "connection", connection)
         if directory is not None:
             pulumi.set(__self__, "directory", directory)
+        if environment is not None:
+            pulumi.set(__self__, "environment", environment)
         if extract is not None:
             pulumi.set(__self__, "extract", extract)
         if files is not None:
@@ -80,6 +83,15 @@ class TarArgs:
     @directory.setter
     def directory(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "directory", value)
+
+    @property
+    @pulumi.getter
+    def environment(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        return pulumi.get(self, "environment")
+
+    @environment.setter
+    def environment(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
+        pulumi.set(self, "environment", value)
 
     @property
     @pulumi.getter
@@ -138,6 +150,7 @@ class Tar(pulumi.ComponentResource):
                  archive: Optional[pulumi.Input[str]] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
                  directory: Optional[pulumi.Input[str]] = None,
+                 environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  extract: Optional[pulumi.Input[bool]] = None,
                  files: Optional[pulumi.Input[Union[Sequence[pulumi.Input[str]], str]]] = None,
                  gzip: Optional[pulumi.Input[bool]] = None,
@@ -183,6 +196,7 @@ class Tar(pulumi.ComponentResource):
                  archive: Optional[pulumi.Input[str]] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
                  directory: Optional[pulumi.Input[str]] = None,
+                 environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  extract: Optional[pulumi.Input[bool]] = None,
                  files: Optional[pulumi.Input[Union[Sequence[pulumi.Input[str]], str]]] = None,
                  gzip: Optional[pulumi.Input[bool]] = None,
@@ -205,6 +219,7 @@ class Tar(pulumi.ComponentResource):
                 raise TypeError("Missing required property 'connection'")
             __props__.__dict__["connection"] = connection
             __props__.__dict__["directory"] = directory
+            __props__.__dict__["environment"] = environment
             __props__.__dict__["extract"] = extract
             __props__.__dict__["files"] = files
             __props__.__dict__["gzip"] = gzip

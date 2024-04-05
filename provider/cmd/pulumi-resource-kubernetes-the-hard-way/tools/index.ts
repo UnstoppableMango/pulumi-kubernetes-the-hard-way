@@ -3,5 +3,7 @@ export * from './mkdir';
 export * from './mktemp';
 export * from './mv';
 export * from './rm';
+export * from './systemctl';
 export * from './tar';
+export * from './tee';
 export * from './wget';

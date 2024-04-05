@@ -19,6 +19,7 @@ class RmArgs:
                  connection: pulumi.Input['pulumi_command.remote.ConnectionArgs'],
                  files: pulumi.Input[Union[Sequence[pulumi.Input[str]], str]],
                  dir: Optional[pulumi.Input[bool]] = None,
+                 environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  force: Optional[pulumi.Input[bool]] = None,
                  lifecycle: Optional['CommandLifecycle'] = None,
                  on_delete: Optional[bool] = None,
@@ -39,6 +40,8 @@ class RmArgs:
         pulumi.set(__self__, "files", files)
         if dir is not None:
             pulumi.set(__self__, "dir", dir)
+        if environment is not None:
+            pulumi.set(__self__, "environment", environment)
         if force is not None:
             pulumi.set(__self__, "force", force)
         if lifecycle is not None:
@@ -85,6 +88,15 @@ class RmArgs:
     @dir.setter
     def dir(self, value: Optional[pulumi.Input[bool]]):
         pulumi.set(self, "dir", value)
+
+    @property
+    @pulumi.getter
+    def environment(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        return pulumi.get(self, "environment")
+
+    @environment.setter
+    def environment(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
+        pulumi.set(self, "environment", value)
 
     @property
     @pulumi.getter
@@ -154,6 +166,7 @@ class Rm(pulumi.ComponentResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
                  dir: Optional[pulumi.Input[bool]] = None,
+                 environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  files: Optional[pulumi.Input[Union[Sequence[pulumi.Input[str]], str]]] = None,
                  force: Optional[pulumi.Input[bool]] = None,
                  lifecycle: Optional['CommandLifecycle'] = None,
@@ -201,6 +214,7 @@ class Rm(pulumi.ComponentResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
                  dir: Optional[pulumi.Input[bool]] = None,
+                 environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  files: Optional[pulumi.Input[Union[Sequence[pulumi.Input[str]], str]]] = None,
                  force: Optional[pulumi.Input[bool]] = None,
                  lifecycle: Optional['CommandLifecycle'] = None,
@@ -222,6 +236,7 @@ class Rm(pulumi.ComponentResource):
                 raise TypeError("Missing required property 'connection'")
             __props__.__dict__["connection"] = connection
             __props__.__dict__["dir"] = dir
+            __props__.__dict__["environment"] = environment
             if files is None and not opts.urn:
                 raise TypeError("Missing required property 'files'")
             __props__.__dict__["files"] = files

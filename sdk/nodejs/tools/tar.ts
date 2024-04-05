@@ -85,6 +85,7 @@ export class Tar extends pulumi.ComponentResource {
             resourceInputs["archive"] = args ? args.archive : undefined;
             resourceInputs["connection"] = args ? (args.connection ? pulumi.output(args.connection).apply(pulumiCommand.types.input.remote.connectionArgsProvideDefaults) : undefined) : undefined;
             resourceInputs["directory"] = args ? args.directory : undefined;
+            resourceInputs["environment"] = args ? args.environment : undefined;
             resourceInputs["extract"] = args ? args.extract : undefined;
             resourceInputs["files"] = args ? args.files : undefined;
             resourceInputs["gzip"] = args ? args.gzip : undefined;
@@ -126,6 +127,7 @@ export interface TarArgs {
      * Corresponds to the --directory option.
      */
     directory?: pulumi.Input<string>;
+    environment?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
      * Corresponds to the --extract option.
      */

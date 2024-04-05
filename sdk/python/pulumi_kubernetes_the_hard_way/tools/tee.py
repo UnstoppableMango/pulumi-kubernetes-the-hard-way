@@ -20,6 +20,7 @@ class TeeArgs:
                  files: pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]],
                  stdin: pulumi.Input[str],
                  append: Optional[pulumi.Input[bool]] = None,
+                 environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  ignore_interrupts: Optional[pulumi.Input[bool]] = None,
                  lifecycle: Optional['CommandLifecycle'] = None,
                  output_error: Optional[pulumi.Input['TeeMode']] = None,
@@ -41,6 +42,8 @@ class TeeArgs:
         pulumi.set(__self__, "stdin", stdin)
         if append is not None:
             pulumi.set(__self__, "append", append)
+        if environment is not None:
+            pulumi.set(__self__, "environment", environment)
         if ignore_interrupts is not None:
             pulumi.set(__self__, "ignore_interrupts", ignore_interrupts)
         if lifecycle is not None:
@@ -96,6 +99,15 @@ class TeeArgs:
     @append.setter
     def append(self, value: Optional[pulumi.Input[bool]]):
         pulumi.set(self, "append", value)
+
+    @property
+    @pulumi.getter
+    def environment(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        return pulumi.get(self, "environment")
+
+    @environment.setter
+    def environment(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
+        pulumi.set(self, "environment", value)
 
     @property
     @pulumi.getter(name="ignoreInterrupts")
@@ -165,6 +177,7 @@ class Tee(pulumi.ComponentResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  append: Optional[pulumi.Input[bool]] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
+                 environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  files: Optional[pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]]] = None,
                  ignore_interrupts: Optional[pulumi.Input[bool]] = None,
                  lifecycle: Optional['CommandLifecycle'] = None,
@@ -213,6 +226,7 @@ class Tee(pulumi.ComponentResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  append: Optional[pulumi.Input[bool]] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
+                 environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  files: Optional[pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]]] = None,
                  ignore_interrupts: Optional[pulumi.Input[bool]] = None,
                  lifecycle: Optional['CommandLifecycle'] = None,
@@ -235,6 +249,7 @@ class Tee(pulumi.ComponentResource):
             if connection is None and not opts.urn:
                 raise TypeError("Missing required property 'connection'")
             __props__.__dict__["connection"] = connection
+            __props__.__dict__["environment"] = environment
             if files is None and not opts.urn:
                 raise TypeError("Missing required property 'files'")
             __props__.__dict__["files"] = files
@@ -247,6 +262,8 @@ class Tee(pulumi.ComponentResource):
             __props__.__dict__["stdin"] = stdin
             __props__.__dict__["version"] = version
             __props__.__dict__["command"] = None
+            __props__.__dict__["stderr"] = None
+            __props__.__dict__["stdout"] = None
         super(Tee, __self__).__init__(
             'kubernetes-the-hard-way:tools:Tee',
             resource_name,
@@ -277,6 +294,11 @@ class Tee(pulumi.ComponentResource):
         Connection details for the remote system.
         """
         return pulumi.get(self, "connection")
+
+    @property
+    @pulumi.getter
+    def environment(self) -> pulumi.Output[Optional[Mapping[str, str]]]:
+        return pulumi.get(self, "environment")
 
     @property
     @pulumi.getter
@@ -320,6 +342,16 @@ class Tee(pulumi.ComponentResource):
 
     @property
     @pulumi.getter
+    def stderr(self) -> pulumi.Output[Optional[str]]:
+        return pulumi.get(self, "stderr")
+
+    @property
+    @pulumi.getter
     def stdin(self) -> pulumi.Output[str]:
         return pulumi.get(self, "stdin")
+
+    @property
+    @pulumi.getter
+    def stdout(self) -> pulumi.Output[Optional[str]]:
+        return pulumi.get(self, "stdout")
 

@@ -12,6 +12,7 @@ import java.lang.Boolean;
 import java.lang.Integer;
 import java.lang.String;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import javax.annotation.Nullable;
@@ -64,6 +65,13 @@ public final class TarArgs extends com.pulumi.resources.ResourceArgs {
      */
     public Optional<Output<String>> directory() {
         return Optional.ofNullable(this.directory);
+    }
+
+    @Import(name="environment")
+    private @Nullable Output<Map<String,String>> environment;
+
+    public Optional<Output<Map<String,String>>> environment() {
+        return Optional.ofNullable(this.environment);
     }
 
     /**
@@ -132,6 +140,7 @@ public final class TarArgs extends com.pulumi.resources.ResourceArgs {
         this.archive = $.archive;
         this.connection = $.connection;
         this.directory = $.directory;
+        this.environment = $.environment;
         this.extract = $.extract;
         this.files = $.files;
         this.gzip = $.gzip;
@@ -217,6 +226,15 @@ public final class TarArgs extends com.pulumi.resources.ResourceArgs {
          */
         public Builder directory(String directory) {
             return directory(Output.of(directory));
+        }
+
+        public Builder environment(@Nullable Output<Map<String,String>> environment) {
+            $.environment = environment;
+            return this;
+        }
+
+        public Builder environment(Map<String,String> environment) {
+            return environment(Output.of(environment));
         }
 
         /**

@@ -34,6 +34,15 @@ namespace UnMango.KubernetesTheHardWay.Tools
         [Output("serviceName")]
         public Output<string?> ServiceName { get; private set; } = null!;
 
+        [Output("stderr")]
+        public Output<string> Stderr { get; private set; } = null!;
+
+        [Output("stdin")]
+        public Output<string?> Stdin { get; private set; } = null!;
+
+        [Output("stdout")]
+        public Output<string> Stdout { get; private set; } = null!;
+
 
         /// <summary>
         /// Create a Systemctl resource with the given unique name, arguments, and options.
@@ -76,6 +85,17 @@ namespace UnMango.KubernetesTheHardWay.Tools
         /// </summary>
         [Input("connection", required: true)]
         public Input<Pulumi.Command.Remote.Inputs.ConnectionArgs> Connection { get; set; } = null!;
+
+        [Input("environment")]
+        private InputMap<string>? _environment;
+        public InputMap<string> Environment
+        {
+            get => _environment ?? (_environment = new InputMap<string>());
+            set => _environment = value;
+        }
+
+        [Input("lifecycle")]
+        public UnMango.KubernetesTheHardWay.Tools.CommandLifecycle? Lifecycle { get; set; }
 
         [Input("serviceName")]
         public Input<string>? ServiceName { get; set; }

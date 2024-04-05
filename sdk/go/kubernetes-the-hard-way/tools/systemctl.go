@@ -23,6 +23,9 @@ type Systemctl struct {
 	// Connection details for the remote system.
 	Connection  pulumiCommand.ConnectionOutput `pulumi:"connection"`
 	ServiceName pulumi.StringPtrOutput         `pulumi:"serviceName"`
+	Stderr      pulumi.StringOutput            `pulumi:"stderr"`
+	Stdin       pulumi.StringPtrOutput         `pulumi:"stdin"`
+	Stdout      pulumi.StringOutput            `pulumi:"stdout"`
 }
 
 // NewSystemctl registers a new resource with the given unique name, arguments, and options.
@@ -52,6 +55,8 @@ type systemctlArgs struct {
 	Commands []SystemctlCommand `pulumi:"commands"`
 	// Connection details for the remote system.
 	Connection  pulumiCommand.Connection `pulumi:"connection"`
+	Environment map[string]string        `pulumi:"environment"`
+	Lifecycle   *CommandLifecycle        `pulumi:"lifecycle"`
 	ServiceName *string                  `pulumi:"serviceName"`
 }
 
@@ -60,6 +65,8 @@ type SystemctlArgs struct {
 	Commands SystemctlCommandArrayInput
 	// Connection details for the remote system.
 	Connection  pulumiCommand.ConnectionInput
+	Environment pulumi.StringMapInput
+	Lifecycle   *CommandLifecycle
 	ServiceName pulumi.StringPtrInput
 }
 
@@ -166,6 +173,18 @@ func (o SystemctlOutput) Connection() pulumiCommand.ConnectionOutput {
 
 func (o SystemctlOutput) ServiceName() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Systemctl) pulumi.StringPtrOutput { return v.ServiceName }).(pulumi.StringPtrOutput)
+}
+
+func (o SystemctlOutput) Stderr() pulumi.StringOutput {
+	return o.ApplyT(func(v *Systemctl) pulumi.StringOutput { return v.Stderr }).(pulumi.StringOutput)
+}
+
+func (o SystemctlOutput) Stdin() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Systemctl) pulumi.StringPtrOutput { return v.Stdin }).(pulumi.StringPtrOutput)
+}
+
+func (o SystemctlOutput) Stdout() pulumi.StringOutput {
+	return o.ApplyT(func(v *Systemctl) pulumi.StringOutput { return v.Stdout }).(pulumi.StringOutput)
 }
 
 type SystemctlArrayOutput struct{ *pulumi.OutputState }

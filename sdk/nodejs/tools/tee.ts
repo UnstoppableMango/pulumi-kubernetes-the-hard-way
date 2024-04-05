@@ -39,6 +39,7 @@ export class Tee extends pulumi.ComponentResource {
      * Connection details for the remote system.
      */
     public readonly connection!: pulumi.Output<pulumiCommand.types.output.remote.Connection>;
+    public readonly environment!: pulumi.Output<{[key: string]: string} | undefined>;
     /**
      * The file(s) to write to.
      */
@@ -59,7 +60,9 @@ export class Tee extends pulumi.ComponentResource {
      * Operate in a more appropriate MODE with pipes.
      */
     public readonly pipe!: pulumi.Output<boolean>;
+    public /*out*/ readonly stderr!: pulumi.Output<string | undefined>;
     public readonly stdin!: pulumi.Output<string>;
+    public /*out*/ readonly stdout!: pulumi.Output<string | undefined>;
 
     /**
      * Create a Tee resource with the given unique name, arguments, and options.
@@ -83,6 +86,7 @@ export class Tee extends pulumi.ComponentResource {
             }
             resourceInputs["append"] = args ? args.append : undefined;
             resourceInputs["connection"] = args ? (args.connection ? pulumi.output(args.connection).apply(pulumiCommand.types.input.remote.connectionArgsProvideDefaults) : undefined) : undefined;
+            resourceInputs["environment"] = args ? args.environment : undefined;
             resourceInputs["files"] = args ? args.files : undefined;
             resourceInputs["ignoreInterrupts"] = args ? args.ignoreInterrupts : undefined;
             resourceInputs["lifecycle"] = args ? args.lifecycle : undefined;
@@ -91,16 +95,21 @@ export class Tee extends pulumi.ComponentResource {
             resourceInputs["stdin"] = args ? args.stdin : undefined;
             resourceInputs["version"] = args ? args.version : undefined;
             resourceInputs["command"] = undefined /*out*/;
+            resourceInputs["stderr"] = undefined /*out*/;
+            resourceInputs["stdout"] = undefined /*out*/;
         } else {
             resourceInputs["append"] = undefined /*out*/;
             resourceInputs["command"] = undefined /*out*/;
             resourceInputs["connection"] = undefined /*out*/;
+            resourceInputs["environment"] = undefined /*out*/;
             resourceInputs["files"] = undefined /*out*/;
             resourceInputs["ignoreInterrupts"] = undefined /*out*/;
             resourceInputs["lifecycle"] = undefined /*out*/;
             resourceInputs["outputError"] = undefined /*out*/;
             resourceInputs["pipe"] = undefined /*out*/;
+            resourceInputs["stderr"] = undefined /*out*/;
             resourceInputs["stdin"] = undefined /*out*/;
+            resourceInputs["stdout"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         super(Tee.__pulumiType, name, resourceInputs, opts, true /*remote*/);
@@ -119,6 +128,7 @@ export interface TeeArgs {
      * Connection details for the remote system.
      */
     connection: pulumi.Input<pulumiCommand.types.input.remote.ConnectionArgs>;
+    environment?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
      * The file(s) to write to.
      */

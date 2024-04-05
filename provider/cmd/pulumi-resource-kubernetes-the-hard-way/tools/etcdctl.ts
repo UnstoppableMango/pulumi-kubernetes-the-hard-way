@@ -12,7 +12,7 @@ export class Etcdctl extends schema.Etcdctl {
     const cert = output(args.cert);
     const connection = output(args.connection);
     const endpoints = output(args.endpoints);
-    const env = output(args.env ?? {}); // TODO: Fix generated type
+    const env = output(args.environment ?? {}); // TODO: Fix generated type
     const key = output(args.key);
 
     const builder = new CommandBuilder(binaryPath)

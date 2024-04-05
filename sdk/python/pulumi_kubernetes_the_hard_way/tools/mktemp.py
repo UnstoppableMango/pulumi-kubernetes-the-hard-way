@@ -19,6 +19,7 @@ class MktempArgs:
                  connection: pulumi.Input['pulumi_command.remote.ConnectionArgs'],
                  directory: Optional[pulumi.Input[bool]] = None,
                  dry_run: Optional[pulumi.Input[bool]] = None,
+                 environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  lifecycle: Optional['CommandLifecycle'] = None,
                  quiet: Optional[pulumi.Input[bool]] = None,
                  suffix: Optional[pulumi.Input[str]] = None,
@@ -41,6 +42,8 @@ class MktempArgs:
             pulumi.set(__self__, "directory", directory)
         if dry_run is not None:
             pulumi.set(__self__, "dry_run", dry_run)
+        if environment is not None:
+            pulumi.set(__self__, "environment", environment)
         if lifecycle is not None:
             pulumi.set(__self__, "lifecycle", lifecycle)
         if quiet is not None:
@@ -89,6 +92,15 @@ class MktempArgs:
     @dry_run.setter
     def dry_run(self, value: Optional[pulumi.Input[bool]]):
         pulumi.set(self, "dry_run", value)
+
+    @property
+    @pulumi.getter
+    def environment(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        return pulumi.get(self, "environment")
+
+    @environment.setter
+    def environment(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
+        pulumi.set(self, "environment", value)
 
     @property
     @pulumi.getter
@@ -168,6 +180,7 @@ class Mktemp(pulumi.ComponentResource):
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
                  directory: Optional[pulumi.Input[bool]] = None,
                  dry_run: Optional[pulumi.Input[bool]] = None,
+                 environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  lifecycle: Optional['CommandLifecycle'] = None,
                  quiet: Optional[pulumi.Input[bool]] = None,
                  suffix: Optional[pulumi.Input[str]] = None,
@@ -216,6 +229,7 @@ class Mktemp(pulumi.ComponentResource):
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
                  directory: Optional[pulumi.Input[bool]] = None,
                  dry_run: Optional[pulumi.Input[bool]] = None,
+                 environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  lifecycle: Optional['CommandLifecycle'] = None,
                  quiet: Optional[pulumi.Input[bool]] = None,
                  suffix: Optional[pulumi.Input[str]] = None,
@@ -238,6 +252,7 @@ class Mktemp(pulumi.ComponentResource):
             __props__.__dict__["connection"] = connection
             __props__.__dict__["directory"] = directory
             __props__.__dict__["dry_run"] = dry_run
+            __props__.__dict__["environment"] = environment
             __props__.__dict__["lifecycle"] = lifecycle
             __props__.__dict__["quiet"] = quiet
             __props__.__dict__["suffix"] = suffix

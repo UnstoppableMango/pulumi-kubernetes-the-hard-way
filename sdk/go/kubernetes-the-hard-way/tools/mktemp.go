@@ -61,7 +61,8 @@ type mktempArgs struct {
 	// Corresponds to the --directory option.
 	Directory *bool `pulumi:"directory"`
 	// Corresponds to the --dry-run option.
-	DryRun *bool `pulumi:"dryRun"`
+	DryRun      *bool             `pulumi:"dryRun"`
+	Environment map[string]string `pulumi:"environment"`
 	// At what stage(s) in the resource lifecycle should the command be run.
 	Lifecycle *CommandLifecycle `pulumi:"lifecycle"`
 	// Corresponds to the --quiet option.
@@ -82,7 +83,8 @@ type MktempArgs struct {
 	// Corresponds to the --directory option.
 	Directory pulumi.BoolPtrInput
 	// Corresponds to the --dry-run option.
-	DryRun pulumi.BoolPtrInput
+	DryRun      pulumi.BoolPtrInput
+	Environment pulumi.StringMapInput
 	// At what stage(s) in the resource lifecycle should the command be run.
 	Lifecycle *CommandLifecycle
 	// Corresponds to the --quiet option.

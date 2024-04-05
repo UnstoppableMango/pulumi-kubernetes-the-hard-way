@@ -13,6 +13,7 @@ import com.unmango.kubernetesthehardway.tools.enums.TeeMode;
 import java.lang.Boolean;
 import java.lang.String;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import javax.annotation.Nullable;
@@ -50,6 +51,13 @@ public final class TeeArgs extends com.pulumi.resources.ResourceArgs {
      */
     public Output<ConnectionArgs> connection() {
         return this.connection;
+    }
+
+    @Import(name="environment")
+    private @Nullable Output<Map<String,String>> environment;
+
+    public Optional<Output<Map<String,String>>> environment() {
+        return Optional.ofNullable(this.environment);
     }
 
     /**
@@ -154,6 +162,7 @@ public final class TeeArgs extends com.pulumi.resources.ResourceArgs {
     private TeeArgs(TeeArgs $) {
         this.append = $.append;
         this.connection = $.connection;
+        this.environment = $.environment;
         this.files = $.files;
         this.ignoreInterrupts = $.ignoreInterrupts;
         this.lifecycle = $.lifecycle;
@@ -221,6 +230,15 @@ public final class TeeArgs extends com.pulumi.resources.ResourceArgs {
          */
         public Builder connection(ConnectionArgs connection) {
             return connection(Output.of(connection));
+        }
+
+        public Builder environment(@Nullable Output<Map<String,String>> environment) {
+            $.environment = environment;
+            return this;
+        }
+
+        public Builder environment(Map<String,String> environment) {
+            return environment(Output.of(environment));
         }
 
         /**

@@ -1,7 +1,7 @@
 import { ComponentResourceOptions, Input, Output, interpolate, output } from '@pulumi/pulumi';
 import { RandomString } from '@pulumi/random';
 import * as schema from '../schema-types';
-import { Mkdir, Mv, Tar } from '../tools';
+import { Etcdctl, Mkdir, Mv, Tar } from '../tools';
 import { Download } from './download';
 import { File } from './file';
 import { CommandBuilder } from '../tools/commandBuilder';
@@ -187,6 +187,10 @@ export class EtcdInstall extends schema.EtcdInstall {
       url,
       version,
     });
+  }
+
+  public etcdctl(inputs: schema.EtcdInstall_etcdctlInputs): Output<schema.EtcdInstall_etcdctlOutputs> {
+    throw new Error('not implemented');
   }
 
   private getDownloadDirectory(input?: Input<string>): Output<string> {

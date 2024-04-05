@@ -111,6 +111,14 @@ namespace UnMango.KubernetesTheHardWay.Tools
         [Input("dryRun")]
         public Input<bool>? DryRun { get; set; }
 
+        [Input("environment")]
+        private InputMap<string>? _environment;
+        public InputMap<string> Environment
+        {
+            get => _environment ?? (_environment = new InputMap<string>());
+            set => _environment = value;
+        }
+
         /// <summary>
         /// At what stage(s) in the resource lifecycle should the command be run.
         /// </summary>

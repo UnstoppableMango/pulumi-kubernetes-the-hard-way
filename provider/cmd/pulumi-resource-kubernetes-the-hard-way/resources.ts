@@ -1,32 +1,13 @@
 import { ComponentResource, ComponentResourceOptions, Inputs } from '@pulumi/pulumi';
+import * as schema from './schema-types';
 import { Download, EtcdInstall, File, KubeApiServerInstall, KubeControllerManagerInstall, KubeSchedulerInstall, SystemdService } from './remote';
 import { Certificate, ClusterPki, EncryptionKey, RootCa } from './tls';
-import { Etcdctl, Mkdir, Mktemp, Rm, Tar, Wget } from './tools';
+import { Etcdctl, Mkdir, Mktemp, Mv, Rm, Systemctl, Tar, Tee, Wget } from './tools';
 
 export type ConstructComponent<T extends ComponentResource = ComponentResource>
   = (name: string, inputs: any, options: ComponentResourceOptions) => T;
 
-export type ResourceConstructor = {
-  readonly 'kubernetes-the-hard-way:remote:Download': ConstructComponent<Download>;
-  readonly 'kubernetes-the-hard-way:remote:EtcdInstall': ConstructComponent<EtcdInstall>;
-  readonly 'kubernetes-the-hard-way:remote:File': ConstructComponent<File>;
-  readonly 'kubernetes-the-hard-way:remote:KubeApiServerInstall': ConstructComponent<KubeApiServerInstall>;
-  readonly 'kubernetes-the-hard-way:remote:KubeControllerManagerInstall': ConstructComponent<KubeControllerManagerInstall>;
-  readonly 'kubernetes-the-hard-way:remote:KubeSchedulerInstall': ConstructComponent<KubeSchedulerInstall>;
-  readonly 'kubernetes-the-hard-way:remote:SystemdService': ConstructComponent<SystemdService>;
-  readonly 'kubernetes-the-hard-way:tls:Certificate': ConstructComponent<Certificate>;
-  readonly 'kubernetes-the-hard-way:tls:ClusterPki': ConstructComponent<ClusterPki>;
-  readonly 'kubernetes-the-hard-way:tls:EncryptionKey': ConstructComponent<EncryptionKey>;
-  readonly 'kubernetes-the-hard-way:tls:RootCa': ConstructComponent<RootCa>;
-  readonly 'kubernetes-the-hard-way:tools:Etcdctl': ConstructComponent<Etcdctl>;
-  readonly 'kubernetes-the-hard-way:tools:Mkdir': ConstructComponent<Mkdir>;
-  readonly 'kubernetes-the-hard-way:tools:Mktemp': ConstructComponent<Mktemp>;
-  readonly 'kubernetes-the-hard-way:tools:Rm': ConstructComponent<Rm>;
-  readonly 'kubernetes-the-hard-way:tools:Tar': ConstructComponent<Tar>;
-  readonly 'kubernetes-the-hard-way:tools:Wget': ConstructComponent<Wget>;
-};
-
-const resources: ResourceConstructor = {
+const resources: schema.ResourceConstructor = {
   'kubernetes-the-hard-way:remote:Download': (...args) => new Download(...args),
   'kubernetes-the-hard-way:remote:EtcdInstall': (...args) => new EtcdInstall(...args),
   'kubernetes-the-hard-way:remote:File': (...args) => new File(...args),
@@ -41,8 +22,11 @@ const resources: ResourceConstructor = {
   'kubernetes-the-hard-way:tools:Etcdctl': (...args) => new Etcdctl(...args),
   'kubernetes-the-hard-way:tools:Mkdir': (...args) => new Mkdir(...args),
   'kubernetes-the-hard-way:tools:Mktemp': (...args) => new Mktemp(...args),
+  'kubernetes-the-hard-way:tools:Mv': (...args) => new Mv(...args),
   'kubernetes-the-hard-way:tools:Rm': (...args) => new Rm(...args),
+  'kubernetes-the-hard-way:tools:Systemctl': (...args) => new Systemctl(...args),
   'kubernetes-the-hard-way:tools:Tar': (...args) => new Tar(...args),
+  'kubernetes-the-hard-way:tools:Tee': (...args) => new Tee(...args),
   'kubernetes-the-hard-way:tools:Wget': (...args) => new Wget(...args),
 };
 

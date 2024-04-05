@@ -22,7 +22,7 @@ class EtcdctlArgs:
                  cert: Optional[pulumi.Input[str]] = None,
                  commands: Optional[pulumi.Input[Sequence[pulumi.Input['EtcdctlCommand']]]] = None,
                  endpoints: Optional[pulumi.Input[str]] = None,
-                 env: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
+                 environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  key: Optional[pulumi.Input[str]] = None):
         """
         The set of arguments for constructing a Etcdctl resource.
@@ -39,8 +39,8 @@ class EtcdctlArgs:
             pulumi.set(__self__, "commands", commands)
         if endpoints is not None:
             pulumi.set(__self__, "endpoints", endpoints)
-        if env is not None:
-            pulumi.set(__self__, "env", env)
+        if environment is not None:
+            pulumi.set(__self__, "environment", environment)
         if key is not None:
             pulumi.set(__self__, "key", key)
 
@@ -103,12 +103,12 @@ class EtcdctlArgs:
 
     @property
     @pulumi.getter
-    def env(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
-        return pulumi.get(self, "env")
+    def environment(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        return pulumi.get(self, "environment")
 
-    @env.setter
-    def env(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
-        pulumi.set(self, "env", value)
+    @environment.setter
+    def environment(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
+        pulumi.set(self, "environment", value)
 
     @property
     @pulumi.getter
@@ -131,7 +131,7 @@ class Etcdctl(pulumi.ComponentResource):
                  commands: Optional[pulumi.Input[Sequence[pulumi.Input['EtcdctlCommand']]]] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
                  endpoints: Optional[pulumi.Input[str]] = None,
-                 env: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
+                 environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  key: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         """
@@ -171,7 +171,7 @@ class Etcdctl(pulumi.ComponentResource):
                  commands: Optional[pulumi.Input[Sequence[pulumi.Input['EtcdctlCommand']]]] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
                  endpoints: Optional[pulumi.Input[str]] = None,
-                 env: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
+                 environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  key: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
@@ -192,7 +192,7 @@ class Etcdctl(pulumi.ComponentResource):
                 raise TypeError("Missing required property 'connection'")
             __props__.__dict__["connection"] = connection
             __props__.__dict__["endpoints"] = endpoints
-            __props__.__dict__["env"] = env
+            __props__.__dict__["environment"] = environment
             __props__.__dict__["key"] = key
             __props__.__dict__["command"] = None
         super(Etcdctl, __self__).__init__(

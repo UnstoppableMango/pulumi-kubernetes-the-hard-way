@@ -10,6 +10,7 @@ import com.pulumi.exceptions.MissingRequiredPropertyException;
 import com.unmango.kubernetesthehardway.tools.enums.CommandLifecycle;
 import java.lang.Boolean;
 import java.lang.String;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import javax.annotation.Nullable;
@@ -47,6 +48,13 @@ public final class MkdirArgs extends com.pulumi.resources.ResourceArgs {
      */
     public Output<String> directory() {
         return this.directory;
+    }
+
+    @Import(name="environment")
+    private @Nullable Output<Map<String,String>> environment;
+
+    public Optional<Output<Map<String,String>>> environment() {
+        return Optional.ofNullable(this.environment);
     }
 
     /**
@@ -99,6 +107,7 @@ public final class MkdirArgs extends com.pulumi.resources.ResourceArgs {
     private MkdirArgs(MkdirArgs $) {
         this.connection = $.connection;
         this.directory = $.directory;
+        this.environment = $.environment;
         this.lifecycle = $.lifecycle;
         this.parents = $.parents;
         this.removeOnDelete = $.removeOnDelete;
@@ -162,6 +171,15 @@ public final class MkdirArgs extends com.pulumi.resources.ResourceArgs {
          */
         public Builder directory(String directory) {
             return directory(Output.of(directory));
+        }
+
+        public Builder environment(@Nullable Output<Map<String,String>> environment) {
+            $.environment = environment;
+            return this;
+        }
+
+        public Builder environment(Map<String,String> environment) {
+            return environment(Output.of(environment));
         }
 
         /**

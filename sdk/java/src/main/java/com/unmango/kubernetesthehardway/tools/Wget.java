@@ -12,6 +12,7 @@ import com.unmango.kubernetesthehardway.Utilities;
 import com.unmango.kubernetesthehardway.tools.WgetArgs;
 import java.lang.Boolean;
 import java.lang.String;
+import java.util.Map;
 import java.util.Optional;
 import javax.annotation.Nullable;
 
@@ -48,6 +49,12 @@ public class Wget extends com.pulumi.resources.ComponentResource {
      */
     public Output<Optional<String>> directoryPrefix() {
         return Codegen.optional(this.directoryPrefix);
+    }
+    @Export(name="environment", refs={Map.class,String.class}, tree="[0,1,1]")
+    private Output</* @Nullable */ Map<String,String>> environment;
+
+    public Output<Optional<Map<String,String>>> environment() {
+        return Codegen.optional(this.environment);
     }
     /**
      * Corresponds to the --https-only option.

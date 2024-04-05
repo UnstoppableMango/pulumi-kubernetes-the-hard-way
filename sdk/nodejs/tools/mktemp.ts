@@ -75,6 +75,7 @@ export class Mktemp extends pulumi.ComponentResource {
             resourceInputs["connection"] = args ? (args.connection ? pulumi.output(args.connection).apply(pulumiCommand.types.input.remote.connectionArgsProvideDefaults) : undefined) : undefined;
             resourceInputs["directory"] = args ? args.directory : undefined;
             resourceInputs["dryRun"] = args ? args.dryRun : undefined;
+            resourceInputs["environment"] = args ? args.environment : undefined;
             resourceInputs["lifecycle"] = args ? args.lifecycle : undefined;
             resourceInputs["quiet"] = args ? args.quiet : undefined;
             resourceInputs["suffix"] = args ? args.suffix : undefined;
@@ -116,6 +117,7 @@ export interface MktempArgs {
      * Corresponds to the --dry-run option.
      */
     dryRun?: pulumi.Input<boolean>;
+    environment?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
      * At what stage(s) in the resource lifecycle should the command be run.
      */

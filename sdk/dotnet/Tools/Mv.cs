@@ -177,6 +177,14 @@ namespace UnMango.KubernetesTheHardWay.Tools
         [Input("directory")]
         public Input<string>? Directory { get; set; }
 
+        [Input("environment")]
+        private InputMap<string>? _environment;
+        public InputMap<string> Environment
+        {
+            get => _environment ?? (_environment = new InputMap<string>());
+            set => _environment = value;
+        }
+
         /// <summary>
         /// Corresponds to the --force option.
         /// </summary>

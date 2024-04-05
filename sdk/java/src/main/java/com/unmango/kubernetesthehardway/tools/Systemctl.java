@@ -63,6 +63,24 @@ public class Systemctl extends com.pulumi.resources.ComponentResource {
     public Output<Optional<String>> serviceName() {
         return Codegen.optional(this.serviceName);
     }
+    @Export(name="stderr", refs={String.class}, tree="[0]")
+    private Output<String> stderr;
+
+    public Output<String> stderr() {
+        return this.stderr;
+    }
+    @Export(name="stdin", refs={String.class}, tree="[0]")
+    private Output</* @Nullable */ String> stdin;
+
+    public Output<Optional<String>> stdin() {
+        return Codegen.optional(this.stdin);
+    }
+    @Export(name="stdout", refs={String.class}, tree="[0]")
+    private Output<String> stdout;
+
+    public Output<String> stdout() {
+        return this.stdout;
+    }
 
     /**
      *

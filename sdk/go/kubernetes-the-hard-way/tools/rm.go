@@ -60,7 +60,8 @@ type rmArgs struct {
 	// Connection details for the remote system.
 	Connection pulumiCommand.Connection `pulumi:"connection"`
 	// Corresponds to the --dir option.
-	Dir *bool `pulumi:"dir"`
+	Dir         *bool             `pulumi:"dir"`
+	Environment map[string]string `pulumi:"environment"`
 	// Corresponds to the [FILE] argument.
 	Files interface{} `pulumi:"files"`
 	// Corresponds to the --force option.
@@ -80,7 +81,8 @@ type RmArgs struct {
 	// Connection details for the remote system.
 	Connection pulumiCommand.ConnectionInput
 	// Corresponds to the --dir option.
-	Dir pulumi.BoolPtrInput
+	Dir         pulumi.BoolPtrInput
+	Environment pulumi.StringMapInput
 	// Corresponds to the [FILE] argument.
 	Files pulumi.Input
 	// Corresponds to the --force option.

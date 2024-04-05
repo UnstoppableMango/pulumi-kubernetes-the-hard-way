@@ -18,6 +18,7 @@ class MkdirArgs:
     def __init__(__self__, *,
                  connection: pulumi.Input['pulumi_command.remote.ConnectionArgs'],
                  directory: pulumi.Input[str],
+                 environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  lifecycle: Optional['CommandLifecycle'] = None,
                  parents: Optional[pulumi.Input[bool]] = None,
                  remove_on_delete: Optional[pulumi.Input[bool]] = None):
@@ -31,6 +32,8 @@ class MkdirArgs:
         """
         pulumi.set(__self__, "connection", connection)
         pulumi.set(__self__, "directory", directory)
+        if environment is not None:
+            pulumi.set(__self__, "environment", environment)
         if lifecycle is not None:
             pulumi.set(__self__, "lifecycle", lifecycle)
         if parents is not None:
@@ -61,6 +64,15 @@ class MkdirArgs:
     @directory.setter
     def directory(self, value: pulumi.Input[str]):
         pulumi.set(self, "directory", value)
+
+    @property
+    @pulumi.getter
+    def environment(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        return pulumi.get(self, "environment")
+
+    @environment.setter
+    def environment(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
+        pulumi.set(self, "environment", value)
 
     @property
     @pulumi.getter
@@ -106,6 +118,7 @@ class Mkdir(pulumi.ComponentResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
                  directory: Optional[pulumi.Input[str]] = None,
+                 environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  lifecycle: Optional['CommandLifecycle'] = None,
                  parents: Optional[pulumi.Input[bool]] = None,
                  remove_on_delete: Optional[pulumi.Input[bool]] = None,
@@ -147,6 +160,7 @@ class Mkdir(pulumi.ComponentResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
                  directory: Optional[pulumi.Input[str]] = None,
+                 environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  lifecycle: Optional['CommandLifecycle'] = None,
                  parents: Optional[pulumi.Input[bool]] = None,
                  remove_on_delete: Optional[pulumi.Input[bool]] = None,
@@ -167,6 +181,7 @@ class Mkdir(pulumi.ComponentResource):
             if directory is None and not opts.urn:
                 raise TypeError("Missing required property 'directory'")
             __props__.__dict__["directory"] = directory
+            __props__.__dict__["environment"] = environment
             __props__.__dict__["lifecycle"] = lifecycle
             __props__.__dict__["parents"] = parents
             __props__.__dict__["remove_on_delete"] = remove_on_delete

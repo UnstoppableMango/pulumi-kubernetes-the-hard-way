@@ -18,6 +18,7 @@ class WgetArgs:
                  connection: pulumi.Input['pulumi_command.remote.ConnectionArgs'],
                  url: pulumi.Input[str],
                  directory_prefix: Optional[pulumi.Input[str]] = None,
+                 environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  https_only: Optional[pulumi.Input[bool]] = None,
                  no_verbose: Optional[pulumi.Input[bool]] = None,
                  output_document: Optional[pulumi.Input[str]] = None,
@@ -38,6 +39,8 @@ class WgetArgs:
         pulumi.set(__self__, "url", url)
         if directory_prefix is not None:
             pulumi.set(__self__, "directory_prefix", directory_prefix)
+        if environment is not None:
+            pulumi.set(__self__, "environment", environment)
         if https_only is not None:
             pulumi.set(__self__, "https_only", https_only)
         if no_verbose is not None:
@@ -84,6 +87,15 @@ class WgetArgs:
     @directory_prefix.setter
     def directory_prefix(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "directory_prefix", value)
+
+    @property
+    @pulumi.getter
+    def environment(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        return pulumi.get(self, "environment")
+
+    @environment.setter
+    def environment(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
+        pulumi.set(self, "environment", value)
 
     @property
     @pulumi.getter(name="httpsOnly")
@@ -153,6 +165,7 @@ class Wget(pulumi.ComponentResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
                  directory_prefix: Optional[pulumi.Input[str]] = None,
+                 environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  https_only: Optional[pulumi.Input[bool]] = None,
                  no_verbose: Optional[pulumi.Input[bool]] = None,
                  output_document: Optional[pulumi.Input[str]] = None,
@@ -200,6 +213,7 @@ class Wget(pulumi.ComponentResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
                  directory_prefix: Optional[pulumi.Input[str]] = None,
+                 environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  https_only: Optional[pulumi.Input[bool]] = None,
                  no_verbose: Optional[pulumi.Input[bool]] = None,
                  output_document: Optional[pulumi.Input[str]] = None,
@@ -221,6 +235,7 @@ class Wget(pulumi.ComponentResource):
                 raise TypeError("Missing required property 'connection'")
             __props__.__dict__["connection"] = connection
             __props__.__dict__["directory_prefix"] = directory_prefix
+            __props__.__dict__["environment"] = environment
             __props__.__dict__["https_only"] = https_only
             __props__.__dict__["no_verbose"] = no_verbose
             __props__.__dict__["output_document"] = output_document
@@ -255,6 +270,11 @@ class Wget(pulumi.ComponentResource):
         Corresponds to the --directory-prefix option.
         """
         return pulumi.get(self, "directory_prefix")
+
+    @property
+    @pulumi.getter
+    def environment(self) -> pulumi.Output[Optional[Mapping[str, str]]]:
+        return pulumi.get(self, "environment")
 
     @property
     @pulumi.getter(name="httpsOnly")

@@ -86,7 +86,8 @@ type mvArgs struct {
 	// Corresponds to the [DEST] argument.
 	Dest *string `pulumi:"dest"`
 	// Corresponds to the [DIRECTORY] argument.
-	Directory *string `pulumi:"directory"`
+	Directory   *string           `pulumi:"directory"`
+	Environment map[string]string `pulumi:"environment"`
 	// Corresponds to the --force option.
 	Force *bool `pulumi:"force"`
 	// Corresponds to the --no-clobber option.
@@ -120,7 +121,8 @@ type MvArgs struct {
 	// Corresponds to the [DEST] argument.
 	Dest pulumi.StringPtrInput
 	// Corresponds to the [DIRECTORY] argument.
-	Directory pulumi.StringPtrInput
+	Directory   pulumi.StringPtrInput
+	Environment pulumi.StringMapInput
 	// Corresponds to the --force option.
 	Force pulumi.BoolPtrInput
 	// Corresponds to the --no-clobber option.

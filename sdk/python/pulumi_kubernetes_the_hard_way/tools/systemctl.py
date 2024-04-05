@@ -18,6 +18,8 @@ class SystemctlArgs:
     def __init__(__self__, *,
                  commands: pulumi.Input[Sequence[pulumi.Input['SystemctlCommand']]],
                  connection: pulumi.Input['pulumi_command.remote.ConnectionArgs'],
+                 environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
+                 lifecycle: Optional['CommandLifecycle'] = None,
                  service_name: Optional[pulumi.Input[str]] = None):
         """
         The set of arguments for constructing a Systemctl resource.
@@ -25,6 +27,10 @@ class SystemctlArgs:
         """
         pulumi.set(__self__, "commands", commands)
         pulumi.set(__self__, "connection", connection)
+        if environment is not None:
+            pulumi.set(__self__, "environment", environment)
+        if lifecycle is not None:
+            pulumi.set(__self__, "lifecycle", lifecycle)
         if service_name is not None:
             pulumi.set(__self__, "service_name", service_name)
 
@@ -50,6 +56,24 @@ class SystemctlArgs:
         pulumi.set(self, "connection", value)
 
     @property
+    @pulumi.getter
+    def environment(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        return pulumi.get(self, "environment")
+
+    @environment.setter
+    def environment(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
+        pulumi.set(self, "environment", value)
+
+    @property
+    @pulumi.getter
+    def lifecycle(self) -> Optional['CommandLifecycle']:
+        return pulumi.get(self, "lifecycle")
+
+    @lifecycle.setter
+    def lifecycle(self, value: Optional['CommandLifecycle']):
+        pulumi.set(self, "lifecycle", value)
+
+    @property
     @pulumi.getter(name="serviceName")
     def service_name(self) -> Optional[pulumi.Input[str]]:
         return pulumi.get(self, "service_name")
@@ -66,6 +90,8 @@ class Systemctl(pulumi.ComponentResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  commands: Optional[pulumi.Input[Sequence[pulumi.Input['SystemctlCommand']]]] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
+                 environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
+                 lifecycle: Optional['CommandLifecycle'] = None,
                  service_name: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         """
@@ -101,6 +127,8 @@ class Systemctl(pulumi.ComponentResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  commands: Optional[pulumi.Input[Sequence[pulumi.Input['SystemctlCommand']]]] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
+                 environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
+                 lifecycle: Optional['CommandLifecycle'] = None,
                  service_name: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
@@ -119,8 +147,13 @@ class Systemctl(pulumi.ComponentResource):
             if connection is None and not opts.urn:
                 raise TypeError("Missing required property 'connection'")
             __props__.__dict__["connection"] = connection
+            __props__.__dict__["environment"] = environment
+            __props__.__dict__["lifecycle"] = lifecycle
             __props__.__dict__["service_name"] = service_name
             __props__.__dict__["command"] = None
+            __props__.__dict__["stderr"] = None
+            __props__.__dict__["stdin"] = None
+            __props__.__dict__["stdout"] = None
         super(Systemctl, __self__).__init__(
             'kubernetes-the-hard-way:tools:Systemctl',
             resource_name,
@@ -153,4 +186,19 @@ class Systemctl(pulumi.ComponentResource):
     @pulumi.getter(name="serviceName")
     def service_name(self) -> pulumi.Output[Optional[str]]:
         return pulumi.get(self, "service_name")
+
+    @property
+    @pulumi.getter
+    def stderr(self) -> pulumi.Output[str]:
+        return pulumi.get(self, "stderr")
+
+    @property
+    @pulumi.getter
+    def stdin(self) -> pulumi.Output[Optional[str]]:
+        return pulumi.get(self, "stdin")
+
+    @property
+    @pulumi.getter
+    def stdout(self) -> pulumi.Output[str]:
+        return pulumi.get(self, "stdout")
 

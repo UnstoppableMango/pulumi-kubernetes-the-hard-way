@@ -23,6 +23,7 @@ class MvArgs:
                  control: Optional[pulumi.Input[str]] = None,
                  dest: Optional[pulumi.Input[str]] = None,
                  directory: Optional[pulumi.Input[str]] = None,
+                 environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  force: Optional[pulumi.Input[bool]] = None,
                  no_clobber: Optional[pulumi.Input[bool]] = None,
                  no_target_directory: Optional[pulumi.Input[bool]] = None,
@@ -61,6 +62,8 @@ class MvArgs:
             pulumi.set(__self__, "dest", dest)
         if directory is not None:
             pulumi.set(__self__, "directory", directory)
+        if environment is not None:
+            pulumi.set(__self__, "environment", environment)
         if force is not None:
             pulumi.set(__self__, "force", force)
         if no_clobber is not None:
@@ -161,6 +164,15 @@ class MvArgs:
     @directory.setter
     def directory(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "directory", value)
+
+    @property
+    @pulumi.getter
+    def environment(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        return pulumi.get(self, "environment")
+
+    @environment.setter
+    def environment(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
+        pulumi.set(self, "environment", value)
 
     @property
     @pulumi.getter
@@ -270,6 +282,7 @@ class Mv(pulumi.ComponentResource):
                  control: Optional[pulumi.Input[str]] = None,
                  dest: Optional[pulumi.Input[str]] = None,
                  directory: Optional[pulumi.Input[str]] = None,
+                 environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  force: Optional[pulumi.Input[bool]] = None,
                  no_clobber: Optional[pulumi.Input[bool]] = None,
                  no_target_directory: Optional[pulumi.Input[bool]] = None,
@@ -331,6 +344,7 @@ class Mv(pulumi.ComponentResource):
                  control: Optional[pulumi.Input[str]] = None,
                  dest: Optional[pulumi.Input[str]] = None,
                  directory: Optional[pulumi.Input[str]] = None,
+                 environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  force: Optional[pulumi.Input[bool]] = None,
                  no_clobber: Optional[pulumi.Input[bool]] = None,
                  no_target_directory: Optional[pulumi.Input[bool]] = None,
@@ -359,6 +373,7 @@ class Mv(pulumi.ComponentResource):
             __props__.__dict__["control"] = control
             __props__.__dict__["dest"] = dest
             __props__.__dict__["directory"] = directory
+            __props__.__dict__["environment"] = environment
             __props__.__dict__["force"] = force
             __props__.__dict__["no_clobber"] = no_clobber
             __props__.__dict__["no_target_directory"] = no_target_directory

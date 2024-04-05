@@ -24,6 +24,7 @@ export class Certificate extends pulumi.ComponentResource {
         return obj['__pulumiType'] === Certificate.__pulumiType;
     }
 
+    public readonly allowedUses!: pulumi.Output<enums.tls.AllowedUsage[] | undefined>;
     public /*out*/ readonly cert!: pulumi.Output<pulumiTls.LocallySignedCert>;
     public /*out*/ readonly certPem!: pulumi.Output<string>;
     public /*out*/ readonly csr!: pulumi.Output<pulumiTls.CertRequest>;
@@ -79,6 +80,7 @@ export class Certificate extends pulumi.ComponentResource {
             resourceInputs["privateKeyPem"] = undefined /*out*/;
             resourceInputs["publicKeyPem"] = undefined /*out*/;
         } else {
+            resourceInputs["allowedUses"] = undefined /*out*/;
             resourceInputs["cert"] = undefined /*out*/;
             resourceInputs["certPem"] = undefined /*out*/;
             resourceInputs["csr"] = undefined /*out*/;

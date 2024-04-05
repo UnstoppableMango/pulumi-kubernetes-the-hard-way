@@ -12,6 +12,7 @@ import com.unmango.kubernetesthehardway.tools.enums.CommandLifecycle;
 import java.lang.Boolean;
 import java.lang.String;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import javax.annotation.Nullable;
@@ -49,6 +50,13 @@ public final class RmArgs extends com.pulumi.resources.ResourceArgs {
      */
     public Optional<Output<Boolean>> dir() {
         return Optional.ofNullable(this.dir);
+    }
+
+    @Import(name="environment")
+    private @Nullable Output<Map<String,String>> environment;
+
+    public Optional<Output<Map<String,String>>> environment() {
+        return Optional.ofNullable(this.environment);
     }
 
     /**
@@ -146,6 +154,7 @@ public final class RmArgs extends com.pulumi.resources.ResourceArgs {
     private RmArgs(RmArgs $) {
         this.connection = $.connection;
         this.dir = $.dir;
+        this.environment = $.environment;
         this.files = $.files;
         this.force = $.force;
         this.lifecycle = $.lifecycle;
@@ -212,6 +221,15 @@ public final class RmArgs extends com.pulumi.resources.ResourceArgs {
          */
         public Builder dir(Boolean dir) {
             return dir(Output.of(dir));
+        }
+
+        public Builder environment(@Nullable Output<Map<String,String>> environment) {
+            $.environment = environment;
+            return this;
+        }
+
+        public Builder environment(Map<String,String> environment) {
+            return environment(Output.of(environment));
         }
 
         /**

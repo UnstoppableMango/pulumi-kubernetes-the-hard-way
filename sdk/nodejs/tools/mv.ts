@@ -115,6 +115,7 @@ export class Mv extends pulumi.ComponentResource {
             resourceInputs["control"] = args ? args.control : undefined;
             resourceInputs["dest"] = args ? args.dest : undefined;
             resourceInputs["directory"] = args ? args.directory : undefined;
+            resourceInputs["environment"] = args ? args.environment : undefined;
             resourceInputs["force"] = args ? args.force : undefined;
             resourceInputs["noClobber"] = args ? args.noClobber : undefined;
             resourceInputs["noTargetDirectory"] = args ? args.noTargetDirectory : undefined;
@@ -177,6 +178,7 @@ export interface MvArgs {
      * Corresponds to the [DIRECTORY] argument.
      */
     directory?: pulumi.Input<string>;
+    environment?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
      * Corresponds to the --force option.
      */

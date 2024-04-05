@@ -37,6 +37,9 @@ export class Systemctl extends pulumi.ComponentResource {
      */
     public readonly connection!: pulumi.Output<pulumiCommand.types.output.remote.Connection>;
     public readonly serviceName!: pulumi.Output<string | undefined>;
+    public /*out*/ readonly stderr!: pulumi.Output<string>;
+    public /*out*/ readonly stdin!: pulumi.Output<string | undefined>;
+    public /*out*/ readonly stdout!: pulumi.Output<string>;
 
     /**
      * Create a Systemctl resource with the given unique name, arguments, and options.
@@ -57,13 +60,21 @@ export class Systemctl extends pulumi.ComponentResource {
             }
             resourceInputs["commands"] = args ? args.commands : undefined;
             resourceInputs["connection"] = args ? (args.connection ? pulumi.output(args.connection).apply(pulumiCommand.types.input.remote.connectionArgsProvideDefaults) : undefined) : undefined;
+            resourceInputs["environment"] = args ? args.environment : undefined;
+            resourceInputs["lifecycle"] = args ? args.lifecycle : undefined;
             resourceInputs["serviceName"] = args ? args.serviceName : undefined;
             resourceInputs["command"] = undefined /*out*/;
+            resourceInputs["stderr"] = undefined /*out*/;
+            resourceInputs["stdin"] = undefined /*out*/;
+            resourceInputs["stdout"] = undefined /*out*/;
         } else {
             resourceInputs["command"] = undefined /*out*/;
             resourceInputs["commands"] = undefined /*out*/;
             resourceInputs["connection"] = undefined /*out*/;
             resourceInputs["serviceName"] = undefined /*out*/;
+            resourceInputs["stderr"] = undefined /*out*/;
+            resourceInputs["stdin"] = undefined /*out*/;
+            resourceInputs["stdout"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         super(Systemctl.__pulumiType, name, resourceInputs, opts, true /*remote*/);
@@ -79,5 +90,7 @@ export interface SystemctlArgs {
      * Connection details for the remote system.
      */
     connection: pulumi.Input<pulumiCommand.types.input.remote.ConnectionArgs>;
+    environment?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    lifecycle?: enums.tools.CommandLifecycle;
     serviceName?: pulumi.Input<string>;
 }

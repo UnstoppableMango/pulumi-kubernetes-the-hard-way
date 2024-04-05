@@ -34,6 +34,9 @@ namespace UnMango.KubernetesTheHardWay.Tools
         [Output("connection")]
         public Output<Pulumi.Command.Remote.Outputs.Connection> Connection { get; private set; } = null!;
 
+        [Output("environment")]
+        public Output<ImmutableDictionary<string, string>?> Environment { get; private set; } = null!;
+
         /// <summary>
         /// The file(s) to write to.
         /// </summary>
@@ -64,8 +67,14 @@ namespace UnMango.KubernetesTheHardWay.Tools
         [Output("pipe")]
         public Output<bool> Pipe { get; private set; } = null!;
 
+        [Output("stderr")]
+        public Output<string?> Stderr { get; private set; } = null!;
+
         [Output("stdin")]
         public Output<string> Stdin { get; private set; } = null!;
+
+        [Output("stdout")]
+        public Output<string?> Stdout { get; private set; } = null!;
 
 
         /// <summary>
@@ -107,6 +116,14 @@ namespace UnMango.KubernetesTheHardWay.Tools
         /// </summary>
         [Input("connection", required: true)]
         public Input<Pulumi.Command.Remote.Inputs.ConnectionArgs> Connection { get; set; } = null!;
+
+        [Input("environment")]
+        private InputMap<string>? _environment;
+        public InputMap<string> Environment
+        {
+            get => _environment ?? (_environment = new InputMap<string>());
+            set => _environment = value;
+        }
 
         /// <summary>
         /// The file(s) to write to.

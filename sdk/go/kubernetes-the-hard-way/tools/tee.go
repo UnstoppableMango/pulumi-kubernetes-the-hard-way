@@ -22,7 +22,8 @@ type Tee struct {
 	// Represents the command run on the remote system.
 	Command pulumiCommand.CommandOutput `pulumi:"command"`
 	// Connection details for the remote system.
-	Connection pulumiCommand.ConnectionOutput `pulumi:"connection"`
+	Connection  pulumiCommand.ConnectionOutput `pulumi:"connection"`
+	Environment pulumi.StringMapOutput         `pulumi:"environment"`
 	// The file(s) to write to.
 	Files pulumi.AnyOutput `pulumi:"files"`
 	// Ignore interrupt signals.
@@ -32,8 +33,10 @@ type Tee struct {
 	// Set behavior on write error.
 	OutputError TeeModePtrOutput `pulumi:"outputError"`
 	// Operate in a more appropriate MODE with pipes.
-	Pipe  pulumi.BoolOutput   `pulumi:"pipe"`
-	Stdin pulumi.StringOutput `pulumi:"stdin"`
+	Pipe   pulumi.BoolOutput      `pulumi:"pipe"`
+	Stderr pulumi.StringPtrOutput `pulumi:"stderr"`
+	Stdin  pulumi.StringOutput    `pulumi:"stdin"`
+	Stdout pulumi.StringPtrOutput `pulumi:"stdout"`
 }
 
 // NewTee registers a new resource with the given unique name, arguments, and options.
@@ -66,7 +69,8 @@ type teeArgs struct {
 	// Append to the given FILEs, do not overwrite.
 	Append *bool `pulumi:"append"`
 	// Connection details for the remote system.
-	Connection pulumiCommand.Connection `pulumi:"connection"`
+	Connection  pulumiCommand.Connection `pulumi:"connection"`
+	Environment map[string]string        `pulumi:"environment"`
 	// The file(s) to write to.
 	Files interface{} `pulumi:"files"`
 	// Ignore interrupt signals.
@@ -87,7 +91,8 @@ type TeeArgs struct {
 	// Append to the given FILEs, do not overwrite.
 	Append pulumi.BoolPtrInput
 	// Connection details for the remote system.
-	Connection pulumiCommand.ConnectionInput
+	Connection  pulumiCommand.ConnectionInput
+	Environment pulumi.StringMapInput
 	// The file(s) to write to.
 	Files pulumi.Input
 	// Ignore interrupt signals.
@@ -205,6 +210,10 @@ func (o TeeOutput) Connection() pulumiCommand.ConnectionOutput {
 	return o.ApplyT(func(v *Tee) pulumiCommand.ConnectionOutput { return v.Connection }).(pulumiCommand.ConnectionOutput)
 }
 
+func (o TeeOutput) Environment() pulumi.StringMapOutput {
+	return o.ApplyT(func(v *Tee) pulumi.StringMapOutput { return v.Environment }).(pulumi.StringMapOutput)
+}
+
 // The file(s) to write to.
 func (o TeeOutput) Files() pulumi.AnyOutput {
 	return o.ApplyT(func(v *Tee) pulumi.AnyOutput { return v.Files }).(pulumi.AnyOutput)
@@ -230,8 +239,16 @@ func (o TeeOutput) Pipe() pulumi.BoolOutput {
 	return o.ApplyT(func(v *Tee) pulumi.BoolOutput { return v.Pipe }).(pulumi.BoolOutput)
 }
 
+func (o TeeOutput) Stderr() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Tee) pulumi.StringPtrOutput { return v.Stderr }).(pulumi.StringPtrOutput)
+}
+
 func (o TeeOutput) Stdin() pulumi.StringOutput {
 	return o.ApplyT(func(v *Tee) pulumi.StringOutput { return v.Stdin }).(pulumi.StringOutput)
+}
+
+func (o TeeOutput) Stdout() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Tee) pulumi.StringPtrOutput { return v.Stdout }).(pulumi.StringPtrOutput)
 }
 
 type TeeArrayOutput struct{ *pulumi.OutputState }

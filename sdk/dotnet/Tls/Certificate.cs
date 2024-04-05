@@ -13,6 +13,9 @@ namespace UnMango.KubernetesTheHardWay.Tls
     [KubernetesTheHardWayResourceType("kubernetes-the-hard-way:tls:Certificate")]
     public partial class Certificate : global::Pulumi.ComponentResource
     {
+        [Output("allowedUses")]
+        public Output<ImmutableArray<UnMango.KubernetesTheHardWay.Tls.AllowedUsage>> AllowedUses { get; private set; } = null!;
+
         [Output("cert")]
         public Output<Pulumi.Tls.LocallySignedCert> Cert { get; private set; } = null!;
 

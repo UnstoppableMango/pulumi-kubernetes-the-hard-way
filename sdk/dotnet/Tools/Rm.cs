@@ -99,6 +99,14 @@ namespace UnMango.KubernetesTheHardWay.Tools
         [Input("dir")]
         public Input<bool>? Dir { get; set; }
 
+        [Input("environment")]
+        private InputMap<string>? _environment;
+        public InputMap<string> Environment
+        {
+            get => _environment ?? (_environment = new InputMap<string>());
+            set => _environment = value;
+        }
+
         /// <summary>
         /// Corresponds to the [FILE] argument.
         /// </summary>

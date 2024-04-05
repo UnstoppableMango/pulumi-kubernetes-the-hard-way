@@ -50,10 +50,10 @@ type etcdctlArgs struct {
 	Cert       *string          `pulumi:"cert"`
 	Commands   []EtcdctlCommand `pulumi:"commands"`
 	// Connection details for the remote system.
-	Connection pulumiCommand.Connection `pulumi:"connection"`
-	Endpoints  *string                  `pulumi:"endpoints"`
-	Env        map[string]string        `pulumi:"env"`
-	Key        *string                  `pulumi:"key"`
+	Connection  pulumiCommand.Connection `pulumi:"connection"`
+	Endpoints   *string                  `pulumi:"endpoints"`
+	Environment map[string]string        `pulumi:"environment"`
+	Key         *string                  `pulumi:"key"`
 }
 
 // The set of arguments for constructing a Etcdctl resource.
@@ -63,10 +63,10 @@ type EtcdctlArgs struct {
 	Cert       pulumi.StringPtrInput
 	Commands   EtcdctlCommandArrayInput
 	// Connection details for the remote system.
-	Connection pulumiCommand.ConnectionInput
-	Endpoints  pulumi.StringPtrInput
-	Env        pulumi.StringMapInput
-	Key        pulumi.StringPtrInput
+	Connection  pulumiCommand.ConnectionInput
+	Endpoints   pulumi.StringPtrInput
+	Environment pulumi.StringMapInput
+	Key         pulumi.StringPtrInput
 }
 
 func (EtcdctlArgs) ElementType() reflect.Type {

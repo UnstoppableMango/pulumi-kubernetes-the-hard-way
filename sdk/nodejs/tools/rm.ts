@@ -75,6 +75,7 @@ export class Rm extends pulumi.ComponentResource {
             }
             resourceInputs["connection"] = args ? (args.connection ? pulumi.output(args.connection).apply(pulumiCommand.types.input.remote.connectionArgsProvideDefaults) : undefined) : undefined;
             resourceInputs["dir"] = args ? args.dir : undefined;
+            resourceInputs["environment"] = args ? args.environment : undefined;
             resourceInputs["files"] = args ? args.files : undefined;
             resourceInputs["force"] = args ? args.force : undefined;
             resourceInputs["lifecycle"] = args ? args.lifecycle : undefined;
@@ -108,6 +109,7 @@ export interface RmArgs {
      * Corresponds to the --dir option.
      */
     dir?: pulumi.Input<boolean>;
+    environment?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
      * Corresponds to the [FILE] argument.
      */

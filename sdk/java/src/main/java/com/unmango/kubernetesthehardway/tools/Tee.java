@@ -17,6 +17,7 @@ import com.unmango.kubernetesthehardway.tools.enums.TeeMode;
 import java.lang.Boolean;
 import java.lang.String;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import javax.annotation.Nullable;
 
@@ -67,6 +68,12 @@ public class Tee extends com.pulumi.resources.ComponentResource {
      */
     public Output<Connection> connection() {
         return this.connection;
+    }
+    @Export(name="environment", refs={Map.class,String.class}, tree="[0,1,1]")
+    private Output</* @Nullable */ Map<String,String>> environment;
+
+    public Output<Optional<Map<String,String>>> environment() {
+        return Codegen.optional(this.environment);
     }
     /**
      * The file(s) to write to.
@@ -138,11 +145,23 @@ public class Tee extends com.pulumi.resources.ComponentResource {
     public Output<Boolean> pipe() {
         return this.pipe;
     }
+    @Export(name="stderr", refs={String.class}, tree="[0]")
+    private Output</* @Nullable */ String> stderr;
+
+    public Output<Optional<String>> stderr() {
+        return Codegen.optional(this.stderr);
+    }
     @Export(name="stdin", refs={String.class}, tree="[0]")
     private Output<String> stdin;
 
     public Output<String> stdin() {
         return this.stdin;
+    }
+    @Export(name="stdout", refs={String.class}, tree="[0]")
+    private Output</* @Nullable */ String> stdout;
+
+    public Output<Optional<String>> stdout() {
+        return Codegen.optional(this.stdout);
     }
 
     /**

@@ -70,11 +70,11 @@ public final class EtcdctlArgs extends com.pulumi.resources.ResourceArgs {
         return Optional.ofNullable(this.endpoints);
     }
 
-    @Import(name="env")
-    private @Nullable Output<Map<String,String>> env;
+    @Import(name="environment")
+    private @Nullable Output<Map<String,String>> environment;
 
-    public Optional<Output<Map<String,String>>> env() {
-        return Optional.ofNullable(this.env);
+    public Optional<Output<Map<String,String>>> environment() {
+        return Optional.ofNullable(this.environment);
     }
 
     @Import(name="key")
@@ -93,7 +93,7 @@ public final class EtcdctlArgs extends com.pulumi.resources.ResourceArgs {
         this.commands = $.commands;
         this.connection = $.connection;
         this.endpoints = $.endpoints;
-        this.env = $.env;
+        this.environment = $.environment;
         this.key = $.key;
     }
 
@@ -185,13 +185,13 @@ public final class EtcdctlArgs extends com.pulumi.resources.ResourceArgs {
             return endpoints(Output.of(endpoints));
         }
 
-        public Builder env(@Nullable Output<Map<String,String>> env) {
-            $.env = env;
+        public Builder environment(@Nullable Output<Map<String,String>> environment) {
+            $.environment = environment;
             return this;
         }
 
-        public Builder env(Map<String,String> env) {
-            return env(Output.of(env));
+        public Builder environment(Map<String,String> environment) {
+            return environment(Output.of(environment));
         }
 
         public Builder key(@Nullable Output<String> key) {

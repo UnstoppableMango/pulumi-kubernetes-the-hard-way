@@ -12,6 +12,7 @@ import java.lang.Boolean;
 import java.lang.Object;
 import java.lang.String;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import javax.annotation.Nullable;
@@ -64,6 +65,13 @@ public final class MktempArgs extends com.pulumi.resources.ResourceArgs {
      */
     public Optional<Output<Boolean>> dryRun() {
         return Optional.ofNullable(this.dryRun);
+    }
+
+    @Import(name="environment")
+    private @Nullable Output<Map<String,String>> environment;
+
+    public Optional<Output<Map<String,String>>> environment() {
+        return Optional.ofNullable(this.environment);
     }
 
     /**
@@ -154,6 +162,7 @@ public final class MktempArgs extends com.pulumi.resources.ResourceArgs {
         this.connection = $.connection;
         this.directory = $.directory;
         this.dryRun = $.dryRun;
+        this.environment = $.environment;
         this.lifecycle = $.lifecycle;
         this.quiet = $.quiet;
         this.suffix = $.suffix;
@@ -241,6 +250,15 @@ public final class MktempArgs extends com.pulumi.resources.ResourceArgs {
          */
         public Builder dryRun(Boolean dryRun) {
             return dryRun(Output.of(dryRun));
+        }
+
+        public Builder environment(@Nullable Output<Map<String,String>> environment) {
+            $.environment = environment;
+            return this;
+        }
+
+        public Builder environment(Map<String,String> environment) {
+            return environment(Output.of(environment));
         }
 
         /**

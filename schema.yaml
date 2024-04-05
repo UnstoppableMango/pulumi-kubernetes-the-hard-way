@@ -518,6 +518,10 @@ resources:
       - caPrivateKeyPem
       - validityPeriodHours
     properties:
+      allowedUses:
+        type: array
+        items:
+          $ref: "#/types/kubernetes-the-hard-way:tls:AllowedUsage"
       cert:
         $ref: "/tls/v5.0.2/schema.json#/resources/tls:index/locallySignedCert:LocallySignedCert"
       certPem:
@@ -721,7 +725,7 @@ resources:
         description: Connection details for the remote system.
       endpoints:
         type: string
-      env:
+      environment:
         type: object
         additionalProperties:
           type: string
@@ -756,6 +760,10 @@ resources:
       directory:
         type: string
         description: The fully qualified path of the directory on the remote system.
+      environment:
+        type: object
+        additionalProperties:
+          type: string
       lifecycle:
         $ref: "#/types/kubernetes-the-hard-way:tools:CommandLifecycle"
         plain: true
@@ -808,6 +816,10 @@ resources:
       dryRun:
         type: boolean
         description: Corresponds to the --dry-run option.
+      environment:
+        type: object
+        additionalProperties:
+          type: string
       lifecycle:
         $ref: "#/types/kubernetes-the-hard-way:tools:CommandLifecycle"
         plain: true
@@ -886,6 +898,10 @@ resources:
       directory:
         type: string
         description: Corresponds to the [DIRECTORY] argument.
+      environment:
+        type: object
+        additionalProperties:
+          type: string
       force:
         type: boolean
         description: Corresponds to the --force option.
@@ -993,6 +1009,10 @@ resources:
       dir:
         type: boolean
         description: Corresponds to the --dir option.
+      environment:
+        type: object
+        additionalProperties:
+          type: string
       files:
         oneOf:
           - type: array
@@ -1062,6 +1082,13 @@ resources:
       connection:
         $ref: "/command/v0.9.2/schema.json#/types/command:remote:Connection"
         description: Connection details for the remote system.
+      environment:
+        type: object
+        additionalProperties:
+          type: string
+      lifecycle:
+        $ref: "#/types/kubernetes-the-hard-way:tools:CommandLifecycle"
+        plain: true
       serviceName:
         type: string
     requiredInputs:
@@ -1080,10 +1107,18 @@ resources:
         description: Connection details for the remote system.
       serviceName:
         type: string
+      stderr:
+        type: string
+      stdin:
+        type: string
+      stdout:
+        type: string
     required:
       - command
       - commands
       - connection
+      - stderr
+      - stdout
   kubernetes-the-hard-way:tools:Tar:
     isComponent: true
     description: Abstracion over the `tar` utility on a remote system.
@@ -1097,6 +1132,10 @@ resources:
       directory:
         type: string
         description: Corresponds to the --directory option.
+      environment:
+        type: object
+        additionalProperties:
+          type: string
       extract:
         type: boolean
         description: Corresponds to the --extract option.
@@ -1166,6 +1205,10 @@ resources:
       connection:
         $ref: "/command/v0.9.2/schema.json#/types/command:remote:Connection"
         description: Connection details for the remote system.
+      environment:
+        type: object
+        additionalProperties:
+          type: string
       files:
         oneOf:
           - type: string
@@ -1205,6 +1248,10 @@ resources:
       connection:
         $ref: "/command/v0.9.2/schema.json#/types/command:remote:Connection"
         description: Connection details for the remote system.
+      environment:
+        type: object
+        additionalProperties:
+          type: string
       files:
         oneOf:
           - type: string
@@ -1225,7 +1272,11 @@ resources:
       pipe:
         type: boolean
         description: Operate in a more appropriate MODE with pipes.
+      stderr:
+        type: string
       stdin:
+        type: string
+      stdout:
         type: string
     required:
       - append
@@ -1245,6 +1296,10 @@ resources:
       directoryPrefix:
         type: string
         description: Corresponds to the --directory-prefix option.
+      environment:
+        type: object
+        additionalProperties:
+          type: string
       httpsOnly:
         type: boolean
         description: Corresponds to the --https-only option.
@@ -1273,6 +1328,10 @@ resources:
       directoryPrefix:
         type: string
         description: Corresponds to the --directory-prefix option.
+      environment:
+        type: object
+        additionalProperties:
+          type: string
       httpsOnly:
         type: boolean
         description: Corresponds to the --https-only option.

@@ -176,6 +176,7 @@ export interface SystemdServiceArgs {
     readonly unit?: pulumi.Input<SystemdUnitSectionInputs>;
 }
 export abstract class Certificate<TData = any> extends (pulumi.ComponentResource)<TData> {
+    public allowedUses?: AllowedUsageOutputs[] | pulumi.Output<AllowedUsageOutputs[]>;
     public cert!: tls.LocallySignedCert | pulumi.Output<tls.LocallySignedCert>;
     public certPem!: string | pulumi.Output<string>;
     public csr!: tls.CertRequest | pulumi.Output<tls.CertRequest>;
@@ -183,7 +184,7 @@ export abstract class Certificate<TData = any> extends (pulumi.ComponentResource
     public privateKeyPem!: string | pulumi.Output<string>;
     public publicKeyPem!: string | pulumi.Output<string>;
     constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
-        super("kubernetes-the-hard-way:tls:Certificate", name, opts.urn ? { cert: undefined, certPem: undefined, csr: undefined, key: undefined, privateKeyPem: undefined, publicKeyPem: undefined } : { name, args, opts }, opts);
+        super("kubernetes-the-hard-way:tls:Certificate", name, opts.urn ? { allowedUses: undefined, cert: undefined, certPem: undefined, csr: undefined, key: undefined, privateKeyPem: undefined, publicKeyPem: undefined } : { name, args, opts }, opts);
     }
 }
 export interface CertificateArgs {
@@ -277,7 +278,7 @@ export interface EtcdctlArgs {
     readonly commands?: pulumi.Input<pulumi.Input<EtcdctlCommandInputs>[]>;
     readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
     readonly endpoints?: pulumi.Input<string>;
-    readonly env?: pulumi.Input<Record<string, pulumi.Input<string>>>;
+    readonly environment?: pulumi.Input<Record<string, pulumi.Input<string>>>;
     readonly caCert?: pulumi.Input<string>;
     readonly cert?: pulumi.Input<string>;
     readonly key?: pulumi.Input<string>;
@@ -296,6 +297,7 @@ export abstract class Mkdir<TData = any> extends (pulumi.ComponentResource)<TDat
 export interface MkdirArgs {
     readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
     readonly directory: pulumi.Input<string>;
+    readonly environment?: pulumi.Input<Record<string, pulumi.Input<string>>>;
     readonly lifecycle?: CommandLifecycleInputs;
     readonly parents?: pulumi.Input<boolean>;
     readonly removeOnDelete?: pulumi.Input<boolean>;
@@ -318,6 +320,7 @@ export interface MktempArgs {
     readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
     readonly directory?: pulumi.Input<boolean>;
     readonly dryRun?: pulumi.Input<boolean>;
+    readonly environment?: pulumi.Input<Record<string, pulumi.Input<string>>>;
     readonly lifecycle?: CommandLifecycleInputs;
     readonly quiet?: pulumi.Input<boolean>;
     readonly suffix?: pulumi.Input<string>;
@@ -353,6 +356,7 @@ export interface MvArgs {
     readonly control?: pulumi.Input<string>;
     readonly dest?: pulumi.Input<string>;
     readonly directory?: pulumi.Input<string>;
+    readonly environment?: pulumi.Input<Record<string, pulumi.Input<string>>>;
     readonly force?: pulumi.Input<boolean>;
     readonly noClobber?: pulumi.Input<boolean>;
     readonly noTargetDirectory?: pulumi.Input<boolean>;
@@ -378,6 +382,7 @@ export abstract class Rm<TData = any> extends (pulumi.ComponentResource)<TData> 
 export interface RmArgs {
     readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
     readonly dir?: pulumi.Input<boolean>;
+    readonly environment?: pulumi.Input<Record<string, pulumi.Input<string>>>;
     readonly files: pulumi.Input<unknown>;
     readonly force?: pulumi.Input<boolean>;
     readonly lifecycle?: CommandLifecycleInputs;
@@ -390,13 +395,18 @@ export abstract class Systemctl<TData = any> extends (pulumi.ComponentResource)<
     public commands!: SystemctlCommandOutputs[] | pulumi.Output<SystemctlCommandOutputs[]>;
     public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
     public serviceName?: string | pulumi.Output<string>;
+    public stderr!: string | pulumi.Output<string>;
+    public stdin?: string | pulumi.Output<string>;
+    public stdout!: string | pulumi.Output<string>;
     constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
-        super("kubernetes-the-hard-way:tools:Systemctl", name, opts.urn ? { command: undefined, commands: undefined, connection: undefined, serviceName: undefined } : { name, args, opts }, opts);
+        super("kubernetes-the-hard-way:tools:Systemctl", name, opts.urn ? { command: undefined, commands: undefined, connection: undefined, serviceName: undefined, stderr: undefined, stdin: undefined, stdout: undefined } : { name, args, opts }, opts);
     }
 }
 export interface SystemctlArgs {
     readonly commands: pulumi.Input<pulumi.Input<SystemctlCommandInputs>[]>;
     readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
+    readonly environment?: pulumi.Input<Record<string, pulumi.Input<string>>>;
+    readonly lifecycle?: CommandLifecycleInputs;
     readonly serviceName?: pulumi.Input<string>;
 }
 export abstract class Tar<TData = any> extends (pulumi.ComponentResource)<TData> {
@@ -418,6 +428,7 @@ export interface TarArgs {
     readonly archive: pulumi.Input<string>;
     readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
     readonly directory?: pulumi.Input<string>;
+    readonly environment?: pulumi.Input<Record<string, pulumi.Input<string>>>;
     readonly extract?: pulumi.Input<boolean>;
     readonly files?: pulumi.Input<unknown>;
     readonly gzip?: pulumi.Input<boolean>;
@@ -427,19 +438,23 @@ export abstract class Tee<TData = any> extends (pulumi.ComponentResource)<TData>
     public append!: boolean | pulumi.Output<boolean>;
     public command!: command.remote.Command | pulumi.Output<command.remote.Command>;
     public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
+    public environment?: Record<string, string> | pulumi.Output<Record<string, string>>;
     public files!: unknown | pulumi.Output<unknown>;
     public ignoreInterrupts!: boolean | pulumi.Output<boolean>;
     public lifecycle?: CommandLifecycleOutputs | CommandLifecycleOutputs;
     public outputError?: TeeModeOutputs | pulumi.Output<TeeModeOutputs>;
     public pipe!: boolean | pulumi.Output<boolean>;
+    public stderr?: string | pulumi.Output<string>;
     public stdin!: string | pulumi.Output<string>;
+    public stdout?: string | pulumi.Output<string>;
     constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
-        super("kubernetes-the-hard-way:tools:Tee", name, opts.urn ? { append: undefined, command: undefined, connection: undefined, files: undefined, ignoreInterrupts: undefined, lifecycle: undefined, outputError: undefined, pipe: undefined, stdin: undefined } : { name, args, opts }, opts);
+        super("kubernetes-the-hard-way:tools:Tee", name, opts.urn ? { append: undefined, command: undefined, connection: undefined, environment: undefined, files: undefined, ignoreInterrupts: undefined, lifecycle: undefined, outputError: undefined, pipe: undefined, stderr: undefined, stdin: undefined, stdout: undefined } : { name, args, opts }, opts);
     }
 }
 export interface TeeArgs {
     readonly append?: pulumi.Input<boolean>;
     readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
+    readonly environment?: pulumi.Input<Record<string, pulumi.Input<string>>>;
     readonly files: pulumi.Input<unknown>;
     readonly ignoreInterrupts?: pulumi.Input<boolean>;
     readonly lifecycle?: CommandLifecycleInputs;
@@ -451,6 +466,7 @@ export interface TeeArgs {
 export abstract class Wget<TData = any> extends (pulumi.ComponentResource)<TData> {
     public command!: command.remote.Command | pulumi.Output<command.remote.Command>;
     public directoryPrefix?: string | pulumi.Output<string>;
+    public environment?: Record<string, string> | pulumi.Output<Record<string, string>>;
     public httpsOnly!: boolean | pulumi.Output<boolean>;
     public noVerbose?: boolean | pulumi.Output<boolean>;
     public outputDocument?: string | pulumi.Output<string>;
@@ -461,12 +477,13 @@ export abstract class Wget<TData = any> extends (pulumi.ComponentResource)<TData
     public timestamping!: boolean | pulumi.Output<boolean>;
     public url!: string | pulumi.Output<string>;
     constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
-        super("kubernetes-the-hard-way:tools:Wget", name, opts.urn ? { command: undefined, directoryPrefix: undefined, httpsOnly: undefined, noVerbose: undefined, outputDocument: undefined, quiet: undefined, stderr: undefined, stdin: undefined, stdout: undefined, timestamping: undefined, url: undefined } : { name, args, opts }, opts);
+        super("kubernetes-the-hard-way:tools:Wget", name, opts.urn ? { command: undefined, directoryPrefix: undefined, environment: undefined, httpsOnly: undefined, noVerbose: undefined, outputDocument: undefined, quiet: undefined, stderr: undefined, stdin: undefined, stdout: undefined, timestamping: undefined, url: undefined } : { name, args, opts }, opts);
     }
 }
 export interface WgetArgs {
     readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
     readonly directoryPrefix?: pulumi.Input<string>;
+    readonly environment?: pulumi.Input<Record<string, pulumi.Input<string>>>;
     readonly httpsOnly?: pulumi.Input<boolean>;
     readonly noVerbose?: pulumi.Input<boolean>;
     readonly outputDocument?: pulumi.Input<string>;
