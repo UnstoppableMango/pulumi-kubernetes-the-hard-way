@@ -362,7 +362,7 @@ resources:
       directory:
         type: string
         description: Directory to install the `etcd` and `etcdctl` binaries.
-      installMkdir:
+      mkdir:
         $ref: "#/resources/kubernetes-the-hard-way:tools:Mkdir"
         description: The operation to create the install directory.
       mvEtcd:
@@ -390,7 +390,7 @@ resources:
       - etcdPath
       - etcdctlPath
       - directory
-      - installMkdir
+      - mkdir
       - mvEtcd
       - mvEtcdctl
       - name
@@ -507,6 +507,8 @@ resources:
       architecture:
         $ref: "#/types/kubernetes-the-hard-way:remote:Architecture"
         description: The kube-apiserver CPU architecture.
+      binName:
+        type: string
       connection:
         $ref: "/command/v0.9.2/schema.json#/types/command:remote:Connection"
         description: The connection details.
@@ -516,6 +518,8 @@ resources:
         default: /usr/local/bin
       mkdir:
         $ref: "#/resources/kubernetes-the-hard-way:tools:Mkdir"
+      path:
+        type: string
       version:
         type: string
         description: The version of kube-apiserver to install.
@@ -547,7 +551,7 @@ resources:
       architecture:
         $ref: "#/types/kubernetes-the-hard-way:remote:Architecture"
         description: The kube-controller-manager CPU architecture.
-      archiveName:
+      binName:
         type: string
       connection:
         $ref: "/command/v0.9.2/schema.json#/types/command:remote:Connection"
@@ -558,6 +562,10 @@ resources:
         default: /usr/local/bin
       mkdir:
         $ref: "#/resources/kubernetes-the-hard-way:tools:Mkdir"
+      mv:
+        $ref: "#/resources/kubernetes-the-hard-way:tools:Mv"
+      path:
+        type: string
       version:
         type: string
         description: The version of kube-controller-manager to install.
@@ -565,6 +573,9 @@ resources:
       - architecture
       - connection
       - directory
+      - mkdir
+      - mv
+      - path
       - version
   kubernetes-the-hard-way:remote:KubectlInstall:
     isComponent: true
@@ -589,7 +600,7 @@ resources:
       architecture:
         $ref: "#/types/kubernetes-the-hard-way:remote:Architecture"
         description: The CPU architecture.
-      archiveName:
+      binName:
         type: string
       connection:
         $ref: "/command/v0.9.2/schema.json#/types/command:remote:Connection"
@@ -646,7 +657,7 @@ resources:
       architecture:
         $ref: "#/types/kubernetes-the-hard-way:remote:Architecture"
         description: The CPU architecture.
-      archiveName:
+      binName:
         type: string
       connection:
         $ref: "/command/v0.9.2/schema.json#/types/command:remote:Connection"
@@ -703,7 +714,7 @@ resources:
       architecture:
         $ref: "#/types/kubernetes-the-hard-way:remote:Architecture"
         description: The CPU architecture.
-      archiveName:
+      binName:
         type: string
       connection:
         $ref: "/command/v0.9.2/schema.json#/types/command:remote:Connection"
@@ -760,7 +771,7 @@ resources:
       architecture:
         $ref: "#/types/kubernetes-the-hard-way:remote:Architecture"
         description: The kube-scheduler CPU architecture.
-      archiveName:
+      binName:
         type: string
       connection:
         $ref: "/command/v0.9.2/schema.json#/types/command:remote:Connection"
@@ -769,8 +780,18 @@ resources:
         type: string
         description: Directory to install the `etcd` and `etcdctl` binaries.
         default: /usr/local/bin
+      download:
+        $ref: "#/resources/kubernetes-the-hard-way:remote:Download"
       mkdir:
         $ref: "#/resources/kubernetes-the-hard-way:tools:Mkdir"
+      mktemp:
+        $ref: "#/resources/kubernetes-the-hard-way:tools:Mktemp"
+      mv:
+        $ref: "#/resources/kubernetes-the-hard-way:tools:Mv"
+      path:
+        type: string
+      rm:
+        $ref: "#/resources/kubernetes-the-hard-way:tools:Rm"
       version:
         type: string
         description: The version of kube-scheduler to install.
@@ -802,6 +823,8 @@ resources:
       architecture:
         $ref: "#/types/kubernetes-the-hard-way:remote:Architecture"
         description: The CPU architecture.
+      binName:
+        type: string
       connection:
         $ref: "/command/v0.9.2/schema.json#/types/command:remote:Connection"
         description: The connection details.
