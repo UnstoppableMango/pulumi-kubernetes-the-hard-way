@@ -20,7 +20,7 @@ type KubectlInstall struct {
 
 	// The CPU architecture.
 	Architecture ArchitectureOutput     `pulumi:"architecture"`
-	ArchiveName  pulumi.StringPtrOutput `pulumi:"archiveName"`
+	BinName      pulumi.StringPtrOutput `pulumi:"binName"`
 	// The connection details.
 	Connection pulumiCommand.ConnectionOutput `pulumi:"connection"`
 	// Directory to install the binary.
@@ -173,8 +173,8 @@ func (o KubectlInstallOutput) Architecture() ArchitectureOutput {
 	return o.ApplyT(func(v *KubectlInstall) ArchitectureOutput { return v.Architecture }).(ArchitectureOutput)
 }
 
-func (o KubectlInstallOutput) ArchiveName() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *KubectlInstall) pulumi.StringPtrOutput { return v.ArchiveName }).(pulumi.StringPtrOutput)
+func (o KubectlInstallOutput) BinName() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *KubectlInstall) pulumi.StringPtrOutput { return v.BinName }).(pulumi.StringPtrOutput)
 }
 
 // The connection details.

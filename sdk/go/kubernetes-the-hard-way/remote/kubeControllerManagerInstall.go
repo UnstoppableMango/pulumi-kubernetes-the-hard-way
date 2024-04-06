@@ -20,12 +20,14 @@ type KubeControllerManagerInstall struct {
 
 	// The kube-controller-manager CPU architecture.
 	Architecture ArchitectureOutput     `pulumi:"architecture"`
-	ArchiveName  pulumi.StringPtrOutput `pulumi:"archiveName"`
+	BinName      pulumi.StringPtrOutput `pulumi:"binName"`
 	// The connection details.
 	Connection pulumiCommand.ConnectionOutput `pulumi:"connection"`
 	// Directory to install the `kube-controller-manager` binary.
 	Directory pulumi.StringOutput `pulumi:"directory"`
 	Mkdir     tools.MkdirOutput   `pulumi:"mkdir"`
+	Mv        tools.MvOutput      `pulumi:"mv"`
+	Path      pulumi.StringOutput `pulumi:"path"`
 	// The version of kube-controller-manager to install.
 	Version pulumi.StringOutput `pulumi:"version"`
 }
@@ -168,8 +170,8 @@ func (o KubeControllerManagerInstallOutput) Architecture() ArchitectureOutput {
 	return o.ApplyT(func(v *KubeControllerManagerInstall) ArchitectureOutput { return v.Architecture }).(ArchitectureOutput)
 }
 
-func (o KubeControllerManagerInstallOutput) ArchiveName() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *KubeControllerManagerInstall) pulumi.StringPtrOutput { return v.ArchiveName }).(pulumi.StringPtrOutput)
+func (o KubeControllerManagerInstallOutput) BinName() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *KubeControllerManagerInstall) pulumi.StringPtrOutput { return v.BinName }).(pulumi.StringPtrOutput)
 }
 
 // The connection details.
@@ -184,6 +186,14 @@ func (o KubeControllerManagerInstallOutput) Directory() pulumi.StringOutput {
 
 func (o KubeControllerManagerInstallOutput) Mkdir() tools.MkdirOutput {
 	return o.ApplyT(func(v *KubeControllerManagerInstall) tools.MkdirOutput { return v.Mkdir }).(tools.MkdirOutput)
+}
+
+func (o KubeControllerManagerInstallOutput) Mv() tools.MvOutput {
+	return o.ApplyT(func(v *KubeControllerManagerInstall) tools.MvOutput { return v.Mv }).(tools.MvOutput)
+}
+
+func (o KubeControllerManagerInstallOutput) Path() pulumi.StringOutput {
+	return o.ApplyT(func(v *KubeControllerManagerInstall) pulumi.StringOutput { return v.Path }).(pulumi.StringOutput)
 }
 
 // The version of kube-controller-manager to install.

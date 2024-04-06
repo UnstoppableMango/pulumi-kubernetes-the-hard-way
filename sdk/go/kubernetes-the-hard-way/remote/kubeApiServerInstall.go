@@ -19,12 +19,14 @@ type KubeApiServerInstall struct {
 	pulumi.ResourceState
 
 	// The kube-apiserver CPU architecture.
-	Architecture ArchitectureOutput `pulumi:"architecture"`
+	Architecture ArchitectureOutput     `pulumi:"architecture"`
+	BinName      pulumi.StringPtrOutput `pulumi:"binName"`
 	// The connection details.
 	Connection pulumiCommand.ConnectionOutput `pulumi:"connection"`
 	// Directory to install the `kube-apiserver` binary.
-	Directory pulumi.StringOutput `pulumi:"directory"`
-	Mkdir     tools.MkdirOutput   `pulumi:"mkdir"`
+	Directory pulumi.StringOutput    `pulumi:"directory"`
+	Mkdir     tools.MkdirOutput      `pulumi:"mkdir"`
+	Path      pulumi.StringPtrOutput `pulumi:"path"`
 	// The version of kube-apiserver to install.
 	Version pulumi.StringOutput `pulumi:"version"`
 }
@@ -167,6 +169,10 @@ func (o KubeApiServerInstallOutput) Architecture() ArchitectureOutput {
 	return o.ApplyT(func(v *KubeApiServerInstall) ArchitectureOutput { return v.Architecture }).(ArchitectureOutput)
 }
 
+func (o KubeApiServerInstallOutput) BinName() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *KubeApiServerInstall) pulumi.StringPtrOutput { return v.BinName }).(pulumi.StringPtrOutput)
+}
+
 // The connection details.
 func (o KubeApiServerInstallOutput) Connection() pulumiCommand.ConnectionOutput {
 	return o.ApplyT(func(v *KubeApiServerInstall) pulumiCommand.ConnectionOutput { return v.Connection }).(pulumiCommand.ConnectionOutput)
@@ -179,6 +185,10 @@ func (o KubeApiServerInstallOutput) Directory() pulumi.StringOutput {
 
 func (o KubeApiServerInstallOutput) Mkdir() tools.MkdirOutput {
 	return o.ApplyT(func(v *KubeApiServerInstall) tools.MkdirOutput { return v.Mkdir }).(tools.MkdirOutput)
+}
+
+func (o KubeApiServerInstallOutput) Path() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *KubeApiServerInstall) pulumi.StringPtrOutput { return v.Path }).(pulumi.StringPtrOutput)
 }
 
 // The version of kube-apiserver to install.

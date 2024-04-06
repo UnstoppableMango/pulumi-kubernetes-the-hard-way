@@ -155,6 +155,7 @@ class RuncInstall(pulumi.ComponentResource):
                 directory = '/usr/local/bin'
             __props__.__dict__["directory"] = directory
             __props__.__dict__["version"] = version
+            __props__.__dict__["bin_name"] = None
             __props__.__dict__["download"] = None
             __props__.__dict__["mkdir"] = None
             __props__.__dict__["mktemp"] = None
@@ -175,6 +176,11 @@ class RuncInstall(pulumi.ComponentResource):
         The CPU architecture.
         """
         return pulumi.get(self, "architecture")
+
+    @property
+    @pulumi.getter(name="binName")
+    def bin_name(self) -> pulumi.Output[Optional[str]]:
+        return pulumi.get(self, "bin_name")
 
     @property
     @pulumi.getter

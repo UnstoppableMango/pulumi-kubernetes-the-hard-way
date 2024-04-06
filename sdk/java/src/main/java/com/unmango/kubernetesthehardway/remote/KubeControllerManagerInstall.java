@@ -12,6 +12,7 @@ import com.unmango.kubernetesthehardway.Utilities;
 import com.unmango.kubernetesthehardway.remote.KubeControllerManagerInstallArgs;
 import com.unmango.kubernetesthehardway.remote.enums.Architecture;
 import com.unmango.kubernetesthehardway.tools.Mkdir;
+import com.unmango.kubernetesthehardway.tools.Mv;
 import java.lang.String;
 import java.util.Optional;
 import javax.annotation.Nullable;
@@ -36,11 +37,11 @@ public class KubeControllerManagerInstall extends com.pulumi.resources.Component
     public Output<Architecture> architecture() {
         return this.architecture;
     }
-    @Export(name="archiveName", refs={String.class}, tree="[0]")
-    private Output</* @Nullable */ String> archiveName;
+    @Export(name="binName", refs={String.class}, tree="[0]")
+    private Output</* @Nullable */ String> binName;
 
-    public Output<Optional<String>> archiveName() {
-        return Codegen.optional(this.archiveName);
+    public Output<Optional<String>> binName() {
+        return Codegen.optional(this.binName);
     }
     /**
      * The connection details.
@@ -71,10 +72,22 @@ public class KubeControllerManagerInstall extends com.pulumi.resources.Component
         return this.directory;
     }
     @Export(name="mkdir", refs={Mkdir.class}, tree="[0]")
-    private Output</* @Nullable */ Mkdir> mkdir;
+    private Output<Mkdir> mkdir;
 
-    public Output<Optional<Mkdir>> mkdir() {
-        return Codegen.optional(this.mkdir);
+    public Output<Mkdir> mkdir() {
+        return this.mkdir;
+    }
+    @Export(name="mv", refs={Mv.class}, tree="[0]")
+    private Output<Mv> mv;
+
+    public Output<Mv> mv() {
+        return this.mv;
+    }
+    @Export(name="path", refs={String.class}, tree="[0]")
+    private Output<String> path;
+
+    public Output<String> path() {
+        return this.path;
     }
     /**
      * The version of kube-controller-manager to install.

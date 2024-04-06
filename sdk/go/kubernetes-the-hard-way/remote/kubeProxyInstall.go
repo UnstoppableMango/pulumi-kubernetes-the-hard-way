@@ -20,7 +20,7 @@ type KubeProxyInstall struct {
 
 	// The CPU architecture.
 	Architecture ArchitectureOutput     `pulumi:"architecture"`
-	ArchiveName  pulumi.StringPtrOutput `pulumi:"archiveName"`
+	BinName      pulumi.StringPtrOutput `pulumi:"binName"`
 	// The connection details.
 	Connection pulumiCommand.ConnectionOutput `pulumi:"connection"`
 	// Directory to install the binary.
@@ -173,8 +173,8 @@ func (o KubeProxyInstallOutput) Architecture() ArchitectureOutput {
 	return o.ApplyT(func(v *KubeProxyInstall) ArchitectureOutput { return v.Architecture }).(ArchitectureOutput)
 }
 
-func (o KubeProxyInstallOutput) ArchiveName() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *KubeProxyInstall) pulumi.StringPtrOutput { return v.ArchiveName }).(pulumi.StringPtrOutput)
+func (o KubeProxyInstallOutput) BinName() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *KubeProxyInstall) pulumi.StringPtrOutput { return v.BinName }).(pulumi.StringPtrOutput)
 }
 
 // The connection details.

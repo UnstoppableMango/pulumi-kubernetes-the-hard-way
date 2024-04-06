@@ -31,7 +31,7 @@ type EtcdInstall struct {
 	// The path to the etcdctl binary on the remote system.
 	EtcdctlPath pulumi.StringOutput `pulumi:"etcdctlPath"`
 	// The operation to create the install directory.
-	InstallMkdir tools.MkdirOutput `pulumi:"installMkdir"`
+	Mkdir tools.MkdirOutput `pulumi:"mkdir"`
 	// The operation to move the etcd binary to the install directory.
 	MvEtcd tools.MvOutput `pulumi:"mvEtcd"`
 	// The operation to move the etcdctl binary to the install directory.
@@ -232,8 +232,8 @@ func (o EtcdInstallOutput) EtcdctlPath() pulumi.StringOutput {
 }
 
 // The operation to create the install directory.
-func (o EtcdInstallOutput) InstallMkdir() tools.MkdirOutput {
-	return o.ApplyT(func(v *EtcdInstall) tools.MkdirOutput { return v.InstallMkdir }).(tools.MkdirOutput)
+func (o EtcdInstallOutput) Mkdir() tools.MkdirOutput {
+	return o.ApplyT(func(v *EtcdInstall) tools.MkdirOutput { return v.Mkdir }).(tools.MkdirOutput)
 }
 
 // The operation to move the etcd binary to the install directory.

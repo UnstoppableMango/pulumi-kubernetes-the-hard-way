@@ -9,9 +9,13 @@ import com.pulumi.core.annotations.Export;
 import com.pulumi.core.annotations.ResourceType;
 import com.pulumi.core.internal.Codegen;
 import com.unmango.kubernetesthehardway.Utilities;
+import com.unmango.kubernetesthehardway.remote.Download;
 import com.unmango.kubernetesthehardway.remote.KubeSchedulerInstallArgs;
 import com.unmango.kubernetesthehardway.remote.enums.Architecture;
 import com.unmango.kubernetesthehardway.tools.Mkdir;
+import com.unmango.kubernetesthehardway.tools.Mktemp;
+import com.unmango.kubernetesthehardway.tools.Mv;
+import com.unmango.kubernetesthehardway.tools.Rm;
 import java.lang.String;
 import java.util.Optional;
 import javax.annotation.Nullable;
@@ -36,11 +40,11 @@ public class KubeSchedulerInstall extends com.pulumi.resources.ComponentResource
     public Output<Architecture> architecture() {
         return this.architecture;
     }
-    @Export(name="archiveName", refs={String.class}, tree="[0]")
-    private Output</* @Nullable */ String> archiveName;
+    @Export(name="binName", refs={String.class}, tree="[0]")
+    private Output</* @Nullable */ String> binName;
 
-    public Output<Optional<String>> archiveName() {
-        return Codegen.optional(this.archiveName);
+    public Output<Optional<String>> binName() {
+        return Codegen.optional(this.binName);
     }
     /**
      * The connection details.
@@ -70,11 +74,41 @@ public class KubeSchedulerInstall extends com.pulumi.resources.ComponentResource
     public Output<String> directory() {
         return this.directory;
     }
+    @Export(name="download", refs={Download.class}, tree="[0]")
+    private Output</* @Nullable */ Download> download;
+
+    public Output<Optional<Download>> download() {
+        return Codegen.optional(this.download);
+    }
     @Export(name="mkdir", refs={Mkdir.class}, tree="[0]")
     private Output</* @Nullable */ Mkdir> mkdir;
 
     public Output<Optional<Mkdir>> mkdir() {
         return Codegen.optional(this.mkdir);
+    }
+    @Export(name="mktemp", refs={Mktemp.class}, tree="[0]")
+    private Output</* @Nullable */ Mktemp> mktemp;
+
+    public Output<Optional<Mktemp>> mktemp() {
+        return Codegen.optional(this.mktemp);
+    }
+    @Export(name="mv", refs={Mv.class}, tree="[0]")
+    private Output</* @Nullable */ Mv> mv;
+
+    public Output<Optional<Mv>> mv() {
+        return Codegen.optional(this.mv);
+    }
+    @Export(name="path", refs={String.class}, tree="[0]")
+    private Output</* @Nullable */ String> path;
+
+    public Output<Optional<String>> path() {
+        return Codegen.optional(this.path);
+    }
+    @Export(name="rm", refs={Rm.class}, tree="[0]")
+    private Output</* @Nullable */ Rm> rm;
+
+    public Output<Optional<Rm>> rm() {
+        return Codegen.optional(this.rm);
     }
     /**
      * The version of kube-scheduler to install.

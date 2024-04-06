@@ -20,12 +20,17 @@ type KubeSchedulerInstall struct {
 
 	// The kube-scheduler CPU architecture.
 	Architecture ArchitectureOutput     `pulumi:"architecture"`
-	ArchiveName  pulumi.StringPtrOutput `pulumi:"archiveName"`
+	BinName      pulumi.StringPtrOutput `pulumi:"binName"`
 	// The connection details.
 	Connection pulumiCommand.ConnectionOutput `pulumi:"connection"`
 	// Directory to install the `etcd` and `etcdctl` binaries.
-	Directory pulumi.StringOutput `pulumi:"directory"`
-	Mkdir     tools.MkdirOutput   `pulumi:"mkdir"`
+	Directory pulumi.StringOutput    `pulumi:"directory"`
+	Download  DownloadOutput         `pulumi:"download"`
+	Mkdir     tools.MkdirOutput      `pulumi:"mkdir"`
+	Mktemp    tools.MktempOutput     `pulumi:"mktemp"`
+	Mv        tools.MvOutput         `pulumi:"mv"`
+	Path      pulumi.StringPtrOutput `pulumi:"path"`
+	Rm        tools.RmOutput         `pulumi:"rm"`
 	// The version of kube-scheduler to install.
 	Version pulumi.StringOutput `pulumi:"version"`
 }
@@ -168,8 +173,8 @@ func (o KubeSchedulerInstallOutput) Architecture() ArchitectureOutput {
 	return o.ApplyT(func(v *KubeSchedulerInstall) ArchitectureOutput { return v.Architecture }).(ArchitectureOutput)
 }
 
-func (o KubeSchedulerInstallOutput) ArchiveName() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *KubeSchedulerInstall) pulumi.StringPtrOutput { return v.ArchiveName }).(pulumi.StringPtrOutput)
+func (o KubeSchedulerInstallOutput) BinName() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *KubeSchedulerInstall) pulumi.StringPtrOutput { return v.BinName }).(pulumi.StringPtrOutput)
 }
 
 // The connection details.
@@ -182,8 +187,28 @@ func (o KubeSchedulerInstallOutput) Directory() pulumi.StringOutput {
 	return o.ApplyT(func(v *KubeSchedulerInstall) pulumi.StringOutput { return v.Directory }).(pulumi.StringOutput)
 }
 
+func (o KubeSchedulerInstallOutput) Download() DownloadOutput {
+	return o.ApplyT(func(v *KubeSchedulerInstall) DownloadOutput { return v.Download }).(DownloadOutput)
+}
+
 func (o KubeSchedulerInstallOutput) Mkdir() tools.MkdirOutput {
 	return o.ApplyT(func(v *KubeSchedulerInstall) tools.MkdirOutput { return v.Mkdir }).(tools.MkdirOutput)
+}
+
+func (o KubeSchedulerInstallOutput) Mktemp() tools.MktempOutput {
+	return o.ApplyT(func(v *KubeSchedulerInstall) tools.MktempOutput { return v.Mktemp }).(tools.MktempOutput)
+}
+
+func (o KubeSchedulerInstallOutput) Mv() tools.MvOutput {
+	return o.ApplyT(func(v *KubeSchedulerInstall) tools.MvOutput { return v.Mv }).(tools.MvOutput)
+}
+
+func (o KubeSchedulerInstallOutput) Path() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *KubeSchedulerInstall) pulumi.StringPtrOutput { return v.Path }).(pulumi.StringPtrOutput)
+}
+
+func (o KubeSchedulerInstallOutput) Rm() tools.RmOutput {
+	return o.ApplyT(func(v *KubeSchedulerInstall) tools.RmOutput { return v.Rm }).(tools.RmOutput)
 }
 
 // The version of kube-scheduler to install.

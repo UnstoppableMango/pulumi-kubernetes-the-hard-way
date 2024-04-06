@@ -9,7 +9,7 @@ import * as utilities from "../utilities";
 
 import * as pulumiCommand from "@pulumi/command";
 
-import {Mkdir} from "../tools";
+import {Mkdir, Mv} from "../tools";
 
 /**
  * Installs kube-controller-manager on a remote system.
@@ -33,7 +33,7 @@ export class KubeControllerManagerInstall extends pulumi.ComponentResource {
      * The kube-controller-manager CPU architecture.
      */
     public readonly architecture!: pulumi.Output<enums.remote.Architecture>;
-    public /*out*/ readonly archiveName!: pulumi.Output<string | undefined>;
+    public /*out*/ readonly binName!: pulumi.Output<string | undefined>;
     /**
      * The connection details.
      */
@@ -42,7 +42,9 @@ export class KubeControllerManagerInstall extends pulumi.ComponentResource {
      * Directory to install the `kube-controller-manager` binary.
      */
     public readonly directory!: pulumi.Output<string>;
-    public /*out*/ readonly mkdir!: pulumi.Output<Mkdir | undefined>;
+    public /*out*/ readonly mkdir!: pulumi.Output<Mkdir>;
+    public /*out*/ readonly mv!: pulumi.Output<Mv>;
+    public /*out*/ readonly path!: pulumi.Output<string>;
     /**
      * The version of kube-controller-manager to install.
      */
@@ -66,14 +68,18 @@ export class KubeControllerManagerInstall extends pulumi.ComponentResource {
             resourceInputs["connection"] = args ? (args.connection ? pulumi.output(args.connection).apply(pulumiCommand.types.input.remote.connectionArgsProvideDefaults) : undefined) : undefined;
             resourceInputs["directory"] = (args ? args.directory : undefined) ?? "/usr/local/bin";
             resourceInputs["version"] = args ? args.version : undefined;
-            resourceInputs["archiveName"] = undefined /*out*/;
+            resourceInputs["binName"] = undefined /*out*/;
             resourceInputs["mkdir"] = undefined /*out*/;
+            resourceInputs["mv"] = undefined /*out*/;
+            resourceInputs["path"] = undefined /*out*/;
         } else {
             resourceInputs["architecture"] = undefined /*out*/;
-            resourceInputs["archiveName"] = undefined /*out*/;
+            resourceInputs["binName"] = undefined /*out*/;
             resourceInputs["connection"] = undefined /*out*/;
             resourceInputs["directory"] = undefined /*out*/;
             resourceInputs["mkdir"] = undefined /*out*/;
+            resourceInputs["mv"] = undefined /*out*/;
+            resourceInputs["path"] = undefined /*out*/;
             resourceInputs["version"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);

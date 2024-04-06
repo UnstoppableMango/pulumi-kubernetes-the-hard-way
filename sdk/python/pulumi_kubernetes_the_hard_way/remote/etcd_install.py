@@ -159,7 +159,7 @@ class EtcdInstall(pulumi.ComponentResource):
             __props__.__dict__["download"] = None
             __props__.__dict__["etcd_path"] = None
             __props__.__dict__["etcdctl_path"] = None
-            __props__.__dict__["install_mkdir"] = None
+            __props__.__dict__["mkdir"] = None
             __props__.__dict__["mv_etcd"] = None
             __props__.__dict__["mv_etcdctl"] = None
             __props__.__dict__["name"] = None
@@ -221,12 +221,12 @@ class EtcdInstall(pulumi.ComponentResource):
         return pulumi.get(self, "etcdctl_path")
 
     @property
-    @pulumi.getter(name="installMkdir")
-    def install_mkdir(self) -> pulumi.Output['_tools.Mkdir']:
+    @pulumi.getter
+    def mkdir(self) -> pulumi.Output['_tools.Mkdir']:
         """
         The operation to create the install directory.
         """
-        return pulumi.get(self, "install_mkdir")
+        return pulumi.get(self, "mkdir")
 
     @property
     @pulumi.getter(name="mvEtcd")

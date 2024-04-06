@@ -10,6 +10,7 @@ from typing import Any, Mapping, Optional, Sequence, Union, overload
 from .. import _utilities
 from .. import tools as _tools
 from ._enums import *
+from .download import Download
 import pulumi_command
 
 __all__ = ['KubeSchedulerInstallArgs', 'KubeSchedulerInstall']
@@ -154,8 +155,13 @@ class KubeSchedulerInstall(pulumi.ComponentResource):
                 directory = '/usr/local/bin'
             __props__.__dict__["directory"] = directory
             __props__.__dict__["version"] = version
-            __props__.__dict__["archive_name"] = None
+            __props__.__dict__["bin_name"] = None
+            __props__.__dict__["download"] = None
             __props__.__dict__["mkdir"] = None
+            __props__.__dict__["mktemp"] = None
+            __props__.__dict__["mv"] = None
+            __props__.__dict__["path"] = None
+            __props__.__dict__["rm"] = None
         super(KubeSchedulerInstall, __self__).__init__(
             'kubernetes-the-hard-way:remote:KubeSchedulerInstall',
             resource_name,
@@ -172,9 +178,9 @@ class KubeSchedulerInstall(pulumi.ComponentResource):
         return pulumi.get(self, "architecture")
 
     @property
-    @pulumi.getter(name="archiveName")
-    def archive_name(self) -> pulumi.Output[Optional[str]]:
-        return pulumi.get(self, "archive_name")
+    @pulumi.getter(name="binName")
+    def bin_name(self) -> pulumi.Output[Optional[str]]:
+        return pulumi.get(self, "bin_name")
 
     @property
     @pulumi.getter
@@ -194,8 +200,33 @@ class KubeSchedulerInstall(pulumi.ComponentResource):
 
     @property
     @pulumi.getter
+    def download(self) -> pulumi.Output[Optional['Download']]:
+        return pulumi.get(self, "download")
+
+    @property
+    @pulumi.getter
     def mkdir(self) -> pulumi.Output[Optional['_tools.Mkdir']]:
         return pulumi.get(self, "mkdir")
+
+    @property
+    @pulumi.getter
+    def mktemp(self) -> pulumi.Output[Optional['_tools.Mktemp']]:
+        return pulumi.get(self, "mktemp")
+
+    @property
+    @pulumi.getter
+    def mv(self) -> pulumi.Output[Optional['_tools.Mv']]:
+        return pulumi.get(self, "mv")
+
+    @property
+    @pulumi.getter
+    def path(self) -> pulumi.Output[Optional[str]]:
+        return pulumi.get(self, "path")
+
+    @property
+    @pulumi.getter
+    def rm(self) -> pulumi.Output[Optional['_tools.Rm']]:
+        return pulumi.get(self, "rm")
 
     @property
     @pulumi.getter

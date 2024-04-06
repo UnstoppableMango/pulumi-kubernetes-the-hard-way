@@ -34,7 +34,7 @@ export class KubeletInstall extends pulumi.ComponentResource {
      * The CPU architecture.
      */
     public readonly architecture!: pulumi.Output<enums.remote.Architecture>;
-    public /*out*/ readonly archiveName!: pulumi.Output<string | undefined>;
+    public /*out*/ readonly binName!: pulumi.Output<string | undefined>;
     /**
      * The connection details.
      */
@@ -72,7 +72,7 @@ export class KubeletInstall extends pulumi.ComponentResource {
             resourceInputs["connection"] = args ? (args.connection ? pulumi.output(args.connection).apply(pulumiCommand.types.input.remote.connectionArgsProvideDefaults) : undefined) : undefined;
             resourceInputs["directory"] = (args ? args.directory : undefined) ?? "/usr/local/bin";
             resourceInputs["version"] = args ? args.version : undefined;
-            resourceInputs["archiveName"] = undefined /*out*/;
+            resourceInputs["binName"] = undefined /*out*/;
             resourceInputs["download"] = undefined /*out*/;
             resourceInputs["mkdir"] = undefined /*out*/;
             resourceInputs["mktemp"] = undefined /*out*/;
@@ -81,7 +81,7 @@ export class KubeletInstall extends pulumi.ComponentResource {
             resourceInputs["rm"] = undefined /*out*/;
         } else {
             resourceInputs["architecture"] = undefined /*out*/;
-            resourceInputs["archiveName"] = undefined /*out*/;
+            resourceInputs["binName"] = undefined /*out*/;
             resourceInputs["connection"] = undefined /*out*/;
             resourceInputs["directory"] = undefined /*out*/;
             resourceInputs["download"] = undefined /*out*/;

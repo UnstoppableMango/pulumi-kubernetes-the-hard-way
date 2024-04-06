@@ -57,7 +57,7 @@ export class EtcdInstall extends pulumi.ComponentResource {
     /**
      * The operation to create the install directory.
      */
-    public /*out*/ readonly installMkdir!: pulumi.Output<Mkdir>;
+    public /*out*/ readonly mkdir!: pulumi.Output<Mkdir>;
     /**
      * The operation to move the etcd binary to the install directory.
      */
@@ -105,7 +105,7 @@ export class EtcdInstall extends pulumi.ComponentResource {
             resourceInputs["download"] = undefined /*out*/;
             resourceInputs["etcdPath"] = undefined /*out*/;
             resourceInputs["etcdctlPath"] = undefined /*out*/;
-            resourceInputs["installMkdir"] = undefined /*out*/;
+            resourceInputs["mkdir"] = undefined /*out*/;
             resourceInputs["mvEtcd"] = undefined /*out*/;
             resourceInputs["mvEtcdctl"] = undefined /*out*/;
             resourceInputs["name"] = undefined /*out*/;
@@ -118,7 +118,7 @@ export class EtcdInstall extends pulumi.ComponentResource {
             resourceInputs["download"] = undefined /*out*/;
             resourceInputs["etcdPath"] = undefined /*out*/;
             resourceInputs["etcdctlPath"] = undefined /*out*/;
-            resourceInputs["installMkdir"] = undefined /*out*/;
+            resourceInputs["mkdir"] = undefined /*out*/;
             resourceInputs["mvEtcd"] = undefined /*out*/;
             resourceInputs["mvEtcdctl"] = undefined /*out*/;
             resourceInputs["name"] = undefined /*out*/;

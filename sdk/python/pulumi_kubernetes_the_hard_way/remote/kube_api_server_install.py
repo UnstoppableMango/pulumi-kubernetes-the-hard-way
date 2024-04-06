@@ -154,7 +154,9 @@ class KubeApiServerInstall(pulumi.ComponentResource):
                 directory = '/usr/local/bin'
             __props__.__dict__["directory"] = directory
             __props__.__dict__["version"] = version
+            __props__.__dict__["bin_name"] = None
             __props__.__dict__["mkdir"] = None
+            __props__.__dict__["path"] = None
         super(KubeApiServerInstall, __self__).__init__(
             'kubernetes-the-hard-way:remote:KubeApiServerInstall',
             resource_name,
@@ -169,6 +171,11 @@ class KubeApiServerInstall(pulumi.ComponentResource):
         The kube-apiserver CPU architecture.
         """
         return pulumi.get(self, "architecture")
+
+    @property
+    @pulumi.getter(name="binName")
+    def bin_name(self) -> pulumi.Output[Optional[str]]:
+        return pulumi.get(self, "bin_name")
 
     @property
     @pulumi.getter
@@ -190,6 +197,11 @@ class KubeApiServerInstall(pulumi.ComponentResource):
     @pulumi.getter
     def mkdir(self) -> pulumi.Output[Optional['_tools.Mkdir']]:
         return pulumi.get(self, "mkdir")
+
+    @property
+    @pulumi.getter
+    def path(self) -> pulumi.Output[Optional[str]]:
+        return pulumi.get(self, "path")
 
     @property
     @pulumi.getter

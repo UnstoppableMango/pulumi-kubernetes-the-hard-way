@@ -55,8 +55,8 @@ namespace UnMango.KubernetesTheHardWay.Remote
         /// <summary>
         /// The operation to create the install directory.
         /// </summary>
-        [Output("installMkdir")]
-        public Output<UnMango.KubernetesTheHardWay.Tools.Mkdir> InstallMkdir { get; private set; } = null!;
+        [Output("mkdir")]
+        public Output<UnMango.KubernetesTheHardWay.Tools.Mkdir> Mkdir { get; private set; } = null!;
 
         /// <summary>
         /// The operation to move the etcd binary to the install directory.

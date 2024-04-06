@@ -40,6 +40,12 @@ public class RuncInstall extends com.pulumi.resources.ComponentResource {
     public Output<Architecture> architecture() {
         return this.architecture;
     }
+    @Export(name="binName", refs={String.class}, tree="[0]")
+    private Output</* @Nullable */ String> binName;
+
+    public Output<Optional<String>> binName() {
+        return Codegen.optional(this.binName);
+    }
     /**
      * The connection details.
      * 

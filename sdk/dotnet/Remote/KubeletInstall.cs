@@ -22,8 +22,8 @@ namespace UnMango.KubernetesTheHardWay.Remote
         [Output("architecture")]
         public Output<UnMango.KubernetesTheHardWay.Remote.Architecture> Architecture { get; private set; } = null!;
 
-        [Output("archiveName")]
-        public Output<string?> ArchiveName { get; private set; } = null!;
+        [Output("binName")]
+        public Output<string?> BinName { get; private set; } = null!;
 
         /// <summary>
         /// The connection details.

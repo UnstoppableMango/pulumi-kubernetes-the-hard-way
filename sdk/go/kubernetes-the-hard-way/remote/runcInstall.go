@@ -19,7 +19,8 @@ type RuncInstall struct {
 	pulumi.ResourceState
 
 	// The CPU architecture.
-	Architecture ArchitectureOutput `pulumi:"architecture"`
+	Architecture ArchitectureOutput     `pulumi:"architecture"`
+	BinName      pulumi.StringPtrOutput `pulumi:"binName"`
 	// The connection details.
 	Connection pulumiCommand.ConnectionOutput `pulumi:"connection"`
 	// Directory to install the binary.
@@ -170,6 +171,10 @@ func (o RuncInstallOutput) ToRuncInstallOutputWithContext(ctx context.Context) R
 // The CPU architecture.
 func (o RuncInstallOutput) Architecture() ArchitectureOutput {
 	return o.ApplyT(func(v *RuncInstall) ArchitectureOutput { return v.Architecture }).(ArchitectureOutput)
+}
+
+func (o RuncInstallOutput) BinName() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *RuncInstall) pulumi.StringPtrOutput { return v.BinName }).(pulumi.StringPtrOutput)
 }
 
 // The connection details.

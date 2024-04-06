@@ -154,8 +154,10 @@ class KubeControllerManagerInstall(pulumi.ComponentResource):
                 directory = '/usr/local/bin'
             __props__.__dict__["directory"] = directory
             __props__.__dict__["version"] = version
-            __props__.__dict__["archive_name"] = None
+            __props__.__dict__["bin_name"] = None
             __props__.__dict__["mkdir"] = None
+            __props__.__dict__["mv"] = None
+            __props__.__dict__["path"] = None
         super(KubeControllerManagerInstall, __self__).__init__(
             'kubernetes-the-hard-way:remote:KubeControllerManagerInstall',
             resource_name,
@@ -172,9 +174,9 @@ class KubeControllerManagerInstall(pulumi.ComponentResource):
         return pulumi.get(self, "architecture")
 
     @property
-    @pulumi.getter(name="archiveName")
-    def archive_name(self) -> pulumi.Output[Optional[str]]:
-        return pulumi.get(self, "archive_name")
+    @pulumi.getter(name="binName")
+    def bin_name(self) -> pulumi.Output[Optional[str]]:
+        return pulumi.get(self, "bin_name")
 
     @property
     @pulumi.getter
@@ -194,8 +196,18 @@ class KubeControllerManagerInstall(pulumi.ComponentResource):
 
     @property
     @pulumi.getter
-    def mkdir(self) -> pulumi.Output[Optional['_tools.Mkdir']]:
+    def mkdir(self) -> pulumi.Output['_tools.Mkdir']:
         return pulumi.get(self, "mkdir")
+
+    @property
+    @pulumi.getter
+    def mv(self) -> pulumi.Output['_tools.Mv']:
+        return pulumi.get(self, "mv")
+
+    @property
+    @pulumi.getter
+    def path(self) -> pulumi.Output[str]:
+        return pulumi.get(self, "path")
 
     @property
     @pulumi.getter

@@ -22,8 +22,8 @@ namespace UnMango.KubernetesTheHardWay.Remote
         [Output("architecture")]
         public Output<UnMango.KubernetesTheHardWay.Remote.Architecture> Architecture { get; private set; } = null!;
 
-        [Output("archiveName")]
-        public Output<string?> ArchiveName { get; private set; } = null!;
+        [Output("binName")]
+        public Output<string?> BinName { get; private set; } = null!;
 
         /// <summary>
         /// The connection details.
@@ -37,8 +37,23 @@ namespace UnMango.KubernetesTheHardWay.Remote
         [Output("directory")]
         public Output<string> Directory { get; private set; } = null!;
 
+        [Output("download")]
+        public Output<UnMango.KubernetesTheHardWay.Remote.Download?> Download { get; private set; } = null!;
+
         [Output("mkdir")]
         public Output<UnMango.KubernetesTheHardWay.Tools.Mkdir?> Mkdir { get; private set; } = null!;
+
+        [Output("mktemp")]
+        public Output<UnMango.KubernetesTheHardWay.Tools.Mktemp?> Mktemp { get; private set; } = null!;
+
+        [Output("mv")]
+        public Output<UnMango.KubernetesTheHardWay.Tools.Mv?> Mv { get; private set; } = null!;
+
+        [Output("path")]
+        public Output<string?> Path { get; private set; } = null!;
+
+        [Output("rm")]
+        public Output<UnMango.KubernetesTheHardWay.Tools.Rm?> Rm { get; private set; } = null!;
 
         /// <summary>
         /// The version of kube-scheduler to install.

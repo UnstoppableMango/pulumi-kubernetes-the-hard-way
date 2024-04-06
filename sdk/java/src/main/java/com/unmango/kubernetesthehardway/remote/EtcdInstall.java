@@ -111,15 +111,15 @@ public class EtcdInstall extends com.pulumi.resources.ComponentResource {
      * The operation to create the install directory.
      * 
      */
-    @Export(name="installMkdir", refs={Mkdir.class}, tree="[0]")
-    private Output<Mkdir> installMkdir;
+    @Export(name="mkdir", refs={Mkdir.class}, tree="[0]")
+    private Output<Mkdir> mkdir;
 
     /**
      * @return The operation to create the install directory.
      * 
      */
-    public Output<Mkdir> installMkdir() {
-        return this.installMkdir;
+    public Output<Mkdir> mkdir() {
+        return this.mkdir;
     }
     /**
      * The operation to move the etcd binary to the install directory.
