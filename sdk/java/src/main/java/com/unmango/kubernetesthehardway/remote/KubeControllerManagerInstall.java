@@ -11,7 +11,10 @@ import com.pulumi.core.internal.Codegen;
 import com.unmango.kubernetesthehardway.Utilities;
 import com.unmango.kubernetesthehardway.remote.KubeControllerManagerInstallArgs;
 import com.unmango.kubernetesthehardway.remote.enums.Architecture;
+import com.unmango.kubernetesthehardway.tools.Mkdir;
+import com.unmango.kubernetesthehardway.tools.Mv;
 import java.lang.String;
+import java.util.Optional;
 import javax.annotation.Nullable;
 
 /**
@@ -34,6 +37,12 @@ public class KubeControllerManagerInstall extends com.pulumi.resources.Component
     public Output<Architecture> architecture() {
         return this.architecture;
     }
+    @Export(name="binName", refs={String.class}, tree="[0]")
+    private Output</* @Nullable */ String> binName;
+
+    public Output<Optional<String>> binName() {
+        return Codegen.optional(this.binName);
+    }
     /**
      * The connection details.
      * 
@@ -52,15 +61,33 @@ public class KubeControllerManagerInstall extends com.pulumi.resources.Component
      * Directory to install the `kube-controller-manager` binary.
      * 
      */
-    @Export(name="installDirectory", refs={String.class}, tree="[0]")
-    private Output<String> installDirectory;
+    @Export(name="directory", refs={String.class}, tree="[0]")
+    private Output<String> directory;
 
     /**
      * @return Directory to install the `kube-controller-manager` binary.
      * 
      */
-    public Output<String> installDirectory() {
-        return this.installDirectory;
+    public Output<String> directory() {
+        return this.directory;
+    }
+    @Export(name="mkdir", refs={Mkdir.class}, tree="[0]")
+    private Output<Mkdir> mkdir;
+
+    public Output<Mkdir> mkdir() {
+        return this.mkdir;
+    }
+    @Export(name="mv", refs={Mv.class}, tree="[0]")
+    private Output<Mv> mv;
+
+    public Output<Mv> mv() {
+        return this.mv;
+    }
+    @Export(name="path", refs={String.class}, tree="[0]")
+    private Output<String> path;
+
+    public Output<String> path() {
+        return this.path;
     }
     /**
      * The version of kube-controller-manager to install.

@@ -1,4 +1,4 @@
-import { Input, Resource, interpolate } from '@pulumi/pulumi';
+import { Input, Output, Resource, interpolate } from '@pulumi/pulumi';
 import { remote } from '@pulumi/command/types/input';
 import { Mkdir, Mktemp, Mv, Rm } from '../tools';
 import { Download } from './download';
@@ -6,19 +6,20 @@ import { Download } from './download';
 interface BinaryInstallArgs {
   binName: Input<string>;
   connection: Input<remote.ConnectionArgs>;
-  installDirectory: Input<string>;
+  directory: Input<string>;
   url: Input<string>;
 }
 
-interface InstallOperations {
+interface BinaryInstallResult {
   mktemp: Mktemp;
   download: Download;
   mkdir: Mkdir;
   mv: Mv;
+  path: Output<string>;
   rm: Rm;
 }
 
-export function binaryInstall(name: string, args: BinaryInstallArgs, parent: Resource): InstallOperations {
+export function binaryInstall(name: string, args: BinaryInstallArgs, parent: Resource): BinaryInstallResult {
   const mktemp = new Mktemp(name, {
     connection: args.connection,
     directory: true,
@@ -34,11 +35,11 @@ export function binaryInstall(name: string, args: BinaryInstallArgs, parent: Res
 
   const mkdir = new Mkdir(name, {
     connection: args.connection,
-    directory: args.installDirectory,
+    directory: args.directory,
     parents: true,
   }, { parent });
 
-  const binPath = interpolate`${args.installDirectory}/${args.binName}`;
+  const binPath = interpolate`${args.directory}/${args.binName}`;
 
   const mv = new Mv(name, {
     connection: args.connection,
@@ -53,5 +54,5 @@ export function binaryInstall(name: string, args: BinaryInstallArgs, parent: Res
     recursive: true,
   }, { parent, dependsOn: mv });
 
-  return { mktemp, download, mkdir, mv, rm };
+  return { mktemp, download, mkdir, mv, path: binPath, rm };
 }

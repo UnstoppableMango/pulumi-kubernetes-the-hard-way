@@ -21,6 +21,12 @@ func (m *module) Version() semver.Version {
 
 func (m *module) Construct(ctx *pulumi.Context, name, typ, urn string) (r pulumi.Resource, err error) {
 	switch typ {
+	case "kubernetes-the-hard-way:remote:CniPluginsInstall":
+		r = &CniPluginsInstall{}
+	case "kubernetes-the-hard-way:remote:ContainerdInstall":
+		r = &ContainerdInstall{}
+	case "kubernetes-the-hard-way:remote:CrictlInstall":
+		r = &CrictlInstall{}
 	case "kubernetes-the-hard-way:remote:Download":
 		r = &Download{}
 	case "kubernetes-the-hard-way:remote:EtcdConfiguration":
@@ -33,8 +39,16 @@ func (m *module) Construct(ctx *pulumi.Context, name, typ, urn string) (r pulumi
 		r = &KubeApiServerInstall{}
 	case "kubernetes-the-hard-way:remote:KubeControllerManagerInstall":
 		r = &KubeControllerManagerInstall{}
+	case "kubernetes-the-hard-way:remote:KubeProxyInstall":
+		r = &KubeProxyInstall{}
 	case "kubernetes-the-hard-way:remote:KubeSchedulerInstall":
 		r = &KubeSchedulerInstall{}
+	case "kubernetes-the-hard-way:remote:KubectlInstall":
+		r = &KubectlInstall{}
+	case "kubernetes-the-hard-way:remote:KubeletInstall":
+		r = &KubeletInstall{}
+	case "kubernetes-the-hard-way:remote:RuncInstall":
+		r = &RuncInstall{}
 	case "kubernetes-the-hard-way:remote:SystemdService":
 		r = &SystemdService{}
 	default:

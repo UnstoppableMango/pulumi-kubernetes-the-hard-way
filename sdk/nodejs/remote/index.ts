@@ -5,6 +5,21 @@ import * as pulumi from "@pulumi/pulumi";
 import * as utilities from "../utilities";
 
 // Export members:
+export { CniPluginsInstallArgs } from "./cniPluginsInstall";
+export type CniPluginsInstall = import("./cniPluginsInstall").CniPluginsInstall;
+export const CniPluginsInstall: typeof import("./cniPluginsInstall").CniPluginsInstall = null as any;
+utilities.lazyLoad(exports, ["CniPluginsInstall"], () => require("./cniPluginsInstall"));
+
+export { ContainerdInstallArgs } from "./containerdInstall";
+export type ContainerdInstall = import("./containerdInstall").ContainerdInstall;
+export const ContainerdInstall: typeof import("./containerdInstall").ContainerdInstall = null as any;
+utilities.lazyLoad(exports, ["ContainerdInstall"], () => require("./containerdInstall"));
+
+export { CrictlInstallArgs } from "./crictlInstall";
+export type CrictlInstall = import("./crictlInstall").CrictlInstall;
+export const CrictlInstall: typeof import("./crictlInstall").CrictlInstall = null as any;
+utilities.lazyLoad(exports, ["CrictlInstall"], () => require("./crictlInstall"));
+
 export { DownloadArgs } from "./download";
 export type Download = import("./download").Download;
 export const Download: typeof import("./download").Download = null as any;
@@ -33,10 +48,30 @@ export type KubeControllerManagerInstall = import("./kubeControllerManagerInstal
 export const KubeControllerManagerInstall: typeof import("./kubeControllerManagerInstall").KubeControllerManagerInstall = null as any;
 utilities.lazyLoad(exports, ["KubeControllerManagerInstall"], () => require("./kubeControllerManagerInstall"));
 
+export { KubeProxyInstallArgs } from "./kubeProxyInstall";
+export type KubeProxyInstall = import("./kubeProxyInstall").KubeProxyInstall;
+export const KubeProxyInstall: typeof import("./kubeProxyInstall").KubeProxyInstall = null as any;
+utilities.lazyLoad(exports, ["KubeProxyInstall"], () => require("./kubeProxyInstall"));
+
 export { KubeSchedulerInstallArgs } from "./kubeSchedulerInstall";
 export type KubeSchedulerInstall = import("./kubeSchedulerInstall").KubeSchedulerInstall;
 export const KubeSchedulerInstall: typeof import("./kubeSchedulerInstall").KubeSchedulerInstall = null as any;
 utilities.lazyLoad(exports, ["KubeSchedulerInstall"], () => require("./kubeSchedulerInstall"));
+
+export { KubectlInstallArgs } from "./kubectlInstall";
+export type KubectlInstall = import("./kubectlInstall").KubectlInstall;
+export const KubectlInstall: typeof import("./kubectlInstall").KubectlInstall = null as any;
+utilities.lazyLoad(exports, ["KubectlInstall"], () => require("./kubectlInstall"));
+
+export { KubeletInstallArgs } from "./kubeletInstall";
+export type KubeletInstall = import("./kubeletInstall").KubeletInstall;
+export const KubeletInstall: typeof import("./kubeletInstall").KubeletInstall = null as any;
+utilities.lazyLoad(exports, ["KubeletInstall"], () => require("./kubeletInstall"));
+
+export { RuncInstallArgs } from "./runcInstall";
+export type RuncInstall = import("./runcInstall").RuncInstall;
+export const RuncInstall: typeof import("./runcInstall").RuncInstall = null as any;
+utilities.lazyLoad(exports, ["RuncInstall"], () => require("./runcInstall"));
 
 export * from "./systemdService";
 import { SystemdService } from "./systemdService";
@@ -49,6 +84,12 @@ const _module = {
     version: utilities.getVersion(),
     construct: (name: string, type: string, urn: string): pulumi.Resource => {
         switch (type) {
+            case "kubernetes-the-hard-way:remote:CniPluginsInstall":
+                return new CniPluginsInstall(name, <any>undefined, { urn })
+            case "kubernetes-the-hard-way:remote:ContainerdInstall":
+                return new ContainerdInstall(name, <any>undefined, { urn })
+            case "kubernetes-the-hard-way:remote:CrictlInstall":
+                return new CrictlInstall(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:remote:Download":
                 return new Download(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:remote:EtcdConfiguration":
@@ -61,8 +102,16 @@ const _module = {
                 return new KubeApiServerInstall(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:remote:KubeControllerManagerInstall":
                 return new KubeControllerManagerInstall(name, <any>undefined, { urn })
+            case "kubernetes-the-hard-way:remote:KubeProxyInstall":
+                return new KubeProxyInstall(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:remote:KubeSchedulerInstall":
                 return new KubeSchedulerInstall(name, <any>undefined, { urn })
+            case "kubernetes-the-hard-way:remote:KubectlInstall":
+                return new KubectlInstall(name, <any>undefined, { urn })
+            case "kubernetes-the-hard-way:remote:KubeletInstall":
+                return new KubeletInstall(name, <any>undefined, { urn })
+            case "kubernetes-the-hard-way:remote:RuncInstall":
+                return new RuncInstall(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:remote:SystemdService":
                 return new SystemdService(name, <any>undefined, { urn })
             default:

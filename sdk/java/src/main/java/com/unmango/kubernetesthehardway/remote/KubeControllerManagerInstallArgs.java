@@ -53,15 +53,15 @@ public final class KubeControllerManagerInstallArgs extends com.pulumi.resources
      * Directory to install the `kube-controller-manager` binary.
      * 
      */
-    @Import(name="installDirectory")
-    private @Nullable Output<String> installDirectory;
+    @Import(name="directory")
+    private @Nullable Output<String> directory;
 
     /**
      * @return Directory to install the `kube-controller-manager` binary.
      * 
      */
-    public Optional<Output<String>> installDirectory() {
-        return Optional.ofNullable(this.installDirectory);
+    public Optional<Output<String>> directory() {
+        return Optional.ofNullable(this.directory);
     }
 
     /**
@@ -84,7 +84,7 @@ public final class KubeControllerManagerInstallArgs extends com.pulumi.resources
     private KubeControllerManagerInstallArgs(KubeControllerManagerInstallArgs $) {
         this.architecture = $.architecture;
         this.connection = $.connection;
-        this.installDirectory = $.installDirectory;
+        this.directory = $.directory;
         this.version = $.version;
     }
 
@@ -149,24 +149,24 @@ public final class KubeControllerManagerInstallArgs extends com.pulumi.resources
         }
 
         /**
-         * @param installDirectory Directory to install the `kube-controller-manager` binary.
+         * @param directory Directory to install the `kube-controller-manager` binary.
          * 
          * @return builder
          * 
          */
-        public Builder installDirectory(@Nullable Output<String> installDirectory) {
-            $.installDirectory = installDirectory;
+        public Builder directory(@Nullable Output<String> directory) {
+            $.directory = directory;
             return this;
         }
 
         /**
-         * @param installDirectory Directory to install the `kube-controller-manager` binary.
+         * @param directory Directory to install the `kube-controller-manager` binary.
          * 
          * @return builder
          * 
          */
-        public Builder installDirectory(String installDirectory) {
-            return installDirectory(Output.of(installDirectory));
+        public Builder directory(String directory) {
+            return directory(Output.of(directory));
         }
 
         /**
@@ -194,7 +194,7 @@ public final class KubeControllerManagerInstallArgs extends com.pulumi.resources
             if ($.connection == null) {
                 throw new MissingRequiredPropertyException("KubeControllerManagerInstallArgs", "connection");
             }
-            $.installDirectory = Codegen.stringProp("installDirectory").output().arg($.installDirectory).def("/usr/local/bin").getNullable();
+            $.directory = Codegen.stringProp("directory").output().arg($.directory).def("/usr/local/bin").getNullable();
             return $;
         }
     }

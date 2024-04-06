@@ -1,6 +1,22 @@
 import { ComponentResource, ComponentResourceOptions, Inputs } from '@pulumi/pulumi';
 import * as schema from './schema-types';
-import { Download, EtcdConfiguration, EtcdInstall, File, KubeApiServerInstall, KubeControllerManagerInstall, KubeSchedulerInstall, SystemdService } from './remote';
+import {
+  CniPluginsInstall,
+  ContainerdInstall,
+  CrictlInstall,
+  Download,
+  EtcdConfiguration,
+  EtcdInstall,
+  File,
+  KubeApiServerInstall,
+  KubeControllerManagerInstall,
+  KubeProxyInstall,
+  KubeSchedulerInstall,
+  KubectlInstall,
+  KubeletInstall,
+  RuncInstall,
+  SystemdService,
+} from './remote';
 import { Certificate, ClusterPki, EncryptionKey, RootCa } from './tls';
 import { Etcdctl, Mkdir, Mktemp, Mv, Rm, Systemctl, Tar, Tee, Wget } from './tools';
 
@@ -26,6 +42,13 @@ const resources: schema.ResourceConstructor = {
   'kubernetes-the-hard-way:tools:Tar': (...args) => new Tar(...args),
   'kubernetes-the-hard-way:tools:Tee': (...args) => new Tee(...args),
   'kubernetes-the-hard-way:tools:Wget': (...args) => new Wget(...args),
+  'kubernetes-the-hard-way:remote:CniPluginsInstall': (...args) => new CniPluginsInstall(...args),
+  'kubernetes-the-hard-way:remote:ContainerdInstall': (...args) => new ContainerdInstall(...args),
+  'kubernetes-the-hard-way:remote:CrictlInstall': (...args) => new CrictlInstall(...args),
+  'kubernetes-the-hard-way:remote:KubectlInstall': (...args) => new KubectlInstall(...args),
+  'kubernetes-the-hard-way:remote:KubeletInstall': (...args) => new KubeletInstall(...args),
+  'kubernetes-the-hard-way:remote:KubeProxyInstall': (...args) => new KubeProxyInstall(...args),
+  'kubernetes-the-hard-way:remote:RuncInstall': (...args) => new RuncInstall(...args),
 };
 
 export function construct(

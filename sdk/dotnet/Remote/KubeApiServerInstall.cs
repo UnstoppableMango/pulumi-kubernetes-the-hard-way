@@ -22,6 +22,9 @@ namespace UnMango.KubernetesTheHardWay.Remote
         [Output("architecture")]
         public Output<UnMango.KubernetesTheHardWay.Remote.Architecture> Architecture { get; private set; } = null!;
 
+        [Output("binName")]
+        public Output<string?> BinName { get; private set; } = null!;
+
         /// <summary>
         /// The connection details.
         /// </summary>
@@ -31,8 +34,14 @@ namespace UnMango.KubernetesTheHardWay.Remote
         /// <summary>
         /// Directory to install the `kube-apiserver` binary.
         /// </summary>
-        [Output("installDirectory")]
-        public Output<string> InstallDirectory { get; private set; } = null!;
+        [Output("directory")]
+        public Output<string> Directory { get; private set; } = null!;
+
+        [Output("mkdir")]
+        public Output<UnMango.KubernetesTheHardWay.Tools.Mkdir?> Mkdir { get; private set; } = null!;
+
+        [Output("path")]
+        public Output<string?> Path { get; private set; } = null!;
 
         /// <summary>
         /// The version of kube-apiserver to install.
@@ -84,8 +93,8 @@ namespace UnMango.KubernetesTheHardWay.Remote
         /// <summary>
         /// Directory to install the `etcd` and `etcdctl` binaries.
         /// </summary>
-        [Input("installDirectory")]
-        public Input<string>? InstallDirectory { get; set; }
+        [Input("directory")]
+        public Input<string>? Directory { get; set; }
 
         /// <summary>
         /// The version of kube-apiserver to install.
@@ -95,7 +104,7 @@ namespace UnMango.KubernetesTheHardWay.Remote
 
         public KubeApiServerInstallArgs()
         {
-            InstallDirectory = "/usr/local/bin";
+            Directory = "/usr/local/bin";
         }
         public static new KubeApiServerInstallArgs Empty => new KubeApiServerInstallArgs();
     }

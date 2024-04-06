@@ -9,27 +9,36 @@ export class KubeControllerManagerInstall extends schema.KubeControllerManagerIn
     const architecture = output(args.architecture ?? 'amd64');
     const binName = 'kube-controller-manager';
     const connection = output(args.connection);
-    const installDirectory = output(args.installDirectory ?? '/usr/local/bin');
+    const directory = output(args.directory ?? '/usr/local/bin');
     const version = output(args.version ?? '1.29.2');
     const url = interpolate`https://storage.googleapis.com/kubernetes-release/release/v${version}/bin/linux/${architecture}/${binName}`;
 
-    binaryInstall(name, {
+    const { download, mkdir, mktemp, mv, path, rm } = binaryInstall(name, {
       binName,
       connection,
-      installDirectory,
+      directory,
       url,
     }, this);
 
     this.architecture = architecture;
+    this.binName = binName;
     this.connection = connection;
-    this.installDirectory = installDirectory;
+    this.directory = directory;
+    this.mkdir = mkdir;
+    this.mv = mv;
+    this.path = path;
     this.version = version;
 
     this.registerOutputs({
       architecture,
+      binName,
       connection,
-      installDirectory,
+      directory,
+      mkdir,
+      mv,
+      path,
       version,
+      url,
     });
   }
 }

@@ -29,6 +29,12 @@ namespace UnMango.KubernetesTheHardWay.Remote
         public Output<string> ArchiveName { get; private set; } = null!;
 
         /// <summary>
+        /// Directory to install the `etcd` and `etcdctl` binaries.
+        /// </summary>
+        [Output("directory")]
+        public Output<string> Directory { get; private set; } = null!;
+
+        /// <summary>
         /// The etcd download operation.
         /// </summary>
         [Output("download")]
@@ -47,16 +53,10 @@ namespace UnMango.KubernetesTheHardWay.Remote
         public Output<string> EtcdctlPath { get; private set; } = null!;
 
         /// <summary>
-        /// Directory to install the `etcd` and `etcdctl` binaries.
-        /// </summary>
-        [Output("installDirectory")]
-        public Output<string> InstallDirectory { get; private set; } = null!;
-
-        /// <summary>
         /// The operation to create the install directory.
         /// </summary>
-        [Output("installMkdir")]
-        public Output<UnMango.KubernetesTheHardWay.Tools.Mkdir> InstallMkdir { get; private set; } = null!;
+        [Output("mkdir")]
+        public Output<UnMango.KubernetesTheHardWay.Tools.Mkdir> Mkdir { get; private set; } = null!;
 
         /// <summary>
         /// The operation to move the etcd binary to the install directory.
@@ -141,8 +141,8 @@ namespace UnMango.KubernetesTheHardWay.Remote
         /// <summary>
         /// Directory to install the `etcd` and `etcdctl` binaries.
         /// </summary>
-        [Input("installDirectory")]
-        public Input<string>? InstallDirectory { get; set; }
+        [Input("directory")]
+        public Input<string>? Directory { get; set; }
 
         /// <summary>
         /// The version of etcd to install.
@@ -152,7 +152,7 @@ namespace UnMango.KubernetesTheHardWay.Remote
 
         public EtcdInstallArgs()
         {
-            InstallDirectory = "/usr/local/bin";
+            Directory = "/usr/local/bin";
         }
         public static new EtcdInstallArgs Empty => new EtcdInstallArgs();
     }

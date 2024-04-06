@@ -9,6 +9,9 @@ import * as utilities from "../utilities";
 
 import * as pulumiCommand from "@pulumi/command";
 
+import {Mkdir, Mktemp, Mv, Rm} from "../tools";
+import {Download} from "./index";
+
 /**
  * Installs kube-scheduler on a remote system.
  */
@@ -31,6 +34,7 @@ export class KubeSchedulerInstall extends pulumi.ComponentResource {
      * The kube-scheduler CPU architecture.
      */
     public readonly architecture!: pulumi.Output<enums.remote.Architecture>;
+    public /*out*/ readonly binName!: pulumi.Output<string | undefined>;
     /**
      * The connection details.
      */
@@ -38,7 +42,13 @@ export class KubeSchedulerInstall extends pulumi.ComponentResource {
     /**
      * Directory to install the `etcd` and `etcdctl` binaries.
      */
-    public readonly installDirectory!: pulumi.Output<string>;
+    public readonly directory!: pulumi.Output<string>;
+    public /*out*/ readonly download!: pulumi.Output<Download | undefined>;
+    public /*out*/ readonly mkdir!: pulumi.Output<Mkdir | undefined>;
+    public /*out*/ readonly mktemp!: pulumi.Output<Mktemp | undefined>;
+    public /*out*/ readonly mv!: pulumi.Output<Mv | undefined>;
+    public /*out*/ readonly path!: pulumi.Output<string | undefined>;
+    public /*out*/ readonly rm!: pulumi.Output<Rm | undefined>;
     /**
      * The version of kube-scheduler to install.
      */
@@ -60,12 +70,26 @@ export class KubeSchedulerInstall extends pulumi.ComponentResource {
             }
             resourceInputs["architecture"] = args ? args.architecture : undefined;
             resourceInputs["connection"] = args ? (args.connection ? pulumi.output(args.connection).apply(pulumiCommand.types.input.remote.connectionArgsProvideDefaults) : undefined) : undefined;
-            resourceInputs["installDirectory"] = (args ? args.installDirectory : undefined) ?? "/usr/local/bin";
+            resourceInputs["directory"] = (args ? args.directory : undefined) ?? "/usr/local/bin";
             resourceInputs["version"] = args ? args.version : undefined;
+            resourceInputs["binName"] = undefined /*out*/;
+            resourceInputs["download"] = undefined /*out*/;
+            resourceInputs["mkdir"] = undefined /*out*/;
+            resourceInputs["mktemp"] = undefined /*out*/;
+            resourceInputs["mv"] = undefined /*out*/;
+            resourceInputs["path"] = undefined /*out*/;
+            resourceInputs["rm"] = undefined /*out*/;
         } else {
             resourceInputs["architecture"] = undefined /*out*/;
+            resourceInputs["binName"] = undefined /*out*/;
             resourceInputs["connection"] = undefined /*out*/;
-            resourceInputs["installDirectory"] = undefined /*out*/;
+            resourceInputs["directory"] = undefined /*out*/;
+            resourceInputs["download"] = undefined /*out*/;
+            resourceInputs["mkdir"] = undefined /*out*/;
+            resourceInputs["mktemp"] = undefined /*out*/;
+            resourceInputs["mv"] = undefined /*out*/;
+            resourceInputs["path"] = undefined /*out*/;
+            resourceInputs["rm"] = undefined /*out*/;
             resourceInputs["version"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
@@ -88,7 +112,7 @@ export interface KubeSchedulerInstallArgs {
     /**
      * Directory to install the `kube-scheduler` binary.
      */
-    installDirectory?: pulumi.Input<string>;
+    directory?: pulumi.Input<string>;
     /**
      * The version of kube-scheduler to install.
      */

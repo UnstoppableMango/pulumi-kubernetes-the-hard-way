@@ -22,16 +22,16 @@ type EtcdInstall struct {
 	Architecture ArchitectureOutput `pulumi:"architecture"`
 	// The name of the etcd release archive.
 	ArchiveName pulumi.StringOutput `pulumi:"archiveName"`
+	// Directory to install the `etcd` and `etcdctl` binaries.
+	Directory pulumi.StringOutput `pulumi:"directory"`
 	// The etcd download operation.
 	Download DownloadOutput `pulumi:"download"`
 	// The path to the etcd binary on the remote system.
 	EtcdPath pulumi.StringOutput `pulumi:"etcdPath"`
 	// The path to the etcdctl binary on the remote system.
 	EtcdctlPath pulumi.StringOutput `pulumi:"etcdctlPath"`
-	// Directory to install the `etcd` and `etcdctl` binaries.
-	InstallDirectory pulumi.StringOutput `pulumi:"installDirectory"`
 	// The operation to create the install directory.
-	InstallMkdir tools.MkdirOutput `pulumi:"installMkdir"`
+	Mkdir tools.MkdirOutput `pulumi:"mkdir"`
 	// The operation to move the etcd binary to the install directory.
 	MvEtcd tools.MvOutput `pulumi:"mvEtcd"`
 	// The operation to move the etcdctl binary to the install directory.
@@ -57,8 +57,8 @@ func NewEtcdInstall(ctx *pulumi.Context,
 		return nil, errors.New("invalid value for required argument 'Connection'")
 	}
 	args.Connection = args.Connection.ToConnectionOutput().ApplyT(func(v pulumiCommand.Connection) pulumiCommand.Connection { return *v.Defaults() }).(pulumiCommand.ConnectionOutput)
-	if args.InstallDirectory == nil {
-		args.InstallDirectory = pulumi.StringPtr("/usr/local/bin")
+	if args.Directory == nil {
+		args.Directory = pulumi.StringPtr("/usr/local/bin")
 	}
 	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource EtcdInstall
@@ -75,7 +75,7 @@ type etcdInstallArgs struct {
 	// The connection details.
 	Connection pulumiCommand.Connection `pulumi:"connection"`
 	// Directory to install the `etcd` and `etcdctl` binaries.
-	InstallDirectory *string `pulumi:"installDirectory"`
+	Directory *string `pulumi:"directory"`
 	// The version of etcd to install.
 	Version *string `pulumi:"version"`
 }
@@ -87,7 +87,7 @@ type EtcdInstallArgs struct {
 	// The connection details.
 	Connection pulumiCommand.ConnectionInput
 	// Directory to install the `etcd` and `etcdctl` binaries.
-	InstallDirectory pulumi.StringPtrInput
+	Directory pulumi.StringPtrInput
 	// The version of etcd to install.
 	Version pulumi.StringPtrInput
 }
@@ -211,6 +211,11 @@ func (o EtcdInstallOutput) ArchiveName() pulumi.StringOutput {
 	return o.ApplyT(func(v *EtcdInstall) pulumi.StringOutput { return v.ArchiveName }).(pulumi.StringOutput)
 }
 
+// Directory to install the `etcd` and `etcdctl` binaries.
+func (o EtcdInstallOutput) Directory() pulumi.StringOutput {
+	return o.ApplyT(func(v *EtcdInstall) pulumi.StringOutput { return v.Directory }).(pulumi.StringOutput)
+}
+
 // The etcd download operation.
 func (o EtcdInstallOutput) Download() DownloadOutput {
 	return o.ApplyT(func(v *EtcdInstall) DownloadOutput { return v.Download }).(DownloadOutput)
@@ -226,14 +231,9 @@ func (o EtcdInstallOutput) EtcdctlPath() pulumi.StringOutput {
 	return o.ApplyT(func(v *EtcdInstall) pulumi.StringOutput { return v.EtcdctlPath }).(pulumi.StringOutput)
 }
 
-// Directory to install the `etcd` and `etcdctl` binaries.
-func (o EtcdInstallOutput) InstallDirectory() pulumi.StringOutput {
-	return o.ApplyT(func(v *EtcdInstall) pulumi.StringOutput { return v.InstallDirectory }).(pulumi.StringOutput)
-}
-
 // The operation to create the install directory.
-func (o EtcdInstallOutput) InstallMkdir() tools.MkdirOutput {
-	return o.ApplyT(func(v *EtcdInstall) tools.MkdirOutput { return v.InstallMkdir }).(tools.MkdirOutput)
+func (o EtcdInstallOutput) Mkdir() tools.MkdirOutput {
+	return o.ApplyT(func(v *EtcdInstall) tools.MkdirOutput { return v.Mkdir }).(tools.MkdirOutput)
 }
 
 // The operation to move the etcd binary to the install directory.

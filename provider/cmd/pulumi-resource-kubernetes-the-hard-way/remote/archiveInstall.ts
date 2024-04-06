@@ -11,7 +11,8 @@ export interface ArchiveInstallArgs<T extends ReadonlyArray<string>> {
   archiveName: Input<string>;
   binaries: T;
   connection: Input<remote.ConnectionArgs>;
-  installDirectory: Input<string>;
+  directory: Input<string>;
+  stripComponents?: Input<number>;
   url: Input<string>;
 }
 
@@ -30,7 +31,7 @@ export function archiveInstall<T extends ReadonlyArray<string>>(
   args: ArchiveInstallArgs<T>,
   parent: Resource,
 ): ArchiveInstallResult<T> {
-  const { archiveName, connection, installDirectory, url } = args;
+  const { archiveName, connection, directory, url } = args;
 
   const mktemp = new Mktemp(name, {
     connection,
@@ -50,12 +51,12 @@ export function archiveInstall<T extends ReadonlyArray<string>>(
     archive: interpolate`${download.destination}/${archiveName}`,
     directory: download.destination,
     gzip: true,
-    stripComponents: 1,
+    stripComponents: args.stripComponents,
   }, { parent, dependsOn: download });
 
   const mkdir = new Mkdir(name, {
     connection: args.connection,
-    directory: installDirectory,
+    directory: directory,
     parents: true,
   }, { parent });
 
@@ -64,12 +65,12 @@ export function archiveInstall<T extends ReadonlyArray<string>>(
     [k]: new Mv(`${name}-${k}`, {
       connection,
       source: interpolate`${download.destination}/${k}`,
-      dest: interpolate`${installDirectory}/${k}`,
+      dest: interpolate`${directory}/${k}`,
     }, { parent, dependsOn: [tar, mkdir] })
   }), {} as Maps<T, Mv>);
 
   const paths = args.binaries.reduce((b, k): Maps<T, string> => ({
-    ...b, [k]: interpolate`${installDirectory}/${k}`,
+    ...b, [k]: interpolate`${directory}/${k}`,
   }), {} as Maps<T, string>);
 
   const rm = new Rm(name, {
