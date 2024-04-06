@@ -88,46 +88,97 @@ resources:
         description: The CPU architecture.
       archiveName:
         type: string
+      bandwidthPath:
+        type: string
+      bridgePath:
+        type: string
       connection:
         $ref: "/command/v0.9.2/schema.json#/types/command:remote:Connection"
         description: The connection details.
+      dhcpPath:
+        type: string
       download:
         $ref: "#/resources/kubernetes-the-hard-way:remote:Download"
       directory:
         type: string
         description: Directory to install the binary.
         default: /usr/local/bin
+      dummyPath:
+        type: string
+      firewallPath:
+        type: string
+      hostDevicePath:
+        type: string
+      hostLocalPath:
+        type: string
+      ipvlanPath:
+        type: string
+      loopbackPath:
+        type: string
+      macvlanPath:
+        type: string
       mkdir:
         $ref: "#/resources/kubernetes-the-hard-way:tools:Mkdir"
       mktemp:
         $ref: "#/resources/kubernetes-the-hard-way:tools:Mktemp"
       mv:
         $ref: "#/resources/kubernetes-the-hard-way:tools:Mv"
-      path:
+      portmapPath:
+        type: string
+      ptpPath:
         type: string
       rm:
         $ref: "#/resources/kubernetes-the-hard-way:tools:Rm"
+      sbrPath:
+        type: string
+      staticPath:
+        type: string
+      tapPath:
+        type: string
       tar:
         $ref: "#/resources/kubernetes-the-hard-way:tools:Tar"
+      tuningPath:
+        type: string
       url:
         type: string
       version:
         type: string
         description: The version to install.
+      vlanPath:
+        type: string
+      vrfPath:
+        type: string
     required:
       - architecture
       - archiveName
+      - bandwidthPath
+      - bridgePath
       - connection
+      - dhcpPath
       - download
       - directory
+      - dummyPath
+      - firewallPath
+      - hostDevicePath
+      - hostLocalPath
+      - ipvlanPath
+      - loopbackPath
+      - macvlanPath
       - mkdir
       - mktemp
       - mv
-      - path
+      - portmapPath
+      - ptpPath
       - rm
+      - sbrPath
+      - staticPath
+      - tapPath
       - tar
+      - tuningPath
       - url
       - version
+      - vlanPath
+      - vrfPath
   kubernetes-the-hard-way:remote:ContainerdInstall:
     isComponent: true
     description: Installs containerd on a remote system.

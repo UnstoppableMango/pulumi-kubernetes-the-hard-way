@@ -35,26 +35,43 @@ export class CniPluginsInstall extends pulumi.ComponentResource {
      */
     public readonly architecture!: pulumi.Output<enums.remote.Architecture>;
     public /*out*/ readonly archiveName!: pulumi.Output<string>;
+    public /*out*/ readonly bandwidthPath!: pulumi.Output<string>;
+    public /*out*/ readonly bridgePath!: pulumi.Output<string>;
     /**
      * The connection details.
      */
     public readonly connection!: pulumi.Output<pulumiCommand.types.output.remote.Connection>;
+    public /*out*/ readonly dhcpPath!: pulumi.Output<string>;
     /**
      * Directory to install the binary.
      */
     public readonly directory!: pulumi.Output<string>;
     public /*out*/ readonly download!: pulumi.Output<Download>;
+    public /*out*/ readonly dummyPath!: pulumi.Output<string>;
+    public /*out*/ readonly firewallPath!: pulumi.Output<string>;
+    public /*out*/ readonly hostDevicePath!: pulumi.Output<string>;
+    public /*out*/ readonly hostLocalPath!: pulumi.Output<string>;
+    public /*out*/ readonly ipvlanPath!: pulumi.Output<string>;
+    public /*out*/ readonly loopbackPath!: pulumi.Output<string>;
+    public /*out*/ readonly macvlanPath!: pulumi.Output<string>;
     public /*out*/ readonly mkdir!: pulumi.Output<Mkdir>;
     public /*out*/ readonly mktemp!: pulumi.Output<Mktemp>;
     public /*out*/ readonly mv!: pulumi.Output<Mv>;
-    public /*out*/ readonly path!: pulumi.Output<string>;
+    public /*out*/ readonly portmapPath!: pulumi.Output<string>;
+    public /*out*/ readonly ptpPath!: pulumi.Output<string>;
     public /*out*/ readonly rm!: pulumi.Output<Rm>;
+    public /*out*/ readonly sbrPath!: pulumi.Output<string>;
+    public /*out*/ readonly staticPath!: pulumi.Output<string>;
+    public /*out*/ readonly tapPath!: pulumi.Output<string>;
     public /*out*/ readonly tar!: pulumi.Output<Tar>;
+    public /*out*/ readonly tuningPath!: pulumi.Output<string>;
     public /*out*/ readonly url!: pulumi.Output<string>;
     /**
      * The version to install.
      */
     public readonly version!: pulumi.Output<string>;
+    public /*out*/ readonly vlanPath!: pulumi.Output<string>;
+    public /*out*/ readonly vrfPath!: pulumi.Output<string>;
 
     /**
      * Create a CniPluginsInstall resource with the given unique name, arguments, and options.
@@ -75,28 +92,62 @@ export class CniPluginsInstall extends pulumi.ComponentResource {
             resourceInputs["directory"] = (args ? args.directory : undefined) ?? "/usr/local/bin";
             resourceInputs["version"] = args ? args.version : undefined;
             resourceInputs["archiveName"] = undefined /*out*/;
+            resourceInputs["bandwidthPath"] = undefined /*out*/;
+            resourceInputs["bridgePath"] = undefined /*out*/;
+            resourceInputs["dhcpPath"] = undefined /*out*/;
             resourceInputs["download"] = undefined /*out*/;
+            resourceInputs["dummyPath"] = undefined /*out*/;
+            resourceInputs["firewallPath"] = undefined /*out*/;
+            resourceInputs["hostDevicePath"] = undefined /*out*/;
+            resourceInputs["hostLocalPath"] = undefined /*out*/;
+            resourceInputs["ipvlanPath"] = undefined /*out*/;
+            resourceInputs["loopbackPath"] = undefined /*out*/;
+            resourceInputs["macvlanPath"] = undefined /*out*/;
             resourceInputs["mkdir"] = undefined /*out*/;
             resourceInputs["mktemp"] = undefined /*out*/;
             resourceInputs["mv"] = undefined /*out*/;
-            resourceInputs["path"] = undefined /*out*/;
+            resourceInputs["portmapPath"] = undefined /*out*/;
+            resourceInputs["ptpPath"] = undefined /*out*/;
             resourceInputs["rm"] = undefined /*out*/;
+            resourceInputs["sbrPath"] = undefined /*out*/;
+            resourceInputs["staticPath"] = undefined /*out*/;
+            resourceInputs["tapPath"] = undefined /*out*/;
             resourceInputs["tar"] = undefined /*out*/;
+            resourceInputs["tuningPath"] = undefined /*out*/;
             resourceInputs["url"] = undefined /*out*/;
+            resourceInputs["vlanPath"] = undefined /*out*/;
+            resourceInputs["vrfPath"] = undefined /*out*/;
         } else {
             resourceInputs["architecture"] = undefined /*out*/;
             resourceInputs["archiveName"] = undefined /*out*/;
+            resourceInputs["bandwidthPath"] = undefined /*out*/;
+            resourceInputs["bridgePath"] = undefined /*out*/;
             resourceInputs["connection"] = undefined /*out*/;
+            resourceInputs["dhcpPath"] = undefined /*out*/;
             resourceInputs["directory"] = undefined /*out*/;
             resourceInputs["download"] = undefined /*out*/;
+            resourceInputs["dummyPath"] = undefined /*out*/;
+            resourceInputs["firewallPath"] = undefined /*out*/;
+            resourceInputs["hostDevicePath"] = undefined /*out*/;
+            resourceInputs["hostLocalPath"] = undefined /*out*/;
+            resourceInputs["ipvlanPath"] = undefined /*out*/;
+            resourceInputs["loopbackPath"] = undefined /*out*/;
+            resourceInputs["macvlanPath"] = undefined /*out*/;
             resourceInputs["mkdir"] = undefined /*out*/;
             resourceInputs["mktemp"] = undefined /*out*/;
             resourceInputs["mv"] = undefined /*out*/;
-            resourceInputs["path"] = undefined /*out*/;
+            resourceInputs["portmapPath"] = undefined /*out*/;
+            resourceInputs["ptpPath"] = undefined /*out*/;
             resourceInputs["rm"] = undefined /*out*/;
+            resourceInputs["sbrPath"] = undefined /*out*/;
+            resourceInputs["staticPath"] = undefined /*out*/;
+            resourceInputs["tapPath"] = undefined /*out*/;
             resourceInputs["tar"] = undefined /*out*/;
+            resourceInputs["tuningPath"] = undefined /*out*/;
             resourceInputs["url"] = undefined /*out*/;
             resourceInputs["version"] = undefined /*out*/;
+            resourceInputs["vlanPath"] = undefined /*out*/;
+            resourceInputs["vrfPath"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         super(CniPluginsInstall.__pulumiType, name, resourceInputs, opts, true /*remote*/);

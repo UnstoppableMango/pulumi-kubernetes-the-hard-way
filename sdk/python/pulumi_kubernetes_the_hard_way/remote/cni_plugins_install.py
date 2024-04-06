@@ -156,14 +156,31 @@ class CniPluginsInstall(pulumi.ComponentResource):
             __props__.__dict__["directory"] = directory
             __props__.__dict__["version"] = version
             __props__.__dict__["archive_name"] = None
+            __props__.__dict__["bandwidth_path"] = None
+            __props__.__dict__["bridge_path"] = None
+            __props__.__dict__["dhcp_path"] = None
             __props__.__dict__["download"] = None
+            __props__.__dict__["dummy_path"] = None
+            __props__.__dict__["firewall_path"] = None
+            __props__.__dict__["host_device_path"] = None
+            __props__.__dict__["host_local_path"] = None
+            __props__.__dict__["ipvlan_path"] = None
+            __props__.__dict__["loopback_path"] = None
+            __props__.__dict__["macvlan_path"] = None
             __props__.__dict__["mkdir"] = None
             __props__.__dict__["mktemp"] = None
             __props__.__dict__["mv"] = None
-            __props__.__dict__["path"] = None
+            __props__.__dict__["portmap_path"] = None
+            __props__.__dict__["ptp_path"] = None
             __props__.__dict__["rm"] = None
+            __props__.__dict__["sbr_path"] = None
+            __props__.__dict__["static_path"] = None
+            __props__.__dict__["tap_path"] = None
             __props__.__dict__["tar"] = None
+            __props__.__dict__["tuning_path"] = None
             __props__.__dict__["url"] = None
+            __props__.__dict__["vlan_path"] = None
+            __props__.__dict__["vrf_path"] = None
         super(CniPluginsInstall, __self__).__init__(
             'kubernetes-the-hard-way:remote:CniPluginsInstall',
             resource_name,
@@ -185,12 +202,27 @@ class CniPluginsInstall(pulumi.ComponentResource):
         return pulumi.get(self, "archive_name")
 
     @property
+    @pulumi.getter(name="bandwidthPath")
+    def bandwidth_path(self) -> pulumi.Output[str]:
+        return pulumi.get(self, "bandwidth_path")
+
+    @property
+    @pulumi.getter(name="bridgePath")
+    def bridge_path(self) -> pulumi.Output[str]:
+        return pulumi.get(self, "bridge_path")
+
+    @property
     @pulumi.getter
     def connection(self) -> pulumi.Output['pulumi_command.remote.outputs.Connection']:
         """
         The connection details.
         """
         return pulumi.get(self, "connection")
+
+    @property
+    @pulumi.getter(name="dhcpPath")
+    def dhcp_path(self) -> pulumi.Output[str]:
+        return pulumi.get(self, "dhcp_path")
 
     @property
     @pulumi.getter
@@ -204,6 +236,41 @@ class CniPluginsInstall(pulumi.ComponentResource):
     @pulumi.getter
     def download(self) -> pulumi.Output['Download']:
         return pulumi.get(self, "download")
+
+    @property
+    @pulumi.getter(name="dummyPath")
+    def dummy_path(self) -> pulumi.Output[str]:
+        return pulumi.get(self, "dummy_path")
+
+    @property
+    @pulumi.getter(name="firewallPath")
+    def firewall_path(self) -> pulumi.Output[str]:
+        return pulumi.get(self, "firewall_path")
+
+    @property
+    @pulumi.getter(name="hostDevicePath")
+    def host_device_path(self) -> pulumi.Output[str]:
+        return pulumi.get(self, "host_device_path")
+
+    @property
+    @pulumi.getter(name="hostLocalPath")
+    def host_local_path(self) -> pulumi.Output[str]:
+        return pulumi.get(self, "host_local_path")
+
+    @property
+    @pulumi.getter(name="ipvlanPath")
+    def ipvlan_path(self) -> pulumi.Output[str]:
+        return pulumi.get(self, "ipvlan_path")
+
+    @property
+    @pulumi.getter(name="loopbackPath")
+    def loopback_path(self) -> pulumi.Output[str]:
+        return pulumi.get(self, "loopback_path")
+
+    @property
+    @pulumi.getter(name="macvlanPath")
+    def macvlan_path(self) -> pulumi.Output[str]:
+        return pulumi.get(self, "macvlan_path")
 
     @property
     @pulumi.getter
@@ -221,9 +288,14 @@ class CniPluginsInstall(pulumi.ComponentResource):
         return pulumi.get(self, "mv")
 
     @property
-    @pulumi.getter
-    def path(self) -> pulumi.Output[str]:
-        return pulumi.get(self, "path")
+    @pulumi.getter(name="portmapPath")
+    def portmap_path(self) -> pulumi.Output[str]:
+        return pulumi.get(self, "portmap_path")
+
+    @property
+    @pulumi.getter(name="ptpPath")
+    def ptp_path(self) -> pulumi.Output[str]:
+        return pulumi.get(self, "ptp_path")
 
     @property
     @pulumi.getter
@@ -231,9 +303,29 @@ class CniPluginsInstall(pulumi.ComponentResource):
         return pulumi.get(self, "rm")
 
     @property
+    @pulumi.getter(name="sbrPath")
+    def sbr_path(self) -> pulumi.Output[str]:
+        return pulumi.get(self, "sbr_path")
+
+    @property
+    @pulumi.getter(name="staticPath")
+    def static_path(self) -> pulumi.Output[str]:
+        return pulumi.get(self, "static_path")
+
+    @property
+    @pulumi.getter(name="tapPath")
+    def tap_path(self) -> pulumi.Output[str]:
+        return pulumi.get(self, "tap_path")
+
+    @property
     @pulumi.getter
     def tar(self) -> pulumi.Output['_tools.Tar']:
         return pulumi.get(self, "tar")
+
+    @property
+    @pulumi.getter(name="tuningPath")
+    def tuning_path(self) -> pulumi.Output[str]:
+        return pulumi.get(self, "tuning_path")
 
     @property
     @pulumi.getter
@@ -247,4 +339,14 @@ class CniPluginsInstall(pulumi.ComponentResource):
         The version to install.
         """
         return pulumi.get(self, "version")
+
+    @property
+    @pulumi.getter(name="vlanPath")
+    def vlan_path(self) -> pulumi.Output[str]:
+        return pulumi.get(self, "vlan_path")
+
+    @property
+    @pulumi.getter(name="vrfPath")
+    def vrf_path(self) -> pulumi.Output[str]:
+        return pulumi.get(self, "vrf_path")
 

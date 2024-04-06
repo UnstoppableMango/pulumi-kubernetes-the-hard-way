@@ -48,19 +48,36 @@ import * as tls from "@pulumi/tls";
 export abstract class CniPluginsInstall<TData = any> extends (pulumi.ComponentResource)<TData> {
     public architecture!: ArchitectureOutputs | pulumi.Output<ArchitectureOutputs>;
     public archiveName!: string | pulumi.Output<string>;
+    public bandwidthPath!: string | pulumi.Output<string>;
+    public bridgePath!: string | pulumi.Output<string>;
     public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
+    public dhcpPath!: string | pulumi.Output<string>;
     public download!: Download | pulumi.Output<Download>;
     public directory!: string | pulumi.Output<string>;
+    public dummyPath!: string | pulumi.Output<string>;
+    public firewallPath!: string | pulumi.Output<string>;
+    public hostDevicePath!: string | pulumi.Output<string>;
+    public hostLocalPath!: string | pulumi.Output<string>;
+    public ipvlanPath!: string | pulumi.Output<string>;
+    public loopbackPath!: string | pulumi.Output<string>;
+    public macvlanPath!: string | pulumi.Output<string>;
     public mkdir!: Mkdir | pulumi.Output<Mkdir>;
     public mktemp!: Mktemp | pulumi.Output<Mktemp>;
     public mv!: Mv | pulumi.Output<Mv>;
-    public path!: string | pulumi.Output<string>;
+    public portmapPath!: string | pulumi.Output<string>;
+    public ptpPath!: string | pulumi.Output<string>;
     public rm!: Rm | pulumi.Output<Rm>;
+    public sbrPath!: string | pulumi.Output<string>;
+    public staticPath!: string | pulumi.Output<string>;
+    public tapPath!: string | pulumi.Output<string>;
     public tar!: Tar | pulumi.Output<Tar>;
+    public tuningPath!: string | pulumi.Output<string>;
     public url!: string | pulumi.Output<string>;
     public version!: string | pulumi.Output<string>;
+    public vlanPath!: string | pulumi.Output<string>;
+    public vrfPath!: string | pulumi.Output<string>;
     constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
-        super("kubernetes-the-hard-way:remote:CniPluginsInstall", name, opts.urn ? { architecture: undefined, archiveName: undefined, connection: undefined, download: undefined, directory: undefined, mkdir: undefined, mktemp: undefined, mv: undefined, path: undefined, rm: undefined, tar: undefined, url: undefined, version: undefined } : { name, args, opts }, opts);
+        super("kubernetes-the-hard-way:remote:CniPluginsInstall", name, opts.urn ? { architecture: undefined, archiveName: undefined, bandwidthPath: undefined, bridgePath: undefined, connection: undefined, dhcpPath: undefined, download: undefined, directory: undefined, dummyPath: undefined, firewallPath: undefined, hostDevicePath: undefined, hostLocalPath: undefined, ipvlanPath: undefined, loopbackPath: undefined, macvlanPath: undefined, mkdir: undefined, mktemp: undefined, mv: undefined, portmapPath: undefined, ptpPath: undefined, rm: undefined, sbrPath: undefined, staticPath: undefined, tapPath: undefined, tar: undefined, tuningPath: undefined, url: undefined, version: undefined, vlanPath: undefined, vrfPath: undefined } : { name, args, opts }, opts);
     }
 }
 export interface CniPluginsInstallArgs {

@@ -78,6 +78,7 @@ const systemdService = new SystemdService('remote-test', {
   },
 });
 
+// Still a little bit more work needed here
 // const cniPlugins = new CniPluginsInstall('remote', {
 //   connection: { host, port, user, password },
 //   directory: path.join(basePath, 'cni-plugins'),

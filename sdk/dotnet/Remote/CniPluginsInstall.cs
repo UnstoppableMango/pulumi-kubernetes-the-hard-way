@@ -25,11 +25,20 @@ namespace UnMango.KubernetesTheHardWay.Remote
         [Output("archiveName")]
         public Output<string> ArchiveName { get; private set; } = null!;
 
+        [Output("bandwidthPath")]
+        public Output<string> BandwidthPath { get; private set; } = null!;
+
+        [Output("bridgePath")]
+        public Output<string> BridgePath { get; private set; } = null!;
+
         /// <summary>
         /// The connection details.
         /// </summary>
         [Output("connection")]
         public Output<Pulumi.Command.Remote.Outputs.Connection> Connection { get; private set; } = null!;
+
+        [Output("dhcpPath")]
+        public Output<string> DhcpPath { get; private set; } = null!;
 
         /// <summary>
         /// Directory to install the binary.
@@ -40,6 +49,27 @@ namespace UnMango.KubernetesTheHardWay.Remote
         [Output("download")]
         public Output<UnMango.KubernetesTheHardWay.Remote.Download> Download { get; private set; } = null!;
 
+        [Output("dummyPath")]
+        public Output<string> DummyPath { get; private set; } = null!;
+
+        [Output("firewallPath")]
+        public Output<string> FirewallPath { get; private set; } = null!;
+
+        [Output("hostDevicePath")]
+        public Output<string> HostDevicePath { get; private set; } = null!;
+
+        [Output("hostLocalPath")]
+        public Output<string> HostLocalPath { get; private set; } = null!;
+
+        [Output("ipvlanPath")]
+        public Output<string> IpvlanPath { get; private set; } = null!;
+
+        [Output("loopbackPath")]
+        public Output<string> LoopbackPath { get; private set; } = null!;
+
+        [Output("macvlanPath")]
+        public Output<string> MacvlanPath { get; private set; } = null!;
+
         [Output("mkdir")]
         public Output<UnMango.KubernetesTheHardWay.Tools.Mkdir> Mkdir { get; private set; } = null!;
 
@@ -49,14 +79,29 @@ namespace UnMango.KubernetesTheHardWay.Remote
         [Output("mv")]
         public Output<UnMango.KubernetesTheHardWay.Tools.Mv> Mv { get; private set; } = null!;
 
-        [Output("path")]
-        public Output<string> Path { get; private set; } = null!;
+        [Output("portmapPath")]
+        public Output<string> PortmapPath { get; private set; } = null!;
+
+        [Output("ptpPath")]
+        public Output<string> PtpPath { get; private set; } = null!;
 
         [Output("rm")]
         public Output<UnMango.KubernetesTheHardWay.Tools.Rm> Rm { get; private set; } = null!;
 
+        [Output("sbrPath")]
+        public Output<string> SbrPath { get; private set; } = null!;
+
+        [Output("staticPath")]
+        public Output<string> StaticPath { get; private set; } = null!;
+
+        [Output("tapPath")]
+        public Output<string> TapPath { get; private set; } = null!;
+
         [Output("tar")]
         public Output<UnMango.KubernetesTheHardWay.Tools.Tar> Tar { get; private set; } = null!;
+
+        [Output("tuningPath")]
+        public Output<string> TuningPath { get; private set; } = null!;
 
         [Output("url")]
         public Output<string> Url { get; private set; } = null!;
@@ -66,6 +111,12 @@ namespace UnMango.KubernetesTheHardWay.Remote
         /// </summary>
         [Output("version")]
         public Output<string> Version { get; private set; } = null!;
+
+        [Output("vlanPath")]
+        public Output<string> VlanPath { get; private set; } = null!;
+
+        [Output("vrfPath")]
+        public Output<string> VrfPath { get; private set; } = null!;
 
 
         /// <summary>

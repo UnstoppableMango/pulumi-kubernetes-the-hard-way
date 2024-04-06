@@ -8,7 +8,7 @@ export class CniPluginsInstall extends schema.CniPluginsInstall {
 
     const architecture = output(args.architecture ?? 'amd64');
     const connection = output(args.connection);
-    const directory = output(args.directory ?? '/usr/local/bin');
+    const directory = output(args.directory ?? '/opt/cni/bin/');
     const version = output(args.version ?? '0.9.1'); // TODO: Stateful versioning?
     const archiveName = interpolate`cni-plugins-linux-${architecture}-v${version}.tgz`;
     const url = interpolate`https://github.com/containernetworking/plugins/releases/download/v${version}/${archiveName}`;
@@ -19,35 +19,91 @@ export class CniPluginsInstall extends schema.CniPluginsInstall {
 
     const { download, mkdir, mktemp, mvs, paths, rm, tar } = archiveInstall(name, {
       archiveName,
-      binaries: ['cni-plugins'] as const,
+      binaries: [
+        'bandwidth',
+        'bridge',
+        'dhcp',
+        'dummy',
+        'firewall',
+        'host-device',
+        'host-local',
+        'ipvlan',
+        'loopback',
+        'macvlan',
+        'portmap',
+        'ptp',
+        'sbr',
+        'static',
+        'tap',
+        'tuning',
+        'vlan',
+        'vrf',
+      ] as const,
       connection,
       directory,
+      stripComponents: 1,
       url,
     }, this);
 
     this.architecture = architecture;
     this.archiveName = archiveName;
+    this.bandwidthPath = paths.bandwidth;
+    this.bridgePath = paths.bridge;
+    this.connection = connection;
+    this.dhcpPath = paths.dhcp;
     this.download = download;
-    this.path = paths['cni-plugins'];
     this.directory = directory;
+    this.dummyPath = paths.dummy;
+    this.firewallPath = paths.firewall;
+    this.hostDevicePath = paths['host-device'];
+    this.hostLocalPath = paths['host-local'];
+    this.ipvlanPath = paths.ipvlan;
+    this.loopbackPath = paths.loopback;
+    this.macvlanPath = paths.macvlan;
     this.mktemp = mktemp;
-    this.mv = mvs['cni-plugins'];
+    this.portmapPath = paths.portmap;
+    this.ptpPath = paths.ptp;
+    this.rm = rm;
+    this.sbrPath = paths.sbr;
+    this.staticPath = paths.static;
+    this.tapPath = paths.tap
     this.tar = tar;
+    this.tuningPath = paths.tuning;
     this.url = url;
     this.version = version;
+    this.vlanPath = paths.vlan;
+    this.vrfPath = paths.vrf;
 
     this.registerOutputs({
       architecture,
       archiveName,
+      bandwidthPath: paths.bandwidth,
+      bridgePath: paths.bridge,
+      connection,
+      dhcpPath: paths.dhcp,
       download,
-      path: paths['cni-plugins'],
       directory,
+      dummyPath: paths.dummy,
+      firewallPath: paths.firewall,
+      hostDevicePath: paths['host-device'],
+      hostLocalPath: paths['host-local'],
+      ipvlanPath: paths.ipvlan,
+      loopbackPath: paths.loopback,
+      macvlanPath: paths.macvlan,
       mkdir,
-      mv: mvs['cni-plugins'],
       name,
+      portmapPath: paths.portmap,
+      ptpPath: paths.ptp,
+      rm,
+      sbrPath: paths.sbr,
+      staticPath: paths.static,
+      tapPath: paths.tap,
       tar,
+      tuningPath: paths.tuning,
       url,
       version,
+      vlanPath: paths.vlan,
+      vrfPath: paths.vrf,
     });
   }
 }

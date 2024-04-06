@@ -19,22 +19,39 @@ type CniPluginsInstall struct {
 	pulumi.ResourceState
 
 	// The CPU architecture.
-	Architecture ArchitectureOutput  `pulumi:"architecture"`
-	ArchiveName  pulumi.StringOutput `pulumi:"archiveName"`
+	Architecture  ArchitectureOutput  `pulumi:"architecture"`
+	ArchiveName   pulumi.StringOutput `pulumi:"archiveName"`
+	BandwidthPath pulumi.StringOutput `pulumi:"bandwidthPath"`
+	BridgePath    pulumi.StringOutput `pulumi:"bridgePath"`
 	// The connection details.
 	Connection pulumiCommand.ConnectionOutput `pulumi:"connection"`
+	DhcpPath   pulumi.StringOutput            `pulumi:"dhcpPath"`
 	// Directory to install the binary.
-	Directory pulumi.StringOutput `pulumi:"directory"`
-	Download  DownloadOutput      `pulumi:"download"`
-	Mkdir     tools.MkdirOutput   `pulumi:"mkdir"`
-	Mktemp    tools.MktempOutput  `pulumi:"mktemp"`
-	Mv        tools.MvOutput      `pulumi:"mv"`
-	Path      pulumi.StringOutput `pulumi:"path"`
-	Rm        tools.RmOutput      `pulumi:"rm"`
-	Tar       tools.TarOutput     `pulumi:"tar"`
-	Url       pulumi.StringOutput `pulumi:"url"`
+	Directory      pulumi.StringOutput `pulumi:"directory"`
+	Download       DownloadOutput      `pulumi:"download"`
+	DummyPath      pulumi.StringOutput `pulumi:"dummyPath"`
+	FirewallPath   pulumi.StringOutput `pulumi:"firewallPath"`
+	HostDevicePath pulumi.StringOutput `pulumi:"hostDevicePath"`
+	HostLocalPath  pulumi.StringOutput `pulumi:"hostLocalPath"`
+	IpvlanPath     pulumi.StringOutput `pulumi:"ipvlanPath"`
+	LoopbackPath   pulumi.StringOutput `pulumi:"loopbackPath"`
+	MacvlanPath    pulumi.StringOutput `pulumi:"macvlanPath"`
+	Mkdir          tools.MkdirOutput   `pulumi:"mkdir"`
+	Mktemp         tools.MktempOutput  `pulumi:"mktemp"`
+	Mv             tools.MvOutput      `pulumi:"mv"`
+	PortmapPath    pulumi.StringOutput `pulumi:"portmapPath"`
+	PtpPath        pulumi.StringOutput `pulumi:"ptpPath"`
+	Rm             tools.RmOutput      `pulumi:"rm"`
+	SbrPath        pulumi.StringOutput `pulumi:"sbrPath"`
+	StaticPath     pulumi.StringOutput `pulumi:"staticPath"`
+	TapPath        pulumi.StringOutput `pulumi:"tapPath"`
+	Tar            tools.TarOutput     `pulumi:"tar"`
+	TuningPath     pulumi.StringOutput `pulumi:"tuningPath"`
+	Url            pulumi.StringOutput `pulumi:"url"`
 	// The version to install.
-	Version pulumi.StringOutput `pulumi:"version"`
+	Version  pulumi.StringOutput `pulumi:"version"`
+	VlanPath pulumi.StringOutput `pulumi:"vlanPath"`
+	VrfPath  pulumi.StringOutput `pulumi:"vrfPath"`
 }
 
 // NewCniPluginsInstall registers a new resource with the given unique name, arguments, and options.
@@ -179,9 +196,21 @@ func (o CniPluginsInstallOutput) ArchiveName() pulumi.StringOutput {
 	return o.ApplyT(func(v *CniPluginsInstall) pulumi.StringOutput { return v.ArchiveName }).(pulumi.StringOutput)
 }
 
+func (o CniPluginsInstallOutput) BandwidthPath() pulumi.StringOutput {
+	return o.ApplyT(func(v *CniPluginsInstall) pulumi.StringOutput { return v.BandwidthPath }).(pulumi.StringOutput)
+}
+
+func (o CniPluginsInstallOutput) BridgePath() pulumi.StringOutput {
+	return o.ApplyT(func(v *CniPluginsInstall) pulumi.StringOutput { return v.BridgePath }).(pulumi.StringOutput)
+}
+
 // The connection details.
 func (o CniPluginsInstallOutput) Connection() pulumiCommand.ConnectionOutput {
 	return o.ApplyT(func(v *CniPluginsInstall) pulumiCommand.ConnectionOutput { return v.Connection }).(pulumiCommand.ConnectionOutput)
+}
+
+func (o CniPluginsInstallOutput) DhcpPath() pulumi.StringOutput {
+	return o.ApplyT(func(v *CniPluginsInstall) pulumi.StringOutput { return v.DhcpPath }).(pulumi.StringOutput)
 }
 
 // Directory to install the binary.
@@ -191,6 +220,34 @@ func (o CniPluginsInstallOutput) Directory() pulumi.StringOutput {
 
 func (o CniPluginsInstallOutput) Download() DownloadOutput {
 	return o.ApplyT(func(v *CniPluginsInstall) DownloadOutput { return v.Download }).(DownloadOutput)
+}
+
+func (o CniPluginsInstallOutput) DummyPath() pulumi.StringOutput {
+	return o.ApplyT(func(v *CniPluginsInstall) pulumi.StringOutput { return v.DummyPath }).(pulumi.StringOutput)
+}
+
+func (o CniPluginsInstallOutput) FirewallPath() pulumi.StringOutput {
+	return o.ApplyT(func(v *CniPluginsInstall) pulumi.StringOutput { return v.FirewallPath }).(pulumi.StringOutput)
+}
+
+func (o CniPluginsInstallOutput) HostDevicePath() pulumi.StringOutput {
+	return o.ApplyT(func(v *CniPluginsInstall) pulumi.StringOutput { return v.HostDevicePath }).(pulumi.StringOutput)
+}
+
+func (o CniPluginsInstallOutput) HostLocalPath() pulumi.StringOutput {
+	return o.ApplyT(func(v *CniPluginsInstall) pulumi.StringOutput { return v.HostLocalPath }).(pulumi.StringOutput)
+}
+
+func (o CniPluginsInstallOutput) IpvlanPath() pulumi.StringOutput {
+	return o.ApplyT(func(v *CniPluginsInstall) pulumi.StringOutput { return v.IpvlanPath }).(pulumi.StringOutput)
+}
+
+func (o CniPluginsInstallOutput) LoopbackPath() pulumi.StringOutput {
+	return o.ApplyT(func(v *CniPluginsInstall) pulumi.StringOutput { return v.LoopbackPath }).(pulumi.StringOutput)
+}
+
+func (o CniPluginsInstallOutput) MacvlanPath() pulumi.StringOutput {
+	return o.ApplyT(func(v *CniPluginsInstall) pulumi.StringOutput { return v.MacvlanPath }).(pulumi.StringOutput)
 }
 
 func (o CniPluginsInstallOutput) Mkdir() tools.MkdirOutput {
@@ -205,16 +262,36 @@ func (o CniPluginsInstallOutput) Mv() tools.MvOutput {
 	return o.ApplyT(func(v *CniPluginsInstall) tools.MvOutput { return v.Mv }).(tools.MvOutput)
 }
 
-func (o CniPluginsInstallOutput) Path() pulumi.StringOutput {
-	return o.ApplyT(func(v *CniPluginsInstall) pulumi.StringOutput { return v.Path }).(pulumi.StringOutput)
+func (o CniPluginsInstallOutput) PortmapPath() pulumi.StringOutput {
+	return o.ApplyT(func(v *CniPluginsInstall) pulumi.StringOutput { return v.PortmapPath }).(pulumi.StringOutput)
+}
+
+func (o CniPluginsInstallOutput) PtpPath() pulumi.StringOutput {
+	return o.ApplyT(func(v *CniPluginsInstall) pulumi.StringOutput { return v.PtpPath }).(pulumi.StringOutput)
 }
 
 func (o CniPluginsInstallOutput) Rm() tools.RmOutput {
 	return o.ApplyT(func(v *CniPluginsInstall) tools.RmOutput { return v.Rm }).(tools.RmOutput)
 }
 
+func (o CniPluginsInstallOutput) SbrPath() pulumi.StringOutput {
+	return o.ApplyT(func(v *CniPluginsInstall) pulumi.StringOutput { return v.SbrPath }).(pulumi.StringOutput)
+}
+
+func (o CniPluginsInstallOutput) StaticPath() pulumi.StringOutput {
+	return o.ApplyT(func(v *CniPluginsInstall) pulumi.StringOutput { return v.StaticPath }).(pulumi.StringOutput)
+}
+
+func (o CniPluginsInstallOutput) TapPath() pulumi.StringOutput {
+	return o.ApplyT(func(v *CniPluginsInstall) pulumi.StringOutput { return v.TapPath }).(pulumi.StringOutput)
+}
+
 func (o CniPluginsInstallOutput) Tar() tools.TarOutput {
 	return o.ApplyT(func(v *CniPluginsInstall) tools.TarOutput { return v.Tar }).(tools.TarOutput)
+}
+
+func (o CniPluginsInstallOutput) TuningPath() pulumi.StringOutput {
+	return o.ApplyT(func(v *CniPluginsInstall) pulumi.StringOutput { return v.TuningPath }).(pulumi.StringOutput)
 }
 
 func (o CniPluginsInstallOutput) Url() pulumi.StringOutput {
@@ -224,6 +301,14 @@ func (o CniPluginsInstallOutput) Url() pulumi.StringOutput {
 // The version to install.
 func (o CniPluginsInstallOutput) Version() pulumi.StringOutput {
 	return o.ApplyT(func(v *CniPluginsInstall) pulumi.StringOutput { return v.Version }).(pulumi.StringOutput)
+}
+
+func (o CniPluginsInstallOutput) VlanPath() pulumi.StringOutput {
+	return o.ApplyT(func(v *CniPluginsInstall) pulumi.StringOutput { return v.VlanPath }).(pulumi.StringOutput)
+}
+
+func (o CniPluginsInstallOutput) VrfPath() pulumi.StringOutput {
+	return o.ApplyT(func(v *CniPluginsInstall) pulumi.StringOutput { return v.VrfPath }).(pulumi.StringOutput)
 }
 
 type CniPluginsInstallArrayOutput struct{ *pulumi.OutputState }

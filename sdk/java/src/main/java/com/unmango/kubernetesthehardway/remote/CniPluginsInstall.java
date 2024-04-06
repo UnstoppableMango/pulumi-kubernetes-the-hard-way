@@ -46,6 +46,18 @@ public class CniPluginsInstall extends com.pulumi.resources.ComponentResource {
     public Output<String> archiveName() {
         return this.archiveName;
     }
+    @Export(name="bandwidthPath", refs={String.class}, tree="[0]")
+    private Output<String> bandwidthPath;
+
+    public Output<String> bandwidthPath() {
+        return this.bandwidthPath;
+    }
+    @Export(name="bridgePath", refs={String.class}, tree="[0]")
+    private Output<String> bridgePath;
+
+    public Output<String> bridgePath() {
+        return this.bridgePath;
+    }
     /**
      * The connection details.
      * 
@@ -59,6 +71,12 @@ public class CniPluginsInstall extends com.pulumi.resources.ComponentResource {
      */
     public Output<Connection> connection() {
         return this.connection;
+    }
+    @Export(name="dhcpPath", refs={String.class}, tree="[0]")
+    private Output<String> dhcpPath;
+
+    public Output<String> dhcpPath() {
+        return this.dhcpPath;
     }
     /**
      * Directory to install the binary.
@@ -80,6 +98,48 @@ public class CniPluginsInstall extends com.pulumi.resources.ComponentResource {
     public Output<Download> download() {
         return this.download;
     }
+    @Export(name="dummyPath", refs={String.class}, tree="[0]")
+    private Output<String> dummyPath;
+
+    public Output<String> dummyPath() {
+        return this.dummyPath;
+    }
+    @Export(name="firewallPath", refs={String.class}, tree="[0]")
+    private Output<String> firewallPath;
+
+    public Output<String> firewallPath() {
+        return this.firewallPath;
+    }
+    @Export(name="hostDevicePath", refs={String.class}, tree="[0]")
+    private Output<String> hostDevicePath;
+
+    public Output<String> hostDevicePath() {
+        return this.hostDevicePath;
+    }
+    @Export(name="hostLocalPath", refs={String.class}, tree="[0]")
+    private Output<String> hostLocalPath;
+
+    public Output<String> hostLocalPath() {
+        return this.hostLocalPath;
+    }
+    @Export(name="ipvlanPath", refs={String.class}, tree="[0]")
+    private Output<String> ipvlanPath;
+
+    public Output<String> ipvlanPath() {
+        return this.ipvlanPath;
+    }
+    @Export(name="loopbackPath", refs={String.class}, tree="[0]")
+    private Output<String> loopbackPath;
+
+    public Output<String> loopbackPath() {
+        return this.loopbackPath;
+    }
+    @Export(name="macvlanPath", refs={String.class}, tree="[0]")
+    private Output<String> macvlanPath;
+
+    public Output<String> macvlanPath() {
+        return this.macvlanPath;
+    }
     @Export(name="mkdir", refs={Mkdir.class}, tree="[0]")
     private Output<Mkdir> mkdir;
 
@@ -98,11 +158,17 @@ public class CniPluginsInstall extends com.pulumi.resources.ComponentResource {
     public Output<Mv> mv() {
         return this.mv;
     }
-    @Export(name="path", refs={String.class}, tree="[0]")
-    private Output<String> path;
+    @Export(name="portmapPath", refs={String.class}, tree="[0]")
+    private Output<String> portmapPath;
 
-    public Output<String> path() {
-        return this.path;
+    public Output<String> portmapPath() {
+        return this.portmapPath;
+    }
+    @Export(name="ptpPath", refs={String.class}, tree="[0]")
+    private Output<String> ptpPath;
+
+    public Output<String> ptpPath() {
+        return this.ptpPath;
     }
     @Export(name="rm", refs={Rm.class}, tree="[0]")
     private Output<Rm> rm;
@@ -110,11 +176,35 @@ public class CniPluginsInstall extends com.pulumi.resources.ComponentResource {
     public Output<Rm> rm() {
         return this.rm;
     }
+    @Export(name="sbrPath", refs={String.class}, tree="[0]")
+    private Output<String> sbrPath;
+
+    public Output<String> sbrPath() {
+        return this.sbrPath;
+    }
+    @Export(name="staticPath", refs={String.class}, tree="[0]")
+    private Output<String> staticPath;
+
+    public Output<String> staticPath() {
+        return this.staticPath;
+    }
+    @Export(name="tapPath", refs={String.class}, tree="[0]")
+    private Output<String> tapPath;
+
+    public Output<String> tapPath() {
+        return this.tapPath;
+    }
     @Export(name="tar", refs={Tar.class}, tree="[0]")
     private Output<Tar> tar;
 
     public Output<Tar> tar() {
         return this.tar;
+    }
+    @Export(name="tuningPath", refs={String.class}, tree="[0]")
+    private Output<String> tuningPath;
+
+    public Output<String> tuningPath() {
+        return this.tuningPath;
     }
     @Export(name="url", refs={String.class}, tree="[0]")
     private Output<String> url;
@@ -135,6 +225,18 @@ public class CniPluginsInstall extends com.pulumi.resources.ComponentResource {
      */
     public Output<String> version() {
         return this.version;
+    }
+    @Export(name="vlanPath", refs={String.class}, tree="[0]")
+    private Output<String> vlanPath;
+
+    public Output<String> vlanPath() {
+        return this.vlanPath;
+    }
+    @Export(name="vrfPath", refs={String.class}, tree="[0]")
+    private Output<String> vrfPath;
+
+    public Output<String> vrfPath() {
+        return this.vrfPath;
     }
 
     /**
