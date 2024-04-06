@@ -63,6 +63,165 @@ language:
       com.pulumi:random: 4.16.0
       com.pulumi:tls: 5.0.0
 resources:
+  kubernetes-the-hard-way:remote:CniPluginsInstall:
+    isComponent: true
+    description: Installs cni-plugins on a remote system.
+    inputProperties:
+      architecture:
+        $ref: "#/types/kubernetes-the-hard-way:remote:Architecture"
+        description: The CPU architecture.
+      connection:
+        $ref: "/command/v0.9.2/schema.json#/types/command:remote:Connection"
+        description: The connection details.
+      installDirectory:
+        type: string
+        description: Directory to install the binary.
+        default: /usr/local/bin
+      version:
+        type: string
+        description: The version of to install.
+    requiredInputs:
+      - connection
+    properties:
+      architecture:
+        $ref: "#/types/kubernetes-the-hard-way:remote:Architecture"
+        description: The CPU architecture.
+      connection:
+        $ref: "/command/v0.9.2/schema.json#/types/command:remote:Connection"
+        description: The connection details.
+      download:
+        $ref: "#/resources/kubernetes-the-hard-way:remote:Download"
+      installDirectory:
+        type: string
+        description: Directory to install the binary.
+        default: /usr/local/bin
+      mktemp:
+        $ref: "#/resources/kubernetes-the-hard-way:tools:Mktemp"
+      mv:
+        $ref: "#/resources/kubernetes-the-hard-way:tools:Mv"
+      path:
+        type: string
+      rm:
+        $ref: "#/resources/kubernetes-the-hard-way:tools:Rm"
+      version:
+        type: string
+        description: The version to install.
+    required:
+      - architecture
+      - connection
+      - download
+      - installDirectory
+      - mktemp
+      - mv
+      - path
+      - rm
+      - version
+  kubernetes-the-hard-way:remote:ContainerdInstall:
+    isComponent: true
+    description: Installs containerd on a remote system.
+    inputProperties:
+      architecture:
+        $ref: "#/types/kubernetes-the-hard-way:remote:Architecture"
+        description: The CPU architecture.
+      connection:
+        $ref: "/command/v0.9.2/schema.json#/types/command:remote:Connection"
+        description: The connection details.
+      installDirectory:
+        type: string
+        description: Directory to install the binary.
+        default: /usr/local/bin
+      version:
+        type: string
+        description: The version of to install.
+    requiredInputs:
+      - connection
+    properties:
+      architecture:
+        $ref: "#/types/kubernetes-the-hard-way:remote:Architecture"
+        description: The CPU architecture.
+      connection:
+        $ref: "/command/v0.9.2/schema.json#/types/command:remote:Connection"
+        description: The connection details.
+      download:
+        $ref: "#/resources/kubernetes-the-hard-way:remote:Download"
+      installDirectory:
+        type: string
+        description: Directory to install the binary.
+        default: /usr/local/bin
+      mktemp:
+        $ref: "#/resources/kubernetes-the-hard-way:tools:Mktemp"
+      mv:
+        $ref: "#/resources/kubernetes-the-hard-way:tools:Mv"
+      path:
+        type: string
+      rm:
+        $ref: "#/resources/kubernetes-the-hard-way:tools:Rm"
+      version:
+        type: string
+        description: The version to install.
+    required:
+      - architecture
+      - connection
+      - download
+      - installDirectory
+      - mktemp
+      - mv
+      - path
+      - rm
+      - version
+  kubernetes-the-hard-way:remote:CrictlInstall:
+    isComponent: true
+    description: Installs crictl on a remote system.
+    inputProperties:
+      architecture:
+        $ref: "#/types/kubernetes-the-hard-way:remote:Architecture"
+        description: The CPU architecture.
+      connection:
+        $ref: "/command/v0.9.2/schema.json#/types/command:remote:Connection"
+        description: The connection details.
+      installDirectory:
+        type: string
+        description: Directory to install the binary.
+        default: /usr/local/bin
+      version:
+        type: string
+        description: The version of to install.
+    requiredInputs:
+      - connection
+    properties:
+      architecture:
+        $ref: "#/types/kubernetes-the-hard-way:remote:Architecture"
+        description: The CPU architecture.
+      connection:
+        $ref: "/command/v0.9.2/schema.json#/types/command:remote:Connection"
+        description: The connection details.
+      download:
+        $ref: "#/resources/kubernetes-the-hard-way:remote:Download"
+      installDirectory:
+        type: string
+        description: Directory to install the binary.
+        default: /usr/local/bin
+      mktemp:
+        $ref: "#/resources/kubernetes-the-hard-way:tools:Mktemp"
+      mv:
+        $ref: "#/resources/kubernetes-the-hard-way:tools:Mv"
+      path:
+        type: string
+      rm:
+        $ref: "#/resources/kubernetes-the-hard-way:tools:Rm"
+      version:
+        type: string
+        description: The version to install.
+    required:
+      - architecture
+      - connection
+      - download
+      - installDirectory
+      - mktemp
+      - mv
+      - path
+      - rm
+      - version
   kubernetes-the-hard-way:remote:EtcdConfiguration:
     isComponent: true
     inputProperties:
@@ -373,6 +532,165 @@ resources:
       - connection
       - installDirectory
       - version
+  kubernetes-the-hard-way:remote:KubectlInstall:
+    isComponent: true
+    description: Installs kubectl on a remote system.
+    inputProperties:
+      architecture:
+        $ref: "#/types/kubernetes-the-hard-way:remote:Architecture"
+        description: The CPU architecture.
+      connection:
+        $ref: "/command/v0.9.2/schema.json#/types/command:remote:Connection"
+        description: The connection details.
+      installDirectory:
+        type: string
+        description: Directory to install the binary.
+        default: /usr/local/bin
+      version:
+        type: string
+        description: The version of to install.
+    requiredInputs:
+      - connection
+    properties:
+      architecture:
+        $ref: "#/types/kubernetes-the-hard-way:remote:Architecture"
+        description: The CPU architecture.
+      connection:
+        $ref: "/command/v0.9.2/schema.json#/types/command:remote:Connection"
+        description: The connection details.
+      download:
+        $ref: "#/resources/kubernetes-the-hard-way:remote:Download"
+      installDirectory:
+        type: string
+        description: Directory to install the binary.
+        default: /usr/local/bin
+      mktemp:
+        $ref: "#/resources/kubernetes-the-hard-way:tools:Mktemp"
+      mv:
+        $ref: "#/resources/kubernetes-the-hard-way:tools:Mv"
+      path:
+        type: string
+      rm:
+        $ref: "#/resources/kubernetes-the-hard-way:tools:Rm"
+      version:
+        type: string
+        description: The version to install.
+    required:
+      - architecture
+      - connection
+      - download
+      - installDirectory
+      - mktemp
+      - mv
+      - path
+      - rm
+      - version
+  kubernetes-the-hard-way:remote:KubeletInstall:
+    isComponent: true
+    description: Installs kubelet on a remote system.
+    inputProperties:
+      architecture:
+        $ref: "#/types/kubernetes-the-hard-way:remote:Architecture"
+        description: The CPU architecture.
+      connection:
+        $ref: "/command/v0.9.2/schema.json#/types/command:remote:Connection"
+        description: The connection details.
+      installDirectory:
+        type: string
+        description: Directory to install the binary.
+        default: /usr/local/bin
+      version:
+        type: string
+        description: The version of to install.
+    requiredInputs:
+      - connection
+    properties:
+      architecture:
+        $ref: "#/types/kubernetes-the-hard-way:remote:Architecture"
+        description: The CPU architecture.
+      connection:
+        $ref: "/command/v0.9.2/schema.json#/types/command:remote:Connection"
+        description: The connection details.
+      download:
+        $ref: "#/resources/kubernetes-the-hard-way:remote:Download"
+      installDirectory:
+        type: string
+        description: Directory to install the binary.
+        default: /usr/local/bin
+      mktemp:
+        $ref: "#/resources/kubernetes-the-hard-way:tools:Mktemp"
+      mv:
+        $ref: "#/resources/kubernetes-the-hard-way:tools:Mv"
+      path:
+        type: string
+      rm:
+        $ref: "#/resources/kubernetes-the-hard-way:tools:Rm"
+      version:
+        type: string
+        description: The version to install.
+    required:
+      - architecture
+      - connection
+      - download
+      - installDirectory
+      - mktemp
+      - mv
+      - path
+      - rm
+      - version
+  kubernetes-the-hard-way:remote:KubeProxyInstall:
+    isComponent: true
+    description: Installs containerd on a remote system.
+    inputProperties:
+      architecture:
+        $ref: "#/types/kubernetes-the-hard-way:remote:Architecture"
+        description: The CPU architecture.
+      connection:
+        $ref: "/command/v0.9.2/schema.json#/types/command:remote:Connection"
+        description: The connection details.
+      installDirectory:
+        type: string
+        description: Directory to install the binary.
+        default: /usr/local/bin
+      version:
+        type: string
+        description: The version of to install.
+    requiredInputs:
+      - connection
+    properties:
+      architecture:
+        $ref: "#/types/kubernetes-the-hard-way:remote:Architecture"
+        description: The CPU architecture.
+      connection:
+        $ref: "/command/v0.9.2/schema.json#/types/command:remote:Connection"
+        description: The connection details.
+      download:
+        $ref: "#/resources/kubernetes-the-hard-way:remote:Download"
+      installDirectory:
+        type: string
+        description: Directory to install the binary.
+        default: /usr/local/bin
+      mktemp:
+        $ref: "#/resources/kubernetes-the-hard-way:tools:Mktemp"
+      mv:
+        $ref: "#/resources/kubernetes-the-hard-way:tools:Mv"
+      path:
+        type: string
+      rm:
+        $ref: "#/resources/kubernetes-the-hard-way:tools:Rm"
+      version:
+        type: string
+        description: The version to install.
+    required:
+      - architecture
+      - connection
+      - download
+      - installDirectory
+      - mktemp
+      - mv
+      - path
+      - rm
+      - version
   kubernetes-the-hard-way:remote:KubeSchedulerInstall:
     isComponent: true
     description: Installs kube-scheduler on a remote system.
@@ -410,6 +728,59 @@ resources:
       - architecture
       - connection
       - installDirectory
+      - version
+  kubernetes-the-hard-way:remote:RuncInstall:
+    isComponent: true
+    description: Installs runc on a remote system.
+    inputProperties:
+      architecture:
+        $ref: "#/types/kubernetes-the-hard-way:remote:Architecture"
+        description: The CPU architecture.
+      connection:
+        $ref: "/command/v0.9.2/schema.json#/types/command:remote:Connection"
+        description: The connection details.
+      installDirectory:
+        type: string
+        description: Directory to install the binary.
+        default: /usr/local/bin
+      version:
+        type: string
+        description: The version of to install.
+    requiredInputs:
+      - connection
+    properties:
+      architecture:
+        $ref: "#/types/kubernetes-the-hard-way:remote:Architecture"
+        description: The CPU architecture.
+      connection:
+        $ref: "/command/v0.9.2/schema.json#/types/command:remote:Connection"
+        description: The connection details.
+      download:
+        $ref: "#/resources/kubernetes-the-hard-way:remote:Download"
+      installDirectory:
+        type: string
+        description: Directory to install the binary.
+        default: /usr/local/bin
+      mktemp:
+        $ref: "#/resources/kubernetes-the-hard-way:tools:Mktemp"
+      mv:
+        $ref: "#/resources/kubernetes-the-hard-way:tools:Mv"
+      path:
+        type: string
+      rm:
+        $ref: "#/resources/kubernetes-the-hard-way:tools:Rm"
+      version:
+        type: string
+        description: The version to install.
+    required:
+      - architecture
+      - connection
+      - download
+      - installDirectory
+      - mktemp
+      - mv
+      - path
+      - rm
       - version
   kubernetes-the-hard-way:remote:SystemdService:
     isComponent: true
