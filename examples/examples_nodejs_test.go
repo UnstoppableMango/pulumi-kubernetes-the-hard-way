@@ -83,6 +83,8 @@ func TestRemoteTs(t *testing.T) {
 
 				// assert.Empty(t, stack.Outputs["tarStdout"])
 				// assert.Empty(t, stack.Outputs["tarStderr"])
+
+				assert.NotEmpty(t, stack.Outputs["mktemp"])
 			},
 		})
 

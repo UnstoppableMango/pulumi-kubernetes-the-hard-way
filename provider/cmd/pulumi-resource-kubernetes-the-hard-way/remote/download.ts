@@ -21,7 +21,7 @@ export class Download extends types.Download {
       connection: args.connection,
       url: args.url,
       directoryPrefix: mkdir.directory,
-    }, { parent: this });
+    }, { parent: this, dependsOn: mkdir });
 
     this.mkdir = mkdir;
     this.destination = destination;

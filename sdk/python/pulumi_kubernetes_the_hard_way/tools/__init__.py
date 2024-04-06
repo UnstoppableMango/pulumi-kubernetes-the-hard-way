@@ -5,9 +5,13 @@
 from .. import _utilities
 import typing
 # Export this package's modules as members:
+from ._enums import *
+from .etcdctl import *
 from .mkdir import *
 from .mktemp import *
 from .mv import *
 from .rm import *
+from .systemctl import *
 from .tar import *
+from .tee import *
 from .wget import *

@@ -63,187 +63,6 @@ language:
       com.pulumi:random: 4.16.0
       com.pulumi:tls: 5.0.0
 resources:
-  kubernetes-the-hard-way:tls:Certificate:
-    isComponent: true
-    inputProperties:
-      algorithm:
-        $ref: "#/types/kubernetes-the-hard-way:tls:Algorithm"
-        description: Name of the algorithm to use when generating the private key.
-      allowedUses:
-        type: array
-        items:
-          $ref: "#/types/kubernetes-the-hard-way:tls:AllowedUsage"
-      caCertPem:
-        type: string
-      caPrivateKeyPem:
-        type: string
-      ecdsaCurve:
-        $ref: "#/types/kubernetes-the-hard-way:tls:EcdsaCurve"
-        description: When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
-      rsaBits:
-        type: integer
-        description: When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
-      dnsNames:
-        type: array
-        items:
-          type: string
-        description: List of DNS names for which a certificate is being requested.
-      earlyRenewalHours:
-        type: integer
-        description: TODO
-      ipAddresses:
-        type: array
-        items:
-          type: string
-        description: List of IP addresses for which a certificate is being requested.
-      isCaCertificate:
-        type: boolean
-      setAuthorityKeyId:
-        type: boolean
-        description: Should the generated certificate include an authority key identifier.
-      setSubjectKeyId:
-        type: boolean
-        description: Should the generated certificate include a subject key identifier.
-      subject:
-        $ref: "/tls/v5.0.2/schema.json#/types/tls:index/CertRequestSubject:CertRequestSubject"
-      uris:
-        type: array
-        items:
-          type: string
-        description: List of URIs for which a certificate is being requested.
-      validityPeriodHours:
-        type: integer
-        description: Number of hours, after initial issuing, that the certificate will remain valid.
-    requiredInputs:
-      - algorithm
-      - allowedUses
-      - caCertPem
-      - caPrivateKeyPem
-      - validityPeriodHours
-    properties:
-      cert:
-        $ref: "/tls/v5.0.2/schema.json#/resources/tls:index/locallySignedCert:LocallySignedCert"
-      certPem:
-        type: string
-      csr:
-        $ref: "/tls/v5.0.2/schema.json#/resources/tls:index/certRequest:CertRequest"
-      key:
-        $ref: "/tls/v5.0.2/schema.json#/resources/tls:index/privateKey:PrivateKey"
-      privateKeyPem:
-        type: string
-      publicKeyPem:
-        type: string
-    required:
-      - cert
-      - certPem
-      - csr
-      - key
-      - privateKeyPem
-      - publicKeyPem
-  kubernetes-the-hard-way:tls:ClusterPki:
-    isComponent: true
-    inputProperties:
-      algorithm:
-        $ref: "#/types/kubernetes-the-hard-way:tls:Algorithm"
-        description: Name of the algorithm to use when generating the private key.
-        default: RSA
-      clusterName:
-        type: string
-        description: A name to use for the cluster
-      ecdsaCurve:
-        $ref: "#/types/kubernetes-the-hard-way:tls:EcdsaCurve"
-        description: When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
-      nodes:
-        type: object
-        additionalProperties:
-          $ref: "#/types/kubernetes-the-hard-way:tls:ClusterPkiNode"
-        description: Map of node names to node configuration.
-      publicIp:
-        type: string
-        description: Publicly accessible IP address.
-      rsaBits:
-        type: integer
-        description: When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
-        default: 2048
-      validityPeriodHours:
-        type: integer
-        description: Number of hours, after initial issuing, that the certificate will remain valid.
-        default: 8076
-    requiredInputs:
-      - clusterName
-      - nodes
-      - publicIp
-    properties:
-      admin:
-        $ref: "#/resources/kubernetes-the-hard-way:tls:Certificate"
-        description: The admin certificate.
-      algorithm:
-        $ref: "#/types/kubernetes-the-hard-way:tls:Algorithm"
-        description: Name of the algorithm to use when generating the private key.
-      ca:
-        $ref: "#/resources/kubernetes-the-hard-way:tls:RootCa"
-      clusterName:
-        type: string
-      controllerManager:
-        $ref: "#/resources/kubernetes-the-hard-way:tls:Certificate"
-        description: The controller manager certificate.
-      kubelet:
-        type: object
-        additionalProperties:
-          $ref: "#/resources/kubernetes-the-hard-way:tls:Certificate"
-        description: Map of node name to kubelet certificate.
-      kubeProxy:
-        $ref: "#/resources/kubernetes-the-hard-way:tls:Certificate"
-        description: The kube proxy certificate.
-      kubernetes:
-        $ref: "#/resources/kubernetes-the-hard-way:tls:Certificate"
-        description: The kubernetes certificate.
-      kubeScheduler:
-        $ref: "#/resources/kubernetes-the-hard-way:tls:Certificate"
-        description: The kube scheduler certificate.
-      publicIp:
-        type: string
-        description: The publicly accessible IP for the cluster.
-      rsaBits:
-        type: integer
-        description: When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
-      serviceAccounts:
-        $ref: "#/resources/kubernetes-the-hard-way:tls:Certificate"
-        description: The service accounts certificate.
-      validityPeriodHours:
-        type: integer
-        description: Number of hours, after initial issuing, that the certificate will remain valid.
-    required:
-      - admin
-      - algorithm
-      - ca
-      - clusterName
-      - controllerManager
-      - kubelet
-      - kubeProxy
-      - kubernetes
-      - kubeScheduler
-      - publicIp
-      - rsaBits
-      - serviceAccounts
-      - validityPeriodHours
-    methods:
-      getKubeconfig: kubernetes-the-hard-way:tls:ClusterPki/getKubeconfig
-  kubernetes-the-hard-way:tls:EncryptionKey:
-    isComponent: true
-    inputProperties:
-      bytes:
-        type: number
-        description: The length of the key in bytes.
-    properties:
-      config:
-        type: string
-        description: The generated `v1/EncryptionConfig`.
-      key:
-        $ref: "/random/v4.16.0/schema.json#/resources/random:index/randomBytes:RandomBytes"
-    required:
-      - config
-      - key
   kubernetes-the-hard-way:remote:EtcdInstall:
     isComponent: true
     description: Represents an etcd binary on a remote system.
@@ -389,6 +208,8 @@ resources:
       - tar
       - url
       - version
+    methods:
+      etcdctl: kubernetes-the-hard-way:remote:EtcdInstall/etcdctl
   kubernetes-the-hard-way:remote:Download:
     isComponent: true
     description: Represents a file to be downloaded on a remote system.
@@ -474,6 +295,120 @@ resources:
       - path
       - stderr
       - stdout
+  kubernetes-the-hard-way:remote:KubeApiServerInstall:
+    isComponent: true
+    description: Installs kube-apiserver on a remote system.
+    inputProperties:
+      architecture:
+        $ref: "#/types/kubernetes-the-hard-way:remote:Architecture"
+        description: The kube-apiserver CPU architecture.
+      connection:
+        $ref: "/command/v0.9.2/schema.json#/types/command:remote:Connection"
+        description: The connection details.
+      installDirectory:
+        type: string
+        description: Directory to install the `etcd` and `etcdctl` binaries.
+        default: /usr/local/bin
+      version:
+        type: string
+        description: The version of kube-apiserver to install.
+    requiredInputs:
+      - connection
+    properties:
+      architecture:
+        $ref: "#/types/kubernetes-the-hard-way:remote:Architecture"
+        description: The kube-apiserver CPU architecture.
+      connection:
+        $ref: "/command/v0.9.2/schema.json#/types/command:remote:Connection"
+        description: The connection details.
+      installDirectory:
+        type: string
+        description: Directory to install the `kube-apiserver` binary.
+        default: /usr/local/bin
+      version:
+        type: string
+        description: The version of kube-apiserver to install.
+    required:
+      - architecture
+      - connection
+      - installDirectory
+      - version
+  kubernetes-the-hard-way:remote:KubeControllerManagerInstall:
+    isComponent: true
+    description: Installs kube-controller-manager on a remote system.
+    inputProperties:
+      architecture:
+        $ref: "#/types/kubernetes-the-hard-way:remote:Architecture"
+        description: The kube-controller-manager CPU architecture.
+      connection:
+        $ref: "/command/v0.9.2/schema.json#/types/command:remote:Connection"
+        description: The connection details.
+      installDirectory:
+        type: string
+        description: Directory to install the `kube-controller-manager` binary.
+        default: /usr/local/bin
+      version:
+        type: string
+        description: The version of kube-controller-manager to install.
+    requiredInputs:
+      - connection
+    properties:
+      architecture:
+        $ref: "#/types/kubernetes-the-hard-way:remote:Architecture"
+        description: The kube-controller-manager CPU architecture.
+      connection:
+        $ref: "/command/v0.9.2/schema.json#/types/command:remote:Connection"
+        description: The connection details.
+      installDirectory:
+        type: string
+        description: Directory to install the `kube-controller-manager` binary.
+        default: /usr/local/bin
+      version:
+        type: string
+        description: The version of kube-controller-manager to install.
+    required:
+      - architecture
+      - connection
+      - installDirectory
+      - version
+  kubernetes-the-hard-way:remote:KubeSchedulerInstall:
+    isComponent: true
+    description: Installs kube-scheduler on a remote system.
+    inputProperties:
+      architecture:
+        $ref: "#/types/kubernetes-the-hard-way:remote:Architecture"
+        description: The kube-scheduler CPU architecture.
+      connection:
+        $ref: "/command/v0.9.2/schema.json#/types/command:remote:Connection"
+        description: The connection details.
+      installDirectory:
+        type: string
+        description: Directory to install the `kube-scheduler` binary.
+        default: /usr/local/bin
+      version:
+        type: string
+        description: The version of kube-scheduler to install.
+    requiredInputs:
+      - connection
+    properties:
+      architecture:
+        $ref: "#/types/kubernetes-the-hard-way:remote:Architecture"
+        description: The kube-scheduler CPU architecture.
+      connection:
+        $ref: "/command/v0.9.2/schema.json#/types/command:remote:Connection"
+        description: The connection details.
+      installDirectory:
+        type: string
+        description: Directory to install the `etcd` and `etcdctl` binaries.
+        default: /usr/local/bin
+      version:
+        type: string
+        description: The version of kube-scheduler to install.
+    required:
+      - architecture
+      - connection
+      - installDirectory
+      - version
   kubernetes-the-hard-way:remote:SystemdService:
     isComponent: true
     inputProperties:
@@ -521,6 +456,195 @@ resources:
       - directory
       - file
       - service
+    methods:
+      disable: kubernetes-the-hard-way:remote:SystemdService/disable
+      enable: kubernetes-the-hard-way:remote:SystemdService/enable
+      start: kubernetes-the-hard-way:remote:SystemdService/start
+  kubernetes-the-hard-way:tls:Certificate:
+    isComponent: true
+    inputProperties:
+      algorithm:
+        $ref: "#/types/kubernetes-the-hard-way:tls:Algorithm"
+        description: Name of the algorithm to use when generating the private key.
+      allowedUses:
+        type: array
+        items:
+          $ref: "#/types/kubernetes-the-hard-way:tls:AllowedUsage"
+      caCertPem:
+        type: string
+      caPrivateKeyPem:
+        type: string
+      ecdsaCurve:
+        $ref: "#/types/kubernetes-the-hard-way:tls:EcdsaCurve"
+        description: When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
+      rsaBits:
+        type: integer
+        description: When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
+      dnsNames:
+        type: array
+        items:
+          type: string
+        description: List of DNS names for which a certificate is being requested.
+      earlyRenewalHours:
+        type: integer
+        description: TODO
+      ipAddresses:
+        type: array
+        items:
+          type: string
+        description: List of IP addresses for which a certificate is being requested.
+      isCaCertificate:
+        type: boolean
+      setAuthorityKeyId:
+        type: boolean
+        description: Should the generated certificate include an authority key identifier.
+      setSubjectKeyId:
+        type: boolean
+        description: Should the generated certificate include a subject key identifier.
+      subject:
+        $ref: "/tls/v5.0.2/schema.json#/types/tls:index/CertRequestSubject:CertRequestSubject"
+      uris:
+        type: array
+        items:
+          type: string
+        description: List of URIs for which a certificate is being requested.
+      validityPeriodHours:
+        type: integer
+        description: Number of hours, after initial issuing, that the certificate will remain valid.
+    requiredInputs:
+      - algorithm
+      - allowedUses
+      - caCertPem
+      - caPrivateKeyPem
+      - validityPeriodHours
+    properties:
+      allowedUses:
+        type: array
+        items:
+          $ref: "#/types/kubernetes-the-hard-way:tls:AllowedUsage"
+      cert:
+        $ref: "/tls/v5.0.2/schema.json#/resources/tls:index/locallySignedCert:LocallySignedCert"
+      certPem:
+        type: string
+      csr:
+        $ref: "/tls/v5.0.2/schema.json#/resources/tls:index/certRequest:CertRequest"
+      key:
+        $ref: "/tls/v5.0.2/schema.json#/resources/tls:index/privateKey:PrivateKey"
+      privateKeyPem:
+        type: string
+      publicKeyPem:
+        type: string
+    required:
+      - cert
+      - certPem
+      - csr
+      - key
+      - privateKeyPem
+      - publicKeyPem
+  kubernetes-the-hard-way:tls:ClusterPki:
+    isComponent: true
+    inputProperties:
+      algorithm:
+        $ref: "#/types/kubernetes-the-hard-way:tls:Algorithm"
+        description: Name of the algorithm to use when generating the private key.
+        default: RSA
+      clusterName:
+        type: string
+        description: A name to use for the cluster
+      ecdsaCurve:
+        $ref: "#/types/kubernetes-the-hard-way:tls:EcdsaCurve"
+        description: When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
+      nodes:
+        type: object
+        additionalProperties:
+          $ref: "#/types/kubernetes-the-hard-way:tls:ClusterPkiNode"
+        description: Map of node names to node configuration.
+      publicIp:
+        type: string
+        description: Publicly accessible IP address.
+      rsaBits:
+        type: integer
+        description: When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
+        default: 2048
+      validityPeriodHours:
+        type: integer
+        description: Number of hours, after initial issuing, that the certificate will remain valid.
+        default: 8076
+    requiredInputs:
+      - clusterName
+      - nodes
+      - publicIp
+    properties:
+      admin:
+        $ref: "#/resources/kubernetes-the-hard-way:tls:Certificate"
+        description: The admin certificate.
+      algorithm:
+        $ref: "#/types/kubernetes-the-hard-way:tls:Algorithm"
+        description: Name of the algorithm to use when generating the private key.
+      ca:
+        $ref: "#/resources/kubernetes-the-hard-way:tls:RootCa"
+      clusterName:
+        type: string
+      controllerManager:
+        $ref: "#/resources/kubernetes-the-hard-way:tls:Certificate"
+        description: The controller manager certificate.
+      kubelet:
+        type: object
+        additionalProperties:
+          $ref: "#/resources/kubernetes-the-hard-way:tls:Certificate"
+        description: Map of node name to kubelet certificate.
+      kubeProxy:
+        $ref: "#/resources/kubernetes-the-hard-way:tls:Certificate"
+        description: The kube proxy certificate.
+      kubernetes:
+        $ref: "#/resources/kubernetes-the-hard-way:tls:Certificate"
+        description: The kubernetes certificate.
+      kubeScheduler:
+        $ref: "#/resources/kubernetes-the-hard-way:tls:Certificate"
+        description: The kube scheduler certificate.
+      publicIp:
+        type: string
+        description: The publicly accessible IP for the cluster.
+      rsaBits:
+        type: integer
+        description: When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
+      serviceAccounts:
+        $ref: "#/resources/kubernetes-the-hard-way:tls:Certificate"
+        description: The service accounts certificate.
+      validityPeriodHours:
+        type: integer
+        description: Number of hours, after initial issuing, that the certificate will remain valid.
+    required:
+      - admin
+      - algorithm
+      - ca
+      - clusterName
+      - controllerManager
+      - kubelet
+      - kubeProxy
+      - kubernetes
+      - kubeScheduler
+      - publicIp
+      - rsaBits
+      - serviceAccounts
+      - validityPeriodHours
+    methods:
+      getKubeconfig: kubernetes-the-hard-way:tls:ClusterPki/getKubeconfig
+  kubernetes-the-hard-way:tls:EncryptionKey:
+    isComponent: true
+    inputProperties:
+      bytes:
+        type: number
+        description: The length of the key in bytes.
+    properties:
+      config:
+        type: string
+        description: The generated `v1/EncryptionConfig`.
+      key:
+        $ref: "/random/v4.16.0/schema.json#/resources/random:index/randomBytes:RandomBytes"
+    required:
+      - config
+      - key
   kubernetes-the-hard-way:tls:RootCa:
     isComponent: true
     inputProperties:
@@ -586,6 +710,46 @@ resources:
       - key
       - privateKeyPem
       - publicKeyPem
+  kubernetes-the-hard-way:tools:Etcdctl:
+    isComponent: true
+    description: Abstraction over the `etcdctl` utility on a remote system.
+    inputProperties:
+      binaryPath:
+        type: string
+      commands:
+        type: array
+        items:
+          $ref: "#/types/kubernetes-the-hard-way:tools:EtcdctlCommand"
+      connection:
+        $ref: "/command/v0.9.2/schema.json#/types/command:remote:Connection"
+        description: Connection details for the remote system.
+      endpoints:
+        type: string
+      environment:
+        type: object
+        additionalProperties:
+          type: string
+      caCert:
+        type: string
+      cert:
+        type: string
+      key:
+        type: string
+    requiredInputs:
+      - connection
+    properties:
+      binaryPath:
+        type: string
+      command:
+        $ref: "/command/v0.9.2/schema.json#/resources/command:remote:Command"
+        description: Represents the command run on the remote system.
+      connection:
+        $ref: "/command/v0.9.2/schema.json#/types/command:remote:Connection"
+        description: Connection details for the remote system.
+    required:
+      - binaryPath
+      - command
+      - connection
   kubernetes-the-hard-way:tools:Mkdir:
     isComponent: true
     description: Represents the `mkdir` utility.
@@ -596,6 +760,14 @@ resources:
       directory:
         type: string
         description: The fully qualified path of the directory on the remote system.
+      environment:
+        type: object
+        additionalProperties:
+          type: string
+      lifecycle:
+        $ref: "#/types/kubernetes-the-hard-way:tools:CommandLifecycle"
+        plain: true
+        description: At what stage(s) in the resource lifecycle should the command be run.
       parents:
         type: boolean
         description: Corresponds to the `--parents` option.
@@ -644,6 +816,14 @@ resources:
       dryRun:
         type: boolean
         description: Corresponds to the --dry-run option.
+      environment:
+        type: object
+        additionalProperties:
+          type: string
+      lifecycle:
+        $ref: "#/types/kubernetes-the-hard-way:tools:CommandLifecycle"
+        plain: true
+        description: At what stage(s) in the resource lifecycle should the command be run.
       quiet:
         type: boolean
         description: Corresponds to the --quiet option.
@@ -656,6 +836,10 @@ resources:
       tmpdir:
         type: string
         description: Corresponds to the --tmpdir option.
+      triggers:
+        type: array
+        items:
+          $ref: "pulumi.json#/Any"
     requiredInputs:
       - connection
     properties:
@@ -671,6 +855,10 @@ resources:
       quiet:
         type: boolean
         description: Corresponds to the --quiet option.
+      stderr:
+        type: string
+      stdout:
+        type: string
       suffix:
         type: string
         description: Corresponds to the --suffix option.
@@ -685,6 +873,8 @@ resources:
       - directory
       - dryRun
       - quiet
+      - stderr
+      - stdout
   kubernetes-the-hard-way:tools:Mv:
     isComponent: true
     description: Abstraction over the `mv` utility on a remote system.
@@ -708,6 +898,10 @@ resources:
       directory:
         type: string
         description: Corresponds to the [DIRECTORY] argument.
+      environment:
+        type: object
+        additionalProperties:
+          type: string
       force:
         type: boolean
         description: Corresponds to the --force option.
@@ -764,6 +958,10 @@ resources:
       force:
         type: boolean
         description: Corresponds to the --force option.
+      lifecycle:
+        $ref: "#/types/kubernetes-the-hard-way:tools:CommandLifecycle"
+        plain: true
+        description: At what stage(s) in the resource lifecycle should the command be run.
       noClobber:
         type: boolean
         description: Corresponds to the --no-clobber option.
@@ -811,6 +1009,10 @@ resources:
       dir:
         type: boolean
         description: Corresponds to the --dir option.
+      environment:
+        type: object
+        additionalProperties:
+          type: string
       files:
         oneOf:
           - type: array
@@ -821,6 +1023,10 @@ resources:
       force:
         type: boolean
         description: Corresponds to the --force option.
+      lifecycle:
+        $ref: "#/types/kubernetes-the-hard-way:tools:CommandLifecycle"
+        plain: true
+        description: At what stage(s) in the resource lifecycle should the command be run.
       onDelete:
         type: boolean
         plain: true
@@ -865,6 +1071,54 @@ resources:
       - onDelete
       - recursive
       - verbose
+  kubernetes-the-hard-way:tools:Systemctl:
+    isComponent: true
+    description: Abstraction over the `systemctl` utility on a remote system.
+    inputProperties:
+      commands:
+        type: array
+        items:
+          $ref: "#/types/kubernetes-the-hard-way:tools:SystemctlCommand"
+      connection:
+        $ref: "/command/v0.9.2/schema.json#/types/command:remote:Connection"
+        description: Connection details for the remote system.
+      environment:
+        type: object
+        additionalProperties:
+          type: string
+      lifecycle:
+        $ref: "#/types/kubernetes-the-hard-way:tools:CommandLifecycle"
+        plain: true
+      serviceName:
+        type: string
+    requiredInputs:
+      - commands
+      - connection
+    properties:
+      command:
+        $ref: "/command/v0.9.2/schema.json#/resources/command:remote:Command"
+        description: Represents the command run on the remote system.
+      commands:
+        type: array
+        items:
+          $ref: "#/types/kubernetes-the-hard-way:tools:SystemctlCommand"
+      connection:
+        $ref: "/command/v0.9.2/schema.json#/types/command:remote:Connection"
+        description: Connection details for the remote system.
+      serviceName:
+        type: string
+      stderr:
+        type: string
+      stdin:
+        type: string
+      stdout:
+        type: string
+    required:
+      - command
+      - commands
+      - connection
+      - stderr
+      - stdout
   kubernetes-the-hard-way:tools:Tar:
     isComponent: true
     description: Abstracion over the `tar` utility on a remote system.
@@ -878,6 +1132,10 @@ resources:
       directory:
         type: string
         description: Corresponds to the --directory option.
+      environment:
+        type: object
+        additionalProperties:
+          type: string
       extract:
         type: boolean
         description: Corresponds to the --extract option.
@@ -937,6 +1195,97 @@ resources:
       - files
       - stderr
       - stdout
+  kubernetes-the-hard-way:tools:Tee:
+    isComponent: true
+    description: Read from standard input and write to standard output and files.
+    inputProperties:
+      append:
+        type: boolean
+        description: Append to the given FILEs, do not overwrite.
+      connection:
+        $ref: "/command/v0.9.2/schema.json#/types/command:remote:Connection"
+        description: Connection details for the remote system.
+      environment:
+        type: object
+        additionalProperties:
+          type: string
+      files:
+        oneOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+        description: The file(s) to write to.
+      ignoreInterrupts:
+        type: boolean
+        description: Ignore interrupt signals.
+      lifecycle:
+        $ref: "#/types/kubernetes-the-hard-way:tools:CommandLifecycle"
+        plain: true
+        description: At what stage(s) in the resource lifecycle should the command be run.
+      outputError:
+        $ref: "#/types/kubernetes-the-hard-way:tools:TeeMode"
+        description: Set behavior on write error.
+      pipe:
+        type: boolean
+        description: Operate in a more appropriate MODE with pipes.
+      stdin:
+        type: string
+      version:
+        type: boolean
+        description: Output version information and exit.
+    requiredInputs:
+      - connection
+      - files
+      - stdin
+    properties:
+      append:
+        type: boolean
+        description: Append to the given FILEs, do not overwrite.
+      command:
+        $ref: "/command/v0.9.2/schema.json#/resources/command:remote:Command"
+        description: Represents the command run on the remote system.
+      connection:
+        $ref: "/command/v0.9.2/schema.json#/types/command:remote:Connection"
+        description: Connection details for the remote system.
+      environment:
+        type: object
+        additionalProperties:
+          type: string
+      files:
+        oneOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+        description: The file(s) to write to.
+      ignoreInterrupts:
+        type: boolean
+        description: Ignore interrupt signals.
+      lifecycle:
+        $ref: "#/types/kubernetes-the-hard-way:tools:CommandLifecycle"
+        plain: true
+        description: At what stage(s) in the resource lifecycle should the command be run.
+      outputError:
+        $ref: "#/types/kubernetes-the-hard-way:tools:TeeMode"
+        description: Set behavior on write error.
+      pipe:
+        type: boolean
+        description: Operate in a more appropriate MODE with pipes.
+      stderr:
+        type: string
+      stdin:
+        type: string
+      stdout:
+        type: string
+    required:
+      - append
+      - command
+      - connection
+      - files
+      - ignoreInterrupts
+      - pipe
+      - stdin
   kubernetes-the-hard-way:tools:Wget:
     isComponent: true
     description: Abstraction over the `wget` utility on a remote system.
@@ -947,6 +1296,10 @@ resources:
       directoryPrefix:
         type: string
         description: Corresponds to the --directory-prefix option.
+      environment:
+        type: object
+        additionalProperties:
+          type: string
       httpsOnly:
         type: boolean
         description: Corresponds to the --https-only option.
@@ -975,6 +1328,10 @@ resources:
       directoryPrefix:
         type: string
         description: Corresponds to the --directory-prefix option.
+      environment:
+        type: object
+        additionalProperties:
+          type: string
       httpsOnly:
         type: boolean
         description: Corresponds to the --https-only option.
@@ -1394,6 +1751,161 @@ types:
         items:
           type: string
         description: Configures (weak) requirement dependencies on other units.
+  kubernetes-the-hard-way:tools:EtcdctlCommand:
+    type: string
+    enum:
+      - value: member
+      - value: list
+  kubernetes-the-hard-way:tls:Bundle:
+    type: object
+    properties:
+      caPem:
+        type: string
+      certPem:
+        type: string
+      keyPem:
+        type: string
+    required:
+      - caPem
+      - certPem
+      - keyPem
+  kubernetes-the-hard-way:tools:SystemctlCommand:
+    type: string
+    enum:
+      - value: daemon-reload
+      - value: disable
+      - value: enable
+      - value: start
+      - value: stop
+  kubernetes-the-hard-way:tools:TeeMode:
+    type: string
+    enum:
+      - value: warn
+      - value: warn-nopipe
+      - value: exit
+      - value: exit-nopipe
+  kubernetes-the-hard-way:tools:CommandLifecycle:
+    type: string
+    enum:
+      - value: create
+      - value: update
+      - value: delete
+  kubernetes-the-hard-way:tools:KubeApiServerCommandOptions:
+    type: object
+    properties:
+      advertiseAddress:
+        type: string
+      allowPrivileged:
+        type: boolean
+      apiServerCount:
+        type: number
+      auditLogMaxAge:
+        type: number
+      auditLogMaxBackup:
+        type: number
+      auditLogMaxSize:
+        type: number
+      auditLogPath:
+        type: string
+      authorizationMode:
+        type: array
+        items:
+          type: string
+      bindAddress:
+        type: string
+      clientCaFile:
+        type: string
+      enableAdmissionPlugins:
+        type: array
+        items:
+          type: string
+      etcdCaFile:
+        type: string
+      etcdCertFile:
+        type: string
+      etcdServers:
+        type: array
+        items:
+          type: string
+      eventTtl:
+        type: string
+      encryptionProviderConfig:
+        type: string
+      kubeletCertificateAuthority:
+        type: string
+      kubeletClientCertificate:
+        type: string
+      kubeletClientKey:
+        type: string
+      runtimeConfig:
+        type: string
+      serviceAccountKeyFile:
+        type: string
+      serviceAccountSigningKeyFile:
+        type: string
+      serviceAccountIssuer:
+        type: string
+      serviceClusterIpRange:
+        type: string
+      serviceNodePortRange:
+        type: string
+      tlsCertFile:
+        type: string
+      tlsPrivateKeyFile:
+        type: string
+      v: # TODO: What does this refer to
+        type: number
+  kubernetes-the-hard-way:tools:KubeApiServerConfiguration:
+    type: object
+    properties:
+      caPem:
+        type: string
+      caKeyPem:
+        type: string
+      keyPem:
+        type: string
+      certPem:
+        type: string
+      saKeyPem:
+        type: string
+      saPem:
+        type: string
+      encryptionConfig:
+        type: string
+  kubernetes-the-hard-way:tools:KubeControllerManagerCommandOptions:
+    type: object
+    properties:
+      bindAddress:
+        type: string
+      clusterCidr:
+        type: string
+      clusterName:
+        type: string
+      clusterSigningCertFile:
+        type: string
+      clusterSigningKeyFile:
+        type: string
+      kubeconfig:
+        type: string
+      leaderElect:
+        type: boolean
+      rootCaFile:
+        type: string
+      serviceAccountPrivateKeyFile:
+        type: string
+      serviceClusterIpRange:
+        type: string
+      useServiceAccountCredentials:
+        type: boolean
+      v: # TODO: What does this refer to
+        type: number
+  kubernetes-the-hard-way:tools:KubeSchedulerCommandOptions:
+    type: object
+    properties:
+      config:
+        type: string
+      v: # TODO: What does this refer to
+        type: number
 functions:
   kubernetes-the-hard-way:tls:ClusterPki/getKubeconfig:
     inputs:
@@ -1424,5 +1936,57 @@ functions:
       properties:
         result:
           $ref: "#/types/kubernetes-the-hard-way:config:Kubeconfig"
+      required:
+        - result
+  kubernetes-the-hard-way:remote:EtcdInstall/etcdctl:
+    inputs:
+      properties:
+        __self__:
+          $ref: "#/resources/kubernetes-the-hard-way:remote:EtcdInstall"
+      required:
+        - __self__
+    outputs:
+      properties:
+        result:
+          $ref: "#/resources/kubernetes-the-hard-way:tools:Etcdctl"
+      required:
+        - result
+  kubernetes-the-hard-way:remote:SystemdService/disable:
+    inputs:
+      properties:
+        __self__:
+          $ref: "#/resources/kubernetes-the-hard-way:remote:SystemdService"
+      required:
+        - __self__
+    outputs:
+      properties:
+        result:
+          $ref: "#/resources/kubernetes-the-hard-way:tools:Systemctl"
+      required:
+        - result
+  kubernetes-the-hard-way:remote:SystemdService/enable:
+    inputs:
+      properties:
+        __self__:
+          $ref: "#/resources/kubernetes-the-hard-way:remote:SystemdService"
+      required:
+        - __self__
+    outputs:
+      properties:
+        result:
+          $ref: "#/resources/kubernetes-the-hard-way:tools:Systemctl"
+      required:
+        - result
+  kubernetes-the-hard-way:remote:SystemdService/start:
+    inputs:
+      properties:
+        __self__:
+          $ref: "#/resources/kubernetes-the-hard-way:remote:SystemdService"
+      required:
+        - __self__
+    outputs:
+      properties:
+        result:
+          $ref: "#/resources/kubernetes-the-hard-way:tools:Systemctl"
       required:
         - result

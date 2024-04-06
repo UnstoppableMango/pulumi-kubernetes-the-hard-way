@@ -145,3 +145,6 @@ export namespace tls {
     }
 
 }
+
+export namespace tools {
+}

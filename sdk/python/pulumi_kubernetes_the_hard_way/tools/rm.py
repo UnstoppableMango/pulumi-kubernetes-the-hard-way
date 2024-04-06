@@ -8,6 +8,7 @@ import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
 from .. import _utilities
+from ._enums import *
 import pulumi_command
 
 __all__ = ['RmArgs', 'Rm']
@@ -18,7 +19,9 @@ class RmArgs:
                  connection: pulumi.Input['pulumi_command.remote.ConnectionArgs'],
                  files: pulumi.Input[Union[Sequence[pulumi.Input[str]], str]],
                  dir: Optional[pulumi.Input[bool]] = None,
+                 environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  force: Optional[pulumi.Input[bool]] = None,
+                 lifecycle: Optional['CommandLifecycle'] = None,
                  on_delete: Optional[bool] = None,
                  recursive: Optional[pulumi.Input[bool]] = None,
                  verbose: Optional[pulumi.Input[bool]] = None):
@@ -28,6 +31,7 @@ class RmArgs:
         :param pulumi.Input[Union[Sequence[pulumi.Input[str]], str]] files: Corresponds to the [FILE] argument.
         :param pulumi.Input[bool] dir: Corresponds to the --dir option.
         :param pulumi.Input[bool] force: Corresponds to the --force option.
+        :param 'CommandLifecycle' lifecycle: At what stage(s) in the resource lifecycle should the command be run.
         :param bool on_delete: Whether rm should be run when the resource is created or deleted.
         :param pulumi.Input[bool] recursive: Corresponds to the --recursive option.
         :param pulumi.Input[bool] verbose: Corresponds to the --verbose option.
@@ -36,8 +40,12 @@ class RmArgs:
         pulumi.set(__self__, "files", files)
         if dir is not None:
             pulumi.set(__self__, "dir", dir)
+        if environment is not None:
+            pulumi.set(__self__, "environment", environment)
         if force is not None:
             pulumi.set(__self__, "force", force)
+        if lifecycle is not None:
+            pulumi.set(__self__, "lifecycle", lifecycle)
         if on_delete is not None:
             pulumi.set(__self__, "on_delete", on_delete)
         if recursive is not None:
@@ -83,6 +91,15 @@ class RmArgs:
 
     @property
     @pulumi.getter
+    def environment(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        return pulumi.get(self, "environment")
+
+    @environment.setter
+    def environment(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
+        pulumi.set(self, "environment", value)
+
+    @property
+    @pulumi.getter
     def force(self) -> Optional[pulumi.Input[bool]]:
         """
         Corresponds to the --force option.
@@ -92,6 +109,18 @@ class RmArgs:
     @force.setter
     def force(self, value: Optional[pulumi.Input[bool]]):
         pulumi.set(self, "force", value)
+
+    @property
+    @pulumi.getter
+    def lifecycle(self) -> Optional['CommandLifecycle']:
+        """
+        At what stage(s) in the resource lifecycle should the command be run.
+        """
+        return pulumi.get(self, "lifecycle")
+
+    @lifecycle.setter
+    def lifecycle(self, value: Optional['CommandLifecycle']):
+        pulumi.set(self, "lifecycle", value)
 
     @property
     @pulumi.getter(name="onDelete")
@@ -137,8 +166,10 @@ class Rm(pulumi.ComponentResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
                  dir: Optional[pulumi.Input[bool]] = None,
+                 environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  files: Optional[pulumi.Input[Union[Sequence[pulumi.Input[str]], str]]] = None,
                  force: Optional[pulumi.Input[bool]] = None,
+                 lifecycle: Optional['CommandLifecycle'] = None,
                  on_delete: Optional[bool] = None,
                  recursive: Optional[pulumi.Input[bool]] = None,
                  verbose: Optional[pulumi.Input[bool]] = None,
@@ -152,6 +183,7 @@ class Rm(pulumi.ComponentResource):
         :param pulumi.Input[bool] dir: Corresponds to the --dir option.
         :param pulumi.Input[Union[Sequence[pulumi.Input[str]], str]] files: Corresponds to the [FILE] argument.
         :param pulumi.Input[bool] force: Corresponds to the --force option.
+        :param 'CommandLifecycle' lifecycle: At what stage(s) in the resource lifecycle should the command be run.
         :param bool on_delete: Whether rm should be run when the resource is created or deleted.
         :param pulumi.Input[bool] recursive: Corresponds to the --recursive option.
         :param pulumi.Input[bool] verbose: Corresponds to the --verbose option.
@@ -182,8 +214,10 @@ class Rm(pulumi.ComponentResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
                  dir: Optional[pulumi.Input[bool]] = None,
+                 environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  files: Optional[pulumi.Input[Union[Sequence[pulumi.Input[str]], str]]] = None,
                  force: Optional[pulumi.Input[bool]] = None,
+                 lifecycle: Optional['CommandLifecycle'] = None,
                  on_delete: Optional[bool] = None,
                  recursive: Optional[pulumi.Input[bool]] = None,
                  verbose: Optional[pulumi.Input[bool]] = None,
@@ -202,10 +236,12 @@ class Rm(pulumi.ComponentResource):
                 raise TypeError("Missing required property 'connection'")
             __props__.__dict__["connection"] = connection
             __props__.__dict__["dir"] = dir
+            __props__.__dict__["environment"] = environment
             if files is None and not opts.urn:
                 raise TypeError("Missing required property 'files'")
             __props__.__dict__["files"] = files
             __props__.__dict__["force"] = force
+            __props__.__dict__["lifecycle"] = lifecycle
             __props__.__dict__["on_delete"] = on_delete
             __props__.__dict__["recursive"] = recursive
             __props__.__dict__["verbose"] = verbose

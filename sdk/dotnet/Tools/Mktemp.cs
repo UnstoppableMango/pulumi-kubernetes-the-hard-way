@@ -40,6 +40,12 @@ namespace UnMango.KubernetesTheHardWay.Tools
         [Output("quiet")]
         public Output<bool> Quiet { get; private set; } = null!;
 
+        [Output("stderr")]
+        public Output<string> Stderr { get; private set; } = null!;
+
+        [Output("stdout")]
+        public Output<string> Stdout { get; private set; } = null!;
+
         /// <summary>
         /// Corresponds to the --suffix option.
         /// </summary>
@@ -105,6 +111,20 @@ namespace UnMango.KubernetesTheHardWay.Tools
         [Input("dryRun")]
         public Input<bool>? DryRun { get; set; }
 
+        [Input("environment")]
+        private InputMap<string>? _environment;
+        public InputMap<string> Environment
+        {
+            get => _environment ?? (_environment = new InputMap<string>());
+            set => _environment = value;
+        }
+
+        /// <summary>
+        /// At what stage(s) in the resource lifecycle should the command be run.
+        /// </summary>
+        [Input("lifecycle")]
+        public UnMango.KubernetesTheHardWay.Tools.CommandLifecycle? Lifecycle { get; set; }
+
         /// <summary>
         /// Corresponds to the --quiet option.
         /// </summary>
@@ -128,6 +148,14 @@ namespace UnMango.KubernetesTheHardWay.Tools
         /// </summary>
         [Input("tmpdir")]
         public Input<string>? Tmpdir { get; set; }
+
+        [Input("triggers")]
+        private InputList<object>? _triggers;
+        public InputList<object> Triggers
+        {
+            get => _triggers ?? (_triggers = new InputList<object>());
+            set => _triggers = value;
+        }
 
         public MktempArgs()
         {

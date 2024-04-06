@@ -60,11 +60,14 @@ type rmArgs struct {
 	// Connection details for the remote system.
 	Connection pulumiCommand.Connection `pulumi:"connection"`
 	// Corresponds to the --dir option.
-	Dir *bool `pulumi:"dir"`
+	Dir         *bool             `pulumi:"dir"`
+	Environment map[string]string `pulumi:"environment"`
 	// Corresponds to the [FILE] argument.
 	Files interface{} `pulumi:"files"`
 	// Corresponds to the --force option.
 	Force *bool `pulumi:"force"`
+	// At what stage(s) in the resource lifecycle should the command be run.
+	Lifecycle *CommandLifecycle `pulumi:"lifecycle"`
 	// Whether rm should be run when the resource is created or deleted.
 	OnDelete *bool `pulumi:"onDelete"`
 	// Corresponds to the --recursive option.
@@ -78,11 +81,14 @@ type RmArgs struct {
 	// Connection details for the remote system.
 	Connection pulumiCommand.ConnectionInput
 	// Corresponds to the --dir option.
-	Dir pulumi.BoolPtrInput
+	Dir         pulumi.BoolPtrInput
+	Environment pulumi.StringMapInput
 	// Corresponds to the [FILE] argument.
 	Files pulumi.Input
 	// Corresponds to the --force option.
 	Force pulumi.BoolPtrInput
+	// At what stage(s) in the resource lifecycle should the command be run.
+	Lifecycle *CommandLifecycle
 	// Whether rm should be run when the resource is created or deleted.
 	OnDelete *bool
 	// Corresponds to the --recursive option.

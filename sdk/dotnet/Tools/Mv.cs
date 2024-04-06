@@ -59,6 +59,12 @@ namespace UnMango.KubernetesTheHardWay.Tools
         public Output<bool> Force { get; private set; } = null!;
 
         /// <summary>
+        /// At what stage(s) in the resource lifecycle should the command be run.
+        /// </summary>
+        [Output("lifecycle")]
+        public Output<UnMango.KubernetesTheHardWay.Tools.CommandLifecycle?> Lifecycle { get; private set; } = null!;
+
+        /// <summary>
         /// Corresponds to the --no-clobber option.
         /// </summary>
         [Output("noClobber")]
@@ -170,6 +176,14 @@ namespace UnMango.KubernetesTheHardWay.Tools
         /// </summary>
         [Input("directory")]
         public Input<string>? Directory { get; set; }
+
+        [Input("environment")]
+        private InputMap<string>? _environment;
+        public InputMap<string> Environment
+        {
+            get => _environment ?? (_environment = new InputMap<string>());
+            set => _environment = value;
+        }
 
         /// <summary>
         /// Corresponds to the --force option.

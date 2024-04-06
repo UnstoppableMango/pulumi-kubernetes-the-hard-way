@@ -21,6 +21,8 @@ func (m *module) Version() semver.Version {
 
 func (m *module) Construct(ctx *pulumi.Context, name, typ, urn string) (r pulumi.Resource, err error) {
 	switch typ {
+	case "kubernetes-the-hard-way:tools:Etcdctl":
+		r = &Etcdctl{}
 	case "kubernetes-the-hard-way:tools:Mkdir":
 		r = &Mkdir{}
 	case "kubernetes-the-hard-way:tools:Mktemp":
@@ -29,8 +31,12 @@ func (m *module) Construct(ctx *pulumi.Context, name, typ, urn string) (r pulumi
 		r = &Mv{}
 	case "kubernetes-the-hard-way:tools:Rm":
 		r = &Rm{}
+	case "kubernetes-the-hard-way:tools:Systemctl":
+		r = &Systemctl{}
 	case "kubernetes-the-hard-way:tools:Tar":
 		r = &Tar{}
+	case "kubernetes-the-hard-way:tools:Tee":
+		r = &Tee{}
 	case "kubernetes-the-hard-way:tools:Wget":
 		r = &Wget{}
 	default:

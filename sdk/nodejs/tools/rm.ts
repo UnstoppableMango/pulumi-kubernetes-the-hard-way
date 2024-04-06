@@ -2,6 +2,9 @@
 // *** Do not edit by hand unless you're certain you know what you are doing! ***
 
 import * as pulumi from "@pulumi/pulumi";
+import * as inputs from "../types/input";
+import * as outputs from "../types/output";
+import * as enums from "../types/enums";
 import * as utilities from "../utilities";
 
 import * as pulumiCommand from "@pulumi/command";
@@ -72,8 +75,10 @@ export class Rm extends pulumi.ComponentResource {
             }
             resourceInputs["connection"] = args ? (args.connection ? pulumi.output(args.connection).apply(pulumiCommand.types.input.remote.connectionArgsProvideDefaults) : undefined) : undefined;
             resourceInputs["dir"] = args ? args.dir : undefined;
+            resourceInputs["environment"] = args ? args.environment : undefined;
             resourceInputs["files"] = args ? args.files : undefined;
             resourceInputs["force"] = args ? args.force : undefined;
+            resourceInputs["lifecycle"] = args ? args.lifecycle : undefined;
             resourceInputs["onDelete"] = args ? args.onDelete : undefined;
             resourceInputs["recursive"] = args ? args.recursive : undefined;
             resourceInputs["verbose"] = args ? args.verbose : undefined;
@@ -104,6 +109,7 @@ export interface RmArgs {
      * Corresponds to the --dir option.
      */
     dir?: pulumi.Input<boolean>;
+    environment?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
      * Corresponds to the [FILE] argument.
      */
@@ -112,6 +118,10 @@ export interface RmArgs {
      * Corresponds to the --force option.
      */
     force?: pulumi.Input<boolean>;
+    /**
+     * At what stage(s) in the resource lifecycle should the command be run.
+     */
+    lifecycle?: enums.tools.CommandLifecycle;
     /**
      * Whether rm should be run when the resource is created or deleted.
      */

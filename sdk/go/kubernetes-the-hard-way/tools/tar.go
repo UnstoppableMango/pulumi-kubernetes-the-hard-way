@@ -68,7 +68,8 @@ type tarArgs struct {
 	// Connection details for the remote system.
 	Connection pulumiCommand.Connection `pulumi:"connection"`
 	// Corresponds to the --directory option.
-	Directory *string `pulumi:"directory"`
+	Directory   *string           `pulumi:"directory"`
+	Environment map[string]string `pulumi:"environment"`
 	// Corresponds to the --extract option.
 	Extract *bool `pulumi:"extract"`
 	// Corresponds to the [FILE] argument.
@@ -86,7 +87,8 @@ type TarArgs struct {
 	// Connection details for the remote system.
 	Connection pulumiCommand.ConnectionInput
 	// Corresponds to the --directory option.
-	Directory pulumi.StringPtrInput
+	Directory   pulumi.StringPtrInput
+	Environment pulumi.StringMapInput
 	// Corresponds to the --extract option.
 	Extract pulumi.BoolPtrInput
 	// Corresponds to the [FILE] argument.

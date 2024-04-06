@@ -12,11 +12,20 @@ import com.pulumi.tls.LocallySignedCert;
 import com.pulumi.tls.PrivateKey;
 import com.unmango.kubernetesthehardway.Utilities;
 import com.unmango.kubernetesthehardway.tls.CertificateArgs;
+import com.unmango.kubernetesthehardway.tls.enums.AllowedUsage;
 import java.lang.String;
+import java.util.List;
+import java.util.Optional;
 import javax.annotation.Nullable;
 
 @ResourceType(type="kubernetes-the-hard-way:tls:Certificate")
 public class Certificate extends com.pulumi.resources.ComponentResource {
+    @Export(name="allowedUses", refs={List.class,AllowedUsage.class}, tree="[0,1]")
+    private Output</* @Nullable */ List<AllowedUsage>> allowedUses;
+
+    public Output<Optional<List<AllowedUsage>>> allowedUses() {
+        return Codegen.optional(this.allowedUses);
+    }
     @Export(name="cert", refs={LocallySignedCert.class}, tree="[0]")
     private Output<LocallySignedCert> cert;
 

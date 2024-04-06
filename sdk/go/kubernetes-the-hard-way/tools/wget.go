@@ -21,6 +21,7 @@ type Wget struct {
 	Command pulumiCommand.CommandOutput `pulumi:"command"`
 	// Corresponds to the --directory-prefix option.
 	DirectoryPrefix pulumi.StringPtrOutput `pulumi:"directoryPrefix"`
+	Environment     pulumi.StringMapOutput `pulumi:"environment"`
 	// Corresponds to the --https-only option.
 	HttpsOnly pulumi.BoolOutput `pulumi:"httpsOnly"`
 	// Corresponds to the --no-verbose option.
@@ -68,7 +69,8 @@ type wgetArgs struct {
 	// Connection details for the remote system.
 	Connection pulumiCommand.Connection `pulumi:"connection"`
 	// Corresponds to the --directory-prefix option.
-	DirectoryPrefix *string `pulumi:"directoryPrefix"`
+	DirectoryPrefix *string           `pulumi:"directoryPrefix"`
+	Environment     map[string]string `pulumi:"environment"`
 	// Corresponds to the --https-only option.
 	HttpsOnly *bool `pulumi:"httpsOnly"`
 	// Corresponds t- the --no-verbose option.
@@ -89,6 +91,7 @@ type WgetArgs struct {
 	Connection pulumiCommand.ConnectionInput
 	// Corresponds to the --directory-prefix option.
 	DirectoryPrefix pulumi.StringPtrInput
+	Environment     pulumi.StringMapInput
 	// Corresponds to the --https-only option.
 	HttpsOnly pulumi.BoolPtrInput
 	// Corresponds t- the --no-verbose option.
@@ -198,6 +201,10 @@ func (o WgetOutput) Command() pulumiCommand.CommandOutput {
 // Corresponds to the --directory-prefix option.
 func (o WgetOutput) DirectoryPrefix() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Wget) pulumi.StringPtrOutput { return v.DirectoryPrefix }).(pulumi.StringPtrOutput)
+}
+
+func (o WgetOutput) Environment() pulumi.StringMapOutput {
+	return o.ApplyT(func(v *Wget) pulumi.StringMapOutput { return v.Environment }).(pulumi.StringMapOutput)
 }
 
 // Corresponds to the --https-only option.

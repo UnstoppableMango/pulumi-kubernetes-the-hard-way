@@ -9,6 +9,7 @@ import com.pulumi.core.annotations.Import;
 import com.pulumi.exceptions.MissingRequiredPropertyException;
 import java.lang.Boolean;
 import java.lang.String;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import javax.annotation.Nullable;
@@ -46,6 +47,13 @@ public final class WgetArgs extends com.pulumi.resources.ResourceArgs {
      */
     public Optional<Output<String>> directoryPrefix() {
         return Optional.ofNullable(this.directoryPrefix);
+    }
+
+    @Import(name="environment")
+    private @Nullable Output<Map<String,String>> environment;
+
+    public Optional<Output<Map<String,String>>> environment() {
+        return Optional.ofNullable(this.environment);
     }
 
     /**
@@ -143,6 +151,7 @@ public final class WgetArgs extends com.pulumi.resources.ResourceArgs {
     private WgetArgs(WgetArgs $) {
         this.connection = $.connection;
         this.directoryPrefix = $.directoryPrefix;
+        this.environment = $.environment;
         this.httpsOnly = $.httpsOnly;
         this.noVerbose = $.noVerbose;
         this.outputDocument = $.outputDocument;
@@ -209,6 +218,15 @@ public final class WgetArgs extends com.pulumi.resources.ResourceArgs {
          */
         public Builder directoryPrefix(String directoryPrefix) {
             return directoryPrefix(Output.of(directoryPrefix));
+        }
+
+        public Builder environment(@Nullable Output<Map<String,String>> environment) {
+            $.environment = environment;
+            return this;
+        }
+
+        public Builder environment(Map<String,String> environment) {
+            return environment(Output.of(environment));
         }
 
         /**

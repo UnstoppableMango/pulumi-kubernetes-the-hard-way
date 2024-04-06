@@ -34,6 +34,9 @@ _utilities.register(
    "kubernetes-the-hard-way:remote:Download": "Download",
    "kubernetes-the-hard-way:remote:EtcdInstall": "EtcdInstall",
    "kubernetes-the-hard-way:remote:File": "File",
+   "kubernetes-the-hard-way:remote:KubeApiServerInstall": "KubeApiServerInstall",
+   "kubernetes-the-hard-way:remote:KubeControllerManagerInstall": "KubeControllerManagerInstall",
+   "kubernetes-the-hard-way:remote:KubeSchedulerInstall": "KubeSchedulerInstall",
    "kubernetes-the-hard-way:remote:SystemdService": "SystemdService"
   }
  },
@@ -53,11 +56,14 @@ _utilities.register(
   "mod": "tools",
   "fqn": "pulumi_kubernetes_the_hard_way.tools",
   "classes": {
+   "kubernetes-the-hard-way:tools:Etcdctl": "Etcdctl",
    "kubernetes-the-hard-way:tools:Mkdir": "Mkdir",
    "kubernetes-the-hard-way:tools:Mktemp": "Mktemp",
    "kubernetes-the-hard-way:tools:Mv": "Mv",
    "kubernetes-the-hard-way:tools:Rm": "Rm",
+   "kubernetes-the-hard-way:tools:Systemctl": "Systemctl",
    "kubernetes-the-hard-way:tools:Tar": "Tar",
+   "kubernetes-the-hard-way:tools:Tee": "Tee",
    "kubernetes-the-hard-way:tools:Wget": "Wget"
   }
  }

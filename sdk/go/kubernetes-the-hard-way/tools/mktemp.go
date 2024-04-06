@@ -24,7 +24,9 @@ type Mktemp struct {
 	// Corresponds to the --dry-run option.
 	DryRun pulumi.BoolOutput `pulumi:"dryRun"`
 	// Corresponds to the --quiet option.
-	Quiet pulumi.BoolOutput `pulumi:"quiet"`
+	Quiet  pulumi.BoolOutput   `pulumi:"quiet"`
+	Stderr pulumi.StringOutput `pulumi:"stderr"`
+	Stdout pulumi.StringOutput `pulumi:"stdout"`
 	// Corresponds to the --suffix option.
 	Suffix pulumi.StringPtrOutput `pulumi:"suffix"`
 	// Corresponds to the [TEMPLATE] arg.
@@ -59,7 +61,10 @@ type mktempArgs struct {
 	// Corresponds to the --directory option.
 	Directory *bool `pulumi:"directory"`
 	// Corresponds to the --dry-run option.
-	DryRun *bool `pulumi:"dryRun"`
+	DryRun      *bool             `pulumi:"dryRun"`
+	Environment map[string]string `pulumi:"environment"`
+	// At what stage(s) in the resource lifecycle should the command be run.
+	Lifecycle *CommandLifecycle `pulumi:"lifecycle"`
 	// Corresponds to the --quiet option.
 	Quiet *bool `pulumi:"quiet"`
 	// Corresponds to the --suffix option.
@@ -67,7 +72,8 @@ type mktempArgs struct {
 	// Corresponds to the [TEMPLATE] arg.
 	Template *string `pulumi:"template"`
 	// Corresponds to the --tmpdir option.
-	Tmpdir *string `pulumi:"tmpdir"`
+	Tmpdir   *string       `pulumi:"tmpdir"`
+	Triggers []interface{} `pulumi:"triggers"`
 }
 
 // The set of arguments for constructing a Mktemp resource.
@@ -77,7 +83,10 @@ type MktempArgs struct {
 	// Corresponds to the --directory option.
 	Directory pulumi.BoolPtrInput
 	// Corresponds to the --dry-run option.
-	DryRun pulumi.BoolPtrInput
+	DryRun      pulumi.BoolPtrInput
+	Environment pulumi.StringMapInput
+	// At what stage(s) in the resource lifecycle should the command be run.
+	Lifecycle *CommandLifecycle
 	// Corresponds to the --quiet option.
 	Quiet pulumi.BoolPtrInput
 	// Corresponds to the --suffix option.
@@ -85,7 +94,8 @@ type MktempArgs struct {
 	// Corresponds to the [TEMPLATE] arg.
 	Template pulumi.StringPtrInput
 	// Corresponds to the --tmpdir option.
-	Tmpdir pulumi.StringPtrInput
+	Tmpdir   pulumi.StringPtrInput
+	Triggers pulumi.ArrayInput
 }
 
 func (MktempArgs) ElementType() reflect.Type {
@@ -193,6 +203,14 @@ func (o MktempOutput) DryRun() pulumi.BoolOutput {
 // Corresponds to the --quiet option.
 func (o MktempOutput) Quiet() pulumi.BoolOutput {
 	return o.ApplyT(func(v *Mktemp) pulumi.BoolOutput { return v.Quiet }).(pulumi.BoolOutput)
+}
+
+func (o MktempOutput) Stderr() pulumi.StringOutput {
+	return o.ApplyT(func(v *Mktemp) pulumi.StringOutput { return v.Stderr }).(pulumi.StringOutput)
+}
+
+func (o MktempOutput) Stdout() pulumi.StringOutput {
+	return o.ApplyT(func(v *Mktemp) pulumi.StringOutput { return v.Stdout }).(pulumi.StringOutput)
 }
 
 // Corresponds to the --suffix option.

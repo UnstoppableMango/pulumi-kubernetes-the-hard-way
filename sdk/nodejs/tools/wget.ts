@@ -32,6 +32,7 @@ export class Wget extends pulumi.ComponentResource {
      * Corresponds to the --directory-prefix option.
      */
     public readonly directoryPrefix!: pulumi.Output<string | undefined>;
+    public readonly environment!: pulumi.Output<{[key: string]: string} | undefined>;
     /**
      * Corresponds to the --https-only option.
      */
@@ -88,6 +89,7 @@ export class Wget extends pulumi.ComponentResource {
             }
             resourceInputs["connection"] = args ? (args.connection ? pulumi.output(args.connection).apply(pulumiCommand.types.input.remote.connectionArgsProvideDefaults) : undefined) : undefined;
             resourceInputs["directoryPrefix"] = args ? args.directoryPrefix : undefined;
+            resourceInputs["environment"] = args ? args.environment : undefined;
             resourceInputs["httpsOnly"] = args ? args.httpsOnly : undefined;
             resourceInputs["noVerbose"] = args ? args.noVerbose : undefined;
             resourceInputs["outputDocument"] = args ? args.outputDocument : undefined;
@@ -101,6 +103,7 @@ export class Wget extends pulumi.ComponentResource {
         } else {
             resourceInputs["command"] = undefined /*out*/;
             resourceInputs["directoryPrefix"] = undefined /*out*/;
+            resourceInputs["environment"] = undefined /*out*/;
             resourceInputs["httpsOnly"] = undefined /*out*/;
             resourceInputs["noVerbose"] = undefined /*out*/;
             resourceInputs["outputDocument"] = undefined /*out*/;
@@ -128,6 +131,7 @@ export interface WgetArgs {
      * Corresponds to the --directory-prefix option.
      */
     directoryPrefix?: pulumi.Input<string>;
+    environment?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
      * Corresponds to the --https-only option.
      */

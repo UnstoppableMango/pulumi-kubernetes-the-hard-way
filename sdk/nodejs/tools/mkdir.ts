@@ -2,6 +2,9 @@
 // *** Do not edit by hand unless you're certain you know what you are doing! ***
 
 import * as pulumi from "@pulumi/pulumi";
+import * as inputs from "../types/input";
+import * as outputs from "../types/output";
+import * as enums from "../types/enums";
 import * as utilities from "../utilities";
 
 import * as pulumiCommand from "@pulumi/command";
@@ -68,6 +71,8 @@ export class Mkdir extends pulumi.ComponentResource {
             }
             resourceInputs["connection"] = args ? (args.connection ? pulumi.output(args.connection).apply(pulumiCommand.types.input.remote.connectionArgsProvideDefaults) : undefined) : undefined;
             resourceInputs["directory"] = args ? args.directory : undefined;
+            resourceInputs["environment"] = args ? args.environment : undefined;
+            resourceInputs["lifecycle"] = args ? args.lifecycle : undefined;
             resourceInputs["parents"] = args ? args.parents : undefined;
             resourceInputs["removeOnDelete"] = args ? args.removeOnDelete : undefined;
             resourceInputs["command"] = undefined /*out*/;
@@ -98,6 +103,11 @@ export interface MkdirArgs {
      * The fully qualified path of the directory on the remote system.
      */
     directory: pulumi.Input<string>;
+    environment?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    /**
+     * At what stage(s) in the resource lifecycle should the command be run.
+     */
+    lifecycle?: enums.tools.CommandLifecycle;
     /**
      * Corresponds to the `--parents` option.
      */

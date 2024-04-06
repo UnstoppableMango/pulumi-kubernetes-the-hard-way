@@ -16,6 +16,7 @@ import (
 type Certificate struct {
 	pulumi.ResourceState
 
+	AllowedUses   AllowedUsageArrayOutput     `pulumi:"allowedUses"`
 	Cert          tls.LocallySignedCertOutput `pulumi:"cert"`
 	CertPem       pulumi.StringOutput         `pulumi:"certPem"`
 	Csr           tls.CertRequestOutput       `pulumi:"csr"`
@@ -197,6 +198,10 @@ func (o CertificateOutput) ToCertificateOutput() CertificateOutput {
 
 func (o CertificateOutput) ToCertificateOutputWithContext(ctx context.Context) CertificateOutput {
 	return o
+}
+
+func (o CertificateOutput) AllowedUses() AllowedUsageArrayOutput {
+	return o.ApplyT(func(v *Certificate) AllowedUsageArrayOutput { return v.AllowedUses }).(AllowedUsageArrayOutput)
 }
 
 func (o CertificateOutput) Cert() tls.LocallySignedCertOutput {

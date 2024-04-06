@@ -9,6 +9,7 @@ import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
 from .. import _utilities
 from . import outputs
+from .. import tools as _tools
 from ._enums import *
 from ._inputs import *
 from .file import File
@@ -230,4 +231,58 @@ class SystemdService(pulumi.ComponentResource):
         Describes the [Unit] section of a systemd service file.
         """
         return pulumi.get(self, "unit")
+
+    @pulumi.output_type
+    class DisableResult:
+        def __init__(__self__, result=None):
+            if result and not isinstance(result, _tools.Systemctl):
+                raise TypeError("Expected argument 'result' to be a _tools.Systemctl")
+            pulumi.set(__self__, "result", result)
+
+        @property
+        @pulumi.getter
+        def result(self) -> '_tools.Systemctl':
+            return pulumi.get(self, "result")
+
+    def disable(__self__) -> pulumi.Output['_tools.Systemctl']:
+        __args__ = dict()
+        __args__['__self__'] = __self__
+        __result__ = pulumi.runtime.call('kubernetes-the-hard-way:remote:SystemdService/disable', __args__, res=__self__, typ=SystemdService.DisableResult)
+        return __result__.result
+
+    @pulumi.output_type
+    class EnableResult:
+        def __init__(__self__, result=None):
+            if result and not isinstance(result, _tools.Systemctl):
+                raise TypeError("Expected argument 'result' to be a _tools.Systemctl")
+            pulumi.set(__self__, "result", result)
+
+        @property
+        @pulumi.getter
+        def result(self) -> '_tools.Systemctl':
+            return pulumi.get(self, "result")
+
+    def enable(__self__) -> pulumi.Output['_tools.Systemctl']:
+        __args__ = dict()
+        __args__['__self__'] = __self__
+        __result__ = pulumi.runtime.call('kubernetes-the-hard-way:remote:SystemdService/enable', __args__, res=__self__, typ=SystemdService.EnableResult)
+        return __result__.result
+
+    @pulumi.output_type
+    class StartResult:
+        def __init__(__self__, result=None):
+            if result and not isinstance(result, _tools.Systemctl):
+                raise TypeError("Expected argument 'result' to be a _tools.Systemctl")
+            pulumi.set(__self__, "result", result)
+
+        @property
+        @pulumi.getter
+        def result(self) -> '_tools.Systemctl':
+            return pulumi.get(self, "result")
+
+    def start(__self__) -> pulumi.Output['_tools.Systemctl']:
+        __args__ = dict()
+        __args__['__self__'] = __self__
+        __result__ = pulumi.runtime.call('kubernetes-the-hard-way:remote:SystemdService/start', __args__, res=__self__, typ=SystemdService.StartResult)
+        return __result__.result
 

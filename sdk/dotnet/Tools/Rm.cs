@@ -99,6 +99,14 @@ namespace UnMango.KubernetesTheHardWay.Tools
         [Input("dir")]
         public Input<bool>? Dir { get; set; }
 
+        [Input("environment")]
+        private InputMap<string>? _environment;
+        public InputMap<string> Environment
+        {
+            get => _environment ?? (_environment = new InputMap<string>());
+            set => _environment = value;
+        }
+
         /// <summary>
         /// Corresponds to the [FILE] argument.
         /// </summary>
@@ -110,6 +118,12 @@ namespace UnMango.KubernetesTheHardWay.Tools
         /// </summary>
         [Input("force")]
         public Input<bool>? Force { get; set; }
+
+        /// <summary>
+        /// At what stage(s) in the resource lifecycle should the command be run.
+        /// </summary>
+        [Input("lifecycle")]
+        public UnMango.KubernetesTheHardWay.Tools.CommandLifecycle? Lifecycle { get; set; }
 
         /// <summary>
         /// Whether rm should be run when the resource is created or deleted.

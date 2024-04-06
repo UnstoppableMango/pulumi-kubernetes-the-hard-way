@@ -171,6 +171,28 @@ func (EtcdInstallArgs) ElementType() reflect.Type {
 	return reflect.TypeOf((*etcdInstallArgs)(nil)).Elem()
 }
 
+func (r *EtcdInstall) Etcdctl(ctx *pulumi.Context) (tools.EtcdctlOutput, error) {
+	out, err := ctx.Call("kubernetes-the-hard-way:remote:EtcdInstall/etcdctl", nil, etcdInstallEtcdctlResultOutput{}, r)
+	if err != nil {
+		return tools.EtcdctlOutput{}, err
+	}
+	return out.(etcdInstallEtcdctlResultOutput).Result(), nil
+}
+
+type etcdInstallEtcdctlResult struct {
+	Result *tools.Etcdctl `pulumi:"result"`
+}
+
+type etcdInstallEtcdctlResultOutput struct{ *pulumi.OutputState }
+
+func (etcdInstallEtcdctlResultOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*etcdInstallEtcdctlResult)(nil)).Elem()
+}
+
+func (o etcdInstallEtcdctlResultOutput) Result() tools.EtcdctlOutput {
+	return o.ApplyT(func(v etcdInstallEtcdctlResult) *tools.Etcdctl { return v.Result }).(tools.EtcdctlOutput)
+}
+
 type EtcdInstallInput interface {
 	pulumi.Input
 
@@ -419,6 +441,7 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*EtcdInstallArrayInput)(nil)).Elem(), EtcdInstallArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*EtcdInstallMapInput)(nil)).Elem(), EtcdInstallMap{})
 	pulumi.RegisterOutputType(EtcdInstallOutput{})
+	pulumi.RegisterOutputType(etcdInstallEtcdctlResultOutput{})
 	pulumi.RegisterOutputType(EtcdInstallArrayOutput{})
 	pulumi.RegisterOutputType(EtcdInstallMapOutput{})
 }

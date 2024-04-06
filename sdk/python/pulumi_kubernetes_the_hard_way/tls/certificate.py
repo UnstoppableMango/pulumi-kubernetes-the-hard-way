@@ -360,6 +360,11 @@ class Certificate(pulumi.ComponentResource):
             remote=True)
 
     @property
+    @pulumi.getter(name="allowedUses")
+    def allowed_uses(self) -> pulumi.Output[Optional[Sequence['AllowedUsage']]]:
+        return pulumi.get(self, "allowed_uses")
+
+    @property
     @pulumi.getter
     def cert(self) -> pulumi.Output['pulumi_tls.LocallySignedCert']:
         return pulumi.get(self, "cert")

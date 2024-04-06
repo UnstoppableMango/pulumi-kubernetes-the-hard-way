@@ -49,7 +49,7 @@ export class ClusterPki<T extends NodeMapInput = NodeMapInput> extends Component
   public readonly kubernetes!: Certificate;
   public readonly kubeScheduler!: Certificate;
   public readonly publicIp!: Output<string>;
-  public readonly rootCa!: RootCa;
+  public readonly ca!: RootCa;
   public readonly serviceAccounts!: Certificate;
   public readonly rsaBits!: Output<number>;
 
@@ -65,7 +65,7 @@ export class ClusterPki<T extends NodeMapInput = NodeMapInput> extends Component
       kubernetes: undefined,
       kubeScheduler: undefined,
       publicIp: undefined,
-      rootCa: undefined,
+      ca: undefined,
       serviceAccounts: undefined,
       rsaBits: undefined,
     };
@@ -81,18 +81,18 @@ export class ClusterPki<T extends NodeMapInput = NodeMapInput> extends Component
     const publicIp = output(args.publicIp);
     const rsaBits = output(args.rsaBits ?? ClusterPki.defaultRsaBits);
 
-    const rootCa = new RootCa(name, {
+    const ca = new RootCa(name, {
       algorithm, rsaBits, validityPeriodHours: validityPeriodHours,
       subject: {
         commonName: clusterName,
       },
     }, { parent: this });
 
-    const admin = newCertificate(rootCa, {
+    const admin = newCertificate(ca, {
       name: this.certName('admin'),
       algorithm, rsaBits,
       validityPeriodHours,
-      allowedUses: rootCa.allowedUses, // TODO
+      allowedUses: ca.allowedUses, // TODO
       subject: {
         commonName: 'admin',
         organization: 'system:masters',
@@ -100,10 +100,10 @@ export class ClusterPki<T extends NodeMapInput = NodeMapInput> extends Component
       options: { parent: this },
     });
 
-    const controllerManager = newCertificate(rootCa, {
+    const controllerManager = newCertificate(ca, {
       name: this.certName('controller-manager'),
       algorithm, rsaBits, validityPeriodHours,
-      allowedUses: rootCa.allowedUses, // TODO
+      allowedUses: ca.allowedUses, // TODO
       subject: {
         commonName: 'system:kube-controller-manager',
         organization: 'system:kube-controller-manager',
@@ -114,10 +114,10 @@ export class ClusterPki<T extends NodeMapInput = NodeMapInput> extends Component
     const kubelet: Partial<CertMap<T>> = {};
     for (const key in args.nodes) {
       const node = output(args.nodes[key]);
-      kubelet[key] = newCertificate(rootCa, {
+      kubelet[key] = newCertificate(ca, {
         name: this.certName(`${key}-worker`),
         algorithm, rsaBits, validityPeriodHours,
-        allowedUses: rootCa.allowedUses, // TODO
+        allowedUses: ca.allowedUses, // TODO
         ipAddresses: [node.ip],
         subject: {
           commonName: interpolate`system:node:${node.ip}`,
@@ -127,10 +127,10 @@ export class ClusterPki<T extends NodeMapInput = NodeMapInput> extends Component
       });
     }
 
-    const kubeProxy = newCertificate(rootCa, {
+    const kubeProxy = newCertificate(ca, {
       name: this.certName('kube-proxy'),
       algorithm, rsaBits, validityPeriodHours,
-      allowedUses: rootCa.allowedUses, // TODO
+      allowedUses: ca.allowedUses, // TODO
       subject: {
         commonName: 'system:kube-proxy',
         organization: 'system:node-proxier',
@@ -138,10 +138,10 @@ export class ClusterPki<T extends NodeMapInput = NodeMapInput> extends Component
       options: { parent: this },
     });
 
-    const kubeScheduler = newCertificate(rootCa, {
+    const kubeScheduler = newCertificate(ca, {
       name: this.certName('kube-scheduler'),
       algorithm, rsaBits, validityPeriodHours,
-      allowedUses: rootCa.allowedUses, // TODO
+      allowedUses: ca.allowedUses, // TODO
       subject: {
         commonName: 'system:kube-scheduler',
         organization: 'system:kube-scheduler',
@@ -149,10 +149,10 @@ export class ClusterPki<T extends NodeMapInput = NodeMapInput> extends Component
       options: { parent: this },
     });
 
-    const kubernetes = newCertificate(rootCa, {
+    const kubernetes = newCertificate(ca, {
       name: this.certName('kubernetes'),
       algorithm, rsaBits, validityPeriodHours,
-      allowedUses: rootCa.allowedUses, // TODO
+      allowedUses: ca.allowedUses, // TODO
       subject: {
         commonName: 'kubernetes',
         organization: 'Kubernetes',
@@ -174,10 +174,10 @@ export class ClusterPki<T extends NodeMapInput = NodeMapInput> extends Component
       options: { parent: this },
     });
 
-    const serviceAccounts = newCertificate(rootCa, {
+    const serviceAccounts = newCertificate(ca, {
       name: this.certName('service-accounts'),
       algorithm, rsaBits, validityPeriodHours,
-      allowedUses: rootCa.allowedUses, // TODO
+      allowedUses: ca.allowedUses, // TODO
       subject: {
         commonName: 'service-accounts',
         organization: 'Kubernetes',
@@ -195,13 +195,13 @@ export class ClusterPki<T extends NodeMapInput = NodeMapInput> extends Component
     this.kubeScheduler = kubeScheduler;
     this.kubernetes = kubernetes;
     this.publicIp = publicIp;
-    this.rootCa = rootCa;
+    this.ca = ca;
     this.serviceAccounts = serviceAccounts;
     this.rsaBits = rsaBits;
 
     this.registerOutputs({
       admin, algorithm, controllerManager, clusterName,
-      kubeProxy, kubeScheduler, kubernetes, publicIp, rootCa,
+      kubeProxy, kubeScheduler, kubernetes, publicIp, ca,
       serviceAccounts, rsaBits, validityPeriodHours,
     });
   }
@@ -211,7 +211,7 @@ export class ClusterPki<T extends NodeMapInput = NodeMapInput> extends Component
     const ip = getIp(options);
     const username = getUsername(options);
 
-    const caData = this.rootCa.certPem;
+    const caData = this.ca.certPem;
     const clientCertPem = cert.certPem;
     const clientKeyPem = cert.privateKeyPem;
     const clusterName = this.clusterName;

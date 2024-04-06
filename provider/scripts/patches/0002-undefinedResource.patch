@@ -1,4 +1,4 @@
 265c265
-<                 Object.keys((resource.properties) as any).map((prop) =>
+<                 Object.keys(resource.properties as any).map((prop) =>
 ---
 >                 Object.keys((resource?.properties ?? {}) as any).map((prop) =>

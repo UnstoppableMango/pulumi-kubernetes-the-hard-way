@@ -28,6 +28,9 @@ namespace UnMango.KubernetesTheHardWay.Tools
         [Output("directoryPrefix")]
         public Output<string?> DirectoryPrefix { get; private set; } = null!;
 
+        [Output("environment")]
+        public Output<ImmutableDictionary<string, string>?> Environment { get; private set; } = null!;
+
         /// <summary>
         /// Corresponds to the --https-only option.
         /// </summary>
@@ -122,6 +125,14 @@ namespace UnMango.KubernetesTheHardWay.Tools
         /// </summary>
         [Input("directoryPrefix")]
         public Input<string>? DirectoryPrefix { get; set; }
+
+        [Input("environment")]
+        private InputMap<string>? _environment;
+        public InputMap<string> Environment
+        {
+            get => _environment ?? (_environment = new InputMap<string>());
+            set => _environment = value;
+        }
 
         /// <summary>
         /// Corresponds to the --https-only option.

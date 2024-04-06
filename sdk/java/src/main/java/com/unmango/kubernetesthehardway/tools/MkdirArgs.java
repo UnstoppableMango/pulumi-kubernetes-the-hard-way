@@ -7,8 +7,10 @@ import com.pulumi.command.remote.inputs.ConnectionArgs;
 import com.pulumi.core.Output;
 import com.pulumi.core.annotations.Import;
 import com.pulumi.exceptions.MissingRequiredPropertyException;
+import com.unmango.kubernetesthehardway.tools.enums.CommandLifecycle;
 import java.lang.Boolean;
 import java.lang.String;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import javax.annotation.Nullable;
@@ -48,6 +50,28 @@ public final class MkdirArgs extends com.pulumi.resources.ResourceArgs {
         return this.directory;
     }
 
+    @Import(name="environment")
+    private @Nullable Output<Map<String,String>> environment;
+
+    public Optional<Output<Map<String,String>>> environment() {
+        return Optional.ofNullable(this.environment);
+    }
+
+    /**
+     * At what stage(s) in the resource lifecycle should the command be run.
+     * 
+     */
+    @Import(name="lifecycle")
+    private @Nullable CommandLifecycle lifecycle;
+
+    /**
+     * @return At what stage(s) in the resource lifecycle should the command be run.
+     * 
+     */
+    public Optional<CommandLifecycle> lifecycle() {
+        return Optional.ofNullable(this.lifecycle);
+    }
+
     /**
      * Corresponds to the `--parents` option.
      * 
@@ -83,6 +107,8 @@ public final class MkdirArgs extends com.pulumi.resources.ResourceArgs {
     private MkdirArgs(MkdirArgs $) {
         this.connection = $.connection;
         this.directory = $.directory;
+        this.environment = $.environment;
+        this.lifecycle = $.lifecycle;
         this.parents = $.parents;
         this.removeOnDelete = $.removeOnDelete;
     }
@@ -145,6 +171,26 @@ public final class MkdirArgs extends com.pulumi.resources.ResourceArgs {
          */
         public Builder directory(String directory) {
             return directory(Output.of(directory));
+        }
+
+        public Builder environment(@Nullable Output<Map<String,String>> environment) {
+            $.environment = environment;
+            return this;
+        }
+
+        public Builder environment(Map<String,String> environment) {
+            return environment(Output.of(environment));
+        }
+
+        /**
+         * @param lifecycle At what stage(s) in the resource lifecycle should the command be run.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder lifecycle(@Nullable CommandLifecycle lifecycle) {
+            $.lifecycle = lifecycle;
+            return this;
         }
 
         /**

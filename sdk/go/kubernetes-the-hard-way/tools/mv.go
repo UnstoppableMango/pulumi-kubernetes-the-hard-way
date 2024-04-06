@@ -31,6 +31,8 @@ type Mv struct {
 	Directory pulumi.StringPtrOutput `pulumi:"directory"`
 	// Corresponds to the --force option.
 	Force pulumi.BoolOutput `pulumi:"force"`
+	// At what stage(s) in the resource lifecycle should the command be run.
+	Lifecycle CommandLifecyclePtrOutput `pulumi:"lifecycle"`
 	// Corresponds to the --no-clobber option.
 	NoClobber pulumi.BoolOutput `pulumi:"noClobber"`
 	// Corresponds to the --no-target-directory option.
@@ -84,7 +86,8 @@ type mvArgs struct {
 	// Corresponds to the [DEST] argument.
 	Dest *string `pulumi:"dest"`
 	// Corresponds to the [DIRECTORY] argument.
-	Directory *string `pulumi:"directory"`
+	Directory   *string           `pulumi:"directory"`
+	Environment map[string]string `pulumi:"environment"`
 	// Corresponds to the --force option.
 	Force *bool `pulumi:"force"`
 	// Corresponds to the --no-clobber option.
@@ -118,7 +121,8 @@ type MvArgs struct {
 	// Corresponds to the [DEST] argument.
 	Dest pulumi.StringPtrInput
 	// Corresponds to the [DIRECTORY] argument.
-	Directory pulumi.StringPtrInput
+	Directory   pulumi.StringPtrInput
+	Environment pulumi.StringMapInput
 	// Corresponds to the --force option.
 	Force pulumi.BoolPtrInput
 	// Corresponds to the --no-clobber option.
@@ -259,6 +263,11 @@ func (o MvOutput) Directory() pulumi.StringPtrOutput {
 // Corresponds to the --force option.
 func (o MvOutput) Force() pulumi.BoolOutput {
 	return o.ApplyT(func(v *Mv) pulumi.BoolOutput { return v.Force }).(pulumi.BoolOutput)
+}
+
+// At what stage(s) in the resource lifecycle should the command be run.
+func (o MvOutput) Lifecycle() CommandLifecyclePtrOutput {
+	return o.ApplyT(func(v *Mv) CommandLifecyclePtrOutput { return v.Lifecycle }).(CommandLifecyclePtrOutput)
 }
 
 // Corresponds to the --no-clobber option.

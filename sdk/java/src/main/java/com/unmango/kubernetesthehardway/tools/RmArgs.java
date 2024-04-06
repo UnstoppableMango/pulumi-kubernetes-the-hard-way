@@ -8,9 +8,11 @@ import com.pulumi.core.Either;
 import com.pulumi.core.Output;
 import com.pulumi.core.annotations.Import;
 import com.pulumi.exceptions.MissingRequiredPropertyException;
+import com.unmango.kubernetesthehardway.tools.enums.CommandLifecycle;
 import java.lang.Boolean;
 import java.lang.String;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import javax.annotation.Nullable;
@@ -50,6 +52,13 @@ public final class RmArgs extends com.pulumi.resources.ResourceArgs {
         return Optional.ofNullable(this.dir);
     }
 
+    @Import(name="environment")
+    private @Nullable Output<Map<String,String>> environment;
+
+    public Optional<Output<Map<String,String>>> environment() {
+        return Optional.ofNullable(this.environment);
+    }
+
     /**
      * Corresponds to the [FILE] argument.
      * 
@@ -78,6 +87,21 @@ public final class RmArgs extends com.pulumi.resources.ResourceArgs {
      */
     public Optional<Output<Boolean>> force() {
         return Optional.ofNullable(this.force);
+    }
+
+    /**
+     * At what stage(s) in the resource lifecycle should the command be run.
+     * 
+     */
+    @Import(name="lifecycle")
+    private @Nullable CommandLifecycle lifecycle;
+
+    /**
+     * @return At what stage(s) in the resource lifecycle should the command be run.
+     * 
+     */
+    public Optional<CommandLifecycle> lifecycle() {
+        return Optional.ofNullable(this.lifecycle);
     }
 
     /**
@@ -130,8 +154,10 @@ public final class RmArgs extends com.pulumi.resources.ResourceArgs {
     private RmArgs(RmArgs $) {
         this.connection = $.connection;
         this.dir = $.dir;
+        this.environment = $.environment;
         this.files = $.files;
         this.force = $.force;
+        this.lifecycle = $.lifecycle;
         this.onDelete = $.onDelete;
         this.recursive = $.recursive;
         this.verbose = $.verbose;
@@ -197,6 +223,15 @@ public final class RmArgs extends com.pulumi.resources.ResourceArgs {
             return dir(Output.of(dir));
         }
 
+        public Builder environment(@Nullable Output<Map<String,String>> environment) {
+            $.environment = environment;
+            return this;
+        }
+
+        public Builder environment(Map<String,String> environment) {
+            return environment(Output.of(environment));
+        }
+
         /**
          * @param files Corresponds to the [FILE] argument.
          * 
@@ -257,6 +292,17 @@ public final class RmArgs extends com.pulumi.resources.ResourceArgs {
          */
         public Builder force(Boolean force) {
             return force(Output.of(force));
+        }
+
+        /**
+         * @param lifecycle At what stage(s) in the resource lifecycle should the command be run.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder lifecycle(@Nullable CommandLifecycle lifecycle) {
+            $.lifecycle = lifecycle;
+            return this;
         }
 
         /**
