@@ -51,7 +51,7 @@ export function archiveInstall<T extends ReadonlyArray<string>>(
     archive: interpolate`${download.destination}/${archiveName}`,
     directory: download.destination,
     gzip: true,
-    stripComponents: args.stripComponents ?? 1,
+    stripComponents: args.stripComponents,
   }, { parent, dependsOn: download });
 
   const mkdir = new Mkdir(name, {

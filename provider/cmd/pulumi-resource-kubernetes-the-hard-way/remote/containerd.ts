@@ -22,6 +22,7 @@ export class ContainerdInstall extends schema.ContainerdInstall {
       binaries: ['containerd'] as const,
       connection,
       directory,
+      stripComponents: 1,
       url,
     }, this);
 

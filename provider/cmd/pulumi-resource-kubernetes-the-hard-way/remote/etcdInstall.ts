@@ -28,6 +28,7 @@ export class EtcdInstall extends schema.EtcdInstall {
       binaries: ['etcd', 'etcdctl'] as const,
       connection,
       directory,
+      stripComponents: 1,
       url,
     }, this);
 

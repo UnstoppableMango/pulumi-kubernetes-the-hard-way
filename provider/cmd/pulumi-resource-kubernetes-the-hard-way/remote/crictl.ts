@@ -22,7 +22,6 @@ export class CrictlInstall extends schema.CrictlInstall {
       binaries: ['crictl'] as const,
       connection,
       directory,
-      stripComponents: 0,
       url,
     }, this);
 
