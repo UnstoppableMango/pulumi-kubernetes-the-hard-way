@@ -73,7 +73,7 @@ resources:
       connection:
         $ref: "/command/v0.9.2/schema.json#/types/command:remote:Connection"
         description: The connection details.
-      installDirectory:
+      directory:
         type: string
         description: Directory to install the binary.
         default: /usr/local/bin
@@ -86,15 +86,19 @@ resources:
       architecture:
         $ref: "#/types/kubernetes-the-hard-way:remote:Architecture"
         description: The CPU architecture.
+      archiveName:
+        type: string
       connection:
         $ref: "/command/v0.9.2/schema.json#/types/command:remote:Connection"
         description: The connection details.
       download:
         $ref: "#/resources/kubernetes-the-hard-way:remote:Download"
-      installDirectory:
+      directory:
         type: string
         description: Directory to install the binary.
         default: /usr/local/bin
+      mkdir:
+        $ref: "#/resources/kubernetes-the-hard-way:tools:Mkdir"
       mktemp:
         $ref: "#/resources/kubernetes-the-hard-way:tools:Mktemp"
       mv:
@@ -103,18 +107,26 @@ resources:
         type: string
       rm:
         $ref: "#/resources/kubernetes-the-hard-way:tools:Rm"
+      tar:
+        $ref: "#/resources/kubernetes-the-hard-way:tools:Tar"
+      url:
+        type: string
       version:
         type: string
         description: The version to install.
     required:
       - architecture
+      - archiveName
       - connection
       - download
-      - installDirectory
+      - directory
+      - mkdir
       - mktemp
       - mv
       - path
       - rm
+      - tar
+      - url
       - version
   kubernetes-the-hard-way:remote:ContainerdInstall:
     isComponent: true
@@ -126,7 +138,7 @@ resources:
       connection:
         $ref: "/command/v0.9.2/schema.json#/types/command:remote:Connection"
         description: The connection details.
-      installDirectory:
+      directory:
         type: string
         description: Directory to install the binary.
         default: /usr/local/bin
@@ -139,15 +151,19 @@ resources:
       architecture:
         $ref: "#/types/kubernetes-the-hard-way:remote:Architecture"
         description: The CPU architecture.
+      archiveName:
+        type: string
       connection:
         $ref: "/command/v0.9.2/schema.json#/types/command:remote:Connection"
         description: The connection details.
       download:
         $ref: "#/resources/kubernetes-the-hard-way:remote:Download"
-      installDirectory:
+      directory:
         type: string
         description: Directory to install the binary.
         default: /usr/local/bin
+      mkdir:
+        $ref: "#/resources/kubernetes-the-hard-way:tools:Mkdir"
       mktemp:
         $ref: "#/resources/kubernetes-the-hard-way:tools:Mktemp"
       mv:
@@ -156,6 +172,10 @@ resources:
         type: string
       rm:
         $ref: "#/resources/kubernetes-the-hard-way:tools:Rm"
+      tar:
+        $ref: "#/resources/kubernetes-the-hard-way:tools:Tar"
+      url:
+        type: string
       version:
         type: string
         description: The version to install.
@@ -163,7 +183,7 @@ resources:
       - architecture
       - connection
       - download
-      - installDirectory
+      - directory
       - mktemp
       - mv
       - path
@@ -179,7 +199,7 @@ resources:
       connection:
         $ref: "/command/v0.9.2/schema.json#/types/command:remote:Connection"
         description: The connection details.
-      installDirectory:
+      directory:
         type: string
         description: Directory to install the binary.
         default: /usr/local/bin
@@ -192,15 +212,19 @@ resources:
       architecture:
         $ref: "#/types/kubernetes-the-hard-way:remote:Architecture"
         description: The CPU architecture.
+      archiveName:
+        type: string
       connection:
         $ref: "/command/v0.9.2/schema.json#/types/command:remote:Connection"
         description: The connection details.
       download:
         $ref: "#/resources/kubernetes-the-hard-way:remote:Download"
-      installDirectory:
+      directory:
         type: string
         description: Directory to install the binary.
         default: /usr/local/bin
+      mkdir:
+        $ref: "#/resources/kubernetes-the-hard-way:tools:Mkdir"
       mktemp:
         $ref: "#/resources/kubernetes-the-hard-way:tools:Mktemp"
       mv:
@@ -209,6 +233,10 @@ resources:
         type: string
       rm:
         $ref: "#/resources/kubernetes-the-hard-way:tools:Rm"
+      tar:
+        $ref: "#/resources/kubernetes-the-hard-way:tools:Tar"
+      url:
+        type: string
       version:
         type: string
         description: The version to install.
@@ -216,7 +244,7 @@ resources:
       - architecture
       - connection
       - download
-      - installDirectory
+      - directory
       - mktemp
       - mv
       - path
@@ -306,7 +334,7 @@ resources:
       connection:
         $ref: "/command/v0.9.2/schema.json#/types/command:remote:Connection"
         description: The connection details.
-      installDirectory:
+      directory:
         type: string
         description: Directory to install the `etcd` and `etcdctl` binaries.
         default: /usr/local/bin
@@ -331,7 +359,7 @@ resources:
       etcdctlPath:
         type: string
         description: The path to the etcdctl binary on the remote system.
-      installDirectory:
+      directory:
         type: string
         description: Directory to install the `etcd` and `etcdctl` binaries.
       installMkdir:
@@ -361,7 +389,7 @@ resources:
       - download
       - etcdPath
       - etcdctlPath
-      - installDirectory
+      - directory
       - installMkdir
       - mvEtcd
       - mvEtcdctl
@@ -466,7 +494,7 @@ resources:
       connection:
         $ref: "/command/v0.9.2/schema.json#/types/command:remote:Connection"
         description: The connection details.
-      installDirectory:
+      directory:
         type: string
         description: Directory to install the `etcd` and `etcdctl` binaries.
         default: /usr/local/bin
@@ -482,17 +510,19 @@ resources:
       connection:
         $ref: "/command/v0.9.2/schema.json#/types/command:remote:Connection"
         description: The connection details.
-      installDirectory:
+      directory:
         type: string
         description: Directory to install the `kube-apiserver` binary.
         default: /usr/local/bin
+      mkdir:
+        $ref: "#/resources/kubernetes-the-hard-way:tools:Mkdir"
       version:
         type: string
         description: The version of kube-apiserver to install.
     required:
       - architecture
       - connection
-      - installDirectory
+      - directory
       - version
   kubernetes-the-hard-way:remote:KubeControllerManagerInstall:
     isComponent: true
@@ -504,7 +534,7 @@ resources:
       connection:
         $ref: "/command/v0.9.2/schema.json#/types/command:remote:Connection"
         description: The connection details.
-      installDirectory:
+      directory:
         type: string
         description: Directory to install the `kube-controller-manager` binary.
         default: /usr/local/bin
@@ -517,20 +547,24 @@ resources:
       architecture:
         $ref: "#/types/kubernetes-the-hard-way:remote:Architecture"
         description: The kube-controller-manager CPU architecture.
+      archiveName:
+        type: string
       connection:
         $ref: "/command/v0.9.2/schema.json#/types/command:remote:Connection"
         description: The connection details.
-      installDirectory:
+      directory:
         type: string
         description: Directory to install the `kube-controller-manager` binary.
         default: /usr/local/bin
+      mkdir:
+        $ref: "#/resources/kubernetes-the-hard-way:tools:Mkdir"
       version:
         type: string
         description: The version of kube-controller-manager to install.
     required:
       - architecture
       - connection
-      - installDirectory
+      - directory
       - version
   kubernetes-the-hard-way:remote:KubectlInstall:
     isComponent: true
@@ -542,7 +576,7 @@ resources:
       connection:
         $ref: "/command/v0.9.2/schema.json#/types/command:remote:Connection"
         description: The connection details.
-      installDirectory:
+      directory:
         type: string
         description: Directory to install the binary.
         default: /usr/local/bin
@@ -555,15 +589,19 @@ resources:
       architecture:
         $ref: "#/types/kubernetes-the-hard-way:remote:Architecture"
         description: The CPU architecture.
+      archiveName:
+        type: string
       connection:
         $ref: "/command/v0.9.2/schema.json#/types/command:remote:Connection"
         description: The connection details.
       download:
         $ref: "#/resources/kubernetes-the-hard-way:remote:Download"
-      installDirectory:
+      directory:
         type: string
         description: Directory to install the binary.
         default: /usr/local/bin
+      mkdir:
+        $ref: "#/resources/kubernetes-the-hard-way:tools:Mkdir"
       mktemp:
         $ref: "#/resources/kubernetes-the-hard-way:tools:Mktemp"
       mv:
@@ -579,7 +617,7 @@ resources:
       - architecture
       - connection
       - download
-      - installDirectory
+      - directory
       - mktemp
       - mv
       - path
@@ -595,7 +633,7 @@ resources:
       connection:
         $ref: "/command/v0.9.2/schema.json#/types/command:remote:Connection"
         description: The connection details.
-      installDirectory:
+      directory:
         type: string
         description: Directory to install the binary.
         default: /usr/local/bin
@@ -608,15 +646,19 @@ resources:
       architecture:
         $ref: "#/types/kubernetes-the-hard-way:remote:Architecture"
         description: The CPU architecture.
+      archiveName:
+        type: string
       connection:
         $ref: "/command/v0.9.2/schema.json#/types/command:remote:Connection"
         description: The connection details.
       download:
         $ref: "#/resources/kubernetes-the-hard-way:remote:Download"
-      installDirectory:
+      directory:
         type: string
         description: Directory to install the binary.
         default: /usr/local/bin
+      mkdir:
+        $ref: "#/resources/kubernetes-the-hard-way:tools:Mkdir"
       mktemp:
         $ref: "#/resources/kubernetes-the-hard-way:tools:Mktemp"
       mv:
@@ -632,7 +674,7 @@ resources:
       - architecture
       - connection
       - download
-      - installDirectory
+      - directory
       - mktemp
       - mv
       - path
@@ -648,7 +690,7 @@ resources:
       connection:
         $ref: "/command/v0.9.2/schema.json#/types/command:remote:Connection"
         description: The connection details.
-      installDirectory:
+      directory:
         type: string
         description: Directory to install the binary.
         default: /usr/local/bin
@@ -661,15 +703,19 @@ resources:
       architecture:
         $ref: "#/types/kubernetes-the-hard-way:remote:Architecture"
         description: The CPU architecture.
+      archiveName:
+        type: string
       connection:
         $ref: "/command/v0.9.2/schema.json#/types/command:remote:Connection"
         description: The connection details.
       download:
         $ref: "#/resources/kubernetes-the-hard-way:remote:Download"
-      installDirectory:
+      directory:
         type: string
         description: Directory to install the binary.
         default: /usr/local/bin
+      mkdir:
+        $ref: "#/resources/kubernetes-the-hard-way:tools:Mkdir"
       mktemp:
         $ref: "#/resources/kubernetes-the-hard-way:tools:Mktemp"
       mv:
@@ -685,7 +731,7 @@ resources:
       - architecture
       - connection
       - download
-      - installDirectory
+      - directory
       - mktemp
       - mv
       - path
@@ -701,7 +747,7 @@ resources:
       connection:
         $ref: "/command/v0.9.2/schema.json#/types/command:remote:Connection"
         description: The connection details.
-      installDirectory:
+      directory:
         type: string
         description: Directory to install the `kube-scheduler` binary.
         default: /usr/local/bin
@@ -714,20 +760,24 @@ resources:
       architecture:
         $ref: "#/types/kubernetes-the-hard-way:remote:Architecture"
         description: The kube-scheduler CPU architecture.
+      archiveName:
+        type: string
       connection:
         $ref: "/command/v0.9.2/schema.json#/types/command:remote:Connection"
         description: The connection details.
-      installDirectory:
+      directory:
         type: string
         description: Directory to install the `etcd` and `etcdctl` binaries.
         default: /usr/local/bin
+      mkdir:
+        $ref: "#/resources/kubernetes-the-hard-way:tools:Mkdir"
       version:
         type: string
         description: The version of kube-scheduler to install.
     required:
       - architecture
       - connection
-      - installDirectory
+      - directory
       - version
   kubernetes-the-hard-way:remote:RuncInstall:
     isComponent: true
@@ -739,7 +789,7 @@ resources:
       connection:
         $ref: "/command/v0.9.2/schema.json#/types/command:remote:Connection"
         description: The connection details.
-      installDirectory:
+      directory:
         type: string
         description: Directory to install the binary.
         default: /usr/local/bin
@@ -757,10 +807,12 @@ resources:
         description: The connection details.
       download:
         $ref: "#/resources/kubernetes-the-hard-way:remote:Download"
-      installDirectory:
+      directory:
         type: string
         description: Directory to install the binary.
         default: /usr/local/bin
+      mkdir:
+        $ref: "#/resources/kubernetes-the-hard-way:tools:Mkdir"
       mktemp:
         $ref: "#/resources/kubernetes-the-hard-way:tools:Mktemp"
       mv:
@@ -776,7 +828,7 @@ resources:
       - architecture
       - connection
       - download
-      - installDirectory
+      - directory
       - mktemp
       - mv
       - path
