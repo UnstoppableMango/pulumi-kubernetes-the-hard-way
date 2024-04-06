@@ -21,6 +21,7 @@
     "remote/archiveInstall.ts",
     "remote/binaryInstall.ts",
     "remote/download.ts",
+    "remote/etcdConfiguration.ts",
     "remote/etcdInstall.ts",
     "remote/file.ts",
     "remote/index.ts",

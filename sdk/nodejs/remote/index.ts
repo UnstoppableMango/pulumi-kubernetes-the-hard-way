@@ -10,6 +10,11 @@ export type Download = import("./download").Download;
 export const Download: typeof import("./download").Download = null as any;
 utilities.lazyLoad(exports, ["Download"], () => require("./download"));
 
+export { EtcdConfigurationArgs } from "./etcdConfiguration";
+export type EtcdConfiguration = import("./etcdConfiguration").EtcdConfiguration;
+export const EtcdConfiguration: typeof import("./etcdConfiguration").EtcdConfiguration = null as any;
+utilities.lazyLoad(exports, ["EtcdConfiguration"], () => require("./etcdConfiguration"));
+
 export * from "./etcdInstall";
 import { EtcdInstall } from "./etcdInstall";
 
@@ -46,6 +51,8 @@ const _module = {
         switch (type) {
             case "kubernetes-the-hard-way:remote:Download":
                 return new Download(name, <any>undefined, { urn })
+            case "kubernetes-the-hard-way:remote:EtcdConfiguration":
+                return new EtcdConfiguration(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:remote:EtcdInstall":
                 return new EtcdInstall(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:remote:File":

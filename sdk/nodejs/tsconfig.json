@@ -17,6 +17,7 @@
         "index.ts",
         "provider.ts",
         "remote/download.ts",
+        "remote/etcdConfiguration.ts",
         "remote/etcdInstall.ts",
         "remote/file.ts",
         "remote/index.ts",

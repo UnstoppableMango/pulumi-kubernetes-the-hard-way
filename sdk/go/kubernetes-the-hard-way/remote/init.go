@@ -23,6 +23,8 @@ func (m *module) Construct(ctx *pulumi.Context, name, typ, urn string) (r pulumi
 	switch typ {
 	case "kubernetes-the-hard-way:remote:Download":
 		r = &Download{}
+	case "kubernetes-the-hard-way:remote:EtcdConfiguration":
+		r = &EtcdConfiguration{}
 	case "kubernetes-the-hard-way:remote:EtcdInstall":
 		r = &EtcdInstall{}
 	case "kubernetes-the-hard-way:remote:File":

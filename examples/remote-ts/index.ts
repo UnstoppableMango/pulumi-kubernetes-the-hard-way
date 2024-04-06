@@ -1,7 +1,7 @@
 import * as path from 'node:path';
 import { Config } from '@pulumi/pulumi';
 import { Etcdctl, Mkdir, Mktemp, Tar, Wget } from '@unmango/pulumi-kubernetes-the-hard-way/tools';
-import { Download, EtcdInstall, File, KubeApiServerInstall, KubeControllerManagerInstall, KubeSchedulerInstall, SystemdService } from '@unmango/pulumi-kubernetes-the-hard-way/remote';
+import { Download, EtcdConfiguration, EtcdInstall, File, KubeApiServerInstall, KubeControllerManagerInstall, KubeSchedulerInstall, SystemdService } from '@unmango/pulumi-kubernetes-the-hard-way/remote';
 
 const config = new Config();
 const host = config.require('host');
@@ -49,14 +49,19 @@ const download = new Download('remote', {
 
 const etcd = new EtcdInstall('remote', {
   connection: { host, port, user, password },
+  installDirectory: path.join(basePath, 'etcd'),
+});
+
+const etcdConfig = new EtcdConfiguration('remote', {
+  connection: { host, port, user, password },
   caPem: 'pretend theres pem data here',
   certPem: 'pretend theres pem data here',
   keyPem: 'pretend theres pem data here',
   internalIp: '10.240.0.10',
-  installDirectory: path.join(basePath, 'etcd'),
   configurationDirectory: path.join(basePath, 'etc', 'etcd'),
   dataDirectory: path.join(basePath, 'var', 'lib', 'etcd'),
   systemdDirectory: basePath,
+  etcdPath: etcd.etcdPath,
 });
 
 // const etcdctl = new Etcdctl('remote', {

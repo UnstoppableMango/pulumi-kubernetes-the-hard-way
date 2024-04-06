@@ -6,6 +6,7 @@
 import * as pulumi from "@pulumi/pulumi";
 export type ConstructComponent<T extends pulumi.ComponentResource = pulumi.ComponentResource> = (name: string, inputs: any, options: pulumi.ComponentResourceOptions) => T;
 export type ResourceConstructor = {
+    readonly "kubernetes-the-hard-way:remote:EtcdConfiguration": ConstructComponent<EtcdConfiguration>;
     readonly "kubernetes-the-hard-way:remote:EtcdInstall": ConstructComponent<EtcdInstall>;
     readonly "kubernetes-the-hard-way:remote:Download": ConstructComponent<Download>;
     readonly "kubernetes-the-hard-way:remote:File": ConstructComponent<File>;
@@ -37,47 +38,53 @@ export type Functions = {
 import * as command from "@pulumi/command";
 import * as random from "@pulumi/random";
 import * as tls from "@pulumi/tls";
-export abstract class EtcdInstall<TData = any> extends (pulumi.ComponentResource)<TData> {
-    public architecture!: ArchitectureOutputs | pulumi.Output<ArchitectureOutputs>;
-    public archiveName!: string | pulumi.Output<string>;
+export abstract class EtcdConfiguration<TData = any> extends (pulumi.ComponentResource)<TData> {
     public caFile?: File | pulumi.Output<File>;
     public certFile?: File | pulumi.Output<File>;
     public configurationDirectory!: string | pulumi.Output<string>;
     public configurationMkdir!: Mkdir | pulumi.Output<Mkdir>;
     public dataDirectory!: string | pulumi.Output<string>;
     public dataMkdir!: Mkdir | pulumi.Output<Mkdir>;
-    public download!: Download | pulumi.Output<Download>;
-    public downloadDirectory!: string | pulumi.Output<string>;
-    public downloadMkdir!: Mkdir | pulumi.Output<Mkdir>;
-    public etcdPath!: string | pulumi.Output<string>;
-    public etcdctlPath!: string | pulumi.Output<string>;
-    public installDirectory!: string | pulumi.Output<string>;
-    public installMkdir!: Mkdir | pulumi.Output<Mkdir>;
     public internalIp!: string | pulumi.Output<string>;
     public keyFile?: File | pulumi.Output<File>;
-    public mvEtcd!: Mv | pulumi.Output<Mv>;
-    public mvEtcdctl!: Mv | pulumi.Output<Mv>;
-    public name!: string | pulumi.Output<string>;
     public systemdService!: SystemdService | pulumi.Output<SystemdService>;
-    public tar!: Tar | pulumi.Output<Tar>;
-    public url!: string | pulumi.Output<string>;
-    public version!: string | pulumi.Output<string>;
     constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
-        super("kubernetes-the-hard-way:remote:EtcdInstall", name, opts.urn ? { architecture: undefined, archiveName: undefined, caFile: undefined, certFile: undefined, configurationDirectory: undefined, configurationMkdir: undefined, dataDirectory: undefined, dataMkdir: undefined, download: undefined, downloadDirectory: undefined, downloadMkdir: undefined, etcdPath: undefined, etcdctlPath: undefined, installDirectory: undefined, installMkdir: undefined, internalIp: undefined, keyFile: undefined, mvEtcd: undefined, mvEtcdctl: undefined, name: undefined, systemdService: undefined, tar: undefined, url: undefined, version: undefined } : { name, args, opts }, opts);
+        super("kubernetes-the-hard-way:remote:EtcdConfiguration", name, opts.urn ? { caFile: undefined, certFile: undefined, configurationDirectory: undefined, configurationMkdir: undefined, dataDirectory: undefined, dataMkdir: undefined, internalIp: undefined, keyFile: undefined, systemdService: undefined } : { name, args, opts }, opts);
     }
 }
-export interface EtcdInstallArgs {
-    readonly architecture?: pulumi.Input<ArchitectureInputs>;
+export interface EtcdConfigurationArgs {
     readonly caPem: pulumi.Input<string>;
     readonly certPem: pulumi.Input<string>;
     readonly configurationDirectory?: pulumi.Input<string>;
     readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
     readonly dataDirectory?: pulumi.Input<string>;
-    readonly downloadDirectory?: pulumi.Input<string>;
-    readonly installDirectory?: pulumi.Input<string>;
+    readonly etcdPath: pulumi.Input<string>;
     readonly internalIp: pulumi.Input<string>;
     readonly keyPem: pulumi.Input<string>;
     readonly systemdDirectory?: pulumi.Input<string>;
+}
+export abstract class EtcdInstall<TData = any> extends (pulumi.ComponentResource)<TData> {
+    public architecture!: ArchitectureOutputs | pulumi.Output<ArchitectureOutputs>;
+    public archiveName!: string | pulumi.Output<string>;
+    public download!: Download | pulumi.Output<Download>;
+    public etcdPath!: string | pulumi.Output<string>;
+    public etcdctlPath!: string | pulumi.Output<string>;
+    public installDirectory!: string | pulumi.Output<string>;
+    public installMkdir!: Mkdir | pulumi.Output<Mkdir>;
+    public mvEtcd!: Mv | pulumi.Output<Mv>;
+    public mvEtcdctl!: Mv | pulumi.Output<Mv>;
+    public name!: string | pulumi.Output<string>;
+    public tar!: Tar | pulumi.Output<Tar>;
+    public url!: string | pulumi.Output<string>;
+    public version!: string | pulumi.Output<string>;
+    constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
+        super("kubernetes-the-hard-way:remote:EtcdInstall", name, opts.urn ? { architecture: undefined, archiveName: undefined, download: undefined, etcdPath: undefined, etcdctlPath: undefined, installDirectory: undefined, installMkdir: undefined, mvEtcd: undefined, mvEtcdctl: undefined, name: undefined, tar: undefined, url: undefined, version: undefined } : { name, args, opts }, opts);
+    }
+}
+export interface EtcdInstallArgs {
+    readonly architecture?: pulumi.Input<ArchitectureInputs>;
+    readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
+    readonly installDirectory?: pulumi.Input<string>;
     readonly version?: pulumi.Input<string>;
 }
 export abstract class Download<TData = any> extends (pulumi.ComponentResource)<TData> {

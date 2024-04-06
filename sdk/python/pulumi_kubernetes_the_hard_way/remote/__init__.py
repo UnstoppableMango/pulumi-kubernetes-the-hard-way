@@ -7,6 +7,7 @@ import typing
 # Export this package's modules as members:
 from ._enums import *
 from .download import *
+from .etcd_configuration import *
 from .etcd_install import *
 from .file import *
 from .kube_api_server_install import *

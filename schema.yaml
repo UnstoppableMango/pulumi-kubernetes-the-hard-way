@@ -63,13 +63,9 @@ language:
       com.pulumi:random: 4.16.0
       com.pulumi:tls: 5.0.0
 resources:
-  kubernetes-the-hard-way:remote:EtcdInstall:
+  kubernetes-the-hard-way:remote:EtcdConfiguration:
     isComponent: true
-    description: Represents an etcd binary on a remote system.
     inputProperties:
-      architecture:
-        $ref: "#/types/kubernetes-the-hard-way:remote:Architecture"
-        description: The etcd CPU architecture.
       caPem:
         type: string
         description: The PEM encoded CA data.
@@ -87,13 +83,8 @@ resources:
         type: string
         description: The directory etcd will use.
         default: /var/lib/etcd
-      downloadDirectory:
+      etcdPath:
         type: string
-        description: Temporary directory to download files to. Defaults to `/tmp/<random string>`.
-      installDirectory:
-        type: string
-        description: Directory to install the `etcd` and `etcdctl` binaries.
-        default: /usr/local/bin
       internalIp:
         type: string
         description: IP used to serve client requests and communicate with etcd peers.
@@ -104,22 +95,14 @@ resources:
         type: string
         description: The systemd service file dirctory.
         default: /etc/system/systemd
-      version:
-        type: string
-        description: The version of etcd to install.
     requiredInputs:
       - caPem
       - certPem
       - connection
+      - etcdPath
       - internalIp
       - keyPem
     properties:
-      architecture:
-        $ref: "#/types/kubernetes-the-hard-way:remote:Architecture"
-        description: The etcd CPU architecture.
-      archiveName:
-        type: string
-        description: The name of the etcd release archive.
       caFile:
         $ref: "#/resources/kubernetes-the-hard-way:remote:File"
         description: The remote certificate authority file.
@@ -138,15 +121,51 @@ resources:
       dataMkdir:
         $ref: "#/resources/kubernetes-the-hard-way:tools:Mkdir"
         description: The command used to create the data directory.
+      internalIp:
+        type: string
+        description: IP used to serve client requests and communicate with etcd peers.
+      keyFile:
+        $ref: "#/resources/kubernetes-the-hard-way:remote:File"
+        description: The remote key file.
+      systemdService:
+        $ref: "#/resources/kubernetes-the-hard-way:remote:SystemdService"
+        description: The remote systemd service.
+    required:
+      - configurationDirectory
+      - configurationMkdir
+      - dataDirectory
+      - dataMkdir
+      - internalIp
+      - systemdService
+  kubernetes-the-hard-way:remote:EtcdInstall:
+    isComponent: true
+    description: Represents an etcd binary on a remote system.
+    inputProperties:
+      architecture:
+        $ref: "#/types/kubernetes-the-hard-way:remote:Architecture"
+        description: The etcd CPU architecture.
+      connection:
+        $ref: "/command/v0.9.2/schema.json#/types/command:remote:Connection"
+        description: The connection details.
+      installDirectory:
+        type: string
+        description: Directory to install the `etcd` and `etcdctl` binaries.
+        default: /usr/local/bin
+      version:
+        type: string
+        description: The version of etcd to install.
+    requiredInputs:
+      - connection
+    properties:
+      architecture:
+        $ref: "#/types/kubernetes-the-hard-way:remote:Architecture"
+        description: The etcd CPU architecture.
+      archiveName:
+        type: string
+        description: The name of the etcd release archive.
       download:
         $ref: "#/resources/kubernetes-the-hard-way:remote:Download"
         description: The etcd download operation.
-      downloadDirectory:
-        type: string
-        description: The directory where the etcd binary was downloaded to.
-      downloadMkdir:
-        $ref: "#/resources/kubernetes-the-hard-way:tools:Mkdir"
-        description: The operation to create the download directory.
       etcdPath:
         type: string
         description: The path to the etcd binary on the remote system.
@@ -159,12 +178,6 @@ resources:
       installMkdir:
         $ref: "#/resources/kubernetes-the-hard-way:tools:Mkdir"
         description: The operation to create the install directory.
-      internalIp:
-        type: string
-        description: IP used to serve client requests and communicate with etcd peers.
-      keyFile:
-        $ref: "#/resources/kubernetes-the-hard-way:remote:File"
-        description: The remote key file.
       mvEtcd:
         $ref: "#/resources/kubernetes-the-hard-way:tools:Mv"
         description: The operation to move the etcd binary to the install directory.
@@ -174,9 +187,6 @@ resources:
       name:
         type: string
         description: The name of the resource.
-      systemdService:
-        $ref: "#/resources/kubernetes-the-hard-way:remote:SystemdService"
-        description: The remote systemd service.
       tar:
         $ref: "#/resources/kubernetes-the-hard-way:tools:Tar"
         description: The tar operation.
@@ -189,22 +199,14 @@ resources:
     required:
       - architecture
       - archiveName
-      - configurationDirectory
-      - configurationMkdir
-      - dataDirectory
-      - dataMkdir
       - download
-      - downloadDirectory
-      - downloadMkdir
       - etcdPath
       - etcdctlPath
       - installDirectory
       - installMkdir
-      - internalIp
       - mvEtcd
       - mvEtcdctl
       - name
-      - systemdService
       - tar
       - url
       - version

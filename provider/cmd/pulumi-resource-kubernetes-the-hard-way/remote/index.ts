@@ -1,4 +1,5 @@
 export * from './download';
+export * from './etcdConfiguration';
 export * from './etcdInstall';
 export * from './file';
 export * from './kubeApiServerInstall';

@@ -1,11 +1,12 @@
 import { ComponentResource, ComponentResourceOptions, Inputs } from '@pulumi/pulumi';
 import * as schema from './schema-types';
-import { Download, EtcdInstall, File, KubeApiServerInstall, KubeControllerManagerInstall, KubeSchedulerInstall, SystemdService } from './remote';
+import { Download, EtcdConfiguration, EtcdInstall, File, KubeApiServerInstall, KubeControllerManagerInstall, KubeSchedulerInstall, SystemdService } from './remote';
 import { Certificate, ClusterPki, EncryptionKey, RootCa } from './tls';
 import { Etcdctl, Mkdir, Mktemp, Mv, Rm, Systemctl, Tar, Tee, Wget } from './tools';
 
 const resources: schema.ResourceConstructor = {
   'kubernetes-the-hard-way:remote:Download': (...args) => new Download(...args),
+  'kubernetes-the-hard-way:remote:EtcdConfiguration': (...args) => new EtcdConfiguration(...args),
   'kubernetes-the-hard-way:remote:EtcdInstall': (...args) => new EtcdInstall(...args),
   'kubernetes-the-hard-way:remote:File': (...args) => new File(...args),
   'kubernetes-the-hard-way:remote:KubeApiServerInstall': (...args) => new KubeApiServerInstall(...args),
