@@ -1,7 +1,5 @@
 import { ComponentResourceOptions, interpolate, output } from '@pulumi/pulumi';
 import * as schema from '../schema-types';
-import { Mkdir, Mktemp, Mv, Rm } from '../tools';
-import { Download } from './download';
 import { binaryInstall } from './binaryInstall';
 
 export class KubeSchedulerInstall extends schema.KubeSchedulerInstall {
@@ -15,7 +13,7 @@ export class KubeSchedulerInstall extends schema.KubeSchedulerInstall {
     const version = output(args.version ?? '1.29.2');
     const url = interpolate`https://storage.googleapis.com/kubernetes-release/release/v${version}/bin/linux/${architecture}/${binName}`;
 
-    binaryInstall(name, {
+    const { download, mkdir, mktemp, mv, path, rm } = binaryInstall(name, {
       binName,
       connection,
       directory,
@@ -25,12 +23,24 @@ export class KubeSchedulerInstall extends schema.KubeSchedulerInstall {
     this.architecture = architecture;
     this.connection = connection;
     this.directory = directory;
+    this.download = download;
+    this.mkdir = mkdir;
+    this.mktemp = mktemp;
+    this.mv = mv;
+    this.path = path;
+    this.rm = rm;
     this.version = version;
 
     this.registerOutputs({
       architecture,
       connection,
       directory,
+      download,
+      mkdir,
+      mktemp,
+      mv,
+      path,
+      rm,
       version,
     });
   }

@@ -42,7 +42,7 @@ export class CrictlInstall extends schema.CrictlInstall {
       download: install.download,
       path: install.paths.crictl,
       directory,
-      installMkdir: install.mkdir,
+      mkdir: install.mkdir,
       mv: install.mvs.crictl,
       name,
       tar: install.tar,

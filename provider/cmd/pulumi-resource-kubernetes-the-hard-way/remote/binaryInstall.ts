@@ -1,4 +1,4 @@
-import { Input, Resource, interpolate } from '@pulumi/pulumi';
+import { Input, Output, Resource, interpolate } from '@pulumi/pulumi';
 import { remote } from '@pulumi/command/types/input';
 import { Mkdir, Mktemp, Mv, Rm } from '../tools';
 import { Download } from './download';
@@ -10,15 +10,16 @@ interface BinaryInstallArgs {
   url: Input<string>;
 }
 
-interface InstallOperations {
+interface BinaryInstallResult {
   mktemp: Mktemp;
   download: Download;
   mkdir: Mkdir;
   mv: Mv;
+  path: Output<string>;
   rm: Rm;
 }
 
-export function binaryInstall(name: string, args: BinaryInstallArgs, parent: Resource): InstallOperations {
+export function binaryInstall(name: string, args: BinaryInstallArgs, parent: Resource): BinaryInstallResult {
   const mktemp = new Mktemp(name, {
     connection: args.connection,
     directory: true,
@@ -53,5 +54,5 @@ export function binaryInstall(name: string, args: BinaryInstallArgs, parent: Res
     recursive: true,
   }, { parent, dependsOn: mv });
 
-  return { mktemp, download, mkdir, mv, rm };
+  return { mktemp, download, mkdir, mv, path: binPath, rm };
 }

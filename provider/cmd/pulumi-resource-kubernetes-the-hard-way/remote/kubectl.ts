@@ -13,7 +13,7 @@ export class KubectlInstall extends schema.KubectlInstall {
     const version = output(args.version ?? '1.29.2');
     const url = interpolate`https://storage.googleapis.com/kubernetes-release/release/v${version}/bin/linux/${architecture}/${binName}`;
 
-    binaryInstall(name, {
+    const { download, mkdir, mktemp, mv, path, rm } = binaryInstall(name, {
       binName,
       connection,
       directory,
@@ -23,12 +23,24 @@ export class KubectlInstall extends schema.KubectlInstall {
     this.architecture = architecture;
     this.connection = connection;
     this.directory = directory;
+    this.download = download;
+    this.mkdir = mkdir;
+    this.mktemp = mktemp;
+    this.mv = mv;
+    this.path = path;
+    this.rm = rm;
     this.version = version;
 
     this.registerOutputs({
       architecture,
       connection,
       directory,
+      download,
+      mkdir,
+      mktemp,
+      mv,
+      path,
+      rm,
       version,
     });
   }

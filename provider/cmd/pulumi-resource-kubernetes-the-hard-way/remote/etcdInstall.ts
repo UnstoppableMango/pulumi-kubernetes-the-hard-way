@@ -37,7 +37,7 @@ export class EtcdInstall extends schema.EtcdInstall {
     this.etcdPath = install.paths.etcd;
     this.etcdctlPath = install.paths.etcdctl;
     this.directory = directory;
-    this.installMkdir = install.mkdir;
+    this.mkdir = install.mkdir;
     this.mvEtcd = install.mvs.etcd;
     this.mvEtcdctl = install.mvs.etcdctl;
     this.name = output(name);
@@ -52,7 +52,7 @@ export class EtcdInstall extends schema.EtcdInstall {
       etcdPath: install.paths.etcd,
       etcdctlPath: install.paths.etcdctl,
       directory,
-      installMkdir: install.mkdir,
+      mkdir: install.mkdir,
       mvEtcd: install.mvs.etcd,
       mvEtcdctl: install.mvs.etcdctl,
       name,

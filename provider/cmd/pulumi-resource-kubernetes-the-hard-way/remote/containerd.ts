@@ -42,7 +42,7 @@ export class ContainerdInstall extends schema.ContainerdInstall {
       download: install.download,
       path: install.paths.containerd,
       directory,
-      installMkdir: install.mkdir,
+      mkdir: install.mkdir,
       mv: install.mvs.containerd,
       name,
       tar: install.tar,

@@ -13,7 +13,7 @@ export class KubeApiServerInstall extends schema.KubeApiServerInstall {
     const version = output(args.version ?? '1.29.2');
     const url = interpolate`https://storage.googleapis.com/kubernetes-release/release/v${version}/bin/linux/${architecture}/${binName}`;
 
-    binaryInstall(name, {
+    const install = binaryInstall(name, {
       binName,
       connection,
       directory,
@@ -21,8 +21,10 @@ export class KubeApiServerInstall extends schema.KubeApiServerInstall {
     }, this);
 
     this.architecture = architecture;
+    this.binName = binName;
     this.connection = connection;
     this.directory = directory;
+    this.path = install.path;
     this.version = version;
 
     this.registerOutputs({

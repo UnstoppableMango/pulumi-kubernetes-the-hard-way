@@ -42,7 +42,7 @@ export class CniPluginsInstall extends schema.CniPluginsInstall {
       download: install.download,
       path: install.paths['cni-plugins'],
       directory,
-      installMkdir: install.mkdir,
+      mkdir: install.mkdir,
       mv: install.mvs['cni-plugins'],
       name,
       tar: install.tar,
