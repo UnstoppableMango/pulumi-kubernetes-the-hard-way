@@ -1,7 +1,7 @@
 import * as path from 'node:path';
 import { Config } from '@pulumi/pulumi';
 import { Etcdctl, Mkdir, Mktemp, Tar, Wget } from '@unmango/pulumi-kubernetes-the-hard-way/tools';
-import { Download, EtcdConfiguration, EtcdInstall, File, KubeApiServerInstall, KubeControllerManagerInstall, KubeSchedulerInstall, SystemdService } from '@unmango/pulumi-kubernetes-the-hard-way/remote';
+import { CniPluginsInstall, ContainerdInstall, CrictlInstall, Download, EtcdConfiguration, EtcdInstall, File, KubeApiServerInstall, KubeControllerManagerInstall, KubeProxyInstall, KubeSchedulerInstall, KubectlInstall, RuncInstall, SystemdService } from '@unmango/pulumi-kubernetes-the-hard-way/remote';
 
 const config = new Config();
 const host = config.require('host');
@@ -78,6 +78,21 @@ const systemdService = new SystemdService('remote-test', {
   },
 });
 
+// const cniPlugins = new CniPluginsInstall('remote', {
+//   connection: { host, port, user, password },
+//   directory: path.join(basePath, 'cni-plugins'),
+// });
+
+const containerd = new ContainerdInstall('remote', {
+  connection: { host, port, user, password },
+  directory: path.join(basePath, 'containerd'),
+});
+
+const crictl = new CrictlInstall('remote', {
+  connection: { host, port, user, password },
+  directory: path.join(basePath, 'crictl'),
+});
+
 const apiServer = new KubeApiServerInstall('remote', {
   connection: { host, port, user, password },
   directory: path.join(basePath, 'kube-apiserver'),
@@ -88,9 +103,29 @@ const controllerManager = new KubeControllerManagerInstall('remote', {
   directory: path.join(basePath, 'kube-controller-manager'),
 });
 
+const kubectl = new KubectlInstall('remote', {
+  connection: { host, port, user, password },
+  directory: path.join(basePath, 'kubectl'),
+});
+
+const kubelet = new KubeApiServerInstall('remote', {
+  connection: { host, port, user, password },
+  directory: path.join(basePath, 'kubelet'),
+});
+
+const kubeProxy = new KubeProxyInstall('remote', {
+  connection: { host, port, user, password },
+  directory: path.join(basePath, 'kube-proxy'),
+});
+
 const scheduler = new KubeSchedulerInstall('remote', {
   connection: { host, port, user, password },
   directory: path.join(basePath, 'kube-scheduler'),
+});
+
+const runc = new RuncInstall('remote', {
+  connection: { host, port, user, password },
+  directory: path.join(basePath, 'runc'),
 });
 
 export const fileStderr = file.stderr;

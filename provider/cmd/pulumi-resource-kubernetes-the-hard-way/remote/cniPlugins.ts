@@ -17,7 +17,7 @@ export class CniPluginsInstall extends schema.CniPluginsInstall {
     // TODO: Caching? Put archive/bins into ~/.kthw/cache so i.e. directory changes, tarball doesn't need to be re-downloaded.
     // TODO: General update logic
 
-    const install = archiveInstall(name, {
+    const { download, mkdir, mktemp, mvs, paths, rm, tar } = archiveInstall(name, {
       archiveName,
       binaries: ['cni-plugins'] as const,
       connection,
@@ -27,25 +27,25 @@ export class CniPluginsInstall extends schema.CniPluginsInstall {
 
     this.architecture = architecture;
     this.archiveName = archiveName;
-    this.download = install.download;
-    this.path = install.paths['cni-plugins'];
+    this.download = download;
+    this.path = paths['cni-plugins'];
     this.directory = directory;
-    this.mktemp = install.mktemp;
-    this.mv = install.mvs['cni-plugins'];
-    this.tar = install.tar;
+    this.mktemp = mktemp;
+    this.mv = mvs['cni-plugins'];
+    this.tar = tar;
     this.url = url;
     this.version = version;
 
     this.registerOutputs({
       architecture,
       archiveName,
-      download: install.download,
-      path: install.paths['cni-plugins'],
+      download,
+      path: paths['cni-plugins'],
       directory,
-      mkdir: install.mkdir,
-      mv: install.mvs['cni-plugins'],
+      mkdir,
+      mv: mvs['cni-plugins'],
       name,
-      tar: install.tar,
+      tar,
       url,
       version,
     });
