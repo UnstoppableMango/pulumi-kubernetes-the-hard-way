@@ -51,17 +51,21 @@ TEST_RUN =
 ifneq ($(TEST_NAME),)
 TEST_RUN = -run ^$(TEST_NAME)$$
 endif
+TEST_SHORT =
+ifneq ($(SHORT),)
+TEST_SHORT = -short
+endif
 export PULUMI_LOCAL_NUGET=$(WORKING_DIR)/nuget
 test: provider build_dotnet build_python install_sdks bin/gotestfmt
-	cd examples && go test -json -v -tags=$(TEST_TAGS) -timeout 2h $(TEST_RUN) | tee /tmp/gotest.log | gotestfmt
+	cd examples && go test -json -v $(TEST_SHORT) -tags=$(TEST_TAGS) -timeout 2h $(TEST_RUN) | tee /tmp/gotest.log | gotestfmt
 test_dotnet: provider build_dotnet install_dotnet_sdk
-	cd examples && go test -v -tags=dotnet -timeout 2h $(TEST_RUN)
+	cd examples && go test -v $(TEST_SHORT) -tags=dotnet -timeout 2h $(TEST_RUN)
 test_python: provider build_python
-	cd examples && go test -v -tags=python -timeout 2h $(TEST_RUN)
+	cd examples && go test -v $(TEST_SHORT) -tags=python -timeout 2h $(TEST_RUN)
 test_go: provider
-	cd examples && go test -v -tags=go -timeout 2h $(TEST_RUN)
+	cd examples && go test -v $(TEST_SHORT) -tags=go -timeout 2h $(TEST_RUN)
 test_nodejs: provider install_nodejs_sdk
-	cd examples && go test -v -tags=nodejs -timeout 2h $(TEST_RUN)
+	cd examples && go test -v $(TEST_SHORT) -tags=nodejs -timeout 2h $(TEST_RUN)
 
 .PHONY: install_provider
 install_provider: .make/install_provider
