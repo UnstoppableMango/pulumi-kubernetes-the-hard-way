@@ -12,6 +12,7 @@ export interface ArchiveInstallArgs<T extends ReadonlyArray<string>> {
   binaries: T;
   connection: Input<remote.ConnectionArgs>;
   directory: Input<string>;
+  stripComponents?: Input<number>;
   url: Input<string>;
 }
 
@@ -50,7 +51,7 @@ export function archiveInstall<T extends ReadonlyArray<string>>(
     archive: interpolate`${download.destination}/${archiveName}`,
     directory: download.destination,
     gzip: true,
-    stripComponents: 1,
+    stripComponents: args.stripComponents ?? 1,
   }, { parent, dependsOn: download });
 
   const mkdir = new Mkdir(name, {

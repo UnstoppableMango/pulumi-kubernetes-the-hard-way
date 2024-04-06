@@ -1,7 +1,7 @@
 import * as path from 'node:path';
 import { Config } from '@pulumi/pulumi';
 import { Etcdctl, Mkdir, Mktemp, Tar, Wget } from '@unmango/pulumi-kubernetes-the-hard-way/tools';
-import { CniPluginsInstall, ContainerdInstall, CrictlInstall, Download, EtcdConfiguration, EtcdInstall, File, KubeApiServerInstall, KubeControllerManagerInstall, KubeProxyInstall, KubeSchedulerInstall, KubectlInstall, RuncInstall, SystemdService } from '@unmango/pulumi-kubernetes-the-hard-way/remote';
+import { CniPluginsInstall, ContainerdInstall, CrictlInstall, Download, EtcdConfiguration, EtcdInstall, File, KubeApiServerInstall, KubeControllerManagerInstall, KubeProxyInstall, KubeSchedulerInstall, KubectlInstall, KubeletInstall, RuncInstall, SystemdService } from '@unmango/pulumi-kubernetes-the-hard-way/remote';
 
 const config = new Config();
 const host = config.require('host');
@@ -108,7 +108,7 @@ const kubectl = new KubectlInstall('remote', {
   directory: path.join(basePath, 'kubectl'),
 });
 
-const kubelet = new KubeApiServerInstall('remote', {
+const kubelet = new KubeletInstall('remote', {
   connection: { host, port, user, password },
   directory: path.join(basePath, 'kubelet'),
 });
