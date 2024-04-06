@@ -32,6 +32,45 @@ func TestSimpleTs(t *testing.T) {
 	integration.ProgramTest(t, &test)
 }
 
+func TestRemoteInstallTs(t *testing.T) {
+	skipIfShort(t)
+
+	const (
+		username = "test-user"
+		password = "test-password"
+	)
+
+	ctx := context.Background()
+	server, err := StartSshServer(ctx,
+		WithSshUsername(username),
+		WithSshPassword(password))
+	assert.NoError(t, err)
+
+	port, err := server.Port(ctx)
+	assert.NoError(t, err)
+
+	defer StopSshServer(ctx, server) // TODO: Error handling?
+
+	test := getJSBaseOptions(t).
+		With(integration.ProgramTestOptions{
+			Dir:           path.Join(getCwd(t), "remote-install-ts"),
+			Quick:         true,
+			SkipRefresh:   true,
+			RunUpdateTest: false,
+			Config: map[string]string{
+				"host":     "localhost",
+				"port":     port,
+				"user":     username,
+				"password": password,
+				"basePath": "/config",
+			},
+			ExtraRuntimeValidation: func(t *testing.T, stack integration.RuntimeValidationStackInfo) {
+			},
+		})
+
+	integration.ProgramTest(t, &test)
+}
+
 func TestRemoteTs(t *testing.T) {
 	const (
 		username = "test-user"
