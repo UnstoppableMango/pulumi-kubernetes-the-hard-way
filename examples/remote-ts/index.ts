@@ -1,7 +1,7 @@
 import * as path from 'node:path';
 import { Config } from '@pulumi/pulumi';
-import { Etcdctl, Mkdir, Mktemp, Tar, Wget } from '@unmango/pulumi-kubernetes-the-hard-way/tools';
-import { CniPluginsInstall, ContainerdInstall, CrictlInstall, Download, EtcdConfiguration, EtcdInstall, File, KubeApiServerInstall, KubeControllerManagerInstall, KubeProxyInstall, KubeSchedulerInstall, KubectlInstall, KubeletInstall, RuncInstall, SystemdService } from '@unmango/pulumi-kubernetes-the-hard-way/remote';
+import { Mkdir, Mktemp, Tar, Wget } from '@unmango/pulumi-kubernetes-the-hard-way/tools';
+import { Download, EtcdConfiguration, File, SystemdService } from '@unmango/pulumi-kubernetes-the-hard-way/remote';
 
 const config = new Config();
 const host = config.require('host');
@@ -47,11 +47,6 @@ const download = new Download('remote', {
 //   gzip: true,
 // });
 
-const etcd = new EtcdInstall('remote', {
-  connection: { host, port, user, password },
-  directory: path.join(basePath, 'etcd'),
-});
-
 const etcdConfig = new EtcdConfiguration('remote', {
   connection: { host, port, user, password },
   caPem: 'pretend theres pem data here',
@@ -61,7 +56,7 @@ const etcdConfig = new EtcdConfiguration('remote', {
   configurationDirectory: path.join(basePath, 'etc', 'etcd'),
   dataDirectory: path.join(basePath, 'var', 'lib', 'etcd'),
   systemdDirectory: basePath,
-  etcdPath: etcd.etcdPath,
+  etcdPath: '/some/path/that/probably/should/exist/etcd',
 });
 
 // const etcdctl = new Etcdctl('remote', {
@@ -76,57 +71,6 @@ const systemdService = new SystemdService('remote-test', {
   service: {
     execStart: 'test',
   },
-});
-
-// Still a little bit more work needed here
-// const cniPlugins = new CniPluginsInstall('remote', {
-//   connection: { host, port, user, password },
-//   directory: path.join(basePath, 'cni-plugins'),
-// });
-
-const containerd = new ContainerdInstall('remote', {
-  connection: { host, port, user, password },
-  directory: path.join(basePath, 'containerd'),
-});
-
-const crictl = new CrictlInstall('remote', {
-  connection: { host, port, user, password },
-  directory: path.join(basePath, 'crictl'),
-});
-
-const apiServer = new KubeApiServerInstall('remote', {
-  connection: { host, port, user, password },
-  directory: path.join(basePath, 'kube-apiserver'),
-});
-
-const controllerManager = new KubeControllerManagerInstall('remote', {
-  connection: { host, port, user, password },
-  directory: path.join(basePath, 'kube-controller-manager'),
-});
-
-const kubectl = new KubectlInstall('remote', {
-  connection: { host, port, user, password },
-  directory: path.join(basePath, 'kubectl'),
-});
-
-const kubelet = new KubeletInstall('remote', {
-  connection: { host, port, user, password },
-  directory: path.join(basePath, 'kubelet'),
-});
-
-const kubeProxy = new KubeProxyInstall('remote', {
-  connection: { host, port, user, password },
-  directory: path.join(basePath, 'kube-proxy'),
-});
-
-const scheduler = new KubeSchedulerInstall('remote', {
-  connection: { host, port, user, password },
-  directory: path.join(basePath, 'kube-scheduler'),
-});
-
-const runc = new RuncInstall('remote', {
-  connection: { host, port, user, password },
-  directory: path.join(basePath, 'runc'),
 });
 
 export const fileStderr = file.stderr;
