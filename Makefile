@@ -6,6 +6,7 @@ PROVIDER        := pulumi-resource-${PACK}
 WORKING_DIR     := $(shell pwd)
 SCHEMA_FILE     := ${WORKING_DIR}/schema.yaml
 PROVIDER_PKG    := ${WORKING_DIR}/provider/cmd/${PROVIDER}/package.json
+PROVIDER_SRC    := $(shell find ${WORKING_DIR}/provider/cmd/${PROVIDER} -type f -name '*.ts')
 
 GOOS ?= $(shell go env GOOS)
 GOARCH ?= $(shell go env GOARCH)
@@ -195,7 +196,7 @@ bin/linux-arm64/$(PROVIDER): TARGET := linuxstatic-arm64
 bin/darwin-amd64/$(PROVIDER): TARGET := macos-x64
 bin/darwin-arm64/$(PROVIDER): TARGET := macos-arm64
 bin/windows-amd64/$(PROVIDER).exe: TARGET := win-x64
-bin/%/$(PROVIDER) bin/%/$(PROVIDER).exe: bin/pulumictl .make/provider_mod_download provider/cmd/${PROVIDER}/schema.json provider/cmd/$(PROVIDER)/*.ts $(PROVIDER_PKG)
+bin/%/$(PROVIDER) bin/%/$(PROVIDER).exe: bin/pulumictl .make/provider_mod_download provider/cmd/${PROVIDER}/schema.json $(PROVIDER_SRC) $(PROVIDER_PKG)
 	@# check the TARGET is set
 	test $(TARGET)
 	cd provider/cmd/${PROVIDER}/ && \
