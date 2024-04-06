@@ -9,6 +9,8 @@ import * as utilities from "../utilities";
 
 import * as pulumiCommand from "@pulumi/command";
 
+import {Mkdir} from "../tools";
+
 /**
  * Installs kube-apiserver on a remote system.
  */
@@ -38,7 +40,8 @@ export class KubeApiServerInstall extends pulumi.ComponentResource {
     /**
      * Directory to install the `kube-apiserver` binary.
      */
-    public readonly installDirectory!: pulumi.Output<string>;
+    public readonly directory!: pulumi.Output<string>;
+    public /*out*/ readonly mkdir!: pulumi.Output<Mkdir | undefined>;
     /**
      * The version of kube-apiserver to install.
      */
@@ -60,12 +63,14 @@ export class KubeApiServerInstall extends pulumi.ComponentResource {
             }
             resourceInputs["architecture"] = args ? args.architecture : undefined;
             resourceInputs["connection"] = args ? (args.connection ? pulumi.output(args.connection).apply(pulumiCommand.types.input.remote.connectionArgsProvideDefaults) : undefined) : undefined;
-            resourceInputs["installDirectory"] = (args ? args.installDirectory : undefined) ?? "/usr/local/bin";
+            resourceInputs["directory"] = (args ? args.directory : undefined) ?? "/usr/local/bin";
             resourceInputs["version"] = args ? args.version : undefined;
+            resourceInputs["mkdir"] = undefined /*out*/;
         } else {
             resourceInputs["architecture"] = undefined /*out*/;
             resourceInputs["connection"] = undefined /*out*/;
-            resourceInputs["installDirectory"] = undefined /*out*/;
+            resourceInputs["directory"] = undefined /*out*/;
+            resourceInputs["mkdir"] = undefined /*out*/;
             resourceInputs["version"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
@@ -88,7 +93,7 @@ export interface KubeApiServerInstallArgs {
     /**
      * Directory to install the `etcd` and `etcdctl` binaries.
      */
-    installDirectory?: pulumi.Input<string>;
+    directory?: pulumi.Input<string>;
     /**
      * The version of kube-apiserver to install.
      */

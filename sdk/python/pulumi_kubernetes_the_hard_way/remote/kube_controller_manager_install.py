@@ -8,6 +8,7 @@ import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
 from .. import _utilities
+from .. import tools as _tools
 from ._enums import *
 import pulumi_command
 
@@ -18,22 +19,22 @@ class KubeControllerManagerInstallArgs:
     def __init__(__self__, *,
                  connection: pulumi.Input['pulumi_command.remote.ConnectionArgs'],
                  architecture: Optional[pulumi.Input['Architecture']] = None,
-                 install_directory: Optional[pulumi.Input[str]] = None,
+                 directory: Optional[pulumi.Input[str]] = None,
                  version: Optional[pulumi.Input[str]] = None):
         """
         The set of arguments for constructing a KubeControllerManagerInstall resource.
         :param pulumi.Input['pulumi_command.remote.ConnectionArgs'] connection: The connection details.
         :param pulumi.Input['Architecture'] architecture: The kube-controller-manager CPU architecture.
-        :param pulumi.Input[str] install_directory: Directory to install the `kube-controller-manager` binary.
+        :param pulumi.Input[str] directory: Directory to install the `kube-controller-manager` binary.
         :param pulumi.Input[str] version: The version of kube-controller-manager to install.
         """
         pulumi.set(__self__, "connection", connection)
         if architecture is not None:
             pulumi.set(__self__, "architecture", architecture)
-        if install_directory is None:
-            install_directory = '/usr/local/bin'
-        if install_directory is not None:
-            pulumi.set(__self__, "install_directory", install_directory)
+        if directory is None:
+            directory = '/usr/local/bin'
+        if directory is not None:
+            pulumi.set(__self__, "directory", directory)
         if version is not None:
             pulumi.set(__self__, "version", version)
 
@@ -62,16 +63,16 @@ class KubeControllerManagerInstallArgs:
         pulumi.set(self, "architecture", value)
 
     @property
-    @pulumi.getter(name="installDirectory")
-    def install_directory(self) -> Optional[pulumi.Input[str]]:
+    @pulumi.getter
+    def directory(self) -> Optional[pulumi.Input[str]]:
         """
         Directory to install the `kube-controller-manager` binary.
         """
-        return pulumi.get(self, "install_directory")
+        return pulumi.get(self, "directory")
 
-    @install_directory.setter
-    def install_directory(self, value: Optional[pulumi.Input[str]]):
-        pulumi.set(self, "install_directory", value)
+    @directory.setter
+    def directory(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "directory", value)
 
     @property
     @pulumi.getter
@@ -93,7 +94,7 @@ class KubeControllerManagerInstall(pulumi.ComponentResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  architecture: Optional[pulumi.Input['Architecture']] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
-                 install_directory: Optional[pulumi.Input[str]] = None,
+                 directory: Optional[pulumi.Input[str]] = None,
                  version: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         """
@@ -103,7 +104,7 @@ class KubeControllerManagerInstall(pulumi.ComponentResource):
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input['Architecture'] architecture: The kube-controller-manager CPU architecture.
         :param pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']] connection: The connection details.
-        :param pulumi.Input[str] install_directory: Directory to install the `kube-controller-manager` binary.
+        :param pulumi.Input[str] directory: Directory to install the `kube-controller-manager` binary.
         :param pulumi.Input[str] version: The version of kube-controller-manager to install.
         """
         ...
@@ -132,7 +133,7 @@ class KubeControllerManagerInstall(pulumi.ComponentResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  architecture: Optional[pulumi.Input['Architecture']] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
-                 install_directory: Optional[pulumi.Input[str]] = None,
+                 directory: Optional[pulumi.Input[str]] = None,
                  version: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
@@ -149,10 +150,12 @@ class KubeControllerManagerInstall(pulumi.ComponentResource):
             if connection is None and not opts.urn:
                 raise TypeError("Missing required property 'connection'")
             __props__.__dict__["connection"] = connection
-            if install_directory is None:
-                install_directory = '/usr/local/bin'
-            __props__.__dict__["install_directory"] = install_directory
+            if directory is None:
+                directory = '/usr/local/bin'
+            __props__.__dict__["directory"] = directory
             __props__.__dict__["version"] = version
+            __props__.__dict__["archive_name"] = None
+            __props__.__dict__["mkdir"] = None
         super(KubeControllerManagerInstall, __self__).__init__(
             'kubernetes-the-hard-way:remote:KubeControllerManagerInstall',
             resource_name,
@@ -169,6 +172,11 @@ class KubeControllerManagerInstall(pulumi.ComponentResource):
         return pulumi.get(self, "architecture")
 
     @property
+    @pulumi.getter(name="archiveName")
+    def archive_name(self) -> pulumi.Output[Optional[str]]:
+        return pulumi.get(self, "archive_name")
+
+    @property
     @pulumi.getter
     def connection(self) -> pulumi.Output['pulumi_command.remote.outputs.Connection']:
         """
@@ -177,12 +185,17 @@ class KubeControllerManagerInstall(pulumi.ComponentResource):
         return pulumi.get(self, "connection")
 
     @property
-    @pulumi.getter(name="installDirectory")
-    def install_directory(self) -> pulumi.Output[str]:
+    @pulumi.getter
+    def directory(self) -> pulumi.Output[str]:
         """
         Directory to install the `kube-controller-manager` binary.
         """
-        return pulumi.get(self, "install_directory")
+        return pulumi.get(self, "directory")
+
+    @property
+    @pulumi.getter
+    def mkdir(self) -> pulumi.Output[Optional['_tools.Mkdir']]:
+        return pulumi.get(self, "mkdir")
 
     @property
     @pulumi.getter

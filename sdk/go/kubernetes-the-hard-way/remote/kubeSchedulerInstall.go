@@ -11,6 +11,7 @@ import (
 	pulumiCommand "github.com/pulumi/pulumi-command/sdk/go/command/remote"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 	"github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/sdk/go/kubernetes-the-hard-way/internal"
+	"github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/sdk/go/kubernetes-the-hard-way/tools"
 )
 
 // Installs kube-scheduler on a remote system.
@@ -18,11 +19,13 @@ type KubeSchedulerInstall struct {
 	pulumi.ResourceState
 
 	// The kube-scheduler CPU architecture.
-	Architecture ArchitectureOutput `pulumi:"architecture"`
+	Architecture ArchitectureOutput     `pulumi:"architecture"`
+	ArchiveName  pulumi.StringPtrOutput `pulumi:"archiveName"`
 	// The connection details.
 	Connection pulumiCommand.ConnectionOutput `pulumi:"connection"`
 	// Directory to install the `etcd` and `etcdctl` binaries.
-	InstallDirectory pulumi.StringOutput `pulumi:"installDirectory"`
+	Directory pulumi.StringOutput `pulumi:"directory"`
+	Mkdir     tools.MkdirOutput   `pulumi:"mkdir"`
 	// The version of kube-scheduler to install.
 	Version pulumi.StringOutput `pulumi:"version"`
 }
@@ -38,8 +41,8 @@ func NewKubeSchedulerInstall(ctx *pulumi.Context,
 		return nil, errors.New("invalid value for required argument 'Connection'")
 	}
 	args.Connection = args.Connection.ToConnectionOutput().ApplyT(func(v pulumiCommand.Connection) pulumiCommand.Connection { return *v.Defaults() }).(pulumiCommand.ConnectionOutput)
-	if args.InstallDirectory == nil {
-		args.InstallDirectory = pulumi.StringPtr("/usr/local/bin")
+	if args.Directory == nil {
+		args.Directory = pulumi.StringPtr("/usr/local/bin")
 	}
 	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource KubeSchedulerInstall
@@ -56,7 +59,7 @@ type kubeSchedulerInstallArgs struct {
 	// The connection details.
 	Connection pulumiCommand.Connection `pulumi:"connection"`
 	// Directory to install the `kube-scheduler` binary.
-	InstallDirectory *string `pulumi:"installDirectory"`
+	Directory *string `pulumi:"directory"`
 	// The version of kube-scheduler to install.
 	Version *string `pulumi:"version"`
 }
@@ -68,7 +71,7 @@ type KubeSchedulerInstallArgs struct {
 	// The connection details.
 	Connection pulumiCommand.ConnectionInput
 	// Directory to install the `kube-scheduler` binary.
-	InstallDirectory pulumi.StringPtrInput
+	Directory pulumi.StringPtrInput
 	// The version of kube-scheduler to install.
 	Version pulumi.StringPtrInput
 }
@@ -165,14 +168,22 @@ func (o KubeSchedulerInstallOutput) Architecture() ArchitectureOutput {
 	return o.ApplyT(func(v *KubeSchedulerInstall) ArchitectureOutput { return v.Architecture }).(ArchitectureOutput)
 }
 
+func (o KubeSchedulerInstallOutput) ArchiveName() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *KubeSchedulerInstall) pulumi.StringPtrOutput { return v.ArchiveName }).(pulumi.StringPtrOutput)
+}
+
 // The connection details.
 func (o KubeSchedulerInstallOutput) Connection() pulumiCommand.ConnectionOutput {
 	return o.ApplyT(func(v *KubeSchedulerInstall) pulumiCommand.ConnectionOutput { return v.Connection }).(pulumiCommand.ConnectionOutput)
 }
 
 // Directory to install the `etcd` and `etcdctl` binaries.
-func (o KubeSchedulerInstallOutput) InstallDirectory() pulumi.StringOutput {
-	return o.ApplyT(func(v *KubeSchedulerInstall) pulumi.StringOutput { return v.InstallDirectory }).(pulumi.StringOutput)
+func (o KubeSchedulerInstallOutput) Directory() pulumi.StringOutput {
+	return o.ApplyT(func(v *KubeSchedulerInstall) pulumi.StringOutput { return v.Directory }).(pulumi.StringOutput)
+}
+
+func (o KubeSchedulerInstallOutput) Mkdir() tools.MkdirOutput {
+	return o.ApplyT(func(v *KubeSchedulerInstall) tools.MkdirOutput { return v.Mkdir }).(tools.MkdirOutput)
 }
 
 // The version of kube-scheduler to install.

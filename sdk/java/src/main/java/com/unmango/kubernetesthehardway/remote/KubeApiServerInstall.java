@@ -11,7 +11,9 @@ import com.pulumi.core.internal.Codegen;
 import com.unmango.kubernetesthehardway.Utilities;
 import com.unmango.kubernetesthehardway.remote.KubeApiServerInstallArgs;
 import com.unmango.kubernetesthehardway.remote.enums.Architecture;
+import com.unmango.kubernetesthehardway.tools.Mkdir;
 import java.lang.String;
+import java.util.Optional;
 import javax.annotation.Nullable;
 
 /**
@@ -52,15 +54,21 @@ public class KubeApiServerInstall extends com.pulumi.resources.ComponentResource
      * Directory to install the `kube-apiserver` binary.
      * 
      */
-    @Export(name="installDirectory", refs={String.class}, tree="[0]")
-    private Output<String> installDirectory;
+    @Export(name="directory", refs={String.class}, tree="[0]")
+    private Output<String> directory;
 
     /**
      * @return Directory to install the `kube-apiserver` binary.
      * 
      */
-    public Output<String> installDirectory() {
-        return this.installDirectory;
+    public Output<String> directory() {
+        return this.directory;
+    }
+    @Export(name="mkdir", refs={Mkdir.class}, tree="[0]")
+    private Output</* @Nullable */ Mkdir> mkdir;
+
+    public Output<Optional<Mkdir>> mkdir() {
+        return Codegen.optional(this.mkdir);
     }
     /**
      * The version of kube-apiserver to install.

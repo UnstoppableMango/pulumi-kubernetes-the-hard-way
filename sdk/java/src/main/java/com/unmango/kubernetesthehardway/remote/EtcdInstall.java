@@ -52,6 +52,20 @@ public class EtcdInstall extends com.pulumi.resources.ComponentResource {
         return this.archiveName;
     }
     /**
+     * Directory to install the `etcd` and `etcdctl` binaries.
+     * 
+     */
+    @Export(name="directory", refs={String.class}, tree="[0]")
+    private Output<String> directory;
+
+    /**
+     * @return Directory to install the `etcd` and `etcdctl` binaries.
+     * 
+     */
+    public Output<String> directory() {
+        return this.directory;
+    }
+    /**
      * The etcd download operation.
      * 
      */
@@ -92,20 +106,6 @@ public class EtcdInstall extends com.pulumi.resources.ComponentResource {
      */
     public Output<String> etcdctlPath() {
         return this.etcdctlPath;
-    }
-    /**
-     * Directory to install the `etcd` and `etcdctl` binaries.
-     * 
-     */
-    @Export(name="installDirectory", refs={String.class}, tree="[0]")
-    private Output<String> installDirectory;
-
-    /**
-     * @return Directory to install the `etcd` and `etcdctl` binaries.
-     * 
-     */
-    public Output<String> installDirectory() {
-        return this.installDirectory;
     }
     /**
      * The operation to create the install directory.

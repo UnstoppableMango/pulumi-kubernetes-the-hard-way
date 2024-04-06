@@ -11,6 +11,7 @@ import (
 	pulumiCommand "github.com/pulumi/pulumi-command/sdk/go/command/remote"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 	"github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/sdk/go/kubernetes-the-hard-way/internal"
+	"github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/sdk/go/kubernetes-the-hard-way/tools"
 )
 
 // Installs kube-apiserver on a remote system.
@@ -22,7 +23,8 @@ type KubeApiServerInstall struct {
 	// The connection details.
 	Connection pulumiCommand.ConnectionOutput `pulumi:"connection"`
 	// Directory to install the `kube-apiserver` binary.
-	InstallDirectory pulumi.StringOutput `pulumi:"installDirectory"`
+	Directory pulumi.StringOutput `pulumi:"directory"`
+	Mkdir     tools.MkdirOutput   `pulumi:"mkdir"`
 	// The version of kube-apiserver to install.
 	Version pulumi.StringOutput `pulumi:"version"`
 }
@@ -38,8 +40,8 @@ func NewKubeApiServerInstall(ctx *pulumi.Context,
 		return nil, errors.New("invalid value for required argument 'Connection'")
 	}
 	args.Connection = args.Connection.ToConnectionOutput().ApplyT(func(v pulumiCommand.Connection) pulumiCommand.Connection { return *v.Defaults() }).(pulumiCommand.ConnectionOutput)
-	if args.InstallDirectory == nil {
-		args.InstallDirectory = pulumi.StringPtr("/usr/local/bin")
+	if args.Directory == nil {
+		args.Directory = pulumi.StringPtr("/usr/local/bin")
 	}
 	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource KubeApiServerInstall
@@ -56,7 +58,7 @@ type kubeApiServerInstallArgs struct {
 	// The connection details.
 	Connection pulumiCommand.Connection `pulumi:"connection"`
 	// Directory to install the `etcd` and `etcdctl` binaries.
-	InstallDirectory *string `pulumi:"installDirectory"`
+	Directory *string `pulumi:"directory"`
 	// The version of kube-apiserver to install.
 	Version *string `pulumi:"version"`
 }
@@ -68,7 +70,7 @@ type KubeApiServerInstallArgs struct {
 	// The connection details.
 	Connection pulumiCommand.ConnectionInput
 	// Directory to install the `etcd` and `etcdctl` binaries.
-	InstallDirectory pulumi.StringPtrInput
+	Directory pulumi.StringPtrInput
 	// The version of kube-apiserver to install.
 	Version pulumi.StringPtrInput
 }
@@ -171,8 +173,12 @@ func (o KubeApiServerInstallOutput) Connection() pulumiCommand.ConnectionOutput 
 }
 
 // Directory to install the `kube-apiserver` binary.
-func (o KubeApiServerInstallOutput) InstallDirectory() pulumi.StringOutput {
-	return o.ApplyT(func(v *KubeApiServerInstall) pulumi.StringOutput { return v.InstallDirectory }).(pulumi.StringOutput)
+func (o KubeApiServerInstallOutput) Directory() pulumi.StringOutput {
+	return o.ApplyT(func(v *KubeApiServerInstall) pulumi.StringOutput { return v.Directory }).(pulumi.StringOutput)
+}
+
+func (o KubeApiServerInstallOutput) Mkdir() tools.MkdirOutput {
+	return o.ApplyT(func(v *KubeApiServerInstall) tools.MkdirOutput { return v.Mkdir }).(tools.MkdirOutput)
 }
 
 // The version of kube-apiserver to install.

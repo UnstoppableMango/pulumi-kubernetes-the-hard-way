@@ -20,22 +20,22 @@ class EtcdInstallArgs:
     def __init__(__self__, *,
                  connection: pulumi.Input['pulumi_command.remote.ConnectionArgs'],
                  architecture: Optional[pulumi.Input['Architecture']] = None,
-                 install_directory: Optional[pulumi.Input[str]] = None,
+                 directory: Optional[pulumi.Input[str]] = None,
                  version: Optional[pulumi.Input[str]] = None):
         """
         The set of arguments for constructing a EtcdInstall resource.
         :param pulumi.Input['pulumi_command.remote.ConnectionArgs'] connection: The connection details.
         :param pulumi.Input['Architecture'] architecture: The etcd CPU architecture.
-        :param pulumi.Input[str] install_directory: Directory to install the `etcd` and `etcdctl` binaries.
+        :param pulumi.Input[str] directory: Directory to install the `etcd` and `etcdctl` binaries.
         :param pulumi.Input[str] version: The version of etcd to install.
         """
         pulumi.set(__self__, "connection", connection)
         if architecture is not None:
             pulumi.set(__self__, "architecture", architecture)
-        if install_directory is None:
-            install_directory = '/usr/local/bin'
-        if install_directory is not None:
-            pulumi.set(__self__, "install_directory", install_directory)
+        if directory is None:
+            directory = '/usr/local/bin'
+        if directory is not None:
+            pulumi.set(__self__, "directory", directory)
         if version is not None:
             pulumi.set(__self__, "version", version)
 
@@ -64,16 +64,16 @@ class EtcdInstallArgs:
         pulumi.set(self, "architecture", value)
 
     @property
-    @pulumi.getter(name="installDirectory")
-    def install_directory(self) -> Optional[pulumi.Input[str]]:
+    @pulumi.getter
+    def directory(self) -> Optional[pulumi.Input[str]]:
         """
         Directory to install the `etcd` and `etcdctl` binaries.
         """
-        return pulumi.get(self, "install_directory")
+        return pulumi.get(self, "directory")
 
-    @install_directory.setter
-    def install_directory(self, value: Optional[pulumi.Input[str]]):
-        pulumi.set(self, "install_directory", value)
+    @directory.setter
+    def directory(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "directory", value)
 
     @property
     @pulumi.getter
@@ -95,7 +95,7 @@ class EtcdInstall(pulumi.ComponentResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  architecture: Optional[pulumi.Input['Architecture']] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
-                 install_directory: Optional[pulumi.Input[str]] = None,
+                 directory: Optional[pulumi.Input[str]] = None,
                  version: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         """
@@ -105,7 +105,7 @@ class EtcdInstall(pulumi.ComponentResource):
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input['Architecture'] architecture: The etcd CPU architecture.
         :param pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']] connection: The connection details.
-        :param pulumi.Input[str] install_directory: Directory to install the `etcd` and `etcdctl` binaries.
+        :param pulumi.Input[str] directory: Directory to install the `etcd` and `etcdctl` binaries.
         :param pulumi.Input[str] version: The version of etcd to install.
         """
         ...
@@ -134,7 +134,7 @@ class EtcdInstall(pulumi.ComponentResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  architecture: Optional[pulumi.Input['Architecture']] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
-                 install_directory: Optional[pulumi.Input[str]] = None,
+                 directory: Optional[pulumi.Input[str]] = None,
                  version: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
@@ -151,9 +151,9 @@ class EtcdInstall(pulumi.ComponentResource):
             if connection is None and not opts.urn:
                 raise TypeError("Missing required property 'connection'")
             __props__.__dict__["connection"] = connection
-            if install_directory is None:
-                install_directory = '/usr/local/bin'
-            __props__.__dict__["install_directory"] = install_directory
+            if directory is None:
+                directory = '/usr/local/bin'
+            __props__.__dict__["directory"] = directory
             __props__.__dict__["version"] = version
             __props__.__dict__["archive_name"] = None
             __props__.__dict__["download"] = None
@@ -190,6 +190,14 @@ class EtcdInstall(pulumi.ComponentResource):
 
     @property
     @pulumi.getter
+    def directory(self) -> pulumi.Output[str]:
+        """
+        Directory to install the `etcd` and `etcdctl` binaries.
+        """
+        return pulumi.get(self, "directory")
+
+    @property
+    @pulumi.getter
     def download(self) -> pulumi.Output['Download']:
         """
         The etcd download operation.
@@ -211,14 +219,6 @@ class EtcdInstall(pulumi.ComponentResource):
         The path to the etcdctl binary on the remote system.
         """
         return pulumi.get(self, "etcdctl_path")
-
-    @property
-    @pulumi.getter(name="installDirectory")
-    def install_directory(self) -> pulumi.Output[str]:
-        """
-        Directory to install the `etcd` and `etcdctl` binaries.
-        """
-        return pulumi.get(self, "install_directory")
 
     @property
     @pulumi.getter(name="installMkdir")

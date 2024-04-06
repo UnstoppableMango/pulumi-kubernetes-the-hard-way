@@ -11,7 +11,9 @@ import com.pulumi.core.internal.Codegen;
 import com.unmango.kubernetesthehardway.Utilities;
 import com.unmango.kubernetesthehardway.remote.KubeSchedulerInstallArgs;
 import com.unmango.kubernetesthehardway.remote.enums.Architecture;
+import com.unmango.kubernetesthehardway.tools.Mkdir;
 import java.lang.String;
+import java.util.Optional;
 import javax.annotation.Nullable;
 
 /**
@@ -34,6 +36,12 @@ public class KubeSchedulerInstall extends com.pulumi.resources.ComponentResource
     public Output<Architecture> architecture() {
         return this.architecture;
     }
+    @Export(name="archiveName", refs={String.class}, tree="[0]")
+    private Output</* @Nullable */ String> archiveName;
+
+    public Output<Optional<String>> archiveName() {
+        return Codegen.optional(this.archiveName);
+    }
     /**
      * The connection details.
      * 
@@ -52,15 +60,21 @@ public class KubeSchedulerInstall extends com.pulumi.resources.ComponentResource
      * Directory to install the `etcd` and `etcdctl` binaries.
      * 
      */
-    @Export(name="installDirectory", refs={String.class}, tree="[0]")
-    private Output<String> installDirectory;
+    @Export(name="directory", refs={String.class}, tree="[0]")
+    private Output<String> directory;
 
     /**
      * @return Directory to install the `etcd` and `etcdctl` binaries.
      * 
      */
-    public Output<String> installDirectory() {
-        return this.installDirectory;
+    public Output<String> directory() {
+        return this.directory;
+    }
+    @Export(name="mkdir", refs={Mkdir.class}, tree="[0]")
+    private Output</* @Nullable */ Mkdir> mkdir;
+
+    public Output<Optional<Mkdir>> mkdir() {
+        return Codegen.optional(this.mkdir);
     }
     /**
      * The version of kube-scheduler to install.

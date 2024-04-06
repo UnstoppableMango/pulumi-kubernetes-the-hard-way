@@ -39,6 +39,10 @@ export class EtcdInstall extends pulumi.ComponentResource {
      */
     public /*out*/ readonly archiveName!: pulumi.Output<string>;
     /**
+     * Directory to install the `etcd` and `etcdctl` binaries.
+     */
+    public readonly directory!: pulumi.Output<string>;
+    /**
      * The etcd download operation.
      */
     public /*out*/ readonly download!: pulumi.Output<Download>;
@@ -50,10 +54,6 @@ export class EtcdInstall extends pulumi.ComponentResource {
      * The path to the etcdctl binary on the remote system.
      */
     public /*out*/ readonly etcdctlPath!: pulumi.Output<string>;
-    /**
-     * Directory to install the `etcd` and `etcdctl` binaries.
-     */
-    public readonly installDirectory!: pulumi.Output<string>;
     /**
      * The operation to create the install directory.
      */
@@ -99,7 +99,7 @@ export class EtcdInstall extends pulumi.ComponentResource {
             }
             resourceInputs["architecture"] = args ? args.architecture : undefined;
             resourceInputs["connection"] = args ? (args.connection ? pulumi.output(args.connection).apply(pulumiCommand.types.input.remote.connectionArgsProvideDefaults) : undefined) : undefined;
-            resourceInputs["installDirectory"] = (args ? args.installDirectory : undefined) ?? "/usr/local/bin";
+            resourceInputs["directory"] = (args ? args.directory : undefined) ?? "/usr/local/bin";
             resourceInputs["version"] = args ? args.version : undefined;
             resourceInputs["archiveName"] = undefined /*out*/;
             resourceInputs["download"] = undefined /*out*/;
@@ -114,10 +114,10 @@ export class EtcdInstall extends pulumi.ComponentResource {
         } else {
             resourceInputs["architecture"] = undefined /*out*/;
             resourceInputs["archiveName"] = undefined /*out*/;
+            resourceInputs["directory"] = undefined /*out*/;
             resourceInputs["download"] = undefined /*out*/;
             resourceInputs["etcdPath"] = undefined /*out*/;
             resourceInputs["etcdctlPath"] = undefined /*out*/;
-            resourceInputs["installDirectory"] = undefined /*out*/;
             resourceInputs["installMkdir"] = undefined /*out*/;
             resourceInputs["mvEtcd"] = undefined /*out*/;
             resourceInputs["mvEtcdctl"] = undefined /*out*/;
@@ -153,7 +153,7 @@ export interface EtcdInstallArgs {
     /**
      * Directory to install the `etcd` and `etcdctl` binaries.
      */
-    installDirectory?: pulumi.Input<string>;
+    directory?: pulumi.Input<string>;
     /**
      * The version of etcd to install.
      */
