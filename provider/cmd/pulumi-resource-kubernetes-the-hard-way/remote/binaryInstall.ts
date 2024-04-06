@@ -6,7 +6,7 @@ import { Download } from './download';
 interface BinaryInstallArgs {
   binName: Input<string>;
   connection: Input<remote.ConnectionArgs>;
-  installDirectory: Input<string>;
+  directory: Input<string>;
   url: Input<string>;
 }
 
@@ -34,11 +34,11 @@ export function binaryInstall(name: string, args: BinaryInstallArgs, parent: Res
 
   const mkdir = new Mkdir(name, {
     connection: args.connection,
-    directory: args.installDirectory,
+    directory: args.directory,
     parents: true,
   }, { parent });
 
-  const binPath = interpolate`${args.installDirectory}/${args.binName}`;
+  const binPath = interpolate`${args.directory}/${args.binName}`;
 
   const mv = new Mv(name, {
     connection: args.connection,

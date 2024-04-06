@@ -6,7 +6,7 @@ export type Architecture = 'amd64' | 'arm64';
 
 export class EtcdInstall extends schema.EtcdInstall {
   public static readonly defaultArch: Architecture = 'amd64';
-  public static readonly defaultInstallDirectory: string = '/usr/local/bin';
+  public static readonly defaultdirectory: string = '/usr/local/bin';
   public static readonly defaultVersion: string = '3.4.15'; // TODO: Versioning
 
   constructor(name: string, args: schema.EtcdInstallArgs, opts?: ComponentResourceOptions) {
@@ -14,20 +14,20 @@ export class EtcdInstall extends schema.EtcdInstall {
 
     const architecture = output(args.architecture ?? EtcdInstall.defaultArch);
     const connection = output(args.connection);
-    const installDirectory = output(args.installDirectory ?? EtcdInstall.defaultInstallDirectory);
+    const directory = output(args.directory ?? EtcdInstall.defaultdirectory);
     const version = output(args.version ?? EtcdInstall.defaultVersion); // TODO: Stateful versioning?
     const archiveName = interpolate`etcd-v${version}-linux-${architecture}.tar.gz`;
     const url = interpolate`https://github.com/etcd-io/etcd/releases/download/v${version}/${archiveName}`;
 
     // TODO: Permission checks?
-    // TODO: Caching? Put archive/bins into ~/.kthw/cache so i.e. installDirectory changes, tarball doesn't need to be re-downloaded.
+    // TODO: Caching? Put archive/bins into ~/.kthw/cache so i.e. directory changes, tarball doesn't need to be re-downloaded.
     // TODO: General update logic
 
     const install = archiveInstall(name, {
       archiveName,
       binaries: ['etcd', 'etcdctl'] as const,
       connection,
-      installDirectory,
+      directory,
       url,
     }, this);
 
@@ -36,7 +36,7 @@ export class EtcdInstall extends schema.EtcdInstall {
     this.download = install.download;
     this.etcdPath = install.paths.etcd;
     this.etcdctlPath = install.paths.etcdctl;
-    this.installDirectory = installDirectory;
+    this.directory = directory;
     this.installMkdir = install.mkdir;
     this.mvEtcd = install.mvs.etcd;
     this.mvEtcdctl = install.mvs.etcdctl;
@@ -51,7 +51,7 @@ export class EtcdInstall extends schema.EtcdInstall {
       download: install.download,
       etcdPath: install.paths.etcd,
       etcdctlPath: install.paths.etcdctl,
-      installDirectory,
+      directory,
       installMkdir: install.mkdir,
       mvEtcd: install.mvs.etcd,
       mvEtcdctl: install.mvs.etcdctl,

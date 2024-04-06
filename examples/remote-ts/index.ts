@@ -49,7 +49,7 @@ const download = new Download('remote', {
 
 const etcd = new EtcdInstall('remote', {
   connection: { host, port, user, password },
-  installDirectory: path.join(basePath, 'etcd'),
+  directory: path.join(basePath, 'etcd'),
 });
 
 const etcdConfig = new EtcdConfiguration('remote', {
@@ -80,17 +80,17 @@ const systemdService = new SystemdService('remote-test', {
 
 const apiServer = new KubeApiServerInstall('remote', {
   connection: { host, port, user, password },
-  installDirectory: path.join(basePath, 'kube-apiserver'),
+  directory: path.join(basePath, 'kube-apiserver'),
 });
 
 const controllerManager = new KubeControllerManagerInstall('remote', {
   connection: { host, port, user, password },
-  installDirectory: path.join(basePath, 'kube-controller-manager'),
+  directory: path.join(basePath, 'kube-controller-manager'),
 });
 
 const scheduler = new KubeSchedulerInstall('remote', {
   connection: { host, port, user, password },
-  installDirectory: path.join(basePath, 'kube-scheduler'),
+  directory: path.join(basePath, 'kube-scheduler'),
 });
 
 export const fileStderr = file.stderr;

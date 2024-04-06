@@ -2,12 +2,12 @@ import { ComponentResourceOptions, interpolate, output } from '@pulumi/pulumi';
 import * as schema from '../schema-types';
 import { binaryInstall } from './binaryInstall';
 
-export class KubeControllerManagerInstall extends schema.KubeControllerManagerInstall {
-  constructor(name: string, args: schema.KubeControllerManagerInstallArgs, opts?: ComponentResourceOptions) {
+export class KubectlInstall extends schema.KubectlInstall {
+  constructor(name: string, args: schema.KubectlInstallArgs, opts?: ComponentResourceOptions) {
     super(name, args, opts);
 
     const architecture = output(args.architecture ?? 'amd64');
-    const binName = 'kube-controller-manager';
+    const binName = 'kube-apiserver';
     const connection = output(args.connection);
     const directory = output(args.directory ?? '/usr/local/bin');
     const version = output(args.version ?? '1.29.2');
