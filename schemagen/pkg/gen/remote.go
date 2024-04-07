@@ -219,11 +219,16 @@ func generateArchiveInstall(
 			Description: "The rm operation.",
 			TypeSpec:    schema.TypeSpec{Ref: localResource("Rm", "tools")},
 		},
+		"tar": {
+			Description: "The tar operation.",
+			TypeSpec:    schema.TypeSpec{Ref: localResource("Tar", "tools")},
+		},
 		"url": {
 			Description: "The url used to download the binary.",
 			TypeSpec:    typeSpecs.String,
 		},
 	}
+	maps.Copy(outputs, inputs)
 
 	requiredOutputs := []string{
 		"architecture",

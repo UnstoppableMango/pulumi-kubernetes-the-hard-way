@@ -392,6 +392,7 @@ func generateRm() schema.ResourceSpec {
 		},
 		"onDelete": { // TODO: Reconsider this SOLID violation
 			Description: "Whether rm should be run when the resource is created or deleted.",
+			TypeSpec:    typeSpecs.Boolean,
 		},
 		"recursive": {
 			Description: "Corresponds to the `--recursive` option.",
@@ -488,6 +489,7 @@ func generateTar() schema.ResourceSpec {
 		},
 		"onDelete": { // TODO: Reconsider this SOLID violation
 			Description: "Whether rm should be run when the resource is created or deleted.",
+			TypeSpec:    typeSpecs.Boolean,
 		},
 		"recursive": {
 			Description: "Corresponds to the `--strip-components` option.",

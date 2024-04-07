@@ -33,24 +33,24 @@ func generateConfig() schema.PackageSpec {
 					"clusters": {
 						TypeSpec: schema.TypeSpec{
 							Type: "array",
-							AdditionalProperties: &schema.TypeSpec{
-								Ref: localResource("Cluster", "config"),
+							Items: &schema.TypeSpec{
+								Ref: localType("Cluster", "config"),
 							},
 						},
 					},
 					"contexts": {
 						TypeSpec: schema.TypeSpec{
 							Type: "array",
-							AdditionalProperties: &schema.TypeSpec{
-								Ref: localResource("Context", "config"),
+							Items: &schema.TypeSpec{
+								Ref: localType("Context", "config"),
 							},
 						},
 					},
 					"users": {
 						TypeSpec: schema.TypeSpec{
 							Type: "array",
-							AdditionalProperties: &schema.TypeSpec{
-								Ref: localResource("User", "config"),
+							Items: &schema.TypeSpec{
+								Ref: localType("User", "config"),
 							},
 						},
 					},

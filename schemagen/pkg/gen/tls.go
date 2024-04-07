@@ -436,7 +436,7 @@ func generateEncryptionKey(randomSpec schema.PackageSpec) schema.ResourceSpec {
 		},
 		"key": {
 			Description: "The generated random key.",
-			TypeSpec:    schema.TypeSpec{Ref: refResource(randomSpec, "index", "randomBytes")},
+			TypeSpec:    schema.TypeSpec{Ref: refResource(randomSpec, "RandomBytes", "index", "randomBytes")},
 		},
 	}
 	maps.Copy(outputs, inputs)
@@ -487,7 +487,7 @@ func generateRootCa(tlsSpec schema.PackageSpec) schema.ResourceSpec {
 	outputs := map[string]schema.PropertySpec{
 		"cert": {
 			Description: "The certificate authority certificate.",
-			TypeSpec:    schema.TypeSpec{Ref: refResource(tlsSpec, "SelfSignedCertificate", "index/selfSignedCertificate")},
+			TypeSpec:    schema.TypeSpec{Ref: refResource(tlsSpec, "SelfSignedCert", "index", "selfSignedCert")},
 		},
 		"key": {
 			Description: "The certificate authority key.",
