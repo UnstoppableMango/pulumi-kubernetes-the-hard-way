@@ -34,6 +34,7 @@ func generateRemote(commandSpec schema.PackageSpec) schema.PackageSpec {
 		remoteMod + "ContainerdInstall":     generateArchiveInstall(commandSpec, "Installs containerd on a remote system", "containerd"),
 		remoteMod + "CrictlInstall":         generateArchiveInstall(commandSpec, "Installs crictl on a remote system", "crictl"),
 		remoteMod + "Download":              generateDownload(commandSpec),
+		remoteMod + "EtcdConfiguration":     generateEtcdConfiguration(commandSpec),
 		remoteMod + "EtcdInstall":           generateArchiveInstall(commandSpec, "Installs etcd on a remote system", "etcd", "etcdctl"),
 		remoteMod + "File":                  generateFile(commandSpec),
 		remoteMod + "KubeApiServerInstall":  generateBinaryInstall(commandSpec, "Installs kube-apiserver on a remote system."),
@@ -291,6 +292,99 @@ func generateDownload(commandSpec schema.PackageSpec) schema.ResourceSpec {
 		IsComponent: true,
 		ObjectTypeSpec: schema.ObjectTypeSpec{
 			Description: "Downloads the file specified by `url` onto a remote system.",
+			Properties:  outputs,
+			Required:    requiredOutputs,
+		},
+		InputProperties: inputs,
+		RequiredInputs:  requiredInputs,
+	}
+}
+
+func generateEtcdConfiguration(commandSpec schema.PackageSpec) schema.ResourceSpec {
+	inputs := map[string]schema.PropertySpec{
+		"caPem": {
+			Description: "The PEM encoded certificate authority data.",
+			TypeSpec:    typeSpecs.String,
+		},
+		"certPem": {
+			Description: "The PEM encoded certificate data.",
+			TypeSpec:    typeSpecs.String,
+		},
+		"configurationDirectory": {
+			Description: "The directory to store etcd configuration.",
+			TypeSpec:    typeSpecs.String,
+			Default:     "/etc/etcd",
+		},
+		"connection": {
+			Description: "The parameters with which to connect to the remote host.",
+			TypeSpec:    schema.TypeSpec{Ref: refType(commandSpec, "Connection", "remote")},
+		},
+		"dataDirectory": {
+			Description: "The directory etcd will store its data.",
+			TypeSpec:    typeSpecs.String,
+		},
+		"etcdPath": {
+			Description: "The path to the `etcd` binary.",
+			TypeSpec:    typeSpecs.String,
+		},
+		"internalIp": {
+			Description: "The IP used to serve client requests and communicate with etcd peers.",
+			TypeSpec:    typeSpecs.String,
+		},
+		"keyPem": {
+			Description: "The PEM encoded key data.",
+			TypeSpec:    typeSpecs.String,
+		},
+	}
+
+	requiredInputs := []string{
+		"caPem",
+		"certPem",
+		"connection",
+		"etcdPath",
+		"internalIp",
+		"keyPem",
+	}
+
+	outputs := map[string]schema.PropertySpec{
+		"caFile": {
+			Description: "The remote certificate authority file.",
+			TypeSpec:    schema.TypeSpec{Ref: localResource("File", "remote")},
+		},
+		"certFile": {
+			Description: "The remote certificate file.",
+			TypeSpec:    schema.TypeSpec{Ref: localResource("File", "remote")},
+		},
+		"configurationMkdir": {
+			Description: "The configuration mkdir operation.",
+			TypeSpec:    schema.TypeSpec{Ref: localResource("Mkdir", "tools")},
+		},
+		"dataMkdir": {
+			Description: "The data mkdir operation.",
+			TypeSpec:    schema.TypeSpec{Ref: localResource("Mkdir", "tools")},
+		},
+		"keyFile": {
+			Description: "The remote key file.",
+			TypeSpec:    schema.TypeSpec{Ref: localResource("File", "remote")},
+		},
+	}
+	maps.Copy(outputs, inputs)
+
+	requiredOutputs := slices.Concat(
+		requiredInputs,
+		[]string{
+			"caFile",
+			"certFile",
+			"configurationMkdir",
+			"dataMkdir",
+			"keyFile",
+		},
+	)
+
+	return schema.ResourceSpec{
+		IsComponent: true,
+		ObjectTypeSpec: schema.ObjectTypeSpec{
+			Description: "Configures etcd on a remote system.",
 			Properties:  outputs,
 			Required:    requiredOutputs,
 		},
