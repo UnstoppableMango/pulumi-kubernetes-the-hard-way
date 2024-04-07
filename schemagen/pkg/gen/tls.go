@@ -145,7 +145,54 @@ func generateTls(randomSpec, tlsSpec schema.PackageSpec) schema.PackageSpec {
 		},
 	}
 
-	functions := map[string]schema.FunctionSpec{}
+	functions := map[string]schema.FunctionSpec{
+		tlsMod + "ClusterPki/getKubeconfig": {
+			Description: "Get a kubeconfig configured from this PKI.",
+			Inputs: &schema.ObjectTypeSpec{
+				Properties: map[string]schema.PropertySpec{
+					"__self__": {
+						Description: "The PKI to use certificate data from.",
+						TypeSpec: schema.TypeSpec{
+							Ref: localResource("ClusterPki", "tls"),
+						},
+					},
+					"options": {
+						Description: "Options for creating the kubeconfig.",
+						TypeSpec: schema.TypeSpec{
+							Plain: true,
+							OneOf: []schema.TypeSpec{
+								{Ref: localType("KubeconfigAdminOptions", "config")},
+								{Ref: localType("KubeconfigKubeControllerManagerOptions", "config")},
+								{Ref: localType("KubeconfigKubeProxyOptions", "config")},
+								{Ref: localType("KubeconfigKubeSchedulerOptions", "config")},
+								{Ref: localType("KubeconfigWorkerOptions", "config")},
+							},
+							Discriminator: &schema.DiscriminatorSpec{
+								PropertyName: "type",
+								Mapping: map[string]string{
+									"admin":                   localType("KubeconfigAdminOptions", "config"),
+									"kube-controller-manager": localType("KubeconfigKubeControllerManagerOptions", "config"),
+									"kube-proxy":              localType("KubeconfigKubeProxyOptions", "config"),
+									"kube-scheduler":          localType("KubeconfigKubeSchedulerOptions", "config"),
+									"worker":                  localType("KubeconfigWorkerOptions", "config"),
+								},
+							},
+						},
+					},
+				},
+				Required: []string{"__self__", "options"},
+			},
+			Outputs: &schema.ObjectTypeSpec{
+				Properties: map[string]schema.PropertySpec{
+					"result": {
+						TypeSpec: schema.TypeSpec{Ref: localType("Kubeconfig", "config")},
+					},
+				},
+				Required: []string{"result"},
+			},
+		},
+	}
+
 	resources := map[string]schema.ResourceSpec{
 		tlsMod + "Certificate":   generateCertificate(tlsSpec),
 		tlsMod + "ClusterPki":    generateClusterPki(),
