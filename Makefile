@@ -4,7 +4,7 @@ PROJECT         := github.com/unstoppablemango/pulumi-${PACK}
 PROVIDER        := pulumi-resource-${PACK}
 
 WORKING_DIR     := $(shell pwd)
-SCHEMA_FILE     := ${WORKING_DIR}/schema.yaml
+SCHEMA_FILE     := ${WORKING_DIR}/provider/cmd/${PROVIDER}/schema.json
 PROVIDER_PKG    := ${WORKING_DIR}/provider/cmd/${PROVIDER}/package.json
 PROVIDER_SRC    := $(shell find ${WORKING_DIR}/provider/cmd/${PROVIDER} -type f -name '*.ts')
 SCHEMAGEN_SRC   := $(shell find ${WORKING_DIR}/schemagen -type f -name '*.go')
@@ -227,7 +227,7 @@ dist: dist/$(PROVIDER)-v$(PROVIDER_VERSION)-darwin-amd64.tar.gz
 dist: dist/$(PROVIDER)-v$(PROVIDER_VERSION)-darwin-arm64.tar.gz
 dist: dist/$(PROVIDER)-v$(PROVIDER_VERSION)-windows-amd64.tar.gz
 
-provider/cmd/${PROVIDER}/schema.json: $(SCHEMAGEN_SRC)
+$(SCHEMA_FILE): $(SCHEMAGEN_SRC)
 	cd schemagen/cmd/pulumi-gen-kubernetes-the-hard-way && \
 		go run main.go ${WORKING_DIR}/provider/cmd/${PROVIDER}
 
