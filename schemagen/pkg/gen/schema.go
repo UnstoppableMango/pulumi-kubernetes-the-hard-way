@@ -92,6 +92,9 @@ func GenerateSchema(packageDir string) schema.PackageSpec {
 				},
 			}),
 		},
+		Functions: map[string]schema.FunctionSpec{},
+		Resources: map[string]schema.ResourceSpec{},
+		Types:     map[string]schema.ComplexTypeSpec{},
 	}
 
 	return extendSchemas(packageSpec,

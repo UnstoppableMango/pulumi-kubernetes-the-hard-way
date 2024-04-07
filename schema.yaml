@@ -459,7 +459,8 @@ resources:
         description: Connection details for the remote system
       destination:
         type: string
-        description: The fully qualified path on the remote system where the file
+        description:
+          The fully qualified path on the remote system where the file
           should be downloaded to.
       removeOnDelete:
         type: boolean
@@ -477,7 +478,8 @@ resources:
         description: Connection details for the remote system
       destination:
         type: string
-        description: The fully qualified path on the remote system where the file
+        description:
+          The fully qualified path on the remote system where the file
           should be downloaded to.
       mkdir:
         $ref: "#/resources/kubernetes-the-hard-way:tools:Mkdir"
@@ -2171,7 +2173,8 @@ types:
         type: array
         items:
           type: string
-        description: A symbolic link is created in the .wants/, .requires/, or .upholds/ directory
+        description:
+          A symbolic link is created in the .wants/, .requires/, or .upholds/ directory
           of each of the listed units when this unit is installed by systemctl enable.
   kubernetes-the-hard-way:remote:SystemdServiceExitType:
     type: string
