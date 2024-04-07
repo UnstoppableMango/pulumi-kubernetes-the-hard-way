@@ -40,7 +40,7 @@ namespace UnMango.KubernetesTheHardWay.Tls
     }
 
     /// <summary>
-    /// Certificate allowed usage.
+    /// Certificate allowed usage
     /// </summary>
     [EnumType]
     public readonly struct AllowedUsage : IEquatable<AllowedUsage>
@@ -75,7 +75,7 @@ namespace UnMango.KubernetesTheHardWay.Tls
     }
 
     /// <summary>
-    /// TODO
+    /// ECDSA algorithm curve
     /// </summary>
     [EnumType]
     public readonly struct EcdsaCurve : IEquatable<EcdsaCurve>
@@ -108,7 +108,7 @@ namespace UnMango.KubernetesTheHardWay.Tls
     }
 
     /// <summary>
-    /// TODO
+    /// The role a node will play in the final cluster
     /// </summary>
     [EnumType]
     public readonly struct NodeRole : IEquatable<NodeRole>

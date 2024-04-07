@@ -11,7 +11,7 @@ using Pulumi;
 namespace UnMango.KubernetesTheHardWay.Tools
 {
     /// <summary>
-    /// Abstracion over the `tar` utility on a remote system.
+    /// Abstraction over the `rm` utility on a remote system.
     /// </summary>
     [KubernetesTheHardWayResourceType("kubernetes-the-hard-way:tools:Tar")]
     public partial class Tar : global::Pulumi.ComponentResource
@@ -23,19 +23,37 @@ namespace UnMango.KubernetesTheHardWay.Tools
         public Output<string> Archive { get; private set; } = null!;
 
         /// <summary>
-        /// Represents the remote `tar` operation.
+        /// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+        /// </summary>
+        [Output("binaryPath")]
+        public Output<string> BinaryPath { get; private set; } = null!;
+
+        /// <summary>
+        /// The underlying command
         /// </summary>
         [Output("command")]
         public Output<Pulumi.Command.Remote.Command> Command { get; private set; } = null!;
 
         /// <summary>
-        /// Corresponds to the --directory option.
+        /// Connection details for the remote system
+        /// </summary>
+        [Output("connection")]
+        public Output<Pulumi.Command.Remote.Outputs.Connection> Connection { get; private set; } = null!;
+
+        /// <summary>
+        /// Corresponds to the `--directory` option.
         /// </summary>
         [Output("directory")]
         public Output<string?> Directory { get; private set; } = null!;
 
         /// <summary>
-        /// Corresponds to the --extract option.
+        /// Environment variables
+        /// </summary>
+        [Output("environment")]
+        public Output<ImmutableDictionary<string, string>> Environment { get; private set; } = null!;
+
+        /// <summary>
+        /// Corresponds to the `--extract` option.
         /// </summary>
         [Output("extract")]
         public Output<bool> Extract { get; private set; } = null!;
@@ -44,37 +62,55 @@ namespace UnMango.KubernetesTheHardWay.Tools
         /// Corresponds to the [FILE] argument.
         /// </summary>
         [Output("files")]
-        public Output<ImmutableArray<string>> Files { get; private set; } = null!;
+        public Output<Union<string, ImmutableArray<string>>> Files { get; private set; } = null!;
 
         /// <summary>
-        /// Corresponds to the --gzip option.
+        /// Corresponds to the `--gzip` option.
         /// </summary>
         [Output("gzip")]
         public Output<bool?> Gzip { get; private set; } = null!;
 
         /// <summary>
-        /// The process' stderr.
+        /// At what stage(s) in the resource lifecycle should the command be run
+        /// </summary>
+        [Output("lifecycle")]
+        public Output<UnMango.KubernetesTheHardWay.Tools.Outputs.CommandLifecycle?> Lifecycle { get; private set; } = null!;
+
+        /// <summary>
+        /// Whether rm should be run when the resource is created or deleted.
+        /// </summary>
+        [Output("onDelete")]
+        public Output<bool?> OnDelete { get; private set; } = null!;
+
+        /// <summary>
+        /// Corresponds to the `--strip-components` option.
+        /// </summary>
+        [Output("recursive")]
+        public Output<int?> Recursive { get; private set; } = null!;
+
+        /// <summary>
+        /// TODO
         /// </summary>
         [Output("stderr")]
         public Output<string> Stderr { get; private set; } = null!;
 
         /// <summary>
-        /// The process' stdin.
+        /// TODO
         /// </summary>
         [Output("stdin")]
         public Output<string?> Stdin { get; private set; } = null!;
 
         /// <summary>
-        /// The process' stdout.
+        /// TODO
         /// </summary>
         [Output("stdout")]
         public Output<string> Stdout { get; private set; } = null!;
 
         /// <summary>
-        /// Corresponds to the --strip-components option.
+        /// TODO
         /// </summary>
-        [Output("stripComponents")]
-        public Output<int?> StripComponents { get; private set; } = null!;
+        [Output("triggers")]
+        public Output<ImmutableArray<object>> Triggers { get; private set; } = null!;
 
 
         /// <summary>
@@ -112,19 +148,29 @@ namespace UnMango.KubernetesTheHardWay.Tools
         public Input<string> Archive { get; set; } = null!;
 
         /// <summary>
-        /// Connection details for the remote system.
+        /// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+        /// </summary>
+        [Input("binaryPath")]
+        public Input<string>? BinaryPath { get; set; }
+
+        /// <summary>
+        /// Connection details for the remote system
         /// </summary>
         [Input("connection", required: true)]
         public Input<Pulumi.Command.Remote.Inputs.ConnectionArgs> Connection { get; set; } = null!;
 
         /// <summary>
-        /// Corresponds to the --directory option.
+        /// Corresponds to the `--directory` option.
         /// </summary>
         [Input("directory")]
         public Input<string>? Directory { get; set; }
 
         [Input("environment")]
         private InputMap<string>? _environment;
+
+        /// <summary>
+        /// Environment variables
+        /// </summary>
         public InputMap<string> Environment
         {
             get => _environment ?? (_environment = new InputMap<string>());
@@ -132,7 +178,7 @@ namespace UnMango.KubernetesTheHardWay.Tools
         }
 
         /// <summary>
-        /// Corresponds to the --extract option.
+        /// Corresponds to the `--extract` option.
         /// </summary>
         [Input("extract")]
         public Input<bool>? Extract { get; set; }
@@ -141,19 +187,49 @@ namespace UnMango.KubernetesTheHardWay.Tools
         /// Corresponds to the [FILE] argument.
         /// </summary>
         [Input("files")]
-        public InputUnion<ImmutableArray<string>, string>? Files { get; set; }
+        public InputUnion<string, ImmutableArray<string>>? Files { get; set; }
 
         /// <summary>
-        /// Corresponds to the --gzip option.
+        /// Corresponds to the `--gzip` option.
         /// </summary>
         [Input("gzip")]
         public Input<bool>? Gzip { get; set; }
 
         /// <summary>
-        /// Corresponds to the --strip-components option.
+        /// At what stage(s) in the resource lifecycle should the command be run
         /// </summary>
-        [Input("stripComponents")]
-        public Input<int>? StripComponents { get; set; }
+        [Input("lifecycle")]
+        public UnMango.KubernetesTheHardWay.Tools.Inputs.CommandLifecycle? Lifecycle { get; set; }
+
+        /// <summary>
+        /// Whether rm should be run when the resource is created or deleted.
+        /// </summary>
+        [Input("onDelete")]
+        public Input<bool>? OnDelete { get; set; }
+
+        /// <summary>
+        /// Corresponds to the `--strip-components` option.
+        /// </summary>
+        [Input("recursive")]
+        public Input<int>? Recursive { get; set; }
+
+        /// <summary>
+        /// TODO
+        /// </summary>
+        [Input("stdin")]
+        public Input<string>? Stdin { get; set; }
+
+        [Input("triggers")]
+        private InputList<object>? _triggers;
+
+        /// <summary>
+        /// TODO
+        /// </summary>
+        public InputList<object> Triggers
+        {
+            get => _triggers ?? (_triggers = new InputList<object>());
+            set => _triggers = value;
+        }
 
         public TarArgs()
         {

@@ -7,7 +7,9 @@ import com.pulumi.command.remote.inputs.ConnectionArgs;
 import com.pulumi.core.Output;
 import com.pulumi.core.annotations.Import;
 import com.pulumi.exceptions.MissingRequiredPropertyException;
-import com.unmango.kubernetesthehardway.tools.enums.EtcdctlCommand;
+import com.unmango.kubernetesthehardway.tools.inputs.CommandLifecycle;
+import com.unmango.kubernetesthehardway.tools.inputs.EtcdctlCommand;
+import java.lang.Object;
 import java.lang.String;
 import java.util.List;
 import java.util.Map;
@@ -20,68 +22,169 @@ public final class EtcdctlArgs extends com.pulumi.resources.ResourceArgs {
 
     public static final EtcdctlArgs Empty = new EtcdctlArgs();
 
+    /**
+     * Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+     * 
+     */
     @Import(name="binaryPath")
     private @Nullable Output<String> binaryPath;
 
+    /**
+     * @return Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+     * 
+     */
     public Optional<Output<String>> binaryPath() {
         return Optional.ofNullable(this.binaryPath);
     }
 
-    @Import(name="caCert")
-    private @Nullable Output<String> caCert;
+    /**
+     * TODO
+     * 
+     */
+    @Import(name="caCert", required=true)
+    private Output<String> caCert;
 
-    public Optional<Output<String>> caCert() {
-        return Optional.ofNullable(this.caCert);
-    }
-
-    @Import(name="cert")
-    private @Nullable Output<String> cert;
-
-    public Optional<Output<String>> cert() {
-        return Optional.ofNullable(this.cert);
-    }
-
-    @Import(name="commands")
-    private @Nullable Output<List<EtcdctlCommand>> commands;
-
-    public Optional<Output<List<EtcdctlCommand>>> commands() {
-        return Optional.ofNullable(this.commands);
+    /**
+     * @return TODO
+     * 
+     */
+    public Output<String> caCert() {
+        return this.caCert;
     }
 
     /**
-     * Connection details for the remote system.
+     * TODO
+     * 
+     */
+    @Import(name="cert", required=true)
+    private Output<String> cert;
+
+    /**
+     * @return TODO
+     * 
+     */
+    public Output<String> cert() {
+        return this.cert;
+    }
+
+    /**
+     * TODO
+     * 
+     */
+    @Import(name="commands", required=true)
+    private Output<EtcdctlCommand> commands;
+
+    /**
+     * @return TODO
+     * 
+     */
+    public Output<EtcdctlCommand> commands() {
+        return this.commands;
+    }
+
+    /**
+     * Connection details for the remote system
      * 
      */
     @Import(name="connection", required=true)
     private Output<ConnectionArgs> connection;
 
     /**
-     * @return Connection details for the remote system.
+     * @return Connection details for the remote system
      * 
      */
     public Output<ConnectionArgs> connection() {
         return this.connection;
     }
 
-    @Import(name="endpoints")
-    private @Nullable Output<String> endpoints;
+    /**
+     * TODO
+     * 
+     */
+    @Import(name="endpoints", required=true)
+    private Output<String> endpoints;
 
-    public Optional<Output<String>> endpoints() {
-        return Optional.ofNullable(this.endpoints);
+    /**
+     * @return TODO
+     * 
+     */
+    public Output<String> endpoints() {
+        return this.endpoints;
     }
 
+    /**
+     * Environment variables
+     * 
+     */
     @Import(name="environment")
     private @Nullable Output<Map<String,String>> environment;
 
+    /**
+     * @return Environment variables
+     * 
+     */
     public Optional<Output<Map<String,String>>> environment() {
         return Optional.ofNullable(this.environment);
     }
 
-    @Import(name="key")
-    private @Nullable Output<String> key;
+    /**
+     * TODO
+     * 
+     */
+    @Import(name="key", required=true)
+    private Output<String> key;
 
-    public Optional<Output<String>> key() {
-        return Optional.ofNullable(this.key);
+    /**
+     * @return TODO
+     * 
+     */
+    public Output<String> key() {
+        return this.key;
+    }
+
+    /**
+     * At what stage(s) in the resource lifecycle should the command be run
+     * 
+     */
+    @Import(name="lifecycle")
+    private @Nullable CommandLifecycle lifecycle;
+
+    /**
+     * @return At what stage(s) in the resource lifecycle should the command be run
+     * 
+     */
+    public Optional<CommandLifecycle> lifecycle() {
+        return Optional.ofNullable(this.lifecycle);
+    }
+
+    /**
+     * TODO
+     * 
+     */
+    @Import(name="stdin")
+    private @Nullable Output<String> stdin;
+
+    /**
+     * @return TODO
+     * 
+     */
+    public Optional<Output<String>> stdin() {
+        return Optional.ofNullable(this.stdin);
+    }
+
+    /**
+     * TODO
+     * 
+     */
+    @Import(name="triggers")
+    private @Nullable Output<List<Object>> triggers;
+
+    /**
+     * @return TODO
+     * 
+     */
+    public Optional<Output<List<Object>>> triggers() {
+        return Optional.ofNullable(this.triggers);
     }
 
     private EtcdctlArgs() {}
@@ -95,6 +198,9 @@ public final class EtcdctlArgs extends com.pulumi.resources.ResourceArgs {
         this.endpoints = $.endpoints;
         this.environment = $.environment;
         this.key = $.key;
+        this.lifecycle = $.lifecycle;
+        this.stdin = $.stdin;
+        this.triggers = $.triggers;
     }
 
     public static Builder builder() {
@@ -115,48 +221,92 @@ public final class EtcdctlArgs extends com.pulumi.resources.ResourceArgs {
             $ = new EtcdctlArgs(Objects.requireNonNull(defaults));
         }
 
+        /**
+         * @param binaryPath Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+         * 
+         * @return builder
+         * 
+         */
         public Builder binaryPath(@Nullable Output<String> binaryPath) {
             $.binaryPath = binaryPath;
             return this;
         }
 
+        /**
+         * @param binaryPath Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+         * 
+         * @return builder
+         * 
+         */
         public Builder binaryPath(String binaryPath) {
             return binaryPath(Output.of(binaryPath));
         }
 
-        public Builder caCert(@Nullable Output<String> caCert) {
+        /**
+         * @param caCert TODO
+         * 
+         * @return builder
+         * 
+         */
+        public Builder caCert(Output<String> caCert) {
             $.caCert = caCert;
             return this;
         }
 
+        /**
+         * @param caCert TODO
+         * 
+         * @return builder
+         * 
+         */
         public Builder caCert(String caCert) {
             return caCert(Output.of(caCert));
         }
 
-        public Builder cert(@Nullable Output<String> cert) {
+        /**
+         * @param cert TODO
+         * 
+         * @return builder
+         * 
+         */
+        public Builder cert(Output<String> cert) {
             $.cert = cert;
             return this;
         }
 
+        /**
+         * @param cert TODO
+         * 
+         * @return builder
+         * 
+         */
         public Builder cert(String cert) {
             return cert(Output.of(cert));
         }
 
-        public Builder commands(@Nullable Output<List<EtcdctlCommand>> commands) {
+        /**
+         * @param commands TODO
+         * 
+         * @return builder
+         * 
+         */
+        public Builder commands(Output<EtcdctlCommand> commands) {
             $.commands = commands;
             return this;
         }
 
-        public Builder commands(List<EtcdctlCommand> commands) {
+        /**
+         * @param commands TODO
+         * 
+         * @return builder
+         * 
+         */
+        public Builder commands(EtcdctlCommand commands) {
             return commands(Output.of(commands));
         }
 
-        public Builder commands(EtcdctlCommand... commands) {
-            return commands(List.of(commands));
-        }
-
         /**
-         * @param connection Connection details for the remote system.
+         * @param connection Connection details for the remote system
          * 
          * @return builder
          * 
@@ -167,7 +317,7 @@ public final class EtcdctlArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param connection Connection details for the remote system.
+         * @param connection Connection details for the remote system
          * 
          * @return builder
          * 
@@ -176,36 +326,150 @@ public final class EtcdctlArgs extends com.pulumi.resources.ResourceArgs {
             return connection(Output.of(connection));
         }
 
-        public Builder endpoints(@Nullable Output<String> endpoints) {
+        /**
+         * @param endpoints TODO
+         * 
+         * @return builder
+         * 
+         */
+        public Builder endpoints(Output<String> endpoints) {
             $.endpoints = endpoints;
             return this;
         }
 
+        /**
+         * @param endpoints TODO
+         * 
+         * @return builder
+         * 
+         */
         public Builder endpoints(String endpoints) {
             return endpoints(Output.of(endpoints));
         }
 
+        /**
+         * @param environment Environment variables
+         * 
+         * @return builder
+         * 
+         */
         public Builder environment(@Nullable Output<Map<String,String>> environment) {
             $.environment = environment;
             return this;
         }
 
+        /**
+         * @param environment Environment variables
+         * 
+         * @return builder
+         * 
+         */
         public Builder environment(Map<String,String> environment) {
             return environment(Output.of(environment));
         }
 
-        public Builder key(@Nullable Output<String> key) {
+        /**
+         * @param key TODO
+         * 
+         * @return builder
+         * 
+         */
+        public Builder key(Output<String> key) {
             $.key = key;
             return this;
         }
 
+        /**
+         * @param key TODO
+         * 
+         * @return builder
+         * 
+         */
         public Builder key(String key) {
             return key(Output.of(key));
         }
 
+        /**
+         * @param lifecycle At what stage(s) in the resource lifecycle should the command be run
+         * 
+         * @return builder
+         * 
+         */
+        public Builder lifecycle(@Nullable CommandLifecycle lifecycle) {
+            $.lifecycle = lifecycle;
+            return this;
+        }
+
+        /**
+         * @param stdin TODO
+         * 
+         * @return builder
+         * 
+         */
+        public Builder stdin(@Nullable Output<String> stdin) {
+            $.stdin = stdin;
+            return this;
+        }
+
+        /**
+         * @param stdin TODO
+         * 
+         * @return builder
+         * 
+         */
+        public Builder stdin(String stdin) {
+            return stdin(Output.of(stdin));
+        }
+
+        /**
+         * @param triggers TODO
+         * 
+         * @return builder
+         * 
+         */
+        public Builder triggers(@Nullable Output<List<Object>> triggers) {
+            $.triggers = triggers;
+            return this;
+        }
+
+        /**
+         * @param triggers TODO
+         * 
+         * @return builder
+         * 
+         */
+        public Builder triggers(List<Object> triggers) {
+            return triggers(Output.of(triggers));
+        }
+
+        /**
+         * @param triggers TODO
+         * 
+         * @return builder
+         * 
+         */
+        public Builder triggers(Object... triggers) {
+            return triggers(List.of(triggers));
+        }
+
         public EtcdctlArgs build() {
+            if ($.caCert == null) {
+                throw new MissingRequiredPropertyException("EtcdctlArgs", "caCert");
+            }
+            if ($.cert == null) {
+                throw new MissingRequiredPropertyException("EtcdctlArgs", "cert");
+            }
+            if ($.commands == null) {
+                throw new MissingRequiredPropertyException("EtcdctlArgs", "commands");
+            }
             if ($.connection == null) {
                 throw new MissingRequiredPropertyException("EtcdctlArgs", "connection");
+            }
+            if ($.endpoints == null) {
+                throw new MissingRequiredPropertyException("EtcdctlArgs", "endpoints");
+            }
+            if ($.key == null) {
+                throw new MissingRequiredPropertyException("EtcdctlArgs", "key");
             }
             return $;
         }

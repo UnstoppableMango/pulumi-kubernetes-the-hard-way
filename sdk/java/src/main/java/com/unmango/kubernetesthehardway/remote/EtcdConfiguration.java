@@ -3,6 +3,7 @@
 
 package com.unmango.kubernetesthehardway.remote;
 
+import com.pulumi.command.remote.outputs.Connection;
 import com.pulumi.core.Output;
 import com.pulumi.core.annotations.Export;
 import com.pulumi.core.annotations.ResourceType;
@@ -10,12 +11,15 @@ import com.pulumi.core.internal.Codegen;
 import com.unmango.kubernetesthehardway.Utilities;
 import com.unmango.kubernetesthehardway.remote.EtcdConfigurationArgs;
 import com.unmango.kubernetesthehardway.remote.File;
-import com.unmango.kubernetesthehardway.remote.SystemdService;
 import com.unmango.kubernetesthehardway.tools.Mkdir;
 import java.lang.String;
 import java.util.Optional;
 import javax.annotation.Nullable;
 
+/**
+ * Configures etcd on a remote system.
+ * 
+ */
 @ResourceType(type="kubernetes-the-hard-way:remote:EtcdConfiguration")
 public class EtcdConfiguration extends com.pulumi.resources.ComponentResource {
     /**
@@ -23,94 +27,150 @@ public class EtcdConfiguration extends com.pulumi.resources.ComponentResource {
      * 
      */
     @Export(name="caFile", refs={File.class}, tree="[0]")
-    private Output</* @Nullable */ File> caFile;
+    private Output<File> caFile;
 
     /**
      * @return The remote certificate authority file.
      * 
      */
-    public Output<Optional<File>> caFile() {
-        return Codegen.optional(this.caFile);
+    public Output<File> caFile() {
+        return this.caFile;
+    }
+    /**
+     * The PEM encoded certificate authority data.
+     * 
+     */
+    @Export(name="caPem", refs={String.class}, tree="[0]")
+    private Output<String> caPem;
+
+    /**
+     * @return The PEM encoded certificate authority data.
+     * 
+     */
+    public Output<String> caPem() {
+        return this.caPem;
     }
     /**
      * The remote certificate file.
      * 
      */
     @Export(name="certFile", refs={File.class}, tree="[0]")
-    private Output</* @Nullable */ File> certFile;
+    private Output<File> certFile;
 
     /**
      * @return The remote certificate file.
      * 
      */
-    public Output<Optional<File>> certFile() {
-        return Codegen.optional(this.certFile);
+    public Output<File> certFile() {
+        return this.certFile;
+    }
+    /**
+     * The PEM encoded certificate data.
+     * 
+     */
+    @Export(name="certPem", refs={String.class}, tree="[0]")
+    private Output<String> certPem;
+
+    /**
+     * @return The PEM encoded certificate data.
+     * 
+     */
+    public Output<String> certPem() {
+        return this.certPem;
     }
     /**
      * The directory to store etcd configuration.
      * 
      */
     @Export(name="configurationDirectory", refs={String.class}, tree="[0]")
-    private Output<String> configurationDirectory;
+    private Output</* @Nullable */ String> configurationDirectory;
 
     /**
      * @return The directory to store etcd configuration.
      * 
      */
-    public Output<String> configurationDirectory() {
-        return this.configurationDirectory;
+    public Output<Optional<String>> configurationDirectory() {
+        return Codegen.optional(this.configurationDirectory);
     }
     /**
-     * The command used to create the configuration directory.
+     * The configuration mkdir operation.
      * 
      */
     @Export(name="configurationMkdir", refs={Mkdir.class}, tree="[0]")
     private Output<Mkdir> configurationMkdir;
 
     /**
-     * @return The command used to create the configuration directory.
+     * @return The configuration mkdir operation.
      * 
      */
     public Output<Mkdir> configurationMkdir() {
         return this.configurationMkdir;
     }
     /**
-     * The directory etcd will use.
+     * The parameters with which to connect to the remote host.
+     * 
+     */
+    @Export(name="connection", refs={Connection.class}, tree="[0]")
+    private Output<Connection> connection;
+
+    /**
+     * @return The parameters with which to connect to the remote host.
+     * 
+     */
+    public Output<Connection> connection() {
+        return this.connection;
+    }
+    /**
+     * The directory etcd will store its data.
      * 
      */
     @Export(name="dataDirectory", refs={String.class}, tree="[0]")
-    private Output<String> dataDirectory;
+    private Output</* @Nullable */ String> dataDirectory;
 
     /**
-     * @return The directory etcd will use.
+     * @return The directory etcd will store its data.
      * 
      */
-    public Output<String> dataDirectory() {
-        return this.dataDirectory;
+    public Output<Optional<String>> dataDirectory() {
+        return Codegen.optional(this.dataDirectory);
     }
     /**
-     * The command used to create the data directory.
+     * The data mkdir operation.
      * 
      */
     @Export(name="dataMkdir", refs={Mkdir.class}, tree="[0]")
     private Output<Mkdir> dataMkdir;
 
     /**
-     * @return The command used to create the data directory.
+     * @return The data mkdir operation.
      * 
      */
     public Output<Mkdir> dataMkdir() {
         return this.dataMkdir;
     }
     /**
-     * IP used to serve client requests and communicate with etcd peers.
+     * The path to the `etcd` binary.
+     * 
+     */
+    @Export(name="etcdPath", refs={String.class}, tree="[0]")
+    private Output<String> etcdPath;
+
+    /**
+     * @return The path to the `etcd` binary.
+     * 
+     */
+    public Output<String> etcdPath() {
+        return this.etcdPath;
+    }
+    /**
+     * The IP used to serve client requests and communicate with etcd peers.
      * 
      */
     @Export(name="internalIp", refs={String.class}, tree="[0]")
     private Output<String> internalIp;
 
     /**
-     * @return IP used to serve client requests and communicate with etcd peers.
+     * @return The IP used to serve client requests and communicate with etcd peers.
      * 
      */
     public Output<String> internalIp() {
@@ -121,28 +181,28 @@ public class EtcdConfiguration extends com.pulumi.resources.ComponentResource {
      * 
      */
     @Export(name="keyFile", refs={File.class}, tree="[0]")
-    private Output</* @Nullable */ File> keyFile;
+    private Output<File> keyFile;
 
     /**
      * @return The remote key file.
      * 
      */
-    public Output<Optional<File>> keyFile() {
-        return Codegen.optional(this.keyFile);
+    public Output<File> keyFile() {
+        return this.keyFile;
     }
     /**
-     * The remote systemd service.
+     * The PEM encoded key data.
      * 
      */
-    @Export(name="systemdService", refs={SystemdService.class}, tree="[0]")
-    private Output<SystemdService> systemdService;
+    @Export(name="keyPem", refs={String.class}, tree="[0]")
+    private Output<String> keyPem;
 
     /**
-     * @return The remote systemd service.
+     * @return The PEM encoded key data.
      * 
      */
-    public Output<SystemdService> systemdService() {
-        return this.systemdService;
+    public Output<String> keyPem() {
+        return this.keyPem;
     }
 
     /**

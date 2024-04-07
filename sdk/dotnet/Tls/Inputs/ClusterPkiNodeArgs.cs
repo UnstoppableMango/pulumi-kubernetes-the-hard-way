@@ -12,16 +12,19 @@ namespace UnMango.KubernetesTheHardWay.Tls.Inputs
 {
 
     /// <summary>
-    /// Node inputs for the PKI.
+    /// TODO
     /// </summary>
     public sealed class ClusterPkiNodeArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
-        /// The IP address of the node.
+        /// The IP address of the node
         /// </summary>
         [Input("ip")]
         public Input<string>? Ip { get; set; }
 
+        /// <summary>
+        /// The role a node should be configured for
+        /// </summary>
         [Input("role")]
         public Input<UnMango.KubernetesTheHardWay.Tls.NodeRole>? Role { get; set; }
 

@@ -6,9 +6,8 @@ package com.unmango.kubernetesthehardway.tls;
 import com.pulumi.core.Output;
 import com.pulumi.core.annotations.Import;
 import com.pulumi.exceptions.MissingRequiredPropertyException;
-import com.pulumi.tls.inputs.SelfSignedCertSubjectArgs;
 import com.unmango.kubernetesthehardway.tls.enums.Algorithm;
-import com.unmango.kubernetesthehardway.tls.enums.EcdsaCurve;
+import com.unmango.tls.inputs.SelfSignedCertSubject;
 import java.lang.Boolean;
 import java.lang.Integer;
 import java.lang.String;
@@ -38,14 +37,14 @@ public final class RootCaArgs extends com.pulumi.resources.ResourceArgs {
     }
 
     /**
-     * List of DNS names for which a certificate is being requested.
+     * List of DNS names for which a certificate is being requested (i.e. certificate subjects).
      * 
      */
     @Import(name="dnsNames")
     private @Nullable Output<List<String>> dnsNames;
 
     /**
-     * @return List of DNS names for which a certificate is being requested.
+     * @return List of DNS names for which a certificate is being requested (i.e. certificate subjects).
      * 
      */
     public Optional<Output<List<String>>> dnsNames() {
@@ -53,14 +52,22 @@ public final class RootCaArgs extends com.pulumi.resources.ResourceArgs {
     }
 
     /**
-     * TODO
+     * The resource will consider the certificate to have expired the given number of hours before its actual expiry time. This
+     * can be useful to deploy an updated certificate in advance of the expiration of the current certificate. However, the old
+     * certificate remains valid until its true expiration time, since this resource does not (and cannot) support certificate
+     * revocation. Also, this advance update can only be performed should the Terraform configuration be applied during the
+     * early renewal period. (default: `0`)
      * 
      */
     @Import(name="earlyRenewalHours")
     private @Nullable Output<Integer> earlyRenewalHours;
 
     /**
-     * @return TODO
+     * @return The resource will consider the certificate to have expired the given number of hours before its actual expiry time. This
+     * can be useful to deploy an updated certificate in advance of the expiration of the current certificate. However, the old
+     * certificate remains valid until its true expiration time, since this resource does not (and cannot) support certificate
+     * revocation. Also, this advance update can only be performed should the Terraform configuration be applied during the
+     * early renewal period. (default: `0`)
      * 
      */
     public Optional<Output<Integer>> earlyRenewalHours() {
@@ -68,29 +75,29 @@ public final class RootCaArgs extends com.pulumi.resources.ResourceArgs {
     }
 
     /**
-     * When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
+     * When `algorithm` is `ECDSA`, the name of the elliptic curve to use. Currently-supported values are: `P224`, `P256`, `P384`, `P521`. (default: `P224`).
      * 
      */
     @Import(name="ecdsaCurve")
-    private @Nullable Output<EcdsaCurve> ecdsaCurve;
+    private @Nullable Output<String> ecdsaCurve;
 
     /**
-     * @return When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
+     * @return When `algorithm` is `ECDSA`, the name of the elliptic curve to use. Currently-supported values are: `P224`, `P256`, `P384`, `P521`. (default: `P224`).
      * 
      */
-    public Optional<Output<EcdsaCurve>> ecdsaCurve() {
+    public Optional<Output<String>> ecdsaCurve() {
         return Optional.ofNullable(this.ecdsaCurve);
     }
 
     /**
-     * List of IP addresses for which a certificate is being requested.
+     * List of IP addresses for which a certificate is being requested (i.e. certificate subjects).
      * 
      */
     @Import(name="ipAddresses")
     private @Nullable Output<List<String>> ipAddresses;
 
     /**
-     * @return List of IP addresses for which a certificate is being requested.
+     * @return List of IP addresses for which a certificate is being requested (i.e. certificate subjects).
      * 
      */
     public Optional<Output<List<String>>> ipAddresses() {
@@ -98,14 +105,14 @@ public final class RootCaArgs extends com.pulumi.resources.ResourceArgs {
     }
 
     /**
-     * When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
+     * When `algorithm` is `RSA`, the size of the generated RSA key, in bits (default: `2048`).
      * 
      */
     @Import(name="rsaBits")
     private @Nullable Output<Integer> rsaBits;
 
     /**
-     * @return When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
+     * @return When `algorithm` is `RSA`, the size of the generated RSA key, in bits (default: `2048`).
      * 
      */
     public Optional<Output<Integer>> rsaBits() {
@@ -113,14 +120,14 @@ public final class RootCaArgs extends com.pulumi.resources.ResourceArgs {
     }
 
     /**
-     * Should the generated certificate include an authority key identifier.
+     * Should the generated certificate include an [authority key identifier](https://datatracker.ietf.org/doc/html/rfc5280#section-4.2.1.1): for self-signed certificates this is the same value as the [subject key identifier](https://datatracker.ietf.org/doc/html/rfc5280#section-4.2.1.2) (default: `false`).
      * 
      */
     @Import(name="setAuthorityKeyId")
     private @Nullable Output<Boolean> setAuthorityKeyId;
 
     /**
-     * @return Should the generated certificate include an authority key identifier.
+     * @return Should the generated certificate include an [authority key identifier](https://datatracker.ietf.org/doc/html/rfc5280#section-4.2.1.1): for self-signed certificates this is the same value as the [subject key identifier](https://datatracker.ietf.org/doc/html/rfc5280#section-4.2.1.2) (default: `false`).
      * 
      */
     public Optional<Output<Boolean>> setAuthorityKeyId() {
@@ -128,36 +135,44 @@ public final class RootCaArgs extends com.pulumi.resources.ResourceArgs {
     }
 
     /**
-     * Should the generated certificate include a subject key identifier.
+     * Should the generated certificate include a [subject key identifier](https://datatracker.ietf.org/doc/html/rfc5280#section-4.2.1.2) (default: `false`).
      * 
      */
     @Import(name="setSubjectKeyId")
     private @Nullable Output<Boolean> setSubjectKeyId;
 
     /**
-     * @return Should the generated certificate include a subject key identifier.
+     * @return Should the generated certificate include a [subject key identifier](https://datatracker.ietf.org/doc/html/rfc5280#section-4.2.1.2) (default: `false`).
      * 
      */
     public Optional<Output<Boolean>> setSubjectKeyId() {
         return Optional.ofNullable(this.setSubjectKeyId);
     }
 
+    /**
+     * The subject for which a certificate is being requested. The acceptable arguments are all optional and their naming is based upon [Issuer Distinguished Names (RFC5280)](https://tools.ietf.org/html/rfc5280#section-4.1.2.4) section.
+     * 
+     */
     @Import(name="subject")
-    private @Nullable Output<SelfSignedCertSubjectArgs> subject;
+    private @Nullable Output<SelfSignedCertSubject> subject;
 
-    public Optional<Output<SelfSignedCertSubjectArgs>> subject() {
+    /**
+     * @return The subject for which a certificate is being requested. The acceptable arguments are all optional and their naming is based upon [Issuer Distinguished Names (RFC5280)](https://tools.ietf.org/html/rfc5280#section-4.1.2.4) section.
+     * 
+     */
+    public Optional<Output<SelfSignedCertSubject>> subject() {
         return Optional.ofNullable(this.subject);
     }
 
     /**
-     * List of URIs for which a certificate is being requested.
+     * List of URIs for which a certificate is being requested (i.e. certificate subjects).
      * 
      */
     @Import(name="uris")
     private @Nullable Output<List<String>> uris;
 
     /**
-     * @return List of URIs for which a certificate is being requested.
+     * @return List of URIs for which a certificate is being requested (i.e. certificate subjects).
      * 
      */
     public Optional<Output<List<String>>> uris() {
@@ -165,14 +180,14 @@ public final class RootCaArgs extends com.pulumi.resources.ResourceArgs {
     }
 
     /**
-     * Number of hours, after initial issuing, that the certificate will remain valid.
+     * Number of hours, after initial issuing, that the certificate will remain valid for.
      * 
      */
     @Import(name="validityPeriodHours", required=true)
     private Output<Integer> validityPeriodHours;
 
     /**
-     * @return Number of hours, after initial issuing, that the certificate will remain valid.
+     * @return Number of hours, after initial issuing, that the certificate will remain valid for.
      * 
      */
     public Output<Integer> validityPeriodHours() {
@@ -235,7 +250,7 @@ public final class RootCaArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param dnsNames List of DNS names for which a certificate is being requested.
+         * @param dnsNames List of DNS names for which a certificate is being requested (i.e. certificate subjects).
          * 
          * @return builder
          * 
@@ -246,7 +261,7 @@ public final class RootCaArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param dnsNames List of DNS names for which a certificate is being requested.
+         * @param dnsNames List of DNS names for which a certificate is being requested (i.e. certificate subjects).
          * 
          * @return builder
          * 
@@ -256,7 +271,7 @@ public final class RootCaArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param dnsNames List of DNS names for which a certificate is being requested.
+         * @param dnsNames List of DNS names for which a certificate is being requested (i.e. certificate subjects).
          * 
          * @return builder
          * 
@@ -266,7 +281,11 @@ public final class RootCaArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param earlyRenewalHours TODO
+         * @param earlyRenewalHours The resource will consider the certificate to have expired the given number of hours before its actual expiry time. This
+         * can be useful to deploy an updated certificate in advance of the expiration of the current certificate. However, the old
+         * certificate remains valid until its true expiration time, since this resource does not (and cannot) support certificate
+         * revocation. Also, this advance update can only be performed should the Terraform configuration be applied during the
+         * early renewal period. (default: `0`)
          * 
          * @return builder
          * 
@@ -277,7 +296,11 @@ public final class RootCaArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param earlyRenewalHours TODO
+         * @param earlyRenewalHours The resource will consider the certificate to have expired the given number of hours before its actual expiry time. This
+         * can be useful to deploy an updated certificate in advance of the expiration of the current certificate. However, the old
+         * certificate remains valid until its true expiration time, since this resource does not (and cannot) support certificate
+         * revocation. Also, this advance update can only be performed should the Terraform configuration be applied during the
+         * early renewal period. (default: `0`)
          * 
          * @return builder
          * 
@@ -287,28 +310,28 @@ public final class RootCaArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param ecdsaCurve When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
+         * @param ecdsaCurve When `algorithm` is `ECDSA`, the name of the elliptic curve to use. Currently-supported values are: `P224`, `P256`, `P384`, `P521`. (default: `P224`).
          * 
          * @return builder
          * 
          */
-        public Builder ecdsaCurve(@Nullable Output<EcdsaCurve> ecdsaCurve) {
+        public Builder ecdsaCurve(@Nullable Output<String> ecdsaCurve) {
             $.ecdsaCurve = ecdsaCurve;
             return this;
         }
 
         /**
-         * @param ecdsaCurve When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
+         * @param ecdsaCurve When `algorithm` is `ECDSA`, the name of the elliptic curve to use. Currently-supported values are: `P224`, `P256`, `P384`, `P521`. (default: `P224`).
          * 
          * @return builder
          * 
          */
-        public Builder ecdsaCurve(EcdsaCurve ecdsaCurve) {
+        public Builder ecdsaCurve(String ecdsaCurve) {
             return ecdsaCurve(Output.of(ecdsaCurve));
         }
 
         /**
-         * @param ipAddresses List of IP addresses for which a certificate is being requested.
+         * @param ipAddresses List of IP addresses for which a certificate is being requested (i.e. certificate subjects).
          * 
          * @return builder
          * 
@@ -319,7 +342,7 @@ public final class RootCaArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param ipAddresses List of IP addresses for which a certificate is being requested.
+         * @param ipAddresses List of IP addresses for which a certificate is being requested (i.e. certificate subjects).
          * 
          * @return builder
          * 
@@ -329,7 +352,7 @@ public final class RootCaArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param ipAddresses List of IP addresses for which a certificate is being requested.
+         * @param ipAddresses List of IP addresses for which a certificate is being requested (i.e. certificate subjects).
          * 
          * @return builder
          * 
@@ -339,7 +362,7 @@ public final class RootCaArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param rsaBits When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
+         * @param rsaBits When `algorithm` is `RSA`, the size of the generated RSA key, in bits (default: `2048`).
          * 
          * @return builder
          * 
@@ -350,7 +373,7 @@ public final class RootCaArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param rsaBits When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
+         * @param rsaBits When `algorithm` is `RSA`, the size of the generated RSA key, in bits (default: `2048`).
          * 
          * @return builder
          * 
@@ -360,7 +383,7 @@ public final class RootCaArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param setAuthorityKeyId Should the generated certificate include an authority key identifier.
+         * @param setAuthorityKeyId Should the generated certificate include an [authority key identifier](https://datatracker.ietf.org/doc/html/rfc5280#section-4.2.1.1): for self-signed certificates this is the same value as the [subject key identifier](https://datatracker.ietf.org/doc/html/rfc5280#section-4.2.1.2) (default: `false`).
          * 
          * @return builder
          * 
@@ -371,7 +394,7 @@ public final class RootCaArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param setAuthorityKeyId Should the generated certificate include an authority key identifier.
+         * @param setAuthorityKeyId Should the generated certificate include an [authority key identifier](https://datatracker.ietf.org/doc/html/rfc5280#section-4.2.1.1): for self-signed certificates this is the same value as the [subject key identifier](https://datatracker.ietf.org/doc/html/rfc5280#section-4.2.1.2) (default: `false`).
          * 
          * @return builder
          * 
@@ -381,7 +404,7 @@ public final class RootCaArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param setSubjectKeyId Should the generated certificate include a subject key identifier.
+         * @param setSubjectKeyId Should the generated certificate include a [subject key identifier](https://datatracker.ietf.org/doc/html/rfc5280#section-4.2.1.2) (default: `false`).
          * 
          * @return builder
          * 
@@ -392,7 +415,7 @@ public final class RootCaArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param setSubjectKeyId Should the generated certificate include a subject key identifier.
+         * @param setSubjectKeyId Should the generated certificate include a [subject key identifier](https://datatracker.ietf.org/doc/html/rfc5280#section-4.2.1.2) (default: `false`).
          * 
          * @return builder
          * 
@@ -401,17 +424,29 @@ public final class RootCaArgs extends com.pulumi.resources.ResourceArgs {
             return setSubjectKeyId(Output.of(setSubjectKeyId));
         }
 
-        public Builder subject(@Nullable Output<SelfSignedCertSubjectArgs> subject) {
+        /**
+         * @param subject The subject for which a certificate is being requested. The acceptable arguments are all optional and their naming is based upon [Issuer Distinguished Names (RFC5280)](https://tools.ietf.org/html/rfc5280#section-4.1.2.4) section.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder subject(@Nullable Output<SelfSignedCertSubject> subject) {
             $.subject = subject;
             return this;
         }
 
-        public Builder subject(SelfSignedCertSubjectArgs subject) {
+        /**
+         * @param subject The subject for which a certificate is being requested. The acceptable arguments are all optional and their naming is based upon [Issuer Distinguished Names (RFC5280)](https://tools.ietf.org/html/rfc5280#section-4.1.2.4) section.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder subject(SelfSignedCertSubject subject) {
             return subject(Output.of(subject));
         }
 
         /**
-         * @param uris List of URIs for which a certificate is being requested.
+         * @param uris List of URIs for which a certificate is being requested (i.e. certificate subjects).
          * 
          * @return builder
          * 
@@ -422,7 +457,7 @@ public final class RootCaArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param uris List of URIs for which a certificate is being requested.
+         * @param uris List of URIs for which a certificate is being requested (i.e. certificate subjects).
          * 
          * @return builder
          * 
@@ -432,7 +467,7 @@ public final class RootCaArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param uris List of URIs for which a certificate is being requested.
+         * @param uris List of URIs for which a certificate is being requested (i.e. certificate subjects).
          * 
          * @return builder
          * 
@@ -442,7 +477,7 @@ public final class RootCaArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param validityPeriodHours Number of hours, after initial issuing, that the certificate will remain valid.
+         * @param validityPeriodHours Number of hours, after initial issuing, that the certificate will remain valid for.
          * 
          * @return builder
          * 
@@ -453,7 +488,7 @@ public final class RootCaArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param validityPeriodHours Number of hours, after initial issuing, that the certificate will remain valid.
+         * @param validityPeriodHours Number of hours, after initial issuing, that the certificate will remain valid for.
          * 
          * @return builder
          * 

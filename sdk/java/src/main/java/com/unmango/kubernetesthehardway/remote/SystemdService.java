@@ -18,17 +18,21 @@ import java.lang.String;
 import java.util.Optional;
 import javax.annotation.Nullable;
 
+/**
+ * A systemd service on a remote system.
+ * 
+ */
 @ResourceType(type="kubernetes-the-hard-way:remote:SystemdService")
 public class SystemdService extends com.pulumi.resources.ComponentResource {
     /**
-     * The connection details.
+     * The parameters with which to connect to the remote host.
      * 
      */
     @Export(name="connection", refs={Connection.class}, tree="[0]")
     private Output<Connection> connection;
 
     /**
-     * @return The connection details.
+     * @return The parameters with which to connect to the remote host.
      * 
      */
     public Output<Connection> connection() {
@@ -49,14 +53,14 @@ public class SystemdService extends com.pulumi.resources.ComponentResource {
         return this.directory;
     }
     /**
-     * Represents the service file on the remote machine.
+     * The service file on the remote machine.
      * 
      */
     @Export(name="file", refs={File.class}, tree="[0]")
     private Output<File> file;
 
     /**
-     * @return Represents the service file on the remote machine.
+     * @return The service file on the remote machine.
      * 
      */
     public Output<File> file() {

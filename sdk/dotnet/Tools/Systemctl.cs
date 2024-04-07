@@ -17,31 +17,76 @@ namespace UnMango.KubernetesTheHardWay.Tools
     public partial class Systemctl : global::Pulumi.ComponentResource
     {
         /// <summary>
-        /// Represents the command run on the remote system.
+        /// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+        /// </summary>
+        [Output("binaryPath")]
+        public Output<string> BinaryPath { get; private set; } = null!;
+
+        /// <summary>
+        /// The underlying command
         /// </summary>
         [Output("command")]
         public Output<Pulumi.Command.Remote.Command> Command { get; private set; } = null!;
 
-        [Output("commands")]
-        public Output<ImmutableArray<UnMango.KubernetesTheHardWay.Tools.SystemctlCommand>> Commands { get; private set; } = null!;
-
         /// <summary>
-        /// Connection details for the remote system.
+        /// Connection details for the remote system
         /// </summary>
         [Output("connection")]
         public Output<Pulumi.Command.Remote.Outputs.Connection> Connection { get; private set; } = null!;
 
-        [Output("serviceName")]
-        public Output<string?> ServiceName { get; private set; } = null!;
+        /// <summary>
+        /// Environment variables
+        /// </summary>
+        [Output("environment")]
+        public Output<ImmutableDictionary<string, string>> Environment { get; private set; } = null!;
 
+        /// <summary>
+        /// At what stage(s) in the resource lifecycle should the command be run
+        /// </summary>
+        [Output("lifecycle")]
+        public Output<UnMango.KubernetesTheHardWay.Tools.Outputs.CommandLifecycle?> Lifecycle { get; private set; } = null!;
+
+        /// <summary>
+        /// Corresponds to the [PATTERN] argument
+        /// </summary>
+        [Output("pattern")]
+        public Output<string?> Pattern { get; private set; } = null!;
+
+        /// <summary>
+        /// TODO
+        /// </summary>
         [Output("stderr")]
         public Output<string> Stderr { get; private set; } = null!;
 
+        /// <summary>
+        /// TODO
+        /// </summary>
         [Output("stdin")]
         public Output<string?> Stdin { get; private set; } = null!;
 
+        /// <summary>
+        /// TODO
+        /// </summary>
         [Output("stdout")]
         public Output<string> Stdout { get; private set; } = null!;
+
+        /// <summary>
+        /// Corresponds to the COMMAND argument.
+        /// </summary>
+        [Output("systemctlCommand")]
+        public Output<UnMango.KubernetesTheHardWay.Tools.SystemctlCommand> SystemctlCommand { get; private set; } = null!;
+
+        /// <summary>
+        /// TODO
+        /// </summary>
+        [Output("triggers")]
+        public Output<ImmutableArray<object>> Triggers { get; private set; } = null!;
+
+        /// <summary>
+        /// Corresponds to the [UNIT...] argument.
+        /// </summary>
+        [Output("unit")]
+        public Output<Union<string, ImmutableArray<string>>> Unit { get; private set; } = null!;
 
 
         /// <summary>
@@ -72,33 +117,71 @@ namespace UnMango.KubernetesTheHardWay.Tools
 
     public sealed class SystemctlArgs : global::Pulumi.ResourceArgs
     {
-        [Input("commands", required: true)]
-        private InputList<UnMango.KubernetesTheHardWay.Tools.SystemctlCommand>? _commands;
-        public InputList<UnMango.KubernetesTheHardWay.Tools.SystemctlCommand> Commands
-        {
-            get => _commands ?? (_commands = new InputList<UnMango.KubernetesTheHardWay.Tools.SystemctlCommand>());
-            set => _commands = value;
-        }
+        /// <summary>
+        /// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+        /// </summary>
+        [Input("binaryPath")]
+        public Input<string>? BinaryPath { get; set; }
 
         /// <summary>
-        /// Connection details for the remote system.
+        /// Corresponds to the COMMAND argument.
+        /// </summary>
+        [Input("command", required: true)]
+        public UnMango.KubernetesTheHardWay.Tools.SystemctlCommand Command { get; set; }
+
+        /// <summary>
+        /// Connection details for the remote system
         /// </summary>
         [Input("connection", required: true)]
         public Input<Pulumi.Command.Remote.Inputs.ConnectionArgs> Connection { get; set; } = null!;
 
         [Input("environment")]
         private InputMap<string>? _environment;
+
+        /// <summary>
+        /// Environment variables
+        /// </summary>
         public InputMap<string> Environment
         {
             get => _environment ?? (_environment = new InputMap<string>());
             set => _environment = value;
         }
 
+        /// <summary>
+        /// At what stage(s) in the resource lifecycle should the command be run
+        /// </summary>
         [Input("lifecycle")]
-        public UnMango.KubernetesTheHardWay.Tools.CommandLifecycle? Lifecycle { get; set; }
+        public UnMango.KubernetesTheHardWay.Tools.Inputs.CommandLifecycle? Lifecycle { get; set; }
 
-        [Input("serviceName")]
-        public Input<string>? ServiceName { get; set; }
+        /// <summary>
+        /// Corresponds to the [PATTERN] argument
+        /// </summary>
+        [Input("pattern")]
+        public Input<string>? Pattern { get; set; }
+
+        /// <summary>
+        /// TODO
+        /// </summary>
+        [Input("stdin")]
+        public Input<string>? Stdin { get; set; }
+
+        [Input("triggers")]
+        private InputList<object>? _triggers;
+
+        /// <summary>
+        /// TODO
+        /// </summary>
+        public InputList<object> Triggers
+        {
+            get => _triggers ?? (_triggers = new InputList<object>());
+            set => _triggers = value;
+        }
+
+        /// <summary>
+        /// Corresponds to the [UNIT...] argument.
+        /// </summary>
+        [Input("unit", required: true)]
+        public InputUnion<string, ImmutableArray<string>> Unit { get; set; } = null!;
 
         public SystemctlArgs()
         {

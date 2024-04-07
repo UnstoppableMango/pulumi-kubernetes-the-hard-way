@@ -11,13 +11,13 @@ using Pulumi;
 namespace UnMango.KubernetesTheHardWay.Remote
 {
     /// <summary>
-    /// Represents a file to be downloaded on a remote system.
+    /// Downloads the file specified by `url` onto a remote system.
     /// </summary>
     [KubernetesTheHardWayResourceType("kubernetes-the-hard-way:remote:Download")]
     public partial class Download : global::Pulumi.ComponentResource
     {
         /// <summary>
-        /// Connection details for the remote system
+        /// The parameters with which to connect to the remote host.
         /// </summary>
         [Output("connection")]
         public Output<Pulumi.Command.Remote.Outputs.Connection> Connection { get; private set; } = null!;
@@ -29,19 +29,25 @@ namespace UnMango.KubernetesTheHardWay.Remote
         public Output<string> Destination { get; private set; } = null!;
 
         /// <summary>
-        /// Represents the command used to create the remote directory.
+        /// The mkdir operation.
         /// </summary>
         [Output("mkdir")]
         public Output<UnMango.KubernetesTheHardWay.Tools.Mkdir> Mkdir { get; private set; } = null!;
 
         /// <summary>
-        /// The URL for the file to be downloaded.
+        /// Remove the downloaded fiel when the resource is deleted.
+        /// </summary>
+        [Output("removeOnDelete")]
+        public Output<bool> RemoveOnDelete { get; private set; } = null!;
+
+        /// <summary>
+        /// The URL of the file to be downloaded.
         /// </summary>
         [Output("url")]
         public Output<string> Url { get; private set; } = null!;
 
         /// <summary>
-        /// Represents the wget command used to download the file.
+        /// The wget operation.
         /// </summary>
         [Output("wget")]
         public Output<UnMango.KubernetesTheHardWay.Tools.Wget> Wget { get; private set; } = null!;
@@ -76,7 +82,7 @@ namespace UnMango.KubernetesTheHardWay.Remote
     public sealed class DownloadArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
-        /// Connection details for the remote system
+        /// The parameters with which to connect to the remote host.
         /// </summary>
         [Input("connection", required: true)]
         public Input<Pulumi.Command.Remote.Inputs.ConnectionArgs> Connection { get; set; } = null!;
@@ -88,13 +94,13 @@ namespace UnMango.KubernetesTheHardWay.Remote
         public Input<string> Destination { get; set; } = null!;
 
         /// <summary>
-        /// Remove the downloaded file when the resource is deleted.
+        /// Remove the downloaded fiel when the resource is deleted.
         /// </summary>
         [Input("removeOnDelete")]
         public Input<bool>? RemoveOnDelete { get; set; }
 
         /// <summary>
-        /// The URL for the file to be downloaded.
+        /// The URL of the file to be downloaded.
         /// </summary>
         [Input("url", required: true)]
         public Input<string> Url { get; set; } = null!;

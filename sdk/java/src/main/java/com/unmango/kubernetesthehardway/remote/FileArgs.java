@@ -16,14 +16,14 @@ public final class FileArgs extends com.pulumi.resources.ResourceArgs {
     public static final FileArgs Empty = new FileArgs();
 
     /**
-     * The connection details.
+     * The parameters with which to connect to the remote host.
      * 
      */
     @Import(name="connection", required=true)
     private Output<ConnectionArgs> connection;
 
     /**
-     * @return The connection details.
+     * @return The parameters with which to connect to the remote host.
      * 
      */
     public Output<ConnectionArgs> connection() {
@@ -87,7 +87,7 @@ public final class FileArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param connection The connection details.
+         * @param connection The parameters with which to connect to the remote host.
          * 
          * @return builder
          * 
@@ -98,7 +98,7 @@ public final class FileArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param connection The connection details.
+         * @param connection The parameters with which to connect to the remote host.
          * 
          * @return builder
          * 

@@ -9,7 +9,7 @@ import java.util.Objects;
 import java.util.StringJoiner;
 
     /**
-     * Certificate allowed usage.
+     * Certificate allowed usage
      * 
      */
     @EnumType

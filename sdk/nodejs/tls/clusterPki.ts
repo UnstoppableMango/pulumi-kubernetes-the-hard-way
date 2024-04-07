@@ -9,6 +9,9 @@ import * as utilities from "../utilities";
 
 import {Certificate, RootCa} from "./index";
 
+/**
+ * The private key infrastructure for a cluster
+ */
 export class ClusterPki extends pulumi.ComponentResource {
     /** @internal */
     public static readonly __pulumiType = 'kubernetes-the-hard-way:tls:ClusterPki';
@@ -31,13 +34,23 @@ export class ClusterPki extends pulumi.ComponentResource {
     /**
      * Name of the algorithm to use when generating the private key.
      */
-    public readonly algorithm!: pulumi.Output<enums.tls.Algorithm>;
+    public readonly algorithm!: pulumi.Output<enums.tls.Algorithm | undefined>;
+    /**
+     * The cluster certificate authority.
+     */
     public /*out*/ readonly ca!: pulumi.Output<RootCa>;
+    /**
+     * A name to use for the cluster
+     */
     public readonly clusterName!: pulumi.Output<string>;
     /**
      * The controller manager certificate.
      */
     public /*out*/ readonly controllerManager!: pulumi.Output<Certificate>;
+    /**
+     * When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
+     */
+    public readonly ecdsaCurve!: pulumi.Output<enums.tls.EcdsaCurve | undefined>;
     /**
      * The kube proxy certificate.
      */
@@ -55,15 +68,19 @@ export class ClusterPki extends pulumi.ComponentResource {
      */
     public /*out*/ readonly kubernetes!: pulumi.Output<Certificate>;
     /**
-     * The publicly accessible IP for the cluster.
+     * Map of node name to node configuration
+     */
+    public readonly nodes!: pulumi.Output<{[key: string]: outputs.tls.ClusterPkiNode}>;
+    /**
+     * Publicly accessible IP address.
      */
     public readonly publicIp!: pulumi.Output<string>;
     /**
      * When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
      */
-    public readonly rsaBits!: pulumi.Output<number>;
+    public readonly rsaBits!: pulumi.Output<number | undefined>;
     /**
-     * The service accounts certificate.
+     * The service accounts certificate
      */
     public /*out*/ readonly serviceAccounts!: pulumi.Output<Certificate>;
     /**
@@ -112,10 +129,12 @@ export class ClusterPki extends pulumi.ComponentResource {
             resourceInputs["ca"] = undefined /*out*/;
             resourceInputs["clusterName"] = undefined /*out*/;
             resourceInputs["controllerManager"] = undefined /*out*/;
+            resourceInputs["ecdsaCurve"] = undefined /*out*/;
             resourceInputs["kubeProxy"] = undefined /*out*/;
             resourceInputs["kubeScheduler"] = undefined /*out*/;
             resourceInputs["kubelet"] = undefined /*out*/;
             resourceInputs["kubernetes"] = undefined /*out*/;
+            resourceInputs["nodes"] = undefined /*out*/;
             resourceInputs["publicIp"] = undefined /*out*/;
             resourceInputs["rsaBits"] = undefined /*out*/;
             resourceInputs["serviceAccounts"] = undefined /*out*/;
@@ -125,6 +144,9 @@ export class ClusterPki extends pulumi.ComponentResource {
         super(ClusterPki.__pulumiType, name, resourceInputs, opts, true /*remote*/);
     }
 
+    /**
+     * Get a kubeconfig configured from this PKI.
+     */
     getKubeconfig(args: ClusterPki.GetKubeconfigArgs): pulumi.Output<outputs.config.Kubeconfig> {
         const result: pulumi.Output<ClusterPki.GetKubeconfigResult> = pulumi.runtime.call("kubernetes-the-hard-way:tls:ClusterPki/getKubeconfig", {
             "__self__": this,
@@ -151,7 +173,7 @@ export interface ClusterPkiArgs {
      */
     ecdsaCurve?: pulumi.Input<enums.tls.EcdsaCurve>;
     /**
-     * Map of node names to node configuration.
+     * Map of node name to node configuration
      */
     nodes: pulumi.Input<{[key: string]: pulumi.Input<inputs.tls.ClusterPkiNodeArgs>}>;
     /**
@@ -173,6 +195,9 @@ export namespace ClusterPki {
      * The set of arguments for the ClusterPki.getKubeconfig method.
      */
     export interface GetKubeconfigArgs {
+        /**
+         * Options for creating the kubeconfig.
+         */
         options: pulumi.Input<inputs.config.KubeconfigAdminOptionsArgs> | pulumi.Input<inputs.config.KubeconfigKubeControllerManagerOptionsArgs> | pulumi.Input<inputs.config.KubeconfigKubeProxyOptionsArgs> | pulumi.Input<inputs.config.KubeconfigKubeSchedulerOptionsArgs> | pulumi.Input<inputs.config.KubeconfigWorkerOptionsArgs>;
     }
 

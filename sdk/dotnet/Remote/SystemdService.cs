@@ -10,11 +10,14 @@ using Pulumi;
 
 namespace UnMango.KubernetesTheHardWay.Remote
 {
+    /// <summary>
+    /// A systemd service on a remote system.
+    /// </summary>
     [KubernetesTheHardWayResourceType("kubernetes-the-hard-way:remote:SystemdService")]
     public partial class SystemdService : global::Pulumi.ComponentResource
     {
         /// <summary>
-        /// The connection details.
+        /// The parameters with which to connect to the remote host.
         /// </summary>
         [Output("connection")]
         public Output<Pulumi.Command.Remote.Outputs.Connection> Connection { get; private set; } = null!;
@@ -26,7 +29,7 @@ namespace UnMango.KubernetesTheHardWay.Remote
         public Output<string> Directory { get; private set; } = null!;
 
         /// <summary>
-        /// Represents the service file on the remote machine.
+        /// The service file on the remote machine.
         /// </summary>
         [Output("file")]
         public Output<UnMango.KubernetesTheHardWay.Remote.File> File { get; private set; } = null!;
@@ -74,21 +77,12 @@ namespace UnMango.KubernetesTheHardWay.Remote
             merged.Id = id ?? merged.Id;
             return merged;
         }
-
-        public global::Pulumi.Output<UnMango.KubernetesTheHardWay.Tools.Systemctl> Disable()
-            => global::Pulumi.Deployment.Instance.Call<SystemdServiceDisableResult>("kubernetes-the-hard-way:remote:SystemdService/disable", CallArgs.Empty, this).Apply(v => v.Result);
-
-        public global::Pulumi.Output<UnMango.KubernetesTheHardWay.Tools.Systemctl> Enable()
-            => global::Pulumi.Deployment.Instance.Call<SystemdServiceEnableResult>("kubernetes-the-hard-way:remote:SystemdService/enable", CallArgs.Empty, this).Apply(v => v.Result);
-
-        public global::Pulumi.Output<UnMango.KubernetesTheHardWay.Tools.Systemctl> Start()
-            => global::Pulumi.Deployment.Instance.Call<SystemdServiceStartResult>("kubernetes-the-hard-way:remote:SystemdService/start", CallArgs.Empty, this).Apply(v => v.Result);
     }
 
     public sealed class SystemdServiceArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
-        /// The connection details.
+        /// The parameters with which to connect to the remote host.
         /// </summary>
         [Input("connection", required: true)]
         public Input<Pulumi.Command.Remote.Inputs.ConnectionArgs> Connection { get; set; } = null!;
@@ -122,50 +116,5 @@ namespace UnMango.KubernetesTheHardWay.Remote
             Directory = "/etc/systemd/system";
         }
         public static new SystemdServiceArgs Empty => new SystemdServiceArgs();
-    }
-
-    /// <summary>
-    /// The results of the <see cref="SystemdService.Disable"/> method.
-    /// </summary>
-    [OutputType]
-    internal sealed class SystemdServiceDisableResult
-    {
-        public readonly UnMango.KubernetesTheHardWay.Tools.Systemctl Result;
-
-        [OutputConstructor]
-        private SystemdServiceDisableResult(UnMango.KubernetesTheHardWay.Tools.Systemctl result)
-        {
-            Result = result;
-        }
-    }
-
-    /// <summary>
-    /// The results of the <see cref="SystemdService.Enable"/> method.
-    /// </summary>
-    [OutputType]
-    internal sealed class SystemdServiceEnableResult
-    {
-        public readonly UnMango.KubernetesTheHardWay.Tools.Systemctl Result;
-
-        [OutputConstructor]
-        private SystemdServiceEnableResult(UnMango.KubernetesTheHardWay.Tools.Systemctl result)
-        {
-            Result = result;
-        }
-    }
-
-    /// <summary>
-    /// The results of the <see cref="SystemdService.Start"/> method.
-    /// </summary>
-    [OutputType]
-    internal sealed class SystemdServiceStartResult
-    {
-        public readonly UnMango.KubernetesTheHardWay.Tools.Systemctl Result;
-
-        [OutputConstructor]
-        private SystemdServiceStartResult(UnMango.KubernetesTheHardWay.Tools.Systemctl result)
-        {
-            Result = result;
-        }
     }
 }

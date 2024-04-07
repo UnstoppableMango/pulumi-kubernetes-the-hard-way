@@ -22,10 +22,10 @@ class DownloadArgs:
                  remove_on_delete: Optional[pulumi.Input[bool]] = None):
         """
         The set of arguments for constructing a Download resource.
-        :param pulumi.Input['pulumi_command.remote.ConnectionArgs'] connection: Connection details for the remote system
+        :param pulumi.Input['pulumi_command.remote.ConnectionArgs'] connection: The parameters with which to connect to the remote host.
         :param pulumi.Input[str] destination: The fully qualified path on the remote system where the file should be downloaded to.
-        :param pulumi.Input[str] url: The URL for the file to be downloaded.
-        :param pulumi.Input[bool] remove_on_delete: Remove the downloaded file when the resource is deleted.
+        :param pulumi.Input[str] url: The URL of the file to be downloaded.
+        :param pulumi.Input[bool] remove_on_delete: Remove the downloaded fiel when the resource is deleted.
         """
         pulumi.set(__self__, "connection", connection)
         pulumi.set(__self__, "destination", destination)
@@ -37,7 +37,7 @@ class DownloadArgs:
     @pulumi.getter
     def connection(self) -> pulumi.Input['pulumi_command.remote.ConnectionArgs']:
         """
-        Connection details for the remote system
+        The parameters with which to connect to the remote host.
         """
         return pulumi.get(self, "connection")
 
@@ -61,7 +61,7 @@ class DownloadArgs:
     @pulumi.getter
     def url(self) -> pulumi.Input[str]:
         """
-        The URL for the file to be downloaded.
+        The URL of the file to be downloaded.
         """
         return pulumi.get(self, "url")
 
@@ -73,7 +73,7 @@ class DownloadArgs:
     @pulumi.getter(name="removeOnDelete")
     def remove_on_delete(self) -> Optional[pulumi.Input[bool]]:
         """
-        Remove the downloaded file when the resource is deleted.
+        Remove the downloaded fiel when the resource is deleted.
         """
         return pulumi.get(self, "remove_on_delete")
 
@@ -93,14 +93,14 @@ class Download(pulumi.ComponentResource):
                  url: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         """
-        Represents a file to be downloaded on a remote system.
+        Downloads the file specified by `url` onto a remote system.
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']] connection: Connection details for the remote system
+        :param pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']] connection: The parameters with which to connect to the remote host.
         :param pulumi.Input[str] destination: The fully qualified path on the remote system where the file should be downloaded to.
-        :param pulumi.Input[bool] remove_on_delete: Remove the downloaded file when the resource is deleted.
-        :param pulumi.Input[str] url: The URL for the file to be downloaded.
+        :param pulumi.Input[bool] remove_on_delete: Remove the downloaded fiel when the resource is deleted.
+        :param pulumi.Input[str] url: The URL of the file to be downloaded.
         """
         ...
     @overload
@@ -109,7 +109,7 @@ class Download(pulumi.ComponentResource):
                  args: DownloadArgs,
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
-        Represents a file to be downloaded on a remote system.
+        Downloads the file specified by `url` onto a remote system.
 
         :param str resource_name: The name of the resource.
         :param DownloadArgs args: The arguments to use to populate this resource's properties.
@@ -164,7 +164,7 @@ class Download(pulumi.ComponentResource):
     @pulumi.getter
     def connection(self) -> pulumi.Output['pulumi_command.remote.outputs.Connection']:
         """
-        Connection details for the remote system
+        The parameters with which to connect to the remote host.
         """
         return pulumi.get(self, "connection")
 
@@ -180,15 +180,23 @@ class Download(pulumi.ComponentResource):
     @pulumi.getter
     def mkdir(self) -> pulumi.Output['_tools.Mkdir']:
         """
-        Represents the command used to create the remote directory.
+        The mkdir operation.
         """
         return pulumi.get(self, "mkdir")
+
+    @property
+    @pulumi.getter(name="removeOnDelete")
+    def remove_on_delete(self) -> pulumi.Output[bool]:
+        """
+        Remove the downloaded fiel when the resource is deleted.
+        """
+        return pulumi.get(self, "remove_on_delete")
 
     @property
     @pulumi.getter
     def url(self) -> pulumi.Output[str]:
         """
-        The URL for the file to be downloaded.
+        The URL of the file to be downloaded.
         """
         return pulumi.get(self, "url")
 
@@ -196,7 +204,7 @@ class Download(pulumi.ComponentResource):
     @pulumi.getter
     def wget(self) -> pulumi.Output['_tools.Wget']:
         """
-        Represents the wget command used to download the file.
+        The wget operation.
         """
         return pulumi.get(self, "wget")
 

@@ -10,6 +10,9 @@ using Pulumi;
 
 namespace UnMango.KubernetesTheHardWay.Remote
 {
+    /// <summary>
+    /// Configures etcd on a remote system.
+    /// </summary>
     [KubernetesTheHardWayResourceType("kubernetes-the-hard-way:remote:EtcdConfiguration")]
     public partial class EtcdConfiguration : global::Pulumi.ComponentResource
     {
@@ -17,40 +20,64 @@ namespace UnMango.KubernetesTheHardWay.Remote
         /// The remote certificate authority file.
         /// </summary>
         [Output("caFile")]
-        public Output<UnMango.KubernetesTheHardWay.Remote.File?> CaFile { get; private set; } = null!;
+        public Output<UnMango.KubernetesTheHardWay.Remote.File> CaFile { get; private set; } = null!;
+
+        /// <summary>
+        /// The PEM encoded certificate authority data.
+        /// </summary>
+        [Output("caPem")]
+        public Output<string> CaPem { get; private set; } = null!;
 
         /// <summary>
         /// The remote certificate file.
         /// </summary>
         [Output("certFile")]
-        public Output<UnMango.KubernetesTheHardWay.Remote.File?> CertFile { get; private set; } = null!;
+        public Output<UnMango.KubernetesTheHardWay.Remote.File> CertFile { get; private set; } = null!;
+
+        /// <summary>
+        /// The PEM encoded certificate data.
+        /// </summary>
+        [Output("certPem")]
+        public Output<string> CertPem { get; private set; } = null!;
 
         /// <summary>
         /// The directory to store etcd configuration.
         /// </summary>
         [Output("configurationDirectory")]
-        public Output<string> ConfigurationDirectory { get; private set; } = null!;
+        public Output<string?> ConfigurationDirectory { get; private set; } = null!;
 
         /// <summary>
-        /// The command used to create the configuration directory.
+        /// The configuration mkdir operation.
         /// </summary>
         [Output("configurationMkdir")]
         public Output<UnMango.KubernetesTheHardWay.Tools.Mkdir> ConfigurationMkdir { get; private set; } = null!;
 
         /// <summary>
-        /// The directory etcd will use.
+        /// The parameters with which to connect to the remote host.
         /// </summary>
-        [Output("dataDirectory")]
-        public Output<string> DataDirectory { get; private set; } = null!;
+        [Output("connection")]
+        public Output<Pulumi.Command.Remote.Outputs.Connection> Connection { get; private set; } = null!;
 
         /// <summary>
-        /// The command used to create the data directory.
+        /// The directory etcd will store its data.
+        /// </summary>
+        [Output("dataDirectory")]
+        public Output<string?> DataDirectory { get; private set; } = null!;
+
+        /// <summary>
+        /// The data mkdir operation.
         /// </summary>
         [Output("dataMkdir")]
         public Output<UnMango.KubernetesTheHardWay.Tools.Mkdir> DataMkdir { get; private set; } = null!;
 
         /// <summary>
-        /// IP used to serve client requests and communicate with etcd peers.
+        /// The path to the `etcd` binary.
+        /// </summary>
+        [Output("etcdPath")]
+        public Output<string> EtcdPath { get; private set; } = null!;
+
+        /// <summary>
+        /// The IP used to serve client requests and communicate with etcd peers.
         /// </summary>
         [Output("internalIp")]
         public Output<string> InternalIp { get; private set; } = null!;
@@ -59,13 +86,13 @@ namespace UnMango.KubernetesTheHardWay.Remote
         /// The remote key file.
         /// </summary>
         [Output("keyFile")]
-        public Output<UnMango.KubernetesTheHardWay.Remote.File?> KeyFile { get; private set; } = null!;
+        public Output<UnMango.KubernetesTheHardWay.Remote.File> KeyFile { get; private set; } = null!;
 
         /// <summary>
-        /// The remote systemd service.
+        /// The PEM encoded key data.
         /// </summary>
-        [Output("systemdService")]
-        public Output<UnMango.KubernetesTheHardWay.Remote.SystemdService> SystemdService { get; private set; } = null!;
+        [Output("keyPem")]
+        public Output<string> KeyPem { get; private set; } = null!;
 
 
         /// <summary>
@@ -97,7 +124,7 @@ namespace UnMango.KubernetesTheHardWay.Remote
     public sealed class EtcdConfigurationArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
-        /// The PEM encoded CA data.
+        /// The PEM encoded certificate authority data.
         /// </summary>
         [Input("caPem", required: true)]
         public Input<string> CaPem { get; set; } = null!;
@@ -115,22 +142,25 @@ namespace UnMango.KubernetesTheHardWay.Remote
         public Input<string>? ConfigurationDirectory { get; set; }
 
         /// <summary>
-        /// The connection details.
+        /// The parameters with which to connect to the remote host.
         /// </summary>
         [Input("connection", required: true)]
         public Input<Pulumi.Command.Remote.Inputs.ConnectionArgs> Connection { get; set; } = null!;
 
         /// <summary>
-        /// The directory etcd will use.
+        /// The directory etcd will store its data.
         /// </summary>
         [Input("dataDirectory")]
         public Input<string>? DataDirectory { get; set; }
 
+        /// <summary>
+        /// The path to the `etcd` binary.
+        /// </summary>
         [Input("etcdPath", required: true)]
         public Input<string> EtcdPath { get; set; } = null!;
 
         /// <summary>
-        /// IP used to serve client requests and communicate with etcd peers.
+        /// The IP used to serve client requests and communicate with etcd peers.
         /// </summary>
         [Input("internalIp", required: true)]
         public Input<string> InternalIp { get; set; } = null!;
@@ -141,17 +171,9 @@ namespace UnMango.KubernetesTheHardWay.Remote
         [Input("keyPem", required: true)]
         public Input<string> KeyPem { get; set; } = null!;
 
-        /// <summary>
-        /// The systemd service file dirctory.
-        /// </summary>
-        [Input("systemdDirectory")]
-        public Input<string>? SystemdDirectory { get; set; }
-
         public EtcdConfigurationArgs()
         {
             ConfigurationDirectory = "/etc/etcd";
-            DataDirectory = "/var/lib/etcd";
-            SystemdDirectory = "/etc/system/systemd";
         }
         public static new EtcdConfigurationArgs Empty => new EtcdConfigurationArgs();
     }

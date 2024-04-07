@@ -2,12 +2,11 @@
 // *** Do not edit by hand unless you're certain you know what you are doing! ***
 
 import * as pulumi from "@pulumi/pulumi";
-import * as inputs from "../types/input";
-import * as outputs from "../types/output";
-import * as enums from "../types/enums";
 import * as utilities from "../utilities";
 
 import * as pulumiCommand from "@pulumi/command";
+
+import {CommandLifecycle, EtcdctlCommand} from "./index";
 
 /**
  * Abstraction over the `etcdctl` utility on a remote system.
@@ -27,15 +26,62 @@ export class Etcdctl extends pulumi.ComponentResource {
         return obj['__pulumiType'] === Etcdctl.__pulumiType;
     }
 
+    /**
+     * Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+     */
     public readonly binaryPath!: pulumi.Output<string>;
     /**
-     * Represents the command run on the remote system.
+     * TODO
+     */
+    public readonly caCert!: pulumi.Output<string>;
+    /**
+     * TODO
+     */
+    public readonly cert!: pulumi.Output<string>;
+    /**
+     * The underlying command
      */
     public /*out*/ readonly command!: pulumi.Output<pulumiCommand.remote.Command>;
     /**
-     * Connection details for the remote system.
+     * TODO
+     */
+    public readonly commands!: pulumi.Output<EtcdctlCommand>;
+    /**
+     * Connection details for the remote system
      */
     public readonly connection!: pulumi.Output<pulumiCommand.types.output.remote.Connection>;
+    /**
+     * TODO
+     */
+    public readonly endpoints!: pulumi.Output<string>;
+    /**
+     * Environment variables
+     */
+    public readonly environment!: pulumi.Output<{[key: string]: string}>;
+    /**
+     * TODO
+     */
+    public readonly key!: pulumi.Output<string>;
+    /**
+     * At what stage(s) in the resource lifecycle should the command be run
+     */
+    public readonly lifecycle!: pulumi.Output<CommandLifecycle | undefined>;
+    /**
+     * TODO
+     */
+    public /*out*/ readonly stderr!: pulumi.Output<string>;
+    /**
+     * TODO
+     */
+    public readonly stdin!: pulumi.Output<string | undefined>;
+    /**
+     * TODO
+     */
+    public /*out*/ readonly stdout!: pulumi.Output<string>;
+    /**
+     * TODO
+     */
+    public readonly triggers!: pulumi.Output<any[]>;
 
     /**
      * Create a Etcdctl resource with the given unique name, arguments, and options.
@@ -48,8 +94,23 @@ export class Etcdctl extends pulumi.ComponentResource {
         let resourceInputs: pulumi.Inputs = {};
         opts = opts || {};
         if (!opts.id) {
+            if ((!args || args.caCert === undefined) && !opts.urn) {
+                throw new Error("Missing required property 'caCert'");
+            }
+            if ((!args || args.cert === undefined) && !opts.urn) {
+                throw new Error("Missing required property 'cert'");
+            }
+            if ((!args || args.commands === undefined) && !opts.urn) {
+                throw new Error("Missing required property 'commands'");
+            }
             if ((!args || args.connection === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'connection'");
+            }
+            if ((!args || args.endpoints === undefined) && !opts.urn) {
+                throw new Error("Missing required property 'endpoints'");
+            }
+            if ((!args || args.key === undefined) && !opts.urn) {
+                throw new Error("Missing required property 'key'");
             }
             resourceInputs["binaryPath"] = args ? args.binaryPath : undefined;
             resourceInputs["caCert"] = args ? args.caCert : undefined;
@@ -59,11 +120,27 @@ export class Etcdctl extends pulumi.ComponentResource {
             resourceInputs["endpoints"] = args ? args.endpoints : undefined;
             resourceInputs["environment"] = args ? args.environment : undefined;
             resourceInputs["key"] = args ? args.key : undefined;
+            resourceInputs["lifecycle"] = args ? args.lifecycle : undefined;
+            resourceInputs["stdin"] = args ? args.stdin : undefined;
+            resourceInputs["triggers"] = args ? args.triggers : undefined;
             resourceInputs["command"] = undefined /*out*/;
+            resourceInputs["stderr"] = undefined /*out*/;
+            resourceInputs["stdout"] = undefined /*out*/;
         } else {
             resourceInputs["binaryPath"] = undefined /*out*/;
+            resourceInputs["caCert"] = undefined /*out*/;
+            resourceInputs["cert"] = undefined /*out*/;
             resourceInputs["command"] = undefined /*out*/;
+            resourceInputs["commands"] = undefined /*out*/;
             resourceInputs["connection"] = undefined /*out*/;
+            resourceInputs["endpoints"] = undefined /*out*/;
+            resourceInputs["environment"] = undefined /*out*/;
+            resourceInputs["key"] = undefined /*out*/;
+            resourceInputs["lifecycle"] = undefined /*out*/;
+            resourceInputs["stderr"] = undefined /*out*/;
+            resourceInputs["stdin"] = undefined /*out*/;
+            resourceInputs["stdout"] = undefined /*out*/;
+            resourceInputs["triggers"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         super(Etcdctl.__pulumiType, name, resourceInputs, opts, true /*remote*/);
@@ -74,15 +151,48 @@ export class Etcdctl extends pulumi.ComponentResource {
  * The set of arguments for constructing a Etcdctl resource.
  */
 export interface EtcdctlArgs {
-    binaryPath?: pulumi.Input<string>;
-    caCert?: pulumi.Input<string>;
-    cert?: pulumi.Input<string>;
-    commands?: pulumi.Input<pulumi.Input<enums.tools.EtcdctlCommand>[]>;
     /**
-     * Connection details for the remote system.
+     * Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+     */
+    binaryPath?: pulumi.Input<string>;
+    /**
+     * TODO
+     */
+    caCert: pulumi.Input<string>;
+    /**
+     * TODO
+     */
+    cert: pulumi.Input<string>;
+    /**
+     * TODO
+     */
+    commands: pulumi.Input<EtcdctlCommand>;
+    /**
+     * Connection details for the remote system
      */
     connection: pulumi.Input<pulumiCommand.types.input.remote.ConnectionArgs>;
-    endpoints?: pulumi.Input<string>;
+    /**
+     * TODO
+     */
+    endpoints: pulumi.Input<string>;
+    /**
+     * Environment variables
+     */
     environment?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
-    key?: pulumi.Input<string>;
+    /**
+     * TODO
+     */
+    key: pulumi.Input<string>;
+    /**
+     * At what stage(s) in the resource lifecycle should the command be run
+     */
+    lifecycle?: CommandLifecycle;
+    /**
+     * TODO
+     */
+    stdin?: pulumi.Input<string>;
+    /**
+     * TODO
+     */
+    triggers?: pulumi.Input<any[]>;
 }

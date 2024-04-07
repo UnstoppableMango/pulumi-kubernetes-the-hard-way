@@ -20,8 +20,9 @@ class ClusterPkiNodeArgs:
                  ip: Optional[pulumi.Input[str]] = None,
                  role: Optional[pulumi.Input['NodeRole']] = None):
         """
-        Node inputs for the PKI.
-        :param pulumi.Input[str] ip: The IP address of the node.
+        TODO
+        :param pulumi.Input[str] ip: The IP address of the node
+        :param pulumi.Input['NodeRole'] role: The role a node should be configured for
         """
         if ip is not None:
             pulumi.set(__self__, "ip", ip)
@@ -32,7 +33,7 @@ class ClusterPkiNodeArgs:
     @pulumi.getter
     def ip(self) -> Optional[pulumi.Input[str]]:
         """
-        The IP address of the node.
+        The IP address of the node
         """
         return pulumi.get(self, "ip")
 
@@ -43,6 +44,9 @@ class ClusterPkiNodeArgs:
     @property
     @pulumi.getter
     def role(self) -> Optional[pulumi.Input['NodeRole']]:
+        """
+        The role a node should be configured for
+        """
         return pulumi.get(self, "role")
 
     @role.setter

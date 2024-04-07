@@ -4,35 +4,69 @@
 package com.unmango.kubernetesthehardway.tools;
 
 import com.pulumi.command.remote.Command;
+import com.pulumi.command.remote.outputs.Connection;
 import com.pulumi.core.Output;
 import com.pulumi.core.annotations.Export;
 import com.pulumi.core.annotations.ResourceType;
 import com.pulumi.core.internal.Codegen;
 import com.unmango.kubernetesthehardway.Utilities;
 import com.unmango.kubernetesthehardway.tools.MkdirArgs;
+import com.unmango.kubernetesthehardway.tools.outputs.CommandLifecycle;
 import java.lang.Boolean;
+import java.lang.Object;
 import java.lang.String;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import javax.annotation.Nullable;
 
 /**
- * Represents the `mkdir` utility.
+ * Abstraction over the `mkdir` utility on a remote system.
  * 
  */
 @ResourceType(type="kubernetes-the-hard-way:tools:Mkdir")
 public class Mkdir extends com.pulumi.resources.ComponentResource {
     /**
-     * The remote command.
+     * Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+     * 
+     */
+    @Export(name="binaryPath", refs={String.class}, tree="[0]")
+    private Output<String> binaryPath;
+
+    /**
+     * @return Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+     * 
+     */
+    public Output<String> binaryPath() {
+        return this.binaryPath;
+    }
+    /**
+     * The underlying command
      * 
      */
     @Export(name="command", refs={Command.class}, tree="[0]")
     private Output<Command> command;
 
     /**
-     * @return The remote command.
+     * @return The underlying command
      * 
      */
     public Output<Command> command() {
         return this.command;
+    }
+    /**
+     * Connection details for the remote system
+     * 
+     */
+    @Export(name="connection", refs={Connection.class}, tree="[0]")
+    private Output<Connection> connection;
+
+    /**
+     * @return Connection details for the remote system
+     * 
+     */
+    public Output<Connection> connection() {
+        return this.connection;
     }
     /**
      * The fully qualified path of the directory on the remote system.
@@ -47,6 +81,34 @@ public class Mkdir extends com.pulumi.resources.ComponentResource {
      */
     public Output<String> directory() {
         return this.directory;
+    }
+    /**
+     * Environment variables
+     * 
+     */
+    @Export(name="environment", refs={Map.class,String.class}, tree="[0,1,1]")
+    private Output<Map<String,String>> environment;
+
+    /**
+     * @return Environment variables
+     * 
+     */
+    public Output<Map<String,String>> environment() {
+        return this.environment;
+    }
+    /**
+     * At what stage(s) in the resource lifecycle should the command be run
+     * 
+     */
+    @Export(name="lifecycle", refs={CommandLifecycle.class}, tree="[0]")
+    private Output</* @Nullable */ CommandLifecycle> lifecycle;
+
+    /**
+     * @return At what stage(s) in the resource lifecycle should the command be run
+     * 
+     */
+    public Output<Optional<CommandLifecycle>> lifecycle() {
+        return Codegen.optional(this.lifecycle);
     }
     /**
      * Corresponds to the `--parents` option.
@@ -77,32 +139,60 @@ public class Mkdir extends com.pulumi.resources.ComponentResource {
         return this.removeOnDelete;
     }
     /**
-     * The command&#39;s stderr.
+     * TODO
      * 
      */
     @Export(name="stderr", refs={String.class}, tree="[0]")
     private Output<String> stderr;
 
     /**
-     * @return The command&#39;s stderr.
+     * @return TODO
      * 
      */
     public Output<String> stderr() {
         return this.stderr;
     }
     /**
-     * The command&#39;s stdout.
+     * TODO
+     * 
+     */
+    @Export(name="stdin", refs={String.class}, tree="[0]")
+    private Output</* @Nullable */ String> stdin;
+
+    /**
+     * @return TODO
+     * 
+     */
+    public Output<Optional<String>> stdin() {
+        return Codegen.optional(this.stdin);
+    }
+    /**
+     * TODO
      * 
      */
     @Export(name="stdout", refs={String.class}, tree="[0]")
     private Output<String> stdout;
 
     /**
-     * @return The command&#39;s stdout.
+     * @return TODO
      * 
      */
     public Output<String> stdout() {
         return this.stdout;
+    }
+    /**
+     * TODO
+     * 
+     */
+    @Export(name="triggers", refs={List.class,Object.class}, tree="[0,1]")
+    private Output<List<Object>> triggers;
+
+    /**
+     * @return TODO
+     * 
+     */
+    public Output<List<Object>> triggers() {
+        return this.triggers;
     }
 
     /**

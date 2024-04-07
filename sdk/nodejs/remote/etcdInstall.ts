@@ -9,11 +9,11 @@ import * as utilities from "../utilities";
 
 import * as pulumiCommand from "@pulumi/command";
 
-import {Etcdctl, Mkdir, Mv, Tar} from "../tools";
+import {Mkdir, Mktemp, Mv, Rm, Tar} from "../tools";
 import {Download} from "./index";
 
 /**
- * Represents an etcd binary on a remote system.
+ * Installs etcd on a remote system
  */
 export class EtcdInstall extends pulumi.ComponentResource {
     /** @internal */
@@ -31,55 +31,67 @@ export class EtcdInstall extends pulumi.ComponentResource {
     }
 
     /**
-     * The etcd CPU architecture.
+     * The CPU architecture to install.
      */
     public readonly architecture!: pulumi.Output<enums.remote.Architecture>;
     /**
-     * The name of the etcd release archive.
+     * The name of the downloaded archive.
      */
     public /*out*/ readonly archiveName!: pulumi.Output<string>;
     /**
-     * Directory to install the `etcd` and `etcdctl` binaries.
+     * The parameters with which to connect to the remote host.
+     */
+    public readonly connection!: pulumi.Output<pulumiCommand.types.output.remote.Connection>;
+    /**
+     * The directory to install the binary to.
      */
     public readonly directory!: pulumi.Output<string>;
     /**
-     * The etcd download operation.
+     * The download operation.
      */
     public /*out*/ readonly download!: pulumi.Output<Download>;
     /**
-     * The path to the etcd binary on the remote system.
+     * The etcd mv operation.
+     */
+    public /*out*/ readonly etcdMv!: pulumi.Output<Mv>;
+    /**
+     * The etcd path on the remote system
      */
     public /*out*/ readonly etcdPath!: pulumi.Output<string>;
     /**
-     * The path to the etcdctl binary on the remote system.
+     * The etcdctl mv operation.
+     */
+    public /*out*/ readonly etcdctlMv!: pulumi.Output<Mv>;
+    /**
+     * The etcdctl path on the remote system
      */
     public /*out*/ readonly etcdctlPath!: pulumi.Output<string>;
     /**
-     * The operation to create the install directory.
+     * The mkdir operation.
      */
     public /*out*/ readonly mkdir!: pulumi.Output<Mkdir>;
     /**
-     * The operation to move the etcd binary to the install directory.
+     * The mktemp operation.
      */
-    public /*out*/ readonly mvEtcd!: pulumi.Output<Mv>;
+    public /*out*/ readonly mktemp!: pulumi.Output<Mktemp>;
     /**
-     * The operation to move the etcdctl binary to the install directory.
+     * The path to the installed binary.
      */
-    public /*out*/ readonly mvEtcdctl!: pulumi.Output<Mv>;
+    public /*out*/ readonly path!: pulumi.Output<string | undefined>;
     /**
-     * The name of the resource.
+     * The rm operation.
      */
-    public /*out*/ readonly name!: pulumi.Output<string>;
+    public /*out*/ readonly rm!: pulumi.Output<Rm>;
     /**
      * The tar operation.
      */
     public /*out*/ readonly tar!: pulumi.Output<Tar>;
     /**
-     * The url used to download etcd.
+     * The url used to download the binary.
      */
     public /*out*/ readonly url!: pulumi.Output<string>;
     /**
-     * The version of etcd downloaded.
+     * The version to install.
      */
     public readonly version!: pulumi.Output<string>;
 
@@ -103,38 +115,36 @@ export class EtcdInstall extends pulumi.ComponentResource {
             resourceInputs["version"] = args ? args.version : undefined;
             resourceInputs["archiveName"] = undefined /*out*/;
             resourceInputs["download"] = undefined /*out*/;
+            resourceInputs["etcdMv"] = undefined /*out*/;
             resourceInputs["etcdPath"] = undefined /*out*/;
+            resourceInputs["etcdctlMv"] = undefined /*out*/;
             resourceInputs["etcdctlPath"] = undefined /*out*/;
             resourceInputs["mkdir"] = undefined /*out*/;
-            resourceInputs["mvEtcd"] = undefined /*out*/;
-            resourceInputs["mvEtcdctl"] = undefined /*out*/;
-            resourceInputs["name"] = undefined /*out*/;
+            resourceInputs["mktemp"] = undefined /*out*/;
+            resourceInputs["path"] = undefined /*out*/;
+            resourceInputs["rm"] = undefined /*out*/;
             resourceInputs["tar"] = undefined /*out*/;
             resourceInputs["url"] = undefined /*out*/;
         } else {
             resourceInputs["architecture"] = undefined /*out*/;
             resourceInputs["archiveName"] = undefined /*out*/;
+            resourceInputs["connection"] = undefined /*out*/;
             resourceInputs["directory"] = undefined /*out*/;
             resourceInputs["download"] = undefined /*out*/;
+            resourceInputs["etcdMv"] = undefined /*out*/;
             resourceInputs["etcdPath"] = undefined /*out*/;
+            resourceInputs["etcdctlMv"] = undefined /*out*/;
             resourceInputs["etcdctlPath"] = undefined /*out*/;
             resourceInputs["mkdir"] = undefined /*out*/;
-            resourceInputs["mvEtcd"] = undefined /*out*/;
-            resourceInputs["mvEtcdctl"] = undefined /*out*/;
-            resourceInputs["name"] = undefined /*out*/;
+            resourceInputs["mktemp"] = undefined /*out*/;
+            resourceInputs["path"] = undefined /*out*/;
+            resourceInputs["rm"] = undefined /*out*/;
             resourceInputs["tar"] = undefined /*out*/;
             resourceInputs["url"] = undefined /*out*/;
             resourceInputs["version"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         super(EtcdInstall.__pulumiType, name, resourceInputs, opts, true /*remote*/);
-    }
-
-    etcdctl(): pulumi.Output<Etcdctl> {
-        const result: pulumi.Output<EtcdInstall.EtcdctlResult> = pulumi.runtime.call("kubernetes-the-hard-way:remote:EtcdInstall/etcdctl", {
-            "__self__": this,
-        }, this);
-        return result.result;
     }
 }
 
@@ -143,29 +153,19 @@ export class EtcdInstall extends pulumi.ComponentResource {
  */
 export interface EtcdInstallArgs {
     /**
-     * The etcd CPU architecture.
+     * The CPU architecture to install.
      */
     architecture?: pulumi.Input<enums.remote.Architecture>;
     /**
-     * The connection details.
+     * The parameters with which to connect to the remote host.
      */
     connection: pulumi.Input<pulumiCommand.types.input.remote.ConnectionArgs>;
     /**
-     * Directory to install the `etcd` and `etcdctl` binaries.
+     * The directory to install the binary to.
      */
     directory?: pulumi.Input<string>;
     /**
-     * The version of etcd to install.
+     * The version to install.
      */
     version?: pulumi.Input<string>;
-}
-
-export namespace EtcdInstall {
-    /**
-     * The results of the EtcdInstall.etcdctl method.
-     */
-    export interface EtcdctlResult {
-        readonly result: Etcdctl;
-    }
-
 }

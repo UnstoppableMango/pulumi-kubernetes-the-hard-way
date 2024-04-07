@@ -23,7 +23,7 @@ export const AllowedUsage = {
 } as const;
 
 /**
- * Certificate allowed usage.
+ * Certificate allowed usage
  */
 export type AllowedUsage = (typeof AllowedUsage)[keyof typeof AllowedUsage];
 
@@ -35,7 +35,7 @@ export const EcdsaCurve = {
 } as const;
 
 /**
- * TODO
+ * ECDSA algorithm curve
  */
 export type EcdsaCurve = (typeof EcdsaCurve)[keyof typeof EcdsaCurve];
 
@@ -45,6 +45,6 @@ export const NodeRole = {
 } as const;
 
 /**
- * TODO
+ * The role a node will play in the final cluster
  */
 export type NodeRole = (typeof NodeRole)[keyof typeof NodeRole];

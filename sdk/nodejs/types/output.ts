@@ -7,7 +7,6 @@ import * as outputs from "../types/output";
 import * as enums from "../types/enums";
 
 import * as pulumiTls from "@pulumi/tls";
-import * as utilities from "../utilities";
 
 export namespace config {
     export interface Cluster {
@@ -103,7 +102,18 @@ export namespace remote {
 }
 
 export namespace tls {
-}
+    /**
+     * TODO
+     */
+    export interface ClusterPkiNode {
+        /**
+         * The IP address of the node
+         */
+        ip?: string;
+        /**
+         * The role a node should be configured for
+         */
+        role?: enums.tls.NodeRole;
+    }
 
-export namespace tools {
 }

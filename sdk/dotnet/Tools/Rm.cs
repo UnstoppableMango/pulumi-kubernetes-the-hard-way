@@ -17,28 +17,52 @@ namespace UnMango.KubernetesTheHardWay.Tools
     public partial class Rm : global::Pulumi.ComponentResource
     {
         /// <summary>
-        /// Represents the command run on the remote system.
+        /// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
         /// </summary>
-        [Output("command")]
-        public Output<Pulumi.Command.Remote.Command?> Command { get; private set; } = null!;
+        [Output("binaryPath")]
+        public Output<string> BinaryPath { get; private set; } = null!;
 
         /// <summary>
-        /// Corresponds to the --dir option.
+        /// The underlying command
+        /// </summary>
+        [Output("command")]
+        public Output<Pulumi.Command.Remote.Command> Command { get; private set; } = null!;
+
+        /// <summary>
+        /// Connection details for the remote system
+        /// </summary>
+        [Output("connection")]
+        public Output<Pulumi.Command.Remote.Outputs.Connection> Connection { get; private set; } = null!;
+
+        /// <summary>
+        /// Corresponds to the `--dir` option.
         /// </summary>
         [Output("dir")]
         public Output<bool> Dir { get; private set; } = null!;
 
         /// <summary>
+        /// Environment variables
+        /// </summary>
+        [Output("environment")]
+        public Output<ImmutableDictionary<string, string>> Environment { get; private set; } = null!;
+
+        /// <summary>
         /// Corresponds to the [FILE] argument.
         /// </summary>
         [Output("files")]
-        public Output<ImmutableArray<string>> Files { get; private set; } = null!;
+        public Output<Union<string, ImmutableArray<string>>> Files { get; private set; } = null!;
 
         /// <summary>
-        /// Corresponds to the --force option.
+        /// Corresponds to the `--force` option.
         /// </summary>
         [Output("force")]
         public Output<bool> Force { get; private set; } = null!;
+
+        /// <summary>
+        /// At what stage(s) in the resource lifecycle should the command be run
+        /// </summary>
+        [Output("lifecycle")]
+        public Output<UnMango.KubernetesTheHardWay.Tools.Outputs.CommandLifecycle?> Lifecycle { get; private set; } = null!;
 
         /// <summary>
         /// Whether rm should be run when the resource is created or deleted.
@@ -47,13 +71,37 @@ namespace UnMango.KubernetesTheHardWay.Tools
         public Output<bool> OnDelete { get; private set; } = null!;
 
         /// <summary>
-        /// Corresponds to the --recursive option.
+        /// Corresponds to the `--recursive` option.
         /// </summary>
         [Output("recursive")]
         public Output<bool> Recursive { get; private set; } = null!;
 
         /// <summary>
-        /// Corresponds to the --verbose option.
+        /// TODO
+        /// </summary>
+        [Output("stderr")]
+        public Output<string> Stderr { get; private set; } = null!;
+
+        /// <summary>
+        /// TODO
+        /// </summary>
+        [Output("stdin")]
+        public Output<string?> Stdin { get; private set; } = null!;
+
+        /// <summary>
+        /// TODO
+        /// </summary>
+        [Output("stdout")]
+        public Output<string> Stdout { get; private set; } = null!;
+
+        /// <summary>
+        /// TODO
+        /// </summary>
+        [Output("triggers")]
+        public Output<ImmutableArray<object>> Triggers { get; private set; } = null!;
+
+        /// <summary>
+        /// Corresponds to the `--verbose` option.
         /// </summary>
         [Output("verbose")]
         public Output<bool> Verbose { get; private set; } = null!;
@@ -88,19 +136,29 @@ namespace UnMango.KubernetesTheHardWay.Tools
     public sealed class RmArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
-        /// Connection details for the remote system.
+        /// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+        /// </summary>
+        [Input("binaryPath")]
+        public Input<string>? BinaryPath { get; set; }
+
+        /// <summary>
+        /// Connection details for the remote system
         /// </summary>
         [Input("connection", required: true)]
         public Input<Pulumi.Command.Remote.Inputs.ConnectionArgs> Connection { get; set; } = null!;
 
         /// <summary>
-        /// Corresponds to the --dir option.
+        /// Corresponds to the `--dir` option.
         /// </summary>
         [Input("dir")]
-        public Input<bool>? Dir { get; set; }
+        public bool? Dir { get; set; }
 
         [Input("environment")]
         private InputMap<string>? _environment;
+
+        /// <summary>
+        /// Environment variables
+        /// </summary>
         public InputMap<string> Environment
         {
             get => _environment ?? (_environment = new InputMap<string>());
@@ -111,34 +169,52 @@ namespace UnMango.KubernetesTheHardWay.Tools
         /// Corresponds to the [FILE] argument.
         /// </summary>
         [Input("files", required: true)]
-        public InputUnion<ImmutableArray<string>, string> Files { get; set; } = null!;
+        public InputUnion<string, ImmutableArray<string>> Files { get; set; } = null!;
 
         /// <summary>
-        /// Corresponds to the --force option.
+        /// Corresponds to the `--force` option.
         /// </summary>
         [Input("force")]
         public Input<bool>? Force { get; set; }
 
         /// <summary>
-        /// At what stage(s) in the resource lifecycle should the command be run.
+        /// At what stage(s) in the resource lifecycle should the command be run
         /// </summary>
         [Input("lifecycle")]
-        public UnMango.KubernetesTheHardWay.Tools.CommandLifecycle? Lifecycle { get; set; }
+        public UnMango.KubernetesTheHardWay.Tools.Inputs.CommandLifecycle? Lifecycle { get; set; }
 
         /// <summary>
         /// Whether rm should be run when the resource is created or deleted.
         /// </summary>
         [Input("onDelete")]
-        public bool? OnDelete { get; set; }
+        public Input<bool>? OnDelete { get; set; }
 
         /// <summary>
-        /// Corresponds to the --recursive option.
+        /// Corresponds to the `--recursive` option.
         /// </summary>
         [Input("recursive")]
         public Input<bool>? Recursive { get; set; }
 
         /// <summary>
-        /// Corresponds to the --verbose option.
+        /// TODO
+        /// </summary>
+        [Input("stdin")]
+        public Input<string>? Stdin { get; set; }
+
+        [Input("triggers")]
+        private InputList<object>? _triggers;
+
+        /// <summary>
+        /// TODO
+        /// </summary>
+        public InputList<object> Triggers
+        {
+            get => _triggers ?? (_triggers = new InputList<object>());
+            set => _triggers = value;
+        }
+
+        /// <summary>
+        /// Corresponds to the `--verbose` option.
         /// </summary>
         [Input("verbose")]
         public Input<bool>? Verbose { get; set; }

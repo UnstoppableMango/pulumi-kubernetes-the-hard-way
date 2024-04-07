@@ -10,11 +10,30 @@ import com.pulumi.core.internal.Codegen;
 import com.pulumi.random.RandomBytes;
 import com.unmango.kubernetesthehardway.Utilities;
 import com.unmango.kubernetesthehardway.tls.EncryptionKeyArgs;
+import java.lang.Integer;
 import java.lang.String;
 import javax.annotation.Nullable;
 
+/**
+ * A cluster encryption key.
+ * 
+ */
 @ResourceType(type="kubernetes-the-hard-way:tls:EncryptionKey")
 public class EncryptionKey extends com.pulumi.resources.ComponentResource {
+    /**
+     * The number of bytes requested. The minimum value for length is 1.
+     * 
+     */
+    @Export(name="bytes", refs={Integer.class}, tree="[0]")
+    private Output<Integer> bytes;
+
+    /**
+     * @return The number of bytes requested. The minimum value for length is 1.
+     * 
+     */
+    public Output<Integer> bytes() {
+        return this.bytes;
+    }
     /**
      * The generated `v1/EncryptionConfig`.
      * 
@@ -29,9 +48,17 @@ public class EncryptionKey extends com.pulumi.resources.ComponentResource {
     public Output<String> config() {
         return this.config;
     }
+    /**
+     * The generated random key.
+     * 
+     */
     @Export(name="key", refs={RandomBytes.class}, tree="[0]")
     private Output<RandomBytes> key;
 
+    /**
+     * @return The generated random key.
+     * 
+     */
     public Output<RandomBytes> key() {
         return this.key;
     }
@@ -48,7 +75,7 @@ public class EncryptionKey extends com.pulumi.resources.ComponentResource {
      * @param name The _unique_ name of the resulting resource.
      * @param args The arguments to use to populate this resource's properties.
      */
-    public EncryptionKey(String name, @Nullable EncryptionKeyArgs args) {
+    public EncryptionKey(String name, EncryptionKeyArgs args) {
         this(name, args, null);
     }
     /**
@@ -57,7 +84,7 @@ public class EncryptionKey extends com.pulumi.resources.ComponentResource {
      * @param args The arguments to use to populate this resource's properties.
      * @param options A bag of options that control this resource's behavior.
      */
-    public EncryptionKey(String name, @Nullable EncryptionKeyArgs args, @Nullable com.pulumi.resources.ComponentResourceOptions options) {
+    public EncryptionKey(String name, EncryptionKeyArgs args, @Nullable com.pulumi.resources.ComponentResourceOptions options) {
         super("kubernetes-the-hard-way:tls:EncryptionKey", name, args == null ? EncryptionKeyArgs.Empty : args, makeResourceOptions(options, Codegen.empty()), true);
     }
 

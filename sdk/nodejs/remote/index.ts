@@ -30,8 +30,10 @@ export type EtcdConfiguration = import("./etcdConfiguration").EtcdConfiguration;
 export const EtcdConfiguration: typeof import("./etcdConfiguration").EtcdConfiguration = null as any;
 utilities.lazyLoad(exports, ["EtcdConfiguration"], () => require("./etcdConfiguration"));
 
-export * from "./etcdInstall";
-import { EtcdInstall } from "./etcdInstall";
+export { EtcdInstallArgs } from "./etcdInstall";
+export type EtcdInstall = import("./etcdInstall").EtcdInstall;
+export const EtcdInstall: typeof import("./etcdInstall").EtcdInstall = null as any;
+utilities.lazyLoad(exports, ["EtcdInstall"], () => require("./etcdInstall"));
 
 export { FileArgs } from "./file";
 export type File = import("./file").File;
@@ -43,10 +45,10 @@ export type KubeApiServerInstall = import("./kubeApiServerInstall").KubeApiServe
 export const KubeApiServerInstall: typeof import("./kubeApiServerInstall").KubeApiServerInstall = null as any;
 utilities.lazyLoad(exports, ["KubeApiServerInstall"], () => require("./kubeApiServerInstall"));
 
-export { KubeControllerManagerInstallArgs } from "./kubeControllerManagerInstall";
-export type KubeControllerManagerInstall = import("./kubeControllerManagerInstall").KubeControllerManagerInstall;
-export const KubeControllerManagerInstall: typeof import("./kubeControllerManagerInstall").KubeControllerManagerInstall = null as any;
-utilities.lazyLoad(exports, ["KubeControllerManagerInstall"], () => require("./kubeControllerManagerInstall"));
+export { KubeControllerManagerArgs } from "./kubeControllerManager";
+export type KubeControllerManager = import("./kubeControllerManager").KubeControllerManager;
+export const KubeControllerManager: typeof import("./kubeControllerManager").KubeControllerManager = null as any;
+utilities.lazyLoad(exports, ["KubeControllerManager"], () => require("./kubeControllerManager"));
 
 export { KubeProxyInstallArgs } from "./kubeProxyInstall";
 export type KubeProxyInstall = import("./kubeProxyInstall").KubeProxyInstall;
@@ -73,8 +75,10 @@ export type RuncInstall = import("./runcInstall").RuncInstall;
 export const RuncInstall: typeof import("./runcInstall").RuncInstall = null as any;
 utilities.lazyLoad(exports, ["RuncInstall"], () => require("./runcInstall"));
 
-export * from "./systemdService";
-import { SystemdService } from "./systemdService";
+export { SystemdServiceArgs } from "./systemdService";
+export type SystemdService = import("./systemdService").SystemdService;
+export const SystemdService: typeof import("./systemdService").SystemdService = null as any;
+utilities.lazyLoad(exports, ["SystemdService"], () => require("./systemdService"));
 
 
 // Export enums:
@@ -100,8 +104,8 @@ const _module = {
                 return new File(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:remote:KubeApiServerInstall":
                 return new KubeApiServerInstall(name, <any>undefined, { urn })
-            case "kubernetes-the-hard-way:remote:KubeControllerManagerInstall":
-                return new KubeControllerManagerInstall(name, <any>undefined, { urn })
+            case "kubernetes-the-hard-way:remote:KubeControllerManager":
+                return new KubeControllerManager(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:remote:KubeProxyInstall":
                 return new KubeProxyInstall(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:remote:KubeSchedulerInstall":

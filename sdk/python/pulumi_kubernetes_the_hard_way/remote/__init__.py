@@ -14,7 +14,7 @@ from .etcd_configuration import *
 from .etcd_install import *
 from .file import *
 from .kube_api_server_install import *
-from .kube_controller_manager_install import *
+from .kube_controller_manager import *
 from .kube_proxy_install import *
 from .kube_scheduler_install import *
 from .kubectl_install import *

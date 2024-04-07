@@ -4,11 +4,13 @@
 package com.unmango.kubernetesthehardway.tools;
 
 import com.pulumi.command.remote.inputs.ConnectionArgs;
+import com.pulumi.core.Either;
 import com.pulumi.core.Output;
 import com.pulumi.core.annotations.Import;
 import com.pulumi.exceptions.MissingRequiredPropertyException;
-import com.unmango.kubernetesthehardway.tools.enums.CommandLifecycle;
 import com.unmango.kubernetesthehardway.tools.enums.SystemctlCommand;
+import com.unmango.kubernetesthehardway.tools.inputs.CommandLifecycle;
+import java.lang.Object;
 import java.lang.String;
 import java.util.List;
 import java.util.Map;
@@ -21,57 +23,153 @@ public final class SystemctlArgs extends com.pulumi.resources.ResourceArgs {
 
     public static final SystemctlArgs Empty = new SystemctlArgs();
 
-    @Import(name="commands", required=true)
-    private Output<List<SystemctlCommand>> commands;
+    /**
+     * Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+     * 
+     */
+    @Import(name="binaryPath")
+    private @Nullable Output<String> binaryPath;
 
-    public Output<List<SystemctlCommand>> commands() {
-        return this.commands;
+    /**
+     * @return Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+     * 
+     */
+    public Optional<Output<String>> binaryPath() {
+        return Optional.ofNullable(this.binaryPath);
     }
 
     /**
-     * Connection details for the remote system.
+     * Corresponds to the COMMAND argument.
+     * 
+     */
+    @Import(name="command", required=true)
+    private SystemctlCommand command;
+
+    /**
+     * @return Corresponds to the COMMAND argument.
+     * 
+     */
+    public SystemctlCommand command() {
+        return this.command;
+    }
+
+    /**
+     * Connection details for the remote system
      * 
      */
     @Import(name="connection", required=true)
     private Output<ConnectionArgs> connection;
 
     /**
-     * @return Connection details for the remote system.
+     * @return Connection details for the remote system
      * 
      */
     public Output<ConnectionArgs> connection() {
         return this.connection;
     }
 
+    /**
+     * Environment variables
+     * 
+     */
     @Import(name="environment")
     private @Nullable Output<Map<String,String>> environment;
 
+    /**
+     * @return Environment variables
+     * 
+     */
     public Optional<Output<Map<String,String>>> environment() {
         return Optional.ofNullable(this.environment);
     }
 
+    /**
+     * At what stage(s) in the resource lifecycle should the command be run
+     * 
+     */
     @Import(name="lifecycle")
     private @Nullable CommandLifecycle lifecycle;
 
+    /**
+     * @return At what stage(s) in the resource lifecycle should the command be run
+     * 
+     */
     public Optional<CommandLifecycle> lifecycle() {
         return Optional.ofNullable(this.lifecycle);
     }
 
-    @Import(name="serviceName")
-    private @Nullable Output<String> serviceName;
+    /**
+     * Corresponds to the [PATTERN] argument
+     * 
+     */
+    @Import(name="pattern")
+    private @Nullable Output<String> pattern;
 
-    public Optional<Output<String>> serviceName() {
-        return Optional.ofNullable(this.serviceName);
+    /**
+     * @return Corresponds to the [PATTERN] argument
+     * 
+     */
+    public Optional<Output<String>> pattern() {
+        return Optional.ofNullable(this.pattern);
+    }
+
+    /**
+     * TODO
+     * 
+     */
+    @Import(name="stdin")
+    private @Nullable Output<String> stdin;
+
+    /**
+     * @return TODO
+     * 
+     */
+    public Optional<Output<String>> stdin() {
+        return Optional.ofNullable(this.stdin);
+    }
+
+    /**
+     * TODO
+     * 
+     */
+    @Import(name="triggers")
+    private @Nullable Output<List<Object>> triggers;
+
+    /**
+     * @return TODO
+     * 
+     */
+    public Optional<Output<List<Object>>> triggers() {
+        return Optional.ofNullable(this.triggers);
+    }
+
+    /**
+     * Corresponds to the [UNIT...] argument.
+     * 
+     */
+    @Import(name="unit", required=true)
+    private Output<Either<String,List<String>>> unit;
+
+    /**
+     * @return Corresponds to the [UNIT...] argument.
+     * 
+     */
+    public Output<Either<String,List<String>>> unit() {
+        return this.unit;
     }
 
     private SystemctlArgs() {}
 
     private SystemctlArgs(SystemctlArgs $) {
-        this.commands = $.commands;
+        this.binaryPath = $.binaryPath;
+        this.command = $.command;
         this.connection = $.connection;
         this.environment = $.environment;
         this.lifecycle = $.lifecycle;
-        this.serviceName = $.serviceName;
+        this.pattern = $.pattern;
+        this.stdin = $.stdin;
+        this.triggers = $.triggers;
+        this.unit = $.unit;
     }
 
     public static Builder builder() {
@@ -92,21 +190,40 @@ public final class SystemctlArgs extends com.pulumi.resources.ResourceArgs {
             $ = new SystemctlArgs(Objects.requireNonNull(defaults));
         }
 
-        public Builder commands(Output<List<SystemctlCommand>> commands) {
-            $.commands = commands;
+        /**
+         * @param binaryPath Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+         * 
+         * @return builder
+         * 
+         */
+        public Builder binaryPath(@Nullable Output<String> binaryPath) {
+            $.binaryPath = binaryPath;
             return this;
         }
 
-        public Builder commands(List<SystemctlCommand> commands) {
-            return commands(Output.of(commands));
-        }
-
-        public Builder commands(SystemctlCommand... commands) {
-            return commands(List.of(commands));
+        /**
+         * @param binaryPath Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+         * 
+         * @return builder
+         * 
+         */
+        public Builder binaryPath(String binaryPath) {
+            return binaryPath(Output.of(binaryPath));
         }
 
         /**
-         * @param connection Connection details for the remote system.
+         * @param command Corresponds to the COMMAND argument.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder command(SystemctlCommand command) {
+            $.command = command;
+            return this;
+        }
+
+        /**
+         * @param connection Connection details for the remote system
          * 
          * @return builder
          * 
@@ -117,7 +234,7 @@ public final class SystemctlArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param connection Connection details for the remote system.
+         * @param connection Connection details for the remote system
          * 
          * @return builder
          * 
@@ -126,35 +243,161 @@ public final class SystemctlArgs extends com.pulumi.resources.ResourceArgs {
             return connection(Output.of(connection));
         }
 
+        /**
+         * @param environment Environment variables
+         * 
+         * @return builder
+         * 
+         */
         public Builder environment(@Nullable Output<Map<String,String>> environment) {
             $.environment = environment;
             return this;
         }
 
+        /**
+         * @param environment Environment variables
+         * 
+         * @return builder
+         * 
+         */
         public Builder environment(Map<String,String> environment) {
             return environment(Output.of(environment));
         }
 
+        /**
+         * @param lifecycle At what stage(s) in the resource lifecycle should the command be run
+         * 
+         * @return builder
+         * 
+         */
         public Builder lifecycle(@Nullable CommandLifecycle lifecycle) {
             $.lifecycle = lifecycle;
             return this;
         }
 
-        public Builder serviceName(@Nullable Output<String> serviceName) {
-            $.serviceName = serviceName;
+        /**
+         * @param pattern Corresponds to the [PATTERN] argument
+         * 
+         * @return builder
+         * 
+         */
+        public Builder pattern(@Nullable Output<String> pattern) {
+            $.pattern = pattern;
             return this;
         }
 
-        public Builder serviceName(String serviceName) {
-            return serviceName(Output.of(serviceName));
+        /**
+         * @param pattern Corresponds to the [PATTERN] argument
+         * 
+         * @return builder
+         * 
+         */
+        public Builder pattern(String pattern) {
+            return pattern(Output.of(pattern));
+        }
+
+        /**
+         * @param stdin TODO
+         * 
+         * @return builder
+         * 
+         */
+        public Builder stdin(@Nullable Output<String> stdin) {
+            $.stdin = stdin;
+            return this;
+        }
+
+        /**
+         * @param stdin TODO
+         * 
+         * @return builder
+         * 
+         */
+        public Builder stdin(String stdin) {
+            return stdin(Output.of(stdin));
+        }
+
+        /**
+         * @param triggers TODO
+         * 
+         * @return builder
+         * 
+         */
+        public Builder triggers(@Nullable Output<List<Object>> triggers) {
+            $.triggers = triggers;
+            return this;
+        }
+
+        /**
+         * @param triggers TODO
+         * 
+         * @return builder
+         * 
+         */
+        public Builder triggers(List<Object> triggers) {
+            return triggers(Output.of(triggers));
+        }
+
+        /**
+         * @param triggers TODO
+         * 
+         * @return builder
+         * 
+         */
+        public Builder triggers(Object... triggers) {
+            return triggers(List.of(triggers));
+        }
+
+        /**
+         * @param unit Corresponds to the [UNIT...] argument.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder unit(Output<Either<String,List<String>>> unit) {
+            $.unit = unit;
+            return this;
+        }
+
+        /**
+         * @param unit Corresponds to the [UNIT...] argument.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder unit(Either<String,List<String>> unit) {
+            return unit(Output.of(unit));
+        }
+
+        /**
+         * @param unit Corresponds to the [UNIT...] argument.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder unit(String unit) {
+            return unit(Either.ofLeft(unit));
+        }
+
+        /**
+         * @param unit Corresponds to the [UNIT...] argument.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder unit(List<String> unit) {
+            return unit(Either.ofRight(unit));
         }
 
         public SystemctlArgs build() {
-            if ($.commands == null) {
-                throw new MissingRequiredPropertyException("SystemctlArgs", "commands");
+            if ($.command == null) {
+                throw new MissingRequiredPropertyException("SystemctlArgs", "command");
             }
             if ($.connection == null) {
                 throw new MissingRequiredPropertyException("SystemctlArgs", "connection");
+            }
+            if ($.unit == null) {
+                throw new MissingRequiredPropertyException("SystemctlArgs", "unit");
             }
             return $;
         }

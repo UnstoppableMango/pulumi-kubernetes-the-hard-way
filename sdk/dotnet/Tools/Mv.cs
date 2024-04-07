@@ -17,28 +17,40 @@ namespace UnMango.KubernetesTheHardWay.Tools
     public partial class Mv : global::Pulumi.ComponentResource
     {
         /// <summary>
-        /// Corresponds to both the -b and --backup options depending on whether [CONTROL] is supplied.
+        /// Corresponds to the `-b` and `--backup` options depending on whether [CONTROL] is supplied.
         /// </summary>
         [Output("backup")]
         public Output<bool> Backup { get; private set; } = null!;
 
         /// <summary>
-        /// Represents the command run on the remote system.
+        /// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+        /// </summary>
+        [Output("binaryPath")]
+        public Output<string> BinaryPath { get; private set; } = null!;
+
+        /// <summary>
+        /// The underlying command
         /// </summary>
         [Output("command")]
         public Output<Pulumi.Command.Remote.Command> Command { get; private set; } = null!;
 
         /// <summary>
-        /// Corresponds to the --context option.
+        /// Connection details for the remote system
+        /// </summary>
+        [Output("connection")]
+        public Output<Pulumi.Command.Remote.Outputs.Connection> Connection { get; private set; } = null!;
+
+        /// <summary>
+        /// Corresponds to the `--context` option.
         /// </summary>
         [Output("context")]
         public Output<bool> Context { get; private set; } = null!;
 
         /// <summary>
-        /// Corresponds to the [CONTROL] argument for the --backup option.
+        /// Corresponds to the [CONTROL] argument for the `--backup` option.
         /// </summary>
         [Output("control")]
-        public Output<string?> Control { get; private set; } = null!;
+        public Output<bool?> Control { get; private set; } = null!;
 
         /// <summary>
         /// Corresponds to the [DEST] argument.
@@ -53,25 +65,31 @@ namespace UnMango.KubernetesTheHardWay.Tools
         public Output<string?> Directory { get; private set; } = null!;
 
         /// <summary>
-        /// Corresponds to the --force option.
+        /// Environment variables
+        /// </summary>
+        [Output("environment")]
+        public Output<ImmutableDictionary<string, string>> Environment { get; private set; } = null!;
+
+        /// <summary>
+        /// Corresponds to the `--force` option.
         /// </summary>
         [Output("force")]
         public Output<bool> Force { get; private set; } = null!;
 
         /// <summary>
-        /// At what stage(s) in the resource lifecycle should the command be run.
+        /// At what stage(s) in the resource lifecycle should the command be run
         /// </summary>
         [Output("lifecycle")]
-        public Output<UnMango.KubernetesTheHardWay.Tools.CommandLifecycle?> Lifecycle { get; private set; } = null!;
+        public Output<UnMango.KubernetesTheHardWay.Tools.Outputs.CommandLifecycle?> Lifecycle { get; private set; } = null!;
 
         /// <summary>
-        /// Corresponds to the --no-clobber option.
+        /// Corresponds to the `--no-clobber` option.
         /// </summary>
         [Output("noClobber")]
         public Output<bool> NoClobber { get; private set; } = null!;
 
         /// <summary>
-        /// Corresponds to the --no-target-directory option.
+        /// Corresponds to the `--no-target-directory` option.
         /// </summary>
         [Output("noTargetDirectory")]
         public Output<bool> NoTargetDirectory { get; private set; } = null!;
@@ -80,34 +98,58 @@ namespace UnMango.KubernetesTheHardWay.Tools
         /// Corresponds to the [SOURCE] argument.
         /// </summary>
         [Output("source")]
-        public Output<ImmutableArray<string>> Source { get; private set; } = null!;
+        public Output<Union<string, ImmutableArray<string>>> Source { get; private set; } = null!;
 
         /// <summary>
-        /// Corresponds to the --strip-trailing-suffix option.
+        /// TODO
+        /// </summary>
+        [Output("stderr")]
+        public Output<string> Stderr { get; private set; } = null!;
+
+        /// <summary>
+        /// TODO
+        /// </summary>
+        [Output("stdin")]
+        public Output<string?> Stdin { get; private set; } = null!;
+
+        /// <summary>
+        /// TODO
+        /// </summary>
+        [Output("stdout")]
+        public Output<string> Stdout { get; private set; } = null!;
+
+        /// <summary>
+        /// Corresponds to the `--strip-trailing-slashes` option.
         /// </summary>
         [Output("stripTrailingSlashes")]
         public Output<bool> StripTrailingSlashes { get; private set; } = null!;
 
         /// <summary>
-        /// Corresponds to the --suffix option.
+        /// Corresponds to the `--suffix` option.
         /// </summary>
         [Output("suffix")]
         public Output<string?> Suffix { get; private set; } = null!;
 
         /// <summary>
-        /// Corresponds to the --target-directory option.
+        /// Corresponds to the `--target-directory` option.
         /// </summary>
         [Output("targetDirectory")]
-        public Output<string?> TargetDirectory { get; private set; } = null!;
+        public Output<bool?> TargetDirectory { get; private set; } = null!;
 
         /// <summary>
-        /// Corresponds to the --update option.
+        /// TODO
+        /// </summary>
+        [Output("triggers")]
+        public Output<ImmutableArray<object>> Triggers { get; private set; } = null!;
+
+        /// <summary>
+        /// Corresponds to the `--update` option.
         /// </summary>
         [Output("update")]
         public Output<bool> Update { get; private set; } = null!;
 
         /// <summary>
-        /// Corresponds to the --verbose option.
+        /// Corresponds to the `--verbose` option.
         /// </summary>
         [Output("verbose")]
         public Output<bool> Verbose { get; private set; } = null!;
@@ -142,28 +184,34 @@ namespace UnMango.KubernetesTheHardWay.Tools
     public sealed class MvArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
-        /// Corresponds to both the -b and --backup options depending on whether [CONTROL] is supplied.
+        /// Corresponds to the `-b` and `--backup` options depending on whether [CONTROL] is supplied.
         /// </summary>
         [Input("backup")]
         public bool? Backup { get; set; }
 
         /// <summary>
-        /// Connection details for the remote system.
+        /// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+        /// </summary>
+        [Input("binaryPath")]
+        public Input<string>? BinaryPath { get; set; }
+
+        /// <summary>
+        /// Connection details for the remote system
         /// </summary>
         [Input("connection", required: true)]
         public Input<Pulumi.Command.Remote.Inputs.ConnectionArgs> Connection { get; set; } = null!;
 
         /// <summary>
-        /// Corresponds to the --context option.
+        /// Corresponds to the `--context` option.
         /// </summary>
         [Input("context")]
         public Input<bool>? Context { get; set; }
 
         /// <summary>
-        /// Corresponds to the [CONTROL] argument for the --backup option.
+        /// Corresponds to the [CONTROL] argument for the `--backup` option.
         /// </summary>
         [Input("control")]
-        public Input<string>? Control { get; set; }
+        public Input<bool>? Control { get; set; }
 
         /// <summary>
         /// Corresponds to the [DEST] argument.
@@ -179,6 +227,10 @@ namespace UnMango.KubernetesTheHardWay.Tools
 
         [Input("environment")]
         private InputMap<string>? _environment;
+
+        /// <summary>
+        /// Environment variables
+        /// </summary>
         public InputMap<string> Environment
         {
             get => _environment ?? (_environment = new InputMap<string>());
@@ -186,19 +238,25 @@ namespace UnMango.KubernetesTheHardWay.Tools
         }
 
         /// <summary>
-        /// Corresponds to the --force option.
+        /// Corresponds to the `--force` option.
         /// </summary>
         [Input("force")]
         public Input<bool>? Force { get; set; }
 
         /// <summary>
-        /// Corresponds to the --no-clobber option.
+        /// At what stage(s) in the resource lifecycle should the command be run
+        /// </summary>
+        [Input("lifecycle")]
+        public UnMango.KubernetesTheHardWay.Tools.Inputs.CommandLifecycle? Lifecycle { get; set; }
+
+        /// <summary>
+        /// Corresponds to the `--no-clobber` option.
         /// </summary>
         [Input("noClobber")]
         public Input<bool>? NoClobber { get; set; }
 
         /// <summary>
-        /// Corresponds to the --no-target-directory option.
+        /// Corresponds to the `--no-target-directory` option.
         /// </summary>
         [Input("noTargetDirectory")]
         public Input<bool>? NoTargetDirectory { get; set; }
@@ -210,31 +268,49 @@ namespace UnMango.KubernetesTheHardWay.Tools
         public InputUnion<string, ImmutableArray<string>> Source { get; set; } = null!;
 
         /// <summary>
-        /// Corresponds to the --strip-trailing-suffix option.
+        /// TODO
+        /// </summary>
+        [Input("stdin")]
+        public Input<string>? Stdin { get; set; }
+
+        /// <summary>
+        /// Corresponds to the `--strip-trailing-slashes` option.
         /// </summary>
         [Input("stripTrailingSlashes")]
         public Input<bool>? StripTrailingSlashes { get; set; }
 
         /// <summary>
-        /// Corresponds to the --suffix option.
+        /// Corresponds to the `--suffix` option.
         /// </summary>
         [Input("suffix")]
         public Input<string>? Suffix { get; set; }
 
         /// <summary>
-        /// Corresponds to the --target-directory option.
+        /// Corresponds to the `--target-directory` option.
         /// </summary>
         [Input("targetDirectory")]
-        public Input<string>? TargetDirectory { get; set; }
+        public Input<bool>? TargetDirectory { get; set; }
+
+        [Input("triggers")]
+        private InputList<object>? _triggers;
 
         /// <summary>
-        /// Corresponds to the --update option.
+        /// TODO
+        /// </summary>
+        public InputList<object> Triggers
+        {
+            get => _triggers ?? (_triggers = new InputList<object>());
+            set => _triggers = value;
+        }
+
+        /// <summary>
+        /// Corresponds to the `--update` option.
         /// </summary>
         [Input("update")]
         public Input<bool>? Update { get; set; }
 
         /// <summary>
-        /// Corresponds to the --verbose option.
+        /// Corresponds to the `--verbose` option.
         /// </summary>
         [Input("verbose")]
         public Input<bool>? Verbose { get; set; }

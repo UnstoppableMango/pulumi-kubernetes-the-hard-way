@@ -13,7 +13,7 @@ import {Mkdir, Mktemp, Mv, Rm, Tar} from "../tools";
 import {Download} from "./index";
 
 /**
- * Installs cni-plugins on a remote system.
+ * Installs cni-plugins on a remote system
  */
 export class CniPluginsInstall extends pulumi.ComponentResource {
     /** @internal */
@@ -31,46 +31,196 @@ export class CniPluginsInstall extends pulumi.ComponentResource {
     }
 
     /**
-     * The CPU architecture.
+     * The CPU architecture to install.
      */
     public readonly architecture!: pulumi.Output<enums.remote.Architecture>;
+    /**
+     * The name of the downloaded archive.
+     */
     public /*out*/ readonly archiveName!: pulumi.Output<string>;
+    /**
+     * The bandwidth mv operation.
+     */
+    public /*out*/ readonly bandwidthMv!: pulumi.Output<Mv>;
+    /**
+     * The bandwidth path on the remote system
+     */
     public /*out*/ readonly bandwidthPath!: pulumi.Output<string>;
+    /**
+     * The bridge mv operation.
+     */
+    public /*out*/ readonly bridgeMv!: pulumi.Output<Mv>;
+    /**
+     * The bridge path on the remote system
+     */
     public /*out*/ readonly bridgePath!: pulumi.Output<string>;
     /**
-     * The connection details.
+     * The parameters with which to connect to the remote host.
      */
     public readonly connection!: pulumi.Output<pulumiCommand.types.output.remote.Connection>;
+    /**
+     * The dhcp mv operation.
+     */
+    public /*out*/ readonly dhcpMv!: pulumi.Output<Mv>;
+    /**
+     * The dhcp path on the remote system
+     */
     public /*out*/ readonly dhcpPath!: pulumi.Output<string>;
     /**
-     * Directory to install the binary.
+     * The directory to install the binary to.
      */
     public readonly directory!: pulumi.Output<string>;
+    /**
+     * The download operation.
+     */
     public /*out*/ readonly download!: pulumi.Output<Download>;
+    /**
+     * The dummy mv operation.
+     */
+    public /*out*/ readonly dummyMv!: pulumi.Output<Mv>;
+    /**
+     * The dummy path on the remote system
+     */
     public /*out*/ readonly dummyPath!: pulumi.Output<string>;
+    /**
+     * The firewall mv operation.
+     */
+    public /*out*/ readonly firewallMv!: pulumi.Output<Mv>;
+    /**
+     * The firewall path on the remote system
+     */
     public /*out*/ readonly firewallPath!: pulumi.Output<string>;
+    /**
+     * The hostDevice mv operation.
+     */
+    public /*out*/ readonly hostDeviceMv!: pulumi.Output<Mv>;
+    /**
+     * The hostDevice path on the remote system
+     */
     public /*out*/ readonly hostDevicePath!: pulumi.Output<string>;
+    /**
+     * The hostLocal mv operation.
+     */
+    public /*out*/ readonly hostLocalMv!: pulumi.Output<Mv>;
+    /**
+     * The hostLocal path on the remote system
+     */
     public /*out*/ readonly hostLocalPath!: pulumi.Output<string>;
+    /**
+     * The ipvlan mv operation.
+     */
+    public /*out*/ readonly ipvlanMv!: pulumi.Output<Mv>;
+    /**
+     * The ipvlan path on the remote system
+     */
     public /*out*/ readonly ipvlanPath!: pulumi.Output<string>;
+    /**
+     * The loopback mv operation.
+     */
+    public /*out*/ readonly loopbackMv!: pulumi.Output<Mv>;
+    /**
+     * The loopback path on the remote system
+     */
     public /*out*/ readonly loopbackPath!: pulumi.Output<string>;
+    /**
+     * The macvlan mv operation.
+     */
+    public /*out*/ readonly macvlanMv!: pulumi.Output<Mv>;
+    /**
+     * The macvlan path on the remote system
+     */
     public /*out*/ readonly macvlanPath!: pulumi.Output<string>;
+    /**
+     * The mkdir operation.
+     */
     public /*out*/ readonly mkdir!: pulumi.Output<Mkdir>;
+    /**
+     * The mktemp operation.
+     */
     public /*out*/ readonly mktemp!: pulumi.Output<Mktemp>;
-    public /*out*/ readonly mv!: pulumi.Output<Mv>;
+    /**
+     * The path to the installed binary.
+     */
+    public /*out*/ readonly path!: pulumi.Output<string | undefined>;
+    /**
+     * The portmap mv operation.
+     */
+    public /*out*/ readonly portmapMv!: pulumi.Output<Mv>;
+    /**
+     * The portmap path on the remote system
+     */
     public /*out*/ readonly portmapPath!: pulumi.Output<string>;
+    /**
+     * The ptp mv operation.
+     */
+    public /*out*/ readonly ptpMv!: pulumi.Output<Mv>;
+    /**
+     * The ptp path on the remote system
+     */
     public /*out*/ readonly ptpPath!: pulumi.Output<string>;
+    /**
+     * The rm operation.
+     */
     public /*out*/ readonly rm!: pulumi.Output<Rm>;
+    /**
+     * The sbr mv operation.
+     */
+    public /*out*/ readonly sbrMv!: pulumi.Output<Mv>;
+    /**
+     * The sbr path on the remote system
+     */
     public /*out*/ readonly sbrPath!: pulumi.Output<string>;
+    /**
+     * The static mv operation.
+     */
+    public /*out*/ readonly staticMv!: pulumi.Output<Mv>;
+    /**
+     * The static path on the remote system
+     */
     public /*out*/ readonly staticPath!: pulumi.Output<string>;
+    /**
+     * The tap mv operation.
+     */
+    public /*out*/ readonly tapMv!: pulumi.Output<Mv>;
+    /**
+     * The tap path on the remote system
+     */
     public /*out*/ readonly tapPath!: pulumi.Output<string>;
+    /**
+     * The tar operation.
+     */
     public /*out*/ readonly tar!: pulumi.Output<Tar>;
+    /**
+     * The tuning mv operation.
+     */
+    public /*out*/ readonly tuningMv!: pulumi.Output<Mv>;
+    /**
+     * The tuning path on the remote system
+     */
     public /*out*/ readonly tuningPath!: pulumi.Output<string>;
+    /**
+     * The url used to download the binary.
+     */
     public /*out*/ readonly url!: pulumi.Output<string>;
     /**
      * The version to install.
      */
     public readonly version!: pulumi.Output<string>;
+    /**
+     * The vlan mv operation.
+     */
+    public /*out*/ readonly vlanMv!: pulumi.Output<Mv>;
+    /**
+     * The vlan path on the remote system
+     */
     public /*out*/ readonly vlanPath!: pulumi.Output<string>;
+    /**
+     * The vrf mv operation.
+     */
+    public /*out*/ readonly vrfMv!: pulumi.Output<Mv>;
+    /**
+     * The vrf path on the remote system
+     */
     public /*out*/ readonly vrfPath!: pulumi.Output<string>;
 
     /**
@@ -92,61 +242,97 @@ export class CniPluginsInstall extends pulumi.ComponentResource {
             resourceInputs["directory"] = (args ? args.directory : undefined) ?? "/usr/local/bin";
             resourceInputs["version"] = args ? args.version : undefined;
             resourceInputs["archiveName"] = undefined /*out*/;
+            resourceInputs["bandwidthMv"] = undefined /*out*/;
             resourceInputs["bandwidthPath"] = undefined /*out*/;
+            resourceInputs["bridgeMv"] = undefined /*out*/;
             resourceInputs["bridgePath"] = undefined /*out*/;
+            resourceInputs["dhcpMv"] = undefined /*out*/;
             resourceInputs["dhcpPath"] = undefined /*out*/;
             resourceInputs["download"] = undefined /*out*/;
+            resourceInputs["dummyMv"] = undefined /*out*/;
             resourceInputs["dummyPath"] = undefined /*out*/;
+            resourceInputs["firewallMv"] = undefined /*out*/;
             resourceInputs["firewallPath"] = undefined /*out*/;
+            resourceInputs["hostDeviceMv"] = undefined /*out*/;
             resourceInputs["hostDevicePath"] = undefined /*out*/;
+            resourceInputs["hostLocalMv"] = undefined /*out*/;
             resourceInputs["hostLocalPath"] = undefined /*out*/;
+            resourceInputs["ipvlanMv"] = undefined /*out*/;
             resourceInputs["ipvlanPath"] = undefined /*out*/;
+            resourceInputs["loopbackMv"] = undefined /*out*/;
             resourceInputs["loopbackPath"] = undefined /*out*/;
+            resourceInputs["macvlanMv"] = undefined /*out*/;
             resourceInputs["macvlanPath"] = undefined /*out*/;
             resourceInputs["mkdir"] = undefined /*out*/;
             resourceInputs["mktemp"] = undefined /*out*/;
-            resourceInputs["mv"] = undefined /*out*/;
+            resourceInputs["path"] = undefined /*out*/;
+            resourceInputs["portmapMv"] = undefined /*out*/;
             resourceInputs["portmapPath"] = undefined /*out*/;
+            resourceInputs["ptpMv"] = undefined /*out*/;
             resourceInputs["ptpPath"] = undefined /*out*/;
             resourceInputs["rm"] = undefined /*out*/;
+            resourceInputs["sbrMv"] = undefined /*out*/;
             resourceInputs["sbrPath"] = undefined /*out*/;
+            resourceInputs["staticMv"] = undefined /*out*/;
             resourceInputs["staticPath"] = undefined /*out*/;
+            resourceInputs["tapMv"] = undefined /*out*/;
             resourceInputs["tapPath"] = undefined /*out*/;
             resourceInputs["tar"] = undefined /*out*/;
+            resourceInputs["tuningMv"] = undefined /*out*/;
             resourceInputs["tuningPath"] = undefined /*out*/;
             resourceInputs["url"] = undefined /*out*/;
+            resourceInputs["vlanMv"] = undefined /*out*/;
             resourceInputs["vlanPath"] = undefined /*out*/;
+            resourceInputs["vrfMv"] = undefined /*out*/;
             resourceInputs["vrfPath"] = undefined /*out*/;
         } else {
             resourceInputs["architecture"] = undefined /*out*/;
             resourceInputs["archiveName"] = undefined /*out*/;
+            resourceInputs["bandwidthMv"] = undefined /*out*/;
             resourceInputs["bandwidthPath"] = undefined /*out*/;
+            resourceInputs["bridgeMv"] = undefined /*out*/;
             resourceInputs["bridgePath"] = undefined /*out*/;
             resourceInputs["connection"] = undefined /*out*/;
+            resourceInputs["dhcpMv"] = undefined /*out*/;
             resourceInputs["dhcpPath"] = undefined /*out*/;
             resourceInputs["directory"] = undefined /*out*/;
             resourceInputs["download"] = undefined /*out*/;
+            resourceInputs["dummyMv"] = undefined /*out*/;
             resourceInputs["dummyPath"] = undefined /*out*/;
+            resourceInputs["firewallMv"] = undefined /*out*/;
             resourceInputs["firewallPath"] = undefined /*out*/;
+            resourceInputs["hostDeviceMv"] = undefined /*out*/;
             resourceInputs["hostDevicePath"] = undefined /*out*/;
+            resourceInputs["hostLocalMv"] = undefined /*out*/;
             resourceInputs["hostLocalPath"] = undefined /*out*/;
+            resourceInputs["ipvlanMv"] = undefined /*out*/;
             resourceInputs["ipvlanPath"] = undefined /*out*/;
+            resourceInputs["loopbackMv"] = undefined /*out*/;
             resourceInputs["loopbackPath"] = undefined /*out*/;
+            resourceInputs["macvlanMv"] = undefined /*out*/;
             resourceInputs["macvlanPath"] = undefined /*out*/;
             resourceInputs["mkdir"] = undefined /*out*/;
             resourceInputs["mktemp"] = undefined /*out*/;
-            resourceInputs["mv"] = undefined /*out*/;
+            resourceInputs["path"] = undefined /*out*/;
+            resourceInputs["portmapMv"] = undefined /*out*/;
             resourceInputs["portmapPath"] = undefined /*out*/;
+            resourceInputs["ptpMv"] = undefined /*out*/;
             resourceInputs["ptpPath"] = undefined /*out*/;
             resourceInputs["rm"] = undefined /*out*/;
+            resourceInputs["sbrMv"] = undefined /*out*/;
             resourceInputs["sbrPath"] = undefined /*out*/;
+            resourceInputs["staticMv"] = undefined /*out*/;
             resourceInputs["staticPath"] = undefined /*out*/;
+            resourceInputs["tapMv"] = undefined /*out*/;
             resourceInputs["tapPath"] = undefined /*out*/;
             resourceInputs["tar"] = undefined /*out*/;
+            resourceInputs["tuningMv"] = undefined /*out*/;
             resourceInputs["tuningPath"] = undefined /*out*/;
             resourceInputs["url"] = undefined /*out*/;
             resourceInputs["version"] = undefined /*out*/;
+            resourceInputs["vlanMv"] = undefined /*out*/;
             resourceInputs["vlanPath"] = undefined /*out*/;
+            resourceInputs["vrfMv"] = undefined /*out*/;
             resourceInputs["vrfPath"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
@@ -159,19 +345,19 @@ export class CniPluginsInstall extends pulumi.ComponentResource {
  */
 export interface CniPluginsInstallArgs {
     /**
-     * The CPU architecture.
+     * The CPU architecture to install.
      */
     architecture?: pulumi.Input<enums.remote.Architecture>;
     /**
-     * The connection details.
+     * The parameters with which to connect to the remote host.
      */
     connection: pulumi.Input<pulumiCommand.types.input.remote.ConnectionArgs>;
     /**
-     * Directory to install the binary.
+     * The directory to install the binary to.
      */
     directory?: pulumi.Input<string>;
     /**
-     * The version of to install.
+     * The version to install.
      */
     version?: pulumi.Input<string>;
 }

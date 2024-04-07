@@ -17,73 +17,100 @@ namespace UnMango.KubernetesTheHardWay.Tools
     public partial class Wget : global::Pulumi.ComponentResource
     {
         /// <summary>
-        /// Represents the remote `tar` operation.
+        /// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+        /// </summary>
+        [Output("binaryPath")]
+        public Output<string> BinaryPath { get; private set; } = null!;
+
+        /// <summary>
+        /// The underlying command
         /// </summary>
         [Output("command")]
         public Output<Pulumi.Command.Remote.Command> Command { get; private set; } = null!;
 
         /// <summary>
-        /// Corresponds to the --directory-prefix option.
+        /// Connection details for the remote system
+        /// </summary>
+        [Output("connection")]
+        public Output<Pulumi.Command.Remote.Outputs.Connection> Connection { get; private set; } = null!;
+
+        /// <summary>
+        /// The  directory prefix is the directory where all other files and subdirectories will be saved to, i.e. the top of the retrieval tree.  The default is . (the current directory).
         /// </summary>
         [Output("directoryPrefix")]
         public Output<string?> DirectoryPrefix { get; private set; } = null!;
 
+        /// <summary>
+        /// Environment variables
+        /// </summary>
         [Output("environment")]
-        public Output<ImmutableDictionary<string, string>?> Environment { get; private set; } = null!;
+        public Output<ImmutableDictionary<string, string>> Environment { get; private set; } = null!;
 
         /// <summary>
-        /// Corresponds to the --https-only option.
+        /// When in recursive mode, only HTTPS links are followed.
         /// </summary>
         [Output("httpsOnly")]
         public Output<bool> HttpsOnly { get; private set; } = null!;
 
         /// <summary>
-        /// Corresponds to the --no-verbose option.
+        /// At what stage(s) in the resource lifecycle should the command be run
         /// </summary>
-        [Output("noVerbose")]
-        public Output<bool?> NoVerbose { get; private set; } = null!;
+        [Output("lifecycle")]
+        public Output<UnMango.KubernetesTheHardWay.Tools.Outputs.CommandLifecycle?> Lifecycle { get; private set; } = null!;
 
         /// <summary>
-        /// Corresponds to the --output-document option.
+        /// Turn off verbose without being completely quiet (use -q for that), which means that error messages and basic information still get printed.
+        /// </summary>
+        [Output("noVerbose")]
+        public Output<bool> NoVerbose { get; private set; } = null!;
+
+        /// <summary>
+        /// The  documents  will  not  be  written  to the appropriate files, but all will be concatenated together and written to file.
         /// </summary>
         [Output("outputDocument")]
         public Output<string?> OutputDocument { get; private set; } = null!;
 
         /// <summary>
-        /// Corresponds to the --quiet option.
+        /// Turn off Wget's output.
         /// </summary>
         [Output("quiet")]
         public Output<bool> Quiet { get; private set; } = null!;
 
         /// <summary>
-        /// The process' stderr.
+        /// TODO
         /// </summary>
         [Output("stderr")]
         public Output<string> Stderr { get; private set; } = null!;
 
         /// <summary>
-        /// The process' stdin.
+        /// TODO
         /// </summary>
         [Output("stdin")]
         public Output<string?> Stdin { get; private set; } = null!;
 
         /// <summary>
-        /// The process' stdout.
+        /// TODO
         /// </summary>
         [Output("stdout")]
         public Output<string> Stdout { get; private set; } = null!;
 
         /// <summary>
-        /// Corresponds to the --timestamping option.
+        /// Turn on time-stamping.
         /// </summary>
         [Output("timestamping")]
         public Output<bool> Timestamping { get; private set; } = null!;
 
         /// <summary>
-        /// Corresponse to the [URL] argument.
+        /// TODO
+        /// </summary>
+        [Output("triggers")]
+        public Output<ImmutableArray<object>> Triggers { get; private set; } = null!;
+
+        /// <summary>
+        /// Corresponds to the [URL...] argument.
         /// </summary>
         [Output("url")]
-        public Output<string> Url { get; private set; } = null!;
+        public Output<Union<string, ImmutableArray<string>>> Url { get; private set; } = null!;
 
 
         /// <summary>
@@ -115,19 +142,29 @@ namespace UnMango.KubernetesTheHardWay.Tools
     public sealed class WgetArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
-        /// Connection details for the remote system.
+        /// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+        /// </summary>
+        [Input("binaryPath")]
+        public Input<string>? BinaryPath { get; set; }
+
+        /// <summary>
+        /// Connection details for the remote system
         /// </summary>
         [Input("connection", required: true)]
         public Input<Pulumi.Command.Remote.Inputs.ConnectionArgs> Connection { get; set; } = null!;
 
         /// <summary>
-        /// Corresponds to the --directory-prefix option.
+        /// The  directory prefix is the directory where all other files and subdirectories will be saved to, i.e. the top of the retrieval tree.  The default is . (the current directory).
         /// </summary>
         [Input("directoryPrefix")]
         public Input<string>? DirectoryPrefix { get; set; }
 
         [Input("environment")]
         private InputMap<string>? _environment;
+
+        /// <summary>
+        /// Environment variables
+        /// </summary>
         public InputMap<string> Environment
         {
             get => _environment ?? (_environment = new InputMap<string>());
@@ -135,40 +172,64 @@ namespace UnMango.KubernetesTheHardWay.Tools
         }
 
         /// <summary>
-        /// Corresponds to the --https-only option.
+        /// When in recursive mode, only HTTPS links are followed.
         /// </summary>
         [Input("httpsOnly")]
         public Input<bool>? HttpsOnly { get; set; }
 
         /// <summary>
-        /// Corresponds t- the --no-verbose option.
+        /// At what stage(s) in the resource lifecycle should the command be run
+        /// </summary>
+        [Input("lifecycle")]
+        public UnMango.KubernetesTheHardWay.Tools.Inputs.CommandLifecycle? Lifecycle { get; set; }
+
+        /// <summary>
+        /// Turn off verbose without being completely quiet (use -q for that), which means that error messages and basic information still get printed.
         /// </summary>
         [Input("noVerbose")]
         public Input<bool>? NoVerbose { get; set; }
 
         /// <summary>
-        /// Corresponds to the --output-document option.
+        /// The  documents  will  not  be  written  to the appropriate files, but all will be concatenated together and written to file.
         /// </summary>
         [Input("outputDocument")]
         public Input<string>? OutputDocument { get; set; }
 
         /// <summary>
-        /// Corresponds to the --quiet option.
+        /// Turn off Wget's output.
         /// </summary>
         [Input("quiet")]
         public Input<bool>? Quiet { get; set; }
 
         /// <summary>
-        /// Corresponds to the --timestamping option.
+        /// TODO
+        /// </summary>
+        [Input("stdin")]
+        public Input<string>? Stdin { get; set; }
+
+        /// <summary>
+        /// Turn on time-stamping.
         /// </summary>
         [Input("timestamping")]
         public Input<bool>? Timestamping { get; set; }
 
+        [Input("triggers")]
+        private InputList<object>? _triggers;
+
         /// <summary>
-        /// Corresponse to the [URL] argument.
+        /// TODO
+        /// </summary>
+        public InputList<object> Triggers
+        {
+            get => _triggers ?? (_triggers = new InputList<object>());
+            set => _triggers = value;
+        }
+
+        /// <summary>
+        /// Corresponds to the [URL...] argument.
         /// </summary>
         [Input("url", required: true)]
-        public Input<string> Url { get; set; } = null!;
+        public InputUnion<string, ImmutableArray<string>> Url { get; set; } = null!;
 
         public WgetArgs()
         {

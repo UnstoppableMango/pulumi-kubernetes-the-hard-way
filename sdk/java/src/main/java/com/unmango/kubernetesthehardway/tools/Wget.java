@@ -4,14 +4,19 @@
 package com.unmango.kubernetesthehardway.tools;
 
 import com.pulumi.command.remote.Command;
+import com.pulumi.command.remote.outputs.Connection;
+import com.pulumi.core.Either;
 import com.pulumi.core.Output;
 import com.pulumi.core.annotations.Export;
 import com.pulumi.core.annotations.ResourceType;
 import com.pulumi.core.internal.Codegen;
 import com.unmango.kubernetesthehardway.Utilities;
 import com.unmango.kubernetesthehardway.tools.WgetArgs;
+import com.unmango.kubernetesthehardway.tools.outputs.CommandLifecycle;
 import java.lang.Boolean;
+import java.lang.Object;
 import java.lang.String;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import javax.annotation.Nullable;
@@ -23,163 +28,227 @@ import javax.annotation.Nullable;
 @ResourceType(type="kubernetes-the-hard-way:tools:Wget")
 public class Wget extends com.pulumi.resources.ComponentResource {
     /**
-     * Represents the remote `tar` operation.
+     * Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+     * 
+     */
+    @Export(name="binaryPath", refs={String.class}, tree="[0]")
+    private Output<String> binaryPath;
+
+    /**
+     * @return Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+     * 
+     */
+    public Output<String> binaryPath() {
+        return this.binaryPath;
+    }
+    /**
+     * The underlying command
      * 
      */
     @Export(name="command", refs={Command.class}, tree="[0]")
     private Output<Command> command;
 
     /**
-     * @return Represents the remote `tar` operation.
+     * @return The underlying command
      * 
      */
     public Output<Command> command() {
         return this.command;
     }
     /**
-     * Corresponds to the --directory-prefix option.
+     * Connection details for the remote system
+     * 
+     */
+    @Export(name="connection", refs={Connection.class}, tree="[0]")
+    private Output<Connection> connection;
+
+    /**
+     * @return Connection details for the remote system
+     * 
+     */
+    public Output<Connection> connection() {
+        return this.connection;
+    }
+    /**
+     * The  directory prefix is the directory where all other files and subdirectories will be saved to, i.e. the top of the retrieval tree.  The default is . (the current directory).
      * 
      */
     @Export(name="directoryPrefix", refs={String.class}, tree="[0]")
     private Output</* @Nullable */ String> directoryPrefix;
 
     /**
-     * @return Corresponds to the --directory-prefix option.
+     * @return The  directory prefix is the directory where all other files and subdirectories will be saved to, i.e. the top of the retrieval tree.  The default is . (the current directory).
      * 
      */
     public Output<Optional<String>> directoryPrefix() {
         return Codegen.optional(this.directoryPrefix);
     }
+    /**
+     * Environment variables
+     * 
+     */
     @Export(name="environment", refs={Map.class,String.class}, tree="[0,1,1]")
-    private Output</* @Nullable */ Map<String,String>> environment;
+    private Output<Map<String,String>> environment;
 
-    public Output<Optional<Map<String,String>>> environment() {
-        return Codegen.optional(this.environment);
+    /**
+     * @return Environment variables
+     * 
+     */
+    public Output<Map<String,String>> environment() {
+        return this.environment;
     }
     /**
-     * Corresponds to the --https-only option.
+     * When in recursive mode, only HTTPS links are followed.
      * 
      */
     @Export(name="httpsOnly", refs={Boolean.class}, tree="[0]")
     private Output<Boolean> httpsOnly;
 
     /**
-     * @return Corresponds to the --https-only option.
+     * @return When in recursive mode, only HTTPS links are followed.
      * 
      */
     public Output<Boolean> httpsOnly() {
         return this.httpsOnly;
     }
     /**
-     * Corresponds to the --no-verbose option.
+     * At what stage(s) in the resource lifecycle should the command be run
+     * 
+     */
+    @Export(name="lifecycle", refs={CommandLifecycle.class}, tree="[0]")
+    private Output</* @Nullable */ CommandLifecycle> lifecycle;
+
+    /**
+     * @return At what stage(s) in the resource lifecycle should the command be run
+     * 
+     */
+    public Output<Optional<CommandLifecycle>> lifecycle() {
+        return Codegen.optional(this.lifecycle);
+    }
+    /**
+     * Turn off verbose without being completely quiet (use -q for that), which means that error messages and basic information still get printed.
      * 
      */
     @Export(name="noVerbose", refs={Boolean.class}, tree="[0]")
-    private Output</* @Nullable */ Boolean> noVerbose;
+    private Output<Boolean> noVerbose;
 
     /**
-     * @return Corresponds to the --no-verbose option.
+     * @return Turn off verbose without being completely quiet (use -q for that), which means that error messages and basic information still get printed.
      * 
      */
-    public Output<Optional<Boolean>> noVerbose() {
-        return Codegen.optional(this.noVerbose);
+    public Output<Boolean> noVerbose() {
+        return this.noVerbose;
     }
     /**
-     * Corresponds to the --output-document option.
+     * The  documents  will  not  be  written  to the appropriate files, but all will be concatenated together and written to file.
      * 
      */
     @Export(name="outputDocument", refs={String.class}, tree="[0]")
     private Output</* @Nullable */ String> outputDocument;
 
     /**
-     * @return Corresponds to the --output-document option.
+     * @return The  documents  will  not  be  written  to the appropriate files, but all will be concatenated together and written to file.
      * 
      */
     public Output<Optional<String>> outputDocument() {
         return Codegen.optional(this.outputDocument);
     }
     /**
-     * Corresponds to the --quiet option.
+     * Turn off Wget&#39;s output.
      * 
      */
     @Export(name="quiet", refs={Boolean.class}, tree="[0]")
     private Output<Boolean> quiet;
 
     /**
-     * @return Corresponds to the --quiet option.
+     * @return Turn off Wget&#39;s output.
      * 
      */
     public Output<Boolean> quiet() {
         return this.quiet;
     }
     /**
-     * The process&#39; stderr.
+     * TODO
      * 
      */
     @Export(name="stderr", refs={String.class}, tree="[0]")
     private Output<String> stderr;
 
     /**
-     * @return The process&#39; stderr.
+     * @return TODO
      * 
      */
     public Output<String> stderr() {
         return this.stderr;
     }
     /**
-     * The process&#39; stdin.
+     * TODO
      * 
      */
     @Export(name="stdin", refs={String.class}, tree="[0]")
     private Output</* @Nullable */ String> stdin;
 
     /**
-     * @return The process&#39; stdin.
+     * @return TODO
      * 
      */
     public Output<Optional<String>> stdin() {
         return Codegen.optional(this.stdin);
     }
     /**
-     * The process&#39; stdout.
+     * TODO
      * 
      */
     @Export(name="stdout", refs={String.class}, tree="[0]")
     private Output<String> stdout;
 
     /**
-     * @return The process&#39; stdout.
+     * @return TODO
      * 
      */
     public Output<String> stdout() {
         return this.stdout;
     }
     /**
-     * Corresponds to the --timestamping option.
+     * Turn on time-stamping.
      * 
      */
     @Export(name="timestamping", refs={Boolean.class}, tree="[0]")
     private Output<Boolean> timestamping;
 
     /**
-     * @return Corresponds to the --timestamping option.
+     * @return Turn on time-stamping.
      * 
      */
     public Output<Boolean> timestamping() {
         return this.timestamping;
     }
     /**
-     * Corresponse to the [URL] argument.
+     * TODO
      * 
      */
-    @Export(name="url", refs={String.class}, tree="[0]")
-    private Output<String> url;
+    @Export(name="triggers", refs={List.class,Object.class}, tree="[0,1]")
+    private Output<List<Object>> triggers;
 
     /**
-     * @return Corresponse to the [URL] argument.
+     * @return TODO
      * 
      */
-    public Output<String> url() {
+    public Output<List<Object>> triggers() {
+        return this.triggers;
+    }
+    /**
+     * Corresponds to the [URL...] argument.
+     * 
+     */
+    @Export(name="url", refs={Either.class,String.class,List.class}, tree="[0,1,[2,1]]")
+    private Output<Either<String,List<String>>> url;
+
+    /**
+     * @return Corresponds to the [URL...] argument.
+     * 
+     */
+    public Output<Either<String,List<String>>> url() {
         return this.url;
     }
 

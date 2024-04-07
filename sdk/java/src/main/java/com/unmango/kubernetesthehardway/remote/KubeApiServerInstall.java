@@ -11,7 +11,11 @@ import com.pulumi.core.internal.Codegen;
 import com.unmango.kubernetesthehardway.Utilities;
 import com.unmango.kubernetesthehardway.remote.KubeApiServerInstallArgs;
 import com.unmango.kubernetesthehardway.remote.enums.Architecture;
-import com.unmango.kubernetesthehardway.tools.Mkdir;
+import com.unmango.kubernetesthehardway.remote.outputs.Download;
+import com.unmango.kubernetesthehardway.tools.outputs.Mkdir;
+import com.unmango.kubernetesthehardway.tools.outputs.Mktemp;
+import com.unmango.kubernetesthehardway.tools.outputs.Mv;
+import com.unmango.kubernetesthehardway.tools.outputs.Rm;
 import java.lang.String;
 import java.util.Optional;
 import javax.annotation.Nullable;
@@ -23,74 +27,168 @@ import javax.annotation.Nullable;
 @ResourceType(type="kubernetes-the-hard-way:remote:KubeApiServerInstall")
 public class KubeApiServerInstall extends com.pulumi.resources.ComponentResource {
     /**
-     * The kube-apiserver CPU architecture.
+     * The CPU architecture to install.
      * 
      */
     @Export(name="architecture", refs={Architecture.class}, tree="[0]")
     private Output<Architecture> architecture;
 
     /**
-     * @return The kube-apiserver CPU architecture.
+     * @return The CPU architecture to install.
      * 
      */
     public Output<Architecture> architecture() {
         return this.architecture;
     }
+    /**
+     * The name of the installed binary.
+     * 
+     */
     @Export(name="binName", refs={String.class}, tree="[0]")
     private Output</* @Nullable */ String> binName;
 
+    /**
+     * @return The name of the installed binary.
+     * 
+     */
     public Output<Optional<String>> binName() {
         return Codegen.optional(this.binName);
     }
     /**
-     * The connection details.
+     * The parameters with which to connect to the remote host.
      * 
      */
     @Export(name="connection", refs={Connection.class}, tree="[0]")
     private Output<Connection> connection;
 
     /**
-     * @return The connection details.
+     * @return The parameters with which to connect to the remote host.
      * 
      */
     public Output<Connection> connection() {
         return this.connection;
     }
     /**
-     * Directory to install the `kube-apiserver` binary.
+     * The directory to install the binary to.
      * 
      */
     @Export(name="directory", refs={String.class}, tree="[0]")
     private Output<String> directory;
 
     /**
-     * @return Directory to install the `kube-apiserver` binary.
+     * @return The directory to install the binary to.
      * 
      */
     public Output<String> directory() {
         return this.directory;
     }
-    @Export(name="mkdir", refs={Mkdir.class}, tree="[0]")
-    private Output</* @Nullable */ Mkdir> mkdir;
+    /**
+     * The download operation.
+     * 
+     */
+    @Export(name="download", refs={Download.class}, tree="[0]")
+    private Output<Download> download;
 
-    public Output<Optional<Mkdir>> mkdir() {
-        return Codegen.optional(this.mkdir);
-    }
-    @Export(name="path", refs={String.class}, tree="[0]")
-    private Output</* @Nullable */ String> path;
-
-    public Output<Optional<String>> path() {
-        return Codegen.optional(this.path);
+    /**
+     * @return The download operation.
+     * 
+     */
+    public Output<Download> download() {
+        return this.download;
     }
     /**
-     * The version of kube-apiserver to install.
+     * The mkdir operation.
+     * 
+     */
+    @Export(name="mkdir", refs={Mkdir.class}, tree="[0]")
+    private Output<Mkdir> mkdir;
+
+    /**
+     * @return The mkdir operation.
+     * 
+     */
+    public Output<Mkdir> mkdir() {
+        return this.mkdir;
+    }
+    /**
+     * The mktemp operation.
+     * 
+     */
+    @Export(name="mktemp", refs={Mktemp.class}, tree="[0]")
+    private Output<Mktemp> mktemp;
+
+    /**
+     * @return The mktemp operation.
+     * 
+     */
+    public Output<Mktemp> mktemp() {
+        return this.mktemp;
+    }
+    /**
+     * The mv operation.
+     * 
+     */
+    @Export(name="mv", refs={Mv.class}, tree="[0]")
+    private Output<Mv> mv;
+
+    /**
+     * @return The mv operation.
+     * 
+     */
+    public Output<Mv> mv() {
+        return this.mv;
+    }
+    /**
+     * The path to the installed binary.
+     * 
+     */
+    @Export(name="path", refs={String.class}, tree="[0]")
+    private Output<String> path;
+
+    /**
+     * @return The path to the installed binary.
+     * 
+     */
+    public Output<String> path() {
+        return this.path;
+    }
+    /**
+     * The rm operation.
+     * 
+     */
+    @Export(name="rm", refs={Rm.class}, tree="[0]")
+    private Output<Rm> rm;
+
+    /**
+     * @return The rm operation.
+     * 
+     */
+    public Output<Rm> rm() {
+        return this.rm;
+    }
+    /**
+     * The url used to download the binary.
+     * 
+     */
+    @Export(name="url", refs={String.class}, tree="[0]")
+    private Output<String> url;
+
+    /**
+     * @return The url used to download the binary.
+     * 
+     */
+    public Output<String> url() {
+        return this.url;
+    }
+    /**
+     * The version to install.
      * 
      */
     @Export(name="version", refs={String.class}, tree="[0]")
     private Output<String> version;
 
     /**
-     * @return The version of kube-apiserver to install.
+     * @return The version to install.
      * 
      */
     public Output<String> version() {

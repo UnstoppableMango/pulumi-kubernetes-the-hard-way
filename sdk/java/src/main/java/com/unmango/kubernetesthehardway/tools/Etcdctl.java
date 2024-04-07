@@ -11,7 +11,13 @@ import com.pulumi.core.annotations.ResourceType;
 import com.pulumi.core.internal.Codegen;
 import com.unmango.kubernetesthehardway.Utilities;
 import com.unmango.kubernetesthehardway.tools.EtcdctlArgs;
+import com.unmango.kubernetesthehardway.tools.outputs.CommandLifecycle;
+import com.unmango.kubernetesthehardway.tools.outputs.EtcdctlCommand;
+import java.lang.Object;
 import java.lang.String;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import javax.annotation.Nullable;
 
 /**
@@ -20,39 +26,201 @@ import javax.annotation.Nullable;
  */
 @ResourceType(type="kubernetes-the-hard-way:tools:Etcdctl")
 public class Etcdctl extends com.pulumi.resources.ComponentResource {
+    /**
+     * Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+     * 
+     */
     @Export(name="binaryPath", refs={String.class}, tree="[0]")
     private Output<String> binaryPath;
 
+    /**
+     * @return Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+     * 
+     */
     public Output<String> binaryPath() {
         return this.binaryPath;
     }
     /**
-     * Represents the command run on the remote system.
+     * TODO
+     * 
+     */
+    @Export(name="caCert", refs={String.class}, tree="[0]")
+    private Output<String> caCert;
+
+    /**
+     * @return TODO
+     * 
+     */
+    public Output<String> caCert() {
+        return this.caCert;
+    }
+    /**
+     * TODO
+     * 
+     */
+    @Export(name="cert", refs={String.class}, tree="[0]")
+    private Output<String> cert;
+
+    /**
+     * @return TODO
+     * 
+     */
+    public Output<String> cert() {
+        return this.cert;
+    }
+    /**
+     * The underlying command
      * 
      */
     @Export(name="command", refs={Command.class}, tree="[0]")
     private Output<Command> command;
 
     /**
-     * @return Represents the command run on the remote system.
+     * @return The underlying command
      * 
      */
     public Output<Command> command() {
         return this.command;
     }
     /**
-     * Connection details for the remote system.
+     * TODO
+     * 
+     */
+    @Export(name="commands", refs={EtcdctlCommand.class}, tree="[0]")
+    private Output<EtcdctlCommand> commands;
+
+    /**
+     * @return TODO
+     * 
+     */
+    public Output<EtcdctlCommand> commands() {
+        return this.commands;
+    }
+    /**
+     * Connection details for the remote system
      * 
      */
     @Export(name="connection", refs={Connection.class}, tree="[0]")
     private Output<Connection> connection;
 
     /**
-     * @return Connection details for the remote system.
+     * @return Connection details for the remote system
      * 
      */
     public Output<Connection> connection() {
         return this.connection;
+    }
+    /**
+     * TODO
+     * 
+     */
+    @Export(name="endpoints", refs={String.class}, tree="[0]")
+    private Output<String> endpoints;
+
+    /**
+     * @return TODO
+     * 
+     */
+    public Output<String> endpoints() {
+        return this.endpoints;
+    }
+    /**
+     * Environment variables
+     * 
+     */
+    @Export(name="environment", refs={Map.class,String.class}, tree="[0,1,1]")
+    private Output<Map<String,String>> environment;
+
+    /**
+     * @return Environment variables
+     * 
+     */
+    public Output<Map<String,String>> environment() {
+        return this.environment;
+    }
+    /**
+     * TODO
+     * 
+     */
+    @Export(name="key", refs={String.class}, tree="[0]")
+    private Output<String> key;
+
+    /**
+     * @return TODO
+     * 
+     */
+    public Output<String> key() {
+        return this.key;
+    }
+    /**
+     * At what stage(s) in the resource lifecycle should the command be run
+     * 
+     */
+    @Export(name="lifecycle", refs={CommandLifecycle.class}, tree="[0]")
+    private Output</* @Nullable */ CommandLifecycle> lifecycle;
+
+    /**
+     * @return At what stage(s) in the resource lifecycle should the command be run
+     * 
+     */
+    public Output<Optional<CommandLifecycle>> lifecycle() {
+        return Codegen.optional(this.lifecycle);
+    }
+    /**
+     * TODO
+     * 
+     */
+    @Export(name="stderr", refs={String.class}, tree="[0]")
+    private Output<String> stderr;
+
+    /**
+     * @return TODO
+     * 
+     */
+    public Output<String> stderr() {
+        return this.stderr;
+    }
+    /**
+     * TODO
+     * 
+     */
+    @Export(name="stdin", refs={String.class}, tree="[0]")
+    private Output</* @Nullable */ String> stdin;
+
+    /**
+     * @return TODO
+     * 
+     */
+    public Output<Optional<String>> stdin() {
+        return Codegen.optional(this.stdin);
+    }
+    /**
+     * TODO
+     * 
+     */
+    @Export(name="stdout", refs={String.class}, tree="[0]")
+    private Output<String> stdout;
+
+    /**
+     * @return TODO
+     * 
+     */
+    public Output<String> stdout() {
+        return this.stdout;
+    }
+    /**
+     * TODO
+     * 
+     */
+    @Export(name="triggers", refs={List.class,Object.class}, tree="[0,1]")
+    private Output<List<Object>> triggers;
+
+    /**
+     * @return TODO
+     * 
+     */
+    public Output<List<Object>> triggers() {
+        return this.triggers;
     }
 
     /**

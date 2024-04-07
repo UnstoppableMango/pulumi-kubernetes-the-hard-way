@@ -5,10 +5,9 @@ package com.unmango.kubernetesthehardway.tls;
 
 import com.pulumi.core.Output;
 import com.pulumi.core.annotations.Import;
-import java.lang.Double;
+import com.pulumi.exceptions.MissingRequiredPropertyException;
+import java.lang.Integer;
 import java.util.Objects;
-import java.util.Optional;
-import javax.annotation.Nullable;
 
 
 public final class EncryptionKeyArgs extends com.pulumi.resources.ResourceArgs {
@@ -16,18 +15,18 @@ public final class EncryptionKeyArgs extends com.pulumi.resources.ResourceArgs {
     public static final EncryptionKeyArgs Empty = new EncryptionKeyArgs();
 
     /**
-     * The length of the key in bytes.
+     * The number of bytes requested. The minimum value for length is 1.
      * 
      */
-    @Import(name="bytes")
-    private @Nullable Output<Double> bytes;
+    @Import(name="bytes", required=true)
+    private Output<Integer> bytes;
 
     /**
-     * @return The length of the key in bytes.
+     * @return The number of bytes requested. The minimum value for length is 1.
      * 
      */
-    public Optional<Output<Double>> bytes() {
-        return Optional.ofNullable(this.bytes);
+    public Output<Integer> bytes() {
+        return this.bytes;
     }
 
     private EncryptionKeyArgs() {}
@@ -55,27 +54,30 @@ public final class EncryptionKeyArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param bytes The length of the key in bytes.
+         * @param bytes The number of bytes requested. The minimum value for length is 1.
          * 
          * @return builder
          * 
          */
-        public Builder bytes(@Nullable Output<Double> bytes) {
+        public Builder bytes(Output<Integer> bytes) {
             $.bytes = bytes;
             return this;
         }
 
         /**
-         * @param bytes The length of the key in bytes.
+         * @param bytes The number of bytes requested. The minimum value for length is 1.
          * 
          * @return builder
          * 
          */
-        public Builder bytes(Double bytes) {
+        public Builder bytes(Integer bytes) {
             return bytes(Output.of(bytes));
         }
 
         public EncryptionKeyArgs build() {
+            if ($.bytes == null) {
+                throw new MissingRequiredPropertyException("EncryptionKeyArgs", "bytes");
+            }
             return $;
         }
     }

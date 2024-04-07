@@ -8,9 +8,7 @@ import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
 from .. import _utilities
-from .. import tools as _tools
 from ._enums import *
-from .download import Download
 import pulumi_command
 
 __all__ = ['KubeSchedulerInstallArgs', 'KubeSchedulerInstall']
@@ -24,10 +22,10 @@ class KubeSchedulerInstallArgs:
                  version: Optional[pulumi.Input[str]] = None):
         """
         The set of arguments for constructing a KubeSchedulerInstall resource.
-        :param pulumi.Input['pulumi_command.remote.ConnectionArgs'] connection: The connection details.
-        :param pulumi.Input['Architecture'] architecture: The kube-scheduler CPU architecture.
-        :param pulumi.Input[str] directory: Directory to install the `kube-scheduler` binary.
-        :param pulumi.Input[str] version: The version of kube-scheduler to install.
+        :param pulumi.Input['pulumi_command.remote.ConnectionArgs'] connection: The parameters with which to connect to the remote host.
+        :param pulumi.Input['Architecture'] architecture: The CPU architecture to install.
+        :param pulumi.Input[str] directory: The directory to install the binary to.
+        :param pulumi.Input[str] version: The version to install.
         """
         pulumi.set(__self__, "connection", connection)
         if architecture is not None:
@@ -43,7 +41,7 @@ class KubeSchedulerInstallArgs:
     @pulumi.getter
     def connection(self) -> pulumi.Input['pulumi_command.remote.ConnectionArgs']:
         """
-        The connection details.
+        The parameters with which to connect to the remote host.
         """
         return pulumi.get(self, "connection")
 
@@ -55,7 +53,7 @@ class KubeSchedulerInstallArgs:
     @pulumi.getter
     def architecture(self) -> Optional[pulumi.Input['Architecture']]:
         """
-        The kube-scheduler CPU architecture.
+        The CPU architecture to install.
         """
         return pulumi.get(self, "architecture")
 
@@ -67,7 +65,7 @@ class KubeSchedulerInstallArgs:
     @pulumi.getter
     def directory(self) -> Optional[pulumi.Input[str]]:
         """
-        Directory to install the `kube-scheduler` binary.
+        The directory to install the binary to.
         """
         return pulumi.get(self, "directory")
 
@@ -79,7 +77,7 @@ class KubeSchedulerInstallArgs:
     @pulumi.getter
     def version(self) -> Optional[pulumi.Input[str]]:
         """
-        The version of kube-scheduler to install.
+        The version to install.
         """
         return pulumi.get(self, "version")
 
@@ -103,10 +101,10 @@ class KubeSchedulerInstall(pulumi.ComponentResource):
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input['Architecture'] architecture: The kube-scheduler CPU architecture.
-        :param pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']] connection: The connection details.
-        :param pulumi.Input[str] directory: Directory to install the `kube-scheduler` binary.
-        :param pulumi.Input[str] version: The version of kube-scheduler to install.
+        :param pulumi.Input['Architecture'] architecture: The CPU architecture to install.
+        :param pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']] connection: The parameters with which to connect to the remote host.
+        :param pulumi.Input[str] directory: The directory to install the binary to.
+        :param pulumi.Input[str] version: The version to install.
         """
         ...
     @overload
@@ -162,6 +160,7 @@ class KubeSchedulerInstall(pulumi.ComponentResource):
             __props__.__dict__["mv"] = None
             __props__.__dict__["path"] = None
             __props__.__dict__["rm"] = None
+            __props__.__dict__["url"] = None
         super(KubeSchedulerInstall, __self__).__init__(
             'kubernetes-the-hard-way:remote:KubeSchedulerInstall',
             resource_name,
@@ -173,20 +172,23 @@ class KubeSchedulerInstall(pulumi.ComponentResource):
     @pulumi.getter
     def architecture(self) -> pulumi.Output['Architecture']:
         """
-        The kube-scheduler CPU architecture.
+        The CPU architecture to install.
         """
         return pulumi.get(self, "architecture")
 
     @property
     @pulumi.getter(name="binName")
     def bin_name(self) -> pulumi.Output[Optional[str]]:
+        """
+        The name of the installed binary.
+        """
         return pulumi.get(self, "bin_name")
 
     @property
     @pulumi.getter
     def connection(self) -> pulumi.Output['pulumi_command.remote.outputs.Connection']:
         """
-        The connection details.
+        The parameters with which to connect to the remote host.
         """
         return pulumi.get(self, "connection")
 
@@ -194,45 +196,71 @@ class KubeSchedulerInstall(pulumi.ComponentResource):
     @pulumi.getter
     def directory(self) -> pulumi.Output[str]:
         """
-        Directory to install the `etcd` and `etcdctl` binaries.
+        The directory to install the binary to.
         """
         return pulumi.get(self, "directory")
 
     @property
     @pulumi.getter
-    def download(self) -> pulumi.Output[Optional['Download']]:
+    def download(self) -> pulumi.Output[Any]:
+        """
+        The download operation.
+        """
         return pulumi.get(self, "download")
 
     @property
     @pulumi.getter
-    def mkdir(self) -> pulumi.Output[Optional['_tools.Mkdir']]:
+    def mkdir(self) -> pulumi.Output[Any]:
+        """
+        The mkdir operation.
+        """
         return pulumi.get(self, "mkdir")
 
     @property
     @pulumi.getter
-    def mktemp(self) -> pulumi.Output[Optional['_tools.Mktemp']]:
+    def mktemp(self) -> pulumi.Output[Any]:
+        """
+        The mktemp operation.
+        """
         return pulumi.get(self, "mktemp")
 
     @property
     @pulumi.getter
-    def mv(self) -> pulumi.Output[Optional['_tools.Mv']]:
+    def mv(self) -> pulumi.Output[Any]:
+        """
+        The mv operation.
+        """
         return pulumi.get(self, "mv")
 
     @property
     @pulumi.getter
-    def path(self) -> pulumi.Output[Optional[str]]:
+    def path(self) -> pulumi.Output[str]:
+        """
+        The path to the installed binary.
+        """
         return pulumi.get(self, "path")
 
     @property
     @pulumi.getter
-    def rm(self) -> pulumi.Output[Optional['_tools.Rm']]:
+    def rm(self) -> pulumi.Output[Any]:
+        """
+        The rm operation.
+        """
         return pulumi.get(self, "rm")
+
+    @property
+    @pulumi.getter
+    def url(self) -> pulumi.Output[str]:
+        """
+        The url used to download the binary.
+        """
+        return pulumi.get(self, "url")
 
     @property
     @pulumi.getter
     def version(self) -> pulumi.Output[str]:
         """
-        The version of kube-scheduler to install.
+        The version to install.
         """
         return pulumi.get(self, "version")
 

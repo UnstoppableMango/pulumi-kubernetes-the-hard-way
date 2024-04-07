@@ -16,38 +16,60 @@ __all__ = ['SystemctlArgs', 'Systemctl']
 @pulumi.input_type
 class SystemctlArgs:
     def __init__(__self__, *,
-                 commands: pulumi.Input[Sequence[pulumi.Input['SystemctlCommand']]],
+                 command: 'SystemctlCommand',
                  connection: pulumi.Input['pulumi_command.remote.ConnectionArgs'],
+                 unit: pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]],
+                 binary_path: Optional[pulumi.Input[str]] = None,
                  environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-                 lifecycle: Optional['CommandLifecycle'] = None,
-                 service_name: Optional[pulumi.Input[str]] = None):
+                 lifecycle: Optional[Any] = None,
+                 pattern: Optional[pulumi.Input[str]] = None,
+                 stdin: Optional[pulumi.Input[str]] = None,
+                 triggers: Optional[pulumi.Input[Sequence[Any]]] = None):
         """
         The set of arguments for constructing a Systemctl resource.
-        :param pulumi.Input['pulumi_command.remote.ConnectionArgs'] connection: Connection details for the remote system.
+        :param 'SystemctlCommand' command: Corresponds to the COMMAND argument.
+        :param pulumi.Input['pulumi_command.remote.ConnectionArgs'] connection: Connection details for the remote system
+        :param pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]] unit: Corresponds to the [UNIT...] argument.
+        :param pulumi.Input[str] binary_path: Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] environment: Environment variables
+        :param Any lifecycle: At what stage(s) in the resource lifecycle should the command be run
+        :param pulumi.Input[str] pattern: Corresponds to the [PATTERN] argument
+        :param pulumi.Input[str] stdin: TODO
+        :param pulumi.Input[Sequence[Any]] triggers: TODO
         """
-        pulumi.set(__self__, "commands", commands)
+        pulumi.set(__self__, "command", command)
         pulumi.set(__self__, "connection", connection)
+        pulumi.set(__self__, "unit", unit)
+        if binary_path is not None:
+            pulumi.set(__self__, "binary_path", binary_path)
         if environment is not None:
             pulumi.set(__self__, "environment", environment)
         if lifecycle is not None:
             pulumi.set(__self__, "lifecycle", lifecycle)
-        if service_name is not None:
-            pulumi.set(__self__, "service_name", service_name)
+        if pattern is not None:
+            pulumi.set(__self__, "pattern", pattern)
+        if stdin is not None:
+            pulumi.set(__self__, "stdin", stdin)
+        if triggers is not None:
+            pulumi.set(__self__, "triggers", triggers)
 
     @property
     @pulumi.getter
-    def commands(self) -> pulumi.Input[Sequence[pulumi.Input['SystemctlCommand']]]:
-        return pulumi.get(self, "commands")
+    def command(self) -> 'SystemctlCommand':
+        """
+        Corresponds to the COMMAND argument.
+        """
+        return pulumi.get(self, "command")
 
-    @commands.setter
-    def commands(self, value: pulumi.Input[Sequence[pulumi.Input['SystemctlCommand']]]):
-        pulumi.set(self, "commands", value)
+    @command.setter
+    def command(self, value: 'SystemctlCommand'):
+        pulumi.set(self, "command", value)
 
     @property
     @pulumi.getter
     def connection(self) -> pulumi.Input['pulumi_command.remote.ConnectionArgs']:
         """
-        Connection details for the remote system.
+        Connection details for the remote system
         """
         return pulumi.get(self, "connection")
 
@@ -57,7 +79,34 @@ class SystemctlArgs:
 
     @property
     @pulumi.getter
+    def unit(self) -> pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]]:
+        """
+        Corresponds to the [UNIT...] argument.
+        """
+        return pulumi.get(self, "unit")
+
+    @unit.setter
+    def unit(self, value: pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]]):
+        pulumi.set(self, "unit", value)
+
+    @property
+    @pulumi.getter(name="binaryPath")
+    def binary_path(self) -> Optional[pulumi.Input[str]]:
+        """
+        Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+        """
+        return pulumi.get(self, "binary_path")
+
+    @binary_path.setter
+    def binary_path(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "binary_path", value)
+
+    @property
+    @pulumi.getter
     def environment(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        """
+        Environment variables
+        """
         return pulumi.get(self, "environment")
 
     @environment.setter
@@ -66,21 +115,51 @@ class SystemctlArgs:
 
     @property
     @pulumi.getter
-    def lifecycle(self) -> Optional['CommandLifecycle']:
+    def lifecycle(self) -> Optional[Any]:
+        """
+        At what stage(s) in the resource lifecycle should the command be run
+        """
         return pulumi.get(self, "lifecycle")
 
     @lifecycle.setter
-    def lifecycle(self, value: Optional['CommandLifecycle']):
+    def lifecycle(self, value: Optional[Any]):
         pulumi.set(self, "lifecycle", value)
 
     @property
-    @pulumi.getter(name="serviceName")
-    def service_name(self) -> Optional[pulumi.Input[str]]:
-        return pulumi.get(self, "service_name")
+    @pulumi.getter
+    def pattern(self) -> Optional[pulumi.Input[str]]:
+        """
+        Corresponds to the [PATTERN] argument
+        """
+        return pulumi.get(self, "pattern")
 
-    @service_name.setter
-    def service_name(self, value: Optional[pulumi.Input[str]]):
-        pulumi.set(self, "service_name", value)
+    @pattern.setter
+    def pattern(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "pattern", value)
+
+    @property
+    @pulumi.getter
+    def stdin(self) -> Optional[pulumi.Input[str]]:
+        """
+        TODO
+        """
+        return pulumi.get(self, "stdin")
+
+    @stdin.setter
+    def stdin(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "stdin", value)
+
+    @property
+    @pulumi.getter
+    def triggers(self) -> Optional[pulumi.Input[Sequence[Any]]]:
+        """
+        TODO
+        """
+        return pulumi.get(self, "triggers")
+
+    @triggers.setter
+    def triggers(self, value: Optional[pulumi.Input[Sequence[Any]]]):
+        pulumi.set(self, "triggers", value)
 
 
 class Systemctl(pulumi.ComponentResource):
@@ -88,18 +167,30 @@ class Systemctl(pulumi.ComponentResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 commands: Optional[pulumi.Input[Sequence[pulumi.Input['SystemctlCommand']]]] = None,
+                 binary_path: Optional[pulumi.Input[str]] = None,
+                 command: Optional['SystemctlCommand'] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
                  environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-                 lifecycle: Optional['CommandLifecycle'] = None,
-                 service_name: Optional[pulumi.Input[str]] = None,
+                 lifecycle: Optional[Any] = None,
+                 pattern: Optional[pulumi.Input[str]] = None,
+                 stdin: Optional[pulumi.Input[str]] = None,
+                 triggers: Optional[pulumi.Input[Sequence[Any]]] = None,
+                 unit: Optional[pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]]] = None,
                  __props__=None):
         """
         Abstraction over the `systemctl` utility on a remote system.
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']] connection: Connection details for the remote system.
+        :param pulumi.Input[str] binary_path: Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+        :param 'SystemctlCommand' command: Corresponds to the COMMAND argument.
+        :param pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']] connection: Connection details for the remote system
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] environment: Environment variables
+        :param Any lifecycle: At what stage(s) in the resource lifecycle should the command be run
+        :param pulumi.Input[str] pattern: Corresponds to the [PATTERN] argument
+        :param pulumi.Input[str] stdin: TODO
+        :param pulumi.Input[Sequence[Any]] triggers: TODO
+        :param pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]] unit: Corresponds to the [UNIT...] argument.
         """
         ...
     @overload
@@ -125,11 +216,15 @@ class Systemctl(pulumi.ComponentResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 commands: Optional[pulumi.Input[Sequence[pulumi.Input['SystemctlCommand']]]] = None,
+                 binary_path: Optional[pulumi.Input[str]] = None,
+                 command: Optional['SystemctlCommand'] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
                  environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-                 lifecycle: Optional['CommandLifecycle'] = None,
-                 service_name: Optional[pulumi.Input[str]] = None,
+                 lifecycle: Optional[Any] = None,
+                 pattern: Optional[pulumi.Input[str]] = None,
+                 stdin: Optional[pulumi.Input[str]] = None,
+                 triggers: Optional[pulumi.Input[Sequence[Any]]] = None,
+                 unit: Optional[pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):
@@ -141,19 +236,24 @@ class Systemctl(pulumi.ComponentResource):
                 raise TypeError('__props__ is only valid when passed in combination with a valid opts.id to get an existing resource')
             __props__ = SystemctlArgs.__new__(SystemctlArgs)
 
-            if commands is None and not opts.urn:
-                raise TypeError("Missing required property 'commands'")
-            __props__.__dict__["commands"] = commands
+            __props__.__dict__["binary_path"] = binary_path
+            if command is None and not opts.urn:
+                raise TypeError("Missing required property 'command'")
+            __props__.__dict__["command"] = command
             if connection is None and not opts.urn:
                 raise TypeError("Missing required property 'connection'")
             __props__.__dict__["connection"] = connection
             __props__.__dict__["environment"] = environment
             __props__.__dict__["lifecycle"] = lifecycle
-            __props__.__dict__["service_name"] = service_name
-            __props__.__dict__["command"] = None
+            __props__.__dict__["pattern"] = pattern
+            __props__.__dict__["stdin"] = stdin
+            __props__.__dict__["triggers"] = triggers
+            if unit is None and not opts.urn:
+                raise TypeError("Missing required property 'unit'")
+            __props__.__dict__["unit"] = unit
             __props__.__dict__["stderr"] = None
-            __props__.__dict__["stdin"] = None
             __props__.__dict__["stdout"] = None
+            __props__.__dict__["systemctl_command"] = None
         super(Systemctl, __self__).__init__(
             'kubernetes-the-hard-way:tools:Systemctl',
             resource_name,
@@ -162,43 +262,98 @@ class Systemctl(pulumi.ComponentResource):
             remote=True)
 
     @property
+    @pulumi.getter(name="binaryPath")
+    def binary_path(self) -> pulumi.Output[str]:
+        """
+        Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+        """
+        return pulumi.get(self, "binary_path")
+
+    @property
     @pulumi.getter
     def command(self) -> pulumi.Output['pulumi_command.remote.Command']:
         """
-        Represents the command run on the remote system.
+        The underlying command
         """
         return pulumi.get(self, "command")
 
     @property
     @pulumi.getter
-    def commands(self) -> pulumi.Output[Sequence['SystemctlCommand']]:
-        return pulumi.get(self, "commands")
-
-    @property
-    @pulumi.getter
     def connection(self) -> pulumi.Output['pulumi_command.remote.outputs.Connection']:
         """
-        Connection details for the remote system.
+        Connection details for the remote system
         """
         return pulumi.get(self, "connection")
 
     @property
-    @pulumi.getter(name="serviceName")
-    def service_name(self) -> pulumi.Output[Optional[str]]:
-        return pulumi.get(self, "service_name")
+    @pulumi.getter
+    def environment(self) -> pulumi.Output[Mapping[str, str]]:
+        """
+        Environment variables
+        """
+        return pulumi.get(self, "environment")
+
+    @property
+    @pulumi.getter
+    def lifecycle(self) -> pulumi.Output[Optional[Any]]:
+        """
+        At what stage(s) in the resource lifecycle should the command be run
+        """
+        return pulumi.get(self, "lifecycle")
+
+    @property
+    @pulumi.getter
+    def pattern(self) -> pulumi.Output[Optional[str]]:
+        """
+        Corresponds to the [PATTERN] argument
+        """
+        return pulumi.get(self, "pattern")
 
     @property
     @pulumi.getter
     def stderr(self) -> pulumi.Output[str]:
+        """
+        TODO
+        """
         return pulumi.get(self, "stderr")
 
     @property
     @pulumi.getter
     def stdin(self) -> pulumi.Output[Optional[str]]:
+        """
+        TODO
+        """
         return pulumi.get(self, "stdin")
 
     @property
     @pulumi.getter
     def stdout(self) -> pulumi.Output[str]:
+        """
+        TODO
+        """
         return pulumi.get(self, "stdout")
+
+    @property
+    @pulumi.getter(name="systemctlCommand")
+    def systemctl_command(self) -> pulumi.Output['SystemctlCommand']:
+        """
+        Corresponds to the COMMAND argument.
+        """
+        return pulumi.get(self, "systemctl_command")
+
+    @property
+    @pulumi.getter
+    def triggers(self) -> pulumi.Output[Sequence[Any]]:
+        """
+        TODO
+        """
+        return pulumi.get(self, "triggers")
+
+    @property
+    @pulumi.getter
+    def unit(self) -> pulumi.Output[Any]:
+        """
+        Corresponds to the [UNIT...] argument.
+        """
+        return pulumi.get(self, "unit")
 

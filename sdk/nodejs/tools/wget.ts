@@ -6,6 +6,8 @@ import * as utilities from "../utilities";
 
 import * as pulumiCommand from "@pulumi/command";
 
+import {CommandLifecycle} from "./index";
+
 /**
  * Abstraction over the `wget` utility on a remote system.
  */
@@ -25,50 +27,69 @@ export class Wget extends pulumi.ComponentResource {
     }
 
     /**
-     * Represents the remote `tar` operation.
+     * Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+     */
+    public readonly binaryPath!: pulumi.Output<string>;
+    /**
+     * The underlying command
      */
     public /*out*/ readonly command!: pulumi.Output<pulumiCommand.remote.Command>;
     /**
-     * Corresponds to the --directory-prefix option.
+     * Connection details for the remote system
+     */
+    public readonly connection!: pulumi.Output<pulumiCommand.types.output.remote.Connection>;
+    /**
+     * The  directory prefix is the directory where all other files and subdirectories will be saved to, i.e. the top of the retrieval tree.  The default is . (the current directory).
      */
     public readonly directoryPrefix!: pulumi.Output<string | undefined>;
-    public readonly environment!: pulumi.Output<{[key: string]: string} | undefined>;
     /**
-     * Corresponds to the --https-only option.
+     * Environment variables
+     */
+    public readonly environment!: pulumi.Output<{[key: string]: string}>;
+    /**
+     * When in recursive mode, only HTTPS links are followed.
      */
     public readonly httpsOnly!: pulumi.Output<boolean>;
     /**
-     * Corresponds to the --no-verbose option.
+     * At what stage(s) in the resource lifecycle should the command be run
      */
-    public readonly noVerbose!: pulumi.Output<boolean | undefined>;
+    public readonly lifecycle!: pulumi.Output<CommandLifecycle | undefined>;
     /**
-     * Corresponds to the --output-document option.
+     * Turn off verbose without being completely quiet (use -q for that), which means that error messages and basic information still get printed.
+     */
+    public readonly noVerbose!: pulumi.Output<boolean>;
+    /**
+     * The  documents  will  not  be  written  to the appropriate files, but all will be concatenated together and written to file.
      */
     public readonly outputDocument!: pulumi.Output<string | undefined>;
     /**
-     * Corresponds to the --quiet option.
+     * Turn off Wget's output.
      */
     public readonly quiet!: pulumi.Output<boolean>;
     /**
-     * The process' stderr.
+     * TODO
      */
     public /*out*/ readonly stderr!: pulumi.Output<string>;
     /**
-     * The process' stdin.
+     * TODO
      */
-    public /*out*/ readonly stdin!: pulumi.Output<string | undefined>;
+    public readonly stdin!: pulumi.Output<string | undefined>;
     /**
-     * The process' stdout.
+     * TODO
      */
     public /*out*/ readonly stdout!: pulumi.Output<string>;
     /**
-     * Corresponds to the --timestamping option.
+     * Turn on time-stamping.
      */
     public readonly timestamping!: pulumi.Output<boolean>;
     /**
-     * Corresponse to the [URL] argument.
+     * TODO
      */
-    public readonly url!: pulumi.Output<string>;
+    public readonly triggers!: pulumi.Output<any[]>;
+    /**
+     * Corresponds to the [URL...] argument.
+     */
+    public readonly url!: pulumi.Output<string | string[]>;
 
     /**
      * Create a Wget resource with the given unique name, arguments, and options.
@@ -87,24 +108,30 @@ export class Wget extends pulumi.ComponentResource {
             if ((!args || args.url === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'url'");
             }
+            resourceInputs["binaryPath"] = args ? args.binaryPath : undefined;
             resourceInputs["connection"] = args ? (args.connection ? pulumi.output(args.connection).apply(pulumiCommand.types.input.remote.connectionArgsProvideDefaults) : undefined) : undefined;
             resourceInputs["directoryPrefix"] = args ? args.directoryPrefix : undefined;
             resourceInputs["environment"] = args ? args.environment : undefined;
             resourceInputs["httpsOnly"] = args ? args.httpsOnly : undefined;
+            resourceInputs["lifecycle"] = args ? args.lifecycle : undefined;
             resourceInputs["noVerbose"] = args ? args.noVerbose : undefined;
             resourceInputs["outputDocument"] = args ? args.outputDocument : undefined;
             resourceInputs["quiet"] = args ? args.quiet : undefined;
+            resourceInputs["stdin"] = args ? args.stdin : undefined;
             resourceInputs["timestamping"] = args ? args.timestamping : undefined;
+            resourceInputs["triggers"] = args ? args.triggers : undefined;
             resourceInputs["url"] = args ? args.url : undefined;
             resourceInputs["command"] = undefined /*out*/;
             resourceInputs["stderr"] = undefined /*out*/;
-            resourceInputs["stdin"] = undefined /*out*/;
             resourceInputs["stdout"] = undefined /*out*/;
         } else {
+            resourceInputs["binaryPath"] = undefined /*out*/;
             resourceInputs["command"] = undefined /*out*/;
+            resourceInputs["connection"] = undefined /*out*/;
             resourceInputs["directoryPrefix"] = undefined /*out*/;
             resourceInputs["environment"] = undefined /*out*/;
             resourceInputs["httpsOnly"] = undefined /*out*/;
+            resourceInputs["lifecycle"] = undefined /*out*/;
             resourceInputs["noVerbose"] = undefined /*out*/;
             resourceInputs["outputDocument"] = undefined /*out*/;
             resourceInputs["quiet"] = undefined /*out*/;
@@ -112,6 +139,7 @@ export class Wget extends pulumi.ComponentResource {
             resourceInputs["stdin"] = undefined /*out*/;
             resourceInputs["stdout"] = undefined /*out*/;
             resourceInputs["timestamping"] = undefined /*out*/;
+            resourceInputs["triggers"] = undefined /*out*/;
             resourceInputs["url"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
@@ -124,36 +152,55 @@ export class Wget extends pulumi.ComponentResource {
  */
 export interface WgetArgs {
     /**
-     * Connection details for the remote system.
+     * Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+     */
+    binaryPath?: pulumi.Input<string>;
+    /**
+     * Connection details for the remote system
      */
     connection: pulumi.Input<pulumiCommand.types.input.remote.ConnectionArgs>;
     /**
-     * Corresponds to the --directory-prefix option.
+     * The  directory prefix is the directory where all other files and subdirectories will be saved to, i.e. the top of the retrieval tree.  The default is . (the current directory).
      */
     directoryPrefix?: pulumi.Input<string>;
+    /**
+     * Environment variables
+     */
     environment?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
-     * Corresponds to the --https-only option.
+     * When in recursive mode, only HTTPS links are followed.
      */
     httpsOnly?: pulumi.Input<boolean>;
     /**
-     * Corresponds t- the --no-verbose option.
+     * At what stage(s) in the resource lifecycle should the command be run
+     */
+    lifecycle?: CommandLifecycle;
+    /**
+     * Turn off verbose without being completely quiet (use -q for that), which means that error messages and basic information still get printed.
      */
     noVerbose?: pulumi.Input<boolean>;
     /**
-     * Corresponds to the --output-document option.
+     * The  documents  will  not  be  written  to the appropriate files, but all will be concatenated together and written to file.
      */
     outputDocument?: pulumi.Input<string>;
     /**
-     * Corresponds to the --quiet option.
+     * Turn off Wget's output.
      */
     quiet?: pulumi.Input<boolean>;
     /**
-     * Corresponds to the --timestamping option.
+     * TODO
+     */
+    stdin?: pulumi.Input<string>;
+    /**
+     * Turn on time-stamping.
      */
     timestamping?: pulumi.Input<boolean>;
     /**
-     * Corresponse to the [URL] argument.
+     * TODO
      */
-    url: pulumi.Input<string>;
+    triggers?: pulumi.Input<any[]>;
+    /**
+     * Corresponds to the [URL...] argument.
+     */
+    url: pulumi.Input<string | pulumi.Input<string>[]>;
 }

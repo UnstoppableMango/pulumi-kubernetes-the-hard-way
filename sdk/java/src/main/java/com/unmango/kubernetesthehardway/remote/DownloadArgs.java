@@ -19,14 +19,14 @@ public final class DownloadArgs extends com.pulumi.resources.ResourceArgs {
     public static final DownloadArgs Empty = new DownloadArgs();
 
     /**
-     * Connection details for the remote system
+     * The parameters with which to connect to the remote host.
      * 
      */
     @Import(name="connection", required=true)
     private Output<ConnectionArgs> connection;
 
     /**
-     * @return Connection details for the remote system
+     * @return The parameters with which to connect to the remote host.
      * 
      */
     public Output<ConnectionArgs> connection() {
@@ -49,14 +49,14 @@ public final class DownloadArgs extends com.pulumi.resources.ResourceArgs {
     }
 
     /**
-     * Remove the downloaded file when the resource is deleted.
+     * Remove the downloaded fiel when the resource is deleted.
      * 
      */
     @Import(name="removeOnDelete")
     private @Nullable Output<Boolean> removeOnDelete;
 
     /**
-     * @return Remove the downloaded file when the resource is deleted.
+     * @return Remove the downloaded fiel when the resource is deleted.
      * 
      */
     public Optional<Output<Boolean>> removeOnDelete() {
@@ -64,14 +64,14 @@ public final class DownloadArgs extends com.pulumi.resources.ResourceArgs {
     }
 
     /**
-     * The URL for the file to be downloaded.
+     * The URL of the file to be downloaded.
      * 
      */
     @Import(name="url", required=true)
     private Output<String> url;
 
     /**
-     * @return The URL for the file to be downloaded.
+     * @return The URL of the file to be downloaded.
      * 
      */
     public Output<String> url() {
@@ -106,7 +106,7 @@ public final class DownloadArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param connection Connection details for the remote system
+         * @param connection The parameters with which to connect to the remote host.
          * 
          * @return builder
          * 
@@ -117,7 +117,7 @@ public final class DownloadArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param connection Connection details for the remote system
+         * @param connection The parameters with which to connect to the remote host.
          * 
          * @return builder
          * 
@@ -148,7 +148,7 @@ public final class DownloadArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param removeOnDelete Remove the downloaded file when the resource is deleted.
+         * @param removeOnDelete Remove the downloaded fiel when the resource is deleted.
          * 
          * @return builder
          * 
@@ -159,7 +159,7 @@ public final class DownloadArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param removeOnDelete Remove the downloaded file when the resource is deleted.
+         * @param removeOnDelete Remove the downloaded fiel when the resource is deleted.
          * 
          * @return builder
          * 
@@ -169,7 +169,7 @@ public final class DownloadArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param url The URL for the file to be downloaded.
+         * @param url The URL of the file to be downloaded.
          * 
          * @return builder
          * 
@@ -180,7 +180,7 @@ public final class DownloadArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param url The URL for the file to be downloaded.
+         * @param url The URL of the file to be downloaded.
          * 
          * @return builder
          * 

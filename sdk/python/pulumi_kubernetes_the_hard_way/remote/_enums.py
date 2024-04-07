@@ -21,11 +21,17 @@ class Architecture(str, Enum):
 
 
 class SystemdServiceExitType(str, Enum):
+    """
+    Systemd service exit type.
+    """
     MAIN = "main"
     CGROUP = "cgroup"
 
 
 class SystemdServiceRestart(str, Enum):
+    """
+    Systemd service restart behavior.
+    """
     NO = "no"
     ON_SUCCESS = "on-success"
     ON_FAILURE = "on-failure"
@@ -36,6 +42,9 @@ class SystemdServiceRestart(str, Enum):
 
 
 class SystemdServiceType(str, Enum):
+    """
+    Systemd service type.
+    """
     SIMPLE = "simple"
     EXEC_ = "exec"
     FORKING = "forking"

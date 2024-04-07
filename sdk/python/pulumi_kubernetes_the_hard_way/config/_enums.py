@@ -10,9 +10,6 @@ __all__ = [
 
 
 class KubeconfigType(str, Enum):
-    """
-    Kubeconfig type
-    """
     WORKER = "worker"
     KUBE_PROXY = "kube-proxy"
     KUBE_CONTROLLER_MANAGER = "kube-controller-manager"

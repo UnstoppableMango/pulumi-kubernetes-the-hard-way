@@ -68,14 +68,14 @@ public final class ClusterPkiArgs extends com.pulumi.resources.ResourceArgs {
     }
 
     /**
-     * Map of node names to node configuration.
+     * Map of node name to node configuration
      * 
      */
     @Import(name="nodes", required=true)
     private Output<Map<String,ClusterPkiNodeArgs>> nodes;
 
     /**
-     * @return Map of node names to node configuration.
+     * @return Map of node name to node configuration
      * 
      */
     public Output<Map<String,ClusterPkiNodeArgs>> nodes() {
@@ -221,7 +221,7 @@ public final class ClusterPkiArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param nodes Map of node names to node configuration.
+         * @param nodes Map of node name to node configuration
          * 
          * @return builder
          * 
@@ -232,7 +232,7 @@ public final class ClusterPkiArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param nodes Map of node names to node configuration.
+         * @param nodes Map of node name to node configuration
          * 
          * @return builder
          * 

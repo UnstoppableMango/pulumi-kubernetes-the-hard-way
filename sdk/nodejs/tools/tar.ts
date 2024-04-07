@@ -6,8 +6,10 @@ import * as utilities from "../utilities";
 
 import * as pulumiCommand from "@pulumi/command";
 
+import {CommandLifecycle} from "./index";
+
 /**
- * Abstracion over the `tar` utility on a remote system.
+ * Abstraction over the `rm` utility on a remote system.
  */
 export class Tar extends pulumi.ComponentResource {
     /** @internal */
@@ -29,41 +31,65 @@ export class Tar extends pulumi.ComponentResource {
      */
     public readonly archive!: pulumi.Output<string>;
     /**
-     * Represents the remote `tar` operation.
+     * Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+     */
+    public readonly binaryPath!: pulumi.Output<string>;
+    /**
+     * The underlying command
      */
     public /*out*/ readonly command!: pulumi.Output<pulumiCommand.remote.Command>;
     /**
-     * Corresponds to the --directory option.
+     * Connection details for the remote system
+     */
+    public readonly connection!: pulumi.Output<pulumiCommand.types.output.remote.Connection>;
+    /**
+     * Corresponds to the `--directory` option.
      */
     public readonly directory!: pulumi.Output<string | undefined>;
     /**
-     * Corresponds to the --extract option.
+     * Environment variables
+     */
+    public readonly environment!: pulumi.Output<{[key: string]: string}>;
+    /**
+     * Corresponds to the `--extract` option.
      */
     public readonly extract!: pulumi.Output<boolean>;
     /**
      * Corresponds to the [FILE] argument.
      */
-    public readonly files!: pulumi.Output<string[]>;
+    public readonly files!: pulumi.Output<string | string[]>;
     /**
-     * Corresponds to the --gzip option.
+     * Corresponds to the `--gzip` option.
      */
     public readonly gzip!: pulumi.Output<boolean | undefined>;
     /**
-     * The process' stderr.
+     * At what stage(s) in the resource lifecycle should the command be run
+     */
+    public readonly lifecycle!: pulumi.Output<CommandLifecycle | undefined>;
+    /**
+     * Whether rm should be run when the resource is created or deleted.
+     */
+    public readonly onDelete!: pulumi.Output<boolean | undefined>;
+    /**
+     * Corresponds to the `--strip-components` option.
+     */
+    public readonly recursive!: pulumi.Output<number | undefined>;
+    /**
+     * TODO
      */
     public /*out*/ readonly stderr!: pulumi.Output<string>;
     /**
-     * The process' stdin.
+     * TODO
      */
-    public /*out*/ readonly stdin!: pulumi.Output<string | undefined>;
+    public readonly stdin!: pulumi.Output<string | undefined>;
     /**
-     * The process' stdout.
+     * TODO
      */
     public /*out*/ readonly stdout!: pulumi.Output<string>;
     /**
-     * Corresponds to the --strip-components option.
+     * TODO
      */
-    public readonly stripComponents!: pulumi.Output<number | undefined>;
+    public readonly triggers!: pulumi.Output<any[]>;
 
     /**
      * Create a Tar resource with the given unique name, arguments, and options.
@@ -83,28 +109,38 @@ export class Tar extends pulumi.ComponentResource {
                 throw new Error("Missing required property 'connection'");
             }
             resourceInputs["archive"] = args ? args.archive : undefined;
+            resourceInputs["binaryPath"] = args ? args.binaryPath : undefined;
             resourceInputs["connection"] = args ? (args.connection ? pulumi.output(args.connection).apply(pulumiCommand.types.input.remote.connectionArgsProvideDefaults) : undefined) : undefined;
             resourceInputs["directory"] = args ? args.directory : undefined;
             resourceInputs["environment"] = args ? args.environment : undefined;
             resourceInputs["extract"] = args ? args.extract : undefined;
             resourceInputs["files"] = args ? args.files : undefined;
             resourceInputs["gzip"] = args ? args.gzip : undefined;
-            resourceInputs["stripComponents"] = args ? args.stripComponents : undefined;
+            resourceInputs["lifecycle"] = args ? args.lifecycle : undefined;
+            resourceInputs["onDelete"] = args ? args.onDelete : undefined;
+            resourceInputs["recursive"] = args ? args.recursive : undefined;
+            resourceInputs["stdin"] = args ? args.stdin : undefined;
+            resourceInputs["triggers"] = args ? args.triggers : undefined;
             resourceInputs["command"] = undefined /*out*/;
             resourceInputs["stderr"] = undefined /*out*/;
-            resourceInputs["stdin"] = undefined /*out*/;
             resourceInputs["stdout"] = undefined /*out*/;
         } else {
             resourceInputs["archive"] = undefined /*out*/;
+            resourceInputs["binaryPath"] = undefined /*out*/;
             resourceInputs["command"] = undefined /*out*/;
+            resourceInputs["connection"] = undefined /*out*/;
             resourceInputs["directory"] = undefined /*out*/;
+            resourceInputs["environment"] = undefined /*out*/;
             resourceInputs["extract"] = undefined /*out*/;
             resourceInputs["files"] = undefined /*out*/;
             resourceInputs["gzip"] = undefined /*out*/;
+            resourceInputs["lifecycle"] = undefined /*out*/;
+            resourceInputs["onDelete"] = undefined /*out*/;
+            resourceInputs["recursive"] = undefined /*out*/;
             resourceInputs["stderr"] = undefined /*out*/;
             resourceInputs["stdin"] = undefined /*out*/;
             resourceInputs["stdout"] = undefined /*out*/;
-            resourceInputs["stripComponents"] = undefined /*out*/;
+            resourceInputs["triggers"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         super(Tar.__pulumiType, name, resourceInputs, opts, true /*remote*/);
@@ -120,28 +156,51 @@ export interface TarArgs {
      */
     archive: pulumi.Input<string>;
     /**
-     * Connection details for the remote system.
+     * Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+     */
+    binaryPath?: pulumi.Input<string>;
+    /**
+     * Connection details for the remote system
      */
     connection: pulumi.Input<pulumiCommand.types.input.remote.ConnectionArgs>;
     /**
-     * Corresponds to the --directory option.
+     * Corresponds to the `--directory` option.
      */
     directory?: pulumi.Input<string>;
+    /**
+     * Environment variables
+     */
     environment?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
-     * Corresponds to the --extract option.
+     * Corresponds to the `--extract` option.
      */
     extract?: pulumi.Input<boolean>;
     /**
      * Corresponds to the [FILE] argument.
      */
-    files?: pulumi.Input<pulumi.Input<string>[] | string>;
+    files?: pulumi.Input<string | pulumi.Input<string>[]>;
     /**
-     * Corresponds to the --gzip option.
+     * Corresponds to the `--gzip` option.
      */
     gzip?: pulumi.Input<boolean>;
     /**
-     * Corresponds to the --strip-components option.
+     * At what stage(s) in the resource lifecycle should the command be run
      */
-    stripComponents?: pulumi.Input<number>;
+    lifecycle?: CommandLifecycle;
+    /**
+     * Whether rm should be run when the resource is created or deleted.
+     */
+    onDelete?: pulumi.Input<boolean>;
+    /**
+     * Corresponds to the `--strip-components` option.
+     */
+    recursive?: pulumi.Input<number>;
+    /**
+     * TODO
+     */
+    stdin?: pulumi.Input<string>;
+    /**
+     * TODO
+     */
+    triggers?: pulumi.Input<any[]>;
 }

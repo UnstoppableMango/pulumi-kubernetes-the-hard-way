@@ -13,7 +13,7 @@ import {Mkdir, Mktemp, Mv, Rm, Tar} from "../tools";
 import {Download} from "./index";
 
 /**
- * Installs crictl on a remote system.
+ * Installs crictl on a remote system
  */
 export class CrictlInstall extends pulumi.ComponentResource {
     /** @internal */
@@ -31,26 +31,57 @@ export class CrictlInstall extends pulumi.ComponentResource {
     }
 
     /**
-     * The CPU architecture.
+     * The CPU architecture to install.
      */
     public readonly architecture!: pulumi.Output<enums.remote.Architecture>;
-    public /*out*/ readonly archiveName!: pulumi.Output<string | undefined>;
     /**
-     * The connection details.
+     * The name of the downloaded archive.
+     */
+    public /*out*/ readonly archiveName!: pulumi.Output<string>;
+    /**
+     * The parameters with which to connect to the remote host.
      */
     public readonly connection!: pulumi.Output<pulumiCommand.types.output.remote.Connection>;
     /**
-     * Directory to install the binary.
+     * The crictl mv operation.
+     */
+    public /*out*/ readonly crictlMv!: pulumi.Output<Mv>;
+    /**
+     * The crictl path on the remote system
+     */
+    public /*out*/ readonly crictlPath!: pulumi.Output<string>;
+    /**
+     * The directory to install the binary to.
      */
     public readonly directory!: pulumi.Output<string>;
+    /**
+     * The download operation.
+     */
     public /*out*/ readonly download!: pulumi.Output<Download>;
-    public /*out*/ readonly mkdir!: pulumi.Output<Mkdir | undefined>;
+    /**
+     * The mkdir operation.
+     */
+    public /*out*/ readonly mkdir!: pulumi.Output<Mkdir>;
+    /**
+     * The mktemp operation.
+     */
     public /*out*/ readonly mktemp!: pulumi.Output<Mktemp>;
-    public /*out*/ readonly mv!: pulumi.Output<Mv>;
-    public /*out*/ readonly path!: pulumi.Output<string>;
+    /**
+     * The path to the installed binary.
+     */
+    public /*out*/ readonly path!: pulumi.Output<string | undefined>;
+    /**
+     * The rm operation.
+     */
     public /*out*/ readonly rm!: pulumi.Output<Rm>;
-    public /*out*/ readonly tar!: pulumi.Output<Tar | undefined>;
-    public /*out*/ readonly url!: pulumi.Output<string | undefined>;
+    /**
+     * The tar operation.
+     */
+    public /*out*/ readonly tar!: pulumi.Output<Tar>;
+    /**
+     * The url used to download the binary.
+     */
+    public /*out*/ readonly url!: pulumi.Output<string>;
     /**
      * The version to install.
      */
@@ -75,10 +106,11 @@ export class CrictlInstall extends pulumi.ComponentResource {
             resourceInputs["directory"] = (args ? args.directory : undefined) ?? "/usr/local/bin";
             resourceInputs["version"] = args ? args.version : undefined;
             resourceInputs["archiveName"] = undefined /*out*/;
+            resourceInputs["crictlMv"] = undefined /*out*/;
+            resourceInputs["crictlPath"] = undefined /*out*/;
             resourceInputs["download"] = undefined /*out*/;
             resourceInputs["mkdir"] = undefined /*out*/;
             resourceInputs["mktemp"] = undefined /*out*/;
-            resourceInputs["mv"] = undefined /*out*/;
             resourceInputs["path"] = undefined /*out*/;
             resourceInputs["rm"] = undefined /*out*/;
             resourceInputs["tar"] = undefined /*out*/;
@@ -87,11 +119,12 @@ export class CrictlInstall extends pulumi.ComponentResource {
             resourceInputs["architecture"] = undefined /*out*/;
             resourceInputs["archiveName"] = undefined /*out*/;
             resourceInputs["connection"] = undefined /*out*/;
+            resourceInputs["crictlMv"] = undefined /*out*/;
+            resourceInputs["crictlPath"] = undefined /*out*/;
             resourceInputs["directory"] = undefined /*out*/;
             resourceInputs["download"] = undefined /*out*/;
             resourceInputs["mkdir"] = undefined /*out*/;
             resourceInputs["mktemp"] = undefined /*out*/;
-            resourceInputs["mv"] = undefined /*out*/;
             resourceInputs["path"] = undefined /*out*/;
             resourceInputs["rm"] = undefined /*out*/;
             resourceInputs["tar"] = undefined /*out*/;
@@ -108,19 +141,19 @@ export class CrictlInstall extends pulumi.ComponentResource {
  */
 export interface CrictlInstallArgs {
     /**
-     * The CPU architecture.
+     * The CPU architecture to install.
      */
     architecture?: pulumi.Input<enums.remote.Architecture>;
     /**
-     * The connection details.
+     * The parameters with which to connect to the remote host.
      */
     connection: pulumi.Input<pulumiCommand.types.input.remote.ConnectionArgs>;
     /**
-     * Directory to install the binary.
+     * The directory to install the binary to.
      */
     directory?: pulumi.Input<string>;
     /**
-     * The version of to install.
+     * The version to install.
      */
     version?: pulumi.Input<string>;
 }

@@ -15,24 +15,23 @@ __all__ = ['EncryptionKeyArgs', 'EncryptionKey']
 @pulumi.input_type
 class EncryptionKeyArgs:
     def __init__(__self__, *,
-                 bytes: Optional[pulumi.Input[float]] = None):
+                 bytes: pulumi.Input[int]):
         """
         The set of arguments for constructing a EncryptionKey resource.
-        :param pulumi.Input[float] bytes: The length of the key in bytes.
+        :param pulumi.Input[int] bytes: The number of bytes requested. The minimum value for length is 1.
         """
-        if bytes is not None:
-            pulumi.set(__self__, "bytes", bytes)
+        pulumi.set(__self__, "bytes", bytes)
 
     @property
     @pulumi.getter
-    def bytes(self) -> Optional[pulumi.Input[float]]:
+    def bytes(self) -> pulumi.Input[int]:
         """
-        The length of the key in bytes.
+        The number of bytes requested. The minimum value for length is 1.
         """
         return pulumi.get(self, "bytes")
 
     @bytes.setter
-    def bytes(self, value: Optional[pulumi.Input[float]]):
+    def bytes(self, value: pulumi.Input[int]):
         pulumi.set(self, "bytes", value)
 
 
@@ -41,22 +40,24 @@ class EncryptionKey(pulumi.ComponentResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 bytes: Optional[pulumi.Input[float]] = None,
+                 bytes: Optional[pulumi.Input[int]] = None,
                  __props__=None):
         """
-        Create a EncryptionKey resource with the given unique name, props, and options.
+        A cluster encryption key.
+
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[float] bytes: The length of the key in bytes.
+        :param pulumi.Input[int] bytes: The number of bytes requested. The minimum value for length is 1.
         """
         ...
     @overload
     def __init__(__self__,
                  resource_name: str,
-                 args: Optional[EncryptionKeyArgs] = None,
+                 args: EncryptionKeyArgs,
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
-        Create a EncryptionKey resource with the given unique name, props, and options.
+        A cluster encryption key.
+
         :param str resource_name: The name of the resource.
         :param EncryptionKeyArgs args: The arguments to use to populate this resource's properties.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -72,7 +73,7 @@ class EncryptionKey(pulumi.ComponentResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 bytes: Optional[pulumi.Input[float]] = None,
+                 bytes: Optional[pulumi.Input[int]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):
@@ -84,6 +85,8 @@ class EncryptionKey(pulumi.ComponentResource):
                 raise TypeError('__props__ is only valid when passed in combination with a valid opts.id to get an existing resource')
             __props__ = EncryptionKeyArgs.__new__(EncryptionKeyArgs)
 
+            if bytes is None and not opts.urn:
+                raise TypeError("Missing required property 'bytes'")
             __props__.__dict__["bytes"] = bytes
             __props__.__dict__["config"] = None
             __props__.__dict__["key"] = None
@@ -96,6 +99,14 @@ class EncryptionKey(pulumi.ComponentResource):
 
     @property
     @pulumi.getter
+    def bytes(self) -> pulumi.Output[int]:
+        """
+        The number of bytes requested. The minimum value for length is 1.
+        """
+        return pulumi.get(self, "bytes")
+
+    @property
+    @pulumi.getter
     def config(self) -> pulumi.Output[str]:
         """
         The generated `v1/EncryptionConfig`.
@@ -105,5 +116,8 @@ class EncryptionKey(pulumi.ComponentResource):
     @property
     @pulumi.getter
     def key(self) -> pulumi.Output['pulumi_random.RandomBytes']:
+        """
+        The generated random key.
+        """
         return pulumi.get(self, "key")
 

@@ -20,14 +20,14 @@ public final class EtcdInstallArgs extends com.pulumi.resources.ResourceArgs {
     public static final EtcdInstallArgs Empty = new EtcdInstallArgs();
 
     /**
-     * The etcd CPU architecture.
+     * The CPU architecture to install.
      * 
      */
     @Import(name="architecture")
     private @Nullable Output<Architecture> architecture;
 
     /**
-     * @return The etcd CPU architecture.
+     * @return The CPU architecture to install.
      * 
      */
     public Optional<Output<Architecture>> architecture() {
@@ -35,14 +35,14 @@ public final class EtcdInstallArgs extends com.pulumi.resources.ResourceArgs {
     }
 
     /**
-     * The connection details.
+     * The parameters with which to connect to the remote host.
      * 
      */
     @Import(name="connection", required=true)
     private Output<ConnectionArgs> connection;
 
     /**
-     * @return The connection details.
+     * @return The parameters with which to connect to the remote host.
      * 
      */
     public Output<ConnectionArgs> connection() {
@@ -50,14 +50,14 @@ public final class EtcdInstallArgs extends com.pulumi.resources.ResourceArgs {
     }
 
     /**
-     * Directory to install the `etcd` and `etcdctl` binaries.
+     * The directory to install the binary to.
      * 
      */
     @Import(name="directory")
     private @Nullable Output<String> directory;
 
     /**
-     * @return Directory to install the `etcd` and `etcdctl` binaries.
+     * @return The directory to install the binary to.
      * 
      */
     public Optional<Output<String>> directory() {
@@ -65,14 +65,14 @@ public final class EtcdInstallArgs extends com.pulumi.resources.ResourceArgs {
     }
 
     /**
-     * The version of etcd to install.
+     * The version to install.
      * 
      */
     @Import(name="version")
     private @Nullable Output<String> version;
 
     /**
-     * @return The version of etcd to install.
+     * @return The version to install.
      * 
      */
     public Optional<Output<String>> version() {
@@ -107,7 +107,7 @@ public final class EtcdInstallArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param architecture The etcd CPU architecture.
+         * @param architecture The CPU architecture to install.
          * 
          * @return builder
          * 
@@ -118,7 +118,7 @@ public final class EtcdInstallArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param architecture The etcd CPU architecture.
+         * @param architecture The CPU architecture to install.
          * 
          * @return builder
          * 
@@ -128,7 +128,7 @@ public final class EtcdInstallArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param connection The connection details.
+         * @param connection The parameters with which to connect to the remote host.
          * 
          * @return builder
          * 
@@ -139,7 +139,7 @@ public final class EtcdInstallArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param connection The connection details.
+         * @param connection The parameters with which to connect to the remote host.
          * 
          * @return builder
          * 
@@ -149,7 +149,7 @@ public final class EtcdInstallArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param directory Directory to install the `etcd` and `etcdctl` binaries.
+         * @param directory The directory to install the binary to.
          * 
          * @return builder
          * 
@@ -160,7 +160,7 @@ public final class EtcdInstallArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param directory Directory to install the `etcd` and `etcdctl` binaries.
+         * @param directory The directory to install the binary to.
          * 
          * @return builder
          * 
@@ -170,7 +170,7 @@ public final class EtcdInstallArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param version The version of etcd to install.
+         * @param version The version to install.
          * 
          * @return builder
          * 
@@ -181,7 +181,7 @@ public final class EtcdInstallArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param version The version of etcd to install.
+         * @param version The version to install.
          * 
          * @return builder
          * 

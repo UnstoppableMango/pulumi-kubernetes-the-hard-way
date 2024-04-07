@@ -2,27 +2,40 @@
 // *** Do not edit by hand unless you're certain you know what you are doing! ***
 
 
-export const CommandLifecycle = {
-    Create: "create",
-    Update: "update",
-    Delete: "delete",
-} as const;
-
-export type CommandLifecycle = (typeof CommandLifecycle)[keyof typeof CommandLifecycle];
-
-export const EtcdctlCommand = {
-    Member: "member",
-    List: "list",
-} as const;
-
-export type EtcdctlCommand = (typeof EtcdctlCommand)[keyof typeof EtcdctlCommand];
-
 export const SystemctlCommand = {
+    Bind: "bind",
+    Cat: "cat",
+    Clean: "clean",
     Daemon_reload: "daemon-reload",
     Disable: "disable",
     Enable: "enable",
+    Freeze: "freeze",
+    Is_active: "is-active",
+    Is_enabled: "is-enabled",
+    Is_failed: "is-failed",
+    Isolate: "isolate",
+    Kill: "kill",
+    List_automounts: "list-automounts",
+    List_dependencies: "list-dependencies",
+    List_paths: "list-paths",
+    List_sockets: "list-sockets",
+    List_timers: "list-timers",
+    List_units: "list-units",
+    Mask: "mask",
+    Mount_image: "mount-image",
+    Reenable: "reenable",
+    Reload: "reload",
+    Reload_or_restart: "reload-or-restart",
+    Restart: "restart",
+    Set_property: "set-property",
+    Show: "show",
     Start: "start",
+    Status: "status",
     Stop: "stop",
+    Thaw: "thaw",
+    Try_reload_or_restart: "try-reload-or-restart",
+    Try_restart: "try-restart",
+    Unmask: "unmask",
 } as const;
 
 export type SystemctlCommand = (typeof SystemctlCommand)[keyof typeof SystemctlCommand];

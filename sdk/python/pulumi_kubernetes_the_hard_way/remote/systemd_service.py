@@ -9,7 +9,6 @@ import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
 from .. import _utilities
 from . import outputs
-from .. import tools as _tools
 from ._enums import *
 from ._inputs import *
 from .file import File
@@ -27,7 +26,7 @@ class SystemdServiceArgs:
                  unit: Optional[pulumi.Input['SystemdUnitSectionArgs']] = None):
         """
         The set of arguments for constructing a SystemdService resource.
-        :param pulumi.Input['pulumi_command.remote.ConnectionArgs'] connection: The connection details.
+        :param pulumi.Input['pulumi_command.remote.ConnectionArgs'] connection: The parameters with which to connect to the remote host.
         :param pulumi.Input['SystemdServiceSectionArgs'] service: Describes the [Service] section of a systemd service file.
         :param pulumi.Input[str] directory: The location to create the service file.
         :param pulumi.Input['SystemdInstallSectionArgs'] install: Describes the [Install] section of a systemd service file.
@@ -48,7 +47,7 @@ class SystemdServiceArgs:
     @pulumi.getter
     def connection(self) -> pulumi.Input['pulumi_command.remote.ConnectionArgs']:
         """
-        The connection details.
+        The parameters with which to connect to the remote host.
         """
         return pulumi.get(self, "connection")
 
@@ -117,10 +116,11 @@ class SystemdService(pulumi.ComponentResource):
                  unit: Optional[pulumi.Input[pulumi.InputType['SystemdUnitSectionArgs']]] = None,
                  __props__=None):
         """
-        Create a SystemdService resource with the given unique name, props, and options.
+        A systemd service on a remote system.
+
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']] connection: The connection details.
+        :param pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']] connection: The parameters with which to connect to the remote host.
         :param pulumi.Input[str] directory: The location to create the service file.
         :param pulumi.Input[pulumi.InputType['SystemdInstallSectionArgs']] install: Describes the [Install] section of a systemd service file.
         :param pulumi.Input[pulumi.InputType['SystemdServiceSectionArgs']] service: Describes the [Service] section of a systemd service file.
@@ -133,7 +133,8 @@ class SystemdService(pulumi.ComponentResource):
                  args: SystemdServiceArgs,
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
-        Create a SystemdService resource with the given unique name, props, and options.
+        A systemd service on a remote system.
+
         :param str resource_name: The name of the resource.
         :param SystemdServiceArgs args: The arguments to use to populate this resource's properties.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -188,7 +189,7 @@ class SystemdService(pulumi.ComponentResource):
     @pulumi.getter
     def connection(self) -> pulumi.Output['pulumi_command.remote.outputs.Connection']:
         """
-        The connection details.
+        The parameters with which to connect to the remote host.
         """
         return pulumi.get(self, "connection")
 
@@ -204,7 +205,7 @@ class SystemdService(pulumi.ComponentResource):
     @pulumi.getter
     def file(self) -> pulumi.Output['File']:
         """
-        Represents the service file on the remote machine.
+        The service file on the remote machine.
         """
         return pulumi.get(self, "file")
 
@@ -231,58 +232,4 @@ class SystemdService(pulumi.ComponentResource):
         Describes the [Unit] section of a systemd service file.
         """
         return pulumi.get(self, "unit")
-
-    @pulumi.output_type
-    class DisableResult:
-        def __init__(__self__, result=None):
-            if result and not isinstance(result, _tools.Systemctl):
-                raise TypeError("Expected argument 'result' to be a _tools.Systemctl")
-            pulumi.set(__self__, "result", result)
-
-        @property
-        @pulumi.getter
-        def result(self) -> '_tools.Systemctl':
-            return pulumi.get(self, "result")
-
-    def disable(__self__) -> pulumi.Output['_tools.Systemctl']:
-        __args__ = dict()
-        __args__['__self__'] = __self__
-        __result__ = pulumi.runtime.call('kubernetes-the-hard-way:remote:SystemdService/disable', __args__, res=__self__, typ=SystemdService.DisableResult)
-        return __result__.result
-
-    @pulumi.output_type
-    class EnableResult:
-        def __init__(__self__, result=None):
-            if result and not isinstance(result, _tools.Systemctl):
-                raise TypeError("Expected argument 'result' to be a _tools.Systemctl")
-            pulumi.set(__self__, "result", result)
-
-        @property
-        @pulumi.getter
-        def result(self) -> '_tools.Systemctl':
-            return pulumi.get(self, "result")
-
-    def enable(__self__) -> pulumi.Output['_tools.Systemctl']:
-        __args__ = dict()
-        __args__['__self__'] = __self__
-        __result__ = pulumi.runtime.call('kubernetes-the-hard-way:remote:SystemdService/enable', __args__, res=__self__, typ=SystemdService.EnableResult)
-        return __result__.result
-
-    @pulumi.output_type
-    class StartResult:
-        def __init__(__self__, result=None):
-            if result and not isinstance(result, _tools.Systemctl):
-                raise TypeError("Expected argument 'result' to be a _tools.Systemctl")
-            pulumi.set(__self__, "result", result)
-
-        @property
-        @pulumi.getter
-        def result(self) -> '_tools.Systemctl':
-            return pulumi.get(self, "result")
-
-    def start(__self__) -> pulumi.Output['_tools.Systemctl']:
-        __args__ = dict()
-        __args__['__self__'] = __self__
-        __result__ = pulumi.runtime.call('kubernetes-the-hard-way:remote:SystemdService/start', __args__, res=__self__, typ=SystemdService.StartResult)
-        return __result__.result
 

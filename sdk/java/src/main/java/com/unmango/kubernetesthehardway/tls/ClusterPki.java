@@ -8,15 +8,22 @@ import com.pulumi.core.annotations.Export;
 import com.pulumi.core.annotations.ResourceType;
 import com.pulumi.core.internal.Codegen;
 import com.unmango.kubernetesthehardway.Utilities;
-import com.unmango.kubernetesthehardway.tls.Certificate;
 import com.unmango.kubernetesthehardway.tls.ClusterPkiArgs;
-import com.unmango.kubernetesthehardway.tls.RootCa;
 import com.unmango.kubernetesthehardway.tls.enums.Algorithm;
+import com.unmango.kubernetesthehardway.tls.enums.EcdsaCurve;
+import com.unmango.kubernetesthehardway.tls.outputs.Certificate;
+import com.unmango.kubernetesthehardway.tls.outputs.ClusterPkiNode;
+import com.unmango.kubernetesthehardway.tls.outputs.RootCa;
 import java.lang.Integer;
 import java.lang.String;
 import java.util.Map;
+import java.util.Optional;
 import javax.annotation.Nullable;
 
+/**
+ * The private key infrastructure for a cluster
+ * 
+ */
 @ResourceType(type="kubernetes-the-hard-way:tls:ClusterPki")
 public class ClusterPki extends com.pulumi.resources.ComponentResource {
     /**
@@ -38,24 +45,40 @@ public class ClusterPki extends com.pulumi.resources.ComponentResource {
      * 
      */
     @Export(name="algorithm", refs={Algorithm.class}, tree="[0]")
-    private Output<Algorithm> algorithm;
+    private Output</* @Nullable */ Algorithm> algorithm;
 
     /**
      * @return Name of the algorithm to use when generating the private key.
      * 
      */
-    public Output<Algorithm> algorithm() {
-        return this.algorithm;
+    public Output<Optional<Algorithm>> algorithm() {
+        return Codegen.optional(this.algorithm);
     }
+    /**
+     * The cluster certificate authority.
+     * 
+     */
     @Export(name="ca", refs={RootCa.class}, tree="[0]")
     private Output<RootCa> ca;
 
+    /**
+     * @return The cluster certificate authority.
+     * 
+     */
     public Output<RootCa> ca() {
         return this.ca;
     }
+    /**
+     * A name to use for the cluster
+     * 
+     */
     @Export(name="clusterName", refs={String.class}, tree="[0]")
     private Output<String> clusterName;
 
+    /**
+     * @return A name to use for the cluster
+     * 
+     */
     public Output<String> clusterName() {
         return this.clusterName;
     }
@@ -72,6 +95,20 @@ public class ClusterPki extends com.pulumi.resources.ComponentResource {
      */
     public Output<Certificate> controllerManager() {
         return this.controllerManager;
+    }
+    /**
+     * When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
+     * 
+     */
+    @Export(name="ecdsaCurve", refs={EcdsaCurve.class}, tree="[0]")
+    private Output</* @Nullable */ EcdsaCurve> ecdsaCurve;
+
+    /**
+     * @return When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
+     * 
+     */
+    public Output<Optional<EcdsaCurve>> ecdsaCurve() {
+        return Codegen.optional(this.ecdsaCurve);
     }
     /**
      * The kube proxy certificate.
@@ -130,14 +167,28 @@ public class ClusterPki extends com.pulumi.resources.ComponentResource {
         return this.kubernetes;
     }
     /**
-     * The publicly accessible IP for the cluster.
+     * Map of node name to node configuration
+     * 
+     */
+    @Export(name="nodes", refs={Map.class,String.class,ClusterPkiNode.class}, tree="[0,1,2]")
+    private Output<Map<String,ClusterPkiNode>> nodes;
+
+    /**
+     * @return Map of node name to node configuration
+     * 
+     */
+    public Output<Map<String,ClusterPkiNode>> nodes() {
+        return this.nodes;
+    }
+    /**
+     * Publicly accessible IP address.
      * 
      */
     @Export(name="publicIp", refs={String.class}, tree="[0]")
     private Output<String> publicIp;
 
     /**
-     * @return The publicly accessible IP for the cluster.
+     * @return Publicly accessible IP address.
      * 
      */
     public Output<String> publicIp() {
@@ -148,24 +199,24 @@ public class ClusterPki extends com.pulumi.resources.ComponentResource {
      * 
      */
     @Export(name="rsaBits", refs={Integer.class}, tree="[0]")
-    private Output<Integer> rsaBits;
+    private Output</* @Nullable */ Integer> rsaBits;
 
     /**
      * @return When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
      * 
      */
-    public Output<Integer> rsaBits() {
-        return this.rsaBits;
+    public Output<Optional<Integer>> rsaBits() {
+        return Codegen.optional(this.rsaBits);
     }
     /**
-     * The service accounts certificate.
+     * The service accounts certificate
      * 
      */
     @Export(name="serviceAccounts", refs={Certificate.class}, tree="[0]")
     private Output<Certificate> serviceAccounts;
 
     /**
-     * @return The service accounts certificate.
+     * @return The service accounts certificate
      * 
      */
     public Output<Certificate> serviceAccounts() {

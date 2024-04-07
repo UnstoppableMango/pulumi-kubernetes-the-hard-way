@@ -20,7 +20,7 @@ class FileArgs:
                  path: pulumi.Input[str]):
         """
         The set of arguments for constructing a File resource.
-        :param pulumi.Input['pulumi_command.remote.ConnectionArgs'] connection: The connection details.
+        :param pulumi.Input['pulumi_command.remote.ConnectionArgs'] connection: The parameters with which to connect to the remote host.
         :param pulumi.Input[str] content: The content of the file.
         :param pulumi.Input[str] path: The path to the file on the remote host.
         """
@@ -32,7 +32,7 @@ class FileArgs:
     @pulumi.getter
     def connection(self) -> pulumi.Input['pulumi_command.remote.ConnectionArgs']:
         """
-        The connection details.
+        The parameters with which to connect to the remote host.
         """
         return pulumi.get(self, "connection")
 
@@ -78,7 +78,7 @@ class File(pulumi.ComponentResource):
         Create a File resource with the given unique name, props, and options.
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']] connection: The connection details.
+        :param pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']] connection: The parameters with which to connect to the remote host.
         :param pulumi.Input[str] content: The content of the file.
         :param pulumi.Input[str] path: The path to the file on the remote host.
         """
@@ -143,15 +143,23 @@ class File(pulumi.ComponentResource):
     @pulumi.getter
     def command(self) -> pulumi.Output['pulumi_command.remote.Command']:
         """
-        The command resource.
+        The executed command.
         """
         return pulumi.get(self, "command")
 
     @property
     @pulumi.getter
+    def connection(self) -> pulumi.Output['pulumi_command.remote.outputs.Connection']:
+        """
+        The parameters with which to connect to the remote host.
+        """
+        return pulumi.get(self, "connection")
+
+    @property
+    @pulumi.getter
     def content(self) -> pulumi.Output[str]:
         """
-        The contents of the remote file.
+        The content of the file.
         """
         return pulumi.get(self, "content")
 
@@ -159,7 +167,7 @@ class File(pulumi.ComponentResource):
     @pulumi.getter
     def path(self) -> pulumi.Output[str]:
         """
-        The path to the file on the remote filesystem.
+        The path to the file on the remote host.
         """
         return pulumi.get(self, "path")
 
@@ -167,15 +175,15 @@ class File(pulumi.ComponentResource):
     @pulumi.getter
     def stderr(self) -> pulumi.Output[str]:
         """
-        The process' stderr.
+        The standard error of the command's process
         """
         return pulumi.get(self, "stderr")
 
     @property
     @pulumi.getter
-    def stdin(self) -> pulumi.Output[Optional[str]]:
+    def stdin(self) -> pulumi.Output[str]:
         """
-        The process' stdin.
+        Pass a string to the command's process as standard in
         """
         return pulumi.get(self, "stdin")
 
@@ -183,7 +191,7 @@ class File(pulumi.ComponentResource):
     @pulumi.getter
     def stdout(self) -> pulumi.Output[str]:
         """
-        The process' stdout.
+        The standard output of the command's process
         """
         return pulumi.get(self, "stdout")
 

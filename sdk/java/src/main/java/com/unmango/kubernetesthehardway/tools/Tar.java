@@ -4,21 +4,26 @@
 package com.unmango.kubernetesthehardway.tools;
 
 import com.pulumi.command.remote.Command;
+import com.pulumi.command.remote.outputs.Connection;
+import com.pulumi.core.Either;
 import com.pulumi.core.Output;
 import com.pulumi.core.annotations.Export;
 import com.pulumi.core.annotations.ResourceType;
 import com.pulumi.core.internal.Codegen;
 import com.unmango.kubernetesthehardway.Utilities;
 import com.unmango.kubernetesthehardway.tools.TarArgs;
+import com.unmango.kubernetesthehardway.tools.outputs.CommandLifecycle;
 import java.lang.Boolean;
 import java.lang.Integer;
+import java.lang.Object;
 import java.lang.String;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import javax.annotation.Nullable;
 
 /**
- * Abstracion over the `tar` utility on a remote system.
+ * Abstraction over the `rm` utility on a remote system.
  * 
  */
 @ResourceType(type="kubernetes-the-hard-way:tools:Tar")
@@ -38,42 +43,84 @@ public class Tar extends com.pulumi.resources.ComponentResource {
         return this.archive;
     }
     /**
-     * Represents the remote `tar` operation.
+     * Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+     * 
+     */
+    @Export(name="binaryPath", refs={String.class}, tree="[0]")
+    private Output<String> binaryPath;
+
+    /**
+     * @return Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+     * 
+     */
+    public Output<String> binaryPath() {
+        return this.binaryPath;
+    }
+    /**
+     * The underlying command
      * 
      */
     @Export(name="command", refs={Command.class}, tree="[0]")
     private Output<Command> command;
 
     /**
-     * @return Represents the remote `tar` operation.
+     * @return The underlying command
      * 
      */
     public Output<Command> command() {
         return this.command;
     }
     /**
-     * Corresponds to the --directory option.
+     * Connection details for the remote system
+     * 
+     */
+    @Export(name="connection", refs={Connection.class}, tree="[0]")
+    private Output<Connection> connection;
+
+    /**
+     * @return Connection details for the remote system
+     * 
+     */
+    public Output<Connection> connection() {
+        return this.connection;
+    }
+    /**
+     * Corresponds to the `--directory` option.
      * 
      */
     @Export(name="directory", refs={String.class}, tree="[0]")
     private Output</* @Nullable */ String> directory;
 
     /**
-     * @return Corresponds to the --directory option.
+     * @return Corresponds to the `--directory` option.
      * 
      */
     public Output<Optional<String>> directory() {
         return Codegen.optional(this.directory);
     }
     /**
-     * Corresponds to the --extract option.
+     * Environment variables
+     * 
+     */
+    @Export(name="environment", refs={Map.class,String.class}, tree="[0,1,1]")
+    private Output<Map<String,String>> environment;
+
+    /**
+     * @return Environment variables
+     * 
+     */
+    public Output<Map<String,String>> environment() {
+        return this.environment;
+    }
+    /**
+     * Corresponds to the `--extract` option.
      * 
      */
     @Export(name="extract", refs={Boolean.class}, tree="[0]")
     private Output<Boolean> extract;
 
     /**
-     * @return Corresponds to the --extract option.
+     * @return Corresponds to the `--extract` option.
      * 
      */
     public Output<Boolean> extract() {
@@ -83,85 +130,127 @@ public class Tar extends com.pulumi.resources.ComponentResource {
      * Corresponds to the [FILE] argument.
      * 
      */
-    @Export(name="files", refs={List.class,String.class}, tree="[0,1]")
-    private Output<List<String>> files;
+    @Export(name="files", refs={Either.class,String.class,List.class}, tree="[0,1,[2,1]]")
+    private Output<Either<String,List<String>>> files;
 
     /**
      * @return Corresponds to the [FILE] argument.
      * 
      */
-    public Output<List<String>> files() {
+    public Output<Either<String,List<String>>> files() {
         return this.files;
     }
     /**
-     * Corresponds to the --gzip option.
+     * Corresponds to the `--gzip` option.
      * 
      */
     @Export(name="gzip", refs={Boolean.class}, tree="[0]")
     private Output</* @Nullable */ Boolean> gzip;
 
     /**
-     * @return Corresponds to the --gzip option.
+     * @return Corresponds to the `--gzip` option.
      * 
      */
     public Output<Optional<Boolean>> gzip() {
         return Codegen.optional(this.gzip);
     }
     /**
-     * The process&#39; stderr.
+     * At what stage(s) in the resource lifecycle should the command be run
+     * 
+     */
+    @Export(name="lifecycle", refs={CommandLifecycle.class}, tree="[0]")
+    private Output</* @Nullable */ CommandLifecycle> lifecycle;
+
+    /**
+     * @return At what stage(s) in the resource lifecycle should the command be run
+     * 
+     */
+    public Output<Optional<CommandLifecycle>> lifecycle() {
+        return Codegen.optional(this.lifecycle);
+    }
+    /**
+     * Whether rm should be run when the resource is created or deleted.
+     * 
+     */
+    @Export(name="onDelete", refs={Boolean.class}, tree="[0]")
+    private Output</* @Nullable */ Boolean> onDelete;
+
+    /**
+     * @return Whether rm should be run when the resource is created or deleted.
+     * 
+     */
+    public Output<Optional<Boolean>> onDelete() {
+        return Codegen.optional(this.onDelete);
+    }
+    /**
+     * Corresponds to the `--strip-components` option.
+     * 
+     */
+    @Export(name="recursive", refs={Integer.class}, tree="[0]")
+    private Output</* @Nullable */ Integer> recursive;
+
+    /**
+     * @return Corresponds to the `--strip-components` option.
+     * 
+     */
+    public Output<Optional<Integer>> recursive() {
+        return Codegen.optional(this.recursive);
+    }
+    /**
+     * TODO
      * 
      */
     @Export(name="stderr", refs={String.class}, tree="[0]")
     private Output<String> stderr;
 
     /**
-     * @return The process&#39; stderr.
+     * @return TODO
      * 
      */
     public Output<String> stderr() {
         return this.stderr;
     }
     /**
-     * The process&#39; stdin.
+     * TODO
      * 
      */
     @Export(name="stdin", refs={String.class}, tree="[0]")
     private Output</* @Nullable */ String> stdin;
 
     /**
-     * @return The process&#39; stdin.
+     * @return TODO
      * 
      */
     public Output<Optional<String>> stdin() {
         return Codegen.optional(this.stdin);
     }
     /**
-     * The process&#39; stdout.
+     * TODO
      * 
      */
     @Export(name="stdout", refs={String.class}, tree="[0]")
     private Output<String> stdout;
 
     /**
-     * @return The process&#39; stdout.
+     * @return TODO
      * 
      */
     public Output<String> stdout() {
         return this.stdout;
     }
     /**
-     * Corresponds to the --strip-components option.
+     * TODO
      * 
      */
-    @Export(name="stripComponents", refs={Integer.class}, tree="[0]")
-    private Output</* @Nullable */ Integer> stripComponents;
+    @Export(name="triggers", refs={List.class,Object.class}, tree="[0,1]")
+    private Output<List<Object>> triggers;
 
     /**
-     * @return Corresponds to the --strip-components option.
+     * @return TODO
      * 
      */
-    public Output<Optional<Integer>> stripComponents() {
-        return Codegen.optional(this.stripComponents);
+    public Output<List<Object>> triggers() {
+        return this.triggers;
     }
 
     /**

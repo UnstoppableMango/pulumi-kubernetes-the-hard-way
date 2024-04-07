@@ -11,70 +11,88 @@ using Pulumi;
 namespace UnMango.KubernetesTheHardWay.Remote
 {
     /// <summary>
-    /// Represents an etcd binary on a remote system.
+    /// Installs etcd on a remote system
     /// </summary>
     [KubernetesTheHardWayResourceType("kubernetes-the-hard-way:remote:EtcdInstall")]
     public partial class EtcdInstall : global::Pulumi.ComponentResource
     {
         /// <summary>
-        /// The etcd CPU architecture.
+        /// The CPU architecture to install.
         /// </summary>
         [Output("architecture")]
         public Output<UnMango.KubernetesTheHardWay.Remote.Architecture> Architecture { get; private set; } = null!;
 
         /// <summary>
-        /// The name of the etcd release archive.
+        /// The name of the downloaded archive.
         /// </summary>
         [Output("archiveName")]
         public Output<string> ArchiveName { get; private set; } = null!;
 
         /// <summary>
-        /// Directory to install the `etcd` and `etcdctl` binaries.
+        /// The parameters with which to connect to the remote host.
+        /// </summary>
+        [Output("connection")]
+        public Output<Pulumi.Command.Remote.Outputs.Connection> Connection { get; private set; } = null!;
+
+        /// <summary>
+        /// The directory to install the binary to.
         /// </summary>
         [Output("directory")]
         public Output<string> Directory { get; private set; } = null!;
 
         /// <summary>
-        /// The etcd download operation.
+        /// The download operation.
         /// </summary>
         [Output("download")]
-        public Output<UnMango.KubernetesTheHardWay.Remote.Download> Download { get; private set; } = null!;
+        public Output<UnMango.KubernetesTheHardWay.Remote.Outputs.Download> Download { get; private set; } = null!;
 
         /// <summary>
-        /// The path to the etcd binary on the remote system.
+        /// The etcd mv operation.
+        /// </summary>
+        [Output("etcdMv")]
+        public Output<UnMango.KubernetesTheHardWay.Tools.Mv> EtcdMv { get; private set; } = null!;
+
+        /// <summary>
+        /// The etcd path on the remote system
         /// </summary>
         [Output("etcdPath")]
         public Output<string> EtcdPath { get; private set; } = null!;
 
         /// <summary>
-        /// The path to the etcdctl binary on the remote system.
+        /// The etcdctl mv operation.
+        /// </summary>
+        [Output("etcdctlMv")]
+        public Output<UnMango.KubernetesTheHardWay.Tools.Mv> EtcdctlMv { get; private set; } = null!;
+
+        /// <summary>
+        /// The etcdctl path on the remote system
         /// </summary>
         [Output("etcdctlPath")]
         public Output<string> EtcdctlPath { get; private set; } = null!;
 
         /// <summary>
-        /// The operation to create the install directory.
+        /// The mkdir operation.
         /// </summary>
         [Output("mkdir")]
-        public Output<UnMango.KubernetesTheHardWay.Tools.Mkdir> Mkdir { get; private set; } = null!;
+        public Output<UnMango.KubernetesTheHardWay.Tools.Outputs.Mkdir> Mkdir { get; private set; } = null!;
 
         /// <summary>
-        /// The operation to move the etcd binary to the install directory.
+        /// The mktemp operation.
         /// </summary>
-        [Output("mvEtcd")]
-        public Output<UnMango.KubernetesTheHardWay.Tools.Mv> MvEtcd { get; private set; } = null!;
+        [Output("mktemp")]
+        public Output<UnMango.KubernetesTheHardWay.Tools.Outputs.Mktemp> Mktemp { get; private set; } = null!;
 
         /// <summary>
-        /// The operation to move the etcdctl binary to the install directory.
+        /// The path to the installed binary.
         /// </summary>
-        [Output("mvEtcdctl")]
-        public Output<UnMango.KubernetesTheHardWay.Tools.Mv> MvEtcdctl { get; private set; } = null!;
+        [Output("path")]
+        public Output<string?> Path { get; private set; } = null!;
 
         /// <summary>
-        /// The name of the resource.
+        /// The rm operation.
         /// </summary>
-        [Output("name")]
-        public Output<string> Name { get; private set; } = null!;
+        [Output("rm")]
+        public Output<UnMango.KubernetesTheHardWay.Tools.Rm> Rm { get; private set; } = null!;
 
         /// <summary>
         /// The tar operation.
@@ -83,13 +101,13 @@ namespace UnMango.KubernetesTheHardWay.Remote
         public Output<UnMango.KubernetesTheHardWay.Tools.Tar> Tar { get; private set; } = null!;
 
         /// <summary>
-        /// The url used to download etcd.
+        /// The url used to download the binary.
         /// </summary>
         [Output("url")]
         public Output<string> Url { get; private set; } = null!;
 
         /// <summary>
-        /// The version of etcd downloaded.
+        /// The version to install.
         /// </summary>
         [Output("version")]
         public Output<string> Version { get; private set; } = null!;
@@ -119,33 +137,30 @@ namespace UnMango.KubernetesTheHardWay.Remote
             merged.Id = id ?? merged.Id;
             return merged;
         }
-
-        public global::Pulumi.Output<UnMango.KubernetesTheHardWay.Tools.Etcdctl> Etcdctl()
-            => global::Pulumi.Deployment.Instance.Call<EtcdInstallEtcdctlResult>("kubernetes-the-hard-way:remote:EtcdInstall/etcdctl", CallArgs.Empty, this).Apply(v => v.Result);
     }
 
     public sealed class EtcdInstallArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
-        /// The etcd CPU architecture.
+        /// The CPU architecture to install.
         /// </summary>
         [Input("architecture")]
         public Input<UnMango.KubernetesTheHardWay.Remote.Architecture>? Architecture { get; set; }
 
         /// <summary>
-        /// The connection details.
+        /// The parameters with which to connect to the remote host.
         /// </summary>
         [Input("connection", required: true)]
         public Input<Pulumi.Command.Remote.Inputs.ConnectionArgs> Connection { get; set; } = null!;
 
         /// <summary>
-        /// Directory to install the `etcd` and `etcdctl` binaries.
+        /// The directory to install the binary to.
         /// </summary>
         [Input("directory")]
         public Input<string>? Directory { get; set; }
 
         /// <summary>
-        /// The version of etcd to install.
+        /// The version to install.
         /// </summary>
         [Input("version")]
         public Input<string>? Version { get; set; }
@@ -155,20 +170,5 @@ namespace UnMango.KubernetesTheHardWay.Remote
             Directory = "/usr/local/bin";
         }
         public static new EtcdInstallArgs Empty => new EtcdInstallArgs();
-    }
-
-    /// <summary>
-    /// The results of the <see cref="EtcdInstall.Etcdctl"/> method.
-    /// </summary>
-    [OutputType]
-    internal sealed class EtcdInstallEtcdctlResult
-    {
-        public readonly UnMango.KubernetesTheHardWay.Tools.Etcdctl Result;
-
-        [OutputConstructor]
-        private EtcdInstallEtcdctlResult(UnMango.KubernetesTheHardWay.Tools.Etcdctl result)
-        {
-            Result = result;
-        }
     }
 }

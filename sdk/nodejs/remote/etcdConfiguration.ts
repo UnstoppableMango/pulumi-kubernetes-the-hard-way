@@ -7,8 +7,11 @@ import * as utilities from "../utilities";
 import * as pulumiCommand from "@pulumi/command";
 
 import {Mkdir} from "../tools";
-import {File, SystemdService} from "./index";
+import {File} from "./index";
 
+/**
+ * Configures etcd on a remote system.
+ */
 export class EtcdConfiguration extends pulumi.ComponentResource {
     /** @internal */
     public static readonly __pulumiType = 'kubernetes-the-hard-way:remote:EtcdConfiguration';
@@ -27,39 +30,55 @@ export class EtcdConfiguration extends pulumi.ComponentResource {
     /**
      * The remote certificate authority file.
      */
-    public /*out*/ readonly caFile!: pulumi.Output<File | undefined>;
+    public /*out*/ readonly caFile!: pulumi.Output<File>;
+    /**
+     * The PEM encoded certificate authority data.
+     */
+    public readonly caPem!: pulumi.Output<string>;
     /**
      * The remote certificate file.
      */
-    public /*out*/ readonly certFile!: pulumi.Output<File | undefined>;
+    public /*out*/ readonly certFile!: pulumi.Output<File>;
+    /**
+     * The PEM encoded certificate data.
+     */
+    public readonly certPem!: pulumi.Output<string>;
     /**
      * The directory to store etcd configuration.
      */
-    public readonly configurationDirectory!: pulumi.Output<string>;
+    public readonly configurationDirectory!: pulumi.Output<string | undefined>;
     /**
-     * The command used to create the configuration directory.
+     * The configuration mkdir operation.
      */
     public /*out*/ readonly configurationMkdir!: pulumi.Output<Mkdir>;
     /**
-     * The directory etcd will use.
+     * The parameters with which to connect to the remote host.
      */
-    public readonly dataDirectory!: pulumi.Output<string>;
+    public readonly connection!: pulumi.Output<pulumiCommand.types.output.remote.Connection>;
     /**
-     * The command used to create the data directory.
+     * The directory etcd will store its data.
+     */
+    public readonly dataDirectory!: pulumi.Output<string | undefined>;
+    /**
+     * The data mkdir operation.
      */
     public /*out*/ readonly dataMkdir!: pulumi.Output<Mkdir>;
     /**
-     * IP used to serve client requests and communicate with etcd peers.
+     * The path to the `etcd` binary.
+     */
+    public readonly etcdPath!: pulumi.Output<string>;
+    /**
+     * The IP used to serve client requests and communicate with etcd peers.
      */
     public readonly internalIp!: pulumi.Output<string>;
     /**
      * The remote key file.
      */
-    public /*out*/ readonly keyFile!: pulumi.Output<File | undefined>;
+    public /*out*/ readonly keyFile!: pulumi.Output<File>;
     /**
-     * The remote systemd service.
+     * The PEM encoded key data.
      */
-    public /*out*/ readonly systemdService!: pulumi.Output<SystemdService>;
+    public readonly keyPem!: pulumi.Output<string>;
 
     /**
      * Create a EtcdConfiguration resource with the given unique name, arguments, and options.
@@ -94,27 +113,29 @@ export class EtcdConfiguration extends pulumi.ComponentResource {
             resourceInputs["certPem"] = args ? args.certPem : undefined;
             resourceInputs["configurationDirectory"] = (args ? args.configurationDirectory : undefined) ?? "/etc/etcd";
             resourceInputs["connection"] = args ? (args.connection ? pulumi.output(args.connection).apply(pulumiCommand.types.input.remote.connectionArgsProvideDefaults) : undefined) : undefined;
-            resourceInputs["dataDirectory"] = (args ? args.dataDirectory : undefined) ?? "/var/lib/etcd";
+            resourceInputs["dataDirectory"] = args ? args.dataDirectory : undefined;
             resourceInputs["etcdPath"] = args ? args.etcdPath : undefined;
             resourceInputs["internalIp"] = args ? args.internalIp : undefined;
             resourceInputs["keyPem"] = args ? args.keyPem : undefined;
-            resourceInputs["systemdDirectory"] = (args ? args.systemdDirectory : undefined) ?? "/etc/system/systemd";
             resourceInputs["caFile"] = undefined /*out*/;
             resourceInputs["certFile"] = undefined /*out*/;
             resourceInputs["configurationMkdir"] = undefined /*out*/;
             resourceInputs["dataMkdir"] = undefined /*out*/;
             resourceInputs["keyFile"] = undefined /*out*/;
-            resourceInputs["systemdService"] = undefined /*out*/;
         } else {
             resourceInputs["caFile"] = undefined /*out*/;
+            resourceInputs["caPem"] = undefined /*out*/;
             resourceInputs["certFile"] = undefined /*out*/;
+            resourceInputs["certPem"] = undefined /*out*/;
             resourceInputs["configurationDirectory"] = undefined /*out*/;
             resourceInputs["configurationMkdir"] = undefined /*out*/;
+            resourceInputs["connection"] = undefined /*out*/;
             resourceInputs["dataDirectory"] = undefined /*out*/;
             resourceInputs["dataMkdir"] = undefined /*out*/;
+            resourceInputs["etcdPath"] = undefined /*out*/;
             resourceInputs["internalIp"] = undefined /*out*/;
             resourceInputs["keyFile"] = undefined /*out*/;
-            resourceInputs["systemdService"] = undefined /*out*/;
+            resourceInputs["keyPem"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         super(EtcdConfiguration.__pulumiType, name, resourceInputs, opts, true /*remote*/);
@@ -126,7 +147,7 @@ export class EtcdConfiguration extends pulumi.ComponentResource {
  */
 export interface EtcdConfigurationArgs {
     /**
-     * The PEM encoded CA data.
+     * The PEM encoded certificate authority data.
      */
     caPem: pulumi.Input<string>;
     /**
@@ -138,24 +159,23 @@ export interface EtcdConfigurationArgs {
      */
     configurationDirectory?: pulumi.Input<string>;
     /**
-     * The connection details.
+     * The parameters with which to connect to the remote host.
      */
     connection: pulumi.Input<pulumiCommand.types.input.remote.ConnectionArgs>;
     /**
-     * The directory etcd will use.
+     * The directory etcd will store its data.
      */
     dataDirectory?: pulumi.Input<string>;
+    /**
+     * The path to the `etcd` binary.
+     */
     etcdPath: pulumi.Input<string>;
     /**
-     * IP used to serve client requests and communicate with etcd peers.
+     * The IP used to serve client requests and communicate with etcd peers.
      */
     internalIp: pulumi.Input<string>;
     /**
      * The PEM encoded key data.
      */
     keyPem: pulumi.Input<string>;
-    /**
-     * The systemd service file dirctory.
-     */
-    systemdDirectory?: pulumi.Input<string>;
 }

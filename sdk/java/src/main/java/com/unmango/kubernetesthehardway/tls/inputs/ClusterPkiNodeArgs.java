@@ -13,7 +13,7 @@ import javax.annotation.Nullable;
 
 
 /**
- * Node inputs for the PKI.
+ * TODO
  * 
  */
 public final class ClusterPkiNodeArgs extends com.pulumi.resources.ResourceArgs {
@@ -21,23 +21,31 @@ public final class ClusterPkiNodeArgs extends com.pulumi.resources.ResourceArgs 
     public static final ClusterPkiNodeArgs Empty = new ClusterPkiNodeArgs();
 
     /**
-     * The IP address of the node.
+     * The IP address of the node
      * 
      */
     @Import(name="ip")
     private @Nullable Output<String> ip;
 
     /**
-     * @return The IP address of the node.
+     * @return The IP address of the node
      * 
      */
     public Optional<Output<String>> ip() {
         return Optional.ofNullable(this.ip);
     }
 
+    /**
+     * The role a node should be configured for
+     * 
+     */
     @Import(name="role")
     private @Nullable Output<NodeRole> role;
 
+    /**
+     * @return The role a node should be configured for
+     * 
+     */
     public Optional<Output<NodeRole>> role() {
         return Optional.ofNullable(this.role);
     }
@@ -68,7 +76,7 @@ public final class ClusterPkiNodeArgs extends com.pulumi.resources.ResourceArgs 
         }
 
         /**
-         * @param ip The IP address of the node.
+         * @param ip The IP address of the node
          * 
          * @return builder
          * 
@@ -79,7 +87,7 @@ public final class ClusterPkiNodeArgs extends com.pulumi.resources.ResourceArgs 
         }
 
         /**
-         * @param ip The IP address of the node.
+         * @param ip The IP address of the node
          * 
          * @return builder
          * 
@@ -88,11 +96,23 @@ public final class ClusterPkiNodeArgs extends com.pulumi.resources.ResourceArgs 
             return ip(Output.of(ip));
         }
 
+        /**
+         * @param role The role a node should be configured for
+         * 
+         * @return builder
+         * 
+         */
         public Builder role(@Nullable Output<NodeRole> role) {
             $.role = role;
             return this;
         }
 
+        /**
+         * @param role The role a node should be configured for
+         * 
+         * @return builder
+         * 
+         */
         public Builder role(NodeRole role) {
             return role(Output.of(role));
         }

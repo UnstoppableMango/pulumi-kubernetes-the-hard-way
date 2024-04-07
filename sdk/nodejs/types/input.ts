@@ -7,7 +7,6 @@ import * as outputs from "../types/output";
 import * as enums from "../types/enums";
 
 import * as pulumiTls from "@pulumi/tls";
-import * as utilities from "../utilities";
 
 export namespace config {
     export interface KubeconfigAdminOptions {
@@ -134,17 +133,17 @@ export namespace remote {
 
 export namespace tls {
     /**
-     * Node inputs for the PKI.
+     * TODO
      */
     export interface ClusterPkiNodeArgs {
         /**
-         * The IP address of the node.
+         * The IP address of the node
          */
         ip?: pulumi.Input<string>;
+        /**
+         * The role a node should be configured for
+         */
         role?: pulumi.Input<enums.tls.NodeRole>;
     }
 
-}
-
-export namespace tools {
 }

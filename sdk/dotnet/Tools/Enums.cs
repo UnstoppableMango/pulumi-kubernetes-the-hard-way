@@ -8,63 +8,6 @@ using Pulumi;
 namespace UnMango.KubernetesTheHardWay.Tools
 {
     [EnumType]
-    public readonly struct CommandLifecycle : IEquatable<CommandLifecycle>
-    {
-        private readonly string _value;
-
-        private CommandLifecycle(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
-        public static CommandLifecycle Create { get; } = new CommandLifecycle("create");
-        public static CommandLifecycle Update { get; } = new CommandLifecycle("update");
-        public static CommandLifecycle Delete { get; } = new CommandLifecycle("delete");
-
-        public static bool operator ==(CommandLifecycle left, CommandLifecycle right) => left.Equals(right);
-        public static bool operator !=(CommandLifecycle left, CommandLifecycle right) => !left.Equals(right);
-
-        public static explicit operator string(CommandLifecycle value) => value._value;
-
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object? obj) => obj is CommandLifecycle other && Equals(other);
-        public bool Equals(CommandLifecycle other) => string.Equals(_value, other._value, StringComparison.Ordinal);
-
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
-
-        public override string ToString() => _value;
-    }
-
-    [EnumType]
-    public readonly struct EtcdctlCommand : IEquatable<EtcdctlCommand>
-    {
-        private readonly string _value;
-
-        private EtcdctlCommand(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
-        public static EtcdctlCommand Member { get; } = new EtcdctlCommand("member");
-        public static EtcdctlCommand List { get; } = new EtcdctlCommand("list");
-
-        public static bool operator ==(EtcdctlCommand left, EtcdctlCommand right) => left.Equals(right);
-        public static bool operator !=(EtcdctlCommand left, EtcdctlCommand right) => !left.Equals(right);
-
-        public static explicit operator string(EtcdctlCommand value) => value._value;
-
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object? obj) => obj is EtcdctlCommand other && Equals(other);
-        public bool Equals(EtcdctlCommand other) => string.Equals(_value, other._value, StringComparison.Ordinal);
-
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
-
-        public override string ToString() => _value;
-    }
-
-    [EnumType]
     public readonly struct SystemctlCommand : IEquatable<SystemctlCommand>
     {
         private readonly string _value;
@@ -74,11 +17,39 @@ namespace UnMango.KubernetesTheHardWay.Tools
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
+        public static SystemctlCommand Bind { get; } = new SystemctlCommand("bind");
+        public static SystemctlCommand Cat { get; } = new SystemctlCommand("cat");
+        public static SystemctlCommand Clean { get; } = new SystemctlCommand("clean");
         public static SystemctlCommand Daemon_reload { get; } = new SystemctlCommand("daemon-reload");
         public static SystemctlCommand Disable { get; } = new SystemctlCommand("disable");
         public static SystemctlCommand Enable { get; } = new SystemctlCommand("enable");
+        public static SystemctlCommand Freeze { get; } = new SystemctlCommand("freeze");
+        public static SystemctlCommand Is_active { get; } = new SystemctlCommand("is-active");
+        public static SystemctlCommand Is_enabled { get; } = new SystemctlCommand("is-enabled");
+        public static SystemctlCommand Is_failed { get; } = new SystemctlCommand("is-failed");
+        public static SystemctlCommand Isolate { get; } = new SystemctlCommand("isolate");
+        public static SystemctlCommand Kill { get; } = new SystemctlCommand("kill");
+        public static SystemctlCommand List_automounts { get; } = new SystemctlCommand("list-automounts");
+        public static SystemctlCommand List_dependencies { get; } = new SystemctlCommand("list-dependencies");
+        public static SystemctlCommand List_paths { get; } = new SystemctlCommand("list-paths");
+        public static SystemctlCommand List_sockets { get; } = new SystemctlCommand("list-sockets");
+        public static SystemctlCommand List_timers { get; } = new SystemctlCommand("list-timers");
+        public static SystemctlCommand List_units { get; } = new SystemctlCommand("list-units");
+        public static SystemctlCommand Mask { get; } = new SystemctlCommand("mask");
+        public static SystemctlCommand Mount_image { get; } = new SystemctlCommand("mount-image");
+        public static SystemctlCommand Reenable { get; } = new SystemctlCommand("reenable");
+        public static SystemctlCommand Reload { get; } = new SystemctlCommand("reload");
+        public static SystemctlCommand Reload_or_restart { get; } = new SystemctlCommand("reload-or-restart");
+        public static SystemctlCommand Restart { get; } = new SystemctlCommand("restart");
+        public static SystemctlCommand Set_property { get; } = new SystemctlCommand("set-property");
+        public static SystemctlCommand Show { get; } = new SystemctlCommand("show");
         public static SystemctlCommand Start { get; } = new SystemctlCommand("start");
+        public static SystemctlCommand Status { get; } = new SystemctlCommand("status");
         public static SystemctlCommand Stop { get; } = new SystemctlCommand("stop");
+        public static SystemctlCommand Thaw { get; } = new SystemctlCommand("thaw");
+        public static SystemctlCommand Try_reload_or_restart { get; } = new SystemctlCommand("try-reload-or-restart");
+        public static SystemctlCommand Try_restart { get; } = new SystemctlCommand("try-restart");
+        public static SystemctlCommand Unmask { get; } = new SystemctlCommand("unmask");
 
         public static bool operator ==(SystemctlCommand left, SystemctlCommand right) => left.Equals(right);
         public static bool operator !=(SystemctlCommand left, SystemctlCommand right) => !left.Equals(right);

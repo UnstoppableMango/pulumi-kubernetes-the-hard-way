@@ -17,24 +17,37 @@ class TarArgs:
     def __init__(__self__, *,
                  archive: pulumi.Input[str],
                  connection: pulumi.Input['pulumi_command.remote.ConnectionArgs'],
+                 binary_path: Optional[pulumi.Input[str]] = None,
                  directory: Optional[pulumi.Input[str]] = None,
                  environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  extract: Optional[pulumi.Input[bool]] = None,
-                 files: Optional[pulumi.Input[Union[Sequence[pulumi.Input[str]], str]]] = None,
+                 files: Optional[pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]]] = None,
                  gzip: Optional[pulumi.Input[bool]] = None,
-                 strip_components: Optional[pulumi.Input[int]] = None):
+                 lifecycle: Optional[Any] = None,
+                 on_delete: Optional[pulumi.Input[bool]] = None,
+                 recursive: Optional[pulumi.Input[int]] = None,
+                 stdin: Optional[pulumi.Input[str]] = None,
+                 triggers: Optional[pulumi.Input[Sequence[Any]]] = None):
         """
         The set of arguments for constructing a Tar resource.
         :param pulumi.Input[str] archive: Corresponds to the [ARCHIVE] argument.
-        :param pulumi.Input['pulumi_command.remote.ConnectionArgs'] connection: Connection details for the remote system.
-        :param pulumi.Input[str] directory: Corresponds to the --directory option.
-        :param pulumi.Input[bool] extract: Corresponds to the --extract option.
-        :param pulumi.Input[Union[Sequence[pulumi.Input[str]], str]] files: Corresponds to the [FILE] argument.
-        :param pulumi.Input[bool] gzip: Corresponds to the --gzip option.
-        :param pulumi.Input[int] strip_components: Corresponds to the --strip-components option.
+        :param pulumi.Input['pulumi_command.remote.ConnectionArgs'] connection: Connection details for the remote system
+        :param pulumi.Input[str] binary_path: Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+        :param pulumi.Input[str] directory: Corresponds to the `--directory` option.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] environment: Environment variables
+        :param pulumi.Input[bool] extract: Corresponds to the `--extract` option.
+        :param pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]] files: Corresponds to the [FILE] argument.
+        :param pulumi.Input[bool] gzip: Corresponds to the `--gzip` option.
+        :param Any lifecycle: At what stage(s) in the resource lifecycle should the command be run
+        :param pulumi.Input[bool] on_delete: Whether rm should be run when the resource is created or deleted.
+        :param pulumi.Input[int] recursive: Corresponds to the `--strip-components` option.
+        :param pulumi.Input[str] stdin: TODO
+        :param pulumi.Input[Sequence[Any]] triggers: TODO
         """
         pulumi.set(__self__, "archive", archive)
         pulumi.set(__self__, "connection", connection)
+        if binary_path is not None:
+            pulumi.set(__self__, "binary_path", binary_path)
         if directory is not None:
             pulumi.set(__self__, "directory", directory)
         if environment is not None:
@@ -45,8 +58,16 @@ class TarArgs:
             pulumi.set(__self__, "files", files)
         if gzip is not None:
             pulumi.set(__self__, "gzip", gzip)
-        if strip_components is not None:
-            pulumi.set(__self__, "strip_components", strip_components)
+        if lifecycle is not None:
+            pulumi.set(__self__, "lifecycle", lifecycle)
+        if on_delete is not None:
+            pulumi.set(__self__, "on_delete", on_delete)
+        if recursive is not None:
+            pulumi.set(__self__, "recursive", recursive)
+        if stdin is not None:
+            pulumi.set(__self__, "stdin", stdin)
+        if triggers is not None:
+            pulumi.set(__self__, "triggers", triggers)
 
     @property
     @pulumi.getter
@@ -64,7 +85,7 @@ class TarArgs:
     @pulumi.getter
     def connection(self) -> pulumi.Input['pulumi_command.remote.ConnectionArgs']:
         """
-        Connection details for the remote system.
+        Connection details for the remote system
         """
         return pulumi.get(self, "connection")
 
@@ -73,10 +94,22 @@ class TarArgs:
         pulumi.set(self, "connection", value)
 
     @property
+    @pulumi.getter(name="binaryPath")
+    def binary_path(self) -> Optional[pulumi.Input[str]]:
+        """
+        Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+        """
+        return pulumi.get(self, "binary_path")
+
+    @binary_path.setter
+    def binary_path(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "binary_path", value)
+
+    @property
     @pulumi.getter
     def directory(self) -> Optional[pulumi.Input[str]]:
         """
-        Corresponds to the --directory option.
+        Corresponds to the `--directory` option.
         """
         return pulumi.get(self, "directory")
 
@@ -87,6 +120,9 @@ class TarArgs:
     @property
     @pulumi.getter
     def environment(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        """
+        Environment variables
+        """
         return pulumi.get(self, "environment")
 
     @environment.setter
@@ -97,7 +133,7 @@ class TarArgs:
     @pulumi.getter
     def extract(self) -> Optional[pulumi.Input[bool]]:
         """
-        Corresponds to the --extract option.
+        Corresponds to the `--extract` option.
         """
         return pulumi.get(self, "extract")
 
@@ -107,21 +143,21 @@ class TarArgs:
 
     @property
     @pulumi.getter
-    def files(self) -> Optional[pulumi.Input[Union[Sequence[pulumi.Input[str]], str]]]:
+    def files(self) -> Optional[pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]]]:
         """
         Corresponds to the [FILE] argument.
         """
         return pulumi.get(self, "files")
 
     @files.setter
-    def files(self, value: Optional[pulumi.Input[Union[Sequence[pulumi.Input[str]], str]]]):
+    def files(self, value: Optional[pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]]]):
         pulumi.set(self, "files", value)
 
     @property
     @pulumi.getter
     def gzip(self) -> Optional[pulumi.Input[bool]]:
         """
-        Corresponds to the --gzip option.
+        Corresponds to the `--gzip` option.
         """
         return pulumi.get(self, "gzip")
 
@@ -130,16 +166,64 @@ class TarArgs:
         pulumi.set(self, "gzip", value)
 
     @property
-    @pulumi.getter(name="stripComponents")
-    def strip_components(self) -> Optional[pulumi.Input[int]]:
+    @pulumi.getter
+    def lifecycle(self) -> Optional[Any]:
         """
-        Corresponds to the --strip-components option.
+        At what stage(s) in the resource lifecycle should the command be run
         """
-        return pulumi.get(self, "strip_components")
+        return pulumi.get(self, "lifecycle")
 
-    @strip_components.setter
-    def strip_components(self, value: Optional[pulumi.Input[int]]):
-        pulumi.set(self, "strip_components", value)
+    @lifecycle.setter
+    def lifecycle(self, value: Optional[Any]):
+        pulumi.set(self, "lifecycle", value)
+
+    @property
+    @pulumi.getter(name="onDelete")
+    def on_delete(self) -> Optional[pulumi.Input[bool]]:
+        """
+        Whether rm should be run when the resource is created or deleted.
+        """
+        return pulumi.get(self, "on_delete")
+
+    @on_delete.setter
+    def on_delete(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "on_delete", value)
+
+    @property
+    @pulumi.getter
+    def recursive(self) -> Optional[pulumi.Input[int]]:
+        """
+        Corresponds to the `--strip-components` option.
+        """
+        return pulumi.get(self, "recursive")
+
+    @recursive.setter
+    def recursive(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "recursive", value)
+
+    @property
+    @pulumi.getter
+    def stdin(self) -> Optional[pulumi.Input[str]]:
+        """
+        TODO
+        """
+        return pulumi.get(self, "stdin")
+
+    @stdin.setter
+    def stdin(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "stdin", value)
+
+    @property
+    @pulumi.getter
+    def triggers(self) -> Optional[pulumi.Input[Sequence[Any]]]:
+        """
+        TODO
+        """
+        return pulumi.get(self, "triggers")
+
+    @triggers.setter
+    def triggers(self, value: Optional[pulumi.Input[Sequence[Any]]]):
+        pulumi.set(self, "triggers", value)
 
 
 class Tar(pulumi.ComponentResource):
@@ -148,26 +232,37 @@ class Tar(pulumi.ComponentResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  archive: Optional[pulumi.Input[str]] = None,
+                 binary_path: Optional[pulumi.Input[str]] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
                  directory: Optional[pulumi.Input[str]] = None,
                  environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  extract: Optional[pulumi.Input[bool]] = None,
-                 files: Optional[pulumi.Input[Union[Sequence[pulumi.Input[str]], str]]] = None,
+                 files: Optional[pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]]] = None,
                  gzip: Optional[pulumi.Input[bool]] = None,
-                 strip_components: Optional[pulumi.Input[int]] = None,
+                 lifecycle: Optional[Any] = None,
+                 on_delete: Optional[pulumi.Input[bool]] = None,
+                 recursive: Optional[pulumi.Input[int]] = None,
+                 stdin: Optional[pulumi.Input[str]] = None,
+                 triggers: Optional[pulumi.Input[Sequence[Any]]] = None,
                  __props__=None):
         """
-        Abstracion over the `tar` utility on a remote system.
+        Abstraction over the `rm` utility on a remote system.
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[str] archive: Corresponds to the [ARCHIVE] argument.
-        :param pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']] connection: Connection details for the remote system.
-        :param pulumi.Input[str] directory: Corresponds to the --directory option.
-        :param pulumi.Input[bool] extract: Corresponds to the --extract option.
-        :param pulumi.Input[Union[Sequence[pulumi.Input[str]], str]] files: Corresponds to the [FILE] argument.
-        :param pulumi.Input[bool] gzip: Corresponds to the --gzip option.
-        :param pulumi.Input[int] strip_components: Corresponds to the --strip-components option.
+        :param pulumi.Input[str] binary_path: Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+        :param pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']] connection: Connection details for the remote system
+        :param pulumi.Input[str] directory: Corresponds to the `--directory` option.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] environment: Environment variables
+        :param pulumi.Input[bool] extract: Corresponds to the `--extract` option.
+        :param pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]] files: Corresponds to the [FILE] argument.
+        :param pulumi.Input[bool] gzip: Corresponds to the `--gzip` option.
+        :param Any lifecycle: At what stage(s) in the resource lifecycle should the command be run
+        :param pulumi.Input[bool] on_delete: Whether rm should be run when the resource is created or deleted.
+        :param pulumi.Input[int] recursive: Corresponds to the `--strip-components` option.
+        :param pulumi.Input[str] stdin: TODO
+        :param pulumi.Input[Sequence[Any]] triggers: TODO
         """
         ...
     @overload
@@ -176,7 +271,7 @@ class Tar(pulumi.ComponentResource):
                  args: TarArgs,
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
-        Abstracion over the `tar` utility on a remote system.
+        Abstraction over the `rm` utility on a remote system.
 
         :param str resource_name: The name of the resource.
         :param TarArgs args: The arguments to use to populate this resource's properties.
@@ -194,13 +289,18 @@ class Tar(pulumi.ComponentResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  archive: Optional[pulumi.Input[str]] = None,
+                 binary_path: Optional[pulumi.Input[str]] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
                  directory: Optional[pulumi.Input[str]] = None,
                  environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  extract: Optional[pulumi.Input[bool]] = None,
-                 files: Optional[pulumi.Input[Union[Sequence[pulumi.Input[str]], str]]] = None,
+                 files: Optional[pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]]] = None,
                  gzip: Optional[pulumi.Input[bool]] = None,
-                 strip_components: Optional[pulumi.Input[int]] = None,
+                 lifecycle: Optional[Any] = None,
+                 on_delete: Optional[pulumi.Input[bool]] = None,
+                 recursive: Optional[pulumi.Input[int]] = None,
+                 stdin: Optional[pulumi.Input[str]] = None,
+                 triggers: Optional[pulumi.Input[Sequence[Any]]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):
@@ -215,6 +315,7 @@ class Tar(pulumi.ComponentResource):
             if archive is None and not opts.urn:
                 raise TypeError("Missing required property 'archive'")
             __props__.__dict__["archive"] = archive
+            __props__.__dict__["binary_path"] = binary_path
             if connection is None and not opts.urn:
                 raise TypeError("Missing required property 'connection'")
             __props__.__dict__["connection"] = connection
@@ -223,10 +324,13 @@ class Tar(pulumi.ComponentResource):
             __props__.__dict__["extract"] = extract
             __props__.__dict__["files"] = files
             __props__.__dict__["gzip"] = gzip
-            __props__.__dict__["strip_components"] = strip_components
+            __props__.__dict__["lifecycle"] = lifecycle
+            __props__.__dict__["on_delete"] = on_delete
+            __props__.__dict__["recursive"] = recursive
+            __props__.__dict__["stdin"] = stdin
+            __props__.__dict__["triggers"] = triggers
             __props__.__dict__["command"] = None
             __props__.__dict__["stderr"] = None
-            __props__.__dict__["stdin"] = None
             __props__.__dict__["stdout"] = None
         super(Tar, __self__).__init__(
             'kubernetes-the-hard-way:tools:Tar',
@@ -244,32 +348,56 @@ class Tar(pulumi.ComponentResource):
         return pulumi.get(self, "archive")
 
     @property
+    @pulumi.getter(name="binaryPath")
+    def binary_path(self) -> pulumi.Output[str]:
+        """
+        Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+        """
+        return pulumi.get(self, "binary_path")
+
+    @property
     @pulumi.getter
     def command(self) -> pulumi.Output['pulumi_command.remote.Command']:
         """
-        Represents the remote `tar` operation.
+        The underlying command
         """
         return pulumi.get(self, "command")
 
     @property
     @pulumi.getter
+    def connection(self) -> pulumi.Output['pulumi_command.remote.outputs.Connection']:
+        """
+        Connection details for the remote system
+        """
+        return pulumi.get(self, "connection")
+
+    @property
+    @pulumi.getter
     def directory(self) -> pulumi.Output[Optional[str]]:
         """
-        Corresponds to the --directory option.
+        Corresponds to the `--directory` option.
         """
         return pulumi.get(self, "directory")
 
     @property
     @pulumi.getter
+    def environment(self) -> pulumi.Output[Mapping[str, str]]:
+        """
+        Environment variables
+        """
+        return pulumi.get(self, "environment")
+
+    @property
+    @pulumi.getter
     def extract(self) -> pulumi.Output[bool]:
         """
-        Corresponds to the --extract option.
+        Corresponds to the `--extract` option.
         """
         return pulumi.get(self, "extract")
 
     @property
     @pulumi.getter
-    def files(self) -> pulumi.Output[Sequence[str]]:
+    def files(self) -> pulumi.Output[Any]:
         """
         Corresponds to the [FILE] argument.
         """
@@ -279,15 +407,39 @@ class Tar(pulumi.ComponentResource):
     @pulumi.getter
     def gzip(self) -> pulumi.Output[Optional[bool]]:
         """
-        Corresponds to the --gzip option.
+        Corresponds to the `--gzip` option.
         """
         return pulumi.get(self, "gzip")
 
     @property
     @pulumi.getter
+    def lifecycle(self) -> pulumi.Output[Optional[Any]]:
+        """
+        At what stage(s) in the resource lifecycle should the command be run
+        """
+        return pulumi.get(self, "lifecycle")
+
+    @property
+    @pulumi.getter(name="onDelete")
+    def on_delete(self) -> pulumi.Output[Optional[bool]]:
+        """
+        Whether rm should be run when the resource is created or deleted.
+        """
+        return pulumi.get(self, "on_delete")
+
+    @property
+    @pulumi.getter
+    def recursive(self) -> pulumi.Output[Optional[int]]:
+        """
+        Corresponds to the `--strip-components` option.
+        """
+        return pulumi.get(self, "recursive")
+
+    @property
+    @pulumi.getter
     def stderr(self) -> pulumi.Output[str]:
         """
-        The process' stderr.
+        TODO
         """
         return pulumi.get(self, "stderr")
 
@@ -295,7 +447,7 @@ class Tar(pulumi.ComponentResource):
     @pulumi.getter
     def stdin(self) -> pulumi.Output[Optional[str]]:
         """
-        The process' stdin.
+        TODO
         """
         return pulumi.get(self, "stdin")
 
@@ -303,15 +455,15 @@ class Tar(pulumi.ComponentResource):
     @pulumi.getter
     def stdout(self) -> pulumi.Output[str]:
         """
-        The process' stdout.
+        TODO
         """
         return pulumi.get(self, "stdout")
 
     @property
-    @pulumi.getter(name="stripComponents")
-    def strip_components(self) -> pulumi.Output[Optional[int]]:
+    @pulumi.getter
+    def triggers(self) -> pulumi.Output[Sequence[Any]]:
         """
-        Corresponds to the --strip-components option.
+        TODO
         """
-        return pulumi.get(self, "strip_components")
+        return pulumi.get(self, "triggers")
 

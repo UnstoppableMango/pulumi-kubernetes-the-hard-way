@@ -17,6 +17,9 @@ export const SystemdServiceExitType = {
     Cgroup: "cgroup",
 } as const;
 
+/**
+ * Systemd service exit type.
+ */
 export type SystemdServiceExitType = (typeof SystemdServiceExitType)[keyof typeof SystemdServiceExitType];
 
 export const SystemdServiceRestart = {
@@ -29,6 +32,9 @@ export const SystemdServiceRestart = {
     Always: "always",
 } as const;
 
+/**
+ * Systemd service restart behavior.
+ */
 export type SystemdServiceRestart = (typeof SystemdServiceRestart)[keyof typeof SystemdServiceRestart];
 
 export const SystemdServiceType = {
@@ -42,4 +48,7 @@ export const SystemdServiceType = {
     Idle: "idle",
 } as const;
 
+/**
+ * Systemd service type.
+ */
 export type SystemdServiceType = (typeof SystemdServiceType)[keyof typeof SystemdServiceType];
