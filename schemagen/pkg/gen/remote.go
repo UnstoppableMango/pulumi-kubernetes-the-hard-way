@@ -22,6 +22,72 @@ func generateRemote(commandSpec schema.PackageSpec) schema.PackageSpec {
 				{Value: "arm64"},
 			},
 		},
+		remoteMod + "SystemdInstallSeciont": {
+			ObjectTypeSpec: schema.ObjectTypeSpec{
+				Description: "https://www.freedesktop.org/software/systemd/man/latest/systemd.unit.html#%5BInstall%5D%20Section%20Options",
+				Type:        "object",
+				Properties: map[string]schema.PropertySpec{
+					"wantedBy": {
+						Description: "A symbolic link is created in the .wants/, .requires/, or .upholds/ directory of each of the listed units when this unit is installed by systemctl enable.",
+						TypeSpec:    typeSpecs.ArrayOfStrings,
+					},
+				},
+			},
+		},
+		remoteMod + "SystemdServiceExitType": {
+			ObjectTypeSpec: schema.ObjectTypeSpec{
+				Description: "Systemd service exit type.",
+				Type:        "string",
+			},
+			Enum: []schema.EnumValueSpec{
+				{Value: "main"},
+				{Value: "cgroup"},
+			},
+		},
+		remoteMod + "SystemdServiceRestart": {
+			ObjectTypeSpec: schema.ObjectTypeSpec{
+				Description: "Systemd service restart behavior.",
+				Type:        "string",
+			},
+			Enum: []schema.EnumValueSpec{
+				{Value: "no"},
+				{Value: "on-success"},
+				{Value: "on-failure"},
+				{Value: "on-abnormal"},
+				{Value: "on-watchdog"},
+				{Value: "on-abort"},
+				{Value: "always"},
+			},
+		},
+		remoteMod + "SystemdServiceType": {
+			ObjectTypeSpec: schema.ObjectTypeSpec{
+				Description: "Systemd service type.",
+				Type:        "string",
+			},
+			Enum: []schema.EnumValueSpec{
+				{Value: "simple"},
+				{Value: "exec"},
+				{Value: "forking"},
+				{Value: "oneshot"},
+				{Value: "dbus"},
+				{Value: "notify"},
+				{Value: "notify-reload"},
+				{Value: "idle"},
+			},
+		},
+		remoteMod + "SystemdServiceSection": {
+			ObjectTypeSpec: schema.ObjectTypeSpec{
+				Description: "https://www.freedesktop.org/software/systemd/man/latest/systemd.service.html#",
+				Type:        "object",
+				Properties: map[string]schema.PropertySpec{
+					"execStart": {
+						Description: "Commands that are executed when this service is started.",
+						TypeSpec:    typeSpecs.String, // This can technically be an array when type is oneshot
+					},
+					"exitType": {},
+				},
+			},
+		},
 	}
 
 	functions := map[string]schema.FunctionSpec{}
@@ -44,6 +110,7 @@ func generateRemote(commandSpec schema.PackageSpec) schema.PackageSpec {
 		remoteMod + "KubeProxyInstall":      generateBinaryInstall(commandSpec, "Installs kube-proxy on a remote system."),
 		remoteMod + "KubeSchedulerInstall":  generateBinaryInstall(commandSpec, "Installs kube-scheduler on a remote system."),
 		remoteMod + "RuncInstall":           generateBinaryInstall(commandSpec, "Installs runc on a remote system."),
+		remoteMod + "SystemdService":        generateSystemdService(commandSpec),
 	}
 
 	return schema.PackageSpec{
@@ -442,6 +509,63 @@ func generateFile(commandSpec schema.PackageSpec) schema.ResourceSpec {
 		IsComponent: true,
 		ObjectTypeSpec: schema.ObjectTypeSpec{
 			Description: "",
+			Properties:  outputs,
+			Required:    requiredOutputs,
+		},
+		InputProperties: inputs,
+		RequiredInputs:  requiredInputs,
+	}
+}
+
+func generateSystemdService(commandSpec schema.PackageSpec) schema.ResourceSpec {
+	inputs := map[string]schema.PropertySpec{
+		"connection": {
+			Description: "The parameters with which to connect to the remote host.",
+			TypeSpec:    schema.TypeSpec{Ref: refType(commandSpec, "Connection", "remote")},
+		},
+		"directory": {
+			Description: "The location to create the service file.",
+			TypeSpec:    typeSpecs.String,
+			Default:     "/etc/systemd/system",
+		},
+		"install": {
+			Description: "Describes the [Install] section of a systemd service file.",
+			TypeSpec:    schema.TypeSpec{Ref: localType("SystemdInstallSection", "remote")},
+		},
+		"service": {
+			Description: "Describes the [Service] section of a systemd service file.",
+			TypeSpec:    schema.TypeSpec{Ref: localType("SystemdServiceSection", "remote")},
+		},
+		"unit": {
+			Description: "Describes the [Unit] section of a systemd service file.",
+			TypeSpec:    schema.TypeSpec{Ref: localType("SystemdUnitSection", "remote")},
+		},
+	}
+
+	requiredInputs := []string{
+		"connection",
+		"service",
+	}
+
+	outputs := map[string]schema.PropertySpec{
+		"file": {
+			Description: "The service file on the remote machine.",
+			TypeSpec:    schema.TypeSpec{Ref: localResource("File", "remote")},
+		},
+	}
+	maps.Copy(outputs, inputs)
+
+	requiredOutputs := []string{
+		"connection",
+		"directory",
+		"file",
+		"service",
+	}
+
+	return schema.ResourceSpec{
+		IsComponent: true,
+		ObjectTypeSpec: schema.ObjectTypeSpec{
+			Description: "A systemd service on a remote system.",
 			Properties:  outputs,
 			Required:    requiredOutputs,
 		},
