@@ -98,6 +98,7 @@ func GenerateSchema(packageDir string) schema.PackageSpec {
 	}
 
 	return extendSchemas(packageSpec,
+		generateConfig(),
 		generateRemote(commandSpec),
 		generateTls(randomSpec, tlsSpec),
 		generateTools(commandSpec))
