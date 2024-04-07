@@ -8,7 +8,7 @@ import (
 
 	"github.com/UnstoppableMango/pulumi-kubernetes-the-hard-way/schemagen/pkg/gen"
 	"github.com/pkg/errors"
-	"github.com/pulumi/pulumi/pkg/codegen/schema"
+	"github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 )
 
 func main() {
@@ -17,7 +17,7 @@ func main() {
 	}
 
 	args := os.Args[1:]
-	if len(args) < 2 {
+	if len(args) < 1 {
 		printUsage()
 		os.Exit(1)
 	}
@@ -29,7 +29,7 @@ func main() {
 	}
 
 	rootDir := filepath.Join(cwd, "..", "..", "..")
-	packageDir := filepath.Join(rootDir, "cmd", "pulumi-resource-kubernetes-the-hard-way")
+	packageDir := filepath.Join(rootDir, "provider", "cmd", "pulumi-resource-kubernetes-the-hard-way")
 	spec := gen.GenerateSchema(packageDir)
 	mustWritePulumiSchema(spec, outDir)
 }
