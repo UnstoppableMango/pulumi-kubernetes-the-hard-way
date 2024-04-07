@@ -64,9 +64,7 @@ func generateTools(commandSpec schema.PackageSpec) schema.PackageSpec {
 	commonProps := map[string]schema.PropertySpec{
 		"binaryPath": {
 			Description: "Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH",
-			TypeSpec: schema.TypeSpec{
-				Type: "string",
-			},
+			TypeSpec:    typeSpecs.String,
 		},
 		"connection": {
 			Description: "Connection details for the remote system",
@@ -76,12 +74,7 @@ func generateTools(commandSpec schema.PackageSpec) schema.PackageSpec {
 		},
 		"environment": {
 			Description: "Environment variables",
-			TypeSpec: schema.TypeSpec{
-				Type: "object",
-				AdditionalProperties: &schema.TypeSpec{
-					Type: "string",
-				},
-			},
+			TypeSpec:    typeSpecs.StringMap,
 		},
 		"lifecycle": {
 			Description: "At what stage(s) in the resource lifecycle should the command be run",
@@ -92,9 +85,7 @@ func generateTools(commandSpec schema.PackageSpec) schema.PackageSpec {
 		},
 		"stdin": {
 			Description: "TODO",
-			TypeSpec: schema.TypeSpec{
-				Type: "string",
-			},
+			TypeSpec:    typeSpecs.String,
 		},
 		"triggers": {
 			Description: "TODO",
@@ -116,21 +107,15 @@ func generateTools(commandSpec schema.PackageSpec) schema.PackageSpec {
 		},
 		"stderr": {
 			Description: "TODO",
-			TypeSpec: schema.TypeSpec{
-				Type: "string",
-			},
+			TypeSpec:    typeSpecs.String,
 		},
 		"stdin": {
 			Description: "TODO",
-			TypeSpec: schema.TypeSpec{
-				Type: "string",
-			},
+			TypeSpec:    typeSpecs.String,
 		},
 		"stdout": {
 			Description: "TODO",
-			TypeSpec: schema.TypeSpec{
-				Type: "string",
-			},
+			TypeSpec:    typeSpecs.String,
 		},
 	}
 
@@ -184,33 +169,25 @@ func generateEtcdctl() schema.ResourceSpec {
 	inputs := map[string]schema.PropertySpec{
 		"caCert": {
 			Description: "TODO",
-			TypeSpec: schema.TypeSpec{
-				Type: "string",
-			},
+			TypeSpec:    typeSpecs.String,
 		},
 		"cert": {
 			Description: "TODO",
-			TypeSpec: schema.TypeSpec{
-				Type: "string",
-			},
+			TypeSpec:    typeSpecs.String,
 		},
 		"commands": {
 			Description: "TODO",
 			TypeSpec: schema.TypeSpec{
-				Ref: "#/types/kubernetes-the-hard-way:tools:EtcdctlCommand",
+				Ref: localType("EtcdctlCommand", "tools"),
 			},
 		},
 		"endpoints": {
 			Description: "TODO",
-			TypeSpec: schema.TypeSpec{
-				Type: "string",
-			},
+			TypeSpec:    typeSpecs.String,
 		},
 		"key": {
 			Description: "TODO",
-			TypeSpec: schema.TypeSpec{
-				Type: "string",
-			},
+			TypeSpec:    typeSpecs.String,
 		},
 	}
 
@@ -237,21 +214,15 @@ func generateMkdir() schema.ResourceSpec {
 	inputs := map[string]schema.PropertySpec{
 		"directory": {
 			Description: "The fully qualified path of the directory on the remote system.",
-			TypeSpec: schema.TypeSpec{
-				Type: "string",
-			},
+			TypeSpec:    typeSpecs.String,
 		},
 		"parents": {
 			Description: "Corresponds to the `--parents` option.",
-			TypeSpec: schema.TypeSpec{
-				Type: "boolean",
-			},
+			TypeSpec:    typeSpecs.Boolean,
 		},
 		"removeOnDelete": { // TODO: Reconsider this SOLID violation
 			Description: "Remove the created directory when the `Mkdir` resource is deleted or updated.",
-			TypeSpec: schema.TypeSpec{
-				Type: "boolean",
-			},
+			TypeSpec:    typeSpecs.Boolean,
 		},
 	}
 
@@ -276,39 +247,27 @@ func generateMktemp() schema.ResourceSpec {
 	inputs := map[string]schema.PropertySpec{
 		"directory": {
 			Description: "Corresponds to the `--directory` option.",
-			TypeSpec: schema.TypeSpec{
-				Type: "boolean",
-			},
+			TypeSpec:    typeSpecs.Boolean,
 		},
 		"dryRun": {
 			Description: "Corresponds to the `--dry-run` option.",
-			TypeSpec: schema.TypeSpec{
-				Type: "boolean",
-			},
+			TypeSpec:    typeSpecs.Boolean,
 		},
 		"quiet": {
 			Description: "Corresponds to the `--quiet` option.",
-			TypeSpec: schema.TypeSpec{
-				Type: "boolean",
-			},
+			TypeSpec:    typeSpecs.Boolean,
 		},
 		"suffix": {
 			Description: "Corresponds to the `--suffix` option.",
-			TypeSpec: schema.TypeSpec{
-				Type: "string",
-			},
+			TypeSpec:    typeSpecs.String,
 		},
 		"template": {
 			Description: "Corresponds to the [TEMPLATE] argument.",
-			TypeSpec: schema.TypeSpec{
-				Type: "boolean",
-			},
+			TypeSpec:    typeSpecs.Boolean,
 		},
 		"tmpdir": {
 			Description: "Corresponds to the `--tmpdir` option.",
-			TypeSpec: schema.TypeSpec{
-				Type: "string",
-			},
+			TypeSpec:    typeSpecs.String,
 		},
 	}
 
@@ -337,84 +296,55 @@ func generateMv() schema.ResourceSpec {
 		},
 		"context": {
 			Description: "Corresponds to the `--context` option.",
-			TypeSpec: schema.TypeSpec{
-				Type: "boolean",
-			},
+			TypeSpec:    typeSpecs.Boolean,
 		},
 		"control": {
 			Description: "Corresponds to the [CONTROL] argument for the `--backup` option.",
-			TypeSpec: schema.TypeSpec{
-				Type: "boolean",
-			},
+			TypeSpec:    typeSpecs.Boolean,
 		},
 		"dest": {
 			Description: "Corresponds to the [DEST] argument.",
-			TypeSpec: schema.TypeSpec{
-				Type: "string",
-			},
+			TypeSpec:    typeSpecs.String,
 		},
 		"directory": {
 			Description: "Corresponds to the [DIRECTORY] argument.",
-			TypeSpec: schema.TypeSpec{
-				Type: "string",
-			},
+			TypeSpec:    typeSpecs.String,
 		},
 		"force": {
 			Description: "Corresponds to the `--force` option.",
-			TypeSpec: schema.TypeSpec{
-				Type: "boolean",
-			},
+			TypeSpec:    typeSpecs.Boolean,
 		},
 		"noClobber": {
 			Description: "Corresponds to the `--no-clobber` option.",
-			TypeSpec: schema.TypeSpec{
-				Type: "boolean",
-			},
+			TypeSpec:    typeSpecs.Boolean,
 		},
 		"noTargetDirectory": {
 			Description: "Corresponds to the `--no-target-directory` option.",
-			TypeSpec: schema.TypeSpec{
-				Type: "boolean",
-			},
+			TypeSpec:    typeSpecs.Boolean,
 		},
 		"source": {
 			Description: "Corresponds to the [SOURCE] argument.",
-			TypeSpec: schema.TypeSpec{
-				OneOf: []schema.TypeSpec{
-					{Type: "string"},
-					arrayOfStrings,
-				},
-			},
+			TypeSpec:    typeSpecs.OneOrMoreStrings,
 		},
 		"stripTrailingSlashes": {
 			Description: "Corresponds to the `--strip-trailing-slashes` option.",
-			TypeSpec: schema.TypeSpec{
-				Type: "boolean",
-			},
+			TypeSpec:    typeSpecs.Boolean,
 		},
 		"suffix": {
 			Description: "Corresponds to the `--suffix` option.",
-			TypeSpec: schema.TypeSpec{
-				Type: "string",
-			},
+			TypeSpec:    typeSpecs.String,
 		},
 		"targetDirectory": {
 			Description: "Corresponds to the `--target-directory` option.",
-			TypeSpec: schema.TypeSpec{
-				Type: "boolean",
-			},
+			TypeSpec:    typeSpecs.Boolean,
 		},
 		"update": {
 			Description: "Corresponds to the `--update` option.",
-			TypeSpec: schema.TypeSpec{
-				Type: "boolean",
-			},
+			TypeSpec:    typeSpecs.Boolean,
 		},
 		"verbose": {
 			Description: "Corresponds to the `--verbose` option.",
-			TypeSpec: schema.TypeSpec{
-				Type: "boolean",
-			},
+			TypeSpec:    typeSpecs.Boolean,
 		},
 	}
 
@@ -454,33 +384,22 @@ func generateRm() schema.ResourceSpec {
 		},
 		"files": {
 			Description: "Corresponds to the [FILE] argument.",
-			TypeSpec: schema.TypeSpec{
-				OneOf: []schema.TypeSpec{
-					{Type: "string"},
-					arrayOfStrings,
-				},
-			},
+			TypeSpec:    typeSpecs.OneOrMoreStrings,
 		},
 		"force": {
 			Description: "Corresponds to the `--force` option.",
-			TypeSpec: schema.TypeSpec{
-				Type: "boolean",
-			},
+			TypeSpec:    typeSpecs.Boolean,
 		},
 		"onDelete": { // TODO: Reconsider this SOLID violation
 			Description: "Whether rm should be run when the resource is created or deleted.",
 		},
 		"recursive": {
 			Description: "Corresponds to the `--recursive` option.",
-			TypeSpec: schema.TypeSpec{
-				Type: "boolean",
-			},
+			TypeSpec:    typeSpecs.Boolean,
 		},
 		"verbose": {
 			Description: "Corresponds to the `--verbose` option.",
-			TypeSpec: schema.TypeSpec{
-				Type: "boolean",
-			},
+			TypeSpec:    typeSpecs.Boolean,
 		},
 	}
 
@@ -516,18 +435,11 @@ func generateSystemctl() schema.ResourceSpec {
 		},
 		"pattern": {
 			Description: "Corresponds to the [PATTERN] argument",
-			TypeSpec: schema.TypeSpec{
-				Type: "string",
-			},
+			TypeSpec:    typeSpecs.String,
 		},
 		"unit": {
 			Description: "Corresponds to the [UNIT...] argument.",
-			TypeSpec: schema.TypeSpec{
-				OneOf: []schema.TypeSpec{
-					{Type: "string"},
-					arrayOfStrings,
-				},
-			},
+			TypeSpec:    typeSpecs.OneOrMoreStrings,
 		},
 	}
 
@@ -556,45 +468,30 @@ func generateTar() schema.ResourceSpec {
 	inputs := map[string]schema.PropertySpec{
 		"archive": {
 			Description: "Corresponds to the [ARCHIVE] argument.",
-			TypeSpec: schema.TypeSpec{
-				Type: "string",
-			},
+			TypeSpec:    typeSpecs.String,
 		},
 		"directory": {
 			Description: "Corresponds to the `--directory` option.",
-			TypeSpec: schema.TypeSpec{
-				Type: "string",
-			},
+			TypeSpec:    typeSpecs.String,
 		},
 		"extract": {
 			Description: "Corresponds to the `--extract` option.",
-			TypeSpec: schema.TypeSpec{
-				Type: "boolean",
-			},
+			TypeSpec:    typeSpecs.Boolean,
 		},
 		"files": {
 			Description: "Corresponds to the [FILE] argument.",
-			TypeSpec: schema.TypeSpec{
-				OneOf: []schema.TypeSpec{
-					{Type: "string"},
-					arrayOfStrings,
-				},
-			},
+			TypeSpec:    typeSpecs.OneOrMoreStrings,
 		},
 		"gzip": {
 			Description: "Corresponds to the `--gzip` option.",
-			TypeSpec: schema.TypeSpec{
-				Type: "boolean",
-			},
+			TypeSpec:    typeSpecs.Boolean,
 		},
 		"onDelete": { // TODO: Reconsider this SOLID violation
 			Description: "Whether rm should be run when the resource is created or deleted.",
 		},
 		"recursive": {
 			Description: "Corresponds to the `--strip-components` option.",
-			TypeSpec: schema.TypeSpec{
-				Type: "integer",
-			},
+			TypeSpec:    typeSpecs.Integer,
 		},
 	}
 
@@ -620,24 +517,15 @@ func generateTee() schema.ResourceSpec {
 	inputs := map[string]schema.PropertySpec{
 		"append": {
 			Description: "Append to the given FILEs, do not overwrite",
-			TypeSpec: schema.TypeSpec{
-				Type: "boolean",
-			},
+			TypeSpec:    typeSpecs.Boolean,
 		},
 		"files": {
 			Description: "Corresponds to the [FILE] argument.",
-			TypeSpec: schema.TypeSpec{
-				OneOf: []schema.TypeSpec{
-					{Type: "string"},
-					arrayOfStrings,
-				},
-			},
+			TypeSpec:    typeSpecs.OneOrMoreStrings,
 		},
 		"ignoreInterrupts": {
 			Description: "Ignore interrupt signals.",
-			TypeSpec: schema.TypeSpec{
-				Type: "boolean",
-			},
+			TypeSpec:    typeSpecs.Boolean,
 		},
 		"outputError": {
 			Description: "Set behavior on write error.",
@@ -647,15 +535,11 @@ func generateTee() schema.ResourceSpec {
 		},
 		"pipe": {
 			Description: "Operate in a more appropriate MODE with pipes.",
-			TypeSpec: schema.TypeSpec{
-				Type: "boolean",
-			},
+			TypeSpec:    typeSpecs.Boolean,
 		},
 		"version": {
 			Description: "Output version information and exit.",
-			TypeSpec: schema.TypeSpec{
-				Type: "boolean",
-			},
+			TypeSpec:    typeSpecs.Boolean,
 		},
 	}
 
@@ -684,48 +568,31 @@ func generateWget() schema.ResourceSpec {
 	inputs := map[string]schema.PropertySpec{
 		"directoryPrefix": {
 			Description: "The  directory prefix is the directory where all other files and subdirectories will be saved to, i.e. the top of the retrieval tree.  The default is . (the current directory).",
-			TypeSpec: schema.TypeSpec{
-				Type: "string",
-			},
+			TypeSpec:    typeSpecs.String,
 		},
 		"httpsOnly": {
 			Description: "When in recursive mode, only HTTPS links are followed.",
-			TypeSpec: schema.TypeSpec{
-				Type: "boolean",
-			},
+			TypeSpec:    typeSpecs.Boolean,
 		},
 		"noVerbose": {
 			Description: "Turn off verbose without being completely quiet (use -q for that), which means that error messages and basic information still get printed.",
-			TypeSpec: schema.TypeSpec{
-				Type: "boolean",
-			},
+			TypeSpec:    typeSpecs.Boolean,
 		},
 		"outputDocument": {
 			Description: "The  documents  will  not  be  written  to the appropriate files, but all will be concatenated together and written to file.",
-			TypeSpec: schema.TypeSpec{
-				Type: "string",
-			},
+			TypeSpec:    typeSpecs.String,
 		},
 		"quiet": {
 			Description: "Turn off Wget's output.",
-			TypeSpec: schema.TypeSpec{
-				Type: "boolean",
-			},
+			TypeSpec:    typeSpecs.Boolean,
 		},
 		"timestamping": {
 			Description: "Turn on time-stamping.",
-			TypeSpec: schema.TypeSpec{
-				Type: "boolean",
-			},
+			TypeSpec:    typeSpecs.Boolean,
 		},
 		"url": {
 			Description: "Corresponds to the [URL...] argument.",
-			TypeSpec: schema.TypeSpec{
-				OneOf: []schema.TypeSpec{
-					{Type: "string"},
-					arrayOfStrings,
-				},
-			},
+			TypeSpec:    typeSpecs.OneOrMoreStrings,
 		},
 	}
 

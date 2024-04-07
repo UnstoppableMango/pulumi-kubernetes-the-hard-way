@@ -7,10 +7,34 @@ import (
 	"github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 )
 
-var arrayOfStrings = schema.TypeSpec{
-	Type: "array",
-	Items: &schema.TypeSpec{
-		Type: "string",
+var typeSpecs = struct {
+	ArrayOfStrings   schema.TypeSpec
+	Boolean          schema.TypeSpec
+	Integer          schema.TypeSpec
+	OneOrMoreStrings schema.TypeSpec
+	String           schema.TypeSpec
+	StringMap        schema.TypeSpec
+}{
+	ArrayOfStrings: schema.TypeSpec{
+		Type: "array",
+		Items: &schema.TypeSpec{
+			Type: "string",
+		},
+	},
+	Boolean: schema.TypeSpec{Type: "boolean"},
+	Integer: schema.TypeSpec{Type: "integer"},
+	OneOrMoreStrings: schema.TypeSpec{
+		OneOf: []schema.TypeSpec{
+			{Type: "string"},
+			{Type: "array", Items: &schema.TypeSpec{
+				Type: "string",
+			}},
+		},
+	},
+	String: schema.TypeSpec{Type: "string"},
+	StringMap: schema.TypeSpec{
+		Type:                 "object",
+		AdditionalProperties: &schema.TypeSpec{Type: "string"},
 	},
 }
 
