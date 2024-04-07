@@ -33,6 +33,7 @@ func generateRemote(commandSpec schema.PackageSpec) schema.PackageSpec {
 			"static", "tap", "tuning", "vlan", "vrf"),
 		remoteMod + "ContainerdInstall":     generateArchiveInstall(commandSpec, "Installs containerd on a remote system", "containerd"),
 		remoteMod + "CrictlInstall":         generateArchiveInstall(commandSpec, "Installs crictl on a remote system", "crictl"),
+		remoteMod + "Download":              generateDownload(commandSpec),
 		remoteMod + "EtcdInstall":           generateArchiveInstall(commandSpec, "Installs etcd on a remote system", "etcd", "etcdctl"),
 		remoteMod + "KubeApiServerInstall":  generateBinaryInstall(commandSpec, "Installs kube-apiserver on a remote system."),
 		remoteMod + "KubeControllerManager": generateBinaryInstall(commandSpec, "Installs kube-controller-manager on a remote system."),
@@ -230,6 +231,65 @@ func generateBinaryInstall(
 		IsComponent: true,
 		ObjectTypeSpec: schema.ObjectTypeSpec{
 			Description: description,
+			Properties:  outputs,
+			Required:    requiredOutputs,
+		},
+		InputProperties: inputs,
+		RequiredInputs:  requiredInputs,
+	}
+}
+
+func generateDownload(commandSpec schema.PackageSpec) schema.ResourceSpec {
+	inputs := map[string]schema.PropertySpec{
+		"connection": {
+			Description: "The parameters with which to connect to the remote host.",
+			TypeSpec:    schema.TypeSpec{Ref: refType(commandSpec, "Connection", "remote")},
+		},
+		"destination": {
+			Description: "The fully qualified path on the remote system where the file should be downloaded to.",
+			TypeSpec:    typeSpecs.String,
+		},
+		"removeOnDelete": {
+			Description: "Remove the downloaded fiel when the resource is deleted.",
+			TypeSpec:    typeSpecs.Boolean,
+		},
+		"url": {
+			Description: "The URL of the file to be downloaded.",
+			TypeSpec:    typeSpecs.String,
+		},
+	}
+
+	requiredInputs := []string{
+		"connection",
+		"destination",
+		"url",
+	}
+
+	outputs := map[string]schema.PropertySpec{
+		"mkdir": {
+			Description: "The mkdir operation.",
+			TypeSpec:    schema.TypeSpec{Ref: localResource("Mkdir", "tools")},
+		},
+		"wget": {
+			Description: "The wget operation.",
+			TypeSpec:    schema.TypeSpec{Ref: localResource("Wget", "tools")},
+		},
+	}
+	maps.Copy(outputs, inputs)
+
+	requiredOutputs := []string{
+		"connection",
+		"destination",
+		"mkdir",
+		"removeOnDelete",
+		"url",
+		"wget",
+	}
+
+	return schema.ResourceSpec{
+		IsComponent: true,
+		ObjectTypeSpec: schema.ObjectTypeSpec{
+			Description: "Downloads the file specified by `url` onto a remote system.",
 			Properties:  outputs,
 			Required:    requiredOutputs,
 		},
