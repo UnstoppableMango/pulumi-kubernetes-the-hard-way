@@ -165,7 +165,7 @@ func generateCertificate(tlsSpec schema.PackageSpec) schema.ResourceSpec {
 	locallySignedCert := tlsSpec.Resources["tls:index/locallySignedCert:LocallySignedCert"]
 	privateKey := tlsSpec.Resources["tls:index/privateKey:PrivateKey"]
 
-	overrides := map[string]schema.PropertySpec{
+	inputs := map[string]schema.PropertySpec{
 		"algorithm": {
 			Description: "Name of the algorithm to use when generating the private key.",
 			TypeSpec:    schema.TypeSpec{Ref: localType("Algorithm", "tls")},
@@ -179,13 +179,30 @@ func generateCertificate(tlsSpec schema.PackageSpec) schema.ResourceSpec {
 		},
 	}
 
-	// TODO: There are a couple of these that we don't need
 	// TODO: Need to rename some refs like `subject`
-	inputs := map[string]schema.PropertySpec{}
-	maps.Copy(inputs, certRequest.InputProperties)
-	maps.Copy(inputs, locallySignedCert.InputProperties)
-	maps.Copy(inputs, privateKey.InputProperties)
-	maps.Copy(inputs, overrides)
+	for k, v := range privateKey.InputProperties {
+		if _, found := inputs[k]; found {
+			continue
+		}
+
+		inputs[k] = v
+	}
+
+	for k, v := range certRequest.InputProperties {
+		if _, found := inputs[k]; found || k == "privateKeyPem" {
+			continue
+		}
+
+		inputs[k] = v
+	}
+
+	for k, v := range locallySignedCert.InputProperties {
+		if _, found := inputs[k]; found || k == "certRequestPem" {
+			continue
+		}
+
+		inputs[k] = v
+	}
 
 	requiredInputs := []string{
 		"algorithm",
@@ -215,11 +232,10 @@ func generateCertificate(tlsSpec schema.PackageSpec) schema.ResourceSpec {
 			},
 		},
 	}
-	maps.Copy(outputs, inputs)
 	maps.Copy(outputs, certRequest.Properties)
 	maps.Copy(outputs, locallySignedCert.Properties)
 	maps.Copy(outputs, privateKey.Properties)
-	maps.Copy(outputs, overrides)
+	maps.Copy(outputs, inputs)
 
 	requiredOutputs := slices.Concat(
 		certRequest.Required,
@@ -391,29 +407,33 @@ func generateEncryptionKey(randomSpec schema.PackageSpec) schema.ResourceSpec {
 }
 
 func generateRootCa(tlsSpec schema.PackageSpec) schema.ResourceSpec {
-	locallySignedCert := tlsSpec.Resources["tls:index/selfSignedCert:SelfSignedCert"]
+	selfSignedCert := tlsSpec.Resources["tls:index/selfSignedCert:SelfSignedCert"]
 	privateKey := tlsSpec.Resources["tls:index/privateKey:PrivateKey"]
 
-	overrides := map[string]schema.PropertySpec{
+	inputs := map[string]schema.PropertySpec{
 		"algorithm": {
 			Description: "Name of the algorithm to use when generating the private key.",
 			TypeSpec:    schema.TypeSpec{Ref: localType("Algorithm", "tls")},
 		},
-		"allowedUses": {
-			Description: "List of key usages allowed for the issued certificate.",
-			TypeSpec: schema.TypeSpec{
-				Type:  "array",
-				Items: &schema.TypeSpec{Ref: localType("AllowedUsage", "tls")},
-			},
-		},
 	}
 
-	// TODO: There are a few of these we don't need.
 	// TODO: Need to rename some refs like `subject`
-	inputs := map[string]schema.PropertySpec{}
-	maps.Copy(inputs, locallySignedCert.InputProperties)
-	maps.Copy(inputs, privateKey.InputProperties)
-	maps.Copy(inputs, overrides)
+	ignoredInputs := []string{"allowedUses", "isCaCertificate", "privateKeyPem"}
+	for k, v := range selfSignedCert.InputProperties {
+		if _, found := inputs[k]; found || slices.Contains(ignoredInputs, k) {
+			continue
+		}
+
+		inputs[k] = v
+	}
+
+	for k, v := range privateKey.InputProperties {
+		if _, found := inputs[k]; found {
+			continue
+		}
+
+		inputs[k] = v
+	}
 
 	requiredInputs := []string{"validityPeriodHours"}
 
@@ -427,11 +447,15 @@ func generateRootCa(tlsSpec schema.PackageSpec) schema.ResourceSpec {
 			TypeSpec:    schema.TypeSpec{Ref: refResource(tlsSpec, "PrivateKey", "index", "privateKey")},
 		},
 	}
-	maps.Copy(outputs, locallySignedCert.Properties)
+	maps.Copy(outputs, selfSignedCert.Properties)
 	maps.Copy(outputs, privateKey.Properties)
 	maps.Copy(outputs, inputs)
 
-	requiredOutputs := []string{"cert", "key"}
+	requiredOutputs := slices.Concat(
+		selfSignedCert.Required,
+		privateKey.Required,
+		[]string{"cert", "key"},
+	)
 
 	return schema.ResourceSpec{
 		IsComponent: true,
