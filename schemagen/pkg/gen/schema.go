@@ -23,7 +23,7 @@ func GenerateSchema(packageDir string) schema.PackageSpec {
 
 	packageSpec := schema.PackageSpec{
 		Name:              "kubernetes-the-hard-way",
-		Description:       "A Pulumi implementation of Kelsey Hightower's Kubernetes the hard way",
+		Description:       "A Pulumi implementation of Kelsey Hightower's Kubernetes the Hard Way",
 		Repository:        "https://github.com/UnstoppableMango/pulumi-kubernetes-the-hard-way",
 		License:           "Apache-2.0",
 		Keywords:          []string{"pulumi", "command", "tls", "kubernetes", "category/utility", "kind/component"},
@@ -56,18 +56,75 @@ func GenerateSchema(packageDir string) schema.PackageSpec {
 				"liftSingleValueMethodReturns": true,
 				"dependencies": map[string]string{
 					"@pulumi/pulumi":  "^3.0.0",
-					"@pulumi/command": "^0.9.0",
-					"@pulumi/random":  "^4.0.0",
-					"@pulumi/tls":     "^3.7.0",
+					"@pulumi/command": "^" + dependencies.Command,
+					"@pulumi/random":  "^" + dependencies.Random,
+					"@pulumi/tls":     "^" + dependencies.Tls,
 				},
 				"devDependencies": map[string]string{
-					"typescript": "^3.7.0",
+					"@types/node": "^18",
+					"typescript":  "^4.6.2",
+				},
+			}),
+			"python": rawMessage(map[string]interface{}{
+				"liftSingleValueMethodReturns": true,
+				"pyproject": map[string]bool{
+					"enabled": true,
+				},
+				"requires": map[string]string{
+					"pulumi":         ">=3.91.1,<4.0.0",
+					"pulumi-command": fmt.Sprintf(">=%s,<1.0.0", dependencies.Command),
+					"pulumi-random":  fmt.Sprintf(">=%s,<5.0.0", dependencies.Random),
+					"pulumi-tls":     fmt.Sprintf(">=%s,<6.0.0", dependencies.Tls),
+				},
+			}),
+			"java": rawMessage(map[string]interface{}{
+				"basePackage":                     "com.unmango",
+				"buildFiles":                      "gradle",
+				"liftSingleValueMethodReturns":    true,
+				"gradleNexusPublishPluginVersion": "1.1.0",
+				"dependencies": map[string]string{
+					"com.google.code.findbugs:jsr305": "3.0.2",
+					"com.google.code.gson:gson":       "2.8.9",
+					"com.pulumi:command":              dependencies.Command,
+					"com.pulumi:pulumi":               "0.9.9",
+					"com.pulumi:random":               dependencies.Random,
+					"com.pulumi:tls":                  dependencies.Tls,
 				},
 			}),
 		},
 	}
 
-	return packageSpec
+	return extendSchemas(packageSpec,
+		generateRemote(commandSpec),
+		generateTls(randomSpec, tlsSpec),
+		generateTools(commandSpec))
+}
+
+func extendSchemas(spec schema.PackageSpec, extensions ...schema.PackageSpec) schema.PackageSpec {
+	for _, extension := range extensions {
+		for k, v := range extension.Resources {
+			if _, found := spec.Resources[k]; found {
+				log.Fatalf("resource already defined %q", k)
+			}
+			spec.Resources[k] = v
+		}
+
+		for k, v := range extension.Types {
+			if _, found := spec.Types[k]; found {
+				log.Fatalf("type already defined %q", k)
+			}
+			spec.Types[k] = v
+		}
+
+		for k, v := range extension.Functions {
+			if _, found := spec.Functions[k]; found {
+				log.Fatalf("function already defined %q", k)
+			}
+			spec.Functions[k] = v
+		}
+	}
+
+	return spec
 }
 
 func rawMessage(v interface{}) schema.RawMessage {
