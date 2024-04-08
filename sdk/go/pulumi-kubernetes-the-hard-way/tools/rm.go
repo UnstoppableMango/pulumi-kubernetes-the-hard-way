@@ -106,7 +106,7 @@ type RmArgs struct {
 	// Connection details for the remote system
 	Connection pulumiCommand.ConnectionInput
 	// Corresponds to the `--dir` option.
-	Dir *bool
+	Dir pulumi.BoolPtrInput
 	// Environment variables
 	Environment pulumi.StringMapInput
 	// Corresponds to the [FILE] argument.

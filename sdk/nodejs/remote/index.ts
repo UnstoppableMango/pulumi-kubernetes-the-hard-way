@@ -45,10 +45,10 @@ export type KubeApiServerInstall = import("./kubeApiServerInstall").KubeApiServe
 export const KubeApiServerInstall: typeof import("./kubeApiServerInstall").KubeApiServerInstall = null as any;
 utilities.lazyLoad(exports, ["KubeApiServerInstall"], () => require("./kubeApiServerInstall"));
 
-export { KubeControllerManagerArgs } from "./kubeControllerManager";
-export type KubeControllerManager = import("./kubeControllerManager").KubeControllerManager;
-export const KubeControllerManager: typeof import("./kubeControllerManager").KubeControllerManager = null as any;
-utilities.lazyLoad(exports, ["KubeControllerManager"], () => require("./kubeControllerManager"));
+export { KubeControllerManagerInstallArgs } from "./kubeControllerManagerInstall";
+export type KubeControllerManagerInstall = import("./kubeControllerManagerInstall").KubeControllerManagerInstall;
+export const KubeControllerManagerInstall: typeof import("./kubeControllerManagerInstall").KubeControllerManagerInstall = null as any;
+utilities.lazyLoad(exports, ["KubeControllerManagerInstall"], () => require("./kubeControllerManagerInstall"));
 
 export { KubeProxyInstallArgs } from "./kubeProxyInstall";
 export type KubeProxyInstall = import("./kubeProxyInstall").KubeProxyInstall;
@@ -104,8 +104,8 @@ const _module = {
                 return new File(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:remote:KubeApiServerInstall":
                 return new KubeApiServerInstall(name, <any>undefined, { urn })
-            case "kubernetes-the-hard-way:remote:KubeControllerManager":
-                return new KubeControllerManager(name, <any>undefined, { urn })
+            case "kubernetes-the-hard-way:remote:KubeControllerManagerInstall":
+                return new KubeControllerManagerInstall(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:remote:KubeProxyInstall":
                 return new KubeProxyInstall(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:remote:KubeSchedulerInstall":

@@ -25,7 +25,7 @@
         "remote/file.ts",
         "remote/index.ts",
         "remote/kubeApiServerInstall.ts",
-        "remote/kubeControllerManager.ts",
+        "remote/kubeControllerManagerInstall.ts",
         "remote/kubeProxyInstall.ts",
         "remote/kubeSchedulerInstall.ts",
         "remote/kubectlInstall.ts",

@@ -11,17 +11,17 @@ from .. import _utilities
 from ._enums import *
 import pulumi_command
 
-__all__ = ['KubeControllerManagerArgs', 'KubeControllerManager']
+__all__ = ['KubeControllerManagerInstallArgs', 'KubeControllerManagerInstall']
 
 @pulumi.input_type
-class KubeControllerManagerArgs:
+class KubeControllerManagerInstallArgs:
     def __init__(__self__, *,
                  connection: pulumi.Input['pulumi_command.remote.ConnectionArgs'],
                  architecture: Optional[pulumi.Input['Architecture']] = None,
                  directory: Optional[pulumi.Input[str]] = None,
                  version: Optional[pulumi.Input[str]] = None):
         """
-        The set of arguments for constructing a KubeControllerManager resource.
+        The set of arguments for constructing a KubeControllerManagerInstall resource.
         :param pulumi.Input['pulumi_command.remote.ConnectionArgs'] connection: The parameters with which to connect to the remote host.
         :param pulumi.Input['Architecture'] architecture: The CPU architecture to install.
         :param pulumi.Input[str] directory: The directory to install the binary to.
@@ -86,7 +86,7 @@ class KubeControllerManagerArgs:
         pulumi.set(self, "version", value)
 
 
-class KubeControllerManager(pulumi.ComponentResource):
+class KubeControllerManagerInstall(pulumi.ComponentResource):
     @overload
     def __init__(__self__,
                  resource_name: str,
@@ -110,18 +110,18 @@ class KubeControllerManager(pulumi.ComponentResource):
     @overload
     def __init__(__self__,
                  resource_name: str,
-                 args: KubeControllerManagerArgs,
+                 args: KubeControllerManagerInstallArgs,
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
         Installs kube-controller-manager on a remote system.
 
         :param str resource_name: The name of the resource.
-        :param KubeControllerManagerArgs args: The arguments to use to populate this resource's properties.
+        :param KubeControllerManagerInstallArgs args: The arguments to use to populate this resource's properties.
         :param pulumi.ResourceOptions opts: Options for the resource.
         """
         ...
     def __init__(__self__, resource_name: str, *args, **kwargs):
-        resource_args, opts = _utilities.get_resource_args_opts(KubeControllerManagerArgs, pulumi.ResourceOptions, *args, **kwargs)
+        resource_args, opts = _utilities.get_resource_args_opts(KubeControllerManagerInstallArgs, pulumi.ResourceOptions, *args, **kwargs)
         if resource_args is not None:
             __self__._internal_init(resource_name, opts, **resource_args.__dict__)
         else:
@@ -143,7 +143,7 @@ class KubeControllerManager(pulumi.ComponentResource):
         else:
             if __props__ is not None:
                 raise TypeError('__props__ is only valid when passed in combination with a valid opts.id to get an existing resource')
-            __props__ = KubeControllerManagerArgs.__new__(KubeControllerManagerArgs)
+            __props__ = KubeControllerManagerInstallArgs.__new__(KubeControllerManagerInstallArgs)
 
             __props__.__dict__["architecture"] = architecture
             if connection is None and not opts.urn:
@@ -161,8 +161,8 @@ class KubeControllerManager(pulumi.ComponentResource):
             __props__.__dict__["path"] = None
             __props__.__dict__["rm"] = None
             __props__.__dict__["url"] = None
-        super(KubeControllerManager, __self__).__init__(
-            'kubernetes-the-hard-way:remote:KubeControllerManager',
+        super(KubeControllerManagerInstall, __self__).__init__(
+            'kubernetes-the-hard-way:remote:KubeControllerManagerInstall',
             resource_name,
             __props__,
             opts,

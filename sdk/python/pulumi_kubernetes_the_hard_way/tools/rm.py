@@ -18,7 +18,7 @@ class RmArgs:
                  connection: pulumi.Input['pulumi_command.remote.ConnectionArgs'],
                  files: pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]],
                  binary_path: Optional[pulumi.Input[str]] = None,
-                 dir: Optional[bool] = None,
+                 dir: Optional[pulumi.Input[bool]] = None,
                  environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  force: Optional[pulumi.Input[bool]] = None,
                  lifecycle: Optional[Any] = None,
@@ -32,7 +32,7 @@ class RmArgs:
         :param pulumi.Input['pulumi_command.remote.ConnectionArgs'] connection: Connection details for the remote system
         :param pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]] files: Corresponds to the [FILE] argument.
         :param pulumi.Input[str] binary_path: Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
-        :param bool dir: Corresponds to the `--dir` option.
+        :param pulumi.Input[bool] dir: Corresponds to the `--dir` option.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] environment: Environment variables
         :param pulumi.Input[bool] force: Corresponds to the `--force` option.
         :param Any lifecycle: At what stage(s) in the resource lifecycle should the command be run
@@ -103,14 +103,14 @@ class RmArgs:
 
     @property
     @pulumi.getter
-    def dir(self) -> Optional[bool]:
+    def dir(self) -> Optional[pulumi.Input[bool]]:
         """
         Corresponds to the `--dir` option.
         """
         return pulumi.get(self, "dir")
 
     @dir.setter
-    def dir(self, value: Optional[bool]):
+    def dir(self, value: Optional[pulumi.Input[bool]]):
         pulumi.set(self, "dir", value)
 
     @property
@@ -217,7 +217,7 @@ class Rm(pulumi.ComponentResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  binary_path: Optional[pulumi.Input[str]] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
-                 dir: Optional[bool] = None,
+                 dir: Optional[pulumi.Input[bool]] = None,
                  environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  files: Optional[pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]]] = None,
                  force: Optional[pulumi.Input[bool]] = None,
@@ -235,7 +235,7 @@ class Rm(pulumi.ComponentResource):
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[str] binary_path: Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
         :param pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']] connection: Connection details for the remote system
-        :param bool dir: Corresponds to the `--dir` option.
+        :param pulumi.Input[bool] dir: Corresponds to the `--dir` option.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] environment: Environment variables
         :param pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]] files: Corresponds to the [FILE] argument.
         :param pulumi.Input[bool] force: Corresponds to the `--force` option.
@@ -272,7 +272,7 @@ class Rm(pulumi.ComponentResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  binary_path: Optional[pulumi.Input[str]] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
-                 dir: Optional[bool] = None,
+                 dir: Optional[pulumi.Input[bool]] = None,
                  environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  files: Optional[pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]]] = None,
                  force: Optional[pulumi.Input[bool]] = None,

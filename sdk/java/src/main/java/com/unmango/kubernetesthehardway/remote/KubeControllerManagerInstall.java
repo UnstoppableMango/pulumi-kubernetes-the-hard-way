@@ -9,7 +9,7 @@ import com.pulumi.core.annotations.Export;
 import com.pulumi.core.annotations.ResourceType;
 import com.pulumi.core.internal.Codegen;
 import com.unmango.kubernetesthehardway.Utilities;
-import com.unmango.kubernetesthehardway.remote.KubeControllerManagerArgs;
+import com.unmango.kubernetesthehardway.remote.KubeControllerManagerInstallArgs;
 import com.unmango.kubernetesthehardway.remote.enums.Architecture;
 import com.unmango.kubernetesthehardway.remote.outputs.Download;
 import com.unmango.kubernetesthehardway.tools.outputs.Mkdir;
@@ -24,8 +24,8 @@ import javax.annotation.Nullable;
  * Installs kube-controller-manager on a remote system.
  * 
  */
-@ResourceType(type="kubernetes-the-hard-way:remote:KubeControllerManager")
-public class KubeControllerManager extends com.pulumi.resources.ComponentResource {
+@ResourceType(type="kubernetes-the-hard-way:remote:KubeControllerManagerInstall")
+public class KubeControllerManagerInstall extends com.pulumi.resources.ComponentResource {
     /**
      * The CPU architecture to install.
      * 
@@ -199,15 +199,15 @@ public class KubeControllerManager extends com.pulumi.resources.ComponentResourc
      *
      * @param name The _unique_ name of the resulting resource.
      */
-    public KubeControllerManager(String name) {
-        this(name, KubeControllerManagerArgs.Empty);
+    public KubeControllerManagerInstall(String name) {
+        this(name, KubeControllerManagerInstallArgs.Empty);
     }
     /**
      *
      * @param name The _unique_ name of the resulting resource.
      * @param args The arguments to use to populate this resource's properties.
      */
-    public KubeControllerManager(String name, KubeControllerManagerArgs args) {
+    public KubeControllerManagerInstall(String name, KubeControllerManagerInstallArgs args) {
         this(name, args, null);
     }
     /**
@@ -216,8 +216,8 @@ public class KubeControllerManager extends com.pulumi.resources.ComponentResourc
      * @param args The arguments to use to populate this resource's properties.
      * @param options A bag of options that control this resource's behavior.
      */
-    public KubeControllerManager(String name, KubeControllerManagerArgs args, @Nullable com.pulumi.resources.ComponentResourceOptions options) {
-        super("kubernetes-the-hard-way:remote:KubeControllerManager", name, args == null ? KubeControllerManagerArgs.Empty : args, makeResourceOptions(options, Codegen.empty()), true);
+    public KubeControllerManagerInstall(String name, KubeControllerManagerInstallArgs args, @Nullable com.pulumi.resources.ComponentResourceOptions options) {
+        super("kubernetes-the-hard-way:remote:KubeControllerManagerInstall", name, args == null ? KubeControllerManagerInstallArgs.Empty : args, makeResourceOptions(options, Codegen.empty()), true);
     }
 
     private static com.pulumi.resources.ComponentResourceOptions makeResourceOptions(@Nullable com.pulumi.resources.ComponentResourceOptions options, @Nullable Output<String> id) {

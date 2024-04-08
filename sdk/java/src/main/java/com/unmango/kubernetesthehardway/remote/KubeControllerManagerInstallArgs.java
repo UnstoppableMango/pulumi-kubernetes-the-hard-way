@@ -15,9 +15,9 @@ import java.util.Optional;
 import javax.annotation.Nullable;
 
 
-public final class KubeControllerManagerArgs extends com.pulumi.resources.ResourceArgs {
+public final class KubeControllerManagerInstallArgs extends com.pulumi.resources.ResourceArgs {
 
-    public static final KubeControllerManagerArgs Empty = new KubeControllerManagerArgs();
+    public static final KubeControllerManagerInstallArgs Empty = new KubeControllerManagerInstallArgs();
 
     /**
      * The CPU architecture to install.
@@ -79,9 +79,9 @@ public final class KubeControllerManagerArgs extends com.pulumi.resources.Resour
         return Optional.ofNullable(this.version);
     }
 
-    private KubeControllerManagerArgs() {}
+    private KubeControllerManagerInstallArgs() {}
 
-    private KubeControllerManagerArgs(KubeControllerManagerArgs $) {
+    private KubeControllerManagerInstallArgs(KubeControllerManagerInstallArgs $) {
         this.architecture = $.architecture;
         this.connection = $.connection;
         this.directory = $.directory;
@@ -91,19 +91,19 @@ public final class KubeControllerManagerArgs extends com.pulumi.resources.Resour
     public static Builder builder() {
         return new Builder();
     }
-    public static Builder builder(KubeControllerManagerArgs defaults) {
+    public static Builder builder(KubeControllerManagerInstallArgs defaults) {
         return new Builder(defaults);
     }
 
     public static final class Builder {
-        private KubeControllerManagerArgs $;
+        private KubeControllerManagerInstallArgs $;
 
         public Builder() {
-            $ = new KubeControllerManagerArgs();
+            $ = new KubeControllerManagerInstallArgs();
         }
 
-        public Builder(KubeControllerManagerArgs defaults) {
-            $ = new KubeControllerManagerArgs(Objects.requireNonNull(defaults));
+        public Builder(KubeControllerManagerInstallArgs defaults) {
+            $ = new KubeControllerManagerInstallArgs(Objects.requireNonNull(defaults));
         }
 
         /**
@@ -190,9 +190,9 @@ public final class KubeControllerManagerArgs extends com.pulumi.resources.Resour
             return version(Output.of(version));
         }
 
-        public KubeControllerManagerArgs build() {
+        public KubeControllerManagerInstallArgs build() {
             if ($.connection == null) {
-                throw new MissingRequiredPropertyException("KubeControllerManagerArgs", "connection");
+                throw new MissingRequiredPropertyException("KubeControllerManagerInstallArgs", "connection");
             }
             $.directory = Codegen.stringProp("directory").output().arg($.directory).def("/usr/local/bin").getNullable();
             return $;

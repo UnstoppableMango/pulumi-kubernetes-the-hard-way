@@ -13,8 +13,8 @@ namespace UnMango.KubernetesTheHardWay.Remote
     /// <summary>
     /// Installs kube-controller-manager on a remote system.
     /// </summary>
-    [KubernetesTheHardWayResourceType("kubernetes-the-hard-way:remote:KubeControllerManager")]
-    public partial class KubeControllerManager : global::Pulumi.ComponentResource
+    [KubernetesTheHardWayResourceType("kubernetes-the-hard-way:remote:KubeControllerManagerInstall")]
+    public partial class KubeControllerManagerInstall : global::Pulumi.ComponentResource
     {
         /// <summary>
         /// The CPU architecture to install.
@@ -90,14 +90,14 @@ namespace UnMango.KubernetesTheHardWay.Remote
 
 
         /// <summary>
-        /// Create a KubeControllerManager resource with the given unique name, arguments, and options.
+        /// Create a KubeControllerManagerInstall resource with the given unique name, arguments, and options.
         /// </summary>
         ///
         /// <param name="name">The unique name of the resource</param>
         /// <param name="args">The arguments used to populate this resource's properties</param>
         /// <param name="options">A bag of options that control this resource's behavior</param>
-        public KubeControllerManager(string name, KubeControllerManagerArgs args, ComponentResourceOptions? options = null)
-            : base("kubernetes-the-hard-way:remote:KubeControllerManager", name, args ?? new KubeControllerManagerArgs(), MakeResourceOptions(options, ""), remote: true)
+        public KubeControllerManagerInstall(string name, KubeControllerManagerInstallArgs args, ComponentResourceOptions? options = null)
+            : base("kubernetes-the-hard-way:remote:KubeControllerManagerInstall", name, args ?? new KubeControllerManagerInstallArgs(), MakeResourceOptions(options, ""), remote: true)
         {
         }
 
@@ -115,7 +115,7 @@ namespace UnMango.KubernetesTheHardWay.Remote
         }
     }
 
-    public sealed class KubeControllerManagerArgs : global::Pulumi.ResourceArgs
+    public sealed class KubeControllerManagerInstallArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
         /// The CPU architecture to install.
@@ -141,10 +141,10 @@ namespace UnMango.KubernetesTheHardWay.Remote
         [Input("version")]
         public Input<string>? Version { get; set; }
 
-        public KubeControllerManagerArgs()
+        public KubeControllerManagerInstallArgs()
         {
             Directory = "/usr/local/bin";
         }
-        public static new KubeControllerManagerArgs Empty => new KubeControllerManagerArgs();
+        public static new KubeControllerManagerInstallArgs Empty => new KubeControllerManagerInstallArgs();
     }
 }

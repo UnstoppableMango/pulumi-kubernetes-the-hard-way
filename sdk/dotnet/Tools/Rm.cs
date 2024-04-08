@@ -151,7 +151,7 @@ namespace UnMango.KubernetesTheHardWay.Tools
         /// Corresponds to the `--dir` option.
         /// </summary>
         [Input("dir")]
-        public bool? Dir { get; set; }
+        public Input<bool>? Dir { get; set; }
 
         [Input("environment")]
         private InputMap<string>? _environment;

@@ -156,7 +156,7 @@ export interface RmArgs {
     /**
      * Corresponds to the `--dir` option.
      */
-    dir?: boolean;
+    dir?: pulumi.Input<boolean>;
     /**
      * Environment variables
      */

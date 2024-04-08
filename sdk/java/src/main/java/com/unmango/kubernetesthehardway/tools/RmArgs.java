@@ -58,13 +58,13 @@ public final class RmArgs extends com.pulumi.resources.ResourceArgs {
      * 
      */
     @Import(name="dir")
-    private @Nullable Boolean dir;
+    private @Nullable Output<Boolean> dir;
 
     /**
      * @return Corresponds to the `--dir` option.
      * 
      */
-    public Optional<Boolean> dir() {
+    public Optional<Output<Boolean>> dir() {
         return Optional.ofNullable(this.dir);
     }
 
@@ -286,9 +286,19 @@ public final class RmArgs extends com.pulumi.resources.ResourceArgs {
          * @return builder
          * 
          */
-        public Builder dir(@Nullable Boolean dir) {
+        public Builder dir(@Nullable Output<Boolean> dir) {
             $.dir = dir;
             return this;
+        }
+
+        /**
+         * @param dir Corresponds to the `--dir` option.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder dir(Boolean dir) {
+            return dir(Output.of(dir));
         }
 
         /**
