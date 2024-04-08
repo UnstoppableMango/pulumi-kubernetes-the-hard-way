@@ -28,7 +28,7 @@
         },
         "go": {
             "generateResourceContainerTypes": true,
-            "importBasePath": "github.com/unstoppablemango/pulumi-kubernetes-the-hard-way",
+            "importBasePath": "github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/sdk/go/kubernetes-the-hard-way",
             "liftSingleValueMethodReturns": true,
             "packageImportAliases": {
                 "github.com/pulumi/pulumi-command/sdk/go/command/remote": "pulumiCommand",
