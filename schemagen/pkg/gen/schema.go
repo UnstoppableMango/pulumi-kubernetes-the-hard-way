@@ -45,7 +45,7 @@ func GenerateSchema(packageDir string) schema.PackageSpec {
 			"go": rawMessage(map[string]interface{}{
 				"generateResourceContainerTypes": true,
 				"liftSingleValueMethodReturns":   true,
-				"importBasePath":                 "github.com/unstoppablemango/pulumi-kubernetes-the-hard-way",
+				"importBasePath":                 "github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/sdk/go/kubernetes-the-hard-way",
 				"packageImportAliases": map[string]string{
 					"github.com/pulumi/pulumi-command/sdk/go/command/remote":                                    "pulumiCommand",
 					"github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/sdk/go/kubernetes-the-hard-way": "kthw",
