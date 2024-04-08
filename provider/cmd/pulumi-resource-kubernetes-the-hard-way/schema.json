@@ -21,7 +21,7 @@
             "packageReferences": {
                 "Pulumi": "3.*",
                 "Pulumi.Command": "0.9.*",
-                "Pulumi.Randomm": "4.*",
+                "Pulumi.Random": "4.*",
                 "Pulumi.Tls": "5.*"
             },
             "rootNamespace": "UnMango"
@@ -617,6 +617,31 @@
                 }
             ]
         },
+        "kubernetes-the-hard-way:tools:CommandLifecycle": {
+            "type": "string",
+            "enum": [
+                {
+                    "value": "create"
+                },
+                {
+                    "value": "update"
+                },
+                {
+                    "value": "delete"
+                }
+            ]
+        },
+        "kubernetes-the-hard-way:tools:EtcdctlCommand": {
+            "type": "string",
+            "enum": [
+                {
+                    "value": "member"
+                },
+                {
+                    "value": "list"
+                }
+            ]
+        },
         "kubernetes-the-hard-way:tools:SystemctlCommand": {
             "type": "string",
             "enum": [
@@ -786,7 +811,7 @@
                     "default": "/usr/local/bin"
                 },
                 "download": {
-                    "$ref": "#/types/kubernetes-the-hard-way:remote:Download",
+                    "$ref": "#/resources/kubernetes-the-hard-way:remote:Download",
                     "description": "The download operation."
                 },
                 "dummyMv": {
@@ -846,11 +871,11 @@
                     "description": "The macvlan path on the remote system"
                 },
                 "mkdir": {
-                    "$ref": "#/types/kubernetes-the-hard-way:tools:Mkdir",
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mkdir",
                     "description": "The mkdir operation."
                 },
                 "mktemp": {
-                    "$ref": "#/types/kubernetes-the-hard-way:tools:Mktemp",
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mktemp",
                     "description": "The mktemp operation."
                 },
                 "path": {
@@ -1040,15 +1065,15 @@
                     "default": "/usr/local/bin"
                 },
                 "download": {
-                    "$ref": "#/types/kubernetes-the-hard-way:remote:Download",
+                    "$ref": "#/resources/kubernetes-the-hard-way:remote:Download",
                     "description": "The download operation."
                 },
                 "mkdir": {
-                    "$ref": "#/types/kubernetes-the-hard-way:tools:Mkdir",
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mkdir",
                     "description": "The mkdir operation."
                 },
                 "mktemp": {
-                    "$ref": "#/types/kubernetes-the-hard-way:tools:Mktemp",
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mktemp",
                     "description": "The mktemp operation."
                 },
                 "path": {
@@ -1140,15 +1165,15 @@
                     "default": "/usr/local/bin"
                 },
                 "download": {
-                    "$ref": "#/types/kubernetes-the-hard-way:remote:Download",
+                    "$ref": "#/resources/kubernetes-the-hard-way:remote:Download",
                     "description": "The download operation."
                 },
                 "mkdir": {
-                    "$ref": "#/types/kubernetes-the-hard-way:tools:Mkdir",
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mkdir",
                     "description": "The mkdir operation."
                 },
                 "mktemp": {
-                    "$ref": "#/types/kubernetes-the-hard-way:tools:Mktemp",
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mktemp",
                     "description": "The mktemp operation."
                 },
                 "path": {
@@ -1408,7 +1433,7 @@
                     "default": "/usr/local/bin"
                 },
                 "download": {
-                    "$ref": "#/types/kubernetes-the-hard-way:remote:Download",
+                    "$ref": "#/resources/kubernetes-the-hard-way:remote:Download",
                     "description": "The download operation."
                 },
                 "etcdMv": {
@@ -1428,11 +1453,11 @@
                     "description": "The etcdctl path on the remote system"
                 },
                 "mkdir": {
-                    "$ref": "#/types/kubernetes-the-hard-way:tools:Mkdir",
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mkdir",
                     "description": "The mkdir operation."
                 },
                 "mktemp": {
-                    "$ref": "#/types/kubernetes-the-hard-way:tools:Mktemp",
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mktemp",
                     "description": "The mktemp operation."
                 },
                 "path": {
@@ -1579,19 +1604,19 @@
                     "default": "/usr/local/bin"
                 },
                 "download": {
-                    "$ref": "#/types/kubernetes-the-hard-way:remote:Download",
+                    "$ref": "#/resources/kubernetes-the-hard-way:remote:Download",
                     "description": "The download operation."
                 },
                 "mkdir": {
-                    "$ref": "#/types/kubernetes-the-hard-way:tools:Mkdir",
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mkdir",
                     "description": "The mkdir operation."
                 },
                 "mktemp": {
-                    "$ref": "#/types/kubernetes-the-hard-way:tools:Mktemp",
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mktemp",
                     "description": "The mktemp operation."
                 },
                 "mv": {
-                    "$ref": "#/types/kubernetes-the-hard-way:tools:Mv",
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mv",
                     "description": "The mv operation."
                 },
                 "path": {
@@ -1599,7 +1624,7 @@
                     "description": "The path to the installed binary."
                 },
                 "rm": {
-                    "$ref": "#/types/kubernetes-the-hard-way:tools:Rm",
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Rm",
                     "description": "The rm operation."
                 },
                 "url": {
@@ -1669,19 +1694,19 @@
                     "default": "/usr/local/bin"
                 },
                 "download": {
-                    "$ref": "#/types/kubernetes-the-hard-way:remote:Download",
+                    "$ref": "#/resources/kubernetes-the-hard-way:remote:Download",
                     "description": "The download operation."
                 },
                 "mkdir": {
-                    "$ref": "#/types/kubernetes-the-hard-way:tools:Mkdir",
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mkdir",
                     "description": "The mkdir operation."
                 },
                 "mktemp": {
-                    "$ref": "#/types/kubernetes-the-hard-way:tools:Mktemp",
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mktemp",
                     "description": "The mktemp operation."
                 },
                 "mv": {
-                    "$ref": "#/types/kubernetes-the-hard-way:tools:Mv",
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mv",
                     "description": "The mv operation."
                 },
                 "path": {
@@ -1689,7 +1714,7 @@
                     "description": "The path to the installed binary."
                 },
                 "rm": {
-                    "$ref": "#/types/kubernetes-the-hard-way:tools:Rm",
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Rm",
                     "description": "The rm operation."
                 },
                 "url": {
@@ -1759,19 +1784,19 @@
                     "default": "/usr/local/bin"
                 },
                 "download": {
-                    "$ref": "#/types/kubernetes-the-hard-way:remote:Download",
+                    "$ref": "#/resources/kubernetes-the-hard-way:remote:Download",
                     "description": "The download operation."
                 },
                 "mkdir": {
-                    "$ref": "#/types/kubernetes-the-hard-way:tools:Mkdir",
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mkdir",
                     "description": "The mkdir operation."
                 },
                 "mktemp": {
-                    "$ref": "#/types/kubernetes-the-hard-way:tools:Mktemp",
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mktemp",
                     "description": "The mktemp operation."
                 },
                 "mv": {
-                    "$ref": "#/types/kubernetes-the-hard-way:tools:Mv",
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mv",
                     "description": "The mv operation."
                 },
                 "path": {
@@ -1779,7 +1804,7 @@
                     "description": "The path to the installed binary."
                 },
                 "rm": {
-                    "$ref": "#/types/kubernetes-the-hard-way:tools:Rm",
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Rm",
                     "description": "The rm operation."
                 },
                 "url": {
@@ -1849,19 +1874,19 @@
                     "default": "/usr/local/bin"
                 },
                 "download": {
-                    "$ref": "#/types/kubernetes-the-hard-way:remote:Download",
+                    "$ref": "#/resources/kubernetes-the-hard-way:remote:Download",
                     "description": "The download operation."
                 },
                 "mkdir": {
-                    "$ref": "#/types/kubernetes-the-hard-way:tools:Mkdir",
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mkdir",
                     "description": "The mkdir operation."
                 },
                 "mktemp": {
-                    "$ref": "#/types/kubernetes-the-hard-way:tools:Mktemp",
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mktemp",
                     "description": "The mktemp operation."
                 },
                 "mv": {
-                    "$ref": "#/types/kubernetes-the-hard-way:tools:Mv",
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mv",
                     "description": "The mv operation."
                 },
                 "path": {
@@ -1869,7 +1894,7 @@
                     "description": "The path to the installed binary."
                 },
                 "rm": {
-                    "$ref": "#/types/kubernetes-the-hard-way:tools:Rm",
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Rm",
                     "description": "The rm operation."
                 },
                 "url": {
@@ -1939,19 +1964,19 @@
                     "default": "/usr/local/bin"
                 },
                 "download": {
-                    "$ref": "#/types/kubernetes-the-hard-way:remote:Download",
+                    "$ref": "#/resources/kubernetes-the-hard-way:remote:Download",
                     "description": "The download operation."
                 },
                 "mkdir": {
-                    "$ref": "#/types/kubernetes-the-hard-way:tools:Mkdir",
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mkdir",
                     "description": "The mkdir operation."
                 },
                 "mktemp": {
-                    "$ref": "#/types/kubernetes-the-hard-way:tools:Mktemp",
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mktemp",
                     "description": "The mktemp operation."
                 },
                 "mv": {
-                    "$ref": "#/types/kubernetes-the-hard-way:tools:Mv",
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mv",
                     "description": "The mv operation."
                 },
                 "path": {
@@ -1959,7 +1984,7 @@
                     "description": "The path to the installed binary."
                 },
                 "rm": {
-                    "$ref": "#/types/kubernetes-the-hard-way:tools:Rm",
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Rm",
                     "description": "The rm operation."
                 },
                 "url": {
@@ -2029,19 +2054,19 @@
                     "default": "/usr/local/bin"
                 },
                 "download": {
-                    "$ref": "#/types/kubernetes-the-hard-way:remote:Download",
+                    "$ref": "#/resources/kubernetes-the-hard-way:remote:Download",
                     "description": "The download operation."
                 },
                 "mkdir": {
-                    "$ref": "#/types/kubernetes-the-hard-way:tools:Mkdir",
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mkdir",
                     "description": "The mkdir operation."
                 },
                 "mktemp": {
-                    "$ref": "#/types/kubernetes-the-hard-way:tools:Mktemp",
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mktemp",
                     "description": "The mktemp operation."
                 },
                 "mv": {
-                    "$ref": "#/types/kubernetes-the-hard-way:tools:Mv",
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mv",
                     "description": "The mv operation."
                 },
                 "path": {
@@ -2049,7 +2074,7 @@
                     "description": "The path to the installed binary."
                 },
                 "rm": {
-                    "$ref": "#/types/kubernetes-the-hard-way:tools:Rm",
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Rm",
                     "description": "The rm operation."
                 },
                 "url": {
@@ -2119,19 +2144,19 @@
                     "default": "/usr/local/bin"
                 },
                 "download": {
-                    "$ref": "#/types/kubernetes-the-hard-way:remote:Download",
+                    "$ref": "#/resources/kubernetes-the-hard-way:remote:Download",
                     "description": "The download operation."
                 },
                 "mkdir": {
-                    "$ref": "#/types/kubernetes-the-hard-way:tools:Mkdir",
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mkdir",
                     "description": "The mkdir operation."
                 },
                 "mktemp": {
-                    "$ref": "#/types/kubernetes-the-hard-way:tools:Mktemp",
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mktemp",
                     "description": "The mktemp operation."
                 },
                 "mv": {
-                    "$ref": "#/types/kubernetes-the-hard-way:tools:Mv",
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mv",
                     "description": "The mv operation."
                 },
                 "path": {
@@ -2139,7 +2164,7 @@
                     "description": "The path to the installed binary."
                 },
                 "rm": {
-                    "$ref": "#/types/kubernetes-the-hard-way:tools:Rm",
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Rm",
                     "description": "The rm operation."
                 },
                 "url": {
@@ -2373,8 +2398,8 @@
                     "description": "Should the generated certificate include a [subject key identifier](https://datatracker.ietf.org/doc/html/rfc5280#section-4.2.1.2) (default: `false`).\n"
                 },
                 "subject": {
-                    "$ref": "#/types/tls:index/CertRequestSubject:CertRequestSubject",
-                    "description": "The subject for which a certificate is being requested. The acceptable arguments are all optional and their naming is based upon [Issuer Distinguished Names (RFC5280)](https://tools.ietf.org/html/rfc5280#section-4.1.2.4) section.\n"
+                    "$ref": "/tls/v5.0.2/schema.json#/types/tls:index/CertRequestSubject:CertRequestSubject",
+                    "description": "TODO"
                 },
                 "uris": {
                     "type": "array",
@@ -2483,8 +2508,8 @@
                     "description": "Should the generated certificate include a [subject key identifier](https://datatracker.ietf.org/doc/html/rfc5280#section-4.2.1.2) (default: `false`).\n"
                 },
                 "subject": {
-                    "$ref": "#/types/tls:index/CertRequestSubject:CertRequestSubject",
-                    "description": "The subject for which a certificate is being requested. The acceptable arguments are all optional and their naming is based upon [Issuer Distinguished Names (RFC5280)](https://tools.ietf.org/html/rfc5280#section-4.1.2.4) section.\n"
+                    "$ref": "/tls/v5.0.2/schema.json#/types/tls:index/CertRequestSubject:CertRequestSubject",
+                    "description": "TODO"
                 },
                 "uris": {
                     "type": "array",
@@ -2511,7 +2536,7 @@
             "description": "The private key infrastructure for a cluster",
             "properties": {
                 "admin": {
-                    "$ref": "#/types/kubernetes-the-hard-way:tls:Certificate",
+                    "$ref": "#/resources/kubernetes-the-hard-way:tls:Certificate",
                     "description": "The admin certificate."
                 },
                 "algorithm": {
@@ -2520,7 +2545,7 @@
                     "default": "RSA"
                 },
                 "ca": {
-                    "$ref": "#/types/kubernetes-the-hard-way:tls:RootCa",
+                    "$ref": "#/resources/kubernetes-the-hard-way:tls:RootCa",
                     "description": "The cluster certificate authority."
                 },
                 "clusterName": {
@@ -2528,7 +2553,7 @@
                     "description": "A name to use for the cluster"
                 },
                 "controllerManager": {
-                    "$ref": "#/types/kubernetes-the-hard-way:tls:Certificate",
+                    "$ref": "#/resources/kubernetes-the-hard-way:tls:Certificate",
                     "description": "The controller manager certificate."
                 },
                 "ecdsaCurve": {
@@ -2536,22 +2561,22 @@
                     "description": "When `algorithm` is `ECDSA`, the name of the elliptic curve to use."
                 },
                 "kubeProxy": {
-                    "$ref": "#/types/kubernetes-the-hard-way:tls:Certificate",
+                    "$ref": "#/resources/kubernetes-the-hard-way:tls:Certificate",
                     "description": "The kube proxy certificate."
                 },
                 "kubeScheduler": {
-                    "$ref": "#/types/kubernetes-the-hard-way:tls:Certificate",
+                    "$ref": "#/resources/kubernetes-the-hard-way:tls:Certificate",
                     "description": "The kube scheduler certificate."
                 },
                 "kubelet": {
                     "type": "object",
                     "additionalProperties": {
-                        "$ref": "#/types/kubernetes-the-hard-way:tls:Certificate"
+                        "$ref": "#/resources/kubernetes-the-hard-way:tls:Certificate"
                     },
                     "description": "Map of node name to kubelet certificate."
                 },
                 "kubernetes": {
-                    "$ref": "#/types/kubernetes-the-hard-way:tls:Certificate",
+                    "$ref": "#/resources/kubernetes-the-hard-way:tls:Certificate",
                     "description": "The kubernetes certificate."
                 },
                 "nodes": {
@@ -2571,7 +2596,7 @@
                     "default": 2048
                 },
                 "serviceAccounts": {
-                    "$ref": "#/types/kubernetes-the-hard-way:tls:Certificate",
+                    "$ref": "#/resources/kubernetes-the-hard-way:tls:Certificate",
                     "description": "The service accounts certificate"
                 },
                 "validityPeriodHours": {
@@ -2777,8 +2802,8 @@
                     "description": "Should the generated certificate include a [subject key identifier](https://datatracker.ietf.org/doc/html/rfc5280#section-4.2.1.2) (default: `false`).\n"
                 },
                 "subject": {
-                    "$ref": "#/types/tls:index/SelfSignedCertSubject:SelfSignedCertSubject",
-                    "description": "The subject for which a certificate is being requested. The acceptable arguments are all optional and their naming is based upon [Issuer Distinguished Names (RFC5280)](https://tools.ietf.org/html/rfc5280#section-4.1.2.4) section.\n"
+                    "$ref": "/tls/v5.0.2/schema.json#/types/tls:index/SelfSignedCertSubject:SelfSignedCertSubject",
+                    "description": "TODO"
                 },
                 "uris": {
                     "type": "array",
@@ -2866,8 +2891,8 @@
                     "description": "Should the generated certificate include a [subject key identifier](https://datatracker.ietf.org/doc/html/rfc5280#section-4.2.1.2) (default: `false`).\n"
                 },
                 "subject": {
-                    "$ref": "#/types/tls:index/SelfSignedCertSubject:SelfSignedCertSubject",
-                    "description": "The subject for which a certificate is being requested. The acceptable arguments are all optional and their naming is based upon [Issuer Distinguished Names (RFC5280)](https://tools.ietf.org/html/rfc5280#section-4.1.2.4) section.\n"
+                    "$ref": "/tls/v5.0.2/schema.json#/types/tls:index/SelfSignedCertSubject:SelfSignedCertSubject",
+                    "description": "TODO"
                 },
                 "uris": {
                     "type": "array",
@@ -3208,7 +3233,7 @@
                     "description": "Corresponds to the `--suffix` option."
                 },
                 "template": {
-                    "type": "boolean",
+                    "type": "string",
                     "description": "Corresponds to the [TEMPLATE] argument."
                 },
                 "tmpdir": {
@@ -3276,7 +3301,7 @@
                     "description": "Corresponds to the `--suffix` option."
                 },
                 "template": {
-                    "type": "boolean",
+                    "type": "string",
                     "description": "Corresponds to the [TEMPLATE] argument."
                 },
                 "tmpdir": {
@@ -3760,17 +3785,7 @@
                     "description": "TODO"
                 },
                 "unit": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
-                        }
-                    ],
+                    "type": "string",
                     "description": "Corresponds to the [UNIT...] argument."
                 }
             },
@@ -3827,17 +3842,7 @@
                     "description": "TODO"
                 },
                 "unit": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
-                        }
-                    ],
+                    "type": "string",
                     "description": "Corresponds to the [UNIT...] argument."
                 }
             },
@@ -3910,8 +3915,8 @@
                     "description": "Whether rm should be run when the resource is created or deleted."
                 },
                 "recursive": {
-                    "type": "integer",
-                    "description": "Corresponds to the `--strip-components` option."
+                    "type": "boolean",
+                    "description": "Corresponds to the `--recursive` option."
                 },
                 "stderr": {
                     "type": "string",
@@ -3924,6 +3929,10 @@
                 "stdout": {
                     "type": "string",
                     "description": "TODO"
+                },
+                "stripComponents": {
+                    "type": "integer",
+                    "description": "Corresponds to the `--strip-components` option."
                 },
                 "triggers": {
                     "type": "array",
@@ -4001,12 +4010,16 @@
                     "description": "Whether rm should be run when the resource is created or deleted."
                 },
                 "recursive": {
-                    "type": "integer",
-                    "description": "Corresponds to the `--strip-components` option."
+                    "type": "boolean",
+                    "description": "Corresponds to the `--recursive` option."
                 },
                 "stdin": {
                     "type": "string",
                     "description": "TODO"
+                },
+                "stripComponents": {
+                    "type": "integer",
+                    "description": "Corresponds to the `--strip-components` option."
                 },
                 "triggers": {
                     "type": "array",
