@@ -14,7 +14,7 @@ export type ResourceConstructor = {
     readonly "kubernetes-the-hard-way:remote:EtcdInstall": ConstructComponent<EtcdInstall>;
     readonly "kubernetes-the-hard-way:remote:File": ConstructComponent<File>;
     readonly "kubernetes-the-hard-way:remote:KubeApiServerInstall": ConstructComponent<KubeApiServerInstall>;
-    readonly "kubernetes-the-hard-way:remote:KubeControllerManager": ConstructComponent<KubeControllerManager>;
+    readonly "kubernetes-the-hard-way:remote:KubeControllerManagerInstall": ConstructComponent<KubeControllerManagerInstall>;
     readonly "kubernetes-the-hard-way:remote:KubeProxyInstall": ConstructComponent<KubeProxyInstall>;
     readonly "kubernetes-the-hard-way:remote:KubeSchedulerInstall": ConstructComponent<KubeSchedulerInstall>;
     readonly "kubernetes-the-hard-way:remote:KubectlInstall": ConstructComponent<KubectlInstall>;
@@ -262,7 +262,7 @@ export interface KubeApiServerInstallArgs {
     readonly directory?: pulumi.Input<string>;
     readonly version?: pulumi.Input<string>;
 }
-export abstract class KubeControllerManager<TData = any> extends (pulumi.ComponentResource)<TData> {
+export abstract class KubeControllerManagerInstall<TData = any> extends (pulumi.ComponentResource)<TData> {
     public architecture!: ArchitectureOutputs | pulumi.Output<ArchitectureOutputs>;
     public binName?: string | pulumi.Output<string>;
     public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
@@ -276,10 +276,10 @@ export abstract class KubeControllerManager<TData = any> extends (pulumi.Compone
     public url!: string | pulumi.Output<string>;
     public version!: string | pulumi.Output<string>;
     constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
-        super("kubernetes-the-hard-way:remote:KubeControllerManager", name, opts.urn ? { architecture: undefined, binName: undefined, connection: undefined, directory: undefined, download: undefined, mkdir: undefined, mktemp: undefined, mv: undefined, path: undefined, rm: undefined, url: undefined, version: undefined } : { name, args, opts }, opts);
+        super("kubernetes-the-hard-way:remote:KubeControllerManagerInstall", name, opts.urn ? { architecture: undefined, binName: undefined, connection: undefined, directory: undefined, download: undefined, mkdir: undefined, mktemp: undefined, mv: undefined, path: undefined, rm: undefined, url: undefined, version: undefined } : { name, args, opts }, opts);
     }
 }
-export interface KubeControllerManagerArgs {
+export interface KubeControllerManagerInstallArgs {
     readonly architecture?: pulumi.Input<ArchitectureInputs>;
     readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
     readonly directory?: pulumi.Input<string>;
@@ -703,7 +703,7 @@ export abstract class Rm<TData = any> extends (pulumi.ComponentResource)<TData> 
     public binaryPath!: string | pulumi.Output<string>;
     public command!: command.remote.Command | pulumi.Output<command.remote.Command>;
     public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
-    public dir!: boolean | boolean;
+    public dir!: boolean | pulumi.Output<boolean>;
     public environment!: Record<string, string> | pulumi.Output<Record<string, string>>;
     public files!: unknown | pulumi.Output<unknown>;
     public force!: boolean | pulumi.Output<boolean>;
@@ -722,7 +722,7 @@ export abstract class Rm<TData = any> extends (pulumi.ComponentResource)<TData> 
 export interface RmArgs {
     readonly binaryPath?: pulumi.Input<string>;
     readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
-    readonly dir?: boolean;
+    readonly dir?: pulumi.Input<boolean>;
     readonly environment?: pulumi.Input<Record<string, pulumi.Input<string>>>;
     readonly files: pulumi.Input<unknown>;
     readonly force?: pulumi.Input<boolean>;
