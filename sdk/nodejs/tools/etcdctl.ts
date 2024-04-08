@@ -2,11 +2,12 @@
 // *** Do not edit by hand unless you're certain you know what you are doing! ***
 
 import * as pulumi from "@pulumi/pulumi";
+import * as inputs from "../types/input";
+import * as outputs from "../types/output";
+import * as enums from "../types/enums";
 import * as utilities from "../utilities";
 
 import * as pulumiCommand from "@pulumi/command";
-
-import {CommandLifecycle, EtcdctlCommand} from "./index";
 
 /**
  * Abstraction over the `etcdctl` utility on a remote system.
@@ -45,7 +46,7 @@ export class Etcdctl extends pulumi.ComponentResource {
     /**
      * TODO
      */
-    public readonly commands!: pulumi.Output<EtcdctlCommand>;
+    public readonly commands!: pulumi.Output<enums.tools.EtcdctlCommand>;
     /**
      * Connection details for the remote system
      */
@@ -65,7 +66,7 @@ export class Etcdctl extends pulumi.ComponentResource {
     /**
      * At what stage(s) in the resource lifecycle should the command be run
      */
-    public readonly lifecycle!: pulumi.Output<CommandLifecycle | undefined>;
+    public readonly lifecycle!: pulumi.Output<enums.tools.CommandLifecycle | undefined>;
     /**
      * TODO
      */
@@ -166,7 +167,7 @@ export interface EtcdctlArgs {
     /**
      * TODO
      */
-    commands: pulumi.Input<EtcdctlCommand>;
+    commands: pulumi.Input<enums.tools.EtcdctlCommand>;
     /**
      * Connection details for the remote system
      */
@@ -186,7 +187,7 @@ export interface EtcdctlArgs {
     /**
      * At what stage(s) in the resource lifecycle should the command be run
      */
-    lifecycle?: CommandLifecycle;
+    lifecycle?: enums.tools.CommandLifecycle;
     /**
      * TODO
      */

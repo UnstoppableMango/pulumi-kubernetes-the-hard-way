@@ -8,7 +8,7 @@ import com.pulumi.core.Either;
 import com.pulumi.core.Output;
 import com.pulumi.core.annotations.Import;
 import com.pulumi.exceptions.MissingRequiredPropertyException;
-import com.unmango.kubernetesthehardway.tools.inputs.CommandLifecycle;
+import com.unmango.kubernetesthehardway.tools.enums.CommandLifecycle;
 import java.lang.Boolean;
 import java.lang.Integer;
 import java.lang.Object;
@@ -175,17 +175,17 @@ public final class TarArgs extends com.pulumi.resources.ResourceArgs {
     }
 
     /**
-     * Corresponds to the `--strip-components` option.
+     * Corresponds to the `--recursive` option.
      * 
      */
     @Import(name="recursive")
-    private @Nullable Output<Integer> recursive;
+    private @Nullable Output<Boolean> recursive;
 
     /**
-     * @return Corresponds to the `--strip-components` option.
+     * @return Corresponds to the `--recursive` option.
      * 
      */
-    public Optional<Output<Integer>> recursive() {
+    public Optional<Output<Boolean>> recursive() {
         return Optional.ofNullable(this.recursive);
     }
 
@@ -202,6 +202,21 @@ public final class TarArgs extends com.pulumi.resources.ResourceArgs {
      */
     public Optional<Output<String>> stdin() {
         return Optional.ofNullable(this.stdin);
+    }
+
+    /**
+     * Corresponds to the `--strip-components` option.
+     * 
+     */
+    @Import(name="stripComponents")
+    private @Nullable Output<Integer> stripComponents;
+
+    /**
+     * @return Corresponds to the `--strip-components` option.
+     * 
+     */
+    public Optional<Output<Integer>> stripComponents() {
+        return Optional.ofNullable(this.stripComponents);
     }
 
     /**
@@ -234,6 +249,7 @@ public final class TarArgs extends com.pulumi.resources.ResourceArgs {
         this.onDelete = $.onDelete;
         this.recursive = $.recursive;
         this.stdin = $.stdin;
+        this.stripComponents = $.stripComponents;
         this.triggers = $.triggers;
     }
 
@@ -476,23 +492,23 @@ public final class TarArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param recursive Corresponds to the `--strip-components` option.
+         * @param recursive Corresponds to the `--recursive` option.
          * 
          * @return builder
          * 
          */
-        public Builder recursive(@Nullable Output<Integer> recursive) {
+        public Builder recursive(@Nullable Output<Boolean> recursive) {
             $.recursive = recursive;
             return this;
         }
 
         /**
-         * @param recursive Corresponds to the `--strip-components` option.
+         * @param recursive Corresponds to the `--recursive` option.
          * 
          * @return builder
          * 
          */
-        public Builder recursive(Integer recursive) {
+        public Builder recursive(Boolean recursive) {
             return recursive(Output.of(recursive));
         }
 
@@ -515,6 +531,27 @@ public final class TarArgs extends com.pulumi.resources.ResourceArgs {
          */
         public Builder stdin(String stdin) {
             return stdin(Output.of(stdin));
+        }
+
+        /**
+         * @param stripComponents Corresponds to the `--strip-components` option.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder stripComponents(@Nullable Output<Integer> stripComponents) {
+            $.stripComponents = stripComponents;
+            return this;
+        }
+
+        /**
+         * @param stripComponents Corresponds to the `--strip-components` option.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder stripComponents(Integer stripComponents) {
+            return stripComponents(Output.of(stripComponents));
         }
 
         /**

@@ -56,7 +56,7 @@ namespace UnMango.KubernetesTheHardWay.Tools
         /// At what stage(s) in the resource lifecycle should the command be run
         /// </summary>
         [Output("lifecycle")]
-        public Output<UnMango.KubernetesTheHardWay.Tools.Outputs.CommandLifecycle?> Lifecycle { get; private set; } = null!;
+        public Output<UnMango.KubernetesTheHardWay.Tools.CommandLifecycle?> Lifecycle { get; private set; } = null!;
 
         /// <summary>
         /// Corresponds to the `--quiet` option.
@@ -92,7 +92,7 @@ namespace UnMango.KubernetesTheHardWay.Tools
         /// Corresponds to the [TEMPLATE] argument.
         /// </summary>
         [Output("template")]
-        public Output<bool?> Template { get; private set; } = null!;
+        public Output<string?> Template { get; private set; } = null!;
 
         /// <summary>
         /// Corresponds to the `--tmpdir` option.
@@ -175,7 +175,7 @@ namespace UnMango.KubernetesTheHardWay.Tools
         /// At what stage(s) in the resource lifecycle should the command be run
         /// </summary>
         [Input("lifecycle")]
-        public UnMango.KubernetesTheHardWay.Tools.Inputs.CommandLifecycle? Lifecycle { get; set; }
+        public UnMango.KubernetesTheHardWay.Tools.CommandLifecycle? Lifecycle { get; set; }
 
         /// <summary>
         /// Corresponds to the `--quiet` option.
@@ -199,7 +199,7 @@ namespace UnMango.KubernetesTheHardWay.Tools
         /// Corresponds to the [TEMPLATE] argument.
         /// </summary>
         [Input("template")]
-        public Input<bool>? Template { get; set; }
+        public Input<string>? Template { get; set; }
 
         /// <summary>
         /// Corresponds to the `--tmpdir` option.

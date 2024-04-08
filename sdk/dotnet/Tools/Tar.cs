@@ -74,7 +74,7 @@ namespace UnMango.KubernetesTheHardWay.Tools
         /// At what stage(s) in the resource lifecycle should the command be run
         /// </summary>
         [Output("lifecycle")]
-        public Output<UnMango.KubernetesTheHardWay.Tools.Outputs.CommandLifecycle?> Lifecycle { get; private set; } = null!;
+        public Output<UnMango.KubernetesTheHardWay.Tools.CommandLifecycle?> Lifecycle { get; private set; } = null!;
 
         /// <summary>
         /// Whether rm should be run when the resource is created or deleted.
@@ -83,10 +83,10 @@ namespace UnMango.KubernetesTheHardWay.Tools
         public Output<bool?> OnDelete { get; private set; } = null!;
 
         /// <summary>
-        /// Corresponds to the `--strip-components` option.
+        /// Corresponds to the `--recursive` option.
         /// </summary>
         [Output("recursive")]
-        public Output<int?> Recursive { get; private set; } = null!;
+        public Output<bool?> Recursive { get; private set; } = null!;
 
         /// <summary>
         /// TODO
@@ -105,6 +105,12 @@ namespace UnMango.KubernetesTheHardWay.Tools
         /// </summary>
         [Output("stdout")]
         public Output<string> Stdout { get; private set; } = null!;
+
+        /// <summary>
+        /// Corresponds to the `--strip-components` option.
+        /// </summary>
+        [Output("stripComponents")]
+        public Output<int?> StripComponents { get; private set; } = null!;
 
         /// <summary>
         /// TODO
@@ -199,7 +205,7 @@ namespace UnMango.KubernetesTheHardWay.Tools
         /// At what stage(s) in the resource lifecycle should the command be run
         /// </summary>
         [Input("lifecycle")]
-        public UnMango.KubernetesTheHardWay.Tools.Inputs.CommandLifecycle? Lifecycle { get; set; }
+        public UnMango.KubernetesTheHardWay.Tools.CommandLifecycle? Lifecycle { get; set; }
 
         /// <summary>
         /// Whether rm should be run when the resource is created or deleted.
@@ -208,16 +214,22 @@ namespace UnMango.KubernetesTheHardWay.Tools
         public Input<bool>? OnDelete { get; set; }
 
         /// <summary>
-        /// Corresponds to the `--strip-components` option.
+        /// Corresponds to the `--recursive` option.
         /// </summary>
         [Input("recursive")]
-        public Input<int>? Recursive { get; set; }
+        public Input<bool>? Recursive { get; set; }
 
         /// <summary>
         /// TODO
         /// </summary>
         [Input("stdin")]
         public Input<string>? Stdin { get; set; }
+
+        /// <summary>
+        /// Corresponds to the `--strip-components` option.
+        /// </summary>
+        [Input("stripComponents")]
+        public Input<int>? StripComponents { get; set; }
 
         [Input("triggers")]
         private InputList<object>? _triggers;

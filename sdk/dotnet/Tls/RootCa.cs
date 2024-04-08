@@ -153,10 +153,10 @@ namespace UnMango.KubernetesTheHardWay.Tls
         public Output<bool> SetSubjectKeyId { get; private set; } = null!;
 
         /// <summary>
-        /// The subject for which a certificate is being requested. The acceptable arguments are all optional and their naming is based upon [Issuer Distinguished Names (RFC5280)](https://tools.ietf.org/html/rfc5280#section-4.1.2.4) section.
+        /// TODO
         /// </summary>
         [Output("subject")]
-        public Output<UnMango.Tls.Outputs.SelfSignedCertSubject?> Subject { get; private set; } = null!;
+        public Output<Pulumi.Tls.Outputs.SelfSignedCertSubject?> Subject { get; private set; } = null!;
 
         /// <summary>
         /// List of URIs for which a certificate is being requested (i.e. certificate subjects).
@@ -282,10 +282,10 @@ namespace UnMango.KubernetesTheHardWay.Tls
         public Input<bool>? SetSubjectKeyId { get; set; }
 
         /// <summary>
-        /// The subject for which a certificate is being requested. The acceptable arguments are all optional and their naming is based upon [Issuer Distinguished Names (RFC5280)](https://tools.ietf.org/html/rfc5280#section-4.1.2.4) section.
+        /// TODO
         /// </summary>
         [Input("subject")]
-        public Input<UnMango.Tls.Inputs.SelfSignedCertSubject>? Subject { get; set; }
+        public Input<Pulumi.Tls.Inputs.SelfSignedCertSubjectArgs>? Subject { get; set; }
 
         [Input("uris")]
         private InputList<string>? _uris;

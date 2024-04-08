@@ -39,14 +39,16 @@ type Tar struct {
 	Lifecycle CommandLifecyclePtrOutput `pulumi:"lifecycle"`
 	// Whether rm should be run when the resource is created or deleted.
 	OnDelete pulumi.BoolPtrOutput `pulumi:"onDelete"`
-	// Corresponds to the `--strip-components` option.
-	Recursive pulumi.IntPtrOutput `pulumi:"recursive"`
+	// Corresponds to the `--recursive` option.
+	Recursive pulumi.BoolPtrOutput `pulumi:"recursive"`
 	// TODO
 	Stderr pulumi.StringOutput `pulumi:"stderr"`
 	// TODO
 	Stdin pulumi.StringPtrOutput `pulumi:"stdin"`
 	// TODO
 	Stdout pulumi.StringOutput `pulumi:"stdout"`
+	// Corresponds to the `--strip-components` option.
+	StripComponents pulumi.IntPtrOutput `pulumi:"stripComponents"`
 	// TODO
 	Triggers pulumi.ArrayOutput `pulumi:"triggers"`
 }
@@ -95,10 +97,12 @@ type tarArgs struct {
 	Lifecycle *CommandLifecycle `pulumi:"lifecycle"`
 	// Whether rm should be run when the resource is created or deleted.
 	OnDelete *bool `pulumi:"onDelete"`
-	// Corresponds to the `--strip-components` option.
-	Recursive *int `pulumi:"recursive"`
+	// Corresponds to the `--recursive` option.
+	Recursive *bool `pulumi:"recursive"`
 	// TODO
 	Stdin *string `pulumi:"stdin"`
+	// Corresponds to the `--strip-components` option.
+	StripComponents *int `pulumi:"stripComponents"`
 	// TODO
 	Triggers []interface{} `pulumi:"triggers"`
 }
@@ -125,10 +129,12 @@ type TarArgs struct {
 	Lifecycle *CommandLifecycle
 	// Whether rm should be run when the resource is created or deleted.
 	OnDelete pulumi.BoolPtrInput
-	// Corresponds to the `--strip-components` option.
-	Recursive pulumi.IntPtrInput
+	// Corresponds to the `--recursive` option.
+	Recursive pulumi.BoolPtrInput
 	// TODO
 	Stdin pulumi.StringPtrInput
+	// Corresponds to the `--strip-components` option.
+	StripComponents pulumi.IntPtrInput
 	// TODO
 	Triggers pulumi.ArrayInput
 }
@@ -275,9 +281,9 @@ func (o TarOutput) OnDelete() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v *Tar) pulumi.BoolPtrOutput { return v.OnDelete }).(pulumi.BoolPtrOutput)
 }
 
-// Corresponds to the `--strip-components` option.
-func (o TarOutput) Recursive() pulumi.IntPtrOutput {
-	return o.ApplyT(func(v *Tar) pulumi.IntPtrOutput { return v.Recursive }).(pulumi.IntPtrOutput)
+// Corresponds to the `--recursive` option.
+func (o TarOutput) Recursive() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *Tar) pulumi.BoolPtrOutput { return v.Recursive }).(pulumi.BoolPtrOutput)
 }
 
 // TODO
@@ -293,6 +299,11 @@ func (o TarOutput) Stdin() pulumi.StringPtrOutput {
 // TODO
 func (o TarOutput) Stdout() pulumi.StringOutput {
 	return o.ApplyT(func(v *Tar) pulumi.StringOutput { return v.Stdout }).(pulumi.StringOutput)
+}
+
+// Corresponds to the `--strip-components` option.
+func (o TarOutput) StripComponents() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *Tar) pulumi.IntPtrOutput { return v.StripComponents }).(pulumi.IntPtrOutput)
 }
 
 // TODO

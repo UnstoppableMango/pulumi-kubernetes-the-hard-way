@@ -2,11 +2,12 @@
 // *** Do not edit by hand unless you're certain you know what you are doing! ***
 
 import * as pulumi from "@pulumi/pulumi";
+import * as inputs from "../types/input";
+import * as outputs from "../types/output";
+import * as enums from "../types/enums";
 import * as utilities from "../utilities";
 
 import * as pulumiCommand from "@pulumi/command";
-
-import {CommandLifecycle} from "./index";
 
 /**
  * Abstraction over the `rm` utility on a remote system.
@@ -65,15 +66,15 @@ export class Tar extends pulumi.ComponentResource {
     /**
      * At what stage(s) in the resource lifecycle should the command be run
      */
-    public readonly lifecycle!: pulumi.Output<CommandLifecycle | undefined>;
+    public readonly lifecycle!: pulumi.Output<enums.tools.CommandLifecycle | undefined>;
     /**
      * Whether rm should be run when the resource is created or deleted.
      */
     public readonly onDelete!: pulumi.Output<boolean | undefined>;
     /**
-     * Corresponds to the `--strip-components` option.
+     * Corresponds to the `--recursive` option.
      */
-    public readonly recursive!: pulumi.Output<number | undefined>;
+    public readonly recursive!: pulumi.Output<boolean | undefined>;
     /**
      * TODO
      */
@@ -86,6 +87,10 @@ export class Tar extends pulumi.ComponentResource {
      * TODO
      */
     public /*out*/ readonly stdout!: pulumi.Output<string>;
+    /**
+     * Corresponds to the `--strip-components` option.
+     */
+    public readonly stripComponents!: pulumi.Output<number | undefined>;
     /**
      * TODO
      */
@@ -120,6 +125,7 @@ export class Tar extends pulumi.ComponentResource {
             resourceInputs["onDelete"] = args ? args.onDelete : undefined;
             resourceInputs["recursive"] = args ? args.recursive : undefined;
             resourceInputs["stdin"] = args ? args.stdin : undefined;
+            resourceInputs["stripComponents"] = args ? args.stripComponents : undefined;
             resourceInputs["triggers"] = args ? args.triggers : undefined;
             resourceInputs["command"] = undefined /*out*/;
             resourceInputs["stderr"] = undefined /*out*/;
@@ -140,6 +146,7 @@ export class Tar extends pulumi.ComponentResource {
             resourceInputs["stderr"] = undefined /*out*/;
             resourceInputs["stdin"] = undefined /*out*/;
             resourceInputs["stdout"] = undefined /*out*/;
+            resourceInputs["stripComponents"] = undefined /*out*/;
             resourceInputs["triggers"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
@@ -186,19 +193,23 @@ export interface TarArgs {
     /**
      * At what stage(s) in the resource lifecycle should the command be run
      */
-    lifecycle?: CommandLifecycle;
+    lifecycle?: enums.tools.CommandLifecycle;
     /**
      * Whether rm should be run when the resource is created or deleted.
      */
     onDelete?: pulumi.Input<boolean>;
     /**
-     * Corresponds to the `--strip-components` option.
+     * Corresponds to the `--recursive` option.
      */
-    recursive?: pulumi.Input<number>;
+    recursive?: pulumi.Input<boolean>;
     /**
      * TODO
      */
     stdin?: pulumi.Input<string>;
+    /**
+     * Corresponds to the `--strip-components` option.
+     */
+    stripComponents?: pulumi.Input<number>;
     /**
      * TODO
      */

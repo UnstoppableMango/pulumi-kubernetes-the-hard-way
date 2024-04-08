@@ -8,6 +8,7 @@ import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
 from .. import _utilities
+from ._enums import *
 import pulumi_command
 
 __all__ = ['RmArgs', 'Rm']
@@ -21,7 +22,7 @@ class RmArgs:
                  dir: Optional[pulumi.Input[bool]] = None,
                  environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  force: Optional[pulumi.Input[bool]] = None,
-                 lifecycle: Optional[Any] = None,
+                 lifecycle: Optional['CommandLifecycle'] = None,
                  on_delete: Optional[pulumi.Input[bool]] = None,
                  recursive: Optional[pulumi.Input[bool]] = None,
                  stdin: Optional[pulumi.Input[str]] = None,
@@ -35,7 +36,7 @@ class RmArgs:
         :param pulumi.Input[bool] dir: Corresponds to the `--dir` option.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] environment: Environment variables
         :param pulumi.Input[bool] force: Corresponds to the `--force` option.
-        :param Any lifecycle: At what stage(s) in the resource lifecycle should the command be run
+        :param 'CommandLifecycle' lifecycle: At what stage(s) in the resource lifecycle should the command be run
         :param pulumi.Input[bool] on_delete: Whether rm should be run when the resource is created or deleted.
         :param pulumi.Input[bool] recursive: Corresponds to the `--recursive` option.
         :param pulumi.Input[str] stdin: TODO
@@ -139,14 +140,14 @@ class RmArgs:
 
     @property
     @pulumi.getter
-    def lifecycle(self) -> Optional[Any]:
+    def lifecycle(self) -> Optional['CommandLifecycle']:
         """
         At what stage(s) in the resource lifecycle should the command be run
         """
         return pulumi.get(self, "lifecycle")
 
     @lifecycle.setter
-    def lifecycle(self, value: Optional[Any]):
+    def lifecycle(self, value: Optional['CommandLifecycle']):
         pulumi.set(self, "lifecycle", value)
 
     @property
@@ -221,7 +222,7 @@ class Rm(pulumi.ComponentResource):
                  environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  files: Optional[pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]]] = None,
                  force: Optional[pulumi.Input[bool]] = None,
-                 lifecycle: Optional[Any] = None,
+                 lifecycle: Optional['CommandLifecycle'] = None,
                  on_delete: Optional[pulumi.Input[bool]] = None,
                  recursive: Optional[pulumi.Input[bool]] = None,
                  stdin: Optional[pulumi.Input[str]] = None,
@@ -239,7 +240,7 @@ class Rm(pulumi.ComponentResource):
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] environment: Environment variables
         :param pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]] files: Corresponds to the [FILE] argument.
         :param pulumi.Input[bool] force: Corresponds to the `--force` option.
-        :param Any lifecycle: At what stage(s) in the resource lifecycle should the command be run
+        :param 'CommandLifecycle' lifecycle: At what stage(s) in the resource lifecycle should the command be run
         :param pulumi.Input[bool] on_delete: Whether rm should be run when the resource is created or deleted.
         :param pulumi.Input[bool] recursive: Corresponds to the `--recursive` option.
         :param pulumi.Input[str] stdin: TODO
@@ -276,7 +277,7 @@ class Rm(pulumi.ComponentResource):
                  environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  files: Optional[pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]]] = None,
                  force: Optional[pulumi.Input[bool]] = None,
-                 lifecycle: Optional[Any] = None,
+                 lifecycle: Optional['CommandLifecycle'] = None,
                  on_delete: Optional[pulumi.Input[bool]] = None,
                  recursive: Optional[pulumi.Input[bool]] = None,
                  stdin: Optional[pulumi.Input[str]] = None,
@@ -377,7 +378,7 @@ class Rm(pulumi.ComponentResource):
 
     @property
     @pulumi.getter
-    def lifecycle(self) -> pulumi.Output[Optional[Any]]:
+    def lifecycle(self) -> pulumi.Output[Optional['CommandLifecycle']]:
         """
         At what stage(s) in the resource lifecycle should the command be run
         """

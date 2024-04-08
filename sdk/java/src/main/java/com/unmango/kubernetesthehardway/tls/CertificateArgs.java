@@ -6,9 +6,9 @@ package com.unmango.kubernetesthehardway.tls;
 import com.pulumi.core.Output;
 import com.pulumi.core.annotations.Import;
 import com.pulumi.exceptions.MissingRequiredPropertyException;
+import com.pulumi.tls.inputs.CertRequestSubjectArgs;
 import com.unmango.kubernetesthehardway.tls.enums.Algorithm;
 import com.unmango.kubernetesthehardway.tls.enums.AllowedUsage;
-import com.unmango.tls.inputs.CertRequestSubject;
 import java.lang.Boolean;
 import java.lang.Integer;
 import java.lang.String;
@@ -196,17 +196,17 @@ public final class CertificateArgs extends com.pulumi.resources.ResourceArgs {
     }
 
     /**
-     * The subject for which a certificate is being requested. The acceptable arguments are all optional and their naming is based upon [Issuer Distinguished Names (RFC5280)](https://tools.ietf.org/html/rfc5280#section-4.1.2.4) section.
+     * TODO
      * 
      */
     @Import(name="subject")
-    private @Nullable Output<CertRequestSubject> subject;
+    private @Nullable Output<CertRequestSubjectArgs> subject;
 
     /**
-     * @return The subject for which a certificate is being requested. The acceptable arguments are all optional and their naming is based upon [Issuer Distinguished Names (RFC5280)](https://tools.ietf.org/html/rfc5280#section-4.1.2.4) section.
+     * @return TODO
      * 
      */
-    public Optional<Output<CertRequestSubject>> subject() {
+    public Optional<Output<CertRequestSubjectArgs>> subject() {
         return Optional.ofNullable(this.subject);
     }
 
@@ -547,23 +547,23 @@ public final class CertificateArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param subject The subject for which a certificate is being requested. The acceptable arguments are all optional and their naming is based upon [Issuer Distinguished Names (RFC5280)](https://tools.ietf.org/html/rfc5280#section-4.1.2.4) section.
+         * @param subject TODO
          * 
          * @return builder
          * 
          */
-        public Builder subject(@Nullable Output<CertRequestSubject> subject) {
+        public Builder subject(@Nullable Output<CertRequestSubjectArgs> subject) {
             $.subject = subject;
             return this;
         }
 
         /**
-         * @param subject The subject for which a certificate is being requested. The acceptable arguments are all optional and their naming is based upon [Issuer Distinguished Names (RFC5280)](https://tools.ietf.org/html/rfc5280#section-4.1.2.4) section.
+         * @param subject TODO
          * 
          * @return builder
          * 
          */
-        public Builder subject(CertRequestSubject subject) {
+        public Builder subject(CertRequestSubjectArgs subject) {
             return subject(Output.of(subject));
         }
 

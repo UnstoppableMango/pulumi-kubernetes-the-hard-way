@@ -8,6 +8,7 @@ import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
 from .. import _utilities
+from ._enums import *
 import pulumi_command
 
 __all__ = ['MvArgs', 'Mv']
@@ -25,7 +26,7 @@ class MvArgs:
                  directory: Optional[pulumi.Input[str]] = None,
                  environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  force: Optional[pulumi.Input[bool]] = None,
-                 lifecycle: Optional[Any] = None,
+                 lifecycle: Optional['CommandLifecycle'] = None,
                  no_clobber: Optional[pulumi.Input[bool]] = None,
                  no_target_directory: Optional[pulumi.Input[bool]] = None,
                  stdin: Optional[pulumi.Input[str]] = None,
@@ -47,7 +48,7 @@ class MvArgs:
         :param pulumi.Input[str] directory: Corresponds to the [DIRECTORY] argument.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] environment: Environment variables
         :param pulumi.Input[bool] force: Corresponds to the `--force` option.
-        :param Any lifecycle: At what stage(s) in the resource lifecycle should the command be run
+        :param 'CommandLifecycle' lifecycle: At what stage(s) in the resource lifecycle should the command be run
         :param pulumi.Input[bool] no_clobber: Corresponds to the `--no-clobber` option.
         :param pulumi.Input[bool] no_target_directory: Corresponds to the `--no-target-directory` option.
         :param pulumi.Input[str] stdin: TODO
@@ -219,14 +220,14 @@ class MvArgs:
 
     @property
     @pulumi.getter
-    def lifecycle(self) -> Optional[Any]:
+    def lifecycle(self) -> Optional['CommandLifecycle']:
         """
         At what stage(s) in the resource lifecycle should the command be run
         """
         return pulumi.get(self, "lifecycle")
 
     @lifecycle.setter
-    def lifecycle(self, value: Optional[Any]):
+    def lifecycle(self, value: Optional['CommandLifecycle']):
         pulumi.set(self, "lifecycle", value)
 
     @property
@@ -352,7 +353,7 @@ class Mv(pulumi.ComponentResource):
                  directory: Optional[pulumi.Input[str]] = None,
                  environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  force: Optional[pulumi.Input[bool]] = None,
-                 lifecycle: Optional[Any] = None,
+                 lifecycle: Optional['CommandLifecycle'] = None,
                  no_clobber: Optional[pulumi.Input[bool]] = None,
                  no_target_directory: Optional[pulumi.Input[bool]] = None,
                  source: Optional[pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]]] = None,
@@ -378,7 +379,7 @@ class Mv(pulumi.ComponentResource):
         :param pulumi.Input[str] directory: Corresponds to the [DIRECTORY] argument.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] environment: Environment variables
         :param pulumi.Input[bool] force: Corresponds to the `--force` option.
-        :param Any lifecycle: At what stage(s) in the resource lifecycle should the command be run
+        :param 'CommandLifecycle' lifecycle: At what stage(s) in the resource lifecycle should the command be run
         :param pulumi.Input[bool] no_clobber: Corresponds to the `--no-clobber` option.
         :param pulumi.Input[bool] no_target_directory: Corresponds to the `--no-target-directory` option.
         :param pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]] source: Corresponds to the [SOURCE] argument.
@@ -423,7 +424,7 @@ class Mv(pulumi.ComponentResource):
                  directory: Optional[pulumi.Input[str]] = None,
                  environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  force: Optional[pulumi.Input[bool]] = None,
-                 lifecycle: Optional[Any] = None,
+                 lifecycle: Optional['CommandLifecycle'] = None,
                  no_clobber: Optional[pulumi.Input[bool]] = None,
                  no_target_directory: Optional[pulumi.Input[bool]] = None,
                  source: Optional[pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]]] = None,
@@ -561,7 +562,7 @@ class Mv(pulumi.ComponentResource):
 
     @property
     @pulumi.getter
-    def lifecycle(self) -> pulumi.Output[Optional[Any]]:
+    def lifecycle(self) -> pulumi.Output[Optional['CommandLifecycle']]:
         """
         At what stage(s) in the resource lifecycle should the command be run
         """

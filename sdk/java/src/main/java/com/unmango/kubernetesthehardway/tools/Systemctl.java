@@ -5,15 +5,14 @@ package com.unmango.kubernetesthehardway.tools;
 
 import com.pulumi.command.remote.Command;
 import com.pulumi.command.remote.outputs.Connection;
-import com.pulumi.core.Either;
 import com.pulumi.core.Output;
 import com.pulumi.core.annotations.Export;
 import com.pulumi.core.annotations.ResourceType;
 import com.pulumi.core.internal.Codegen;
 import com.unmango.kubernetesthehardway.Utilities;
 import com.unmango.kubernetesthehardway.tools.SystemctlArgs;
+import com.unmango.kubernetesthehardway.tools.enums.CommandLifecycle;
 import com.unmango.kubernetesthehardway.tools.enums.SystemctlCommand;
-import com.unmango.kubernetesthehardway.tools.outputs.CommandLifecycle;
 import java.lang.Object;
 import java.lang.String;
 import java.util.List;
@@ -185,14 +184,14 @@ public class Systemctl extends com.pulumi.resources.ComponentResource {
      * Corresponds to the [UNIT...] argument.
      * 
      */
-    @Export(name="unit", refs={Either.class,String.class,List.class}, tree="[0,1,[2,1]]")
-    private Output<Either<String,List<String>>> unit;
+    @Export(name="unit", refs={String.class}, tree="[0]")
+    private Output<String> unit;
 
     /**
      * @return Corresponds to the [UNIT...] argument.
      * 
      */
-    public Output<Either<String,List<String>>> unit() {
+    public Output<String> unit() {
         return this.unit;
     }
 

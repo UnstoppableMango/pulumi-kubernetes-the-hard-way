@@ -8,6 +8,7 @@ import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
 from .. import _utilities
+from ._enums import *
 import pulumi_command
 
 __all__ = ['EtcdctlArgs', 'Etcdctl']
@@ -17,26 +18,26 @@ class EtcdctlArgs:
     def __init__(__self__, *,
                  ca_cert: pulumi.Input[str],
                  cert: pulumi.Input[str],
-                 commands: Any,
+                 commands: pulumi.Input['EtcdctlCommand'],
                  connection: pulumi.Input['pulumi_command.remote.ConnectionArgs'],
                  endpoints: pulumi.Input[str],
                  key: pulumi.Input[str],
                  binary_path: Optional[pulumi.Input[str]] = None,
                  environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-                 lifecycle: Optional[Any] = None,
+                 lifecycle: Optional['CommandLifecycle'] = None,
                  stdin: Optional[pulumi.Input[str]] = None,
                  triggers: Optional[pulumi.Input[Sequence[Any]]] = None):
         """
         The set of arguments for constructing a Etcdctl resource.
         :param pulumi.Input[str] ca_cert: TODO
         :param pulumi.Input[str] cert: TODO
-        :param Any commands: TODO
+        :param pulumi.Input['EtcdctlCommand'] commands: TODO
         :param pulumi.Input['pulumi_command.remote.ConnectionArgs'] connection: Connection details for the remote system
         :param pulumi.Input[str] endpoints: TODO
         :param pulumi.Input[str] key: TODO
         :param pulumi.Input[str] binary_path: Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] environment: Environment variables
-        :param Any lifecycle: At what stage(s) in the resource lifecycle should the command be run
+        :param 'CommandLifecycle' lifecycle: At what stage(s) in the resource lifecycle should the command be run
         :param pulumi.Input[str] stdin: TODO
         :param pulumi.Input[Sequence[Any]] triggers: TODO
         """
@@ -83,14 +84,14 @@ class EtcdctlArgs:
 
     @property
     @pulumi.getter
-    def commands(self) -> Any:
+    def commands(self) -> pulumi.Input['EtcdctlCommand']:
         """
         TODO
         """
         return pulumi.get(self, "commands")
 
     @commands.setter
-    def commands(self, value: Any):
+    def commands(self, value: pulumi.Input['EtcdctlCommand']):
         pulumi.set(self, "commands", value)
 
     @property
@@ -155,14 +156,14 @@ class EtcdctlArgs:
 
     @property
     @pulumi.getter
-    def lifecycle(self) -> Optional[Any]:
+    def lifecycle(self) -> Optional['CommandLifecycle']:
         """
         At what stage(s) in the resource lifecycle should the command be run
         """
         return pulumi.get(self, "lifecycle")
 
     @lifecycle.setter
-    def lifecycle(self, value: Optional[Any]):
+    def lifecycle(self, value: Optional['CommandLifecycle']):
         pulumi.set(self, "lifecycle", value)
 
     @property
@@ -198,12 +199,12 @@ class Etcdctl(pulumi.ComponentResource):
                  binary_path: Optional[pulumi.Input[str]] = None,
                  ca_cert: Optional[pulumi.Input[str]] = None,
                  cert: Optional[pulumi.Input[str]] = None,
-                 commands: Optional[Any] = None,
+                 commands: Optional[pulumi.Input['EtcdctlCommand']] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
                  endpoints: Optional[pulumi.Input[str]] = None,
                  environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  key: Optional[pulumi.Input[str]] = None,
-                 lifecycle: Optional[Any] = None,
+                 lifecycle: Optional['CommandLifecycle'] = None,
                  stdin: Optional[pulumi.Input[str]] = None,
                  triggers: Optional[pulumi.Input[Sequence[Any]]] = None,
                  __props__=None):
@@ -215,12 +216,12 @@ class Etcdctl(pulumi.ComponentResource):
         :param pulumi.Input[str] binary_path: Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
         :param pulumi.Input[str] ca_cert: TODO
         :param pulumi.Input[str] cert: TODO
-        :param Any commands: TODO
+        :param pulumi.Input['EtcdctlCommand'] commands: TODO
         :param pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']] connection: Connection details for the remote system
         :param pulumi.Input[str] endpoints: TODO
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] environment: Environment variables
         :param pulumi.Input[str] key: TODO
-        :param Any lifecycle: At what stage(s) in the resource lifecycle should the command be run
+        :param 'CommandLifecycle' lifecycle: At what stage(s) in the resource lifecycle should the command be run
         :param pulumi.Input[str] stdin: TODO
         :param pulumi.Input[Sequence[Any]] triggers: TODO
         """
@@ -251,12 +252,12 @@ class Etcdctl(pulumi.ComponentResource):
                  binary_path: Optional[pulumi.Input[str]] = None,
                  ca_cert: Optional[pulumi.Input[str]] = None,
                  cert: Optional[pulumi.Input[str]] = None,
-                 commands: Optional[Any] = None,
+                 commands: Optional[pulumi.Input['EtcdctlCommand']] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
                  endpoints: Optional[pulumi.Input[str]] = None,
                  environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  key: Optional[pulumi.Input[str]] = None,
-                 lifecycle: Optional[Any] = None,
+                 lifecycle: Optional['CommandLifecycle'] = None,
                  stdin: Optional[pulumi.Input[str]] = None,
                  triggers: Optional[pulumi.Input[Sequence[Any]]] = None,
                  __props__=None):
@@ -337,7 +338,7 @@ class Etcdctl(pulumi.ComponentResource):
 
     @property
     @pulumi.getter
-    def commands(self) -> pulumi.Output[Any]:
+    def commands(self) -> pulumi.Output['EtcdctlCommand']:
         """
         TODO
         """
@@ -377,7 +378,7 @@ class Etcdctl(pulumi.ComponentResource):
 
     @property
     @pulumi.getter
-    def lifecycle(self) -> pulumi.Output[Optional[Any]]:
+    def lifecycle(self) -> pulumi.Output[Optional['CommandLifecycle']]:
         """
         At what stage(s) in the resource lifecycle should the command be run
         """

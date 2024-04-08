@@ -2,6 +2,21 @@
 // *** Do not edit by hand unless you're certain you know what you are doing! ***
 
 
+export const CommandLifecycle = {
+    Create: "create",
+    Update: "update",
+    Delete: "delete",
+} as const;
+
+export type CommandLifecycle = (typeof CommandLifecycle)[keyof typeof CommandLifecycle];
+
+export const EtcdctlCommand = {
+    Member: "member",
+    List: "list",
+} as const;
+
+export type EtcdctlCommand = (typeof EtcdctlCommand)[keyof typeof EtcdctlCommand];
+
 export const SystemctlCommand = {
     Bind: "bind",
     Cat: "cat",

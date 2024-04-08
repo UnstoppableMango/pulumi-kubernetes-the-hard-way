@@ -5,9 +5,22 @@
 from enum import Enum
 
 __all__ = [
+    'CommandLifecycle',
+    'EtcdctlCommand',
     'SystemctlCommand',
     'TeeMode',
 ]
+
+
+class CommandLifecycle(str, Enum):
+    CREATE = "create"
+    UPDATE = "update"
+    DELETE = "delete"
+
+
+class EtcdctlCommand(str, Enum):
+    MEMBER = "member"
+    LIST = "list"
 
 
 class SystemctlCommand(str, Enum):

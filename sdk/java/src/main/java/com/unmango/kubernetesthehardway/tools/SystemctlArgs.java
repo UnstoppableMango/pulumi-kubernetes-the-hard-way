@@ -4,12 +4,11 @@
 package com.unmango.kubernetesthehardway.tools;
 
 import com.pulumi.command.remote.inputs.ConnectionArgs;
-import com.pulumi.core.Either;
 import com.pulumi.core.Output;
 import com.pulumi.core.annotations.Import;
 import com.pulumi.exceptions.MissingRequiredPropertyException;
+import com.unmango.kubernetesthehardway.tools.enums.CommandLifecycle;
 import com.unmango.kubernetesthehardway.tools.enums.SystemctlCommand;
-import com.unmango.kubernetesthehardway.tools.inputs.CommandLifecycle;
 import java.lang.Object;
 import java.lang.String;
 import java.util.List;
@@ -148,13 +147,13 @@ public final class SystemctlArgs extends com.pulumi.resources.ResourceArgs {
      * 
      */
     @Import(name="unit", required=true)
-    private Output<Either<String,List<String>>> unit;
+    private Output<String> unit;
 
     /**
      * @return Corresponds to the [UNIT...] argument.
      * 
      */
-    public Output<Either<String,List<String>>> unit() {
+    public Output<String> unit() {
         return this.unit;
     }
 
@@ -354,7 +353,7 @@ public final class SystemctlArgs extends com.pulumi.resources.ResourceArgs {
          * @return builder
          * 
          */
-        public Builder unit(Output<Either<String,List<String>>> unit) {
+        public Builder unit(Output<String> unit) {
             $.unit = unit;
             return this;
         }
@@ -365,28 +364,8 @@ public final class SystemctlArgs extends com.pulumi.resources.ResourceArgs {
          * @return builder
          * 
          */
-        public Builder unit(Either<String,List<String>> unit) {
-            return unit(Output.of(unit));
-        }
-
-        /**
-         * @param unit Corresponds to the [UNIT...] argument.
-         * 
-         * @return builder
-         * 
-         */
         public Builder unit(String unit) {
-            return unit(Either.ofLeft(unit));
-        }
-
-        /**
-         * @param unit Corresponds to the [UNIT...] argument.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder unit(List<String> unit) {
-            return unit(Either.ofRight(unit));
+            return unit(Output.of(unit));
         }
 
         public SystemctlArgs build() {

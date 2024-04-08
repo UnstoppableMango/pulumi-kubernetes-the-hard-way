@@ -2,11 +2,12 @@
 // *** Do not edit by hand unless you're certain you know what you are doing! ***
 
 import * as pulumi from "@pulumi/pulumi";
+import * as inputs from "../types/input";
+import * as outputs from "../types/output";
+import * as enums from "../types/enums";
 import * as utilities from "../utilities";
 
 import * as pulumiCommand from "@pulumi/command";
-
-import {CommandLifecycle} from "./index";
 
 /**
  * Abstraction over the `rm` utility on a remote system.
@@ -57,7 +58,7 @@ export class Rm extends pulumi.ComponentResource {
     /**
      * At what stage(s) in the resource lifecycle should the command be run
      */
-    public readonly lifecycle!: pulumi.Output<CommandLifecycle | undefined>;
+    public readonly lifecycle!: pulumi.Output<enums.tools.CommandLifecycle | undefined>;
     /**
      * Whether rm should be run when the resource is created or deleted.
      */
@@ -172,7 +173,7 @@ export interface RmArgs {
     /**
      * At what stage(s) in the resource lifecycle should the command be run
      */
-    lifecycle?: CommandLifecycle;
+    lifecycle?: enums.tools.CommandLifecycle;
     /**
      * Whether rm should be run when the resource is created or deleted.
      */

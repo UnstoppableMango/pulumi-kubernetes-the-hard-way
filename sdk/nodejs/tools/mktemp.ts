@@ -2,11 +2,12 @@
 // *** Do not edit by hand unless you're certain you know what you are doing! ***
 
 import * as pulumi from "@pulumi/pulumi";
+import * as inputs from "../types/input";
+import * as outputs from "../types/output";
+import * as enums from "../types/enums";
 import * as utilities from "../utilities";
 
 import * as pulumiCommand from "@pulumi/command";
-
-import {CommandLifecycle} from "./index";
 
 /**
  * Abstraction over the `mkdir` utility on a remote system.
@@ -53,7 +54,7 @@ export class Mktemp extends pulumi.ComponentResource {
     /**
      * At what stage(s) in the resource lifecycle should the command be run
      */
-    public readonly lifecycle!: pulumi.Output<CommandLifecycle | undefined>;
+    public readonly lifecycle!: pulumi.Output<enums.tools.CommandLifecycle | undefined>;
     /**
      * Corresponds to the `--quiet` option.
      */
@@ -77,7 +78,7 @@ export class Mktemp extends pulumi.ComponentResource {
     /**
      * Corresponds to the [TEMPLATE] argument.
      */
-    public readonly template!: pulumi.Output<boolean | undefined>;
+    public readonly template!: pulumi.Output<string | undefined>;
     /**
      * Corresponds to the `--tmpdir` option.
      */
@@ -165,7 +166,7 @@ export interface MktempArgs {
     /**
      * At what stage(s) in the resource lifecycle should the command be run
      */
-    lifecycle?: CommandLifecycle;
+    lifecycle?: enums.tools.CommandLifecycle;
     /**
      * Corresponds to the `--quiet` option.
      */
@@ -181,7 +182,7 @@ export interface MktempArgs {
     /**
      * Corresponds to the [TEMPLATE] argument.
      */
-    template?: pulumi.Input<boolean>;
+    template?: pulumi.Input<string>;
     /**
      * Corresponds to the `--tmpdir` option.
      */

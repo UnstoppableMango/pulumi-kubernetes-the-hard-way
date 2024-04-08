@@ -44,25 +44,25 @@ namespace UnMango.KubernetesTheHardWay.Remote
         /// The download operation.
         /// </summary>
         [Output("download")]
-        public Output<UnMango.KubernetesTheHardWay.Remote.Outputs.Download> Download { get; private set; } = null!;
+        public Output<UnMango.KubernetesTheHardWay.Remote.Download> Download { get; private set; } = null!;
 
         /// <summary>
         /// The mkdir operation.
         /// </summary>
         [Output("mkdir")]
-        public Output<UnMango.KubernetesTheHardWay.Tools.Outputs.Mkdir> Mkdir { get; private set; } = null!;
+        public Output<UnMango.KubernetesTheHardWay.Tools.Mkdir> Mkdir { get; private set; } = null!;
 
         /// <summary>
         /// The mktemp operation.
         /// </summary>
         [Output("mktemp")]
-        public Output<UnMango.KubernetesTheHardWay.Tools.Outputs.Mktemp> Mktemp { get; private set; } = null!;
+        public Output<UnMango.KubernetesTheHardWay.Tools.Mktemp> Mktemp { get; private set; } = null!;
 
         /// <summary>
         /// The mv operation.
         /// </summary>
         [Output("mv")]
-        public Output<UnMango.KubernetesTheHardWay.Tools.Outputs.Mv> Mv { get; private set; } = null!;
+        public Output<UnMango.KubernetesTheHardWay.Tools.Mv> Mv { get; private set; } = null!;
 
         /// <summary>
         /// The path to the installed binary.
@@ -74,7 +74,7 @@ namespace UnMango.KubernetesTheHardWay.Remote
         /// The rm operation.
         /// </summary>
         [Output("rm")]
-        public Output<UnMango.KubernetesTheHardWay.Tools.Outputs.Rm> Rm { get; private set; } = null!;
+        public Output<UnMango.KubernetesTheHardWay.Tools.Rm> Rm { get; private set; } = null!;
 
         /// <summary>
         /// The url used to download the binary.

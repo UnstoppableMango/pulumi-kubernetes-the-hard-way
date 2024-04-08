@@ -44,7 +44,7 @@ namespace UnMango.KubernetesTheHardWay.Tools
         /// At what stage(s) in the resource lifecycle should the command be run
         /// </summary>
         [Output("lifecycle")]
-        public Output<UnMango.KubernetesTheHardWay.Tools.Outputs.CommandLifecycle?> Lifecycle { get; private set; } = null!;
+        public Output<UnMango.KubernetesTheHardWay.Tools.CommandLifecycle?> Lifecycle { get; private set; } = null!;
 
         /// <summary>
         /// Corresponds to the [PATTERN] argument
@@ -86,7 +86,7 @@ namespace UnMango.KubernetesTheHardWay.Tools
         /// Corresponds to the [UNIT...] argument.
         /// </summary>
         [Output("unit")]
-        public Output<Union<string, ImmutableArray<string>>> Unit { get; private set; } = null!;
+        public Output<string> Unit { get; private set; } = null!;
 
 
         /// <summary>
@@ -151,7 +151,7 @@ namespace UnMango.KubernetesTheHardWay.Tools
         /// At what stage(s) in the resource lifecycle should the command be run
         /// </summary>
         [Input("lifecycle")]
-        public UnMango.KubernetesTheHardWay.Tools.Inputs.CommandLifecycle? Lifecycle { get; set; }
+        public UnMango.KubernetesTheHardWay.Tools.CommandLifecycle? Lifecycle { get; set; }
 
         /// <summary>
         /// Corresponds to the [PATTERN] argument
@@ -181,7 +181,7 @@ namespace UnMango.KubernetesTheHardWay.Tools
         /// Corresponds to the [UNIT...] argument.
         /// </summary>
         [Input("unit", required: true)]
-        public InputUnion<string, ImmutableArray<string>> Unit { get; set; } = null!;
+        public Input<string> Unit { get; set; } = null!;
 
         public SystemctlArgs()
         {

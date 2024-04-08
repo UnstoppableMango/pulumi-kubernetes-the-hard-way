@@ -62,7 +62,7 @@ namespace UnMango.KubernetesTheHardWay.Tools
         /// At what stage(s) in the resource lifecycle should the command be run
         /// </summary>
         [Output("lifecycle")]
-        public Output<UnMango.KubernetesTheHardWay.Tools.Outputs.CommandLifecycle?> Lifecycle { get; private set; } = null!;
+        public Output<UnMango.KubernetesTheHardWay.Tools.CommandLifecycle?> Lifecycle { get; private set; } = null!;
 
         /// <summary>
         /// Whether rm should be run when the resource is created or deleted.
@@ -181,7 +181,7 @@ namespace UnMango.KubernetesTheHardWay.Tools
         /// At what stage(s) in the resource lifecycle should the command be run
         /// </summary>
         [Input("lifecycle")]
-        public UnMango.KubernetesTheHardWay.Tools.Inputs.CommandLifecycle? Lifecycle { get; set; }
+        public UnMango.KubernetesTheHardWay.Tools.CommandLifecycle? Lifecycle { get; set; }
 
         /// <summary>
         /// Whether rm should be run when the resource is created or deleted.

@@ -25,7 +25,7 @@ class RootCaArgs:
                  rsa_bits: Optional[pulumi.Input[int]] = None,
                  set_authority_key_id: Optional[pulumi.Input[bool]] = None,
                  set_subject_key_id: Optional[pulumi.Input[bool]] = None,
-                 subject: Optional[Any] = None,
+                 subject: Optional[pulumi.Input['pulumi_tls.SelfSignedCertSubjectArgs']] = None,
                  uris: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None):
         """
         The set of arguments for constructing a RootCa resource.
@@ -42,7 +42,7 @@ class RootCaArgs:
         :param pulumi.Input[int] rsa_bits: When `algorithm` is `RSA`, the size of the generated RSA key, in bits (default: `2048`).
         :param pulumi.Input[bool] set_authority_key_id: Should the generated certificate include an [authority key identifier](https://datatracker.ietf.org/doc/html/rfc5280#section-4.2.1.1): for self-signed certificates this is the same value as the [subject key identifier](https://datatracker.ietf.org/doc/html/rfc5280#section-4.2.1.2) (default: `false`).
         :param pulumi.Input[bool] set_subject_key_id: Should the generated certificate include a [subject key identifier](https://datatracker.ietf.org/doc/html/rfc5280#section-4.2.1.2) (default: `false`).
-        :param Any subject: The subject for which a certificate is being requested. The acceptable arguments are all optional and their naming is based upon [Issuer Distinguished Names (RFC5280)](https://tools.ietf.org/html/rfc5280#section-4.1.2.4) section.
+        :param pulumi.Input['pulumi_tls.SelfSignedCertSubjectArgs'] subject: TODO
         :param pulumi.Input[Sequence[pulumi.Input[str]]] uris: List of URIs for which a certificate is being requested (i.e. certificate subjects).
         """
         pulumi.set(__self__, "validity_period_hours", validity_period_hours)
@@ -181,14 +181,14 @@ class RootCaArgs:
 
     @property
     @pulumi.getter
-    def subject(self) -> Optional[Any]:
+    def subject(self) -> Optional[pulumi.Input['pulumi_tls.SelfSignedCertSubjectArgs']]:
         """
-        The subject for which a certificate is being requested. The acceptable arguments are all optional and their naming is based upon [Issuer Distinguished Names (RFC5280)](https://tools.ietf.org/html/rfc5280#section-4.1.2.4) section.
+        TODO
         """
         return pulumi.get(self, "subject")
 
     @subject.setter
-    def subject(self, value: Optional[Any]):
+    def subject(self, value: Optional[pulumi.Input['pulumi_tls.SelfSignedCertSubjectArgs']]):
         pulumi.set(self, "subject", value)
 
     @property
@@ -217,7 +217,7 @@ class RootCa(pulumi.ComponentResource):
                  rsa_bits: Optional[pulumi.Input[int]] = None,
                  set_authority_key_id: Optional[pulumi.Input[bool]] = None,
                  set_subject_key_id: Optional[pulumi.Input[bool]] = None,
-                 subject: Optional[Any] = None,
+                 subject: Optional[pulumi.Input[pulumi.InputType['pulumi_tls.SelfSignedCertSubjectArgs']]] = None,
                  uris: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  validity_period_hours: Optional[pulumi.Input[int]] = None,
                  __props__=None):
@@ -238,7 +238,7 @@ class RootCa(pulumi.ComponentResource):
         :param pulumi.Input[int] rsa_bits: When `algorithm` is `RSA`, the size of the generated RSA key, in bits (default: `2048`).
         :param pulumi.Input[bool] set_authority_key_id: Should the generated certificate include an [authority key identifier](https://datatracker.ietf.org/doc/html/rfc5280#section-4.2.1.1): for self-signed certificates this is the same value as the [subject key identifier](https://datatracker.ietf.org/doc/html/rfc5280#section-4.2.1.2) (default: `false`).
         :param pulumi.Input[bool] set_subject_key_id: Should the generated certificate include a [subject key identifier](https://datatracker.ietf.org/doc/html/rfc5280#section-4.2.1.2) (default: `false`).
-        :param Any subject: The subject for which a certificate is being requested. The acceptable arguments are all optional and their naming is based upon [Issuer Distinguished Names (RFC5280)](https://tools.ietf.org/html/rfc5280#section-4.1.2.4) section.
+        :param pulumi.Input[pulumi.InputType['pulumi_tls.SelfSignedCertSubjectArgs']] subject: TODO
         :param pulumi.Input[Sequence[pulumi.Input[str]]] uris: List of URIs for which a certificate is being requested (i.e. certificate subjects).
         :param pulumi.Input[int] validity_period_hours: Number of hours, after initial issuing, that the certificate will remain valid for.
         """
@@ -274,7 +274,7 @@ class RootCa(pulumi.ComponentResource):
                  rsa_bits: Optional[pulumi.Input[int]] = None,
                  set_authority_key_id: Optional[pulumi.Input[bool]] = None,
                  set_subject_key_id: Optional[pulumi.Input[bool]] = None,
-                 subject: Optional[Any] = None,
+                 subject: Optional[pulumi.Input[pulumi.InputType['pulumi_tls.SelfSignedCertSubjectArgs']]] = None,
                  uris: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  validity_period_hours: Optional[pulumi.Input[int]] = None,
                  __props__=None):
@@ -508,9 +508,9 @@ class RootCa(pulumi.ComponentResource):
 
     @property
     @pulumi.getter
-    def subject(self) -> pulumi.Output[Optional[Any]]:
+    def subject(self) -> pulumi.Output[Optional['pulumi_tls.outputs.SelfSignedCertSubject']]:
         """
-        The subject for which a certificate is being requested. The acceptable arguments are all optional and their naming is based upon [Issuer Distinguished Names (RFC5280)](https://tools.ietf.org/html/rfc5280#section-4.1.2.4) section.
+        TODO
         """
         return pulumi.get(self, "subject")
 

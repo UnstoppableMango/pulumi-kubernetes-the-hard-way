@@ -73,8 +73,8 @@ type Certificate struct {
 	RsaBits pulumi.IntOutput `pulumi:"rsaBits"`
 	// Should the generated certificate include a [subject key identifier](https://datatracker.ietf.org/doc/html/rfc5280#section-4.2.1.2) (default: `false`).
 	SetSubjectKeyId pulumi.BoolOutput `pulumi:"setSubjectKeyId"`
-	// The subject for which a certificate is being requested. The acceptable arguments are all optional and their naming is based upon [Issuer Distinguished Names (RFC5280)](https://tools.ietf.org/html/rfc5280#section-4.1.2.4) section.
-	Subject pulumikubernetesthehardway.CertRequestSubjectPtrOutput `pulumi:"subject"`
+	// TODO
+	Subject tls.CertRequestSubjectPtrOutput `pulumi:"subject"`
 	// List of URIs for which a certificate is being requested (i.e. certificate subjects).
 	Uris pulumi.StringArrayOutput `pulumi:"uris"`
 	// The time until which the certificate is invalid, expressed as an [RFC3339](https://tools.ietf.org/html/rfc3339) timestamp.
@@ -153,8 +153,8 @@ type certificateArgs struct {
 	RsaBits *int `pulumi:"rsaBits"`
 	// Should the generated certificate include a [subject key identifier](https://datatracker.ietf.org/doc/html/rfc5280#section-4.2.1.2) (default: `false`).
 	SetSubjectKeyId *bool `pulumi:"setSubjectKeyId"`
-	// The subject for which a certificate is being requested. The acceptable arguments are all optional and their naming is based upon [Issuer Distinguished Names (RFC5280)](https://tools.ietf.org/html/rfc5280#section-4.1.2.4) section.
-	Subject *pulumikubernetesthehardway.CertRequestSubject `pulumi:"subject"`
+	// TODO
+	Subject *tls.CertRequestSubject `pulumi:"subject"`
 	// List of URIs for which a certificate is being requested (i.e. certificate subjects).
 	Uris []string `pulumi:"uris"`
 	// Number of hours, after initial issuing, that the certificate will remain valid for.
@@ -189,8 +189,8 @@ type CertificateArgs struct {
 	RsaBits pulumi.IntPtrInput
 	// Should the generated certificate include a [subject key identifier](https://datatracker.ietf.org/doc/html/rfc5280#section-4.2.1.2) (default: `false`).
 	SetSubjectKeyId pulumi.BoolPtrInput
-	// The subject for which a certificate is being requested. The acceptable arguments are all optional and their naming is based upon [Issuer Distinguished Names (RFC5280)](https://tools.ietf.org/html/rfc5280#section-4.1.2.4) section.
-	Subject pulumikubernetesthehardway.CertRequestSubjectPtrInput
+	// TODO
+	Subject tls.CertRequestSubjectPtrInput
 	// List of URIs for which a certificate is being requested (i.e. certificate subjects).
 	Uris pulumi.StringArrayInput
 	// Number of hours, after initial issuing, that the certificate will remain valid for.
@@ -418,9 +418,9 @@ func (o CertificateOutput) SetSubjectKeyId() pulumi.BoolOutput {
 	return o.ApplyT(func(v *Certificate) pulumi.BoolOutput { return v.SetSubjectKeyId }).(pulumi.BoolOutput)
 }
 
-// The subject for which a certificate is being requested. The acceptable arguments are all optional and their naming is based upon [Issuer Distinguished Names (RFC5280)](https://tools.ietf.org/html/rfc5280#section-4.1.2.4) section.
-func (o CertificateOutput) Subject() pulumikubernetesthehardway.CertRequestSubjectPtrOutput {
-	return o.ApplyT(func(v *Certificate) pulumikubernetesthehardway.CertRequestSubjectPtrOutput { return v.Subject }).(pulumikubernetesthehardway.CertRequestSubjectPtrOutput)
+// TODO
+func (o CertificateOutput) Subject() tls.CertRequestSubjectPtrOutput {
+	return o.ApplyT(func(v *Certificate) tls.CertRequestSubjectPtrOutput { return v.Subject }).(tls.CertRequestSubjectPtrOutput)
 }
 
 // List of URIs for which a certificate is being requested (i.e. certificate subjects).

@@ -7,7 +7,7 @@ import com.pulumi.command.remote.inputs.ConnectionArgs;
 import com.pulumi.core.Output;
 import com.pulumi.core.annotations.Import;
 import com.pulumi.exceptions.MissingRequiredPropertyException;
-import com.unmango.kubernetesthehardway.tools.inputs.CommandLifecycle;
+import com.unmango.kubernetesthehardway.tools.enums.CommandLifecycle;
 import java.lang.Boolean;
 import java.lang.Object;
 import java.lang.String;
@@ -162,13 +162,13 @@ public final class MktempArgs extends com.pulumi.resources.ResourceArgs {
      * 
      */
     @Import(name="template")
-    private @Nullable Output<Boolean> template;
+    private @Nullable Output<String> template;
 
     /**
      * @return Corresponds to the [TEMPLATE] argument.
      * 
      */
-    public Optional<Output<Boolean>> template() {
+    public Optional<Output<String>> template() {
         return Optional.ofNullable(this.template);
     }
 
@@ -422,7 +422,7 @@ public final class MktempArgs extends com.pulumi.resources.ResourceArgs {
          * @return builder
          * 
          */
-        public Builder template(@Nullable Output<Boolean> template) {
+        public Builder template(@Nullable Output<String> template) {
             $.template = template;
             return this;
         }
@@ -433,7 +433,7 @@ public final class MktempArgs extends com.pulumi.resources.ResourceArgs {
          * @return builder
          * 
          */
-        public Builder template(Boolean template) {
+        public Builder template(String template) {
             return template(Output.of(template));
         }
 

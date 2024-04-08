@@ -9,8 +9,6 @@ import * as utilities from "../utilities";
 
 import * as pulumiTls from "@pulumi/tls";
 
-import {SelfSignedCertSubject} from "..";
-
 /**
  * Root certificate authority for a cluster.
  */
@@ -122,9 +120,9 @@ export class RootCa extends pulumi.ComponentResource {
      */
     public readonly setSubjectKeyId!: pulumi.Output<boolean>;
     /**
-     * The subject for which a certificate is being requested. The acceptable arguments are all optional and their naming is based upon [Issuer Distinguished Names (RFC5280)](https://tools.ietf.org/html/rfc5280#section-4.1.2.4) section.
+     * TODO
      */
-    public readonly subject!: pulumi.Output<SelfSignedCertSubject | undefined>;
+    public readonly subject!: pulumi.Output<pulumiTls.types.output.SelfSignedCertSubject | undefined>;
     /**
      * List of URIs for which a certificate is being requested (i.e. certificate subjects).
      */
@@ -260,9 +258,9 @@ export interface RootCaArgs {
      */
     setSubjectKeyId?: pulumi.Input<boolean>;
     /**
-     * The subject for which a certificate is being requested. The acceptable arguments are all optional and their naming is based upon [Issuer Distinguished Names (RFC5280)](https://tools.ietf.org/html/rfc5280#section-4.1.2.4) section.
+     * TODO
      */
-    subject?: pulumi.Input<SelfSignedCertSubject>;
+    subject?: pulumi.Input<pulumiTls.types.input.SelfSignedCertSubject>;
     /**
      * List of URIs for which a certificate is being requested (i.e. certificate subjects).
      */

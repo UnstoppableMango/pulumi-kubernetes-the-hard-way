@@ -8,6 +8,7 @@ import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
 from .. import _utilities
+from ._enums import *
 import pulumi_command
 
 __all__ = ['WgetArgs', 'Wget']
@@ -21,7 +22,7 @@ class WgetArgs:
                  directory_prefix: Optional[pulumi.Input[str]] = None,
                  environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  https_only: Optional[pulumi.Input[bool]] = None,
-                 lifecycle: Optional[Any] = None,
+                 lifecycle: Optional['CommandLifecycle'] = None,
                  no_verbose: Optional[pulumi.Input[bool]] = None,
                  output_document: Optional[pulumi.Input[str]] = None,
                  quiet: Optional[pulumi.Input[bool]] = None,
@@ -36,7 +37,7 @@ class WgetArgs:
         :param pulumi.Input[str] directory_prefix: The  directory prefix is the directory where all other files and subdirectories will be saved to, i.e. the top of the retrieval tree.  The default is . (the current directory).
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] environment: Environment variables
         :param pulumi.Input[bool] https_only: When in recursive mode, only HTTPS links are followed.
-        :param Any lifecycle: At what stage(s) in the resource lifecycle should the command be run
+        :param 'CommandLifecycle' lifecycle: At what stage(s) in the resource lifecycle should the command be run
         :param pulumi.Input[bool] no_verbose: Turn off verbose without being completely quiet (use -q for that), which means that error messages and basic information still get printed.
         :param pulumi.Input[str] output_document: The  documents  will  not  be  written  to the appropriate files, but all will be concatenated together and written to file.
         :param pulumi.Input[bool] quiet: Turn off Wget's output.
@@ -143,14 +144,14 @@ class WgetArgs:
 
     @property
     @pulumi.getter
-    def lifecycle(self) -> Optional[Any]:
+    def lifecycle(self) -> Optional['CommandLifecycle']:
         """
         At what stage(s) in the resource lifecycle should the command be run
         """
         return pulumi.get(self, "lifecycle")
 
     @lifecycle.setter
-    def lifecycle(self, value: Optional[Any]):
+    def lifecycle(self, value: Optional['CommandLifecycle']):
         pulumi.set(self, "lifecycle", value)
 
     @property
@@ -236,7 +237,7 @@ class Wget(pulumi.ComponentResource):
                  directory_prefix: Optional[pulumi.Input[str]] = None,
                  environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  https_only: Optional[pulumi.Input[bool]] = None,
-                 lifecycle: Optional[Any] = None,
+                 lifecycle: Optional['CommandLifecycle'] = None,
                  no_verbose: Optional[pulumi.Input[bool]] = None,
                  output_document: Optional[pulumi.Input[str]] = None,
                  quiet: Optional[pulumi.Input[bool]] = None,
@@ -255,7 +256,7 @@ class Wget(pulumi.ComponentResource):
         :param pulumi.Input[str] directory_prefix: The  directory prefix is the directory where all other files and subdirectories will be saved to, i.e. the top of the retrieval tree.  The default is . (the current directory).
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] environment: Environment variables
         :param pulumi.Input[bool] https_only: When in recursive mode, only HTTPS links are followed.
-        :param Any lifecycle: At what stage(s) in the resource lifecycle should the command be run
+        :param 'CommandLifecycle' lifecycle: At what stage(s) in the resource lifecycle should the command be run
         :param pulumi.Input[bool] no_verbose: Turn off verbose without being completely quiet (use -q for that), which means that error messages and basic information still get printed.
         :param pulumi.Input[str] output_document: The  documents  will  not  be  written  to the appropriate files, but all will be concatenated together and written to file.
         :param pulumi.Input[bool] quiet: Turn off Wget's output.
@@ -293,7 +294,7 @@ class Wget(pulumi.ComponentResource):
                  directory_prefix: Optional[pulumi.Input[str]] = None,
                  environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  https_only: Optional[pulumi.Input[bool]] = None,
-                 lifecycle: Optional[Any] = None,
+                 lifecycle: Optional['CommandLifecycle'] = None,
                  no_verbose: Optional[pulumi.Input[bool]] = None,
                  output_document: Optional[pulumi.Input[str]] = None,
                  quiet: Optional[pulumi.Input[bool]] = None,
@@ -389,7 +390,7 @@ class Wget(pulumi.ComponentResource):
 
     @property
     @pulumi.getter
-    def lifecycle(self) -> pulumi.Output[Optional[Any]]:
+    def lifecycle(self) -> pulumi.Output[Optional['CommandLifecycle']]:
         """
         At what stage(s) in the resource lifecycle should the command be run
         """

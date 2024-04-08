@@ -44,7 +44,7 @@ namespace UnMango.KubernetesTheHardWay.Tools
         /// TODO
         /// </summary>
         [Output("commands")]
-        public Output<UnMango.KubernetesTheHardWay.Tools.Outputs.EtcdctlCommand> Commands { get; private set; } = null!;
+        public Output<UnMango.KubernetesTheHardWay.Tools.EtcdctlCommand> Commands { get; private set; } = null!;
 
         /// <summary>
         /// Connection details for the remote system
@@ -74,7 +74,7 @@ namespace UnMango.KubernetesTheHardWay.Tools
         /// At what stage(s) in the resource lifecycle should the command be run
         /// </summary>
         [Output("lifecycle")]
-        public Output<UnMango.KubernetesTheHardWay.Tools.Outputs.CommandLifecycle?> Lifecycle { get; private set; } = null!;
+        public Output<UnMango.KubernetesTheHardWay.Tools.CommandLifecycle?> Lifecycle { get; private set; } = null!;
 
         /// <summary>
         /// TODO
@@ -151,7 +151,7 @@ namespace UnMango.KubernetesTheHardWay.Tools
         /// TODO
         /// </summary>
         [Input("commands", required: true)]
-        public Input<UnMango.KubernetesTheHardWay.Tools.Inputs.EtcdctlCommand> Commands { get; set; } = null!;
+        public Input<UnMango.KubernetesTheHardWay.Tools.EtcdctlCommand> Commands { get; set; } = null!;
 
         /// <summary>
         /// Connection details for the remote system
@@ -187,7 +187,7 @@ namespace UnMango.KubernetesTheHardWay.Tools
         /// At what stage(s) in the resource lifecycle should the command be run
         /// </summary>
         [Input("lifecycle")]
-        public UnMango.KubernetesTheHardWay.Tools.Inputs.CommandLifecycle? Lifecycle { get; set; }
+        public UnMango.KubernetesTheHardWay.Tools.CommandLifecycle? Lifecycle { get; set; }
 
         /// <summary>
         /// TODO

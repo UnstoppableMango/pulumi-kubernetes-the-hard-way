@@ -40,7 +40,7 @@ type Systemctl struct {
 	// TODO
 	Triggers pulumi.ArrayOutput `pulumi:"triggers"`
 	// Corresponds to the [UNIT...] argument.
-	Unit pulumi.AnyOutput `pulumi:"unit"`
+	Unit pulumi.StringOutput `pulumi:"unit"`
 }
 
 // NewSystemctl registers a new resource with the given unique name, arguments, and options.
@@ -84,7 +84,7 @@ type systemctlArgs struct {
 	// TODO
 	Triggers []interface{} `pulumi:"triggers"`
 	// Corresponds to the [UNIT...] argument.
-	Unit interface{} `pulumi:"unit"`
+	Unit string `pulumi:"unit"`
 }
 
 // The set of arguments for constructing a Systemctl resource.
@@ -106,7 +106,7 @@ type SystemctlArgs struct {
 	// TODO
 	Triggers pulumi.ArrayInput
 	// Corresponds to the [UNIT...] argument.
-	Unit pulumi.Input
+	Unit pulumi.StringInput
 }
 
 func (SystemctlArgs) ElementType() reflect.Type {
@@ -252,8 +252,8 @@ func (o SystemctlOutput) Triggers() pulumi.ArrayOutput {
 }
 
 // Corresponds to the [UNIT...] argument.
-func (o SystemctlOutput) Unit() pulumi.AnyOutput {
-	return o.ApplyT(func(v *Systemctl) pulumi.AnyOutput { return v.Unit }).(pulumi.AnyOutput)
+func (o SystemctlOutput) Unit() pulumi.StringOutput {
+	return o.ApplyT(func(v *Systemctl) pulumi.StringOutput { return v.Unit }).(pulumi.StringOutput)
 }
 
 type SystemctlArrayOutput struct{ *pulumi.OutputState }

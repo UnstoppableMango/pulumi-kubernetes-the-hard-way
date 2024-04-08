@@ -9,8 +9,6 @@ import * as utilities from "../utilities";
 
 import * as pulumiTls from "@pulumi/tls";
 
-import {CertRequestSubject} from "..";
-
 /**
  * A certificate key pair.
  */
@@ -138,9 +136,9 @@ export class Certificate extends pulumi.ComponentResource {
      */
     public readonly setSubjectKeyId!: pulumi.Output<boolean>;
     /**
-     * The subject for which a certificate is being requested. The acceptable arguments are all optional and their naming is based upon [Issuer Distinguished Names (RFC5280)](https://tools.ietf.org/html/rfc5280#section-4.1.2.4) section.
+     * TODO
      */
-    public readonly subject!: pulumi.Output<CertRequestSubject | undefined>;
+    public readonly subject!: pulumi.Output<pulumiTls.types.output.CertRequestSubject | undefined>;
     /**
      * List of URIs for which a certificate is being requested (i.e. certificate subjects).
      */
@@ -308,9 +306,9 @@ export interface CertificateArgs {
      */
     setSubjectKeyId?: pulumi.Input<boolean>;
     /**
-     * The subject for which a certificate is being requested. The acceptable arguments are all optional and their naming is based upon [Issuer Distinguished Names (RFC5280)](https://tools.ietf.org/html/rfc5280#section-4.1.2.4) section.
+     * TODO
      */
-    subject?: pulumi.Input<CertRequestSubject>;
+    subject?: pulumi.Input<pulumiTls.types.input.CertRequestSubject>;
     /**
      * List of URIs for which a certificate is being requested (i.e. certificate subjects).
      */

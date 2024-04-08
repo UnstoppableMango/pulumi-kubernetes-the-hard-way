@@ -10,6 +10,262 @@ import (
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
+type CommandLifecycle string
+
+const (
+	CommandLifecycleCreate = CommandLifecycle("create")
+	CommandLifecycleUpdate = CommandLifecycle("update")
+	CommandLifecycleDelete = CommandLifecycle("delete")
+)
+
+type CommandLifecycleOutput struct{ *pulumi.OutputState }
+
+func (CommandLifecycleOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*CommandLifecycle)(nil)).Elem()
+}
+
+func (o CommandLifecycleOutput) ToCommandLifecycleOutput() CommandLifecycleOutput {
+	return o
+}
+
+func (o CommandLifecycleOutput) ToCommandLifecycleOutputWithContext(ctx context.Context) CommandLifecycleOutput {
+	return o
+}
+
+func (o CommandLifecycleOutput) ToCommandLifecyclePtrOutput() CommandLifecyclePtrOutput {
+	return o.ToCommandLifecyclePtrOutputWithContext(context.Background())
+}
+
+func (o CommandLifecycleOutput) ToCommandLifecyclePtrOutputWithContext(ctx context.Context) CommandLifecyclePtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v CommandLifecycle) *CommandLifecycle {
+		return &v
+	}).(CommandLifecyclePtrOutput)
+}
+
+func (o CommandLifecycleOutput) ToStringOutput() pulumi.StringOutput {
+	return o.ToStringOutputWithContext(context.Background())
+}
+
+func (o CommandLifecycleOutput) ToStringOutputWithContext(ctx context.Context) pulumi.StringOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, e CommandLifecycle) string {
+		return string(e)
+	}).(pulumi.StringOutput)
+}
+
+func (o CommandLifecycleOutput) ToStringPtrOutput() pulumi.StringPtrOutput {
+	return o.ToStringPtrOutputWithContext(context.Background())
+}
+
+func (o CommandLifecycleOutput) ToStringPtrOutputWithContext(ctx context.Context) pulumi.StringPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, e CommandLifecycle) *string {
+		v := string(e)
+		return &v
+	}).(pulumi.StringPtrOutput)
+}
+
+type CommandLifecyclePtrOutput struct{ *pulumi.OutputState }
+
+func (CommandLifecyclePtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**CommandLifecycle)(nil)).Elem()
+}
+
+func (o CommandLifecyclePtrOutput) ToCommandLifecyclePtrOutput() CommandLifecyclePtrOutput {
+	return o
+}
+
+func (o CommandLifecyclePtrOutput) ToCommandLifecyclePtrOutputWithContext(ctx context.Context) CommandLifecyclePtrOutput {
+	return o
+}
+
+func (o CommandLifecyclePtrOutput) Elem() CommandLifecycleOutput {
+	return o.ApplyT(func(v *CommandLifecycle) CommandLifecycle {
+		if v != nil {
+			return *v
+		}
+		var ret CommandLifecycle
+		return ret
+	}).(CommandLifecycleOutput)
+}
+
+func (o CommandLifecyclePtrOutput) ToStringPtrOutput() pulumi.StringPtrOutput {
+	return o.ToStringPtrOutputWithContext(context.Background())
+}
+
+func (o CommandLifecyclePtrOutput) ToStringPtrOutputWithContext(ctx context.Context) pulumi.StringPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, e *CommandLifecycle) *string {
+		if e == nil {
+			return nil
+		}
+		v := string(*e)
+		return &v
+	}).(pulumi.StringPtrOutput)
+}
+
+type EtcdctlCommand string
+
+const (
+	EtcdctlCommandMember = EtcdctlCommand("member")
+	EtcdctlCommandList   = EtcdctlCommand("list")
+)
+
+func (EtcdctlCommand) ElementType() reflect.Type {
+	return reflect.TypeOf((*EtcdctlCommand)(nil)).Elem()
+}
+
+func (e EtcdctlCommand) ToEtcdctlCommandOutput() EtcdctlCommandOutput {
+	return pulumi.ToOutput(e).(EtcdctlCommandOutput)
+}
+
+func (e EtcdctlCommand) ToEtcdctlCommandOutputWithContext(ctx context.Context) EtcdctlCommandOutput {
+	return pulumi.ToOutputWithContext(ctx, e).(EtcdctlCommandOutput)
+}
+
+func (e EtcdctlCommand) ToEtcdctlCommandPtrOutput() EtcdctlCommandPtrOutput {
+	return e.ToEtcdctlCommandPtrOutputWithContext(context.Background())
+}
+
+func (e EtcdctlCommand) ToEtcdctlCommandPtrOutputWithContext(ctx context.Context) EtcdctlCommandPtrOutput {
+	return EtcdctlCommand(e).ToEtcdctlCommandOutputWithContext(ctx).ToEtcdctlCommandPtrOutputWithContext(ctx)
+}
+
+func (e EtcdctlCommand) ToStringOutput() pulumi.StringOutput {
+	return pulumi.ToOutput(pulumi.String(e)).(pulumi.StringOutput)
+}
+
+func (e EtcdctlCommand) ToStringOutputWithContext(ctx context.Context) pulumi.StringOutput {
+	return pulumi.ToOutputWithContext(ctx, pulumi.String(e)).(pulumi.StringOutput)
+}
+
+func (e EtcdctlCommand) ToStringPtrOutput() pulumi.StringPtrOutput {
+	return pulumi.String(e).ToStringPtrOutputWithContext(context.Background())
+}
+
+func (e EtcdctlCommand) ToStringPtrOutputWithContext(ctx context.Context) pulumi.StringPtrOutput {
+	return pulumi.String(e).ToStringOutputWithContext(ctx).ToStringPtrOutputWithContext(ctx)
+}
+
+type EtcdctlCommandOutput struct{ *pulumi.OutputState }
+
+func (EtcdctlCommandOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*EtcdctlCommand)(nil)).Elem()
+}
+
+func (o EtcdctlCommandOutput) ToEtcdctlCommandOutput() EtcdctlCommandOutput {
+	return o
+}
+
+func (o EtcdctlCommandOutput) ToEtcdctlCommandOutputWithContext(ctx context.Context) EtcdctlCommandOutput {
+	return o
+}
+
+func (o EtcdctlCommandOutput) ToEtcdctlCommandPtrOutput() EtcdctlCommandPtrOutput {
+	return o.ToEtcdctlCommandPtrOutputWithContext(context.Background())
+}
+
+func (o EtcdctlCommandOutput) ToEtcdctlCommandPtrOutputWithContext(ctx context.Context) EtcdctlCommandPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v EtcdctlCommand) *EtcdctlCommand {
+		return &v
+	}).(EtcdctlCommandPtrOutput)
+}
+
+func (o EtcdctlCommandOutput) ToStringOutput() pulumi.StringOutput {
+	return o.ToStringOutputWithContext(context.Background())
+}
+
+func (o EtcdctlCommandOutput) ToStringOutputWithContext(ctx context.Context) pulumi.StringOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, e EtcdctlCommand) string {
+		return string(e)
+	}).(pulumi.StringOutput)
+}
+
+func (o EtcdctlCommandOutput) ToStringPtrOutput() pulumi.StringPtrOutput {
+	return o.ToStringPtrOutputWithContext(context.Background())
+}
+
+func (o EtcdctlCommandOutput) ToStringPtrOutputWithContext(ctx context.Context) pulumi.StringPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, e EtcdctlCommand) *string {
+		v := string(e)
+		return &v
+	}).(pulumi.StringPtrOutput)
+}
+
+type EtcdctlCommandPtrOutput struct{ *pulumi.OutputState }
+
+func (EtcdctlCommandPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**EtcdctlCommand)(nil)).Elem()
+}
+
+func (o EtcdctlCommandPtrOutput) ToEtcdctlCommandPtrOutput() EtcdctlCommandPtrOutput {
+	return o
+}
+
+func (o EtcdctlCommandPtrOutput) ToEtcdctlCommandPtrOutputWithContext(ctx context.Context) EtcdctlCommandPtrOutput {
+	return o
+}
+
+func (o EtcdctlCommandPtrOutput) Elem() EtcdctlCommandOutput {
+	return o.ApplyT(func(v *EtcdctlCommand) EtcdctlCommand {
+		if v != nil {
+			return *v
+		}
+		var ret EtcdctlCommand
+		return ret
+	}).(EtcdctlCommandOutput)
+}
+
+func (o EtcdctlCommandPtrOutput) ToStringPtrOutput() pulumi.StringPtrOutput {
+	return o.ToStringPtrOutputWithContext(context.Background())
+}
+
+func (o EtcdctlCommandPtrOutput) ToStringPtrOutputWithContext(ctx context.Context) pulumi.StringPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, e *EtcdctlCommand) *string {
+		if e == nil {
+			return nil
+		}
+		v := string(*e)
+		return &v
+	}).(pulumi.StringPtrOutput)
+}
+
+// EtcdctlCommandInput is an input type that accepts values of the EtcdctlCommand enum
+// A concrete instance of `EtcdctlCommandInput` can be one of the following:
+//
+//	EtcdctlCommandMember
+//	EtcdctlCommandList
+type EtcdctlCommandInput interface {
+	pulumi.Input
+
+	ToEtcdctlCommandOutput() EtcdctlCommandOutput
+	ToEtcdctlCommandOutputWithContext(context.Context) EtcdctlCommandOutput
+}
+
+var etcdctlCommandPtrType = reflect.TypeOf((**EtcdctlCommand)(nil)).Elem()
+
+type EtcdctlCommandPtrInput interface {
+	pulumi.Input
+
+	ToEtcdctlCommandPtrOutput() EtcdctlCommandPtrOutput
+	ToEtcdctlCommandPtrOutputWithContext(context.Context) EtcdctlCommandPtrOutput
+}
+
+type etcdctlCommandPtr string
+
+func EtcdctlCommandPtr(v string) EtcdctlCommandPtrInput {
+	return (*etcdctlCommandPtr)(&v)
+}
+
+func (*etcdctlCommandPtr) ElementType() reflect.Type {
+	return etcdctlCommandPtrType
+}
+
+func (in *etcdctlCommandPtr) ToEtcdctlCommandPtrOutput() EtcdctlCommandPtrOutput {
+	return pulumi.ToOutput(in).(EtcdctlCommandPtrOutput)
+}
+
+func (in *etcdctlCommandPtr) ToEtcdctlCommandPtrOutputWithContext(ctx context.Context) EtcdctlCommandPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, in).(EtcdctlCommandPtrOutput)
+}
+
 type SystemctlCommand string
 
 const (
@@ -301,8 +557,14 @@ func (in *teeModePtr) ToTeeModePtrOutputWithContext(ctx context.Context) TeeMode
 }
 
 func init() {
+	pulumi.RegisterInputType(reflect.TypeOf((*EtcdctlCommandInput)(nil)).Elem(), EtcdctlCommand("member"))
+	pulumi.RegisterInputType(reflect.TypeOf((*EtcdctlCommandPtrInput)(nil)).Elem(), EtcdctlCommand("member"))
 	pulumi.RegisterInputType(reflect.TypeOf((*TeeModeInput)(nil)).Elem(), TeeMode("warn"))
 	pulumi.RegisterInputType(reflect.TypeOf((*TeeModePtrInput)(nil)).Elem(), TeeMode("warn"))
+	pulumi.RegisterOutputType(CommandLifecycleOutput{})
+	pulumi.RegisterOutputType(CommandLifecyclePtrOutput{})
+	pulumi.RegisterOutputType(EtcdctlCommandOutput{})
+	pulumi.RegisterOutputType(EtcdctlCommandPtrOutput{})
 	pulumi.RegisterOutputType(SystemctlCommandOutput{})
 	pulumi.RegisterOutputType(SystemctlCommandPtrOutput{})
 	pulumi.RegisterOutputType(TeeModeOutput{})

@@ -8,6 +8,7 @@ import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
 from .. import _utilities
+from ._enums import *
 import pulumi_command
 
 __all__ = ['MktempArgs', 'Mktemp']
@@ -20,11 +21,11 @@ class MktempArgs:
                  directory: Optional[pulumi.Input[bool]] = None,
                  dry_run: Optional[pulumi.Input[bool]] = None,
                  environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-                 lifecycle: Optional[Any] = None,
+                 lifecycle: Optional['CommandLifecycle'] = None,
                  quiet: Optional[pulumi.Input[bool]] = None,
                  stdin: Optional[pulumi.Input[str]] = None,
                  suffix: Optional[pulumi.Input[str]] = None,
-                 template: Optional[pulumi.Input[bool]] = None,
+                 template: Optional[pulumi.Input[str]] = None,
                  tmpdir: Optional[pulumi.Input[str]] = None,
                  triggers: Optional[pulumi.Input[Sequence[Any]]] = None):
         """
@@ -34,11 +35,11 @@ class MktempArgs:
         :param pulumi.Input[bool] directory: Corresponds to the `--directory` option.
         :param pulumi.Input[bool] dry_run: Corresponds to the `--dry-run` option.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] environment: Environment variables
-        :param Any lifecycle: At what stage(s) in the resource lifecycle should the command be run
+        :param 'CommandLifecycle' lifecycle: At what stage(s) in the resource lifecycle should the command be run
         :param pulumi.Input[bool] quiet: Corresponds to the `--quiet` option.
         :param pulumi.Input[str] stdin: TODO
         :param pulumi.Input[str] suffix: Corresponds to the `--suffix` option.
-        :param pulumi.Input[bool] template: Corresponds to the [TEMPLATE] argument.
+        :param pulumi.Input[str] template: Corresponds to the [TEMPLATE] argument.
         :param pulumi.Input[str] tmpdir: Corresponds to the `--tmpdir` option.
         :param pulumi.Input[Sequence[Any]] triggers: TODO
         """
@@ -128,14 +129,14 @@ class MktempArgs:
 
     @property
     @pulumi.getter
-    def lifecycle(self) -> Optional[Any]:
+    def lifecycle(self) -> Optional['CommandLifecycle']:
         """
         At what stage(s) in the resource lifecycle should the command be run
         """
         return pulumi.get(self, "lifecycle")
 
     @lifecycle.setter
-    def lifecycle(self, value: Optional[Any]):
+    def lifecycle(self, value: Optional['CommandLifecycle']):
         pulumi.set(self, "lifecycle", value)
 
     @property
@@ -176,14 +177,14 @@ class MktempArgs:
 
     @property
     @pulumi.getter
-    def template(self) -> Optional[pulumi.Input[bool]]:
+    def template(self) -> Optional[pulumi.Input[str]]:
         """
         Corresponds to the [TEMPLATE] argument.
         """
         return pulumi.get(self, "template")
 
     @template.setter
-    def template(self, value: Optional[pulumi.Input[bool]]):
+    def template(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "template", value)
 
     @property
@@ -221,11 +222,11 @@ class Mktemp(pulumi.ComponentResource):
                  directory: Optional[pulumi.Input[bool]] = None,
                  dry_run: Optional[pulumi.Input[bool]] = None,
                  environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-                 lifecycle: Optional[Any] = None,
+                 lifecycle: Optional['CommandLifecycle'] = None,
                  quiet: Optional[pulumi.Input[bool]] = None,
                  stdin: Optional[pulumi.Input[str]] = None,
                  suffix: Optional[pulumi.Input[str]] = None,
-                 template: Optional[pulumi.Input[bool]] = None,
+                 template: Optional[pulumi.Input[str]] = None,
                  tmpdir: Optional[pulumi.Input[str]] = None,
                  triggers: Optional[pulumi.Input[Sequence[Any]]] = None,
                  __props__=None):
@@ -239,11 +240,11 @@ class Mktemp(pulumi.ComponentResource):
         :param pulumi.Input[bool] directory: Corresponds to the `--directory` option.
         :param pulumi.Input[bool] dry_run: Corresponds to the `--dry-run` option.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] environment: Environment variables
-        :param Any lifecycle: At what stage(s) in the resource lifecycle should the command be run
+        :param 'CommandLifecycle' lifecycle: At what stage(s) in the resource lifecycle should the command be run
         :param pulumi.Input[bool] quiet: Corresponds to the `--quiet` option.
         :param pulumi.Input[str] stdin: TODO
         :param pulumi.Input[str] suffix: Corresponds to the `--suffix` option.
-        :param pulumi.Input[bool] template: Corresponds to the [TEMPLATE] argument.
+        :param pulumi.Input[str] template: Corresponds to the [TEMPLATE] argument.
         :param pulumi.Input[str] tmpdir: Corresponds to the `--tmpdir` option.
         :param pulumi.Input[Sequence[Any]] triggers: TODO
         """
@@ -276,11 +277,11 @@ class Mktemp(pulumi.ComponentResource):
                  directory: Optional[pulumi.Input[bool]] = None,
                  dry_run: Optional[pulumi.Input[bool]] = None,
                  environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-                 lifecycle: Optional[Any] = None,
+                 lifecycle: Optional['CommandLifecycle'] = None,
                  quiet: Optional[pulumi.Input[bool]] = None,
                  stdin: Optional[pulumi.Input[str]] = None,
                  suffix: Optional[pulumi.Input[str]] = None,
-                 template: Optional[pulumi.Input[bool]] = None,
+                 template: Optional[pulumi.Input[str]] = None,
                  tmpdir: Optional[pulumi.Input[str]] = None,
                  triggers: Optional[pulumi.Input[Sequence[Any]]] = None,
                  __props__=None):
@@ -368,7 +369,7 @@ class Mktemp(pulumi.ComponentResource):
 
     @property
     @pulumi.getter
-    def lifecycle(self) -> pulumi.Output[Optional[Any]]:
+    def lifecycle(self) -> pulumi.Output[Optional['CommandLifecycle']]:
         """
         At what stage(s) in the resource lifecycle should the command be run
         """
@@ -416,7 +417,7 @@ class Mktemp(pulumi.ComponentResource):
 
     @property
     @pulumi.getter
-    def template(self) -> pulumi.Output[Optional[bool]]:
+    def template(self) -> pulumi.Output[Optional[str]]:
         """
         Corresponds to the [TEMPLATE] argument.
         """

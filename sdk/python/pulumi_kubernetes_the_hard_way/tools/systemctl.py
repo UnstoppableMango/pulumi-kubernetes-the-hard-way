@@ -18,10 +18,10 @@ class SystemctlArgs:
     def __init__(__self__, *,
                  command: 'SystemctlCommand',
                  connection: pulumi.Input['pulumi_command.remote.ConnectionArgs'],
-                 unit: pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]],
+                 unit: pulumi.Input[str],
                  binary_path: Optional[pulumi.Input[str]] = None,
                  environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-                 lifecycle: Optional[Any] = None,
+                 lifecycle: Optional['CommandLifecycle'] = None,
                  pattern: Optional[pulumi.Input[str]] = None,
                  stdin: Optional[pulumi.Input[str]] = None,
                  triggers: Optional[pulumi.Input[Sequence[Any]]] = None):
@@ -29,10 +29,10 @@ class SystemctlArgs:
         The set of arguments for constructing a Systemctl resource.
         :param 'SystemctlCommand' command: Corresponds to the COMMAND argument.
         :param pulumi.Input['pulumi_command.remote.ConnectionArgs'] connection: Connection details for the remote system
-        :param pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]] unit: Corresponds to the [UNIT...] argument.
+        :param pulumi.Input[str] unit: Corresponds to the [UNIT...] argument.
         :param pulumi.Input[str] binary_path: Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] environment: Environment variables
-        :param Any lifecycle: At what stage(s) in the resource lifecycle should the command be run
+        :param 'CommandLifecycle' lifecycle: At what stage(s) in the resource lifecycle should the command be run
         :param pulumi.Input[str] pattern: Corresponds to the [PATTERN] argument
         :param pulumi.Input[str] stdin: TODO
         :param pulumi.Input[Sequence[Any]] triggers: TODO
@@ -79,14 +79,14 @@ class SystemctlArgs:
 
     @property
     @pulumi.getter
-    def unit(self) -> pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]]:
+    def unit(self) -> pulumi.Input[str]:
         """
         Corresponds to the [UNIT...] argument.
         """
         return pulumi.get(self, "unit")
 
     @unit.setter
-    def unit(self, value: pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]]):
+    def unit(self, value: pulumi.Input[str]):
         pulumi.set(self, "unit", value)
 
     @property
@@ -115,14 +115,14 @@ class SystemctlArgs:
 
     @property
     @pulumi.getter
-    def lifecycle(self) -> Optional[Any]:
+    def lifecycle(self) -> Optional['CommandLifecycle']:
         """
         At what stage(s) in the resource lifecycle should the command be run
         """
         return pulumi.get(self, "lifecycle")
 
     @lifecycle.setter
-    def lifecycle(self, value: Optional[Any]):
+    def lifecycle(self, value: Optional['CommandLifecycle']):
         pulumi.set(self, "lifecycle", value)
 
     @property
@@ -171,11 +171,11 @@ class Systemctl(pulumi.ComponentResource):
                  command: Optional['SystemctlCommand'] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
                  environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-                 lifecycle: Optional[Any] = None,
+                 lifecycle: Optional['CommandLifecycle'] = None,
                  pattern: Optional[pulumi.Input[str]] = None,
                  stdin: Optional[pulumi.Input[str]] = None,
                  triggers: Optional[pulumi.Input[Sequence[Any]]] = None,
-                 unit: Optional[pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]]] = None,
+                 unit: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         """
         Abstraction over the `systemctl` utility on a remote system.
@@ -186,11 +186,11 @@ class Systemctl(pulumi.ComponentResource):
         :param 'SystemctlCommand' command: Corresponds to the COMMAND argument.
         :param pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']] connection: Connection details for the remote system
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] environment: Environment variables
-        :param Any lifecycle: At what stage(s) in the resource lifecycle should the command be run
+        :param 'CommandLifecycle' lifecycle: At what stage(s) in the resource lifecycle should the command be run
         :param pulumi.Input[str] pattern: Corresponds to the [PATTERN] argument
         :param pulumi.Input[str] stdin: TODO
         :param pulumi.Input[Sequence[Any]] triggers: TODO
-        :param pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]] unit: Corresponds to the [UNIT...] argument.
+        :param pulumi.Input[str] unit: Corresponds to the [UNIT...] argument.
         """
         ...
     @overload
@@ -220,11 +220,11 @@ class Systemctl(pulumi.ComponentResource):
                  command: Optional['SystemctlCommand'] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
                  environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-                 lifecycle: Optional[Any] = None,
+                 lifecycle: Optional['CommandLifecycle'] = None,
                  pattern: Optional[pulumi.Input[str]] = None,
                  stdin: Optional[pulumi.Input[str]] = None,
                  triggers: Optional[pulumi.Input[Sequence[Any]]] = None,
-                 unit: Optional[pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]]] = None,
+                 unit: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):
@@ -295,7 +295,7 @@ class Systemctl(pulumi.ComponentResource):
 
     @property
     @pulumi.getter
-    def lifecycle(self) -> pulumi.Output[Optional[Any]]:
+    def lifecycle(self) -> pulumi.Output[Optional['CommandLifecycle']]:
         """
         At what stage(s) in the resource lifecycle should the command be run
         """
@@ -351,7 +351,7 @@ class Systemctl(pulumi.ComponentResource):
 
     @property
     @pulumi.getter
-    def unit(self) -> pulumi.Output[Any]:
+    def unit(self) -> pulumi.Output[str]:
         """
         Corresponds to the [UNIT...] argument.
         """

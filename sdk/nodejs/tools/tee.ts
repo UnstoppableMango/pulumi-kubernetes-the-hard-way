@@ -9,8 +9,6 @@ import * as utilities from "../utilities";
 
 import * as pulumiCommand from "@pulumi/command";
 
-import {CommandLifecycle} from "./index";
-
 /**
  * Abstraction over the `rm` utility on a remote system.
  */
@@ -60,7 +58,7 @@ export class Tee extends pulumi.ComponentResource {
     /**
      * At what stage(s) in the resource lifecycle should the command be run
      */
-    public readonly lifecycle!: pulumi.Output<CommandLifecycle | undefined>;
+    public readonly lifecycle!: pulumi.Output<enums.tools.CommandLifecycle | undefined>;
     /**
      * Set behavior on write error.
      */
@@ -178,7 +176,7 @@ export interface TeeArgs {
     /**
      * At what stage(s) in the resource lifecycle should the command be run
      */
-    lifecycle?: CommandLifecycle;
+    lifecycle?: enums.tools.CommandLifecycle;
     /**
      * Set behavior on write error.
      */

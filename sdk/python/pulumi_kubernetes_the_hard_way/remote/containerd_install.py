@@ -10,6 +10,7 @@ from typing import Any, Mapping, Optional, Sequence, Union, overload
 from .. import _utilities
 from .. import tools as _tools
 from ._enums import *
+from .download import Download
 import pulumi_command
 
 __all__ = ['ContainerdInstallArgs', 'ContainerdInstall']
@@ -221,7 +222,7 @@ class ContainerdInstall(pulumi.ComponentResource):
 
     @property
     @pulumi.getter
-    def download(self) -> pulumi.Output[Any]:
+    def download(self) -> pulumi.Output['Download']:
         """
         The download operation.
         """
@@ -229,7 +230,7 @@ class ContainerdInstall(pulumi.ComponentResource):
 
     @property
     @pulumi.getter
-    def mkdir(self) -> pulumi.Output[Any]:
+    def mkdir(self) -> pulumi.Output['_tools.Mkdir']:
         """
         The mkdir operation.
         """
@@ -237,7 +238,7 @@ class ContainerdInstall(pulumi.ComponentResource):
 
     @property
     @pulumi.getter
-    def mktemp(self) -> pulumi.Output[Any]:
+    def mktemp(self) -> pulumi.Output['_tools.Mktemp']:
         """
         The mktemp operation.
         """

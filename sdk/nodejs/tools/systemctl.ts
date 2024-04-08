@@ -9,8 +9,6 @@ import * as utilities from "../utilities";
 
 import * as pulumiCommand from "@pulumi/command";
 
-import {CommandLifecycle} from "./index";
-
 /**
  * Abstraction over the `systemctl` utility on a remote system.
  */
@@ -48,7 +46,7 @@ export class Systemctl extends pulumi.ComponentResource {
     /**
      * At what stage(s) in the resource lifecycle should the command be run
      */
-    public readonly lifecycle!: pulumi.Output<CommandLifecycle | undefined>;
+    public readonly lifecycle!: pulumi.Output<enums.tools.CommandLifecycle | undefined>;
     /**
      * Corresponds to the [PATTERN] argument
      */
@@ -76,7 +74,7 @@ export class Systemctl extends pulumi.ComponentResource {
     /**
      * Corresponds to the [UNIT...] argument.
      */
-    public readonly unit!: pulumi.Output<string | string[]>;
+    public readonly unit!: pulumi.Output<string>;
 
     /**
      * Create a Systemctl resource with the given unique name, arguments, and options.
@@ -152,7 +150,7 @@ export interface SystemctlArgs {
     /**
      * At what stage(s) in the resource lifecycle should the command be run
      */
-    lifecycle?: CommandLifecycle;
+    lifecycle?: enums.tools.CommandLifecycle;
     /**
      * Corresponds to the [PATTERN] argument
      */
@@ -168,5 +166,5 @@ export interface SystemctlArgs {
     /**
      * Corresponds to the [UNIT...] argument.
      */
-    unit: pulumi.Input<string | pulumi.Input<string>[]>;
+    unit: pulumi.Input<string>;
 }

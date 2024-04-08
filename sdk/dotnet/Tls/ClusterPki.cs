@@ -20,7 +20,7 @@ namespace UnMango.KubernetesTheHardWay.Tls
         /// The admin certificate.
         /// </summary>
         [Output("admin")]
-        public Output<UnMango.KubernetesTheHardWay.Tls.Outputs.Certificate> Admin { get; private set; } = null!;
+        public Output<UnMango.KubernetesTheHardWay.Tls.Certificate> Admin { get; private set; } = null!;
 
         /// <summary>
         /// Name of the algorithm to use when generating the private key.
@@ -32,7 +32,7 @@ namespace UnMango.KubernetesTheHardWay.Tls
         /// The cluster certificate authority.
         /// </summary>
         [Output("ca")]
-        public Output<UnMango.KubernetesTheHardWay.Tls.Outputs.RootCa> Ca { get; private set; } = null!;
+        public Output<UnMango.KubernetesTheHardWay.Tls.RootCa> Ca { get; private set; } = null!;
 
         /// <summary>
         /// A name to use for the cluster
@@ -44,7 +44,7 @@ namespace UnMango.KubernetesTheHardWay.Tls
         /// The controller manager certificate.
         /// </summary>
         [Output("controllerManager")]
-        public Output<UnMango.KubernetesTheHardWay.Tls.Outputs.Certificate> ControllerManager { get; private set; } = null!;
+        public Output<UnMango.KubernetesTheHardWay.Tls.Certificate> ControllerManager { get; private set; } = null!;
 
         /// <summary>
         /// When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
@@ -56,25 +56,25 @@ namespace UnMango.KubernetesTheHardWay.Tls
         /// The kube proxy certificate.
         /// </summary>
         [Output("kubeProxy")]
-        public Output<UnMango.KubernetesTheHardWay.Tls.Outputs.Certificate> KubeProxy { get; private set; } = null!;
+        public Output<UnMango.KubernetesTheHardWay.Tls.Certificate> KubeProxy { get; private set; } = null!;
 
         /// <summary>
         /// The kube scheduler certificate.
         /// </summary>
         [Output("kubeScheduler")]
-        public Output<UnMango.KubernetesTheHardWay.Tls.Outputs.Certificate> KubeScheduler { get; private set; } = null!;
+        public Output<UnMango.KubernetesTheHardWay.Tls.Certificate> KubeScheduler { get; private set; } = null!;
 
         /// <summary>
         /// Map of node name to kubelet certificate.
         /// </summary>
         [Output("kubelet")]
-        public Output<ImmutableDictionary<string, UnMango.KubernetesTheHardWay.Tls.Outputs.Certificate>> Kubelet { get; private set; } = null!;
+        public Output<ImmutableDictionary<string, UnMango.KubernetesTheHardWay.Tls.Certificate>> Kubelet { get; private set; } = null!;
 
         /// <summary>
         /// The kubernetes certificate.
         /// </summary>
         [Output("kubernetes")]
-        public Output<UnMango.KubernetesTheHardWay.Tls.Outputs.Certificate> Kubernetes { get; private set; } = null!;
+        public Output<UnMango.KubernetesTheHardWay.Tls.Certificate> Kubernetes { get; private set; } = null!;
 
         /// <summary>
         /// Map of node name to node configuration
@@ -98,7 +98,7 @@ namespace UnMango.KubernetesTheHardWay.Tls
         /// The service accounts certificate
         /// </summary>
         [Output("serviceAccounts")]
-        public Output<UnMango.KubernetesTheHardWay.Tls.Outputs.Certificate> ServiceAccounts { get; private set; } = null!;
+        public Output<UnMango.KubernetesTheHardWay.Tls.Certificate> ServiceAccounts { get; private set; } = null!;
 
         /// <summary>
         /// Number of hours, after initial issuing, that the certificate will remain valid.

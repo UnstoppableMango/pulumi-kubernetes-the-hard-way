@@ -12,7 +12,7 @@ import com.pulumi.core.annotations.ResourceType;
 import com.pulumi.core.internal.Codegen;
 import com.unmango.kubernetesthehardway.Utilities;
 import com.unmango.kubernetesthehardway.tools.TarArgs;
-import com.unmango.kubernetesthehardway.tools.outputs.CommandLifecycle;
+import com.unmango.kubernetesthehardway.tools.enums.CommandLifecycle;
 import java.lang.Boolean;
 import java.lang.Integer;
 import java.lang.Object;
@@ -183,17 +183,17 @@ public class Tar extends com.pulumi.resources.ComponentResource {
         return Codegen.optional(this.onDelete);
     }
     /**
-     * Corresponds to the `--strip-components` option.
+     * Corresponds to the `--recursive` option.
      * 
      */
-    @Export(name="recursive", refs={Integer.class}, tree="[0]")
-    private Output</* @Nullable */ Integer> recursive;
+    @Export(name="recursive", refs={Boolean.class}, tree="[0]")
+    private Output</* @Nullable */ Boolean> recursive;
 
     /**
-     * @return Corresponds to the `--strip-components` option.
+     * @return Corresponds to the `--recursive` option.
      * 
      */
-    public Output<Optional<Integer>> recursive() {
+    public Output<Optional<Boolean>> recursive() {
         return Codegen.optional(this.recursive);
     }
     /**
@@ -237,6 +237,20 @@ public class Tar extends com.pulumi.resources.ComponentResource {
      */
     public Output<String> stdout() {
         return this.stdout;
+    }
+    /**
+     * Corresponds to the `--strip-components` option.
+     * 
+     */
+    @Export(name="stripComponents", refs={Integer.class}, tree="[0]")
+    private Output</* @Nullable */ Integer> stripComponents;
+
+    /**
+     * @return Corresponds to the `--strip-components` option.
+     * 
+     */
+    public Output<Optional<Integer>> stripComponents() {
+        return Codegen.optional(this.stripComponents);
     }
     /**
      * TODO

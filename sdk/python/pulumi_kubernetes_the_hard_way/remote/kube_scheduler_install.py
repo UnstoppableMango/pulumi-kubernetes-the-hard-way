@@ -8,7 +8,9 @@ import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
 from .. import _utilities
+from .. import tools as _tools
 from ._enums import *
+from .download import Download
 import pulumi_command
 
 __all__ = ['KubeSchedulerInstallArgs', 'KubeSchedulerInstall']
@@ -202,7 +204,7 @@ class KubeSchedulerInstall(pulumi.ComponentResource):
 
     @property
     @pulumi.getter
-    def download(self) -> pulumi.Output[Any]:
+    def download(self) -> pulumi.Output['Download']:
         """
         The download operation.
         """
@@ -210,7 +212,7 @@ class KubeSchedulerInstall(pulumi.ComponentResource):
 
     @property
     @pulumi.getter
-    def mkdir(self) -> pulumi.Output[Any]:
+    def mkdir(self) -> pulumi.Output['_tools.Mkdir']:
         """
         The mkdir operation.
         """
@@ -218,7 +220,7 @@ class KubeSchedulerInstall(pulumi.ComponentResource):
 
     @property
     @pulumi.getter
-    def mktemp(self) -> pulumi.Output[Any]:
+    def mktemp(self) -> pulumi.Output['_tools.Mktemp']:
         """
         The mktemp operation.
         """
@@ -226,7 +228,7 @@ class KubeSchedulerInstall(pulumi.ComponentResource):
 
     @property
     @pulumi.getter
-    def mv(self) -> pulumi.Output[Any]:
+    def mv(self) -> pulumi.Output['_tools.Mv']:
         """
         The mv operation.
         """
@@ -242,7 +244,7 @@ class KubeSchedulerInstall(pulumi.ComponentResource):
 
     @property
     @pulumi.getter
-    def rm(self) -> pulumi.Output[Any]:
+    def rm(self) -> pulumi.Output['_tools.Rm']:
         """
         The rm operation.
         """

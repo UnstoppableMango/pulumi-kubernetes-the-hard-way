@@ -11,7 +11,7 @@ import com.pulumi.core.annotations.ResourceType;
 import com.pulumi.core.internal.Codegen;
 import com.unmango.kubernetesthehardway.Utilities;
 import com.unmango.kubernetesthehardway.tools.MktempArgs;
-import com.unmango.kubernetesthehardway.tools.outputs.CommandLifecycle;
+import com.unmango.kubernetesthehardway.tools.enums.CommandLifecycle;
 import java.lang.Boolean;
 import java.lang.Object;
 import java.lang.String;
@@ -198,14 +198,14 @@ public class Mktemp extends com.pulumi.resources.ComponentResource {
      * Corresponds to the [TEMPLATE] argument.
      * 
      */
-    @Export(name="template", refs={Boolean.class}, tree="[0]")
-    private Output</* @Nullable */ Boolean> template;
+    @Export(name="template", refs={String.class}, tree="[0]")
+    private Output</* @Nullable */ String> template;
 
     /**
      * @return Corresponds to the [TEMPLATE] argument.
      * 
      */
-    public Output<Optional<Boolean>> template() {
+    public Output<Optional<String>> template() {
         return Codegen.optional(this.template);
     }
     /**

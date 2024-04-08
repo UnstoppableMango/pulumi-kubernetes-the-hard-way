@@ -8,6 +8,63 @@ using Pulumi;
 namespace UnMango.KubernetesTheHardWay.Tools
 {
     [EnumType]
+    public readonly struct CommandLifecycle : IEquatable<CommandLifecycle>
+    {
+        private readonly string _value;
+
+        private CommandLifecycle(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
+        public static CommandLifecycle Create { get; } = new CommandLifecycle("create");
+        public static CommandLifecycle Update { get; } = new CommandLifecycle("update");
+        public static CommandLifecycle Delete { get; } = new CommandLifecycle("delete");
+
+        public static bool operator ==(CommandLifecycle left, CommandLifecycle right) => left.Equals(right);
+        public static bool operator !=(CommandLifecycle left, CommandLifecycle right) => !left.Equals(right);
+
+        public static explicit operator string(CommandLifecycle value) => value._value;
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object? obj) => obj is CommandLifecycle other && Equals(other);
+        public bool Equals(CommandLifecycle other) => string.Equals(_value, other._value, StringComparison.Ordinal);
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+
+        public override string ToString() => _value;
+    }
+
+    [EnumType]
+    public readonly struct EtcdctlCommand : IEquatable<EtcdctlCommand>
+    {
+        private readonly string _value;
+
+        private EtcdctlCommand(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
+        public static EtcdctlCommand Member { get; } = new EtcdctlCommand("member");
+        public static EtcdctlCommand List { get; } = new EtcdctlCommand("list");
+
+        public static bool operator ==(EtcdctlCommand left, EtcdctlCommand right) => left.Equals(right);
+        public static bool operator !=(EtcdctlCommand left, EtcdctlCommand right) => !left.Equals(right);
+
+        public static explicit operator string(EtcdctlCommand value) => value._value;
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object? obj) => obj is EtcdctlCommand other && Equals(other);
+        public bool Equals(EtcdctlCommand other) => string.Equals(_value, other._value, StringComparison.Ordinal);
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+
+        public override string ToString() => _value;
+    }
+
+    [EnumType]
     public readonly struct SystemctlCommand : IEquatable<SystemctlCommand>
     {
         private readonly string _value;

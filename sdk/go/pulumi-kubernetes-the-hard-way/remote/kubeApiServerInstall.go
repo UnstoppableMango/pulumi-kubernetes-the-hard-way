@@ -11,6 +11,7 @@ import (
 	pulumiCommand "github.com/pulumi/pulumi-command/sdk/go/command/remote"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 	"github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/internal"
+	"github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/tools"
 )
 
 // Installs kube-apiserver on a remote system.

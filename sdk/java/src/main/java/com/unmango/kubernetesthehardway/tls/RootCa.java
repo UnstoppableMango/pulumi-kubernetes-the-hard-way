@@ -9,10 +9,10 @@ import com.pulumi.core.annotations.ResourceType;
 import com.pulumi.core.internal.Codegen;
 import com.pulumi.tls.PrivateKey;
 import com.pulumi.tls.SelfSignedCert;
+import com.pulumi.tls.outputs.SelfSignedCertSubject;
 import com.unmango.kubernetesthehardway.Utilities;
 import com.unmango.kubernetesthehardway.tls.RootCaArgs;
 import com.unmango.kubernetesthehardway.tls.enums.Algorithm;
-import com.unmango.tls.outputs.SelfSignedCertSubject;
 import java.lang.Boolean;
 import java.lang.Integer;
 import java.lang.String;
@@ -343,14 +343,14 @@ public class RootCa extends com.pulumi.resources.ComponentResource {
         return this.setSubjectKeyId;
     }
     /**
-     * The subject for which a certificate is being requested. The acceptable arguments are all optional and their naming is based upon [Issuer Distinguished Names (RFC5280)](https://tools.ietf.org/html/rfc5280#section-4.1.2.4) section.
+     * TODO
      * 
      */
     @Export(name="subject", refs={SelfSignedCertSubject.class}, tree="[0]")
     private Output</* @Nullable */ SelfSignedCertSubject> subject;
 
     /**
-     * @return The subject for which a certificate is being requested. The acceptable arguments are all optional and their naming is based upon [Issuer Distinguished Names (RFC5280)](https://tools.ietf.org/html/rfc5280#section-4.1.2.4) section.
+     * @return TODO
      * 
      */
     public Output<Optional<SelfSignedCertSubject>> subject() {

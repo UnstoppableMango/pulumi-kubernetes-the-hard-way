@@ -42,7 +42,7 @@ type Mktemp struct {
 	// Corresponds to the `--suffix` option.
 	Suffix pulumi.StringPtrOutput `pulumi:"suffix"`
 	// Corresponds to the [TEMPLATE] argument.
-	Template pulumi.BoolPtrOutput `pulumi:"template"`
+	Template pulumi.StringPtrOutput `pulumi:"template"`
 	// Corresponds to the `--tmpdir` option.
 	Tmpdir pulumi.StringPtrOutput `pulumi:"tmpdir"`
 	// TODO
@@ -89,7 +89,7 @@ type mktempArgs struct {
 	// Corresponds to the `--suffix` option.
 	Suffix *string `pulumi:"suffix"`
 	// Corresponds to the [TEMPLATE] argument.
-	Template *bool `pulumi:"template"`
+	Template *string `pulumi:"template"`
 	// Corresponds to the `--tmpdir` option.
 	Tmpdir *string `pulumi:"tmpdir"`
 	// TODO
@@ -117,7 +117,7 @@ type MktempArgs struct {
 	// Corresponds to the `--suffix` option.
 	Suffix pulumi.StringPtrInput
 	// Corresponds to the [TEMPLATE] argument.
-	Template pulumi.BoolPtrInput
+	Template pulumi.StringPtrInput
 	// Corresponds to the `--tmpdir` option.
 	Tmpdir pulumi.StringPtrInput
 	// TODO
@@ -272,8 +272,8 @@ func (o MktempOutput) Suffix() pulumi.StringPtrOutput {
 }
 
 // Corresponds to the [TEMPLATE] argument.
-func (o MktempOutput) Template() pulumi.BoolPtrOutput {
-	return o.ApplyT(func(v *Mktemp) pulumi.BoolPtrOutput { return v.Template }).(pulumi.BoolPtrOutput)
+func (o MktempOutput) Template() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mktemp) pulumi.StringPtrOutput { return v.Template }).(pulumi.StringPtrOutput)
 }
 
 // Corresponds to the `--tmpdir` option.

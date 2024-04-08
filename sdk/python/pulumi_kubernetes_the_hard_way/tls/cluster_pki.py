@@ -12,6 +12,8 @@ from . import outputs
 from .. import config as _config
 from ._enums import *
 from ._inputs import *
+from .certificate import Certificate
+from .root_ca import RootCa
 
 __all__ = ['ClusterPkiArgs', 'ClusterPki']
 
@@ -242,7 +244,7 @@ class ClusterPki(pulumi.ComponentResource):
 
     @property
     @pulumi.getter
-    def admin(self) -> pulumi.Output[Any]:
+    def admin(self) -> pulumi.Output['Certificate']:
         """
         The admin certificate.
         """
@@ -258,7 +260,7 @@ class ClusterPki(pulumi.ComponentResource):
 
     @property
     @pulumi.getter
-    def ca(self) -> pulumi.Output[Any]:
+    def ca(self) -> pulumi.Output['RootCa']:
         """
         The cluster certificate authority.
         """
@@ -274,7 +276,7 @@ class ClusterPki(pulumi.ComponentResource):
 
     @property
     @pulumi.getter(name="controllerManager")
-    def controller_manager(self) -> pulumi.Output[Any]:
+    def controller_manager(self) -> pulumi.Output['Certificate']:
         """
         The controller manager certificate.
         """
@@ -290,7 +292,7 @@ class ClusterPki(pulumi.ComponentResource):
 
     @property
     @pulumi.getter(name="kubeProxy")
-    def kube_proxy(self) -> pulumi.Output[Any]:
+    def kube_proxy(self) -> pulumi.Output['Certificate']:
         """
         The kube proxy certificate.
         """
@@ -298,7 +300,7 @@ class ClusterPki(pulumi.ComponentResource):
 
     @property
     @pulumi.getter(name="kubeScheduler")
-    def kube_scheduler(self) -> pulumi.Output[Any]:
+    def kube_scheduler(self) -> pulumi.Output['Certificate']:
         """
         The kube scheduler certificate.
         """
@@ -306,7 +308,7 @@ class ClusterPki(pulumi.ComponentResource):
 
     @property
     @pulumi.getter
-    def kubelet(self) -> pulumi.Output[Mapping[str, Any]]:
+    def kubelet(self) -> pulumi.Output[Mapping[str, 'Certificate']]:
         """
         Map of node name to kubelet certificate.
         """
@@ -314,7 +316,7 @@ class ClusterPki(pulumi.ComponentResource):
 
     @property
     @pulumi.getter
-    def kubernetes(self) -> pulumi.Output[Any]:
+    def kubernetes(self) -> pulumi.Output['Certificate']:
         """
         The kubernetes certificate.
         """
@@ -346,7 +348,7 @@ class ClusterPki(pulumi.ComponentResource):
 
     @property
     @pulumi.getter(name="serviceAccounts")
-    def service_accounts(self) -> pulumi.Output[Any]:
+    def service_accounts(self) -> pulumi.Output['Certificate']:
         """
         The service accounts certificate
         """
