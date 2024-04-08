@@ -1,20 +1,10 @@
 import { ComponentResourceOptions, Input, Output } from '@pulumi/pulumi';
 import { CertRequest, LocallySignedCert } from '@pulumi/tls';
 import { CertRequestSubject } from '@pulumi/tls/types/input';
+import * as schema from '../schema-types';
 import { KeyPair, KeyPairArgs } from './keypair';
 import { AllowedUsage } from '../types';
 import { toAllowedUsage } from '../util';
-
-export interface CertificateArgs extends KeyPairArgs {
-  allowedUses: Input<Input<AllowedUsage>[]>;
-  dnsNames?: Input<Input<string>[]>;
-  caCertPem: Input<string>;
-  caPrivateKeyPem: Input<string>;
-  ipAddresses?: Input<Input<string>[]>;
-  isCaCertificate?: Input<boolean>;
-  uris?: Input<Input<string>[]>;
-  subject?: Input<CertRequestSubject>;
-}
 
 export class Certificate extends KeyPair<LocallySignedCert> {
   public static readonly __pulumiType: string = 'kubernetes-the-hard-way:tls:Certificate';
@@ -24,7 +14,7 @@ export class Certificate extends KeyPair<LocallySignedCert> {
   public readonly cert!: LocallySignedCert;
   public readonly csr!: CertRequest;
 
-  constructor(name: string, args: CertificateArgs, opts?: ComponentResourceOptions) {
+  constructor(name: string, args: schema.CertificateArgs, opts?: ComponentResourceOptions) {
     const props = {
       allowedUses: undefined,
       certPem: undefined,

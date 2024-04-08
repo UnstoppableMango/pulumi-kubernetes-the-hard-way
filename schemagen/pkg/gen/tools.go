@@ -377,10 +377,7 @@ func generateRm() schema.ResourceSpec {
 	inputs := map[string]schema.PropertySpec{
 		"dir": {
 			Description: "Corresponds to the `--dir` option.",
-			TypeSpec: schema.TypeSpec{
-				Type:  "boolean",
-				Plain: true,
-			},
+			TypeSpec:    typeSpecs.Boolean,
 		},
 		"files": {
 			Description: "Corresponds to the [FILE] argument.",
