@@ -224,11 +224,17 @@ func generateCertificate(tlsSpec schema.PackageSpec) schema.ResourceSpec {
 				Items: &schema.TypeSpec{Ref: localType("AllowedUsage", "tls")},
 			},
 		},
+		"subject": {
+			Description: "TODO",
+			TypeSpec:    schema.TypeSpec{Ref: refType(tlsSpec, "CertRequestSubject", "index", "CertRequestSubject")},
+		},
 	}
+
+	ignoredProps := []string{"privateKeyPem", "certRequestPem"}
 
 	// TODO: Need to rename some refs like `subject`
 	for k, v := range privateKey.InputProperties {
-		if _, found := inputs[k]; found {
+		if _, found := inputs[k]; found || slices.Contains(ignoredProps, k) {
 			continue
 		}
 
@@ -236,7 +242,7 @@ func generateCertificate(tlsSpec schema.PackageSpec) schema.ResourceSpec {
 	}
 
 	for k, v := range certRequest.InputProperties {
-		if _, found := inputs[k]; found || k == "privateKeyPem" {
+		if _, found := inputs[k]; found || slices.Contains(ignoredProps, k) {
 			continue
 		}
 
@@ -244,7 +250,7 @@ func generateCertificate(tlsSpec schema.PackageSpec) schema.ResourceSpec {
 	}
 
 	for k, v := range locallySignedCert.InputProperties {
-		if _, found := inputs[k]; found || k == "certRequestPem" {
+		if _, found := inputs[k]; found || slices.Contains(ignoredProps, k) {
 			continue
 		}
 
@@ -352,40 +358,40 @@ func generateClusterPki() schema.ResourceSpec {
 	outputs := map[string]schema.PropertySpec{
 		"admin": {
 			Description: "The admin certificate.",
-			TypeSpec:    schema.TypeSpec{Ref: localType("Certificate", "tls")},
+			TypeSpec:    schema.TypeSpec{Ref: localResource("Certificate", "tls")},
 		},
 		"ca": {
 			Description: "The cluster certificate authority.",
-			TypeSpec:    schema.TypeSpec{Ref: localType("RootCa", "tls")},
+			TypeSpec:    schema.TypeSpec{Ref: localResource("RootCa", "tls")},
 		},
 		"controllerManager": {
 			Description: "The controller manager certificate.",
-			TypeSpec:    schema.TypeSpec{Ref: localType("Certificate", "tls")},
+			TypeSpec:    schema.TypeSpec{Ref: localResource("Certificate", "tls")},
 		},
 		"kubelet": {
 			Description: "Map of node name to kubelet certificate.",
 			TypeSpec: schema.TypeSpec{
 				Type: "object",
 				AdditionalProperties: &schema.TypeSpec{
-					Ref: localType("Certificate", "tls"),
+					Ref: localResource("Certificate", "tls"),
 				},
 			},
 		},
 		"kubeProxy": {
 			Description: "The kube proxy certificate.",
-			TypeSpec:    schema.TypeSpec{Ref: localType("Certificate", "tls")},
+			TypeSpec:    schema.TypeSpec{Ref: localResource("Certificate", "tls")},
 		},
 		"kubernetes": {
 			Description: "The kubernetes certificate.",
-			TypeSpec:    schema.TypeSpec{Ref: localType("Certificate", "tls")},
+			TypeSpec:    schema.TypeSpec{Ref: localResource("Certificate", "tls")},
 		},
 		"kubeScheduler": {
 			Description: "The kube scheduler certificate.",
-			TypeSpec:    schema.TypeSpec{Ref: localType("Certificate", "tls")},
+			TypeSpec:    schema.TypeSpec{Ref: localResource("Certificate", "tls")},
 		},
 		"serviceAccounts": {
 			Description: "The service accounts certificate",
-			TypeSpec:    schema.TypeSpec{Ref: localType("Certificate", "tls")},
+			TypeSpec:    schema.TypeSpec{Ref: localResource("Certificate", "tls")},
 		},
 	}
 	maps.Copy(outputs, inputs)
@@ -461,6 +467,10 @@ func generateRootCa(tlsSpec schema.PackageSpec) schema.ResourceSpec {
 		"algorithm": {
 			Description: "Name of the algorithm to use when generating the private key.",
 			TypeSpec:    schema.TypeSpec{Ref: localType("Algorithm", "tls")},
+		},
+		"subject": {
+			Description: "TODO",
+			TypeSpec:    schema.TypeSpec{Ref: refType(tlsSpec, "SelfSignedCertSubject", "index", "SelfSignedCertSubject")},
 		},
 	}
 

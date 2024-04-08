@@ -201,15 +201,15 @@ func generateArchiveInstall(
 		},
 		"download": {
 			Description: "The download operation.",
-			TypeSpec:    schema.TypeSpec{Ref: localType("Download", "remote")},
+			TypeSpec:    schema.TypeSpec{Ref: localResource("Download", "remote")},
 		},
 		"mkdir": {
 			Description: "The mkdir operation.",
-			TypeSpec:    schema.TypeSpec{Ref: localType("Mkdir", "tools")},
+			TypeSpec:    schema.TypeSpec{Ref: localResource("Mkdir", "tools")},
 		},
 		"mktemp": {
 			Description: "The mktemp operation.",
-			TypeSpec:    schema.TypeSpec{Ref: localType("Mktemp", "tools")},
+			TypeSpec:    schema.TypeSpec{Ref: localResource("Mktemp", "tools")},
 		},
 		"path": {
 			Description: "The path to the installed binary.",
@@ -303,19 +303,19 @@ func generateBinaryInstall(
 		},
 		"download": {
 			Description: "The download operation.",
-			TypeSpec:    schema.TypeSpec{Ref: localType("Download", "remote")},
+			TypeSpec:    schema.TypeSpec{Ref: localResource("Download", "remote")},
 		},
 		"mkdir": {
 			Description: "The mkdir operation.",
-			TypeSpec:    schema.TypeSpec{Ref: localType("Mkdir", "tools")},
+			TypeSpec:    schema.TypeSpec{Ref: localResource("Mkdir", "tools")},
 		},
 		"mktemp": {
 			Description: "The mktemp operation.",
-			TypeSpec:    schema.TypeSpec{Ref: localType("Mktemp", "tools")},
+			TypeSpec:    schema.TypeSpec{Ref: localResource("Mktemp", "tools")},
 		},
 		"mv": {
 			Description: "The mv operation.",
-			TypeSpec:    schema.TypeSpec{Ref: localType("Mv", "tools")},
+			TypeSpec:    schema.TypeSpec{Ref: localResource("Mv", "tools")},
 		},
 		"path": {
 			Description: "The path to the installed binary.",
@@ -323,7 +323,7 @@ func generateBinaryInstall(
 		},
 		"rm": {
 			Description: "The rm operation.",
-			TypeSpec:    schema.TypeSpec{Ref: localType("Rm", "tools")},
+			TypeSpec:    schema.TypeSpec{Ref: localResource("Rm", "tools")},
 		},
 		"url": {
 			Description: "The url used to download the binary.",

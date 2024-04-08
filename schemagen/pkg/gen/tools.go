@@ -8,6 +8,25 @@ const toolsMod = "kubernetes-the-hard-way:tools:"
 
 func generateTools(commandSpec schema.PackageSpec) schema.PackageSpec {
 	types := map[string]schema.ComplexTypeSpec{
+		toolsMod + "CommandLifecycle": {
+			ObjectTypeSpec: schema.ObjectTypeSpec{
+				Type: "string",
+			},
+			Enum: []schema.EnumValueSpec{
+				{Value: "create"},
+				{Value: "update"},
+				{Value: "delete"},
+			},
+		},
+		toolsMod + "EtcdctlCommand": {
+			ObjectTypeSpec: schema.ObjectTypeSpec{
+				Type: "string",
+			},
+			Enum: []schema.EnumValueSpec{
+				{Value: "member"},
+				{Value: "list"},
+			},
+		},
 		toolsMod + "SystemctlCommand": {
 			ObjectTypeSpec: schema.ObjectTypeSpec{
 				Type: "string",
@@ -263,7 +282,7 @@ func generateMktemp() schema.ResourceSpec {
 		},
 		"template": {
 			Description: "Corresponds to the [TEMPLATE] argument.",
-			TypeSpec:    typeSpecs.Boolean,
+			TypeSpec:    typeSpecs.String,
 		},
 		"tmpdir": {
 			Description: "Corresponds to the `--tmpdir` option.",
@@ -437,7 +456,7 @@ func generateSystemctl() schema.ResourceSpec {
 		},
 		"unit": {
 			Description: "Corresponds to the [UNIT...] argument.",
-			TypeSpec:    typeSpecs.OneOrMoreStrings,
+			TypeSpec:    typeSpecs.String, // TODO: This can have more than one value
 		},
 	}
 
@@ -489,6 +508,10 @@ func generateTar() schema.ResourceSpec {
 			TypeSpec:    typeSpecs.Boolean,
 		},
 		"recursive": {
+			Description: "Corresponds to the `--recursive` option.",
+			TypeSpec:    typeSpecs.Boolean,
+		},
+		"stripComponents": {
 			Description: "Corresponds to the `--strip-components` option.",
 			TypeSpec:    typeSpecs.Integer,
 		},

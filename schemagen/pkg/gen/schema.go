@@ -38,7 +38,7 @@ func GenerateSchema(packageDir string) schema.PackageSpec {
 				"packageReferences": map[string]string{
 					"Pulumi":         "3.*",
 					"Pulumi.Command": "0.9.*",
-					"Pulumi.Randomm": "4.*",
+					"Pulumi.Random":  "4.*",
 					"Pulumi.Tls":     "5.*",
 				},
 			}),
