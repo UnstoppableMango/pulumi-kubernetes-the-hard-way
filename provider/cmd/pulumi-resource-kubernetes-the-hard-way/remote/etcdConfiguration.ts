@@ -12,7 +12,7 @@ export class EtcdConfiguration extends schema.EtcdConfiguration {
     const configurationDirectory = output(args.configurationDirectory ?? '/etc/etcd'); // Default value from schema?
     const dataDirectory = output(args.dataDirectory ?? '/var/lib/etcd'); // Default value from schema?
     const internalIp = output(args.internalIp);
-    const systemdDirectory = output(args.systemdDirectory ?? '/etc/systemd/system');
+    // const systemdDirectory = output(args.systemdDirectory ?? '/etc/systemd/system');
 
     const configurationMkdir = new Mkdir(`${name}-config`, {
       connection: args.connection,
@@ -60,23 +60,23 @@ export class EtcdConfiguration extends schema.EtcdConfiguration {
       {}, // TODO: Peers
     );
 
-    const systemdService = new SystemdService(name, {
-      connection: args.connection,
-      directory: systemdDirectory,
-      unit: {
-        description: 'etcd',
-        documentation: ['https://github.com/etcd-io/etcd'],
-      },
-      service: {
-        type: 'notify',
-        execStart,
-        restart: 'on-failure',
-        restartSec: '5',
-      },
-      install: {
-        wantedBy: ['multi-user.target'],
-      },
-    }, { parent: this });
+    // const systemdService = new SystemdService(name, {
+    //   connection: args.connection,
+    //   directory: systemdDirectory,
+    //   unit: {
+    //     description: 'etcd',
+    //     documentation: ['https://github.com/etcd-io/etcd'],
+    //   },
+    //   service: {
+    //     type: 'notify',
+    //     execStart,
+    //     restart: 'on-failure',
+    //     restartSec: '5',
+    //   },
+    //   install: {
+    //     wantedBy: ['multi-user.target'],
+    //   },
+    // }, { parent: this });
 
     this.caFile = caFile;
     this.certFile = certFile;
@@ -86,7 +86,7 @@ export class EtcdConfiguration extends schema.EtcdConfiguration {
     this.dataMkdir = dataMkdir;
     this.internalIp = internalIp;
     this.keyFile = keyFile;
-    this.systemdService = systemdService,
+    // this.systemdService = systemdService,
 
     this.registerOutputs({
       caFile,
@@ -98,7 +98,7 @@ export class EtcdConfiguration extends schema.EtcdConfiguration {
       internalIp,
       keyFile,
       name,
-      systemdService,
+      // systemdService,
     });
   }
 }

@@ -11,7 +11,7 @@ export class Systemctl extends schema.Systemctl {
     const systemctlCommand = output(args.command);
     const environment = output(args.environment ?? {});
     const lifecycle = args.lifecycle ?? 'create';
-    const serviceName = output(args.unit);
+    const unit = output(args.unit);
 
     const builder = new CommandBuilder('systemctl')
       .arg(systemctlCommand)
@@ -24,9 +24,9 @@ export class Systemctl extends schema.Systemctl {
     }, { parent: this });
 
     this.command = command;
-    this.commands = systemctlCommand;
+    this.systemctlCommand = args.command;
     this.connection = connection;
-    this.serviceName = serviceName as Output<string>;
+    this.unit = unit as Output<string>;
     this.stderr = command.stderr;
     this.stdin = command.stdin as Output<string>;
     this.stdout = command.stdout;
@@ -35,7 +35,7 @@ export class Systemctl extends schema.Systemctl {
       command,
       systemctlCommand,
       connection,
-      serviceName,
+      unit,
       stderr: command.stderr,
       stdin: command.stdin,
       stdout: command.stdout,

@@ -32,7 +32,7 @@ export class ContainerdInstall extends schema.ContainerdInstall {
     this.path = install.paths.containerd;
     this.directory = directory;
     this.mkdir = install.mkdir;
-    this.mv = install.mvs.containerd;
+    this.containerdMv = install.mvs.containerd;
     this.tar = install.tar;
     this.url = url;
     this.version = version;

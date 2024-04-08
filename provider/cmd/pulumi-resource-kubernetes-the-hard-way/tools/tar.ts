@@ -1,6 +1,5 @@
-import { ComponentResource, ComponentResourceOptions, Input, Output, output } from '@pulumi/pulumi';
+import { ComponentResourceOptions, Input, Output, output } from '@pulumi/pulumi';
 import { Command } from '@pulumi/command/remote';
-import { remote } from '@pulumi/command/types/input';
 import * as types from '../schema-types';
 import { CommandBuilder, toArray } from './commandBuilder';
 
