@@ -2301,8 +2301,7 @@
                 },
                 "caPrivateKeyPem": {
                     "type": "string",
-                    "description": "Private key of the Certificate Authority (CA) used to sign the certificate, in [PEM (RFC 1421)](https://datatracker.ietf.org/doc/html/rfc1421) format.\n",
-                    "secret": true
+                    "description": "Private key of the Certificate Authority (CA) used to sign the certificate, in [PEM (RFC 1421)](https://datatracker.ietf.org/doc/html/rfc1421) format.\n"
                 },
                 "cert": {
                     "$ref": "/tls/v5.0.2/schema.json#/resources/tls:index/locallySignedCert:LocallySignedCert",
@@ -2356,18 +2355,15 @@
                 },
                 "privateKeyOpenssh": {
                     "type": "string",
-                    "description": "Private key data in [OpenSSH PEM (RFC 4716)](https://datatracker.ietf.org/doc/html/rfc4716) format.\n",
-                    "secret": true
+                    "description": "Private key data in [OpenSSH PEM (RFC 4716)](https://datatracker.ietf.org/doc/html/rfc4716) format.\n"
                 },
                 "privateKeyPem": {
                     "type": "string",
-                    "description": "Private key data in [PEM (RFC 1421)](https://datatracker.ietf.org/doc/html/rfc1421) format.\n",
-                    "secret": true
+                    "description": "Private key data in [PEM (RFC 1421)](https://datatracker.ietf.org/doc/html/rfc1421) format.\n"
                 },
                 "privateKeyPemPkcs8": {
                     "type": "string",
-                    "description": "Private key data in [PKCS#8 PEM (RFC 5208)](https://datatracker.ietf.org/doc/html/rfc5208) format.\n",
-                    "secret": true
+                    "description": "Private key data in [PKCS#8 PEM (RFC 5208)](https://datatracker.ietf.org/doc/html/rfc5208) format.\n"
                 },
                 "publicKeyFingerprintMd5": {
                     "type": "string",
@@ -2756,18 +2752,15 @@
                 },
                 "privateKeyOpenssh": {
                     "type": "string",
-                    "description": "Private key data in [OpenSSH PEM (RFC 4716)](https://datatracker.ietf.org/doc/html/rfc4716) format.\n",
-                    "secret": true
+                    "description": "Private key data in [OpenSSH PEM (RFC 4716)](https://datatracker.ietf.org/doc/html/rfc4716) format.\n"
                 },
                 "privateKeyPem": {
                     "type": "string",
-                    "description": "Private key data in [PEM (RFC 1421)](https://datatracker.ietf.org/doc/html/rfc1421) format.\n",
-                    "secret": true
+                    "description": "Private key data in [PEM (RFC 1421)](https://datatracker.ietf.org/doc/html/rfc1421) format.\n"
                 },
                 "privateKeyPemPkcs8": {
                     "type": "string",
-                    "description": "Private key data in [PKCS#8 PEM (RFC 5208)](https://datatracker.ietf.org/doc/html/rfc5208) format.\n",
-                    "secret": true
+                    "description": "Private key data in [PKCS#8 PEM (RFC 5208)](https://datatracker.ietf.org/doc/html/rfc5208) format.\n"
                 },
                 "publicKeyFingerprintMd5": {
                     "type": "string",
