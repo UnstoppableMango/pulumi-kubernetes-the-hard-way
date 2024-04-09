@@ -227,7 +227,7 @@ dist: dist/$(PROVIDER)-v$(PROVIDER_VERSION)-darwin-amd64.tar.gz
 dist: dist/$(PROVIDER)-v$(PROVIDER_VERSION)-darwin-arm64.tar.gz
 dist: dist/$(PROVIDER)-v$(PROVIDER_VERSION)-windows-amd64.tar.gz
 
-$(SCHEMA_FILE): $(SCHEMAGEN_SRC)
+provider/cmd/$(PROVIDER)/schema.json: $(SCHEMAGEN_SRC)
 	cd schemagen/cmd/pulumi-gen-kubernetes-the-hard-way && \
 		go run main.go ${WORKING_DIR}/provider/cmd/${PROVIDER}
 
