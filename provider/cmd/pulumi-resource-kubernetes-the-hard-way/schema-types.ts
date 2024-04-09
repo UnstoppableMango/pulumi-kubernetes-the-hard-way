@@ -39,6 +39,7 @@ export type Functions = {
     "kubernetes-the-hard-way:tls:ClusterPki/getKubeconfig": (inputs: ClusterPki_getKubeconfigInputs) => Promise<ClusterPki_getKubeconfigOutputs>;
 };
 import * as command from "@pulumi/command";
+import * as kubernetes from "@pulumi/kubernetes";
 import * as random from "@pulumi/random";
 import * as tls from "@pulumi/tls";
 export abstract class CniPluginsInstall<TData = any> extends (pulumi.ComponentResource)<TData> {
@@ -973,6 +974,20 @@ export interface UserOutputs {
 }
 export type ArchitectureInputs = "amd64" | "arm64";
 export type ArchitectureOutputs = "amd64" | "arm64";
+export interface PodManifestInputs {
+    readonly apiVersion?: pulumi.Input<string>;
+    readonly kind?: pulumi.Input<string>;
+    readonly metadata?: pulumi.Input<kubernetes.types.input.meta.v1.ObjectMeta>;
+    readonly spec?: pulumi.Input<kubernetes.types.input.core.v1.PodSpec>;
+    readonly status?: pulumi.Input<kubernetes.types.input.core.v1.PodStatus>;
+}
+export interface PodManifestOutputs {
+    readonly apiVersion?: pulumi.Output<string>;
+    readonly kind?: pulumi.Output<string>;
+    readonly metadata?: pulumi.Output<kubernetes.types.output.meta.v1.ObjectMeta>;
+    readonly spec?: pulumi.Output<kubernetes.types.output.core.v1.PodSpec>;
+    readonly status?: pulumi.Output<kubernetes.types.output.core.v1.PodStatus>;
+}
 export interface SystemdInstallSectionInputs {
     readonly wantedBy?: pulumi.Input<pulumi.Input<string>[]>;
 }
