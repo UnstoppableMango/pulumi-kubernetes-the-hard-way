@@ -18,19 +18,28 @@ import (
 type RuncInstall struct {
 	pulumi.ResourceState
 
-	// The CPU architecture.
-	Architecture ArchitectureOutput     `pulumi:"architecture"`
-	BinName      pulumi.StringPtrOutput `pulumi:"binName"`
-	// The connection details.
+	// The CPU architecture to install.
+	Architecture ArchitectureOutput `pulumi:"architecture"`
+	// The name of the installed binary.
+	BinName pulumi.StringPtrOutput `pulumi:"binName"`
+	// The parameters with which to connect to the remote host.
 	Connection pulumiCommand.ConnectionOutput `pulumi:"connection"`
-	// Directory to install the binary.
+	// The directory to install the binary to.
 	Directory pulumi.StringOutput `pulumi:"directory"`
-	Download  DownloadOutput      `pulumi:"download"`
-	Mkdir     tools.MkdirOutput   `pulumi:"mkdir"`
-	Mktemp    tools.MktempOutput  `pulumi:"mktemp"`
-	Mv        tools.MvOutput      `pulumi:"mv"`
-	Path      pulumi.StringOutput `pulumi:"path"`
-	Rm        tools.RmOutput      `pulumi:"rm"`
+	// The download operation.
+	Download DownloadOutput `pulumi:"download"`
+	// The mkdir operation.
+	Mkdir tools.MkdirOutput `pulumi:"mkdir"`
+	// The mktemp operation.
+	Mktemp tools.MktempOutput `pulumi:"mktemp"`
+	// The mv operation.
+	Mv tools.MvOutput `pulumi:"mv"`
+	// The path to the installed binary.
+	Path pulumi.StringOutput `pulumi:"path"`
+	// The rm operation.
+	Rm tools.RmOutput `pulumi:"rm"`
+	// The url used to download the binary.
+	Url pulumi.StringOutput `pulumi:"url"`
 	// The version to install.
 	Version pulumi.StringOutput `pulumi:"version"`
 }
@@ -59,25 +68,25 @@ func NewRuncInstall(ctx *pulumi.Context,
 }
 
 type runcInstallArgs struct {
-	// The CPU architecture.
+	// The CPU architecture to install.
 	Architecture *Architecture `pulumi:"architecture"`
-	// The connection details.
+	// The parameters with which to connect to the remote host.
 	Connection pulumiCommand.Connection `pulumi:"connection"`
-	// Directory to install the binary.
+	// The directory to install the binary to.
 	Directory *string `pulumi:"directory"`
-	// The version of to install.
+	// The version to install.
 	Version *string `pulumi:"version"`
 }
 
 // The set of arguments for constructing a RuncInstall resource.
 type RuncInstallArgs struct {
-	// The CPU architecture.
+	// The CPU architecture to install.
 	Architecture ArchitecturePtrInput
-	// The connection details.
+	// The parameters with which to connect to the remote host.
 	Connection pulumiCommand.ConnectionInput
-	// Directory to install the binary.
+	// The directory to install the binary to.
 	Directory pulumi.StringPtrInput
-	// The version of to install.
+	// The version to install.
 	Version pulumi.StringPtrInput
 }
 
@@ -168,47 +177,59 @@ func (o RuncInstallOutput) ToRuncInstallOutputWithContext(ctx context.Context) R
 	return o
 }
 
-// The CPU architecture.
+// The CPU architecture to install.
 func (o RuncInstallOutput) Architecture() ArchitectureOutput {
 	return o.ApplyT(func(v *RuncInstall) ArchitectureOutput { return v.Architecture }).(ArchitectureOutput)
 }
 
+// The name of the installed binary.
 func (o RuncInstallOutput) BinName() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *RuncInstall) pulumi.StringPtrOutput { return v.BinName }).(pulumi.StringPtrOutput)
 }
 
-// The connection details.
+// The parameters with which to connect to the remote host.
 func (o RuncInstallOutput) Connection() pulumiCommand.ConnectionOutput {
 	return o.ApplyT(func(v *RuncInstall) pulumiCommand.ConnectionOutput { return v.Connection }).(pulumiCommand.ConnectionOutput)
 }
 
-// Directory to install the binary.
+// The directory to install the binary to.
 func (o RuncInstallOutput) Directory() pulumi.StringOutput {
 	return o.ApplyT(func(v *RuncInstall) pulumi.StringOutput { return v.Directory }).(pulumi.StringOutput)
 }
 
+// The download operation.
 func (o RuncInstallOutput) Download() DownloadOutput {
 	return o.ApplyT(func(v *RuncInstall) DownloadOutput { return v.Download }).(DownloadOutput)
 }
 
+// The mkdir operation.
 func (o RuncInstallOutput) Mkdir() tools.MkdirOutput {
 	return o.ApplyT(func(v *RuncInstall) tools.MkdirOutput { return v.Mkdir }).(tools.MkdirOutput)
 }
 
+// The mktemp operation.
 func (o RuncInstallOutput) Mktemp() tools.MktempOutput {
 	return o.ApplyT(func(v *RuncInstall) tools.MktempOutput { return v.Mktemp }).(tools.MktempOutput)
 }
 
+// The mv operation.
 func (o RuncInstallOutput) Mv() tools.MvOutput {
 	return o.ApplyT(func(v *RuncInstall) tools.MvOutput { return v.Mv }).(tools.MvOutput)
 }
 
+// The path to the installed binary.
 func (o RuncInstallOutput) Path() pulumi.StringOutput {
 	return o.ApplyT(func(v *RuncInstall) pulumi.StringOutput { return v.Path }).(pulumi.StringOutput)
 }
 
+// The rm operation.
 func (o RuncInstallOutput) Rm() tools.RmOutput {
 	return o.ApplyT(func(v *RuncInstall) tools.RmOutput { return v.Rm }).(tools.RmOutput)
+}
+
+// The url used to download the binary.
+func (o RuncInstallOutput) Url() pulumi.StringOutput {
+	return o.ApplyT(func(v *RuncInstall) pulumi.StringOutput { return v.Url }).(pulumi.StringOutput)
 }
 
 // The version to install.

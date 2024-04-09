@@ -1,0 +1,4436 @@
+{
+    "name": "kubernetes-the-hard-way",
+    "description": "A Pulumi implementation of Kelsey Hightower's Kubernetes the Hard Way",
+    "keywords": [
+        "pulumi",
+        "command",
+        "tls",
+        "kubernetes",
+        "category/utility",
+        "kind/component"
+    ],
+    "license": "Apache-2.0",
+    "attribution": "https://github.com/kelseyhightower/kubernetes-the-hard-way",
+    "repository": "https://github.com/UnstoppableMango/pulumi-kubernetes-the-hard-way",
+    "pluginDownloadURL": "github://api.github.com/UnstoppableMango",
+    "publisher": "UnstoppableMango",
+    "language": {
+        "csharp": {
+            "dictionaryConstructors": true,
+            "liftSingleValueMethodReturns": true,
+            "packageReferences": {
+                "Pulumi": "3.*",
+                "Pulumi.Command": "0.9.*",
+                "Pulumi.Random": "4.*",
+                "Pulumi.Tls": "5.*"
+            },
+            "rootNamespace": "UnMango"
+        },
+        "go": {
+            "generateResourceContainerTypes": true,
+            "importBasePath": "github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/sdk/go/kubernetes-the-hard-way",
+            "liftSingleValueMethodReturns": true,
+            "packageImportAliases": {
+                "github.com/pulumi/pulumi-command/sdk/go/command/remote": "pulumiCommand",
+                "github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/sdk/go/kubernetes-the-hard-way": "kthw"
+            }
+        },
+        "java": {
+            "basePackage": "com.unmango",
+            "buildFiles": "gradle",
+            "dependencies": {
+                "com.google.code.findbugs:jsr305": "3.0.2",
+                "com.google.code.gson:gson": "2.8.9",
+                "com.pulumi:command": "0.9.2",
+                "com.pulumi:pulumi": "0.9.9",
+                "com.pulumi:random": "4.16.0",
+                "com.pulumi:tls": "5.0.2"
+            },
+            "gradleNexusPublishPluginVersion": "1.1.0",
+            "liftSingleValueMethodReturns": true
+        },
+        "nodejs": {
+            "dependencies": {
+                "@pulumi/command": "^0.9.2",
+                "@pulumi/pulumi": "^3.0.0",
+                "@pulumi/random": "^4.16.0",
+                "@pulumi/tls": "^5.0.2"
+            },
+            "devDependencies": {
+                "@types/node": "^18",
+                "typescript": "^4.6.2"
+            },
+            "liftSingleValueMethodReturns": true,
+            "packageName": "@unmango/pulumi-kubernetes-the-hard-way"
+        },
+        "python": {
+            "liftSingleValueMethodReturns": true,
+            "pyproject": {
+                "enabled": true
+            },
+            "requires": {
+                "pulumi": "\u003e=3.91.1,\u003c4.0.0",
+                "pulumi-command": "\u003e=0.9.2,\u003c1.0.0",
+                "pulumi-random": "\u003e=4.16.0,\u003c5.0.0",
+                "pulumi-tls": "\u003e=5.0.2,\u003c6.0.0"
+            }
+        }
+    },
+    "config": {},
+    "types": {
+        "kubernetes-the-hard-way:config:Cluster": {
+            "properties": {
+                "certificateAuthorityData": {
+                    "type": "string"
+                },
+                "server": {
+                    "type": "string"
+                }
+            },
+            "type": "object",
+            "required": [
+                "certificateAuthorityData",
+                "server"
+            ]
+        },
+        "kubernetes-the-hard-way:config:Context": {
+            "properties": {
+                "cluster": {
+                    "type": "string"
+                },
+                "user": {
+                    "type": "string"
+                }
+            },
+            "type": "object",
+            "required": [
+                "cluster",
+                "user"
+            ]
+        },
+        "kubernetes-the-hard-way:config:Kubeconfig": {
+            "properties": {
+                "clusters": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/kubernetes-the-hard-way:config:Cluster"
+                    }
+                },
+                "contexts": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/kubernetes-the-hard-way:config:Context"
+                    }
+                },
+                "users": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/kubernetes-the-hard-way:config:User"
+                    }
+                }
+            },
+            "type": "object",
+            "required": [
+                "clusters",
+                "contexts",
+                "users"
+            ]
+        },
+        "kubernetes-the-hard-way:config:KubeconfigAdminOptions": {
+            "properties": {
+                "publicIp": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string",
+                    "plain": true,
+                    "const": "admin"
+                }
+            },
+            "type": "object",
+            "required": [
+                "type"
+            ]
+        },
+        "kubernetes-the-hard-way:config:KubeconfigCluster": {
+            "properties": {
+                "cluster": {
+                    "$ref": "#/types/kubernetes-the-hard-way:config:Cluster"
+                },
+                "name": {
+                    "type": "string"
+                }
+            },
+            "type": "object",
+            "required": [
+                "cluster",
+                "name"
+            ]
+        },
+        "kubernetes-the-hard-way:config:KubeconfigContext": {
+            "properties": {
+                "context": {
+                    "$ref": "#/types/kubernetes-the-hard-way:config:Context"
+                },
+                "name": {
+                    "type": "string"
+                }
+            },
+            "type": "object",
+            "required": [
+                "context",
+                "name"
+            ]
+        },
+        "kubernetes-the-hard-way:config:KubeconfigKubeControllerManagerOptions": {
+            "properties": {
+                "publicIp": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string",
+                    "plain": true,
+                    "const": "kube-controller-manager"
+                }
+            },
+            "type": "object",
+            "required": [
+                "type"
+            ]
+        },
+        "kubernetes-the-hard-way:config:KubeconfigKubeProxyOptions": {
+            "properties": {
+                "publicIp": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string",
+                    "plain": true,
+                    "const": "kube-proxy"
+                }
+            },
+            "type": "object",
+            "required": [
+                "type"
+            ]
+        },
+        "kubernetes-the-hard-way:config:KubeconfigKubeSchedulerOptions": {
+            "properties": {
+                "publicIp": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string",
+                    "plain": true,
+                    "const": "kube-scheduler"
+                }
+            },
+            "type": "object",
+            "required": [
+                "type"
+            ]
+        },
+        "kubernetes-the-hard-way:config:KubeconfigType": {
+            "type": "string",
+            "enum": [
+                {
+                    "value": "worker"
+                },
+                {
+                    "value": "kube-proxy"
+                },
+                {
+                    "value": "kube-controller-manager"
+                },
+                {
+                    "value": "kube-scheduler"
+                },
+                {
+                    "value": "admin"
+                }
+            ]
+        },
+        "kubernetes-the-hard-way:config:KubeconfigUser": {
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "user": {
+                    "$ref": "#/types/kubernetes-the-hard-way:config:User"
+                }
+            },
+            "type": "object",
+            "required": [
+                "name",
+                "user"
+            ]
+        },
+        "kubernetes-the-hard-way:config:KubeconfigWorkerOptions": {
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "publicIp": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string",
+                    "plain": true,
+                    "const": "worker"
+                }
+            },
+            "type": "object",
+            "required": [
+                "name",
+                "publicIp"
+            ]
+        },
+        "kubernetes-the-hard-way:config:User": {
+            "properties": {
+                "clientCertificateData": {
+                    "type": "string"
+                },
+                "clientKeyData": {
+                    "type": "string"
+                }
+            },
+            "type": "object",
+            "required": [
+                "clientCertificateData",
+                "clientKeyData"
+            ]
+        },
+        "kubernetes-the-hard-way:remote:Architecture": {
+            "description": "CPU architecture",
+            "type": "string",
+            "enum": [
+                {
+                    "value": "amd64"
+                },
+                {
+                    "value": "arm64"
+                }
+            ]
+        },
+        "kubernetes-the-hard-way:remote:SystemdInstallSection": {
+            "description": "https://www.freedesktop.org/software/systemd/man/latest/systemd.unit.html#%5BInstall%5D%20Section%20Options",
+            "properties": {
+                "wantedBy": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "A symbolic link is created in the .wants/, .requires/, or .upholds/ directory of each of the listed units when this unit is installed by systemctl enable."
+                }
+            },
+            "type": "object"
+        },
+        "kubernetes-the-hard-way:remote:SystemdServiceExitType": {
+            "description": "Systemd service exit type.",
+            "type": "string",
+            "enum": [
+                {
+                    "value": "main"
+                },
+                {
+                    "value": "cgroup"
+                }
+            ]
+        },
+        "kubernetes-the-hard-way:remote:SystemdServiceRestart": {
+            "description": "Systemd service restart behavior.",
+            "type": "string",
+            "enum": [
+                {
+                    "value": "no"
+                },
+                {
+                    "value": "on-success"
+                },
+                {
+                    "value": "on-failure"
+                },
+                {
+                    "value": "on-abnormal"
+                },
+                {
+                    "value": "on-watchdog"
+                },
+                {
+                    "value": "on-abort"
+                },
+                {
+                    "value": "always"
+                }
+            ]
+        },
+        "kubernetes-the-hard-way:remote:SystemdServiceSection": {
+            "description": "https://www.freedesktop.org/software/systemd/man/latest/systemd.service.html#",
+            "properties": {
+                "execStart": {
+                    "type": "string",
+                    "description": "Commands that are executed when this service is started."
+                },
+                "exitType": {
+                    "$ref": "#/types/kubernetes-the-hard-way:remote:SystemdServiceExitType",
+                    "description": "Specifies when the manager should consider the service to be finished."
+                },
+                "restart": {
+                    "$ref": "#/types/kubernetes-the-hard-way:remote:SystemdServiceRestart",
+                    "description": "Configures whether the service shall be restarted when the service process exits, is killed, or a timeout is reached."
+                },
+                "restartSec": {
+                    "type": "string",
+                    "description": "Configures the time to sleep before restarting a service (as configured with Restart=)."
+                },
+                "type": {
+                    "$ref": "#/types/kubernetes-the-hard-way:remote:SystemdServiceType",
+                    "description": "Configures the mechanism via which the service notifies the manager that the service start-up has finished."
+                }
+            },
+            "type": "object"
+        },
+        "kubernetes-the-hard-way:remote:SystemdServiceType": {
+            "description": "Systemd service type.",
+            "type": "string",
+            "enum": [
+                {
+                    "value": "simple"
+                },
+                {
+                    "value": "exec"
+                },
+                {
+                    "value": "forking"
+                },
+                {
+                    "value": "oneshot"
+                },
+                {
+                    "value": "dbus"
+                },
+                {
+                    "value": "notify"
+                },
+                {
+                    "value": "notify-reload"
+                },
+                {
+                    "value": "idle"
+                }
+            ]
+        },
+        "kubernetes-the-hard-way:remote:SystemdUnitSection": {
+            "description": "https://www.freedesktop.org/software/systemd/man/latest/systemd.unit.html#",
+            "properties": {
+                "bindsTo": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "Configures requirement dependencies, very similar in style to Requires=."
+                },
+                "description": {
+                    "type": "string",
+                    "description": "A short human readable title of the unit."
+                },
+                "documentation": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "A space-separated list of URIs referencing documentation for this unit or its configuration."
+                },
+                "requires": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "Similar to Wants=, but declares a stronger requirement dependency."
+                },
+                "requisite": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "Similar to Requires=. However, if the units listed here are not started already, they will not be started and the starting of this unit will fail immediately."
+                },
+                "wants": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "Configures (weak) requirement dependencies on other units."
+                }
+            },
+            "type": "object"
+        },
+        "kubernetes-the-hard-way:tls:Algorithm": {
+            "description": "Private key algorithm.",
+            "type": "string",
+            "enum": [
+                {
+                    "value": "RSA"
+                },
+                {
+                    "value": "ECDSA"
+                },
+                {
+                    "value": "ED25519"
+                }
+            ]
+        },
+        "kubernetes-the-hard-way:tls:AllowedUsage": {
+            "description": "Certificate allowed usage",
+            "type": "string",
+            "enum": [
+                {
+                    "name": "certSigning",
+                    "value": "cert_signing"
+                },
+                {
+                    "name": "clientAuth",
+                    "value": "client_auth"
+                },
+                {
+                    "name": "crlSigning",
+                    "value": "crl_signing"
+                },
+                {
+                    "name": "digitalSignature",
+                    "value": "digital_signature"
+                },
+                {
+                    "name": "keyEncipherment",
+                    "value": "key_encipherment"
+                },
+                {
+                    "name": "serverAuth",
+                    "value": "server_auth"
+                }
+            ]
+        },
+        "kubernetes-the-hard-way:tls:Bundle": {
+            "description": "A CA + Cert + Key bundle",
+            "properties": {
+                "caPem": {
+                    "type": "string",
+                    "description": "The PEM encoded certificate authority data."
+                },
+                "certPem": {
+                    "type": "string",
+                    "description": "The PEM encoded certificate data."
+                },
+                "keyPem": {
+                    "type": "string",
+                    "description": "The PEM encoded private key data"
+                }
+            },
+            "type": "object",
+            "required": [
+                "caPem",
+                "certPem",
+                "keyPem"
+            ]
+        },
+        "kubernetes-the-hard-way:tls:ClusterPkiNode": {
+            "description": "TODO",
+            "properties": {
+                "ip": {
+                    "type": "string",
+                    "description": "The IP address of the node"
+                },
+                "role": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tls:NodeRole",
+                    "description": "The role a node should be configured for"
+                }
+            },
+            "type": "object"
+        },
+        "kubernetes-the-hard-way:tls:EcdsaCurve": {
+            "description": "ECDSA algorithm curve",
+            "type": "string",
+            "enum": [
+                {
+                    "value": "P224"
+                },
+                {
+                    "value": "P256"
+                },
+                {
+                    "value": "P384"
+                },
+                {
+                    "value": "P521"
+                }
+            ]
+        },
+        "kubernetes-the-hard-way:tls:KeyPair": {
+            "description": "A certificate and key pair",
+            "properties": {
+                "cert": {
+                    "oneOf": [
+                        {
+                            "$ref": "/tls/v5.0.2/schema.json#/resources/tls:index/locallySignedCert:LocallySignedCert"
+                        },
+                        {
+                            "$ref": "/tls/v5.0.2/schema.json#/resources/tls:index/selfSignedCert:SelfSignedCert"
+                        }
+                    ],
+                    "description": "The certificate resource."
+                },
+                "certPem": {
+                    "type": "string",
+                    "description": "The PEM encoded certificate data."
+                },
+                "key": {
+                    "$ref": "/tls/v5.0.2/schema.json#/resources/tls:index/privateKey:PrivateKey",
+                    "description": "The private key resource."
+                },
+                "privateKeyPem": {
+                    "type": "string",
+                    "description": "The PEM encoded private key data."
+                },
+                "publicKeyPem": {
+                    "type": "string",
+                    "description": "The PEM encoded public key data."
+                }
+            },
+            "type": "object",
+            "required": [
+                "cert",
+                "certPem",
+                "key",
+                "privateKeyPem",
+                "publicKeyPem"
+            ]
+        },
+        "kubernetes-the-hard-way:tls:NodeRole": {
+            "description": "The role a node will play in the final cluster",
+            "type": "string",
+            "enum": [
+                {
+                    "value": "controlplane"
+                },
+                {
+                    "value": "worker"
+                }
+            ]
+        },
+        "kubernetes-the-hard-way:tools:CommandLifecycle": {
+            "type": "string",
+            "enum": [
+                {
+                    "value": "create"
+                },
+                {
+                    "value": "update"
+                },
+                {
+                    "value": "delete"
+                }
+            ]
+        },
+        "kubernetes-the-hard-way:tools:EtcdctlCommand": {
+            "type": "string",
+            "enum": [
+                {
+                    "value": "member"
+                },
+                {
+                    "value": "list"
+                }
+            ]
+        },
+        "kubernetes-the-hard-way:tools:SystemctlCommand": {
+            "type": "string",
+            "enum": [
+                {
+                    "value": "bind"
+                },
+                {
+                    "value": "cat"
+                },
+                {
+                    "value": "clean"
+                },
+                {
+                    "value": "daemon-reload"
+                },
+                {
+                    "value": "disable"
+                },
+                {
+                    "value": "enable"
+                },
+                {
+                    "value": "freeze"
+                },
+                {
+                    "value": "is-active"
+                },
+                {
+                    "value": "is-enabled"
+                },
+                {
+                    "value": "is-failed"
+                },
+                {
+                    "value": "isolate"
+                },
+                {
+                    "value": "kill"
+                },
+                {
+                    "value": "list-automounts"
+                },
+                {
+                    "value": "list-dependencies"
+                },
+                {
+                    "value": "list-paths"
+                },
+                {
+                    "value": "list-sockets"
+                },
+                {
+                    "value": "list-timers"
+                },
+                {
+                    "value": "list-units"
+                },
+                {
+                    "value": "mask"
+                },
+                {
+                    "value": "mount-image"
+                },
+                {
+                    "value": "reenable"
+                },
+                {
+                    "value": "reload"
+                },
+                {
+                    "value": "reload-or-restart"
+                },
+                {
+                    "value": "restart"
+                },
+                {
+                    "value": "set-property"
+                },
+                {
+                    "value": "show"
+                },
+                {
+                    "value": "start"
+                },
+                {
+                    "value": "status"
+                },
+                {
+                    "value": "stop"
+                },
+                {
+                    "value": "thaw"
+                },
+                {
+                    "value": "try-reload-or-restart"
+                },
+                {
+                    "value": "try-restart"
+                },
+                {
+                    "value": "unmask"
+                }
+            ]
+        },
+        "kubernetes-the-hard-way:tools:TeeMode": {
+            "type": "string",
+            "enum": [
+                {
+                    "value": "warn"
+                },
+                {
+                    "value": "warn-nopipe"
+                },
+                {
+                    "value": "exit"
+                },
+                {
+                    "value": "exit-nopipe"
+                }
+            ]
+        }
+    },
+    "provider": {},
+    "resources": {
+        "kubernetes-the-hard-way:remote:CniPluginsInstall": {
+            "description": "Installs cni-plugins on a remote system",
+            "properties": {
+                "architecture": {
+                    "$ref": "#/types/kubernetes-the-hard-way:remote:Architecture",
+                    "description": "The CPU architecture to install."
+                },
+                "archiveName": {
+                    "type": "string",
+                    "description": "The name of the downloaded archive."
+                },
+                "bandwidthMv": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mv",
+                    "description": "The bandwidth mv operation."
+                },
+                "bandwidthPath": {
+                    "type": "string",
+                    "description": "The bandwidth path on the remote system"
+                },
+                "bridgeMv": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mv",
+                    "description": "The bridge mv operation."
+                },
+                "bridgePath": {
+                    "type": "string",
+                    "description": "The bridge path on the remote system"
+                },
+                "connection": {
+                    "$ref": "/command/v0.9.2/schema.json#/types/command:remote:Connection",
+                    "description": "The parameters with which to connect to the remote host."
+                },
+                "dhcpMv": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mv",
+                    "description": "The dhcp mv operation."
+                },
+                "dhcpPath": {
+                    "type": "string",
+                    "description": "The dhcp path on the remote system"
+                },
+                "directory": {
+                    "type": "string",
+                    "description": "The directory to install the binary to.",
+                    "default": "/usr/local/bin"
+                },
+                "download": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:remote:Download",
+                    "description": "The download operation."
+                },
+                "dummyMv": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mv",
+                    "description": "The dummy mv operation."
+                },
+                "dummyPath": {
+                    "type": "string",
+                    "description": "The dummy path on the remote system"
+                },
+                "firewallMv": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mv",
+                    "description": "The firewall mv operation."
+                },
+                "firewallPath": {
+                    "type": "string",
+                    "description": "The firewall path on the remote system"
+                },
+                "hostDeviceMv": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mv",
+                    "description": "The hostDevice mv operation."
+                },
+                "hostDevicePath": {
+                    "type": "string",
+                    "description": "The hostDevice path on the remote system"
+                },
+                "hostLocalMv": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mv",
+                    "description": "The hostLocal mv operation."
+                },
+                "hostLocalPath": {
+                    "type": "string",
+                    "description": "The hostLocal path on the remote system"
+                },
+                "ipvlanMv": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mv",
+                    "description": "The ipvlan mv operation."
+                },
+                "ipvlanPath": {
+                    "type": "string",
+                    "description": "The ipvlan path on the remote system"
+                },
+                "loopbackMv": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mv",
+                    "description": "The loopback mv operation."
+                },
+                "loopbackPath": {
+                    "type": "string",
+                    "description": "The loopback path on the remote system"
+                },
+                "macvlanMv": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mv",
+                    "description": "The macvlan mv operation."
+                },
+                "macvlanPath": {
+                    "type": "string",
+                    "description": "The macvlan path on the remote system"
+                },
+                "mkdir": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mkdir",
+                    "description": "The mkdir operation."
+                },
+                "mktemp": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mktemp",
+                    "description": "The mktemp operation."
+                },
+                "path": {
+                    "type": "string",
+                    "description": "The path to the installed binary."
+                },
+                "portmapMv": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mv",
+                    "description": "The portmap mv operation."
+                },
+                "portmapPath": {
+                    "type": "string",
+                    "description": "The portmap path on the remote system"
+                },
+                "ptpMv": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mv",
+                    "description": "The ptp mv operation."
+                },
+                "ptpPath": {
+                    "type": "string",
+                    "description": "The ptp path on the remote system"
+                },
+                "rm": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Rm",
+                    "description": "The rm operation."
+                },
+                "sbrMv": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mv",
+                    "description": "The sbr mv operation."
+                },
+                "sbrPath": {
+                    "type": "string",
+                    "description": "The sbr path on the remote system"
+                },
+                "staticMv": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mv",
+                    "description": "The static mv operation."
+                },
+                "staticPath": {
+                    "type": "string",
+                    "description": "The static path on the remote system"
+                },
+                "tapMv": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mv",
+                    "description": "The tap mv operation."
+                },
+                "tapPath": {
+                    "type": "string",
+                    "description": "The tap path on the remote system"
+                },
+                "tar": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Tar",
+                    "description": "The tar operation."
+                },
+                "tuningMv": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mv",
+                    "description": "The tuning mv operation."
+                },
+                "tuningPath": {
+                    "type": "string",
+                    "description": "The tuning path on the remote system"
+                },
+                "url": {
+                    "type": "string",
+                    "description": "The url used to download the binary."
+                },
+                "version": {
+                    "type": "string",
+                    "description": "The version to install."
+                },
+                "vlanMv": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mv",
+                    "description": "The vlan mv operation."
+                },
+                "vlanPath": {
+                    "type": "string",
+                    "description": "The vlan path on the remote system"
+                },
+                "vrfMv": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mv",
+                    "description": "The vrf mv operation."
+                },
+                "vrfPath": {
+                    "type": "string",
+                    "description": "The vrf path on the remote system"
+                }
+            },
+            "required": [
+                "architecture",
+                "archiveName",
+                "connection",
+                "download",
+                "directory",
+                "mkdir",
+                "mktemp",
+                "rm",
+                "tar",
+                "url",
+                "version",
+                "bandwidthMv",
+                "bandwidthPath",
+                "bridgeMv",
+                "bridgePath",
+                "dhcpMv",
+                "dhcpPath",
+                "dummyMv",
+                "dummyPath",
+                "firewallMv",
+                "firewallPath",
+                "hostDeviceMv",
+                "hostDevicePath",
+                "hostLocalMv",
+                "hostLocalPath",
+                "ipvlanMv",
+                "ipvlanPath",
+                "loopbackMv",
+                "loopbackPath",
+                "macvlanMv",
+                "macvlanPath",
+                "portmapMv",
+                "portmapPath",
+                "ptpMv",
+                "ptpPath",
+                "sbrMv",
+                "sbrPath",
+                "staticMv",
+                "staticPath",
+                "tapMv",
+                "tapPath",
+                "tuningMv",
+                "tuningPath",
+                "vlanMv",
+                "vlanPath",
+                "vrfMv",
+                "vrfPath"
+            ],
+            "inputProperties": {
+                "architecture": {
+                    "$ref": "#/types/kubernetes-the-hard-way:remote:Architecture",
+                    "description": "The CPU architecture to install."
+                },
+                "connection": {
+                    "$ref": "/command/v0.9.2/schema.json#/types/command:remote:Connection",
+                    "description": "The parameters with which to connect to the remote host."
+                },
+                "directory": {
+                    "type": "string",
+                    "description": "The directory to install the binary to.",
+                    "default": "/usr/local/bin"
+                },
+                "version": {
+                    "type": "string",
+                    "description": "The version to install."
+                }
+            },
+            "requiredInputs": [
+                "connection"
+            ],
+            "isComponent": true
+        },
+        "kubernetes-the-hard-way:remote:ContainerdInstall": {
+            "description": "Installs containerd on a remote system",
+            "properties": {
+                "architecture": {
+                    "$ref": "#/types/kubernetes-the-hard-way:remote:Architecture",
+                    "description": "The CPU architecture to install."
+                },
+                "archiveName": {
+                    "type": "string",
+                    "description": "The name of the downloaded archive."
+                },
+                "connection": {
+                    "$ref": "/command/v0.9.2/schema.json#/types/command:remote:Connection",
+                    "description": "The parameters with which to connect to the remote host."
+                },
+                "containerdMv": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mv",
+                    "description": "The containerd mv operation."
+                },
+                "containerdPath": {
+                    "type": "string",
+                    "description": "The containerd path on the remote system"
+                },
+                "directory": {
+                    "type": "string",
+                    "description": "The directory to install the binary to.",
+                    "default": "/usr/local/bin"
+                },
+                "download": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:remote:Download",
+                    "description": "The download operation."
+                },
+                "mkdir": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mkdir",
+                    "description": "The mkdir operation."
+                },
+                "mktemp": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mktemp",
+                    "description": "The mktemp operation."
+                },
+                "path": {
+                    "type": "string",
+                    "description": "The path to the installed binary."
+                },
+                "rm": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Rm",
+                    "description": "The rm operation."
+                },
+                "tar": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Tar",
+                    "description": "The tar operation."
+                },
+                "url": {
+                    "type": "string",
+                    "description": "The url used to download the binary."
+                },
+                "version": {
+                    "type": "string",
+                    "description": "The version to install."
+                }
+            },
+            "required": [
+                "architecture",
+                "archiveName",
+                "connection",
+                "download",
+                "directory",
+                "mkdir",
+                "mktemp",
+                "rm",
+                "tar",
+                "url",
+                "version",
+                "containerdMv",
+                "containerdPath"
+            ],
+            "inputProperties": {
+                "architecture": {
+                    "$ref": "#/types/kubernetes-the-hard-way:remote:Architecture",
+                    "description": "The CPU architecture to install."
+                },
+                "connection": {
+                    "$ref": "/command/v0.9.2/schema.json#/types/command:remote:Connection",
+                    "description": "The parameters with which to connect to the remote host."
+                },
+                "directory": {
+                    "type": "string",
+                    "description": "The directory to install the binary to.",
+                    "default": "/usr/local/bin"
+                },
+                "version": {
+                    "type": "string",
+                    "description": "The version to install."
+                }
+            },
+            "requiredInputs": [
+                "connection"
+            ],
+            "isComponent": true
+        },
+        "kubernetes-the-hard-way:remote:CrictlInstall": {
+            "description": "Installs crictl on a remote system",
+            "properties": {
+                "architecture": {
+                    "$ref": "#/types/kubernetes-the-hard-way:remote:Architecture",
+                    "description": "The CPU architecture to install."
+                },
+                "archiveName": {
+                    "type": "string",
+                    "description": "The name of the downloaded archive."
+                },
+                "connection": {
+                    "$ref": "/command/v0.9.2/schema.json#/types/command:remote:Connection",
+                    "description": "The parameters with which to connect to the remote host."
+                },
+                "crictlMv": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mv",
+                    "description": "The crictl mv operation."
+                },
+                "crictlPath": {
+                    "type": "string",
+                    "description": "The crictl path on the remote system"
+                },
+                "directory": {
+                    "type": "string",
+                    "description": "The directory to install the binary to.",
+                    "default": "/usr/local/bin"
+                },
+                "download": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:remote:Download",
+                    "description": "The download operation."
+                },
+                "mkdir": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mkdir",
+                    "description": "The mkdir operation."
+                },
+                "mktemp": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mktemp",
+                    "description": "The mktemp operation."
+                },
+                "path": {
+                    "type": "string",
+                    "description": "The path to the installed binary."
+                },
+                "rm": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Rm",
+                    "description": "The rm operation."
+                },
+                "tar": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Tar",
+                    "description": "The tar operation."
+                },
+                "url": {
+                    "type": "string",
+                    "description": "The url used to download the binary."
+                },
+                "version": {
+                    "type": "string",
+                    "description": "The version to install."
+                }
+            },
+            "required": [
+                "architecture",
+                "archiveName",
+                "connection",
+                "download",
+                "directory",
+                "mkdir",
+                "mktemp",
+                "rm",
+                "tar",
+                "url",
+                "version",
+                "crictlMv",
+                "crictlPath"
+            ],
+            "inputProperties": {
+                "architecture": {
+                    "$ref": "#/types/kubernetes-the-hard-way:remote:Architecture",
+                    "description": "The CPU architecture to install."
+                },
+                "connection": {
+                    "$ref": "/command/v0.9.2/schema.json#/types/command:remote:Connection",
+                    "description": "The parameters with which to connect to the remote host."
+                },
+                "directory": {
+                    "type": "string",
+                    "description": "The directory to install the binary to.",
+                    "default": "/usr/local/bin"
+                },
+                "version": {
+                    "type": "string",
+                    "description": "The version to install."
+                }
+            },
+            "requiredInputs": [
+                "connection"
+            ],
+            "isComponent": true
+        },
+        "kubernetes-the-hard-way:remote:Download": {
+            "description": "Downloads the file specified by `url` onto a remote system.",
+            "properties": {
+                "connection": {
+                    "$ref": "/command/v0.9.2/schema.json#/types/command:remote:Connection",
+                    "description": "The parameters with which to connect to the remote host."
+                },
+                "destination": {
+                    "type": "string",
+                    "description": "The fully qualified path on the remote system where the file should be downloaded to."
+                },
+                "mkdir": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mkdir",
+                    "description": "The mkdir operation."
+                },
+                "removeOnDelete": {
+                    "type": "boolean",
+                    "description": "Remove the downloaded fiel when the resource is deleted."
+                },
+                "url": {
+                    "type": "string",
+                    "description": "The URL of the file to be downloaded."
+                },
+                "wget": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Wget",
+                    "description": "The wget operation."
+                }
+            },
+            "required": [
+                "connection",
+                "destination",
+                "mkdir",
+                "removeOnDelete",
+                "url",
+                "wget"
+            ],
+            "inputProperties": {
+                "connection": {
+                    "$ref": "/command/v0.9.2/schema.json#/types/command:remote:Connection",
+                    "description": "The parameters with which to connect to the remote host."
+                },
+                "destination": {
+                    "type": "string",
+                    "description": "The fully qualified path on the remote system where the file should be downloaded to."
+                },
+                "removeOnDelete": {
+                    "type": "boolean",
+                    "description": "Remove the downloaded fiel when the resource is deleted."
+                },
+                "url": {
+                    "type": "string",
+                    "description": "The URL of the file to be downloaded."
+                }
+            },
+            "requiredInputs": [
+                "connection",
+                "destination",
+                "url"
+            ],
+            "isComponent": true
+        },
+        "kubernetes-the-hard-way:remote:EtcdConfiguration": {
+            "description": "Configures etcd on a remote system.",
+            "properties": {
+                "caFile": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:remote:File",
+                    "description": "The remote certificate authority file."
+                },
+                "caPem": {
+                    "type": "string",
+                    "description": "The PEM encoded certificate authority data."
+                },
+                "certFile": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:remote:File",
+                    "description": "The remote certificate file."
+                },
+                "certPem": {
+                    "type": "string",
+                    "description": "The PEM encoded certificate data."
+                },
+                "configurationDirectory": {
+                    "type": "string",
+                    "description": "The directory to store etcd configuration.",
+                    "default": "/etc/etcd"
+                },
+                "configurationMkdir": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mkdir",
+                    "description": "The configuration mkdir operation."
+                },
+                "connection": {
+                    "$ref": "/command/v0.9.2/schema.json#/types/command:remote:Connection",
+                    "description": "The parameters with which to connect to the remote host."
+                },
+                "dataDirectory": {
+                    "type": "string",
+                    "description": "The directory etcd will store its data."
+                },
+                "dataMkdir": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mkdir",
+                    "description": "The data mkdir operation."
+                },
+                "etcdPath": {
+                    "type": "string",
+                    "description": "The path to the `etcd` binary."
+                },
+                "internalIp": {
+                    "type": "string",
+                    "description": "The IP used to serve client requests and communicate with etcd peers."
+                },
+                "keyFile": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:remote:File",
+                    "description": "The remote key file."
+                },
+                "keyPem": {
+                    "type": "string",
+                    "description": "The PEM encoded key data."
+                }
+            },
+            "required": [
+                "caPem",
+                "certPem",
+                "connection",
+                "etcdPath",
+                "internalIp",
+                "keyPem",
+                "caFile",
+                "certFile",
+                "configurationMkdir",
+                "dataMkdir",
+                "keyFile"
+            ],
+            "inputProperties": {
+                "caPem": {
+                    "type": "string",
+                    "description": "The PEM encoded certificate authority data."
+                },
+                "certPem": {
+                    "type": "string",
+                    "description": "The PEM encoded certificate data."
+                },
+                "configurationDirectory": {
+                    "type": "string",
+                    "description": "The directory to store etcd configuration.",
+                    "default": "/etc/etcd"
+                },
+                "connection": {
+                    "$ref": "/command/v0.9.2/schema.json#/types/command:remote:Connection",
+                    "description": "The parameters with which to connect to the remote host."
+                },
+                "dataDirectory": {
+                    "type": "string",
+                    "description": "The directory etcd will store its data."
+                },
+                "etcdPath": {
+                    "type": "string",
+                    "description": "The path to the `etcd` binary."
+                },
+                "internalIp": {
+                    "type": "string",
+                    "description": "The IP used to serve client requests and communicate with etcd peers."
+                },
+                "keyPem": {
+                    "type": "string",
+                    "description": "The PEM encoded key data."
+                }
+            },
+            "requiredInputs": [
+                "caPem",
+                "certPem",
+                "connection",
+                "etcdPath",
+                "internalIp",
+                "keyPem"
+            ],
+            "isComponent": true
+        },
+        "kubernetes-the-hard-way:remote:EtcdInstall": {
+            "description": "Installs etcd on a remote system",
+            "properties": {
+                "architecture": {
+                    "$ref": "#/types/kubernetes-the-hard-way:remote:Architecture",
+                    "description": "The CPU architecture to install."
+                },
+                "archiveName": {
+                    "type": "string",
+                    "description": "The name of the downloaded archive."
+                },
+                "connection": {
+                    "$ref": "/command/v0.9.2/schema.json#/types/command:remote:Connection",
+                    "description": "The parameters with which to connect to the remote host."
+                },
+                "directory": {
+                    "type": "string",
+                    "description": "The directory to install the binary to.",
+                    "default": "/usr/local/bin"
+                },
+                "download": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:remote:Download",
+                    "description": "The download operation."
+                },
+                "etcdMv": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mv",
+                    "description": "The etcd mv operation."
+                },
+                "etcdPath": {
+                    "type": "string",
+                    "description": "The etcd path on the remote system"
+                },
+                "etcdctlMv": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mv",
+                    "description": "The etcdctl mv operation."
+                },
+                "etcdctlPath": {
+                    "type": "string",
+                    "description": "The etcdctl path on the remote system"
+                },
+                "mkdir": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mkdir",
+                    "description": "The mkdir operation."
+                },
+                "mktemp": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mktemp",
+                    "description": "The mktemp operation."
+                },
+                "path": {
+                    "type": "string",
+                    "description": "The path to the installed binary."
+                },
+                "rm": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Rm",
+                    "description": "The rm operation."
+                },
+                "tar": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Tar",
+                    "description": "The tar operation."
+                },
+                "url": {
+                    "type": "string",
+                    "description": "The url used to download the binary."
+                },
+                "version": {
+                    "type": "string",
+                    "description": "The version to install."
+                }
+            },
+            "required": [
+                "architecture",
+                "archiveName",
+                "connection",
+                "download",
+                "directory",
+                "mkdir",
+                "mktemp",
+                "rm",
+                "tar",
+                "url",
+                "version",
+                "etcdMv",
+                "etcdPath",
+                "etcdctlMv",
+                "etcdctlPath"
+            ],
+            "inputProperties": {
+                "architecture": {
+                    "$ref": "#/types/kubernetes-the-hard-way:remote:Architecture",
+                    "description": "The CPU architecture to install."
+                },
+                "connection": {
+                    "$ref": "/command/v0.9.2/schema.json#/types/command:remote:Connection",
+                    "description": "The parameters with which to connect to the remote host."
+                },
+                "directory": {
+                    "type": "string",
+                    "description": "The directory to install the binary to.",
+                    "default": "/usr/local/bin"
+                },
+                "version": {
+                    "type": "string",
+                    "description": "The version to install."
+                }
+            },
+            "requiredInputs": [
+                "connection"
+            ],
+            "isComponent": true
+        },
+        "kubernetes-the-hard-way:remote:File": {
+            "properties": {
+                "command": {
+                    "$ref": "/command/v0.9.2/schema.json#/resources/command:remote:Command",
+                    "description": "The executed command."
+                },
+                "connection": {
+                    "$ref": "/command/v0.9.2/schema.json#/types/command:remote:Connection",
+                    "description": "The parameters with which to connect to the remote host."
+                },
+                "content": {
+                    "type": "string",
+                    "description": "The content of the file."
+                },
+                "path": {
+                    "type": "string",
+                    "description": "The path to the file on the remote host."
+                },
+                "stderr": {
+                    "type": "string",
+                    "description": "The standard error of the command's process"
+                },
+                "stdin": {
+                    "type": "string",
+                    "description": "Pass a string to the command's process as standard in"
+                },
+                "stdout": {
+                    "type": "string",
+                    "description": "The standard output of the command's process"
+                }
+            },
+            "required": [
+                "command",
+                "connection",
+                "content",
+                "path",
+                "stderr",
+                "stdin",
+                "stdout"
+            ],
+            "inputProperties": {
+                "connection": {
+                    "$ref": "/command/v0.9.2/schema.json#/types/command:remote:Connection",
+                    "description": "The parameters with which to connect to the remote host."
+                },
+                "content": {
+                    "type": "string",
+                    "description": "The content of the file."
+                },
+                "path": {
+                    "type": "string",
+                    "description": "The path to the file on the remote host."
+                }
+            },
+            "requiredInputs": [
+                "connection",
+                "content",
+                "path"
+            ],
+            "isComponent": true
+        },
+        "kubernetes-the-hard-way:remote:KubeApiServerInstall": {
+            "description": "Installs kube-apiserver on a remote system.",
+            "properties": {
+                "architecture": {
+                    "$ref": "#/types/kubernetes-the-hard-way:remote:Architecture",
+                    "description": "The CPU architecture to install."
+                },
+                "binName": {
+                    "type": "string",
+                    "description": "The name of the installed binary."
+                },
+                "connection": {
+                    "$ref": "/command/v0.9.2/schema.json#/types/command:remote:Connection",
+                    "description": "The parameters with which to connect to the remote host."
+                },
+                "directory": {
+                    "type": "string",
+                    "description": "The directory to install the binary to.",
+                    "default": "/usr/local/bin"
+                },
+                "download": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:remote:Download",
+                    "description": "The download operation."
+                },
+                "mkdir": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mkdir",
+                    "description": "The mkdir operation."
+                },
+                "mktemp": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mktemp",
+                    "description": "The mktemp operation."
+                },
+                "mv": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mv",
+                    "description": "The mv operation."
+                },
+                "path": {
+                    "type": "string",
+                    "description": "The path to the installed binary."
+                },
+                "rm": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Rm",
+                    "description": "The rm operation."
+                },
+                "url": {
+                    "type": "string",
+                    "description": "The url used to download the binary."
+                },
+                "version": {
+                    "type": "string",
+                    "description": "The version to install."
+                }
+            },
+            "required": [
+                "connection",
+                "architecture",
+                "directory",
+                "download",
+                "mkdir",
+                "mktemp",
+                "mv",
+                "path",
+                "rm",
+                "url",
+                "version"
+            ],
+            "inputProperties": {
+                "architecture": {
+                    "$ref": "#/types/kubernetes-the-hard-way:remote:Architecture",
+                    "description": "The CPU architecture to install."
+                },
+                "connection": {
+                    "$ref": "/command/v0.9.2/schema.json#/types/command:remote:Connection",
+                    "description": "The parameters with which to connect to the remote host."
+                },
+                "directory": {
+                    "type": "string",
+                    "description": "The directory to install the binary to.",
+                    "default": "/usr/local/bin"
+                },
+                "version": {
+                    "type": "string",
+                    "description": "The version to install."
+                }
+            },
+            "requiredInputs": [
+                "connection"
+            ],
+            "isComponent": true
+        },
+        "kubernetes-the-hard-way:remote:KubeControllerManagerInstall": {
+            "description": "Installs kube-controller-manager on a remote system.",
+            "properties": {
+                "architecture": {
+                    "$ref": "#/types/kubernetes-the-hard-way:remote:Architecture",
+                    "description": "The CPU architecture to install."
+                },
+                "binName": {
+                    "type": "string",
+                    "description": "The name of the installed binary."
+                },
+                "connection": {
+                    "$ref": "/command/v0.9.2/schema.json#/types/command:remote:Connection",
+                    "description": "The parameters with which to connect to the remote host."
+                },
+                "directory": {
+                    "type": "string",
+                    "description": "The directory to install the binary to.",
+                    "default": "/usr/local/bin"
+                },
+                "download": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:remote:Download",
+                    "description": "The download operation."
+                },
+                "mkdir": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mkdir",
+                    "description": "The mkdir operation."
+                },
+                "mktemp": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mktemp",
+                    "description": "The mktemp operation."
+                },
+                "mv": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mv",
+                    "description": "The mv operation."
+                },
+                "path": {
+                    "type": "string",
+                    "description": "The path to the installed binary."
+                },
+                "rm": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Rm",
+                    "description": "The rm operation."
+                },
+                "url": {
+                    "type": "string",
+                    "description": "The url used to download the binary."
+                },
+                "version": {
+                    "type": "string",
+                    "description": "The version to install."
+                }
+            },
+            "required": [
+                "connection",
+                "architecture",
+                "directory",
+                "download",
+                "mkdir",
+                "mktemp",
+                "mv",
+                "path",
+                "rm",
+                "url",
+                "version"
+            ],
+            "inputProperties": {
+                "architecture": {
+                    "$ref": "#/types/kubernetes-the-hard-way:remote:Architecture",
+                    "description": "The CPU architecture to install."
+                },
+                "connection": {
+                    "$ref": "/command/v0.9.2/schema.json#/types/command:remote:Connection",
+                    "description": "The parameters with which to connect to the remote host."
+                },
+                "directory": {
+                    "type": "string",
+                    "description": "The directory to install the binary to.",
+                    "default": "/usr/local/bin"
+                },
+                "version": {
+                    "type": "string",
+                    "description": "The version to install."
+                }
+            },
+            "requiredInputs": [
+                "connection"
+            ],
+            "isComponent": true
+        },
+        "kubernetes-the-hard-way:remote:KubeProxyInstall": {
+            "description": "Installs kube-proxy on a remote system.",
+            "properties": {
+                "architecture": {
+                    "$ref": "#/types/kubernetes-the-hard-way:remote:Architecture",
+                    "description": "The CPU architecture to install."
+                },
+                "binName": {
+                    "type": "string",
+                    "description": "The name of the installed binary."
+                },
+                "connection": {
+                    "$ref": "/command/v0.9.2/schema.json#/types/command:remote:Connection",
+                    "description": "The parameters with which to connect to the remote host."
+                },
+                "directory": {
+                    "type": "string",
+                    "description": "The directory to install the binary to.",
+                    "default": "/usr/local/bin"
+                },
+                "download": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:remote:Download",
+                    "description": "The download operation."
+                },
+                "mkdir": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mkdir",
+                    "description": "The mkdir operation."
+                },
+                "mktemp": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mktemp",
+                    "description": "The mktemp operation."
+                },
+                "mv": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mv",
+                    "description": "The mv operation."
+                },
+                "path": {
+                    "type": "string",
+                    "description": "The path to the installed binary."
+                },
+                "rm": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Rm",
+                    "description": "The rm operation."
+                },
+                "url": {
+                    "type": "string",
+                    "description": "The url used to download the binary."
+                },
+                "version": {
+                    "type": "string",
+                    "description": "The version to install."
+                }
+            },
+            "required": [
+                "connection",
+                "architecture",
+                "directory",
+                "download",
+                "mkdir",
+                "mktemp",
+                "mv",
+                "path",
+                "rm",
+                "url",
+                "version"
+            ],
+            "inputProperties": {
+                "architecture": {
+                    "$ref": "#/types/kubernetes-the-hard-way:remote:Architecture",
+                    "description": "The CPU architecture to install."
+                },
+                "connection": {
+                    "$ref": "/command/v0.9.2/schema.json#/types/command:remote:Connection",
+                    "description": "The parameters with which to connect to the remote host."
+                },
+                "directory": {
+                    "type": "string",
+                    "description": "The directory to install the binary to.",
+                    "default": "/usr/local/bin"
+                },
+                "version": {
+                    "type": "string",
+                    "description": "The version to install."
+                }
+            },
+            "requiredInputs": [
+                "connection"
+            ],
+            "isComponent": true
+        },
+        "kubernetes-the-hard-way:remote:KubeSchedulerInstall": {
+            "description": "Installs kube-scheduler on a remote system.",
+            "properties": {
+                "architecture": {
+                    "$ref": "#/types/kubernetes-the-hard-way:remote:Architecture",
+                    "description": "The CPU architecture to install."
+                },
+                "binName": {
+                    "type": "string",
+                    "description": "The name of the installed binary."
+                },
+                "connection": {
+                    "$ref": "/command/v0.9.2/schema.json#/types/command:remote:Connection",
+                    "description": "The parameters with which to connect to the remote host."
+                },
+                "directory": {
+                    "type": "string",
+                    "description": "The directory to install the binary to.",
+                    "default": "/usr/local/bin"
+                },
+                "download": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:remote:Download",
+                    "description": "The download operation."
+                },
+                "mkdir": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mkdir",
+                    "description": "The mkdir operation."
+                },
+                "mktemp": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mktemp",
+                    "description": "The mktemp operation."
+                },
+                "mv": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mv",
+                    "description": "The mv operation."
+                },
+                "path": {
+                    "type": "string",
+                    "description": "The path to the installed binary."
+                },
+                "rm": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Rm",
+                    "description": "The rm operation."
+                },
+                "url": {
+                    "type": "string",
+                    "description": "The url used to download the binary."
+                },
+                "version": {
+                    "type": "string",
+                    "description": "The version to install."
+                }
+            },
+            "required": [
+                "connection",
+                "architecture",
+                "directory",
+                "download",
+                "mkdir",
+                "mktemp",
+                "mv",
+                "path",
+                "rm",
+                "url",
+                "version"
+            ],
+            "inputProperties": {
+                "architecture": {
+                    "$ref": "#/types/kubernetes-the-hard-way:remote:Architecture",
+                    "description": "The CPU architecture to install."
+                },
+                "connection": {
+                    "$ref": "/command/v0.9.2/schema.json#/types/command:remote:Connection",
+                    "description": "The parameters with which to connect to the remote host."
+                },
+                "directory": {
+                    "type": "string",
+                    "description": "The directory to install the binary to.",
+                    "default": "/usr/local/bin"
+                },
+                "version": {
+                    "type": "string",
+                    "description": "The version to install."
+                }
+            },
+            "requiredInputs": [
+                "connection"
+            ],
+            "isComponent": true
+        },
+        "kubernetes-the-hard-way:remote:KubectlInstall": {
+            "description": "Installs kubectl on a remote system.",
+            "properties": {
+                "architecture": {
+                    "$ref": "#/types/kubernetes-the-hard-way:remote:Architecture",
+                    "description": "The CPU architecture to install."
+                },
+                "binName": {
+                    "type": "string",
+                    "description": "The name of the installed binary."
+                },
+                "connection": {
+                    "$ref": "/command/v0.9.2/schema.json#/types/command:remote:Connection",
+                    "description": "The parameters with which to connect to the remote host."
+                },
+                "directory": {
+                    "type": "string",
+                    "description": "The directory to install the binary to.",
+                    "default": "/usr/local/bin"
+                },
+                "download": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:remote:Download",
+                    "description": "The download operation."
+                },
+                "mkdir": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mkdir",
+                    "description": "The mkdir operation."
+                },
+                "mktemp": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mktemp",
+                    "description": "The mktemp operation."
+                },
+                "mv": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mv",
+                    "description": "The mv operation."
+                },
+                "path": {
+                    "type": "string",
+                    "description": "The path to the installed binary."
+                },
+                "rm": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Rm",
+                    "description": "The rm operation."
+                },
+                "url": {
+                    "type": "string",
+                    "description": "The url used to download the binary."
+                },
+                "version": {
+                    "type": "string",
+                    "description": "The version to install."
+                }
+            },
+            "required": [
+                "connection",
+                "architecture",
+                "directory",
+                "download",
+                "mkdir",
+                "mktemp",
+                "mv",
+                "path",
+                "rm",
+                "url",
+                "version"
+            ],
+            "inputProperties": {
+                "architecture": {
+                    "$ref": "#/types/kubernetes-the-hard-way:remote:Architecture",
+                    "description": "The CPU architecture to install."
+                },
+                "connection": {
+                    "$ref": "/command/v0.9.2/schema.json#/types/command:remote:Connection",
+                    "description": "The parameters with which to connect to the remote host."
+                },
+                "directory": {
+                    "type": "string",
+                    "description": "The directory to install the binary to.",
+                    "default": "/usr/local/bin"
+                },
+                "version": {
+                    "type": "string",
+                    "description": "The version to install."
+                }
+            },
+            "requiredInputs": [
+                "connection"
+            ],
+            "isComponent": true
+        },
+        "kubernetes-the-hard-way:remote:KubeletInstall": {
+            "description": "Installs kubelet on a remote system.",
+            "properties": {
+                "architecture": {
+                    "$ref": "#/types/kubernetes-the-hard-way:remote:Architecture",
+                    "description": "The CPU architecture to install."
+                },
+                "binName": {
+                    "type": "string",
+                    "description": "The name of the installed binary."
+                },
+                "connection": {
+                    "$ref": "/command/v0.9.2/schema.json#/types/command:remote:Connection",
+                    "description": "The parameters with which to connect to the remote host."
+                },
+                "directory": {
+                    "type": "string",
+                    "description": "The directory to install the binary to.",
+                    "default": "/usr/local/bin"
+                },
+                "download": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:remote:Download",
+                    "description": "The download operation."
+                },
+                "mkdir": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mkdir",
+                    "description": "The mkdir operation."
+                },
+                "mktemp": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mktemp",
+                    "description": "The mktemp operation."
+                },
+                "mv": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mv",
+                    "description": "The mv operation."
+                },
+                "path": {
+                    "type": "string",
+                    "description": "The path to the installed binary."
+                },
+                "rm": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Rm",
+                    "description": "The rm operation."
+                },
+                "url": {
+                    "type": "string",
+                    "description": "The url used to download the binary."
+                },
+                "version": {
+                    "type": "string",
+                    "description": "The version to install."
+                }
+            },
+            "required": [
+                "connection",
+                "architecture",
+                "directory",
+                "download",
+                "mkdir",
+                "mktemp",
+                "mv",
+                "path",
+                "rm",
+                "url",
+                "version"
+            ],
+            "inputProperties": {
+                "architecture": {
+                    "$ref": "#/types/kubernetes-the-hard-way:remote:Architecture",
+                    "description": "The CPU architecture to install."
+                },
+                "connection": {
+                    "$ref": "/command/v0.9.2/schema.json#/types/command:remote:Connection",
+                    "description": "The parameters with which to connect to the remote host."
+                },
+                "directory": {
+                    "type": "string",
+                    "description": "The directory to install the binary to.",
+                    "default": "/usr/local/bin"
+                },
+                "version": {
+                    "type": "string",
+                    "description": "The version to install."
+                }
+            },
+            "requiredInputs": [
+                "connection"
+            ],
+            "isComponent": true
+        },
+        "kubernetes-the-hard-way:remote:RuncInstall": {
+            "description": "Installs runc on a remote system.",
+            "properties": {
+                "architecture": {
+                    "$ref": "#/types/kubernetes-the-hard-way:remote:Architecture",
+                    "description": "The CPU architecture to install."
+                },
+                "binName": {
+                    "type": "string",
+                    "description": "The name of the installed binary."
+                },
+                "connection": {
+                    "$ref": "/command/v0.9.2/schema.json#/types/command:remote:Connection",
+                    "description": "The parameters with which to connect to the remote host."
+                },
+                "directory": {
+                    "type": "string",
+                    "description": "The directory to install the binary to.",
+                    "default": "/usr/local/bin"
+                },
+                "download": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:remote:Download",
+                    "description": "The download operation."
+                },
+                "mkdir": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mkdir",
+                    "description": "The mkdir operation."
+                },
+                "mktemp": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mktemp",
+                    "description": "The mktemp operation."
+                },
+                "mv": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mv",
+                    "description": "The mv operation."
+                },
+                "path": {
+                    "type": "string",
+                    "description": "The path to the installed binary."
+                },
+                "rm": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Rm",
+                    "description": "The rm operation."
+                },
+                "url": {
+                    "type": "string",
+                    "description": "The url used to download the binary."
+                },
+                "version": {
+                    "type": "string",
+                    "description": "The version to install."
+                }
+            },
+            "required": [
+                "connection",
+                "architecture",
+                "directory",
+                "download",
+                "mkdir",
+                "mktemp",
+                "mv",
+                "path",
+                "rm",
+                "url",
+                "version"
+            ],
+            "inputProperties": {
+                "architecture": {
+                    "$ref": "#/types/kubernetes-the-hard-way:remote:Architecture",
+                    "description": "The CPU architecture to install."
+                },
+                "connection": {
+                    "$ref": "/command/v0.9.2/schema.json#/types/command:remote:Connection",
+                    "description": "The parameters with which to connect to the remote host."
+                },
+                "directory": {
+                    "type": "string",
+                    "description": "The directory to install the binary to.",
+                    "default": "/usr/local/bin"
+                },
+                "version": {
+                    "type": "string",
+                    "description": "The version to install."
+                }
+            },
+            "requiredInputs": [
+                "connection"
+            ],
+            "isComponent": true
+        },
+        "kubernetes-the-hard-way:remote:SystemdService": {
+            "description": "A systemd service on a remote system.",
+            "properties": {
+                "connection": {
+                    "$ref": "/command/v0.9.2/schema.json#/types/command:remote:Connection",
+                    "description": "The parameters with which to connect to the remote host."
+                },
+                "directory": {
+                    "type": "string",
+                    "description": "The location to create the service file.",
+                    "default": "/etc/systemd/system"
+                },
+                "file": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:remote:File",
+                    "description": "The service file on the remote machine."
+                },
+                "install": {
+                    "$ref": "#/types/kubernetes-the-hard-way:remote:SystemdInstallSection",
+                    "description": "Describes the [Install] section of a systemd service file."
+                },
+                "service": {
+                    "$ref": "#/types/kubernetes-the-hard-way:remote:SystemdServiceSection",
+                    "description": "Describes the [Service] section of a systemd service file."
+                },
+                "unit": {
+                    "$ref": "#/types/kubernetes-the-hard-way:remote:SystemdUnitSection",
+                    "description": "Describes the [Unit] section of a systemd service file."
+                }
+            },
+            "required": [
+                "connection",
+                "directory",
+                "file",
+                "service"
+            ],
+            "inputProperties": {
+                "connection": {
+                    "$ref": "/command/v0.9.2/schema.json#/types/command:remote:Connection",
+                    "description": "The parameters with which to connect to the remote host."
+                },
+                "directory": {
+                    "type": "string",
+                    "description": "The location to create the service file.",
+                    "default": "/etc/systemd/system"
+                },
+                "install": {
+                    "$ref": "#/types/kubernetes-the-hard-way:remote:SystemdInstallSection",
+                    "description": "Describes the [Install] section of a systemd service file."
+                },
+                "service": {
+                    "$ref": "#/types/kubernetes-the-hard-way:remote:SystemdServiceSection",
+                    "description": "Describes the [Service] section of a systemd service file."
+                },
+                "unit": {
+                    "$ref": "#/types/kubernetes-the-hard-way:remote:SystemdUnitSection",
+                    "description": "Describes the [Unit] section of a systemd service file."
+                }
+            },
+            "requiredInputs": [
+                "connection",
+                "service"
+            ],
+            "isComponent": true
+        },
+        "kubernetes-the-hard-way:tls:Certificate": {
+            "description": "A certificate key pair.",
+            "properties": {
+                "algorithm": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tls:Algorithm",
+                    "description": "Name of the algorithm to use when generating the private key."
+                },
+                "allowedUses": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/kubernetes-the-hard-way:tls:AllowedUsage"
+                    },
+                    "description": "List of key usages allowed for the issued certificate."
+                },
+                "caCertPem": {
+                    "type": "string",
+                    "description": "Certificate data of the Certificate Authority (CA) in [PEM (RFC 1421)](https://datatracker.ietf.org/doc/html/rfc1421) format.\n"
+                },
+                "caKeyAlgorithm": {
+                    "type": "string",
+                    "description": "Name of the algorithm used when generating the private key provided in `ca_private_key_pem`.\n"
+                },
+                "caPrivateKeyPem": {
+                    "type": "string",
+                    "description": "Private key of the Certificate Authority (CA) used to sign the certificate, in [PEM (RFC 1421)](https://datatracker.ietf.org/doc/html/rfc1421) format.\n"
+                },
+                "cert": {
+                    "$ref": "/tls/v5.0.2/schema.json#/resources/tls:index/locallySignedCert:LocallySignedCert",
+                    "description": "The certificate."
+                },
+                "certPem": {
+                    "type": "string",
+                    "description": "Certificate data in PEM (RFC 1421).\n"
+                },
+                "certRequestPem": {
+                    "type": "string",
+                    "description": "Certificate request data in [PEM (RFC 1421)](https://datatracker.ietf.org/doc/html/rfc1421) format.\n"
+                },
+                "csr": {
+                    "$ref": "/tls/v5.0.2/schema.json#/resources/tls:index/certRequest:CertRequest",
+                    "description": "The certificate signing request."
+                },
+                "dnsNames": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "List of DNS names for which a certificate is being requested (i.e. certificate subjects).\n"
+                },
+                "earlyRenewalHours": {
+                    "type": "integer",
+                    "description": "The resource will consider the certificate to have expired the given number of hours before its actual expiry time. This\ncan be useful to deploy an updated certificate in advance of the expiration of the current certificate. However, the old\ncertificate remains valid until its true expiration time, since this resource does not (and cannot) support certificate\nrevocation. Also, this advance update can only be performed should the Terraform configuration be applied during the\nearly renewal period. (default: `0`)\n"
+                },
+                "ecdsaCurve": {
+                    "type": "string",
+                    "description": "When `algorithm` is `ECDSA`, the name of the elliptic curve to use. Currently-supported values are: `P224`, `P256`, `P384`, `P521`. (default: `P224`).\n"
+                },
+                "ipAddresses": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "List of IP addresses for which a certificate is being requested (i.e. certificate subjects).\n"
+                },
+                "isCaCertificate": {
+                    "type": "boolean",
+                    "description": "Is the generated certificate representing a Certificate Authority (CA) (default: `false`).\n"
+                },
+                "key": {
+                    "$ref": "/tls/v5.0.2/schema.json#/resources/tls:index/privateKey:PrivateKey",
+                    "description": "The private key"
+                },
+                "keyAlgorithm": {
+                    "type": "string",
+                    "description": "Name of the algorithm used when generating the private key provided in `private_key_pem`.\n"
+                },
+                "privateKeyOpenssh": {
+                    "type": "string",
+                    "description": "Private key data in [OpenSSH PEM (RFC 4716)](https://datatracker.ietf.org/doc/html/rfc4716) format.\n"
+                },
+                "privateKeyPem": {
+                    "type": "string",
+                    "description": "Private key data in [PEM (RFC 1421)](https://datatracker.ietf.org/doc/html/rfc1421) format.\n"
+                },
+                "privateKeyPemPkcs8": {
+                    "type": "string",
+                    "description": "Private key data in [PKCS#8 PEM (RFC 5208)](https://datatracker.ietf.org/doc/html/rfc5208) format.\n"
+                },
+                "publicKeyFingerprintMd5": {
+                    "type": "string",
+                    "description": "The fingerprint of the public key data in OpenSSH MD5 hash format, e.g. `aa:bb:cc:...`. Only available if the selected private key format is compatible, similarly to `public_key_openssh` and the ECDSA P224 limitations.\n"
+                },
+                "publicKeyFingerprintSha256": {
+                    "type": "string",
+                    "description": "The fingerprint of the public key data in OpenSSH SHA256 hash format, e.g. `SHA256:...`. Only available if the selected private key format is compatible, similarly to `public_key_openssh` and the ECDSA P224 limitations.\n"
+                },
+                "publicKeyOpenssh": {
+                    "type": "string",
+                    "description": "The public key data in \"Authorized Keys\".\n"
+                },
+                "publicKeyPem": {
+                    "type": "string",
+                    "description": "Public key data in PEM (RFC 1421).\n"
+                },
+                "readyForRenewal": {
+                    "type": "boolean",
+                    "description": "Is the certificate either expired (i.e. beyond the `validity_period_hours`) or ready for an early renewal (i.e. within the `early_renewal_hours`)?\n"
+                },
+                "rsaBits": {
+                    "type": "integer",
+                    "description": "When `algorithm` is `RSA`, the size of the generated RSA key, in bits (default: `2048`).\n"
+                },
+                "setSubjectKeyId": {
+                    "type": "boolean",
+                    "description": "Should the generated certificate include a [subject key identifier](https://datatracker.ietf.org/doc/html/rfc5280#section-4.2.1.2) (default: `false`).\n"
+                },
+                "subject": {
+                    "$ref": "/tls/v5.0.2/schema.json#/types/tls:index/CertRequestSubject:CertRequestSubject",
+                    "description": "TODO"
+                },
+                "uris": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "List of URIs for which a certificate is being requested (i.e. certificate subjects).\n"
+                },
+                "validityEndTime": {
+                    "type": "string",
+                    "description": "The time until which the certificate is invalid, expressed as an [RFC3339](https://tools.ietf.org/html/rfc3339) timestamp.\n"
+                },
+                "validityPeriodHours": {
+                    "type": "integer",
+                    "description": "Number of hours, after initial issuing, that the certificate will remain valid for.\n"
+                },
+                "validityStartTime": {
+                    "type": "string",
+                    "description": "The time after which the certificate is valid, expressed as an [RFC3339](https://tools.ietf.org/html/rfc3339) timestamp.\n"
+                }
+            },
+            "required": [
+                "certRequestPem",
+                "keyAlgorithm",
+                "privateKeyPem",
+                "allowedUses",
+                "caCertPem",
+                "caKeyAlgorithm",
+                "caPrivateKeyPem",
+                "certPem",
+                "certRequestPem",
+                "earlyRenewalHours",
+                "isCaCertificate",
+                "readyForRenewal",
+                "setSubjectKeyId",
+                "validityEndTime",
+                "validityPeriodHours",
+                "validityStartTime",
+                "algorithm",
+                "ecdsaCurve",
+                "privateKeyOpenssh",
+                "privateKeyPem",
+                "privateKeyPemPkcs8",
+                "publicKeyFingerprintMd5",
+                "publicKeyFingerprintSha256",
+                "publicKeyOpenssh",
+                "publicKeyPem",
+                "rsaBits",
+                "cert",
+                "csr",
+                "key"
+            ],
+            "inputProperties": {
+                "algorithm": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tls:Algorithm",
+                    "description": "Name of the algorithm to use when generating the private key."
+                },
+                "allowedUses": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/kubernetes-the-hard-way:tls:AllowedUsage"
+                    },
+                    "description": "List of key usages allowed for the issued certificate."
+                },
+                "caCertPem": {
+                    "type": "string",
+                    "description": "Certificate data of the Certificate Authority (CA) in [PEM (RFC 1421)](https://datatracker.ietf.org/doc/html/rfc1421) format.\n"
+                },
+                "caPrivateKeyPem": {
+                    "type": "string",
+                    "description": "Private key of the Certificate Authority (CA) used to sign the certificate, in [PEM (RFC 1421)](https://datatracker.ietf.org/doc/html/rfc1421) format.\n",
+                    "secret": true
+                },
+                "dnsNames": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "List of DNS names for which a certificate is being requested (i.e. certificate subjects).\n"
+                },
+                "earlyRenewalHours": {
+                    "type": "integer",
+                    "description": "The resource will consider the certificate to have expired the given number of hours before its actual expiry time. This\ncan be useful to deploy an updated certificate in advance of the expiration of the current certificate. However, the old\ncertificate remains valid until its true expiration time, since this resource does not (and cannot) support certificate\nrevocation. Also, this advance update can only be performed should the Terraform configuration be applied during the\nearly renewal period. (default: `0`)\n"
+                },
+                "ecdsaCurve": {
+                    "type": "string",
+                    "description": "When `algorithm` is `ECDSA`, the name of the elliptic curve to use. Currently-supported values are: `P224`, `P256`, `P384`, `P521`. (default: `P224`).\n"
+                },
+                "ipAddresses": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "List of IP addresses for which a certificate is being requested (i.e. certificate subjects).\n"
+                },
+                "isCaCertificate": {
+                    "type": "boolean",
+                    "description": "Is the generated certificate representing a Certificate Authority (CA) (default: `false`).\n"
+                },
+                "rsaBits": {
+                    "type": "integer",
+                    "description": "When `algorithm` is `RSA`, the size of the generated RSA key, in bits (default: `2048`).\n"
+                },
+                "setSubjectKeyId": {
+                    "type": "boolean",
+                    "description": "Should the generated certificate include a [subject key identifier](https://datatracker.ietf.org/doc/html/rfc5280#section-4.2.1.2) (default: `false`).\n"
+                },
+                "subject": {
+                    "$ref": "/tls/v5.0.2/schema.json#/types/tls:index/CertRequestSubject:CertRequestSubject",
+                    "description": "TODO"
+                },
+                "uris": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "List of URIs for which a certificate is being requested (i.e. certificate subjects).\n"
+                },
+                "validityPeriodHours": {
+                    "type": "integer",
+                    "description": "Number of hours, after initial issuing, that the certificate will remain valid for.\n"
+                }
+            },
+            "requiredInputs": [
+                "algorithm",
+                "allowedUses",
+                "caCertPem",
+                "caPrivateKeyPem",
+                "validityPeriodHours"
+            ],
+            "isComponent": true
+        },
+        "kubernetes-the-hard-way:tls:ClusterPki": {
+            "description": "The private key infrastructure for a cluster",
+            "properties": {
+                "admin": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tls:Certificate",
+                    "description": "The admin certificate."
+                },
+                "algorithm": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tls:Algorithm",
+                    "description": "Name of the algorithm to use when generating the private key.",
+                    "default": "RSA"
+                },
+                "ca": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tls:RootCa",
+                    "description": "The cluster certificate authority."
+                },
+                "clusterName": {
+                    "type": "string",
+                    "description": "A name to use for the cluster"
+                },
+                "controllerManager": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tls:Certificate",
+                    "description": "The controller manager certificate."
+                },
+                "ecdsaCurve": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tls:EcdsaCurve",
+                    "description": "When `algorithm` is `ECDSA`, the name of the elliptic curve to use."
+                },
+                "kubeProxy": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tls:Certificate",
+                    "description": "The kube proxy certificate."
+                },
+                "kubeScheduler": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tls:Certificate",
+                    "description": "The kube scheduler certificate."
+                },
+                "kubelet": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "$ref": "#/resources/kubernetes-the-hard-way:tls:Certificate"
+                    },
+                    "description": "Map of node name to kubelet certificate."
+                },
+                "kubernetes": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tls:Certificate",
+                    "description": "The kubernetes certificate."
+                },
+                "nodes": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "$ref": "#/types/kubernetes-the-hard-way:tls:ClusterPkiNode"
+                    },
+                    "description": "Map of node name to node configuration"
+                },
+                "publicIp": {
+                    "type": "string",
+                    "description": "Publicly accessible IP address."
+                },
+                "rsaBits": {
+                    "type": "integer",
+                    "description": "When `algorithm` is `RSA`, the size of the generated RSA key, in bits.",
+                    "default": 2048
+                },
+                "serviceAccounts": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tls:Certificate",
+                    "description": "The service accounts certificate"
+                },
+                "validityPeriodHours": {
+                    "type": "integer",
+                    "description": "Number of hours, after initial issuing, that the certificate will remain valid.",
+                    "default": 8076
+                }
+            },
+            "required": [
+                "admin",
+                "ca",
+                "controllerManager",
+                "kubelet",
+                "kubeProxy",
+                "kubernetes",
+                "kubeScheduler",
+                "publicIp",
+                "serviceAccounts",
+                "validityPeriodHours",
+                "clusterName",
+                "nodes",
+                "publicIp"
+            ],
+            "inputProperties": {
+                "algorithm": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tls:Algorithm",
+                    "description": "Name of the algorithm to use when generating the private key.",
+                    "default": "RSA"
+                },
+                "clusterName": {
+                    "type": "string",
+                    "description": "A name to use for the cluster"
+                },
+                "ecdsaCurve": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tls:EcdsaCurve",
+                    "description": "When `algorithm` is `ECDSA`, the name of the elliptic curve to use."
+                },
+                "nodes": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "$ref": "#/types/kubernetes-the-hard-way:tls:ClusterPkiNode"
+                    },
+                    "description": "Map of node name to node configuration"
+                },
+                "publicIp": {
+                    "type": "string",
+                    "description": "Publicly accessible IP address."
+                },
+                "rsaBits": {
+                    "type": "integer",
+                    "description": "When `algorithm` is `RSA`, the size of the generated RSA key, in bits.",
+                    "default": 2048
+                },
+                "validityPeriodHours": {
+                    "type": "integer",
+                    "description": "Number of hours, after initial issuing, that the certificate will remain valid.",
+                    "default": 8076
+                }
+            },
+            "requiredInputs": [
+                "clusterName",
+                "nodes",
+                "publicIp"
+            ],
+            "isComponent": true,
+            "methods": {
+                "getKubeconfig": "kubernetes-the-hard-way:tls:ClusterPki/getKubeconfig"
+            }
+        },
+        "kubernetes-the-hard-way:tls:EncryptionKey": {
+            "description": "A cluster encryption key.",
+            "properties": {
+                "bytes": {
+                    "type": "integer",
+                    "description": "The number of bytes requested. The minimum value for length is 1.\n"
+                },
+                "config": {
+                    "type": "string",
+                    "description": "The generated `v1/EncryptionConfig`."
+                },
+                "key": {
+                    "$ref": "/random/v4.16.0/schema.json#/resources/random:index/randomBytes:RandomBytes",
+                    "description": "The generated random key."
+                }
+            },
+            "required": [
+                "bytes",
+                "config",
+                "key"
+            ],
+            "inputProperties": {
+                "bytes": {
+                    "type": "integer",
+                    "description": "The number of bytes requested. The minimum value for length is 1.\n"
+                }
+            },
+            "requiredInputs": [
+                "bytes"
+            ],
+            "isComponent": true
+        },
+        "kubernetes-the-hard-way:tls:RootCa": {
+            "description": "Root certificate authority for a cluster.",
+            "properties": {
+                "algorithm": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tls:Algorithm",
+                    "description": "Name of the algorithm to use when generating the private key."
+                },
+                "allowedUses": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "List of key usages allowed for the issued certificate. Values are defined in [RFC 5280](https://datatracker.ietf.org/doc/html/rfc5280) and combine flags defined by both [Key Usages](https://datatracker.ietf.org/doc/html/rfc5280#section-4.2.1.3) and [Extended Key Usages](https://datatracker.ietf.org/doc/html/rfc5280#section-4.2.1.12). Accepted values: `any_extended`, `cert_signing`, `client_auth`, `code_signing`, `content_commitment`, `crl_signing`, `data_encipherment`, `decipher_only`, `digital_signature`, `email_protection`, `encipher_only`, `ipsec_end_system`, `ipsec_tunnel`, `ipsec_user`, `key_agreement`, `key_encipherment`, `microsoft_commercial_code_signing`, `microsoft_kernel_code_signing`, `microsoft_server_gated_crypto`, `netscape_server_gated_crypto`, `ocsp_signing`, `server_auth`, `timestamping`.\n"
+                },
+                "cert": {
+                    "$ref": "/tls/v5.0.2/schema.json#/resources/tls:index/selfSignedCert:SelfSignedCert",
+                    "description": "The certificate authority certificate."
+                },
+                "certPem": {
+                    "type": "string",
+                    "description": "Certificate data in PEM (RFC 1421).\n"
+                },
+                "dnsNames": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "List of DNS names for which a certificate is being requested (i.e. certificate subjects).\n"
+                },
+                "earlyRenewalHours": {
+                    "type": "integer",
+                    "description": "The resource will consider the certificate to have expired the given number of hours before its actual expiry time. This\ncan be useful to deploy an updated certificate in advance of the expiration of the current certificate. However, the old\ncertificate remains valid until its true expiration time, since this resource does not (and cannot) support certificate\nrevocation. Also, this advance update can only be performed should the Terraform configuration be applied during the\nearly renewal period. (default: `0`)\n"
+                },
+                "ecdsaCurve": {
+                    "type": "string",
+                    "description": "When `algorithm` is `ECDSA`, the name of the elliptic curve to use. Currently-supported values are: `P224`, `P256`, `P384`, `P521`. (default: `P224`).\n"
+                },
+                "ipAddresses": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "List of IP addresses for which a certificate is being requested (i.e. certificate subjects).\n"
+                },
+                "isCaCertificate": {
+                    "type": "boolean",
+                    "description": "Is the generated certificate representing a Certificate Authority (CA) (default: `false`).\n"
+                },
+                "key": {
+                    "$ref": "/tls/v5.0.2/schema.json#/resources/tls:index/privateKey:PrivateKey",
+                    "description": "The certificate authority key."
+                },
+                "keyAlgorithm": {
+                    "type": "string",
+                    "description": "Name of the algorithm used when generating the private key provided in `private_key_pem`.\n"
+                },
+                "privateKeyOpenssh": {
+                    "type": "string",
+                    "description": "Private key data in [OpenSSH PEM (RFC 4716)](https://datatracker.ietf.org/doc/html/rfc4716) format.\n"
+                },
+                "privateKeyPem": {
+                    "type": "string",
+                    "description": "Private key data in [PEM (RFC 1421)](https://datatracker.ietf.org/doc/html/rfc1421) format.\n"
+                },
+                "privateKeyPemPkcs8": {
+                    "type": "string",
+                    "description": "Private key data in [PKCS#8 PEM (RFC 5208)](https://datatracker.ietf.org/doc/html/rfc5208) format.\n"
+                },
+                "publicKeyFingerprintMd5": {
+                    "type": "string",
+                    "description": "The fingerprint of the public key data in OpenSSH MD5 hash format, e.g. `aa:bb:cc:...`. Only available if the selected private key format is compatible, similarly to `public_key_openssh` and the ECDSA P224 limitations.\n"
+                },
+                "publicKeyFingerprintSha256": {
+                    "type": "string",
+                    "description": "The fingerprint of the public key data in OpenSSH SHA256 hash format, e.g. `SHA256:...`. Only available if the selected private key format is compatible, similarly to `public_key_openssh` and the ECDSA P224 limitations.\n"
+                },
+                "publicKeyOpenssh": {
+                    "type": "string",
+                    "description": "The public key data in \"Authorized Keys\".\n"
+                },
+                "publicKeyPem": {
+                    "type": "string",
+                    "description": "Public key data in PEM (RFC 1421).\n"
+                },
+                "readyForRenewal": {
+                    "type": "boolean",
+                    "description": "Is the certificate either expired (i.e. beyond the `validity_period_hours`) or ready for an early renewal (i.e. within the `early_renewal_hours`)?\n"
+                },
+                "rsaBits": {
+                    "type": "integer",
+                    "description": "When `algorithm` is `RSA`, the size of the generated RSA key, in bits (default: `2048`).\n"
+                },
+                "setAuthorityKeyId": {
+                    "type": "boolean",
+                    "description": "Should the generated certificate include an [authority key identifier](https://datatracker.ietf.org/doc/html/rfc5280#section-4.2.1.1): for self-signed certificates this is the same value as the [subject key identifier](https://datatracker.ietf.org/doc/html/rfc5280#section-4.2.1.2) (default: `false`).\n"
+                },
+                "setSubjectKeyId": {
+                    "type": "boolean",
+                    "description": "Should the generated certificate include a [subject key identifier](https://datatracker.ietf.org/doc/html/rfc5280#section-4.2.1.2) (default: `false`).\n"
+                },
+                "subject": {
+                    "$ref": "/tls/v5.0.2/schema.json#/types/tls:index/SelfSignedCertSubject:SelfSignedCertSubject",
+                    "description": "TODO"
+                },
+                "uris": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "List of URIs for which a certificate is being requested (i.e. certificate subjects).\n"
+                },
+                "validityEndTime": {
+                    "type": "string",
+                    "description": "The time until which the certificate is invalid, expressed as an [RFC3339](https://tools.ietf.org/html/rfc3339) timestamp.\n"
+                },
+                "validityPeriodHours": {
+                    "type": "integer",
+                    "description": "Number of hours, after initial issuing, that the certificate will remain valid for.\n"
+                },
+                "validityStartTime": {
+                    "type": "string",
+                    "description": "The time after which the certificate is valid, expressed as an [RFC3339](https://tools.ietf.org/html/rfc3339) timestamp.\n"
+                }
+            },
+            "required": [
+                "allowedUses",
+                "certPem",
+                "earlyRenewalHours",
+                "isCaCertificate",
+                "keyAlgorithm",
+                "privateKeyPem",
+                "readyForRenewal",
+                "setAuthorityKeyId",
+                "setSubjectKeyId",
+                "validityEndTime",
+                "validityPeriodHours",
+                "validityStartTime",
+                "algorithm",
+                "ecdsaCurve",
+                "privateKeyOpenssh",
+                "privateKeyPem",
+                "privateKeyPemPkcs8",
+                "publicKeyFingerprintMd5",
+                "publicKeyFingerprintSha256",
+                "publicKeyOpenssh",
+                "publicKeyPem",
+                "rsaBits",
+                "cert",
+                "key"
+            ],
+            "inputProperties": {
+                "algorithm": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tls:Algorithm",
+                    "description": "Name of the algorithm to use when generating the private key."
+                },
+                "dnsNames": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "List of DNS names for which a certificate is being requested (i.e. certificate subjects).\n"
+                },
+                "earlyRenewalHours": {
+                    "type": "integer",
+                    "description": "The resource will consider the certificate to have expired the given number of hours before its actual expiry time. This\ncan be useful to deploy an updated certificate in advance of the expiration of the current certificate. However, the old\ncertificate remains valid until its true expiration time, since this resource does not (and cannot) support certificate\nrevocation. Also, this advance update can only be performed should the Terraform configuration be applied during the\nearly renewal period. (default: `0`)\n"
+                },
+                "ecdsaCurve": {
+                    "type": "string",
+                    "description": "When `algorithm` is `ECDSA`, the name of the elliptic curve to use. Currently-supported values are: `P224`, `P256`, `P384`, `P521`. (default: `P224`).\n"
+                },
+                "ipAddresses": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "List of IP addresses for which a certificate is being requested (i.e. certificate subjects).\n"
+                },
+                "rsaBits": {
+                    "type": "integer",
+                    "description": "When `algorithm` is `RSA`, the size of the generated RSA key, in bits (default: `2048`).\n"
+                },
+                "setAuthorityKeyId": {
+                    "type": "boolean",
+                    "description": "Should the generated certificate include an [authority key identifier](https://datatracker.ietf.org/doc/html/rfc5280#section-4.2.1.1): for self-signed certificates this is the same value as the [subject key identifier](https://datatracker.ietf.org/doc/html/rfc5280#section-4.2.1.2) (default: `false`).\n"
+                },
+                "setSubjectKeyId": {
+                    "type": "boolean",
+                    "description": "Should the generated certificate include a [subject key identifier](https://datatracker.ietf.org/doc/html/rfc5280#section-4.2.1.2) (default: `false`).\n"
+                },
+                "subject": {
+                    "$ref": "/tls/v5.0.2/schema.json#/types/tls:index/SelfSignedCertSubject:SelfSignedCertSubject",
+                    "description": "TODO"
+                },
+                "uris": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "List of URIs for which a certificate is being requested (i.e. certificate subjects).\n"
+                },
+                "validityPeriodHours": {
+                    "type": "integer",
+                    "description": "Number of hours, after initial issuing, that the certificate will remain valid for.\n"
+                }
+            },
+            "requiredInputs": [
+                "validityPeriodHours"
+            ],
+            "isComponent": true
+        },
+        "kubernetes-the-hard-way:tools:Etcdctl": {
+            "description": "Abstraction over the `etcdctl` utility on a remote system.",
+            "properties": {
+                "binaryPath": {
+                    "type": "string",
+                    "description": "Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH"
+                },
+                "caCert": {
+                    "type": "string",
+                    "description": "TODO"
+                },
+                "cert": {
+                    "type": "string",
+                    "description": "TODO"
+                },
+                "command": {
+                    "$ref": "/command/v0.9.2/schema.json#/resources/command:remote:Command",
+                    "description": "The underlying command"
+                },
+                "commands": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:EtcdctlCommand",
+                    "description": "TODO"
+                },
+                "connection": {
+                    "$ref": "/command/v0.9.2/schema.json#/types/command:remote:Connection",
+                    "description": "Connection details for the remote system"
+                },
+                "endpoints": {
+                    "type": "string",
+                    "description": "TODO"
+                },
+                "environment": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "description": "Environment variables"
+                },
+                "key": {
+                    "type": "string",
+                    "description": "TODO"
+                },
+                "lifecycle": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:CommandLifecycle",
+                    "plain": true,
+                    "description": "At what stage(s) in the resource lifecycle should the command be run"
+                },
+                "stderr": {
+                    "type": "string",
+                    "description": "TODO"
+                },
+                "stdin": {
+                    "type": "string",
+                    "description": "TODO"
+                },
+                "stdout": {
+                    "type": "string",
+                    "description": "TODO"
+                },
+                "triggers": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "pulumi.json#/Any"
+                    },
+                    "description": "TODO"
+                }
+            },
+            "required": [
+                "caCert",
+                "cert",
+                "commands",
+                "endpoints",
+                "key",
+                "binaryPath",
+                "command",
+                "connection",
+                "environment",
+                "stderr",
+                "stdout",
+                "triggers"
+            ],
+            "inputProperties": {
+                "binaryPath": {
+                    "type": "string",
+                    "description": "Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH"
+                },
+                "caCert": {
+                    "type": "string",
+                    "description": "TODO"
+                },
+                "cert": {
+                    "type": "string",
+                    "description": "TODO"
+                },
+                "commands": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:EtcdctlCommand",
+                    "description": "TODO"
+                },
+                "connection": {
+                    "$ref": "/command/v0.9.2/schema.json#/types/command:remote:Connection",
+                    "description": "Connection details for the remote system"
+                },
+                "endpoints": {
+                    "type": "string",
+                    "description": "TODO"
+                },
+                "environment": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "description": "Environment variables"
+                },
+                "key": {
+                    "type": "string",
+                    "description": "TODO"
+                },
+                "lifecycle": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:CommandLifecycle",
+                    "plain": true,
+                    "description": "At what stage(s) in the resource lifecycle should the command be run"
+                },
+                "stdin": {
+                    "type": "string",
+                    "description": "TODO"
+                },
+                "triggers": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "pulumi.json#/Any"
+                    },
+                    "description": "TODO"
+                }
+            },
+            "requiredInputs": [
+                "caCert",
+                "cert",
+                "commands",
+                "endpoints",
+                "key",
+                "connection"
+            ],
+            "isComponent": true
+        },
+        "kubernetes-the-hard-way:tools:Mkdir": {
+            "description": "Abstraction over the `mkdir` utility on a remote system.",
+            "properties": {
+                "binaryPath": {
+                    "type": "string",
+                    "description": "Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH"
+                },
+                "command": {
+                    "$ref": "/command/v0.9.2/schema.json#/resources/command:remote:Command",
+                    "description": "The underlying command"
+                },
+                "connection": {
+                    "$ref": "/command/v0.9.2/schema.json#/types/command:remote:Connection",
+                    "description": "Connection details for the remote system"
+                },
+                "directory": {
+                    "type": "string",
+                    "description": "The fully qualified path of the directory on the remote system."
+                },
+                "environment": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "description": "Environment variables"
+                },
+                "lifecycle": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:CommandLifecycle",
+                    "plain": true,
+                    "description": "At what stage(s) in the resource lifecycle should the command be run"
+                },
+                "parents": {
+                    "type": "boolean",
+                    "description": "Corresponds to the `--parents` option."
+                },
+                "removeOnDelete": {
+                    "type": "boolean",
+                    "description": "Remove the created directory when the `Mkdir` resource is deleted or updated."
+                },
+                "stderr": {
+                    "type": "string",
+                    "description": "TODO"
+                },
+                "stdin": {
+                    "type": "string",
+                    "description": "TODO"
+                },
+                "stdout": {
+                    "type": "string",
+                    "description": "TODO"
+                },
+                "triggers": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "pulumi.json#/Any"
+                    },
+                    "description": "TODO"
+                }
+            },
+            "required": [
+                "directory",
+                "parents",
+                "removeOnDelete",
+                "binaryPath",
+                "command",
+                "connection",
+                "environment",
+                "stderr",
+                "stdout",
+                "triggers"
+            ],
+            "inputProperties": {
+                "binaryPath": {
+                    "type": "string",
+                    "description": "Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH"
+                },
+                "connection": {
+                    "$ref": "/command/v0.9.2/schema.json#/types/command:remote:Connection",
+                    "description": "Connection details for the remote system"
+                },
+                "directory": {
+                    "type": "string",
+                    "description": "The fully qualified path of the directory on the remote system."
+                },
+                "environment": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "description": "Environment variables"
+                },
+                "lifecycle": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:CommandLifecycle",
+                    "plain": true,
+                    "description": "At what stage(s) in the resource lifecycle should the command be run"
+                },
+                "parents": {
+                    "type": "boolean",
+                    "description": "Corresponds to the `--parents` option."
+                },
+                "removeOnDelete": {
+                    "type": "boolean",
+                    "description": "Remove the created directory when the `Mkdir` resource is deleted or updated."
+                },
+                "stdin": {
+                    "type": "string",
+                    "description": "TODO"
+                },
+                "triggers": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "pulumi.json#/Any"
+                    },
+                    "description": "TODO"
+                }
+            },
+            "requiredInputs": [
+                "directory",
+                "connection"
+            ],
+            "isComponent": true
+        },
+        "kubernetes-the-hard-way:tools:Mktemp": {
+            "description": "Abstraction over the `mkdir` utility on a remote system.",
+            "properties": {
+                "binaryPath": {
+                    "type": "string",
+                    "description": "Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH"
+                },
+                "command": {
+                    "$ref": "/command/v0.9.2/schema.json#/resources/command:remote:Command",
+                    "description": "The underlying command"
+                },
+                "connection": {
+                    "$ref": "/command/v0.9.2/schema.json#/types/command:remote:Connection",
+                    "description": "Connection details for the remote system"
+                },
+                "directory": {
+                    "type": "boolean",
+                    "description": "Corresponds to the `--directory` option."
+                },
+                "dryRun": {
+                    "type": "boolean",
+                    "description": "Corresponds to the `--dry-run` option."
+                },
+                "environment": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "description": "Environment variables"
+                },
+                "lifecycle": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:CommandLifecycle",
+                    "plain": true,
+                    "description": "At what stage(s) in the resource lifecycle should the command be run"
+                },
+                "quiet": {
+                    "type": "boolean",
+                    "description": "Corresponds to the `--quiet` option."
+                },
+                "stderr": {
+                    "type": "string",
+                    "description": "TODO"
+                },
+                "stdin": {
+                    "type": "string",
+                    "description": "TODO"
+                },
+                "stdout": {
+                    "type": "string",
+                    "description": "TODO"
+                },
+                "suffix": {
+                    "type": "string",
+                    "description": "Corresponds to the `--suffix` option."
+                },
+                "template": {
+                    "type": "string",
+                    "description": "Corresponds to the [TEMPLATE] argument."
+                },
+                "tmpdir": {
+                    "type": "string",
+                    "description": "Corresponds to the `--tmpdir` option."
+                },
+                "triggers": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "pulumi.json#/Any"
+                    },
+                    "description": "TODO"
+                }
+            },
+            "required": [
+                "dryRun",
+                "quiet",
+                "binaryPath",
+                "command",
+                "connection",
+                "environment",
+                "stderr",
+                "stdout",
+                "triggers"
+            ],
+            "inputProperties": {
+                "binaryPath": {
+                    "type": "string",
+                    "description": "Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH"
+                },
+                "connection": {
+                    "$ref": "/command/v0.9.2/schema.json#/types/command:remote:Connection",
+                    "description": "Connection details for the remote system"
+                },
+                "directory": {
+                    "type": "boolean",
+                    "description": "Corresponds to the `--directory` option."
+                },
+                "dryRun": {
+                    "type": "boolean",
+                    "description": "Corresponds to the `--dry-run` option."
+                },
+                "environment": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "description": "Environment variables"
+                },
+                "lifecycle": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:CommandLifecycle",
+                    "plain": true,
+                    "description": "At what stage(s) in the resource lifecycle should the command be run"
+                },
+                "quiet": {
+                    "type": "boolean",
+                    "description": "Corresponds to the `--quiet` option."
+                },
+                "stdin": {
+                    "type": "string",
+                    "description": "TODO"
+                },
+                "suffix": {
+                    "type": "string",
+                    "description": "Corresponds to the `--suffix` option."
+                },
+                "template": {
+                    "type": "string",
+                    "description": "Corresponds to the [TEMPLATE] argument."
+                },
+                "tmpdir": {
+                    "type": "string",
+                    "description": "Corresponds to the `--tmpdir` option."
+                },
+                "triggers": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "pulumi.json#/Any"
+                    },
+                    "description": "TODO"
+                }
+            },
+            "requiredInputs": [
+                "connection"
+            ],
+            "isComponent": true
+        },
+        "kubernetes-the-hard-way:tools:Mv": {
+            "description": "Abstraction over the `mv` utility on a remote system.",
+            "properties": {
+                "backup": {
+                    "type": "boolean",
+                    "plain": true,
+                    "description": "Corresponds to the `-b` and `--backup` options depending on whether [CONTROL] is supplied."
+                },
+                "binaryPath": {
+                    "type": "string",
+                    "description": "Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH"
+                },
+                "command": {
+                    "$ref": "/command/v0.9.2/schema.json#/resources/command:remote:Command",
+                    "description": "The underlying command"
+                },
+                "connection": {
+                    "$ref": "/command/v0.9.2/schema.json#/types/command:remote:Connection",
+                    "description": "Connection details for the remote system"
+                },
+                "context": {
+                    "type": "boolean",
+                    "description": "Corresponds to the `--context` option."
+                },
+                "control": {
+                    "type": "boolean",
+                    "description": "Corresponds to the [CONTROL] argument for the `--backup` option."
+                },
+                "dest": {
+                    "type": "string",
+                    "description": "Corresponds to the [DEST] argument."
+                },
+                "directory": {
+                    "type": "string",
+                    "description": "Corresponds to the [DIRECTORY] argument."
+                },
+                "environment": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "description": "Environment variables"
+                },
+                "force": {
+                    "type": "boolean",
+                    "description": "Corresponds to the `--force` option."
+                },
+                "lifecycle": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:CommandLifecycle",
+                    "plain": true,
+                    "description": "At what stage(s) in the resource lifecycle should the command be run"
+                },
+                "noClobber": {
+                    "type": "boolean",
+                    "description": "Corresponds to the `--no-clobber` option."
+                },
+                "noTargetDirectory": {
+                    "type": "boolean",
+                    "description": "Corresponds to the `--no-target-directory` option."
+                },
+                "source": {
+                    "oneOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    ],
+                    "description": "Corresponds to the [SOURCE] argument."
+                },
+                "stderr": {
+                    "type": "string",
+                    "description": "TODO"
+                },
+                "stdin": {
+                    "type": "string",
+                    "description": "TODO"
+                },
+                "stdout": {
+                    "type": "string",
+                    "description": "TODO"
+                },
+                "stripTrailingSlashes": {
+                    "type": "boolean",
+                    "description": "Corresponds to the `--strip-trailing-slashes` option."
+                },
+                "suffix": {
+                    "type": "string",
+                    "description": "Corresponds to the `--suffix` option."
+                },
+                "targetDirectory": {
+                    "type": "boolean",
+                    "description": "Corresponds to the `--target-directory` option."
+                },
+                "triggers": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "pulumi.json#/Any"
+                    },
+                    "description": "TODO"
+                },
+                "update": {
+                    "type": "boolean",
+                    "description": "Corresponds to the `--update` option."
+                },
+                "verbose": {
+                    "type": "boolean",
+                    "description": "Corresponds to the `--verbose` option."
+                }
+            },
+            "required": [
+                "source",
+                "backup",
+                "context",
+                "force",
+                "noClobber",
+                "noTargetDirectory",
+                "source",
+                "stripTrailingSlashes",
+                "update",
+                "verbose",
+                "binaryPath",
+                "command",
+                "connection",
+                "environment",
+                "stderr",
+                "stdout",
+                "triggers"
+            ],
+            "inputProperties": {
+                "backup": {
+                    "type": "boolean",
+                    "plain": true,
+                    "description": "Corresponds to the `-b` and `--backup` options depending on whether [CONTROL] is supplied."
+                },
+                "binaryPath": {
+                    "type": "string",
+                    "description": "Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH"
+                },
+                "connection": {
+                    "$ref": "/command/v0.9.2/schema.json#/types/command:remote:Connection",
+                    "description": "Connection details for the remote system"
+                },
+                "context": {
+                    "type": "boolean",
+                    "description": "Corresponds to the `--context` option."
+                },
+                "control": {
+                    "type": "boolean",
+                    "description": "Corresponds to the [CONTROL] argument for the `--backup` option."
+                },
+                "dest": {
+                    "type": "string",
+                    "description": "Corresponds to the [DEST] argument."
+                },
+                "directory": {
+                    "type": "string",
+                    "description": "Corresponds to the [DIRECTORY] argument."
+                },
+                "environment": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "description": "Environment variables"
+                },
+                "force": {
+                    "type": "boolean",
+                    "description": "Corresponds to the `--force` option."
+                },
+                "lifecycle": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:CommandLifecycle",
+                    "plain": true,
+                    "description": "At what stage(s) in the resource lifecycle should the command be run"
+                },
+                "noClobber": {
+                    "type": "boolean",
+                    "description": "Corresponds to the `--no-clobber` option."
+                },
+                "noTargetDirectory": {
+                    "type": "boolean",
+                    "description": "Corresponds to the `--no-target-directory` option."
+                },
+                "source": {
+                    "oneOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    ],
+                    "description": "Corresponds to the [SOURCE] argument."
+                },
+                "stdin": {
+                    "type": "string",
+                    "description": "TODO"
+                },
+                "stripTrailingSlashes": {
+                    "type": "boolean",
+                    "description": "Corresponds to the `--strip-trailing-slashes` option."
+                },
+                "suffix": {
+                    "type": "string",
+                    "description": "Corresponds to the `--suffix` option."
+                },
+                "targetDirectory": {
+                    "type": "boolean",
+                    "description": "Corresponds to the `--target-directory` option."
+                },
+                "triggers": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "pulumi.json#/Any"
+                    },
+                    "description": "TODO"
+                },
+                "update": {
+                    "type": "boolean",
+                    "description": "Corresponds to the `--update` option."
+                },
+                "verbose": {
+                    "type": "boolean",
+                    "description": "Corresponds to the `--verbose` option."
+                }
+            },
+            "requiredInputs": [
+                "source",
+                "connection"
+            ],
+            "isComponent": true
+        },
+        "kubernetes-the-hard-way:tools:Rm": {
+            "description": "Abstraction over the `rm` utility on a remote system.",
+            "properties": {
+                "binaryPath": {
+                    "type": "string",
+                    "description": "Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH"
+                },
+                "command": {
+                    "$ref": "/command/v0.9.2/schema.json#/resources/command:remote:Command",
+                    "description": "The underlying command"
+                },
+                "connection": {
+                    "$ref": "/command/v0.9.2/schema.json#/types/command:remote:Connection",
+                    "description": "Connection details for the remote system"
+                },
+                "dir": {
+                    "type": "boolean",
+                    "description": "Corresponds to the `--dir` option."
+                },
+                "environment": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "description": "Environment variables"
+                },
+                "files": {
+                    "oneOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    ],
+                    "description": "Corresponds to the [FILE] argument."
+                },
+                "force": {
+                    "type": "boolean",
+                    "description": "Corresponds to the `--force` option."
+                },
+                "lifecycle": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:CommandLifecycle",
+                    "plain": true,
+                    "description": "At what stage(s) in the resource lifecycle should the command be run"
+                },
+                "onDelete": {
+                    "type": "boolean",
+                    "description": "Whether rm should be run when the resource is created or deleted."
+                },
+                "recursive": {
+                    "type": "boolean",
+                    "description": "Corresponds to the `--recursive` option."
+                },
+                "stderr": {
+                    "type": "string",
+                    "description": "TODO"
+                },
+                "stdin": {
+                    "type": "string",
+                    "description": "TODO"
+                },
+                "stdout": {
+                    "type": "string",
+                    "description": "TODO"
+                },
+                "triggers": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "pulumi.json#/Any"
+                    },
+                    "description": "TODO"
+                },
+                "verbose": {
+                    "type": "boolean",
+                    "description": "Corresponds to the `--verbose` option."
+                }
+            },
+            "required": [
+                "files",
+                "dir",
+                "force",
+                "onDelete",
+                "recursive",
+                "verbose",
+                "binaryPath",
+                "command",
+                "connection",
+                "environment",
+                "stderr",
+                "stdout",
+                "triggers"
+            ],
+            "inputProperties": {
+                "binaryPath": {
+                    "type": "string",
+                    "description": "Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH"
+                },
+                "connection": {
+                    "$ref": "/command/v0.9.2/schema.json#/types/command:remote:Connection",
+                    "description": "Connection details for the remote system"
+                },
+                "dir": {
+                    "type": "boolean",
+                    "description": "Corresponds to the `--dir` option."
+                },
+                "environment": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "description": "Environment variables"
+                },
+                "files": {
+                    "oneOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    ],
+                    "description": "Corresponds to the [FILE] argument."
+                },
+                "force": {
+                    "type": "boolean",
+                    "description": "Corresponds to the `--force` option."
+                },
+                "lifecycle": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:CommandLifecycle",
+                    "plain": true,
+                    "description": "At what stage(s) in the resource lifecycle should the command be run"
+                },
+                "onDelete": {
+                    "type": "boolean",
+                    "description": "Whether rm should be run when the resource is created or deleted."
+                },
+                "recursive": {
+                    "type": "boolean",
+                    "description": "Corresponds to the `--recursive` option."
+                },
+                "stdin": {
+                    "type": "string",
+                    "description": "TODO"
+                },
+                "triggers": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "pulumi.json#/Any"
+                    },
+                    "description": "TODO"
+                },
+                "verbose": {
+                    "type": "boolean",
+                    "description": "Corresponds to the `--verbose` option."
+                }
+            },
+            "requiredInputs": [
+                "files",
+                "connection"
+            ],
+            "isComponent": true
+        },
+        "kubernetes-the-hard-way:tools:Systemctl": {
+            "description": "Abstraction over the `systemctl` utility on a remote system.",
+            "properties": {
+                "binaryPath": {
+                    "type": "string",
+                    "description": "Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH"
+                },
+                "command": {
+                    "$ref": "/command/v0.9.2/schema.json#/resources/command:remote:Command",
+                    "description": "The underlying command"
+                },
+                "connection": {
+                    "$ref": "/command/v0.9.2/schema.json#/types/command:remote:Connection",
+                    "description": "Connection details for the remote system"
+                },
+                "environment": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "description": "Environment variables"
+                },
+                "lifecycle": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:CommandLifecycle",
+                    "plain": true,
+                    "description": "At what stage(s) in the resource lifecycle should the command be run"
+                },
+                "pattern": {
+                    "type": "string",
+                    "description": "Corresponds to the [PATTERN] argument"
+                },
+                "stderr": {
+                    "type": "string",
+                    "description": "TODO"
+                },
+                "stdin": {
+                    "type": "string",
+                    "description": "TODO"
+                },
+                "stdout": {
+                    "type": "string",
+                    "description": "TODO"
+                },
+                "systemctlCommand": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:SystemctlCommand",
+                    "plain": true,
+                    "description": "Corresponds to the COMMAND argument."
+                },
+                "triggers": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "pulumi.json#/Any"
+                    },
+                    "description": "TODO"
+                },
+                "unit": {
+                    "type": "string",
+                    "description": "Corresponds to the [UNIT...] argument."
+                }
+            },
+            "required": [
+                "systemctlCommand",
+                "unit",
+                "binaryPath",
+                "command",
+                "connection",
+                "environment",
+                "stderr",
+                "stdout",
+                "triggers"
+            ],
+            "inputProperties": {
+                "binaryPath": {
+                    "type": "string",
+                    "description": "Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH"
+                },
+                "command": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:SystemctlCommand",
+                    "plain": true,
+                    "description": "Corresponds to the COMMAND argument."
+                },
+                "connection": {
+                    "$ref": "/command/v0.9.2/schema.json#/types/command:remote:Connection",
+                    "description": "Connection details for the remote system"
+                },
+                "environment": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "description": "Environment variables"
+                },
+                "lifecycle": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:CommandLifecycle",
+                    "plain": true,
+                    "description": "At what stage(s) in the resource lifecycle should the command be run"
+                },
+                "pattern": {
+                    "type": "string",
+                    "description": "Corresponds to the [PATTERN] argument"
+                },
+                "stdin": {
+                    "type": "string",
+                    "description": "TODO"
+                },
+                "triggers": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "pulumi.json#/Any"
+                    },
+                    "description": "TODO"
+                },
+                "unit": {
+                    "type": "string",
+                    "description": "Corresponds to the [UNIT...] argument."
+                }
+            },
+            "requiredInputs": [
+                "command",
+                "unit",
+                "connection"
+            ],
+            "isComponent": true
+        },
+        "kubernetes-the-hard-way:tools:Tar": {
+            "description": "Abstraction over the `rm` utility on a remote system.",
+            "properties": {
+                "archive": {
+                    "type": "string",
+                    "description": "Corresponds to the [ARCHIVE] argument."
+                },
+                "binaryPath": {
+                    "type": "string",
+                    "description": "Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH"
+                },
+                "command": {
+                    "$ref": "/command/v0.9.2/schema.json#/resources/command:remote:Command",
+                    "description": "The underlying command"
+                },
+                "connection": {
+                    "$ref": "/command/v0.9.2/schema.json#/types/command:remote:Connection",
+                    "description": "Connection details for the remote system"
+                },
+                "directory": {
+                    "type": "string",
+                    "description": "Corresponds to the `--directory` option."
+                },
+                "environment": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "description": "Environment variables"
+                },
+                "extract": {
+                    "type": "boolean",
+                    "description": "Corresponds to the `--extract` option."
+                },
+                "files": {
+                    "oneOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    ],
+                    "description": "Corresponds to the [FILE] argument."
+                },
+                "gzip": {
+                    "type": "boolean",
+                    "description": "Corresponds to the `--gzip` option."
+                },
+                "lifecycle": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:CommandLifecycle",
+                    "plain": true,
+                    "description": "At what stage(s) in the resource lifecycle should the command be run"
+                },
+                "onDelete": {
+                    "type": "boolean",
+                    "description": "Whether rm should be run when the resource is created or deleted."
+                },
+                "recursive": {
+                    "type": "boolean",
+                    "description": "Corresponds to the `--recursive` option."
+                },
+                "stderr": {
+                    "type": "string",
+                    "description": "TODO"
+                },
+                "stdin": {
+                    "type": "string",
+                    "description": "TODO"
+                },
+                "stdout": {
+                    "type": "string",
+                    "description": "TODO"
+                },
+                "stripComponents": {
+                    "type": "integer",
+                    "description": "Corresponds to the `--strip-components` option."
+                },
+                "triggers": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "pulumi.json#/Any"
+                    },
+                    "description": "TODO"
+                }
+            },
+            "required": [
+                "archive",
+                "extract",
+                "files",
+                "binaryPath",
+                "command",
+                "connection",
+                "environment",
+                "stderr",
+                "stdout",
+                "triggers"
+            ],
+            "inputProperties": {
+                "archive": {
+                    "type": "string",
+                    "description": "Corresponds to the [ARCHIVE] argument."
+                },
+                "binaryPath": {
+                    "type": "string",
+                    "description": "Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH"
+                },
+                "connection": {
+                    "$ref": "/command/v0.9.2/schema.json#/types/command:remote:Connection",
+                    "description": "Connection details for the remote system"
+                },
+                "directory": {
+                    "type": "string",
+                    "description": "Corresponds to the `--directory` option."
+                },
+                "environment": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "description": "Environment variables"
+                },
+                "extract": {
+                    "type": "boolean",
+                    "description": "Corresponds to the `--extract` option."
+                },
+                "files": {
+                    "oneOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    ],
+                    "description": "Corresponds to the [FILE] argument."
+                },
+                "gzip": {
+                    "type": "boolean",
+                    "description": "Corresponds to the `--gzip` option."
+                },
+                "lifecycle": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:CommandLifecycle",
+                    "plain": true,
+                    "description": "At what stage(s) in the resource lifecycle should the command be run"
+                },
+                "onDelete": {
+                    "type": "boolean",
+                    "description": "Whether rm should be run when the resource is created or deleted."
+                },
+                "recursive": {
+                    "type": "boolean",
+                    "description": "Corresponds to the `--recursive` option."
+                },
+                "stdin": {
+                    "type": "string",
+                    "description": "TODO"
+                },
+                "stripComponents": {
+                    "type": "integer",
+                    "description": "Corresponds to the `--strip-components` option."
+                },
+                "triggers": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "pulumi.json#/Any"
+                    },
+                    "description": "TODO"
+                }
+            },
+            "requiredInputs": [
+                "archive",
+                "connection"
+            ],
+            "isComponent": true
+        },
+        "kubernetes-the-hard-way:tools:Tee": {
+            "description": "Abstraction over the `rm` utility on a remote system.",
+            "properties": {
+                "append": {
+                    "type": "boolean",
+                    "description": "Append to the given FILEs, do not overwrite"
+                },
+                "binaryPath": {
+                    "type": "string",
+                    "description": "Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH"
+                },
+                "command": {
+                    "$ref": "/command/v0.9.2/schema.json#/resources/command:remote:Command",
+                    "description": "The underlying command"
+                },
+                "connection": {
+                    "$ref": "/command/v0.9.2/schema.json#/types/command:remote:Connection",
+                    "description": "Connection details for the remote system"
+                },
+                "environment": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "description": "Environment variables"
+                },
+                "files": {
+                    "oneOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    ],
+                    "description": "Corresponds to the [FILE] argument."
+                },
+                "ignoreInterrupts": {
+                    "type": "boolean",
+                    "description": "Ignore interrupt signals."
+                },
+                "lifecycle": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:CommandLifecycle",
+                    "plain": true,
+                    "description": "At what stage(s) in the resource lifecycle should the command be run"
+                },
+                "outputError": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:TeeMode",
+                    "description": "Set behavior on write error."
+                },
+                "pipe": {
+                    "type": "boolean",
+                    "description": "Operate in a more appropriate MODE with pipes."
+                },
+                "stderr": {
+                    "type": "string",
+                    "description": "TODO"
+                },
+                "stdin": {
+                    "type": "string",
+                    "description": "TODO"
+                },
+                "stdout": {
+                    "type": "string",
+                    "description": "TODO"
+                },
+                "triggers": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "pulumi.json#/Any"
+                    },
+                    "description": "TODO"
+                },
+                "version": {
+                    "type": "boolean",
+                    "description": "Output version information and exit."
+                }
+            },
+            "required": [
+                "files",
+                "stdin",
+                "append",
+                "ignoreInterrupts",
+                "pipe",
+                "version",
+                "binaryPath",
+                "command",
+                "connection",
+                "environment",
+                "stderr",
+                "stdout",
+                "triggers"
+            ],
+            "inputProperties": {
+                "append": {
+                    "type": "boolean",
+                    "description": "Append to the given FILEs, do not overwrite"
+                },
+                "binaryPath": {
+                    "type": "string",
+                    "description": "Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH"
+                },
+                "connection": {
+                    "$ref": "/command/v0.9.2/schema.json#/types/command:remote:Connection",
+                    "description": "Connection details for the remote system"
+                },
+                "environment": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "description": "Environment variables"
+                },
+                "files": {
+                    "oneOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    ],
+                    "description": "Corresponds to the [FILE] argument."
+                },
+                "ignoreInterrupts": {
+                    "type": "boolean",
+                    "description": "Ignore interrupt signals."
+                },
+                "lifecycle": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:CommandLifecycle",
+                    "plain": true,
+                    "description": "At what stage(s) in the resource lifecycle should the command be run"
+                },
+                "outputError": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:TeeMode",
+                    "description": "Set behavior on write error."
+                },
+                "pipe": {
+                    "type": "boolean",
+                    "description": "Operate in a more appropriate MODE with pipes."
+                },
+                "stdin": {
+                    "type": "string",
+                    "description": "TODO"
+                },
+                "triggers": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "pulumi.json#/Any"
+                    },
+                    "description": "TODO"
+                },
+                "version": {
+                    "type": "boolean",
+                    "description": "Output version information and exit."
+                }
+            },
+            "requiredInputs": [
+                "files",
+                "stdin",
+                "connection"
+            ],
+            "isComponent": true
+        },
+        "kubernetes-the-hard-way:tools:Wget": {
+            "description": "Abstraction over the `wget` utility on a remote system.",
+            "properties": {
+                "binaryPath": {
+                    "type": "string",
+                    "description": "Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH"
+                },
+                "command": {
+                    "$ref": "/command/v0.9.2/schema.json#/resources/command:remote:Command",
+                    "description": "The underlying command"
+                },
+                "connection": {
+                    "$ref": "/command/v0.9.2/schema.json#/types/command:remote:Connection",
+                    "description": "Connection details for the remote system"
+                },
+                "directoryPrefix": {
+                    "type": "string",
+                    "description": "The  directory prefix is the directory where all other files and subdirectories will be saved to, i.e. the top of the retrieval tree.  The default is . (the current directory)."
+                },
+                "environment": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "description": "Environment variables"
+                },
+                "httpsOnly": {
+                    "type": "boolean",
+                    "description": "When in recursive mode, only HTTPS links are followed."
+                },
+                "lifecycle": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:CommandLifecycle",
+                    "plain": true,
+                    "description": "At what stage(s) in the resource lifecycle should the command be run"
+                },
+                "noVerbose": {
+                    "type": "boolean",
+                    "description": "Turn off verbose without being completely quiet (use -q for that), which means that error messages and basic information still get printed."
+                },
+                "outputDocument": {
+                    "type": "string",
+                    "description": "The  documents  will  not  be  written  to the appropriate files, but all will be concatenated together and written to file."
+                },
+                "quiet": {
+                    "type": "boolean",
+                    "description": "Turn off Wget's output."
+                },
+                "stderr": {
+                    "type": "string",
+                    "description": "TODO"
+                },
+                "stdin": {
+                    "type": "string",
+                    "description": "TODO"
+                },
+                "stdout": {
+                    "type": "string",
+                    "description": "TODO"
+                },
+                "timestamping": {
+                    "type": "boolean",
+                    "description": "Turn on time-stamping."
+                },
+                "triggers": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "pulumi.json#/Any"
+                    },
+                    "description": "TODO"
+                },
+                "url": {
+                    "oneOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    ],
+                    "description": "Corresponds to the [URL...] argument."
+                }
+            },
+            "required": [
+                "url",
+                "httpsOnly",
+                "quiet",
+                "noVerbose",
+                "timestamping",
+                "binaryPath",
+                "command",
+                "connection",
+                "environment",
+                "stderr",
+                "stdout",
+                "triggers"
+            ],
+            "inputProperties": {
+                "binaryPath": {
+                    "type": "string",
+                    "description": "Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH"
+                },
+                "connection": {
+                    "$ref": "/command/v0.9.2/schema.json#/types/command:remote:Connection",
+                    "description": "Connection details for the remote system"
+                },
+                "directoryPrefix": {
+                    "type": "string",
+                    "description": "The  directory prefix is the directory where all other files and subdirectories will be saved to, i.e. the top of the retrieval tree.  The default is . (the current directory)."
+                },
+                "environment": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "description": "Environment variables"
+                },
+                "httpsOnly": {
+                    "type": "boolean",
+                    "description": "When in recursive mode, only HTTPS links are followed."
+                },
+                "lifecycle": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:CommandLifecycle",
+                    "plain": true,
+                    "description": "At what stage(s) in the resource lifecycle should the command be run"
+                },
+                "noVerbose": {
+                    "type": "boolean",
+                    "description": "Turn off verbose without being completely quiet (use -q for that), which means that error messages and basic information still get printed."
+                },
+                "outputDocument": {
+                    "type": "string",
+                    "description": "The  documents  will  not  be  written  to the appropriate files, but all will be concatenated together and written to file."
+                },
+                "quiet": {
+                    "type": "boolean",
+                    "description": "Turn off Wget's output."
+                },
+                "stdin": {
+                    "type": "string",
+                    "description": "TODO"
+                },
+                "timestamping": {
+                    "type": "boolean",
+                    "description": "Turn on time-stamping."
+                },
+                "triggers": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "pulumi.json#/Any"
+                    },
+                    "description": "TODO"
+                },
+                "url": {
+                    "oneOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    ],
+                    "description": "Corresponds to the [URL...] argument."
+                }
+            },
+            "requiredInputs": [
+                "url",
+                "connection"
+            ],
+            "isComponent": true
+        }
+    },
+    "functions": {
+        "kubernetes-the-hard-way:tls:ClusterPki/getKubeconfig": {
+            "description": "Get a kubeconfig configured from this PKI.",
+            "inputs": {
+                "properties": {
+                    "__self__": {
+                        "$ref": "#/resources/kubernetes-the-hard-way:tls:ClusterPki",
+                        "description": "The PKI to use certificate data from."
+                    },
+                    "options": {
+                        "oneOf": [
+                            {
+                                "$ref": "#/types/kubernetes-the-hard-way:config:KubeconfigAdminOptions"
+                            },
+                            {
+                                "$ref": "#/types/kubernetes-the-hard-way:config:KubeconfigKubeControllerManagerOptions"
+                            },
+                            {
+                                "$ref": "#/types/kubernetes-the-hard-way:config:KubeconfigKubeProxyOptions"
+                            },
+                            {
+                                "$ref": "#/types/kubernetes-the-hard-way:config:KubeconfigKubeSchedulerOptions"
+                            },
+                            {
+                                "$ref": "#/types/kubernetes-the-hard-way:config:KubeconfigWorkerOptions"
+                            }
+                        ],
+                        "discriminator": {
+                            "propertyName": "type",
+                            "mapping": {
+                                "admin": "#/types/kubernetes-the-hard-way:config:KubeconfigAdminOptions",
+                                "kube-controller-manager": "#/types/kubernetes-the-hard-way:config:KubeconfigKubeControllerManagerOptions",
+                                "kube-proxy": "#/types/kubernetes-the-hard-way:config:KubeconfigKubeProxyOptions",
+                                "kube-scheduler": "#/types/kubernetes-the-hard-way:config:KubeconfigKubeSchedulerOptions",
+                                "worker": "#/types/kubernetes-the-hard-way:config:KubeconfigWorkerOptions"
+                            }
+                        },
+                        "plain": true,
+                        "description": "Options for creating the kubeconfig."
+                    }
+                },
+                "required": [
+                    "__self__",
+                    "options"
+                ]
+            },
+            "outputs": {
+                "properties": {
+                    "result": {
+                        "$ref": "#/types/kubernetes-the-hard-way:config:Kubeconfig"
+                    }
+                },
+                "required": [
+                    "result"
+                ]
+            }
+        }
+    }
+}

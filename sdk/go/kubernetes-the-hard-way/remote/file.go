@@ -16,17 +16,19 @@ import (
 type File struct {
 	pulumi.ResourceState
 
-	// The command resource.
+	// The executed command.
 	Command pulumiCommand.CommandOutput `pulumi:"command"`
-	// The contents of the remote file.
+	// The parameters with which to connect to the remote host.
+	Connection pulumiCommand.ConnectionOutput `pulumi:"connection"`
+	// The content of the file.
 	Content pulumi.StringOutput `pulumi:"content"`
-	// The path to the file on the remote filesystem.
+	// The path to the file on the remote host.
 	Path pulumi.StringOutput `pulumi:"path"`
-	// The process' stderr.
+	// The standard error of the command's process
 	Stderr pulumi.StringOutput `pulumi:"stderr"`
-	// The process' stdin.
-	Stdin pulumi.StringPtrOutput `pulumi:"stdin"`
-	// The process' stdout.
+	// Pass a string to the command's process as standard in
+	Stdin pulumi.StringOutput `pulumi:"stdin"`
+	// The standard output of the command's process
 	Stdout pulumi.StringOutput `pulumi:"stdout"`
 }
 
@@ -57,7 +59,7 @@ func NewFile(ctx *pulumi.Context,
 }
 
 type fileArgs struct {
-	// The connection details.
+	// The parameters with which to connect to the remote host.
 	Connection pulumiCommand.Connection `pulumi:"connection"`
 	// The content of the file.
 	Content string `pulumi:"content"`
@@ -67,7 +69,7 @@ type fileArgs struct {
 
 // The set of arguments for constructing a File resource.
 type FileArgs struct {
-	// The connection details.
+	// The parameters with which to connect to the remote host.
 	Connection pulumiCommand.ConnectionInput
 	// The content of the file.
 	Content pulumi.StringInput
@@ -162,32 +164,37 @@ func (o FileOutput) ToFileOutputWithContext(ctx context.Context) FileOutput {
 	return o
 }
 
-// The command resource.
+// The executed command.
 func (o FileOutput) Command() pulumiCommand.CommandOutput {
 	return o.ApplyT(func(v *File) pulumiCommand.CommandOutput { return v.Command }).(pulumiCommand.CommandOutput)
 }
 
-// The contents of the remote file.
+// The parameters with which to connect to the remote host.
+func (o FileOutput) Connection() pulumiCommand.ConnectionOutput {
+	return o.ApplyT(func(v *File) pulumiCommand.ConnectionOutput { return v.Connection }).(pulumiCommand.ConnectionOutput)
+}
+
+// The content of the file.
 func (o FileOutput) Content() pulumi.StringOutput {
 	return o.ApplyT(func(v *File) pulumi.StringOutput { return v.Content }).(pulumi.StringOutput)
 }
 
-// The path to the file on the remote filesystem.
+// The path to the file on the remote host.
 func (o FileOutput) Path() pulumi.StringOutput {
 	return o.ApplyT(func(v *File) pulumi.StringOutput { return v.Path }).(pulumi.StringOutput)
 }
 
-// The process' stderr.
+// The standard error of the command's process
 func (o FileOutput) Stderr() pulumi.StringOutput {
 	return o.ApplyT(func(v *File) pulumi.StringOutput { return v.Stderr }).(pulumi.StringOutput)
 }
 
-// The process' stdin.
-func (o FileOutput) Stdin() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *File) pulumi.StringPtrOutput { return v.Stdin }).(pulumi.StringPtrOutput)
+// Pass a string to the command's process as standard in
+func (o FileOutput) Stdin() pulumi.StringOutput {
+	return o.ApplyT(func(v *File) pulumi.StringOutput { return v.Stdin }).(pulumi.StringOutput)
 }
 
-// The process' stdout.
+// The standard output of the command's process
 func (o FileOutput) Stdout() pulumi.StringOutput {
 	return o.ApplyT(func(v *File) pulumi.StringOutput { return v.Stdout }).(pulumi.StringOutput)
 }

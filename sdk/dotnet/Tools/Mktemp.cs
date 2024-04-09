@@ -11,58 +11,100 @@ using Pulumi;
 namespace UnMango.KubernetesTheHardWay.Tools
 {
     /// <summary>
-    /// Abstracion over the `mktemp` utility on a remote system.
+    /// Abstraction over the `mkdir` utility on a remote system.
     /// </summary>
     [KubernetesTheHardWayResourceType("kubernetes-the-hard-way:tools:Mktemp")]
     public partial class Mktemp : global::Pulumi.ComponentResource
     {
         /// <summary>
-        /// Represents the remote `tar` operation.
+        /// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+        /// </summary>
+        [Output("binaryPath")]
+        public Output<string> BinaryPath { get; private set; } = null!;
+
+        /// <summary>
+        /// The underlying command
         /// </summary>
         [Output("command")]
         public Output<Pulumi.Command.Remote.Command> Command { get; private set; } = null!;
 
         /// <summary>
-        /// Corresponds to the --directory option.
+        /// Connection details for the remote system
         /// </summary>
-        [Output("directory")]
-        public Output<bool> Directory { get; private set; } = null!;
+        [Output("connection")]
+        public Output<Pulumi.Command.Remote.Outputs.Connection> Connection { get; private set; } = null!;
 
         /// <summary>
-        /// Corresponds to the --dry-run option.
+        /// Corresponds to the `--directory` option.
+        /// </summary>
+        [Output("directory")]
+        public Output<bool?> Directory { get; private set; } = null!;
+
+        /// <summary>
+        /// Corresponds to the `--dry-run` option.
         /// </summary>
         [Output("dryRun")]
         public Output<bool> DryRun { get; private set; } = null!;
 
         /// <summary>
-        /// Corresponds to the --quiet option.
+        /// Environment variables
+        /// </summary>
+        [Output("environment")]
+        public Output<ImmutableDictionary<string, string>> Environment { get; private set; } = null!;
+
+        /// <summary>
+        /// At what stage(s) in the resource lifecycle should the command be run
+        /// </summary>
+        [Output("lifecycle")]
+        public Output<UnMango.KubernetesTheHardWay.Tools.CommandLifecycle?> Lifecycle { get; private set; } = null!;
+
+        /// <summary>
+        /// Corresponds to the `--quiet` option.
         /// </summary>
         [Output("quiet")]
         public Output<bool> Quiet { get; private set; } = null!;
 
+        /// <summary>
+        /// TODO
+        /// </summary>
         [Output("stderr")]
         public Output<string> Stderr { get; private set; } = null!;
 
+        /// <summary>
+        /// TODO
+        /// </summary>
+        [Output("stdin")]
+        public Output<string?> Stdin { get; private set; } = null!;
+
+        /// <summary>
+        /// TODO
+        /// </summary>
         [Output("stdout")]
         public Output<string> Stdout { get; private set; } = null!;
 
         /// <summary>
-        /// Corresponds to the --suffix option.
+        /// Corresponds to the `--suffix` option.
         /// </summary>
         [Output("suffix")]
         public Output<string?> Suffix { get; private set; } = null!;
 
         /// <summary>
-        /// Corresponds to the [TEMPLATE] arg.
+        /// Corresponds to the [TEMPLATE] argument.
         /// </summary>
         [Output("template")]
         public Output<string?> Template { get; private set; } = null!;
 
         /// <summary>
-        /// Corresponds to the --tmpdir option.
+        /// Corresponds to the `--tmpdir` option.
         /// </summary>
         [Output("tmpdir")]
         public Output<string?> Tmpdir { get; private set; } = null!;
+
+        /// <summary>
+        /// TODO
+        /// </summary>
+        [Output("triggers")]
+        public Output<ImmutableArray<object>> Triggers { get; private set; } = null!;
 
 
         /// <summary>
@@ -94,25 +136,35 @@ namespace UnMango.KubernetesTheHardWay.Tools
     public sealed class MktempArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
-        /// Connection details for the remote system.
+        /// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+        /// </summary>
+        [Input("binaryPath")]
+        public Input<string>? BinaryPath { get; set; }
+
+        /// <summary>
+        /// Connection details for the remote system
         /// </summary>
         [Input("connection", required: true)]
         public Input<Pulumi.Command.Remote.Inputs.ConnectionArgs> Connection { get; set; } = null!;
 
         /// <summary>
-        /// Corresponds to the --directory option.
+        /// Corresponds to the `--directory` option.
         /// </summary>
         [Input("directory")]
         public Input<bool>? Directory { get; set; }
 
         /// <summary>
-        /// Corresponds to the --dry-run option.
+        /// Corresponds to the `--dry-run` option.
         /// </summary>
         [Input("dryRun")]
         public Input<bool>? DryRun { get; set; }
 
         [Input("environment")]
         private InputMap<string>? _environment;
+
+        /// <summary>
+        /// Environment variables
+        /// </summary>
         public InputMap<string> Environment
         {
             get => _environment ?? (_environment = new InputMap<string>());
@@ -120,37 +172,47 @@ namespace UnMango.KubernetesTheHardWay.Tools
         }
 
         /// <summary>
-        /// At what stage(s) in the resource lifecycle should the command be run.
+        /// At what stage(s) in the resource lifecycle should the command be run
         /// </summary>
         [Input("lifecycle")]
         public UnMango.KubernetesTheHardWay.Tools.CommandLifecycle? Lifecycle { get; set; }
 
         /// <summary>
-        /// Corresponds to the --quiet option.
+        /// Corresponds to the `--quiet` option.
         /// </summary>
         [Input("quiet")]
         public Input<bool>? Quiet { get; set; }
 
         /// <summary>
-        /// Corresponds to the --suffix option.
+        /// TODO
+        /// </summary>
+        [Input("stdin")]
+        public Input<string>? Stdin { get; set; }
+
+        /// <summary>
+        /// Corresponds to the `--suffix` option.
         /// </summary>
         [Input("suffix")]
         public Input<string>? Suffix { get; set; }
 
         /// <summary>
-        /// Corresponds to the [TEMPLATE] arg.
+        /// Corresponds to the [TEMPLATE] argument.
         /// </summary>
         [Input("template")]
         public Input<string>? Template { get; set; }
 
         /// <summary>
-        /// Corresponds to the --tmpdir option.
+        /// Corresponds to the `--tmpdir` option.
         /// </summary>
         [Input("tmpdir")]
         public Input<string>? Tmpdir { get; set; }
 
         [Input("triggers")]
         private InputList<object>? _triggers;
+
+        /// <summary>
+        /// TODO
+        /// </summary>
         public InputList<object> Triggers
         {
             get => _triggers ?? (_triggers = new InputList<object>());

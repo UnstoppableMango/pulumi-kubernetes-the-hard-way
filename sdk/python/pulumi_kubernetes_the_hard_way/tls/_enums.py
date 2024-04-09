@@ -23,7 +23,7 @@ class Algorithm(str, Enum):
 
 class AllowedUsage(str, Enum):
     """
-    Certificate allowed usage.
+    Certificate allowed usage
     """
     CERT_SIGNING = "cert_signing"
     CLIENT_AUTH = "client_auth"
@@ -35,7 +35,7 @@ class AllowedUsage(str, Enum):
 
 class EcdsaCurve(str, Enum):
     """
-    TODO
+    ECDSA algorithm curve
     """
     P224 = "P224"
     P256 = "P256"
@@ -45,7 +45,7 @@ class EcdsaCurve(str, Enum):
 
 class NodeRole(str, Enum):
     """
-    TODO
+    The role a node will play in the final cluster
     """
     CONTROLPLANE = "controlplane"
     WORKER = "worker"

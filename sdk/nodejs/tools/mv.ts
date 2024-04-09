@@ -28,21 +28,29 @@ export class Mv extends pulumi.ComponentResource {
     }
 
     /**
-     * Corresponds to both the -b and --backup options depending on whether [CONTROL] is supplied.
+     * Corresponds to the `-b` and `--backup` options depending on whether [CONTROL] is supplied.
      */
     public readonly backup!: pulumi.Output<boolean>;
     /**
-     * Represents the command run on the remote system.
+     * Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+     */
+    public readonly binaryPath!: pulumi.Output<string>;
+    /**
+     * The underlying command
      */
     public /*out*/ readonly command!: pulumi.Output<pulumiCommand.remote.Command>;
     /**
-     * Corresponds to the --context option.
+     * Connection details for the remote system
+     */
+    public readonly connection!: pulumi.Output<pulumiCommand.types.output.remote.Connection>;
+    /**
+     * Corresponds to the `--context` option.
      */
     public readonly context!: pulumi.Output<boolean>;
     /**
-     * Corresponds to the [CONTROL] argument for the --backup option.
+     * Corresponds to the [CONTROL] argument for the `--backup` option.
      */
-    public readonly control!: pulumi.Output<string | undefined>;
+    public readonly control!: pulumi.Output<boolean | undefined>;
     /**
      * Corresponds to the [DEST] argument.
      */
@@ -52,43 +60,63 @@ export class Mv extends pulumi.ComponentResource {
      */
     public readonly directory!: pulumi.Output<string | undefined>;
     /**
-     * Corresponds to the --force option.
+     * Environment variables
+     */
+    public readonly environment!: pulumi.Output<{[key: string]: string}>;
+    /**
+     * Corresponds to the `--force` option.
      */
     public readonly force!: pulumi.Output<boolean>;
     /**
-     * At what stage(s) in the resource lifecycle should the command be run.
+     * At what stage(s) in the resource lifecycle should the command be run
      */
-    public /*out*/ readonly lifecycle!: pulumi.Output<enums.tools.CommandLifecycle | undefined>;
+    public readonly lifecycle!: pulumi.Output<enums.tools.CommandLifecycle | undefined>;
     /**
-     * Corresponds to the --no-clobber option.
+     * Corresponds to the `--no-clobber` option.
      */
     public readonly noClobber!: pulumi.Output<boolean>;
     /**
-     * Corresponds to the --no-target-directory option.
+     * Corresponds to the `--no-target-directory` option.
      */
     public readonly noTargetDirectory!: pulumi.Output<boolean>;
     /**
      * Corresponds to the [SOURCE] argument.
      */
-    public readonly source!: pulumi.Output<string[]>;
+    public readonly source!: pulumi.Output<string | string[]>;
     /**
-     * Corresponds to the --strip-trailing-suffix option.
+     * TODO
+     */
+    public /*out*/ readonly stderr!: pulumi.Output<string>;
+    /**
+     * TODO
+     */
+    public readonly stdin!: pulumi.Output<string | undefined>;
+    /**
+     * TODO
+     */
+    public /*out*/ readonly stdout!: pulumi.Output<string>;
+    /**
+     * Corresponds to the `--strip-trailing-slashes` option.
      */
     public readonly stripTrailingSlashes!: pulumi.Output<boolean>;
     /**
-     * Corresponds to the --suffix option.
+     * Corresponds to the `--suffix` option.
      */
     public readonly suffix!: pulumi.Output<string | undefined>;
     /**
-     * Corresponds to the --target-directory option.
+     * Corresponds to the `--target-directory` option.
      */
-    public readonly targetDirectory!: pulumi.Output<string | undefined>;
+    public readonly targetDirectory!: pulumi.Output<boolean | undefined>;
     /**
-     * Corresponds to the --update option.
+     * TODO
+     */
+    public readonly triggers!: pulumi.Output<any[]>;
+    /**
+     * Corresponds to the `--update` option.
      */
     public readonly update!: pulumi.Output<boolean>;
     /**
-     * Corresponds to the --verbose option.
+     * Corresponds to the `--verbose` option.
      */
     public readonly verbose!: pulumi.Output<boolean>;
 
@@ -110,6 +138,7 @@ export class Mv extends pulumi.ComponentResource {
                 throw new Error("Missing required property 'source'");
             }
             resourceInputs["backup"] = args ? args.backup : undefined;
+            resourceInputs["binaryPath"] = args ? args.binaryPath : undefined;
             resourceInputs["connection"] = args ? (args.connection ? pulumi.output(args.connection).apply(pulumiCommand.types.input.remote.connectionArgsProvideDefaults) : undefined) : undefined;
             resourceInputs["context"] = args ? args.context : undefined;
             resourceInputs["control"] = args ? args.control : undefined;
@@ -117,31 +146,42 @@ export class Mv extends pulumi.ComponentResource {
             resourceInputs["directory"] = args ? args.directory : undefined;
             resourceInputs["environment"] = args ? args.environment : undefined;
             resourceInputs["force"] = args ? args.force : undefined;
+            resourceInputs["lifecycle"] = args ? args.lifecycle : undefined;
             resourceInputs["noClobber"] = args ? args.noClobber : undefined;
             resourceInputs["noTargetDirectory"] = args ? args.noTargetDirectory : undefined;
             resourceInputs["source"] = args ? args.source : undefined;
+            resourceInputs["stdin"] = args ? args.stdin : undefined;
             resourceInputs["stripTrailingSlashes"] = args ? args.stripTrailingSlashes : undefined;
             resourceInputs["suffix"] = args ? args.suffix : undefined;
             resourceInputs["targetDirectory"] = args ? args.targetDirectory : undefined;
+            resourceInputs["triggers"] = args ? args.triggers : undefined;
             resourceInputs["update"] = args ? args.update : undefined;
             resourceInputs["verbose"] = args ? args.verbose : undefined;
             resourceInputs["command"] = undefined /*out*/;
-            resourceInputs["lifecycle"] = undefined /*out*/;
+            resourceInputs["stderr"] = undefined /*out*/;
+            resourceInputs["stdout"] = undefined /*out*/;
         } else {
             resourceInputs["backup"] = undefined /*out*/;
+            resourceInputs["binaryPath"] = undefined /*out*/;
             resourceInputs["command"] = undefined /*out*/;
+            resourceInputs["connection"] = undefined /*out*/;
             resourceInputs["context"] = undefined /*out*/;
             resourceInputs["control"] = undefined /*out*/;
             resourceInputs["dest"] = undefined /*out*/;
             resourceInputs["directory"] = undefined /*out*/;
+            resourceInputs["environment"] = undefined /*out*/;
             resourceInputs["force"] = undefined /*out*/;
             resourceInputs["lifecycle"] = undefined /*out*/;
             resourceInputs["noClobber"] = undefined /*out*/;
             resourceInputs["noTargetDirectory"] = undefined /*out*/;
             resourceInputs["source"] = undefined /*out*/;
+            resourceInputs["stderr"] = undefined /*out*/;
+            resourceInputs["stdin"] = undefined /*out*/;
+            resourceInputs["stdout"] = undefined /*out*/;
             resourceInputs["stripTrailingSlashes"] = undefined /*out*/;
             resourceInputs["suffix"] = undefined /*out*/;
             resourceInputs["targetDirectory"] = undefined /*out*/;
+            resourceInputs["triggers"] = undefined /*out*/;
             resourceInputs["update"] = undefined /*out*/;
             resourceInputs["verbose"] = undefined /*out*/;
         }
@@ -155,21 +195,25 @@ export class Mv extends pulumi.ComponentResource {
  */
 export interface MvArgs {
     /**
-     * Corresponds to both the -b and --backup options depending on whether [CONTROL] is supplied.
+     * Corresponds to the `-b` and `--backup` options depending on whether [CONTROL] is supplied.
      */
     backup?: boolean;
     /**
-     * Connection details for the remote system.
+     * Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+     */
+    binaryPath?: pulumi.Input<string>;
+    /**
+     * Connection details for the remote system
      */
     connection: pulumi.Input<pulumiCommand.types.input.remote.ConnectionArgs>;
     /**
-     * Corresponds to the --context option.
+     * Corresponds to the `--context` option.
      */
     context?: pulumi.Input<boolean>;
     /**
-     * Corresponds to the [CONTROL] argument for the --backup option.
+     * Corresponds to the [CONTROL] argument for the `--backup` option.
      */
-    control?: pulumi.Input<string>;
+    control?: pulumi.Input<boolean>;
     /**
      * Corresponds to the [DEST] argument.
      */
@@ -178,17 +222,24 @@ export interface MvArgs {
      * Corresponds to the [DIRECTORY] argument.
      */
     directory?: pulumi.Input<string>;
+    /**
+     * Environment variables
+     */
     environment?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
-     * Corresponds to the --force option.
+     * Corresponds to the `--force` option.
      */
     force?: pulumi.Input<boolean>;
     /**
-     * Corresponds to the --no-clobber option.
+     * At what stage(s) in the resource lifecycle should the command be run
+     */
+    lifecycle?: enums.tools.CommandLifecycle;
+    /**
+     * Corresponds to the `--no-clobber` option.
      */
     noClobber?: pulumi.Input<boolean>;
     /**
-     * Corresponds to the --no-target-directory option.
+     * Corresponds to the `--no-target-directory` option.
      */
     noTargetDirectory?: pulumi.Input<boolean>;
     /**
@@ -196,23 +247,31 @@ export interface MvArgs {
      */
     source: pulumi.Input<string | pulumi.Input<string>[]>;
     /**
-     * Corresponds to the --strip-trailing-suffix option.
+     * TODO
+     */
+    stdin?: pulumi.Input<string>;
+    /**
+     * Corresponds to the `--strip-trailing-slashes` option.
      */
     stripTrailingSlashes?: pulumi.Input<boolean>;
     /**
-     * Corresponds to the --suffix option.
+     * Corresponds to the `--suffix` option.
      */
     suffix?: pulumi.Input<string>;
     /**
-     * Corresponds to the --target-directory option.
+     * Corresponds to the `--target-directory` option.
      */
-    targetDirectory?: pulumi.Input<string>;
+    targetDirectory?: pulumi.Input<boolean>;
     /**
-     * Corresponds to the --update option.
+     * TODO
+     */
+    triggers?: pulumi.Input<any[]>;
+    /**
+     * Corresponds to the `--update` option.
      */
     update?: pulumi.Input<boolean>;
     /**
-     * Corresponds to the --verbose option.
+     * Corresponds to the `--verbose` option.
      */
     verbose?: pulumi.Input<boolean>;
 }

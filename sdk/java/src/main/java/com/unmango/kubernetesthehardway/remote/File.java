@@ -4,6 +4,7 @@
 package com.unmango.kubernetesthehardway.remote;
 
 import com.pulumi.command.remote.Command;
+import com.pulumi.command.remote.outputs.Connection;
 import com.pulumi.core.Output;
 import com.pulumi.core.annotations.Export;
 import com.pulumi.core.annotations.ResourceType;
@@ -11,90 +12,103 @@ import com.pulumi.core.internal.Codegen;
 import com.unmango.kubernetesthehardway.Utilities;
 import com.unmango.kubernetesthehardway.remote.FileArgs;
 import java.lang.String;
-import java.util.Optional;
 import javax.annotation.Nullable;
 
 @ResourceType(type="kubernetes-the-hard-way:remote:File")
 public class File extends com.pulumi.resources.ComponentResource {
     /**
-     * The command resource.
+     * The executed command.
      * 
      */
     @Export(name="command", refs={Command.class}, tree="[0]")
     private Output<Command> command;
 
     /**
-     * @return The command resource.
+     * @return The executed command.
      * 
      */
     public Output<Command> command() {
         return this.command;
     }
     /**
-     * The contents of the remote file.
+     * The parameters with which to connect to the remote host.
+     * 
+     */
+    @Export(name="connection", refs={Connection.class}, tree="[0]")
+    private Output<Connection> connection;
+
+    /**
+     * @return The parameters with which to connect to the remote host.
+     * 
+     */
+    public Output<Connection> connection() {
+        return this.connection;
+    }
+    /**
+     * The content of the file.
      * 
      */
     @Export(name="content", refs={String.class}, tree="[0]")
     private Output<String> content;
 
     /**
-     * @return The contents of the remote file.
+     * @return The content of the file.
      * 
      */
     public Output<String> content() {
         return this.content;
     }
     /**
-     * The path to the file on the remote filesystem.
+     * The path to the file on the remote host.
      * 
      */
     @Export(name="path", refs={String.class}, tree="[0]")
     private Output<String> path;
 
     /**
-     * @return The path to the file on the remote filesystem.
+     * @return The path to the file on the remote host.
      * 
      */
     public Output<String> path() {
         return this.path;
     }
     /**
-     * The process&#39; stderr.
+     * The standard error of the command&#39;s process
      * 
      */
     @Export(name="stderr", refs={String.class}, tree="[0]")
     private Output<String> stderr;
 
     /**
-     * @return The process&#39; stderr.
+     * @return The standard error of the command&#39;s process
      * 
      */
     public Output<String> stderr() {
         return this.stderr;
     }
     /**
-     * The process&#39; stdin.
+     * Pass a string to the command&#39;s process as standard in
      * 
      */
     @Export(name="stdin", refs={String.class}, tree="[0]")
-    private Output</* @Nullable */ String> stdin;
+    private Output<String> stdin;
 
     /**
-     * @return The process&#39; stdin.
+     * @return Pass a string to the command&#39;s process as standard in
      * 
      */
-    public Output<Optional<String>> stdin() {
-        return Codegen.optional(this.stdin);
+    public Output<String> stdin() {
+        return this.stdin;
     }
     /**
-     * The process&#39; stdout.
+     * The standard output of the command&#39;s process
      * 
      */
     @Export(name="stdout", refs={String.class}, tree="[0]")
     private Output<String> stdout;
 
     /**
-     * @return The process&#39; stdout.
+     * @return The standard output of the command&#39;s process
      * 
      */
     public Output<String> stdout() {

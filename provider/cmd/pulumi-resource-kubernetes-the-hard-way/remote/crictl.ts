@@ -31,7 +31,7 @@ export class CrictlInstall extends schema.CrictlInstall {
     this.path = install.paths.crictl;
     this.directory = directory;
     this.mktemp = install.mktemp;
-    this.mv = install.mvs.crictl;
+    this.crictlMv = install.mvs.crictl;
     this.tar = install.tar;
     this.url = url;
     this.version = version;

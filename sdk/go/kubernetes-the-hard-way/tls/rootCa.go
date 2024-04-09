@@ -13,15 +13,68 @@ import (
 	"github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/sdk/go/kubernetes-the-hard-way/internal"
 )
 
+// Root certificate authority for a cluster.
 type RootCa struct {
 	pulumi.ResourceState
 
-	AllowedUses   AllowedUsageArrayOutput  `pulumi:"allowedUses"`
-	Cert          tls.SelfSignedCertOutput `pulumi:"cert"`
-	CertPem       pulumi.StringOutput      `pulumi:"certPem"`
-	Key           tls.PrivateKeyOutput     `pulumi:"key"`
-	PrivateKeyPem pulumi.StringOutput      `pulumi:"privateKeyPem"`
-	PublicKeyPem  pulumi.StringOutput      `pulumi:"publicKeyPem"`
+	// Name of the algorithm to use when generating the private key.
+	Algorithm AlgorithmOutput `pulumi:"algorithm"`
+	// List of key usages allowed for the issued certificate. Values are defined in [RFC 5280](https://datatracker.ietf.org/doc/html/rfc5280) and combine flags defined by both [Key Usages](https://datatracker.ietf.org/doc/html/rfc5280#section-4.2.1.3) and [Extended Key Usages](https://datatracker.ietf.org/doc/html/rfc5280#section-4.2.1.12). Accepted values: `any_extended`, `cert_signing`, `client_auth`, `code_signing`, `content_commitment`, `crl_signing`, `data_encipherment`, `decipher_only`, `digital_signature`, `email_protection`, `encipher_only`, `ipsec_end_system`, `ipsec_tunnel`, `ipsec_user`, `key_agreement`, `key_encipherment`, `microsoft_commercial_code_signing`, `microsoft_kernel_code_signing`, `microsoft_server_gated_crypto`, `netscape_server_gated_crypto`, `ocsp_signing`, `server_auth`, `timestamping`.
+	AllowedUses pulumi.StringArrayOutput `pulumi:"allowedUses"`
+	// The certificate authority certificate.
+	Cert tls.SelfSignedCertOutput `pulumi:"cert"`
+	// Certificate data in PEM (RFC 1421).
+	CertPem pulumi.StringOutput `pulumi:"certPem"`
+	// List of DNS names for which a certificate is being requested (i.e. certificate subjects).
+	DnsNames pulumi.StringArrayOutput `pulumi:"dnsNames"`
+	// The resource will consider the certificate to have expired the given number of hours before its actual expiry time. This
+	// can be useful to deploy an updated certificate in advance of the expiration of the current certificate. However, the old
+	// certificate remains valid until its true expiration time, since this resource does not (and cannot) support certificate
+	// revocation. Also, this advance update can only be performed should the Terraform configuration be applied during the
+	// early renewal period. (default: `0`)
+	EarlyRenewalHours pulumi.IntOutput `pulumi:"earlyRenewalHours"`
+	// When `algorithm` is `ECDSA`, the name of the elliptic curve to use. Currently-supported values are: `P224`, `P256`, `P384`, `P521`. (default: `P224`).
+	EcdsaCurve pulumi.StringOutput `pulumi:"ecdsaCurve"`
+	// List of IP addresses for which a certificate is being requested (i.e. certificate subjects).
+	IpAddresses pulumi.StringArrayOutput `pulumi:"ipAddresses"`
+	// Is the generated certificate representing a Certificate Authority (CA) (default: `false`).
+	IsCaCertificate pulumi.BoolOutput `pulumi:"isCaCertificate"`
+	// The certificate authority key.
+	Key tls.PrivateKeyOutput `pulumi:"key"`
+	// Name of the algorithm used when generating the private key provided in `private_key_pem`.
+	KeyAlgorithm pulumi.StringOutput `pulumi:"keyAlgorithm"`
+	// Private key data in [OpenSSH PEM (RFC 4716)](https://datatracker.ietf.org/doc/html/rfc4716) format.
+	PrivateKeyOpenssh pulumi.StringOutput `pulumi:"privateKeyOpenssh"`
+	// Private key data in [PEM (RFC 1421)](https://datatracker.ietf.org/doc/html/rfc1421) format.
+	PrivateKeyPem pulumi.StringOutput `pulumi:"privateKeyPem"`
+	// Private key data in [PKCS#8 PEM (RFC 5208)](https://datatracker.ietf.org/doc/html/rfc5208) format.
+	PrivateKeyPemPkcs8 pulumi.StringOutput `pulumi:"privateKeyPemPkcs8"`
+	// The fingerprint of the public key data in OpenSSH MD5 hash format, e.g. `aa:bb:cc:...`. Only available if the selected private key format is compatible, similarly to `public_key_openssh` and the ECDSA P224 limitations.
+	PublicKeyFingerprintMd5 pulumi.StringOutput `pulumi:"publicKeyFingerprintMd5"`
+	// The fingerprint of the public key data in OpenSSH SHA256 hash format, e.g. `SHA256:...`. Only available if the selected private key format is compatible, similarly to `public_key_openssh` and the ECDSA P224 limitations.
+	PublicKeyFingerprintSha256 pulumi.StringOutput `pulumi:"publicKeyFingerprintSha256"`
+	// The public key data in "Authorized Keys".
+	PublicKeyOpenssh pulumi.StringOutput `pulumi:"publicKeyOpenssh"`
+	// Public key data in PEM (RFC 1421).
+	PublicKeyPem pulumi.StringOutput `pulumi:"publicKeyPem"`
+	// Is the certificate either expired (i.e. beyond the `validity_period_hours`) or ready for an early renewal (i.e. within the `early_renewal_hours`)?
+	ReadyForRenewal pulumi.BoolOutput `pulumi:"readyForRenewal"`
+	// When `algorithm` is `RSA`, the size of the generated RSA key, in bits (default: `2048`).
+	RsaBits pulumi.IntOutput `pulumi:"rsaBits"`
+	// Should the generated certificate include an [authority key identifier](https://datatracker.ietf.org/doc/html/rfc5280#section-4.2.1.1): for self-signed certificates this is the same value as the [subject key identifier](https://datatracker.ietf.org/doc/html/rfc5280#section-4.2.1.2) (default: `false`).
+	SetAuthorityKeyId pulumi.BoolOutput `pulumi:"setAuthorityKeyId"`
+	// Should the generated certificate include a [subject key identifier](https://datatracker.ietf.org/doc/html/rfc5280#section-4.2.1.2) (default: `false`).
+	SetSubjectKeyId pulumi.BoolOutput `pulumi:"setSubjectKeyId"`
+	// TODO
+	Subject tls.SelfSignedCertSubjectPtrOutput `pulumi:"subject"`
+	// List of URIs for which a certificate is being requested (i.e. certificate subjects).
+	Uris pulumi.StringArrayOutput `pulumi:"uris"`
+	// The time until which the certificate is invalid, expressed as an [RFC3339](https://tools.ietf.org/html/rfc3339) timestamp.
+	ValidityEndTime pulumi.StringOutput `pulumi:"validityEndTime"`
+	// Number of hours, after initial issuing, that the certificate will remain valid for.
+	ValidityPeriodHours pulumi.IntOutput `pulumi:"validityPeriodHours"`
+	// The time after which the certificate is valid, expressed as an [RFC3339](https://tools.ietf.org/html/rfc3339) timestamp.
+	ValidityStartTime pulumi.StringOutput `pulumi:"validityStartTime"`
 }
 
 // NewRootCa registers a new resource with the given unique name, arguments, and options.
@@ -46,24 +99,29 @@ func NewRootCa(ctx *pulumi.Context,
 type rootCaArgs struct {
 	// Name of the algorithm to use when generating the private key.
 	Algorithm *Algorithm `pulumi:"algorithm"`
-	// List of DNS names for which a certificate is being requested.
+	// List of DNS names for which a certificate is being requested (i.e. certificate subjects).
 	DnsNames []string `pulumi:"dnsNames"`
-	// TODO
+	// The resource will consider the certificate to have expired the given number of hours before its actual expiry time. This
+	// can be useful to deploy an updated certificate in advance of the expiration of the current certificate. However, the old
+	// certificate remains valid until its true expiration time, since this resource does not (and cannot) support certificate
+	// revocation. Also, this advance update can only be performed should the Terraform configuration be applied during the
+	// early renewal period. (default: `0`)
 	EarlyRenewalHours *int `pulumi:"earlyRenewalHours"`
-	// When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
-	EcdsaCurve *EcdsaCurve `pulumi:"ecdsaCurve"`
-	// List of IP addresses for which a certificate is being requested.
+	// When `algorithm` is `ECDSA`, the name of the elliptic curve to use. Currently-supported values are: `P224`, `P256`, `P384`, `P521`. (default: `P224`).
+	EcdsaCurve *string `pulumi:"ecdsaCurve"`
+	// List of IP addresses for which a certificate is being requested (i.e. certificate subjects).
 	IpAddresses []string `pulumi:"ipAddresses"`
-	// When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
+	// When `algorithm` is `RSA`, the size of the generated RSA key, in bits (default: `2048`).
 	RsaBits *int `pulumi:"rsaBits"`
-	// Should the generated certificate include an authority key identifier.
+	// Should the generated certificate include an [authority key identifier](https://datatracker.ietf.org/doc/html/rfc5280#section-4.2.1.1): for self-signed certificates this is the same value as the [subject key identifier](https://datatracker.ietf.org/doc/html/rfc5280#section-4.2.1.2) (default: `false`).
 	SetAuthorityKeyId *bool `pulumi:"setAuthorityKeyId"`
-	// Should the generated certificate include a subject key identifier.
-	SetSubjectKeyId *bool                      `pulumi:"setSubjectKeyId"`
-	Subject         *tls.SelfSignedCertSubject `pulumi:"subject"`
-	// List of URIs for which a certificate is being requested.
+	// Should the generated certificate include a [subject key identifier](https://datatracker.ietf.org/doc/html/rfc5280#section-4.2.1.2) (default: `false`).
+	SetSubjectKeyId *bool `pulumi:"setSubjectKeyId"`
+	// TODO
+	Subject *tls.SelfSignedCertSubject `pulumi:"subject"`
+	// List of URIs for which a certificate is being requested (i.e. certificate subjects).
 	Uris []string `pulumi:"uris"`
-	// Number of hours, after initial issuing, that the certificate will remain valid.
+	// Number of hours, after initial issuing, that the certificate will remain valid for.
 	ValidityPeriodHours int `pulumi:"validityPeriodHours"`
 }
 
@@ -71,24 +129,29 @@ type rootCaArgs struct {
 type RootCaArgs struct {
 	// Name of the algorithm to use when generating the private key.
 	Algorithm AlgorithmPtrInput
-	// List of DNS names for which a certificate is being requested.
+	// List of DNS names for which a certificate is being requested (i.e. certificate subjects).
 	DnsNames pulumi.StringArrayInput
-	// TODO
+	// The resource will consider the certificate to have expired the given number of hours before its actual expiry time. This
+	// can be useful to deploy an updated certificate in advance of the expiration of the current certificate. However, the old
+	// certificate remains valid until its true expiration time, since this resource does not (and cannot) support certificate
+	// revocation. Also, this advance update can only be performed should the Terraform configuration be applied during the
+	// early renewal period. (default: `0`)
 	EarlyRenewalHours pulumi.IntPtrInput
-	// When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
-	EcdsaCurve EcdsaCurvePtrInput
-	// List of IP addresses for which a certificate is being requested.
+	// When `algorithm` is `ECDSA`, the name of the elliptic curve to use. Currently-supported values are: `P224`, `P256`, `P384`, `P521`. (default: `P224`).
+	EcdsaCurve pulumi.StringPtrInput
+	// List of IP addresses for which a certificate is being requested (i.e. certificate subjects).
 	IpAddresses pulumi.StringArrayInput
-	// When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
+	// When `algorithm` is `RSA`, the size of the generated RSA key, in bits (default: `2048`).
 	RsaBits pulumi.IntPtrInput
-	// Should the generated certificate include an authority key identifier.
+	// Should the generated certificate include an [authority key identifier](https://datatracker.ietf.org/doc/html/rfc5280#section-4.2.1.1): for self-signed certificates this is the same value as the [subject key identifier](https://datatracker.ietf.org/doc/html/rfc5280#section-4.2.1.2) (default: `false`).
 	SetAuthorityKeyId pulumi.BoolPtrInput
-	// Should the generated certificate include a subject key identifier.
+	// Should the generated certificate include a [subject key identifier](https://datatracker.ietf.org/doc/html/rfc5280#section-4.2.1.2) (default: `false`).
 	SetSubjectKeyId pulumi.BoolPtrInput
-	Subject         tls.SelfSignedCertSubjectPtrInput
-	// List of URIs for which a certificate is being requested.
+	// TODO
+	Subject tls.SelfSignedCertSubjectPtrInput
+	// List of URIs for which a certificate is being requested (i.e. certificate subjects).
 	Uris pulumi.StringArrayInput
-	// Number of hours, after initial issuing, that the certificate will remain valid.
+	// Number of hours, after initial issuing, that the certificate will remain valid for.
 	ValidityPeriodHours pulumi.IntInput
 }
 
@@ -179,28 +242,143 @@ func (o RootCaOutput) ToRootCaOutputWithContext(ctx context.Context) RootCaOutpu
 	return o
 }
 
-func (o RootCaOutput) AllowedUses() AllowedUsageArrayOutput {
-	return o.ApplyT(func(v *RootCa) AllowedUsageArrayOutput { return v.AllowedUses }).(AllowedUsageArrayOutput)
+// Name of the algorithm to use when generating the private key.
+func (o RootCaOutput) Algorithm() AlgorithmOutput {
+	return o.ApplyT(func(v *RootCa) AlgorithmOutput { return v.Algorithm }).(AlgorithmOutput)
 }
 
+// List of key usages allowed for the issued certificate. Values are defined in [RFC 5280](https://datatracker.ietf.org/doc/html/rfc5280) and combine flags defined by both [Key Usages](https://datatracker.ietf.org/doc/html/rfc5280#section-4.2.1.3) and [Extended Key Usages](https://datatracker.ietf.org/doc/html/rfc5280#section-4.2.1.12). Accepted values: `any_extended`, `cert_signing`, `client_auth`, `code_signing`, `content_commitment`, `crl_signing`, `data_encipherment`, `decipher_only`, `digital_signature`, `email_protection`, `encipher_only`, `ipsec_end_system`, `ipsec_tunnel`, `ipsec_user`, `key_agreement`, `key_encipherment`, `microsoft_commercial_code_signing`, `microsoft_kernel_code_signing`, `microsoft_server_gated_crypto`, `netscape_server_gated_crypto`, `ocsp_signing`, `server_auth`, `timestamping`.
+func (o RootCaOutput) AllowedUses() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v *RootCa) pulumi.StringArrayOutput { return v.AllowedUses }).(pulumi.StringArrayOutput)
+}
+
+// The certificate authority certificate.
 func (o RootCaOutput) Cert() tls.SelfSignedCertOutput {
 	return o.ApplyT(func(v *RootCa) tls.SelfSignedCertOutput { return v.Cert }).(tls.SelfSignedCertOutput)
 }
 
+// Certificate data in PEM (RFC 1421).
 func (o RootCaOutput) CertPem() pulumi.StringOutput {
 	return o.ApplyT(func(v *RootCa) pulumi.StringOutput { return v.CertPem }).(pulumi.StringOutput)
 }
 
+// List of DNS names for which a certificate is being requested (i.e. certificate subjects).
+func (o RootCaOutput) DnsNames() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v *RootCa) pulumi.StringArrayOutput { return v.DnsNames }).(pulumi.StringArrayOutput)
+}
+
+// The resource will consider the certificate to have expired the given number of hours before its actual expiry time. This
+// can be useful to deploy an updated certificate in advance of the expiration of the current certificate. However, the old
+// certificate remains valid until its true expiration time, since this resource does not (and cannot) support certificate
+// revocation. Also, this advance update can only be performed should the Terraform configuration be applied during the
+// early renewal period. (default: `0`)
+func (o RootCaOutput) EarlyRenewalHours() pulumi.IntOutput {
+	return o.ApplyT(func(v *RootCa) pulumi.IntOutput { return v.EarlyRenewalHours }).(pulumi.IntOutput)
+}
+
+// When `algorithm` is `ECDSA`, the name of the elliptic curve to use. Currently-supported values are: `P224`, `P256`, `P384`, `P521`. (default: `P224`).
+func (o RootCaOutput) EcdsaCurve() pulumi.StringOutput {
+	return o.ApplyT(func(v *RootCa) pulumi.StringOutput { return v.EcdsaCurve }).(pulumi.StringOutput)
+}
+
+// List of IP addresses for which a certificate is being requested (i.e. certificate subjects).
+func (o RootCaOutput) IpAddresses() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v *RootCa) pulumi.StringArrayOutput { return v.IpAddresses }).(pulumi.StringArrayOutput)
+}
+
+// Is the generated certificate representing a Certificate Authority (CA) (default: `false`).
+func (o RootCaOutput) IsCaCertificate() pulumi.BoolOutput {
+	return o.ApplyT(func(v *RootCa) pulumi.BoolOutput { return v.IsCaCertificate }).(pulumi.BoolOutput)
+}
+
+// The certificate authority key.
 func (o RootCaOutput) Key() tls.PrivateKeyOutput {
 	return o.ApplyT(func(v *RootCa) tls.PrivateKeyOutput { return v.Key }).(tls.PrivateKeyOutput)
 }
 
+// Name of the algorithm used when generating the private key provided in `private_key_pem`.
+func (o RootCaOutput) KeyAlgorithm() pulumi.StringOutput {
+	return o.ApplyT(func(v *RootCa) pulumi.StringOutput { return v.KeyAlgorithm }).(pulumi.StringOutput)
+}
+
+// Private key data in [OpenSSH PEM (RFC 4716)](https://datatracker.ietf.org/doc/html/rfc4716) format.
+func (o RootCaOutput) PrivateKeyOpenssh() pulumi.StringOutput {
+	return o.ApplyT(func(v *RootCa) pulumi.StringOutput { return v.PrivateKeyOpenssh }).(pulumi.StringOutput)
+}
+
+// Private key data in [PEM (RFC 1421)](https://datatracker.ietf.org/doc/html/rfc1421) format.
 func (o RootCaOutput) PrivateKeyPem() pulumi.StringOutput {
 	return o.ApplyT(func(v *RootCa) pulumi.StringOutput { return v.PrivateKeyPem }).(pulumi.StringOutput)
 }
 
+// Private key data in [PKCS#8 PEM (RFC 5208)](https://datatracker.ietf.org/doc/html/rfc5208) format.
+func (o RootCaOutput) PrivateKeyPemPkcs8() pulumi.StringOutput {
+	return o.ApplyT(func(v *RootCa) pulumi.StringOutput { return v.PrivateKeyPemPkcs8 }).(pulumi.StringOutput)
+}
+
+// The fingerprint of the public key data in OpenSSH MD5 hash format, e.g. `aa:bb:cc:...`. Only available if the selected private key format is compatible, similarly to `public_key_openssh` and the ECDSA P224 limitations.
+func (o RootCaOutput) PublicKeyFingerprintMd5() pulumi.StringOutput {
+	return o.ApplyT(func(v *RootCa) pulumi.StringOutput { return v.PublicKeyFingerprintMd5 }).(pulumi.StringOutput)
+}
+
+// The fingerprint of the public key data in OpenSSH SHA256 hash format, e.g. `SHA256:...`. Only available if the selected private key format is compatible, similarly to `public_key_openssh` and the ECDSA P224 limitations.
+func (o RootCaOutput) PublicKeyFingerprintSha256() pulumi.StringOutput {
+	return o.ApplyT(func(v *RootCa) pulumi.StringOutput { return v.PublicKeyFingerprintSha256 }).(pulumi.StringOutput)
+}
+
+// The public key data in "Authorized Keys".
+func (o RootCaOutput) PublicKeyOpenssh() pulumi.StringOutput {
+	return o.ApplyT(func(v *RootCa) pulumi.StringOutput { return v.PublicKeyOpenssh }).(pulumi.StringOutput)
+}
+
+// Public key data in PEM (RFC 1421).
 func (o RootCaOutput) PublicKeyPem() pulumi.StringOutput {
 	return o.ApplyT(func(v *RootCa) pulumi.StringOutput { return v.PublicKeyPem }).(pulumi.StringOutput)
+}
+
+// Is the certificate either expired (i.e. beyond the `validity_period_hours`) or ready for an early renewal (i.e. within the `early_renewal_hours`)?
+func (o RootCaOutput) ReadyForRenewal() pulumi.BoolOutput {
+	return o.ApplyT(func(v *RootCa) pulumi.BoolOutput { return v.ReadyForRenewal }).(pulumi.BoolOutput)
+}
+
+// When `algorithm` is `RSA`, the size of the generated RSA key, in bits (default: `2048`).
+func (o RootCaOutput) RsaBits() pulumi.IntOutput {
+	return o.ApplyT(func(v *RootCa) pulumi.IntOutput { return v.RsaBits }).(pulumi.IntOutput)
+}
+
+// Should the generated certificate include an [authority key identifier](https://datatracker.ietf.org/doc/html/rfc5280#section-4.2.1.1): for self-signed certificates this is the same value as the [subject key identifier](https://datatracker.ietf.org/doc/html/rfc5280#section-4.2.1.2) (default: `false`).
+func (o RootCaOutput) SetAuthorityKeyId() pulumi.BoolOutput {
+	return o.ApplyT(func(v *RootCa) pulumi.BoolOutput { return v.SetAuthorityKeyId }).(pulumi.BoolOutput)
+}
+
+// Should the generated certificate include a [subject key identifier](https://datatracker.ietf.org/doc/html/rfc5280#section-4.2.1.2) (default: `false`).
+func (o RootCaOutput) SetSubjectKeyId() pulumi.BoolOutput {
+	return o.ApplyT(func(v *RootCa) pulumi.BoolOutput { return v.SetSubjectKeyId }).(pulumi.BoolOutput)
+}
+
+// TODO
+func (o RootCaOutput) Subject() tls.SelfSignedCertSubjectPtrOutput {
+	return o.ApplyT(func(v *RootCa) tls.SelfSignedCertSubjectPtrOutput { return v.Subject }).(tls.SelfSignedCertSubjectPtrOutput)
+}
+
+// List of URIs for which a certificate is being requested (i.e. certificate subjects).
+func (o RootCaOutput) Uris() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v *RootCa) pulumi.StringArrayOutput { return v.Uris }).(pulumi.StringArrayOutput)
+}
+
+// The time until which the certificate is invalid, expressed as an [RFC3339](https://tools.ietf.org/html/rfc3339) timestamp.
+func (o RootCaOutput) ValidityEndTime() pulumi.StringOutput {
+	return o.ApplyT(func(v *RootCa) pulumi.StringOutput { return v.ValidityEndTime }).(pulumi.StringOutput)
+}
+
+// Number of hours, after initial issuing, that the certificate will remain valid for.
+func (o RootCaOutput) ValidityPeriodHours() pulumi.IntOutput {
+	return o.ApplyT(func(v *RootCa) pulumi.IntOutput { return v.ValidityPeriodHours }).(pulumi.IntOutput)
+}
+
+// The time after which the certificate is valid, expressed as an [RFC3339](https://tools.ietf.org/html/rfc3339) timestamp.
+func (o RootCaOutput) ValidityStartTime() pulumi.StringOutput {
+	return o.ApplyT(func(v *RootCa) pulumi.StringOutput { return v.ValidityStartTime }).(pulumi.StringOutput)
 }
 
 type RootCaArrayOutput struct{ *pulumi.OutputState }

@@ -14,25 +14,36 @@ import (
 	"github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/sdk/go/kubernetes-the-hard-way/tools"
 )
 
-// Installs containerd on a remote system.
+// Installs containerd on a remote system
 type ContainerdInstall struct {
 	pulumi.ResourceState
 
-	// The CPU architecture.
-	Architecture ArchitectureOutput     `pulumi:"architecture"`
-	ArchiveName  pulumi.StringPtrOutput `pulumi:"archiveName"`
-	// The connection details.
+	// The CPU architecture to install.
+	Architecture ArchitectureOutput `pulumi:"architecture"`
+	// The name of the downloaded archive.
+	ArchiveName pulumi.StringOutput `pulumi:"archiveName"`
+	// The parameters with which to connect to the remote host.
 	Connection pulumiCommand.ConnectionOutput `pulumi:"connection"`
-	// Directory to install the binary.
-	Directory pulumi.StringOutput    `pulumi:"directory"`
-	Download  DownloadOutput         `pulumi:"download"`
-	Mkdir     tools.MkdirOutput      `pulumi:"mkdir"`
-	Mktemp    tools.MktempOutput     `pulumi:"mktemp"`
-	Mv        tools.MvOutput         `pulumi:"mv"`
-	Path      pulumi.StringOutput    `pulumi:"path"`
-	Rm        tools.RmOutput         `pulumi:"rm"`
-	Tar       tools.TarOutput        `pulumi:"tar"`
-	Url       pulumi.StringPtrOutput `pulumi:"url"`
+	// The containerd mv operation.
+	ContainerdMv tools.MvOutput `pulumi:"containerdMv"`
+	// The containerd path on the remote system
+	ContainerdPath pulumi.StringOutput `pulumi:"containerdPath"`
+	// The directory to install the binary to.
+	Directory pulumi.StringOutput `pulumi:"directory"`
+	// The download operation.
+	Download DownloadOutput `pulumi:"download"`
+	// The mkdir operation.
+	Mkdir tools.MkdirOutput `pulumi:"mkdir"`
+	// The mktemp operation.
+	Mktemp tools.MktempOutput `pulumi:"mktemp"`
+	// The path to the installed binary.
+	Path pulumi.StringPtrOutput `pulumi:"path"`
+	// The rm operation.
+	Rm tools.RmOutput `pulumi:"rm"`
+	// The tar operation.
+	Tar tools.TarOutput `pulumi:"tar"`
+	// The url used to download the binary.
+	Url pulumi.StringOutput `pulumi:"url"`
 	// The version to install.
 	Version pulumi.StringOutput `pulumi:"version"`
 }
@@ -61,25 +72,25 @@ func NewContainerdInstall(ctx *pulumi.Context,
 }
 
 type containerdInstallArgs struct {
-	// The CPU architecture.
+	// The CPU architecture to install.
 	Architecture *Architecture `pulumi:"architecture"`
-	// The connection details.
+	// The parameters with which to connect to the remote host.
 	Connection pulumiCommand.Connection `pulumi:"connection"`
-	// Directory to install the binary.
+	// The directory to install the binary to.
 	Directory *string `pulumi:"directory"`
-	// The version of to install.
+	// The version to install.
 	Version *string `pulumi:"version"`
 }
 
 // The set of arguments for constructing a ContainerdInstall resource.
 type ContainerdInstallArgs struct {
-	// The CPU architecture.
+	// The CPU architecture to install.
 	Architecture ArchitecturePtrInput
-	// The connection details.
+	// The parameters with which to connect to the remote host.
 	Connection pulumiCommand.ConnectionInput
-	// Directory to install the binary.
+	// The directory to install the binary to.
 	Directory pulumi.StringPtrInput
-	// The version of to install.
+	// The version to install.
 	Version pulumi.StringPtrInput
 }
 
@@ -170,55 +181,69 @@ func (o ContainerdInstallOutput) ToContainerdInstallOutputWithContext(ctx contex
 	return o
 }
 
-// The CPU architecture.
+// The CPU architecture to install.
 func (o ContainerdInstallOutput) Architecture() ArchitectureOutput {
 	return o.ApplyT(func(v *ContainerdInstall) ArchitectureOutput { return v.Architecture }).(ArchitectureOutput)
 }
 
-func (o ContainerdInstallOutput) ArchiveName() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *ContainerdInstall) pulumi.StringPtrOutput { return v.ArchiveName }).(pulumi.StringPtrOutput)
+// The name of the downloaded archive.
+func (o ContainerdInstallOutput) ArchiveName() pulumi.StringOutput {
+	return o.ApplyT(func(v *ContainerdInstall) pulumi.StringOutput { return v.ArchiveName }).(pulumi.StringOutput)
 }
 
-// The connection details.
+// The parameters with which to connect to the remote host.
 func (o ContainerdInstallOutput) Connection() pulumiCommand.ConnectionOutput {
 	return o.ApplyT(func(v *ContainerdInstall) pulumiCommand.ConnectionOutput { return v.Connection }).(pulumiCommand.ConnectionOutput)
 }
 
-// Directory to install the binary.
+// The containerd mv operation.
+func (o ContainerdInstallOutput) ContainerdMv() tools.MvOutput {
+	return o.ApplyT(func(v *ContainerdInstall) tools.MvOutput { return v.ContainerdMv }).(tools.MvOutput)
+}
+
+// The containerd path on the remote system
+func (o ContainerdInstallOutput) ContainerdPath() pulumi.StringOutput {
+	return o.ApplyT(func(v *ContainerdInstall) pulumi.StringOutput { return v.ContainerdPath }).(pulumi.StringOutput)
+}
+
+// The directory to install the binary to.
 func (o ContainerdInstallOutput) Directory() pulumi.StringOutput {
 	return o.ApplyT(func(v *ContainerdInstall) pulumi.StringOutput { return v.Directory }).(pulumi.StringOutput)
 }
 
+// The download operation.
 func (o ContainerdInstallOutput) Download() DownloadOutput {
 	return o.ApplyT(func(v *ContainerdInstall) DownloadOutput { return v.Download }).(DownloadOutput)
 }
 
+// The mkdir operation.
 func (o ContainerdInstallOutput) Mkdir() tools.MkdirOutput {
 	return o.ApplyT(func(v *ContainerdInstall) tools.MkdirOutput { return v.Mkdir }).(tools.MkdirOutput)
 }
 
+// The mktemp operation.
 func (o ContainerdInstallOutput) Mktemp() tools.MktempOutput {
 	return o.ApplyT(func(v *ContainerdInstall) tools.MktempOutput { return v.Mktemp }).(tools.MktempOutput)
 }
 
-func (o ContainerdInstallOutput) Mv() tools.MvOutput {
-	return o.ApplyT(func(v *ContainerdInstall) tools.MvOutput { return v.Mv }).(tools.MvOutput)
+// The path to the installed binary.
+func (o ContainerdInstallOutput) Path() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *ContainerdInstall) pulumi.StringPtrOutput { return v.Path }).(pulumi.StringPtrOutput)
 }
 
-func (o ContainerdInstallOutput) Path() pulumi.StringOutput {
-	return o.ApplyT(func(v *ContainerdInstall) pulumi.StringOutput { return v.Path }).(pulumi.StringOutput)
-}
-
+// The rm operation.
 func (o ContainerdInstallOutput) Rm() tools.RmOutput {
 	return o.ApplyT(func(v *ContainerdInstall) tools.RmOutput { return v.Rm }).(tools.RmOutput)
 }
 
+// The tar operation.
 func (o ContainerdInstallOutput) Tar() tools.TarOutput {
 	return o.ApplyT(func(v *ContainerdInstall) tools.TarOutput { return v.Tar }).(tools.TarOutput)
 }
 
-func (o ContainerdInstallOutput) Url() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *ContainerdInstall) pulumi.StringPtrOutput { return v.Url }).(pulumi.StringPtrOutput)
+// The url used to download the binary.
+func (o ContainerdInstallOutput) Url() pulumi.StringOutput {
+	return o.ApplyT(func(v *ContainerdInstall) pulumi.StringOutput { return v.Url }).(pulumi.StringOutput)
 }
 
 // The version to install.

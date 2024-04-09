@@ -27,98 +27,168 @@ import javax.annotation.Nullable;
 @ResourceType(type="kubernetes-the-hard-way:remote:KubeSchedulerInstall")
 public class KubeSchedulerInstall extends com.pulumi.resources.ComponentResource {
     /**
-     * The kube-scheduler CPU architecture.
+     * The CPU architecture to install.
      * 
      */
     @Export(name="architecture", refs={Architecture.class}, tree="[0]")
     private Output<Architecture> architecture;
 
     /**
-     * @return The kube-scheduler CPU architecture.
+     * @return The CPU architecture to install.
      * 
      */
     public Output<Architecture> architecture() {
         return this.architecture;
     }
+    /**
+     * The name of the installed binary.
+     * 
+     */
     @Export(name="binName", refs={String.class}, tree="[0]")
     private Output</* @Nullable */ String> binName;
 
+    /**
+     * @return The name of the installed binary.
+     * 
+     */
     public Output<Optional<String>> binName() {
         return Codegen.optional(this.binName);
     }
     /**
-     * The connection details.
+     * The parameters with which to connect to the remote host.
      * 
      */
     @Export(name="connection", refs={Connection.class}, tree="[0]")
     private Output<Connection> connection;
 
     /**
-     * @return The connection details.
+     * @return The parameters with which to connect to the remote host.
      * 
      */
     public Output<Connection> connection() {
         return this.connection;
     }
     /**
-     * Directory to install the `etcd` and `etcdctl` binaries.
+     * The directory to install the binary to.
      * 
      */
     @Export(name="directory", refs={String.class}, tree="[0]")
     private Output<String> directory;
 
     /**
-     * @return Directory to install the `etcd` and `etcdctl` binaries.
+     * @return The directory to install the binary to.
      * 
      */
     public Output<String> directory() {
         return this.directory;
     }
+    /**
+     * The download operation.
+     * 
+     */
     @Export(name="download", refs={Download.class}, tree="[0]")
-    private Output</* @Nullable */ Download> download;
+    private Output<Download> download;
 
-    public Output<Optional<Download>> download() {
-        return Codegen.optional(this.download);
-    }
-    @Export(name="mkdir", refs={Mkdir.class}, tree="[0]")
-    private Output</* @Nullable */ Mkdir> mkdir;
-
-    public Output<Optional<Mkdir>> mkdir() {
-        return Codegen.optional(this.mkdir);
-    }
-    @Export(name="mktemp", refs={Mktemp.class}, tree="[0]")
-    private Output</* @Nullable */ Mktemp> mktemp;
-
-    public Output<Optional<Mktemp>> mktemp() {
-        return Codegen.optional(this.mktemp);
-    }
-    @Export(name="mv", refs={Mv.class}, tree="[0]")
-    private Output</* @Nullable */ Mv> mv;
-
-    public Output<Optional<Mv>> mv() {
-        return Codegen.optional(this.mv);
-    }
-    @Export(name="path", refs={String.class}, tree="[0]")
-    private Output</* @Nullable */ String> path;
-
-    public Output<Optional<String>> path() {
-        return Codegen.optional(this.path);
-    }
-    @Export(name="rm", refs={Rm.class}, tree="[0]")
-    private Output</* @Nullable */ Rm> rm;
-
-    public Output<Optional<Rm>> rm() {
-        return Codegen.optional(this.rm);
+    /**
+     * @return The download operation.
+     * 
+     */
+    public Output<Download> download() {
+        return this.download;
     }
     /**
-     * The version of kube-scheduler to install.
+     * The mkdir operation.
+     * 
+     */
+    @Export(name="mkdir", refs={Mkdir.class}, tree="[0]")
+    private Output<Mkdir> mkdir;
+
+    /**
+     * @return The mkdir operation.
+     * 
+     */
+    public Output<Mkdir> mkdir() {
+        return this.mkdir;
+    }
+    /**
+     * The mktemp operation.
+     * 
+     */
+    @Export(name="mktemp", refs={Mktemp.class}, tree="[0]")
+    private Output<Mktemp> mktemp;
+
+    /**
+     * @return The mktemp operation.
+     * 
+     */
+    public Output<Mktemp> mktemp() {
+        return this.mktemp;
+    }
+    /**
+     * The mv operation.
+     * 
+     */
+    @Export(name="mv", refs={Mv.class}, tree="[0]")
+    private Output<Mv> mv;
+
+    /**
+     * @return The mv operation.
+     * 
+     */
+    public Output<Mv> mv() {
+        return this.mv;
+    }
+    /**
+     * The path to the installed binary.
+     * 
+     */
+    @Export(name="path", refs={String.class}, tree="[0]")
+    private Output<String> path;
+
+    /**
+     * @return The path to the installed binary.
+     * 
+     */
+    public Output<String> path() {
+        return this.path;
+    }
+    /**
+     * The rm operation.
+     * 
+     */
+    @Export(name="rm", refs={Rm.class}, tree="[0]")
+    private Output<Rm> rm;
+
+    /**
+     * @return The rm operation.
+     * 
+     */
+    public Output<Rm> rm() {
+        return this.rm;
+    }
+    /**
+     * The url used to download the binary.
+     * 
+     */
+    @Export(name="url", refs={String.class}, tree="[0]")
+    private Output<String> url;
+
+    /**
+     * @return The url used to download the binary.
+     * 
+     */
+    public Output<String> url() {
+        return this.url;
+    }
+    /**
+     * The version to install.
      * 
      */
     @Export(name="version", refs={String.class}, tree="[0]")
     private Output<String> version;
 
     /**
-     * @return The version of kube-scheduler to install.
+     * @return The version to install.
      * 
      */
     public Output<String> version() {

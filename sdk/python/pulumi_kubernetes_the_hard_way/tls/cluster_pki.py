@@ -8,6 +8,7 @@ import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
 from .. import _utilities
+from . import outputs
 from .. import config as _config
 from ._enums import *
 from ._inputs import *
@@ -29,7 +30,7 @@ class ClusterPkiArgs:
         """
         The set of arguments for constructing a ClusterPki resource.
         :param pulumi.Input[str] cluster_name: A name to use for the cluster
-        :param pulumi.Input[Mapping[str, pulumi.Input['ClusterPkiNodeArgs']]] nodes: Map of node names to node configuration.
+        :param pulumi.Input[Mapping[str, pulumi.Input['ClusterPkiNodeArgs']]] nodes: Map of node name to node configuration
         :param pulumi.Input[str] public_ip: Publicly accessible IP address.
         :param pulumi.Input['Algorithm'] algorithm: Name of the algorithm to use when generating the private key.
         :param pulumi.Input['EcdsaCurve'] ecdsa_curve: When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
@@ -70,7 +71,7 @@ class ClusterPkiArgs:
     @pulumi.getter
     def nodes(self) -> pulumi.Input[Mapping[str, pulumi.Input['ClusterPkiNodeArgs']]]:
         """
-        Map of node names to node configuration.
+        Map of node name to node configuration
         """
         return pulumi.get(self, "nodes")
 
@@ -153,13 +154,14 @@ class ClusterPki(pulumi.ComponentResource):
                  validity_period_hours: Optional[pulumi.Input[int]] = None,
                  __props__=None):
         """
-        Create a ClusterPki resource with the given unique name, props, and options.
+        The private key infrastructure for a cluster
+
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input['Algorithm'] algorithm: Name of the algorithm to use when generating the private key.
         :param pulumi.Input[str] cluster_name: A name to use for the cluster
         :param pulumi.Input['EcdsaCurve'] ecdsa_curve: When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
-        :param pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['ClusterPkiNodeArgs']]]] nodes: Map of node names to node configuration.
+        :param pulumi.Input[Mapping[str, pulumi.Input[pulumi.InputType['ClusterPkiNodeArgs']]]] nodes: Map of node name to node configuration
         :param pulumi.Input[str] public_ip: Publicly accessible IP address.
         :param pulumi.Input[int] rsa_bits: When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
         :param pulumi.Input[int] validity_period_hours: Number of hours, after initial issuing, that the certificate will remain valid.
@@ -171,7 +173,8 @@ class ClusterPki(pulumi.ComponentResource):
                  args: ClusterPkiArgs,
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
-        Create a ClusterPki resource with the given unique name, props, and options.
+        The private key infrastructure for a cluster
+
         :param str resource_name: The name of the resource.
         :param ClusterPkiArgs args: The arguments to use to populate this resource's properties.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -249,7 +252,7 @@ class ClusterPki(pulumi.ComponentResource):
 
     @property
     @pulumi.getter
-    def algorithm(self) -> pulumi.Output['Algorithm']:
+    def algorithm(self) -> pulumi.Output[Optional['Algorithm']]:
         """
         Name of the algorithm to use when generating the private key.
         """
@@ -258,11 +261,17 @@ class ClusterPki(pulumi.ComponentResource):
     @property
     @pulumi.getter
     def ca(self) -> pulumi.Output['RootCa']:
+        """
+        The cluster certificate authority.
+        """
         return pulumi.get(self, "ca")
 
     @property
     @pulumi.getter(name="clusterName")
     def cluster_name(self) -> pulumi.Output[str]:
+        """
+        A name to use for the cluster
+        """
         return pulumi.get(self, "cluster_name")
 
     @property
@@ -272,6 +281,14 @@ class ClusterPki(pulumi.ComponentResource):
         The controller manager certificate.
         """
         return pulumi.get(self, "controller_manager")
+
+    @property
+    @pulumi.getter(name="ecdsaCurve")
+    def ecdsa_curve(self) -> pulumi.Output[Optional['EcdsaCurve']]:
+        """
+        When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
+        """
+        return pulumi.get(self, "ecdsa_curve")
 
     @property
     @pulumi.getter(name="kubeProxy")
@@ -306,16 +323,24 @@ class ClusterPki(pulumi.ComponentResource):
         return pulumi.get(self, "kubernetes")
 
     @property
+    @pulumi.getter
+    def nodes(self) -> pulumi.Output[Mapping[str, 'outputs.ClusterPkiNode']]:
+        """
+        Map of node name to node configuration
+        """
+        return pulumi.get(self, "nodes")
+
+    @property
     @pulumi.getter(name="publicIp")
     def public_ip(self) -> pulumi.Output[str]:
         """
-        The publicly accessible IP for the cluster.
+        Publicly accessible IP address.
         """
         return pulumi.get(self, "public_ip")
 
     @property
     @pulumi.getter(name="rsaBits")
-    def rsa_bits(self) -> pulumi.Output[int]:
+    def rsa_bits(self) -> pulumi.Output[Optional[int]]:
         """
         When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
         """
@@ -325,7 +350,7 @@ class ClusterPki(pulumi.ComponentResource):
     @pulumi.getter(name="serviceAccounts")
     def service_accounts(self) -> pulumi.Output['Certificate']:
         """
-        The service accounts certificate.
+        The service accounts certificate
         """
         return pulumi.get(self, "service_accounts")
 
@@ -351,6 +376,12 @@ class ClusterPki(pulumi.ComponentResource):
 
     def get_kubeconfig(__self__, *,
                        options: Union[pulumi.Input['_config.KubeconfigAdminOptionsArgs'], pulumi.Input['_config.KubeconfigKubeControllerManagerOptionsArgs'], pulumi.Input['_config.KubeconfigKubeProxyOptionsArgs'], pulumi.Input['_config.KubeconfigKubeSchedulerOptionsArgs'], pulumi.Input['_config.KubeconfigWorkerOptionsArgs']]) -> pulumi.Output['dict']:
+        """
+        Get a kubeconfig configured from this PKI.
+
+
+        :param Union[pulumi.Input['_config.KubeconfigAdminOptionsArgs'], pulumi.Input['_config.KubeconfigKubeControllerManagerOptionsArgs'], pulumi.Input['_config.KubeconfigKubeProxyOptionsArgs'], pulumi.Input['_config.KubeconfigKubeSchedulerOptionsArgs'], pulumi.Input['_config.KubeconfigWorkerOptionsArgs']] options: Options for creating the kubeconfig.
+        """
         __args__ = dict()
         __args__['__self__'] = __self__
         __args__['options'] = options

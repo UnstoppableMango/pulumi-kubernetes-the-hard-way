@@ -3,6 +3,7 @@
 
 package com.unmango.kubernetesthehardway.remote;
 
+import com.pulumi.command.remote.outputs.Connection;
 import com.pulumi.core.Output;
 import com.pulumi.core.annotations.Export;
 import com.pulumi.core.annotations.ResourceType;
@@ -12,156 +13,201 @@ import com.unmango.kubernetesthehardway.remote.Download;
 import com.unmango.kubernetesthehardway.remote.EtcdInstallArgs;
 import com.unmango.kubernetesthehardway.remote.enums.Architecture;
 import com.unmango.kubernetesthehardway.tools.Mkdir;
+import com.unmango.kubernetesthehardway.tools.Mktemp;
 import com.unmango.kubernetesthehardway.tools.Mv;
+import com.unmango.kubernetesthehardway.tools.Rm;
 import com.unmango.kubernetesthehardway.tools.Tar;
 import java.lang.String;
+import java.util.Optional;
 import javax.annotation.Nullable;
 
 /**
- * Represents an etcd binary on a remote system.
+ * Installs etcd on a remote system
  * 
  */
 @ResourceType(type="kubernetes-the-hard-way:remote:EtcdInstall")
 public class EtcdInstall extends com.pulumi.resources.ComponentResource {
     /**
-     * The etcd CPU architecture.
+     * The CPU architecture to install.
      * 
      */
     @Export(name="architecture", refs={Architecture.class}, tree="[0]")
     private Output<Architecture> architecture;
 
     /**
-     * @return The etcd CPU architecture.
+     * @return The CPU architecture to install.
      * 
      */
     public Output<Architecture> architecture() {
         return this.architecture;
     }
     /**
-     * The name of the etcd release archive.
+     * The name of the downloaded archive.
      * 
      */
     @Export(name="archiveName", refs={String.class}, tree="[0]")
     private Output<String> archiveName;
 
     /**
-     * @return The name of the etcd release archive.
+     * @return The name of the downloaded archive.
      * 
      */
     public Output<String> archiveName() {
         return this.archiveName;
     }
     /**
-     * Directory to install the `etcd` and `etcdctl` binaries.
+     * The parameters with which to connect to the remote host.
+     * 
+     */
+    @Export(name="connection", refs={Connection.class}, tree="[0]")
+    private Output<Connection> connection;
+
+    /**
+     * @return The parameters with which to connect to the remote host.
+     * 
+     */
+    public Output<Connection> connection() {
+        return this.connection;
+    }
+    /**
+     * The directory to install the binary to.
      * 
      */
     @Export(name="directory", refs={String.class}, tree="[0]")
     private Output<String> directory;
 
     /**
-     * @return Directory to install the `etcd` and `etcdctl` binaries.
+     * @return The directory to install the binary to.
      * 
      */
     public Output<String> directory() {
         return this.directory;
     }
     /**
-     * The etcd download operation.
+     * The download operation.
      * 
      */
     @Export(name="download", refs={Download.class}, tree="[0]")
     private Output<Download> download;
 
     /**
-     * @return The etcd download operation.
+     * @return The download operation.
      * 
      */
     public Output<Download> download() {
         return this.download;
     }
     /**
-     * The path to the etcd binary on the remote system.
+     * The etcd mv operation.
+     * 
+     */
+    @Export(name="etcdMv", refs={Mv.class}, tree="[0]")
+    private Output<Mv> etcdMv;
+
+    /**
+     * @return The etcd mv operation.
+     * 
+     */
+    public Output<Mv> etcdMv() {
+        return this.etcdMv;
+    }
+    /**
+     * The etcd path on the remote system
      * 
      */
     @Export(name="etcdPath", refs={String.class}, tree="[0]")
     private Output<String> etcdPath;
 
     /**
-     * @return The path to the etcd binary on the remote system.
+     * @return The etcd path on the remote system
      * 
      */
     public Output<String> etcdPath() {
         return this.etcdPath;
     }
     /**
-     * The path to the etcdctl binary on the remote system.
+     * The etcdctl mv operation.
+     * 
+     */
+    @Export(name="etcdctlMv", refs={Mv.class}, tree="[0]")
+    private Output<Mv> etcdctlMv;
+
+    /**
+     * @return The etcdctl mv operation.
+     * 
+     */
+    public Output<Mv> etcdctlMv() {
+        return this.etcdctlMv;
+    }
+    /**
+     * The etcdctl path on the remote system
      * 
      */
     @Export(name="etcdctlPath", refs={String.class}, tree="[0]")
     private Output<String> etcdctlPath;
 
     /**
-     * @return The path to the etcdctl binary on the remote system.
+     * @return The etcdctl path on the remote system
      * 
      */
     public Output<String> etcdctlPath() {
         return this.etcdctlPath;
     }
     /**
-     * The operation to create the install directory.
+     * The mkdir operation.
      * 
      */
     @Export(name="mkdir", refs={Mkdir.class}, tree="[0]")
     private Output<Mkdir> mkdir;
 
     /**
-     * @return The operation to create the install directory.
+     * @return The mkdir operation.
      * 
      */
     public Output<Mkdir> mkdir() {
         return this.mkdir;
     }
     /**
-     * The operation to move the etcd binary to the install directory.
+     * The mktemp operation.
      * 
      */
-    @Export(name="mvEtcd", refs={Mv.class}, tree="[0]")
-    private Output<Mv> mvEtcd;
+    @Export(name="mktemp", refs={Mktemp.class}, tree="[0]")
+    private Output<Mktemp> mktemp;
 
     /**
-     * @return The operation to move the etcd binary to the install directory.
+     * @return The mktemp operation.
      * 
      */
-    public Output<Mv> mvEtcd() {
-        return this.mvEtcd;
+    public Output<Mktemp> mktemp() {
+        return this.mktemp;
     }
     /**
-     * The operation to move the etcdctl binary to the install directory.
+     * The path to the installed binary.
      * 
      */
-    @Export(name="mvEtcdctl", refs={Mv.class}, tree="[0]")
-    private Output<Mv> mvEtcdctl;
+    @Export(name="path", refs={String.class}, tree="[0]")
+    private Output</* @Nullable */ String> path;
 
     /**
-     * @return The operation to move the etcdctl binary to the install directory.
+     * @return The path to the installed binary.
      * 
      */
-    public Output<Mv> mvEtcdctl() {
-        return this.mvEtcdctl;
+    public Output<Optional<String>> path() {
+        return Codegen.optional(this.path);
     }
     /**
-     * The name of the resource.
+     * The rm operation.
      * 
      */
-    @Export(name="name", refs={String.class}, tree="[0]")
-    private Output<String> name;
+    @Export(name="rm", refs={Rm.class}, tree="[0]")
+    private Output<Rm> rm;
 
     /**
-     * @return The name of the resource.
+     * @return The rm operation.
      * 
      */
-    public Output<String> name() {
-        return this.name;
+    public Output<Rm> rm() {
+        return this.rm;
     }
     /**
      * The tar operation.
@@ -178,28 +224,28 @@ public class EtcdInstall extends com.pulumi.resources.ComponentResource {
         return this.tar;
     }
     /**
-     * The url used to download etcd.
+     * The url used to download the binary.
      * 
      */
     @Export(name="url", refs={String.class}, tree="[0]")
     private Output<String> url;
 
     /**
-     * @return The url used to download etcd.
+     * @return The url used to download the binary.
      * 
      */
     public Output<String> url() {
         return this.url;
     }
     /**
-     * The version of etcd downloaded.
+     * The version to install.
      * 
      */
     @Export(name="version", refs={String.class}, tree="[0]")
     private Output<String> version;
 
     /**
-     * @return The version of etcd downloaded.
+     * @return The version to install.
      * 
      */
     public Output<String> version() {

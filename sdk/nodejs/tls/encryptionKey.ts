@@ -6,6 +6,9 @@ import * as utilities from "../utilities";
 
 import * as pulumiRandom from "@pulumi/random";
 
+/**
+ * A cluster encryption key.
+ */
 export class EncryptionKey extends pulumi.ComponentResource {
     /** @internal */
     public static readonly __pulumiType = 'kubernetes-the-hard-way:tls:EncryptionKey';
@@ -22,9 +25,16 @@ export class EncryptionKey extends pulumi.ComponentResource {
     }
 
     /**
+     * The number of bytes requested. The minimum value for length is 1.
+     */
+    public readonly bytes!: pulumi.Output<number>;
+    /**
      * The generated `v1/EncryptionConfig`.
      */
     public /*out*/ readonly config!: pulumi.Output<string>;
+    /**
+     * The generated random key.
+     */
     public /*out*/ readonly key!: pulumi.Output<pulumiRandom.RandomBytes>;
 
     /**
@@ -34,14 +44,18 @@ export class EncryptionKey extends pulumi.ComponentResource {
      * @param args The arguments to use to populate this resource's properties.
      * @param opts A bag of options that control this resource's behavior.
      */
-    constructor(name: string, args?: EncryptionKeyArgs, opts?: pulumi.ComponentResourceOptions) {
+    constructor(name: string, args: EncryptionKeyArgs, opts?: pulumi.ComponentResourceOptions) {
         let resourceInputs: pulumi.Inputs = {};
         opts = opts || {};
         if (!opts.id) {
+            if ((!args || args.bytes === undefined) && !opts.urn) {
+                throw new Error("Missing required property 'bytes'");
+            }
             resourceInputs["bytes"] = args ? args.bytes : undefined;
             resourceInputs["config"] = undefined /*out*/;
             resourceInputs["key"] = undefined /*out*/;
         } else {
+            resourceInputs["bytes"] = undefined /*out*/;
             resourceInputs["config"] = undefined /*out*/;
             resourceInputs["key"] = undefined /*out*/;
         }
@@ -55,7 +69,7 @@ export class EncryptionKey extends pulumi.ComponentResource {
  */
 export interface EncryptionKeyArgs {
     /**
-     * The length of the key in bytes.
+     * The number of bytes requested. The minimum value for length is 1.
      */
-    bytes?: pulumi.Input<number>;
+    bytes: pulumi.Input<number>;
 }

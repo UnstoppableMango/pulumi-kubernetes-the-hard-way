@@ -13,30 +13,44 @@ import (
 	"github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/sdk/go/kubernetes-the-hard-way/internal"
 )
 
-// Abstracion over the `tar` utility on a remote system.
+// Abstraction over the `rm` utility on a remote system.
 type Tar struct {
 	pulumi.ResourceState
 
 	// Corresponds to the [ARCHIVE] argument.
 	Archive pulumi.StringOutput `pulumi:"archive"`
-	// Represents the remote `tar` operation.
+	// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+	BinaryPath pulumi.StringOutput `pulumi:"binaryPath"`
+	// The underlying command
 	Command pulumiCommand.CommandOutput `pulumi:"command"`
-	// Corresponds to the --directory option.
+	// Connection details for the remote system
+	Connection pulumiCommand.ConnectionOutput `pulumi:"connection"`
+	// Corresponds to the `--directory` option.
 	Directory pulumi.StringPtrOutput `pulumi:"directory"`
-	// Corresponds to the --extract option.
+	// Environment variables
+	Environment pulumi.StringMapOutput `pulumi:"environment"`
+	// Corresponds to the `--extract` option.
 	Extract pulumi.BoolOutput `pulumi:"extract"`
 	// Corresponds to the [FILE] argument.
-	Files pulumi.StringArrayOutput `pulumi:"files"`
-	// Corresponds to the --gzip option.
+	Files pulumi.AnyOutput `pulumi:"files"`
+	// Corresponds to the `--gzip` option.
 	Gzip pulumi.BoolPtrOutput `pulumi:"gzip"`
-	// The process' stderr.
+	// At what stage(s) in the resource lifecycle should the command be run
+	Lifecycle CommandLifecyclePtrOutput `pulumi:"lifecycle"`
+	// Whether rm should be run when the resource is created or deleted.
+	OnDelete pulumi.BoolPtrOutput `pulumi:"onDelete"`
+	// Corresponds to the `--recursive` option.
+	Recursive pulumi.BoolPtrOutput `pulumi:"recursive"`
+	// TODO
 	Stderr pulumi.StringOutput `pulumi:"stderr"`
-	// The process' stdin.
+	// TODO
 	Stdin pulumi.StringPtrOutput `pulumi:"stdin"`
-	// The process' stdout.
+	// TODO
 	Stdout pulumi.StringOutput `pulumi:"stdout"`
-	// Corresponds to the --strip-components option.
+	// Corresponds to the `--strip-components` option.
 	StripComponents pulumi.IntPtrOutput `pulumi:"stripComponents"`
+	// TODO
+	Triggers pulumi.ArrayOutput `pulumi:"triggers"`
 }
 
 // NewTar registers a new resource with the given unique name, arguments, and options.
@@ -65,38 +79,64 @@ func NewTar(ctx *pulumi.Context,
 type tarArgs struct {
 	// Corresponds to the [ARCHIVE] argument.
 	Archive string `pulumi:"archive"`
-	// Connection details for the remote system.
+	// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+	BinaryPath *string `pulumi:"binaryPath"`
+	// Connection details for the remote system
 	Connection pulumiCommand.Connection `pulumi:"connection"`
-	// Corresponds to the --directory option.
-	Directory   *string           `pulumi:"directory"`
+	// Corresponds to the `--directory` option.
+	Directory *string `pulumi:"directory"`
+	// Environment variables
 	Environment map[string]string `pulumi:"environment"`
-	// Corresponds to the --extract option.
+	// Corresponds to the `--extract` option.
 	Extract *bool `pulumi:"extract"`
 	// Corresponds to the [FILE] argument.
 	Files interface{} `pulumi:"files"`
-	// Corresponds to the --gzip option.
+	// Corresponds to the `--gzip` option.
 	Gzip *bool `pulumi:"gzip"`
-	// Corresponds to the --strip-components option.
+	// At what stage(s) in the resource lifecycle should the command be run
+	Lifecycle *CommandLifecycle `pulumi:"lifecycle"`
+	// Whether rm should be run when the resource is created or deleted.
+	OnDelete *bool `pulumi:"onDelete"`
+	// Corresponds to the `--recursive` option.
+	Recursive *bool `pulumi:"recursive"`
+	// TODO
+	Stdin *string `pulumi:"stdin"`
+	// Corresponds to the `--strip-components` option.
 	StripComponents *int `pulumi:"stripComponents"`
+	// TODO
+	Triggers []interface{} `pulumi:"triggers"`
 }
 
 // The set of arguments for constructing a Tar resource.
 type TarArgs struct {
 	// Corresponds to the [ARCHIVE] argument.
 	Archive pulumi.StringInput
-	// Connection details for the remote system.
+	// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+	BinaryPath pulumi.StringPtrInput
+	// Connection details for the remote system
 	Connection pulumiCommand.ConnectionInput
-	// Corresponds to the --directory option.
-	Directory   pulumi.StringPtrInput
+	// Corresponds to the `--directory` option.
+	Directory pulumi.StringPtrInput
+	// Environment variables
 	Environment pulumi.StringMapInput
-	// Corresponds to the --extract option.
+	// Corresponds to the `--extract` option.
 	Extract pulumi.BoolPtrInput
 	// Corresponds to the [FILE] argument.
 	Files pulumi.Input
-	// Corresponds to the --gzip option.
+	// Corresponds to the `--gzip` option.
 	Gzip pulumi.BoolPtrInput
-	// Corresponds to the --strip-components option.
+	// At what stage(s) in the resource lifecycle should the command be run
+	Lifecycle *CommandLifecycle
+	// Whether rm should be run when the resource is created or deleted.
+	OnDelete pulumi.BoolPtrInput
+	// Corresponds to the `--recursive` option.
+	Recursive pulumi.BoolPtrInput
+	// TODO
+	Stdin pulumi.StringPtrInput
+	// Corresponds to the `--strip-components` option.
 	StripComponents pulumi.IntPtrInput
+	// TODO
+	Triggers pulumi.ArrayInput
 }
 
 func (TarArgs) ElementType() reflect.Type {
@@ -191,49 +231,84 @@ func (o TarOutput) Archive() pulumi.StringOutput {
 	return o.ApplyT(func(v *Tar) pulumi.StringOutput { return v.Archive }).(pulumi.StringOutput)
 }
 
-// Represents the remote `tar` operation.
+// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+func (o TarOutput) BinaryPath() pulumi.StringOutput {
+	return o.ApplyT(func(v *Tar) pulumi.StringOutput { return v.BinaryPath }).(pulumi.StringOutput)
+}
+
+// The underlying command
 func (o TarOutput) Command() pulumiCommand.CommandOutput {
 	return o.ApplyT(func(v *Tar) pulumiCommand.CommandOutput { return v.Command }).(pulumiCommand.CommandOutput)
 }
 
-// Corresponds to the --directory option.
+// Connection details for the remote system
+func (o TarOutput) Connection() pulumiCommand.ConnectionOutput {
+	return o.ApplyT(func(v *Tar) pulumiCommand.ConnectionOutput { return v.Connection }).(pulumiCommand.ConnectionOutput)
+}
+
+// Corresponds to the `--directory` option.
 func (o TarOutput) Directory() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Tar) pulumi.StringPtrOutput { return v.Directory }).(pulumi.StringPtrOutput)
 }
 
-// Corresponds to the --extract option.
+// Environment variables
+func (o TarOutput) Environment() pulumi.StringMapOutput {
+	return o.ApplyT(func(v *Tar) pulumi.StringMapOutput { return v.Environment }).(pulumi.StringMapOutput)
+}
+
+// Corresponds to the `--extract` option.
 func (o TarOutput) Extract() pulumi.BoolOutput {
 	return o.ApplyT(func(v *Tar) pulumi.BoolOutput { return v.Extract }).(pulumi.BoolOutput)
 }
 
 // Corresponds to the [FILE] argument.
-func (o TarOutput) Files() pulumi.StringArrayOutput {
-	return o.ApplyT(func(v *Tar) pulumi.StringArrayOutput { return v.Files }).(pulumi.StringArrayOutput)
+func (o TarOutput) Files() pulumi.AnyOutput {
+	return o.ApplyT(func(v *Tar) pulumi.AnyOutput { return v.Files }).(pulumi.AnyOutput)
 }
 
-// Corresponds to the --gzip option.
+// Corresponds to the `--gzip` option.
 func (o TarOutput) Gzip() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v *Tar) pulumi.BoolPtrOutput { return v.Gzip }).(pulumi.BoolPtrOutput)
 }
 
-// The process' stderr.
+// At what stage(s) in the resource lifecycle should the command be run
+func (o TarOutput) Lifecycle() CommandLifecyclePtrOutput {
+	return o.ApplyT(func(v *Tar) CommandLifecyclePtrOutput { return v.Lifecycle }).(CommandLifecyclePtrOutput)
+}
+
+// Whether rm should be run when the resource is created or deleted.
+func (o TarOutput) OnDelete() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *Tar) pulumi.BoolPtrOutput { return v.OnDelete }).(pulumi.BoolPtrOutput)
+}
+
+// Corresponds to the `--recursive` option.
+func (o TarOutput) Recursive() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *Tar) pulumi.BoolPtrOutput { return v.Recursive }).(pulumi.BoolPtrOutput)
+}
+
+// TODO
 func (o TarOutput) Stderr() pulumi.StringOutput {
 	return o.ApplyT(func(v *Tar) pulumi.StringOutput { return v.Stderr }).(pulumi.StringOutput)
 }
 
-// The process' stdin.
+// TODO
 func (o TarOutput) Stdin() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Tar) pulumi.StringPtrOutput { return v.Stdin }).(pulumi.StringPtrOutput)
 }
 
-// The process' stdout.
+// TODO
 func (o TarOutput) Stdout() pulumi.StringOutput {
 	return o.ApplyT(func(v *Tar) pulumi.StringOutput { return v.Stdout }).(pulumi.StringOutput)
 }
 
-// Corresponds to the --strip-components option.
+// Corresponds to the `--strip-components` option.
 func (o TarOutput) StripComponents() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v *Tar) pulumi.IntPtrOutput { return v.StripComponents }).(pulumi.IntPtrOutput)
+}
+
+// TODO
+func (o TarOutput) Triggers() pulumi.ArrayOutput {
+	return o.ApplyT(func(v *Tar) pulumi.ArrayOutput { return v.Triggers }).(pulumi.ArrayOutput)
 }
 
 type TarArrayOutput struct{ *pulumi.OutputState }

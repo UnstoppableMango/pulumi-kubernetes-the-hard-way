@@ -266,96 +266,43 @@ func (in *etcdctlCommandPtr) ToEtcdctlCommandPtrOutputWithContext(ctx context.Co
 	return pulumi.ToOutputWithContext(ctx, in).(EtcdctlCommandPtrOutput)
 }
 
-// EtcdctlCommandArrayInput is an input type that accepts EtcdctlCommandArray and EtcdctlCommandArrayOutput values.
-// You can construct a concrete instance of `EtcdctlCommandArrayInput` via:
-//
-//	EtcdctlCommandArray{ EtcdctlCommandArgs{...} }
-type EtcdctlCommandArrayInput interface {
-	pulumi.Input
-
-	ToEtcdctlCommandArrayOutput() EtcdctlCommandArrayOutput
-	ToEtcdctlCommandArrayOutputWithContext(context.Context) EtcdctlCommandArrayOutput
-}
-
-type EtcdctlCommandArray []EtcdctlCommand
-
-func (EtcdctlCommandArray) ElementType() reflect.Type {
-	return reflect.TypeOf((*[]EtcdctlCommand)(nil)).Elem()
-}
-
-func (i EtcdctlCommandArray) ToEtcdctlCommandArrayOutput() EtcdctlCommandArrayOutput {
-	return i.ToEtcdctlCommandArrayOutputWithContext(context.Background())
-}
-
-func (i EtcdctlCommandArray) ToEtcdctlCommandArrayOutputWithContext(ctx context.Context) EtcdctlCommandArrayOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(EtcdctlCommandArrayOutput)
-}
-
-type EtcdctlCommandArrayOutput struct{ *pulumi.OutputState }
-
-func (EtcdctlCommandArrayOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*[]EtcdctlCommand)(nil)).Elem()
-}
-
-func (o EtcdctlCommandArrayOutput) ToEtcdctlCommandArrayOutput() EtcdctlCommandArrayOutput {
-	return o
-}
-
-func (o EtcdctlCommandArrayOutput) ToEtcdctlCommandArrayOutputWithContext(ctx context.Context) EtcdctlCommandArrayOutput {
-	return o
-}
-
-func (o EtcdctlCommandArrayOutput) Index(i pulumi.IntInput) EtcdctlCommandOutput {
-	return pulumi.All(o, i).ApplyT(func(vs []interface{}) EtcdctlCommand {
-		return vs[0].([]EtcdctlCommand)[vs[1].(int)]
-	}).(EtcdctlCommandOutput)
-}
-
 type SystemctlCommand string
 
 const (
-	SystemctlCommand_Daemon_Reload = SystemctlCommand("daemon-reload")
-	SystemctlCommandDisable        = SystemctlCommand("disable")
-	SystemctlCommandEnable         = SystemctlCommand("enable")
-	SystemctlCommandStart          = SystemctlCommand("start")
-	SystemctlCommandStop           = SystemctlCommand("stop")
+	SystemctlCommandBind                   = SystemctlCommand("bind")
+	SystemctlCommandCat                    = SystemctlCommand("cat")
+	SystemctlCommandClean                  = SystemctlCommand("clean")
+	SystemctlCommand_Daemon_Reload         = SystemctlCommand("daemon-reload")
+	SystemctlCommandDisable                = SystemctlCommand("disable")
+	SystemctlCommandEnable                 = SystemctlCommand("enable")
+	SystemctlCommandFreeze                 = SystemctlCommand("freeze")
+	SystemctlCommand_Is_Active             = SystemctlCommand("is-active")
+	SystemctlCommand_Is_Enabled            = SystemctlCommand("is-enabled")
+	SystemctlCommand_Is_Failed             = SystemctlCommand("is-failed")
+	SystemctlCommandIsolate                = SystemctlCommand("isolate")
+	SystemctlCommandKill                   = SystemctlCommand("kill")
+	SystemctlCommand_List_Automounts       = SystemctlCommand("list-automounts")
+	SystemctlCommand_List_Dependencies     = SystemctlCommand("list-dependencies")
+	SystemctlCommand_List_Paths            = SystemctlCommand("list-paths")
+	SystemctlCommand_List_Sockets          = SystemctlCommand("list-sockets")
+	SystemctlCommand_List_Timers           = SystemctlCommand("list-timers")
+	SystemctlCommand_List_Units            = SystemctlCommand("list-units")
+	SystemctlCommandMask                   = SystemctlCommand("mask")
+	SystemctlCommand_Mount_Image           = SystemctlCommand("mount-image")
+	SystemctlCommandReenable               = SystemctlCommand("reenable")
+	SystemctlCommandReload                 = SystemctlCommand("reload")
+	SystemctlCommand_Reload_Or_Restart     = SystemctlCommand("reload-or-restart")
+	SystemctlCommandRestart                = SystemctlCommand("restart")
+	SystemctlCommand_Set_Property          = SystemctlCommand("set-property")
+	SystemctlCommandShow                   = SystemctlCommand("show")
+	SystemctlCommandStart                  = SystemctlCommand("start")
+	SystemctlCommandStatus                 = SystemctlCommand("status")
+	SystemctlCommandStop                   = SystemctlCommand("stop")
+	SystemctlCommandThaw                   = SystemctlCommand("thaw")
+	SystemctlCommand_Try_Reload_Or_Restart = SystemctlCommand("try-reload-or-restart")
+	SystemctlCommand_Try_Restart           = SystemctlCommand("try-restart")
+	SystemctlCommandUnmask                 = SystemctlCommand("unmask")
 )
-
-func (SystemctlCommand) ElementType() reflect.Type {
-	return reflect.TypeOf((*SystemctlCommand)(nil)).Elem()
-}
-
-func (e SystemctlCommand) ToSystemctlCommandOutput() SystemctlCommandOutput {
-	return pulumi.ToOutput(e).(SystemctlCommandOutput)
-}
-
-func (e SystemctlCommand) ToSystemctlCommandOutputWithContext(ctx context.Context) SystemctlCommandOutput {
-	return pulumi.ToOutputWithContext(ctx, e).(SystemctlCommandOutput)
-}
-
-func (e SystemctlCommand) ToSystemctlCommandPtrOutput() SystemctlCommandPtrOutput {
-	return e.ToSystemctlCommandPtrOutputWithContext(context.Background())
-}
-
-func (e SystemctlCommand) ToSystemctlCommandPtrOutputWithContext(ctx context.Context) SystemctlCommandPtrOutput {
-	return SystemctlCommand(e).ToSystemctlCommandOutputWithContext(ctx).ToSystemctlCommandPtrOutputWithContext(ctx)
-}
-
-func (e SystemctlCommand) ToStringOutput() pulumi.StringOutput {
-	return pulumi.ToOutput(pulumi.String(e)).(pulumi.StringOutput)
-}
-
-func (e SystemctlCommand) ToStringOutputWithContext(ctx context.Context) pulumi.StringOutput {
-	return pulumi.ToOutputWithContext(ctx, pulumi.String(e)).(pulumi.StringOutput)
-}
-
-func (e SystemctlCommand) ToStringPtrOutput() pulumi.StringPtrOutput {
-	return pulumi.String(e).ToStringPtrOutputWithContext(context.Background())
-}
-
-func (e SystemctlCommand) ToStringPtrOutputWithContext(ctx context.Context) pulumi.StringPtrOutput {
-	return pulumi.String(e).ToStringOutputWithContext(ctx).ToStringPtrOutputWithContext(ctx)
-}
 
 type SystemctlCommandOutput struct{ *pulumi.OutputState }
 
@@ -438,93 +385,6 @@ func (o SystemctlCommandPtrOutput) ToStringPtrOutputWithContext(ctx context.Cont
 		v := string(*e)
 		return &v
 	}).(pulumi.StringPtrOutput)
-}
-
-// SystemctlCommandInput is an input type that accepts values of the SystemctlCommand enum
-// A concrete instance of `SystemctlCommandInput` can be one of the following:
-//
-//	SystemctlCommand_Daemon_Reload
-//	SystemctlCommandDisable
-//	SystemctlCommandEnable
-//	SystemctlCommandStart
-//	SystemctlCommandStop
-type SystemctlCommandInput interface {
-	pulumi.Input
-
-	ToSystemctlCommandOutput() SystemctlCommandOutput
-	ToSystemctlCommandOutputWithContext(context.Context) SystemctlCommandOutput
-}
-
-var systemctlCommandPtrType = reflect.TypeOf((**SystemctlCommand)(nil)).Elem()
-
-type SystemctlCommandPtrInput interface {
-	pulumi.Input
-
-	ToSystemctlCommandPtrOutput() SystemctlCommandPtrOutput
-	ToSystemctlCommandPtrOutputWithContext(context.Context) SystemctlCommandPtrOutput
-}
-
-type systemctlCommandPtr string
-
-func SystemctlCommandPtr(v string) SystemctlCommandPtrInput {
-	return (*systemctlCommandPtr)(&v)
-}
-
-func (*systemctlCommandPtr) ElementType() reflect.Type {
-	return systemctlCommandPtrType
-}
-
-func (in *systemctlCommandPtr) ToSystemctlCommandPtrOutput() SystemctlCommandPtrOutput {
-	return pulumi.ToOutput(in).(SystemctlCommandPtrOutput)
-}
-
-func (in *systemctlCommandPtr) ToSystemctlCommandPtrOutputWithContext(ctx context.Context) SystemctlCommandPtrOutput {
-	return pulumi.ToOutputWithContext(ctx, in).(SystemctlCommandPtrOutput)
-}
-
-// SystemctlCommandArrayInput is an input type that accepts SystemctlCommandArray and SystemctlCommandArrayOutput values.
-// You can construct a concrete instance of `SystemctlCommandArrayInput` via:
-//
-//	SystemctlCommandArray{ SystemctlCommandArgs{...} }
-type SystemctlCommandArrayInput interface {
-	pulumi.Input
-
-	ToSystemctlCommandArrayOutput() SystemctlCommandArrayOutput
-	ToSystemctlCommandArrayOutputWithContext(context.Context) SystemctlCommandArrayOutput
-}
-
-type SystemctlCommandArray []SystemctlCommand
-
-func (SystemctlCommandArray) ElementType() reflect.Type {
-	return reflect.TypeOf((*[]SystemctlCommand)(nil)).Elem()
-}
-
-func (i SystemctlCommandArray) ToSystemctlCommandArrayOutput() SystemctlCommandArrayOutput {
-	return i.ToSystemctlCommandArrayOutputWithContext(context.Background())
-}
-
-func (i SystemctlCommandArray) ToSystemctlCommandArrayOutputWithContext(ctx context.Context) SystemctlCommandArrayOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(SystemctlCommandArrayOutput)
-}
-
-type SystemctlCommandArrayOutput struct{ *pulumi.OutputState }
-
-func (SystemctlCommandArrayOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*[]SystemctlCommand)(nil)).Elem()
-}
-
-func (o SystemctlCommandArrayOutput) ToSystemctlCommandArrayOutput() SystemctlCommandArrayOutput {
-	return o
-}
-
-func (o SystemctlCommandArrayOutput) ToSystemctlCommandArrayOutputWithContext(ctx context.Context) SystemctlCommandArrayOutput {
-	return o
-}
-
-func (o SystemctlCommandArrayOutput) Index(i pulumi.IntInput) SystemctlCommandOutput {
-	return pulumi.All(o, i).ApplyT(func(vs []interface{}) SystemctlCommand {
-		return vs[0].([]SystemctlCommand)[vs[1].(int)]
-	}).(SystemctlCommandOutput)
 }
 
 type TeeMode string
@@ -699,20 +559,14 @@ func (in *teeModePtr) ToTeeModePtrOutputWithContext(ctx context.Context) TeeMode
 func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*EtcdctlCommandInput)(nil)).Elem(), EtcdctlCommand("member"))
 	pulumi.RegisterInputType(reflect.TypeOf((*EtcdctlCommandPtrInput)(nil)).Elem(), EtcdctlCommand("member"))
-	pulumi.RegisterInputType(reflect.TypeOf((*EtcdctlCommandArrayInput)(nil)).Elem(), EtcdctlCommandArray{})
-	pulumi.RegisterInputType(reflect.TypeOf((*SystemctlCommandInput)(nil)).Elem(), SystemctlCommand("daemon-reload"))
-	pulumi.RegisterInputType(reflect.TypeOf((*SystemctlCommandPtrInput)(nil)).Elem(), SystemctlCommand("daemon-reload"))
-	pulumi.RegisterInputType(reflect.TypeOf((*SystemctlCommandArrayInput)(nil)).Elem(), SystemctlCommandArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*TeeModeInput)(nil)).Elem(), TeeMode("warn"))
 	pulumi.RegisterInputType(reflect.TypeOf((*TeeModePtrInput)(nil)).Elem(), TeeMode("warn"))
 	pulumi.RegisterOutputType(CommandLifecycleOutput{})
 	pulumi.RegisterOutputType(CommandLifecyclePtrOutput{})
 	pulumi.RegisterOutputType(EtcdctlCommandOutput{})
 	pulumi.RegisterOutputType(EtcdctlCommandPtrOutput{})
-	pulumi.RegisterOutputType(EtcdctlCommandArrayOutput{})
 	pulumi.RegisterOutputType(SystemctlCommandOutput{})
 	pulumi.RegisterOutputType(SystemctlCommandPtrOutput{})
-	pulumi.RegisterOutputType(SystemctlCommandArrayOutput{})
 	pulumi.RegisterOutputType(TeeModeOutput{})
 	pulumi.RegisterOutputType(TeeModePtrOutput{})
 }

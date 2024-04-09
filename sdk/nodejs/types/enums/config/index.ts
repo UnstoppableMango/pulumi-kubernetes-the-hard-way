@@ -10,7 +10,4 @@ export const KubeconfigType = {
     Admin: "admin",
 } as const;
 
-/**
- * Kubeconfig type
- */
 export type KubeconfigType = (typeof KubeconfigType)[keyof typeof KubeconfigType];

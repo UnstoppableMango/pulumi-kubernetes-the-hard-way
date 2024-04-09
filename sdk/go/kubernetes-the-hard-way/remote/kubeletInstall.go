@@ -18,19 +18,28 @@ import (
 type KubeletInstall struct {
 	pulumi.ResourceState
 
-	// The CPU architecture.
-	Architecture ArchitectureOutput     `pulumi:"architecture"`
-	BinName      pulumi.StringPtrOutput `pulumi:"binName"`
-	// The connection details.
+	// The CPU architecture to install.
+	Architecture ArchitectureOutput `pulumi:"architecture"`
+	// The name of the installed binary.
+	BinName pulumi.StringPtrOutput `pulumi:"binName"`
+	// The parameters with which to connect to the remote host.
 	Connection pulumiCommand.ConnectionOutput `pulumi:"connection"`
-	// Directory to install the binary.
+	// The directory to install the binary to.
 	Directory pulumi.StringOutput `pulumi:"directory"`
-	Download  DownloadOutput      `pulumi:"download"`
-	Mkdir     tools.MkdirOutput   `pulumi:"mkdir"`
-	Mktemp    tools.MktempOutput  `pulumi:"mktemp"`
-	Mv        tools.MvOutput      `pulumi:"mv"`
-	Path      pulumi.StringOutput `pulumi:"path"`
-	Rm        tools.RmOutput      `pulumi:"rm"`
+	// The download operation.
+	Download DownloadOutput `pulumi:"download"`
+	// The mkdir operation.
+	Mkdir tools.MkdirOutput `pulumi:"mkdir"`
+	// The mktemp operation.
+	Mktemp tools.MktempOutput `pulumi:"mktemp"`
+	// The mv operation.
+	Mv tools.MvOutput `pulumi:"mv"`
+	// The path to the installed binary.
+	Path pulumi.StringOutput `pulumi:"path"`
+	// The rm operation.
+	Rm tools.RmOutput `pulumi:"rm"`
+	// The url used to download the binary.
+	Url pulumi.StringOutput `pulumi:"url"`
 	// The version to install.
 	Version pulumi.StringOutput `pulumi:"version"`
 }
@@ -59,25 +68,25 @@ func NewKubeletInstall(ctx *pulumi.Context,
 }
 
 type kubeletInstallArgs struct {
-	// The CPU architecture.
+	// The CPU architecture to install.
 	Architecture *Architecture `pulumi:"architecture"`
-	// The connection details.
+	// The parameters with which to connect to the remote host.
 	Connection pulumiCommand.Connection `pulumi:"connection"`
-	// Directory to install the binary.
+	// The directory to install the binary to.
 	Directory *string `pulumi:"directory"`
-	// The version of to install.
+	// The version to install.
 	Version *string `pulumi:"version"`
 }
 
 // The set of arguments for constructing a KubeletInstall resource.
 type KubeletInstallArgs struct {
-	// The CPU architecture.
+	// The CPU architecture to install.
 	Architecture ArchitecturePtrInput
-	// The connection details.
+	// The parameters with which to connect to the remote host.
 	Connection pulumiCommand.ConnectionInput
-	// Directory to install the binary.
+	// The directory to install the binary to.
 	Directory pulumi.StringPtrInput
-	// The version of to install.
+	// The version to install.
 	Version pulumi.StringPtrInput
 }
 
@@ -168,47 +177,59 @@ func (o KubeletInstallOutput) ToKubeletInstallOutputWithContext(ctx context.Cont
 	return o
 }
 
-// The CPU architecture.
+// The CPU architecture to install.
 func (o KubeletInstallOutput) Architecture() ArchitectureOutput {
 	return o.ApplyT(func(v *KubeletInstall) ArchitectureOutput { return v.Architecture }).(ArchitectureOutput)
 }
 
+// The name of the installed binary.
 func (o KubeletInstallOutput) BinName() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *KubeletInstall) pulumi.StringPtrOutput { return v.BinName }).(pulumi.StringPtrOutput)
 }
 
-// The connection details.
+// The parameters with which to connect to the remote host.
 func (o KubeletInstallOutput) Connection() pulumiCommand.ConnectionOutput {
 	return o.ApplyT(func(v *KubeletInstall) pulumiCommand.ConnectionOutput { return v.Connection }).(pulumiCommand.ConnectionOutput)
 }
 
-// Directory to install the binary.
+// The directory to install the binary to.
 func (o KubeletInstallOutput) Directory() pulumi.StringOutput {
 	return o.ApplyT(func(v *KubeletInstall) pulumi.StringOutput { return v.Directory }).(pulumi.StringOutput)
 }
 
+// The download operation.
 func (o KubeletInstallOutput) Download() DownloadOutput {
 	return o.ApplyT(func(v *KubeletInstall) DownloadOutput { return v.Download }).(DownloadOutput)
 }
 
+// The mkdir operation.
 func (o KubeletInstallOutput) Mkdir() tools.MkdirOutput {
 	return o.ApplyT(func(v *KubeletInstall) tools.MkdirOutput { return v.Mkdir }).(tools.MkdirOutput)
 }
 
+// The mktemp operation.
 func (o KubeletInstallOutput) Mktemp() tools.MktempOutput {
 	return o.ApplyT(func(v *KubeletInstall) tools.MktempOutput { return v.Mktemp }).(tools.MktempOutput)
 }
 
+// The mv operation.
 func (o KubeletInstallOutput) Mv() tools.MvOutput {
 	return o.ApplyT(func(v *KubeletInstall) tools.MvOutput { return v.Mv }).(tools.MvOutput)
 }
 
+// The path to the installed binary.
 func (o KubeletInstallOutput) Path() pulumi.StringOutput {
 	return o.ApplyT(func(v *KubeletInstall) pulumi.StringOutput { return v.Path }).(pulumi.StringOutput)
 }
 
+// The rm operation.
 func (o KubeletInstallOutput) Rm() tools.RmOutput {
 	return o.ApplyT(func(v *KubeletInstall) tools.RmOutput { return v.Rm }).(tools.RmOutput)
+}
+
+// The url used to download the binary.
+func (o KubeletInstallOutput) Url() pulumi.StringOutput {
+	return o.ApplyT(func(v *KubeletInstall) pulumi.StringOutput { return v.Url }).(pulumi.StringOutput)
 }
 
 // The version to install.

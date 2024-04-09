@@ -1,12 +1,13 @@
 import { ComponentResourceOptions, Input, Inputs, Output, output } from '@pulumi/pulumi';
 import { SelfSignedCert } from '@pulumi/tls';
 import { SelfSignedCertSubject } from '@pulumi/tls/types/input';
+import * as schema from '../schema-types';
 import { KeyPair, KeyPairArgs } from './keypair';
-import { Certificate, CertificateArgs } from './certificate';
+import { Certificate } from './certificate';
 import { AllowedUsage } from '../types';
 import { toAllowedUsage } from '../util';
 
-export type NewCertificateInputs = Omit<CertificateArgs, 'caCertPem' | 'caPrivateKeyPem'> & {
+export type NewCertificateInputs = Omit<schema.CertificateArgs, 'caCertPem' | 'caPrivateKeyPem'> & {
   name: string;
   options?: ComponentResourceOptions;
 };

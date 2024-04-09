@@ -14,44 +14,106 @@ import (
 	"github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/sdk/go/kubernetes-the-hard-way/tools"
 )
 
-// Installs cni-plugins on a remote system.
+// Installs cni-plugins on a remote system
 type CniPluginsInstall struct {
 	pulumi.ResourceState
 
-	// The CPU architecture.
-	Architecture  ArchitectureOutput  `pulumi:"architecture"`
-	ArchiveName   pulumi.StringOutput `pulumi:"archiveName"`
+	// The CPU architecture to install.
+	Architecture ArchitectureOutput `pulumi:"architecture"`
+	// The name of the downloaded archive.
+	ArchiveName pulumi.StringOutput `pulumi:"archiveName"`
+	// The bandwidth mv operation.
+	BandwidthMv tools.MvOutput `pulumi:"bandwidthMv"`
+	// The bandwidth path on the remote system
 	BandwidthPath pulumi.StringOutput `pulumi:"bandwidthPath"`
-	BridgePath    pulumi.StringOutput `pulumi:"bridgePath"`
-	// The connection details.
+	// The bridge mv operation.
+	BridgeMv tools.MvOutput `pulumi:"bridgeMv"`
+	// The bridge path on the remote system
+	BridgePath pulumi.StringOutput `pulumi:"bridgePath"`
+	// The parameters with which to connect to the remote host.
 	Connection pulumiCommand.ConnectionOutput `pulumi:"connection"`
-	DhcpPath   pulumi.StringOutput            `pulumi:"dhcpPath"`
-	// Directory to install the binary.
-	Directory      pulumi.StringOutput `pulumi:"directory"`
-	Download       DownloadOutput      `pulumi:"download"`
-	DummyPath      pulumi.StringOutput `pulumi:"dummyPath"`
-	FirewallPath   pulumi.StringOutput `pulumi:"firewallPath"`
+	// The dhcp mv operation.
+	DhcpMv tools.MvOutput `pulumi:"dhcpMv"`
+	// The dhcp path on the remote system
+	DhcpPath pulumi.StringOutput `pulumi:"dhcpPath"`
+	// The directory to install the binary to.
+	Directory pulumi.StringOutput `pulumi:"directory"`
+	// The download operation.
+	Download DownloadOutput `pulumi:"download"`
+	// The dummy mv operation.
+	DummyMv tools.MvOutput `pulumi:"dummyMv"`
+	// The dummy path on the remote system
+	DummyPath pulumi.StringOutput `pulumi:"dummyPath"`
+	// The firewall mv operation.
+	FirewallMv tools.MvOutput `pulumi:"firewallMv"`
+	// The firewall path on the remote system
+	FirewallPath pulumi.StringOutput `pulumi:"firewallPath"`
+	// The hostDevice mv operation.
+	HostDeviceMv tools.MvOutput `pulumi:"hostDeviceMv"`
+	// The hostDevice path on the remote system
 	HostDevicePath pulumi.StringOutput `pulumi:"hostDevicePath"`
-	HostLocalPath  pulumi.StringOutput `pulumi:"hostLocalPath"`
-	IpvlanPath     pulumi.StringOutput `pulumi:"ipvlanPath"`
-	LoopbackPath   pulumi.StringOutput `pulumi:"loopbackPath"`
-	MacvlanPath    pulumi.StringOutput `pulumi:"macvlanPath"`
-	Mkdir          tools.MkdirOutput   `pulumi:"mkdir"`
-	Mktemp         tools.MktempOutput  `pulumi:"mktemp"`
-	Mv             tools.MvOutput      `pulumi:"mv"`
-	PortmapPath    pulumi.StringOutput `pulumi:"portmapPath"`
-	PtpPath        pulumi.StringOutput `pulumi:"ptpPath"`
-	Rm             tools.RmOutput      `pulumi:"rm"`
-	SbrPath        pulumi.StringOutput `pulumi:"sbrPath"`
-	StaticPath     pulumi.StringOutput `pulumi:"staticPath"`
-	TapPath        pulumi.StringOutput `pulumi:"tapPath"`
-	Tar            tools.TarOutput     `pulumi:"tar"`
-	TuningPath     pulumi.StringOutput `pulumi:"tuningPath"`
-	Url            pulumi.StringOutput `pulumi:"url"`
+	// The hostLocal mv operation.
+	HostLocalMv tools.MvOutput `pulumi:"hostLocalMv"`
+	// The hostLocal path on the remote system
+	HostLocalPath pulumi.StringOutput `pulumi:"hostLocalPath"`
+	// The ipvlan mv operation.
+	IpvlanMv tools.MvOutput `pulumi:"ipvlanMv"`
+	// The ipvlan path on the remote system
+	IpvlanPath pulumi.StringOutput `pulumi:"ipvlanPath"`
+	// The loopback mv operation.
+	LoopbackMv tools.MvOutput `pulumi:"loopbackMv"`
+	// The loopback path on the remote system
+	LoopbackPath pulumi.StringOutput `pulumi:"loopbackPath"`
+	// The macvlan mv operation.
+	MacvlanMv tools.MvOutput `pulumi:"macvlanMv"`
+	// The macvlan path on the remote system
+	MacvlanPath pulumi.StringOutput `pulumi:"macvlanPath"`
+	// The mkdir operation.
+	Mkdir tools.MkdirOutput `pulumi:"mkdir"`
+	// The mktemp operation.
+	Mktemp tools.MktempOutput `pulumi:"mktemp"`
+	// The path to the installed binary.
+	Path pulumi.StringPtrOutput `pulumi:"path"`
+	// The portmap mv operation.
+	PortmapMv tools.MvOutput `pulumi:"portmapMv"`
+	// The portmap path on the remote system
+	PortmapPath pulumi.StringOutput `pulumi:"portmapPath"`
+	// The ptp mv operation.
+	PtpMv tools.MvOutput `pulumi:"ptpMv"`
+	// The ptp path on the remote system
+	PtpPath pulumi.StringOutput `pulumi:"ptpPath"`
+	// The rm operation.
+	Rm tools.RmOutput `pulumi:"rm"`
+	// The sbr mv operation.
+	SbrMv tools.MvOutput `pulumi:"sbrMv"`
+	// The sbr path on the remote system
+	SbrPath pulumi.StringOutput `pulumi:"sbrPath"`
+	// The static mv operation.
+	StaticMv tools.MvOutput `pulumi:"staticMv"`
+	// The static path on the remote system
+	StaticPath pulumi.StringOutput `pulumi:"staticPath"`
+	// The tap mv operation.
+	TapMv tools.MvOutput `pulumi:"tapMv"`
+	// The tap path on the remote system
+	TapPath pulumi.StringOutput `pulumi:"tapPath"`
+	// The tar operation.
+	Tar tools.TarOutput `pulumi:"tar"`
+	// The tuning mv operation.
+	TuningMv tools.MvOutput `pulumi:"tuningMv"`
+	// The tuning path on the remote system
+	TuningPath pulumi.StringOutput `pulumi:"tuningPath"`
+	// The url used to download the binary.
+	Url pulumi.StringOutput `pulumi:"url"`
 	// The version to install.
-	Version  pulumi.StringOutput `pulumi:"version"`
+	Version pulumi.StringOutput `pulumi:"version"`
+	// The vlan mv operation.
+	VlanMv tools.MvOutput `pulumi:"vlanMv"`
+	// The vlan path on the remote system
 	VlanPath pulumi.StringOutput `pulumi:"vlanPath"`
-	VrfPath  pulumi.StringOutput `pulumi:"vrfPath"`
+	// The vrf mv operation.
+	VrfMv tools.MvOutput `pulumi:"vrfMv"`
+	// The vrf path on the remote system
+	VrfPath pulumi.StringOutput `pulumi:"vrfPath"`
 }
 
 // NewCniPluginsInstall registers a new resource with the given unique name, arguments, and options.
@@ -78,25 +140,25 @@ func NewCniPluginsInstall(ctx *pulumi.Context,
 }
 
 type cniPluginsInstallArgs struct {
-	// The CPU architecture.
+	// The CPU architecture to install.
 	Architecture *Architecture `pulumi:"architecture"`
-	// The connection details.
+	// The parameters with which to connect to the remote host.
 	Connection pulumiCommand.Connection `pulumi:"connection"`
-	// Directory to install the binary.
+	// The directory to install the binary to.
 	Directory *string `pulumi:"directory"`
-	// The version of to install.
+	// The version to install.
 	Version *string `pulumi:"version"`
 }
 
 // The set of arguments for constructing a CniPluginsInstall resource.
 type CniPluginsInstallArgs struct {
-	// The CPU architecture.
+	// The CPU architecture to install.
 	Architecture ArchitecturePtrInput
-	// The connection details.
+	// The parameters with which to connect to the remote host.
 	Connection pulumiCommand.ConnectionInput
-	// Directory to install the binary.
+	// The directory to install the binary to.
 	Directory pulumi.StringPtrInput
-	// The version of to install.
+	// The version to install.
 	Version pulumi.StringPtrInput
 }
 
@@ -187,113 +249,217 @@ func (o CniPluginsInstallOutput) ToCniPluginsInstallOutputWithContext(ctx contex
 	return o
 }
 
-// The CPU architecture.
+// The CPU architecture to install.
 func (o CniPluginsInstallOutput) Architecture() ArchitectureOutput {
 	return o.ApplyT(func(v *CniPluginsInstall) ArchitectureOutput { return v.Architecture }).(ArchitectureOutput)
 }
 
+// The name of the downloaded archive.
 func (o CniPluginsInstallOutput) ArchiveName() pulumi.StringOutput {
 	return o.ApplyT(func(v *CniPluginsInstall) pulumi.StringOutput { return v.ArchiveName }).(pulumi.StringOutput)
 }
 
+// The bandwidth mv operation.
+func (o CniPluginsInstallOutput) BandwidthMv() tools.MvOutput {
+	return o.ApplyT(func(v *CniPluginsInstall) tools.MvOutput { return v.BandwidthMv }).(tools.MvOutput)
+}
+
+// The bandwidth path on the remote system
 func (o CniPluginsInstallOutput) BandwidthPath() pulumi.StringOutput {
 	return o.ApplyT(func(v *CniPluginsInstall) pulumi.StringOutput { return v.BandwidthPath }).(pulumi.StringOutput)
 }
 
+// The bridge mv operation.
+func (o CniPluginsInstallOutput) BridgeMv() tools.MvOutput {
+	return o.ApplyT(func(v *CniPluginsInstall) tools.MvOutput { return v.BridgeMv }).(tools.MvOutput)
+}
+
+// The bridge path on the remote system
 func (o CniPluginsInstallOutput) BridgePath() pulumi.StringOutput {
 	return o.ApplyT(func(v *CniPluginsInstall) pulumi.StringOutput { return v.BridgePath }).(pulumi.StringOutput)
 }
 
-// The connection details.
+// The parameters with which to connect to the remote host.
 func (o CniPluginsInstallOutput) Connection() pulumiCommand.ConnectionOutput {
 	return o.ApplyT(func(v *CniPluginsInstall) pulumiCommand.ConnectionOutput { return v.Connection }).(pulumiCommand.ConnectionOutput)
 }
 
+// The dhcp mv operation.
+func (o CniPluginsInstallOutput) DhcpMv() tools.MvOutput {
+	return o.ApplyT(func(v *CniPluginsInstall) tools.MvOutput { return v.DhcpMv }).(tools.MvOutput)
+}
+
+// The dhcp path on the remote system
 func (o CniPluginsInstallOutput) DhcpPath() pulumi.StringOutput {
 	return o.ApplyT(func(v *CniPluginsInstall) pulumi.StringOutput { return v.DhcpPath }).(pulumi.StringOutput)
 }
 
-// Directory to install the binary.
+// The directory to install the binary to.
 func (o CniPluginsInstallOutput) Directory() pulumi.StringOutput {
 	return o.ApplyT(func(v *CniPluginsInstall) pulumi.StringOutput { return v.Directory }).(pulumi.StringOutput)
 }
 
+// The download operation.
 func (o CniPluginsInstallOutput) Download() DownloadOutput {
 	return o.ApplyT(func(v *CniPluginsInstall) DownloadOutput { return v.Download }).(DownloadOutput)
 }
 
+// The dummy mv operation.
+func (o CniPluginsInstallOutput) DummyMv() tools.MvOutput {
+	return o.ApplyT(func(v *CniPluginsInstall) tools.MvOutput { return v.DummyMv }).(tools.MvOutput)
+}
+
+// The dummy path on the remote system
 func (o CniPluginsInstallOutput) DummyPath() pulumi.StringOutput {
 	return o.ApplyT(func(v *CniPluginsInstall) pulumi.StringOutput { return v.DummyPath }).(pulumi.StringOutput)
 }
 
+// The firewall mv operation.
+func (o CniPluginsInstallOutput) FirewallMv() tools.MvOutput {
+	return o.ApplyT(func(v *CniPluginsInstall) tools.MvOutput { return v.FirewallMv }).(tools.MvOutput)
+}
+
+// The firewall path on the remote system
 func (o CniPluginsInstallOutput) FirewallPath() pulumi.StringOutput {
 	return o.ApplyT(func(v *CniPluginsInstall) pulumi.StringOutput { return v.FirewallPath }).(pulumi.StringOutput)
 }
 
+// The hostDevice mv operation.
+func (o CniPluginsInstallOutput) HostDeviceMv() tools.MvOutput {
+	return o.ApplyT(func(v *CniPluginsInstall) tools.MvOutput { return v.HostDeviceMv }).(tools.MvOutput)
+}
+
+// The hostDevice path on the remote system
 func (o CniPluginsInstallOutput) HostDevicePath() pulumi.StringOutput {
 	return o.ApplyT(func(v *CniPluginsInstall) pulumi.StringOutput { return v.HostDevicePath }).(pulumi.StringOutput)
 }
 
+// The hostLocal mv operation.
+func (o CniPluginsInstallOutput) HostLocalMv() tools.MvOutput {
+	return o.ApplyT(func(v *CniPluginsInstall) tools.MvOutput { return v.HostLocalMv }).(tools.MvOutput)
+}
+
+// The hostLocal path on the remote system
 func (o CniPluginsInstallOutput) HostLocalPath() pulumi.StringOutput {
 	return o.ApplyT(func(v *CniPluginsInstall) pulumi.StringOutput { return v.HostLocalPath }).(pulumi.StringOutput)
 }
 
+// The ipvlan mv operation.
+func (o CniPluginsInstallOutput) IpvlanMv() tools.MvOutput {
+	return o.ApplyT(func(v *CniPluginsInstall) tools.MvOutput { return v.IpvlanMv }).(tools.MvOutput)
+}
+
+// The ipvlan path on the remote system
 func (o CniPluginsInstallOutput) IpvlanPath() pulumi.StringOutput {
 	return o.ApplyT(func(v *CniPluginsInstall) pulumi.StringOutput { return v.IpvlanPath }).(pulumi.StringOutput)
 }
 
+// The loopback mv operation.
+func (o CniPluginsInstallOutput) LoopbackMv() tools.MvOutput {
+	return o.ApplyT(func(v *CniPluginsInstall) tools.MvOutput { return v.LoopbackMv }).(tools.MvOutput)
+}
+
+// The loopback path on the remote system
 func (o CniPluginsInstallOutput) LoopbackPath() pulumi.StringOutput {
 	return o.ApplyT(func(v *CniPluginsInstall) pulumi.StringOutput { return v.LoopbackPath }).(pulumi.StringOutput)
 }
 
+// The macvlan mv operation.
+func (o CniPluginsInstallOutput) MacvlanMv() tools.MvOutput {
+	return o.ApplyT(func(v *CniPluginsInstall) tools.MvOutput { return v.MacvlanMv }).(tools.MvOutput)
+}
+
+// The macvlan path on the remote system
 func (o CniPluginsInstallOutput) MacvlanPath() pulumi.StringOutput {
 	return o.ApplyT(func(v *CniPluginsInstall) pulumi.StringOutput { return v.MacvlanPath }).(pulumi.StringOutput)
 }
 
+// The mkdir operation.
 func (o CniPluginsInstallOutput) Mkdir() tools.MkdirOutput {
 	return o.ApplyT(func(v *CniPluginsInstall) tools.MkdirOutput { return v.Mkdir }).(tools.MkdirOutput)
 }
 
+// The mktemp operation.
 func (o CniPluginsInstallOutput) Mktemp() tools.MktempOutput {
 	return o.ApplyT(func(v *CniPluginsInstall) tools.MktempOutput { return v.Mktemp }).(tools.MktempOutput)
 }
 
-func (o CniPluginsInstallOutput) Mv() tools.MvOutput {
-	return o.ApplyT(func(v *CniPluginsInstall) tools.MvOutput { return v.Mv }).(tools.MvOutput)
+// The path to the installed binary.
+func (o CniPluginsInstallOutput) Path() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *CniPluginsInstall) pulumi.StringPtrOutput { return v.Path }).(pulumi.StringPtrOutput)
 }
 
+// The portmap mv operation.
+func (o CniPluginsInstallOutput) PortmapMv() tools.MvOutput {
+	return o.ApplyT(func(v *CniPluginsInstall) tools.MvOutput { return v.PortmapMv }).(tools.MvOutput)
+}
+
+// The portmap path on the remote system
 func (o CniPluginsInstallOutput) PortmapPath() pulumi.StringOutput {
 	return o.ApplyT(func(v *CniPluginsInstall) pulumi.StringOutput { return v.PortmapPath }).(pulumi.StringOutput)
 }
 
+// The ptp mv operation.
+func (o CniPluginsInstallOutput) PtpMv() tools.MvOutput {
+	return o.ApplyT(func(v *CniPluginsInstall) tools.MvOutput { return v.PtpMv }).(tools.MvOutput)
+}
+
+// The ptp path on the remote system
 func (o CniPluginsInstallOutput) PtpPath() pulumi.StringOutput {
 	return o.ApplyT(func(v *CniPluginsInstall) pulumi.StringOutput { return v.PtpPath }).(pulumi.StringOutput)
 }
 
+// The rm operation.
 func (o CniPluginsInstallOutput) Rm() tools.RmOutput {
 	return o.ApplyT(func(v *CniPluginsInstall) tools.RmOutput { return v.Rm }).(tools.RmOutput)
 }
 
+// The sbr mv operation.
+func (o CniPluginsInstallOutput) SbrMv() tools.MvOutput {
+	return o.ApplyT(func(v *CniPluginsInstall) tools.MvOutput { return v.SbrMv }).(tools.MvOutput)
+}
+
+// The sbr path on the remote system
 func (o CniPluginsInstallOutput) SbrPath() pulumi.StringOutput {
 	return o.ApplyT(func(v *CniPluginsInstall) pulumi.StringOutput { return v.SbrPath }).(pulumi.StringOutput)
 }
 
+// The static mv operation.
+func (o CniPluginsInstallOutput) StaticMv() tools.MvOutput {
+	return o.ApplyT(func(v *CniPluginsInstall) tools.MvOutput { return v.StaticMv }).(tools.MvOutput)
+}
+
+// The static path on the remote system
 func (o CniPluginsInstallOutput) StaticPath() pulumi.StringOutput {
 	return o.ApplyT(func(v *CniPluginsInstall) pulumi.StringOutput { return v.StaticPath }).(pulumi.StringOutput)
 }
 
+// The tap mv operation.
+func (o CniPluginsInstallOutput) TapMv() tools.MvOutput {
+	return o.ApplyT(func(v *CniPluginsInstall) tools.MvOutput { return v.TapMv }).(tools.MvOutput)
+}
+
+// The tap path on the remote system
 func (o CniPluginsInstallOutput) TapPath() pulumi.StringOutput {
 	return o.ApplyT(func(v *CniPluginsInstall) pulumi.StringOutput { return v.TapPath }).(pulumi.StringOutput)
 }
 
+// The tar operation.
 func (o CniPluginsInstallOutput) Tar() tools.TarOutput {
 	return o.ApplyT(func(v *CniPluginsInstall) tools.TarOutput { return v.Tar }).(tools.TarOutput)
 }
 
+// The tuning mv operation.
+func (o CniPluginsInstallOutput) TuningMv() tools.MvOutput {
+	return o.ApplyT(func(v *CniPluginsInstall) tools.MvOutput { return v.TuningMv }).(tools.MvOutput)
+}
+
+// The tuning path on the remote system
 func (o CniPluginsInstallOutput) TuningPath() pulumi.StringOutput {
 	return o.ApplyT(func(v *CniPluginsInstall) pulumi.StringOutput { return v.TuningPath }).(pulumi.StringOutput)
 }
 
+// The url used to download the binary.
 func (o CniPluginsInstallOutput) Url() pulumi.StringOutput {
 	return o.ApplyT(func(v *CniPluginsInstall) pulumi.StringOutput { return v.Url }).(pulumi.StringOutput)
 }
@@ -303,10 +469,22 @@ func (o CniPluginsInstallOutput) Version() pulumi.StringOutput {
 	return o.ApplyT(func(v *CniPluginsInstall) pulumi.StringOutput { return v.Version }).(pulumi.StringOutput)
 }
 
+// The vlan mv operation.
+func (o CniPluginsInstallOutput) VlanMv() tools.MvOutput {
+	return o.ApplyT(func(v *CniPluginsInstall) tools.MvOutput { return v.VlanMv }).(tools.MvOutput)
+}
+
+// The vlan path on the remote system
 func (o CniPluginsInstallOutput) VlanPath() pulumi.StringOutput {
 	return o.ApplyT(func(v *CniPluginsInstall) pulumi.StringOutput { return v.VlanPath }).(pulumi.StringOutput)
 }
 
+// The vrf mv operation.
+func (o CniPluginsInstallOutput) VrfMv() tools.MvOutput {
+	return o.ApplyT(func(v *CniPluginsInstall) tools.MvOutput { return v.VrfMv }).(tools.MvOutput)
+}
+
+// The vrf path on the remote system
 func (o CniPluginsInstallOutput) VrfPath() pulumi.StringOutput {
 	return o.ApplyT(func(v *CniPluginsInstall) pulumi.StringOutput { return v.VrfPath }).(pulumi.StringOutput)
 }

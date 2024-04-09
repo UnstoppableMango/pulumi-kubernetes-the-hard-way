@@ -13,17 +13,22 @@ import (
 	"github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/sdk/go/kubernetes-the-hard-way/internal"
 )
 
+// The private key infrastructure for a cluster
 type ClusterPki struct {
 	pulumi.ResourceState
 
 	// The admin certificate.
 	Admin CertificateOutput `pulumi:"admin"`
 	// Name of the algorithm to use when generating the private key.
-	Algorithm   AlgorithmOutput     `pulumi:"algorithm"`
-	Ca          RootCaOutput        `pulumi:"ca"`
+	Algorithm AlgorithmPtrOutput `pulumi:"algorithm"`
+	// The cluster certificate authority.
+	Ca RootCaOutput `pulumi:"ca"`
+	// A name to use for the cluster
 	ClusterName pulumi.StringOutput `pulumi:"clusterName"`
 	// The controller manager certificate.
 	ControllerManager CertificateOutput `pulumi:"controllerManager"`
+	// When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
+	EcdsaCurve EcdsaCurvePtrOutput `pulumi:"ecdsaCurve"`
 	// The kube proxy certificate.
 	KubeProxy CertificateOutput `pulumi:"kubeProxy"`
 	// The kube scheduler certificate.
@@ -32,11 +37,13 @@ type ClusterPki struct {
 	Kubelet CertificateMapOutput `pulumi:"kubelet"`
 	// The kubernetes certificate.
 	Kubernetes CertificateOutput `pulumi:"kubernetes"`
-	// The publicly accessible IP for the cluster.
+	// Map of node name to node configuration
+	Nodes ClusterPkiNodeMapOutput `pulumi:"nodes"`
+	// Publicly accessible IP address.
 	PublicIp pulumi.StringOutput `pulumi:"publicIp"`
 	// When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
-	RsaBits pulumi.IntOutput `pulumi:"rsaBits"`
-	// The service accounts certificate.
+	RsaBits pulumi.IntPtrOutput `pulumi:"rsaBits"`
+	// The service accounts certificate
 	ServiceAccounts CertificateOutput `pulumi:"serviceAccounts"`
 	// Number of hours, after initial issuing, that the certificate will remain valid.
 	ValidityPeriodHours pulumi.IntOutput `pulumi:"validityPeriodHours"`
@@ -83,7 +90,7 @@ type clusterPkiArgs struct {
 	ClusterName string `pulumi:"clusterName"`
 	// When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
 	EcdsaCurve *EcdsaCurve `pulumi:"ecdsaCurve"`
-	// Map of node names to node configuration.
+	// Map of node name to node configuration
 	Nodes map[string]ClusterPkiNode `pulumi:"nodes"`
 	// Publicly accessible IP address.
 	PublicIp string `pulumi:"publicIp"`
@@ -101,7 +108,7 @@ type ClusterPkiArgs struct {
 	ClusterName pulumi.StringInput
 	// When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
 	EcdsaCurve EcdsaCurvePtrInput
-	// Map of node names to node configuration.
+	// Map of node name to node configuration
 	Nodes ClusterPkiNodeMapInput
 	// Publicly accessible IP address.
 	PublicIp pulumi.StringInput
@@ -115,6 +122,7 @@ func (ClusterPkiArgs) ElementType() reflect.Type {
 	return reflect.TypeOf((*clusterPkiArgs)(nil)).Elem()
 }
 
+// Get a kubeconfig configured from this PKI.
 func (r *ClusterPki) GetKubeconfig(ctx *pulumi.Context, args *ClusterPkiGetKubeconfigArgs) (config.KubeconfigOutput, error) {
 	out, err := ctx.Call("kubernetes-the-hard-way:tls:ClusterPki/getKubeconfig", args, clusterPkiGetKubeconfigResultOutput{}, r)
 	if err != nil {
@@ -124,11 +132,13 @@ func (r *ClusterPki) GetKubeconfig(ctx *pulumi.Context, args *ClusterPkiGetKubec
 }
 
 type clusterPkiGetKubeconfigArgs struct {
+	// Options for creating the kubeconfig.
 	Options interface{} `pulumi:"options"`
 }
 
 // The set of arguments for the GetKubeconfig method of the ClusterPki resource.
 type ClusterPkiGetKubeconfigArgs struct {
+	// Options for creating the kubeconfig.
 	Options interface{}
 }
 
@@ -239,14 +249,16 @@ func (o ClusterPkiOutput) Admin() CertificateOutput {
 }
 
 // Name of the algorithm to use when generating the private key.
-func (o ClusterPkiOutput) Algorithm() AlgorithmOutput {
-	return o.ApplyT(func(v *ClusterPki) AlgorithmOutput { return v.Algorithm }).(AlgorithmOutput)
+func (o ClusterPkiOutput) Algorithm() AlgorithmPtrOutput {
+	return o.ApplyT(func(v *ClusterPki) AlgorithmPtrOutput { return v.Algorithm }).(AlgorithmPtrOutput)
 }
 
+// The cluster certificate authority.
 func (o ClusterPkiOutput) Ca() RootCaOutput {
 	return o.ApplyT(func(v *ClusterPki) RootCaOutput { return v.Ca }).(RootCaOutput)
 }
 
+// A name to use for the cluster
 func (o ClusterPkiOutput) ClusterName() pulumi.StringOutput {
 	return o.ApplyT(func(v *ClusterPki) pulumi.StringOutput { return v.ClusterName }).(pulumi.StringOutput)
 }
@@ -254,6 +266,11 @@ func (o ClusterPkiOutput) ClusterName() pulumi.StringOutput {
 // The controller manager certificate.
 func (o ClusterPkiOutput) ControllerManager() CertificateOutput {
 	return o.ApplyT(func(v *ClusterPki) CertificateOutput { return v.ControllerManager }).(CertificateOutput)
+}
+
+// When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
+func (o ClusterPkiOutput) EcdsaCurve() EcdsaCurvePtrOutput {
+	return o.ApplyT(func(v *ClusterPki) EcdsaCurvePtrOutput { return v.EcdsaCurve }).(EcdsaCurvePtrOutput)
 }
 
 // The kube proxy certificate.
@@ -276,17 +293,22 @@ func (o ClusterPkiOutput) Kubernetes() CertificateOutput {
 	return o.ApplyT(func(v *ClusterPki) CertificateOutput { return v.Kubernetes }).(CertificateOutput)
 }
 
-// The publicly accessible IP for the cluster.
+// Map of node name to node configuration
+func (o ClusterPkiOutput) Nodes() ClusterPkiNodeMapOutput {
+	return o.ApplyT(func(v *ClusterPki) ClusterPkiNodeMapOutput { return v.Nodes }).(ClusterPkiNodeMapOutput)
+}
+
+// Publicly accessible IP address.
 func (o ClusterPkiOutput) PublicIp() pulumi.StringOutput {
 	return o.ApplyT(func(v *ClusterPki) pulumi.StringOutput { return v.PublicIp }).(pulumi.StringOutput)
 }
 
 // When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
-func (o ClusterPkiOutput) RsaBits() pulumi.IntOutput {
-	return o.ApplyT(func(v *ClusterPki) pulumi.IntOutput { return v.RsaBits }).(pulumi.IntOutput)
+func (o ClusterPkiOutput) RsaBits() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *ClusterPki) pulumi.IntPtrOutput { return v.RsaBits }).(pulumi.IntPtrOutput)
 }
 
-// The service accounts certificate.
+// The service accounts certificate
 func (o ClusterPkiOutput) ServiceAccounts() CertificateOutput {
 	return o.ApplyT(func(v *ClusterPki) CertificateOutput { return v.ServiceAccounts }).(CertificateOutput)
 }

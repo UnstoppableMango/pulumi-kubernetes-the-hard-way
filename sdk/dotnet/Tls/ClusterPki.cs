@@ -10,6 +10,9 @@ using Pulumi;
 
 namespace UnMango.KubernetesTheHardWay.Tls
 {
+    /// <summary>
+    /// The private key infrastructure for a cluster
+    /// </summary>
     [KubernetesTheHardWayResourceType("kubernetes-the-hard-way:tls:ClusterPki")]
     public partial class ClusterPki : global::Pulumi.ComponentResource
     {
@@ -23,11 +26,17 @@ namespace UnMango.KubernetesTheHardWay.Tls
         /// Name of the algorithm to use when generating the private key.
         /// </summary>
         [Output("algorithm")]
-        public Output<UnMango.KubernetesTheHardWay.Tls.Algorithm> Algorithm { get; private set; } = null!;
+        public Output<UnMango.KubernetesTheHardWay.Tls.Algorithm?> Algorithm { get; private set; } = null!;
 
+        /// <summary>
+        /// The cluster certificate authority.
+        /// </summary>
         [Output("ca")]
         public Output<UnMango.KubernetesTheHardWay.Tls.RootCa> Ca { get; private set; } = null!;
 
+        /// <summary>
+        /// A name to use for the cluster
+        /// </summary>
         [Output("clusterName")]
         public Output<string> ClusterName { get; private set; } = null!;
 
@@ -36,6 +45,12 @@ namespace UnMango.KubernetesTheHardWay.Tls
         /// </summary>
         [Output("controllerManager")]
         public Output<UnMango.KubernetesTheHardWay.Tls.Certificate> ControllerManager { get; private set; } = null!;
+
+        /// <summary>
+        /// When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
+        /// </summary>
+        [Output("ecdsaCurve")]
+        public Output<UnMango.KubernetesTheHardWay.Tls.EcdsaCurve?> EcdsaCurve { get; private set; } = null!;
 
         /// <summary>
         /// The kube proxy certificate.
@@ -62,7 +77,13 @@ namespace UnMango.KubernetesTheHardWay.Tls
         public Output<UnMango.KubernetesTheHardWay.Tls.Certificate> Kubernetes { get; private set; } = null!;
 
         /// <summary>
-        /// The publicly accessible IP for the cluster.
+        /// Map of node name to node configuration
+        /// </summary>
+        [Output("nodes")]
+        public Output<ImmutableDictionary<string, Outputs.ClusterPkiNode>> Nodes { get; private set; } = null!;
+
+        /// <summary>
+        /// Publicly accessible IP address.
         /// </summary>
         [Output("publicIp")]
         public Output<string> PublicIp { get; private set; } = null!;
@@ -71,10 +92,10 @@ namespace UnMango.KubernetesTheHardWay.Tls
         /// When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
         /// </summary>
         [Output("rsaBits")]
-        public Output<int> RsaBits { get; private set; } = null!;
+        public Output<int?> RsaBits { get; private set; } = null!;
 
         /// <summary>
-        /// The service accounts certificate.
+        /// The service accounts certificate
         /// </summary>
         [Output("serviceAccounts")]
         public Output<UnMango.KubernetesTheHardWay.Tls.Certificate> ServiceAccounts { get; private set; } = null!;
@@ -111,6 +132,9 @@ namespace UnMango.KubernetesTheHardWay.Tls
             return merged;
         }
 
+        /// <summary>
+        /// Get a kubeconfig configured from this PKI.
+        /// </summary>
         public global::Pulumi.Output<UnMango.KubernetesTheHardWay.Config.Outputs.Kubeconfig> GetKubeconfig(ClusterPkiGetKubeconfigArgs args)
             => global::Pulumi.Deployment.Instance.Call<ClusterPkiGetKubeconfigResult>("kubernetes-the-hard-way:tls:ClusterPki/getKubeconfig", args ?? new ClusterPkiGetKubeconfigArgs(), this).Apply(v => v.Result);
     }
@@ -139,7 +163,7 @@ namespace UnMango.KubernetesTheHardWay.Tls
         private InputMap<Inputs.ClusterPkiNodeArgs>? _nodes;
 
         /// <summary>
-        /// Map of node names to node configuration.
+        /// Map of node name to node configuration
         /// </summary>
         public InputMap<Inputs.ClusterPkiNodeArgs> Nodes
         {
@@ -179,6 +203,9 @@ namespace UnMango.KubernetesTheHardWay.Tls
     /// </summary>
     public sealed class ClusterPkiGetKubeconfigArgs : global::Pulumi.CallArgs
     {
+        /// <summary>
+        /// Options for creating the kubeconfig.
+        /// </summary>
         [Input("options", required: true)]
         public object Options { get; set; } = null!;
 

@@ -39,9 +39,9 @@ export class EtcdInstall extends schema.EtcdInstall {
     this.etcdctlPath = install.paths.etcdctl;
     this.directory = directory;
     this.mkdir = install.mkdir;
-    this.mvEtcd = install.mvs.etcd;
-    this.mvEtcdctl = install.mvs.etcdctl;
-    this.name = output(name);
+    this.etcdMv = install.mvs.etcd;
+    this.etcdctlMv = install.mvs.etcdctl;
+    // this.name = output(name);
     this.tar = install.tar;
     this.url = url;
     this.version = version;
@@ -63,7 +63,7 @@ export class EtcdInstall extends schema.EtcdInstall {
     });
   }
 
-  public etcdctl(inputs: schema.EtcdInstall_etcdctlInputs): Output<schema.EtcdInstall_etcdctlOutputs> {
-    throw new Error('not implemented');
-  }
+  // public etcdctl(inputs: schema.EtcdInstall_etcdctlInputs): Output<schema.EtcdInstall_etcdctlOutputs> {
+  //   throw new Error('not implemented');
+  // }
 }

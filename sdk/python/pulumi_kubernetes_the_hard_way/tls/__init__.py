@@ -11,3 +11,4 @@ from .cluster_pki import *
 from .encryption_key import *
 from .root_ca import *
 from ._inputs import *
+from . import outputs

@@ -14,27 +14,36 @@ import (
 	"github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/sdk/go/kubernetes-the-hard-way/tools"
 )
 
+// Configures etcd on a remote system.
 type EtcdConfiguration struct {
 	pulumi.ResourceState
 
 	// The remote certificate authority file.
 	CaFile FileOutput `pulumi:"caFile"`
+	// The PEM encoded certificate authority data.
+	CaPem pulumi.StringOutput `pulumi:"caPem"`
 	// The remote certificate file.
 	CertFile FileOutput `pulumi:"certFile"`
+	// The PEM encoded certificate data.
+	CertPem pulumi.StringOutput `pulumi:"certPem"`
 	// The directory to store etcd configuration.
-	ConfigurationDirectory pulumi.StringOutput `pulumi:"configurationDirectory"`
-	// The command used to create the configuration directory.
+	ConfigurationDirectory pulumi.StringPtrOutput `pulumi:"configurationDirectory"`
+	// The configuration mkdir operation.
 	ConfigurationMkdir tools.MkdirOutput `pulumi:"configurationMkdir"`
-	// The directory etcd will use.
-	DataDirectory pulumi.StringOutput `pulumi:"dataDirectory"`
-	// The command used to create the data directory.
+	// The parameters with which to connect to the remote host.
+	Connection pulumiCommand.ConnectionOutput `pulumi:"connection"`
+	// The directory etcd will store its data.
+	DataDirectory pulumi.StringPtrOutput `pulumi:"dataDirectory"`
+	// The data mkdir operation.
 	DataMkdir tools.MkdirOutput `pulumi:"dataMkdir"`
-	// IP used to serve client requests and communicate with etcd peers.
+	// The path to the `etcd` binary.
+	EtcdPath pulumi.StringOutput `pulumi:"etcdPath"`
+	// The IP used to serve client requests and communicate with etcd peers.
 	InternalIp pulumi.StringOutput `pulumi:"internalIp"`
 	// The remote key file.
 	KeyFile FileOutput `pulumi:"keyFile"`
-	// The remote systemd service.
-	SystemdService SystemdServiceOutput `pulumi:"systemdService"`
+	// The PEM encoded key data.
+	KeyPem pulumi.StringOutput `pulumi:"keyPem"`
 }
 
 // NewEtcdConfiguration registers a new resource with the given unique name, arguments, and options.
@@ -66,12 +75,6 @@ func NewEtcdConfiguration(ctx *pulumi.Context,
 		args.ConfigurationDirectory = pulumi.StringPtr("/etc/etcd")
 	}
 	args.Connection = args.Connection.ToConnectionOutput().ApplyT(func(v pulumiCommand.Connection) pulumiCommand.Connection { return *v.Defaults() }).(pulumiCommand.ConnectionOutput)
-	if args.DataDirectory == nil {
-		args.DataDirectory = pulumi.StringPtr("/var/lib/etcd")
-	}
-	if args.SystemdDirectory == nil {
-		args.SystemdDirectory = pulumi.StringPtr("/etc/system/systemd")
-	}
 	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource EtcdConfiguration
 	err := ctx.RegisterRemoteComponentResource("kubernetes-the-hard-way:remote:EtcdConfiguration", name, args, &resource, opts...)
@@ -82,44 +85,42 @@ func NewEtcdConfiguration(ctx *pulumi.Context,
 }
 
 type etcdConfigurationArgs struct {
-	// The PEM encoded CA data.
+	// The PEM encoded certificate authority data.
 	CaPem string `pulumi:"caPem"`
 	// The PEM encoded certificate data.
 	CertPem string `pulumi:"certPem"`
 	// The directory to store etcd configuration.
 	ConfigurationDirectory *string `pulumi:"configurationDirectory"`
-	// The connection details.
+	// The parameters with which to connect to the remote host.
 	Connection pulumiCommand.Connection `pulumi:"connection"`
-	// The directory etcd will use.
+	// The directory etcd will store its data.
 	DataDirectory *string `pulumi:"dataDirectory"`
-	EtcdPath      string  `pulumi:"etcdPath"`
-	// IP used to serve client requests and communicate with etcd peers.
+	// The path to the `etcd` binary.
+	EtcdPath string `pulumi:"etcdPath"`
+	// The IP used to serve client requests and communicate with etcd peers.
 	InternalIp string `pulumi:"internalIp"`
 	// The PEM encoded key data.
 	KeyPem string `pulumi:"keyPem"`
-	// The systemd service file dirctory.
-	SystemdDirectory *string `pulumi:"systemdDirectory"`
 }
 
 // The set of arguments for constructing a EtcdConfiguration resource.
 type EtcdConfigurationArgs struct {
-	// The PEM encoded CA data.
+	// The PEM encoded certificate authority data.
 	CaPem pulumi.StringInput
 	// The PEM encoded certificate data.
 	CertPem pulumi.StringInput
 	// The directory to store etcd configuration.
 	ConfigurationDirectory pulumi.StringPtrInput
-	// The connection details.
+	// The parameters with which to connect to the remote host.
 	Connection pulumiCommand.ConnectionInput
-	// The directory etcd will use.
+	// The directory etcd will store its data.
 	DataDirectory pulumi.StringPtrInput
-	EtcdPath      pulumi.StringInput
-	// IP used to serve client requests and communicate with etcd peers.
+	// The path to the `etcd` binary.
+	EtcdPath pulumi.StringInput
+	// The IP used to serve client requests and communicate with etcd peers.
 	InternalIp pulumi.StringInput
 	// The PEM encoded key data.
 	KeyPem pulumi.StringInput
-	// The systemd service file dirctory.
-	SystemdDirectory pulumi.StringPtrInput
 }
 
 func (EtcdConfigurationArgs) ElementType() reflect.Type {
@@ -214,32 +215,52 @@ func (o EtcdConfigurationOutput) CaFile() FileOutput {
 	return o.ApplyT(func(v *EtcdConfiguration) FileOutput { return v.CaFile }).(FileOutput)
 }
 
+// The PEM encoded certificate authority data.
+func (o EtcdConfigurationOutput) CaPem() pulumi.StringOutput {
+	return o.ApplyT(func(v *EtcdConfiguration) pulumi.StringOutput { return v.CaPem }).(pulumi.StringOutput)
+}
+
 // The remote certificate file.
 func (o EtcdConfigurationOutput) CertFile() FileOutput {
 	return o.ApplyT(func(v *EtcdConfiguration) FileOutput { return v.CertFile }).(FileOutput)
 }
 
-// The directory to store etcd configuration.
-func (o EtcdConfigurationOutput) ConfigurationDirectory() pulumi.StringOutput {
-	return o.ApplyT(func(v *EtcdConfiguration) pulumi.StringOutput { return v.ConfigurationDirectory }).(pulumi.StringOutput)
+// The PEM encoded certificate data.
+func (o EtcdConfigurationOutput) CertPem() pulumi.StringOutput {
+	return o.ApplyT(func(v *EtcdConfiguration) pulumi.StringOutput { return v.CertPem }).(pulumi.StringOutput)
 }
 
-// The command used to create the configuration directory.
+// The directory to store etcd configuration.
+func (o EtcdConfigurationOutput) ConfigurationDirectory() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *EtcdConfiguration) pulumi.StringPtrOutput { return v.ConfigurationDirectory }).(pulumi.StringPtrOutput)
+}
+
+// The configuration mkdir operation.
 func (o EtcdConfigurationOutput) ConfigurationMkdir() tools.MkdirOutput {
 	return o.ApplyT(func(v *EtcdConfiguration) tools.MkdirOutput { return v.ConfigurationMkdir }).(tools.MkdirOutput)
 }
 
-// The directory etcd will use.
-func (o EtcdConfigurationOutput) DataDirectory() pulumi.StringOutput {
-	return o.ApplyT(func(v *EtcdConfiguration) pulumi.StringOutput { return v.DataDirectory }).(pulumi.StringOutput)
+// The parameters with which to connect to the remote host.
+func (o EtcdConfigurationOutput) Connection() pulumiCommand.ConnectionOutput {
+	return o.ApplyT(func(v *EtcdConfiguration) pulumiCommand.ConnectionOutput { return v.Connection }).(pulumiCommand.ConnectionOutput)
 }
 
-// The command used to create the data directory.
+// The directory etcd will store its data.
+func (o EtcdConfigurationOutput) DataDirectory() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *EtcdConfiguration) pulumi.StringPtrOutput { return v.DataDirectory }).(pulumi.StringPtrOutput)
+}
+
+// The data mkdir operation.
 func (o EtcdConfigurationOutput) DataMkdir() tools.MkdirOutput {
 	return o.ApplyT(func(v *EtcdConfiguration) tools.MkdirOutput { return v.DataMkdir }).(tools.MkdirOutput)
 }
 
-// IP used to serve client requests and communicate with etcd peers.
+// The path to the `etcd` binary.
+func (o EtcdConfigurationOutput) EtcdPath() pulumi.StringOutput {
+	return o.ApplyT(func(v *EtcdConfiguration) pulumi.StringOutput { return v.EtcdPath }).(pulumi.StringOutput)
+}
+
+// The IP used to serve client requests and communicate with etcd peers.
 func (o EtcdConfigurationOutput) InternalIp() pulumi.StringOutput {
 	return o.ApplyT(func(v *EtcdConfiguration) pulumi.StringOutput { return v.InternalIp }).(pulumi.StringOutput)
 }
@@ -249,9 +270,9 @@ func (o EtcdConfigurationOutput) KeyFile() FileOutput {
 	return o.ApplyT(func(v *EtcdConfiguration) FileOutput { return v.KeyFile }).(FileOutput)
 }
 
-// The remote systemd service.
-func (o EtcdConfigurationOutput) SystemdService() SystemdServiceOutput {
-	return o.ApplyT(func(v *EtcdConfiguration) SystemdServiceOutput { return v.SystemdService }).(SystemdServiceOutput)
+// The PEM encoded key data.
+func (o EtcdConfigurationOutput) KeyPem() pulumi.StringOutput {
+	return o.ApplyT(func(v *EtcdConfiguration) pulumi.StringOutput { return v.KeyPem }).(pulumi.StringOutput)
 }
 
 type EtcdConfigurationArrayOutput struct{ *pulumi.OutputState }

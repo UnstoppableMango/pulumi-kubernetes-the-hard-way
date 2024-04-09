@@ -178,7 +178,7 @@ func (in *algorithmPtr) ToAlgorithmPtrOutputWithContext(ctx context.Context) Alg
 	return pulumi.ToOutputWithContext(ctx, in).(AlgorithmPtrOutput)
 }
 
-// Certificate allowed usage.
+// Certificate allowed usage
 type AllowedUsage string
 
 const (
@@ -397,7 +397,7 @@ func (o AllowedUsageArrayOutput) Index(i pulumi.IntInput) AllowedUsageOutput {
 	}).(AllowedUsageOutput)
 }
 
-// TODO
+// ECDSA algorithm curve
 type EcdsaCurve string
 
 const (
@@ -567,7 +567,7 @@ func (in *ecdsaCurvePtr) ToEcdsaCurvePtrOutputWithContext(ctx context.Context) E
 	return pulumi.ToOutputWithContext(ctx, in).(EcdsaCurvePtrOutput)
 }
 
-// TODO
+// The role a node will play in the final cluster
 type NodeRole string
 
 const (

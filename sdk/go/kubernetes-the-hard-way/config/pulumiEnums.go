@@ -3,7 +3,6 @@
 
 package config
 
-// Kubeconfig type
 type KubeconfigType string
 
 const (

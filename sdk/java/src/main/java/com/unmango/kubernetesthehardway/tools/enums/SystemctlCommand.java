@@ -10,11 +10,39 @@ import java.util.StringJoiner;
 
     @EnumType
     public enum SystemctlCommand {
+        Bind("bind"),
+        Cat("cat"),
+        Clean("clean"),
         Daemonreload("daemon-reload"),
         Disable("disable"),
         Enable("enable"),
+        Freeze("freeze"),
+        Isactive("is-active"),
+        Isenabled("is-enabled"),
+        Isfailed("is-failed"),
+        Isolate("isolate"),
+        Kill("kill"),
+        Listautomounts("list-automounts"),
+        Listdependencies("list-dependencies"),
+        Listpaths("list-paths"),
+        Listsockets("list-sockets"),
+        Listtimers("list-timers"),
+        Listunits("list-units"),
+        Mask("mask"),
+        Mountimage("mount-image"),
+        Reenable("reenable"),
+        Reload("reload"),
+        Reloadorrestart("reload-or-restart"),
+        Restart("restart"),
+        Setproperty("set-property"),
+        Show("show"),
         Start("start"),
-        Stop("stop");
+        Status("status"),
+        Stop("stop"),
+        Thaw("thaw"),
+        Tryreloadorrestart("try-reload-or-restart"),
+        Tryrestart("try-restart"),
+        Unmask("unmask");
 
         private final String value;
 

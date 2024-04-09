@@ -20,7 +20,7 @@ class RootCaArgs:
                  algorithm: Optional[pulumi.Input['Algorithm']] = None,
                  dns_names: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  early_renewal_hours: Optional[pulumi.Input[int]] = None,
-                 ecdsa_curve: Optional[pulumi.Input['EcdsaCurve']] = None,
+                 ecdsa_curve: Optional[pulumi.Input[str]] = None,
                  ip_addresses: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  rsa_bits: Optional[pulumi.Input[int]] = None,
                  set_authority_key_id: Optional[pulumi.Input[bool]] = None,
@@ -29,16 +29,21 @@ class RootCaArgs:
                  uris: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None):
         """
         The set of arguments for constructing a RootCa resource.
-        :param pulumi.Input[int] validity_period_hours: Number of hours, after initial issuing, that the certificate will remain valid.
+        :param pulumi.Input[int] validity_period_hours: Number of hours, after initial issuing, that the certificate will remain valid for.
         :param pulumi.Input['Algorithm'] algorithm: Name of the algorithm to use when generating the private key.
-        :param pulumi.Input[Sequence[pulumi.Input[str]]] dns_names: List of DNS names for which a certificate is being requested.
-        :param pulumi.Input[int] early_renewal_hours: TODO
-        :param pulumi.Input['EcdsaCurve'] ecdsa_curve: When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
-        :param pulumi.Input[Sequence[pulumi.Input[str]]] ip_addresses: List of IP addresses for which a certificate is being requested.
-        :param pulumi.Input[int] rsa_bits: When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
-        :param pulumi.Input[bool] set_authority_key_id: Should the generated certificate include an authority key identifier.
-        :param pulumi.Input[bool] set_subject_key_id: Should the generated certificate include a subject key identifier.
-        :param pulumi.Input[Sequence[pulumi.Input[str]]] uris: List of URIs for which a certificate is being requested.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] dns_names: List of DNS names for which a certificate is being requested (i.e. certificate subjects).
+        :param pulumi.Input[int] early_renewal_hours: The resource will consider the certificate to have expired the given number of hours before its actual expiry time. This
+               can be useful to deploy an updated certificate in advance of the expiration of the current certificate. However, the old
+               certificate remains valid until its true expiration time, since this resource does not (and cannot) support certificate
+               revocation. Also, this advance update can only be performed should the Terraform configuration be applied during the
+               early renewal period. (default: `0`)
+        :param pulumi.Input[str] ecdsa_curve: When `algorithm` is `ECDSA`, the name of the elliptic curve to use. Currently-supported values are: `P224`, `P256`, `P384`, `P521`. (default: `P224`).
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] ip_addresses: List of IP addresses for which a certificate is being requested (i.e. certificate subjects).
+        :param pulumi.Input[int] rsa_bits: When `algorithm` is `RSA`, the size of the generated RSA key, in bits (default: `2048`).
+        :param pulumi.Input[bool] set_authority_key_id: Should the generated certificate include an [authority key identifier](https://datatracker.ietf.org/doc/html/rfc5280#section-4.2.1.1): for self-signed certificates this is the same value as the [subject key identifier](https://datatracker.ietf.org/doc/html/rfc5280#section-4.2.1.2) (default: `false`).
+        :param pulumi.Input[bool] set_subject_key_id: Should the generated certificate include a [subject key identifier](https://datatracker.ietf.org/doc/html/rfc5280#section-4.2.1.2) (default: `false`).
+        :param pulumi.Input['pulumi_tls.SelfSignedCertSubjectArgs'] subject: TODO
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] uris: List of URIs for which a certificate is being requested (i.e. certificate subjects).
         """
         pulumi.set(__self__, "validity_period_hours", validity_period_hours)
         if algorithm is not None:
@@ -66,7 +71,7 @@ class RootCaArgs:
     @pulumi.getter(name="validityPeriodHours")
     def validity_period_hours(self) -> pulumi.Input[int]:
         """
-        Number of hours, after initial issuing, that the certificate will remain valid.
+        Number of hours, after initial issuing, that the certificate will remain valid for.
         """
         return pulumi.get(self, "validity_period_hours")
 
@@ -90,7 +95,7 @@ class RootCaArgs:
     @pulumi.getter(name="dnsNames")
     def dns_names(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
         """
-        List of DNS names for which a certificate is being requested.
+        List of DNS names for which a certificate is being requested (i.e. certificate subjects).
         """
         return pulumi.get(self, "dns_names")
 
@@ -102,7 +107,11 @@ class RootCaArgs:
     @pulumi.getter(name="earlyRenewalHours")
     def early_renewal_hours(self) -> Optional[pulumi.Input[int]]:
         """
-        TODO
+        The resource will consider the certificate to have expired the given number of hours before its actual expiry time. This
+        can be useful to deploy an updated certificate in advance of the expiration of the current certificate. However, the old
+        certificate remains valid until its true expiration time, since this resource does not (and cannot) support certificate
+        revocation. Also, this advance update can only be performed should the Terraform configuration be applied during the
+        early renewal period. (default: `0`)
         """
         return pulumi.get(self, "early_renewal_hours")
 
@@ -112,21 +121,21 @@ class RootCaArgs:
 
     @property
     @pulumi.getter(name="ecdsaCurve")
-    def ecdsa_curve(self) -> Optional[pulumi.Input['EcdsaCurve']]:
+    def ecdsa_curve(self) -> Optional[pulumi.Input[str]]:
         """
-        When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
+        When `algorithm` is `ECDSA`, the name of the elliptic curve to use. Currently-supported values are: `P224`, `P256`, `P384`, `P521`. (default: `P224`).
         """
         return pulumi.get(self, "ecdsa_curve")
 
     @ecdsa_curve.setter
-    def ecdsa_curve(self, value: Optional[pulumi.Input['EcdsaCurve']]):
+    def ecdsa_curve(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "ecdsa_curve", value)
 
     @property
     @pulumi.getter(name="ipAddresses")
     def ip_addresses(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
         """
-        List of IP addresses for which a certificate is being requested.
+        List of IP addresses for which a certificate is being requested (i.e. certificate subjects).
         """
         return pulumi.get(self, "ip_addresses")
 
@@ -138,7 +147,7 @@ class RootCaArgs:
     @pulumi.getter(name="rsaBits")
     def rsa_bits(self) -> Optional[pulumi.Input[int]]:
         """
-        When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
+        When `algorithm` is `RSA`, the size of the generated RSA key, in bits (default: `2048`).
         """
         return pulumi.get(self, "rsa_bits")
 
@@ -150,7 +159,7 @@ class RootCaArgs:
     @pulumi.getter(name="setAuthorityKeyId")
     def set_authority_key_id(self) -> Optional[pulumi.Input[bool]]:
         """
-        Should the generated certificate include an authority key identifier.
+        Should the generated certificate include an [authority key identifier](https://datatracker.ietf.org/doc/html/rfc5280#section-4.2.1.1): for self-signed certificates this is the same value as the [subject key identifier](https://datatracker.ietf.org/doc/html/rfc5280#section-4.2.1.2) (default: `false`).
         """
         return pulumi.get(self, "set_authority_key_id")
 
@@ -162,7 +171,7 @@ class RootCaArgs:
     @pulumi.getter(name="setSubjectKeyId")
     def set_subject_key_id(self) -> Optional[pulumi.Input[bool]]:
         """
-        Should the generated certificate include a subject key identifier.
+        Should the generated certificate include a [subject key identifier](https://datatracker.ietf.org/doc/html/rfc5280#section-4.2.1.2) (default: `false`).
         """
         return pulumi.get(self, "set_subject_key_id")
 
@@ -173,6 +182,9 @@ class RootCaArgs:
     @property
     @pulumi.getter
     def subject(self) -> Optional[pulumi.Input['pulumi_tls.SelfSignedCertSubjectArgs']]:
+        """
+        TODO
+        """
         return pulumi.get(self, "subject")
 
     @subject.setter
@@ -183,7 +195,7 @@ class RootCaArgs:
     @pulumi.getter
     def uris(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
         """
-        List of URIs for which a certificate is being requested.
+        List of URIs for which a certificate is being requested (i.e. certificate subjects).
         """
         return pulumi.get(self, "uris")
 
@@ -200,7 +212,7 @@ class RootCa(pulumi.ComponentResource):
                  algorithm: Optional[pulumi.Input['Algorithm']] = None,
                  dns_names: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  early_renewal_hours: Optional[pulumi.Input[int]] = None,
-                 ecdsa_curve: Optional[pulumi.Input['EcdsaCurve']] = None,
+                 ecdsa_curve: Optional[pulumi.Input[str]] = None,
                  ip_addresses: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  rsa_bits: Optional[pulumi.Input[int]] = None,
                  set_authority_key_id: Optional[pulumi.Input[bool]] = None,
@@ -210,19 +222,25 @@ class RootCa(pulumi.ComponentResource):
                  validity_period_hours: Optional[pulumi.Input[int]] = None,
                  __props__=None):
         """
-        Create a RootCa resource with the given unique name, props, and options.
+        Root certificate authority for a cluster.
+
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input['Algorithm'] algorithm: Name of the algorithm to use when generating the private key.
-        :param pulumi.Input[Sequence[pulumi.Input[str]]] dns_names: List of DNS names for which a certificate is being requested.
-        :param pulumi.Input[int] early_renewal_hours: TODO
-        :param pulumi.Input['EcdsaCurve'] ecdsa_curve: When `algorithm` is `ECDSA`, the name of the elliptic curve to use.
-        :param pulumi.Input[Sequence[pulumi.Input[str]]] ip_addresses: List of IP addresses for which a certificate is being requested.
-        :param pulumi.Input[int] rsa_bits: When `algorithm` is `RSA`, the size of the generated RSA key, in bits.
-        :param pulumi.Input[bool] set_authority_key_id: Should the generated certificate include an authority key identifier.
-        :param pulumi.Input[bool] set_subject_key_id: Should the generated certificate include a subject key identifier.
-        :param pulumi.Input[Sequence[pulumi.Input[str]]] uris: List of URIs for which a certificate is being requested.
-        :param pulumi.Input[int] validity_period_hours: Number of hours, after initial issuing, that the certificate will remain valid.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] dns_names: List of DNS names for which a certificate is being requested (i.e. certificate subjects).
+        :param pulumi.Input[int] early_renewal_hours: The resource will consider the certificate to have expired the given number of hours before its actual expiry time. This
+               can be useful to deploy an updated certificate in advance of the expiration of the current certificate. However, the old
+               certificate remains valid until its true expiration time, since this resource does not (and cannot) support certificate
+               revocation. Also, this advance update can only be performed should the Terraform configuration be applied during the
+               early renewal period. (default: `0`)
+        :param pulumi.Input[str] ecdsa_curve: When `algorithm` is `ECDSA`, the name of the elliptic curve to use. Currently-supported values are: `P224`, `P256`, `P384`, `P521`. (default: `P224`).
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] ip_addresses: List of IP addresses for which a certificate is being requested (i.e. certificate subjects).
+        :param pulumi.Input[int] rsa_bits: When `algorithm` is `RSA`, the size of the generated RSA key, in bits (default: `2048`).
+        :param pulumi.Input[bool] set_authority_key_id: Should the generated certificate include an [authority key identifier](https://datatracker.ietf.org/doc/html/rfc5280#section-4.2.1.1): for self-signed certificates this is the same value as the [subject key identifier](https://datatracker.ietf.org/doc/html/rfc5280#section-4.2.1.2) (default: `false`).
+        :param pulumi.Input[bool] set_subject_key_id: Should the generated certificate include a [subject key identifier](https://datatracker.ietf.org/doc/html/rfc5280#section-4.2.1.2) (default: `false`).
+        :param pulumi.Input[pulumi.InputType['pulumi_tls.SelfSignedCertSubjectArgs']] subject: TODO
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] uris: List of URIs for which a certificate is being requested (i.e. certificate subjects).
+        :param pulumi.Input[int] validity_period_hours: Number of hours, after initial issuing, that the certificate will remain valid for.
         """
         ...
     @overload
@@ -231,7 +249,8 @@ class RootCa(pulumi.ComponentResource):
                  args: RootCaArgs,
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
-        Create a RootCa resource with the given unique name, props, and options.
+        Root certificate authority for a cluster.
+
         :param str resource_name: The name of the resource.
         :param RootCaArgs args: The arguments to use to populate this resource's properties.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -250,7 +269,7 @@ class RootCa(pulumi.ComponentResource):
                  algorithm: Optional[pulumi.Input['Algorithm']] = None,
                  dns_names: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  early_renewal_hours: Optional[pulumi.Input[int]] = None,
-                 ecdsa_curve: Optional[pulumi.Input['EcdsaCurve']] = None,
+                 ecdsa_curve: Optional[pulumi.Input[str]] = None,
                  ip_addresses: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  rsa_bits: Optional[pulumi.Input[int]] = None,
                  set_authority_key_id: Optional[pulumi.Input[bool]] = None,
@@ -285,9 +304,19 @@ class RootCa(pulumi.ComponentResource):
             __props__.__dict__["allowed_uses"] = None
             __props__.__dict__["cert"] = None
             __props__.__dict__["cert_pem"] = None
+            __props__.__dict__["is_ca_certificate"] = None
             __props__.__dict__["key"] = None
+            __props__.__dict__["key_algorithm"] = None
+            __props__.__dict__["private_key_openssh"] = None
             __props__.__dict__["private_key_pem"] = None
+            __props__.__dict__["private_key_pem_pkcs8"] = None
+            __props__.__dict__["public_key_fingerprint_md5"] = None
+            __props__.__dict__["public_key_fingerprint_sha256"] = None
+            __props__.__dict__["public_key_openssh"] = None
             __props__.__dict__["public_key_pem"] = None
+            __props__.__dict__["ready_for_renewal"] = None
+            __props__.__dict__["validity_end_time"] = None
+            __props__.__dict__["validity_start_time"] = None
         super(RootCa, __self__).__init__(
             'kubernetes-the-hard-way:tls:RootCa',
             resource_name,
@@ -296,32 +325,222 @@ class RootCa(pulumi.ComponentResource):
             remote=True)
 
     @property
+    @pulumi.getter
+    def algorithm(self) -> pulumi.Output['Algorithm']:
+        """
+        Name of the algorithm to use when generating the private key.
+        """
+        return pulumi.get(self, "algorithm")
+
+    @property
     @pulumi.getter(name="allowedUses")
-    def allowed_uses(self) -> pulumi.Output[Sequence['AllowedUsage']]:
+    def allowed_uses(self) -> pulumi.Output[Sequence[str]]:
+        """
+        List of key usages allowed for the issued certificate. Values are defined in [RFC 5280](https://datatracker.ietf.org/doc/html/rfc5280) and combine flags defined by both [Key Usages](https://datatracker.ietf.org/doc/html/rfc5280#section-4.2.1.3) and [Extended Key Usages](https://datatracker.ietf.org/doc/html/rfc5280#section-4.2.1.12). Accepted values: `any_extended`, `cert_signing`, `client_auth`, `code_signing`, `content_commitment`, `crl_signing`, `data_encipherment`, `decipher_only`, `digital_signature`, `email_protection`, `encipher_only`, `ipsec_end_system`, `ipsec_tunnel`, `ipsec_user`, `key_agreement`, `key_encipherment`, `microsoft_commercial_code_signing`, `microsoft_kernel_code_signing`, `microsoft_server_gated_crypto`, `netscape_server_gated_crypto`, `ocsp_signing`, `server_auth`, `timestamping`.
+        """
         return pulumi.get(self, "allowed_uses")
 
     @property
     @pulumi.getter
     def cert(self) -> pulumi.Output['pulumi_tls.SelfSignedCert']:
+        """
+        The certificate authority certificate.
+        """
         return pulumi.get(self, "cert")
 
     @property
     @pulumi.getter(name="certPem")
     def cert_pem(self) -> pulumi.Output[str]:
+        """
+        Certificate data in PEM (RFC 1421).
+        """
         return pulumi.get(self, "cert_pem")
+
+    @property
+    @pulumi.getter(name="dnsNames")
+    def dns_names(self) -> pulumi.Output[Optional[Sequence[str]]]:
+        """
+        List of DNS names for which a certificate is being requested (i.e. certificate subjects).
+        """
+        return pulumi.get(self, "dns_names")
+
+    @property
+    @pulumi.getter(name="earlyRenewalHours")
+    def early_renewal_hours(self) -> pulumi.Output[int]:
+        """
+        The resource will consider the certificate to have expired the given number of hours before its actual expiry time. This
+        can be useful to deploy an updated certificate in advance of the expiration of the current certificate. However, the old
+        certificate remains valid until its true expiration time, since this resource does not (and cannot) support certificate
+        revocation. Also, this advance update can only be performed should the Terraform configuration be applied during the
+        early renewal period. (default: `0`)
+        """
+        return pulumi.get(self, "early_renewal_hours")
+
+    @property
+    @pulumi.getter(name="ecdsaCurve")
+    def ecdsa_curve(self) -> pulumi.Output[str]:
+        """
+        When `algorithm` is `ECDSA`, the name of the elliptic curve to use. Currently-supported values are: `P224`, `P256`, `P384`, `P521`. (default: `P224`).
+        """
+        return pulumi.get(self, "ecdsa_curve")
+
+    @property
+    @pulumi.getter(name="ipAddresses")
+    def ip_addresses(self) -> pulumi.Output[Optional[Sequence[str]]]:
+        """
+        List of IP addresses for which a certificate is being requested (i.e. certificate subjects).
+        """
+        return pulumi.get(self, "ip_addresses")
+
+    @property
+    @pulumi.getter(name="isCaCertificate")
+    def is_ca_certificate(self) -> pulumi.Output[bool]:
+        """
+        Is the generated certificate representing a Certificate Authority (CA) (default: `false`).
+        """
+        return pulumi.get(self, "is_ca_certificate")
 
     @property
     @pulumi.getter
     def key(self) -> pulumi.Output['pulumi_tls.PrivateKey']:
+        """
+        The certificate authority key.
+        """
         return pulumi.get(self, "key")
+
+    @property
+    @pulumi.getter(name="keyAlgorithm")
+    def key_algorithm(self) -> pulumi.Output[str]:
+        """
+        Name of the algorithm used when generating the private key provided in `private_key_pem`.
+        """
+        return pulumi.get(self, "key_algorithm")
+
+    @property
+    @pulumi.getter(name="privateKeyOpenssh")
+    def private_key_openssh(self) -> pulumi.Output[str]:
+        """
+        Private key data in [OpenSSH PEM (RFC 4716)](https://datatracker.ietf.org/doc/html/rfc4716) format.
+        """
+        return pulumi.get(self, "private_key_openssh")
 
     @property
     @pulumi.getter(name="privateKeyPem")
     def private_key_pem(self) -> pulumi.Output[str]:
+        """
+        Private key data in [PEM (RFC 1421)](https://datatracker.ietf.org/doc/html/rfc1421) format.
+        """
         return pulumi.get(self, "private_key_pem")
+
+    @property
+    @pulumi.getter(name="privateKeyPemPkcs8")
+    def private_key_pem_pkcs8(self) -> pulumi.Output[str]:
+        """
+        Private key data in [PKCS#8 PEM (RFC 5208)](https://datatracker.ietf.org/doc/html/rfc5208) format.
+        """
+        return pulumi.get(self, "private_key_pem_pkcs8")
+
+    @property
+    @pulumi.getter(name="publicKeyFingerprintMd5")
+    def public_key_fingerprint_md5(self) -> pulumi.Output[str]:
+        """
+        The fingerprint of the public key data in OpenSSH MD5 hash format, e.g. `aa:bb:cc:...`. Only available if the selected private key format is compatible, similarly to `public_key_openssh` and the ECDSA P224 limitations.
+        """
+        return pulumi.get(self, "public_key_fingerprint_md5")
+
+    @property
+    @pulumi.getter(name="publicKeyFingerprintSha256")
+    def public_key_fingerprint_sha256(self) -> pulumi.Output[str]:
+        """
+        The fingerprint of the public key data in OpenSSH SHA256 hash format, e.g. `SHA256:...`. Only available if the selected private key format is compatible, similarly to `public_key_openssh` and the ECDSA P224 limitations.
+        """
+        return pulumi.get(self, "public_key_fingerprint_sha256")
+
+    @property
+    @pulumi.getter(name="publicKeyOpenssh")
+    def public_key_openssh(self) -> pulumi.Output[str]:
+        """
+        The public key data in "Authorized Keys".
+        """
+        return pulumi.get(self, "public_key_openssh")
 
     @property
     @pulumi.getter(name="publicKeyPem")
     def public_key_pem(self) -> pulumi.Output[str]:
+        """
+        Public key data in PEM (RFC 1421).
+        """
         return pulumi.get(self, "public_key_pem")
+
+    @property
+    @pulumi.getter(name="readyForRenewal")
+    def ready_for_renewal(self) -> pulumi.Output[bool]:
+        """
+        Is the certificate either expired (i.e. beyond the `validity_period_hours`) or ready for an early renewal (i.e. within the `early_renewal_hours`)?
+        """
+        return pulumi.get(self, "ready_for_renewal")
+
+    @property
+    @pulumi.getter(name="rsaBits")
+    def rsa_bits(self) -> pulumi.Output[int]:
+        """
+        When `algorithm` is `RSA`, the size of the generated RSA key, in bits (default: `2048`).
+        """
+        return pulumi.get(self, "rsa_bits")
+
+    @property
+    @pulumi.getter(name="setAuthorityKeyId")
+    def set_authority_key_id(self) -> pulumi.Output[bool]:
+        """
+        Should the generated certificate include an [authority key identifier](https://datatracker.ietf.org/doc/html/rfc5280#section-4.2.1.1): for self-signed certificates this is the same value as the [subject key identifier](https://datatracker.ietf.org/doc/html/rfc5280#section-4.2.1.2) (default: `false`).
+        """
+        return pulumi.get(self, "set_authority_key_id")
+
+    @property
+    @pulumi.getter(name="setSubjectKeyId")
+    def set_subject_key_id(self) -> pulumi.Output[bool]:
+        """
+        Should the generated certificate include a [subject key identifier](https://datatracker.ietf.org/doc/html/rfc5280#section-4.2.1.2) (default: `false`).
+        """
+        return pulumi.get(self, "set_subject_key_id")
+
+    @property
+    @pulumi.getter
+    def subject(self) -> pulumi.Output[Optional['pulumi_tls.outputs.SelfSignedCertSubject']]:
+        """
+        TODO
+        """
+        return pulumi.get(self, "subject")
+
+    @property
+    @pulumi.getter
+    def uris(self) -> pulumi.Output[Optional[Sequence[str]]]:
+        """
+        List of URIs for which a certificate is being requested (i.e. certificate subjects).
+        """
+        return pulumi.get(self, "uris")
+
+    @property
+    @pulumi.getter(name="validityEndTime")
+    def validity_end_time(self) -> pulumi.Output[str]:
+        """
+        The time until which the certificate is invalid, expressed as an [RFC3339](https://tools.ietf.org/html/rfc3339) timestamp.
+        """
+        return pulumi.get(self, "validity_end_time")
+
+    @property
+    @pulumi.getter(name="validityPeriodHours")
+    def validity_period_hours(self) -> pulumi.Output[int]:
+        """
+        Number of hours, after initial issuing, that the certificate will remain valid for.
+        """
+        return pulumi.get(self, "validity_period_hours")
+
+    @property
+    @pulumi.getter(name="validityStartTime")
+    def validity_start_time(self) -> pulumi.Output[str]:
+        """
+        The time after which the certificate is valid, expressed as an [RFC3339](https://tools.ietf.org/html/rfc3339) timestamp.
+        """
+        return pulumi.get(self, "validity_start_time")
 

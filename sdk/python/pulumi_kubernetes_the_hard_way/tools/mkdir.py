@@ -18,20 +18,29 @@ class MkdirArgs:
     def __init__(__self__, *,
                  connection: pulumi.Input['pulumi_command.remote.ConnectionArgs'],
                  directory: pulumi.Input[str],
+                 binary_path: Optional[pulumi.Input[str]] = None,
                  environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  lifecycle: Optional['CommandLifecycle'] = None,
                  parents: Optional[pulumi.Input[bool]] = None,
-                 remove_on_delete: Optional[pulumi.Input[bool]] = None):
+                 remove_on_delete: Optional[pulumi.Input[bool]] = None,
+                 stdin: Optional[pulumi.Input[str]] = None,
+                 triggers: Optional[pulumi.Input[Sequence[Any]]] = None):
         """
         The set of arguments for constructing a Mkdir resource.
-        :param pulumi.Input['pulumi_command.remote.ConnectionArgs'] connection: The connection details for the remote system.
+        :param pulumi.Input['pulumi_command.remote.ConnectionArgs'] connection: Connection details for the remote system
         :param pulumi.Input[str] directory: The fully qualified path of the directory on the remote system.
-        :param 'CommandLifecycle' lifecycle: At what stage(s) in the resource lifecycle should the command be run.
+        :param pulumi.Input[str] binary_path: Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] environment: Environment variables
+        :param 'CommandLifecycle' lifecycle: At what stage(s) in the resource lifecycle should the command be run
         :param pulumi.Input[bool] parents: Corresponds to the `--parents` option.
         :param pulumi.Input[bool] remove_on_delete: Remove the created directory when the `Mkdir` resource is deleted or updated.
+        :param pulumi.Input[str] stdin: TODO
+        :param pulumi.Input[Sequence[Any]] triggers: TODO
         """
         pulumi.set(__self__, "connection", connection)
         pulumi.set(__self__, "directory", directory)
+        if binary_path is not None:
+            pulumi.set(__self__, "binary_path", binary_path)
         if environment is not None:
             pulumi.set(__self__, "environment", environment)
         if lifecycle is not None:
@@ -40,12 +49,16 @@ class MkdirArgs:
             pulumi.set(__self__, "parents", parents)
         if remove_on_delete is not None:
             pulumi.set(__self__, "remove_on_delete", remove_on_delete)
+        if stdin is not None:
+            pulumi.set(__self__, "stdin", stdin)
+        if triggers is not None:
+            pulumi.set(__self__, "triggers", triggers)
 
     @property
     @pulumi.getter
     def connection(self) -> pulumi.Input['pulumi_command.remote.ConnectionArgs']:
         """
-        The connection details for the remote system.
+        Connection details for the remote system
         """
         return pulumi.get(self, "connection")
 
@@ -66,8 +79,23 @@ class MkdirArgs:
         pulumi.set(self, "directory", value)
 
     @property
+    @pulumi.getter(name="binaryPath")
+    def binary_path(self) -> Optional[pulumi.Input[str]]:
+        """
+        Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+        """
+        return pulumi.get(self, "binary_path")
+
+    @binary_path.setter
+    def binary_path(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "binary_path", value)
+
+    @property
     @pulumi.getter
     def environment(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        """
+        Environment variables
+        """
         return pulumi.get(self, "environment")
 
     @environment.setter
@@ -78,7 +106,7 @@ class MkdirArgs:
     @pulumi.getter
     def lifecycle(self) -> Optional['CommandLifecycle']:
         """
-        At what stage(s) in the resource lifecycle should the command be run.
+        At what stage(s) in the resource lifecycle should the command be run
         """
         return pulumi.get(self, "lifecycle")
 
@@ -110,29 +138,60 @@ class MkdirArgs:
     def remove_on_delete(self, value: Optional[pulumi.Input[bool]]):
         pulumi.set(self, "remove_on_delete", value)
 
+    @property
+    @pulumi.getter
+    def stdin(self) -> Optional[pulumi.Input[str]]:
+        """
+        TODO
+        """
+        return pulumi.get(self, "stdin")
+
+    @stdin.setter
+    def stdin(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "stdin", value)
+
+    @property
+    @pulumi.getter
+    def triggers(self) -> Optional[pulumi.Input[Sequence[Any]]]:
+        """
+        TODO
+        """
+        return pulumi.get(self, "triggers")
+
+    @triggers.setter
+    def triggers(self, value: Optional[pulumi.Input[Sequence[Any]]]):
+        pulumi.set(self, "triggers", value)
+
 
 class Mkdir(pulumi.ComponentResource):
     @overload
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
+                 binary_path: Optional[pulumi.Input[str]] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
                  directory: Optional[pulumi.Input[str]] = None,
                  environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  lifecycle: Optional['CommandLifecycle'] = None,
                  parents: Optional[pulumi.Input[bool]] = None,
                  remove_on_delete: Optional[pulumi.Input[bool]] = None,
+                 stdin: Optional[pulumi.Input[str]] = None,
+                 triggers: Optional[pulumi.Input[Sequence[Any]]] = None,
                  __props__=None):
         """
-        Represents the `mkdir` utility.
+        Abstraction over the `mkdir` utility on a remote system.
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']] connection: The connection details for the remote system.
+        :param pulumi.Input[str] binary_path: Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+        :param pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']] connection: Connection details for the remote system
         :param pulumi.Input[str] directory: The fully qualified path of the directory on the remote system.
-        :param 'CommandLifecycle' lifecycle: At what stage(s) in the resource lifecycle should the command be run.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] environment: Environment variables
+        :param 'CommandLifecycle' lifecycle: At what stage(s) in the resource lifecycle should the command be run
         :param pulumi.Input[bool] parents: Corresponds to the `--parents` option.
         :param pulumi.Input[bool] remove_on_delete: Remove the created directory when the `Mkdir` resource is deleted or updated.
+        :param pulumi.Input[str] stdin: TODO
+        :param pulumi.Input[Sequence[Any]] triggers: TODO
         """
         ...
     @overload
@@ -141,7 +200,7 @@ class Mkdir(pulumi.ComponentResource):
                  args: MkdirArgs,
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
-        Represents the `mkdir` utility.
+        Abstraction over the `mkdir` utility on a remote system.
 
         :param str resource_name: The name of the resource.
         :param MkdirArgs args: The arguments to use to populate this resource's properties.
@@ -158,12 +217,15 @@ class Mkdir(pulumi.ComponentResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
+                 binary_path: Optional[pulumi.Input[str]] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
                  directory: Optional[pulumi.Input[str]] = None,
                  environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  lifecycle: Optional['CommandLifecycle'] = None,
                  parents: Optional[pulumi.Input[bool]] = None,
                  remove_on_delete: Optional[pulumi.Input[bool]] = None,
+                 stdin: Optional[pulumi.Input[str]] = None,
+                 triggers: Optional[pulumi.Input[Sequence[Any]]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):
@@ -175,6 +237,7 @@ class Mkdir(pulumi.ComponentResource):
                 raise TypeError('__props__ is only valid when passed in combination with a valid opts.id to get an existing resource')
             __props__ = MkdirArgs.__new__(MkdirArgs)
 
+            __props__.__dict__["binary_path"] = binary_path
             if connection is None and not opts.urn:
                 raise TypeError("Missing required property 'connection'")
             __props__.__dict__["connection"] = connection
@@ -185,6 +248,8 @@ class Mkdir(pulumi.ComponentResource):
             __props__.__dict__["lifecycle"] = lifecycle
             __props__.__dict__["parents"] = parents
             __props__.__dict__["remove_on_delete"] = remove_on_delete
+            __props__.__dict__["stdin"] = stdin
+            __props__.__dict__["triggers"] = triggers
             __props__.__dict__["command"] = None
             __props__.__dict__["stderr"] = None
             __props__.__dict__["stdout"] = None
@@ -196,12 +261,28 @@ class Mkdir(pulumi.ComponentResource):
             remote=True)
 
     @property
+    @pulumi.getter(name="binaryPath")
+    def binary_path(self) -> pulumi.Output[str]:
+        """
+        Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+        """
+        return pulumi.get(self, "binary_path")
+
+    @property
     @pulumi.getter
     def command(self) -> pulumi.Output['pulumi_command.remote.Command']:
         """
-        The remote command.
+        The underlying command
         """
         return pulumi.get(self, "command")
+
+    @property
+    @pulumi.getter
+    def connection(self) -> pulumi.Output['pulumi_command.remote.outputs.Connection']:
+        """
+        Connection details for the remote system
+        """
+        return pulumi.get(self, "connection")
 
     @property
     @pulumi.getter
@@ -210,6 +291,22 @@ class Mkdir(pulumi.ComponentResource):
         The fully qualified path of the directory on the remote system.
         """
         return pulumi.get(self, "directory")
+
+    @property
+    @pulumi.getter
+    def environment(self) -> pulumi.Output[Mapping[str, str]]:
+        """
+        Environment variables
+        """
+        return pulumi.get(self, "environment")
+
+    @property
+    @pulumi.getter
+    def lifecycle(self) -> pulumi.Output[Optional['CommandLifecycle']]:
+        """
+        At what stage(s) in the resource lifecycle should the command be run
+        """
+        return pulumi.get(self, "lifecycle")
 
     @property
     @pulumi.getter
@@ -231,15 +328,31 @@ class Mkdir(pulumi.ComponentResource):
     @pulumi.getter
     def stderr(self) -> pulumi.Output[str]:
         """
-        The command's stderr.
+        TODO
         """
         return pulumi.get(self, "stderr")
 
     @property
     @pulumi.getter
+    def stdin(self) -> pulumi.Output[Optional[str]]:
+        """
+        TODO
+        """
+        return pulumi.get(self, "stdin")
+
+    @property
+    @pulumi.getter
     def stdout(self) -> pulumi.Output[str]:
         """
-        The command's stdout.
+        TODO
         """
         return pulumi.get(self, "stdout")
+
+    @property
+    @pulumi.getter
+    def triggers(self) -> pulumi.Output[Sequence[Any]]:
+        """
+        TODO
+        """
+        return pulumi.get(self, "triggers")
 

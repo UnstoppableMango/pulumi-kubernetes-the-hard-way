@@ -19,14 +19,14 @@ public final class EtcdConfigurationArgs extends com.pulumi.resources.ResourceAr
     public static final EtcdConfigurationArgs Empty = new EtcdConfigurationArgs();
 
     /**
-     * The PEM encoded CA data.
+     * The PEM encoded certificate authority data.
      * 
      */
     @Import(name="caPem", required=true)
     private Output<String> caPem;
 
     /**
-     * @return The PEM encoded CA data.
+     * @return The PEM encoded certificate authority data.
      * 
      */
     public Output<String> caPem() {
@@ -64,14 +64,14 @@ public final class EtcdConfigurationArgs extends com.pulumi.resources.ResourceAr
     }
 
     /**
-     * The connection details.
+     * The parameters with which to connect to the remote host.
      * 
      */
     @Import(name="connection", required=true)
     private Output<ConnectionArgs> connection;
 
     /**
-     * @return The connection details.
+     * @return The parameters with which to connect to the remote host.
      * 
      */
     public Output<ConnectionArgs> connection() {
@@ -79,36 +79,44 @@ public final class EtcdConfigurationArgs extends com.pulumi.resources.ResourceAr
     }
 
     /**
-     * The directory etcd will use.
+     * The directory etcd will store its data.
      * 
      */
     @Import(name="dataDirectory")
     private @Nullable Output<String> dataDirectory;
 
     /**
-     * @return The directory etcd will use.
+     * @return The directory etcd will store its data.
      * 
      */
     public Optional<Output<String>> dataDirectory() {
         return Optional.ofNullable(this.dataDirectory);
     }
 
+    /**
+     * The path to the `etcd` binary.
+     * 
+     */
     @Import(name="etcdPath", required=true)
     private Output<String> etcdPath;
 
+    /**
+     * @return The path to the `etcd` binary.
+     * 
+     */
     public Output<String> etcdPath() {
         return this.etcdPath;
     }
 
     /**
-     * IP used to serve client requests and communicate with etcd peers.
+     * The IP used to serve client requests and communicate with etcd peers.
      * 
      */
     @Import(name="internalIp", required=true)
     private Output<String> internalIp;
 
     /**
-     * @return IP used to serve client requests and communicate with etcd peers.
+     * @return The IP used to serve client requests and communicate with etcd peers.
      * 
      */
     public Output<String> internalIp() {
@@ -130,21 +138,6 @@ public final class EtcdConfigurationArgs extends com.pulumi.resources.ResourceAr
         return this.keyPem;
     }
 
-    /**
-     * The systemd service file dirctory.
-     * 
-     */
-    @Import(name="systemdDirectory")
-    private @Nullable Output<String> systemdDirectory;
-
-    /**
-     * @return The systemd service file dirctory.
-     * 
-     */
-    public Optional<Output<String>> systemdDirectory() {
-        return Optional.ofNullable(this.systemdDirectory);
-    }
-
     private EtcdConfigurationArgs() {}
 
     private EtcdConfigurationArgs(EtcdConfigurationArgs $) {
@@ -156,7 +149,6 @@ public final class EtcdConfigurationArgs extends com.pulumi.resources.ResourceAr
         this.etcdPath = $.etcdPath;
         this.internalIp = $.internalIp;
         this.keyPem = $.keyPem;
-        this.systemdDirectory = $.systemdDirectory;
     }
 
     public static Builder builder() {
@@ -178,7 +170,7 @@ public final class EtcdConfigurationArgs extends com.pulumi.resources.ResourceAr
         }
 
         /**
-         * @param caPem The PEM encoded CA data.
+         * @param caPem The PEM encoded certificate authority data.
          * 
          * @return builder
          * 
@@ -189,7 +181,7 @@ public final class EtcdConfigurationArgs extends com.pulumi.resources.ResourceAr
         }
 
         /**
-         * @param caPem The PEM encoded CA data.
+         * @param caPem The PEM encoded certificate authority data.
          * 
          * @return builder
          * 
@@ -241,7 +233,7 @@ public final class EtcdConfigurationArgs extends com.pulumi.resources.ResourceAr
         }
 
         /**
-         * @param connection The connection details.
+         * @param connection The parameters with which to connect to the remote host.
          * 
          * @return builder
          * 
@@ -252,7 +244,7 @@ public final class EtcdConfigurationArgs extends com.pulumi.resources.ResourceAr
         }
 
         /**
-         * @param connection The connection details.
+         * @param connection The parameters with which to connect to the remote host.
          * 
          * @return builder
          * 
@@ -262,7 +254,7 @@ public final class EtcdConfigurationArgs extends com.pulumi.resources.ResourceAr
         }
 
         /**
-         * @param dataDirectory The directory etcd will use.
+         * @param dataDirectory The directory etcd will store its data.
          * 
          * @return builder
          * 
@@ -273,7 +265,7 @@ public final class EtcdConfigurationArgs extends com.pulumi.resources.ResourceAr
         }
 
         /**
-         * @param dataDirectory The directory etcd will use.
+         * @param dataDirectory The directory etcd will store its data.
          * 
          * @return builder
          * 
@@ -282,17 +274,29 @@ public final class EtcdConfigurationArgs extends com.pulumi.resources.ResourceAr
             return dataDirectory(Output.of(dataDirectory));
         }
 
+        /**
+         * @param etcdPath The path to the `etcd` binary.
+         * 
+         * @return builder
+         * 
+         */
         public Builder etcdPath(Output<String> etcdPath) {
             $.etcdPath = etcdPath;
             return this;
         }
 
+        /**
+         * @param etcdPath The path to the `etcd` binary.
+         * 
+         * @return builder
+         * 
+         */
         public Builder etcdPath(String etcdPath) {
             return etcdPath(Output.of(etcdPath));
         }
 
         /**
-         * @param internalIp IP used to serve client requests and communicate with etcd peers.
+         * @param internalIp The IP used to serve client requests and communicate with etcd peers.
          * 
          * @return builder
          * 
@@ -303,7 +307,7 @@ public final class EtcdConfigurationArgs extends com.pulumi.resources.ResourceAr
         }
 
         /**
-         * @param internalIp IP used to serve client requests and communicate with etcd peers.
+         * @param internalIp The IP used to serve client requests and communicate with etcd peers.
          * 
          * @return builder
          * 
@@ -333,27 +337,6 @@ public final class EtcdConfigurationArgs extends com.pulumi.resources.ResourceAr
             return keyPem(Output.of(keyPem));
         }
 
-        /**
-         * @param systemdDirectory The systemd service file dirctory.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder systemdDirectory(@Nullable Output<String> systemdDirectory) {
-            $.systemdDirectory = systemdDirectory;
-            return this;
-        }
-
-        /**
-         * @param systemdDirectory The systemd service file dirctory.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder systemdDirectory(String systemdDirectory) {
-            return systemdDirectory(Output.of(systemdDirectory));
-        }
-
         public EtcdConfigurationArgs build() {
             if ($.caPem == null) {
                 throw new MissingRequiredPropertyException("EtcdConfigurationArgs", "caPem");
@@ -365,7 +348,6 @@ public final class EtcdConfigurationArgs extends com.pulumi.resources.ResourceAr
             if ($.connection == null) {
                 throw new MissingRequiredPropertyException("EtcdConfigurationArgs", "connection");
             }
-            $.dataDirectory = Codegen.stringProp("dataDirectory").output().arg($.dataDirectory).def("/var/lib/etcd").getNullable();
             if ($.etcdPath == null) {
                 throw new MissingRequiredPropertyException("EtcdConfigurationArgs", "etcdPath");
             }
@@ -375,7 +357,6 @@ public final class EtcdConfigurationArgs extends com.pulumi.resources.ResourceAr
             if ($.keyPem == null) {
                 throw new MissingRequiredPropertyException("EtcdConfigurationArgs", "keyPem");
             }
-            $.systemdDirectory = Codegen.stringProp("systemdDirectory").output().arg($.systemdDirectory).def("/etc/system/systemd").getNullable();
             return $;
         }
     }

@@ -18,20 +18,29 @@ import (
 type KubeSchedulerInstall struct {
 	pulumi.ResourceState
 
-	// The kube-scheduler CPU architecture.
-	Architecture ArchitectureOutput     `pulumi:"architecture"`
-	BinName      pulumi.StringPtrOutput `pulumi:"binName"`
-	// The connection details.
+	// The CPU architecture to install.
+	Architecture ArchitectureOutput `pulumi:"architecture"`
+	// The name of the installed binary.
+	BinName pulumi.StringPtrOutput `pulumi:"binName"`
+	// The parameters with which to connect to the remote host.
 	Connection pulumiCommand.ConnectionOutput `pulumi:"connection"`
-	// Directory to install the `etcd` and `etcdctl` binaries.
-	Directory pulumi.StringOutput    `pulumi:"directory"`
-	Download  DownloadOutput         `pulumi:"download"`
-	Mkdir     tools.MkdirOutput      `pulumi:"mkdir"`
-	Mktemp    tools.MktempOutput     `pulumi:"mktemp"`
-	Mv        tools.MvOutput         `pulumi:"mv"`
-	Path      pulumi.StringPtrOutput `pulumi:"path"`
-	Rm        tools.RmOutput         `pulumi:"rm"`
-	// The version of kube-scheduler to install.
+	// The directory to install the binary to.
+	Directory pulumi.StringOutput `pulumi:"directory"`
+	// The download operation.
+	Download DownloadOutput `pulumi:"download"`
+	// The mkdir operation.
+	Mkdir tools.MkdirOutput `pulumi:"mkdir"`
+	// The mktemp operation.
+	Mktemp tools.MktempOutput `pulumi:"mktemp"`
+	// The mv operation.
+	Mv tools.MvOutput `pulumi:"mv"`
+	// The path to the installed binary.
+	Path pulumi.StringOutput `pulumi:"path"`
+	// The rm operation.
+	Rm tools.RmOutput `pulumi:"rm"`
+	// The url used to download the binary.
+	Url pulumi.StringOutput `pulumi:"url"`
+	// The version to install.
 	Version pulumi.StringOutput `pulumi:"version"`
 }
 
@@ -59,25 +68,25 @@ func NewKubeSchedulerInstall(ctx *pulumi.Context,
 }
 
 type kubeSchedulerInstallArgs struct {
-	// The kube-scheduler CPU architecture.
+	// The CPU architecture to install.
 	Architecture *Architecture `pulumi:"architecture"`
-	// The connection details.
+	// The parameters with which to connect to the remote host.
 	Connection pulumiCommand.Connection `pulumi:"connection"`
-	// Directory to install the `kube-scheduler` binary.
+	// The directory to install the binary to.
 	Directory *string `pulumi:"directory"`
-	// The version of kube-scheduler to install.
+	// The version to install.
 	Version *string `pulumi:"version"`
 }
 
 // The set of arguments for constructing a KubeSchedulerInstall resource.
 type KubeSchedulerInstallArgs struct {
-	// The kube-scheduler CPU architecture.
+	// The CPU architecture to install.
 	Architecture ArchitecturePtrInput
-	// The connection details.
+	// The parameters with which to connect to the remote host.
 	Connection pulumiCommand.ConnectionInput
-	// Directory to install the `kube-scheduler` binary.
+	// The directory to install the binary to.
 	Directory pulumi.StringPtrInput
-	// The version of kube-scheduler to install.
+	// The version to install.
 	Version pulumi.StringPtrInput
 }
 
@@ -168,50 +177,62 @@ func (o KubeSchedulerInstallOutput) ToKubeSchedulerInstallOutputWithContext(ctx 
 	return o
 }
 
-// The kube-scheduler CPU architecture.
+// The CPU architecture to install.
 func (o KubeSchedulerInstallOutput) Architecture() ArchitectureOutput {
 	return o.ApplyT(func(v *KubeSchedulerInstall) ArchitectureOutput { return v.Architecture }).(ArchitectureOutput)
 }
 
+// The name of the installed binary.
 func (o KubeSchedulerInstallOutput) BinName() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *KubeSchedulerInstall) pulumi.StringPtrOutput { return v.BinName }).(pulumi.StringPtrOutput)
 }
 
-// The connection details.
+// The parameters with which to connect to the remote host.
 func (o KubeSchedulerInstallOutput) Connection() pulumiCommand.ConnectionOutput {
 	return o.ApplyT(func(v *KubeSchedulerInstall) pulumiCommand.ConnectionOutput { return v.Connection }).(pulumiCommand.ConnectionOutput)
 }
 
-// Directory to install the `etcd` and `etcdctl` binaries.
+// The directory to install the binary to.
 func (o KubeSchedulerInstallOutput) Directory() pulumi.StringOutput {
 	return o.ApplyT(func(v *KubeSchedulerInstall) pulumi.StringOutput { return v.Directory }).(pulumi.StringOutput)
 }
 
+// The download operation.
 func (o KubeSchedulerInstallOutput) Download() DownloadOutput {
 	return o.ApplyT(func(v *KubeSchedulerInstall) DownloadOutput { return v.Download }).(DownloadOutput)
 }
 
+// The mkdir operation.
 func (o KubeSchedulerInstallOutput) Mkdir() tools.MkdirOutput {
 	return o.ApplyT(func(v *KubeSchedulerInstall) tools.MkdirOutput { return v.Mkdir }).(tools.MkdirOutput)
 }
 
+// The mktemp operation.
 func (o KubeSchedulerInstallOutput) Mktemp() tools.MktempOutput {
 	return o.ApplyT(func(v *KubeSchedulerInstall) tools.MktempOutput { return v.Mktemp }).(tools.MktempOutput)
 }
 
+// The mv operation.
 func (o KubeSchedulerInstallOutput) Mv() tools.MvOutput {
 	return o.ApplyT(func(v *KubeSchedulerInstall) tools.MvOutput { return v.Mv }).(tools.MvOutput)
 }
 
-func (o KubeSchedulerInstallOutput) Path() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *KubeSchedulerInstall) pulumi.StringPtrOutput { return v.Path }).(pulumi.StringPtrOutput)
+// The path to the installed binary.
+func (o KubeSchedulerInstallOutput) Path() pulumi.StringOutput {
+	return o.ApplyT(func(v *KubeSchedulerInstall) pulumi.StringOutput { return v.Path }).(pulumi.StringOutput)
 }
 
+// The rm operation.
 func (o KubeSchedulerInstallOutput) Rm() tools.RmOutput {
 	return o.ApplyT(func(v *KubeSchedulerInstall) tools.RmOutput { return v.Rm }).(tools.RmOutput)
 }
 
-// The version of kube-scheduler to install.
+// The url used to download the binary.
+func (o KubeSchedulerInstallOutput) Url() pulumi.StringOutput {
+	return o.ApplyT(func(v *KubeSchedulerInstall) pulumi.StringOutput { return v.Url }).(pulumi.StringOutput)
+}
+
+// The version to install.
 func (o KubeSchedulerInstallOutput) Version() pulumi.StringOutput {
 	return o.ApplyT(func(v *KubeSchedulerInstall) pulumi.StringOutput { return v.Version }).(pulumi.StringOutput)
 }

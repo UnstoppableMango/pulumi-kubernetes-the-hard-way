@@ -9,7 +9,7 @@ import * as pulumiCommand from "@pulumi/command";
 import {Mkdir, Wget} from "../tools";
 
 /**
- * Represents a file to be downloaded on a remote system.
+ * Downloads the file specified by `url` onto a remote system.
  */
 export class Download extends pulumi.ComponentResource {
     /** @internal */
@@ -27,7 +27,7 @@ export class Download extends pulumi.ComponentResource {
     }
 
     /**
-     * Connection details for the remote system
+     * The parameters with which to connect to the remote host.
      */
     public readonly connection!: pulumi.Output<pulumiCommand.types.output.remote.Connection>;
     /**
@@ -35,15 +35,19 @@ export class Download extends pulumi.ComponentResource {
      */
     public readonly destination!: pulumi.Output<string>;
     /**
-     * Represents the command used to create the remote directory.
+     * The mkdir operation.
      */
     public /*out*/ readonly mkdir!: pulumi.Output<Mkdir>;
     /**
-     * The URL for the file to be downloaded.
+     * Remove the downloaded fiel when the resource is deleted.
+     */
+    public readonly removeOnDelete!: pulumi.Output<boolean>;
+    /**
+     * The URL of the file to be downloaded.
      */
     public readonly url!: pulumi.Output<string>;
     /**
-     * Represents the wget command used to download the file.
+     * The wget operation.
      */
     public /*out*/ readonly wget!: pulumi.Output<Wget>;
 
@@ -77,6 +81,7 @@ export class Download extends pulumi.ComponentResource {
             resourceInputs["connection"] = undefined /*out*/;
             resourceInputs["destination"] = undefined /*out*/;
             resourceInputs["mkdir"] = undefined /*out*/;
+            resourceInputs["removeOnDelete"] = undefined /*out*/;
             resourceInputs["url"] = undefined /*out*/;
             resourceInputs["wget"] = undefined /*out*/;
         }
@@ -90,7 +95,7 @@ export class Download extends pulumi.ComponentResource {
  */
 export interface DownloadArgs {
     /**
-     * Connection details for the remote system
+     * The parameters with which to connect to the remote host.
      */
     connection: pulumi.Input<pulumiCommand.types.input.remote.ConnectionArgs>;
     /**
@@ -98,11 +103,11 @@ export interface DownloadArgs {
      */
     destination: pulumi.Input<string>;
     /**
-     * Remove the downloaded file when the resource is deleted.
+     * Remove the downloaded fiel when the resource is deleted.
      */
     removeOnDelete?: pulumi.Input<boolean>;
     /**
-     * The URL for the file to be downloaded.
+     * The URL of the file to be downloaded.
      */
     url: pulumi.Input<string>;
 }

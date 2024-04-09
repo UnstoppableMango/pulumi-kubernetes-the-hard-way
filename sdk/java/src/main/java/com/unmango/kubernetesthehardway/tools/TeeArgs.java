@@ -11,6 +11,7 @@ import com.pulumi.exceptions.MissingRequiredPropertyException;
 import com.unmango.kubernetesthehardway.tools.enums.CommandLifecycle;
 import com.unmango.kubernetesthehardway.tools.enums.TeeMode;
 import java.lang.Boolean;
+import java.lang.Object;
 import java.lang.String;
 import java.util.List;
 import java.util.Map;
@@ -24,14 +25,14 @@ public final class TeeArgs extends com.pulumi.resources.ResourceArgs {
     public static final TeeArgs Empty = new TeeArgs();
 
     /**
-     * Append to the given FILEs, do not overwrite.
+     * Append to the given FILEs, do not overwrite
      * 
      */
     @Import(name="append")
     private @Nullable Output<Boolean> append;
 
     /**
-     * @return Append to the given FILEs, do not overwrite.
+     * @return Append to the given FILEs, do not overwrite
      * 
      */
     public Optional<Output<Boolean>> append() {
@@ -39,36 +40,59 @@ public final class TeeArgs extends com.pulumi.resources.ResourceArgs {
     }
 
     /**
-     * Connection details for the remote system.
+     * Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+     * 
+     */
+    @Import(name="binaryPath")
+    private @Nullable Output<String> binaryPath;
+
+    /**
+     * @return Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+     * 
+     */
+    public Optional<Output<String>> binaryPath() {
+        return Optional.ofNullable(this.binaryPath);
+    }
+
+    /**
+     * Connection details for the remote system
      * 
      */
     @Import(name="connection", required=true)
     private Output<ConnectionArgs> connection;
 
     /**
-     * @return Connection details for the remote system.
+     * @return Connection details for the remote system
      * 
      */
     public Output<ConnectionArgs> connection() {
         return this.connection;
     }
 
+    /**
+     * Environment variables
+     * 
+     */
     @Import(name="environment")
     private @Nullable Output<Map<String,String>> environment;
 
+    /**
+     * @return Environment variables
+     * 
+     */
     public Optional<Output<Map<String,String>>> environment() {
         return Optional.ofNullable(this.environment);
     }
 
     /**
-     * The file(s) to write to.
+     * Corresponds to the [FILE] argument.
      * 
      */
     @Import(name="files", required=true)
     private Output<Either<String,List<String>>> files;
 
     /**
-     * @return The file(s) to write to.
+     * @return Corresponds to the [FILE] argument.
      * 
      */
     public Output<Either<String,List<String>>> files() {
@@ -91,14 +115,14 @@ public final class TeeArgs extends com.pulumi.resources.ResourceArgs {
     }
 
     /**
-     * At what stage(s) in the resource lifecycle should the command be run.
+     * At what stage(s) in the resource lifecycle should the command be run
      * 
      */
     @Import(name="lifecycle")
     private @Nullable CommandLifecycle lifecycle;
 
     /**
-     * @return At what stage(s) in the resource lifecycle should the command be run.
+     * @return At what stage(s) in the resource lifecycle should the command be run
      * 
      */
     public Optional<CommandLifecycle> lifecycle() {
@@ -135,11 +159,34 @@ public final class TeeArgs extends com.pulumi.resources.ResourceArgs {
         return Optional.ofNullable(this.pipe);
     }
 
+    /**
+     * TODO
+     * 
+     */
     @Import(name="stdin", required=true)
     private Output<String> stdin;
 
+    /**
+     * @return TODO
+     * 
+     */
     public Output<String> stdin() {
         return this.stdin;
+    }
+
+    /**
+     * TODO
+     * 
+     */
+    @Import(name="triggers")
+    private @Nullable Output<List<Object>> triggers;
+
+    /**
+     * @return TODO
+     * 
+     */
+    public Optional<Output<List<Object>>> triggers() {
+        return Optional.ofNullable(this.triggers);
     }
 
     /**
@@ -161,6 +208,7 @@ public final class TeeArgs extends com.pulumi.resources.ResourceArgs {
 
     private TeeArgs(TeeArgs $) {
         this.append = $.append;
+        this.binaryPath = $.binaryPath;
         this.connection = $.connection;
         this.environment = $.environment;
         this.files = $.files;
@@ -169,6 +217,7 @@ public final class TeeArgs extends com.pulumi.resources.ResourceArgs {
         this.outputError = $.outputError;
         this.pipe = $.pipe;
         this.stdin = $.stdin;
+        this.triggers = $.triggers;
         this.version = $.version;
     }
 
@@ -191,7 +240,7 @@ public final class TeeArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param append Append to the given FILEs, do not overwrite.
+         * @param append Append to the given FILEs, do not overwrite
          * 
          * @return builder
          * 
@@ -202,7 +251,7 @@ public final class TeeArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param append Append to the given FILEs, do not overwrite.
+         * @param append Append to the given FILEs, do not overwrite
          * 
          * @return builder
          * 
@@ -212,7 +261,28 @@ public final class TeeArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param connection Connection details for the remote system.
+         * @param binaryPath Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+         * 
+         * @return builder
+         * 
+         */
+        public Builder binaryPath(@Nullable Output<String> binaryPath) {
+            $.binaryPath = binaryPath;
+            return this;
+        }
+
+        /**
+         * @param binaryPath Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+         * 
+         * @return builder
+         * 
+         */
+        public Builder binaryPath(String binaryPath) {
+            return binaryPath(Output.of(binaryPath));
+        }
+
+        /**
+         * @param connection Connection details for the remote system
          * 
          * @return builder
          * 
@@ -223,7 +293,7 @@ public final class TeeArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param connection Connection details for the remote system.
+         * @param connection Connection details for the remote system
          * 
          * @return builder
          * 
@@ -232,17 +302,29 @@ public final class TeeArgs extends com.pulumi.resources.ResourceArgs {
             return connection(Output.of(connection));
         }
 
+        /**
+         * @param environment Environment variables
+         * 
+         * @return builder
+         * 
+         */
         public Builder environment(@Nullable Output<Map<String,String>> environment) {
             $.environment = environment;
             return this;
         }
 
+        /**
+         * @param environment Environment variables
+         * 
+         * @return builder
+         * 
+         */
         public Builder environment(Map<String,String> environment) {
             return environment(Output.of(environment));
         }
 
         /**
-         * @param files The file(s) to write to.
+         * @param files Corresponds to the [FILE] argument.
          * 
          * @return builder
          * 
@@ -253,7 +335,7 @@ public final class TeeArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param files The file(s) to write to.
+         * @param files Corresponds to the [FILE] argument.
          * 
          * @return builder
          * 
@@ -263,7 +345,7 @@ public final class TeeArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param files The file(s) to write to.
+         * @param files Corresponds to the [FILE] argument.
          * 
          * @return builder
          * 
@@ -273,7 +355,7 @@ public final class TeeArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param files The file(s) to write to.
+         * @param files Corresponds to the [FILE] argument.
          * 
          * @return builder
          * 
@@ -304,7 +386,7 @@ public final class TeeArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param lifecycle At what stage(s) in the resource lifecycle should the command be run.
+         * @param lifecycle At what stage(s) in the resource lifecycle should the command be run
          * 
          * @return builder
          * 
@@ -356,13 +438,56 @@ public final class TeeArgs extends com.pulumi.resources.ResourceArgs {
             return pipe(Output.of(pipe));
         }
 
+        /**
+         * @param stdin TODO
+         * 
+         * @return builder
+         * 
+         */
         public Builder stdin(Output<String> stdin) {
             $.stdin = stdin;
             return this;
         }
 
+        /**
+         * @param stdin TODO
+         * 
+         * @return builder
+         * 
+         */
         public Builder stdin(String stdin) {
             return stdin(Output.of(stdin));
+        }
+
+        /**
+         * @param triggers TODO
+         * 
+         * @return builder
+         * 
+         */
+        public Builder triggers(@Nullable Output<List<Object>> triggers) {
+            $.triggers = triggers;
+            return this;
+        }
+
+        /**
+         * @param triggers TODO
+         * 
+         * @return builder
+         * 
+         */
+        public Builder triggers(List<Object> triggers) {
+            return triggers(Output.of(triggers));
+        }
+
+        /**
+         * @param triggers TODO
+         * 
+         * @return builder
+         * 
+         */
+        public Builder triggers(Object... triggers) {
+            return triggers(List.of(triggers));
         }
 
         /**

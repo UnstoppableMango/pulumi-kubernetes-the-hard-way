@@ -8,6 +8,10 @@ import java.lang.String;
 import java.util.Objects;
 import java.util.StringJoiner;
 
+    /**
+     * Systemd service exit type.
+     * 
+     */
     @EnumType
     public enum SystemdServiceExitType {
         Main("main"),

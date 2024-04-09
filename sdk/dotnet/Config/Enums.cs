@@ -7,9 +7,6 @@ using Pulumi;
 
 namespace UnMango.KubernetesTheHardWay.Config
 {
-    /// <summary>
-    /// Kubeconfig type
-    /// </summary>
     [EnumType]
     public readonly struct KubeconfigType : IEquatable<KubeconfigType>
     {

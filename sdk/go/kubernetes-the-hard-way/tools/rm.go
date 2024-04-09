@@ -17,19 +17,35 @@ import (
 type Rm struct {
 	pulumi.ResourceState
 
-	// Represents the command run on the remote system.
+	// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+	BinaryPath pulumi.StringOutput `pulumi:"binaryPath"`
+	// The underlying command
 	Command pulumiCommand.CommandOutput `pulumi:"command"`
-	// Corresponds to the --dir option.
+	// Connection details for the remote system
+	Connection pulumiCommand.ConnectionOutput `pulumi:"connection"`
+	// Corresponds to the `--dir` option.
 	Dir pulumi.BoolOutput `pulumi:"dir"`
+	// Environment variables
+	Environment pulumi.StringMapOutput `pulumi:"environment"`
 	// Corresponds to the [FILE] argument.
-	Files pulumi.StringArrayOutput `pulumi:"files"`
-	// Corresponds to the --force option.
+	Files pulumi.AnyOutput `pulumi:"files"`
+	// Corresponds to the `--force` option.
 	Force pulumi.BoolOutput `pulumi:"force"`
+	// At what stage(s) in the resource lifecycle should the command be run
+	Lifecycle CommandLifecyclePtrOutput `pulumi:"lifecycle"`
 	// Whether rm should be run when the resource is created or deleted.
 	OnDelete pulumi.BoolOutput `pulumi:"onDelete"`
-	// Corresponds to the --recursive option.
+	// Corresponds to the `--recursive` option.
 	Recursive pulumi.BoolOutput `pulumi:"recursive"`
-	// Corresponds to the --verbose option.
+	// TODO
+	Stderr pulumi.StringOutput `pulumi:"stderr"`
+	// TODO
+	Stdin pulumi.StringPtrOutput `pulumi:"stdin"`
+	// TODO
+	Stdout pulumi.StringOutput `pulumi:"stdout"`
+	// TODO
+	Triggers pulumi.ArrayOutput `pulumi:"triggers"`
+	// Corresponds to the `--verbose` option.
 	Verbose pulumi.BoolOutput `pulumi:"verbose"`
 }
 
@@ -57,43 +73,57 @@ func NewRm(ctx *pulumi.Context,
 }
 
 type rmArgs struct {
-	// Connection details for the remote system.
+	// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+	BinaryPath *string `pulumi:"binaryPath"`
+	// Connection details for the remote system
 	Connection pulumiCommand.Connection `pulumi:"connection"`
-	// Corresponds to the --dir option.
-	Dir         *bool             `pulumi:"dir"`
+	// Corresponds to the `--dir` option.
+	Dir *bool `pulumi:"dir"`
+	// Environment variables
 	Environment map[string]string `pulumi:"environment"`
 	// Corresponds to the [FILE] argument.
 	Files interface{} `pulumi:"files"`
-	// Corresponds to the --force option.
+	// Corresponds to the `--force` option.
 	Force *bool `pulumi:"force"`
-	// At what stage(s) in the resource lifecycle should the command be run.
+	// At what stage(s) in the resource lifecycle should the command be run
 	Lifecycle *CommandLifecycle `pulumi:"lifecycle"`
 	// Whether rm should be run when the resource is created or deleted.
 	OnDelete *bool `pulumi:"onDelete"`
-	// Corresponds to the --recursive option.
+	// Corresponds to the `--recursive` option.
 	Recursive *bool `pulumi:"recursive"`
-	// Corresponds to the --verbose option.
+	// TODO
+	Stdin *string `pulumi:"stdin"`
+	// TODO
+	Triggers []interface{} `pulumi:"triggers"`
+	// Corresponds to the `--verbose` option.
 	Verbose *bool `pulumi:"verbose"`
 }
 
 // The set of arguments for constructing a Rm resource.
 type RmArgs struct {
-	// Connection details for the remote system.
+	// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+	BinaryPath pulumi.StringPtrInput
+	// Connection details for the remote system
 	Connection pulumiCommand.ConnectionInput
-	// Corresponds to the --dir option.
-	Dir         pulumi.BoolPtrInput
+	// Corresponds to the `--dir` option.
+	Dir pulumi.BoolPtrInput
+	// Environment variables
 	Environment pulumi.StringMapInput
 	// Corresponds to the [FILE] argument.
 	Files pulumi.Input
-	// Corresponds to the --force option.
+	// Corresponds to the `--force` option.
 	Force pulumi.BoolPtrInput
-	// At what stage(s) in the resource lifecycle should the command be run.
+	// At what stage(s) in the resource lifecycle should the command be run
 	Lifecycle *CommandLifecycle
 	// Whether rm should be run when the resource is created or deleted.
-	OnDelete *bool
-	// Corresponds to the --recursive option.
+	OnDelete pulumi.BoolPtrInput
+	// Corresponds to the `--recursive` option.
 	Recursive pulumi.BoolPtrInput
-	// Corresponds to the --verbose option.
+	// TODO
+	Stdin pulumi.StringPtrInput
+	// TODO
+	Triggers pulumi.ArrayInput
+	// Corresponds to the `--verbose` option.
 	Verbose pulumi.BoolPtrInput
 }
 
@@ -184,24 +214,44 @@ func (o RmOutput) ToRmOutputWithContext(ctx context.Context) RmOutput {
 	return o
 }
 
-// Represents the command run on the remote system.
+// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+func (o RmOutput) BinaryPath() pulumi.StringOutput {
+	return o.ApplyT(func(v *Rm) pulumi.StringOutput { return v.BinaryPath }).(pulumi.StringOutput)
+}
+
+// The underlying command
 func (o RmOutput) Command() pulumiCommand.CommandOutput {
 	return o.ApplyT(func(v *Rm) pulumiCommand.CommandOutput { return v.Command }).(pulumiCommand.CommandOutput)
 }
 
-// Corresponds to the --dir option.
+// Connection details for the remote system
+func (o RmOutput) Connection() pulumiCommand.ConnectionOutput {
+	return o.ApplyT(func(v *Rm) pulumiCommand.ConnectionOutput { return v.Connection }).(pulumiCommand.ConnectionOutput)
+}
+
+// Corresponds to the `--dir` option.
 func (o RmOutput) Dir() pulumi.BoolOutput {
 	return o.ApplyT(func(v *Rm) pulumi.BoolOutput { return v.Dir }).(pulumi.BoolOutput)
 }
 
-// Corresponds to the [FILE] argument.
-func (o RmOutput) Files() pulumi.StringArrayOutput {
-	return o.ApplyT(func(v *Rm) pulumi.StringArrayOutput { return v.Files }).(pulumi.StringArrayOutput)
+// Environment variables
+func (o RmOutput) Environment() pulumi.StringMapOutput {
+	return o.ApplyT(func(v *Rm) pulumi.StringMapOutput { return v.Environment }).(pulumi.StringMapOutput)
 }
 
-// Corresponds to the --force option.
+// Corresponds to the [FILE] argument.
+func (o RmOutput) Files() pulumi.AnyOutput {
+	return o.ApplyT(func(v *Rm) pulumi.AnyOutput { return v.Files }).(pulumi.AnyOutput)
+}
+
+// Corresponds to the `--force` option.
 func (o RmOutput) Force() pulumi.BoolOutput {
 	return o.ApplyT(func(v *Rm) pulumi.BoolOutput { return v.Force }).(pulumi.BoolOutput)
+}
+
+// At what stage(s) in the resource lifecycle should the command be run
+func (o RmOutput) Lifecycle() CommandLifecyclePtrOutput {
+	return o.ApplyT(func(v *Rm) CommandLifecyclePtrOutput { return v.Lifecycle }).(CommandLifecyclePtrOutput)
 }
 
 // Whether rm should be run when the resource is created or deleted.
@@ -209,12 +259,32 @@ func (o RmOutput) OnDelete() pulumi.BoolOutput {
 	return o.ApplyT(func(v *Rm) pulumi.BoolOutput { return v.OnDelete }).(pulumi.BoolOutput)
 }
 
-// Corresponds to the --recursive option.
+// Corresponds to the `--recursive` option.
 func (o RmOutput) Recursive() pulumi.BoolOutput {
 	return o.ApplyT(func(v *Rm) pulumi.BoolOutput { return v.Recursive }).(pulumi.BoolOutput)
 }
 
-// Corresponds to the --verbose option.
+// TODO
+func (o RmOutput) Stderr() pulumi.StringOutput {
+	return o.ApplyT(func(v *Rm) pulumi.StringOutput { return v.Stderr }).(pulumi.StringOutput)
+}
+
+// TODO
+func (o RmOutput) Stdin() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Rm) pulumi.StringPtrOutput { return v.Stdin }).(pulumi.StringPtrOutput)
+}
+
+// TODO
+func (o RmOutput) Stdout() pulumi.StringOutput {
+	return o.ApplyT(func(v *Rm) pulumi.StringOutput { return v.Stdout }).(pulumi.StringOutput)
+}
+
+// TODO
+func (o RmOutput) Triggers() pulumi.ArrayOutput {
+	return o.ApplyT(func(v *Rm) pulumi.ArrayOutput { return v.Triggers }).(pulumi.ArrayOutput)
+}
+
+// Corresponds to the `--verbose` option.
 func (o RmOutput) Verbose() pulumi.BoolOutput {
 	return o.ApplyT(func(v *Rm) pulumi.BoolOutput { return v.Verbose }).(pulumi.BoolOutput)
 }

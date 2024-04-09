@@ -4,6 +4,8 @@
 package com.unmango.kubernetesthehardway.tools;
 
 import com.pulumi.command.remote.Command;
+import com.pulumi.command.remote.outputs.Connection;
+import com.pulumi.core.Either;
 import com.pulumi.core.Output;
 import com.pulumi.core.annotations.Export;
 import com.pulumi.core.annotations.ResourceType;
@@ -12,8 +14,10 @@ import com.unmango.kubernetesthehardway.Utilities;
 import com.unmango.kubernetesthehardway.tools.MvArgs;
 import com.unmango.kubernetesthehardway.tools.enums.CommandLifecycle;
 import java.lang.Boolean;
+import java.lang.Object;
 import java.lang.String;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import javax.annotation.Nullable;
 
@@ -24,59 +28,87 @@ import javax.annotation.Nullable;
 @ResourceType(type="kubernetes-the-hard-way:tools:Mv")
 public class Mv extends com.pulumi.resources.ComponentResource {
     /**
-     * Corresponds to both the -b and --backup options depending on whether [CONTROL] is supplied.
+     * Corresponds to the `-b` and `--backup` options depending on whether [CONTROL] is supplied.
      * 
      */
     @Export(name="backup", refs={Boolean.class}, tree="[0]")
     private Output<Boolean> backup;
 
     /**
-     * @return Corresponds to both the -b and --backup options depending on whether [CONTROL] is supplied.
+     * @return Corresponds to the `-b` and `--backup` options depending on whether [CONTROL] is supplied.
      * 
      */
     public Output<Boolean> backup() {
         return this.backup;
     }
     /**
-     * Represents the command run on the remote system.
+     * Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+     * 
+     */
+    @Export(name="binaryPath", refs={String.class}, tree="[0]")
+    private Output<String> binaryPath;
+
+    /**
+     * @return Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+     * 
+     */
+    public Output<String> binaryPath() {
+        return this.binaryPath;
+    }
+    /**
+     * The underlying command
      * 
      */
     @Export(name="command", refs={Command.class}, tree="[0]")
     private Output<Command> command;
 
     /**
-     * @return Represents the command run on the remote system.
+     * @return The underlying command
      * 
      */
     public Output<Command> command() {
         return this.command;
     }
     /**
-     * Corresponds to the --context option.
+     * Connection details for the remote system
+     * 
+     */
+    @Export(name="connection", refs={Connection.class}, tree="[0]")
+    private Output<Connection> connection;
+
+    /**
+     * @return Connection details for the remote system
+     * 
+     */
+    public Output<Connection> connection() {
+        return this.connection;
+    }
+    /**
+     * Corresponds to the `--context` option.
      * 
      */
     @Export(name="context", refs={Boolean.class}, tree="[0]")
     private Output<Boolean> context;
 
     /**
-     * @return Corresponds to the --context option.
+     * @return Corresponds to the `--context` option.
      * 
      */
     public Output<Boolean> context() {
         return this.context;
     }
     /**
-     * Corresponds to the [CONTROL] argument for the --backup option.
+     * Corresponds to the [CONTROL] argument for the `--backup` option.
      * 
      */
-    @Export(name="control", refs={String.class}, tree="[0]")
-    private Output</* @Nullable */ String> control;
+    @Export(name="control", refs={Boolean.class}, tree="[0]")
+    private Output</* @Nullable */ Boolean> control;
 
     /**
-     * @return Corresponds to the [CONTROL] argument for the --backup option.
+     * @return Corresponds to the [CONTROL] argument for the `--backup` option.
      * 
      */
-    public Output<Optional<String>> control() {
+    public Output<Optional<Boolean>> control() {
         return Codegen.optional(this.control);
     }
     /**
@@ -108,56 +140,70 @@ public class Mv extends com.pulumi.resources.ComponentResource {
         return Codegen.optional(this.directory);
     }
     /**
-     * Corresponds to the --force option.
+     * Environment variables
+     * 
+     */
+    @Export(name="environment", refs={Map.class,String.class}, tree="[0,1,1]")
+    private Output<Map<String,String>> environment;
+
+    /**
+     * @return Environment variables
+     * 
+     */
+    public Output<Map<String,String>> environment() {
+        return this.environment;
+    }
+    /**
+     * Corresponds to the `--force` option.
      * 
      */
     @Export(name="force", refs={Boolean.class}, tree="[0]")
     private Output<Boolean> force;
 
     /**
-     * @return Corresponds to the --force option.
+     * @return Corresponds to the `--force` option.
      * 
      */
     public Output<Boolean> force() {
         return this.force;
     }
     /**
-     * At what stage(s) in the resource lifecycle should the command be run.
+     * At what stage(s) in the resource lifecycle should the command be run
      * 
      */
     @Export(name="lifecycle", refs={CommandLifecycle.class}, tree="[0]")
     private Output</* @Nullable */ CommandLifecycle> lifecycle;
 
     /**
-     * @return At what stage(s) in the resource lifecycle should the command be run.
+     * @return At what stage(s) in the resource lifecycle should the command be run
      * 
      */
     public Output<Optional<CommandLifecycle>> lifecycle() {
         return Codegen.optional(this.lifecycle);
     }
     /**
-     * Corresponds to the --no-clobber option.
+     * Corresponds to the `--no-clobber` option.
      * 
      */
     @Export(name="noClobber", refs={Boolean.class}, tree="[0]")
     private Output<Boolean> noClobber;
 
     /**
-     * @return Corresponds to the --no-clobber option.
+     * @return Corresponds to the `--no-clobber` option.
      * 
      */
     public Output<Boolean> noClobber() {
         return this.noClobber;
     }
     /**
-     * Corresponds to the --no-target-directory option.
+     * Corresponds to the `--no-target-directory` option.
      * 
      */
     @Export(name="noTargetDirectory", refs={Boolean.class}, tree="[0]")
     private Output<Boolean> noTargetDirectory;
 
     /**
-     * @return Corresponds to the --no-target-directory option.
+     * @return Corresponds to the `--no-target-directory` option.
      * 
      */
     public Output<Boolean> noTargetDirectory() {
@@ -167,81 +213,137 @@ public class Mv extends com.pulumi.resources.ComponentResource {
      * Corresponds to the [SOURCE] argument.
      * 
      */
-    @Export(name="source", refs={List.class,String.class}, tree="[0,1]")
-    private Output<List<String>> source;
+    @Export(name="source", refs={Either.class,String.class,List.class}, tree="[0,1,[2,1]]")
+    private Output<Either<String,List<String>>> source;
 
     /**
      * @return Corresponds to the [SOURCE] argument.
      * 
      */
-    public Output<List<String>> source() {
+    public Output<Either<String,List<String>>> source() {
         return this.source;
     }
     /**
-     * Corresponds to the --strip-trailing-suffix option.
+     * TODO
+     * 
+     */
+    @Export(name="stderr", refs={String.class}, tree="[0]")
+    private Output<String> stderr;
+
+    /**
+     * @return TODO
+     * 
+     */
+    public Output<String> stderr() {
+        return this.stderr;
+    }
+    /**
+     * TODO
+     * 
+     */
+    @Export(name="stdin", refs={String.class}, tree="[0]")
+    private Output</* @Nullable */ String> stdin;
+
+    /**
+     * @return TODO
+     * 
+     */
+    public Output<Optional<String>> stdin() {
+        return Codegen.optional(this.stdin);
+    }
+    /**
+     * TODO
+     * 
+     */
+    @Export(name="stdout", refs={String.class}, tree="[0]")
+    private Output<String> stdout;
+
+    /**
+     * @return TODO
+     * 
+     */
+    public Output<String> stdout() {
+        return this.stdout;
+    }
+    /**
+     * Corresponds to the `--strip-trailing-slashes` option.
      * 
      */
     @Export(name="stripTrailingSlashes", refs={Boolean.class}, tree="[0]")
     private Output<Boolean> stripTrailingSlashes;
 
     /**
-     * @return Corresponds to the --strip-trailing-suffix option.
+     * @return Corresponds to the `--strip-trailing-slashes` option.
      * 
      */
     public Output<Boolean> stripTrailingSlashes() {
         return this.stripTrailingSlashes;
     }
     /**
-     * Corresponds to the --suffix option.
+     * Corresponds to the `--suffix` option.
      * 
      */
     @Export(name="suffix", refs={String.class}, tree="[0]")
     private Output</* @Nullable */ String> suffix;
 
     /**
-     * @return Corresponds to the --suffix option.
+     * @return Corresponds to the `--suffix` option.
      * 
      */
     public Output<Optional<String>> suffix() {
         return Codegen.optional(this.suffix);
     }
     /**
-     * Corresponds to the --target-directory option.
+     * Corresponds to the `--target-directory` option.
      * 
      */
-    @Export(name="targetDirectory", refs={String.class}, tree="[0]")
-    private Output</* @Nullable */ String> targetDirectory;
+    @Export(name="targetDirectory", refs={Boolean.class}, tree="[0]")
+    private Output</* @Nullable */ Boolean> targetDirectory;
 
     /**
-     * @return Corresponds to the --target-directory option.
+     * @return Corresponds to the `--target-directory` option.
      * 
      */
-    public Output<Optional<String>> targetDirectory() {
+    public Output<Optional<Boolean>> targetDirectory() {
         return Codegen.optional(this.targetDirectory);
     }
     /**
-     * Corresponds to the --update option.
+     * TODO
+     * 
+     */
+    @Export(name="triggers", refs={List.class,Object.class}, tree="[0,1]")
+    private Output<List<Object>> triggers;
+
+    /**
+     * @return TODO
+     * 
+     */
+    public Output<List<Object>> triggers() {
+        return this.triggers;
+    }
+    /**
+     * Corresponds to the `--update` option.
      * 
      */
     @Export(name="update", refs={Boolean.class}, tree="[0]")
     private Output<Boolean> update;
 
     /**
-     * @return Corresponds to the --update option.
+     * @return Corresponds to the `--update` option.
      * 
      */
     public Output<Boolean> update() {
         return this.update;
     }
     /**
-     * Corresponds to the --verbose option.
+     * Corresponds to the `--verbose` option.
      * 
      */
     @Export(name="verbose", refs={Boolean.class}, tree="[0]")
     private Output<Boolean> verbose;
 
     /**
-     * @return Corresponds to the --verbose option.
+     * @return Corresponds to the `--verbose` option.
      * 
      */
     public Output<Boolean> verbose() {

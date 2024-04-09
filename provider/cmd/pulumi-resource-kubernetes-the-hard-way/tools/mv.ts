@@ -56,7 +56,7 @@ export class Mv extends types.Mv {
       create: builder.command,
     }, { parent: this });
 
-    this.backup = backup;
+    this.backup = args.backup ?? false; // TODO
     this.context = context;
     this.force = force;
     this.noClobber = noClobber;

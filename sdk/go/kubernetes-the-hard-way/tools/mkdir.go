@@ -13,22 +13,34 @@ import (
 	"github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/sdk/go/kubernetes-the-hard-way/internal"
 )
 
-// Represents the `mkdir` utility.
+// Abstraction over the `mkdir` utility on a remote system.
 type Mkdir struct {
 	pulumi.ResourceState
 
-	// The remote command.
+	// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+	BinaryPath pulumi.StringOutput `pulumi:"binaryPath"`
+	// The underlying command
 	Command pulumiCommand.CommandOutput `pulumi:"command"`
+	// Connection details for the remote system
+	Connection pulumiCommand.ConnectionOutput `pulumi:"connection"`
 	// The fully qualified path of the directory on the remote system.
 	Directory pulumi.StringOutput `pulumi:"directory"`
+	// Environment variables
+	Environment pulumi.StringMapOutput `pulumi:"environment"`
+	// At what stage(s) in the resource lifecycle should the command be run
+	Lifecycle CommandLifecyclePtrOutput `pulumi:"lifecycle"`
 	// Corresponds to the `--parents` option.
 	Parents pulumi.BoolOutput `pulumi:"parents"`
 	// Remove the created directory when the `Mkdir` resource is deleted or updated.
 	RemoveOnDelete pulumi.BoolOutput `pulumi:"removeOnDelete"`
-	// The command's stderr.
+	// TODO
 	Stderr pulumi.StringOutput `pulumi:"stderr"`
-	// The command's stdout.
+	// TODO
+	Stdin pulumi.StringPtrOutput `pulumi:"stdin"`
+	// TODO
 	Stdout pulumi.StringOutput `pulumi:"stdout"`
+	// TODO
+	Triggers pulumi.ArrayOutput `pulumi:"triggers"`
 }
 
 // NewMkdir registers a new resource with the given unique name, arguments, and options.
@@ -55,32 +67,46 @@ func NewMkdir(ctx *pulumi.Context,
 }
 
 type mkdirArgs struct {
-	// The connection details for the remote system.
+	// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+	BinaryPath *string `pulumi:"binaryPath"`
+	// Connection details for the remote system
 	Connection pulumiCommand.Connection `pulumi:"connection"`
 	// The fully qualified path of the directory on the remote system.
-	Directory   string            `pulumi:"directory"`
+	Directory string `pulumi:"directory"`
+	// Environment variables
 	Environment map[string]string `pulumi:"environment"`
-	// At what stage(s) in the resource lifecycle should the command be run.
+	// At what stage(s) in the resource lifecycle should the command be run
 	Lifecycle *CommandLifecycle `pulumi:"lifecycle"`
 	// Corresponds to the `--parents` option.
 	Parents *bool `pulumi:"parents"`
 	// Remove the created directory when the `Mkdir` resource is deleted or updated.
 	RemoveOnDelete *bool `pulumi:"removeOnDelete"`
+	// TODO
+	Stdin *string `pulumi:"stdin"`
+	// TODO
+	Triggers []interface{} `pulumi:"triggers"`
 }
 
 // The set of arguments for constructing a Mkdir resource.
 type MkdirArgs struct {
-	// The connection details for the remote system.
+	// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+	BinaryPath pulumi.StringPtrInput
+	// Connection details for the remote system
 	Connection pulumiCommand.ConnectionInput
 	// The fully qualified path of the directory on the remote system.
-	Directory   pulumi.StringInput
+	Directory pulumi.StringInput
+	// Environment variables
 	Environment pulumi.StringMapInput
-	// At what stage(s) in the resource lifecycle should the command be run.
+	// At what stage(s) in the resource lifecycle should the command be run
 	Lifecycle *CommandLifecycle
 	// Corresponds to the `--parents` option.
 	Parents pulumi.BoolPtrInput
 	// Remove the created directory when the `Mkdir` resource is deleted or updated.
 	RemoveOnDelete pulumi.BoolPtrInput
+	// TODO
+	Stdin pulumi.StringPtrInput
+	// TODO
+	Triggers pulumi.ArrayInput
 }
 
 func (MkdirArgs) ElementType() reflect.Type {
@@ -170,14 +196,34 @@ func (o MkdirOutput) ToMkdirOutputWithContext(ctx context.Context) MkdirOutput {
 	return o
 }
 
-// The remote command.
+// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+func (o MkdirOutput) BinaryPath() pulumi.StringOutput {
+	return o.ApplyT(func(v *Mkdir) pulumi.StringOutput { return v.BinaryPath }).(pulumi.StringOutput)
+}
+
+// The underlying command
 func (o MkdirOutput) Command() pulumiCommand.CommandOutput {
 	return o.ApplyT(func(v *Mkdir) pulumiCommand.CommandOutput { return v.Command }).(pulumiCommand.CommandOutput)
+}
+
+// Connection details for the remote system
+func (o MkdirOutput) Connection() pulumiCommand.ConnectionOutput {
+	return o.ApplyT(func(v *Mkdir) pulumiCommand.ConnectionOutput { return v.Connection }).(pulumiCommand.ConnectionOutput)
 }
 
 // The fully qualified path of the directory on the remote system.
 func (o MkdirOutput) Directory() pulumi.StringOutput {
 	return o.ApplyT(func(v *Mkdir) pulumi.StringOutput { return v.Directory }).(pulumi.StringOutput)
+}
+
+// Environment variables
+func (o MkdirOutput) Environment() pulumi.StringMapOutput {
+	return o.ApplyT(func(v *Mkdir) pulumi.StringMapOutput { return v.Environment }).(pulumi.StringMapOutput)
+}
+
+// At what stage(s) in the resource lifecycle should the command be run
+func (o MkdirOutput) Lifecycle() CommandLifecyclePtrOutput {
+	return o.ApplyT(func(v *Mkdir) CommandLifecyclePtrOutput { return v.Lifecycle }).(CommandLifecyclePtrOutput)
 }
 
 // Corresponds to the `--parents` option.
@@ -190,14 +236,24 @@ func (o MkdirOutput) RemoveOnDelete() pulumi.BoolOutput {
 	return o.ApplyT(func(v *Mkdir) pulumi.BoolOutput { return v.RemoveOnDelete }).(pulumi.BoolOutput)
 }
 
-// The command's stderr.
+// TODO
 func (o MkdirOutput) Stderr() pulumi.StringOutput {
 	return o.ApplyT(func(v *Mkdir) pulumi.StringOutput { return v.Stderr }).(pulumi.StringOutput)
 }
 
-// The command's stdout.
+// TODO
+func (o MkdirOutput) Stdin() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mkdir) pulumi.StringPtrOutput { return v.Stdin }).(pulumi.StringPtrOutput)
+}
+
+// TODO
 func (o MkdirOutput) Stdout() pulumi.StringOutput {
 	return o.ApplyT(func(v *Mkdir) pulumi.StringOutput { return v.Stdout }).(pulumi.StringOutput)
+}
+
+// TODO
+func (o MkdirOutput) Triggers() pulumi.ArrayOutput {
+	return o.ApplyT(func(v *Mkdir) pulumi.ArrayOutput { return v.Triggers }).(pulumi.ArrayOutput)
 }
 
 type MkdirArrayOutput struct{ *pulumi.OutputState }

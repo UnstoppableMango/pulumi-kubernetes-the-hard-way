@@ -8,14 +8,14 @@ export class Systemctl extends schema.Systemctl {
     super(name, args, opts);
 
     const connection = output(args.connection);
-    const commands = output(args.commands);
+    const systemctlCommand = output(args.command);
     const environment = output(args.environment ?? {});
     const lifecycle = args.lifecycle ?? 'create';
-    const serviceName = output(args.serviceName);
+    const unit = output(args.unit);
 
     const builder = new CommandBuilder('systemctl')
-      .arg(commands)
-      .arg(args.serviceName);
+      .arg(systemctlCommand)
+      .arg(args.unit);
 
     const command = new Command(name, {
       connection,
@@ -24,18 +24,18 @@ export class Systemctl extends schema.Systemctl {
     }, { parent: this });
 
     this.command = command;
-    this.commands = commands;
+    this.systemctlCommand = args.command;
     this.connection = connection;
-    this.serviceName = serviceName as Output<string>;
+    this.unit = unit as Output<string>;
     this.stderr = command.stderr;
     this.stdin = command.stdin as Output<string>;
     this.stdout = command.stdout;
 
     this.registerOutputs({
       command,
-      commands,
+      systemctlCommand,
       connection,
-      serviceName,
+      unit,
       stderr: command.stderr,
       stdin: command.stdin,
       stdout: command.stdout,

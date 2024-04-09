@@ -55,7 +55,7 @@ const etcdConfig = new EtcdConfiguration('remote', {
   internalIp: '10.240.0.10',
   configurationDirectory: path.join(basePath, 'etc', 'etcd'),
   dataDirectory: path.join(basePath, 'var', 'lib', 'etcd'),
-  systemdDirectory: basePath,
+  // systemdDirectory: basePath,
   etcdPath: '/some/path/that/probably/should/exist/etcd',
 });
 

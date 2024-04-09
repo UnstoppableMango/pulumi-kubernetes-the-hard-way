@@ -9,7 +9,8 @@ import * as utilities from "../utilities";
 
 import * as pulumiCommand from "@pulumi/command";
 
-import {Mkdir} from "../tools";
+import {Mkdir, Mktemp, Mv, Rm} from "../tools";
+import {Download} from "./index";
 
 /**
  * Installs kube-apiserver on a remote system.
@@ -30,22 +31,51 @@ export class KubeApiServerInstall extends pulumi.ComponentResource {
     }
 
     /**
-     * The kube-apiserver CPU architecture.
+     * The CPU architecture to install.
      */
     public readonly architecture!: pulumi.Output<enums.remote.Architecture>;
+    /**
+     * The name of the installed binary.
+     */
     public /*out*/ readonly binName!: pulumi.Output<string | undefined>;
     /**
-     * The connection details.
+     * The parameters with which to connect to the remote host.
      */
     public readonly connection!: pulumi.Output<pulumiCommand.types.output.remote.Connection>;
     /**
-     * Directory to install the `kube-apiserver` binary.
+     * The directory to install the binary to.
      */
     public readonly directory!: pulumi.Output<string>;
-    public /*out*/ readonly mkdir!: pulumi.Output<Mkdir | undefined>;
-    public /*out*/ readonly path!: pulumi.Output<string | undefined>;
     /**
-     * The version of kube-apiserver to install.
+     * The download operation.
+     */
+    public /*out*/ readonly download!: pulumi.Output<Download>;
+    /**
+     * The mkdir operation.
+     */
+    public /*out*/ readonly mkdir!: pulumi.Output<Mkdir>;
+    /**
+     * The mktemp operation.
+     */
+    public /*out*/ readonly mktemp!: pulumi.Output<Mktemp>;
+    /**
+     * The mv operation.
+     */
+    public /*out*/ readonly mv!: pulumi.Output<Mv>;
+    /**
+     * The path to the installed binary.
+     */
+    public /*out*/ readonly path!: pulumi.Output<string>;
+    /**
+     * The rm operation.
+     */
+    public /*out*/ readonly rm!: pulumi.Output<Rm>;
+    /**
+     * The url used to download the binary.
+     */
+    public /*out*/ readonly url!: pulumi.Output<string>;
+    /**
+     * The version to install.
      */
     public readonly version!: pulumi.Output<string>;
 
@@ -68,15 +98,25 @@ export class KubeApiServerInstall extends pulumi.ComponentResource {
             resourceInputs["directory"] = (args ? args.directory : undefined) ?? "/usr/local/bin";
             resourceInputs["version"] = args ? args.version : undefined;
             resourceInputs["binName"] = undefined /*out*/;
+            resourceInputs["download"] = undefined /*out*/;
             resourceInputs["mkdir"] = undefined /*out*/;
+            resourceInputs["mktemp"] = undefined /*out*/;
+            resourceInputs["mv"] = undefined /*out*/;
             resourceInputs["path"] = undefined /*out*/;
+            resourceInputs["rm"] = undefined /*out*/;
+            resourceInputs["url"] = undefined /*out*/;
         } else {
             resourceInputs["architecture"] = undefined /*out*/;
             resourceInputs["binName"] = undefined /*out*/;
             resourceInputs["connection"] = undefined /*out*/;
             resourceInputs["directory"] = undefined /*out*/;
+            resourceInputs["download"] = undefined /*out*/;
             resourceInputs["mkdir"] = undefined /*out*/;
+            resourceInputs["mktemp"] = undefined /*out*/;
+            resourceInputs["mv"] = undefined /*out*/;
             resourceInputs["path"] = undefined /*out*/;
+            resourceInputs["rm"] = undefined /*out*/;
+            resourceInputs["url"] = undefined /*out*/;
             resourceInputs["version"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
@@ -89,19 +129,19 @@ export class KubeApiServerInstall extends pulumi.ComponentResource {
  */
 export interface KubeApiServerInstallArgs {
     /**
-     * The kube-apiserver CPU architecture.
+     * The CPU architecture to install.
      */
     architecture?: pulumi.Input<enums.remote.Architecture>;
     /**
-     * The connection details.
+     * The parameters with which to connect to the remote host.
      */
     connection: pulumi.Input<pulumiCommand.types.input.remote.ConnectionArgs>;
     /**
-     * Directory to install the `etcd` and `etcdctl` binaries.
+     * The directory to install the binary to.
      */
     directory?: pulumi.Input<string>;
     /**
-     * The version of kube-apiserver to install.
+     * The version to install.
      */
     version?: pulumi.Input<string>;
 }

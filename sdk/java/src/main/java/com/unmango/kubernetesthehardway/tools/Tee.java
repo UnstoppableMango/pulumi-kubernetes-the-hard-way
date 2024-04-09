@@ -15,6 +15,7 @@ import com.unmango.kubernetesthehardway.tools.TeeArgs;
 import com.unmango.kubernetesthehardway.tools.enums.CommandLifecycle;
 import com.unmango.kubernetesthehardway.tools.enums.TeeMode;
 import java.lang.Boolean;
+import java.lang.Object;
 import java.lang.String;
 import java.util.List;
 import java.util.Map;
@@ -22,68 +23,90 @@ import java.util.Optional;
 import javax.annotation.Nullable;
 
 /**
- * Read from standard input and write to standard output and files.
+ * Abstraction over the `rm` utility on a remote system.
  * 
  */
 @ResourceType(type="kubernetes-the-hard-way:tools:Tee")
 public class Tee extends com.pulumi.resources.ComponentResource {
     /**
-     * Append to the given FILEs, do not overwrite.
+     * Append to the given FILEs, do not overwrite
      * 
      */
     @Export(name="append", refs={Boolean.class}, tree="[0]")
     private Output<Boolean> append;
 
     /**
-     * @return Append to the given FILEs, do not overwrite.
+     * @return Append to the given FILEs, do not overwrite
      * 
      */
     public Output<Boolean> append() {
         return this.append;
     }
     /**
-     * Represents the command run on the remote system.
+     * Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+     * 
+     */
+    @Export(name="binaryPath", refs={String.class}, tree="[0]")
+    private Output<String> binaryPath;
+
+    /**
+     * @return Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+     * 
+     */
+    public Output<String> binaryPath() {
+        return this.binaryPath;
+    }
+    /**
+     * The underlying command
      * 
      */
     @Export(name="command", refs={Command.class}, tree="[0]")
     private Output<Command> command;
 
     /**
-     * @return Represents the command run on the remote system.
+     * @return The underlying command
      * 
      */
     public Output<Command> command() {
         return this.command;
     }
     /**
-     * Connection details for the remote system.
+     * Connection details for the remote system
      * 
      */
     @Export(name="connection", refs={Connection.class}, tree="[0]")
     private Output<Connection> connection;
 
     /**
-     * @return Connection details for the remote system.
+     * @return Connection details for the remote system
      * 
      */
     public Output<Connection> connection() {
         return this.connection;
     }
+    /**
+     * Environment variables
+     * 
+     */
     @Export(name="environment", refs={Map.class,String.class}, tree="[0,1,1]")
-    private Output</* @Nullable */ Map<String,String>> environment;
+    private Output<Map<String,String>> environment;
 
-    public Output<Optional<Map<String,String>>> environment() {
-        return Codegen.optional(this.environment);
+    /**
+     * @return Environment variables
+     * 
+     */
+    public Output<Map<String,String>> environment() {
+        return this.environment;
     }
     /**
-     * The file(s) to write to.
+     * Corresponds to the [FILE] argument.
      * 
      */
     @Export(name="files", refs={Either.class,String.class,List.class}, tree="[0,1,[2,1]]")
     private Output<Either<String,List<String>>> files;
 
     /**
-     * @return The file(s) to write to.
+     * @return Corresponds to the [FILE] argument.
      * 
      */
     public Output<Either<String,List<String>>> files() {
@@ -104,14 +127,14 @@ public class Tee extends com.pulumi.resources.ComponentResource {
         return this.ignoreInterrupts;
     }
     /**
-     * At what stage(s) in the resource lifecycle should the command be run.
+     * At what stage(s) in the resource lifecycle should the command be run
      * 
      */
     @Export(name="lifecycle", refs={CommandLifecycle.class}, tree="[0]")
     private Output</* @Nullable */ CommandLifecycle> lifecycle;
 
     /**
-     * @return At what stage(s) in the resource lifecycle should the command be run.
+     * @return At what stage(s) in the resource lifecycle should the command be run
      * 
      */
     public Output<Optional<CommandLifecycle>> lifecycle() {
@@ -145,23 +168,75 @@ public class Tee extends com.pulumi.resources.ComponentResource {
     public Output<Boolean> pipe() {
         return this.pipe;
     }
+    /**
+     * TODO
+     * 
+     */
     @Export(name="stderr", refs={String.class}, tree="[0]")
-    private Output</* @Nullable */ String> stderr;
+    private Output<String> stderr;
 
-    public Output<Optional<String>> stderr() {
-        return Codegen.optional(this.stderr);
+    /**
+     * @return TODO
+     * 
+     */
+    public Output<String> stderr() {
+        return this.stderr;
     }
+    /**
+     * TODO
+     * 
+     */
     @Export(name="stdin", refs={String.class}, tree="[0]")
     private Output<String> stdin;
 
+    /**
+     * @return TODO
+     * 
+     */
     public Output<String> stdin() {
         return this.stdin;
     }
+    /**
+     * TODO
+     * 
+     */
     @Export(name="stdout", refs={String.class}, tree="[0]")
-    private Output</* @Nullable */ String> stdout;
+    private Output<String> stdout;
 
-    public Output<Optional<String>> stdout() {
-        return Codegen.optional(this.stdout);
+    /**
+     * @return TODO
+     * 
+     */
+    public Output<String> stdout() {
+        return this.stdout;
+    }
+    /**
+     * TODO
+     * 
+     */
+    @Export(name="triggers", refs={List.class,Object.class}, tree="[0,1]")
+    private Output<List<Object>> triggers;
+
+    /**
+     * @return TODO
+     * 
+     */
+    public Output<List<Object>> triggers() {
+        return this.triggers;
+    }
+    /**
+     * Output version information and exit.
+     * 
+     */
+    @Export(name="version", refs={Boolean.class}, tree="[0]")
+    private Output<Boolean> version;
+
+    /**
+     * @return Output version information and exit.
+     * 
+     */
+    public Output<Boolean> version() {
+        return this.version;
     }
 
     /**

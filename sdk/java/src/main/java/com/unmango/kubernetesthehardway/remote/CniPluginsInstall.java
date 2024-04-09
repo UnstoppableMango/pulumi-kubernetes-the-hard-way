@@ -18,197 +18,614 @@ import com.unmango.kubernetesthehardway.tools.Mv;
 import com.unmango.kubernetesthehardway.tools.Rm;
 import com.unmango.kubernetesthehardway.tools.Tar;
 import java.lang.String;
+import java.util.Optional;
 import javax.annotation.Nullable;
 
 /**
- * Installs cni-plugins on a remote system.
+ * Installs cni-plugins on a remote system
  * 
  */
 @ResourceType(type="kubernetes-the-hard-way:remote:CniPluginsInstall")
 public class CniPluginsInstall extends com.pulumi.resources.ComponentResource {
     /**
-     * The CPU architecture.
+     * The CPU architecture to install.
      * 
      */
     @Export(name="architecture", refs={Architecture.class}, tree="[0]")
     private Output<Architecture> architecture;
 
     /**
-     * @return The CPU architecture.
+     * @return The CPU architecture to install.
      * 
      */
     public Output<Architecture> architecture() {
         return this.architecture;
     }
+    /**
+     * The name of the downloaded archive.
+     * 
+     */
     @Export(name="archiveName", refs={String.class}, tree="[0]")
     private Output<String> archiveName;
 
+    /**
+     * @return The name of the downloaded archive.
+     * 
+     */
     public Output<String> archiveName() {
         return this.archiveName;
     }
+    /**
+     * The bandwidth mv operation.
+     * 
+     */
+    @Export(name="bandwidthMv", refs={Mv.class}, tree="[0]")
+    private Output<Mv> bandwidthMv;
+
+    /**
+     * @return The bandwidth mv operation.
+     * 
+     */
+    public Output<Mv> bandwidthMv() {
+        return this.bandwidthMv;
+    }
+    /**
+     * The bandwidth path on the remote system
+     * 
+     */
     @Export(name="bandwidthPath", refs={String.class}, tree="[0]")
     private Output<String> bandwidthPath;
 
+    /**
+     * @return The bandwidth path on the remote system
+     * 
+     */
     public Output<String> bandwidthPath() {
         return this.bandwidthPath;
     }
+    /**
+     * The bridge mv operation.
+     * 
+     */
+    @Export(name="bridgeMv", refs={Mv.class}, tree="[0]")
+    private Output<Mv> bridgeMv;
+
+    /**
+     * @return The bridge mv operation.
+     * 
+     */
+    public Output<Mv> bridgeMv() {
+        return this.bridgeMv;
+    }
+    /**
+     * The bridge path on the remote system
+     * 
+     */
     @Export(name="bridgePath", refs={String.class}, tree="[0]")
     private Output<String> bridgePath;
 
+    /**
+     * @return The bridge path on the remote system
+     * 
+     */
     public Output<String> bridgePath() {
         return this.bridgePath;
     }
     /**
-     * The connection details.
+     * The parameters with which to connect to the remote host.
      * 
      */
     @Export(name="connection", refs={Connection.class}, tree="[0]")
     private Output<Connection> connection;
 
     /**
-     * @return The connection details.
+     * @return The parameters with which to connect to the remote host.
      * 
      */
     public Output<Connection> connection() {
         return this.connection;
     }
+    /**
+     * The dhcp mv operation.
+     * 
+     */
+    @Export(name="dhcpMv", refs={Mv.class}, tree="[0]")
+    private Output<Mv> dhcpMv;
+
+    /**
+     * @return The dhcp mv operation.
+     * 
+     */
+    public Output<Mv> dhcpMv() {
+        return this.dhcpMv;
+    }
+    /**
+     * The dhcp path on the remote system
+     * 
+     */
     @Export(name="dhcpPath", refs={String.class}, tree="[0]")
     private Output<String> dhcpPath;
 
+    /**
+     * @return The dhcp path on the remote system
+     * 
+     */
     public Output<String> dhcpPath() {
         return this.dhcpPath;
     }
     /**
-     * Directory to install the binary.
+     * The directory to install the binary to.
      * 
      */
     @Export(name="directory", refs={String.class}, tree="[0]")
     private Output<String> directory;
 
     /**
-     * @return Directory to install the binary.
+     * @return The directory to install the binary to.
      * 
      */
     public Output<String> directory() {
         return this.directory;
     }
+    /**
+     * The download operation.
+     * 
+     */
     @Export(name="download", refs={Download.class}, tree="[0]")
     private Output<Download> download;
 
+    /**
+     * @return The download operation.
+     * 
+     */
     public Output<Download> download() {
         return this.download;
     }
+    /**
+     * The dummy mv operation.
+     * 
+     */
+    @Export(name="dummyMv", refs={Mv.class}, tree="[0]")
+    private Output<Mv> dummyMv;
+
+    /**
+     * @return The dummy mv operation.
+     * 
+     */
+    public Output<Mv> dummyMv() {
+        return this.dummyMv;
+    }
+    /**
+     * The dummy path on the remote system
+     * 
+     */
     @Export(name="dummyPath", refs={String.class}, tree="[0]")
     private Output<String> dummyPath;
 
+    /**
+     * @return The dummy path on the remote system
+     * 
+     */
     public Output<String> dummyPath() {
         return this.dummyPath;
     }
+    /**
+     * The firewall mv operation.
+     * 
+     */
+    @Export(name="firewallMv", refs={Mv.class}, tree="[0]")
+    private Output<Mv> firewallMv;
+
+    /**
+     * @return The firewall mv operation.
+     * 
+     */
+    public Output<Mv> firewallMv() {
+        return this.firewallMv;
+    }
+    /**
+     * The firewall path on the remote system
+     * 
+     */
     @Export(name="firewallPath", refs={String.class}, tree="[0]")
     private Output<String> firewallPath;
 
+    /**
+     * @return The firewall path on the remote system
+     * 
+     */
     public Output<String> firewallPath() {
         return this.firewallPath;
     }
+    /**
+     * The hostDevice mv operation.
+     * 
+     */
+    @Export(name="hostDeviceMv", refs={Mv.class}, tree="[0]")
+    private Output<Mv> hostDeviceMv;
+
+    /**
+     * @return The hostDevice mv operation.
+     * 
+     */
+    public Output<Mv> hostDeviceMv() {
+        return this.hostDeviceMv;
+    }
+    /**
+     * The hostDevice path on the remote system
+     * 
+     */
     @Export(name="hostDevicePath", refs={String.class}, tree="[0]")
     private Output<String> hostDevicePath;
 
+    /**
+     * @return The hostDevice path on the remote system
+     * 
+     */
     public Output<String> hostDevicePath() {
         return this.hostDevicePath;
     }
+    /**
+     * The hostLocal mv operation.
+     * 
+     */
+    @Export(name="hostLocalMv", refs={Mv.class}, tree="[0]")
+    private Output<Mv> hostLocalMv;
+
+    /**
+     * @return The hostLocal mv operation.
+     * 
+     */
+    public Output<Mv> hostLocalMv() {
+        return this.hostLocalMv;
+    }
+    /**
+     * The hostLocal path on the remote system
+     * 
+     */
     @Export(name="hostLocalPath", refs={String.class}, tree="[0]")
     private Output<String> hostLocalPath;
 
+    /**
+     * @return The hostLocal path on the remote system
+     * 
+     */
     public Output<String> hostLocalPath() {
         return this.hostLocalPath;
     }
+    /**
+     * The ipvlan mv operation.
+     * 
+     */
+    @Export(name="ipvlanMv", refs={Mv.class}, tree="[0]")
+    private Output<Mv> ipvlanMv;
+
+    /**
+     * @return The ipvlan mv operation.
+     * 
+     */
+    public Output<Mv> ipvlanMv() {
+        return this.ipvlanMv;
+    }
+    /**
+     * The ipvlan path on the remote system
+     * 
+     */
     @Export(name="ipvlanPath", refs={String.class}, tree="[0]")
     private Output<String> ipvlanPath;
 
+    /**
+     * @return The ipvlan path on the remote system
+     * 
+     */
     public Output<String> ipvlanPath() {
         return this.ipvlanPath;
     }
+    /**
+     * The loopback mv operation.
+     * 
+     */
+    @Export(name="loopbackMv", refs={Mv.class}, tree="[0]")
+    private Output<Mv> loopbackMv;
+
+    /**
+     * @return The loopback mv operation.
+     * 
+     */
+    public Output<Mv> loopbackMv() {
+        return this.loopbackMv;
+    }
+    /**
+     * The loopback path on the remote system
+     * 
+     */
     @Export(name="loopbackPath", refs={String.class}, tree="[0]")
     private Output<String> loopbackPath;
 
+    /**
+     * @return The loopback path on the remote system
+     * 
+     */
     public Output<String> loopbackPath() {
         return this.loopbackPath;
     }
+    /**
+     * The macvlan mv operation.
+     * 
+     */
+    @Export(name="macvlanMv", refs={Mv.class}, tree="[0]")
+    private Output<Mv> macvlanMv;
+
+    /**
+     * @return The macvlan mv operation.
+     * 
+     */
+    public Output<Mv> macvlanMv() {
+        return this.macvlanMv;
+    }
+    /**
+     * The macvlan path on the remote system
+     * 
+     */
     @Export(name="macvlanPath", refs={String.class}, tree="[0]")
     private Output<String> macvlanPath;
 
+    /**
+     * @return The macvlan path on the remote system
+     * 
+     */
     public Output<String> macvlanPath() {
         return this.macvlanPath;
     }
+    /**
+     * The mkdir operation.
+     * 
+     */
     @Export(name="mkdir", refs={Mkdir.class}, tree="[0]")
     private Output<Mkdir> mkdir;
 
+    /**
+     * @return The mkdir operation.
+     * 
+     */
     public Output<Mkdir> mkdir() {
         return this.mkdir;
     }
+    /**
+     * The mktemp operation.
+     * 
+     */
     @Export(name="mktemp", refs={Mktemp.class}, tree="[0]")
     private Output<Mktemp> mktemp;
 
+    /**
+     * @return The mktemp operation.
+     * 
+     */
     public Output<Mktemp> mktemp() {
         return this.mktemp;
     }
-    @Export(name="mv", refs={Mv.class}, tree="[0]")
-    private Output<Mv> mv;
+    /**
+     * The path to the installed binary.
+     * 
+     */
+    @Export(name="path", refs={String.class}, tree="[0]")
+    private Output</* @Nullable */ String> path;
 
-    public Output<Mv> mv() {
-        return this.mv;
+    /**
+     * @return The path to the installed binary.
+     * 
+     */
+    public Output<Optional<String>> path() {
+        return Codegen.optional(this.path);
     }
+    /**
+     * The portmap mv operation.
+     * 
+     */
+    @Export(name="portmapMv", refs={Mv.class}, tree="[0]")
+    private Output<Mv> portmapMv;
+
+    /**
+     * @return The portmap mv operation.
+     * 
+     */
+    public Output<Mv> portmapMv() {
+        return this.portmapMv;
+    }
+    /**
+     * The portmap path on the remote system
+     * 
+     */
     @Export(name="portmapPath", refs={String.class}, tree="[0]")
     private Output<String> portmapPath;
 
+    /**
+     * @return The portmap path on the remote system
+     * 
+     */
     public Output<String> portmapPath() {
         return this.portmapPath;
     }
+    /**
+     * The ptp mv operation.
+     * 
+     */
+    @Export(name="ptpMv", refs={Mv.class}, tree="[0]")
+    private Output<Mv> ptpMv;
+
+    /**
+     * @return The ptp mv operation.
+     * 
+     */
+    public Output<Mv> ptpMv() {
+        return this.ptpMv;
+    }
+    /**
+     * The ptp path on the remote system
+     * 
+     */
     @Export(name="ptpPath", refs={String.class}, tree="[0]")
     private Output<String> ptpPath;
 
+    /**
+     * @return The ptp path on the remote system
+     * 
+     */
     public Output<String> ptpPath() {
         return this.ptpPath;
     }
+    /**
+     * The rm operation.
+     * 
+     */
     @Export(name="rm", refs={Rm.class}, tree="[0]")
     private Output<Rm> rm;
 
+    /**
+     * @return The rm operation.
+     * 
+     */
     public Output<Rm> rm() {
         return this.rm;
     }
+    /**
+     * The sbr mv operation.
+     * 
+     */
+    @Export(name="sbrMv", refs={Mv.class}, tree="[0]")
+    private Output<Mv> sbrMv;
+
+    /**
+     * @return The sbr mv operation.
+     * 
+     */
+    public Output<Mv> sbrMv() {
+        return this.sbrMv;
+    }
+    /**
+     * The sbr path on the remote system
+     * 
+     */
     @Export(name="sbrPath", refs={String.class}, tree="[0]")
     private Output<String> sbrPath;
 
+    /**
+     * @return The sbr path on the remote system
+     * 
+     */
     public Output<String> sbrPath() {
         return this.sbrPath;
     }
+    /**
+     * The static mv operation.
+     * 
+     */
+    @Export(name="staticMv", refs={Mv.class}, tree="[0]")
+    private Output<Mv> staticMv;
+
+    /**
+     * @return The static mv operation.
+     * 
+     */
+    public Output<Mv> staticMv() {
+        return this.staticMv;
+    }
+    /**
+     * The static path on the remote system
+     * 
+     */
     @Export(name="staticPath", refs={String.class}, tree="[0]")
     private Output<String> staticPath;
 
+    /**
+     * @return The static path on the remote system
+     * 
+     */
     public Output<String> staticPath() {
         return this.staticPath;
     }
+    /**
+     * The tap mv operation.
+     * 
+     */
+    @Export(name="tapMv", refs={Mv.class}, tree="[0]")
+    private Output<Mv> tapMv;
+
+    /**
+     * @return The tap mv operation.
+     * 
+     */
+    public Output<Mv> tapMv() {
+        return this.tapMv;
+    }
+    /**
+     * The tap path on the remote system
+     * 
+     */
     @Export(name="tapPath", refs={String.class}, tree="[0]")
     private Output<String> tapPath;
 
+    /**
+     * @return The tap path on the remote system
+     * 
+     */
     public Output<String> tapPath() {
         return this.tapPath;
     }
+    /**
+     * The tar operation.
+     * 
+     */
     @Export(name="tar", refs={Tar.class}, tree="[0]")
     private Output<Tar> tar;
 
+    /**
+     * @return The tar operation.
+     * 
+     */
     public Output<Tar> tar() {
         return this.tar;
     }
+    /**
+     * The tuning mv operation.
+     * 
+     */
+    @Export(name="tuningMv", refs={Mv.class}, tree="[0]")
+    private Output<Mv> tuningMv;
+
+    /**
+     * @return The tuning mv operation.
+     * 
+     */
+    public Output<Mv> tuningMv() {
+        return this.tuningMv;
+    }
+    /**
+     * The tuning path on the remote system
+     * 
+     */
     @Export(name="tuningPath", refs={String.class}, tree="[0]")
     private Output<String> tuningPath;
 
+    /**
+     * @return The tuning path on the remote system
+     * 
+     */
     public Output<String> tuningPath() {
         return this.tuningPath;
     }
+    /**
+     * The url used to download the binary.
+     * 
+     */
     @Export(name="url", refs={String.class}, tree="[0]")
     private Output<String> url;
 
+    /**
+     * @return The url used to download the binary.
+     * 
+     */
     public Output<String> url() {
         return this.url;
     }
@@ -226,15 +643,59 @@ public class CniPluginsInstall extends com.pulumi.resources.ComponentResource {
     public Output<String> version() {
         return this.version;
     }
+    /**
+     * The vlan mv operation.
+     * 
+     */
+    @Export(name="vlanMv", refs={Mv.class}, tree="[0]")
+    private Output<Mv> vlanMv;
+
+    /**
+     * @return The vlan mv operation.
+     * 
+     */
+    public Output<Mv> vlanMv() {
+        return this.vlanMv;
+    }
+    /**
+     * The vlan path on the remote system
+     * 
+     */
     @Export(name="vlanPath", refs={String.class}, tree="[0]")
     private Output<String> vlanPath;
 
+    /**
+     * @return The vlan path on the remote system
+     * 
+     */
     public Output<String> vlanPath() {
         return this.vlanPath;
     }
+    /**
+     * The vrf mv operation.
+     * 
+     */
+    @Export(name="vrfMv", refs={Mv.class}, tree="[0]")
+    private Output<Mv> vrfMv;
+
+    /**
+     * @return The vrf mv operation.
+     * 
+     */
+    public Output<Mv> vrfMv() {
+        return this.vrfMv;
+    }
+    /**
+     * The vrf path on the remote system
+     * 
+     */
     @Export(name="vrfPath", refs={String.class}, tree="[0]")
     private Output<String> vrfPath;
 
+    /**
+     * @return The vrf path on the remote system
+     * 
+     */
     public Output<String> vrfPath() {
         return this.vrfPath;
     }

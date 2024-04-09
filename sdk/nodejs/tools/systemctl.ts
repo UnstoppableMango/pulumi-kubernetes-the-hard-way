@@ -28,18 +28,53 @@ export class Systemctl extends pulumi.ComponentResource {
     }
 
     /**
-     * Represents the command run on the remote system.
+     * Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
      */
-    public /*out*/ readonly command!: pulumi.Output<pulumiCommand.remote.Command>;
-    public readonly commands!: pulumi.Output<enums.tools.SystemctlCommand[]>;
+    public readonly binaryPath!: pulumi.Output<string>;
     /**
-     * Connection details for the remote system.
+     * The underlying command
+     */
+    public readonly command!: pulumi.Output<pulumiCommand.remote.Command>;
+    /**
+     * Connection details for the remote system
      */
     public readonly connection!: pulumi.Output<pulumiCommand.types.output.remote.Connection>;
-    public readonly serviceName!: pulumi.Output<string | undefined>;
+    /**
+     * Environment variables
+     */
+    public readonly environment!: pulumi.Output<{[key: string]: string}>;
+    /**
+     * At what stage(s) in the resource lifecycle should the command be run
+     */
+    public readonly lifecycle!: pulumi.Output<enums.tools.CommandLifecycle | undefined>;
+    /**
+     * Corresponds to the [PATTERN] argument
+     */
+    public readonly pattern!: pulumi.Output<string | undefined>;
+    /**
+     * TODO
+     */
     public /*out*/ readonly stderr!: pulumi.Output<string>;
-    public /*out*/ readonly stdin!: pulumi.Output<string | undefined>;
+    /**
+     * TODO
+     */
+    public readonly stdin!: pulumi.Output<string | undefined>;
+    /**
+     * TODO
+     */
     public /*out*/ readonly stdout!: pulumi.Output<string>;
+    /**
+     * Corresponds to the COMMAND argument.
+     */
+    public /*out*/ readonly systemctlCommand!: pulumi.Output<enums.tools.SystemctlCommand>;
+    /**
+     * TODO
+     */
+    public readonly triggers!: pulumi.Output<any[]>;
+    /**
+     * Corresponds to the [UNIT...] argument.
+     */
+    public readonly unit!: pulumi.Output<string>;
 
     /**
      * Create a Systemctl resource with the given unique name, arguments, and options.
@@ -52,29 +87,40 @@ export class Systemctl extends pulumi.ComponentResource {
         let resourceInputs: pulumi.Inputs = {};
         opts = opts || {};
         if (!opts.id) {
-            if ((!args || args.commands === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'commands'");
+            if ((!args || args.command === undefined) && !opts.urn) {
+                throw new Error("Missing required property 'command'");
             }
             if ((!args || args.connection === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'connection'");
             }
-            resourceInputs["commands"] = args ? args.commands : undefined;
+            if ((!args || args.unit === undefined) && !opts.urn) {
+                throw new Error("Missing required property 'unit'");
+            }
+            resourceInputs["binaryPath"] = args ? args.binaryPath : undefined;
+            resourceInputs["command"] = args ? args.command : undefined;
             resourceInputs["connection"] = args ? (args.connection ? pulumi.output(args.connection).apply(pulumiCommand.types.input.remote.connectionArgsProvideDefaults) : undefined) : undefined;
             resourceInputs["environment"] = args ? args.environment : undefined;
             resourceInputs["lifecycle"] = args ? args.lifecycle : undefined;
-            resourceInputs["serviceName"] = args ? args.serviceName : undefined;
-            resourceInputs["command"] = undefined /*out*/;
+            resourceInputs["pattern"] = args ? args.pattern : undefined;
+            resourceInputs["stdin"] = args ? args.stdin : undefined;
+            resourceInputs["triggers"] = args ? args.triggers : undefined;
+            resourceInputs["unit"] = args ? args.unit : undefined;
             resourceInputs["stderr"] = undefined /*out*/;
-            resourceInputs["stdin"] = undefined /*out*/;
             resourceInputs["stdout"] = undefined /*out*/;
+            resourceInputs["systemctlCommand"] = undefined /*out*/;
         } else {
+            resourceInputs["binaryPath"] = undefined /*out*/;
             resourceInputs["command"] = undefined /*out*/;
-            resourceInputs["commands"] = undefined /*out*/;
             resourceInputs["connection"] = undefined /*out*/;
-            resourceInputs["serviceName"] = undefined /*out*/;
+            resourceInputs["environment"] = undefined /*out*/;
+            resourceInputs["lifecycle"] = undefined /*out*/;
+            resourceInputs["pattern"] = undefined /*out*/;
             resourceInputs["stderr"] = undefined /*out*/;
             resourceInputs["stdin"] = undefined /*out*/;
             resourceInputs["stdout"] = undefined /*out*/;
+            resourceInputs["systemctlCommand"] = undefined /*out*/;
+            resourceInputs["triggers"] = undefined /*out*/;
+            resourceInputs["unit"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         super(Systemctl.__pulumiType, name, resourceInputs, opts, true /*remote*/);
@@ -85,12 +131,40 @@ export class Systemctl extends pulumi.ComponentResource {
  * The set of arguments for constructing a Systemctl resource.
  */
 export interface SystemctlArgs {
-    commands: pulumi.Input<pulumi.Input<enums.tools.SystemctlCommand>[]>;
     /**
-     * Connection details for the remote system.
+     * Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+     */
+    binaryPath?: pulumi.Input<string>;
+    /**
+     * Corresponds to the COMMAND argument.
+     */
+    command: enums.tools.SystemctlCommand;
+    /**
+     * Connection details for the remote system
      */
     connection: pulumi.Input<pulumiCommand.types.input.remote.ConnectionArgs>;
+    /**
+     * Environment variables
+     */
     environment?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    /**
+     * At what stage(s) in the resource lifecycle should the command be run
+     */
     lifecycle?: enums.tools.CommandLifecycle;
-    serviceName?: pulumi.Input<string>;
+    /**
+     * Corresponds to the [PATTERN] argument
+     */
+    pattern?: pulumi.Input<string>;
+    /**
+     * TODO
+     */
+    stdin?: pulumi.Input<string>;
+    /**
+     * TODO
+     */
+    triggers?: pulumi.Input<any[]>;
+    /**
+     * Corresponds to the [UNIT...] argument.
+     */
+    unit: pulumi.Input<string>;
 }

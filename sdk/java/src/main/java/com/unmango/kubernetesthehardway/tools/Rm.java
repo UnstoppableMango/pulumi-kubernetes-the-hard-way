@@ -4,15 +4,20 @@
 package com.unmango.kubernetesthehardway.tools;
 
 import com.pulumi.command.remote.Command;
+import com.pulumi.command.remote.outputs.Connection;
+import com.pulumi.core.Either;
 import com.pulumi.core.Output;
 import com.pulumi.core.annotations.Export;
 import com.pulumi.core.annotations.ResourceType;
 import com.pulumi.core.internal.Codegen;
 import com.unmango.kubernetesthehardway.Utilities;
 import com.unmango.kubernetesthehardway.tools.RmArgs;
+import com.unmango.kubernetesthehardway.tools.enums.CommandLifecycle;
 import java.lang.Boolean;
+import java.lang.Object;
 import java.lang.String;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import javax.annotation.Nullable;
 
@@ -23,60 +28,116 @@ import javax.annotation.Nullable;
 @ResourceType(type="kubernetes-the-hard-way:tools:Rm")
 public class Rm extends com.pulumi.resources.ComponentResource {
     /**
-     * Represents the command run on the remote system.
+     * Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+     * 
+     */
+    @Export(name="binaryPath", refs={String.class}, tree="[0]")
+    private Output<String> binaryPath;
+
+    /**
+     * @return Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+     * 
+     */
+    public Output<String> binaryPath() {
+        return this.binaryPath;
+    }
+    /**
+     * The underlying command
      * 
      */
     @Export(name="command", refs={Command.class}, tree="[0]")
-    private Output</* @Nullable */ Command> command;
+    private Output<Command> command;
 
     /**
-     * @return Represents the command run on the remote system.
+     * @return The underlying command
      * 
      */
-    public Output<Optional<Command>> command() {
-        return Codegen.optional(this.command);
+    public Output<Command> command() {
+        return this.command;
     }
     /**
-     * Corresponds to the --dir option.
+     * Connection details for the remote system
+     * 
+     */
+    @Export(name="connection", refs={Connection.class}, tree="[0]")
+    private Output<Connection> connection;
+
+    /**
+     * @return Connection details for the remote system
+     * 
+     */
+    public Output<Connection> connection() {
+        return this.connection;
+    }
+    /**
+     * Corresponds to the `--dir` option.
      * 
      */
     @Export(name="dir", refs={Boolean.class}, tree="[0]")
     private Output<Boolean> dir;
 
     /**
-     * @return Corresponds to the --dir option.
+     * @return Corresponds to the `--dir` option.
      * 
      */
     public Output<Boolean> dir() {
         return this.dir;
     }
     /**
+     * Environment variables
+     * 
+     */
+    @Export(name="environment", refs={Map.class,String.class}, tree="[0,1,1]")
+    private Output<Map<String,String>> environment;
+
+    /**
+     * @return Environment variables
+     * 
+     */
+    public Output<Map<String,String>> environment() {
+        return this.environment;
+    }
+    /**
      * Corresponds to the [FILE] argument.
      * 
      */
-    @Export(name="files", refs={List.class,String.class}, tree="[0,1]")
-    private Output<List<String>> files;
+    @Export(name="files", refs={Either.class,String.class,List.class}, tree="[0,1,[2,1]]")
+    private Output<Either<String,List<String>>> files;
 
     /**
      * @return Corresponds to the [FILE] argument.
      * 
      */
-    public Output<List<String>> files() {
+    public Output<Either<String,List<String>>> files() {
         return this.files;
     }
     /**
-     * Corresponds to the --force option.
+     * Corresponds to the `--force` option.
      * 
      */
     @Export(name="force", refs={Boolean.class}, tree="[0]")
     private Output<Boolean> force;
 
     /**
-     * @return Corresponds to the --force option.
+     * @return Corresponds to the `--force` option.
      * 
      */
     public Output<Boolean> force() {
         return this.force;
+    }
+    /**
+     * At what stage(s) in the resource lifecycle should the command be run
+     * 
+     */
+    @Export(name="lifecycle", refs={CommandLifecycle.class}, tree="[0]")
+    private Output</* @Nullable */ CommandLifecycle> lifecycle;
+
+    /**
+     * @return At what stage(s) in the resource lifecycle should the command be run
+     * 
+     */
+    public Output<Optional<CommandLifecycle>> lifecycle() {
+        return Codegen.optional(this.lifecycle);
     }
     /**
      * Whether rm should be run when the resource is created or deleted.
@@ -93,28 +154,84 @@ public class Rm extends com.pulumi.resources.ComponentResource {
         return this.onDelete;
     }
     /**
-     * Corresponds to the --recursive option.
+     * Corresponds to the `--recursive` option.
      * 
      */
     @Export(name="recursive", refs={Boolean.class}, tree="[0]")
     private Output<Boolean> recursive;
 
     /**
-     * @return Corresponds to the --recursive option.
+     * @return Corresponds to the `--recursive` option.
      * 
      */
     public Output<Boolean> recursive() {
         return this.recursive;
     }
     /**
-     * Corresponds to the --verbose option.
+     * TODO
+     * 
+     */
+    @Export(name="stderr", refs={String.class}, tree="[0]")
+    private Output<String> stderr;
+
+    /**
+     * @return TODO
+     * 
+     */
+    public Output<String> stderr() {
+        return this.stderr;
+    }
+    /**
+     * TODO
+     * 
+     */
+    @Export(name="stdin", refs={String.class}, tree="[0]")
+    private Output</* @Nullable */ String> stdin;
+
+    /**
+     * @return TODO
+     * 
+     */
+    public Output<Optional<String>> stdin() {
+        return Codegen.optional(this.stdin);
+    }
+    /**
+     * TODO
+     * 
+     */
+    @Export(name="stdout", refs={String.class}, tree="[0]")
+    private Output<String> stdout;
+
+    /**
+     * @return TODO
+     * 
+     */
+    public Output<String> stdout() {
+        return this.stdout;
+    }
+    /**
+     * TODO
+     * 
+     */
+    @Export(name="triggers", refs={List.class,Object.class}, tree="[0,1]")
+    private Output<List<Object>> triggers;
+
+    /**
+     * @return TODO
+     * 
+     */
+    public Output<List<Object>> triggers() {
+        return this.triggers;
+    }
+    /**
+     * Corresponds to the `--verbose` option.
      * 
      */
     @Export(name="verbose", refs={Boolean.class}, tree="[0]")
     private Output<Boolean> verbose;
 
     /**
-     * @return Corresponds to the --verbose option.
+     * @return Corresponds to the `--verbose` option.
      * 
      */
     public Output<Boolean> verbose() {

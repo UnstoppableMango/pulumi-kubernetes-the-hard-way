@@ -11,17 +11,17 @@ import (
 	pulumiCommand "github.com/pulumi/pulumi-command/sdk/go/command/remote"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 	"github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/sdk/go/kubernetes-the-hard-way/internal"
-	"github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/sdk/go/kubernetes-the-hard-way/tools"
 )
 
+// A systemd service on a remote system.
 type SystemdService struct {
 	pulumi.ResourceState
 
-	// The connection details.
+	// The parameters with which to connect to the remote host.
 	Connection pulumiCommand.ConnectionOutput `pulumi:"connection"`
 	// The location to create the service file.
 	Directory pulumi.StringOutput `pulumi:"directory"`
-	// Represents the service file on the remote machine.
+	// The service file on the remote machine.
 	File FileOutput `pulumi:"file"`
 	// Describes the [Install] section of a systemd service file.
 	Install SystemdInstallSectionPtrOutput `pulumi:"install"`
@@ -58,7 +58,7 @@ func NewSystemdService(ctx *pulumi.Context,
 }
 
 type systemdServiceArgs struct {
-	// The connection details.
+	// The parameters with which to connect to the remote host.
 	Connection pulumiCommand.Connection `pulumi:"connection"`
 	// The location to create the service file.
 	Directory *string `pulumi:"directory"`
@@ -72,7 +72,7 @@ type systemdServiceArgs struct {
 
 // The set of arguments for constructing a SystemdService resource.
 type SystemdServiceArgs struct {
-	// The connection details.
+	// The parameters with which to connect to the remote host.
 	Connection pulumiCommand.ConnectionInput
 	// The location to create the service file.
 	Directory pulumi.StringPtrInput
@@ -86,72 +86,6 @@ type SystemdServiceArgs struct {
 
 func (SystemdServiceArgs) ElementType() reflect.Type {
 	return reflect.TypeOf((*systemdServiceArgs)(nil)).Elem()
-}
-
-func (r *SystemdService) Disable(ctx *pulumi.Context) (tools.SystemctlOutput, error) {
-	out, err := ctx.Call("kubernetes-the-hard-way:remote:SystemdService/disable", nil, systemdServiceDisableResultOutput{}, r)
-	if err != nil {
-		return tools.SystemctlOutput{}, err
-	}
-	return out.(systemdServiceDisableResultOutput).Result(), nil
-}
-
-type systemdServiceDisableResult struct {
-	Result *tools.Systemctl `pulumi:"result"`
-}
-
-type systemdServiceDisableResultOutput struct{ *pulumi.OutputState }
-
-func (systemdServiceDisableResultOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*systemdServiceDisableResult)(nil)).Elem()
-}
-
-func (o systemdServiceDisableResultOutput) Result() tools.SystemctlOutput {
-	return o.ApplyT(func(v systemdServiceDisableResult) *tools.Systemctl { return v.Result }).(tools.SystemctlOutput)
-}
-
-func (r *SystemdService) Enable(ctx *pulumi.Context) (tools.SystemctlOutput, error) {
-	out, err := ctx.Call("kubernetes-the-hard-way:remote:SystemdService/enable", nil, systemdServiceEnableResultOutput{}, r)
-	if err != nil {
-		return tools.SystemctlOutput{}, err
-	}
-	return out.(systemdServiceEnableResultOutput).Result(), nil
-}
-
-type systemdServiceEnableResult struct {
-	Result *tools.Systemctl `pulumi:"result"`
-}
-
-type systemdServiceEnableResultOutput struct{ *pulumi.OutputState }
-
-func (systemdServiceEnableResultOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*systemdServiceEnableResult)(nil)).Elem()
-}
-
-func (o systemdServiceEnableResultOutput) Result() tools.SystemctlOutput {
-	return o.ApplyT(func(v systemdServiceEnableResult) *tools.Systemctl { return v.Result }).(tools.SystemctlOutput)
-}
-
-func (r *SystemdService) Start(ctx *pulumi.Context) (tools.SystemctlOutput, error) {
-	out, err := ctx.Call("kubernetes-the-hard-way:remote:SystemdService/start", nil, systemdServiceStartResultOutput{}, r)
-	if err != nil {
-		return tools.SystemctlOutput{}, err
-	}
-	return out.(systemdServiceStartResultOutput).Result(), nil
-}
-
-type systemdServiceStartResult struct {
-	Result *tools.Systemctl `pulumi:"result"`
-}
-
-type systemdServiceStartResultOutput struct{ *pulumi.OutputState }
-
-func (systemdServiceStartResultOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*systemdServiceStartResult)(nil)).Elem()
-}
-
-func (o systemdServiceStartResultOutput) Result() tools.SystemctlOutput {
-	return o.ApplyT(func(v systemdServiceStartResult) *tools.Systemctl { return v.Result }).(tools.SystemctlOutput)
 }
 
 type SystemdServiceInput interface {
@@ -237,7 +171,7 @@ func (o SystemdServiceOutput) ToSystemdServiceOutputWithContext(ctx context.Cont
 	return o
 }
 
-// The connection details.
+// The parameters with which to connect to the remote host.
 func (o SystemdServiceOutput) Connection() pulumiCommand.ConnectionOutput {
 	return o.ApplyT(func(v *SystemdService) pulumiCommand.ConnectionOutput { return v.Connection }).(pulumiCommand.ConnectionOutput)
 }
@@ -247,7 +181,7 @@ func (o SystemdServiceOutput) Directory() pulumi.StringOutput {
 	return o.ApplyT(func(v *SystemdService) pulumi.StringOutput { return v.Directory }).(pulumi.StringOutput)
 }
 
-// Represents the service file on the remote machine.
+// The service file on the remote machine.
 func (o SystemdServiceOutput) File() FileOutput {
 	return o.ApplyT(func(v *SystemdService) FileOutput { return v.File }).(FileOutput)
 }
@@ -312,9 +246,6 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*SystemdServiceArrayInput)(nil)).Elem(), SystemdServiceArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*SystemdServiceMapInput)(nil)).Elem(), SystemdServiceMap{})
 	pulumi.RegisterOutputType(SystemdServiceOutput{})
-	pulumi.RegisterOutputType(systemdServiceDisableResultOutput{})
-	pulumi.RegisterOutputType(systemdServiceEnableResultOutput{})
-	pulumi.RegisterOutputType(systemdServiceStartResultOutput{})
 	pulumi.RegisterOutputType(SystemdServiceArrayOutput{})
 	pulumi.RegisterOutputType(SystemdServiceMapOutput{})
 }

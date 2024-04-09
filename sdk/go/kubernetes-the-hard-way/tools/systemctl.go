@@ -17,15 +17,30 @@ import (
 type Systemctl struct {
 	pulumi.ResourceState
 
-	// Represents the command run on the remote system.
-	Command  pulumiCommand.CommandOutput `pulumi:"command"`
-	Commands SystemctlCommandArrayOutput `pulumi:"commands"`
-	// Connection details for the remote system.
-	Connection  pulumiCommand.ConnectionOutput `pulumi:"connection"`
-	ServiceName pulumi.StringPtrOutput         `pulumi:"serviceName"`
-	Stderr      pulumi.StringOutput            `pulumi:"stderr"`
-	Stdin       pulumi.StringPtrOutput         `pulumi:"stdin"`
-	Stdout      pulumi.StringOutput            `pulumi:"stdout"`
+	// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+	BinaryPath pulumi.StringOutput `pulumi:"binaryPath"`
+	// The underlying command
+	Command pulumiCommand.CommandOutput `pulumi:"command"`
+	// Connection details for the remote system
+	Connection pulumiCommand.ConnectionOutput `pulumi:"connection"`
+	// Environment variables
+	Environment pulumi.StringMapOutput `pulumi:"environment"`
+	// At what stage(s) in the resource lifecycle should the command be run
+	Lifecycle CommandLifecyclePtrOutput `pulumi:"lifecycle"`
+	// Corresponds to the [PATTERN] argument
+	Pattern pulumi.StringPtrOutput `pulumi:"pattern"`
+	// TODO
+	Stderr pulumi.StringOutput `pulumi:"stderr"`
+	// TODO
+	Stdin pulumi.StringPtrOutput `pulumi:"stdin"`
+	// TODO
+	Stdout pulumi.StringOutput `pulumi:"stdout"`
+	// Corresponds to the COMMAND argument.
+	SystemctlCommand SystemctlCommandOutput `pulumi:"systemctlCommand"`
+	// TODO
+	Triggers pulumi.ArrayOutput `pulumi:"triggers"`
+	// Corresponds to the [UNIT...] argument.
+	Unit pulumi.StringOutput `pulumi:"unit"`
 }
 
 // NewSystemctl registers a new resource with the given unique name, arguments, and options.
@@ -35,11 +50,11 @@ func NewSystemctl(ctx *pulumi.Context,
 		return nil, errors.New("missing one or more required arguments")
 	}
 
-	if args.Commands == nil {
-		return nil, errors.New("invalid value for required argument 'Commands'")
-	}
 	if args.Connection == nil {
 		return nil, errors.New("invalid value for required argument 'Connection'")
+	}
+	if args.Unit == nil {
+		return nil, errors.New("invalid value for required argument 'Unit'")
 	}
 	args.Connection = args.Connection.ToConnectionOutput().ApplyT(func(v pulumiCommand.Connection) pulumiCommand.Connection { return *v.Defaults() }).(pulumiCommand.ConnectionOutput)
 	opts = internal.PkgResourceDefaultOpts(opts)
@@ -52,22 +67,46 @@ func NewSystemctl(ctx *pulumi.Context,
 }
 
 type systemctlArgs struct {
-	Commands []SystemctlCommand `pulumi:"commands"`
-	// Connection details for the remote system.
-	Connection  pulumiCommand.Connection `pulumi:"connection"`
-	Environment map[string]string        `pulumi:"environment"`
-	Lifecycle   *CommandLifecycle        `pulumi:"lifecycle"`
-	ServiceName *string                  `pulumi:"serviceName"`
+	// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+	BinaryPath *string `pulumi:"binaryPath"`
+	// Corresponds to the COMMAND argument.
+	Command SystemctlCommand `pulumi:"command"`
+	// Connection details for the remote system
+	Connection pulumiCommand.Connection `pulumi:"connection"`
+	// Environment variables
+	Environment map[string]string `pulumi:"environment"`
+	// At what stage(s) in the resource lifecycle should the command be run
+	Lifecycle *CommandLifecycle `pulumi:"lifecycle"`
+	// Corresponds to the [PATTERN] argument
+	Pattern *string `pulumi:"pattern"`
+	// TODO
+	Stdin *string `pulumi:"stdin"`
+	// TODO
+	Triggers []interface{} `pulumi:"triggers"`
+	// Corresponds to the [UNIT...] argument.
+	Unit string `pulumi:"unit"`
 }
 
 // The set of arguments for constructing a Systemctl resource.
 type SystemctlArgs struct {
-	Commands SystemctlCommandArrayInput
-	// Connection details for the remote system.
-	Connection  pulumiCommand.ConnectionInput
+	// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+	BinaryPath pulumi.StringPtrInput
+	// Corresponds to the COMMAND argument.
+	Command SystemctlCommand
+	// Connection details for the remote system
+	Connection pulumiCommand.ConnectionInput
+	// Environment variables
 	Environment pulumi.StringMapInput
-	Lifecycle   *CommandLifecycle
-	ServiceName pulumi.StringPtrInput
+	// At what stage(s) in the resource lifecycle should the command be run
+	Lifecycle *CommandLifecycle
+	// Corresponds to the [PATTERN] argument
+	Pattern pulumi.StringPtrInput
+	// TODO
+	Stdin pulumi.StringPtrInput
+	// TODO
+	Triggers pulumi.ArrayInput
+	// Corresponds to the [UNIT...] argument.
+	Unit pulumi.StringInput
 }
 
 func (SystemctlArgs) ElementType() reflect.Type {
@@ -157,34 +196,64 @@ func (o SystemctlOutput) ToSystemctlOutputWithContext(ctx context.Context) Syste
 	return o
 }
 
-// Represents the command run on the remote system.
+// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+func (o SystemctlOutput) BinaryPath() pulumi.StringOutput {
+	return o.ApplyT(func(v *Systemctl) pulumi.StringOutput { return v.BinaryPath }).(pulumi.StringOutput)
+}
+
+// The underlying command
 func (o SystemctlOutput) Command() pulumiCommand.CommandOutput {
 	return o.ApplyT(func(v *Systemctl) pulumiCommand.CommandOutput { return v.Command }).(pulumiCommand.CommandOutput)
 }
 
-func (o SystemctlOutput) Commands() SystemctlCommandArrayOutput {
-	return o.ApplyT(func(v *Systemctl) SystemctlCommandArrayOutput { return v.Commands }).(SystemctlCommandArrayOutput)
-}
-
-// Connection details for the remote system.
+// Connection details for the remote system
 func (o SystemctlOutput) Connection() pulumiCommand.ConnectionOutput {
 	return o.ApplyT(func(v *Systemctl) pulumiCommand.ConnectionOutput { return v.Connection }).(pulumiCommand.ConnectionOutput)
 }
 
-func (o SystemctlOutput) ServiceName() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Systemctl) pulumi.StringPtrOutput { return v.ServiceName }).(pulumi.StringPtrOutput)
+// Environment variables
+func (o SystemctlOutput) Environment() pulumi.StringMapOutput {
+	return o.ApplyT(func(v *Systemctl) pulumi.StringMapOutput { return v.Environment }).(pulumi.StringMapOutput)
 }
 
+// At what stage(s) in the resource lifecycle should the command be run
+func (o SystemctlOutput) Lifecycle() CommandLifecyclePtrOutput {
+	return o.ApplyT(func(v *Systemctl) CommandLifecyclePtrOutput { return v.Lifecycle }).(CommandLifecyclePtrOutput)
+}
+
+// Corresponds to the [PATTERN] argument
+func (o SystemctlOutput) Pattern() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Systemctl) pulumi.StringPtrOutput { return v.Pattern }).(pulumi.StringPtrOutput)
+}
+
+// TODO
 func (o SystemctlOutput) Stderr() pulumi.StringOutput {
 	return o.ApplyT(func(v *Systemctl) pulumi.StringOutput { return v.Stderr }).(pulumi.StringOutput)
 }
 
+// TODO
 func (o SystemctlOutput) Stdin() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Systemctl) pulumi.StringPtrOutput { return v.Stdin }).(pulumi.StringPtrOutput)
 }
 
+// TODO
 func (o SystemctlOutput) Stdout() pulumi.StringOutput {
 	return o.ApplyT(func(v *Systemctl) pulumi.StringOutput { return v.Stdout }).(pulumi.StringOutput)
+}
+
+// Corresponds to the COMMAND argument.
+func (o SystemctlOutput) SystemctlCommand() SystemctlCommandOutput {
+	return o.ApplyT(func(v *Systemctl) SystemctlCommandOutput { return v.SystemctlCommand }).(SystemctlCommandOutput)
+}
+
+// TODO
+func (o SystemctlOutput) Triggers() pulumi.ArrayOutput {
+	return o.ApplyT(func(v *Systemctl) pulumi.ArrayOutput { return v.Triggers }).(pulumi.ArrayOutput)
+}
+
+// Corresponds to the [UNIT...] argument.
+func (o SystemctlOutput) Unit() pulumi.StringOutput {
+	return o.ApplyT(func(v *Systemctl) pulumi.StringOutput { return v.Unit }).(pulumi.StringOutput)
 }
 
 type SystemctlArrayOutput struct{ *pulumi.OutputState }

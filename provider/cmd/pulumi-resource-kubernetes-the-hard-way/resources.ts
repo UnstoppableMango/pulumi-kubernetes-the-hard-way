@@ -29,9 +29,12 @@ const resources: schema.ResourceConstructor = {
   'kubernetes-the-hard-way:remote:KubeControllerManagerInstall': (...args) => new KubeControllerManagerInstall(...args),
   'kubernetes-the-hard-way:remote:KubeSchedulerInstall': (...args) => new KubeSchedulerInstall(...args),
   'kubernetes-the-hard-way:remote:SystemdService': (...args) => new SystemdService(...args),
+  // @ts-ignore Due to the keypair subclass this refactor is a little harder
   'kubernetes-the-hard-way:tls:Certificate': (...args) => new Certificate(...args),
+  // @ts-ignore This refactor loosely depends on the KeyPair refactors
   'kubernetes-the-hard-way:tls:ClusterPki': (...args) => new ClusterPki(...args),
   'kubernetes-the-hard-way:tls:EncryptionKey': (...args) => new EncryptionKey(...args),
+  // @ts-ignore Due to the keypair subclass this refactor is a little harder
   'kubernetes-the-hard-way:tls:RootCa': (...args) => new RootCa(...args),
   'kubernetes-the-hard-way:tools:Etcdctl': (...args) => new Etcdctl(...args),
   'kubernetes-the-hard-way:tools:Mkdir': (...args) => new Mkdir(...args),

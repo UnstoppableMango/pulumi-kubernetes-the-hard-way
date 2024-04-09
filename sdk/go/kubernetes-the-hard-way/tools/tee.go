@@ -13,30 +13,40 @@ import (
 	"github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/sdk/go/kubernetes-the-hard-way/internal"
 )
 
-// Read from standard input and write to standard output and files.
+// Abstraction over the `rm` utility on a remote system.
 type Tee struct {
 	pulumi.ResourceState
 
-	// Append to the given FILEs, do not overwrite.
+	// Append to the given FILEs, do not overwrite
 	Append pulumi.BoolOutput `pulumi:"append"`
-	// Represents the command run on the remote system.
+	// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+	BinaryPath pulumi.StringOutput `pulumi:"binaryPath"`
+	// The underlying command
 	Command pulumiCommand.CommandOutput `pulumi:"command"`
-	// Connection details for the remote system.
-	Connection  pulumiCommand.ConnectionOutput `pulumi:"connection"`
-	Environment pulumi.StringMapOutput         `pulumi:"environment"`
-	// The file(s) to write to.
+	// Connection details for the remote system
+	Connection pulumiCommand.ConnectionOutput `pulumi:"connection"`
+	// Environment variables
+	Environment pulumi.StringMapOutput `pulumi:"environment"`
+	// Corresponds to the [FILE] argument.
 	Files pulumi.AnyOutput `pulumi:"files"`
 	// Ignore interrupt signals.
 	IgnoreInterrupts pulumi.BoolOutput `pulumi:"ignoreInterrupts"`
-	// At what stage(s) in the resource lifecycle should the command be run.
+	// At what stage(s) in the resource lifecycle should the command be run
 	Lifecycle CommandLifecyclePtrOutput `pulumi:"lifecycle"`
 	// Set behavior on write error.
 	OutputError TeeModePtrOutput `pulumi:"outputError"`
 	// Operate in a more appropriate MODE with pipes.
-	Pipe   pulumi.BoolOutput      `pulumi:"pipe"`
-	Stderr pulumi.StringPtrOutput `pulumi:"stderr"`
-	Stdin  pulumi.StringOutput    `pulumi:"stdin"`
-	Stdout pulumi.StringPtrOutput `pulumi:"stdout"`
+	Pipe pulumi.BoolOutput `pulumi:"pipe"`
+	// TODO
+	Stderr pulumi.StringOutput `pulumi:"stderr"`
+	// TODO
+	Stdin pulumi.StringOutput `pulumi:"stdin"`
+	// TODO
+	Stdout pulumi.StringOutput `pulumi:"stdout"`
+	// TODO
+	Triggers pulumi.ArrayOutput `pulumi:"triggers"`
+	// Output version information and exit.
+	Version pulumi.BoolOutput `pulumi:"version"`
 }
 
 // NewTee registers a new resource with the given unique name, arguments, and options.
@@ -66,44 +76,56 @@ func NewTee(ctx *pulumi.Context,
 }
 
 type teeArgs struct {
-	// Append to the given FILEs, do not overwrite.
+	// Append to the given FILEs, do not overwrite
 	Append *bool `pulumi:"append"`
-	// Connection details for the remote system.
-	Connection  pulumiCommand.Connection `pulumi:"connection"`
-	Environment map[string]string        `pulumi:"environment"`
-	// The file(s) to write to.
+	// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+	BinaryPath *string `pulumi:"binaryPath"`
+	// Connection details for the remote system
+	Connection pulumiCommand.Connection `pulumi:"connection"`
+	// Environment variables
+	Environment map[string]string `pulumi:"environment"`
+	// Corresponds to the [FILE] argument.
 	Files interface{} `pulumi:"files"`
 	// Ignore interrupt signals.
 	IgnoreInterrupts *bool `pulumi:"ignoreInterrupts"`
-	// At what stage(s) in the resource lifecycle should the command be run.
+	// At what stage(s) in the resource lifecycle should the command be run
 	Lifecycle *CommandLifecycle `pulumi:"lifecycle"`
 	// Set behavior on write error.
 	OutputError *TeeMode `pulumi:"outputError"`
 	// Operate in a more appropriate MODE with pipes.
-	Pipe  *bool  `pulumi:"pipe"`
+	Pipe *bool `pulumi:"pipe"`
+	// TODO
 	Stdin string `pulumi:"stdin"`
+	// TODO
+	Triggers []interface{} `pulumi:"triggers"`
 	// Output version information and exit.
 	Version *bool `pulumi:"version"`
 }
 
 // The set of arguments for constructing a Tee resource.
 type TeeArgs struct {
-	// Append to the given FILEs, do not overwrite.
+	// Append to the given FILEs, do not overwrite
 	Append pulumi.BoolPtrInput
-	// Connection details for the remote system.
-	Connection  pulumiCommand.ConnectionInput
+	// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+	BinaryPath pulumi.StringPtrInput
+	// Connection details for the remote system
+	Connection pulumiCommand.ConnectionInput
+	// Environment variables
 	Environment pulumi.StringMapInput
-	// The file(s) to write to.
+	// Corresponds to the [FILE] argument.
 	Files pulumi.Input
 	// Ignore interrupt signals.
 	IgnoreInterrupts pulumi.BoolPtrInput
-	// At what stage(s) in the resource lifecycle should the command be run.
+	// At what stage(s) in the resource lifecycle should the command be run
 	Lifecycle *CommandLifecycle
 	// Set behavior on write error.
 	OutputError TeeModePtrInput
 	// Operate in a more appropriate MODE with pipes.
-	Pipe  pulumi.BoolPtrInput
+	Pipe pulumi.BoolPtrInput
+	// TODO
 	Stdin pulumi.StringInput
+	// TODO
+	Triggers pulumi.ArrayInput
 	// Output version information and exit.
 	Version pulumi.BoolPtrInput
 }
@@ -195,26 +217,32 @@ func (o TeeOutput) ToTeeOutputWithContext(ctx context.Context) TeeOutput {
 	return o
 }
 
-// Append to the given FILEs, do not overwrite.
+// Append to the given FILEs, do not overwrite
 func (o TeeOutput) Append() pulumi.BoolOutput {
 	return o.ApplyT(func(v *Tee) pulumi.BoolOutput { return v.Append }).(pulumi.BoolOutput)
 }
 
-// Represents the command run on the remote system.
+// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+func (o TeeOutput) BinaryPath() pulumi.StringOutput {
+	return o.ApplyT(func(v *Tee) pulumi.StringOutput { return v.BinaryPath }).(pulumi.StringOutput)
+}
+
+// The underlying command
 func (o TeeOutput) Command() pulumiCommand.CommandOutput {
 	return o.ApplyT(func(v *Tee) pulumiCommand.CommandOutput { return v.Command }).(pulumiCommand.CommandOutput)
 }
 
-// Connection details for the remote system.
+// Connection details for the remote system
 func (o TeeOutput) Connection() pulumiCommand.ConnectionOutput {
 	return o.ApplyT(func(v *Tee) pulumiCommand.ConnectionOutput { return v.Connection }).(pulumiCommand.ConnectionOutput)
 }
 
+// Environment variables
 func (o TeeOutput) Environment() pulumi.StringMapOutput {
 	return o.ApplyT(func(v *Tee) pulumi.StringMapOutput { return v.Environment }).(pulumi.StringMapOutput)
 }
 
-// The file(s) to write to.
+// Corresponds to the [FILE] argument.
 func (o TeeOutput) Files() pulumi.AnyOutput {
 	return o.ApplyT(func(v *Tee) pulumi.AnyOutput { return v.Files }).(pulumi.AnyOutput)
 }
@@ -224,7 +252,7 @@ func (o TeeOutput) IgnoreInterrupts() pulumi.BoolOutput {
 	return o.ApplyT(func(v *Tee) pulumi.BoolOutput { return v.IgnoreInterrupts }).(pulumi.BoolOutput)
 }
 
-// At what stage(s) in the resource lifecycle should the command be run.
+// At what stage(s) in the resource lifecycle should the command be run
 func (o TeeOutput) Lifecycle() CommandLifecyclePtrOutput {
 	return o.ApplyT(func(v *Tee) CommandLifecyclePtrOutput { return v.Lifecycle }).(CommandLifecyclePtrOutput)
 }
@@ -239,16 +267,29 @@ func (o TeeOutput) Pipe() pulumi.BoolOutput {
 	return o.ApplyT(func(v *Tee) pulumi.BoolOutput { return v.Pipe }).(pulumi.BoolOutput)
 }
 
-func (o TeeOutput) Stderr() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Tee) pulumi.StringPtrOutput { return v.Stderr }).(pulumi.StringPtrOutput)
+// TODO
+func (o TeeOutput) Stderr() pulumi.StringOutput {
+	return o.ApplyT(func(v *Tee) pulumi.StringOutput { return v.Stderr }).(pulumi.StringOutput)
 }
 
+// TODO
 func (o TeeOutput) Stdin() pulumi.StringOutput {
 	return o.ApplyT(func(v *Tee) pulumi.StringOutput { return v.Stdin }).(pulumi.StringOutput)
 }
 
-func (o TeeOutput) Stdout() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Tee) pulumi.StringPtrOutput { return v.Stdout }).(pulumi.StringPtrOutput)
+// TODO
+func (o TeeOutput) Stdout() pulumi.StringOutput {
+	return o.ApplyT(func(v *Tee) pulumi.StringOutput { return v.Stdout }).(pulumi.StringOutput)
+}
+
+// TODO
+func (o TeeOutput) Triggers() pulumi.ArrayOutput {
+	return o.ApplyT(func(v *Tee) pulumi.ArrayOutput { return v.Triggers }).(pulumi.ArrayOutput)
+}
+
+// Output version information and exit.
+func (o TeeOutput) Version() pulumi.BoolOutput {
+	return o.ApplyT(func(v *Tee) pulumi.BoolOutput { return v.Version }).(pulumi.BoolOutput)
 }
 
 type TeeArrayOutput struct{ *pulumi.OutputState }

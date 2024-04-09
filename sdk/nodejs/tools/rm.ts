@@ -28,31 +28,63 @@ export class Rm extends pulumi.ComponentResource {
     }
 
     /**
-     * Represents the command run on the remote system.
+     * Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
      */
-    public /*out*/ readonly command!: pulumi.Output<pulumiCommand.remote.Command | undefined>;
+    public readonly binaryPath!: pulumi.Output<string>;
     /**
-     * Corresponds to the --dir option.
+     * The underlying command
+     */
+    public /*out*/ readonly command!: pulumi.Output<pulumiCommand.remote.Command>;
+    /**
+     * Connection details for the remote system
+     */
+    public readonly connection!: pulumi.Output<pulumiCommand.types.output.remote.Connection>;
+    /**
+     * Corresponds to the `--dir` option.
      */
     public readonly dir!: pulumi.Output<boolean>;
     /**
+     * Environment variables
+     */
+    public readonly environment!: pulumi.Output<{[key: string]: string}>;
+    /**
      * Corresponds to the [FILE] argument.
      */
-    public readonly files!: pulumi.Output<string[]>;
+    public readonly files!: pulumi.Output<string | string[]>;
     /**
-     * Corresponds to the --force option.
+     * Corresponds to the `--force` option.
      */
     public readonly force!: pulumi.Output<boolean>;
+    /**
+     * At what stage(s) in the resource lifecycle should the command be run
+     */
+    public readonly lifecycle!: pulumi.Output<enums.tools.CommandLifecycle | undefined>;
     /**
      * Whether rm should be run when the resource is created or deleted.
      */
     public readonly onDelete!: pulumi.Output<boolean>;
     /**
-     * Corresponds to the --recursive option.
+     * Corresponds to the `--recursive` option.
      */
     public readonly recursive!: pulumi.Output<boolean>;
     /**
-     * Corresponds to the --verbose option.
+     * TODO
+     */
+    public /*out*/ readonly stderr!: pulumi.Output<string>;
+    /**
+     * TODO
+     */
+    public readonly stdin!: pulumi.Output<string | undefined>;
+    /**
+     * TODO
+     */
+    public /*out*/ readonly stdout!: pulumi.Output<string>;
+    /**
+     * TODO
+     */
+    public readonly triggers!: pulumi.Output<any[]>;
+    /**
+     * Corresponds to the `--verbose` option.
      */
     public readonly verbose!: pulumi.Output<boolean>;
 
@@ -73,6 +105,7 @@ export class Rm extends pulumi.ComponentResource {
             if ((!args || args.files === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'files'");
             }
+            resourceInputs["binaryPath"] = args ? args.binaryPath : undefined;
             resourceInputs["connection"] = args ? (args.connection ? pulumi.output(args.connection).apply(pulumiCommand.types.input.remote.connectionArgsProvideDefaults) : undefined) : undefined;
             resourceInputs["dir"] = args ? args.dir : undefined;
             resourceInputs["environment"] = args ? args.environment : undefined;
@@ -81,15 +114,27 @@ export class Rm extends pulumi.ComponentResource {
             resourceInputs["lifecycle"] = args ? args.lifecycle : undefined;
             resourceInputs["onDelete"] = args ? args.onDelete : undefined;
             resourceInputs["recursive"] = args ? args.recursive : undefined;
+            resourceInputs["stdin"] = args ? args.stdin : undefined;
+            resourceInputs["triggers"] = args ? args.triggers : undefined;
             resourceInputs["verbose"] = args ? args.verbose : undefined;
             resourceInputs["command"] = undefined /*out*/;
+            resourceInputs["stderr"] = undefined /*out*/;
+            resourceInputs["stdout"] = undefined /*out*/;
         } else {
+            resourceInputs["binaryPath"] = undefined /*out*/;
             resourceInputs["command"] = undefined /*out*/;
+            resourceInputs["connection"] = undefined /*out*/;
             resourceInputs["dir"] = undefined /*out*/;
+            resourceInputs["environment"] = undefined /*out*/;
             resourceInputs["files"] = undefined /*out*/;
             resourceInputs["force"] = undefined /*out*/;
+            resourceInputs["lifecycle"] = undefined /*out*/;
             resourceInputs["onDelete"] = undefined /*out*/;
             resourceInputs["recursive"] = undefined /*out*/;
+            resourceInputs["stderr"] = undefined /*out*/;
+            resourceInputs["stdin"] = undefined /*out*/;
+            resourceInputs["stdout"] = undefined /*out*/;
+            resourceInputs["triggers"] = undefined /*out*/;
             resourceInputs["verbose"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
@@ -102,36 +147,51 @@ export class Rm extends pulumi.ComponentResource {
  */
 export interface RmArgs {
     /**
-     * Connection details for the remote system.
+     * Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+     */
+    binaryPath?: pulumi.Input<string>;
+    /**
+     * Connection details for the remote system
      */
     connection: pulumi.Input<pulumiCommand.types.input.remote.ConnectionArgs>;
     /**
-     * Corresponds to the --dir option.
+     * Corresponds to the `--dir` option.
      */
     dir?: pulumi.Input<boolean>;
+    /**
+     * Environment variables
+     */
     environment?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
      * Corresponds to the [FILE] argument.
      */
-    files: pulumi.Input<pulumi.Input<string>[] | string>;
+    files: pulumi.Input<string | pulumi.Input<string>[]>;
     /**
-     * Corresponds to the --force option.
+     * Corresponds to the `--force` option.
      */
     force?: pulumi.Input<boolean>;
     /**
-     * At what stage(s) in the resource lifecycle should the command be run.
+     * At what stage(s) in the resource lifecycle should the command be run
      */
     lifecycle?: enums.tools.CommandLifecycle;
     /**
      * Whether rm should be run when the resource is created or deleted.
      */
-    onDelete?: boolean;
+    onDelete?: pulumi.Input<boolean>;
     /**
-     * Corresponds to the --recursive option.
+     * Corresponds to the `--recursive` option.
      */
     recursive?: pulumi.Input<boolean>;
     /**
-     * Corresponds to the --verbose option.
+     * TODO
+     */
+    stdin?: pulumi.Input<string>;
+    /**
+     * TODO
+     */
+    triggers?: pulumi.Input<any[]>;
+    /**
+     * Corresponds to the `--verbose` option.
      */
     verbose?: pulumi.Input<boolean>;
 }

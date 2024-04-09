@@ -10,15 +10,27 @@ using Pulumi;
 
 namespace UnMango.KubernetesTheHardWay.Tls
 {
+    /// <summary>
+    /// A cluster encryption key.
+    /// </summary>
     [KubernetesTheHardWayResourceType("kubernetes-the-hard-way:tls:EncryptionKey")]
     public partial class EncryptionKey : global::Pulumi.ComponentResource
     {
+        /// <summary>
+        /// The number of bytes requested. The minimum value for length is 1.
+        /// </summary>
+        [Output("bytes")]
+        public Output<int> Bytes { get; private set; } = null!;
+
         /// <summary>
         /// The generated `v1/EncryptionConfig`.
         /// </summary>
         [Output("config")]
         public Output<string> Config { get; private set; } = null!;
 
+        /// <summary>
+        /// The generated random key.
+        /// </summary>
         [Output("key")]
         public Output<Pulumi.Random.RandomBytes> Key { get; private set; } = null!;
 
@@ -30,7 +42,7 @@ namespace UnMango.KubernetesTheHardWay.Tls
         /// <param name="name">The unique name of the resource</param>
         /// <param name="args">The arguments used to populate this resource's properties</param>
         /// <param name="options">A bag of options that control this resource's behavior</param>
-        public EncryptionKey(string name, EncryptionKeyArgs? args = null, ComponentResourceOptions? options = null)
+        public EncryptionKey(string name, EncryptionKeyArgs args, ComponentResourceOptions? options = null)
             : base("kubernetes-the-hard-way:tls:EncryptionKey", name, args ?? new EncryptionKeyArgs(), MakeResourceOptions(options, ""), remote: true)
         {
         }
@@ -52,10 +64,10 @@ namespace UnMango.KubernetesTheHardWay.Tls
     public sealed class EncryptionKeyArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
-        /// The length of the key in bytes.
+        /// The number of bytes requested. The minimum value for length is 1.
         /// </summary>
-        [Input("bytes")]
-        public Input<double>? Bytes { get; set; }
+        [Input("bytes", required: true)]
+        public Input<int> Bytes { get; set; } = null!;
 
         public EncryptionKeyArgs()
         {

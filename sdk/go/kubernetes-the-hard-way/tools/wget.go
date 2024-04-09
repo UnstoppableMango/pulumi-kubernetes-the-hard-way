@@ -17,29 +17,38 @@ import (
 type Wget struct {
 	pulumi.ResourceState
 
-	// Represents the remote `tar` operation.
+	// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+	BinaryPath pulumi.StringOutput `pulumi:"binaryPath"`
+	// The underlying command
 	Command pulumiCommand.CommandOutput `pulumi:"command"`
-	// Corresponds to the --directory-prefix option.
+	// Connection details for the remote system
+	Connection pulumiCommand.ConnectionOutput `pulumi:"connection"`
+	// The  directory prefix is the directory where all other files and subdirectories will be saved to, i.e. the top of the retrieval tree.  The default is . (the current directory).
 	DirectoryPrefix pulumi.StringPtrOutput `pulumi:"directoryPrefix"`
-	Environment     pulumi.StringMapOutput `pulumi:"environment"`
-	// Corresponds to the --https-only option.
+	// Environment variables
+	Environment pulumi.StringMapOutput `pulumi:"environment"`
+	// When in recursive mode, only HTTPS links are followed.
 	HttpsOnly pulumi.BoolOutput `pulumi:"httpsOnly"`
-	// Corresponds to the --no-verbose option.
-	NoVerbose pulumi.BoolPtrOutput `pulumi:"noVerbose"`
-	// Corresponds to the --output-document option.
+	// At what stage(s) in the resource lifecycle should the command be run
+	Lifecycle CommandLifecyclePtrOutput `pulumi:"lifecycle"`
+	// Turn off verbose without being completely quiet (use -q for that), which means that error messages and basic information still get printed.
+	NoVerbose pulumi.BoolOutput `pulumi:"noVerbose"`
+	// The  documents  will  not  be  written  to the appropriate files, but all will be concatenated together and written to file.
 	OutputDocument pulumi.StringPtrOutput `pulumi:"outputDocument"`
-	// Corresponds to the --quiet option.
+	// Turn off Wget's output.
 	Quiet pulumi.BoolOutput `pulumi:"quiet"`
-	// The process' stderr.
+	// TODO
 	Stderr pulumi.StringOutput `pulumi:"stderr"`
-	// The process' stdin.
+	// TODO
 	Stdin pulumi.StringPtrOutput `pulumi:"stdin"`
-	// The process' stdout.
+	// TODO
 	Stdout pulumi.StringOutput `pulumi:"stdout"`
-	// Corresponds to the --timestamping option.
+	// Turn on time-stamping.
 	Timestamping pulumi.BoolOutput `pulumi:"timestamping"`
-	// Corresponse to the [URL] argument.
-	Url pulumi.StringOutput `pulumi:"url"`
+	// TODO
+	Triggers pulumi.ArrayOutput `pulumi:"triggers"`
+	// Corresponds to the [URL...] argument.
+	Url pulumi.AnyOutput `pulumi:"url"`
 }
 
 // NewWget registers a new resource with the given unique name, arguments, and options.
@@ -66,44 +75,62 @@ func NewWget(ctx *pulumi.Context,
 }
 
 type wgetArgs struct {
-	// Connection details for the remote system.
+	// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+	BinaryPath *string `pulumi:"binaryPath"`
+	// Connection details for the remote system
 	Connection pulumiCommand.Connection `pulumi:"connection"`
-	// Corresponds to the --directory-prefix option.
-	DirectoryPrefix *string           `pulumi:"directoryPrefix"`
-	Environment     map[string]string `pulumi:"environment"`
-	// Corresponds to the --https-only option.
+	// The  directory prefix is the directory where all other files and subdirectories will be saved to, i.e. the top of the retrieval tree.  The default is . (the current directory).
+	DirectoryPrefix *string `pulumi:"directoryPrefix"`
+	// Environment variables
+	Environment map[string]string `pulumi:"environment"`
+	// When in recursive mode, only HTTPS links are followed.
 	HttpsOnly *bool `pulumi:"httpsOnly"`
-	// Corresponds t- the --no-verbose option.
+	// At what stage(s) in the resource lifecycle should the command be run
+	Lifecycle *CommandLifecycle `pulumi:"lifecycle"`
+	// Turn off verbose without being completely quiet (use -q for that), which means that error messages and basic information still get printed.
 	NoVerbose *bool `pulumi:"noVerbose"`
-	// Corresponds to the --output-document option.
+	// The  documents  will  not  be  written  to the appropriate files, but all will be concatenated together and written to file.
 	OutputDocument *string `pulumi:"outputDocument"`
-	// Corresponds to the --quiet option.
+	// Turn off Wget's output.
 	Quiet *bool `pulumi:"quiet"`
-	// Corresponds to the --timestamping option.
+	// TODO
+	Stdin *string `pulumi:"stdin"`
+	// Turn on time-stamping.
 	Timestamping *bool `pulumi:"timestamping"`
-	// Corresponse to the [URL] argument.
-	Url string `pulumi:"url"`
+	// TODO
+	Triggers []interface{} `pulumi:"triggers"`
+	// Corresponds to the [URL...] argument.
+	Url interface{} `pulumi:"url"`
 }
 
 // The set of arguments for constructing a Wget resource.
 type WgetArgs struct {
-	// Connection details for the remote system.
+	// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+	BinaryPath pulumi.StringPtrInput
+	// Connection details for the remote system
 	Connection pulumiCommand.ConnectionInput
-	// Corresponds to the --directory-prefix option.
+	// The  directory prefix is the directory where all other files and subdirectories will be saved to, i.e. the top of the retrieval tree.  The default is . (the current directory).
 	DirectoryPrefix pulumi.StringPtrInput
-	Environment     pulumi.StringMapInput
-	// Corresponds to the --https-only option.
+	// Environment variables
+	Environment pulumi.StringMapInput
+	// When in recursive mode, only HTTPS links are followed.
 	HttpsOnly pulumi.BoolPtrInput
-	// Corresponds t- the --no-verbose option.
+	// At what stage(s) in the resource lifecycle should the command be run
+	Lifecycle *CommandLifecycle
+	// Turn off verbose without being completely quiet (use -q for that), which means that error messages and basic information still get printed.
 	NoVerbose pulumi.BoolPtrInput
-	// Corresponds to the --output-document option.
+	// The  documents  will  not  be  written  to the appropriate files, but all will be concatenated together and written to file.
 	OutputDocument pulumi.StringPtrInput
-	// Corresponds to the --quiet option.
+	// Turn off Wget's output.
 	Quiet pulumi.BoolPtrInput
-	// Corresponds to the --timestamping option.
+	// TODO
+	Stdin pulumi.StringPtrInput
+	// Turn on time-stamping.
 	Timestamping pulumi.BoolPtrInput
-	// Corresponse to the [URL] argument.
-	Url pulumi.StringInput
+	// TODO
+	Triggers pulumi.ArrayInput
+	// Corresponds to the [URL...] argument.
+	Url pulumi.Input
 }
 
 func (WgetArgs) ElementType() reflect.Type {
@@ -193,63 +220,84 @@ func (o WgetOutput) ToWgetOutputWithContext(ctx context.Context) WgetOutput {
 	return o
 }
 
-// Represents the remote `tar` operation.
+// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+func (o WgetOutput) BinaryPath() pulumi.StringOutput {
+	return o.ApplyT(func(v *Wget) pulumi.StringOutput { return v.BinaryPath }).(pulumi.StringOutput)
+}
+
+// The underlying command
 func (o WgetOutput) Command() pulumiCommand.CommandOutput {
 	return o.ApplyT(func(v *Wget) pulumiCommand.CommandOutput { return v.Command }).(pulumiCommand.CommandOutput)
 }
 
-// Corresponds to the --directory-prefix option.
+// Connection details for the remote system
+func (o WgetOutput) Connection() pulumiCommand.ConnectionOutput {
+	return o.ApplyT(func(v *Wget) pulumiCommand.ConnectionOutput { return v.Connection }).(pulumiCommand.ConnectionOutput)
+}
+
+// The  directory prefix is the directory where all other files and subdirectories will be saved to, i.e. the top of the retrieval tree.  The default is . (the current directory).
 func (o WgetOutput) DirectoryPrefix() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Wget) pulumi.StringPtrOutput { return v.DirectoryPrefix }).(pulumi.StringPtrOutput)
 }
 
+// Environment variables
 func (o WgetOutput) Environment() pulumi.StringMapOutput {
 	return o.ApplyT(func(v *Wget) pulumi.StringMapOutput { return v.Environment }).(pulumi.StringMapOutput)
 }
 
-// Corresponds to the --https-only option.
+// When in recursive mode, only HTTPS links are followed.
 func (o WgetOutput) HttpsOnly() pulumi.BoolOutput {
 	return o.ApplyT(func(v *Wget) pulumi.BoolOutput { return v.HttpsOnly }).(pulumi.BoolOutput)
 }
 
-// Corresponds to the --no-verbose option.
-func (o WgetOutput) NoVerbose() pulumi.BoolPtrOutput {
-	return o.ApplyT(func(v *Wget) pulumi.BoolPtrOutput { return v.NoVerbose }).(pulumi.BoolPtrOutput)
+// At what stage(s) in the resource lifecycle should the command be run
+func (o WgetOutput) Lifecycle() CommandLifecyclePtrOutput {
+	return o.ApplyT(func(v *Wget) CommandLifecyclePtrOutput { return v.Lifecycle }).(CommandLifecyclePtrOutput)
 }
 
-// Corresponds to the --output-document option.
+// Turn off verbose without being completely quiet (use -q for that), which means that error messages and basic information still get printed.
+func (o WgetOutput) NoVerbose() pulumi.BoolOutput {
+	return o.ApplyT(func(v *Wget) pulumi.BoolOutput { return v.NoVerbose }).(pulumi.BoolOutput)
+}
+
+// The  documents  will  not  be  written  to the appropriate files, but all will be concatenated together and written to file.
 func (o WgetOutput) OutputDocument() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Wget) pulumi.StringPtrOutput { return v.OutputDocument }).(pulumi.StringPtrOutput)
 }
 
-// Corresponds to the --quiet option.
+// Turn off Wget's output.
 func (o WgetOutput) Quiet() pulumi.BoolOutput {
 	return o.ApplyT(func(v *Wget) pulumi.BoolOutput { return v.Quiet }).(pulumi.BoolOutput)
 }
 
-// The process' stderr.
+// TODO
 func (o WgetOutput) Stderr() pulumi.StringOutput {
 	return o.ApplyT(func(v *Wget) pulumi.StringOutput { return v.Stderr }).(pulumi.StringOutput)
 }
 
-// The process' stdin.
+// TODO
 func (o WgetOutput) Stdin() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Wget) pulumi.StringPtrOutput { return v.Stdin }).(pulumi.StringPtrOutput)
 }
 
-// The process' stdout.
+// TODO
 func (o WgetOutput) Stdout() pulumi.StringOutput {
 	return o.ApplyT(func(v *Wget) pulumi.StringOutput { return v.Stdout }).(pulumi.StringOutput)
 }
 
-// Corresponds to the --timestamping option.
+// Turn on time-stamping.
 func (o WgetOutput) Timestamping() pulumi.BoolOutput {
 	return o.ApplyT(func(v *Wget) pulumi.BoolOutput { return v.Timestamping }).(pulumi.BoolOutput)
 }
 
-// Corresponse to the [URL] argument.
-func (o WgetOutput) Url() pulumi.StringOutput {
-	return o.ApplyT(func(v *Wget) pulumi.StringOutput { return v.Url }).(pulumi.StringOutput)
+// TODO
+func (o WgetOutput) Triggers() pulumi.ArrayOutput {
+	return o.ApplyT(func(v *Wget) pulumi.ArrayOutput { return v.Triggers }).(pulumi.ArrayOutput)
+}
+
+// Corresponds to the [URL...] argument.
+func (o WgetOutput) Url() pulumi.AnyOutput {
+	return o.ApplyT(func(v *Wget) pulumi.AnyOutput { return v.Url }).(pulumi.AnyOutput)
 }
 
 type WgetArrayOutput struct{ *pulumi.OutputState }

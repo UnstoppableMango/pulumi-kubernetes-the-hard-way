@@ -38,6 +38,9 @@ namespace UnMango.KubernetesTheHardWay.Remote
         public override string ToString() => _value;
     }
 
+    /// <summary>
+    /// Systemd service exit type.
+    /// </summary>
     [EnumType]
     public readonly struct SystemdServiceExitType : IEquatable<SystemdServiceExitType>
     {
@@ -66,6 +69,9 @@ namespace UnMango.KubernetesTheHardWay.Remote
         public override string ToString() => _value;
     }
 
+    /// <summary>
+    /// Systemd service restart behavior.
+    /// </summary>
     [EnumType]
     public readonly struct SystemdServiceRestart : IEquatable<SystemdServiceRestart>
     {
@@ -99,6 +105,9 @@ namespace UnMango.KubernetesTheHardWay.Remote
         public override string ToString() => _value;
     }
 
+    /// <summary>
+    /// Systemd service type.
+    /// </summary>
     [EnumType]
     public readonly struct SystemdServiceType : IEquatable<SystemdServiceType>
     {

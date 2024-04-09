@@ -11,9 +11,12 @@ import com.pulumi.core.annotations.ResourceType;
 import com.pulumi.core.internal.Codegen;
 import com.unmango.kubernetesthehardway.Utilities;
 import com.unmango.kubernetesthehardway.tools.SystemctlArgs;
+import com.unmango.kubernetesthehardway.tools.enums.CommandLifecycle;
 import com.unmango.kubernetesthehardway.tools.enums.SystemctlCommand;
+import java.lang.Object;
 import java.lang.String;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import javax.annotation.Nullable;
 
@@ -24,62 +27,172 @@ import javax.annotation.Nullable;
 @ResourceType(type="kubernetes-the-hard-way:tools:Systemctl")
 public class Systemctl extends com.pulumi.resources.ComponentResource {
     /**
-     * Represents the command run on the remote system.
+     * Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+     * 
+     */
+    @Export(name="binaryPath", refs={String.class}, tree="[0]")
+    private Output<String> binaryPath;
+
+    /**
+     * @return Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+     * 
+     */
+    public Output<String> binaryPath() {
+        return this.binaryPath;
+    }
+    /**
+     * The underlying command
      * 
      */
     @Export(name="command", refs={Command.class}, tree="[0]")
     private Output<Command> command;
 
     /**
-     * @return Represents the command run on the remote system.
+     * @return The underlying command
      * 
      */
     public Output<Command> command() {
         return this.command;
     }
-    @Export(name="commands", refs={List.class,SystemctlCommand.class}, tree="[0,1]")
-    private Output<List<SystemctlCommand>> commands;
-
-    public Output<List<SystemctlCommand>> commands() {
-        return this.commands;
-    }
     /**
-     * Connection details for the remote system.
+     * Connection details for the remote system
      * 
      */
     @Export(name="connection", refs={Connection.class}, tree="[0]")
     private Output<Connection> connection;
 
     /**
-     * @return Connection details for the remote system.
+     * @return Connection details for the remote system
      * 
      */
     public Output<Connection> connection() {
         return this.connection;
     }
-    @Export(name="serviceName", refs={String.class}, tree="[0]")
-    private Output</* @Nullable */ String> serviceName;
+    /**
+     * Environment variables
+     * 
+     */
+    @Export(name="environment", refs={Map.class,String.class}, tree="[0,1,1]")
+    private Output<Map<String,String>> environment;
 
-    public Output<Optional<String>> serviceName() {
-        return Codegen.optional(this.serviceName);
+    /**
+     * @return Environment variables
+     * 
+     */
+    public Output<Map<String,String>> environment() {
+        return this.environment;
     }
+    /**
+     * At what stage(s) in the resource lifecycle should the command be run
+     * 
+     */
+    @Export(name="lifecycle", refs={CommandLifecycle.class}, tree="[0]")
+    private Output</* @Nullable */ CommandLifecycle> lifecycle;
+
+    /**
+     * @return At what stage(s) in the resource lifecycle should the command be run
+     * 
+     */
+    public Output<Optional<CommandLifecycle>> lifecycle() {
+        return Codegen.optional(this.lifecycle);
+    }
+    /**
+     * Corresponds to the [PATTERN] argument
+     * 
+     */
+    @Export(name="pattern", refs={String.class}, tree="[0]")
+    private Output</* @Nullable */ String> pattern;
+
+    /**
+     * @return Corresponds to the [PATTERN] argument
+     * 
+     */
+    public Output<Optional<String>> pattern() {
+        return Codegen.optional(this.pattern);
+    }
+    /**
+     * TODO
+     * 
+     */
     @Export(name="stderr", refs={String.class}, tree="[0]")
     private Output<String> stderr;
 
+    /**
+     * @return TODO
+     * 
+     */
     public Output<String> stderr() {
         return this.stderr;
     }
+    /**
+     * TODO
+     * 
+     */
     @Export(name="stdin", refs={String.class}, tree="[0]")
     private Output</* @Nullable */ String> stdin;
 
+    /**
+     * @return TODO
+     * 
+     */
     public Output<Optional<String>> stdin() {
         return Codegen.optional(this.stdin);
     }
+    /**
+     * TODO
+     * 
+     */
     @Export(name="stdout", refs={String.class}, tree="[0]")
     private Output<String> stdout;
 
+    /**
+     * @return TODO
+     * 
+     */
     public Output<String> stdout() {
         return this.stdout;
+    }
+    /**
+     * Corresponds to the COMMAND argument.
+     * 
+     */
+    @Export(name="systemctlCommand", refs={SystemctlCommand.class}, tree="[0]")
+    private Output<SystemctlCommand> systemctlCommand;
+
+    /**
+     * @return Corresponds to the COMMAND argument.
+     * 
+     */
+    public Output<SystemctlCommand> systemctlCommand() {
+        return this.systemctlCommand;
+    }
+    /**
+     * TODO
+     * 
+     */
+    @Export(name="triggers", refs={List.class,Object.class}, tree="[0,1]")
+    private Output<List<Object>> triggers;
+
+    /**
+     * @return TODO
+     * 
+     */
+    public Output<List<Object>> triggers() {
+        return this.triggers;
+    }
+    /**
+     * Corresponds to the [UNIT...] argument.
+     * 
+     */
+    @Export(name="unit", refs={String.class}, tree="[0]")
+    private Output<String> unit;
+
+    /**
+     * @return Corresponds to the [UNIT...] argument.
+     * 
+     */
+    public Output<String> unit() {
+        return this.unit;
     }
 
     /**

@@ -30,8 +30,10 @@ export type EtcdConfiguration = import("./etcdConfiguration").EtcdConfiguration;
 export const EtcdConfiguration: typeof import("./etcdConfiguration").EtcdConfiguration = null as any;
 utilities.lazyLoad(exports, ["EtcdConfiguration"], () => require("./etcdConfiguration"));
 
-export * from "./etcdInstall";
-import { EtcdInstall } from "./etcdInstall";
+export { EtcdInstallArgs } from "./etcdInstall";
+export type EtcdInstall = import("./etcdInstall").EtcdInstall;
+export const EtcdInstall: typeof import("./etcdInstall").EtcdInstall = null as any;
+utilities.lazyLoad(exports, ["EtcdInstall"], () => require("./etcdInstall"));
 
 export { FileArgs } from "./file";
 export type File = import("./file").File;
@@ -73,8 +75,10 @@ export type RuncInstall = import("./runcInstall").RuncInstall;
 export const RuncInstall: typeof import("./runcInstall").RuncInstall = null as any;
 utilities.lazyLoad(exports, ["RuncInstall"], () => require("./runcInstall"));
 
-export * from "./systemdService";
-import { SystemdService } from "./systemdService";
+export { SystemdServiceArgs } from "./systemdService";
+export type SystemdService = import("./systemdService").SystemdService;
+export const SystemdService: typeof import("./systemdService").SystemdService = null as any;
+utilities.lazyLoad(exports, ["SystemdService"], () => require("./systemdService"));
 
 
 // Export enums:

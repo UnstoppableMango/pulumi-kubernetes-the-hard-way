@@ -31,26 +31,51 @@ export class KubeSchedulerInstall extends pulumi.ComponentResource {
     }
 
     /**
-     * The kube-scheduler CPU architecture.
+     * The CPU architecture to install.
      */
     public readonly architecture!: pulumi.Output<enums.remote.Architecture>;
+    /**
+     * The name of the installed binary.
+     */
     public /*out*/ readonly binName!: pulumi.Output<string | undefined>;
     /**
-     * The connection details.
+     * The parameters with which to connect to the remote host.
      */
     public readonly connection!: pulumi.Output<pulumiCommand.types.output.remote.Connection>;
     /**
-     * Directory to install the `etcd` and `etcdctl` binaries.
+     * The directory to install the binary to.
      */
     public readonly directory!: pulumi.Output<string>;
-    public /*out*/ readonly download!: pulumi.Output<Download | undefined>;
-    public /*out*/ readonly mkdir!: pulumi.Output<Mkdir | undefined>;
-    public /*out*/ readonly mktemp!: pulumi.Output<Mktemp | undefined>;
-    public /*out*/ readonly mv!: pulumi.Output<Mv | undefined>;
-    public /*out*/ readonly path!: pulumi.Output<string | undefined>;
-    public /*out*/ readonly rm!: pulumi.Output<Rm | undefined>;
     /**
-     * The version of kube-scheduler to install.
+     * The download operation.
+     */
+    public /*out*/ readonly download!: pulumi.Output<Download>;
+    /**
+     * The mkdir operation.
+     */
+    public /*out*/ readonly mkdir!: pulumi.Output<Mkdir>;
+    /**
+     * The mktemp operation.
+     */
+    public /*out*/ readonly mktemp!: pulumi.Output<Mktemp>;
+    /**
+     * The mv operation.
+     */
+    public /*out*/ readonly mv!: pulumi.Output<Mv>;
+    /**
+     * The path to the installed binary.
+     */
+    public /*out*/ readonly path!: pulumi.Output<string>;
+    /**
+     * The rm operation.
+     */
+    public /*out*/ readonly rm!: pulumi.Output<Rm>;
+    /**
+     * The url used to download the binary.
+     */
+    public /*out*/ readonly url!: pulumi.Output<string>;
+    /**
+     * The version to install.
      */
     public readonly version!: pulumi.Output<string>;
 
@@ -79,6 +104,7 @@ export class KubeSchedulerInstall extends pulumi.ComponentResource {
             resourceInputs["mv"] = undefined /*out*/;
             resourceInputs["path"] = undefined /*out*/;
             resourceInputs["rm"] = undefined /*out*/;
+            resourceInputs["url"] = undefined /*out*/;
         } else {
             resourceInputs["architecture"] = undefined /*out*/;
             resourceInputs["binName"] = undefined /*out*/;
@@ -90,6 +116,7 @@ export class KubeSchedulerInstall extends pulumi.ComponentResource {
             resourceInputs["mv"] = undefined /*out*/;
             resourceInputs["path"] = undefined /*out*/;
             resourceInputs["rm"] = undefined /*out*/;
+            resourceInputs["url"] = undefined /*out*/;
             resourceInputs["version"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
@@ -102,19 +129,19 @@ export class KubeSchedulerInstall extends pulumi.ComponentResource {
  */
 export interface KubeSchedulerInstallArgs {
     /**
-     * The kube-scheduler CPU architecture.
+     * The CPU architecture to install.
      */
     architecture?: pulumi.Input<enums.remote.Architecture>;
     /**
-     * The connection details.
+     * The parameters with which to connect to the remote host.
      */
     connection: pulumi.Input<pulumiCommand.types.input.remote.ConnectionArgs>;
     /**
-     * Directory to install the `kube-scheduler` binary.
+     * The directory to install the binary to.
      */
     directory?: pulumi.Input<string>;
     /**
-     * The version of kube-scheduler to install.
+     * The version to install.
      */
     version?: pulumi.Input<string>;
 }

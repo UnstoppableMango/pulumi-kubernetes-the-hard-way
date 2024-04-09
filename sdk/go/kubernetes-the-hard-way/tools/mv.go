@@ -17,37 +17,51 @@ import (
 type Mv struct {
 	pulumi.ResourceState
 
-	// Corresponds to both the -b and --backup options depending on whether [CONTROL] is supplied.
+	// Corresponds to the `-b` and `--backup` options depending on whether [CONTROL] is supplied.
 	Backup pulumi.BoolOutput `pulumi:"backup"`
-	// Represents the command run on the remote system.
+	// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+	BinaryPath pulumi.StringOutput `pulumi:"binaryPath"`
+	// The underlying command
 	Command pulumiCommand.CommandOutput `pulumi:"command"`
-	// Corresponds to the --context option.
+	// Connection details for the remote system
+	Connection pulumiCommand.ConnectionOutput `pulumi:"connection"`
+	// Corresponds to the `--context` option.
 	Context pulumi.BoolOutput `pulumi:"context"`
-	// Corresponds to the [CONTROL] argument for the --backup option.
-	Control pulumi.StringPtrOutput `pulumi:"control"`
+	// Corresponds to the [CONTROL] argument for the `--backup` option.
+	Control pulumi.BoolPtrOutput `pulumi:"control"`
 	// Corresponds to the [DEST] argument.
 	Dest pulumi.StringPtrOutput `pulumi:"dest"`
 	// Corresponds to the [DIRECTORY] argument.
 	Directory pulumi.StringPtrOutput `pulumi:"directory"`
-	// Corresponds to the --force option.
+	// Environment variables
+	Environment pulumi.StringMapOutput `pulumi:"environment"`
+	// Corresponds to the `--force` option.
 	Force pulumi.BoolOutput `pulumi:"force"`
-	// At what stage(s) in the resource lifecycle should the command be run.
+	// At what stage(s) in the resource lifecycle should the command be run
 	Lifecycle CommandLifecyclePtrOutput `pulumi:"lifecycle"`
-	// Corresponds to the --no-clobber option.
+	// Corresponds to the `--no-clobber` option.
 	NoClobber pulumi.BoolOutput `pulumi:"noClobber"`
-	// Corresponds to the --no-target-directory option.
+	// Corresponds to the `--no-target-directory` option.
 	NoTargetDirectory pulumi.BoolOutput `pulumi:"noTargetDirectory"`
 	// Corresponds to the [SOURCE] argument.
-	Source pulumi.StringArrayOutput `pulumi:"source"`
-	// Corresponds to the --strip-trailing-suffix option.
+	Source pulumi.AnyOutput `pulumi:"source"`
+	// TODO
+	Stderr pulumi.StringOutput `pulumi:"stderr"`
+	// TODO
+	Stdin pulumi.StringPtrOutput `pulumi:"stdin"`
+	// TODO
+	Stdout pulumi.StringOutput `pulumi:"stdout"`
+	// Corresponds to the `--strip-trailing-slashes` option.
 	StripTrailingSlashes pulumi.BoolOutput `pulumi:"stripTrailingSlashes"`
-	// Corresponds to the --suffix option.
+	// Corresponds to the `--suffix` option.
 	Suffix pulumi.StringPtrOutput `pulumi:"suffix"`
-	// Corresponds to the --target-directory option.
-	TargetDirectory pulumi.StringPtrOutput `pulumi:"targetDirectory"`
-	// Corresponds to the --update option.
+	// Corresponds to the `--target-directory` option.
+	TargetDirectory pulumi.BoolPtrOutput `pulumi:"targetDirectory"`
+	// TODO
+	Triggers pulumi.ArrayOutput `pulumi:"triggers"`
+	// Corresponds to the `--update` option.
 	Update pulumi.BoolOutput `pulumi:"update"`
-	// Corresponds to the --verbose option.
+	// Corresponds to the `--verbose` option.
 	Verbose pulumi.BoolOutput `pulumi:"verbose"`
 }
 
@@ -75,71 +89,89 @@ func NewMv(ctx *pulumi.Context,
 }
 
 type mvArgs struct {
-	// Corresponds to both the -b and --backup options depending on whether [CONTROL] is supplied.
+	// Corresponds to the `-b` and `--backup` options depending on whether [CONTROL] is supplied.
 	Backup *bool `pulumi:"backup"`
-	// Connection details for the remote system.
+	// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+	BinaryPath *string `pulumi:"binaryPath"`
+	// Connection details for the remote system
 	Connection pulumiCommand.Connection `pulumi:"connection"`
-	// Corresponds to the --context option.
+	// Corresponds to the `--context` option.
 	Context *bool `pulumi:"context"`
-	// Corresponds to the [CONTROL] argument for the --backup option.
-	Control *string `pulumi:"control"`
+	// Corresponds to the [CONTROL] argument for the `--backup` option.
+	Control *bool `pulumi:"control"`
 	// Corresponds to the [DEST] argument.
 	Dest *string `pulumi:"dest"`
 	// Corresponds to the [DIRECTORY] argument.
-	Directory   *string           `pulumi:"directory"`
+	Directory *string `pulumi:"directory"`
+	// Environment variables
 	Environment map[string]string `pulumi:"environment"`
-	// Corresponds to the --force option.
+	// Corresponds to the `--force` option.
 	Force *bool `pulumi:"force"`
-	// Corresponds to the --no-clobber option.
+	// At what stage(s) in the resource lifecycle should the command be run
+	Lifecycle *CommandLifecycle `pulumi:"lifecycle"`
+	// Corresponds to the `--no-clobber` option.
 	NoClobber *bool `pulumi:"noClobber"`
-	// Corresponds to the --no-target-directory option.
+	// Corresponds to the `--no-target-directory` option.
 	NoTargetDirectory *bool `pulumi:"noTargetDirectory"`
 	// Corresponds to the [SOURCE] argument.
 	Source interface{} `pulumi:"source"`
-	// Corresponds to the --strip-trailing-suffix option.
+	// TODO
+	Stdin *string `pulumi:"stdin"`
+	// Corresponds to the `--strip-trailing-slashes` option.
 	StripTrailingSlashes *bool `pulumi:"stripTrailingSlashes"`
-	// Corresponds to the --suffix option.
+	// Corresponds to the `--suffix` option.
 	Suffix *string `pulumi:"suffix"`
-	// Corresponds to the --target-directory option.
-	TargetDirectory *string `pulumi:"targetDirectory"`
-	// Corresponds to the --update option.
+	// Corresponds to the `--target-directory` option.
+	TargetDirectory *bool `pulumi:"targetDirectory"`
+	// TODO
+	Triggers []interface{} `pulumi:"triggers"`
+	// Corresponds to the `--update` option.
 	Update *bool `pulumi:"update"`
-	// Corresponds to the --verbose option.
+	// Corresponds to the `--verbose` option.
 	Verbose *bool `pulumi:"verbose"`
 }
 
 // The set of arguments for constructing a Mv resource.
 type MvArgs struct {
-	// Corresponds to both the -b and --backup options depending on whether [CONTROL] is supplied.
+	// Corresponds to the `-b` and `--backup` options depending on whether [CONTROL] is supplied.
 	Backup *bool
-	// Connection details for the remote system.
+	// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+	BinaryPath pulumi.StringPtrInput
+	// Connection details for the remote system
 	Connection pulumiCommand.ConnectionInput
-	// Corresponds to the --context option.
+	// Corresponds to the `--context` option.
 	Context pulumi.BoolPtrInput
-	// Corresponds to the [CONTROL] argument for the --backup option.
-	Control pulumi.StringPtrInput
+	// Corresponds to the [CONTROL] argument for the `--backup` option.
+	Control pulumi.BoolPtrInput
 	// Corresponds to the [DEST] argument.
 	Dest pulumi.StringPtrInput
 	// Corresponds to the [DIRECTORY] argument.
-	Directory   pulumi.StringPtrInput
+	Directory pulumi.StringPtrInput
+	// Environment variables
 	Environment pulumi.StringMapInput
-	// Corresponds to the --force option.
+	// Corresponds to the `--force` option.
 	Force pulumi.BoolPtrInput
-	// Corresponds to the --no-clobber option.
+	// At what stage(s) in the resource lifecycle should the command be run
+	Lifecycle *CommandLifecycle
+	// Corresponds to the `--no-clobber` option.
 	NoClobber pulumi.BoolPtrInput
-	// Corresponds to the --no-target-directory option.
+	// Corresponds to the `--no-target-directory` option.
 	NoTargetDirectory pulumi.BoolPtrInput
 	// Corresponds to the [SOURCE] argument.
 	Source pulumi.Input
-	// Corresponds to the --strip-trailing-suffix option.
+	// TODO
+	Stdin pulumi.StringPtrInput
+	// Corresponds to the `--strip-trailing-slashes` option.
 	StripTrailingSlashes pulumi.BoolPtrInput
-	// Corresponds to the --suffix option.
+	// Corresponds to the `--suffix` option.
 	Suffix pulumi.StringPtrInput
-	// Corresponds to the --target-directory option.
-	TargetDirectory pulumi.StringPtrInput
-	// Corresponds to the --update option.
+	// Corresponds to the `--target-directory` option.
+	TargetDirectory pulumi.BoolPtrInput
+	// TODO
+	Triggers pulumi.ArrayInput
+	// Corresponds to the `--update` option.
 	Update pulumi.BoolPtrInput
-	// Corresponds to the --verbose option.
+	// Corresponds to the `--verbose` option.
 	Verbose pulumi.BoolPtrInput
 }
 
@@ -230,24 +262,34 @@ func (o MvOutput) ToMvOutputWithContext(ctx context.Context) MvOutput {
 	return o
 }
 
-// Corresponds to both the -b and --backup options depending on whether [CONTROL] is supplied.
+// Corresponds to the `-b` and `--backup` options depending on whether [CONTROL] is supplied.
 func (o MvOutput) Backup() pulumi.BoolOutput {
 	return o.ApplyT(func(v *Mv) pulumi.BoolOutput { return v.Backup }).(pulumi.BoolOutput)
 }
 
-// Represents the command run on the remote system.
+// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+func (o MvOutput) BinaryPath() pulumi.StringOutput {
+	return o.ApplyT(func(v *Mv) pulumi.StringOutput { return v.BinaryPath }).(pulumi.StringOutput)
+}
+
+// The underlying command
 func (o MvOutput) Command() pulumiCommand.CommandOutput {
 	return o.ApplyT(func(v *Mv) pulumiCommand.CommandOutput { return v.Command }).(pulumiCommand.CommandOutput)
 }
 
-// Corresponds to the --context option.
+// Connection details for the remote system
+func (o MvOutput) Connection() pulumiCommand.ConnectionOutput {
+	return o.ApplyT(func(v *Mv) pulumiCommand.ConnectionOutput { return v.Connection }).(pulumiCommand.ConnectionOutput)
+}
+
+// Corresponds to the `--context` option.
 func (o MvOutput) Context() pulumi.BoolOutput {
 	return o.ApplyT(func(v *Mv) pulumi.BoolOutput { return v.Context }).(pulumi.BoolOutput)
 }
 
-// Corresponds to the [CONTROL] argument for the --backup option.
-func (o MvOutput) Control() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Mv) pulumi.StringPtrOutput { return v.Control }).(pulumi.StringPtrOutput)
+// Corresponds to the [CONTROL] argument for the `--backup` option.
+func (o MvOutput) Control() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *Mv) pulumi.BoolPtrOutput { return v.Control }).(pulumi.BoolPtrOutput)
 }
 
 // Corresponds to the [DEST] argument.
@@ -260,52 +302,77 @@ func (o MvOutput) Directory() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Mv) pulumi.StringPtrOutput { return v.Directory }).(pulumi.StringPtrOutput)
 }
 
-// Corresponds to the --force option.
+// Environment variables
+func (o MvOutput) Environment() pulumi.StringMapOutput {
+	return o.ApplyT(func(v *Mv) pulumi.StringMapOutput { return v.Environment }).(pulumi.StringMapOutput)
+}
+
+// Corresponds to the `--force` option.
 func (o MvOutput) Force() pulumi.BoolOutput {
 	return o.ApplyT(func(v *Mv) pulumi.BoolOutput { return v.Force }).(pulumi.BoolOutput)
 }
 
-// At what stage(s) in the resource lifecycle should the command be run.
+// At what stage(s) in the resource lifecycle should the command be run
 func (o MvOutput) Lifecycle() CommandLifecyclePtrOutput {
 	return o.ApplyT(func(v *Mv) CommandLifecyclePtrOutput { return v.Lifecycle }).(CommandLifecyclePtrOutput)
 }
 
-// Corresponds to the --no-clobber option.
+// Corresponds to the `--no-clobber` option.
 func (o MvOutput) NoClobber() pulumi.BoolOutput {
 	return o.ApplyT(func(v *Mv) pulumi.BoolOutput { return v.NoClobber }).(pulumi.BoolOutput)
 }
 
-// Corresponds to the --no-target-directory option.
+// Corresponds to the `--no-target-directory` option.
 func (o MvOutput) NoTargetDirectory() pulumi.BoolOutput {
 	return o.ApplyT(func(v *Mv) pulumi.BoolOutput { return v.NoTargetDirectory }).(pulumi.BoolOutput)
 }
 
 // Corresponds to the [SOURCE] argument.
-func (o MvOutput) Source() pulumi.StringArrayOutput {
-	return o.ApplyT(func(v *Mv) pulumi.StringArrayOutput { return v.Source }).(pulumi.StringArrayOutput)
+func (o MvOutput) Source() pulumi.AnyOutput {
+	return o.ApplyT(func(v *Mv) pulumi.AnyOutput { return v.Source }).(pulumi.AnyOutput)
 }
 
-// Corresponds to the --strip-trailing-suffix option.
+// TODO
+func (o MvOutput) Stderr() pulumi.StringOutput {
+	return o.ApplyT(func(v *Mv) pulumi.StringOutput { return v.Stderr }).(pulumi.StringOutput)
+}
+
+// TODO
+func (o MvOutput) Stdin() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mv) pulumi.StringPtrOutput { return v.Stdin }).(pulumi.StringPtrOutput)
+}
+
+// TODO
+func (o MvOutput) Stdout() pulumi.StringOutput {
+	return o.ApplyT(func(v *Mv) pulumi.StringOutput { return v.Stdout }).(pulumi.StringOutput)
+}
+
+// Corresponds to the `--strip-trailing-slashes` option.
 func (o MvOutput) StripTrailingSlashes() pulumi.BoolOutput {
 	return o.ApplyT(func(v *Mv) pulumi.BoolOutput { return v.StripTrailingSlashes }).(pulumi.BoolOutput)
 }
 
-// Corresponds to the --suffix option.
+// Corresponds to the `--suffix` option.
 func (o MvOutput) Suffix() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Mv) pulumi.StringPtrOutput { return v.Suffix }).(pulumi.StringPtrOutput)
 }
 
-// Corresponds to the --target-directory option.
-func (o MvOutput) TargetDirectory() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Mv) pulumi.StringPtrOutput { return v.TargetDirectory }).(pulumi.StringPtrOutput)
+// Corresponds to the `--target-directory` option.
+func (o MvOutput) TargetDirectory() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *Mv) pulumi.BoolPtrOutput { return v.TargetDirectory }).(pulumi.BoolPtrOutput)
 }
 
-// Corresponds to the --update option.
+// TODO
+func (o MvOutput) Triggers() pulumi.ArrayOutput {
+	return o.ApplyT(func(v *Mv) pulumi.ArrayOutput { return v.Triggers }).(pulumi.ArrayOutput)
+}
+
+// Corresponds to the `--update` option.
 func (o MvOutput) Update() pulumi.BoolOutput {
 	return o.ApplyT(func(v *Mv) pulumi.BoolOutput { return v.Update }).(pulumi.BoolOutput)
 }
 
-// Corresponds to the --verbose option.
+// Corresponds to the `--verbose` option.
 func (o MvOutput) Verbose() pulumi.BoolOutput {
 	return o.ApplyT(func(v *Mv) pulumi.BoolOutput { return v.Verbose }).(pulumi.BoolOutput)
 }

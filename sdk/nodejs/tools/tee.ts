@@ -10,7 +10,7 @@ import * as utilities from "../utilities";
 import * as pulumiCommand from "@pulumi/command";
 
 /**
- * Read from standard input and write to standard output and files.
+ * Abstraction over the `rm` utility on a remote system.
  */
 export class Tee extends pulumi.ComponentResource {
     /** @internal */
@@ -28,20 +28,27 @@ export class Tee extends pulumi.ComponentResource {
     }
 
     /**
-     * Append to the given FILEs, do not overwrite.
+     * Append to the given FILEs, do not overwrite
      */
     public readonly append!: pulumi.Output<boolean>;
     /**
-     * Represents the command run on the remote system.
+     * Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+     */
+    public readonly binaryPath!: pulumi.Output<string>;
+    /**
+     * The underlying command
      */
     public /*out*/ readonly command!: pulumi.Output<pulumiCommand.remote.Command>;
     /**
-     * Connection details for the remote system.
+     * Connection details for the remote system
      */
     public readonly connection!: pulumi.Output<pulumiCommand.types.output.remote.Connection>;
-    public readonly environment!: pulumi.Output<{[key: string]: string} | undefined>;
     /**
-     * The file(s) to write to.
+     * Environment variables
+     */
+    public readonly environment!: pulumi.Output<{[key: string]: string}>;
+    /**
+     * Corresponds to the [FILE] argument.
      */
     public readonly files!: pulumi.Output<string | string[]>;
     /**
@@ -49,7 +56,7 @@ export class Tee extends pulumi.ComponentResource {
      */
     public readonly ignoreInterrupts!: pulumi.Output<boolean>;
     /**
-     * At what stage(s) in the resource lifecycle should the command be run.
+     * At what stage(s) in the resource lifecycle should the command be run
      */
     public readonly lifecycle!: pulumi.Output<enums.tools.CommandLifecycle | undefined>;
     /**
@@ -60,9 +67,26 @@ export class Tee extends pulumi.ComponentResource {
      * Operate in a more appropriate MODE with pipes.
      */
     public readonly pipe!: pulumi.Output<boolean>;
-    public /*out*/ readonly stderr!: pulumi.Output<string | undefined>;
+    /**
+     * TODO
+     */
+    public /*out*/ readonly stderr!: pulumi.Output<string>;
+    /**
+     * TODO
+     */
     public readonly stdin!: pulumi.Output<string>;
-    public /*out*/ readonly stdout!: pulumi.Output<string | undefined>;
+    /**
+     * TODO
+     */
+    public /*out*/ readonly stdout!: pulumi.Output<string>;
+    /**
+     * TODO
+     */
+    public readonly triggers!: pulumi.Output<any[]>;
+    /**
+     * Output version information and exit.
+     */
+    public readonly version!: pulumi.Output<boolean>;
 
     /**
      * Create a Tee resource with the given unique name, arguments, and options.
@@ -85,6 +109,7 @@ export class Tee extends pulumi.ComponentResource {
                 throw new Error("Missing required property 'stdin'");
             }
             resourceInputs["append"] = args ? args.append : undefined;
+            resourceInputs["binaryPath"] = args ? args.binaryPath : undefined;
             resourceInputs["connection"] = args ? (args.connection ? pulumi.output(args.connection).apply(pulumiCommand.types.input.remote.connectionArgsProvideDefaults) : undefined) : undefined;
             resourceInputs["environment"] = args ? args.environment : undefined;
             resourceInputs["files"] = args ? args.files : undefined;
@@ -93,12 +118,14 @@ export class Tee extends pulumi.ComponentResource {
             resourceInputs["outputError"] = args ? args.outputError : undefined;
             resourceInputs["pipe"] = args ? args.pipe : undefined;
             resourceInputs["stdin"] = args ? args.stdin : undefined;
+            resourceInputs["triggers"] = args ? args.triggers : undefined;
             resourceInputs["version"] = args ? args.version : undefined;
             resourceInputs["command"] = undefined /*out*/;
             resourceInputs["stderr"] = undefined /*out*/;
             resourceInputs["stdout"] = undefined /*out*/;
         } else {
             resourceInputs["append"] = undefined /*out*/;
+            resourceInputs["binaryPath"] = undefined /*out*/;
             resourceInputs["command"] = undefined /*out*/;
             resourceInputs["connection"] = undefined /*out*/;
             resourceInputs["environment"] = undefined /*out*/;
@@ -110,6 +137,8 @@ export class Tee extends pulumi.ComponentResource {
             resourceInputs["stderr"] = undefined /*out*/;
             resourceInputs["stdin"] = undefined /*out*/;
             resourceInputs["stdout"] = undefined /*out*/;
+            resourceInputs["triggers"] = undefined /*out*/;
+            resourceInputs["version"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         super(Tee.__pulumiType, name, resourceInputs, opts, true /*remote*/);
@@ -121,16 +150,23 @@ export class Tee extends pulumi.ComponentResource {
  */
 export interface TeeArgs {
     /**
-     * Append to the given FILEs, do not overwrite.
+     * Append to the given FILEs, do not overwrite
      */
     append?: pulumi.Input<boolean>;
     /**
-     * Connection details for the remote system.
+     * Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+     */
+    binaryPath?: pulumi.Input<string>;
+    /**
+     * Connection details for the remote system
      */
     connection: pulumi.Input<pulumiCommand.types.input.remote.ConnectionArgs>;
+    /**
+     * Environment variables
+     */
     environment?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
-     * The file(s) to write to.
+     * Corresponds to the [FILE] argument.
      */
     files: pulumi.Input<string | pulumi.Input<string>[]>;
     /**
@@ -138,7 +174,7 @@ export interface TeeArgs {
      */
     ignoreInterrupts?: pulumi.Input<boolean>;
     /**
-     * At what stage(s) in the resource lifecycle should the command be run.
+     * At what stage(s) in the resource lifecycle should the command be run
      */
     lifecycle?: enums.tools.CommandLifecycle;
     /**
@@ -149,7 +185,14 @@ export interface TeeArgs {
      * Operate in a more appropriate MODE with pipes.
      */
     pipe?: pulumi.Input<boolean>;
+    /**
+     * TODO
+     */
     stdin: pulumi.Input<string>;
+    /**
+     * TODO
+     */
+    triggers?: pulumi.Input<any[]>;
     /**
      * Output version information and exit.
      */

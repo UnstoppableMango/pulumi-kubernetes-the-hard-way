@@ -22,14 +22,14 @@ public final class SystemdServiceArgs extends com.pulumi.resources.ResourceArgs 
     public static final SystemdServiceArgs Empty = new SystemdServiceArgs();
 
     /**
-     * The connection details.
+     * The parameters with which to connect to the remote host.
      * 
      */
     @Import(name="connection", required=true)
     private Output<ConnectionArgs> connection;
 
     /**
-     * @return The connection details.
+     * @return The parameters with which to connect to the remote host.
      * 
      */
     public Output<ConnectionArgs> connection() {
@@ -125,7 +125,7 @@ public final class SystemdServiceArgs extends com.pulumi.resources.ResourceArgs 
         }
 
         /**
-         * @param connection The connection details.
+         * @param connection The parameters with which to connect to the remote host.
          * 
          * @return builder
          * 
@@ -136,7 +136,7 @@ public final class SystemdServiceArgs extends com.pulumi.resources.ResourceArgs 
         }
 
         /**
-         * @param connection The connection details.
+         * @param connection The parameters with which to connect to the remote host.
          * 
          * @return builder
          * 

@@ -14,19 +14,21 @@ import (
 	"github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/sdk/go/kubernetes-the-hard-way/tools"
 )
 
-// Represents a file to be downloaded on a remote system.
+// Downloads the file specified by `url` onto a remote system.
 type Download struct {
 	pulumi.ResourceState
 
-	// Connection details for the remote system
+	// The parameters with which to connect to the remote host.
 	Connection pulumiCommand.ConnectionOutput `pulumi:"connection"`
 	// The fully qualified path on the remote system where the file should be downloaded to.
 	Destination pulumi.StringOutput `pulumi:"destination"`
-	// Represents the command used to create the remote directory.
+	// The mkdir operation.
 	Mkdir tools.MkdirOutput `pulumi:"mkdir"`
-	// The URL for the file to be downloaded.
+	// Remove the downloaded fiel when the resource is deleted.
+	RemoveOnDelete pulumi.BoolOutput `pulumi:"removeOnDelete"`
+	// The URL of the file to be downloaded.
 	Url pulumi.StringOutput `pulumi:"url"`
-	// Represents the wget command used to download the file.
+	// The wget operation.
 	Wget tools.WgetOutput `pulumi:"wget"`
 }
 
@@ -57,25 +59,25 @@ func NewDownload(ctx *pulumi.Context,
 }
 
 type downloadArgs struct {
-	// Connection details for the remote system
+	// The parameters with which to connect to the remote host.
 	Connection pulumiCommand.Connection `pulumi:"connection"`
 	// The fully qualified path on the remote system where the file should be downloaded to.
 	Destination string `pulumi:"destination"`
-	// Remove the downloaded file when the resource is deleted.
+	// Remove the downloaded fiel when the resource is deleted.
 	RemoveOnDelete *bool `pulumi:"removeOnDelete"`
-	// The URL for the file to be downloaded.
+	// The URL of the file to be downloaded.
 	Url string `pulumi:"url"`
 }
 
 // The set of arguments for constructing a Download resource.
 type DownloadArgs struct {
-	// Connection details for the remote system
+	// The parameters with which to connect to the remote host.
 	Connection pulumiCommand.ConnectionInput
 	// The fully qualified path on the remote system where the file should be downloaded to.
 	Destination pulumi.StringInput
-	// Remove the downloaded file when the resource is deleted.
+	// Remove the downloaded fiel when the resource is deleted.
 	RemoveOnDelete pulumi.BoolPtrInput
-	// The URL for the file to be downloaded.
+	// The URL of the file to be downloaded.
 	Url pulumi.StringInput
 }
 
@@ -166,7 +168,7 @@ func (o DownloadOutput) ToDownloadOutputWithContext(ctx context.Context) Downloa
 	return o
 }
 
-// Connection details for the remote system
+// The parameters with which to connect to the remote host.
 func (o DownloadOutput) Connection() pulumiCommand.ConnectionOutput {
 	return o.ApplyT(func(v *Download) pulumiCommand.ConnectionOutput { return v.Connection }).(pulumiCommand.ConnectionOutput)
 }
@@ -176,17 +178,22 @@ func (o DownloadOutput) Destination() pulumi.StringOutput {
 	return o.ApplyT(func(v *Download) pulumi.StringOutput { return v.Destination }).(pulumi.StringOutput)
 }
 
-// Represents the command used to create the remote directory.
+// The mkdir operation.
 func (o DownloadOutput) Mkdir() tools.MkdirOutput {
 	return o.ApplyT(func(v *Download) tools.MkdirOutput { return v.Mkdir }).(tools.MkdirOutput)
 }
 
-// The URL for the file to be downloaded.
+// Remove the downloaded fiel when the resource is deleted.
+func (o DownloadOutput) RemoveOnDelete() pulumi.BoolOutput {
+	return o.ApplyT(func(v *Download) pulumi.BoolOutput { return v.RemoveOnDelete }).(pulumi.BoolOutput)
+}
+
+// The URL of the file to be downloaded.
 func (o DownloadOutput) Url() pulumi.StringOutput {
 	return o.ApplyT(func(v *Download) pulumi.StringOutput { return v.Url }).(pulumi.StringOutput)
 }
 
-// Represents the wget command used to download the file.
+// The wget operation.
 func (o DownloadOutput) Wget() tools.WgetOutput {
 	return o.ApplyT(func(v *Download) tools.WgetOutput { return v.Wget }).(tools.WgetOutput)
 }

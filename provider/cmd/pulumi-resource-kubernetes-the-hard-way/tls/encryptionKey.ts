@@ -1,22 +1,16 @@
 import * as path from 'node:path';
 import * as YAML from 'yaml';
-import { ComponentResource, ComponentResourceOptions, Input, Output, output } from '@pulumi/pulumi';
+import { ComponentResourceOptions, output } from '@pulumi/pulumi';
 import { RandomBytes } from '@pulumi/random';
 import { remote } from '@pulumi/command/types/input';
+import * as schema from '../schema-types';
 import { File } from '../remote/file';
 
-export interface EncryptionKeyArgs {
-  bytes?: Input<number>;
-}
-
-export class EncryptionKey extends ComponentResource {
+export class EncryptionKey extends schema.EncryptionKey {
   public static readonly defaultBytes = 24;
 
-  public readonly config: Output<string>;
-  public readonly key: RandomBytes;
-
-  constructor(name: string, args: EncryptionKeyArgs, opts?: ComponentResourceOptions) {
-    super('kubernetes-the-hard-way:tls:encryptionKey', name, args, opts);
+  constructor(name: string, args: schema.EncryptionKeyArgs, opts?: ComponentResourceOptions) {
+    super(name, args, opts);
 
     const bytes = output(args.bytes ?? EncryptionKey.defaultBytes);
     const key = new RandomBytes(name, { length: bytes }, { parent: this });
@@ -37,10 +31,11 @@ export class EncryptionKey extends ComponentResource {
       ],
     }));
 
+    this.bytes = bytes;
     this.config = config;
     this.key = key;
 
-    this.registerOutputs({ config, key });
+    this.registerOutputs({ bytes, config, key });
   }
 
   public install(name: string, connection: remote.ConnectionArgs, opts?: ComponentResourceOptions): File {

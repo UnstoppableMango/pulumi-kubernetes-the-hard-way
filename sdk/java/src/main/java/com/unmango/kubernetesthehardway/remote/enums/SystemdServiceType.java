@@ -8,6 +8,10 @@ import java.lang.String;
 import java.util.Objects;
 import java.util.StringJoiner;
 
+    /**
+     * Systemd service type.
+     * 
+     */
     @EnumType
     public enum SystemdServiceType {
         Simple("simple"),

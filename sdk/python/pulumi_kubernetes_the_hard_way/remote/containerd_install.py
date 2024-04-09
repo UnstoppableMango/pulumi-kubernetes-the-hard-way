@@ -24,10 +24,10 @@ class ContainerdInstallArgs:
                  version: Optional[pulumi.Input[str]] = None):
         """
         The set of arguments for constructing a ContainerdInstall resource.
-        :param pulumi.Input['pulumi_command.remote.ConnectionArgs'] connection: The connection details.
-        :param pulumi.Input['Architecture'] architecture: The CPU architecture.
-        :param pulumi.Input[str] directory: Directory to install the binary.
-        :param pulumi.Input[str] version: The version of to install.
+        :param pulumi.Input['pulumi_command.remote.ConnectionArgs'] connection: The parameters with which to connect to the remote host.
+        :param pulumi.Input['Architecture'] architecture: The CPU architecture to install.
+        :param pulumi.Input[str] directory: The directory to install the binary to.
+        :param pulumi.Input[str] version: The version to install.
         """
         pulumi.set(__self__, "connection", connection)
         if architecture is not None:
@@ -43,7 +43,7 @@ class ContainerdInstallArgs:
     @pulumi.getter
     def connection(self) -> pulumi.Input['pulumi_command.remote.ConnectionArgs']:
         """
-        The connection details.
+        The parameters with which to connect to the remote host.
         """
         return pulumi.get(self, "connection")
 
@@ -55,7 +55,7 @@ class ContainerdInstallArgs:
     @pulumi.getter
     def architecture(self) -> Optional[pulumi.Input['Architecture']]:
         """
-        The CPU architecture.
+        The CPU architecture to install.
         """
         return pulumi.get(self, "architecture")
 
@@ -67,7 +67,7 @@ class ContainerdInstallArgs:
     @pulumi.getter
     def directory(self) -> Optional[pulumi.Input[str]]:
         """
-        Directory to install the binary.
+        The directory to install the binary to.
         """
         return pulumi.get(self, "directory")
 
@@ -79,7 +79,7 @@ class ContainerdInstallArgs:
     @pulumi.getter
     def version(self) -> Optional[pulumi.Input[str]]:
         """
-        The version of to install.
+        The version to install.
         """
         return pulumi.get(self, "version")
 
@@ -99,14 +99,14 @@ class ContainerdInstall(pulumi.ComponentResource):
                  version: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         """
-        Installs containerd on a remote system.
+        Installs containerd on a remote system
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input['Architecture'] architecture: The CPU architecture.
-        :param pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']] connection: The connection details.
-        :param pulumi.Input[str] directory: Directory to install the binary.
-        :param pulumi.Input[str] version: The version of to install.
+        :param pulumi.Input['Architecture'] architecture: The CPU architecture to install.
+        :param pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']] connection: The parameters with which to connect to the remote host.
+        :param pulumi.Input[str] directory: The directory to install the binary to.
+        :param pulumi.Input[str] version: The version to install.
         """
         ...
     @overload
@@ -115,7 +115,7 @@ class ContainerdInstall(pulumi.ComponentResource):
                  args: ContainerdInstallArgs,
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
-        Installs containerd on a remote system.
+        Installs containerd on a remote system
 
         :param str resource_name: The name of the resource.
         :param ContainerdInstallArgs args: The arguments to use to populate this resource's properties.
@@ -156,10 +156,11 @@ class ContainerdInstall(pulumi.ComponentResource):
             __props__.__dict__["directory"] = directory
             __props__.__dict__["version"] = version
             __props__.__dict__["archive_name"] = None
+            __props__.__dict__["containerd_mv"] = None
+            __props__.__dict__["containerd_path"] = None
             __props__.__dict__["download"] = None
             __props__.__dict__["mkdir"] = None
             __props__.__dict__["mktemp"] = None
-            __props__.__dict__["mv"] = None
             __props__.__dict__["path"] = None
             __props__.__dict__["rm"] = None
             __props__.__dict__["tar"] = None
@@ -175,69 +176,104 @@ class ContainerdInstall(pulumi.ComponentResource):
     @pulumi.getter
     def architecture(self) -> pulumi.Output['Architecture']:
         """
-        The CPU architecture.
+        The CPU architecture to install.
         """
         return pulumi.get(self, "architecture")
 
     @property
     @pulumi.getter(name="archiveName")
-    def archive_name(self) -> pulumi.Output[Optional[str]]:
+    def archive_name(self) -> pulumi.Output[str]:
+        """
+        The name of the downloaded archive.
+        """
         return pulumi.get(self, "archive_name")
 
     @property
     @pulumi.getter
     def connection(self) -> pulumi.Output['pulumi_command.remote.outputs.Connection']:
         """
-        The connection details.
+        The parameters with which to connect to the remote host.
         """
         return pulumi.get(self, "connection")
+
+    @property
+    @pulumi.getter(name="containerdMv")
+    def containerd_mv(self) -> pulumi.Output['_tools.Mv']:
+        """
+        The containerd mv operation.
+        """
+        return pulumi.get(self, "containerd_mv")
+
+    @property
+    @pulumi.getter(name="containerdPath")
+    def containerd_path(self) -> pulumi.Output[str]:
+        """
+        The containerd path on the remote system
+        """
+        return pulumi.get(self, "containerd_path")
 
     @property
     @pulumi.getter
     def directory(self) -> pulumi.Output[str]:
         """
-        Directory to install the binary.
+        The directory to install the binary to.
         """
         return pulumi.get(self, "directory")
 
     @property
     @pulumi.getter
     def download(self) -> pulumi.Output['Download']:
+        """
+        The download operation.
+        """
         return pulumi.get(self, "download")
 
     @property
     @pulumi.getter
-    def mkdir(self) -> pulumi.Output[Optional['_tools.Mkdir']]:
+    def mkdir(self) -> pulumi.Output['_tools.Mkdir']:
+        """
+        The mkdir operation.
+        """
         return pulumi.get(self, "mkdir")
 
     @property
     @pulumi.getter
     def mktemp(self) -> pulumi.Output['_tools.Mktemp']:
+        """
+        The mktemp operation.
+        """
         return pulumi.get(self, "mktemp")
 
     @property
     @pulumi.getter
-    def mv(self) -> pulumi.Output['_tools.Mv']:
-        return pulumi.get(self, "mv")
-
-    @property
-    @pulumi.getter
-    def path(self) -> pulumi.Output[str]:
+    def path(self) -> pulumi.Output[Optional[str]]:
+        """
+        The path to the installed binary.
+        """
         return pulumi.get(self, "path")
 
     @property
     @pulumi.getter
     def rm(self) -> pulumi.Output['_tools.Rm']:
+        """
+        The rm operation.
+        """
         return pulumi.get(self, "rm")
 
     @property
     @pulumi.getter
-    def tar(self) -> pulumi.Output[Optional['_tools.Tar']]:
+    def tar(self) -> pulumi.Output['_tools.Tar']:
+        """
+        The tar operation.
+        """
         return pulumi.get(self, "tar")
 
     @property
     @pulumi.getter
-    def url(self) -> pulumi.Output[Optional[str]]:
+    def url(self) -> pulumi.Output[str]:
+        """
+        The url used to download the binary.
+        """
         return pulumi.get(self, "url")
 
     @property

@@ -9,7 +9,7 @@ import java.util.Objects;
 import java.util.StringJoiner;
 
     /**
-     * TODO
+     * ECDSA algorithm curve
      * 
      */
     @EnumType

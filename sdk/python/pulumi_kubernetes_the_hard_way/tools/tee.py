@@ -20,21 +20,27 @@ class TeeArgs:
                  files: pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]],
                  stdin: pulumi.Input[str],
                  append: Optional[pulumi.Input[bool]] = None,
+                 binary_path: Optional[pulumi.Input[str]] = None,
                  environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  ignore_interrupts: Optional[pulumi.Input[bool]] = None,
                  lifecycle: Optional['CommandLifecycle'] = None,
                  output_error: Optional[pulumi.Input['TeeMode']] = None,
                  pipe: Optional[pulumi.Input[bool]] = None,
+                 triggers: Optional[pulumi.Input[Sequence[Any]]] = None,
                  version: Optional[pulumi.Input[bool]] = None):
         """
         The set of arguments for constructing a Tee resource.
-        :param pulumi.Input['pulumi_command.remote.ConnectionArgs'] connection: Connection details for the remote system.
-        :param pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]] files: The file(s) to write to.
-        :param pulumi.Input[bool] append: Append to the given FILEs, do not overwrite.
+        :param pulumi.Input['pulumi_command.remote.ConnectionArgs'] connection: Connection details for the remote system
+        :param pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]] files: Corresponds to the [FILE] argument.
+        :param pulumi.Input[str] stdin: TODO
+        :param pulumi.Input[bool] append: Append to the given FILEs, do not overwrite
+        :param pulumi.Input[str] binary_path: Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] environment: Environment variables
         :param pulumi.Input[bool] ignore_interrupts: Ignore interrupt signals.
-        :param 'CommandLifecycle' lifecycle: At what stage(s) in the resource lifecycle should the command be run.
+        :param 'CommandLifecycle' lifecycle: At what stage(s) in the resource lifecycle should the command be run
         :param pulumi.Input['TeeMode'] output_error: Set behavior on write error.
         :param pulumi.Input[bool] pipe: Operate in a more appropriate MODE with pipes.
+        :param pulumi.Input[Sequence[Any]] triggers: TODO
         :param pulumi.Input[bool] version: Output version information and exit.
         """
         pulumi.set(__self__, "connection", connection)
@@ -42,6 +48,8 @@ class TeeArgs:
         pulumi.set(__self__, "stdin", stdin)
         if append is not None:
             pulumi.set(__self__, "append", append)
+        if binary_path is not None:
+            pulumi.set(__self__, "binary_path", binary_path)
         if environment is not None:
             pulumi.set(__self__, "environment", environment)
         if ignore_interrupts is not None:
@@ -52,6 +60,8 @@ class TeeArgs:
             pulumi.set(__self__, "output_error", output_error)
         if pipe is not None:
             pulumi.set(__self__, "pipe", pipe)
+        if triggers is not None:
+            pulumi.set(__self__, "triggers", triggers)
         if version is not None:
             pulumi.set(__self__, "version", version)
 
@@ -59,7 +69,7 @@ class TeeArgs:
     @pulumi.getter
     def connection(self) -> pulumi.Input['pulumi_command.remote.ConnectionArgs']:
         """
-        Connection details for the remote system.
+        Connection details for the remote system
         """
         return pulumi.get(self, "connection")
 
@@ -71,7 +81,7 @@ class TeeArgs:
     @pulumi.getter
     def files(self) -> pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]]:
         """
-        The file(s) to write to.
+        Corresponds to the [FILE] argument.
         """
         return pulumi.get(self, "files")
 
@@ -82,6 +92,9 @@ class TeeArgs:
     @property
     @pulumi.getter
     def stdin(self) -> pulumi.Input[str]:
+        """
+        TODO
+        """
         return pulumi.get(self, "stdin")
 
     @stdin.setter
@@ -92,7 +105,7 @@ class TeeArgs:
     @pulumi.getter
     def append(self) -> Optional[pulumi.Input[bool]]:
         """
-        Append to the given FILEs, do not overwrite.
+        Append to the given FILEs, do not overwrite
         """
         return pulumi.get(self, "append")
 
@@ -101,8 +114,23 @@ class TeeArgs:
         pulumi.set(self, "append", value)
 
     @property
+    @pulumi.getter(name="binaryPath")
+    def binary_path(self) -> Optional[pulumi.Input[str]]:
+        """
+        Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+        """
+        return pulumi.get(self, "binary_path")
+
+    @binary_path.setter
+    def binary_path(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "binary_path", value)
+
+    @property
     @pulumi.getter
     def environment(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        """
+        Environment variables
+        """
         return pulumi.get(self, "environment")
 
     @environment.setter
@@ -125,7 +153,7 @@ class TeeArgs:
     @pulumi.getter
     def lifecycle(self) -> Optional['CommandLifecycle']:
         """
-        At what stage(s) in the resource lifecycle should the command be run.
+        At what stage(s) in the resource lifecycle should the command be run
         """
         return pulumi.get(self, "lifecycle")
 
@@ -159,6 +187,18 @@ class TeeArgs:
 
     @property
     @pulumi.getter
+    def triggers(self) -> Optional[pulumi.Input[Sequence[Any]]]:
+        """
+        TODO
+        """
+        return pulumi.get(self, "triggers")
+
+    @triggers.setter
+    def triggers(self, value: Optional[pulumi.Input[Sequence[Any]]]):
+        pulumi.set(self, "triggers", value)
+
+    @property
+    @pulumi.getter
     def version(self) -> Optional[pulumi.Input[bool]]:
         """
         Output version information and exit.
@@ -176,6 +216,7 @@ class Tee(pulumi.ComponentResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  append: Optional[pulumi.Input[bool]] = None,
+                 binary_path: Optional[pulumi.Input[str]] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
                  environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  files: Optional[pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]]] = None,
@@ -184,20 +225,25 @@ class Tee(pulumi.ComponentResource):
                  output_error: Optional[pulumi.Input['TeeMode']] = None,
                  pipe: Optional[pulumi.Input[bool]] = None,
                  stdin: Optional[pulumi.Input[str]] = None,
+                 triggers: Optional[pulumi.Input[Sequence[Any]]] = None,
                  version: Optional[pulumi.Input[bool]] = None,
                  __props__=None):
         """
-        Read from standard input and write to standard output and files.
+        Abstraction over the `rm` utility on a remote system.
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[bool] append: Append to the given FILEs, do not overwrite.
-        :param pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']] connection: Connection details for the remote system.
-        :param pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]] files: The file(s) to write to.
+        :param pulumi.Input[bool] append: Append to the given FILEs, do not overwrite
+        :param pulumi.Input[str] binary_path: Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+        :param pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']] connection: Connection details for the remote system
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] environment: Environment variables
+        :param pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]] files: Corresponds to the [FILE] argument.
         :param pulumi.Input[bool] ignore_interrupts: Ignore interrupt signals.
-        :param 'CommandLifecycle' lifecycle: At what stage(s) in the resource lifecycle should the command be run.
+        :param 'CommandLifecycle' lifecycle: At what stage(s) in the resource lifecycle should the command be run
         :param pulumi.Input['TeeMode'] output_error: Set behavior on write error.
         :param pulumi.Input[bool] pipe: Operate in a more appropriate MODE with pipes.
+        :param pulumi.Input[str] stdin: TODO
+        :param pulumi.Input[Sequence[Any]] triggers: TODO
         :param pulumi.Input[bool] version: Output version information and exit.
         """
         ...
@@ -207,7 +253,7 @@ class Tee(pulumi.ComponentResource):
                  args: TeeArgs,
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
-        Read from standard input and write to standard output and files.
+        Abstraction over the `rm` utility on a remote system.
 
         :param str resource_name: The name of the resource.
         :param TeeArgs args: The arguments to use to populate this resource's properties.
@@ -225,6 +271,7 @@ class Tee(pulumi.ComponentResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  append: Optional[pulumi.Input[bool]] = None,
+                 binary_path: Optional[pulumi.Input[str]] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
                  environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  files: Optional[pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]]] = None,
@@ -233,6 +280,7 @@ class Tee(pulumi.ComponentResource):
                  output_error: Optional[pulumi.Input['TeeMode']] = None,
                  pipe: Optional[pulumi.Input[bool]] = None,
                  stdin: Optional[pulumi.Input[str]] = None,
+                 triggers: Optional[pulumi.Input[Sequence[Any]]] = None,
                  version: Optional[pulumi.Input[bool]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
@@ -246,6 +294,7 @@ class Tee(pulumi.ComponentResource):
             __props__ = TeeArgs.__new__(TeeArgs)
 
             __props__.__dict__["append"] = append
+            __props__.__dict__["binary_path"] = binary_path
             if connection is None and not opts.urn:
                 raise TypeError("Missing required property 'connection'")
             __props__.__dict__["connection"] = connection
@@ -260,6 +309,7 @@ class Tee(pulumi.ComponentResource):
             if stdin is None and not opts.urn:
                 raise TypeError("Missing required property 'stdin'")
             __props__.__dict__["stdin"] = stdin
+            __props__.__dict__["triggers"] = triggers
             __props__.__dict__["version"] = version
             __props__.__dict__["command"] = None
             __props__.__dict__["stderr"] = None
@@ -275,15 +325,23 @@ class Tee(pulumi.ComponentResource):
     @pulumi.getter
     def append(self) -> pulumi.Output[bool]:
         """
-        Append to the given FILEs, do not overwrite.
+        Append to the given FILEs, do not overwrite
         """
         return pulumi.get(self, "append")
+
+    @property
+    @pulumi.getter(name="binaryPath")
+    def binary_path(self) -> pulumi.Output[str]:
+        """
+        Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+        """
+        return pulumi.get(self, "binary_path")
 
     @property
     @pulumi.getter
     def command(self) -> pulumi.Output['pulumi_command.remote.Command']:
         """
-        Represents the command run on the remote system.
+        The underlying command
         """
         return pulumi.get(self, "command")
 
@@ -291,20 +349,23 @@ class Tee(pulumi.ComponentResource):
     @pulumi.getter
     def connection(self) -> pulumi.Output['pulumi_command.remote.outputs.Connection']:
         """
-        Connection details for the remote system.
+        Connection details for the remote system
         """
         return pulumi.get(self, "connection")
 
     @property
     @pulumi.getter
-    def environment(self) -> pulumi.Output[Optional[Mapping[str, str]]]:
+    def environment(self) -> pulumi.Output[Mapping[str, str]]:
+        """
+        Environment variables
+        """
         return pulumi.get(self, "environment")
 
     @property
     @pulumi.getter
     def files(self) -> pulumi.Output[Any]:
         """
-        The file(s) to write to.
+        Corresponds to the [FILE] argument.
         """
         return pulumi.get(self, "files")
 
@@ -320,7 +381,7 @@ class Tee(pulumi.ComponentResource):
     @pulumi.getter
     def lifecycle(self) -> pulumi.Output[Optional['CommandLifecycle']]:
         """
-        At what stage(s) in the resource lifecycle should the command be run.
+        At what stage(s) in the resource lifecycle should the command be run
         """
         return pulumi.get(self, "lifecycle")
 
@@ -342,16 +403,41 @@ class Tee(pulumi.ComponentResource):
 
     @property
     @pulumi.getter
-    def stderr(self) -> pulumi.Output[Optional[str]]:
+    def stderr(self) -> pulumi.Output[str]:
+        """
+        TODO
+        """
         return pulumi.get(self, "stderr")
 
     @property
     @pulumi.getter
     def stdin(self) -> pulumi.Output[str]:
+        """
+        TODO
+        """
         return pulumi.get(self, "stdin")
 
     @property
     @pulumi.getter
-    def stdout(self) -> pulumi.Output[Optional[str]]:
+    def stdout(self) -> pulumi.Output[str]:
+        """
+        TODO
+        """
         return pulumi.get(self, "stdout")
+
+    @property
+    @pulumi.getter
+    def triggers(self) -> pulumi.Output[Sequence[Any]]:
+        """
+        TODO
+        """
+        return pulumi.get(self, "triggers")
+
+    @property
+    @pulumi.getter
+    def version(self) -> pulumi.Output[bool]:
+        """
+        Output version information and exit.
+        """
+        return pulumi.get(self, "version")
 

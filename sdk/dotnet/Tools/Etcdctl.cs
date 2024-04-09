@@ -16,20 +16,89 @@ namespace UnMango.KubernetesTheHardWay.Tools
     [KubernetesTheHardWayResourceType("kubernetes-the-hard-way:tools:Etcdctl")]
     public partial class Etcdctl : global::Pulumi.ComponentResource
     {
+        /// <summary>
+        /// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+        /// </summary>
         [Output("binaryPath")]
         public Output<string> BinaryPath { get; private set; } = null!;
 
         /// <summary>
-        /// Represents the command run on the remote system.
+        /// TODO
+        /// </summary>
+        [Output("caCert")]
+        public Output<string> CaCert { get; private set; } = null!;
+
+        /// <summary>
+        /// TODO
+        /// </summary>
+        [Output("cert")]
+        public Output<string> Cert { get; private set; } = null!;
+
+        /// <summary>
+        /// The underlying command
         /// </summary>
         [Output("command")]
         public Output<Pulumi.Command.Remote.Command> Command { get; private set; } = null!;
 
         /// <summary>
-        /// Connection details for the remote system.
+        /// TODO
+        /// </summary>
+        [Output("commands")]
+        public Output<UnMango.KubernetesTheHardWay.Tools.EtcdctlCommand> Commands { get; private set; } = null!;
+
+        /// <summary>
+        /// Connection details for the remote system
         /// </summary>
         [Output("connection")]
         public Output<Pulumi.Command.Remote.Outputs.Connection> Connection { get; private set; } = null!;
+
+        /// <summary>
+        /// TODO
+        /// </summary>
+        [Output("endpoints")]
+        public Output<string> Endpoints { get; private set; } = null!;
+
+        /// <summary>
+        /// Environment variables
+        /// </summary>
+        [Output("environment")]
+        public Output<ImmutableDictionary<string, string>> Environment { get; private set; } = null!;
+
+        /// <summary>
+        /// TODO
+        /// </summary>
+        [Output("key")]
+        public Output<string> Key { get; private set; } = null!;
+
+        /// <summary>
+        /// At what stage(s) in the resource lifecycle should the command be run
+        /// </summary>
+        [Output("lifecycle")]
+        public Output<UnMango.KubernetesTheHardWay.Tools.CommandLifecycle?> Lifecycle { get; private set; } = null!;
+
+        /// <summary>
+        /// TODO
+        /// </summary>
+        [Output("stderr")]
+        public Output<string> Stderr { get; private set; } = null!;
+
+        /// <summary>
+        /// TODO
+        /// </summary>
+        [Output("stdin")]
+        public Output<string?> Stdin { get; private set; } = null!;
+
+        /// <summary>
+        /// TODO
+        /// </summary>
+        [Output("stdout")]
+        public Output<string> Stdout { get; private set; } = null!;
+
+        /// <summary>
+        /// TODO
+        /// </summary>
+        [Output("triggers")]
+        public Output<ImmutableArray<object>> Triggers { get; private set; } = null!;
 
 
         /// <summary>
@@ -60,42 +129,83 @@ namespace UnMango.KubernetesTheHardWay.Tools
 
     public sealed class EtcdctlArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+        /// </summary>
         [Input("binaryPath")]
         public Input<string>? BinaryPath { get; set; }
 
-        [Input("caCert")]
-        public Input<string>? CaCert { get; set; }
-
-        [Input("cert")]
-        public Input<string>? Cert { get; set; }
-
-        [Input("commands")]
-        private InputList<UnMango.KubernetesTheHardWay.Tools.EtcdctlCommand>? _commands;
-        public InputList<UnMango.KubernetesTheHardWay.Tools.EtcdctlCommand> Commands
-        {
-            get => _commands ?? (_commands = new InputList<UnMango.KubernetesTheHardWay.Tools.EtcdctlCommand>());
-            set => _commands = value;
-        }
+        /// <summary>
+        /// TODO
+        /// </summary>
+        [Input("caCert", required: true)]
+        public Input<string> CaCert { get; set; } = null!;
 
         /// <summary>
-        /// Connection details for the remote system.
+        /// TODO
+        /// </summary>
+        [Input("cert", required: true)]
+        public Input<string> Cert { get; set; } = null!;
+
+        /// <summary>
+        /// TODO
+        /// </summary>
+        [Input("commands", required: true)]
+        public Input<UnMango.KubernetesTheHardWay.Tools.EtcdctlCommand> Commands { get; set; } = null!;
+
+        /// <summary>
+        /// Connection details for the remote system
         /// </summary>
         [Input("connection", required: true)]
         public Input<Pulumi.Command.Remote.Inputs.ConnectionArgs> Connection { get; set; } = null!;
 
-        [Input("endpoints")]
-        public Input<string>? Endpoints { get; set; }
+        /// <summary>
+        /// TODO
+        /// </summary>
+        [Input("endpoints", required: true)]
+        public Input<string> Endpoints { get; set; } = null!;
 
         [Input("environment")]
         private InputMap<string>? _environment;
+
+        /// <summary>
+        /// Environment variables
+        /// </summary>
         public InputMap<string> Environment
         {
             get => _environment ?? (_environment = new InputMap<string>());
             set => _environment = value;
         }
 
-        [Input("key")]
-        public Input<string>? Key { get; set; }
+        /// <summary>
+        /// TODO
+        /// </summary>
+        [Input("key", required: true)]
+        public Input<string> Key { get; set; } = null!;
+
+        /// <summary>
+        /// At what stage(s) in the resource lifecycle should the command be run
+        /// </summary>
+        [Input("lifecycle")]
+        public UnMango.KubernetesTheHardWay.Tools.CommandLifecycle? Lifecycle { get; set; }
+
+        /// <summary>
+        /// TODO
+        /// </summary>
+        [Input("stdin")]
+        public Input<string>? Stdin { get; set; }
+
+        [Input("triggers")]
+        private InputList<object>? _triggers;
+
+        /// <summary>
+        /// TODO
+        /// </summary>
+        public InputList<object> Triggers
+        {
+            get => _triggers ?? (_triggers = new InputList<object>());
+            set => _triggers = value;
+        }
 
         public EtcdctlArgs()
         {

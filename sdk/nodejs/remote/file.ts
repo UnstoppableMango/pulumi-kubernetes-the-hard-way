@@ -22,27 +22,31 @@ export class File extends pulumi.ComponentResource {
     }
 
     /**
-     * The command resource.
+     * The executed command.
      */
     public /*out*/ readonly command!: pulumi.Output<pulumiCommand.remote.Command>;
     /**
-     * The contents of the remote file.
+     * The parameters with which to connect to the remote host.
+     */
+    public readonly connection!: pulumi.Output<pulumiCommand.types.output.remote.Connection>;
+    /**
+     * The content of the file.
      */
     public readonly content!: pulumi.Output<string>;
     /**
-     * The path to the file on the remote filesystem.
+     * The path to the file on the remote host.
      */
     public readonly path!: pulumi.Output<string>;
     /**
-     * The process' stderr.
+     * The standard error of the command's process
      */
     public /*out*/ readonly stderr!: pulumi.Output<string>;
     /**
-     * The process' stdin.
+     * Pass a string to the command's process as standard in
      */
-    public /*out*/ readonly stdin!: pulumi.Output<string | undefined>;
+    public /*out*/ readonly stdin!: pulumi.Output<string>;
     /**
-     * The process' stdout.
+     * The standard output of the command's process
      */
     public /*out*/ readonly stdout!: pulumi.Output<string>;
 
@@ -75,6 +79,7 @@ export class File extends pulumi.ComponentResource {
             resourceInputs["stdout"] = undefined /*out*/;
         } else {
             resourceInputs["command"] = undefined /*out*/;
+            resourceInputs["connection"] = undefined /*out*/;
             resourceInputs["content"] = undefined /*out*/;
             resourceInputs["path"] = undefined /*out*/;
             resourceInputs["stderr"] = undefined /*out*/;
@@ -91,7 +96,7 @@ export class File extends pulumi.ComponentResource {
  */
 export interface FileArgs {
     /**
-     * The connection details.
+     * The parameters with which to connect to the remote host.
      */
     connection: pulumi.Input<pulumiCommand.types.input.remote.ConnectionArgs>;
     /**

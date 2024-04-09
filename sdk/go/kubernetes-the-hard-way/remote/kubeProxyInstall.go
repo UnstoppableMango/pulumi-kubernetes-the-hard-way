@@ -14,23 +14,32 @@ import (
 	"github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/sdk/go/kubernetes-the-hard-way/tools"
 )
 
-// Installs containerd on a remote system.
+// Installs kube-proxy on a remote system.
 type KubeProxyInstall struct {
 	pulumi.ResourceState
 
-	// The CPU architecture.
-	Architecture ArchitectureOutput     `pulumi:"architecture"`
-	BinName      pulumi.StringPtrOutput `pulumi:"binName"`
-	// The connection details.
+	// The CPU architecture to install.
+	Architecture ArchitectureOutput `pulumi:"architecture"`
+	// The name of the installed binary.
+	BinName pulumi.StringPtrOutput `pulumi:"binName"`
+	// The parameters with which to connect to the remote host.
 	Connection pulumiCommand.ConnectionOutput `pulumi:"connection"`
-	// Directory to install the binary.
+	// The directory to install the binary to.
 	Directory pulumi.StringOutput `pulumi:"directory"`
-	Download  DownloadOutput      `pulumi:"download"`
-	Mkdir     tools.MkdirOutput   `pulumi:"mkdir"`
-	Mktemp    tools.MktempOutput  `pulumi:"mktemp"`
-	Mv        tools.MvOutput      `pulumi:"mv"`
-	Path      pulumi.StringOutput `pulumi:"path"`
-	Rm        tools.RmOutput      `pulumi:"rm"`
+	// The download operation.
+	Download DownloadOutput `pulumi:"download"`
+	// The mkdir operation.
+	Mkdir tools.MkdirOutput `pulumi:"mkdir"`
+	// The mktemp operation.
+	Mktemp tools.MktempOutput `pulumi:"mktemp"`
+	// The mv operation.
+	Mv tools.MvOutput `pulumi:"mv"`
+	// The path to the installed binary.
+	Path pulumi.StringOutput `pulumi:"path"`
+	// The rm operation.
+	Rm tools.RmOutput `pulumi:"rm"`
+	// The url used to download the binary.
+	Url pulumi.StringOutput `pulumi:"url"`
 	// The version to install.
 	Version pulumi.StringOutput `pulumi:"version"`
 }
@@ -59,25 +68,25 @@ func NewKubeProxyInstall(ctx *pulumi.Context,
 }
 
 type kubeProxyInstallArgs struct {
-	// The CPU architecture.
+	// The CPU architecture to install.
 	Architecture *Architecture `pulumi:"architecture"`
-	// The connection details.
+	// The parameters with which to connect to the remote host.
 	Connection pulumiCommand.Connection `pulumi:"connection"`
-	// Directory to install the binary.
+	// The directory to install the binary to.
 	Directory *string `pulumi:"directory"`
-	// The version of to install.
+	// The version to install.
 	Version *string `pulumi:"version"`
 }
 
 // The set of arguments for constructing a KubeProxyInstall resource.
 type KubeProxyInstallArgs struct {
-	// The CPU architecture.
+	// The CPU architecture to install.
 	Architecture ArchitecturePtrInput
-	// The connection details.
+	// The parameters with which to connect to the remote host.
 	Connection pulumiCommand.ConnectionInput
-	// Directory to install the binary.
+	// The directory to install the binary to.
 	Directory pulumi.StringPtrInput
-	// The version of to install.
+	// The version to install.
 	Version pulumi.StringPtrInput
 }
 
@@ -168,47 +177,59 @@ func (o KubeProxyInstallOutput) ToKubeProxyInstallOutputWithContext(ctx context.
 	return o
 }
 
-// The CPU architecture.
+// The CPU architecture to install.
 func (o KubeProxyInstallOutput) Architecture() ArchitectureOutput {
 	return o.ApplyT(func(v *KubeProxyInstall) ArchitectureOutput { return v.Architecture }).(ArchitectureOutput)
 }
 
+// The name of the installed binary.
 func (o KubeProxyInstallOutput) BinName() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *KubeProxyInstall) pulumi.StringPtrOutput { return v.BinName }).(pulumi.StringPtrOutput)
 }
 
-// The connection details.
+// The parameters with which to connect to the remote host.
 func (o KubeProxyInstallOutput) Connection() pulumiCommand.ConnectionOutput {
 	return o.ApplyT(func(v *KubeProxyInstall) pulumiCommand.ConnectionOutput { return v.Connection }).(pulumiCommand.ConnectionOutput)
 }
 
-// Directory to install the binary.
+// The directory to install the binary to.
 func (o KubeProxyInstallOutput) Directory() pulumi.StringOutput {
 	return o.ApplyT(func(v *KubeProxyInstall) pulumi.StringOutput { return v.Directory }).(pulumi.StringOutput)
 }
 
+// The download operation.
 func (o KubeProxyInstallOutput) Download() DownloadOutput {
 	return o.ApplyT(func(v *KubeProxyInstall) DownloadOutput { return v.Download }).(DownloadOutput)
 }
 
+// The mkdir operation.
 func (o KubeProxyInstallOutput) Mkdir() tools.MkdirOutput {
 	return o.ApplyT(func(v *KubeProxyInstall) tools.MkdirOutput { return v.Mkdir }).(tools.MkdirOutput)
 }
 
+// The mktemp operation.
 func (o KubeProxyInstallOutput) Mktemp() tools.MktempOutput {
 	return o.ApplyT(func(v *KubeProxyInstall) tools.MktempOutput { return v.Mktemp }).(tools.MktempOutput)
 }
 
+// The mv operation.
 func (o KubeProxyInstallOutput) Mv() tools.MvOutput {
 	return o.ApplyT(func(v *KubeProxyInstall) tools.MvOutput { return v.Mv }).(tools.MvOutput)
 }
 
+// The path to the installed binary.
 func (o KubeProxyInstallOutput) Path() pulumi.StringOutput {
 	return o.ApplyT(func(v *KubeProxyInstall) pulumi.StringOutput { return v.Path }).(pulumi.StringOutput)
 }
 
+// The rm operation.
 func (o KubeProxyInstallOutput) Rm() tools.RmOutput {
 	return o.ApplyT(func(v *KubeProxyInstall) tools.RmOutput { return v.Rm }).(tools.RmOutput)
+}
+
+// The url used to download the binary.
+func (o KubeProxyInstallOutput) Url() pulumi.StringOutput {
+	return o.ApplyT(func(v *KubeProxyInstall) pulumi.StringOutput { return v.Url }).(pulumi.StringOutput)
 }
 
 // The version to install.

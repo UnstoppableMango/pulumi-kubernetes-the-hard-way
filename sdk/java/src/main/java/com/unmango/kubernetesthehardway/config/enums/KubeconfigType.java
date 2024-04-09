@@ -8,10 +8,6 @@ import java.lang.String;
 import java.util.Objects;
 import java.util.StringJoiner;
 
-    /**
-     * Kubeconfig type
-     * 
-     */
     @EnumType
     public enum KubeconfigType {
         Worker("worker"),

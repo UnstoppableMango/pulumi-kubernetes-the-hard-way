@@ -14,25 +14,36 @@ import (
 	"github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/sdk/go/kubernetes-the-hard-way/tools"
 )
 
-// Installs crictl on a remote system.
+// Installs crictl on a remote system
 type CrictlInstall struct {
 	pulumi.ResourceState
 
-	// The CPU architecture.
-	Architecture ArchitectureOutput     `pulumi:"architecture"`
-	ArchiveName  pulumi.StringPtrOutput `pulumi:"archiveName"`
-	// The connection details.
+	// The CPU architecture to install.
+	Architecture ArchitectureOutput `pulumi:"architecture"`
+	// The name of the downloaded archive.
+	ArchiveName pulumi.StringOutput `pulumi:"archiveName"`
+	// The parameters with which to connect to the remote host.
 	Connection pulumiCommand.ConnectionOutput `pulumi:"connection"`
-	// Directory to install the binary.
-	Directory pulumi.StringOutput    `pulumi:"directory"`
-	Download  DownloadOutput         `pulumi:"download"`
-	Mkdir     tools.MkdirOutput      `pulumi:"mkdir"`
-	Mktemp    tools.MktempOutput     `pulumi:"mktemp"`
-	Mv        tools.MvOutput         `pulumi:"mv"`
-	Path      pulumi.StringOutput    `pulumi:"path"`
-	Rm        tools.RmOutput         `pulumi:"rm"`
-	Tar       tools.TarOutput        `pulumi:"tar"`
-	Url       pulumi.StringPtrOutput `pulumi:"url"`
+	// The crictl mv operation.
+	CrictlMv tools.MvOutput `pulumi:"crictlMv"`
+	// The crictl path on the remote system
+	CrictlPath pulumi.StringOutput `pulumi:"crictlPath"`
+	// The directory to install the binary to.
+	Directory pulumi.StringOutput `pulumi:"directory"`
+	// The download operation.
+	Download DownloadOutput `pulumi:"download"`
+	// The mkdir operation.
+	Mkdir tools.MkdirOutput `pulumi:"mkdir"`
+	// The mktemp operation.
+	Mktemp tools.MktempOutput `pulumi:"mktemp"`
+	// The path to the installed binary.
+	Path pulumi.StringPtrOutput `pulumi:"path"`
+	// The rm operation.
+	Rm tools.RmOutput `pulumi:"rm"`
+	// The tar operation.
+	Tar tools.TarOutput `pulumi:"tar"`
+	// The url used to download the binary.
+	Url pulumi.StringOutput `pulumi:"url"`
 	// The version to install.
 	Version pulumi.StringOutput `pulumi:"version"`
 }
@@ -61,25 +72,25 @@ func NewCrictlInstall(ctx *pulumi.Context,
 }
 
 type crictlInstallArgs struct {
-	// The CPU architecture.
+	// The CPU architecture to install.
 	Architecture *Architecture `pulumi:"architecture"`
-	// The connection details.
+	// The parameters with which to connect to the remote host.
 	Connection pulumiCommand.Connection `pulumi:"connection"`
-	// Directory to install the binary.
+	// The directory to install the binary to.
 	Directory *string `pulumi:"directory"`
-	// The version of to install.
+	// The version to install.
 	Version *string `pulumi:"version"`
 }
 
 // The set of arguments for constructing a CrictlInstall resource.
 type CrictlInstallArgs struct {
-	// The CPU architecture.
+	// The CPU architecture to install.
 	Architecture ArchitecturePtrInput
-	// The connection details.
+	// The parameters with which to connect to the remote host.
 	Connection pulumiCommand.ConnectionInput
-	// Directory to install the binary.
+	// The directory to install the binary to.
 	Directory pulumi.StringPtrInput
-	// The version of to install.
+	// The version to install.
 	Version pulumi.StringPtrInput
 }
 
@@ -170,55 +181,69 @@ func (o CrictlInstallOutput) ToCrictlInstallOutputWithContext(ctx context.Contex
 	return o
 }
 
-// The CPU architecture.
+// The CPU architecture to install.
 func (o CrictlInstallOutput) Architecture() ArchitectureOutput {
 	return o.ApplyT(func(v *CrictlInstall) ArchitectureOutput { return v.Architecture }).(ArchitectureOutput)
 }
 
-func (o CrictlInstallOutput) ArchiveName() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *CrictlInstall) pulumi.StringPtrOutput { return v.ArchiveName }).(pulumi.StringPtrOutput)
+// The name of the downloaded archive.
+func (o CrictlInstallOutput) ArchiveName() pulumi.StringOutput {
+	return o.ApplyT(func(v *CrictlInstall) pulumi.StringOutput { return v.ArchiveName }).(pulumi.StringOutput)
 }
 
-// The connection details.
+// The parameters with which to connect to the remote host.
 func (o CrictlInstallOutput) Connection() pulumiCommand.ConnectionOutput {
 	return o.ApplyT(func(v *CrictlInstall) pulumiCommand.ConnectionOutput { return v.Connection }).(pulumiCommand.ConnectionOutput)
 }
 
-// Directory to install the binary.
+// The crictl mv operation.
+func (o CrictlInstallOutput) CrictlMv() tools.MvOutput {
+	return o.ApplyT(func(v *CrictlInstall) tools.MvOutput { return v.CrictlMv }).(tools.MvOutput)
+}
+
+// The crictl path on the remote system
+func (o CrictlInstallOutput) CrictlPath() pulumi.StringOutput {
+	return o.ApplyT(func(v *CrictlInstall) pulumi.StringOutput { return v.CrictlPath }).(pulumi.StringOutput)
+}
+
+// The directory to install the binary to.
 func (o CrictlInstallOutput) Directory() pulumi.StringOutput {
 	return o.ApplyT(func(v *CrictlInstall) pulumi.StringOutput { return v.Directory }).(pulumi.StringOutput)
 }
 
+// The download operation.
 func (o CrictlInstallOutput) Download() DownloadOutput {
 	return o.ApplyT(func(v *CrictlInstall) DownloadOutput { return v.Download }).(DownloadOutput)
 }
 
+// The mkdir operation.
 func (o CrictlInstallOutput) Mkdir() tools.MkdirOutput {
 	return o.ApplyT(func(v *CrictlInstall) tools.MkdirOutput { return v.Mkdir }).(tools.MkdirOutput)
 }
 
+// The mktemp operation.
 func (o CrictlInstallOutput) Mktemp() tools.MktempOutput {
 	return o.ApplyT(func(v *CrictlInstall) tools.MktempOutput { return v.Mktemp }).(tools.MktempOutput)
 }
 
-func (o CrictlInstallOutput) Mv() tools.MvOutput {
-	return o.ApplyT(func(v *CrictlInstall) tools.MvOutput { return v.Mv }).(tools.MvOutput)
+// The path to the installed binary.
+func (o CrictlInstallOutput) Path() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *CrictlInstall) pulumi.StringPtrOutput { return v.Path }).(pulumi.StringPtrOutput)
 }
 
-func (o CrictlInstallOutput) Path() pulumi.StringOutput {
-	return o.ApplyT(func(v *CrictlInstall) pulumi.StringOutput { return v.Path }).(pulumi.StringOutput)
-}
-
+// The rm operation.
 func (o CrictlInstallOutput) Rm() tools.RmOutput {
 	return o.ApplyT(func(v *CrictlInstall) tools.RmOutput { return v.Rm }).(tools.RmOutput)
 }
 
+// The tar operation.
 func (o CrictlInstallOutput) Tar() tools.TarOutput {
 	return o.ApplyT(func(v *CrictlInstall) tools.TarOutput { return v.Tar }).(tools.TarOutput)
 }
 
-func (o CrictlInstallOutput) Url() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *CrictlInstall) pulumi.StringPtrOutput { return v.Url }).(pulumi.StringPtrOutput)
+// The url used to download the binary.
+func (o CrictlInstallOutput) Url() pulumi.StringOutput {
+	return o.ApplyT(func(v *CrictlInstall) pulumi.StringOutput { return v.Url }).(pulumi.StringOutput)
 }
 
 // The version to install.

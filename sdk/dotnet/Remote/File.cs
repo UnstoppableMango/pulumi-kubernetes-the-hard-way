@@ -14,37 +14,43 @@ namespace UnMango.KubernetesTheHardWay.Remote
     public partial class File : global::Pulumi.ComponentResource
     {
         /// <summary>
-        /// The command resource.
+        /// The executed command.
         /// </summary>
         [Output("command")]
         public Output<Pulumi.Command.Remote.Command> Command { get; private set; } = null!;
 
         /// <summary>
-        /// The contents of the remote file.
+        /// The parameters with which to connect to the remote host.
+        /// </summary>
+        [Output("connection")]
+        public Output<Pulumi.Command.Remote.Outputs.Connection> Connection { get; private set; } = null!;
+
+        /// <summary>
+        /// The content of the file.
         /// </summary>
         [Output("content")]
         public Output<string> Content { get; private set; } = null!;
 
         /// <summary>
-        /// The path to the file on the remote filesystem.
+        /// The path to the file on the remote host.
         /// </summary>
         [Output("path")]
         public Output<string> Path { get; private set; } = null!;
 
         /// <summary>
-        /// The process' stderr.
+        /// The standard error of the command's process
         /// </summary>
         [Output("stderr")]
         public Output<string> Stderr { get; private set; } = null!;
 
         /// <summary>
-        /// The process' stdin.
+        /// Pass a string to the command's process as standard in
         /// </summary>
         [Output("stdin")]
-        public Output<string?> Stdin { get; private set; } = null!;
+        public Output<string> Stdin { get; private set; } = null!;
 
         /// <summary>
-        /// The process' stdout.
+        /// The standard output of the command's process
         /// </summary>
         [Output("stdout")]
         public Output<string> Stdout { get; private set; } = null!;
@@ -79,7 +85,7 @@ namespace UnMango.KubernetesTheHardWay.Remote
     public sealed class FileArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
-        /// The connection details.
+        /// The parameters with which to connect to the remote host.
         /// </summary>
         [Input("connection", required: true)]
         public Input<Pulumi.Command.Remote.Inputs.ConnectionArgs> Connection { get; set; } = null!;

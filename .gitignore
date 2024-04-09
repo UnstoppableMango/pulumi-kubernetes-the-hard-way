@@ -20,6 +20,3 @@ build/
 
 ci-scripts/
 *.tar.gz
-
-/provider/cmd/pulumi-resource-*/schema.json
-/provider/cmd/pulumi-resource-*/schema.yaml

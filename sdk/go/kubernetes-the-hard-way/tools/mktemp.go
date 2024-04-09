@@ -13,26 +13,40 @@ import (
 	"github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/sdk/go/kubernetes-the-hard-way/internal"
 )
 
-// Abstracion over the `mktemp` utility on a remote system.
+// Abstraction over the `mkdir` utility on a remote system.
 type Mktemp struct {
 	pulumi.ResourceState
 
-	// Represents the remote `tar` operation.
+	// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+	BinaryPath pulumi.StringOutput `pulumi:"binaryPath"`
+	// The underlying command
 	Command pulumiCommand.CommandOutput `pulumi:"command"`
-	// Corresponds to the --directory option.
-	Directory pulumi.BoolOutput `pulumi:"directory"`
-	// Corresponds to the --dry-run option.
+	// Connection details for the remote system
+	Connection pulumiCommand.ConnectionOutput `pulumi:"connection"`
+	// Corresponds to the `--directory` option.
+	Directory pulumi.BoolPtrOutput `pulumi:"directory"`
+	// Corresponds to the `--dry-run` option.
 	DryRun pulumi.BoolOutput `pulumi:"dryRun"`
-	// Corresponds to the --quiet option.
-	Quiet  pulumi.BoolOutput   `pulumi:"quiet"`
+	// Environment variables
+	Environment pulumi.StringMapOutput `pulumi:"environment"`
+	// At what stage(s) in the resource lifecycle should the command be run
+	Lifecycle CommandLifecyclePtrOutput `pulumi:"lifecycle"`
+	// Corresponds to the `--quiet` option.
+	Quiet pulumi.BoolOutput `pulumi:"quiet"`
+	// TODO
 	Stderr pulumi.StringOutput `pulumi:"stderr"`
+	// TODO
+	Stdin pulumi.StringPtrOutput `pulumi:"stdin"`
+	// TODO
 	Stdout pulumi.StringOutput `pulumi:"stdout"`
-	// Corresponds to the --suffix option.
+	// Corresponds to the `--suffix` option.
 	Suffix pulumi.StringPtrOutput `pulumi:"suffix"`
-	// Corresponds to the [TEMPLATE] arg.
+	// Corresponds to the [TEMPLATE] argument.
 	Template pulumi.StringPtrOutput `pulumi:"template"`
-	// Corresponds to the --tmpdir option.
+	// Corresponds to the `--tmpdir` option.
 	Tmpdir pulumi.StringPtrOutput `pulumi:"tmpdir"`
+	// TODO
+	Triggers pulumi.ArrayOutput `pulumi:"triggers"`
 }
 
 // NewMktemp registers a new resource with the given unique name, arguments, and options.
@@ -56,45 +70,57 @@ func NewMktemp(ctx *pulumi.Context,
 }
 
 type mktempArgs struct {
-	// Connection details for the remote system.
+	// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+	BinaryPath *string `pulumi:"binaryPath"`
+	// Connection details for the remote system
 	Connection pulumiCommand.Connection `pulumi:"connection"`
-	// Corresponds to the --directory option.
+	// Corresponds to the `--directory` option.
 	Directory *bool `pulumi:"directory"`
-	// Corresponds to the --dry-run option.
-	DryRun      *bool             `pulumi:"dryRun"`
+	// Corresponds to the `--dry-run` option.
+	DryRun *bool `pulumi:"dryRun"`
+	// Environment variables
 	Environment map[string]string `pulumi:"environment"`
-	// At what stage(s) in the resource lifecycle should the command be run.
+	// At what stage(s) in the resource lifecycle should the command be run
 	Lifecycle *CommandLifecycle `pulumi:"lifecycle"`
-	// Corresponds to the --quiet option.
+	// Corresponds to the `--quiet` option.
 	Quiet *bool `pulumi:"quiet"`
-	// Corresponds to the --suffix option.
+	// TODO
+	Stdin *string `pulumi:"stdin"`
+	// Corresponds to the `--suffix` option.
 	Suffix *string `pulumi:"suffix"`
-	// Corresponds to the [TEMPLATE] arg.
+	// Corresponds to the [TEMPLATE] argument.
 	Template *string `pulumi:"template"`
-	// Corresponds to the --tmpdir option.
-	Tmpdir   *string       `pulumi:"tmpdir"`
+	// Corresponds to the `--tmpdir` option.
+	Tmpdir *string `pulumi:"tmpdir"`
+	// TODO
 	Triggers []interface{} `pulumi:"triggers"`
 }
 
 // The set of arguments for constructing a Mktemp resource.
 type MktempArgs struct {
-	// Connection details for the remote system.
+	// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+	BinaryPath pulumi.StringPtrInput
+	// Connection details for the remote system
 	Connection pulumiCommand.ConnectionInput
-	// Corresponds to the --directory option.
+	// Corresponds to the `--directory` option.
 	Directory pulumi.BoolPtrInput
-	// Corresponds to the --dry-run option.
-	DryRun      pulumi.BoolPtrInput
+	// Corresponds to the `--dry-run` option.
+	DryRun pulumi.BoolPtrInput
+	// Environment variables
 	Environment pulumi.StringMapInput
-	// At what stage(s) in the resource lifecycle should the command be run.
+	// At what stage(s) in the resource lifecycle should the command be run
 	Lifecycle *CommandLifecycle
-	// Corresponds to the --quiet option.
+	// Corresponds to the `--quiet` option.
 	Quiet pulumi.BoolPtrInput
-	// Corresponds to the --suffix option.
+	// TODO
+	Stdin pulumi.StringPtrInput
+	// Corresponds to the `--suffix` option.
 	Suffix pulumi.StringPtrInput
-	// Corresponds to the [TEMPLATE] arg.
+	// Corresponds to the [TEMPLATE] argument.
 	Template pulumi.StringPtrInput
-	// Corresponds to the --tmpdir option.
-	Tmpdir   pulumi.StringPtrInput
+	// Corresponds to the `--tmpdir` option.
+	Tmpdir pulumi.StringPtrInput
+	// TODO
 	Triggers pulumi.ArrayInput
 }
 
@@ -185,47 +211,79 @@ func (o MktempOutput) ToMktempOutputWithContext(ctx context.Context) MktempOutpu
 	return o
 }
 
-// Represents the remote `tar` operation.
+// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+func (o MktempOutput) BinaryPath() pulumi.StringOutput {
+	return o.ApplyT(func(v *Mktemp) pulumi.StringOutput { return v.BinaryPath }).(pulumi.StringOutput)
+}
+
+// The underlying command
 func (o MktempOutput) Command() pulumiCommand.CommandOutput {
 	return o.ApplyT(func(v *Mktemp) pulumiCommand.CommandOutput { return v.Command }).(pulumiCommand.CommandOutput)
 }
 
-// Corresponds to the --directory option.
-func (o MktempOutput) Directory() pulumi.BoolOutput {
-	return o.ApplyT(func(v *Mktemp) pulumi.BoolOutput { return v.Directory }).(pulumi.BoolOutput)
+// Connection details for the remote system
+func (o MktempOutput) Connection() pulumiCommand.ConnectionOutput {
+	return o.ApplyT(func(v *Mktemp) pulumiCommand.ConnectionOutput { return v.Connection }).(pulumiCommand.ConnectionOutput)
 }
 
-// Corresponds to the --dry-run option.
+// Corresponds to the `--directory` option.
+func (o MktempOutput) Directory() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *Mktemp) pulumi.BoolPtrOutput { return v.Directory }).(pulumi.BoolPtrOutput)
+}
+
+// Corresponds to the `--dry-run` option.
 func (o MktempOutput) DryRun() pulumi.BoolOutput {
 	return o.ApplyT(func(v *Mktemp) pulumi.BoolOutput { return v.DryRun }).(pulumi.BoolOutput)
 }
 
-// Corresponds to the --quiet option.
+// Environment variables
+func (o MktempOutput) Environment() pulumi.StringMapOutput {
+	return o.ApplyT(func(v *Mktemp) pulumi.StringMapOutput { return v.Environment }).(pulumi.StringMapOutput)
+}
+
+// At what stage(s) in the resource lifecycle should the command be run
+func (o MktempOutput) Lifecycle() CommandLifecyclePtrOutput {
+	return o.ApplyT(func(v *Mktemp) CommandLifecyclePtrOutput { return v.Lifecycle }).(CommandLifecyclePtrOutput)
+}
+
+// Corresponds to the `--quiet` option.
 func (o MktempOutput) Quiet() pulumi.BoolOutput {
 	return o.ApplyT(func(v *Mktemp) pulumi.BoolOutput { return v.Quiet }).(pulumi.BoolOutput)
 }
 
+// TODO
 func (o MktempOutput) Stderr() pulumi.StringOutput {
 	return o.ApplyT(func(v *Mktemp) pulumi.StringOutput { return v.Stderr }).(pulumi.StringOutput)
 }
 
+// TODO
+func (o MktempOutput) Stdin() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mktemp) pulumi.StringPtrOutput { return v.Stdin }).(pulumi.StringPtrOutput)
+}
+
+// TODO
 func (o MktempOutput) Stdout() pulumi.StringOutput {
 	return o.ApplyT(func(v *Mktemp) pulumi.StringOutput { return v.Stdout }).(pulumi.StringOutput)
 }
 
-// Corresponds to the --suffix option.
+// Corresponds to the `--suffix` option.
 func (o MktempOutput) Suffix() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Mktemp) pulumi.StringPtrOutput { return v.Suffix }).(pulumi.StringPtrOutput)
 }
 
-// Corresponds to the [TEMPLATE] arg.
+// Corresponds to the [TEMPLATE] argument.
 func (o MktempOutput) Template() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Mktemp) pulumi.StringPtrOutput { return v.Template }).(pulumi.StringPtrOutput)
 }
 
-// Corresponds to the --tmpdir option.
+// Corresponds to the `--tmpdir` option.
 func (o MktempOutput) Tmpdir() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Mktemp) pulumi.StringPtrOutput { return v.Tmpdir }).(pulumi.StringPtrOutput)
+}
+
+// TODO
+func (o MktempOutput) Triggers() pulumi.ArrayOutput {
+	return o.ApplyT(func(v *Mktemp) pulumi.ArrayOutput { return v.Triggers }).(pulumi.ArrayOutput)
 }
 
 type MktempArrayOutput struct{ *pulumi.OutputState }

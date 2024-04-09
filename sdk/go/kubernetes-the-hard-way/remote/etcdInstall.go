@@ -14,35 +14,41 @@ import (
 	"github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/sdk/go/kubernetes-the-hard-way/tools"
 )
 
-// Represents an etcd binary on a remote system.
+// Installs etcd on a remote system
 type EtcdInstall struct {
 	pulumi.ResourceState
 
-	// The etcd CPU architecture.
+	// The CPU architecture to install.
 	Architecture ArchitectureOutput `pulumi:"architecture"`
-	// The name of the etcd release archive.
+	// The name of the downloaded archive.
 	ArchiveName pulumi.StringOutput `pulumi:"archiveName"`
-	// Directory to install the `etcd` and `etcdctl` binaries.
+	// The parameters with which to connect to the remote host.
+	Connection pulumiCommand.ConnectionOutput `pulumi:"connection"`
+	// The directory to install the binary to.
 	Directory pulumi.StringOutput `pulumi:"directory"`
-	// The etcd download operation.
+	// The download operation.
 	Download DownloadOutput `pulumi:"download"`
-	// The path to the etcd binary on the remote system.
+	// The etcd mv operation.
+	EtcdMv tools.MvOutput `pulumi:"etcdMv"`
+	// The etcd path on the remote system
 	EtcdPath pulumi.StringOutput `pulumi:"etcdPath"`
-	// The path to the etcdctl binary on the remote system.
+	// The etcdctl mv operation.
+	EtcdctlMv tools.MvOutput `pulumi:"etcdctlMv"`
+	// The etcdctl path on the remote system
 	EtcdctlPath pulumi.StringOutput `pulumi:"etcdctlPath"`
-	// The operation to create the install directory.
+	// The mkdir operation.
 	Mkdir tools.MkdirOutput `pulumi:"mkdir"`
-	// The operation to move the etcd binary to the install directory.
-	MvEtcd tools.MvOutput `pulumi:"mvEtcd"`
-	// The operation to move the etcdctl binary to the install directory.
-	MvEtcdctl tools.MvOutput `pulumi:"mvEtcdctl"`
-	// The name of the resource.
-	Name pulumi.StringOutput `pulumi:"name"`
+	// The mktemp operation.
+	Mktemp tools.MktempOutput `pulumi:"mktemp"`
+	// The path to the installed binary.
+	Path pulumi.StringPtrOutput `pulumi:"path"`
+	// The rm operation.
+	Rm tools.RmOutput `pulumi:"rm"`
 	// The tar operation.
 	Tar tools.TarOutput `pulumi:"tar"`
-	// The url used to download etcd.
+	// The url used to download the binary.
 	Url pulumi.StringOutput `pulumi:"url"`
-	// The version of etcd downloaded.
+	// The version to install.
 	Version pulumi.StringOutput `pulumi:"version"`
 }
 
@@ -70,52 +76,30 @@ func NewEtcdInstall(ctx *pulumi.Context,
 }
 
 type etcdInstallArgs struct {
-	// The etcd CPU architecture.
+	// The CPU architecture to install.
 	Architecture *Architecture `pulumi:"architecture"`
-	// The connection details.
+	// The parameters with which to connect to the remote host.
 	Connection pulumiCommand.Connection `pulumi:"connection"`
-	// Directory to install the `etcd` and `etcdctl` binaries.
+	// The directory to install the binary to.
 	Directory *string `pulumi:"directory"`
-	// The version of etcd to install.
+	// The version to install.
 	Version *string `pulumi:"version"`
 }
 
 // The set of arguments for constructing a EtcdInstall resource.
 type EtcdInstallArgs struct {
-	// The etcd CPU architecture.
+	// The CPU architecture to install.
 	Architecture ArchitecturePtrInput
-	// The connection details.
+	// The parameters with which to connect to the remote host.
 	Connection pulumiCommand.ConnectionInput
-	// Directory to install the `etcd` and `etcdctl` binaries.
+	// The directory to install the binary to.
 	Directory pulumi.StringPtrInput
-	// The version of etcd to install.
+	// The version to install.
 	Version pulumi.StringPtrInput
 }
 
 func (EtcdInstallArgs) ElementType() reflect.Type {
 	return reflect.TypeOf((*etcdInstallArgs)(nil)).Elem()
-}
-
-func (r *EtcdInstall) Etcdctl(ctx *pulumi.Context) (tools.EtcdctlOutput, error) {
-	out, err := ctx.Call("kubernetes-the-hard-way:remote:EtcdInstall/etcdctl", nil, etcdInstallEtcdctlResultOutput{}, r)
-	if err != nil {
-		return tools.EtcdctlOutput{}, err
-	}
-	return out.(etcdInstallEtcdctlResultOutput).Result(), nil
-}
-
-type etcdInstallEtcdctlResult struct {
-	Result *tools.Etcdctl `pulumi:"result"`
-}
-
-type etcdInstallEtcdctlResultOutput struct{ *pulumi.OutputState }
-
-func (etcdInstallEtcdctlResultOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*etcdInstallEtcdctlResult)(nil)).Elem()
-}
-
-func (o etcdInstallEtcdctlResultOutput) Result() tools.EtcdctlOutput {
-	return o.ApplyT(func(v etcdInstallEtcdctlResult) *tools.Etcdctl { return v.Result }).(tools.EtcdctlOutput)
 }
 
 type EtcdInstallInput interface {
@@ -201,54 +185,69 @@ func (o EtcdInstallOutput) ToEtcdInstallOutputWithContext(ctx context.Context) E
 	return o
 }
 
-// The etcd CPU architecture.
+// The CPU architecture to install.
 func (o EtcdInstallOutput) Architecture() ArchitectureOutput {
 	return o.ApplyT(func(v *EtcdInstall) ArchitectureOutput { return v.Architecture }).(ArchitectureOutput)
 }
 
-// The name of the etcd release archive.
+// The name of the downloaded archive.
 func (o EtcdInstallOutput) ArchiveName() pulumi.StringOutput {
 	return o.ApplyT(func(v *EtcdInstall) pulumi.StringOutput { return v.ArchiveName }).(pulumi.StringOutput)
 }
 
-// Directory to install the `etcd` and `etcdctl` binaries.
+// The parameters with which to connect to the remote host.
+func (o EtcdInstallOutput) Connection() pulumiCommand.ConnectionOutput {
+	return o.ApplyT(func(v *EtcdInstall) pulumiCommand.ConnectionOutput { return v.Connection }).(pulumiCommand.ConnectionOutput)
+}
+
+// The directory to install the binary to.
 func (o EtcdInstallOutput) Directory() pulumi.StringOutput {
 	return o.ApplyT(func(v *EtcdInstall) pulumi.StringOutput { return v.Directory }).(pulumi.StringOutput)
 }
 
-// The etcd download operation.
+// The download operation.
 func (o EtcdInstallOutput) Download() DownloadOutput {
 	return o.ApplyT(func(v *EtcdInstall) DownloadOutput { return v.Download }).(DownloadOutput)
 }
 
-// The path to the etcd binary on the remote system.
+// The etcd mv operation.
+func (o EtcdInstallOutput) EtcdMv() tools.MvOutput {
+	return o.ApplyT(func(v *EtcdInstall) tools.MvOutput { return v.EtcdMv }).(tools.MvOutput)
+}
+
+// The etcd path on the remote system
 func (o EtcdInstallOutput) EtcdPath() pulumi.StringOutput {
 	return o.ApplyT(func(v *EtcdInstall) pulumi.StringOutput { return v.EtcdPath }).(pulumi.StringOutput)
 }
 
-// The path to the etcdctl binary on the remote system.
+// The etcdctl mv operation.
+func (o EtcdInstallOutput) EtcdctlMv() tools.MvOutput {
+	return o.ApplyT(func(v *EtcdInstall) tools.MvOutput { return v.EtcdctlMv }).(tools.MvOutput)
+}
+
+// The etcdctl path on the remote system
 func (o EtcdInstallOutput) EtcdctlPath() pulumi.StringOutput {
 	return o.ApplyT(func(v *EtcdInstall) pulumi.StringOutput { return v.EtcdctlPath }).(pulumi.StringOutput)
 }
 
-// The operation to create the install directory.
+// The mkdir operation.
 func (o EtcdInstallOutput) Mkdir() tools.MkdirOutput {
 	return o.ApplyT(func(v *EtcdInstall) tools.MkdirOutput { return v.Mkdir }).(tools.MkdirOutput)
 }
 
-// The operation to move the etcd binary to the install directory.
-func (o EtcdInstallOutput) MvEtcd() tools.MvOutput {
-	return o.ApplyT(func(v *EtcdInstall) tools.MvOutput { return v.MvEtcd }).(tools.MvOutput)
+// The mktemp operation.
+func (o EtcdInstallOutput) Mktemp() tools.MktempOutput {
+	return o.ApplyT(func(v *EtcdInstall) tools.MktempOutput { return v.Mktemp }).(tools.MktempOutput)
 }
 
-// The operation to move the etcdctl binary to the install directory.
-func (o EtcdInstallOutput) MvEtcdctl() tools.MvOutput {
-	return o.ApplyT(func(v *EtcdInstall) tools.MvOutput { return v.MvEtcdctl }).(tools.MvOutput)
+// The path to the installed binary.
+func (o EtcdInstallOutput) Path() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *EtcdInstall) pulumi.StringPtrOutput { return v.Path }).(pulumi.StringPtrOutput)
 }
 
-// The name of the resource.
-func (o EtcdInstallOutput) Name() pulumi.StringOutput {
-	return o.ApplyT(func(v *EtcdInstall) pulumi.StringOutput { return v.Name }).(pulumi.StringOutput)
+// The rm operation.
+func (o EtcdInstallOutput) Rm() tools.RmOutput {
+	return o.ApplyT(func(v *EtcdInstall) tools.RmOutput { return v.Rm }).(tools.RmOutput)
 }
 
 // The tar operation.
@@ -256,12 +255,12 @@ func (o EtcdInstallOutput) Tar() tools.TarOutput {
 	return o.ApplyT(func(v *EtcdInstall) tools.TarOutput { return v.Tar }).(tools.TarOutput)
 }
 
-// The url used to download etcd.
+// The url used to download the binary.
 func (o EtcdInstallOutput) Url() pulumi.StringOutput {
 	return o.ApplyT(func(v *EtcdInstall) pulumi.StringOutput { return v.Url }).(pulumi.StringOutput)
 }
 
-// The version of etcd downloaded.
+// The version to install.
 func (o EtcdInstallOutput) Version() pulumi.StringOutput {
 	return o.ApplyT(func(v *EtcdInstall) pulumi.StringOutput { return v.Version }).(pulumi.StringOutput)
 }
@@ -311,7 +310,6 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*EtcdInstallArrayInput)(nil)).Elem(), EtcdInstallArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*EtcdInstallMapInput)(nil)).Elem(), EtcdInstallMap{})
 	pulumi.RegisterOutputType(EtcdInstallOutput{})
-	pulumi.RegisterOutputType(etcdInstallEtcdctlResultOutput{})
 	pulumi.RegisterOutputType(EtcdInstallArrayOutput{})
 	pulumi.RegisterOutputType(EtcdInstallMapOutput{})
 }

@@ -176,6 +176,7 @@ func (in *architecturePtr) ToArchitecturePtrOutputWithContext(ctx context.Contex
 	return pulumi.ToOutputWithContext(ctx, in).(ArchitecturePtrOutput)
 }
 
+// Systemd service exit type.
 type SystemdServiceExitType string
 
 const (
@@ -341,6 +342,7 @@ func (in *systemdServiceExitTypePtr) ToSystemdServiceExitTypePtrOutputWithContex
 	return pulumi.ToOutputWithContext(ctx, in).(SystemdServiceExitTypePtrOutput)
 }
 
+// Systemd service restart behavior.
 type SystemdServiceRestart string
 
 const (
@@ -516,6 +518,7 @@ func (in *systemdServiceRestartPtr) ToSystemdServiceRestartPtrOutputWithContext(
 	return pulumi.ToOutputWithContext(ctx, in).(SystemdServiceRestartPtrOutput)
 }
 
+// Systemd service type.
 type SystemdServiceType string
 
 const (

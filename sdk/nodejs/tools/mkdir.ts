@@ -10,7 +10,7 @@ import * as utilities from "../utilities";
 import * as pulumiCommand from "@pulumi/command";
 
 /**
- * Represents the `mkdir` utility.
+ * Abstraction over the `mkdir` utility on a remote system.
  */
 export class Mkdir extends pulumi.ComponentResource {
     /** @internal */
@@ -28,13 +28,29 @@ export class Mkdir extends pulumi.ComponentResource {
     }
 
     /**
-     * The remote command.
+     * Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+     */
+    public readonly binaryPath!: pulumi.Output<string>;
+    /**
+     * The underlying command
      */
     public /*out*/ readonly command!: pulumi.Output<pulumiCommand.remote.Command>;
+    /**
+     * Connection details for the remote system
+     */
+    public readonly connection!: pulumi.Output<pulumiCommand.types.output.remote.Connection>;
     /**
      * The fully qualified path of the directory on the remote system.
      */
     public readonly directory!: pulumi.Output<string>;
+    /**
+     * Environment variables
+     */
+    public readonly environment!: pulumi.Output<{[key: string]: string}>;
+    /**
+     * At what stage(s) in the resource lifecycle should the command be run
+     */
+    public readonly lifecycle!: pulumi.Output<enums.tools.CommandLifecycle | undefined>;
     /**
      * Corresponds to the `--parents` option.
      */
@@ -44,13 +60,21 @@ export class Mkdir extends pulumi.ComponentResource {
      */
     public readonly removeOnDelete!: pulumi.Output<boolean>;
     /**
-     * The command's stderr.
+     * TODO
      */
     public /*out*/ readonly stderr!: pulumi.Output<string>;
     /**
-     * The command's stdout.
+     * TODO
+     */
+    public readonly stdin!: pulumi.Output<string | undefined>;
+    /**
+     * TODO
      */
     public /*out*/ readonly stdout!: pulumi.Output<string>;
+    /**
+     * TODO
+     */
+    public readonly triggers!: pulumi.Output<any[]>;
 
     /**
      * Create a Mkdir resource with the given unique name, arguments, and options.
@@ -69,22 +93,31 @@ export class Mkdir extends pulumi.ComponentResource {
             if ((!args || args.directory === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'directory'");
             }
+            resourceInputs["binaryPath"] = args ? args.binaryPath : undefined;
             resourceInputs["connection"] = args ? (args.connection ? pulumi.output(args.connection).apply(pulumiCommand.types.input.remote.connectionArgsProvideDefaults) : undefined) : undefined;
             resourceInputs["directory"] = args ? args.directory : undefined;
             resourceInputs["environment"] = args ? args.environment : undefined;
             resourceInputs["lifecycle"] = args ? args.lifecycle : undefined;
             resourceInputs["parents"] = args ? args.parents : undefined;
             resourceInputs["removeOnDelete"] = args ? args.removeOnDelete : undefined;
+            resourceInputs["stdin"] = args ? args.stdin : undefined;
+            resourceInputs["triggers"] = args ? args.triggers : undefined;
             resourceInputs["command"] = undefined /*out*/;
             resourceInputs["stderr"] = undefined /*out*/;
             resourceInputs["stdout"] = undefined /*out*/;
         } else {
+            resourceInputs["binaryPath"] = undefined /*out*/;
             resourceInputs["command"] = undefined /*out*/;
+            resourceInputs["connection"] = undefined /*out*/;
             resourceInputs["directory"] = undefined /*out*/;
+            resourceInputs["environment"] = undefined /*out*/;
+            resourceInputs["lifecycle"] = undefined /*out*/;
             resourceInputs["parents"] = undefined /*out*/;
             resourceInputs["removeOnDelete"] = undefined /*out*/;
             resourceInputs["stderr"] = undefined /*out*/;
+            resourceInputs["stdin"] = undefined /*out*/;
             resourceInputs["stdout"] = undefined /*out*/;
+            resourceInputs["triggers"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         super(Mkdir.__pulumiType, name, resourceInputs, opts, true /*remote*/);
@@ -96,16 +129,23 @@ export class Mkdir extends pulumi.ComponentResource {
  */
 export interface MkdirArgs {
     /**
-     * The connection details for the remote system.
+     * Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+     */
+    binaryPath?: pulumi.Input<string>;
+    /**
+     * Connection details for the remote system
      */
     connection: pulumi.Input<pulumiCommand.types.input.remote.ConnectionArgs>;
     /**
      * The fully qualified path of the directory on the remote system.
      */
     directory: pulumi.Input<string>;
+    /**
+     * Environment variables
+     */
     environment?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
-     * At what stage(s) in the resource lifecycle should the command be run.
+     * At what stage(s) in the resource lifecycle should the command be run
      */
     lifecycle?: enums.tools.CommandLifecycle;
     /**
@@ -116,4 +156,12 @@ export interface MkdirArgs {
      * Remove the created directory when the `Mkdir` resource is deleted or updated.
      */
     removeOnDelete?: pulumi.Input<boolean>;
+    /**
+     * TODO
+     */
+    stdin?: pulumi.Input<string>;
+    /**
+     * TODO
+     */
+    triggers?: pulumi.Input<any[]>;
 }

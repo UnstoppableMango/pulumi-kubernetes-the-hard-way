@@ -12,24 +12,25 @@ import com.unmango.kubernetesthehardway.Utilities;
 import com.unmango.kubernetesthehardway.remote.DownloadArgs;
 import com.unmango.kubernetesthehardway.tools.Mkdir;
 import com.unmango.kubernetesthehardway.tools.Wget;
+import java.lang.Boolean;
 import java.lang.String;
 import javax.annotation.Nullable;
 
 /**
- * Represents a file to be downloaded on a remote system.
+ * Downloads the file specified by `url` onto a remote system.
  * 
  */
 @ResourceType(type="kubernetes-the-hard-way:remote:Download")
 public class Download extends com.pulumi.resources.ComponentResource {
     /**
-     * Connection details for the remote system
+     * The parameters with which to connect to the remote host.
      * 
      */
     @Export(name="connection", refs={Connection.class}, tree="[0]")
     private Output<Connection> connection;
 
     /**
-     * @return Connection details for the remote system
+     * @return The parameters with which to connect to the remote host.
      * 
      */
     public Output<Connection> connection() {
@@ -50,42 +51,56 @@ public class Download extends com.pulumi.resources.ComponentResource {
         return this.destination;
     }
     /**
-     * Represents the command used to create the remote directory.
+     * The mkdir operation.
      * 
      */
     @Export(name="mkdir", refs={Mkdir.class}, tree="[0]")
     private Output<Mkdir> mkdir;
 
     /**
-     * @return Represents the command used to create the remote directory.
+     * @return The mkdir operation.
      * 
      */
     public Output<Mkdir> mkdir() {
         return this.mkdir;
     }
     /**
-     * The URL for the file to be downloaded.
+     * Remove the downloaded fiel when the resource is deleted.
+     * 
+     */
+    @Export(name="removeOnDelete", refs={Boolean.class}, tree="[0]")
+    private Output<Boolean> removeOnDelete;
+
+    /**
+     * @return Remove the downloaded fiel when the resource is deleted.
+     * 
+     */
+    public Output<Boolean> removeOnDelete() {
+        return this.removeOnDelete;
+    }
+    /**
+     * The URL of the file to be downloaded.
      * 
      */
     @Export(name="url", refs={String.class}, tree="[0]")
     private Output<String> url;
 
     /**
-     * @return The URL for the file to be downloaded.
+     * @return The URL of the file to be downloaded.
      * 
      */
     public Output<String> url() {
         return this.url;
     }
     /**
-     * Represents the wget command used to download the file.
+     * The wget operation.
      * 
      */
     @Export(name="wget", refs={Wget.class}, tree="[0]")
     private Output<Wget> wget;
 
     /**
-     * @return Represents the wget command used to download the file.
+     * @return The wget operation.
      * 
      */
     public Output<Wget> wget() {

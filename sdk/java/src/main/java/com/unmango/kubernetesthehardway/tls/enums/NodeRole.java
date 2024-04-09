@@ -9,7 +9,7 @@ import java.util.Objects;
 import java.util.StringJoiner;
 
     /**
-     * TODO
+     * The role a node will play in the final cluster
      * 
      */
     @EnumType

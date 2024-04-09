@@ -7,26 +7,34 @@ import (
 	"context"
 	"reflect"
 
+	"errors"
 	"github.com/pulumi/pulumi-random/sdk/v4/go/random"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 	"github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/sdk/go/kubernetes-the-hard-way/internal"
 )
 
+// A cluster encryption key.
 type EncryptionKey struct {
 	pulumi.ResourceState
 
+	// The number of bytes requested. The minimum value for length is 1.
+	Bytes pulumi.IntOutput `pulumi:"bytes"`
 	// The generated `v1/EncryptionConfig`.
-	Config pulumi.StringOutput      `pulumi:"config"`
-	Key    random.RandomBytesOutput `pulumi:"key"`
+	Config pulumi.StringOutput `pulumi:"config"`
+	// The generated random key.
+	Key random.RandomBytesOutput `pulumi:"key"`
 }
 
 // NewEncryptionKey registers a new resource with the given unique name, arguments, and options.
 func NewEncryptionKey(ctx *pulumi.Context,
 	name string, args *EncryptionKeyArgs, opts ...pulumi.ResourceOption) (*EncryptionKey, error) {
 	if args == nil {
-		args = &EncryptionKeyArgs{}
+		return nil, errors.New("missing one or more required arguments")
 	}
 
+	if args.Bytes == nil {
+		return nil, errors.New("invalid value for required argument 'Bytes'")
+	}
 	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource EncryptionKey
 	err := ctx.RegisterRemoteComponentResource("kubernetes-the-hard-way:tls:EncryptionKey", name, args, &resource, opts...)
@@ -37,14 +45,14 @@ func NewEncryptionKey(ctx *pulumi.Context,
 }
 
 type encryptionKeyArgs struct {
-	// The length of the key in bytes.
-	Bytes *float64 `pulumi:"bytes"`
+	// The number of bytes requested. The minimum value for length is 1.
+	Bytes int `pulumi:"bytes"`
 }
 
 // The set of arguments for constructing a EncryptionKey resource.
 type EncryptionKeyArgs struct {
-	// The length of the key in bytes.
-	Bytes pulumi.Float64PtrInput
+	// The number of bytes requested. The minimum value for length is 1.
+	Bytes pulumi.IntInput
 }
 
 func (EncryptionKeyArgs) ElementType() reflect.Type {
@@ -134,11 +142,17 @@ func (o EncryptionKeyOutput) ToEncryptionKeyOutputWithContext(ctx context.Contex
 	return o
 }
 
+// The number of bytes requested. The minimum value for length is 1.
+func (o EncryptionKeyOutput) Bytes() pulumi.IntOutput {
+	return o.ApplyT(func(v *EncryptionKey) pulumi.IntOutput { return v.Bytes }).(pulumi.IntOutput)
+}
+
 // The generated `v1/EncryptionConfig`.
 func (o EncryptionKeyOutput) Config() pulumi.StringOutput {
 	return o.ApplyT(func(v *EncryptionKey) pulumi.StringOutput { return v.Config }).(pulumi.StringOutput)
 }
 
+// The generated random key.
 func (o EncryptionKeyOutput) Key() random.RandomBytesOutput {
 	return o.ApplyT(func(v *EncryptionKey) random.RandomBytesOutput { return v.Key }).(random.RandomBytesOutput)
 }

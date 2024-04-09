@@ -14,16 +14,21 @@ import (
 
 var _ = internal.GetEnvOrDefault
 
+// A CA + Cert + Key bundle
 type Bundle struct {
-	CaPem   string `pulumi:"caPem"`
+	// The PEM encoded certificate authority data.
+	CaPem string `pulumi:"caPem"`
+	// The PEM encoded certificate data.
 	CertPem string `pulumi:"certPem"`
-	KeyPem  string `pulumi:"keyPem"`
+	// The PEM encoded private key data
+	KeyPem string `pulumi:"keyPem"`
 }
 
-// Node inputs for the PKI.
+// TODO
 type ClusterPkiNode struct {
-	// The IP address of the node.
-	Ip   *string   `pulumi:"ip"`
+	// The IP address of the node
+	Ip *string `pulumi:"ip"`
+	// The role a node should be configured for
 	Role *NodeRole `pulumi:"role"`
 }
 
@@ -38,11 +43,12 @@ type ClusterPkiNodeInput interface {
 	ToClusterPkiNodeOutputWithContext(context.Context) ClusterPkiNodeOutput
 }
 
-// Node inputs for the PKI.
+// TODO
 type ClusterPkiNodeArgs struct {
-	// The IP address of the node.
-	Ip   pulumi.StringPtrInput `pulumi:"ip"`
-	Role NodeRolePtrInput      `pulumi:"role"`
+	// The IP address of the node
+	Ip pulumi.StringPtrInput `pulumi:"ip"`
+	// The role a node should be configured for
+	Role NodeRolePtrInput `pulumi:"role"`
 }
 
 func (ClusterPkiNodeArgs) ElementType() reflect.Type {
@@ -82,7 +88,7 @@ func (i ClusterPkiNodeMap) ToClusterPkiNodeMapOutputWithContext(ctx context.Cont
 	return pulumi.ToOutputWithContext(ctx, i).(ClusterPkiNodeMapOutput)
 }
 
-// Node inputs for the PKI.
+// TODO
 type ClusterPkiNodeOutput struct{ *pulumi.OutputState }
 
 func (ClusterPkiNodeOutput) ElementType() reflect.Type {
@@ -97,11 +103,12 @@ func (o ClusterPkiNodeOutput) ToClusterPkiNodeOutputWithContext(ctx context.Cont
 	return o
 }
 
-// The IP address of the node.
+// The IP address of the node
 func (o ClusterPkiNodeOutput) Ip() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v ClusterPkiNode) *string { return v.Ip }).(pulumi.StringPtrOutput)
 }
 
+// The role a node should be configured for
 func (o ClusterPkiNodeOutput) Role() NodeRolePtrOutput {
 	return o.ApplyT(func(v ClusterPkiNode) *NodeRole { return v.Role }).(NodeRolePtrOutput)
 }
@@ -126,16 +133,18 @@ func (o ClusterPkiNodeMapOutput) MapIndex(k pulumi.StringInput) ClusterPkiNodeOu
 	}).(ClusterPkiNodeOutput)
 }
 
-// A certificate and key pair.
+// A certificate and key pair
 type KeyPair struct {
-	// The PEM encoded certificate data
-	CertPem *string `pulumi:"certPem"`
-	// The private key.
+	// The certificate resource.
+	Cert interface{} `pulumi:"cert"`
+	// The PEM encoded certificate data.
+	CertPem string `pulumi:"certPem"`
+	// The private key resource.
 	Key *tls.PrivateKey `pulumi:"key"`
 	// The PEM encoded private key data.
-	PrivateKeyPem *string `pulumi:"privateKeyPem"`
+	PrivateKeyPem string `pulumi:"privateKeyPem"`
 	// The PEM encoded public key data.
-	PublicKeyPem *string `pulumi:"publicKeyPem"`
+	PublicKeyPem string `pulumi:"publicKeyPem"`
 }
 
 func init() {

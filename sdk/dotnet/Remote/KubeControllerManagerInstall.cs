@@ -17,37 +17,73 @@ namespace UnMango.KubernetesTheHardWay.Remote
     public partial class KubeControllerManagerInstall : global::Pulumi.ComponentResource
     {
         /// <summary>
-        /// The kube-controller-manager CPU architecture.
+        /// The CPU architecture to install.
         /// </summary>
         [Output("architecture")]
         public Output<UnMango.KubernetesTheHardWay.Remote.Architecture> Architecture { get; private set; } = null!;
 
+        /// <summary>
+        /// The name of the installed binary.
+        /// </summary>
         [Output("binName")]
         public Output<string?> BinName { get; private set; } = null!;
 
         /// <summary>
-        /// The connection details.
+        /// The parameters with which to connect to the remote host.
         /// </summary>
         [Output("connection")]
         public Output<Pulumi.Command.Remote.Outputs.Connection> Connection { get; private set; } = null!;
 
         /// <summary>
-        /// Directory to install the `kube-controller-manager` binary.
+        /// The directory to install the binary to.
         /// </summary>
         [Output("directory")]
         public Output<string> Directory { get; private set; } = null!;
 
+        /// <summary>
+        /// The download operation.
+        /// </summary>
+        [Output("download")]
+        public Output<UnMango.KubernetesTheHardWay.Remote.Download> Download { get; private set; } = null!;
+
+        /// <summary>
+        /// The mkdir operation.
+        /// </summary>
         [Output("mkdir")]
         public Output<UnMango.KubernetesTheHardWay.Tools.Mkdir> Mkdir { get; private set; } = null!;
 
+        /// <summary>
+        /// The mktemp operation.
+        /// </summary>
+        [Output("mktemp")]
+        public Output<UnMango.KubernetesTheHardWay.Tools.Mktemp> Mktemp { get; private set; } = null!;
+
+        /// <summary>
+        /// The mv operation.
+        /// </summary>
         [Output("mv")]
         public Output<UnMango.KubernetesTheHardWay.Tools.Mv> Mv { get; private set; } = null!;
 
+        /// <summary>
+        /// The path to the installed binary.
+        /// </summary>
         [Output("path")]
         public Output<string> Path { get; private set; } = null!;
 
         /// <summary>
-        /// The version of kube-controller-manager to install.
+        /// The rm operation.
+        /// </summary>
+        [Output("rm")]
+        public Output<UnMango.KubernetesTheHardWay.Tools.Rm> Rm { get; private set; } = null!;
+
+        /// <summary>
+        /// The url used to download the binary.
+        /// </summary>
+        [Output("url")]
+        public Output<string> Url { get; private set; } = null!;
+
+        /// <summary>
+        /// The version to install.
         /// </summary>
         [Output("version")]
         public Output<string> Version { get; private set; } = null!;
@@ -82,25 +118,25 @@ namespace UnMango.KubernetesTheHardWay.Remote
     public sealed class KubeControllerManagerInstallArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
-        /// The kube-controller-manager CPU architecture.
+        /// The CPU architecture to install.
         /// </summary>
         [Input("architecture")]
         public Input<UnMango.KubernetesTheHardWay.Remote.Architecture>? Architecture { get; set; }
 
         /// <summary>
-        /// The connection details.
+        /// The parameters with which to connect to the remote host.
         /// </summary>
         [Input("connection", required: true)]
         public Input<Pulumi.Command.Remote.Inputs.ConnectionArgs> Connection { get; set; } = null!;
 
         /// <summary>
-        /// Directory to install the `kube-controller-manager` binary.
+        /// The directory to install the binary to.
         /// </summary>
         [Input("directory")]
         public Input<string>? Directory { get; set; }
 
         /// <summary>
-        /// The version of kube-controller-manager to install.
+        /// The version to install.
         /// </summary>
         [Input("version")]
         public Input<string>? Version { get; set; }

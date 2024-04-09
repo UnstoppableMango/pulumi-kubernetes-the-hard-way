@@ -8,7 +8,9 @@ import com.pulumi.core.Either;
 import com.pulumi.core.Output;
 import com.pulumi.core.annotations.Import;
 import com.pulumi.exceptions.MissingRequiredPropertyException;
+import com.unmango.kubernetesthehardway.tools.enums.CommandLifecycle;
 import java.lang.Boolean;
+import java.lang.Object;
 import java.lang.String;
 import java.util.List;
 import java.util.Map;
@@ -22,14 +24,14 @@ public final class MvArgs extends com.pulumi.resources.ResourceArgs {
     public static final MvArgs Empty = new MvArgs();
 
     /**
-     * Corresponds to both the -b and --backup options depending on whether [CONTROL] is supplied.
+     * Corresponds to the `-b` and `--backup` options depending on whether [CONTROL] is supplied.
      * 
      */
     @Import(name="backup")
     private @Nullable Boolean backup;
 
     /**
-     * @return Corresponds to both the -b and --backup options depending on whether [CONTROL] is supplied.
+     * @return Corresponds to the `-b` and `--backup` options depending on whether [CONTROL] is supplied.
      * 
      */
     public Optional<Boolean> backup() {
@@ -37,14 +39,29 @@ public final class MvArgs extends com.pulumi.resources.ResourceArgs {
     }
 
     /**
-     * Connection details for the remote system.
+     * Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+     * 
+     */
+    @Import(name="binaryPath")
+    private @Nullable Output<String> binaryPath;
+
+    /**
+     * @return Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+     * 
+     */
+    public Optional<Output<String>> binaryPath() {
+        return Optional.ofNullable(this.binaryPath);
+    }
+
+    /**
+     * Connection details for the remote system
      * 
      */
     @Import(name="connection", required=true)
     private Output<ConnectionArgs> connection;
 
     /**
-     * @return Connection details for the remote system.
+     * @return Connection details for the remote system
      * 
      */
     public Output<ConnectionArgs> connection() {
@@ -52,14 +69,14 @@ public final class MvArgs extends com.pulumi.resources.ResourceArgs {
     }
 
     /**
-     * Corresponds to the --context option.
+     * Corresponds to the `--context` option.
      * 
      */
     @Import(name="context")
     private @Nullable Output<Boolean> context;
 
     /**
-     * @return Corresponds to the --context option.
+     * @return Corresponds to the `--context` option.
      * 
      */
     public Optional<Output<Boolean>> context() {
@@ -67,17 +84,17 @@ public final class MvArgs extends com.pulumi.resources.ResourceArgs {
     }
 
     /**
-     * Corresponds to the [CONTROL] argument for the --backup option.
+     * Corresponds to the [CONTROL] argument for the `--backup` option.
      * 
      */
     @Import(name="control")
-    private @Nullable Output<String> control;
+    private @Nullable Output<Boolean> control;
 
     /**
-     * @return Corresponds to the [CONTROL] argument for the --backup option.
+     * @return Corresponds to the [CONTROL] argument for the `--backup` option.
      * 
      */
-    public Optional<Output<String>> control() {
+    public Optional<Output<Boolean>> control() {
         return Optional.ofNullable(this.control);
     }
 
@@ -111,22 +128,30 @@ public final class MvArgs extends com.pulumi.resources.ResourceArgs {
         return Optional.ofNullable(this.directory);
     }
 
+    /**
+     * Environment variables
+     * 
+     */
     @Import(name="environment")
     private @Nullable Output<Map<String,String>> environment;
 
+    /**
+     * @return Environment variables
+     * 
+     */
     public Optional<Output<Map<String,String>>> environment() {
         return Optional.ofNullable(this.environment);
     }
 
     /**
-     * Corresponds to the --force option.
+     * Corresponds to the `--force` option.
      * 
      */
     @Import(name="force")
     private @Nullable Output<Boolean> force;
 
     /**
-     * @return Corresponds to the --force option.
+     * @return Corresponds to the `--force` option.
      * 
      */
     public Optional<Output<Boolean>> force() {
@@ -134,14 +159,29 @@ public final class MvArgs extends com.pulumi.resources.ResourceArgs {
     }
 
     /**
-     * Corresponds to the --no-clobber option.
+     * At what stage(s) in the resource lifecycle should the command be run
+     * 
+     */
+    @Import(name="lifecycle")
+    private @Nullable CommandLifecycle lifecycle;
+
+    /**
+     * @return At what stage(s) in the resource lifecycle should the command be run
+     * 
+     */
+    public Optional<CommandLifecycle> lifecycle() {
+        return Optional.ofNullable(this.lifecycle);
+    }
+
+    /**
+     * Corresponds to the `--no-clobber` option.
      * 
      */
     @Import(name="noClobber")
     private @Nullable Output<Boolean> noClobber;
 
     /**
-     * @return Corresponds to the --no-clobber option.
+     * @return Corresponds to the `--no-clobber` option.
      * 
      */
     public Optional<Output<Boolean>> noClobber() {
@@ -149,14 +189,14 @@ public final class MvArgs extends com.pulumi.resources.ResourceArgs {
     }
 
     /**
-     * Corresponds to the --no-target-directory option.
+     * Corresponds to the `--no-target-directory` option.
      * 
      */
     @Import(name="noTargetDirectory")
     private @Nullable Output<Boolean> noTargetDirectory;
 
     /**
-     * @return Corresponds to the --no-target-directory option.
+     * @return Corresponds to the `--no-target-directory` option.
      * 
      */
     public Optional<Output<Boolean>> noTargetDirectory() {
@@ -179,14 +219,29 @@ public final class MvArgs extends com.pulumi.resources.ResourceArgs {
     }
 
     /**
-     * Corresponds to the --strip-trailing-suffix option.
+     * TODO
+     * 
+     */
+    @Import(name="stdin")
+    private @Nullable Output<String> stdin;
+
+    /**
+     * @return TODO
+     * 
+     */
+    public Optional<Output<String>> stdin() {
+        return Optional.ofNullable(this.stdin);
+    }
+
+    /**
+     * Corresponds to the `--strip-trailing-slashes` option.
      * 
      */
     @Import(name="stripTrailingSlashes")
     private @Nullable Output<Boolean> stripTrailingSlashes;
 
     /**
-     * @return Corresponds to the --strip-trailing-suffix option.
+     * @return Corresponds to the `--strip-trailing-slashes` option.
      * 
      */
     public Optional<Output<Boolean>> stripTrailingSlashes() {
@@ -194,14 +249,14 @@ public final class MvArgs extends com.pulumi.resources.ResourceArgs {
     }
 
     /**
-     * Corresponds to the --suffix option.
+     * Corresponds to the `--suffix` option.
      * 
      */
     @Import(name="suffix")
     private @Nullable Output<String> suffix;
 
     /**
-     * @return Corresponds to the --suffix option.
+     * @return Corresponds to the `--suffix` option.
      * 
      */
     public Optional<Output<String>> suffix() {
@@ -209,29 +264,44 @@ public final class MvArgs extends com.pulumi.resources.ResourceArgs {
     }
 
     /**
-     * Corresponds to the --target-directory option.
+     * Corresponds to the `--target-directory` option.
      * 
      */
     @Import(name="targetDirectory")
-    private @Nullable Output<String> targetDirectory;
+    private @Nullable Output<Boolean> targetDirectory;
 
     /**
-     * @return Corresponds to the --target-directory option.
+     * @return Corresponds to the `--target-directory` option.
      * 
      */
-    public Optional<Output<String>> targetDirectory() {
+    public Optional<Output<Boolean>> targetDirectory() {
         return Optional.ofNullable(this.targetDirectory);
     }
 
     /**
-     * Corresponds to the --update option.
+     * TODO
+     * 
+     */
+    @Import(name="triggers")
+    private @Nullable Output<List<Object>> triggers;
+
+    /**
+     * @return TODO
+     * 
+     */
+    public Optional<Output<List<Object>>> triggers() {
+        return Optional.ofNullable(this.triggers);
+    }
+
+    /**
+     * Corresponds to the `--update` option.
      * 
      */
     @Import(name="update")
     private @Nullable Output<Boolean> update;
 
     /**
-     * @return Corresponds to the --update option.
+     * @return Corresponds to the `--update` option.
      * 
      */
     public Optional<Output<Boolean>> update() {
@@ -239,14 +309,14 @@ public final class MvArgs extends com.pulumi.resources.ResourceArgs {
     }
 
     /**
-     * Corresponds to the --verbose option.
+     * Corresponds to the `--verbose` option.
      * 
      */
     @Import(name="verbose")
     private @Nullable Output<Boolean> verbose;
 
     /**
-     * @return Corresponds to the --verbose option.
+     * @return Corresponds to the `--verbose` option.
      * 
      */
     public Optional<Output<Boolean>> verbose() {
@@ -257,6 +327,7 @@ public final class MvArgs extends com.pulumi.resources.ResourceArgs {
 
     private MvArgs(MvArgs $) {
         this.backup = $.backup;
+        this.binaryPath = $.binaryPath;
         this.connection = $.connection;
         this.context = $.context;
         this.control = $.control;
@@ -264,12 +335,15 @@ public final class MvArgs extends com.pulumi.resources.ResourceArgs {
         this.directory = $.directory;
         this.environment = $.environment;
         this.force = $.force;
+        this.lifecycle = $.lifecycle;
         this.noClobber = $.noClobber;
         this.noTargetDirectory = $.noTargetDirectory;
         this.source = $.source;
+        this.stdin = $.stdin;
         this.stripTrailingSlashes = $.stripTrailingSlashes;
         this.suffix = $.suffix;
         this.targetDirectory = $.targetDirectory;
+        this.triggers = $.triggers;
         this.update = $.update;
         this.verbose = $.verbose;
     }
@@ -293,7 +367,7 @@ public final class MvArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param backup Corresponds to both the -b and --backup options depending on whether [CONTROL] is supplied.
+         * @param backup Corresponds to the `-b` and `--backup` options depending on whether [CONTROL] is supplied.
          * 
          * @return builder
          * 
@@ -304,7 +378,28 @@ public final class MvArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param connection Connection details for the remote system.
+         * @param binaryPath Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+         * 
+         * @return builder
+         * 
+         */
+        public Builder binaryPath(@Nullable Output<String> binaryPath) {
+            $.binaryPath = binaryPath;
+            return this;
+        }
+
+        /**
+         * @param binaryPath Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+         * 
+         * @return builder
+         * 
+         */
+        public Builder binaryPath(String binaryPath) {
+            return binaryPath(Output.of(binaryPath));
+        }
+
+        /**
+         * @param connection Connection details for the remote system
          * 
          * @return builder
          * 
@@ -315,7 +410,7 @@ public final class MvArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param connection Connection details for the remote system.
+         * @param connection Connection details for the remote system
          * 
          * @return builder
          * 
@@ -325,7 +420,7 @@ public final class MvArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param context Corresponds to the --context option.
+         * @param context Corresponds to the `--context` option.
          * 
          * @return builder
          * 
@@ -336,7 +431,7 @@ public final class MvArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param context Corresponds to the --context option.
+         * @param context Corresponds to the `--context` option.
          * 
          * @return builder
          * 
@@ -346,23 +441,23 @@ public final class MvArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param control Corresponds to the [CONTROL] argument for the --backup option.
+         * @param control Corresponds to the [CONTROL] argument for the `--backup` option.
          * 
          * @return builder
          * 
          */
-        public Builder control(@Nullable Output<String> control) {
+        public Builder control(@Nullable Output<Boolean> control) {
             $.control = control;
             return this;
         }
 
         /**
-         * @param control Corresponds to the [CONTROL] argument for the --backup option.
+         * @param control Corresponds to the [CONTROL] argument for the `--backup` option.
          * 
          * @return builder
          * 
          */
-        public Builder control(String control) {
+        public Builder control(Boolean control) {
             return control(Output.of(control));
         }
 
@@ -408,17 +503,29 @@ public final class MvArgs extends com.pulumi.resources.ResourceArgs {
             return directory(Output.of(directory));
         }
 
+        /**
+         * @param environment Environment variables
+         * 
+         * @return builder
+         * 
+         */
         public Builder environment(@Nullable Output<Map<String,String>> environment) {
             $.environment = environment;
             return this;
         }
 
+        /**
+         * @param environment Environment variables
+         * 
+         * @return builder
+         * 
+         */
         public Builder environment(Map<String,String> environment) {
             return environment(Output.of(environment));
         }
 
         /**
-         * @param force Corresponds to the --force option.
+         * @param force Corresponds to the `--force` option.
          * 
          * @return builder
          * 
@@ -429,7 +536,7 @@ public final class MvArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param force Corresponds to the --force option.
+         * @param force Corresponds to the `--force` option.
          * 
          * @return builder
          * 
@@ -439,7 +546,18 @@ public final class MvArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param noClobber Corresponds to the --no-clobber option.
+         * @param lifecycle At what stage(s) in the resource lifecycle should the command be run
+         * 
+         * @return builder
+         * 
+         */
+        public Builder lifecycle(@Nullable CommandLifecycle lifecycle) {
+            $.lifecycle = lifecycle;
+            return this;
+        }
+
+        /**
+         * @param noClobber Corresponds to the `--no-clobber` option.
          * 
          * @return builder
          * 
@@ -450,7 +568,7 @@ public final class MvArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param noClobber Corresponds to the --no-clobber option.
+         * @param noClobber Corresponds to the `--no-clobber` option.
          * 
          * @return builder
          * 
@@ -460,7 +578,7 @@ public final class MvArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param noTargetDirectory Corresponds to the --no-target-directory option.
+         * @param noTargetDirectory Corresponds to the `--no-target-directory` option.
          * 
          * @return builder
          * 
@@ -471,7 +589,7 @@ public final class MvArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param noTargetDirectory Corresponds to the --no-target-directory option.
+         * @param noTargetDirectory Corresponds to the `--no-target-directory` option.
          * 
          * @return builder
          * 
@@ -522,7 +640,28 @@ public final class MvArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param stripTrailingSlashes Corresponds to the --strip-trailing-suffix option.
+         * @param stdin TODO
+         * 
+         * @return builder
+         * 
+         */
+        public Builder stdin(@Nullable Output<String> stdin) {
+            $.stdin = stdin;
+            return this;
+        }
+
+        /**
+         * @param stdin TODO
+         * 
+         * @return builder
+         * 
+         */
+        public Builder stdin(String stdin) {
+            return stdin(Output.of(stdin));
+        }
+
+        /**
+         * @param stripTrailingSlashes Corresponds to the `--strip-trailing-slashes` option.
          * 
          * @return builder
          * 
@@ -533,7 +672,7 @@ public final class MvArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param stripTrailingSlashes Corresponds to the --strip-trailing-suffix option.
+         * @param stripTrailingSlashes Corresponds to the `--strip-trailing-slashes` option.
          * 
          * @return builder
          * 
@@ -543,7 +682,7 @@ public final class MvArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param suffix Corresponds to the --suffix option.
+         * @param suffix Corresponds to the `--suffix` option.
          * 
          * @return builder
          * 
@@ -554,7 +693,7 @@ public final class MvArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param suffix Corresponds to the --suffix option.
+         * @param suffix Corresponds to the `--suffix` option.
          * 
          * @return builder
          * 
@@ -564,28 +703,59 @@ public final class MvArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param targetDirectory Corresponds to the --target-directory option.
+         * @param targetDirectory Corresponds to the `--target-directory` option.
          * 
          * @return builder
          * 
          */
-        public Builder targetDirectory(@Nullable Output<String> targetDirectory) {
+        public Builder targetDirectory(@Nullable Output<Boolean> targetDirectory) {
             $.targetDirectory = targetDirectory;
             return this;
         }
 
         /**
-         * @param targetDirectory Corresponds to the --target-directory option.
+         * @param targetDirectory Corresponds to the `--target-directory` option.
          * 
          * @return builder
          * 
          */
-        public Builder targetDirectory(String targetDirectory) {
+        public Builder targetDirectory(Boolean targetDirectory) {
             return targetDirectory(Output.of(targetDirectory));
         }
 
         /**
-         * @param update Corresponds to the --update option.
+         * @param triggers TODO
+         * 
+         * @return builder
+         * 
+         */
+        public Builder triggers(@Nullable Output<List<Object>> triggers) {
+            $.triggers = triggers;
+            return this;
+        }
+
+        /**
+         * @param triggers TODO
+         * 
+         * @return builder
+         * 
+         */
+        public Builder triggers(List<Object> triggers) {
+            return triggers(Output.of(triggers));
+        }
+
+        /**
+         * @param triggers TODO
+         * 
+         * @return builder
+         * 
+         */
+        public Builder triggers(Object... triggers) {
+            return triggers(List.of(triggers));
+        }
+
+        /**
+         * @param update Corresponds to the `--update` option.
          * 
          * @return builder
          * 
@@ -596,7 +766,7 @@ public final class MvArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param update Corresponds to the --update option.
+         * @param update Corresponds to the `--update` option.
          * 
          * @return builder
          * 
@@ -606,7 +776,7 @@ public final class MvArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param verbose Corresponds to the --verbose option.
+         * @param verbose Corresponds to the `--verbose` option.
          * 
          * @return builder
          * 
@@ -617,7 +787,7 @@ public final class MvArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param verbose Corresponds to the --verbose option.
+         * @param verbose Corresponds to the `--verbose` option.
          * 
          * @return builder
          * 

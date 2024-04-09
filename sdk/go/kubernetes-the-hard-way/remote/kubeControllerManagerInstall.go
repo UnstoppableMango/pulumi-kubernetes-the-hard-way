@@ -18,17 +18,29 @@ import (
 type KubeControllerManagerInstall struct {
 	pulumi.ResourceState
 
-	// The kube-controller-manager CPU architecture.
-	Architecture ArchitectureOutput     `pulumi:"architecture"`
-	BinName      pulumi.StringPtrOutput `pulumi:"binName"`
-	// The connection details.
+	// The CPU architecture to install.
+	Architecture ArchitectureOutput `pulumi:"architecture"`
+	// The name of the installed binary.
+	BinName pulumi.StringPtrOutput `pulumi:"binName"`
+	// The parameters with which to connect to the remote host.
 	Connection pulumiCommand.ConnectionOutput `pulumi:"connection"`
-	// Directory to install the `kube-controller-manager` binary.
+	// The directory to install the binary to.
 	Directory pulumi.StringOutput `pulumi:"directory"`
-	Mkdir     tools.MkdirOutput   `pulumi:"mkdir"`
-	Mv        tools.MvOutput      `pulumi:"mv"`
-	Path      pulumi.StringOutput `pulumi:"path"`
-	// The version of kube-controller-manager to install.
+	// The download operation.
+	Download DownloadOutput `pulumi:"download"`
+	// The mkdir operation.
+	Mkdir tools.MkdirOutput `pulumi:"mkdir"`
+	// The mktemp operation.
+	Mktemp tools.MktempOutput `pulumi:"mktemp"`
+	// The mv operation.
+	Mv tools.MvOutput `pulumi:"mv"`
+	// The path to the installed binary.
+	Path pulumi.StringOutput `pulumi:"path"`
+	// The rm operation.
+	Rm tools.RmOutput `pulumi:"rm"`
+	// The url used to download the binary.
+	Url pulumi.StringOutput `pulumi:"url"`
+	// The version to install.
 	Version pulumi.StringOutput `pulumi:"version"`
 }
 
@@ -56,25 +68,25 @@ func NewKubeControllerManagerInstall(ctx *pulumi.Context,
 }
 
 type kubeControllerManagerInstallArgs struct {
-	// The kube-controller-manager CPU architecture.
+	// The CPU architecture to install.
 	Architecture *Architecture `pulumi:"architecture"`
-	// The connection details.
+	// The parameters with which to connect to the remote host.
 	Connection pulumiCommand.Connection `pulumi:"connection"`
-	// Directory to install the `kube-controller-manager` binary.
+	// The directory to install the binary to.
 	Directory *string `pulumi:"directory"`
-	// The version of kube-controller-manager to install.
+	// The version to install.
 	Version *string `pulumi:"version"`
 }
 
 // The set of arguments for constructing a KubeControllerManagerInstall resource.
 type KubeControllerManagerInstallArgs struct {
-	// The kube-controller-manager CPU architecture.
+	// The CPU architecture to install.
 	Architecture ArchitecturePtrInput
-	// The connection details.
+	// The parameters with which to connect to the remote host.
 	Connection pulumiCommand.ConnectionInput
-	// Directory to install the `kube-controller-manager` binary.
+	// The directory to install the binary to.
 	Directory pulumi.StringPtrInput
-	// The version of kube-controller-manager to install.
+	// The version to install.
 	Version pulumi.StringPtrInput
 }
 
@@ -165,38 +177,62 @@ func (o KubeControllerManagerInstallOutput) ToKubeControllerManagerInstallOutput
 	return o
 }
 
-// The kube-controller-manager CPU architecture.
+// The CPU architecture to install.
 func (o KubeControllerManagerInstallOutput) Architecture() ArchitectureOutput {
 	return o.ApplyT(func(v *KubeControllerManagerInstall) ArchitectureOutput { return v.Architecture }).(ArchitectureOutput)
 }
 
+// The name of the installed binary.
 func (o KubeControllerManagerInstallOutput) BinName() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *KubeControllerManagerInstall) pulumi.StringPtrOutput { return v.BinName }).(pulumi.StringPtrOutput)
 }
 
-// The connection details.
+// The parameters with which to connect to the remote host.
 func (o KubeControllerManagerInstallOutput) Connection() pulumiCommand.ConnectionOutput {
 	return o.ApplyT(func(v *KubeControllerManagerInstall) pulumiCommand.ConnectionOutput { return v.Connection }).(pulumiCommand.ConnectionOutput)
 }
 
-// Directory to install the `kube-controller-manager` binary.
+// The directory to install the binary to.
 func (o KubeControllerManagerInstallOutput) Directory() pulumi.StringOutput {
 	return o.ApplyT(func(v *KubeControllerManagerInstall) pulumi.StringOutput { return v.Directory }).(pulumi.StringOutput)
 }
 
+// The download operation.
+func (o KubeControllerManagerInstallOutput) Download() DownloadOutput {
+	return o.ApplyT(func(v *KubeControllerManagerInstall) DownloadOutput { return v.Download }).(DownloadOutput)
+}
+
+// The mkdir operation.
 func (o KubeControllerManagerInstallOutput) Mkdir() tools.MkdirOutput {
 	return o.ApplyT(func(v *KubeControllerManagerInstall) tools.MkdirOutput { return v.Mkdir }).(tools.MkdirOutput)
 }
 
+// The mktemp operation.
+func (o KubeControllerManagerInstallOutput) Mktemp() tools.MktempOutput {
+	return o.ApplyT(func(v *KubeControllerManagerInstall) tools.MktempOutput { return v.Mktemp }).(tools.MktempOutput)
+}
+
+// The mv operation.
 func (o KubeControllerManagerInstallOutput) Mv() tools.MvOutput {
 	return o.ApplyT(func(v *KubeControllerManagerInstall) tools.MvOutput { return v.Mv }).(tools.MvOutput)
 }
 
+// The path to the installed binary.
 func (o KubeControllerManagerInstallOutput) Path() pulumi.StringOutput {
 	return o.ApplyT(func(v *KubeControllerManagerInstall) pulumi.StringOutput { return v.Path }).(pulumi.StringOutput)
 }
 
-// The version of kube-controller-manager to install.
+// The rm operation.
+func (o KubeControllerManagerInstallOutput) Rm() tools.RmOutput {
+	return o.ApplyT(func(v *KubeControllerManagerInstall) tools.RmOutput { return v.Rm }).(tools.RmOutput)
+}
+
+// The url used to download the binary.
+func (o KubeControllerManagerInstallOutput) Url() pulumi.StringOutput {
+	return o.ApplyT(func(v *KubeControllerManagerInstall) pulumi.StringOutput { return v.Url }).(pulumi.StringOutput)
+}
+
+// The version to install.
 func (o KubeControllerManagerInstallOutput) Version() pulumi.StringOutput {
 	return o.ApplyT(func(v *KubeControllerManagerInstall) pulumi.StringOutput { return v.Version }).(pulumi.StringOutput)
 }
