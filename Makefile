@@ -131,6 +131,7 @@ clean:
 	rm -rf sdk/nodejs/bin
 	rm -rf sdk/python/bin
 	rm -rf sdk/java/{.gradle,build}
+	rm -rf $(SCHEMA_FILE)
 	@if dotnet nuget list source | grep "$(WORKING_DIR)"; then \
 		dotnet nuget remove source "$(WORKING_DIR)" \
 	; fi
