@@ -237,7 +237,8 @@ provider/scripts/vendor/generate-provider-types.ts: .awsx.version
 	cd provider/scripts && \
 		curl -sSL 'https://raw.githubusercontent.com/pulumi/pulumi-awsx/v$(AWSX_VERSION)/awsx/scripts/generate-provider-types.ts' > vendor/generate-provider-types.ts && \
 		patch vendor/generate-provider-types.ts patches/0001-fixes.patch && \
-		patch vendor/generate-provider-types.ts patches/0002-undefinedResource.patch
+		patch vendor/generate-provider-types.ts patches/0002-undefinedResource.patch && \
+		patch vendor/generate-provider-types.ts patches/0003-addKubernetes.patch
 
 provider/scripts/vendor/pulumi-schema.d.ts: AWSX_VERSION := $(shell cat .awsx.version)
 provider/scripts/vendor/pulumi-schema.d.ts: .awsx.version
