@@ -290,6 +290,24 @@ func generateCertificate(tlsSpec schema.PackageSpec) schema.ResourceSpec {
 	maps.Copy(outputs, privateKey.Properties)
 	maps.Copy(outputs, inputs)
 
+	// Hack to get around weird .NET issue
+	if prop, ok := outputs["privateKeyOpenssh"]; ok {
+		prop.Secret = false
+		outputs["privateKeyOpenssh"] = prop
+	}
+	if prop, ok := outputs["privateKeyPem"]; ok {
+		prop.Secret = false
+		outputs["privateKeyPem"] = prop
+	}
+	if prop, ok := outputs["privateKeyPemPkcs8"]; ok {
+		prop.Secret = false
+		outputs["privateKeyPemPkcs8"] = prop
+	}
+	if prop, ok := outputs["caPrivateKeyPem"]; ok {
+		prop.Secret = false
+		outputs["caPrivateKeyPem"] = prop
+	}
+
 	requiredOutputs := slices.Concat(
 		certRequest.Required,
 		locallySignedCert.Required,
@@ -513,6 +531,20 @@ func generateRootCa(tlsSpec schema.PackageSpec) schema.ResourceSpec {
 		privateKey.Required,
 		[]string{"cert", "key"},
 	)
+
+	// Hack to get around weird .NET issue
+	if prop, ok := outputs["privateKeyOpenssh"]; ok {
+		prop.Secret = false
+		outputs["privateKeyOpenssh"] = prop
+	}
+	if prop, ok := outputs["privateKeyPem"]; ok {
+		prop.Secret = false
+		outputs["privateKeyPem"] = prop
+	}
+	if prop, ok := outputs["privateKeyPemPkcs8"]; ok {
+		prop.Secret = false
+		outputs["privateKeyPemPkcs8"] = prop
+	}
 
 	return schema.ResourceSpec{
 		IsComponent: true,
