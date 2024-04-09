@@ -6,6 +6,7 @@ import * as inputs from "../types/input";
 import * as outputs from "../types/output";
 import * as enums from "../types/enums";
 
+import * as pulumiKubernetes from "@pulumi/kubernetes";
 import * as pulumiTls from "@pulumi/tls";
 
 export namespace config {
