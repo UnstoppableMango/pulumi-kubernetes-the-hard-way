@@ -87,12 +87,6 @@ func NewRootCa(ctx *pulumi.Context,
 	if args.ValidityPeriodHours == nil {
 		return nil, errors.New("invalid value for required argument 'ValidityPeriodHours'")
 	}
-	secrets := pulumi.AdditionalSecretOutputs([]string{
-		"privateKeyOpenssh",
-		"privateKeyPem",
-		"privateKeyPemPkcs8",
-	})
-	opts = append(opts, secrets)
 	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource RootCa
 	err := ctx.RegisterRemoteComponentResource("kubernetes-the-hard-way:tls:RootCa", name, args, &resource, opts...)

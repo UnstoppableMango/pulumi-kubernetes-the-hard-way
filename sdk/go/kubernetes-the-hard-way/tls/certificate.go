@@ -110,13 +110,6 @@ func NewCertificate(ctx *pulumi.Context,
 	if args.CaPrivateKeyPem != nil {
 		args.CaPrivateKeyPem = pulumi.ToSecret(args.CaPrivateKeyPem).(pulumi.StringInput)
 	}
-	secrets := pulumi.AdditionalSecretOutputs([]string{
-		"caPrivateKeyPem",
-		"privateKeyOpenssh",
-		"privateKeyPem",
-		"privateKeyPemPkcs8",
-	})
-	opts = append(opts, secrets)
 	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource Certificate
 	err := ctx.RegisterRemoteComponentResource("kubernetes-the-hard-way:tls:Certificate", name, args, &resource, opts...)

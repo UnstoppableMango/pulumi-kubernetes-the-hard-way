@@ -201,12 +201,6 @@ namespace UnMango.KubernetesTheHardWay.Tls
             {
                 Version = Utilities.Version,
                 PluginDownloadURL = "github://api.github.com/UnstoppableMango",
-                AdditionalSecretOutputs =
-                {
-                    "privateKeyOpenssh",
-                    "privateKeyPem",
-                    "privateKeyPemPkcs8",
-                },
             };
             var merged = ComponentResourceOptions.Merge(defaultOptions, options);
             // Override the ID if one was specified for consistency with other language SDKs.

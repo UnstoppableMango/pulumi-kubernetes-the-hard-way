@@ -382,8 +382,6 @@ class Certificate(pulumi.ComponentResource):
             __props__.__dict__["ready_for_renewal"] = None
             __props__.__dict__["validity_end_time"] = None
             __props__.__dict__["validity_start_time"] = None
-        secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["caPrivateKeyPem", "privateKeyOpenssh", "privateKeyPem", "privateKeyPemPkcs8"])
-        opts = pulumi.ResourceOptions.merge(opts, secret_opts)
         super(Certificate, __self__).__init__(
             'kubernetes-the-hard-way:tls:Certificate',
             resource_name,

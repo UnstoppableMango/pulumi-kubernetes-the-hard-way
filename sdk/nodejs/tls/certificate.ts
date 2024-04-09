@@ -247,8 +247,6 @@ export class Certificate extends pulumi.ComponentResource {
             resourceInputs["validityStartTime"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
-        const secretOpts = { additionalSecretOutputs: ["caPrivateKeyPem", "privateKeyOpenssh", "privateKeyPem", "privateKeyPemPkcs8"] };
-        opts = pulumi.mergeOptions(opts, secretOpts);
         super(Certificate.__pulumiType, name, resourceInputs, opts, true /*remote*/);
     }
 }

@@ -317,8 +317,6 @@ class RootCa(pulumi.ComponentResource):
             __props__.__dict__["ready_for_renewal"] = None
             __props__.__dict__["validity_end_time"] = None
             __props__.__dict__["validity_start_time"] = None
-        secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["privateKeyOpenssh", "privateKeyPem", "privateKeyPemPkcs8"])
-        opts = pulumi.ResourceOptions.merge(opts, secret_opts)
         super(RootCa, __self__).__init__(
             'kubernetes-the-hard-way:tls:RootCa',
             resource_name,
