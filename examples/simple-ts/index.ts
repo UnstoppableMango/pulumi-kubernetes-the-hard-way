@@ -1,18 +1,18 @@
 import { AllowedUsage, Certificate, ClusterPki, RootCa } from '@unmango/pulumi-kubernetes-the-hard-way/tls';
 
 const ca = new RootCa('simple', {
-    algorithm: 'RSA',
-    validityPeriodHours: 256,
+  algorithm: 'RSA',
+  validityPeriodHours: 256,
 });
 
 const cert = new Certificate('simple', {
-    algorithm: 'RSA',
-    allowedUses: [
-        AllowedUsage.CertSigning,
-    ],
-    validityPeriodHours: 256,
-    caCertPem: ca.certPem,
-    caPrivateKeyPem: ca.privateKeyPem,
+  algorithm: 'RSA',
+  allowedUses: [
+      AllowedUsage.CertSigning,
+  ],
+  validityPeriodHours: 256,
+  caCertPem: ca.certPem,
+  caPrivateKeyPem: ca.privateKeyPem,
 });
 
 // TODO: Fix
