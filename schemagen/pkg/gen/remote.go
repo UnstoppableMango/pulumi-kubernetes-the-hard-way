@@ -10,7 +10,7 @@ import (
 
 const remoteMod = "kubernetes-the-hard-way:remote:"
 
-func generateRemote(commandSpec schema.PackageSpec) schema.PackageSpec {
+func generateRemote(commandSpec, kubernetesSpec schema.PackageSpec) schema.PackageSpec {
 	types := map[string]schema.ComplexTypeSpec{
 		remoteMod + "Architecture": {
 			ObjectTypeSpec: schema.ObjectTypeSpec{
@@ -22,6 +22,7 @@ func generateRemote(commandSpec schema.PackageSpec) schema.PackageSpec {
 				{Value: "arm64"},
 			},
 		},
+		remoteMod + "PodManifest": generatePodManifest(kubernetesSpec),
 		remoteMod + "SystemdInstallSection": {
 			ObjectTypeSpec: schema.ObjectTypeSpec{
 				Description: "https://www.freedesktop.org/software/systemd/man/latest/systemd.unit.html#%5BInstall%5D%20Section%20Options",
@@ -566,6 +567,18 @@ func generateFile(commandSpec schema.PackageSpec) schema.ResourceSpec {
 		},
 		InputProperties: inputs,
 		RequiredInputs:  requiredInputs,
+	}
+}
+
+func generatePodManifest(kubernetesSpec schema.PackageSpec) schema.ComplexTypeSpec {
+	pod := kubernetesSpec.Resources["kubernetes:core/v1:Pod"]
+
+	return schema.ComplexTypeSpec{
+		ObjectTypeSpec: schema.ObjectTypeSpec{
+			Description: pod.Description,
+			Type:        "object",
+			Properties:  makeExternal(pod.Properties, kubernetesSpec),
+		},
 	}
 }
 

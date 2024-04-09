@@ -18,6 +18,7 @@ import (
 func GenerateSchema(packageDir string) schema.PackageSpec {
 	dependencies := readPackageDependencies(packageDir)
 	commandSpec := getPackageSpec("command", dependencies.Command)
+	kubernetesSpec := getPackageSpec("kubernetes", dependencies.Kubernetes)
 	randomSpec := getPackageSpec("random", dependencies.Random)
 	tlsSpec := getPackageSpec("tls", dependencies.Tls)
 
@@ -103,7 +104,7 @@ func GenerateSchema(packageDir string) schema.PackageSpec {
 
 	return extendSchemas(packageSpec,
 		generateConfig(),
-		generateRemote(commandSpec),
+		generateRemote(commandSpec, kubernetesSpec),
 		generateTls(randomSpec, tlsSpec),
 		generateTools(commandSpec))
 }
