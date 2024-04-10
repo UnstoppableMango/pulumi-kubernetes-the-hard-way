@@ -13,6 +13,8 @@
         "strict": true
     },
     "files": [
+        "config/getKubeVipManifest.ts",
+        "config/getKubeconfig.ts",
         "config/index.ts",
         "index.ts",
         "provider.ts",
