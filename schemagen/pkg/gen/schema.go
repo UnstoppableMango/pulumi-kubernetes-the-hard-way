@@ -103,8 +103,8 @@ func GenerateSchema(packageDir string) schema.PackageSpec {
 	}
 
 	return extendSchemas(packageSpec,
-		generateConfig(),
-		generateRemote(commandSpec, kubernetesSpec),
+		generateConfig(kubernetesSpec),
+		generateRemote(commandSpec),
 		generateTls(randomSpec, tlsSpec),
 		generateTools(commandSpec))
 }
