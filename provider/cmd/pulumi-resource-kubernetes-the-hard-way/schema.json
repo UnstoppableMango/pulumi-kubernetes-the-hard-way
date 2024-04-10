@@ -289,34 +289,7 @@
                 "publicIp"
             ]
         },
-        "kubernetes-the-hard-way:config:User": {
-            "properties": {
-                "clientCertificateData": {
-                    "type": "string"
-                },
-                "clientKeyData": {
-                    "type": "string"
-                }
-            },
-            "type": "object",
-            "required": [
-                "clientCertificateData",
-                "clientKeyData"
-            ]
-        },
-        "kubernetes-the-hard-way:remote:Architecture": {
-            "description": "CPU architecture",
-            "type": "string",
-            "enum": [
-                {
-                    "value": "amd64"
-                },
-                {
-                    "value": "arm64"
-                }
-            ]
-        },
-        "kubernetes-the-hard-way:remote:PodManifest": {
+        "kubernetes-the-hard-way:config:PodManifest": {
             "description": "Pod is a collection of containers that can run on a host. This resource is created by clients and scheduled onto hosts.\n\nThis resource waits until its status is ready before registering success\nfor create/update, and populating output properties from the current state of the resource.\nThe following conditions are used to determine whether the resource creation has\nsucceeded or failed:\n\n1. The Pod is scheduled (\"PodScheduled\"\" '.status.condition' is true).\n2. The Pod is initialized (\"Initialized\" '.status.condition' is true).\n3. The Pod is ready (\"Ready\" '.status.condition' is true) and the '.status.phase' is\n   set to \"Running\".\nOr (for Jobs): The Pod succeeded ('.status.phase' set to \"Succeeded\").\n\nIf the Pod has not reached a Ready state after 10 minutes, it will\ntime out and mark the resource update as Failed. You can override the default timeout value\nby setting the 'customTimeouts' option on the resource.\n\n{{% examples %}}\n## Example Usage\n{{% example %}}\n### Create a Pod with auto-naming\n\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as kubernetes from \"@pulumi/kubernetes\";\n\nconst pod = new kubernetes.core.v1.Pod(\"pod\", {spec: {\n    containers: [{\n        image: \"nginx:1.14.2\",\n        name: \"nginx\",\n        ports: [{\n            containerPort: 80,\n        }],\n    }],\n}});\n```\n```python\nimport pulumi\nimport pulumi_kubernetes as kubernetes\n\npod = kubernetes.core.v1.Pod(\"pod\", spec=kubernetes.core.v1.PodSpecArgs(\n    containers=[kubernetes.core.v1.ContainerArgs(\n        image=\"nginx:1.14.2\",\n        name=\"nginx\",\n        ports=[kubernetes.core.v1.ContainerPortArgs(\n            container_port=80,\n        )],\n    )],\n))\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Kubernetes = Pulumi.Kubernetes;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var pod = new Kubernetes.Core.V1.Pod(\"pod\", new()\n    {\n        Spec = new Kubernetes.Types.Inputs.Core.V1.PodSpecArgs\n        {\n            Containers = new[]\n            {\n                new Kubernetes.Types.Inputs.Core.V1.ContainerArgs\n                {\n                    Image = \"nginx:1.14.2\",\n                    Name = \"nginx\",\n                    Ports = new[]\n                    {\n                        new Kubernetes.Types.Inputs.Core.V1.ContainerPortArgs\n                        {\n                            ContainerPortValue = 80,\n                        },\n                    },\n                },\n            },\n        },\n    });\n\n});\n\n```\n```go\npackage main\n\nimport (\n\tcorev1 \"github.com/pulumi/pulumi-kubernetes/sdk/v4/go/kubernetes/core/v1\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := corev1.NewPod(ctx, \"pod\", \u0026corev1.PodArgs{\n\t\t\tSpec: \u0026corev1.PodSpecArgs{\n\t\t\t\tContainers: corev1.ContainerArray{\n\t\t\t\t\t\u0026corev1.ContainerArgs{\n\t\t\t\t\t\tImage: pulumi.String(\"nginx:1.14.2\"),\n\t\t\t\t\t\tName:  pulumi.String(\"nginx\"),\n\t\t\t\t\t\tPorts: corev1.ContainerPortArray{\n\t\t\t\t\t\t\t\u0026corev1.ContainerPortArgs{\n\t\t\t\t\t\t\t\tContainerPort: pulumi.Int(80),\n\t\t\t\t\t\t\t},\n\t\t\t\t\t\t},\n\t\t\t\t\t},\n\t\t\t\t},\n\t\t\t},\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.kubernetes.core_v1.Pod;\nimport com.pulumi.kubernetes.core_v1.PodArgs;\nimport com.pulumi.kubernetes.core_v1.inputs.PodSpecArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var pod = new Pod(\"pod\", PodArgs.builder()        \n            .spec(PodSpecArgs.builder()\n                .containers(ContainerArgs.builder()\n                    .image(\"nginx:1.14.2\")\n                    .name(\"nginx\")\n                    .ports(ContainerPortArgs.builder()\n                        .containerPort(80)\n                        .build())\n                    .build())\n                .build())\n            .build());\n\n    }\n}\n```\n```yaml\ndescription: Create a Pod with auto-naming\nname: yaml-example\nresources:\n    pod:\n        properties:\n            spec:\n                containers:\n                    - image: nginx:1.14.2\n                      name: nginx\n                      ports:\n                        - containerPort: 80\n        type: kubernetes:core/v1:Pod\nruntime: yaml\n```\n{{% /example %}}\n{{% example %}}\n### Create a Pod with a user-specified name\n\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as kubernetes from \"@pulumi/kubernetes\";\n\nconst pod = new kubernetes.core.v1.Pod(\"pod\", {\n    metadata: {\n        name: \"nginx\",\n    },\n    spec: {\n        containers: [{\n            image: \"nginx:1.14.2\",\n            name: \"nginx\",\n            ports: [{\n                containerPort: 80,\n            }],\n        }],\n    },\n});\n```\n```python\nimport pulumi\nimport pulumi_kubernetes as kubernetes\n\npod = kubernetes.core.v1.Pod(\"pod\",\n    metadata=kubernetes.meta.v1.ObjectMetaArgs(\n        name=\"nginx\",\n    ),\n    spec=kubernetes.core.v1.PodSpecArgs(\n        containers=[kubernetes.core.v1.ContainerArgs(\n            image=\"nginx:1.14.2\",\n            name=\"nginx\",\n            ports=[kubernetes.core.v1.ContainerPortArgs(\n                container_port=80,\n            )],\n        )],\n    ))\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Kubernetes = Pulumi.Kubernetes;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var pod = new Kubernetes.Core.V1.Pod(\"pod\", new()\n    {\n        Metadata = new Kubernetes.Types.Inputs.Meta.V1.ObjectMetaArgs\n        {\n            Name = \"nginx\",\n        },\n        Spec = new Kubernetes.Types.Inputs.Core.V1.PodSpecArgs\n        {\n            Containers = new[]\n            {\n                new Kubernetes.Types.Inputs.Core.V1.ContainerArgs\n                {\n                    Image = \"nginx:1.14.2\",\n                    Name = \"nginx\",\n                    Ports = new[]\n                    {\n                        new Kubernetes.Types.Inputs.Core.V1.ContainerPortArgs\n                        {\n                            ContainerPortValue = 80,\n                        },\n                    },\n                },\n            },\n        },\n    });\n\n});\n\n```\n```go\npackage main\n\nimport (\n\tcorev1 \"github.com/pulumi/pulumi-kubernetes/sdk/v4/go/kubernetes/core/v1\"\n\tmetav1 \"github.com/pulumi/pulumi-kubernetes/sdk/v4/go/kubernetes/meta/v1\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := corev1.NewPod(ctx, \"pod\", \u0026corev1.PodArgs{\n\t\t\tMetadata: \u0026metav1.ObjectMetaArgs{\n\t\t\t\tName: pulumi.String(\"nginx\"),\n\t\t\t},\n\t\t\tSpec: \u0026corev1.PodSpecArgs{\n\t\t\t\tContainers: corev1.ContainerArray{\n\t\t\t\t\t\u0026corev1.ContainerArgs{\n\t\t\t\t\t\tImage: pulumi.String(\"nginx:1.14.2\"),\n\t\t\t\t\t\tName:  pulumi.String(\"nginx\"),\n\t\t\t\t\t\tPorts: corev1.ContainerPortArray{\n\t\t\t\t\t\t\t\u0026corev1.ContainerPortArgs{\n\t\t\t\t\t\t\t\tContainerPort: pulumi.Int(80),\n\t\t\t\t\t\t\t},\n\t\t\t\t\t\t},\n\t\t\t\t\t},\n\t\t\t\t},\n\t\t\t},\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.kubernetes.core_v1.Pod;\nimport com.pulumi.kubernetes.core_v1.PodArgs;\nimport com.pulumi.kubernetes.meta_v1.inputs.ObjectMetaArgs;\nimport com.pulumi.kubernetes.core_v1.inputs.PodSpecArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var pod = new Pod(\"pod\", PodArgs.builder()        \n            .metadata(ObjectMetaArgs.builder()\n                .name(\"nginx\")\n                .build())\n            .spec(PodSpecArgs.builder()\n                .containers(ContainerArgs.builder()\n                    .image(\"nginx:1.14.2\")\n                    .name(\"nginx\")\n                    .ports(ContainerPortArgs.builder()\n                        .containerPort(80)\n                        .build())\n                    .build())\n                .build())\n            .build());\n\n    }\n}\n```\n```yaml\ndescription: Create a Pod with a user-specified name\nname: yaml-example\nresources:\n    pod:\n        properties:\n            metadata:\n                name: nginx\n            spec:\n                containers:\n                    - image: nginx:1.14.2\n                      name: nginx\n                      ports:\n                        - containerPort: 80\n        type: kubernetes:core/v1:Pod\nruntime: yaml\n```\n{{% /example %}}\n{{% /examples %}}\n",
             "properties": {
                 "apiVersion": {
@@ -343,6 +316,33 @@
                 }
             },
             "type": "object"
+        },
+        "kubernetes-the-hard-way:config:User": {
+            "properties": {
+                "clientCertificateData": {
+                    "type": "string"
+                },
+                "clientKeyData": {
+                    "type": "string"
+                }
+            },
+            "type": "object",
+            "required": [
+                "clientCertificateData",
+                "clientKeyData"
+            ]
+        },
+        "kubernetes-the-hard-way:remote:Architecture": {
+            "description": "CPU architecture",
+            "type": "string",
+            "enum": [
+                {
+                    "value": "amd64"
+                },
+                {
+                    "value": "arm64"
+                }
+            ]
         },
         "kubernetes-the-hard-way:remote:SystemdInstallSection": {
             "description": "https://www.freedesktop.org/software/systemd/man/latest/systemd.unit.html#%5BInstall%5D%20Section%20Options",
@@ -4408,6 +4408,148 @@
         }
     },
     "functions": {
+        "kubernetes-the-hard-way:config:getKubeVipManifest": {
+            "description": "Gets the static pod manifests for KubeVip.",
+            "inputs": {
+                "properties": {
+                    "address": {
+                        "type": "string",
+                        "description": "TODO"
+                    },
+                    "cpEnable": {
+                        "type": "boolean",
+                        "description": "TODO"
+                    },
+                    "cpNamespace": {
+                        "type": "string",
+                        "description": "TODO"
+                    },
+                    "image": {
+                        "type": "string",
+                        "description": "Override the kube-vip image."
+                    },
+                    "kubeconfigPath": {
+                        "type": "string",
+                        "description": "Path to the kubeconfig on the remote host."
+                    },
+                    "port": {
+                        "type": "integer",
+                        "description": "TODO",
+                        "default": 6443
+                    },
+                    "svcEnable": {
+                        "type": "boolean",
+                        "description": "TODO"
+                    },
+                    "version": {
+                        "type": "string",
+                        "description": "Version of kube-vip to use."
+                    },
+                    "vipArp": {
+                        "type": "boolean",
+                        "description": "TODO"
+                    },
+                    "vipCidr": {
+                        "type": "string",
+                        "description": "TODO"
+                    },
+                    "vipDdns": {
+                        "type": "boolean",
+                        "description": "TODO"
+                    },
+                    "vipInterface": {
+                        "type": "string",
+                        "description": "TODO"
+                    },
+                    "vipLeaderElection": {
+                        "type": "boolean",
+                        "description": "TODO"
+                    },
+                    "vipLeaseDuration": {
+                        "type": "integer",
+                        "description": "TODO"
+                    },
+                    "vipRenewDeadline": {
+                        "type": "integer",
+                        "description": "TODO"
+                    },
+                    "vipRetryPeriod": {
+                        "type": "integer",
+                        "description": "TODO"
+                    }
+                },
+                "required": [
+                    "address",
+                    "kubeconfigPath",
+                    "vipCidr"
+                ]
+            },
+            "outputs": {
+                "properties": {
+                    "result": {
+                        "$ref": "#/types/kubernetes-the-hard-way:config:PodManifest"
+                    }
+                },
+                "required": [
+                    "result"
+                ]
+            }
+        },
+        "kubernetes-the-hard-way:config:getKubeconfig": {
+            "inputs": {
+                "properties": {
+                    "caPem": {
+                        "type": "string",
+                        "description": "Certificate authority data."
+                    },
+                    "options": {
+                        "oneOf": [
+                            {
+                                "$ref": "#/types/kubernetes-the-hard-way:config:KubeconfigAdminOptions"
+                            },
+                            {
+                                "$ref": "#/types/kubernetes-the-hard-way:config:KubeconfigKubeControllerManagerOptions"
+                            },
+                            {
+                                "$ref": "#/types/kubernetes-the-hard-way:config:KubeconfigKubeProxyOptions"
+                            },
+                            {
+                                "$ref": "#/types/kubernetes-the-hard-way:config:KubeconfigKubeSchedulerOptions"
+                            },
+                            {
+                                "$ref": "#/types/kubernetes-the-hard-way:config:KubeconfigWorkerOptions"
+                            }
+                        ],
+                        "discriminator": {
+                            "propertyName": "type",
+                            "mapping": {
+                                "admin": "#/types/kubernetes-the-hard-way:config:KubeconfigAdminOptions",
+                                "kube-controller-manager": "#/types/kubernetes-the-hard-way:config:KubeconfigKubeControllerManagerOptions",
+                                "kube-proxy": "#/types/kubernetes-the-hard-way:config:KubeconfigKubeProxyOptions",
+                                "kube-scheduler": "#/types/kubernetes-the-hard-way:config:KubeconfigKubeSchedulerOptions",
+                                "worker": "#/types/kubernetes-the-hard-way:config:KubeconfigWorkerOptions"
+                            }
+                        },
+                        "plain": true,
+                        "description": "Options for creating the kubeconfig."
+                    }
+                },
+                "required": [
+                    "caPem",
+                    "options"
+                ]
+            },
+            "outputs": {
+                "properties": {
+                    "result": {
+                        "$ref": "#/types/kubernetes-the-hard-way:config:Kubeconfig"
+                    }
+                },
+                "required": [
+                    "result"
+                ]
+            }
+        },
         "kubernetes-the-hard-way:tls:ClusterPki/getKubeconfig": {
             "description": "Get a kubeconfig configured from this PKI.",
             "inputs": {
