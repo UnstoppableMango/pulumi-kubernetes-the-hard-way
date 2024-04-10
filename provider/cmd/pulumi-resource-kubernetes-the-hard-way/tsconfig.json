@@ -15,6 +15,7 @@
   "files": [
     "config/index.ts",
     "config/kubeconfig.ts",
+    "config/kubeVip.ts",
     "functions.ts",
     "index.ts",
     "provider.ts",
