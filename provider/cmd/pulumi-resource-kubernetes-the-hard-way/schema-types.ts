@@ -1082,6 +1082,13 @@ export type TeeModeInputs = "warn" | "warn-nopipe" | "exit" | "exit-nopipe";
 export type TeeModeOutputs = "warn" | "warn-nopipe" | "exit" | "exit-nopipe";
 export interface getKubeVipManifestInputs {
     readonly address: pulumi.Input<string>;
+    readonly bgpAs?: pulumi.Input<number>;
+    readonly bgpEnable?: pulumi.Input<boolean>;
+    readonly bgpPeerAddress?: pulumi.Input<string>;
+    readonly bgpPeerAs?: pulumi.Input<number>;
+    readonly bgpPeerPass?: pulumi.Input<string>;
+    readonly bgpPeers?: pulumi.Input<string>;
+    readonly bgpRouterId?: pulumi.Input<string>;
     readonly cpEnable?: pulumi.Input<boolean>;
     readonly cpNamespace?: pulumi.Input<string>;
     readonly image?: pulumi.Input<string>;
@@ -1090,7 +1097,7 @@ export interface getKubeVipManifestInputs {
     readonly svcEnable?: pulumi.Input<boolean>;
     readonly version?: pulumi.Input<string>;
     readonly vipArp?: pulumi.Input<boolean>;
-    readonly vipCidr: pulumi.Input<string>;
+    readonly vipCidr: pulumi.Input<number>;
     readonly vipDdns?: pulumi.Input<boolean>;
     readonly vipInterface?: pulumi.Input<string>;
     readonly vipLeaderElection?: pulumi.Input<boolean>;
