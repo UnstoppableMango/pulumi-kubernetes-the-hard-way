@@ -35,7 +35,7 @@ export async function getKubeVipManifest(inputs: schema.getKubeVipManifestInputs
     spec: {
       containers: [{
         name: 'kube-vip',
-        image: image ?? interpolate`ghcr.io/kube-vip/kube-vip:v${version}`,
+        image: image ?? interpolate`ghcr.io/kube-vip/kube-vip:v${version ?? '0.7.2'}`,
         imagePullPolicy: 'Always',
         args: ['manager'],
         env,
