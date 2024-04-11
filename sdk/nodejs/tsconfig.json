@@ -16,6 +16,7 @@
         "config/getKubeVipManifest.ts",
         "config/getKubeconfig.ts",
         "config/index.ts",
+        "config/kubeVipManifest.ts",
         "index.ts",
         "provider.ts",
         "remote/cniPluginsInstall.ts",

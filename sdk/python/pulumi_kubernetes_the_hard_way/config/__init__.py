@@ -8,5 +8,6 @@ import typing
 from ._enums import *
 from .get_kube_vip_manifest import *
 from .get_kubeconfig import *
+from .kube_vip_manifest import *
 from ._inputs import *
 from . import outputs

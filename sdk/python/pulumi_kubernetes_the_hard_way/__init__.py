@@ -28,6 +28,14 @@ _utilities.register(
 [
  {
   "pkg": "kubernetes-the-hard-way",
+  "mod": "config",
+  "fqn": "pulumi_kubernetes_the_hard_way.config",
+  "classes": {
+   "kubernetes-the-hard-way:config:KubeVipManifest": "KubeVipManifest"
+  }
+ },
+ {
+  "pkg": "kubernetes-the-hard-way",
   "mod": "remote",
   "fqn": "pulumi_kubernetes_the_hard_way.remote",
   "classes": {
