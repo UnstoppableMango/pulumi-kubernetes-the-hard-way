@@ -4416,6 +4416,34 @@
                         "type": "string",
                         "description": "TODO"
                     },
+                    "bgpAs": {
+                        "type": "integer",
+                        "description": "TODO"
+                    },
+                    "bgpEnable": {
+                        "type": "boolean",
+                        "description": "TODO"
+                    },
+                    "bgpPeerAddress": {
+                        "type": "string",
+                        "description": "TODO"
+                    },
+                    "bgpPeerAs": {
+                        "type": "integer",
+                        "description": "TODO"
+                    },
+                    "bgpPeerPass": {
+                        "type": "string",
+                        "description": "TODO"
+                    },
+                    "bgpPeers": {
+                        "type": "string",
+                        "description": "TODO"
+                    },
+                    "bgpRouterId": {
+                        "type": "string",
+                        "description": "TODO"
+                    },
                     "cpEnable": {
                         "type": "boolean",
                         "description": "TODO"
@@ -4450,7 +4478,7 @@
                         "description": "TODO"
                     },
                     "vipCidr": {
-                        "type": "string",
+                        "type": "integer",
                         "description": "TODO"
                     },
                     "vipDdns": {
