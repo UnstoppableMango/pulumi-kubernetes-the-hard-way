@@ -1,6 +1,10 @@
 package gen
 
-import "github.com/pulumi/pulumi/pkg/v3/codegen/schema"
+import (
+	"maps"
+
+	"github.com/pulumi/pulumi/pkg/v3/codegen/schema"
+)
 
 const configMod = "kubernetes-the-hard-way:config:"
 
@@ -384,12 +388,20 @@ func generateGetKubeVipManifest() schema.FunctionSpec {
 }
 
 func generateKubeVipManifest(getKubeVipManifest schema.FunctionSpec) schema.ResourceSpec {
+	outputs := maps.Clone(getKubeVipManifest.Outputs.Properties)
+	outputs["yaml"] = schema.PropertySpec{
+		Description: "The yaml representation of the manifest",
+		TypeSpec:    typeSpecs.String,
+	}
+
+	requiredOutputs := append(getKubeVipManifest.Outputs.Required, "yaml")
+
 	return schema.ResourceSpec{
 		IsComponent: true,
 		ObjectTypeSpec: schema.ObjectTypeSpec{
 			Description: "Pseudo resource for generating the kube-vip manifest.",
-			Properties:  getKubeVipManifest.Outputs.Properties,
-			Required:    getKubeVipManifest.Outputs.Required,
+			Properties:  outputs,
+			Required:    requiredOutputs,
 		},
 		InputProperties: getKubeVipManifest.Inputs.Properties,
 		RequiredInputs:  getKubeVipManifest.Inputs.Required,
