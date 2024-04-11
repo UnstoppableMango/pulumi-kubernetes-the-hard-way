@@ -2372,6 +2372,57 @@
             ],
             "isComponent": true
         },
+        "kubernetes-the-hard-way:remote:StaticPod": {
+            "description": "Create a static pod manifest on a remote system.",
+            "properties": {
+                "connection": {
+                    "$ref": "/command/v0.9.2/schema.json#/types/command:remote:Connection",
+                    "description": "The parameters with which to connect to the remote host."
+                },
+                "file": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:remote:File",
+                    "description": "The remote manifest file."
+                },
+                "fileName": {
+                    "type": "string",
+                    "description": "The name of the file on the remote system."
+                },
+                "path": {
+                    "type": "string",
+                    "description": "The path to the manifest on the remote system."
+                },
+                "pod": {
+                    "$ref": "#/types/kubernetes-the-hard-way:config:PodManifest",
+                    "description": "The pod manifest."
+                }
+            },
+            "required": [
+                "connection",
+                "file",
+                "fileName",
+                "path",
+                "pod"
+            ],
+            "inputProperties": {
+                "connection": {
+                    "$ref": "/command/v0.9.2/schema.json#/types/command:remote:Connection",
+                    "description": "The parameters with which to connect to the remote host."
+                },
+                "fileName": {
+                    "type": "string",
+                    "description": "The name of the file on the remote system."
+                },
+                "pod": {
+                    "$ref": "#/types/kubernetes-the-hard-way:config:PodManifest",
+                    "description": "The pod manifest."
+                }
+            },
+            "requiredInputs": [
+                "connection",
+                "pod"
+            ],
+            "isComponent": true
+        },
         "kubernetes-the-hard-way:remote:SystemdService": {
             "description": "A systemd service on a remote system.",
             "properties": {
