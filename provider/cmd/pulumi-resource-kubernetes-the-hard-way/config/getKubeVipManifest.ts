@@ -36,8 +36,8 @@ export async function getKubeVipManifest(inputs: schema.getKubeVipManifestInputs
     apiVersion: 'v1',
     kind: 'Pod',
     metadata: {
-      name: 'kube-vip',
-      namespace: 'kube-system',
+      name: inputs.name ?? 'kube-vip',
+      namespace: inputs.namespace ?? 'kube-system',
     },
     spec: {
       containers: [{
