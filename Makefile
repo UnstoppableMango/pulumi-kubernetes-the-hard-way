@@ -190,7 +190,7 @@ bin/yq: .yq.version
 	@touch bin/yq
 	@./bin/yq --version
 
-bin/$(LOCAL_PROVIDER_FILENAME): bin/pulumictl .make/provider_mod_download $(SCHEMA_FILE) $(PROVIDER_SRC) $(PROVIDER_PKG)
+bin/$(LOCAL_PROVIDER_FILENAME): bin/pulumictl .make/provider_mod_download provider/cmd/$(PROVIDER)/schema.json $(PROVIDER_SRC) $(PROVIDER_PKG)
 	cd provider/cmd/${PROVIDER}/ && \
 		yarn tsc && \
 		cp package.json schema.json ./bin && \
@@ -202,7 +202,7 @@ bin/linux-arm64/$(PROVIDER): TARGET := linuxstatic-arm64
 bin/darwin-amd64/$(PROVIDER): TARGET := macos-x64
 bin/darwin-arm64/$(PROVIDER): TARGET := macos-arm64
 bin/windows-amd64/$(PROVIDER).exe: TARGET := win-x64
-bin/%/$(PROVIDER) bin/%/$(PROVIDER).exe: bin/pulumictl .make/provider_mod_download $(SCHEMA_FILE) $(PROVIDER_SRC) $(PROVIDER_PKG)
+bin/%/$(PROVIDER) bin/%/$(PROVIDER).exe: bin/pulumictl .make/provider_mod_download provider/cmd/$(PROVIDER)/schema.json $(PROVIDER_SRC) $(PROVIDER_PKG)
 	@# check the TARGET is set
 	test $(TARGET)
 	cd provider/cmd/${PROVIDER}/ && \
@@ -252,12 +252,12 @@ provider/scripts/vendor/pulumi-schema.d.ts: .awsx.version
 		yarn install
 	@touch $@
 
-.make/generate_java: bin/pulumictl .pulumi/bin/pulumi $(SCHEMA_FILE)
+.make/generate_java: bin/pulumictl .pulumi/bin/pulumi provider/cmd/$(PROVIDER)/schema.json
 	rm -rf sdk/java
 	.pulumi/bin/pulumi package gen-sdk $(SCHEMA_FILE) --language java
 	@touch $@
 
-.make/generate_nodejs: bin/pulumictl .pulumi/bin/pulumi $(SCHEMA_FILE)
+.make/generate_nodejs: bin/pulumictl .pulumi/bin/pulumi provider/cmd/$(PROVIDER)/schema.json
 	rm -rf sdk/nodejs
 	.pulumi/bin/pulumi package gen-sdk $(SCHEMA_FILE) --language nodejs
 	sed -i.bak -e "s/sourceMap/inlineSourceMap/g" sdk/nodejs/tsconfig.json
@@ -267,13 +267,13 @@ provider/scripts/vendor/pulumi-schema.d.ts: .awsx.version
 	rm sdk/nodejs/*.bak
 	@touch $@
 
-.make/generate_python: bin/pulumictl .pulumi/bin/pulumi $(SCHEMA_FILE)
+.make/generate_python: bin/pulumictl .pulumi/bin/pulumi provider/cmd/$(PROVIDER)/schema.json
 	rm -rf sdk/python
 	.pulumi/bin/pulumi package gen-sdk $(SCHEMA_FILE) --language python
 	cp README.md sdk/python
 	@touch $@
 
-.make/generate_dotnet: bin/pulumictl .pulumi/bin/pulumi $(SCHEMA_FILE)
+.make/generate_dotnet: bin/pulumictl .pulumi/bin/pulumi provider/cmd/$(PROVIDER)/schema.json
 	rm -rf sdk/dotnet
 	.pulumi/bin/pulumi package gen-sdk $(SCHEMA_FILE) --language dotnet
 	sed -i.bak -e "s/<\/Nullable>/<\/Nullable>\n    <UseSharedCompilation>false<\/UseSharedCompilation>/g" sdk/dotnet/UnMango.KubernetesTheHardWay.csproj
@@ -281,12 +281,12 @@ provider/scripts/vendor/pulumi-schema.d.ts: .awsx.version
 	rm sdk/dotnet/*.bak sdk/dotnet/**/*.bak
 	@touch $@
 
-.make/generate_go: bin/pulumictl .pulumi/bin/pulumi $(SCHEMA_FILE)
+.make/generate_go: bin/pulumictl .pulumi/bin/pulumi provider/cmd/$(PROVIDER)/schema.json
 	rm -rf sdk/go
 	.pulumi/bin/pulumi package gen-sdk $(SCHEMA_FILE) --language go
 	@touch $@
 
-.make/generate_types: vendor $(SCHEMA_FILE)
+.make/generate_types: vendor provider/cmd/$(PROVIDER)/schema.json
 	cd provider/scripts && yarn install && yarn gen-types
 	cd provider/cmd/${PROVIDER} && sed -i.bak 's/input.remote.Connection/input.remote.ConnectionArgs/g' schema-types.ts && rm schema-types.ts.bak
 	@touch $@
