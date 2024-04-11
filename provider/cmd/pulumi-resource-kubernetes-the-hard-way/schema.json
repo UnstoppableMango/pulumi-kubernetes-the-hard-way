@@ -862,6 +862,16 @@
                     "type": "string",
                     "description": "Path to the kubeconfig on the remote host."
                 },
+                "name": {
+                    "type": "string",
+                    "description": "Name of the static pod. Defaults to kube-vip.",
+                    "default": "kube-vip"
+                },
+                "namespace": {
+                    "type": "string",
+                    "description": "Namespace for the static pod. Defaults to kube-system.",
+                    "default": "kube-system"
+                },
                 "port": {
                     "type": "integer",
                     "description": "TODO",
@@ -4576,6 +4586,16 @@
                     "kubeconfigPath": {
                         "type": "string",
                         "description": "Path to the kubeconfig on the remote host."
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "Name of the static pod. Defaults to kube-vip.",
+                        "default": "kube-vip"
+                    },
+                    "namespace": {
+                        "type": "string",
+                        "description": "Namespace for the static pod. Defaults to kube-system.",
+                        "default": "kube-system"
                     },
                     "port": {
                         "type": "integer",
