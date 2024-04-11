@@ -60,4 +60,4 @@ export const certCert = cert.cert;
 export const certKey = cert.key;
 
 export const kubeconfigJson = kubeconfig.apply(JSON.stringify);
-export const kubeVipJson = kubeVip.result.apply(JSON.stringify);
+export const kubeVipYaml = kubeVip.yaml;
