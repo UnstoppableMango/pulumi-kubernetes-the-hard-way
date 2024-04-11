@@ -243,122 +243,16 @@ func generateConfig(kubernetesSpec schema.PackageSpec) schema.PackageSpec {
 				Required: []string{"result"},
 			},
 		},
-		configMod + "getKubeVipManifest": {
-			Description: "Gets the static pod manifests for KubeVip.",
-			Inputs: &schema.ObjectTypeSpec{
-				Properties: map[string]schema.PropertySpec{
-					"address": {
-						Description: "TODO",
-						TypeSpec:    typeSpecs.String,
-					},
-					"bgpAs": {
-						Description: "TODO",
-						TypeSpec:    typeSpecs.Integer,
-					},
-					"bgpEnable": {
-						Description: "TODO",
-						TypeSpec:    typeSpecs.Boolean,
-					},
-					"bgpPeerAddress": {
-						Description: "TODO",
-						TypeSpec:    typeSpecs.String,
-					},
-					"bgpPeerAs": {
-						Description: "TODO",
-						TypeSpec:    typeSpecs.Integer,
-					},
-					"bgpPeerPass": {
-						Description: "TODO",
-						TypeSpec:    typeSpecs.String,
-					},
-					"bgpPeers": { // This could be structured so that consumers don't need to know the format
-						Description: "TODO",
-						TypeSpec:    typeSpecs.String,
-					},
-					"bgpRouterId": {
-						Description: "TODO",
-						TypeSpec:    typeSpecs.String,
-					},
-					"cpEnable": {
-						Description: "TODO",
-						TypeSpec:    typeSpecs.Boolean,
-					},
-					"cpNamespace": {
-						Description: "TODO",
-						TypeSpec:    typeSpecs.String,
-					},
-					"image": {
-						Description: "Override the kube-vip image.",
-						TypeSpec:    typeSpecs.String,
-					},
-					"kubeconfigPath": {
-						Description: "Path to the kubeconfig on the remote host.",
-						TypeSpec:    typeSpecs.String,
-					},
-					"port": {
-						Description: "TODO",
-						TypeSpec:    typeSpecs.Integer,
-						Default:     6443,
-					},
-					"svcEnable": {
-						Description: "TODO",
-						TypeSpec:    typeSpecs.Boolean,
-					},
-					"version": {
-						Description: "Version of kube-vip to use.",
-						TypeSpec:    typeSpecs.String,
-					},
-					"vipArp": {
-						Description: "TODO",
-						TypeSpec:    typeSpecs.Boolean,
-					},
-					"vipCidr": {
-						Description: "TODO",
-						TypeSpec:    typeSpecs.Integer,
-					},
-					"vipDdns": {
-						Description: "TODO",
-						TypeSpec:    typeSpecs.Boolean,
-					},
-					"vipInterface": {
-						Description: "TODO",
-						TypeSpec:    typeSpecs.String,
-					},
-					"vipLeaderElection": {
-						Description: "TODO",
-						TypeSpec:    typeSpecs.Boolean,
-					},
-					"vipLeaseDuration": {
-						Description: "TODO",
-						TypeSpec:    typeSpecs.Integer,
-					},
-					"vipRenewDeadline": {
-						Description: "TODO",
-						TypeSpec:    typeSpecs.Integer,
-					},
-					"vipRetryPeriod": {
-						Description: "TODO",
-						TypeSpec:    typeSpecs.Integer,
-					},
-				},
-				Required: []string{"address", "kubeconfigPath", "vipCidr"},
-			},
-			Outputs: &schema.ObjectTypeSpec{
-				Properties: map[string]schema.PropertySpec{
-					"result": {
-						TypeSpec: schema.TypeSpec{
-							Ref: localType("PodManifest", "config"),
-						},
-					},
-				},
-				Required: []string{"result"},
-			},
-		},
+		configMod + "getKubeVipManifest": generateGetKubeVipManifest(),
+	}
+
+	resources := map[string]schema.ResourceSpec{
+		configMod + "KubeVipManifest": generateKubeVipManifest(functions[configMod+"getKubeVipManifest"]),
 	}
 
 	return schema.PackageSpec{
 		Functions: functions,
-		Resources: map[string]schema.ResourceSpec{},
+		Resources: resources,
 		Types:     types,
 	}
 }
@@ -372,5 +266,132 @@ func generatePodManifest(kubernetesSpec schema.PackageSpec) schema.ComplexTypeSp
 			Type:        "object",
 			Properties:  makeExternal(pod.Properties, kubernetesSpec),
 		},
+	}
+}
+
+func generateGetKubeVipManifest() schema.FunctionSpec {
+	return schema.FunctionSpec{
+		Description: "Gets the static pod manifests for KubeVip.",
+		Inputs: &schema.ObjectTypeSpec{
+			Properties: map[string]schema.PropertySpec{
+				"address": {
+					Description: "TODO",
+					TypeSpec:    typeSpecs.String,
+				},
+				"bgpAs": {
+					Description: "TODO",
+					TypeSpec:    typeSpecs.Integer,
+				},
+				"bgpEnable": {
+					Description: "TODO",
+					TypeSpec:    typeSpecs.Boolean,
+				},
+				"bgpPeerAddress": {
+					Description: "TODO",
+					TypeSpec:    typeSpecs.String,
+				},
+				"bgpPeerAs": {
+					Description: "TODO",
+					TypeSpec:    typeSpecs.Integer,
+				},
+				"bgpPeerPass": {
+					Description: "TODO",
+					TypeSpec:    typeSpecs.String,
+				},
+				"bgpPeers": { // This could be structured so that consumers don't need to know the format
+					Description: "TODO",
+					TypeSpec:    typeSpecs.String,
+				},
+				"bgpRouterId": {
+					Description: "TODO",
+					TypeSpec:    typeSpecs.String,
+				},
+				"cpEnable": {
+					Description: "TODO",
+					TypeSpec:    typeSpecs.Boolean,
+				},
+				"cpNamespace": {
+					Description: "TODO",
+					TypeSpec:    typeSpecs.String,
+				},
+				"image": {
+					Description: "Override the kube-vip image.",
+					TypeSpec:    typeSpecs.String,
+				},
+				"kubeconfigPath": {
+					Description: "Path to the kubeconfig on the remote host.",
+					TypeSpec:    typeSpecs.String,
+				},
+				"port": {
+					Description: "TODO",
+					TypeSpec:    typeSpecs.Integer,
+					Default:     6443,
+				},
+				"svcEnable": {
+					Description: "TODO",
+					TypeSpec:    typeSpecs.Boolean,
+				},
+				"version": {
+					Description: "Version of kube-vip to use.",
+					TypeSpec:    typeSpecs.String,
+				},
+				"vipArp": {
+					Description: "TODO",
+					TypeSpec:    typeSpecs.Boolean,
+				},
+				"vipCidr": {
+					Description: "TODO",
+					TypeSpec:    typeSpecs.Integer,
+				},
+				"vipDdns": {
+					Description: "TODO",
+					TypeSpec:    typeSpecs.Boolean,
+				},
+				"vipInterface": {
+					Description: "TODO",
+					TypeSpec:    typeSpecs.String,
+				},
+				"vipLeaderElection": {
+					Description: "TODO",
+					TypeSpec:    typeSpecs.Boolean,
+				},
+				"vipLeaseDuration": {
+					Description: "TODO",
+					TypeSpec:    typeSpecs.Integer,
+				},
+				"vipRenewDeadline": {
+					Description: "TODO",
+					TypeSpec:    typeSpecs.Integer,
+				},
+				"vipRetryPeriod": {
+					Description: "TODO",
+					TypeSpec:    typeSpecs.Integer,
+				},
+			},
+			Required: []string{"address", "kubeconfigPath", "vipCidr"},
+		},
+		Outputs: &schema.ObjectTypeSpec{
+			Properties: map[string]schema.PropertySpec{
+				"result": {
+					TypeSpec: schema.TypeSpec{
+						Ref: localType("PodManifest", "config"),
+					},
+				},
+			},
+			Required: []string{"result"},
+		},
+	}
+}
+
+func generateKubeVipManifest(getKubeVipManifest schema.FunctionSpec) schema.ResourceSpec {
+	return schema.ResourceSpec{
+		IsComponent: true,
+		ObjectTypeSpec: schema.ObjectTypeSpec{
+			Description: "Pseudo resource for generating the kube-vip manifest.",
+			Properties:  getKubeVipManifest.Outputs.Properties,
+			Required:    getKubeVipManifest.Outputs.Required,
+		},
+		InputProperties: getKubeVipManifest.Inputs.Properties,
+		RequiredInputs:  getKubeVipManifest.Inputs.Required,
 	}
 }
