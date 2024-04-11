@@ -73,19 +73,20 @@ const systemdService = new SystemdService('remote-test', {
   },
 });
 
-const staticPod = new StaticPod('remote', {
-  connection: { host, port, user, password },
-  pod: {
-    apiVersion: 'v1',
-    kind: 'Pod',
-    metadata: { name: 'remote' },
-    spec: {
-      containers: [{
-        name: 'idk',
-      }],
-    },
-  },
-});
+// Permissions for /etc/kubernetes/manifests puts a damper on this one...
+// const staticPod = new StaticPod('remote', {
+//   connection: { host, port, user, password },
+//   pod: {
+//     apiVersion: 'v1',
+//     kind: 'Pod',
+//     metadata: { name: 'remote' },
+//     spec: {
+//       containers: [{
+//         name: 'idk',
+//       }],
+//     },
+//   },
+// });
 
 export const fileStderr = file.stderr;
 export const fileStdout = file.stdout;
