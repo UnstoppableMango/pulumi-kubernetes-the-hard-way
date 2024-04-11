@@ -5,6 +5,11 @@ import * as pulumi from "@pulumi/pulumi";
 import * as utilities from "../utilities";
 
 // Export members:
+export { ChmodArgs } from "./chmod";
+export type Chmod = import("./chmod").Chmod;
+export const Chmod: typeof import("./chmod").Chmod = null as any;
+utilities.lazyLoad(exports, ["Chmod"], () => require("./chmod"));
+
 export { EtcdctlArgs } from "./etcdctl";
 export type Etcdctl = import("./etcdctl").Etcdctl;
 export const Etcdctl: typeof import("./etcdctl").Etcdctl = null as any;
@@ -58,6 +63,8 @@ const _module = {
     version: utilities.getVersion(),
     construct: (name: string, type: string, urn: string): pulumi.Resource => {
         switch (type) {
+            case "kubernetes-the-hard-way:tools:Chmod":
+                return new Chmod(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:tools:Etcdctl":
                 return new Etcdctl(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:tools:Mkdir":

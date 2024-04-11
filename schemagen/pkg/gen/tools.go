@@ -139,6 +139,7 @@ func generateTools(commandSpec schema.PackageSpec) schema.PackageSpec {
 	}
 
 	tools := map[string]schema.ResourceSpec{
+		"Chmod":     generateChmod(),
 		"Etcdctl":   generateEtcdctl(),
 		"Mkdir":     generateMkdir(),
 		"Mktemp":    generateMktemp(),
@@ -181,6 +182,76 @@ func generateTools(commandSpec schema.PackageSpec) schema.PackageSpec {
 		Functions: map[string]schema.FunctionSpec{},
 		Resources: resources,
 		Types:     types,
+	}
+}
+
+func generateChmod() schema.ResourceSpec {
+	inputs := map[string]schema.PropertySpec{
+		"changes": {
+			Description: "Like verbose but report only when a change is made.",
+			TypeSpec:    typeSpecs.Boolean,
+		},
+		"files": {
+			Description: "Corresponds to the [FILE] argument.",
+			TypeSpec:    typeSpecs.OneOrMoreStrings,
+		},
+		"help": {
+			Description: "Display help and exit.",
+			TypeSpec:    typeSpecs.Boolean,
+		},
+		"mode": {
+			Description: "Modes may be absolute or symbolic. An absolute mode is an octal number...",
+			TypeSpec:    typeSpecs.String,
+		},
+		"noPreserveRoot": {
+			Description: "Do not trea '/' spcially (the default).",
+			TypeSpec:    typeSpecs.Boolean,
+		},
+		"preserveRoot": {
+			Description: "Fail to operate recursively on '/'.",
+			TypeSpec:    typeSpecs.Boolean,
+		},
+		"quiet": {
+			Description: "Suppress most error messages. Same as `silent`.",
+			TypeSpec:    typeSpecs.Boolean,
+		},
+		"recursive": {
+			Description: "Change files and directories recursively.",
+			TypeSpec:    typeSpecs.Boolean,
+		},
+		"reference": {
+			Description: "Use RFILE's mode instead of specifying MODE values. RFILE is always dereferenced if a symbolic link.",
+			TypeSpec:    typeSpecs.String,
+		},
+		"silent": {
+			Description: "Suppress most error messages. Same as `quiet`.",
+			TypeSpec:    typeSpecs.Boolean,
+		},
+		"version": {
+			Description: "Output version information and exit.",
+			TypeSpec:    typeSpecs.Boolean,
+		},
+	}
+
+	required := []string{"files", "mode"}
+
+	return schema.ResourceSpec{
+		ObjectTypeSpec: schema.ObjectTypeSpec{
+			Description: "Abstraction over the `chmod` utility on a remote system.",
+			Properties:  implicitOutputs(inputs, map[string]schema.PropertySpec{}),
+			Required: append(required,
+				"changes",
+				"help",
+				"noPreserveRoot",
+				"preserveRoot",
+				"quiet",
+				"recursive",
+				"silent",
+				"version",
+			),
+		},
+		InputProperties: inputs,
+		RequiredInputs:  required,
 	}
 }
 

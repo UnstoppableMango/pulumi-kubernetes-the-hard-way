@@ -1,6 +1,6 @@
 import * as path from 'node:path';
 import { Config } from '@pulumi/pulumi';
-import { Mkdir, Mktemp, Tar, Wget } from '@unmango/pulumi-kubernetes-the-hard-way/tools';
+import { Chmod, Mkdir, Mktemp, Tar, Wget } from '@unmango/pulumi-kubernetes-the-hard-way/tools';
 import { Download, EtcdConfiguration, File, StaticPod, SystemdService } from '@unmango/pulumi-kubernetes-the-hard-way/remote';
 
 const config = new Config();
@@ -14,6 +14,12 @@ const file = new File('remote', {
   connection: { host, port, user, password },
   content: config.require('content'),
   path: path.join(basePath, 'remote-file'),
+});
+
+const chmod = new Chmod('remote', {
+   connection: { host, port, user, password },
+   files: file.path,
+   mode: 'u+x',
 });
 
 const wget = new Wget('remote', {

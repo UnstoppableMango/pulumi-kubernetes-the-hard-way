@@ -41,6 +41,7 @@
     "remote/systemdService.ts",
     "resources.ts",
     "schema-types.ts",
+    "tools/chmod.ts",
     "tools/commandBuilder.ts",
     "tools/etcdctl.ts",
     "tools/index.ts",

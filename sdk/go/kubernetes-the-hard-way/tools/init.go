@@ -21,6 +21,8 @@ func (m *module) Version() semver.Version {
 
 func (m *module) Construct(ctx *pulumi.Context, name, typ, urn string) (r pulumi.Resource, err error) {
 	switch typ {
+	case "kubernetes-the-hard-way:tools:Chmod":
+		r = &Chmod{}
 	case "kubernetes-the-hard-way:tools:Etcdctl":
 		r = &Etcdctl{}
 	case "kubernetes-the-hard-way:tools:Mkdir":
