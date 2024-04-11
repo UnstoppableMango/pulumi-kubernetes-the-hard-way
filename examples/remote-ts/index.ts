@@ -1,7 +1,7 @@
 import * as path from 'node:path';
 import { Config } from '@pulumi/pulumi';
 import { Mkdir, Mktemp, Tar, Wget } from '@unmango/pulumi-kubernetes-the-hard-way/tools';
-import { Download, EtcdConfiguration, File, SystemdService } from '@unmango/pulumi-kubernetes-the-hard-way/remote';
+import { Download, EtcdConfiguration, File, StaticPod, SystemdService } from '@unmango/pulumi-kubernetes-the-hard-way/remote';
 
 const config = new Config();
 const host = config.require('host');
@@ -72,6 +72,21 @@ const systemdService = new SystemdService('remote-test', {
     execStart: 'test',
   },
 });
+
+// Permissions for /etc/kubernetes/manifests puts a damper on this one...
+// const staticPod = new StaticPod('remote', {
+//   connection: { host, port, user, password },
+//   pod: {
+//     apiVersion: 'v1',
+//     kind: 'Pod',
+//     metadata: { name: 'remote' },
+//     spec: {
+//       containers: [{
+//         name: 'idk',
+//       }],
+//     },
+//   },
+// });
 
 export const fileStderr = file.stderr;
 export const fileStdout = file.stdout;

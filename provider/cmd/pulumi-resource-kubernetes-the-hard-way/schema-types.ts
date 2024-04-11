@@ -6,6 +6,7 @@
 import * as pulumi from "@pulumi/pulumi";
 export type ConstructComponent<T extends pulumi.ComponentResource = pulumi.ComponentResource> = (name: string, inputs: any, options: pulumi.ComponentResourceOptions) => T;
 export type ResourceConstructor = {
+    readonly "kubernetes-the-hard-way:config:KubeVipManifest": ConstructComponent<KubeVipManifest>;
     readonly "kubernetes-the-hard-way:remote:CniPluginsInstall": ConstructComponent<CniPluginsInstall>;
     readonly "kubernetes-the-hard-way:remote:ContainerdInstall": ConstructComponent<ContainerdInstall>;
     readonly "kubernetes-the-hard-way:remote:CrictlInstall": ConstructComponent<CrictlInstall>;
@@ -20,6 +21,7 @@ export type ResourceConstructor = {
     readonly "kubernetes-the-hard-way:remote:KubectlInstall": ConstructComponent<KubectlInstall>;
     readonly "kubernetes-the-hard-way:remote:KubeletInstall": ConstructComponent<KubeletInstall>;
     readonly "kubernetes-the-hard-way:remote:RuncInstall": ConstructComponent<RuncInstall>;
+    readonly "kubernetes-the-hard-way:remote:StaticPod": ConstructComponent<StaticPod>;
     readonly "kubernetes-the-hard-way:remote:SystemdService": ConstructComponent<SystemdService>;
     readonly "kubernetes-the-hard-way:tls:Certificate": ConstructComponent<Certificate>;
     readonly "kubernetes-the-hard-way:tls:ClusterPki": ConstructComponent<ClusterPki>;
@@ -36,11 +38,48 @@ export type ResourceConstructor = {
     readonly "kubernetes-the-hard-way:tools:Wget": ConstructComponent<Wget>;
 };
 export type Functions = {
+    "kubernetes-the-hard-way:config:getKubeVipManifest": (inputs: getKubeVipManifestInputs) => Promise<getKubeVipManifestOutputs>;
+    "kubernetes-the-hard-way:config:getKubeconfig": (inputs: getKubeconfigInputs) => Promise<getKubeconfigOutputs>;
     "kubernetes-the-hard-way:tls:ClusterPki/getKubeconfig": (inputs: ClusterPki_getKubeconfigInputs) => Promise<ClusterPki_getKubeconfigOutputs>;
 };
 import * as command from "@pulumi/command";
+import * as kubernetes from "@pulumi/kubernetes";
 import * as random from "@pulumi/random";
 import * as tls from "@pulumi/tls";
+export abstract class KubeVipManifest<TData = any> extends (pulumi.ComponentResource)<TData> {
+    public result!: PodManifestOutputs | pulumi.Output<PodManifestOutputs>;
+    public yaml!: string | pulumi.Output<string>;
+    constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
+        super("kubernetes-the-hard-way:config:KubeVipManifest", name, opts.urn ? { result: undefined, yaml: undefined } : { name, args, opts }, opts);
+    }
+}
+export interface KubeVipManifestArgs {
+    readonly address: pulumi.Input<string>;
+    readonly bgpAs?: pulumi.Input<number>;
+    readonly bgpEnable?: pulumi.Input<boolean>;
+    readonly bgpPeerAddress?: pulumi.Input<string>;
+    readonly bgpPeerAs?: pulumi.Input<number>;
+    readonly bgpPeerPass?: pulumi.Input<string>;
+    readonly bgpPeers?: pulumi.Input<string>;
+    readonly bgpRouterId?: pulumi.Input<string>;
+    readonly cpEnable?: pulumi.Input<boolean>;
+    readonly cpNamespace?: pulumi.Input<string>;
+    readonly image?: pulumi.Input<string>;
+    readonly kubeconfigPath: pulumi.Input<string>;
+    readonly name?: pulumi.Input<string>;
+    readonly namespace?: pulumi.Input<string>;
+    readonly port?: pulumi.Input<number>;
+    readonly svcEnable?: pulumi.Input<boolean>;
+    readonly version?: pulumi.Input<string>;
+    readonly vipArp?: pulumi.Input<boolean>;
+    readonly vipCidr: pulumi.Input<number>;
+    readonly vipDdns?: pulumi.Input<boolean>;
+    readonly vipInterface?: pulumi.Input<string>;
+    readonly vipLeaderElection?: pulumi.Input<boolean>;
+    readonly vipLeaseDuration?: pulumi.Input<number>;
+    readonly vipRenewDeadline?: pulumi.Input<number>;
+    readonly vipRetryPeriod?: pulumi.Input<number>;
+}
 export abstract class CniPluginsInstall<TData = any> extends (pulumi.ComponentResource)<TData> {
     public architecture!: ArchitectureOutputs | pulumi.Output<ArchitectureOutputs>;
     public archiveName!: string | pulumi.Output<string>;
@@ -399,6 +438,22 @@ export interface RuncInstallArgs {
     readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
     readonly directory?: pulumi.Input<string>;
     readonly version?: pulumi.Input<string>;
+}
+export abstract class StaticPod<TData = any> extends (pulumi.ComponentResource)<TData> {
+    public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
+    public file!: File | pulumi.Output<File>;
+    public fileName!: string | pulumi.Output<string>;
+    public mkdir!: Mkdir | pulumi.Output<Mkdir>;
+    public path!: string | pulumi.Output<string>;
+    public pod!: PodManifestOutputs | pulumi.Output<PodManifestOutputs>;
+    constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
+        super("kubernetes-the-hard-way:remote:StaticPod", name, opts.urn ? { connection: undefined, file: undefined, fileName: undefined, mkdir: undefined, path: undefined, pod: undefined } : { name, args, opts }, opts);
+    }
+}
+export interface StaticPodArgs {
+    readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
+    readonly fileName?: pulumi.Input<string>;
+    readonly pod: pulumi.Input<PodManifestInputs>;
 }
 export abstract class SystemdService<TData = any> extends (pulumi.ComponentResource)<TData> {
     public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
@@ -963,6 +1018,20 @@ export interface KubeconfigWorkerOptionsOutputs {
     readonly publicIp: pulumi.Output<string>;
     readonly type?: string;
 }
+export interface PodManifestInputs {
+    readonly apiVersion?: pulumi.Input<string>;
+    readonly kind?: pulumi.Input<string>;
+    readonly metadata?: pulumi.Input<kubernetes.types.input.meta.v1.ObjectMeta>;
+    readonly spec?: pulumi.Input<kubernetes.types.input.core.v1.PodSpec>;
+    readonly status?: pulumi.Input<kubernetes.types.input.core.v1.PodStatus>;
+}
+export interface PodManifestOutputs {
+    readonly apiVersion?: pulumi.Output<string>;
+    readonly kind?: pulumi.Output<string>;
+    readonly metadata?: pulumi.Output<kubernetes.types.output.meta.v1.ObjectMeta>;
+    readonly spec?: pulumi.Output<kubernetes.types.output.core.v1.PodSpec>;
+    readonly status?: pulumi.Output<kubernetes.types.output.core.v1.PodStatus>;
+}
 export interface UserInputs {
     readonly clientCertificateData: pulumi.Input<string>;
     readonly clientKeyData: pulumi.Input<string>;
@@ -1063,6 +1132,43 @@ export type SystemctlCommandInputs = "bind" | "cat" | "clean" | "daemon-reload" 
 export type SystemctlCommandOutputs = "bind" | "cat" | "clean" | "daemon-reload" | "disable" | "enable" | "freeze" | "is-active" | "is-enabled" | "is-failed" | "isolate" | "kill" | "list-automounts" | "list-dependencies" | "list-paths" | "list-sockets" | "list-timers" | "list-units" | "mask" | "mount-image" | "reenable" | "reload" | "reload-or-restart" | "restart" | "set-property" | "show" | "start" | "status" | "stop" | "thaw" | "try-reload-or-restart" | "try-restart" | "unmask";
 export type TeeModeInputs = "warn" | "warn-nopipe" | "exit" | "exit-nopipe";
 export type TeeModeOutputs = "warn" | "warn-nopipe" | "exit" | "exit-nopipe";
+export interface getKubeVipManifestInputs {
+    readonly address: pulumi.Input<string>;
+    readonly bgpAs?: pulumi.Input<number>;
+    readonly bgpEnable?: pulumi.Input<boolean>;
+    readonly bgpPeerAddress?: pulumi.Input<string>;
+    readonly bgpPeerAs?: pulumi.Input<number>;
+    readonly bgpPeerPass?: pulumi.Input<string>;
+    readonly bgpPeers?: pulumi.Input<string>;
+    readonly bgpRouterId?: pulumi.Input<string>;
+    readonly cpEnable?: pulumi.Input<boolean>;
+    readonly cpNamespace?: pulumi.Input<string>;
+    readonly image?: pulumi.Input<string>;
+    readonly kubeconfigPath: pulumi.Input<string>;
+    readonly name?: pulumi.Input<string>;
+    readonly namespace?: pulumi.Input<string>;
+    readonly port?: pulumi.Input<number>;
+    readonly svcEnable?: pulumi.Input<boolean>;
+    readonly version?: pulumi.Input<string>;
+    readonly vipArp?: pulumi.Input<boolean>;
+    readonly vipCidr: pulumi.Input<number>;
+    readonly vipDdns?: pulumi.Input<boolean>;
+    readonly vipInterface?: pulumi.Input<string>;
+    readonly vipLeaderElection?: pulumi.Input<boolean>;
+    readonly vipLeaseDuration?: pulumi.Input<number>;
+    readonly vipRenewDeadline?: pulumi.Input<number>;
+    readonly vipRetryPeriod?: pulumi.Input<number>;
+}
+export interface getKubeVipManifestOutputs {
+    readonly result: pulumi.Output<PodManifestOutputs>;
+}
+export interface getKubeconfigInputs {
+    readonly caPem: pulumi.Input<string>;
+    readonly options: unknown;
+}
+export interface getKubeconfigOutputs {
+    readonly result: pulumi.Output<KubeconfigOutputs>;
+}
 export interface ClusterPki_getKubeconfigInputs {
     readonly __self__: pulumi.Input<ClusterPki>;
     readonly options: unknown;

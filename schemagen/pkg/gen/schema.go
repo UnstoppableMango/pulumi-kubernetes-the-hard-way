@@ -18,6 +18,7 @@ import (
 func GenerateSchema(packageDir string) schema.PackageSpec {
 	dependencies := readPackageDependencies(packageDir)
 	commandSpec := getPackageSpec("command", dependencies.Command)
+	kubernetesSpec := getPackageSpec("kubernetes", dependencies.Kubernetes)
 	randomSpec := getPackageSpec("random", dependencies.Random)
 	tlsSpec := getPackageSpec("tls", dependencies.Tls)
 
@@ -36,10 +37,11 @@ func GenerateSchema(packageDir string) schema.PackageSpec {
 				"dictionaryConstructors":       true,
 				"liftSingleValueMethodReturns": true,
 				"packageReferences": map[string]string{
-					"Pulumi":         "3.*",
-					"Pulumi.Command": "0.9.*",
-					"Pulumi.Random":  "4.*",
-					"Pulumi.Tls":     "5.*",
+					"Pulumi":            "3.*",
+					"Pulumi.Command":    "0.9.*",
+					"Pulumi.Kubernetes": "4.*",
+					"Pulumi.Random":     "4.*",
+					"Pulumi.Tls":        "5.*",
 				},
 			}),
 			"go": rawMessage(map[string]interface{}{
@@ -55,10 +57,11 @@ func GenerateSchema(packageDir string) schema.PackageSpec {
 				"packageName":                  "@unmango/pulumi-kubernetes-the-hard-way",
 				"liftSingleValueMethodReturns": true,
 				"dependencies": map[string]string{
-					"@pulumi/pulumi":  "^3.0.0",
-					"@pulumi/command": "^" + dependencies.Command,
-					"@pulumi/random":  "^" + dependencies.Random,
-					"@pulumi/tls":     "^" + dependencies.Tls,
+					"@pulumi/pulumi":     "^3.0.0",
+					"@pulumi/command":    "^" + dependencies.Command,
+					"@pulumi/kubernetes": "^" + dependencies.Kubernetes,
+					"@pulumi/random":     "^" + dependencies.Random,
+					"@pulumi/tls":        "^" + dependencies.Tls,
 				},
 				"devDependencies": map[string]string{
 					"@types/node": "^18",
@@ -71,10 +74,11 @@ func GenerateSchema(packageDir string) schema.PackageSpec {
 					"enabled": true,
 				},
 				"requires": map[string]string{
-					"pulumi":         ">=3.91.1,<4.0.0",
-					"pulumi-command": fmt.Sprintf(">=%s,<1.0.0", dependencies.Command),
-					"pulumi-random":  fmt.Sprintf(">=%s,<5.0.0", dependencies.Random),
-					"pulumi-tls":     fmt.Sprintf(">=%s,<6.0.0", dependencies.Tls),
+					"pulumi":            ">=3.91.1,<4.0.0",
+					"pulumi-command":    fmt.Sprintf(">=%s,<1.0.0", dependencies.Command),
+					"pulumi-kubernetes": fmt.Sprintf(">=%s,<5.0.0", dependencies.Kubernetes),
+					"pulumi-random":     fmt.Sprintf(">=%s,<5.0.0", dependencies.Random),
+					"pulumi-tls":        fmt.Sprintf(">=%s,<6.0.0", dependencies.Tls),
 				},
 			}),
 			"java": rawMessage(map[string]interface{}{
@@ -86,6 +90,7 @@ func GenerateSchema(packageDir string) schema.PackageSpec {
 					"com.google.code.findbugs:jsr305": "3.0.2",
 					"com.google.code.gson:gson":       "2.8.9",
 					"com.pulumi:command":              dependencies.Command,
+					"com.pulumi:kubernetes":           dependencies.Kubernetes,
 					"com.pulumi:pulumi":               "0.9.9",
 					"com.pulumi:random":               dependencies.Random,
 					"com.pulumi:tls":                  dependencies.Tls,
@@ -98,7 +103,7 @@ func GenerateSchema(packageDir string) schema.PackageSpec {
 	}
 
 	return extendSchemas(packageSpec,
-		generateConfig(),
+		generateConfig(kubernetesSpec),
 		generateRemote(commandSpec),
 		generateTls(randomSpec, tlsSpec),
 		generateTools(commandSpec))
@@ -172,9 +177,10 @@ func getSpecFromUrl(url string) schema.PackageSpec {
 }
 
 type Dependencies struct {
-	Command string `json:"@pulumi/command"`
-	Random  string `json:"@pulumi/random"`
-	Tls     string `json:"@pulumi/tls"`
+	Command    string `json:"@pulumi/command"`
+	Kubernetes string `json:"@pulumi/kubernetes"`
+	Random     string `json:"@pulumi/random"`
+	Tls        string `json:"@pulumi/tls"`
 }
 
 type PackageJson struct {

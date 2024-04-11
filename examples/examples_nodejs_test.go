@@ -26,6 +26,7 @@ func TestSimpleTs(t *testing.T) {
 				assert.NotEmpty(t, stack.Outputs["certPem"])
 				assert.NotEmpty(t, stack.Outputs["keyPem"])
 				assert.NotEmpty(t, stack.Outputs["kubeconfigJson"])
+				assert.NotEmpty(t, stack.Outputs["kubeVipYaml"])
 			},
 		})
 

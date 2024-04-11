@@ -13,7 +13,10 @@
         "strict": true
     },
     "files": [
+        "config/getKubeVipManifest.ts",
+        "config/getKubeconfig.ts",
         "config/index.ts",
+        "config/kubeVipManifest.ts",
         "index.ts",
         "provider.ts",
         "remote/cniPluginsInstall.ts",
@@ -31,6 +34,7 @@
         "remote/kubectlInstall.ts",
         "remote/kubeletInstall.ts",
         "remote/runcInstall.ts",
+        "remote/staticPod.ts",
         "remote/systemdService.ts",
         "tls/certificate.ts",
         "tls/clusterPki.ts",

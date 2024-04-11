@@ -6,5 +6,8 @@ from .. import _utilities
 import typing
 # Export this package's modules as members:
 from ._enums import *
+from .get_kube_vip_manifest import *
+from .get_kubeconfig import *
+from .kube_vip_manifest import *
 from ._inputs import *
 from . import outputs

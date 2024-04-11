@@ -13,8 +13,10 @@
     "forceConsistentCasingInFileNames": true
   },
   "files": [
+    "config/getKubeVipManifest.ts",
     "config/index.ts",
     "config/kubeconfig.ts",
+    "config/kubeVipManifest.ts",
     "functions.ts",
     "index.ts",
     "provider.ts",
@@ -35,6 +37,7 @@
     "remote/kubeProxy.ts",
     "remote/kubeSchedulerInstall.ts",
     "remote/runc.ts",
+    "remote/staticPod.ts",
     "remote/systemdService.ts",
     "resources.ts",
     "schema-types.ts",

@@ -157,6 +157,7 @@ func generateRemote(commandSpec schema.PackageSpec) schema.PackageSpec {
 		remoteMod + "KubeProxyInstall":             generateBinaryInstall(commandSpec, "Installs kube-proxy on a remote system."),
 		remoteMod + "KubeSchedulerInstall":         generateBinaryInstall(commandSpec, "Installs kube-scheduler on a remote system."),
 		remoteMod + "RuncInstall":                  generateBinaryInstall(commandSpec, "Installs runc on a remote system."),
+		remoteMod + "StaticPod":                    generateStaticPod(commandSpec),
 		remoteMod + "SystemdService":               generateSystemdService(commandSpec),
 	}
 
@@ -623,5 +624,58 @@ func generateSystemdService(commandSpec schema.PackageSpec) schema.ResourceSpec 
 		},
 		InputProperties: inputs,
 		RequiredInputs:  requiredInputs,
+	}
+}
+
+func generateStaticPod(commandSpec schema.PackageSpec) schema.ResourceSpec {
+	inputs := map[string]schema.PropertySpec{
+		"connection": {
+			Description: "The parameters with which to connect to the remote host.",
+			TypeSpec:    schema.TypeSpec{Ref: refType(commandSpec, "Connection", "remote")},
+		},
+		"fileName": {
+			Description: "The name of the file on the remote system.",
+			TypeSpec:    typeSpecs.String,
+		},
+		"pod": {
+			Description: "The pod manifest.",
+			TypeSpec:    schema.TypeSpec{Ref: localType("PodManifest", "config")},
+		},
+	}
+
+	outputs := map[string]schema.PropertySpec{
+		"file": {
+			Description: "The remote manifest file.",
+			TypeSpec:    schema.TypeSpec{Ref: localResource("File", "remote")},
+		},
+		"mkdir": {
+			Description: "The mkdir operation to ensure /etc/kubernetes/manifests exists.",
+			TypeSpec:    schema.TypeSpec{Ref: localResource("Mkdir", "tools")},
+		},
+		"path": {
+			Description: "The path to the manifest on the remote system.",
+			TypeSpec:    typeSpecs.String,
+		},
+	}
+	maps.Copy(outputs, inputs)
+
+	requiredOutputs := []string{
+		"connection",
+		"file",
+		"fileName",
+		"mkdir",
+		"path",
+		"pod",
+	}
+
+	return schema.ResourceSpec{
+		IsComponent: true,
+		ObjectTypeSpec: schema.ObjectTypeSpec{
+			Description: "Create a static pod manifest on a remote system.",
+			Properties:  outputs,
+			Required:    requiredOutputs,
+		},
+		InputProperties: inputs,
+		RequiredInputs:  []string{"connection", "pod"},
 	}
 }

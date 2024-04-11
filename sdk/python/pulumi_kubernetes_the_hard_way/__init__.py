@@ -28,6 +28,14 @@ _utilities.register(
 [
  {
   "pkg": "kubernetes-the-hard-way",
+  "mod": "config",
+  "fqn": "pulumi_kubernetes_the_hard_way.config",
+  "classes": {
+   "kubernetes-the-hard-way:config:KubeVipManifest": "KubeVipManifest"
+  }
+ },
+ {
+  "pkg": "kubernetes-the-hard-way",
   "mod": "remote",
   "fqn": "pulumi_kubernetes_the_hard_way.remote",
   "classes": {
@@ -45,6 +53,7 @@ _utilities.register(
    "kubernetes-the-hard-way:remote:KubectlInstall": "KubectlInstall",
    "kubernetes-the-hard-way:remote:KubeletInstall": "KubeletInstall",
    "kubernetes-the-hard-way:remote:RuncInstall": "RuncInstall",
+   "kubernetes-the-hard-way:remote:StaticPod": "StaticPod",
    "kubernetes-the-hard-way:remote:SystemdService": "SystemdService"
   }
  },
