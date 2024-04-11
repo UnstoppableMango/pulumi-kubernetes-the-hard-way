@@ -41,6 +41,7 @@
         "tls/encryptionKey.ts",
         "tls/index.ts",
         "tls/rootCa.ts",
+        "tools/chmod.ts",
         "tools/etcdctl.ts",
         "tools/index.ts",
         "tools/mkdir.ts",

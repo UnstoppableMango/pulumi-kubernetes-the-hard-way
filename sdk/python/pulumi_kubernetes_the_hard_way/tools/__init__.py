@@ -6,6 +6,7 @@ from .. import _utilities
 import typing
 # Export this package's modules as members:
 from ._enums import *
+from .chmod import *
 from .etcdctl import *
 from .mkdir import *
 from .mktemp import *
