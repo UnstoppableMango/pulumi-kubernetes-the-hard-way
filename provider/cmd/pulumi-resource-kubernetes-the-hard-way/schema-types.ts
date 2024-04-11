@@ -47,8 +47,9 @@ import * as random from "@pulumi/random";
 import * as tls from "@pulumi/tls";
 export abstract class KubeVipManifest<TData = any> extends (pulumi.ComponentResource)<TData> {
     public result!: PodManifestOutputs | pulumi.Output<PodManifestOutputs>;
+    public yaml!: string | pulumi.Output<string>;
     constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
-        super("kubernetes-the-hard-way:config:KubeVipManifest", name, opts.urn ? { result: undefined } : { name, args, opts }, opts);
+        super("kubernetes-the-hard-way:config:KubeVipManifest", name, opts.urn ? { result: undefined, yaml: undefined } : { name, args, opts }, opts);
     }
 }
 export interface KubeVipManifestArgs {
