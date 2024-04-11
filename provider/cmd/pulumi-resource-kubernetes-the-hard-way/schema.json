@@ -2387,6 +2387,10 @@
                     "type": "string",
                     "description": "The name of the file on the remote system."
                 },
+                "mkdir": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mkdir",
+                    "description": "The mkdir operation to ensure /etc/kubernetes/manifests exists."
+                },
                 "path": {
                     "type": "string",
                     "description": "The path to the manifest on the remote system."
@@ -2400,6 +2404,7 @@
                 "connection",
                 "file",
                 "fileName",
+                "mkdir",
                 "path",
                 "pod"
             ],
