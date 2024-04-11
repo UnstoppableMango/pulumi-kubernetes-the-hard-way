@@ -32,6 +32,13 @@ export async function getKubeVipManifest(inputs: schema.getKubeVipManifestInputs
   if (inputs.vipRetryPeriod) push(env, 'vip_retryperiod', inputs.vipRetryPeriod);
 
   const result: schema.PodManifestInputs = {
+    // Const doesn't seem to be working for these two
+    apiVersion: 'v1',
+    kind: 'Pod',
+    metadata: {
+      name: 'kube-vip',
+      namespace: 'kube-system',
+    },
     spec: {
       containers: [{
         name: 'kube-vip',
