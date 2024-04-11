@@ -251,6 +251,34 @@ func generateConfig(kubernetesSpec schema.PackageSpec) schema.PackageSpec {
 						Description: "TODO",
 						TypeSpec:    typeSpecs.String,
 					},
+					"bgpAs": {
+						Description: "TODO",
+						TypeSpec:    typeSpecs.Integer,
+					},
+					"bgpEnable": {
+						Description: "TODO",
+						TypeSpec:    typeSpecs.Boolean,
+					},
+					"bgpPeerAddress": {
+						Description: "TODO",
+						TypeSpec:    typeSpecs.String,
+					},
+					"bgpPeerAs": {
+						Description: "TODO",
+						TypeSpec:    typeSpecs.Integer,
+					},
+					"bgpPeerPass": {
+						Description: "TODO",
+						TypeSpec:    typeSpecs.String,
+					},
+					"bgpPeers": { // This could be structured so that consumers don't need to know the format
+						Description: "TODO",
+						TypeSpec:    typeSpecs.String,
+					},
+					"bgpRouterId": {
+						Description: "TODO",
+						TypeSpec:    typeSpecs.String,
+					},
 					"cpEnable": {
 						Description: "TODO",
 						TypeSpec:    typeSpecs.Boolean,
