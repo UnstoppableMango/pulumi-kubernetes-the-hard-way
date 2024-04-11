@@ -17,6 +17,8 @@ type KubeVipManifest struct {
 	pulumi.ResourceState
 
 	Result PodManifestOutput `pulumi:"result"`
+	// The yaml representation of the manifest
+	Yaml pulumi.StringOutput `pulumi:"yaml"`
 }
 
 // NewKubeVipManifest registers a new resource with the given unique name, arguments, and options.
@@ -235,6 +237,11 @@ func (o KubeVipManifestOutput) ToKubeVipManifestOutputWithContext(ctx context.Co
 
 func (o KubeVipManifestOutput) Result() PodManifestOutput {
 	return o.ApplyT(func(v *KubeVipManifest) PodManifestOutput { return v.Result }).(PodManifestOutput)
+}
+
+// The yaml representation of the manifest
+func (o KubeVipManifestOutput) Yaml() pulumi.StringOutput {
+	return o.ApplyT(func(v *KubeVipManifest) pulumi.StringOutput { return v.Yaml }).(pulumi.StringOutput)
 }
 
 type KubeVipManifestArrayOutput struct{ *pulumi.OutputState }

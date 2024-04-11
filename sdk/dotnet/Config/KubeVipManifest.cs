@@ -19,6 +19,12 @@ namespace UnMango.KubernetesTheHardWay.Config
         [Output("result")]
         public Output<Outputs.PodManifest> Result { get; private set; } = null!;
 
+        /// <summary>
+        /// The yaml representation of the manifest
+        /// </summary>
+        [Output("yaml")]
+        public Output<string> Yaml { get; private set; } = null!;
+
 
         /// <summary>
         /// Create a KubeVipManifest resource with the given unique name, arguments, and options.

@@ -536,6 +536,7 @@ class KubeVipManifest(pulumi.ComponentResource):
             __props__.__dict__["vip_renew_deadline"] = vip_renew_deadline
             __props__.__dict__["vip_retry_period"] = vip_retry_period
             __props__.__dict__["result"] = None
+            __props__.__dict__["yaml"] = None
         super(KubeVipManifest, __self__).__init__(
             'kubernetes-the-hard-way:config:KubeVipManifest',
             resource_name,
@@ -547,4 +548,12 @@ class KubeVipManifest(pulumi.ComponentResource):
     @pulumi.getter
     def result(self) -> pulumi.Output['outputs.PodManifest']:
         return pulumi.get(self, "result")
+
+    @property
+    @pulumi.getter
+    def yaml(self) -> pulumi.Output[str]:
+        """
+        The yaml representation of the manifest
+        """
+        return pulumi.get(self, "yaml")
 

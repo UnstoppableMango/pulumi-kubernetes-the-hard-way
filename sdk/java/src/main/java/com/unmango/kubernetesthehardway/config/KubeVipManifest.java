@@ -10,6 +10,7 @@ import com.pulumi.core.internal.Codegen;
 import com.unmango.kubernetesthehardway.Utilities;
 import com.unmango.kubernetesthehardway.config.KubeVipManifestArgs;
 import com.unmango.kubernetesthehardway.config.outputs.PodManifest;
+import java.lang.String;
 import javax.annotation.Nullable;
 
 /**
@@ -23,6 +24,20 @@ public class KubeVipManifest extends com.pulumi.resources.ComponentResource {
 
     public Output<PodManifest> result() {
         return this.result;
+    }
+    /**
+     * The yaml representation of the manifest
+     * 
+     */
+    @Export(name="yaml", refs={String.class}, tree="[0]")
+    private Output<String> yaml;
+
+    /**
+     * @return The yaml representation of the manifest
+     * 
+     */
+    public Output<String> yaml() {
+        return this.yaml;
     }
 
     /**

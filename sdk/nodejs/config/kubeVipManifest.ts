@@ -28,6 +28,10 @@ export class KubeVipManifest extends pulumi.ComponentResource {
     }
 
     public /*out*/ readonly result!: pulumi.Output<outputs.config.PodManifest>;
+    /**
+     * The yaml representation of the manifest
+     */
+    public /*out*/ readonly yaml!: pulumi.Output<string>;
 
     /**
      * Create a KubeVipManifest resource with the given unique name, arguments, and options.
@@ -73,8 +77,10 @@ export class KubeVipManifest extends pulumi.ComponentResource {
             resourceInputs["vipRenewDeadline"] = args ? args.vipRenewDeadline : undefined;
             resourceInputs["vipRetryPeriod"] = args ? args.vipRetryPeriod : undefined;
             resourceInputs["result"] = undefined /*out*/;
+            resourceInputs["yaml"] = undefined /*out*/;
         } else {
             resourceInputs["result"] = undefined /*out*/;
+            resourceInputs["yaml"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         super(KubeVipManifest.__pulumiType, name, resourceInputs, opts, true /*remote*/);
