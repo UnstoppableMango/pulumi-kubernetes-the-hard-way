@@ -1,3 +1,4 @@
+import * as YAML from 'yaml';
 import { ComponentResourceOptions, Output, output } from '@pulumi/pulumi';
 import * as schema from '../schema-types';
 import { getKubeVipManifest } from './getKubeVipManifest';
@@ -7,10 +8,12 @@ export class KubeVipManifest extends schema.KubeVipManifest {
     super(name, args, opts);
 
     const { result } = output(getKubeVipManifest(args));
+    const yaml = result.apply(YAML.stringify);
 
     // Ugh... can this be better?
     this.result = result as Output<schema.PodManifestOutputs>;
+    this.yaml = yaml
 
-    this.registerOutputs({ result });
+    this.registerOutputs({ result, yaml });
   }
 }
