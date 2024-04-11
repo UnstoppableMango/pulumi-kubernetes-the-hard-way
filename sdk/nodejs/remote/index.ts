@@ -75,6 +75,11 @@ export type RuncInstall = import("./runcInstall").RuncInstall;
 export const RuncInstall: typeof import("./runcInstall").RuncInstall = null as any;
 utilities.lazyLoad(exports, ["RuncInstall"], () => require("./runcInstall"));
 
+export { StaticPodArgs } from "./staticPod";
+export type StaticPod = import("./staticPod").StaticPod;
+export const StaticPod: typeof import("./staticPod").StaticPod = null as any;
+utilities.lazyLoad(exports, ["StaticPod"], () => require("./staticPod"));
+
 export { SystemdServiceArgs } from "./systemdService";
 export type SystemdService = import("./systemdService").SystemdService;
 export const SystemdService: typeof import("./systemdService").SystemdService = null as any;
@@ -116,6 +121,8 @@ const _module = {
                 return new KubeletInstall(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:remote:RuncInstall":
                 return new RuncInstall(name, <any>undefined, { urn })
+            case "kubernetes-the-hard-way:remote:StaticPod":
+                return new StaticPod(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:remote:SystemdService":
                 return new SystemdService(name, <any>undefined, { urn })
             default:

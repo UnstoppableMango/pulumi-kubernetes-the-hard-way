@@ -544,6 +544,136 @@ type PodManifest struct {
 	Status *corev1.PodStatus `pulumi:"status"`
 }
 
+// PodManifestInput is an input type that accepts PodManifestArgs and PodManifestOutput values.
+// You can construct a concrete instance of `PodManifestInput` via:
+//
+//	PodManifestArgs{...}
+type PodManifestInput interface {
+	pulumi.Input
+
+	ToPodManifestOutput() PodManifestOutput
+	ToPodManifestOutputWithContext(context.Context) PodManifestOutput
+}
+
+// Pod is a collection of containers that can run on a host. This resource is created by clients and scheduled onto hosts.
+//
+// This resource waits until its status is ready before registering success
+// for create/update, and populating output properties from the current state of the resource.
+// The following conditions are used to determine whether the resource creation has
+// succeeded or failed:
+//
+//  1. The Pod is scheduled ("PodScheduled"" '.status.condition' is true).
+//  2. The Pod is initialized ("Initialized" '.status.condition' is true).
+//  3. The Pod is ready ("Ready" '.status.condition' is true) and the '.status.phase' is
+//     set to "Running".
+//     Or (for Jobs): The Pod succeeded ('.status.phase' set to "Succeeded").
+//
+// If the Pod has not reached a Ready state after 10 minutes, it will
+// time out and mark the resource update as Failed. You can override the default timeout value
+// by setting the 'customTimeouts' option on the resource.
+//
+// ## Example Usage
+// ### Create a Pod with auto-naming
+// ```go
+// package main
+//
+// import (
+//
+//	corev1 "github.com/pulumi/pulumi-kubernetes/sdk/v4/go/kubernetes/core/v1"
+//	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+//
+// )
+//
+//	func main() {
+//		pulumi.Run(func(ctx *pulumi.Context) error {
+//			_, err := corev1.NewPod(ctx, "pod", &corev1.PodArgs{
+//				Spec: &corev1.PodSpecArgs{
+//					Containers: corev1.ContainerArray{
+//						&corev1.ContainerArgs{
+//							Image: pulumi.String("nginx:1.14.2"),
+//							Name:  pulumi.String("nginx"),
+//							Ports: corev1.ContainerPortArray{
+//								&corev1.ContainerPortArgs{
+//									ContainerPort: pulumi.Int(80),
+//								},
+//							},
+//						},
+//					},
+//				},
+//			})
+//			if err != nil {
+//				return err
+//			}
+//			return nil
+//		})
+//	}
+//
+// ```
+// ### Create a Pod with a user-specified name
+// ```go
+// package main
+//
+// import (
+//
+//	corev1 "github.com/pulumi/pulumi-kubernetes/sdk/v4/go/kubernetes/core/v1"
+//	metav1 "github.com/pulumi/pulumi-kubernetes/sdk/v4/go/kubernetes/meta/v1"
+//	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+//
+// )
+//
+//	func main() {
+//		pulumi.Run(func(ctx *pulumi.Context) error {
+//			_, err := corev1.NewPod(ctx, "pod", &corev1.PodArgs{
+//				Metadata: &metav1.ObjectMetaArgs{
+//					Name: pulumi.String("nginx"),
+//				},
+//				Spec: &corev1.PodSpecArgs{
+//					Containers: corev1.ContainerArray{
+//						&corev1.ContainerArgs{
+//							Image: pulumi.String("nginx:1.14.2"),
+//							Name:  pulumi.String("nginx"),
+//							Ports: corev1.ContainerPortArray{
+//								&corev1.ContainerPortArgs{
+//									ContainerPort: pulumi.Int(80),
+//								},
+//							},
+//						},
+//					},
+//				},
+//			})
+//			if err != nil {
+//				return err
+//			}
+//			return nil
+//		})
+//	}
+//
+// ```
+type PodManifestArgs struct {
+	// APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+	ApiVersion pulumi.StringPtrInput `pulumi:"apiVersion"`
+	// Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+	Kind pulumi.StringPtrInput `pulumi:"kind"`
+	// Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
+	Metadata metav1.ObjectMetaPtrInput `pulumi:"metadata"`
+	// Specification of the desired behavior of the pod. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
+	Spec corev1.PodSpecPtrInput `pulumi:"spec"`
+	// Most recently observed status of the pod. This data may not be up to date. Populated by the system. Read-only. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
+	Status corev1.PodStatusPtrInput `pulumi:"status"`
+}
+
+func (PodManifestArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*PodManifest)(nil)).Elem()
+}
+
+func (i PodManifestArgs) ToPodManifestOutput() PodManifestOutput {
+	return i.ToPodManifestOutputWithContext(context.Background())
+}
+
+func (i PodManifestArgs) ToPodManifestOutputWithContext(ctx context.Context) PodManifestOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(PodManifestOutput)
+}
+
 // Pod is a collection of containers that can run on a host. This resource is created by clients and scheduled onto hosts.
 //
 // This resource waits until its status is ready before registering success
@@ -730,6 +860,7 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*KubeconfigKubeProxyOptionsInput)(nil)).Elem(), KubeconfigKubeProxyOptionsArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*KubeconfigKubeSchedulerOptionsInput)(nil)).Elem(), KubeconfigKubeSchedulerOptionsArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*KubeconfigWorkerOptionsInput)(nil)).Elem(), KubeconfigWorkerOptionsArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*PodManifestInput)(nil)).Elem(), PodManifestArgs{})
 	pulumi.RegisterOutputType(ClusterOutput{})
 	pulumi.RegisterOutputType(ClusterArrayOutput{})
 	pulumi.RegisterOutputType(ContextOutput{})

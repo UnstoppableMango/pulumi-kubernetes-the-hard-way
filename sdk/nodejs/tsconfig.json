@@ -34,6 +34,7 @@
         "remote/kubectlInstall.ts",
         "remote/kubeletInstall.ts",
         "remote/runcInstall.ts",
+        "remote/staticPod.ts",
         "remote/systemdService.ts",
         "tls/certificate.ts",
         "tls/clusterPki.ts",
