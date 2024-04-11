@@ -15,6 +15,7 @@ import {
   KubectlInstall,
   KubeletInstall,
   RuncInstall,
+  StaticPod,
   SystemdService,
 } from './remote';
 import { Certificate, ClusterPki, EncryptionKey, RootCa } from './tls';
@@ -30,6 +31,14 @@ const resources: schema.ResourceConstructor = {
   'kubernetes-the-hard-way:remote:KubeApiServerInstall': (...args) => new KubeApiServerInstall(...args),
   'kubernetes-the-hard-way:remote:KubeControllerManagerInstall': (...args) => new KubeControllerManagerInstall(...args),
   'kubernetes-the-hard-way:remote:KubeSchedulerInstall': (...args) => new KubeSchedulerInstall(...args),
+  'kubernetes-the-hard-way:remote:CniPluginsInstall': (...args) => new CniPluginsInstall(...args),
+  'kubernetes-the-hard-way:remote:ContainerdInstall': (...args) => new ContainerdInstall(...args),
+  'kubernetes-the-hard-way:remote:CrictlInstall': (...args) => new CrictlInstall(...args),
+  'kubernetes-the-hard-way:remote:KubectlInstall': (...args) => new KubectlInstall(...args),
+  'kubernetes-the-hard-way:remote:KubeletInstall': (...args) => new KubeletInstall(...args),
+  'kubernetes-the-hard-way:remote:KubeProxyInstall': (...args) => new KubeProxyInstall(...args),
+  'kubernetes-the-hard-way:remote:RuncInstall': (...args) => new RuncInstall(...args),
+  'kubernetes-the-hard-way:remote:StaticPod': (...args) => new StaticPod(...args),
   'kubernetes-the-hard-way:remote:SystemdService': (...args) => new SystemdService(...args),
   // @ts-ignore Due to the keypair subclass this refactor is a little harder
   'kubernetes-the-hard-way:tls:Certificate': (...args) => new Certificate(...args),
@@ -47,13 +56,6 @@ const resources: schema.ResourceConstructor = {
   'kubernetes-the-hard-way:tools:Tar': (...args) => new Tar(...args),
   'kubernetes-the-hard-way:tools:Tee': (...args) => new Tee(...args),
   'kubernetes-the-hard-way:tools:Wget': (...args) => new Wget(...args),
-  'kubernetes-the-hard-way:remote:CniPluginsInstall': (...args) => new CniPluginsInstall(...args),
-  'kubernetes-the-hard-way:remote:ContainerdInstall': (...args) => new ContainerdInstall(...args),
-  'kubernetes-the-hard-way:remote:CrictlInstall': (...args) => new CrictlInstall(...args),
-  'kubernetes-the-hard-way:remote:KubectlInstall': (...args) => new KubectlInstall(...args),
-  'kubernetes-the-hard-way:remote:KubeletInstall': (...args) => new KubeletInstall(...args),
-  'kubernetes-the-hard-way:remote:KubeProxyInstall': (...args) => new KubeProxyInstall(...args),
-  'kubernetes-the-hard-way:remote:RuncInstall': (...args) => new RuncInstall(...args),
 };
 
 export function construct(

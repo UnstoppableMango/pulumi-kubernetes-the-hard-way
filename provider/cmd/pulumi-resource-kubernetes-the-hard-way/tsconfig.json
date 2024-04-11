@@ -37,6 +37,7 @@
     "remote/kubeProxy.ts",
     "remote/kubeSchedulerInstall.ts",
     "remote/runc.ts",
+    "remote/staticPod.ts",
     "remote/systemdService.ts",
     "resources.ts",
     "schema-types.ts",
