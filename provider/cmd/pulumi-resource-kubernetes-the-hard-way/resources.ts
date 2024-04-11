@@ -19,7 +19,7 @@ import {
   SystemdService,
 } from './remote';
 import { Certificate, ClusterPki, EncryptionKey, RootCa } from './tls';
-import { Etcdctl, Mkdir, Mktemp, Mv, Rm, Systemctl, Tar, Tee, Wget } from './tools';
+import { Chmod, Etcdctl, Mkdir, Mktemp, Mv, Rm, Systemctl, Tar, Tee, Wget } from './tools';
 import { KubeVipManifest } from './config';
 
 const resources: schema.ResourceConstructor = {
@@ -47,6 +47,7 @@ const resources: schema.ResourceConstructor = {
   'kubernetes-the-hard-way:tls:EncryptionKey': (...args) => new EncryptionKey(...args),
   // @ts-ignore Due to the keypair subclass this refactor is a little harder
   'kubernetes-the-hard-way:tls:RootCa': (...args) => new RootCa(...args),
+  'kubernetes-the-hard-way:tools:Chmod': (...args) => new Chmod(...args),
   'kubernetes-the-hard-way:tools:Etcdctl': (...args) => new Etcdctl(...args),
   'kubernetes-the-hard-way:tools:Mkdir': (...args) => new Mkdir(...args),
   'kubernetes-the-hard-way:tools:Mktemp': (...args) => new Mktemp(...args),
