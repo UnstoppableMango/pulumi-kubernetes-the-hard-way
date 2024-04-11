@@ -27,6 +27,7 @@ export type ResourceConstructor = {
     readonly "kubernetes-the-hard-way:tls:ClusterPki": ConstructComponent<ClusterPki>;
     readonly "kubernetes-the-hard-way:tls:EncryptionKey": ConstructComponent<EncryptionKey>;
     readonly "kubernetes-the-hard-way:tls:RootCa": ConstructComponent<RootCa>;
+    readonly "kubernetes-the-hard-way:tools:Chmod": ConstructComponent<Chmod>;
     readonly "kubernetes-the-hard-way:tools:Etcdctl": ConstructComponent<Etcdctl>;
     readonly "kubernetes-the-hard-way:tools:Mkdir": ConstructComponent<Mkdir>;
     readonly "kubernetes-the-hard-way:tools:Mktemp": ConstructComponent<Mktemp>;
@@ -43,7 +44,6 @@ export type Functions = {
     "kubernetes-the-hard-way:tls:ClusterPki/getKubeconfig": (inputs: ClusterPki_getKubeconfigInputs) => Promise<ClusterPki_getKubeconfigOutputs>;
 };
 import * as command from "@pulumi/command";
-import * as kubernetes from "@pulumi/kubernetes";
 import * as random from "@pulumi/random";
 import * as tls from "@pulumi/tls";
 export abstract class KubeVipManifest<TData = any> extends (pulumi.ComponentResource)<TData> {
@@ -610,6 +610,50 @@ export interface RootCaArgs {
     readonly uris?: pulumi.Input<pulumi.Input<string>[]>;
     readonly validityPeriodHours: pulumi.Input<number>;
 }
+export abstract class Chmod<TData = any> extends (pulumi.ComponentResource)<TData> {
+    public binaryPath!: string | pulumi.Output<string>;
+    public changes!: boolean | pulumi.Output<boolean>;
+    public command!: command.remote.Command | pulumi.Output<command.remote.Command>;
+    public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
+    public environment!: Record<string, string> | pulumi.Output<Record<string, string>>;
+    public files!: unknown | pulumi.Output<unknown>;
+    public help!: boolean | pulumi.Output<boolean>;
+    public lifecycle?: CommandLifecycleOutputs | CommandLifecycleOutputs;
+    public mode!: string | pulumi.Output<string>;
+    public noPreserveRoot!: boolean | pulumi.Output<boolean>;
+    public preserveRoot!: boolean | pulumi.Output<boolean>;
+    public quiet!: boolean | pulumi.Output<boolean>;
+    public recursive!: boolean | pulumi.Output<boolean>;
+    public reference?: string | pulumi.Output<string>;
+    public silent!: boolean | pulumi.Output<boolean>;
+    public stderr!: string | pulumi.Output<string>;
+    public stdin?: string | pulumi.Output<string>;
+    public stdout!: string | pulumi.Output<string>;
+    public triggers!: any[] | pulumi.Output<any[]>;
+    public version!: boolean | pulumi.Output<boolean>;
+    constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
+        super("kubernetes-the-hard-way:tools:Chmod", name, opts.urn ? { binaryPath: undefined, changes: undefined, command: undefined, connection: undefined, environment: undefined, files: undefined, help: undefined, lifecycle: undefined, mode: undefined, noPreserveRoot: undefined, preserveRoot: undefined, quiet: undefined, recursive: undefined, reference: undefined, silent: undefined, stderr: undefined, stdin: undefined, stdout: undefined, triggers: undefined, version: undefined } : { name, args, opts }, opts);
+    }
+}
+export interface ChmodArgs {
+    readonly binaryPath?: pulumi.Input<string>;
+    readonly changes?: pulumi.Input<boolean>;
+    readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
+    readonly environment?: pulumi.Input<Record<string, pulumi.Input<string>>>;
+    readonly files: pulumi.Input<unknown>;
+    readonly help?: pulumi.Input<boolean>;
+    readonly lifecycle?: CommandLifecycleInputs;
+    readonly mode: pulumi.Input<string>;
+    readonly noPreserveRoot?: pulumi.Input<boolean>;
+    readonly preserveRoot?: pulumi.Input<boolean>;
+    readonly quiet?: pulumi.Input<boolean>;
+    readonly recursive?: pulumi.Input<boolean>;
+    readonly reference?: pulumi.Input<string>;
+    readonly silent?: pulumi.Input<boolean>;
+    readonly stdin?: pulumi.Input<string>;
+    readonly triggers?: pulumi.Input<pulumi.Input<any>[]>;
+    readonly version?: pulumi.Input<boolean>;
+}
 export abstract class Etcdctl<TData = any> extends (pulumi.ComponentResource)<TData> {
     public binaryPath!: string | pulumi.Output<string>;
     public caCert!: string | pulumi.Output<string>;
@@ -1021,16 +1065,16 @@ export interface KubeconfigWorkerOptionsOutputs {
 export interface PodManifestInputs {
     readonly apiVersion?: pulumi.Input<string>;
     readonly kind?: pulumi.Input<string>;
-    readonly metadata?: pulumi.Input<kubernetes.types.input.meta.v1.ObjectMeta>;
-    readonly spec?: pulumi.Input<kubernetes.types.input.core.v1.PodSpec>;
-    readonly status?: pulumi.Input<kubernetes.types.input.core.v1.PodStatus>;
+    readonly metadata?: pulumi.Input<unknown>;
+    readonly spec?: pulumi.Input<unknown>;
+    readonly status?: pulumi.Input<unknown>;
 }
 export interface PodManifestOutputs {
     readonly apiVersion?: pulumi.Output<string>;
     readonly kind?: pulumi.Output<string>;
-    readonly metadata?: pulumi.Output<kubernetes.types.output.meta.v1.ObjectMeta>;
-    readonly spec?: pulumi.Output<kubernetes.types.output.core.v1.PodSpec>;
-    readonly status?: pulumi.Output<kubernetes.types.output.core.v1.PodStatus>;
+    readonly metadata?: pulumi.Output<unknown>;
+    readonly spec?: pulumi.Output<unknown>;
+    readonly status?: pulumi.Output<unknown>;
 }
 export interface UserInputs {
     readonly clientCertificateData: pulumi.Input<string>;
