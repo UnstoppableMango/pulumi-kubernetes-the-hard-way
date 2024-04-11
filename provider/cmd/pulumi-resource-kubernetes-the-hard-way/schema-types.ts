@@ -6,6 +6,7 @@
 import * as pulumi from "@pulumi/pulumi";
 export type ConstructComponent<T extends pulumi.ComponentResource = pulumi.ComponentResource> = (name: string, inputs: any, options: pulumi.ComponentResourceOptions) => T;
 export type ResourceConstructor = {
+    readonly "kubernetes-the-hard-way:config:KubeVipManifest": ConstructComponent<KubeVipManifest>;
     readonly "kubernetes-the-hard-way:remote:CniPluginsInstall": ConstructComponent<CniPluginsInstall>;
     readonly "kubernetes-the-hard-way:remote:ContainerdInstall": ConstructComponent<ContainerdInstall>;
     readonly "kubernetes-the-hard-way:remote:CrictlInstall": ConstructComponent<CrictlInstall>;
@@ -44,6 +45,37 @@ import * as command from "@pulumi/command";
 import * as kubernetes from "@pulumi/kubernetes";
 import * as random from "@pulumi/random";
 import * as tls from "@pulumi/tls";
+export abstract class KubeVipManifest<TData = any> extends (pulumi.ComponentResource)<TData> {
+    public result!: PodManifestOutputs | pulumi.Output<PodManifestOutputs>;
+    constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
+        super("kubernetes-the-hard-way:config:KubeVipManifest", name, opts.urn ? { result: undefined } : { name, args, opts }, opts);
+    }
+}
+export interface KubeVipManifestArgs {
+    readonly address: pulumi.Input<string>;
+    readonly bgpAs?: pulumi.Input<number>;
+    readonly bgpEnable?: pulumi.Input<boolean>;
+    readonly bgpPeerAddress?: pulumi.Input<string>;
+    readonly bgpPeerAs?: pulumi.Input<number>;
+    readonly bgpPeerPass?: pulumi.Input<string>;
+    readonly bgpPeers?: pulumi.Input<string>;
+    readonly bgpRouterId?: pulumi.Input<string>;
+    readonly cpEnable?: pulumi.Input<boolean>;
+    readonly cpNamespace?: pulumi.Input<string>;
+    readonly image?: pulumi.Input<string>;
+    readonly kubeconfigPath: pulumi.Input<string>;
+    readonly port?: pulumi.Input<number>;
+    readonly svcEnable?: pulumi.Input<boolean>;
+    readonly version?: pulumi.Input<string>;
+    readonly vipArp?: pulumi.Input<boolean>;
+    readonly vipCidr: pulumi.Input<number>;
+    readonly vipDdns?: pulumi.Input<boolean>;
+    readonly vipInterface?: pulumi.Input<string>;
+    readonly vipLeaderElection?: pulumi.Input<boolean>;
+    readonly vipLeaseDuration?: pulumi.Input<number>;
+    readonly vipRenewDeadline?: pulumi.Input<number>;
+    readonly vipRetryPeriod?: pulumi.Input<number>;
+}
 export abstract class CniPluginsInstall<TData = any> extends (pulumi.ComponentResource)<TData> {
     public architecture!: ArchitectureOutputs | pulumi.Output<ArchitectureOutputs>;
     public archiveName!: string | pulumi.Output<string>;
