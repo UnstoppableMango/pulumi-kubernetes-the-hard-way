@@ -803,10 +803,15 @@
             "properties": {
                 "result": {
                     "$ref": "#/types/kubernetes-the-hard-way:config:PodManifest"
+                },
+                "yaml": {
+                    "type": "string",
+                    "description": "The yaml representation of the manifest"
                 }
             },
             "required": [
-                "result"
+                "result",
+                "yaml"
             ],
             "inputProperties": {
                 "address": {
