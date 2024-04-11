@@ -65,6 +65,8 @@ export interface KubeVipManifestArgs {
     readonly cpNamespace?: pulumi.Input<string>;
     readonly image?: pulumi.Input<string>;
     readonly kubeconfigPath: pulumi.Input<string>;
+    readonly name?: pulumi.Input<string>;
+    readonly namespace?: pulumi.Input<string>;
     readonly port?: pulumi.Input<number>;
     readonly svcEnable?: pulumi.Input<boolean>;
     readonly version?: pulumi.Input<string>;
@@ -1126,6 +1128,8 @@ export interface getKubeVipManifestInputs {
     readonly cpNamespace?: pulumi.Input<string>;
     readonly image?: pulumi.Input<string>;
     readonly kubeconfigPath: pulumi.Input<string>;
+    readonly name?: pulumi.Input<string>;
+    readonly namespace?: pulumi.Input<string>;
     readonly port?: pulumi.Input<number>;
     readonly svcEnable?: pulumi.Input<boolean>;
     readonly version?: pulumi.Input<string>;
