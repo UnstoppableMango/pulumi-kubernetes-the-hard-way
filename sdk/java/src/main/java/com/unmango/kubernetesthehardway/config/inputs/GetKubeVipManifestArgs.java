@@ -200,6 +200,36 @@ public final class GetKubeVipManifestArgs extends com.pulumi.resources.InvokeArg
     }
 
     /**
+     * Name of the static pod. Defaults to kube-vip.
+     * 
+     */
+    @Import(name="name")
+    private @Nullable Output<String> name;
+
+    /**
+     * @return Name of the static pod. Defaults to kube-vip.
+     * 
+     */
+    public Optional<Output<String>> name() {
+        return Optional.ofNullable(this.name);
+    }
+
+    /**
+     * Namespace for the static pod. Defaults to kube-system.
+     * 
+     */
+    @Import(name="namespace")
+    private @Nullable Output<String> namespace;
+
+    /**
+     * @return Namespace for the static pod. Defaults to kube-system.
+     * 
+     */
+    public Optional<Output<String>> namespace() {
+        return Optional.ofNullable(this.namespace);
+    }
+
+    /**
      * TODO
      * 
      */
@@ -379,6 +409,8 @@ public final class GetKubeVipManifestArgs extends com.pulumi.resources.InvokeArg
         this.cpNamespace = $.cpNamespace;
         this.image = $.image;
         this.kubeconfigPath = $.kubeconfigPath;
+        this.name = $.name;
+        this.namespace = $.namespace;
         this.port = $.port;
         this.svcEnable = $.svcEnable;
         this.version = $.version;
@@ -663,6 +695,48 @@ public final class GetKubeVipManifestArgs extends com.pulumi.resources.InvokeArg
         }
 
         /**
+         * @param name Name of the static pod. Defaults to kube-vip.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder name(@Nullable Output<String> name) {
+            $.name = name;
+            return this;
+        }
+
+        /**
+         * @param name Name of the static pod. Defaults to kube-vip.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder name(String name) {
+            return name(Output.of(name));
+        }
+
+        /**
+         * @param namespace Namespace for the static pod. Defaults to kube-system.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder namespace(@Nullable Output<String> namespace) {
+            $.namespace = namespace;
+            return this;
+        }
+
+        /**
+         * @param namespace Namespace for the static pod. Defaults to kube-system.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder namespace(String namespace) {
+            return namespace(Output.of(namespace));
+        }
+
+        /**
          * @param port TODO
          * 
          * @return builder
@@ -900,6 +974,8 @@ public final class GetKubeVipManifestArgs extends com.pulumi.resources.InvokeArg
             if ($.kubeconfigPath == null) {
                 throw new MissingRequiredPropertyException("GetKubeVipManifestArgs", "kubeconfigPath");
             }
+            $.name = Codegen.stringProp("name").output().arg($.name).def("kube-vip").getNullable();
+            $.namespace = Codegen.stringProp("namespace").output().arg($.namespace).def("kube-system").getNullable();
             $.port = Codegen.integerProp("port").output().arg($.port).def(6443).getNullable();
             if ($.vipCidr == null) {
                 throw new MissingRequiredPropertyException("GetKubeVipManifestArgs", "vipCidr");

@@ -65,6 +65,8 @@ export class KubeVipManifest extends pulumi.ComponentResource {
             resourceInputs["cpNamespace"] = args ? args.cpNamespace : undefined;
             resourceInputs["image"] = args ? args.image : undefined;
             resourceInputs["kubeconfigPath"] = args ? args.kubeconfigPath : undefined;
+            resourceInputs["name"] = (args ? args.name : undefined) ?? "kube-vip";
+            resourceInputs["namespace"] = (args ? args.namespace : undefined) ?? "kube-system";
             resourceInputs["port"] = (args ? args.port : undefined) ?? 6443;
             resourceInputs["svcEnable"] = args ? args.svcEnable : undefined;
             resourceInputs["version"] = args ? args.version : undefined;
@@ -139,6 +141,14 @@ export interface KubeVipManifestArgs {
      * Path to the kubeconfig on the remote host.
      */
     kubeconfigPath: pulumi.Input<string>;
+    /**
+     * Name of the static pod. Defaults to kube-vip.
+     */
+    name?: pulumi.Input<string>;
+    /**
+     * Namespace for the static pod. Defaults to kube-system.
+     */
+    namespace?: pulumi.Input<string>;
     /**
      * TODO
      */

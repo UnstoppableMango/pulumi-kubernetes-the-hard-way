@@ -127,6 +127,18 @@ namespace UnMango.KubernetesTheHardWay.Config
         public Input<string> KubeconfigPath { get; set; } = null!;
 
         /// <summary>
+        /// Name of the static pod. Defaults to kube-vip.
+        /// </summary>
+        [Input("name")]
+        public Input<string>? Name { get; set; }
+
+        /// <summary>
+        /// Namespace for the static pod. Defaults to kube-system.
+        /// </summary>
+        [Input("namespace")]
+        public Input<string>? Namespace { get; set; }
+
+        /// <summary>
         /// TODO
         /// </summary>
         [Input("port")]
@@ -194,6 +206,8 @@ namespace UnMango.KubernetesTheHardWay.Config
 
         public KubeVipManifestArgs()
         {
+            Name = "kube-vip";
+            Namespace = "kube-system";
             Port = 6443;
         }
         public static new KubeVipManifestArgs Empty => new KubeVipManifestArgs();

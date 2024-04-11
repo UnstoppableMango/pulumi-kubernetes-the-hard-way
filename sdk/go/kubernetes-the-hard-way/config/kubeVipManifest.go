@@ -37,6 +37,12 @@ func NewKubeVipManifest(ctx *pulumi.Context,
 	if args.VipCidr == nil {
 		return nil, errors.New("invalid value for required argument 'VipCidr'")
 	}
+	if args.Name == nil {
+		args.Name = pulumi.StringPtr("kube-vip")
+	}
+	if args.Namespace == nil {
+		args.Namespace = pulumi.StringPtr("kube-system")
+	}
 	if args.Port == nil {
 		args.Port = pulumi.IntPtr(6443)
 	}
@@ -74,6 +80,10 @@ type kubeVipManifestArgs struct {
 	Image *string `pulumi:"image"`
 	// Path to the kubeconfig on the remote host.
 	KubeconfigPath string `pulumi:"kubeconfigPath"`
+	// Name of the static pod. Defaults to kube-vip.
+	Name *string `pulumi:"name"`
+	// Namespace for the static pod. Defaults to kube-system.
+	Namespace *string `pulumi:"namespace"`
 	// TODO
 	Port *int `pulumi:"port"`
 	// TODO
@@ -124,6 +134,10 @@ type KubeVipManifestArgs struct {
 	Image pulumi.StringPtrInput
 	// Path to the kubeconfig on the remote host.
 	KubeconfigPath pulumi.StringInput
+	// Name of the static pod. Defaults to kube-vip.
+	Name pulumi.StringPtrInput
+	// Namespace for the static pod. Defaults to kube-system.
+	Namespace pulumi.StringPtrInput
 	// TODO
 	Port pulumi.IntPtrInput
 	// TODO

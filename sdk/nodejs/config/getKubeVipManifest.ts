@@ -28,6 +28,8 @@ export function getKubeVipManifest(args: GetKubeVipManifestArgs, opts?: pulumi.I
         "cpNamespace": args.cpNamespace,
         "image": args.image,
         "kubeconfigPath": args.kubeconfigPath,
+        "name": args.name,
+        "namespace": args.namespace,
         "port": args.port,
         "svcEnable": args.svcEnable,
         "version": args.version,
@@ -91,6 +93,14 @@ export interface GetKubeVipManifestArgs {
      * Path to the kubeconfig on the remote host.
      */
     kubeconfigPath: string;
+    /**
+     * Name of the static pod. Defaults to kube-vip.
+     */
+    name?: string;
+    /**
+     * Namespace for the static pod. Defaults to kube-system.
+     */
+    namespace?: string;
     /**
      * TODO
      */
@@ -196,6 +206,14 @@ export interface GetKubeVipManifestOutputArgs {
      * Path to the kubeconfig on the remote host.
      */
     kubeconfigPath: pulumi.Input<string>;
+    /**
+     * Name of the static pod. Defaults to kube-vip.
+     */
+    name?: pulumi.Input<string>;
+    /**
+     * Namespace for the static pod. Defaults to kube-system.
+     */
+    namespace?: pulumi.Input<string>;
     /**
      * TODO
      */

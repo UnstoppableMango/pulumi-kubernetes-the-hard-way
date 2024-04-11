@@ -47,6 +47,10 @@ type GetKubeVipManifestArgs struct {
 	Image *string `pulumi:"image"`
 	// Path to the kubeconfig on the remote host.
 	KubeconfigPath string `pulumi:"kubeconfigPath"`
+	// Name of the static pod. Defaults to kube-vip.
+	Name *string `pulumi:"name"`
+	// Namespace for the static pod. Defaults to kube-system.
+	Namespace *string `pulumi:"namespace"`
 	// TODO
 	Port *int `pulumi:"port"`
 	// TODO
@@ -77,6 +81,14 @@ func (val *GetKubeVipManifestArgs) Defaults() *GetKubeVipManifestArgs {
 		return nil
 	}
 	tmp := *val
+	if tmp.Name == nil {
+		name_ := "kube-vip"
+		tmp.Name = &name_
+	}
+	if tmp.Namespace == nil {
+		namespace_ := "kube-system"
+		tmp.Namespace = &namespace_
+	}
 	if tmp.Port == nil {
 		port_ := 6443
 		tmp.Port = &port_
@@ -126,6 +138,10 @@ type GetKubeVipManifestOutputArgs struct {
 	Image pulumi.StringPtrInput `pulumi:"image"`
 	// Path to the kubeconfig on the remote host.
 	KubeconfigPath pulumi.StringInput `pulumi:"kubeconfigPath"`
+	// Name of the static pod. Defaults to kube-vip.
+	Name pulumi.StringPtrInput `pulumi:"name"`
+	// Namespace for the static pod. Defaults to kube-system.
+	Namespace pulumi.StringPtrInput `pulumi:"namespace"`
 	// TODO
 	Port pulumi.IntPtrInput `pulumi:"port"`
 	// TODO

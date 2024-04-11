@@ -52,6 +52,8 @@ def get_kube_vip_manifest(address: Optional[str] = None,
                           cp_namespace: Optional[str] = None,
                           image: Optional[str] = None,
                           kubeconfig_path: Optional[str] = None,
+                          name: Optional[str] = None,
+                          namespace: Optional[str] = None,
                           port: Optional[int] = None,
                           svc_enable: Optional[bool] = None,
                           version: Optional[str] = None,
@@ -80,6 +82,8 @@ def get_kube_vip_manifest(address: Optional[str] = None,
     :param str cp_namespace: TODO
     :param str image: Override the kube-vip image.
     :param str kubeconfig_path: Path to the kubeconfig on the remote host.
+    :param str name: Name of the static pod. Defaults to kube-vip.
+    :param str namespace: Namespace for the static pod. Defaults to kube-system.
     :param int port: TODO
     :param bool svc_enable: TODO
     :param str version: Version of kube-vip to use.
@@ -105,6 +109,8 @@ def get_kube_vip_manifest(address: Optional[str] = None,
     __args__['cpNamespace'] = cp_namespace
     __args__['image'] = image
     __args__['kubeconfigPath'] = kubeconfig_path
+    __args__['name'] = name
+    __args__['namespace'] = namespace
     __args__['port'] = port
     __args__['svcEnable'] = svc_enable
     __args__['version'] = version
@@ -136,6 +142,8 @@ def get_kube_vip_manifest_output(address: Optional[pulumi.Input[str]] = None,
                                  cp_namespace: Optional[pulumi.Input[Optional[str]]] = None,
                                  image: Optional[pulumi.Input[Optional[str]]] = None,
                                  kubeconfig_path: Optional[pulumi.Input[str]] = None,
+                                 name: Optional[pulumi.Input[Optional[str]]] = None,
+                                 namespace: Optional[pulumi.Input[Optional[str]]] = None,
                                  port: Optional[pulumi.Input[Optional[int]]] = None,
                                  svc_enable: Optional[pulumi.Input[Optional[bool]]] = None,
                                  version: Optional[pulumi.Input[Optional[str]]] = None,
@@ -164,6 +172,8 @@ def get_kube_vip_manifest_output(address: Optional[pulumi.Input[str]] = None,
     :param str cp_namespace: TODO
     :param str image: Override the kube-vip image.
     :param str kubeconfig_path: Path to the kubeconfig on the remote host.
+    :param str name: Name of the static pod. Defaults to kube-vip.
+    :param str namespace: Namespace for the static pod. Defaults to kube-system.
     :param int port: TODO
     :param bool svc_enable: TODO
     :param str version: Version of kube-vip to use.

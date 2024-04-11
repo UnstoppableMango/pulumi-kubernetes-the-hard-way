@@ -199,6 +199,36 @@ public final class GetKubeVipManifestPlainArgs extends com.pulumi.resources.Invo
     }
 
     /**
+     * Name of the static pod. Defaults to kube-vip.
+     * 
+     */
+    @Import(name="name")
+    private @Nullable String name;
+
+    /**
+     * @return Name of the static pod. Defaults to kube-vip.
+     * 
+     */
+    public Optional<String> name() {
+        return Optional.ofNullable(this.name);
+    }
+
+    /**
+     * Namespace for the static pod. Defaults to kube-system.
+     * 
+     */
+    @Import(name="namespace")
+    private @Nullable String namespace;
+
+    /**
+     * @return Namespace for the static pod. Defaults to kube-system.
+     * 
+     */
+    public Optional<String> namespace() {
+        return Optional.ofNullable(this.namespace);
+    }
+
+    /**
      * TODO
      * 
      */
@@ -378,6 +408,8 @@ public final class GetKubeVipManifestPlainArgs extends com.pulumi.resources.Invo
         this.cpNamespace = $.cpNamespace;
         this.image = $.image;
         this.kubeconfigPath = $.kubeconfigPath;
+        this.name = $.name;
+        this.namespace = $.namespace;
         this.port = $.port;
         this.svcEnable = $.svcEnable;
         this.version = $.version;
@@ -542,6 +574,28 @@ public final class GetKubeVipManifestPlainArgs extends com.pulumi.resources.Invo
         }
 
         /**
+         * @param name Name of the static pod. Defaults to kube-vip.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder name(@Nullable String name) {
+            $.name = name;
+            return this;
+        }
+
+        /**
+         * @param namespace Namespace for the static pod. Defaults to kube-system.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder namespace(@Nullable String namespace) {
+            $.namespace = namespace;
+            return this;
+        }
+
+        /**
          * @param port TODO
          * 
          * @return builder
@@ -669,6 +723,8 @@ public final class GetKubeVipManifestPlainArgs extends com.pulumi.resources.Invo
             if ($.kubeconfigPath == null) {
                 throw new MissingRequiredPropertyException("GetKubeVipManifestPlainArgs", "kubeconfigPath");
             }
+            $.name = Codegen.stringProp("name").arg($.name).def("kube-vip").getNullable();
+            $.namespace = Codegen.stringProp("namespace").arg($.namespace).def("kube-system").getNullable();
             $.port = Codegen.integerProp("port").arg($.port).def(6443).getNullable();
             if ($.vipCidr == null) {
                 throw new MissingRequiredPropertyException("GetKubeVipManifestPlainArgs", "vipCidr");

@@ -29,6 +29,8 @@ class KubeVipManifestArgs:
                  cp_enable: Optional[pulumi.Input[bool]] = None,
                  cp_namespace: Optional[pulumi.Input[str]] = None,
                  image: Optional[pulumi.Input[str]] = None,
+                 name: Optional[pulumi.Input[str]] = None,
+                 namespace: Optional[pulumi.Input[str]] = None,
                  port: Optional[pulumi.Input[int]] = None,
                  svc_enable: Optional[pulumi.Input[bool]] = None,
                  version: Optional[pulumi.Input[str]] = None,
@@ -54,6 +56,8 @@ class KubeVipManifestArgs:
         :param pulumi.Input[bool] cp_enable: TODO
         :param pulumi.Input[str] cp_namespace: TODO
         :param pulumi.Input[str] image: Override the kube-vip image.
+        :param pulumi.Input[str] name: Name of the static pod. Defaults to kube-vip.
+        :param pulumi.Input[str] namespace: Namespace for the static pod. Defaults to kube-system.
         :param pulumi.Input[int] port: TODO
         :param pulumi.Input[bool] svc_enable: TODO
         :param pulumi.Input[str] version: Version of kube-vip to use.
@@ -88,6 +92,14 @@ class KubeVipManifestArgs:
             pulumi.set(__self__, "cp_namespace", cp_namespace)
         if image is not None:
             pulumi.set(__self__, "image", image)
+        if name is None:
+            name = 'kube-vip'
+        if name is not None:
+            pulumi.set(__self__, "name", name)
+        if namespace is None:
+            namespace = 'kube-system'
+        if namespace is not None:
+            pulumi.set(__self__, "namespace", namespace)
         if port is None:
             port = 6443
         if port is not None:
@@ -269,6 +281,30 @@ class KubeVipManifestArgs:
 
     @property
     @pulumi.getter
+    def name(self) -> Optional[pulumi.Input[str]]:
+        """
+        Name of the static pod. Defaults to kube-vip.
+        """
+        return pulumi.get(self, "name")
+
+    @name.setter
+    def name(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "name", value)
+
+    @property
+    @pulumi.getter
+    def namespace(self) -> Optional[pulumi.Input[str]]:
+        """
+        Namespace for the static pod. Defaults to kube-system.
+        """
+        return pulumi.get(self, "namespace")
+
+    @namespace.setter
+    def namespace(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "namespace", value)
+
+    @property
+    @pulumi.getter
     def port(self) -> Optional[pulumi.Input[int]]:
         """
         TODO
@@ -405,6 +441,8 @@ class KubeVipManifest(pulumi.ComponentResource):
                  cp_namespace: Optional[pulumi.Input[str]] = None,
                  image: Optional[pulumi.Input[str]] = None,
                  kubeconfig_path: Optional[pulumi.Input[str]] = None,
+                 name: Optional[pulumi.Input[str]] = None,
+                 namespace: Optional[pulumi.Input[str]] = None,
                  port: Optional[pulumi.Input[int]] = None,
                  svc_enable: Optional[pulumi.Input[bool]] = None,
                  version: Optional[pulumi.Input[str]] = None,
@@ -434,6 +472,8 @@ class KubeVipManifest(pulumi.ComponentResource):
         :param pulumi.Input[str] cp_namespace: TODO
         :param pulumi.Input[str] image: Override the kube-vip image.
         :param pulumi.Input[str] kubeconfig_path: Path to the kubeconfig on the remote host.
+        :param pulumi.Input[str] name: Name of the static pod. Defaults to kube-vip.
+        :param pulumi.Input[str] namespace: Namespace for the static pod. Defaults to kube-system.
         :param pulumi.Input[int] port: TODO
         :param pulumi.Input[bool] svc_enable: TODO
         :param pulumi.Input[str] version: Version of kube-vip to use.
@@ -482,6 +522,8 @@ class KubeVipManifest(pulumi.ComponentResource):
                  cp_namespace: Optional[pulumi.Input[str]] = None,
                  image: Optional[pulumi.Input[str]] = None,
                  kubeconfig_path: Optional[pulumi.Input[str]] = None,
+                 name: Optional[pulumi.Input[str]] = None,
+                 namespace: Optional[pulumi.Input[str]] = None,
                  port: Optional[pulumi.Input[int]] = None,
                  svc_enable: Optional[pulumi.Input[bool]] = None,
                  version: Optional[pulumi.Input[str]] = None,
@@ -520,6 +562,12 @@ class KubeVipManifest(pulumi.ComponentResource):
             if kubeconfig_path is None and not opts.urn:
                 raise TypeError("Missing required property 'kubeconfig_path'")
             __props__.__dict__["kubeconfig_path"] = kubeconfig_path
+            if name is None:
+                name = 'kube-vip'
+            __props__.__dict__["name"] = name
+            if namespace is None:
+                namespace = 'kube-system'
+            __props__.__dict__["namespace"] = namespace
             if port is None:
                 port = 6443
             __props__.__dict__["port"] = port
