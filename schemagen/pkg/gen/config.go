@@ -326,6 +326,16 @@ func generateGetKubeVipManifest() schema.FunctionSpec {
 					Description: "Path to the kubeconfig on the remote host.",
 					TypeSpec:    typeSpecs.String,
 				},
+				"name": {
+					Description: "Name of the static pod. Defaults to kube-vip.",
+					TypeSpec:    typeSpecs.String,
+					Default:     "kube-vip",
+				},
+				"namespace": {
+					Description: "Namespace for the static pod. Defaults to kube-system.",
+					TypeSpec:    typeSpecs.String,
+					Default:     "kube-system",
+				},
 				"port": {
 					Description: "TODO",
 					TypeSpec:    typeSpecs.Integer,
