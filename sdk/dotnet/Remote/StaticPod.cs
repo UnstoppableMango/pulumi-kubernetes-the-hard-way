@@ -35,6 +35,12 @@ namespace UnMango.KubernetesTheHardWay.Remote
         public Output<string> FileName { get; private set; } = null!;
 
         /// <summary>
+        /// The mkdir operation to ensure /etc/kubernetes/manifests exists.
+        /// </summary>
+        [Output("mkdir")]
+        public Output<UnMango.KubernetesTheHardWay.Tools.Mkdir> Mkdir { get; private set; } = null!;
+
+        /// <summary>
         /// The path to the manifest on the remote system.
         /// </summary>
         [Output("path")]

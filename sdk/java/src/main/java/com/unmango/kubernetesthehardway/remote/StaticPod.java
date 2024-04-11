@@ -12,6 +12,7 @@ import com.unmango.kubernetesthehardway.Utilities;
 import com.unmango.kubernetesthehardway.config.outputs.PodManifest;
 import com.unmango.kubernetesthehardway.remote.File;
 import com.unmango.kubernetesthehardway.remote.StaticPodArgs;
+import com.unmango.kubernetesthehardway.tools.Mkdir;
 import java.lang.String;
 import javax.annotation.Nullable;
 
@@ -62,6 +63,20 @@ public class StaticPod extends com.pulumi.resources.ComponentResource {
      */
     public Output<String> fileName() {
         return this.fileName;
+    }
+    /**
+     * The mkdir operation to ensure /etc/kubernetes/manifests exists.
+     * 
+     */
+    @Export(name="mkdir", refs={Mkdir.class}, tree="[0]")
+    private Output<Mkdir> mkdir;
+
+    /**
+     * @return The mkdir operation to ensure /etc/kubernetes/manifests exists.
+     * 
+     */
+    public Output<Mkdir> mkdir() {
+        return this.mkdir;
     }
     /**
      * The path to the manifest on the remote system.

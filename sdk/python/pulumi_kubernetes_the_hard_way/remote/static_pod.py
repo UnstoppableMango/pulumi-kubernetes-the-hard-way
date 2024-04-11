@@ -9,6 +9,7 @@ import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
 from .. import _utilities
 from .. import config as _config
+from .. import tools as _tools
 from .file import File
 import pulumi_command
 import pulumi_kubernetes
@@ -133,6 +134,7 @@ class StaticPod(pulumi.ComponentResource):
                 raise TypeError("Missing required property 'pod'")
             __props__.__dict__["pod"] = pod
             __props__.__dict__["file"] = None
+            __props__.__dict__["mkdir"] = None
             __props__.__dict__["path"] = None
         super(StaticPod, __self__).__init__(
             'kubernetes-the-hard-way:remote:StaticPod',
@@ -164,6 +166,14 @@ class StaticPod(pulumi.ComponentResource):
         The name of the file on the remote system.
         """
         return pulumi.get(self, "file_name")
+
+    @property
+    @pulumi.getter
+    def mkdir(self) -> pulumi.Output['_tools.Mkdir']:
+        """
+        The mkdir operation to ensure /etc/kubernetes/manifests exists.
+        """
+        return pulumi.get(self, "mkdir")
 
     @property
     @pulumi.getter

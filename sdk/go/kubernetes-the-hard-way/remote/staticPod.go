@@ -12,6 +12,7 @@ import (
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 	"github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/sdk/go/kubernetes-the-hard-way/config"
 	"github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/sdk/go/kubernetes-the-hard-way/internal"
+	"github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/sdk/go/kubernetes-the-hard-way/tools"
 )
 
 // Create a static pod manifest on a remote system.
@@ -24,6 +25,8 @@ type StaticPod struct {
 	File FileOutput `pulumi:"file"`
 	// The name of the file on the remote system.
 	FileName pulumi.StringOutput `pulumi:"fileName"`
+	// The mkdir operation to ensure /etc/kubernetes/manifests exists.
+	Mkdir tools.MkdirOutput `pulumi:"mkdir"`
 	// The path to the manifest on the remote system.
 	Path pulumi.StringOutput `pulumi:"path"`
 	// The pod manifest.
@@ -172,6 +175,11 @@ func (o StaticPodOutput) File() FileOutput {
 // The name of the file on the remote system.
 func (o StaticPodOutput) FileName() pulumi.StringOutput {
 	return o.ApplyT(func(v *StaticPod) pulumi.StringOutput { return v.FileName }).(pulumi.StringOutput)
+}
+
+// The mkdir operation to ensure /etc/kubernetes/manifests exists.
+func (o StaticPodOutput) Mkdir() tools.MkdirOutput {
+	return o.ApplyT(func(v *StaticPod) tools.MkdirOutput { return v.Mkdir }).(tools.MkdirOutput)
 }
 
 // The path to the manifest on the remote system.

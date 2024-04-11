@@ -10,6 +10,7 @@ import * as utilities from "../utilities";
 import * as pulumiCommand from "@pulumi/command";
 import * as pulumiKubernetes from "@pulumi/kubernetes";
 
+import {Mkdir} from "../tools";
 import {File} from "./index";
 
 /**
@@ -43,6 +44,10 @@ export class StaticPod extends pulumi.ComponentResource {
      */
     public readonly fileName!: pulumi.Output<string>;
     /**
+     * The mkdir operation to ensure /etc/kubernetes/manifests exists.
+     */
+    public /*out*/ readonly mkdir!: pulumi.Output<Mkdir>;
+    /**
      * The path to the manifest on the remote system.
      */
     public /*out*/ readonly path!: pulumi.Output<string>;
@@ -72,11 +77,13 @@ export class StaticPod extends pulumi.ComponentResource {
             resourceInputs["fileName"] = args ? args.fileName : undefined;
             resourceInputs["pod"] = args ? args.pod : undefined;
             resourceInputs["file"] = undefined /*out*/;
+            resourceInputs["mkdir"] = undefined /*out*/;
             resourceInputs["path"] = undefined /*out*/;
         } else {
             resourceInputs["connection"] = undefined /*out*/;
             resourceInputs["file"] = undefined /*out*/;
             resourceInputs["fileName"] = undefined /*out*/;
+            resourceInputs["mkdir"] = undefined /*out*/;
             resourceInputs["path"] = undefined /*out*/;
             resourceInputs["pod"] = undefined /*out*/;
         }
