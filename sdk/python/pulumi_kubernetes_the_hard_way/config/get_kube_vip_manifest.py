@@ -41,6 +41,13 @@ class AwaitableGetKubeVipManifestResult(GetKubeVipManifestResult):
 
 
 def get_kube_vip_manifest(address: Optional[str] = None,
+                          bgp_as: Optional[int] = None,
+                          bgp_enable: Optional[bool] = None,
+                          bgp_peer_address: Optional[str] = None,
+                          bgp_peer_as: Optional[int] = None,
+                          bgp_peer_pass: Optional[str] = None,
+                          bgp_peers: Optional[str] = None,
+                          bgp_router_id: Optional[str] = None,
                           cp_enable: Optional[bool] = None,
                           cp_namespace: Optional[str] = None,
                           image: Optional[str] = None,
@@ -49,7 +56,7 @@ def get_kube_vip_manifest(address: Optional[str] = None,
                           svc_enable: Optional[bool] = None,
                           version: Optional[str] = None,
                           vip_arp: Optional[bool] = None,
-                          vip_cidr: Optional[str] = None,
+                          vip_cidr: Optional[int] = None,
                           vip_ddns: Optional[bool] = None,
                           vip_interface: Optional[str] = None,
                           vip_leader_election: Optional[bool] = None,
@@ -62,6 +69,13 @@ def get_kube_vip_manifest(address: Optional[str] = None,
 
 
     :param str address: TODO
+    :param int bgp_as: TODO
+    :param bool bgp_enable: TODO
+    :param str bgp_peer_address: TODO
+    :param int bgp_peer_as: TODO
+    :param str bgp_peer_pass: TODO
+    :param str bgp_peers: TODO
+    :param str bgp_router_id: TODO
     :param bool cp_enable: TODO
     :param str cp_namespace: TODO
     :param str image: Override the kube-vip image.
@@ -70,7 +84,7 @@ def get_kube_vip_manifest(address: Optional[str] = None,
     :param bool svc_enable: TODO
     :param str version: Version of kube-vip to use.
     :param bool vip_arp: TODO
-    :param str vip_cidr: TODO
+    :param int vip_cidr: TODO
     :param bool vip_ddns: TODO
     :param str vip_interface: TODO
     :param bool vip_leader_election: TODO
@@ -80,6 +94,13 @@ def get_kube_vip_manifest(address: Optional[str] = None,
     """
     __args__ = dict()
     __args__['address'] = address
+    __args__['bgpAs'] = bgp_as
+    __args__['bgpEnable'] = bgp_enable
+    __args__['bgpPeerAddress'] = bgp_peer_address
+    __args__['bgpPeerAs'] = bgp_peer_as
+    __args__['bgpPeerPass'] = bgp_peer_pass
+    __args__['bgpPeers'] = bgp_peers
+    __args__['bgpRouterId'] = bgp_router_id
     __args__['cpEnable'] = cp_enable
     __args__['cpNamespace'] = cp_namespace
     __args__['image'] = image
@@ -104,6 +125,13 @@ def get_kube_vip_manifest(address: Optional[str] = None,
 
 @_utilities.lift_output_func(get_kube_vip_manifest)
 def get_kube_vip_manifest_output(address: Optional[pulumi.Input[str]] = None,
+                                 bgp_as: Optional[pulumi.Input[Optional[int]]] = None,
+                                 bgp_enable: Optional[pulumi.Input[Optional[bool]]] = None,
+                                 bgp_peer_address: Optional[pulumi.Input[Optional[str]]] = None,
+                                 bgp_peer_as: Optional[pulumi.Input[Optional[int]]] = None,
+                                 bgp_peer_pass: Optional[pulumi.Input[Optional[str]]] = None,
+                                 bgp_peers: Optional[pulumi.Input[Optional[str]]] = None,
+                                 bgp_router_id: Optional[pulumi.Input[Optional[str]]] = None,
                                  cp_enable: Optional[pulumi.Input[Optional[bool]]] = None,
                                  cp_namespace: Optional[pulumi.Input[Optional[str]]] = None,
                                  image: Optional[pulumi.Input[Optional[str]]] = None,
@@ -112,7 +140,7 @@ def get_kube_vip_manifest_output(address: Optional[pulumi.Input[str]] = None,
                                  svc_enable: Optional[pulumi.Input[Optional[bool]]] = None,
                                  version: Optional[pulumi.Input[Optional[str]]] = None,
                                  vip_arp: Optional[pulumi.Input[Optional[bool]]] = None,
-                                 vip_cidr: Optional[pulumi.Input[str]] = None,
+                                 vip_cidr: Optional[pulumi.Input[int]] = None,
                                  vip_ddns: Optional[pulumi.Input[Optional[bool]]] = None,
                                  vip_interface: Optional[pulumi.Input[Optional[str]]] = None,
                                  vip_leader_election: Optional[pulumi.Input[Optional[bool]]] = None,
@@ -125,6 +153,13 @@ def get_kube_vip_manifest_output(address: Optional[pulumi.Input[str]] = None,
 
 
     :param str address: TODO
+    :param int bgp_as: TODO
+    :param bool bgp_enable: TODO
+    :param str bgp_peer_address: TODO
+    :param int bgp_peer_as: TODO
+    :param str bgp_peer_pass: TODO
+    :param str bgp_peers: TODO
+    :param str bgp_router_id: TODO
     :param bool cp_enable: TODO
     :param str cp_namespace: TODO
     :param str image: Override the kube-vip image.
@@ -133,7 +168,7 @@ def get_kube_vip_manifest_output(address: Optional[pulumi.Input[str]] = None,
     :param bool svc_enable: TODO
     :param str version: Version of kube-vip to use.
     :param bool vip_arp: TODO
-    :param str vip_cidr: TODO
+    :param int vip_cidr: TODO
     :param bool vip_ddns: TODO
     :param str vip_interface: TODO
     :param bool vip_leader_election: TODO

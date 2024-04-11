@@ -17,6 +17,13 @@ export function getKubeVipManifest(args: GetKubeVipManifestArgs, opts?: pulumi.I
     opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
     return pulumi.runtime.invoke("kubernetes-the-hard-way:config:getKubeVipManifest", {
         "address": args.address,
+        "bgpAs": args.bgpAs,
+        "bgpEnable": args.bgpEnable,
+        "bgpPeerAddress": args.bgpPeerAddress,
+        "bgpPeerAs": args.bgpPeerAs,
+        "bgpPeerPass": args.bgpPeerPass,
+        "bgpPeers": args.bgpPeers,
+        "bgpRouterId": args.bgpRouterId,
         "cpEnable": args.cpEnable,
         "cpNamespace": args.cpNamespace,
         "image": args.image,
@@ -40,6 +47,34 @@ export interface GetKubeVipManifestArgs {
      * TODO
      */
     address: string;
+    /**
+     * TODO
+     */
+    bgpAs?: number;
+    /**
+     * TODO
+     */
+    bgpEnable?: boolean;
+    /**
+     * TODO
+     */
+    bgpPeerAddress?: string;
+    /**
+     * TODO
+     */
+    bgpPeerAs?: number;
+    /**
+     * TODO
+     */
+    bgpPeerPass?: string;
+    /**
+     * TODO
+     */
+    bgpPeers?: string;
+    /**
+     * TODO
+     */
+    bgpRouterId?: string;
     /**
      * TODO
      */
@@ -75,7 +110,7 @@ export interface GetKubeVipManifestArgs {
     /**
      * TODO
      */
-    vipCidr: string;
+    vipCidr: number;
     /**
      * TODO
      */
@@ -120,6 +155,34 @@ export interface GetKubeVipManifestOutputArgs {
     /**
      * TODO
      */
+    bgpAs?: pulumi.Input<number>;
+    /**
+     * TODO
+     */
+    bgpEnable?: pulumi.Input<boolean>;
+    /**
+     * TODO
+     */
+    bgpPeerAddress?: pulumi.Input<string>;
+    /**
+     * TODO
+     */
+    bgpPeerAs?: pulumi.Input<number>;
+    /**
+     * TODO
+     */
+    bgpPeerPass?: pulumi.Input<string>;
+    /**
+     * TODO
+     */
+    bgpPeers?: pulumi.Input<string>;
+    /**
+     * TODO
+     */
+    bgpRouterId?: pulumi.Input<string>;
+    /**
+     * TODO
+     */
     cpEnable?: pulumi.Input<boolean>;
     /**
      * TODO
@@ -152,7 +215,7 @@ export interface GetKubeVipManifestOutputArgs {
     /**
      * TODO
      */
-    vipCidr: pulumi.Input<string>;
+    vipCidr: pulumi.Input<number>;
     /**
      * TODO
      */

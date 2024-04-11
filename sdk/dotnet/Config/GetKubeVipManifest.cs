@@ -37,6 +37,48 @@ namespace UnMango.KubernetesTheHardWay.Config
         /// <summary>
         /// TODO
         /// </summary>
+        [Input("bgpAs")]
+        public int? BgpAs { get; set; }
+
+        /// <summary>
+        /// TODO
+        /// </summary>
+        [Input("bgpEnable")]
+        public bool? BgpEnable { get; set; }
+
+        /// <summary>
+        /// TODO
+        /// </summary>
+        [Input("bgpPeerAddress")]
+        public string? BgpPeerAddress { get; set; }
+
+        /// <summary>
+        /// TODO
+        /// </summary>
+        [Input("bgpPeerAs")]
+        public int? BgpPeerAs { get; set; }
+
+        /// <summary>
+        /// TODO
+        /// </summary>
+        [Input("bgpPeerPass")]
+        public string? BgpPeerPass { get; set; }
+
+        /// <summary>
+        /// TODO
+        /// </summary>
+        [Input("bgpPeers")]
+        public string? BgpPeers { get; set; }
+
+        /// <summary>
+        /// TODO
+        /// </summary>
+        [Input("bgpRouterId")]
+        public string? BgpRouterId { get; set; }
+
+        /// <summary>
+        /// TODO
+        /// </summary>
         [Input("cpEnable")]
         public bool? CpEnable { get; set; }
 
@@ -86,7 +128,7 @@ namespace UnMango.KubernetesTheHardWay.Config
         /// TODO
         /// </summary>
         [Input("vipCidr", required: true)]
-        public string VipCidr { get; set; } = null!;
+        public int VipCidr { get; set; }
 
         /// <summary>
         /// TODO
@@ -142,6 +184,48 @@ namespace UnMango.KubernetesTheHardWay.Config
         /// <summary>
         /// TODO
         /// </summary>
+        [Input("bgpAs")]
+        public Input<int>? BgpAs { get; set; }
+
+        /// <summary>
+        /// TODO
+        /// </summary>
+        [Input("bgpEnable")]
+        public Input<bool>? BgpEnable { get; set; }
+
+        /// <summary>
+        /// TODO
+        /// </summary>
+        [Input("bgpPeerAddress")]
+        public Input<string>? BgpPeerAddress { get; set; }
+
+        /// <summary>
+        /// TODO
+        /// </summary>
+        [Input("bgpPeerAs")]
+        public Input<int>? BgpPeerAs { get; set; }
+
+        /// <summary>
+        /// TODO
+        /// </summary>
+        [Input("bgpPeerPass")]
+        public Input<string>? BgpPeerPass { get; set; }
+
+        /// <summary>
+        /// TODO
+        /// </summary>
+        [Input("bgpPeers")]
+        public Input<string>? BgpPeers { get; set; }
+
+        /// <summary>
+        /// TODO
+        /// </summary>
+        [Input("bgpRouterId")]
+        public Input<string>? BgpRouterId { get; set; }
+
+        /// <summary>
+        /// TODO
+        /// </summary>
         [Input("cpEnable")]
         public Input<bool>? CpEnable { get; set; }
 
@@ -191,7 +275,7 @@ namespace UnMango.KubernetesTheHardWay.Config
         /// TODO
         /// </summary>
         [Input("vipCidr", required: true)]
-        public Input<string> VipCidr { get; set; } = null!;
+        public Input<int> VipCidr { get; set; } = null!;
 
         /// <summary>
         /// TODO

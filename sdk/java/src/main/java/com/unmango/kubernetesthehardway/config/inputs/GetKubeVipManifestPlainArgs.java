@@ -37,6 +37,111 @@ public final class GetKubeVipManifestPlainArgs extends com.pulumi.resources.Invo
      * TODO
      * 
      */
+    @Import(name="bgpAs")
+    private @Nullable Integer bgpAs;
+
+    /**
+     * @return TODO
+     * 
+     */
+    public Optional<Integer> bgpAs() {
+        return Optional.ofNullable(this.bgpAs);
+    }
+
+    /**
+     * TODO
+     * 
+     */
+    @Import(name="bgpEnable")
+    private @Nullable Boolean bgpEnable;
+
+    /**
+     * @return TODO
+     * 
+     */
+    public Optional<Boolean> bgpEnable() {
+        return Optional.ofNullable(this.bgpEnable);
+    }
+
+    /**
+     * TODO
+     * 
+     */
+    @Import(name="bgpPeerAddress")
+    private @Nullable String bgpPeerAddress;
+
+    /**
+     * @return TODO
+     * 
+     */
+    public Optional<String> bgpPeerAddress() {
+        return Optional.ofNullable(this.bgpPeerAddress);
+    }
+
+    /**
+     * TODO
+     * 
+     */
+    @Import(name="bgpPeerAs")
+    private @Nullable Integer bgpPeerAs;
+
+    /**
+     * @return TODO
+     * 
+     */
+    public Optional<Integer> bgpPeerAs() {
+        return Optional.ofNullable(this.bgpPeerAs);
+    }
+
+    /**
+     * TODO
+     * 
+     */
+    @Import(name="bgpPeerPass")
+    private @Nullable String bgpPeerPass;
+
+    /**
+     * @return TODO
+     * 
+     */
+    public Optional<String> bgpPeerPass() {
+        return Optional.ofNullable(this.bgpPeerPass);
+    }
+
+    /**
+     * TODO
+     * 
+     */
+    @Import(name="bgpPeers")
+    private @Nullable String bgpPeers;
+
+    /**
+     * @return TODO
+     * 
+     */
+    public Optional<String> bgpPeers() {
+        return Optional.ofNullable(this.bgpPeers);
+    }
+
+    /**
+     * TODO
+     * 
+     */
+    @Import(name="bgpRouterId")
+    private @Nullable String bgpRouterId;
+
+    /**
+     * @return TODO
+     * 
+     */
+    public Optional<String> bgpRouterId() {
+        return Optional.ofNullable(this.bgpRouterId);
+    }
+
+    /**
+     * TODO
+     * 
+     */
     @Import(name="cpEnable")
     private @Nullable Boolean cpEnable;
 
@@ -158,13 +263,13 @@ public final class GetKubeVipManifestPlainArgs extends com.pulumi.resources.Invo
      * 
      */
     @Import(name="vipCidr", required=true)
-    private String vipCidr;
+    private Integer vipCidr;
 
     /**
      * @return TODO
      * 
      */
-    public String vipCidr() {
+    public Integer vipCidr() {
         return this.vipCidr;
     }
 
@@ -262,6 +367,13 @@ public final class GetKubeVipManifestPlainArgs extends com.pulumi.resources.Invo
 
     private GetKubeVipManifestPlainArgs(GetKubeVipManifestPlainArgs $) {
         this.address = $.address;
+        this.bgpAs = $.bgpAs;
+        this.bgpEnable = $.bgpEnable;
+        this.bgpPeerAddress = $.bgpPeerAddress;
+        this.bgpPeerAs = $.bgpPeerAs;
+        this.bgpPeerPass = $.bgpPeerPass;
+        this.bgpPeers = $.bgpPeers;
+        this.bgpRouterId = $.bgpRouterId;
         this.cpEnable = $.cpEnable;
         this.cpNamespace = $.cpNamespace;
         this.image = $.image;
@@ -305,6 +417,83 @@ public final class GetKubeVipManifestPlainArgs extends com.pulumi.resources.Invo
          */
         public Builder address(String address) {
             $.address = address;
+            return this;
+        }
+
+        /**
+         * @param bgpAs TODO
+         * 
+         * @return builder
+         * 
+         */
+        public Builder bgpAs(@Nullable Integer bgpAs) {
+            $.bgpAs = bgpAs;
+            return this;
+        }
+
+        /**
+         * @param bgpEnable TODO
+         * 
+         * @return builder
+         * 
+         */
+        public Builder bgpEnable(@Nullable Boolean bgpEnable) {
+            $.bgpEnable = bgpEnable;
+            return this;
+        }
+
+        /**
+         * @param bgpPeerAddress TODO
+         * 
+         * @return builder
+         * 
+         */
+        public Builder bgpPeerAddress(@Nullable String bgpPeerAddress) {
+            $.bgpPeerAddress = bgpPeerAddress;
+            return this;
+        }
+
+        /**
+         * @param bgpPeerAs TODO
+         * 
+         * @return builder
+         * 
+         */
+        public Builder bgpPeerAs(@Nullable Integer bgpPeerAs) {
+            $.bgpPeerAs = bgpPeerAs;
+            return this;
+        }
+
+        /**
+         * @param bgpPeerPass TODO
+         * 
+         * @return builder
+         * 
+         */
+        public Builder bgpPeerPass(@Nullable String bgpPeerPass) {
+            $.bgpPeerPass = bgpPeerPass;
+            return this;
+        }
+
+        /**
+         * @param bgpPeers TODO
+         * 
+         * @return builder
+         * 
+         */
+        public Builder bgpPeers(@Nullable String bgpPeers) {
+            $.bgpPeers = bgpPeers;
+            return this;
+        }
+
+        /**
+         * @param bgpRouterId TODO
+         * 
+         * @return builder
+         * 
+         */
+        public Builder bgpRouterId(@Nullable String bgpRouterId) {
+            $.bgpRouterId = bgpRouterId;
             return this;
         }
 
@@ -402,7 +591,7 @@ public final class GetKubeVipManifestPlainArgs extends com.pulumi.resources.Invo
          * @return builder
          * 
          */
-        public Builder vipCidr(String vipCidr) {
+        public Builder vipCidr(Integer vipCidr) {
             $.vipCidr = vipCidr;
             return this;
         }

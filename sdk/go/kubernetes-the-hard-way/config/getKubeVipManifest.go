@@ -26,6 +26,20 @@ type GetKubeVipManifestArgs struct {
 	// TODO
 	Address string `pulumi:"address"`
 	// TODO
+	BgpAs *int `pulumi:"bgpAs"`
+	// TODO
+	BgpEnable *bool `pulumi:"bgpEnable"`
+	// TODO
+	BgpPeerAddress *string `pulumi:"bgpPeerAddress"`
+	// TODO
+	BgpPeerAs *int `pulumi:"bgpPeerAs"`
+	// TODO
+	BgpPeerPass *string `pulumi:"bgpPeerPass"`
+	// TODO
+	BgpPeers *string `pulumi:"bgpPeers"`
+	// TODO
+	BgpRouterId *string `pulumi:"bgpRouterId"`
+	// TODO
 	CpEnable *bool `pulumi:"cpEnable"`
 	// TODO
 	CpNamespace *string `pulumi:"cpNamespace"`
@@ -42,7 +56,7 @@ type GetKubeVipManifestArgs struct {
 	// TODO
 	VipArp *bool `pulumi:"vipArp"`
 	// TODO
-	VipCidr string `pulumi:"vipCidr"`
+	VipCidr int `pulumi:"vipCidr"`
 	// TODO
 	VipDdns *bool `pulumi:"vipDdns"`
 	// TODO
@@ -91,6 +105,20 @@ type GetKubeVipManifestOutputArgs struct {
 	// TODO
 	Address pulumi.StringInput `pulumi:"address"`
 	// TODO
+	BgpAs pulumi.IntPtrInput `pulumi:"bgpAs"`
+	// TODO
+	BgpEnable pulumi.BoolPtrInput `pulumi:"bgpEnable"`
+	// TODO
+	BgpPeerAddress pulumi.StringPtrInput `pulumi:"bgpPeerAddress"`
+	// TODO
+	BgpPeerAs pulumi.IntPtrInput `pulumi:"bgpPeerAs"`
+	// TODO
+	BgpPeerPass pulumi.StringPtrInput `pulumi:"bgpPeerPass"`
+	// TODO
+	BgpPeers pulumi.StringPtrInput `pulumi:"bgpPeers"`
+	// TODO
+	BgpRouterId pulumi.StringPtrInput `pulumi:"bgpRouterId"`
+	// TODO
 	CpEnable pulumi.BoolPtrInput `pulumi:"cpEnable"`
 	// TODO
 	CpNamespace pulumi.StringPtrInput `pulumi:"cpNamespace"`
@@ -107,7 +135,7 @@ type GetKubeVipManifestOutputArgs struct {
 	// TODO
 	VipArp pulumi.BoolPtrInput `pulumi:"vipArp"`
 	// TODO
-	VipCidr pulumi.StringInput `pulumi:"vipCidr"`
+	VipCidr pulumi.IntInput `pulumi:"vipCidr"`
 	// TODO
 	VipDdns pulumi.BoolPtrInput `pulumi:"vipDdns"`
 	// TODO

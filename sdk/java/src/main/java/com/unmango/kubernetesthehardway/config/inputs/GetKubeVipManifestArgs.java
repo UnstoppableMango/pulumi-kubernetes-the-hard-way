@@ -38,6 +38,111 @@ public final class GetKubeVipManifestArgs extends com.pulumi.resources.InvokeArg
      * TODO
      * 
      */
+    @Import(name="bgpAs")
+    private @Nullable Output<Integer> bgpAs;
+
+    /**
+     * @return TODO
+     * 
+     */
+    public Optional<Output<Integer>> bgpAs() {
+        return Optional.ofNullable(this.bgpAs);
+    }
+
+    /**
+     * TODO
+     * 
+     */
+    @Import(name="bgpEnable")
+    private @Nullable Output<Boolean> bgpEnable;
+
+    /**
+     * @return TODO
+     * 
+     */
+    public Optional<Output<Boolean>> bgpEnable() {
+        return Optional.ofNullable(this.bgpEnable);
+    }
+
+    /**
+     * TODO
+     * 
+     */
+    @Import(name="bgpPeerAddress")
+    private @Nullable Output<String> bgpPeerAddress;
+
+    /**
+     * @return TODO
+     * 
+     */
+    public Optional<Output<String>> bgpPeerAddress() {
+        return Optional.ofNullable(this.bgpPeerAddress);
+    }
+
+    /**
+     * TODO
+     * 
+     */
+    @Import(name="bgpPeerAs")
+    private @Nullable Output<Integer> bgpPeerAs;
+
+    /**
+     * @return TODO
+     * 
+     */
+    public Optional<Output<Integer>> bgpPeerAs() {
+        return Optional.ofNullable(this.bgpPeerAs);
+    }
+
+    /**
+     * TODO
+     * 
+     */
+    @Import(name="bgpPeerPass")
+    private @Nullable Output<String> bgpPeerPass;
+
+    /**
+     * @return TODO
+     * 
+     */
+    public Optional<Output<String>> bgpPeerPass() {
+        return Optional.ofNullable(this.bgpPeerPass);
+    }
+
+    /**
+     * TODO
+     * 
+     */
+    @Import(name="bgpPeers")
+    private @Nullable Output<String> bgpPeers;
+
+    /**
+     * @return TODO
+     * 
+     */
+    public Optional<Output<String>> bgpPeers() {
+        return Optional.ofNullable(this.bgpPeers);
+    }
+
+    /**
+     * TODO
+     * 
+     */
+    @Import(name="bgpRouterId")
+    private @Nullable Output<String> bgpRouterId;
+
+    /**
+     * @return TODO
+     * 
+     */
+    public Optional<Output<String>> bgpRouterId() {
+        return Optional.ofNullable(this.bgpRouterId);
+    }
+
+    /**
+     * TODO
+     * 
+     */
     @Import(name="cpEnable")
     private @Nullable Output<Boolean> cpEnable;
 
@@ -159,13 +264,13 @@ public final class GetKubeVipManifestArgs extends com.pulumi.resources.InvokeArg
      * 
      */
     @Import(name="vipCidr", required=true)
-    private Output<String> vipCidr;
+    private Output<Integer> vipCidr;
 
     /**
      * @return TODO
      * 
      */
-    public Output<String> vipCidr() {
+    public Output<Integer> vipCidr() {
         return this.vipCidr;
     }
 
@@ -263,6 +368,13 @@ public final class GetKubeVipManifestArgs extends com.pulumi.resources.InvokeArg
 
     private GetKubeVipManifestArgs(GetKubeVipManifestArgs $) {
         this.address = $.address;
+        this.bgpAs = $.bgpAs;
+        this.bgpEnable = $.bgpEnable;
+        this.bgpPeerAddress = $.bgpPeerAddress;
+        this.bgpPeerAs = $.bgpPeerAs;
+        this.bgpPeerPass = $.bgpPeerPass;
+        this.bgpPeers = $.bgpPeers;
+        this.bgpRouterId = $.bgpRouterId;
         this.cpEnable = $.cpEnable;
         this.cpNamespace = $.cpNamespace;
         this.image = $.image;
@@ -317,6 +429,153 @@ public final class GetKubeVipManifestArgs extends com.pulumi.resources.InvokeArg
          */
         public Builder address(String address) {
             return address(Output.of(address));
+        }
+
+        /**
+         * @param bgpAs TODO
+         * 
+         * @return builder
+         * 
+         */
+        public Builder bgpAs(@Nullable Output<Integer> bgpAs) {
+            $.bgpAs = bgpAs;
+            return this;
+        }
+
+        /**
+         * @param bgpAs TODO
+         * 
+         * @return builder
+         * 
+         */
+        public Builder bgpAs(Integer bgpAs) {
+            return bgpAs(Output.of(bgpAs));
+        }
+
+        /**
+         * @param bgpEnable TODO
+         * 
+         * @return builder
+         * 
+         */
+        public Builder bgpEnable(@Nullable Output<Boolean> bgpEnable) {
+            $.bgpEnable = bgpEnable;
+            return this;
+        }
+
+        /**
+         * @param bgpEnable TODO
+         * 
+         * @return builder
+         * 
+         */
+        public Builder bgpEnable(Boolean bgpEnable) {
+            return bgpEnable(Output.of(bgpEnable));
+        }
+
+        /**
+         * @param bgpPeerAddress TODO
+         * 
+         * @return builder
+         * 
+         */
+        public Builder bgpPeerAddress(@Nullable Output<String> bgpPeerAddress) {
+            $.bgpPeerAddress = bgpPeerAddress;
+            return this;
+        }
+
+        /**
+         * @param bgpPeerAddress TODO
+         * 
+         * @return builder
+         * 
+         */
+        public Builder bgpPeerAddress(String bgpPeerAddress) {
+            return bgpPeerAddress(Output.of(bgpPeerAddress));
+        }
+
+        /**
+         * @param bgpPeerAs TODO
+         * 
+         * @return builder
+         * 
+         */
+        public Builder bgpPeerAs(@Nullable Output<Integer> bgpPeerAs) {
+            $.bgpPeerAs = bgpPeerAs;
+            return this;
+        }
+
+        /**
+         * @param bgpPeerAs TODO
+         * 
+         * @return builder
+         * 
+         */
+        public Builder bgpPeerAs(Integer bgpPeerAs) {
+            return bgpPeerAs(Output.of(bgpPeerAs));
+        }
+
+        /**
+         * @param bgpPeerPass TODO
+         * 
+         * @return builder
+         * 
+         */
+        public Builder bgpPeerPass(@Nullable Output<String> bgpPeerPass) {
+            $.bgpPeerPass = bgpPeerPass;
+            return this;
+        }
+
+        /**
+         * @param bgpPeerPass TODO
+         * 
+         * @return builder
+         * 
+         */
+        public Builder bgpPeerPass(String bgpPeerPass) {
+            return bgpPeerPass(Output.of(bgpPeerPass));
+        }
+
+        /**
+         * @param bgpPeers TODO
+         * 
+         * @return builder
+         * 
+         */
+        public Builder bgpPeers(@Nullable Output<String> bgpPeers) {
+            $.bgpPeers = bgpPeers;
+            return this;
+        }
+
+        /**
+         * @param bgpPeers TODO
+         * 
+         * @return builder
+         * 
+         */
+        public Builder bgpPeers(String bgpPeers) {
+            return bgpPeers(Output.of(bgpPeers));
+        }
+
+        /**
+         * @param bgpRouterId TODO
+         * 
+         * @return builder
+         * 
+         */
+        public Builder bgpRouterId(@Nullable Output<String> bgpRouterId) {
+            $.bgpRouterId = bgpRouterId;
+            return this;
+        }
+
+        /**
+         * @param bgpRouterId TODO
+         * 
+         * @return builder
+         * 
+         */
+        public Builder bgpRouterId(String bgpRouterId) {
+            return bgpRouterId(Output.of(bgpRouterId));
         }
 
         /**
@@ -493,7 +752,7 @@ public final class GetKubeVipManifestArgs extends com.pulumi.resources.InvokeArg
          * @return builder
          * 
          */
-        public Builder vipCidr(Output<String> vipCidr) {
+        public Builder vipCidr(Output<Integer> vipCidr) {
             $.vipCidr = vipCidr;
             return this;
         }
@@ -504,7 +763,7 @@ public final class GetKubeVipManifestArgs extends com.pulumi.resources.InvokeArg
          * @return builder
          * 
          */
-        public Builder vipCidr(String vipCidr) {
+        public Builder vipCidr(Integer vipCidr) {
             return vipCidr(Output.of(vipCidr));
         }
 
