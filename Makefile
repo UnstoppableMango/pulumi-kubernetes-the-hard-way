@@ -72,13 +72,13 @@ test_nodejs: provider install_nodejs_sdk
 install_provider: .make/install_provider
 
 .PHONY: generate generate_java generate_nodejs generate_python generate_dotnet generate_go generate_types
-generate: generate_java generate_nodejs generate_python generate_dotnet generate_go
-generate_java: .make/generate_types .make/generate_java
-generate_nodejs: .make/generate_types .make/generate_nodejs
-generate_python: .make/generate_types .make/generate_python
-generate_dotnet: .make/generate_types .make/generate_dotnet
-generate_go: .make/generate_types .make/generate_go
-generate_types: .make/generate_types .make/generate_types
+generate: generate_types generate_java generate_nodejs generate_python generate_dotnet generate_go
+generate_java: .make/generate_java
+generate_nodejs: .make/generate_nodejs
+generate_python: .make/generate_python
+generate_dotnet: .make/generate_dotnet
+generate_go: .make/generate_go
+generate_types: .make/generate_types
 
 .PHONY: local_generate_code
 local_generate_code: generate_java
