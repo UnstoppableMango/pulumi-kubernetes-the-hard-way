@@ -21,6 +21,7 @@ export type ResourceConstructor = {
     readonly "kubernetes-the-hard-way:remote:KubectlInstall": ConstructComponent<KubectlInstall>;
     readonly "kubernetes-the-hard-way:remote:KubeletInstall": ConstructComponent<KubeletInstall>;
     readonly "kubernetes-the-hard-way:remote:RuncInstall": ConstructComponent<RuncInstall>;
+    readonly "kubernetes-the-hard-way:remote:StaticPod": ConstructComponent<StaticPod>;
     readonly "kubernetes-the-hard-way:remote:SystemdService": ConstructComponent<SystemdService>;
     readonly "kubernetes-the-hard-way:tls:Certificate": ConstructComponent<Certificate>;
     readonly "kubernetes-the-hard-way:tls:ClusterPki": ConstructComponent<ClusterPki>;
@@ -437,6 +438,21 @@ export interface RuncInstallArgs {
     readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
     readonly directory?: pulumi.Input<string>;
     readonly version?: pulumi.Input<string>;
+}
+export abstract class StaticPod<TData = any> extends (pulumi.ComponentResource)<TData> {
+    public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
+    public file!: File | pulumi.Output<File>;
+    public fileName!: string | pulumi.Output<string>;
+    public path!: string | pulumi.Output<string>;
+    public pod!: PodManifestOutputs | pulumi.Output<PodManifestOutputs>;
+    constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
+        super("kubernetes-the-hard-way:remote:StaticPod", name, opts.urn ? { connection: undefined, file: undefined, fileName: undefined, path: undefined, pod: undefined } : { name, args, opts }, opts);
+    }
+}
+export interface StaticPodArgs {
+    readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
+    readonly fileName?: pulumi.Input<string>;
+    readonly pod: pulumi.Input<PodManifestInputs>;
 }
 export abstract class SystemdService<TData = any> extends (pulumi.ComponentResource)<TData> {
     public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
