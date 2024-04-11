@@ -798,6 +798,118 @@
     },
     "provider": {},
     "resources": {
+        "kubernetes-the-hard-way:config:KubeVipManifest": {
+            "description": "Pseudo resource for generating the kube-vip manifest.",
+            "properties": {
+                "result": {
+                    "$ref": "#/types/kubernetes-the-hard-way:config:PodManifest"
+                }
+            },
+            "required": [
+                "result"
+            ],
+            "inputProperties": {
+                "address": {
+                    "type": "string",
+                    "description": "TODO"
+                },
+                "bgpAs": {
+                    "type": "integer",
+                    "description": "TODO"
+                },
+                "bgpEnable": {
+                    "type": "boolean",
+                    "description": "TODO"
+                },
+                "bgpPeerAddress": {
+                    "type": "string",
+                    "description": "TODO"
+                },
+                "bgpPeerAs": {
+                    "type": "integer",
+                    "description": "TODO"
+                },
+                "bgpPeerPass": {
+                    "type": "string",
+                    "description": "TODO"
+                },
+                "bgpPeers": {
+                    "type": "string",
+                    "description": "TODO"
+                },
+                "bgpRouterId": {
+                    "type": "string",
+                    "description": "TODO"
+                },
+                "cpEnable": {
+                    "type": "boolean",
+                    "description": "TODO"
+                },
+                "cpNamespace": {
+                    "type": "string",
+                    "description": "TODO"
+                },
+                "image": {
+                    "type": "string",
+                    "description": "Override the kube-vip image."
+                },
+                "kubeconfigPath": {
+                    "type": "string",
+                    "description": "Path to the kubeconfig on the remote host."
+                },
+                "port": {
+                    "type": "integer",
+                    "description": "TODO",
+                    "default": 6443
+                },
+                "svcEnable": {
+                    "type": "boolean",
+                    "description": "TODO"
+                },
+                "version": {
+                    "type": "string",
+                    "description": "Version of kube-vip to use."
+                },
+                "vipArp": {
+                    "type": "boolean",
+                    "description": "TODO"
+                },
+                "vipCidr": {
+                    "type": "integer",
+                    "description": "TODO"
+                },
+                "vipDdns": {
+                    "type": "boolean",
+                    "description": "TODO"
+                },
+                "vipInterface": {
+                    "type": "string",
+                    "description": "TODO"
+                },
+                "vipLeaderElection": {
+                    "type": "boolean",
+                    "description": "TODO"
+                },
+                "vipLeaseDuration": {
+                    "type": "integer",
+                    "description": "TODO"
+                },
+                "vipRenewDeadline": {
+                    "type": "integer",
+                    "description": "TODO"
+                },
+                "vipRetryPeriod": {
+                    "type": "integer",
+                    "description": "TODO"
+                }
+            },
+            "requiredInputs": [
+                "address",
+                "kubeconfigPath",
+                "vipCidr"
+            ],
+            "isComponent": true
+        },
         "kubernetes-the-hard-way:remote:CniPluginsInstall": {
             "description": "Installs cni-plugins on a remote system",
             "properties": {
