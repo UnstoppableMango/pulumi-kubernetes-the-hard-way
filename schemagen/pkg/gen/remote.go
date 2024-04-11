@@ -648,6 +648,10 @@ func generateStaticPod(commandSpec schema.PackageSpec) schema.ResourceSpec {
 			Description: "The remote manifest file.",
 			TypeSpec:    schema.TypeSpec{Ref: localResource("File", "remote")},
 		},
+		"mkdir": {
+			Description: "The mkdir operation to ensure /etc/kubernetes/manifests exists.",
+			TypeSpec:    schema.TypeSpec{Ref: localResource("Mkdir", "tools")},
+		},
 		"path": {
 			Description: "The path to the manifest on the remote system.",
 			TypeSpec:    typeSpecs.String,
@@ -659,6 +663,7 @@ func generateStaticPod(commandSpec schema.PackageSpec) schema.ResourceSpec {
 		"connection",
 		"file",
 		"fileName",
+		"mkdir",
 		"path",
 		"pod",
 	}
