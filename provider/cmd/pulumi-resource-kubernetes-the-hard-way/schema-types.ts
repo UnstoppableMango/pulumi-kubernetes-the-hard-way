@@ -443,10 +443,11 @@ export abstract class StaticPod<TData = any> extends (pulumi.ComponentResource)<
     public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
     public file!: File | pulumi.Output<File>;
     public fileName!: string | pulumi.Output<string>;
+    public mkdir!: Mkdir | pulumi.Output<Mkdir>;
     public path!: string | pulumi.Output<string>;
     public pod!: PodManifestOutputs | pulumi.Output<PodManifestOutputs>;
     constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
-        super("kubernetes-the-hard-way:remote:StaticPod", name, opts.urn ? { connection: undefined, file: undefined, fileName: undefined, path: undefined, pod: undefined } : { name, args, opts }, opts);
+        super("kubernetes-the-hard-way:remote:StaticPod", name, opts.urn ? { connection: undefined, file: undefined, fileName: undefined, mkdir: undefined, path: undefined, pod: undefined } : { name, args, opts }, opts);
     }
 }
 export interface StaticPodArgs {
