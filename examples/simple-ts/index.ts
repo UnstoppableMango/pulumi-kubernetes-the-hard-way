@@ -1,4 +1,4 @@
-import { getKubeVipManifestOutput } from '@unmango/pulumi-kubernetes-the-hard-way/config';
+import { KubeVipManifest, getKubeVipManifestOutput } from '@unmango/pulumi-kubernetes-the-hard-way/config';
 import { AllowedUsage, Certificate, ClusterPki, RootCa } from '@unmango/pulumi-kubernetes-the-hard-way/tls';
 
 const ca = new RootCa('simple', {
@@ -41,7 +41,7 @@ const kubeconfig = pki.getKubeconfig({
   },
 });
 
-const kubeVip = getKubeVipManifestOutput({
+const kubeVip = new KubeVipManifest('simple', {
   address: '123.0.0.45',
   kubeconfigPath: '/some/path',
   vipCidr: 69,
@@ -60,4 +60,4 @@ export const certCert = cert.cert;
 export const certKey = cert.key;
 
 export const kubeconfigJson = kubeconfig.apply(JSON.stringify);
-export const kubeVipJson = kubeVip.apply(JSON.stringify);
+export const kubeVipJson = kubeVip.result.apply(JSON.stringify);
