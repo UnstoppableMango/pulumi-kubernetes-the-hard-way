@@ -19,8 +19,10 @@ import {
 } from './remote';
 import { Certificate, ClusterPki, EncryptionKey, RootCa } from './tls';
 import { Etcdctl, Mkdir, Mktemp, Mv, Rm, Systemctl, Tar, Tee, Wget } from './tools';
+import { KubeVipManifest } from './config';
 
 const resources: schema.ResourceConstructor = {
+  'kubernetes-the-hard-way:config:KubeVipManifest': (...args) => new KubeVipManifest(...args),
   'kubernetes-the-hard-way:remote:Download': (...args) => new Download(...args),
   'kubernetes-the-hard-way:remote:EtcdConfiguration': (...args) => new EtcdConfiguration(...args),
   'kubernetes-the-hard-way:remote:EtcdInstall': (...args) => new EtcdInstall(...args),

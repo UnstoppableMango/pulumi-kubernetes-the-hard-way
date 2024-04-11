@@ -1,2 +1,3 @@
+export * from './getKubeVipManifest';
 export * from './kubeconfig';
-export * from './kubeVip';
+export * from './kubeVipManifest';
