@@ -17,6 +17,7 @@ func Generate(commandSpec schema.PackageSpec) schema.PackageSpec {
 		name("Download"):                     generateDownload(commandSpec),
 		name("EtcdConfiguration"):            generateEtcdConfiguration(commandSpec),
 		name("EtcdInstall"):                  generateArchiveInstall(commandSpec, "Installs etcd on a remote system", "etcd", "etcdctl"),
+		name("EtcdService"):                  generateEtcdService(commandSpec),
 		name("File"):                         generateFile(commandSpec),
 		name("KubeApiServerInstall"):         generateBinaryInstall(commandSpec, "Installs kube-apiserver on a remote system."),
 		name("KubeControllerManagerInstall"): generateBinaryInstall(commandSpec, "Installs kube-controller-manager on a remote system."),
