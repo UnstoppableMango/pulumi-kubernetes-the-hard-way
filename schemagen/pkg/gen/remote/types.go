@@ -5,7 +5,7 @@ import (
 	"github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 )
 
-func GenerateTypes() map[string]schema.ComplexTypeSpec {
+func generateTypes() map[string]schema.ComplexTypeSpec {
 	return map[string]schema.ComplexTypeSpec{
 		name("Architecture"): {
 			ObjectTypeSpec: schema.ObjectTypeSpec{
