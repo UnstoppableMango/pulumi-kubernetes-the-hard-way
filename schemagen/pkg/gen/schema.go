@@ -11,6 +11,7 @@ import (
 
 	"os"
 
+	"github.com/UnstoppableMango/pulumi-kubernetes-the-hard-way/schemagen/pkg/gen/remote"
 	"github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 	"github.com/pulumi/pulumi/sdk/go/common/util/contract"
 )
@@ -104,7 +105,7 @@ func GenerateSchema(packageDir string) schema.PackageSpec {
 
 	return extendSchemas(packageSpec,
 		generateConfig(kubernetesSpec),
-		generateRemote(commandSpec),
+		remote.Generate(commandSpec),
 		generateTls(randomSpec, tlsSpec),
 		generateTools(commandSpec))
 }
