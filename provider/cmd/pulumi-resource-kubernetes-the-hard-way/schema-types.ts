@@ -222,8 +222,9 @@ export abstract class EtcdConfiguration<TData = any> extends (pulumi.ComponentRe
     public internalIp!: string | pulumi.Output<string>;
     public keyFile!: File | pulumi.Output<File>;
     public keyPem!: string | pulumi.Output<string>;
+    public value!: EtcdConfigurationPropsOutputs | pulumi.Output<EtcdConfigurationPropsOutputs>;
     constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
-        super("kubernetes-the-hard-way:remote:EtcdConfiguration", name, opts.urn ? { caFile: undefined, caPem: undefined, certFile: undefined, certPem: undefined, configurationDirectory: undefined, configurationMkdir: undefined, connection: undefined, dataDirectory: undefined, dataMkdir: undefined, etcdPath: undefined, internalIp: undefined, keyFile: undefined, keyPem: undefined } : { name, args, opts }, opts);
+        super("kubernetes-the-hard-way:remote:EtcdConfiguration", name, opts.urn ? { caFile: undefined, caPem: undefined, certFile: undefined, certPem: undefined, configurationDirectory: undefined, configurationMkdir: undefined, connection: undefined, dataDirectory: undefined, dataMkdir: undefined, etcdPath: undefined, internalIp: undefined, keyFile: undefined, keyPem: undefined, value: undefined } : { name, args, opts }, opts);
     }
 }
 export interface EtcdConfigurationArgs {
@@ -1112,6 +1113,24 @@ export interface UserOutputs {
 }
 export type ArchitectureInputs = "amd64" | "arm64";
 export type ArchitectureOutputs = "amd64" | "arm64";
+export interface EtcdConfigurationPropsInputs {
+    readonly caFilePath: pulumi.Input<string>;
+    readonly certFilePath: pulumi.Input<string>;
+    readonly dataDirectory: pulumi.Input<string>;
+    readonly etcdPath: pulumi.Input<string>;
+    readonly internalIp: pulumi.Input<string>;
+    readonly keyFilePath: pulumi.Input<string>;
+    readonly name: pulumi.Input<string>;
+}
+export interface EtcdConfigurationPropsOutputs {
+    readonly caFilePath: pulumi.Output<string>;
+    readonly certFilePath: pulumi.Output<string>;
+    readonly dataDirectory: pulumi.Output<string>;
+    readonly etcdPath: pulumi.Output<string>;
+    readonly internalIp: pulumi.Output<string>;
+    readonly keyFilePath: pulumi.Output<string>;
+    readonly name: pulumi.Output<string>;
+}
 export interface SystemdInstallSectionInputs {
     readonly wantedBy?: pulumi.Input<pulumi.Input<string>[]>;
 }
