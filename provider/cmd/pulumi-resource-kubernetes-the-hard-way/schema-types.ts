@@ -265,7 +265,7 @@ export interface EtcdInstallArgs {
     readonly version?: pulumi.Input<string>;
 }
 export abstract class EtcdService<TData = any> extends (pulumi.ComponentResource)<TData> {
-    public configuration!: EtcdConfiguration | pulumi.Output<EtcdConfiguration>;
+    public configuration!: EtcdConfigurationPropsOutputs | pulumi.Output<EtcdConfigurationPropsOutputs>;
     public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
     public description?: string | pulumi.Output<string>;
     public directory?: string | pulumi.Output<string>;
@@ -279,7 +279,7 @@ export abstract class EtcdService<TData = any> extends (pulumi.ComponentResource
     }
 }
 export interface EtcdServiceArgs {
-    readonly configuration: pulumi.Input<EtcdConfiguration>;
+    readonly configuration: pulumi.Input<EtcdConfigurationPropsInputs>;
     readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
     readonly description?: pulumi.Input<string>;
     readonly directory?: pulumi.Input<string>;
