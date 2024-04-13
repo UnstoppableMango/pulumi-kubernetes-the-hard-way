@@ -7,8 +7,11 @@ export class EtcdConfiguration extends schema.EtcdConfiguration {
   constructor(name: string, args: schema.EtcdConfigurationArgs, opts?: ComponentResourceOptions) {
     super(name, args, opts);
 
+    const caPem = output(args.caPem);
+    const certPem = output(args.certPem);
     const configurationDirectory = output(args.configurationDirectory ?? '/etc/etcd'); // Default value from schema?
     const dataDirectory = output(args.dataDirectory ?? '/var/lib/etcd'); // Default value from schema?
+    const etcdPath = output(args.etcdPath);
     const internalIp = output(args.internalIp);
 
     const configurationMkdir = new Mkdir(`${name}-config`, {
@@ -45,45 +48,44 @@ export class EtcdConfiguration extends schema.EtcdConfiguration {
       path: keyFilePath,
     }, { parent: this, dependsOn: configurationMkdir });
 
-    // const systemdService = new SystemdService(name, {
-    //   connection: args.connection,
-    //   directory: systemdDirectory,
-    //   unit: {
-    //     description: 'etcd',
-    //     documentation: ['https://github.com/etcd-io/etcd'],
-    //   },
-    //   service: {
-    //     type: 'notify',
-    //     execStart,
-    //     restart: 'on-failure',
-    //     restartSec: '5',
-    //   },
-    //   install: {
-    //     wantedBy: ['multi-user.target'],
-    //   },
-    // }, { parent: this });
-
     this.caFile = caFile;
+    this.caPem = caPem;
     this.certFile = certFile;
+    this.certPem = certPem;
     this.configurationDirectory = configurationDirectory;
     this.configurationMkdir = configurationMkdir;
     this.dataDirectory = dataDirectory;
     this.dataMkdir = dataMkdir;
+    this.etcdPath = etcdPath;
     this.internalIp = internalIp;
     this.keyFile = keyFile;
-    // this.systemdService = systemdService,
+
+    const value: schema.EtcdConfigurationPropsInputs = {
+      name,
+      etcdPath,
+      internalIp,
+      dataDirectory,
+      caFilePath: caFile.path,
+      certFilePath: certFile.path,
+      keyFilePath: keyFile.path,
+    };
+
+    this.value = output(value);
 
     this.registerOutputs({
       caFile,
+      caPem,
       certFile,
+      certPem,
       configurationDirectory,
       configurationMkdir,
       dataDirectory,
       dataMkdir,
+      etcdPath,
       internalIp,
       keyFile,
       name,
-      // systemdService,
+      value,
     });
   }
 }
