@@ -21,12 +21,14 @@ type EtcdService struct {
 	Connection pulumiCommand.ConnectionOutput `pulumi:"connection"`
 	// Optional systemd unit description.
 	Description pulumi.StringPtrOutput `pulumi:"description"`
+	// The location to create the service file.
+	Directory pulumi.StringPtrOutput `pulumi:"directory"`
 	// Optional systemd unit documentation
 	Documentation pulumi.StringPtrOutput `pulumi:"documentation"`
 	// Optionally override the systemd service restart behaviour. Defaults to `on-failure`.
-	Restart kubernetesthehardway.SystemdServiceRestartPtrOutput `pulumi:"restart"`
+	Restart SystemdServiceRestartPtrOutput `pulumi:"restart"`
 	// Optionally override the systemd service RestartSec. Defaults to `5`.
-	RestartSec pulumi.IntPtrOutput `pulumi:"restartSec"`
+	RestartSec pulumi.StringPtrOutput `pulumi:"restartSec"`
 	// The remote systemd service.
 	Service SystemdServiceOutput `pulumi:"service"`
 	// Optionally override the systemd service wanted-by. Defaults to `multi-user.target`.
@@ -58,12 +60,14 @@ type etcdServiceArgs struct {
 	Connection pulumiCommand.Connection `pulumi:"connection"`
 	// Optional systemd unit description.
 	Description *string `pulumi:"description"`
+	// The location to create the service file.
+	Directory *string `pulumi:"directory"`
 	// Optional systemd unit documentation
 	Documentation *string `pulumi:"documentation"`
 	// Optionally override the systemd service restart behaviour. Defaults to `on-failure`.
-	Restart *kubernetesthehardway.SystemdServiceRestart `pulumi:"restart"`
+	Restart *SystemdServiceRestart `pulumi:"restart"`
 	// Optionally override the systemd service RestartSec. Defaults to `5`.
-	RestartSec *int `pulumi:"restartSec"`
+	RestartSec *string `pulumi:"restartSec"`
 	// Optionally override the systemd service wanted-by. Defaults to `multi-user.target`.
 	WantedBy *string `pulumi:"wantedBy"`
 }
@@ -74,12 +78,14 @@ type EtcdServiceArgs struct {
 	Connection pulumiCommand.ConnectionInput
 	// Optional systemd unit description.
 	Description pulumi.StringPtrInput
+	// The location to create the service file.
+	Directory pulumi.StringPtrInput
 	// Optional systemd unit documentation
 	Documentation pulumi.StringPtrInput
 	// Optionally override the systemd service restart behaviour. Defaults to `on-failure`.
-	Restart kubernetesthehardway.SystemdServiceRestartPtrInput
+	Restart SystemdServiceRestartPtrInput
 	// Optionally override the systemd service RestartSec. Defaults to `5`.
-	RestartSec pulumi.IntPtrInput
+	RestartSec pulumi.StringPtrInput
 	// Optionally override the systemd service wanted-by. Defaults to `multi-user.target`.
 	WantedBy pulumi.StringPtrInput
 }
@@ -181,19 +187,24 @@ func (o EtcdServiceOutput) Description() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *EtcdService) pulumi.StringPtrOutput { return v.Description }).(pulumi.StringPtrOutput)
 }
 
+// The location to create the service file.
+func (o EtcdServiceOutput) Directory() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *EtcdService) pulumi.StringPtrOutput { return v.Directory }).(pulumi.StringPtrOutput)
+}
+
 // Optional systemd unit documentation
 func (o EtcdServiceOutput) Documentation() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *EtcdService) pulumi.StringPtrOutput { return v.Documentation }).(pulumi.StringPtrOutput)
 }
 
 // Optionally override the systemd service restart behaviour. Defaults to `on-failure`.
-func (o EtcdServiceOutput) Restart() kubernetesthehardway.SystemdServiceRestartPtrOutput {
-	return o.ApplyT(func(v *EtcdService) kubernetesthehardway.SystemdServiceRestartPtrOutput { return v.Restart }).(kubernetesthehardway.SystemdServiceRestartPtrOutput)
+func (o EtcdServiceOutput) Restart() SystemdServiceRestartPtrOutput {
+	return o.ApplyT(func(v *EtcdService) SystemdServiceRestartPtrOutput { return v.Restart }).(SystemdServiceRestartPtrOutput)
 }
 
 // Optionally override the systemd service RestartSec. Defaults to `5`.
-func (o EtcdServiceOutput) RestartSec() pulumi.IntPtrOutput {
-	return o.ApplyT(func(v *EtcdService) pulumi.IntPtrOutput { return v.RestartSec }).(pulumi.IntPtrOutput)
+func (o EtcdServiceOutput) RestartSec() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *EtcdService) pulumi.StringPtrOutput { return v.RestartSec }).(pulumi.StringPtrOutput)
 }
 
 // The remote systemd service.

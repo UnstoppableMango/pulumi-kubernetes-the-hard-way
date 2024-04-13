@@ -2,11 +2,13 @@
 // *** Do not edit by hand unless you're certain you know what you are doing! ***
 
 import * as pulumi from "@pulumi/pulumi";
+import * as inputs from "../types/input";
+import * as outputs from "../types/output";
+import * as enums from "../types/enums";
 import * as utilities from "../utilities";
 
 import * as pulumiCommand from "@pulumi/command";
 
-import {SystemdServiceRestart} from "..";
 import {SystemdService} from "./index";
 
 /**
@@ -36,17 +38,21 @@ export class EtcdService extends pulumi.ComponentResource {
      */
     public readonly description!: pulumi.Output<string | undefined>;
     /**
+     * The location to create the service file.
+     */
+    public readonly directory!: pulumi.Output<string | undefined>;
+    /**
      * Optional systemd unit documentation
      */
     public readonly documentation!: pulumi.Output<string | undefined>;
     /**
      * Optionally override the systemd service restart behaviour. Defaults to `on-failure`.
      */
-    public readonly restart!: pulumi.Output<SystemdServiceRestart | undefined>;
+    public readonly restart!: pulumi.Output<enums.remote.SystemdServiceRestart | undefined>;
     /**
      * Optionally override the systemd service RestartSec. Defaults to `5`.
      */
-    public readonly restartSec!: pulumi.Output<number | undefined>;
+    public readonly restartSec!: pulumi.Output<string | undefined>;
     /**
      * The remote systemd service.
      */
@@ -72,6 +78,7 @@ export class EtcdService extends pulumi.ComponentResource {
             }
             resourceInputs["connection"] = args ? (args.connection ? pulumi.output(args.connection).apply(pulumiCommand.types.input.remote.connectionArgsProvideDefaults) : undefined) : undefined;
             resourceInputs["description"] = args ? args.description : undefined;
+            resourceInputs["directory"] = args ? args.directory : undefined;
             resourceInputs["documentation"] = args ? args.documentation : undefined;
             resourceInputs["restart"] = args ? args.restart : undefined;
             resourceInputs["restartSec"] = args ? args.restartSec : undefined;
@@ -80,6 +87,7 @@ export class EtcdService extends pulumi.ComponentResource {
         } else {
             resourceInputs["connection"] = undefined /*out*/;
             resourceInputs["description"] = undefined /*out*/;
+            resourceInputs["directory"] = undefined /*out*/;
             resourceInputs["documentation"] = undefined /*out*/;
             resourceInputs["restart"] = undefined /*out*/;
             resourceInputs["restartSec"] = undefined /*out*/;
@@ -104,17 +112,21 @@ export interface EtcdServiceArgs {
      */
     description?: pulumi.Input<string>;
     /**
+     * The location to create the service file.
+     */
+    directory?: pulumi.Input<string>;
+    /**
      * Optional systemd unit documentation
      */
     documentation?: pulumi.Input<string>;
     /**
      * Optionally override the systemd service restart behaviour. Defaults to `on-failure`.
      */
-    restart?: pulumi.Input<SystemdServiceRestart>;
+    restart?: pulumi.Input<enums.remote.SystemdServiceRestart>;
     /**
      * Optionally override the systemd service RestartSec. Defaults to `5`.
      */
-    restartSec?: pulumi.Input<number>;
+    restartSec?: pulumi.Input<string>;
     /**
      * Optionally override the systemd service wanted-by. Defaults to `multi-user.target`.
      */

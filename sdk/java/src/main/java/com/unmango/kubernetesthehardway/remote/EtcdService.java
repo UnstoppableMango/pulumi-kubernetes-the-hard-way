@@ -9,10 +9,9 @@ import com.pulumi.core.annotations.Export;
 import com.pulumi.core.annotations.ResourceType;
 import com.pulumi.core.internal.Codegen;
 import com.unmango.kubernetesthehardway.Utilities;
-import com.unmango.kubernetesthehardway.outputs.SystemdServiceRestart;
 import com.unmango.kubernetesthehardway.remote.EtcdServiceArgs;
 import com.unmango.kubernetesthehardway.remote.SystemdService;
-import java.lang.Integer;
+import com.unmango.kubernetesthehardway.remote.enums.SystemdServiceRestart;
 import java.lang.String;
 import java.util.Optional;
 import javax.annotation.Nullable;
@@ -52,6 +51,20 @@ public class EtcdService extends com.pulumi.resources.ComponentResource {
         return Codegen.optional(this.description);
     }
     /**
+     * The location to create the service file.
+     * 
+     */
+    @Export(name="directory", refs={String.class}, tree="[0]")
+    private Output</* @Nullable */ String> directory;
+
+    /**
+     * @return The location to create the service file.
+     * 
+     */
+    public Output<Optional<String>> directory() {
+        return Codegen.optional(this.directory);
+    }
+    /**
      * Optional systemd unit documentation
      * 
      */
@@ -83,14 +96,14 @@ public class EtcdService extends com.pulumi.resources.ComponentResource {
      * Optionally override the systemd service RestartSec. Defaults to `5`.
      * 
      */
-    @Export(name="restartSec", refs={Integer.class}, tree="[0]")
-    private Output</* @Nullable */ Integer> restartSec;
+    @Export(name="restartSec", refs={String.class}, tree="[0]")
+    private Output</* @Nullable */ String> restartSec;
 
     /**
      * @return Optionally override the systemd service RestartSec. Defaults to `5`.
      * 
      */
-    public Output<Optional<Integer>> restartSec() {
+    public Output<Optional<String>> restartSec() {
         return Codegen.optional(this.restartSec);
     }
     /**

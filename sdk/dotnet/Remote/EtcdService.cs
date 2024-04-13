@@ -29,6 +29,12 @@ namespace UnMango.KubernetesTheHardWay.Remote
         public Output<string?> Description { get; private set; } = null!;
 
         /// <summary>
+        /// The location to create the service file.
+        /// </summary>
+        [Output("directory")]
+        public Output<string?> Directory { get; private set; } = null!;
+
+        /// <summary>
         /// Optional systemd unit documentation
         /// </summary>
         [Output("documentation")]
@@ -38,13 +44,13 @@ namespace UnMango.KubernetesTheHardWay.Remote
         /// Optionally override the systemd service restart behaviour. Defaults to `on-failure`.
         /// </summary>
         [Output("restart")]
-        public Output<UnMango.KubernetesTheHardWay.Outputs.SystemdServiceRestart?> Restart { get; private set; } = null!;
+        public Output<UnMango.KubernetesTheHardWay.Remote.SystemdServiceRestart?> Restart { get; private set; } = null!;
 
         /// <summary>
         /// Optionally override the systemd service RestartSec. Defaults to `5`.
         /// </summary>
         [Output("restartSec")]
-        public Output<int?> RestartSec { get; private set; } = null!;
+        public Output<string?> RestartSec { get; private set; } = null!;
 
         /// <summary>
         /// The remote systemd service.
@@ -100,6 +106,12 @@ namespace UnMango.KubernetesTheHardWay.Remote
         public Input<string>? Description { get; set; }
 
         /// <summary>
+        /// The location to create the service file.
+        /// </summary>
+        [Input("directory")]
+        public Input<string>? Directory { get; set; }
+
+        /// <summary>
         /// Optional systemd unit documentation
         /// </summary>
         [Input("documentation")]
@@ -109,13 +121,13 @@ namespace UnMango.KubernetesTheHardWay.Remote
         /// Optionally override the systemd service restart behaviour. Defaults to `on-failure`.
         /// </summary>
         [Input("restart")]
-        public Input<UnMango.KubernetesTheHardWay.Inputs.SystemdServiceRestart>? Restart { get; set; }
+        public Input<UnMango.KubernetesTheHardWay.Remote.SystemdServiceRestart>? Restart { get; set; }
 
         /// <summary>
         /// Optionally override the systemd service RestartSec. Defaults to `5`.
         /// </summary>
         [Input("restartSec")]
-        public Input<int>? RestartSec { get; set; }
+        public Input<string>? RestartSec { get; set; }
 
         /// <summary>
         /// Optionally override the systemd service wanted-by. Defaults to `multi-user.target`.

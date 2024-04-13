@@ -7,8 +7,7 @@ import com.pulumi.command.remote.inputs.ConnectionArgs;
 import com.pulumi.core.Output;
 import com.pulumi.core.annotations.Import;
 import com.pulumi.exceptions.MissingRequiredPropertyException;
-import com.unmango.kubernetesthehardway.inputs.SystemdServiceRestart;
-import java.lang.Integer;
+import com.unmango.kubernetesthehardway.remote.enums.SystemdServiceRestart;
 import java.lang.String;
 import java.util.Objects;
 import java.util.Optional;
@@ -50,6 +49,21 @@ public final class EtcdServiceArgs extends com.pulumi.resources.ResourceArgs {
     }
 
     /**
+     * The location to create the service file.
+     * 
+     */
+    @Import(name="directory")
+    private @Nullable Output<String> directory;
+
+    /**
+     * @return The location to create the service file.
+     * 
+     */
+    public Optional<Output<String>> directory() {
+        return Optional.ofNullable(this.directory);
+    }
+
+    /**
      * Optional systemd unit documentation
      * 
      */
@@ -84,13 +98,13 @@ public final class EtcdServiceArgs extends com.pulumi.resources.ResourceArgs {
      * 
      */
     @Import(name="restartSec")
-    private @Nullable Output<Integer> restartSec;
+    private @Nullable Output<String> restartSec;
 
     /**
      * @return Optionally override the systemd service RestartSec. Defaults to `5`.
      * 
      */
-    public Optional<Output<Integer>> restartSec() {
+    public Optional<Output<String>> restartSec() {
         return Optional.ofNullable(this.restartSec);
     }
 
@@ -114,6 +128,7 @@ public final class EtcdServiceArgs extends com.pulumi.resources.ResourceArgs {
     private EtcdServiceArgs(EtcdServiceArgs $) {
         this.connection = $.connection;
         this.description = $.description;
+        this.directory = $.directory;
         this.documentation = $.documentation;
         this.restart = $.restart;
         this.restartSec = $.restartSec;
@@ -181,6 +196,27 @@ public final class EtcdServiceArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
+         * @param directory The location to create the service file.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder directory(@Nullable Output<String> directory) {
+            $.directory = directory;
+            return this;
+        }
+
+        /**
+         * @param directory The location to create the service file.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder directory(String directory) {
+            return directory(Output.of(directory));
+        }
+
+        /**
          * @param documentation Optional systemd unit documentation
          * 
          * @return builder
@@ -228,7 +264,7 @@ public final class EtcdServiceArgs extends com.pulumi.resources.ResourceArgs {
          * @return builder
          * 
          */
-        public Builder restartSec(@Nullable Output<Integer> restartSec) {
+        public Builder restartSec(@Nullable Output<String> restartSec) {
             $.restartSec = restartSec;
             return this;
         }
@@ -239,7 +275,7 @@ public final class EtcdServiceArgs extends com.pulumi.resources.ResourceArgs {
          * @return builder
          * 
          */
-        public Builder restartSec(Integer restartSec) {
+        public Builder restartSec(String restartSec) {
             return restartSec(Output.of(restartSec));
         }
 

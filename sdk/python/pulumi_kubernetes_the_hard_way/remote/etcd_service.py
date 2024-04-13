@@ -8,6 +8,7 @@ import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
 from .. import _utilities
+from ._enums import *
 from .systemd_service import SystemdService
 import pulumi_command
 
@@ -18,22 +19,26 @@ class EtcdServiceArgs:
     def __init__(__self__, *,
                  connection: pulumi.Input['pulumi_command.remote.ConnectionArgs'],
                  description: Optional[pulumi.Input[str]] = None,
+                 directory: Optional[pulumi.Input[str]] = None,
                  documentation: Optional[pulumi.Input[str]] = None,
-                 restart: Optional[Any] = None,
-                 restart_sec: Optional[pulumi.Input[int]] = None,
+                 restart: Optional[pulumi.Input['SystemdServiceRestart']] = None,
+                 restart_sec: Optional[pulumi.Input[str]] = None,
                  wanted_by: Optional[pulumi.Input[str]] = None):
         """
         The set of arguments for constructing a EtcdService resource.
         :param pulumi.Input['pulumi_command.remote.ConnectionArgs'] connection: The parameters with which to connect to the remote host.
         :param pulumi.Input[str] description: Optional systemd unit description.
+        :param pulumi.Input[str] directory: The location to create the service file.
         :param pulumi.Input[str] documentation: Optional systemd unit documentation
-        :param Any restart: Optionally override the systemd service restart behaviour. Defaults to `on-failure`.
-        :param pulumi.Input[int] restart_sec: Optionally override the systemd service RestartSec. Defaults to `5`.
+        :param pulumi.Input['SystemdServiceRestart'] restart: Optionally override the systemd service restart behaviour. Defaults to `on-failure`.
+        :param pulumi.Input[str] restart_sec: Optionally override the systemd service RestartSec. Defaults to `5`.
         :param pulumi.Input[str] wanted_by: Optionally override the systemd service wanted-by. Defaults to `multi-user.target`.
         """
         pulumi.set(__self__, "connection", connection)
         if description is not None:
             pulumi.set(__self__, "description", description)
+        if directory is not None:
+            pulumi.set(__self__, "directory", directory)
         if documentation is not None:
             pulumi.set(__self__, "documentation", documentation)
         if restart is not None:
@@ -69,6 +74,18 @@ class EtcdServiceArgs:
 
     @property
     @pulumi.getter
+    def directory(self) -> Optional[pulumi.Input[str]]:
+        """
+        The location to create the service file.
+        """
+        return pulumi.get(self, "directory")
+
+    @directory.setter
+    def directory(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "directory", value)
+
+    @property
+    @pulumi.getter
     def documentation(self) -> Optional[pulumi.Input[str]]:
         """
         Optional systemd unit documentation
@@ -81,26 +98,26 @@ class EtcdServiceArgs:
 
     @property
     @pulumi.getter
-    def restart(self) -> Optional[Any]:
+    def restart(self) -> Optional[pulumi.Input['SystemdServiceRestart']]:
         """
         Optionally override the systemd service restart behaviour. Defaults to `on-failure`.
         """
         return pulumi.get(self, "restart")
 
     @restart.setter
-    def restart(self, value: Optional[Any]):
+    def restart(self, value: Optional[pulumi.Input['SystemdServiceRestart']]):
         pulumi.set(self, "restart", value)
 
     @property
     @pulumi.getter(name="restartSec")
-    def restart_sec(self) -> Optional[pulumi.Input[int]]:
+    def restart_sec(self) -> Optional[pulumi.Input[str]]:
         """
         Optionally override the systemd service RestartSec. Defaults to `5`.
         """
         return pulumi.get(self, "restart_sec")
 
     @restart_sec.setter
-    def restart_sec(self, value: Optional[pulumi.Input[int]]):
+    def restart_sec(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "restart_sec", value)
 
     @property
@@ -123,9 +140,10 @@ class EtcdService(pulumi.ComponentResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
                  description: Optional[pulumi.Input[str]] = None,
+                 directory: Optional[pulumi.Input[str]] = None,
                  documentation: Optional[pulumi.Input[str]] = None,
-                 restart: Optional[Any] = None,
-                 restart_sec: Optional[pulumi.Input[int]] = None,
+                 restart: Optional[pulumi.Input['SystemdServiceRestart']] = None,
+                 restart_sec: Optional[pulumi.Input[str]] = None,
                  wanted_by: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         """
@@ -135,9 +153,10 @@ class EtcdService(pulumi.ComponentResource):
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']] connection: The parameters with which to connect to the remote host.
         :param pulumi.Input[str] description: Optional systemd unit description.
+        :param pulumi.Input[str] directory: The location to create the service file.
         :param pulumi.Input[str] documentation: Optional systemd unit documentation
-        :param Any restart: Optionally override the systemd service restart behaviour. Defaults to `on-failure`.
-        :param pulumi.Input[int] restart_sec: Optionally override the systemd service RestartSec. Defaults to `5`.
+        :param pulumi.Input['SystemdServiceRestart'] restart: Optionally override the systemd service restart behaviour. Defaults to `on-failure`.
+        :param pulumi.Input[str] restart_sec: Optionally override the systemd service RestartSec. Defaults to `5`.
         :param pulumi.Input[str] wanted_by: Optionally override the systemd service wanted-by. Defaults to `multi-user.target`.
         """
         ...
@@ -166,9 +185,10 @@ class EtcdService(pulumi.ComponentResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
                  description: Optional[pulumi.Input[str]] = None,
+                 directory: Optional[pulumi.Input[str]] = None,
                  documentation: Optional[pulumi.Input[str]] = None,
-                 restart: Optional[Any] = None,
-                 restart_sec: Optional[pulumi.Input[int]] = None,
+                 restart: Optional[pulumi.Input['SystemdServiceRestart']] = None,
+                 restart_sec: Optional[pulumi.Input[str]] = None,
                  wanted_by: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
@@ -185,6 +205,7 @@ class EtcdService(pulumi.ComponentResource):
                 raise TypeError("Missing required property 'connection'")
             __props__.__dict__["connection"] = connection
             __props__.__dict__["description"] = description
+            __props__.__dict__["directory"] = directory
             __props__.__dict__["documentation"] = documentation
             __props__.__dict__["restart"] = restart
             __props__.__dict__["restart_sec"] = restart_sec
@@ -215,6 +236,14 @@ class EtcdService(pulumi.ComponentResource):
 
     @property
     @pulumi.getter
+    def directory(self) -> pulumi.Output[Optional[str]]:
+        """
+        The location to create the service file.
+        """
+        return pulumi.get(self, "directory")
+
+    @property
+    @pulumi.getter
     def documentation(self) -> pulumi.Output[Optional[str]]:
         """
         Optional systemd unit documentation
@@ -223,7 +252,7 @@ class EtcdService(pulumi.ComponentResource):
 
     @property
     @pulumi.getter
-    def restart(self) -> pulumi.Output[Optional[Any]]:
+    def restart(self) -> pulumi.Output[Optional['SystemdServiceRestart']]:
         """
         Optionally override the systemd service restart behaviour. Defaults to `on-failure`.
         """
@@ -231,7 +260,7 @@ class EtcdService(pulumi.ComponentResource):
 
     @property
     @pulumi.getter(name="restartSec")
-    def restart_sec(self) -> pulumi.Output[Optional[int]]:
+    def restart_sec(self) -> pulumi.Output[Optional[str]]:
         """
         Optionally override the systemd service RestartSec. Defaults to `5`.
         """
