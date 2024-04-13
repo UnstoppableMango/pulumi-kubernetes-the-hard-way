@@ -344,6 +344,49 @@
                 }
             ]
         },
+        "kubernetes-the-hard-way:remote:EtcdConfigurationProps": {
+            "description": "Props for resources that consume etcd configuration.",
+            "properties": {
+                "caFilePath": {
+                    "type": "string",
+                    "description": "Path to the certificate authority file on the remote system."
+                },
+                "certFilePath": {
+                    "type": "string",
+                    "description": "Path to the certificate file on the remote system."
+                },
+                "dataDirectory": {
+                    "type": "string",
+                    "description": "Etcd's data directory."
+                },
+                "etcdPath": {
+                    "type": "string",
+                    "description": "Path to the etcd binary."
+                },
+                "internalIp": {
+                    "type": "string",
+                    "description": "Internal IP of the etcd node."
+                },
+                "keyFilePath": {
+                    "type": "string",
+                    "description": "Path to the private key file on the remote system."
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Name of the etcd node."
+                }
+            },
+            "type": "object",
+            "required": [
+                "caFilePath",
+                "certFilePath",
+                "dataDirectory",
+                "etcdPath",
+                "internalIp",
+                "keyFilePath",
+                "name"
+            ]
+        },
         "kubernetes-the-hard-way:remote:SystemdInstallSection": {
             "description": "https://www.freedesktop.org/software/systemd/man/latest/systemd.unit.html#%5BInstall%5D%20Section%20Options",
             "properties": {
@@ -1512,6 +1555,10 @@
                 "keyPem": {
                     "type": "string",
                     "description": "The PEM encoded key data."
+                },
+                "value": {
+                    "$ref": "#/types/kubernetes-the-hard-way:remote:EtcdConfigurationProps",
+                    "description": "A bag of properties to be consumed by other resources."
                 }
             },
             "required": [
@@ -1527,7 +1574,8 @@
                 "configurationMkdir",
                 "dataDirectory",
                 "dataMkdir",
-                "keyFile"
+                "keyFile",
+                "value"
             ],
             "inputProperties": {
                 "caPem": {
