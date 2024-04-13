@@ -39,6 +39,9 @@ _ := $(shell mkdir -p .make)
 default: provider build_sdks
 ensure: bin/pulumictl .pulumi/bin/pulumi
 
+.PHONY: schema
+schema: generate_schema
+
 # Binaries
 .PHONY: provider
 provider: bin/$(LOCAL_PROVIDER_FILENAME)
@@ -71,14 +74,15 @@ test_nodejs: provider install_nodejs_sdk
 .PHONY: install_provider
 install_provider: .make/install_provider
 
-.PHONY: generate generate_java generate_nodejs generate_python generate_dotnet generate_go generate_types
-generate: generate_types generate_java generate_nodejs generate_python generate_dotnet generate_go
+.PHONY: generate generate_java generate_nodejs generate_python generate_dotnet generate_go generate_types generate_schema
+generate: generate_schema generate_types generate_java generate_nodejs generate_python generate_dotnet generate_go
 generate_java: .make/generate_java
 generate_nodejs: .make/generate_nodejs
 generate_python: .make/generate_python
 generate_dotnet: .make/generate_dotnet
 generate_go: .make/generate_go
 generate_types: .make/generate_types
+generate_schema: provider/cmd/$(PROVIDER)/schema.json
 
 .PHONY: local_generate_code
 local_generate_code: generate_java
