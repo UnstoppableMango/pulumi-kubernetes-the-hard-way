@@ -17,6 +17,12 @@ namespace UnMango.KubernetesTheHardWay.Remote
     public partial class EtcdService : global::Pulumi.ComponentResource
     {
         /// <summary>
+        /// Etcd configuration.
+        /// </summary>
+        [Output("configuration")]
+        public Output<UnMango.KubernetesTheHardWay.Remote.EtcdConfiguration> Configuration { get; private set; } = null!;
+
+        /// <summary>
         /// The parameters with which to connect to the remote host.
         /// </summary>
         [Output("connection")]
@@ -93,6 +99,12 @@ namespace UnMango.KubernetesTheHardWay.Remote
 
     public sealed class EtcdServiceArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// Etcd configuration.
+        /// </summary>
+        [Input("configuration", required: true)]
+        public Input<UnMango.KubernetesTheHardWay.Remote.EtcdConfiguration> Configuration { get; set; } = null!;
+
         /// <summary>
         /// The parameters with which to connect to the remote host.
         /// </summary>

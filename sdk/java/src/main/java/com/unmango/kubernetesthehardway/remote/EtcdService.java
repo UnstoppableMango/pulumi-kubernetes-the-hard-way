@@ -9,6 +9,7 @@ import com.pulumi.core.annotations.Export;
 import com.pulumi.core.annotations.ResourceType;
 import com.pulumi.core.internal.Codegen;
 import com.unmango.kubernetesthehardway.Utilities;
+import com.unmango.kubernetesthehardway.remote.EtcdConfiguration;
 import com.unmango.kubernetesthehardway.remote.EtcdServiceArgs;
 import com.unmango.kubernetesthehardway.remote.SystemdService;
 import com.unmango.kubernetesthehardway.remote.enums.SystemdServiceRestart;
@@ -22,6 +23,20 @@ import javax.annotation.Nullable;
  */
 @ResourceType(type="kubernetes-the-hard-way:remote:EtcdService")
 public class EtcdService extends com.pulumi.resources.ComponentResource {
+    /**
+     * Etcd configuration.
+     * 
+     */
+    @Export(name="configuration", refs={EtcdConfiguration.class}, tree="[0]")
+    private Output<EtcdConfiguration> configuration;
+
+    /**
+     * @return Etcd configuration.
+     * 
+     */
+    public Output<EtcdConfiguration> configuration() {
+        return this.configuration;
+    }
     /**
      * The parameters with which to connect to the remote host.
      * 

@@ -44,7 +44,7 @@ namespace UnMango.KubernetesTheHardWay.Remote
         /// The directory to store etcd configuration.
         /// </summary>
         [Output("configurationDirectory")]
-        public Output<string?> ConfigurationDirectory { get; private set; } = null!;
+        public Output<string> ConfigurationDirectory { get; private set; } = null!;
 
         /// <summary>
         /// The configuration mkdir operation.
@@ -62,7 +62,7 @@ namespace UnMango.KubernetesTheHardWay.Remote
         /// The directory etcd will store its data.
         /// </summary>
         [Output("dataDirectory")]
-        public Output<string?> DataDirectory { get; private set; } = null!;
+        public Output<string> DataDirectory { get; private set; } = null!;
 
         /// <summary>
         /// The data mkdir operation.
@@ -174,6 +174,7 @@ namespace UnMango.KubernetesTheHardWay.Remote
         public EtcdConfigurationArgs()
         {
             ConfigurationDirectory = "/etc/etcd";
+            DataDirectory = "/var/lib/etcd";
         }
         public static new EtcdConfigurationArgs Empty => new EtcdConfigurationArgs();
     }

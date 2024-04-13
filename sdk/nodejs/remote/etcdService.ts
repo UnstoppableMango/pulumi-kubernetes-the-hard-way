@@ -9,7 +9,7 @@ import * as utilities from "../utilities";
 
 import * as pulumiCommand from "@pulumi/command";
 
-import {SystemdService} from "./index";
+import {EtcdConfiguration, SystemdService} from "./index";
 
 /**
  * Etcd systemd service file. Will likely get replaced with a static function when https://github.com/pulumi/pulumi/issues/7583 gets resolved.
@@ -29,6 +29,10 @@ export class EtcdService extends pulumi.ComponentResource {
         return obj['__pulumiType'] === EtcdService.__pulumiType;
     }
 
+    /**
+     * Etcd configuration.
+     */
+    public readonly configuration!: pulumi.Output<EtcdConfiguration>;
     /**
      * The parameters with which to connect to the remote host.
      */
@@ -73,9 +77,13 @@ export class EtcdService extends pulumi.ComponentResource {
         let resourceInputs: pulumi.Inputs = {};
         opts = opts || {};
         if (!opts.id) {
+            if ((!args || args.configuration === undefined) && !opts.urn) {
+                throw new Error("Missing required property 'configuration'");
+            }
             if ((!args || args.connection === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'connection'");
             }
+            resourceInputs["configuration"] = args ? args.configuration : undefined;
             resourceInputs["connection"] = args ? (args.connection ? pulumi.output(args.connection).apply(pulumiCommand.types.input.remote.connectionArgsProvideDefaults) : undefined) : undefined;
             resourceInputs["description"] = args ? args.description : undefined;
             resourceInputs["directory"] = args ? args.directory : undefined;
@@ -85,6 +93,7 @@ export class EtcdService extends pulumi.ComponentResource {
             resourceInputs["wantedBy"] = args ? args.wantedBy : undefined;
             resourceInputs["service"] = undefined /*out*/;
         } else {
+            resourceInputs["configuration"] = undefined /*out*/;
             resourceInputs["connection"] = undefined /*out*/;
             resourceInputs["description"] = undefined /*out*/;
             resourceInputs["directory"] = undefined /*out*/;
@@ -103,6 +112,10 @@ export class EtcdService extends pulumi.ComponentResource {
  * The set of arguments for constructing a EtcdService resource.
  */
 export interface EtcdServiceArgs {
+    /**
+     * Etcd configuration.
+     */
+    configuration: pulumi.Input<EtcdConfiguration>;
     /**
      * The parameters with which to connect to the remote host.
      */

@@ -7,6 +7,7 @@ import com.pulumi.command.remote.inputs.ConnectionArgs;
 import com.pulumi.core.Output;
 import com.pulumi.core.annotations.Import;
 import com.pulumi.exceptions.MissingRequiredPropertyException;
+import com.unmango.kubernetesthehardway.remote.EtcdConfiguration;
 import com.unmango.kubernetesthehardway.remote.enums.SystemdServiceRestart;
 import java.lang.String;
 import java.util.Objects;
@@ -17,6 +18,21 @@ import javax.annotation.Nullable;
 public final class EtcdServiceArgs extends com.pulumi.resources.ResourceArgs {
 
     public static final EtcdServiceArgs Empty = new EtcdServiceArgs();
+
+    /**
+     * Etcd configuration.
+     * 
+     */
+    @Import(name="configuration", required=true)
+    private Output<EtcdConfiguration> configuration;
+
+    /**
+     * @return Etcd configuration.
+     * 
+     */
+    public Output<EtcdConfiguration> configuration() {
+        return this.configuration;
+    }
 
     /**
      * The parameters with which to connect to the remote host.
@@ -126,6 +142,7 @@ public final class EtcdServiceArgs extends com.pulumi.resources.ResourceArgs {
     private EtcdServiceArgs() {}
 
     private EtcdServiceArgs(EtcdServiceArgs $) {
+        this.configuration = $.configuration;
         this.connection = $.connection;
         this.description = $.description;
         this.directory = $.directory;
@@ -151,6 +168,27 @@ public final class EtcdServiceArgs extends com.pulumi.resources.ResourceArgs {
 
         public Builder(EtcdServiceArgs defaults) {
             $ = new EtcdServiceArgs(Objects.requireNonNull(defaults));
+        }
+
+        /**
+         * @param configuration Etcd configuration.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder configuration(Output<EtcdConfiguration> configuration) {
+            $.configuration = configuration;
+            return this;
+        }
+
+        /**
+         * @param configuration Etcd configuration.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder configuration(EtcdConfiguration configuration) {
+            return configuration(Output.of(configuration));
         }
 
         /**
@@ -301,6 +339,9 @@ public final class EtcdServiceArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         public EtcdServiceArgs build() {
+            if ($.configuration == null) {
+                throw new MissingRequiredPropertyException("EtcdServiceArgs", "configuration");
+            }
             if ($.connection == null) {
                 throw new MissingRequiredPropertyException("EtcdServiceArgs", "connection");
             }

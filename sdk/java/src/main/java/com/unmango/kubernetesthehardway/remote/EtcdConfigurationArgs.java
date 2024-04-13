@@ -348,6 +348,7 @@ public final class EtcdConfigurationArgs extends com.pulumi.resources.ResourceAr
             if ($.connection == null) {
                 throw new MissingRequiredPropertyException("EtcdConfigurationArgs", "connection");
             }
+            $.dataDirectory = Codegen.stringProp("dataDirectory").output().arg($.dataDirectory).def("/var/lib/etcd").getNullable();
             if ($.etcdPath == null) {
                 throw new MissingRequiredPropertyException("EtcdConfigurationArgs", "etcdPath");
             }

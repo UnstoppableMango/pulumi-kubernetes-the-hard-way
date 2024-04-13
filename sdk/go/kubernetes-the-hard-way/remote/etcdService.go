@@ -17,6 +17,8 @@ import (
 type EtcdService struct {
 	pulumi.ResourceState
 
+	// Etcd configuration.
+	Configuration EtcdConfigurationOutput `pulumi:"configuration"`
 	// The parameters with which to connect to the remote host.
 	Connection pulumiCommand.ConnectionOutput `pulumi:"connection"`
 	// Optional systemd unit description.
@@ -42,6 +44,9 @@ func NewEtcdService(ctx *pulumi.Context,
 		return nil, errors.New("missing one or more required arguments")
 	}
 
+	if args.Configuration == nil {
+		return nil, errors.New("invalid value for required argument 'Configuration'")
+	}
 	if args.Connection == nil {
 		return nil, errors.New("invalid value for required argument 'Connection'")
 	}
@@ -56,6 +61,8 @@ func NewEtcdService(ctx *pulumi.Context,
 }
 
 type etcdServiceArgs struct {
+	// Etcd configuration.
+	Configuration *EtcdConfiguration `pulumi:"configuration"`
 	// The parameters with which to connect to the remote host.
 	Connection pulumiCommand.Connection `pulumi:"connection"`
 	// Optional systemd unit description.
@@ -74,6 +81,8 @@ type etcdServiceArgs struct {
 
 // The set of arguments for constructing a EtcdService resource.
 type EtcdServiceArgs struct {
+	// Etcd configuration.
+	Configuration EtcdConfigurationInput
 	// The parameters with which to connect to the remote host.
 	Connection pulumiCommand.ConnectionInput
 	// Optional systemd unit description.
@@ -175,6 +184,11 @@ func (o EtcdServiceOutput) ToEtcdServiceOutput() EtcdServiceOutput {
 
 func (o EtcdServiceOutput) ToEtcdServiceOutputWithContext(ctx context.Context) EtcdServiceOutput {
 	return o
+}
+
+// Etcd configuration.
+func (o EtcdServiceOutput) Configuration() EtcdConfigurationOutput {
+	return o.ApplyT(func(v *EtcdService) EtcdConfigurationOutput { return v.Configuration }).(EtcdConfigurationOutput)
 }
 
 // The parameters with which to connect to the remote host.

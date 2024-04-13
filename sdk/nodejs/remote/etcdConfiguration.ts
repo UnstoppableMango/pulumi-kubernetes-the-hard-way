@@ -46,7 +46,7 @@ export class EtcdConfiguration extends pulumi.ComponentResource {
     /**
      * The directory to store etcd configuration.
      */
-    public readonly configurationDirectory!: pulumi.Output<string | undefined>;
+    public readonly configurationDirectory!: pulumi.Output<string>;
     /**
      * The configuration mkdir operation.
      */
@@ -58,7 +58,7 @@ export class EtcdConfiguration extends pulumi.ComponentResource {
     /**
      * The directory etcd will store its data.
      */
-    public readonly dataDirectory!: pulumi.Output<string | undefined>;
+    public readonly dataDirectory!: pulumi.Output<string>;
     /**
      * The data mkdir operation.
      */
@@ -113,7 +113,7 @@ export class EtcdConfiguration extends pulumi.ComponentResource {
             resourceInputs["certPem"] = args ? args.certPem : undefined;
             resourceInputs["configurationDirectory"] = (args ? args.configurationDirectory : undefined) ?? "/etc/etcd";
             resourceInputs["connection"] = args ? (args.connection ? pulumi.output(args.connection).apply(pulumiCommand.types.input.remote.connectionArgsProvideDefaults) : undefined) : undefined;
-            resourceInputs["dataDirectory"] = args ? args.dataDirectory : undefined;
+            resourceInputs["dataDirectory"] = (args ? args.dataDirectory : undefined) ?? "/var/lib/etcd";
             resourceInputs["etcdPath"] = args ? args.etcdPath : undefined;
             resourceInputs["internalIp"] = args ? args.internalIp : undefined;
             resourceInputs["keyPem"] = args ? args.keyPem : undefined;

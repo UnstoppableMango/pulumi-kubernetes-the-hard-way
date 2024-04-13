@@ -9,6 +9,7 @@ import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
 from .. import _utilities
 from ._enums import *
+from .etcd_configuration import EtcdConfiguration
 from .systemd_service import SystemdService
 import pulumi_command
 
@@ -17,6 +18,7 @@ __all__ = ['EtcdServiceArgs', 'EtcdService']
 @pulumi.input_type
 class EtcdServiceArgs:
     def __init__(__self__, *,
+                 configuration: pulumi.Input['EtcdConfiguration'],
                  connection: pulumi.Input['pulumi_command.remote.ConnectionArgs'],
                  description: Optional[pulumi.Input[str]] = None,
                  directory: Optional[pulumi.Input[str]] = None,
@@ -26,6 +28,7 @@ class EtcdServiceArgs:
                  wanted_by: Optional[pulumi.Input[str]] = None):
         """
         The set of arguments for constructing a EtcdService resource.
+        :param pulumi.Input['EtcdConfiguration'] configuration: Etcd configuration.
         :param pulumi.Input['pulumi_command.remote.ConnectionArgs'] connection: The parameters with which to connect to the remote host.
         :param pulumi.Input[str] description: Optional systemd unit description.
         :param pulumi.Input[str] directory: The location to create the service file.
@@ -34,6 +37,7 @@ class EtcdServiceArgs:
         :param pulumi.Input[str] restart_sec: Optionally override the systemd service RestartSec. Defaults to `5`.
         :param pulumi.Input[str] wanted_by: Optionally override the systemd service wanted-by. Defaults to `multi-user.target`.
         """
+        pulumi.set(__self__, "configuration", configuration)
         pulumi.set(__self__, "connection", connection)
         if description is not None:
             pulumi.set(__self__, "description", description)
@@ -47,6 +51,18 @@ class EtcdServiceArgs:
             pulumi.set(__self__, "restart_sec", restart_sec)
         if wanted_by is not None:
             pulumi.set(__self__, "wanted_by", wanted_by)
+
+    @property
+    @pulumi.getter
+    def configuration(self) -> pulumi.Input['EtcdConfiguration']:
+        """
+        Etcd configuration.
+        """
+        return pulumi.get(self, "configuration")
+
+    @configuration.setter
+    def configuration(self, value: pulumi.Input['EtcdConfiguration']):
+        pulumi.set(self, "configuration", value)
 
     @property
     @pulumi.getter
@@ -138,6 +154,7 @@ class EtcdService(pulumi.ComponentResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
+                 configuration: Optional[pulumi.Input['EtcdConfiguration']] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
                  description: Optional[pulumi.Input[str]] = None,
                  directory: Optional[pulumi.Input[str]] = None,
@@ -151,6 +168,7 @@ class EtcdService(pulumi.ComponentResource):
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input['EtcdConfiguration'] configuration: Etcd configuration.
         :param pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']] connection: The parameters with which to connect to the remote host.
         :param pulumi.Input[str] description: Optional systemd unit description.
         :param pulumi.Input[str] directory: The location to create the service file.
@@ -183,6 +201,7 @@ class EtcdService(pulumi.ComponentResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
+                 configuration: Optional[pulumi.Input['EtcdConfiguration']] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
                  description: Optional[pulumi.Input[str]] = None,
                  directory: Optional[pulumi.Input[str]] = None,
@@ -201,6 +220,9 @@ class EtcdService(pulumi.ComponentResource):
                 raise TypeError('__props__ is only valid when passed in combination with a valid opts.id to get an existing resource')
             __props__ = EtcdServiceArgs.__new__(EtcdServiceArgs)
 
+            if configuration is None and not opts.urn:
+                raise TypeError("Missing required property 'configuration'")
+            __props__.__dict__["configuration"] = configuration
             if connection is None and not opts.urn:
                 raise TypeError("Missing required property 'connection'")
             __props__.__dict__["connection"] = connection
@@ -217,6 +239,14 @@ class EtcdService(pulumi.ComponentResource):
             __props__,
             opts,
             remote=True)
+
+    @property
+    @pulumi.getter
+    def configuration(self) -> pulumi.Output['EtcdConfiguration']:
+        """
+        Etcd configuration.
+        """
+        return pulumi.get(self, "configuration")
 
     @property
     @pulumi.getter
