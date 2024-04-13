@@ -1737,7 +1737,7 @@
             "description": "Etcd systemd service file. Will likely get replaced with a static function when https://github.com/pulumi/pulumi/issues/7583 gets resolved.",
             "properties": {
                 "configuration": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:remote:EtcdConfiguration",
+                    "$ref": "#/types/kubernetes-the-hard-way:remote:EtcdConfigurationProps",
                     "description": "Etcd configuration."
                 },
                 "connection": {
@@ -1780,7 +1780,7 @@
             ],
             "inputProperties": {
                 "configuration": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:remote:EtcdConfiguration",
+                    "$ref": "#/types/kubernetes-the-hard-way:remote:EtcdConfigurationProps",
                     "description": "Etcd configuration."
                 },
                 "connection": {
