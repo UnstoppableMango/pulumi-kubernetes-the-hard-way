@@ -1756,6 +1756,13 @@
                     "type": "string",
                     "description": "Optional systemd unit documentation"
                 },
+                "peers": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/kubernetes-the-hard-way:remote:EtcdConfigurationProps"
+                    },
+                    "description": "Etcd peer configuration."
+                },
                 "restart": {
                     "$ref": "#/types/kubernetes-the-hard-way:remote:SystemdServiceRestart",
                     "description": "Optionally override the systemd service restart behaviour. Defaults to `on-failure`."
@@ -1776,6 +1783,7 @@
             "required": [
                 "configuration",
                 "connection",
+                "peers",
                 "service"
             ],
             "inputProperties": {
@@ -1798,6 +1806,13 @@
                 "documentation": {
                     "type": "string",
                     "description": "Optional systemd unit documentation"
+                },
+                "peers": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/kubernetes-the-hard-way:remote:EtcdConfigurationProps"
+                    },
+                    "description": "Etcd peer configuration."
                 },
                 "restart": {
                     "$ref": "#/types/kubernetes-the-hard-way:remote:SystemdServiceRestart",
