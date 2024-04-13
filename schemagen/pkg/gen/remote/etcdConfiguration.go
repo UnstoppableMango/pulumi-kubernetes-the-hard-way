@@ -30,6 +30,7 @@ func generateEtcdConfiguration(commandSpec schema.PackageSpec) schema.ResourceSp
 		"dataDirectory": {
 			Description: "The directory etcd will store its data.",
 			TypeSpec:    types.String,
+			Default:     "/var/lib/etcd",
 		},
 		"etcdPath": {
 			Description: "The path to the `etcd` binary.",
@@ -83,7 +84,9 @@ func generateEtcdConfiguration(commandSpec schema.PackageSpec) schema.ResourceSp
 		[]string{
 			"caFile",
 			"certFile",
+			"configurationDirectory",
 			"configurationMkdir",
+			"dataDirectory",
 			"dataMkdir",
 			"keyFile",
 		},

@@ -10,6 +10,10 @@ import (
 
 func generateEtcdService(commandSpec schema.PackageSpec) schema.ResourceSpec {
 	inputs := map[string]schema.PropertySpec{
+		"configuration": {
+			Description: "Etcd configuration.",
+			TypeSpec:    types.LocalResource("EtcdConfiguration", "remote"),
+		},
 		"connection":    connection(commandSpec),
 		"description":   props.String("Optional systemd unit description."),
 		"directory":     props.String("The location to create the service file."),
@@ -22,7 +26,7 @@ func generateEtcdService(commandSpec schema.PackageSpec) schema.ResourceSpec {
 		"wantedBy":   props.String("Optionally override the systemd service wanted-by. Defaults to `multi-user.target`."),
 	}
 
-	requiredInputs := []string{"connection"}
+	requiredInputs := []string{"configuration", "connection"}
 
 	outputs := map[string]schema.PropertySpec{
 		"service": {
