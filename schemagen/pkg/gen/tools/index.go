@@ -50,6 +50,7 @@ func Generate(commandSpec schema.PackageSpec) schema.PackageSpec {
 		"Mktemp":    generateMktemp(),
 		"Mv":        generateMv(),
 		"Rm":        generateRm(),
+		"Sed":       generateSed(),
 		"Systemctl": generateSystemctl(),
 		"Tar":       generateTar(),
 		"Tee":       generateTee(),
