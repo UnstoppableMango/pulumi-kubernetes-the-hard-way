@@ -27,6 +27,8 @@ type EtcdService struct {
 	Directory pulumi.StringPtrOutput `pulumi:"directory"`
 	// Optional systemd unit documentation
 	Documentation pulumi.StringPtrOutput `pulumi:"documentation"`
+	// Etcd peer configuration.
+	Peers EtcdConfigurationPropsArrayOutput `pulumi:"peers"`
 	// Optionally override the systemd service restart behaviour. Defaults to `on-failure`.
 	Restart SystemdServiceRestartPtrOutput `pulumi:"restart"`
 	// Optionally override the systemd service RestartSec. Defaults to `5`.
@@ -71,6 +73,8 @@ type etcdServiceArgs struct {
 	Directory *string `pulumi:"directory"`
 	// Optional systemd unit documentation
 	Documentation *string `pulumi:"documentation"`
+	// Etcd peer configuration.
+	Peers []EtcdConfigurationProps `pulumi:"peers"`
 	// Optionally override the systemd service restart behaviour. Defaults to `on-failure`.
 	Restart *SystemdServiceRestart `pulumi:"restart"`
 	// Optionally override the systemd service RestartSec. Defaults to `5`.
@@ -91,6 +95,8 @@ type EtcdServiceArgs struct {
 	Directory pulumi.StringPtrInput
 	// Optional systemd unit documentation
 	Documentation pulumi.StringPtrInput
+	// Etcd peer configuration.
+	Peers EtcdConfigurationPropsArrayInput
 	// Optionally override the systemd service restart behaviour. Defaults to `on-failure`.
 	Restart SystemdServiceRestartPtrInput
 	// Optionally override the systemd service RestartSec. Defaults to `5`.
@@ -209,6 +215,11 @@ func (o EtcdServiceOutput) Directory() pulumi.StringPtrOutput {
 // Optional systemd unit documentation
 func (o EtcdServiceOutput) Documentation() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *EtcdService) pulumi.StringPtrOutput { return v.Documentation }).(pulumi.StringPtrOutput)
+}
+
+// Etcd peer configuration.
+func (o EtcdServiceOutput) Peers() EtcdConfigurationPropsArrayOutput {
+	return o.ApplyT(func(v *EtcdService) EtcdConfigurationPropsArrayOutput { return v.Peers }).(EtcdConfigurationPropsArrayOutput)
 }
 
 // Optionally override the systemd service restart behaviour. Defaults to `on-failure`.

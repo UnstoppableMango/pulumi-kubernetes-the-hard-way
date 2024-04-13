@@ -14,6 +14,7 @@ import com.unmango.kubernetesthehardway.remote.SystemdService;
 import com.unmango.kubernetesthehardway.remote.enums.SystemdServiceRestart;
 import com.unmango.kubernetesthehardway.remote.outputs.EtcdConfigurationProps;
 import java.lang.String;
+import java.util.List;
 import java.util.Optional;
 import javax.annotation.Nullable;
 
@@ -92,6 +93,20 @@ public class EtcdService extends com.pulumi.resources.ComponentResource {
      */
     public Output<Optional<String>> documentation() {
         return Codegen.optional(this.documentation);
+    }
+    /**
+     * Etcd peer configuration.
+     * 
+     */
+    @Export(name="peers", refs={List.class,EtcdConfigurationProps.class}, tree="[0,1]")
+    private Output<List<EtcdConfigurationProps>> peers;
+
+    /**
+     * @return Etcd peer configuration.
+     * 
+     */
+    public Output<List<EtcdConfigurationProps>> peers() {
+        return this.peers;
     }
     /**
      * Optionally override the systemd service restart behaviour. Defaults to `on-failure`.

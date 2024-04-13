@@ -10,6 +10,7 @@ import com.pulumi.exceptions.MissingRequiredPropertyException;
 import com.unmango.kubernetesthehardway.remote.enums.SystemdServiceRestart;
 import com.unmango.kubernetesthehardway.remote.inputs.EtcdConfigurationPropsArgs;
 import java.lang.String;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import javax.annotation.Nullable;
@@ -95,6 +96,21 @@ public final class EtcdServiceArgs extends com.pulumi.resources.ResourceArgs {
     }
 
     /**
+     * Etcd peer configuration.
+     * 
+     */
+    @Import(name="peers")
+    private @Nullable Output<List<EtcdConfigurationPropsArgs>> peers;
+
+    /**
+     * @return Etcd peer configuration.
+     * 
+     */
+    public Optional<Output<List<EtcdConfigurationPropsArgs>>> peers() {
+        return Optional.ofNullable(this.peers);
+    }
+
+    /**
      * Optionally override the systemd service restart behaviour. Defaults to `on-failure`.
      * 
      */
@@ -147,6 +163,7 @@ public final class EtcdServiceArgs extends com.pulumi.resources.ResourceArgs {
         this.description = $.description;
         this.directory = $.directory;
         this.documentation = $.documentation;
+        this.peers = $.peers;
         this.restart = $.restart;
         this.restartSec = $.restartSec;
         this.wantedBy = $.wantedBy;
@@ -273,6 +290,37 @@ public final class EtcdServiceArgs extends com.pulumi.resources.ResourceArgs {
          */
         public Builder documentation(String documentation) {
             return documentation(Output.of(documentation));
+        }
+
+        /**
+         * @param peers Etcd peer configuration.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder peers(@Nullable Output<List<EtcdConfigurationPropsArgs>> peers) {
+            $.peers = peers;
+            return this;
+        }
+
+        /**
+         * @param peers Etcd peer configuration.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder peers(List<EtcdConfigurationPropsArgs> peers) {
+            return peers(Output.of(peers));
+        }
+
+        /**
+         * @param peers Etcd peer configuration.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder peers(EtcdConfigurationPropsArgs... peers) {
+            return peers(List.of(peers));
         }
 
         /**

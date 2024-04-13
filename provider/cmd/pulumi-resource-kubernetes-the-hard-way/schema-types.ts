@@ -270,12 +270,13 @@ export abstract class EtcdService<TData = any> extends (pulumi.ComponentResource
     public description?: string | pulumi.Output<string>;
     public directory?: string | pulumi.Output<string>;
     public documentation?: string | pulumi.Output<string>;
+    public peers!: EtcdConfigurationPropsOutputs[] | pulumi.Output<EtcdConfigurationPropsOutputs[]>;
     public restart?: SystemdServiceRestartOutputs | pulumi.Output<SystemdServiceRestartOutputs>;
     public restartSec?: string | pulumi.Output<string>;
     public service!: SystemdService | pulumi.Output<SystemdService>;
     public wantedBy?: string | pulumi.Output<string>;
     constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
-        super("kubernetes-the-hard-way:remote:EtcdService", name, opts.urn ? { configuration: undefined, connection: undefined, description: undefined, directory: undefined, documentation: undefined, restart: undefined, restartSec: undefined, service: undefined, wantedBy: undefined } : { name, args, opts }, opts);
+        super("kubernetes-the-hard-way:remote:EtcdService", name, opts.urn ? { configuration: undefined, connection: undefined, description: undefined, directory: undefined, documentation: undefined, peers: undefined, restart: undefined, restartSec: undefined, service: undefined, wantedBy: undefined } : { name, args, opts }, opts);
     }
 }
 export interface EtcdServiceArgs {
@@ -284,6 +285,7 @@ export interface EtcdServiceArgs {
     readonly description?: pulumi.Input<string>;
     readonly directory?: pulumi.Input<string>;
     readonly documentation?: pulumi.Input<string>;
+    readonly peers?: pulumi.Input<pulumi.Input<EtcdConfigurationPropsInputs>[]>;
     readonly restart?: pulumi.Input<SystemdServiceRestartInputs>;
     readonly restartSec?: pulumi.Input<string>;
     readonly wantedBy?: pulumi.Input<string>;

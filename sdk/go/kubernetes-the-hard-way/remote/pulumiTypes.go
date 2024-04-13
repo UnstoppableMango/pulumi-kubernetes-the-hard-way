@@ -72,6 +72,31 @@ func (i EtcdConfigurationPropsArgs) ToEtcdConfigurationPropsOutputWithContext(ct
 	return pulumi.ToOutputWithContext(ctx, i).(EtcdConfigurationPropsOutput)
 }
 
+// EtcdConfigurationPropsArrayInput is an input type that accepts EtcdConfigurationPropsArray and EtcdConfigurationPropsArrayOutput values.
+// You can construct a concrete instance of `EtcdConfigurationPropsArrayInput` via:
+//
+//	EtcdConfigurationPropsArray{ EtcdConfigurationPropsArgs{...} }
+type EtcdConfigurationPropsArrayInput interface {
+	pulumi.Input
+
+	ToEtcdConfigurationPropsArrayOutput() EtcdConfigurationPropsArrayOutput
+	ToEtcdConfigurationPropsArrayOutputWithContext(context.Context) EtcdConfigurationPropsArrayOutput
+}
+
+type EtcdConfigurationPropsArray []EtcdConfigurationPropsInput
+
+func (EtcdConfigurationPropsArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]EtcdConfigurationProps)(nil)).Elem()
+}
+
+func (i EtcdConfigurationPropsArray) ToEtcdConfigurationPropsArrayOutput() EtcdConfigurationPropsArrayOutput {
+	return i.ToEtcdConfigurationPropsArrayOutputWithContext(context.Background())
+}
+
+func (i EtcdConfigurationPropsArray) ToEtcdConfigurationPropsArrayOutputWithContext(ctx context.Context) EtcdConfigurationPropsArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(EtcdConfigurationPropsArrayOutput)
+}
+
 // Props for resources that consume etcd configuration.
 type EtcdConfigurationPropsOutput struct{ *pulumi.OutputState }
 
@@ -120,6 +145,26 @@ func (o EtcdConfigurationPropsOutput) KeyFilePath() pulumi.StringOutput {
 // Name of the etcd node.
 func (o EtcdConfigurationPropsOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v EtcdConfigurationProps) string { return v.Name }).(pulumi.StringOutput)
+}
+
+type EtcdConfigurationPropsArrayOutput struct{ *pulumi.OutputState }
+
+func (EtcdConfigurationPropsArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]EtcdConfigurationProps)(nil)).Elem()
+}
+
+func (o EtcdConfigurationPropsArrayOutput) ToEtcdConfigurationPropsArrayOutput() EtcdConfigurationPropsArrayOutput {
+	return o
+}
+
+func (o EtcdConfigurationPropsArrayOutput) ToEtcdConfigurationPropsArrayOutputWithContext(ctx context.Context) EtcdConfigurationPropsArrayOutput {
+	return o
+}
+
+func (o EtcdConfigurationPropsArrayOutput) Index(i pulumi.IntInput) EtcdConfigurationPropsOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) EtcdConfigurationProps {
+		return vs[0].([]EtcdConfigurationProps)[vs[1].(int)]
+	}).(EtcdConfigurationPropsOutput)
 }
 
 // https://www.freedesktop.org/software/systemd/man/latest/systemd.unit.html#%5BInstall%5D%20Section%20Options
@@ -590,12 +635,14 @@ func (o SystemdUnitSectionPtrOutput) Wants() pulumi.StringArrayOutput {
 
 func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*EtcdConfigurationPropsInput)(nil)).Elem(), EtcdConfigurationPropsArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*EtcdConfigurationPropsArrayInput)(nil)).Elem(), EtcdConfigurationPropsArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*SystemdInstallSectionInput)(nil)).Elem(), SystemdInstallSectionArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*SystemdInstallSectionPtrInput)(nil)).Elem(), SystemdInstallSectionArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*SystemdServiceSectionInput)(nil)).Elem(), SystemdServiceSectionArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*SystemdUnitSectionInput)(nil)).Elem(), SystemdUnitSectionArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*SystemdUnitSectionPtrInput)(nil)).Elem(), SystemdUnitSectionArgs{})
 	pulumi.RegisterOutputType(EtcdConfigurationPropsOutput{})
+	pulumi.RegisterOutputType(EtcdConfigurationPropsArrayOutput{})
 	pulumi.RegisterOutputType(SystemdInstallSectionOutput{})
 	pulumi.RegisterOutputType(SystemdInstallSectionPtrOutput{})
 	pulumi.RegisterOutputType(SystemdServiceSectionOutput{})

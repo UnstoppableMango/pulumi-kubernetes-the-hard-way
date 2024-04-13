@@ -47,6 +47,12 @@ namespace UnMango.KubernetesTheHardWay.Remote
         public Output<string?> Documentation { get; private set; } = null!;
 
         /// <summary>
+        /// Etcd peer configuration.
+        /// </summary>
+        [Output("peers")]
+        public Output<ImmutableArray<Outputs.EtcdConfigurationProps>> Peers { get; private set; } = null!;
+
+        /// <summary>
         /// Optionally override the systemd service restart behaviour. Defaults to `on-failure`.
         /// </summary>
         [Output("restart")]
@@ -128,6 +134,18 @@ namespace UnMango.KubernetesTheHardWay.Remote
         /// </summary>
         [Input("documentation")]
         public Input<string>? Documentation { get; set; }
+
+        [Input("peers")]
+        private InputList<Inputs.EtcdConfigurationPropsArgs>? _peers;
+
+        /// <summary>
+        /// Etcd peer configuration.
+        /// </summary>
+        public InputList<Inputs.EtcdConfigurationPropsArgs> Peers
+        {
+            get => _peers ?? (_peers = new InputList<Inputs.EtcdConfigurationPropsArgs>());
+            set => _peers = value;
+        }
 
         /// <summary>
         /// Optionally override the systemd service restart behaviour. Defaults to `on-failure`.

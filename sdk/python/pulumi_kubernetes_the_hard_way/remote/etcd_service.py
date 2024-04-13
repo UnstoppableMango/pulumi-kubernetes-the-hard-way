@@ -24,6 +24,7 @@ class EtcdServiceArgs:
                  description: Optional[pulumi.Input[str]] = None,
                  directory: Optional[pulumi.Input[str]] = None,
                  documentation: Optional[pulumi.Input[str]] = None,
+                 peers: Optional[pulumi.Input[Sequence[pulumi.Input['EtcdConfigurationPropsArgs']]]] = None,
                  restart: Optional[pulumi.Input['SystemdServiceRestart']] = None,
                  restart_sec: Optional[pulumi.Input[str]] = None,
                  wanted_by: Optional[pulumi.Input[str]] = None):
@@ -34,6 +35,7 @@ class EtcdServiceArgs:
         :param pulumi.Input[str] description: Optional systemd unit description.
         :param pulumi.Input[str] directory: The location to create the service file.
         :param pulumi.Input[str] documentation: Optional systemd unit documentation
+        :param pulumi.Input[Sequence[pulumi.Input['EtcdConfigurationPropsArgs']]] peers: Etcd peer configuration.
         :param pulumi.Input['SystemdServiceRestart'] restart: Optionally override the systemd service restart behaviour. Defaults to `on-failure`.
         :param pulumi.Input[str] restart_sec: Optionally override the systemd service RestartSec. Defaults to `5`.
         :param pulumi.Input[str] wanted_by: Optionally override the systemd service wanted-by. Defaults to `multi-user.target`.
@@ -46,6 +48,8 @@ class EtcdServiceArgs:
             pulumi.set(__self__, "directory", directory)
         if documentation is not None:
             pulumi.set(__self__, "documentation", documentation)
+        if peers is not None:
+            pulumi.set(__self__, "peers", peers)
         if restart is not None:
             pulumi.set(__self__, "restart", restart)
         if restart_sec is not None:
@@ -115,6 +119,18 @@ class EtcdServiceArgs:
 
     @property
     @pulumi.getter
+    def peers(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['EtcdConfigurationPropsArgs']]]]:
+        """
+        Etcd peer configuration.
+        """
+        return pulumi.get(self, "peers")
+
+    @peers.setter
+    def peers(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['EtcdConfigurationPropsArgs']]]]):
+        pulumi.set(self, "peers", value)
+
+    @property
+    @pulumi.getter
     def restart(self) -> Optional[pulumi.Input['SystemdServiceRestart']]:
         """
         Optionally override the systemd service restart behaviour. Defaults to `on-failure`.
@@ -160,6 +176,7 @@ class EtcdService(pulumi.ComponentResource):
                  description: Optional[pulumi.Input[str]] = None,
                  directory: Optional[pulumi.Input[str]] = None,
                  documentation: Optional[pulumi.Input[str]] = None,
+                 peers: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['EtcdConfigurationPropsArgs']]]]] = None,
                  restart: Optional[pulumi.Input['SystemdServiceRestart']] = None,
                  restart_sec: Optional[pulumi.Input[str]] = None,
                  wanted_by: Optional[pulumi.Input[str]] = None,
@@ -174,6 +191,7 @@ class EtcdService(pulumi.ComponentResource):
         :param pulumi.Input[str] description: Optional systemd unit description.
         :param pulumi.Input[str] directory: The location to create the service file.
         :param pulumi.Input[str] documentation: Optional systemd unit documentation
+        :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['EtcdConfigurationPropsArgs']]]] peers: Etcd peer configuration.
         :param pulumi.Input['SystemdServiceRestart'] restart: Optionally override the systemd service restart behaviour. Defaults to `on-failure`.
         :param pulumi.Input[str] restart_sec: Optionally override the systemd service RestartSec. Defaults to `5`.
         :param pulumi.Input[str] wanted_by: Optionally override the systemd service wanted-by. Defaults to `multi-user.target`.
@@ -207,6 +225,7 @@ class EtcdService(pulumi.ComponentResource):
                  description: Optional[pulumi.Input[str]] = None,
                  directory: Optional[pulumi.Input[str]] = None,
                  documentation: Optional[pulumi.Input[str]] = None,
+                 peers: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['EtcdConfigurationPropsArgs']]]]] = None,
                  restart: Optional[pulumi.Input['SystemdServiceRestart']] = None,
                  restart_sec: Optional[pulumi.Input[str]] = None,
                  wanted_by: Optional[pulumi.Input[str]] = None,
@@ -230,6 +249,7 @@ class EtcdService(pulumi.ComponentResource):
             __props__.__dict__["description"] = description
             __props__.__dict__["directory"] = directory
             __props__.__dict__["documentation"] = documentation
+            __props__.__dict__["peers"] = peers
             __props__.__dict__["restart"] = restart
             __props__.__dict__["restart_sec"] = restart_sec
             __props__.__dict__["wanted_by"] = wanted_by
@@ -280,6 +300,14 @@ class EtcdService(pulumi.ComponentResource):
         Optional systemd unit documentation
         """
         return pulumi.get(self, "documentation")
+
+    @property
+    @pulumi.getter
+    def peers(self) -> pulumi.Output[Sequence['outputs.EtcdConfigurationProps']]:
+        """
+        Etcd peer configuration.
+        """
+        return pulumi.get(self, "peers")
 
     @property
     @pulumi.getter

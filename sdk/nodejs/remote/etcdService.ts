@@ -50,6 +50,10 @@ export class EtcdService extends pulumi.ComponentResource {
      */
     public readonly documentation!: pulumi.Output<string | undefined>;
     /**
+     * Etcd peer configuration.
+     */
+    public readonly peers!: pulumi.Output<outputs.remote.EtcdConfigurationProps[]>;
+    /**
      * Optionally override the systemd service restart behaviour. Defaults to `on-failure`.
      */
     public readonly restart!: pulumi.Output<enums.remote.SystemdServiceRestart | undefined>;
@@ -88,6 +92,7 @@ export class EtcdService extends pulumi.ComponentResource {
             resourceInputs["description"] = args ? args.description : undefined;
             resourceInputs["directory"] = args ? args.directory : undefined;
             resourceInputs["documentation"] = args ? args.documentation : undefined;
+            resourceInputs["peers"] = args ? args.peers : undefined;
             resourceInputs["restart"] = args ? args.restart : undefined;
             resourceInputs["restartSec"] = args ? args.restartSec : undefined;
             resourceInputs["wantedBy"] = args ? args.wantedBy : undefined;
@@ -98,6 +103,7 @@ export class EtcdService extends pulumi.ComponentResource {
             resourceInputs["description"] = undefined /*out*/;
             resourceInputs["directory"] = undefined /*out*/;
             resourceInputs["documentation"] = undefined /*out*/;
+            resourceInputs["peers"] = undefined /*out*/;
             resourceInputs["restart"] = undefined /*out*/;
             resourceInputs["restartSec"] = undefined /*out*/;
             resourceInputs["service"] = undefined /*out*/;
@@ -132,6 +138,10 @@ export interface EtcdServiceArgs {
      * Optional systemd unit documentation
      */
     documentation?: pulumi.Input<string>;
+    /**
+     * Etcd peer configuration.
+     */
+    peers?: pulumi.Input<pulumi.Input<inputs.remote.EtcdConfigurationPropsArgs>[]>;
     /**
      * Optionally override the systemd service restart behaviour. Defaults to `on-failure`.
      */
