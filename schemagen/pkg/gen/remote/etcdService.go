@@ -12,12 +12,13 @@ func generateEtcdService(commandSpec schema.PackageSpec) schema.ResourceSpec {
 	inputs := map[string]schema.PropertySpec{
 		"connection":    connection(commandSpec),
 		"description":   props.String("Optional systemd unit description."),
+		"directory":     props.String("The location to create the service file."),
 		"documentation": props.String("Optional systemd unit documentation"),
 		"restart": {
 			Description: "Optionally override the systemd service restart behaviour. Defaults to `on-failure`.",
-			TypeSpec:    types.LocalType("SystemdServiceRestart"),
+			TypeSpec:    types.LocalType("SystemdServiceRestart", "remote"),
 		},
-		"restartSec": props.Integer("Optionally override the systemd service RestartSec. Defaults to `5`."),
+		"restartSec": props.String("Optionally override the systemd service RestartSec. Defaults to `5`."),
 		"wantedBy":   props.String("Optionally override the systemd service wanted-by. Defaults to `multi-user.target`."),
 	}
 
