@@ -61,7 +61,6 @@ const etcdConfig = new EtcdConfiguration('remote', {
   internalIp: '10.240.0.10',
   configurationDirectory: path.join(basePath, 'etc', 'etcd'),
   dataDirectory: path.join(basePath, 'var', 'lib', 'etcd'),
-  // systemdDirectory: basePath,
   etcdPath: '/some/path/that/probably/should/exist/etcd',
 });
 
@@ -71,7 +70,7 @@ const etcdConfig = new EtcdConfiguration('remote', {
 //   commands: ['member', 'list'],
 // }, { dependsOn: etcd });
 
-const systemdService = new SystemdService('remote-test', {
+const systemdService = new SystemdService('remote', {
   connection: { host, port, user, password },
   directory: basePath,
   service: {
@@ -94,9 +93,10 @@ const systemdService = new SystemdService('remote-test', {
 //   },
 // });
 
-const etcdService = new EtcdService('remote-test', {
+const etcdService = new EtcdService('remote', {
   connection: { host, port, user, password },
   directory: basePath,
+  configuration: etcdConfig,
 });
 
 export const fileStderr = file.stderr;
