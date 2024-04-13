@@ -11,10 +11,124 @@ from .. import _utilities
 from ._enums import *
 
 __all__ = [
+    'EtcdConfigurationPropsArgs',
     'SystemdInstallSectionArgs',
     'SystemdServiceSectionArgs',
     'SystemdUnitSectionArgs',
 ]
+
+@pulumi.input_type
+class EtcdConfigurationPropsArgs:
+    def __init__(__self__, *,
+                 ca_file_path: pulumi.Input[str],
+                 cert_file_path: pulumi.Input[str],
+                 data_directory: pulumi.Input[str],
+                 etcd_path: pulumi.Input[str],
+                 internal_ip: pulumi.Input[str],
+                 key_file_path: pulumi.Input[str],
+                 name: pulumi.Input[str]):
+        """
+        Props for resources that consume etcd configuration.
+        :param pulumi.Input[str] ca_file_path: Path to the certificate authority file on the remote system.
+        :param pulumi.Input[str] cert_file_path: Path to the certificate file on the remote system.
+        :param pulumi.Input[str] data_directory: Etcd's data directory.
+        :param pulumi.Input[str] etcd_path: Path to the etcd binary.
+        :param pulumi.Input[str] internal_ip: Internal IP of the etcd node.
+        :param pulumi.Input[str] key_file_path: Path to the private key file on the remote system.
+        :param pulumi.Input[str] name: Name of the etcd node.
+        """
+        pulumi.set(__self__, "ca_file_path", ca_file_path)
+        pulumi.set(__self__, "cert_file_path", cert_file_path)
+        pulumi.set(__self__, "data_directory", data_directory)
+        pulumi.set(__self__, "etcd_path", etcd_path)
+        pulumi.set(__self__, "internal_ip", internal_ip)
+        pulumi.set(__self__, "key_file_path", key_file_path)
+        pulumi.set(__self__, "name", name)
+
+    @property
+    @pulumi.getter(name="caFilePath")
+    def ca_file_path(self) -> pulumi.Input[str]:
+        """
+        Path to the certificate authority file on the remote system.
+        """
+        return pulumi.get(self, "ca_file_path")
+
+    @ca_file_path.setter
+    def ca_file_path(self, value: pulumi.Input[str]):
+        pulumi.set(self, "ca_file_path", value)
+
+    @property
+    @pulumi.getter(name="certFilePath")
+    def cert_file_path(self) -> pulumi.Input[str]:
+        """
+        Path to the certificate file on the remote system.
+        """
+        return pulumi.get(self, "cert_file_path")
+
+    @cert_file_path.setter
+    def cert_file_path(self, value: pulumi.Input[str]):
+        pulumi.set(self, "cert_file_path", value)
+
+    @property
+    @pulumi.getter(name="dataDirectory")
+    def data_directory(self) -> pulumi.Input[str]:
+        """
+        Etcd's data directory.
+        """
+        return pulumi.get(self, "data_directory")
+
+    @data_directory.setter
+    def data_directory(self, value: pulumi.Input[str]):
+        pulumi.set(self, "data_directory", value)
+
+    @property
+    @pulumi.getter(name="etcdPath")
+    def etcd_path(self) -> pulumi.Input[str]:
+        """
+        Path to the etcd binary.
+        """
+        return pulumi.get(self, "etcd_path")
+
+    @etcd_path.setter
+    def etcd_path(self, value: pulumi.Input[str]):
+        pulumi.set(self, "etcd_path", value)
+
+    @property
+    @pulumi.getter(name="internalIp")
+    def internal_ip(self) -> pulumi.Input[str]:
+        """
+        Internal IP of the etcd node.
+        """
+        return pulumi.get(self, "internal_ip")
+
+    @internal_ip.setter
+    def internal_ip(self, value: pulumi.Input[str]):
+        pulumi.set(self, "internal_ip", value)
+
+    @property
+    @pulumi.getter(name="keyFilePath")
+    def key_file_path(self) -> pulumi.Input[str]:
+        """
+        Path to the private key file on the remote system.
+        """
+        return pulumi.get(self, "key_file_path")
+
+    @key_file_path.setter
+    def key_file_path(self, value: pulumi.Input[str]):
+        pulumi.set(self, "key_file_path", value)
+
+    @property
+    @pulumi.getter
+    def name(self) -> pulumi.Input[str]:
+        """
+        Name of the etcd node.
+        """
+        return pulumi.get(self, "name")
+
+    @name.setter
+    def name(self, value: pulumi.Input[str]):
+        pulumi.set(self, "name", value)
+
 
 @pulumi.input_type
 class SystemdInstallSectionArgs:

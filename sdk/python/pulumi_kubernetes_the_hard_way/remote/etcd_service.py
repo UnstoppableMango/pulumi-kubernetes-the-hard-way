@@ -8,8 +8,9 @@ import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
 from .. import _utilities
+from . import outputs
 from ._enums import *
-from .etcd_configuration import EtcdConfiguration
+from ._inputs import *
 from .systemd_service import SystemdService
 import pulumi_command
 
@@ -18,7 +19,7 @@ __all__ = ['EtcdServiceArgs', 'EtcdService']
 @pulumi.input_type
 class EtcdServiceArgs:
     def __init__(__self__, *,
-                 configuration: pulumi.Input['EtcdConfiguration'],
+                 configuration: pulumi.Input['EtcdConfigurationPropsArgs'],
                  connection: pulumi.Input['pulumi_command.remote.ConnectionArgs'],
                  description: Optional[pulumi.Input[str]] = None,
                  directory: Optional[pulumi.Input[str]] = None,
@@ -28,7 +29,7 @@ class EtcdServiceArgs:
                  wanted_by: Optional[pulumi.Input[str]] = None):
         """
         The set of arguments for constructing a EtcdService resource.
-        :param pulumi.Input['EtcdConfiguration'] configuration: Etcd configuration.
+        :param pulumi.Input['EtcdConfigurationPropsArgs'] configuration: Etcd configuration.
         :param pulumi.Input['pulumi_command.remote.ConnectionArgs'] connection: The parameters with which to connect to the remote host.
         :param pulumi.Input[str] description: Optional systemd unit description.
         :param pulumi.Input[str] directory: The location to create the service file.
@@ -54,14 +55,14 @@ class EtcdServiceArgs:
 
     @property
     @pulumi.getter
-    def configuration(self) -> pulumi.Input['EtcdConfiguration']:
+    def configuration(self) -> pulumi.Input['EtcdConfigurationPropsArgs']:
         """
         Etcd configuration.
         """
         return pulumi.get(self, "configuration")
 
     @configuration.setter
-    def configuration(self, value: pulumi.Input['EtcdConfiguration']):
+    def configuration(self, value: pulumi.Input['EtcdConfigurationPropsArgs']):
         pulumi.set(self, "configuration", value)
 
     @property
@@ -154,7 +155,7 @@ class EtcdService(pulumi.ComponentResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 configuration: Optional[pulumi.Input['EtcdConfiguration']] = None,
+                 configuration: Optional[pulumi.Input[pulumi.InputType['EtcdConfigurationPropsArgs']]] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
                  description: Optional[pulumi.Input[str]] = None,
                  directory: Optional[pulumi.Input[str]] = None,
@@ -168,7 +169,7 @@ class EtcdService(pulumi.ComponentResource):
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input['EtcdConfiguration'] configuration: Etcd configuration.
+        :param pulumi.Input[pulumi.InputType['EtcdConfigurationPropsArgs']] configuration: Etcd configuration.
         :param pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']] connection: The parameters with which to connect to the remote host.
         :param pulumi.Input[str] description: Optional systemd unit description.
         :param pulumi.Input[str] directory: The location to create the service file.
@@ -201,7 +202,7 @@ class EtcdService(pulumi.ComponentResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 configuration: Optional[pulumi.Input['EtcdConfiguration']] = None,
+                 configuration: Optional[pulumi.Input[pulumi.InputType['EtcdConfigurationPropsArgs']]] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
                  description: Optional[pulumi.Input[str]] = None,
                  directory: Optional[pulumi.Input[str]] = None,
@@ -242,7 +243,7 @@ class EtcdService(pulumi.ComponentResource):
 
     @property
     @pulumi.getter
-    def configuration(self) -> pulumi.Output['EtcdConfiguration']:
+    def configuration(self) -> pulumi.Output['outputs.EtcdConfigurationProps']:
         """
         Etcd configuration.
         """

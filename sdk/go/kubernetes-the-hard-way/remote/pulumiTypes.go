@@ -31,6 +31,47 @@ type EtcdConfigurationProps struct {
 	Name string `pulumi:"name"`
 }
 
+// EtcdConfigurationPropsInput is an input type that accepts EtcdConfigurationPropsArgs and EtcdConfigurationPropsOutput values.
+// You can construct a concrete instance of `EtcdConfigurationPropsInput` via:
+//
+//	EtcdConfigurationPropsArgs{...}
+type EtcdConfigurationPropsInput interface {
+	pulumi.Input
+
+	ToEtcdConfigurationPropsOutput() EtcdConfigurationPropsOutput
+	ToEtcdConfigurationPropsOutputWithContext(context.Context) EtcdConfigurationPropsOutput
+}
+
+// Props for resources that consume etcd configuration.
+type EtcdConfigurationPropsArgs struct {
+	// Path to the certificate authority file on the remote system.
+	CaFilePath pulumi.StringInput `pulumi:"caFilePath"`
+	// Path to the certificate file on the remote system.
+	CertFilePath pulumi.StringInput `pulumi:"certFilePath"`
+	// Etcd's data directory.
+	DataDirectory pulumi.StringInput `pulumi:"dataDirectory"`
+	// Path to the etcd binary.
+	EtcdPath pulumi.StringInput `pulumi:"etcdPath"`
+	// Internal IP of the etcd node.
+	InternalIp pulumi.StringInput `pulumi:"internalIp"`
+	// Path to the private key file on the remote system.
+	KeyFilePath pulumi.StringInput `pulumi:"keyFilePath"`
+	// Name of the etcd node.
+	Name pulumi.StringInput `pulumi:"name"`
+}
+
+func (EtcdConfigurationPropsArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*EtcdConfigurationProps)(nil)).Elem()
+}
+
+func (i EtcdConfigurationPropsArgs) ToEtcdConfigurationPropsOutput() EtcdConfigurationPropsOutput {
+	return i.ToEtcdConfigurationPropsOutputWithContext(context.Background())
+}
+
+func (i EtcdConfigurationPropsArgs) ToEtcdConfigurationPropsOutputWithContext(ctx context.Context) EtcdConfigurationPropsOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(EtcdConfigurationPropsOutput)
+}
+
 // Props for resources that consume etcd configuration.
 type EtcdConfigurationPropsOutput struct{ *pulumi.OutputState }
 
@@ -548,6 +589,7 @@ func (o SystemdUnitSectionPtrOutput) Wants() pulumi.StringArrayOutput {
 }
 
 func init() {
+	pulumi.RegisterInputType(reflect.TypeOf((*EtcdConfigurationPropsInput)(nil)).Elem(), EtcdConfigurationPropsArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*SystemdInstallSectionInput)(nil)).Elem(), SystemdInstallSectionArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*SystemdInstallSectionPtrInput)(nil)).Elem(), SystemdInstallSectionArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*SystemdServiceSectionInput)(nil)).Elem(), SystemdServiceSectionArgs{})

@@ -9,7 +9,7 @@ import * as utilities from "../utilities";
 
 import * as pulumiCommand from "@pulumi/command";
 
-import {EtcdConfiguration, SystemdService} from "./index";
+import {SystemdService} from "./index";
 
 /**
  * Etcd systemd service file. Will likely get replaced with a static function when https://github.com/pulumi/pulumi/issues/7583 gets resolved.
@@ -32,7 +32,7 @@ export class EtcdService extends pulumi.ComponentResource {
     /**
      * Etcd configuration.
      */
-    public readonly configuration!: pulumi.Output<EtcdConfiguration>;
+    public readonly configuration!: pulumi.Output<outputs.remote.EtcdConfigurationProps>;
     /**
      * The parameters with which to connect to the remote host.
      */
@@ -115,7 +115,7 @@ export interface EtcdServiceArgs {
     /**
      * Etcd configuration.
      */
-    configuration: pulumi.Input<EtcdConfiguration>;
+    configuration: pulumi.Input<inputs.remote.EtcdConfigurationPropsArgs>;
     /**
      * The parameters with which to connect to the remote host.
      */

@@ -20,7 +20,7 @@ namespace UnMango.KubernetesTheHardWay.Remote
         /// Etcd configuration.
         /// </summary>
         [Output("configuration")]
-        public Output<UnMango.KubernetesTheHardWay.Remote.EtcdConfiguration> Configuration { get; private set; } = null!;
+        public Output<Outputs.EtcdConfigurationProps> Configuration { get; private set; } = null!;
 
         /// <summary>
         /// The parameters with which to connect to the remote host.
@@ -103,7 +103,7 @@ namespace UnMango.KubernetesTheHardWay.Remote
         /// Etcd configuration.
         /// </summary>
         [Input("configuration", required: true)]
-        public Input<UnMango.KubernetesTheHardWay.Remote.EtcdConfiguration> Configuration { get; set; } = null!;
+        public Input<Inputs.EtcdConfigurationPropsArgs> Configuration { get; set; } = null!;
 
         /// <summary>
         /// The parameters with which to connect to the remote host.

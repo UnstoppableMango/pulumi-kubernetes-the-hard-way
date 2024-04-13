@@ -7,8 +7,8 @@ import com.pulumi.command.remote.inputs.ConnectionArgs;
 import com.pulumi.core.Output;
 import com.pulumi.core.annotations.Import;
 import com.pulumi.exceptions.MissingRequiredPropertyException;
-import com.unmango.kubernetesthehardway.remote.EtcdConfiguration;
 import com.unmango.kubernetesthehardway.remote.enums.SystemdServiceRestart;
+import com.unmango.kubernetesthehardway.remote.inputs.EtcdConfigurationPropsArgs;
 import java.lang.String;
 import java.util.Objects;
 import java.util.Optional;
@@ -24,13 +24,13 @@ public final class EtcdServiceArgs extends com.pulumi.resources.ResourceArgs {
      * 
      */
     @Import(name="configuration", required=true)
-    private Output<EtcdConfiguration> configuration;
+    private Output<EtcdConfigurationPropsArgs> configuration;
 
     /**
      * @return Etcd configuration.
      * 
      */
-    public Output<EtcdConfiguration> configuration() {
+    public Output<EtcdConfigurationPropsArgs> configuration() {
         return this.configuration;
     }
 
@@ -176,7 +176,7 @@ public final class EtcdServiceArgs extends com.pulumi.resources.ResourceArgs {
          * @return builder
          * 
          */
-        public Builder configuration(Output<EtcdConfiguration> configuration) {
+        public Builder configuration(Output<EtcdConfigurationPropsArgs> configuration) {
             $.configuration = configuration;
             return this;
         }
@@ -187,7 +187,7 @@ public final class EtcdServiceArgs extends com.pulumi.resources.ResourceArgs {
          * @return builder
          * 
          */
-        public Builder configuration(EtcdConfiguration configuration) {
+        public Builder configuration(EtcdConfigurationPropsArgs configuration) {
             return configuration(Output.of(configuration));
         }
 
