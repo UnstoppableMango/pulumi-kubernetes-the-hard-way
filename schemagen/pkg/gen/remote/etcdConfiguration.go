@@ -4,20 +4,15 @@ import (
 	"maps"
 	"slices"
 
+	"github.com/UnstoppableMango/pulumi-kubernetes-the-hard-way/schemagen/pkg/gen/props"
 	"github.com/UnstoppableMango/pulumi-kubernetes-the-hard-way/schemagen/pkg/gen/types"
 	"github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 )
 
 func generateEtcdConfiguration(commandSpec schema.PackageSpec) schema.ResourceSpec {
 	inputs := map[string]schema.PropertySpec{
-		"caPem": {
-			Description: "The PEM encoded certificate authority data.",
-			TypeSpec:    types.String,
-		},
-		"certPem": {
-			Description: "The PEM encoded certificate data.",
-			TypeSpec:    types.String,
-		},
+		"caPem":   props.String("The PEM encoded certificate authority data."),
+		"certPem": props.String("The PEM encoded certificate data."),
 		"configurationDirectory": {
 			Description: "The directory to store etcd configuration.",
 			TypeSpec:    types.String,
@@ -32,15 +27,9 @@ func generateEtcdConfiguration(commandSpec schema.PackageSpec) schema.ResourceSp
 			TypeSpec:    types.String,
 			Default:     "/var/lib/etcd",
 		},
-		"etcdPath": {
-			Description: "The path to the `etcd` binary.",
-			TypeSpec:    types.String,
-		},
-		"internalIp": {
-			Description: "The IP used to serve client requests and communicate with etcd peers.",
-			TypeSpec:    types.String,
-		},
-		"keyPem": {
+		"etcdPath":   props.String("The path to the `etcd` binary."),
+		"internalIp": props.String("The IP used to serve client requests and communicate with etcd peers."),
+		"keyPem": { // TODO: Secret I'm pretty sure
 			Description: "The PEM encoded key data.",
 			TypeSpec:    types.String,
 		},

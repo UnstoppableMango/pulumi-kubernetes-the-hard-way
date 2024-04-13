@@ -9,6 +9,8 @@ import (
 )
 
 func generateEtcdService(commandSpec schema.PackageSpec) schema.ResourceSpec {
+	peerItems := types.LocalType("EtcdConfigurationProps", "remote")
+
 	inputs := map[string]schema.PropertySpec{
 		"configuration": {
 			Description: "Etcd configuration.",
@@ -18,6 +20,13 @@ func generateEtcdService(commandSpec schema.PackageSpec) schema.ResourceSpec {
 		"description":   props.String("Optional systemd unit description."),
 		"directory":     props.String("The location to create the service file."),
 		"documentation": props.String("Optional systemd unit documentation"),
+		"peers": {
+			Description: "Etcd peer configuration.",
+			TypeSpec: schema.TypeSpec{
+				Type:  "array",
+				Items: &peerItems,
+			},
+		},
 		"restart": {
 			Description: "Optionally override the systemd service restart behaviour. Defaults to `on-failure`.",
 			TypeSpec:    types.LocalType("SystemdServiceRestart", "remote"),
@@ -41,7 +50,7 @@ func generateEtcdService(commandSpec schema.PackageSpec) schema.ResourceSpec {
 		ObjectTypeSpec: schema.ObjectTypeSpec{
 			Description: "Etcd systemd service file. Will likely get replaced with a static function when https://github.com/pulumi/pulumi/issues/7583 gets resolved.",
 			Properties:  outputs,
-			Required:    append(requiredInputs, "service"),
+			Required:    append(requiredInputs, "peers", "service"),
 		},
 		InputProperties: inputs,
 		RequiredInputs:  requiredInputs,
