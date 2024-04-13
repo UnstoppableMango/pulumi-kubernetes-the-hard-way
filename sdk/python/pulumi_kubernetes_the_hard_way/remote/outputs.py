@@ -11,10 +11,126 @@ from .. import _utilities
 from ._enums import *
 
 __all__ = [
+    'EtcdConfigurationProps',
     'SystemdInstallSection',
     'SystemdServiceSection',
     'SystemdUnitSection',
 ]
+
+@pulumi.output_type
+class EtcdConfigurationProps(dict):
+    """
+    Props for resources that consume etcd configuration.
+    """
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "caFilePath":
+            suggest = "ca_file_path"
+        elif key == "certFilePath":
+            suggest = "cert_file_path"
+        elif key == "dataDirectory":
+            suggest = "data_directory"
+        elif key == "etcdPath":
+            suggest = "etcd_path"
+        elif key == "internalIp":
+            suggest = "internal_ip"
+        elif key == "keyFilePath":
+            suggest = "key_file_path"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in EtcdConfigurationProps. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        EtcdConfigurationProps.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        EtcdConfigurationProps.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 ca_file_path: str,
+                 cert_file_path: str,
+                 data_directory: str,
+                 etcd_path: str,
+                 internal_ip: str,
+                 key_file_path: str,
+                 name: str):
+        """
+        Props for resources that consume etcd configuration.
+        :param str ca_file_path: Path to the certificate authority file on the remote system.
+        :param str cert_file_path: Path to the certificate file on the remote system.
+        :param str data_directory: Etcd's data directory.
+        :param str etcd_path: Path to the etcd binary.
+        :param str internal_ip: Internal IP of the etcd node.
+        :param str key_file_path: Path to the private key file on the remote system.
+        :param str name: Name of the etcd node.
+        """
+        pulumi.set(__self__, "ca_file_path", ca_file_path)
+        pulumi.set(__self__, "cert_file_path", cert_file_path)
+        pulumi.set(__self__, "data_directory", data_directory)
+        pulumi.set(__self__, "etcd_path", etcd_path)
+        pulumi.set(__self__, "internal_ip", internal_ip)
+        pulumi.set(__self__, "key_file_path", key_file_path)
+        pulumi.set(__self__, "name", name)
+
+    @property
+    @pulumi.getter(name="caFilePath")
+    def ca_file_path(self) -> str:
+        """
+        Path to the certificate authority file on the remote system.
+        """
+        return pulumi.get(self, "ca_file_path")
+
+    @property
+    @pulumi.getter(name="certFilePath")
+    def cert_file_path(self) -> str:
+        """
+        Path to the certificate file on the remote system.
+        """
+        return pulumi.get(self, "cert_file_path")
+
+    @property
+    @pulumi.getter(name="dataDirectory")
+    def data_directory(self) -> str:
+        """
+        Etcd's data directory.
+        """
+        return pulumi.get(self, "data_directory")
+
+    @property
+    @pulumi.getter(name="etcdPath")
+    def etcd_path(self) -> str:
+        """
+        Path to the etcd binary.
+        """
+        return pulumi.get(self, "etcd_path")
+
+    @property
+    @pulumi.getter(name="internalIp")
+    def internal_ip(self) -> str:
+        """
+        Internal IP of the etcd node.
+        """
+        return pulumi.get(self, "internal_ip")
+
+    @property
+    @pulumi.getter(name="keyFilePath")
+    def key_file_path(self) -> str:
+        """
+        Path to the private key file on the remote system.
+        """
+        return pulumi.get(self, "key_file_path")
+
+    @property
+    @pulumi.getter
+    def name(self) -> str:
+        """
+        Name of the etcd node.
+        """
+        return pulumi.get(self, "name")
+
 
 @pulumi.output_type
 class SystemdInstallSection(dict):

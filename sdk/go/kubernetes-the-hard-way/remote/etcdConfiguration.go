@@ -44,6 +44,8 @@ type EtcdConfiguration struct {
 	KeyFile FileOutput `pulumi:"keyFile"`
 	// The PEM encoded key data.
 	KeyPem pulumi.StringOutput `pulumi:"keyPem"`
+	// A bag of properties to be consumed by other resources.
+	Value EtcdConfigurationPropsOutput `pulumi:"value"`
 }
 
 // NewEtcdConfiguration registers a new resource with the given unique name, arguments, and options.
@@ -276,6 +278,11 @@ func (o EtcdConfigurationOutput) KeyFile() FileOutput {
 // The PEM encoded key data.
 func (o EtcdConfigurationOutput) KeyPem() pulumi.StringOutput {
 	return o.ApplyT(func(v *EtcdConfiguration) pulumi.StringOutput { return v.KeyPem }).(pulumi.StringOutput)
+}
+
+// A bag of properties to be consumed by other resources.
+func (o EtcdConfigurationOutput) Value() EtcdConfigurationPropsOutput {
+	return o.ApplyT(func(v *EtcdConfiguration) EtcdConfigurationPropsOutput { return v.Value }).(EtcdConfigurationPropsOutput)
 }
 
 type EtcdConfigurationArrayOutput struct{ *pulumi.OutputState }

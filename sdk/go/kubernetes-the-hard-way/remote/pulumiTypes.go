@@ -13,6 +13,74 @@ import (
 
 var _ = internal.GetEnvOrDefault
 
+// Props for resources that consume etcd configuration.
+type EtcdConfigurationProps struct {
+	// Path to the certificate authority file on the remote system.
+	CaFilePath string `pulumi:"caFilePath"`
+	// Path to the certificate file on the remote system.
+	CertFilePath string `pulumi:"certFilePath"`
+	// Etcd's data directory.
+	DataDirectory string `pulumi:"dataDirectory"`
+	// Path to the etcd binary.
+	EtcdPath string `pulumi:"etcdPath"`
+	// Internal IP of the etcd node.
+	InternalIp string `pulumi:"internalIp"`
+	// Path to the private key file on the remote system.
+	KeyFilePath string `pulumi:"keyFilePath"`
+	// Name of the etcd node.
+	Name string `pulumi:"name"`
+}
+
+// Props for resources that consume etcd configuration.
+type EtcdConfigurationPropsOutput struct{ *pulumi.OutputState }
+
+func (EtcdConfigurationPropsOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*EtcdConfigurationProps)(nil)).Elem()
+}
+
+func (o EtcdConfigurationPropsOutput) ToEtcdConfigurationPropsOutput() EtcdConfigurationPropsOutput {
+	return o
+}
+
+func (o EtcdConfigurationPropsOutput) ToEtcdConfigurationPropsOutputWithContext(ctx context.Context) EtcdConfigurationPropsOutput {
+	return o
+}
+
+// Path to the certificate authority file on the remote system.
+func (o EtcdConfigurationPropsOutput) CaFilePath() pulumi.StringOutput {
+	return o.ApplyT(func(v EtcdConfigurationProps) string { return v.CaFilePath }).(pulumi.StringOutput)
+}
+
+// Path to the certificate file on the remote system.
+func (o EtcdConfigurationPropsOutput) CertFilePath() pulumi.StringOutput {
+	return o.ApplyT(func(v EtcdConfigurationProps) string { return v.CertFilePath }).(pulumi.StringOutput)
+}
+
+// Etcd's data directory.
+func (o EtcdConfigurationPropsOutput) DataDirectory() pulumi.StringOutput {
+	return o.ApplyT(func(v EtcdConfigurationProps) string { return v.DataDirectory }).(pulumi.StringOutput)
+}
+
+// Path to the etcd binary.
+func (o EtcdConfigurationPropsOutput) EtcdPath() pulumi.StringOutput {
+	return o.ApplyT(func(v EtcdConfigurationProps) string { return v.EtcdPath }).(pulumi.StringOutput)
+}
+
+// Internal IP of the etcd node.
+func (o EtcdConfigurationPropsOutput) InternalIp() pulumi.StringOutput {
+	return o.ApplyT(func(v EtcdConfigurationProps) string { return v.InternalIp }).(pulumi.StringOutput)
+}
+
+// Path to the private key file on the remote system.
+func (o EtcdConfigurationPropsOutput) KeyFilePath() pulumi.StringOutput {
+	return o.ApplyT(func(v EtcdConfigurationProps) string { return v.KeyFilePath }).(pulumi.StringOutput)
+}
+
+// Name of the etcd node.
+func (o EtcdConfigurationPropsOutput) Name() pulumi.StringOutput {
+	return o.ApplyT(func(v EtcdConfigurationProps) string { return v.Name }).(pulumi.StringOutput)
+}
+
 // https://www.freedesktop.org/software/systemd/man/latest/systemd.unit.html#%5BInstall%5D%20Section%20Options
 type SystemdInstallSection struct {
 	// A symbolic link is created in the .wants/, .requires/, or .upholds/ directory of each of the listed units when this unit is installed by systemctl enable.
@@ -485,6 +553,7 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*SystemdServiceSectionInput)(nil)).Elem(), SystemdServiceSectionArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*SystemdUnitSectionInput)(nil)).Elem(), SystemdUnitSectionArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*SystemdUnitSectionPtrInput)(nil)).Elem(), SystemdUnitSectionArgs{})
+	pulumi.RegisterOutputType(EtcdConfigurationPropsOutput{})
 	pulumi.RegisterOutputType(SystemdInstallSectionOutput{})
 	pulumi.RegisterOutputType(SystemdInstallSectionPtrOutput{})
 	pulumi.RegisterOutputType(SystemdServiceSectionOutput{})

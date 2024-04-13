@@ -11,6 +11,7 @@ import com.pulumi.core.internal.Codegen;
 import com.unmango.kubernetesthehardway.Utilities;
 import com.unmango.kubernetesthehardway.remote.EtcdConfigurationArgs;
 import com.unmango.kubernetesthehardway.remote.File;
+import com.unmango.kubernetesthehardway.remote.outputs.EtcdConfigurationProps;
 import com.unmango.kubernetesthehardway.tools.Mkdir;
 import java.lang.String;
 import javax.annotation.Nullable;
@@ -202,6 +203,20 @@ public class EtcdConfiguration extends com.pulumi.resources.ComponentResource {
      */
     public Output<String> keyPem() {
         return this.keyPem;
+    }
+    /**
+     * A bag of properties to be consumed by other resources.
+     * 
+     */
+    @Export(name="value", refs={EtcdConfigurationProps.class}, tree="[0]")
+    private Output<EtcdConfigurationProps> value;
+
+    /**
+     * @return A bag of properties to be consumed by other resources.
+     * 
+     */
+    public Output<EtcdConfigurationProps> value() {
+        return this.value;
     }
 
     /**

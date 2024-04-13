@@ -94,6 +94,12 @@ namespace UnMango.KubernetesTheHardWay.Remote
         [Output("keyPem")]
         public Output<string> KeyPem { get; private set; } = null!;
 
+        /// <summary>
+        /// A bag of properties to be consumed by other resources.
+        /// </summary>
+        [Output("value")]
+        public Output<Outputs.EtcdConfigurationProps> Value { get; private set; } = null!;
+
 
         /// <summary>
         /// Create a EtcdConfiguration resource with the given unique name, arguments, and options.

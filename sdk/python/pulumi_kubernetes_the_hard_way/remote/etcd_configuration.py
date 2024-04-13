@@ -8,6 +8,7 @@ import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
 from .. import _utilities
+from . import outputs
 from .. import tools as _tools
 from .file import File
 import pulumi_command
@@ -248,6 +249,7 @@ class EtcdConfiguration(pulumi.ComponentResource):
             __props__.__dict__["configuration_mkdir"] = None
             __props__.__dict__["data_mkdir"] = None
             __props__.__dict__["key_file"] = None
+            __props__.__dict__["value"] = None
         super(EtcdConfiguration, __self__).__init__(
             'kubernetes-the-hard-way:remote:EtcdConfiguration',
             resource_name,
@@ -358,4 +360,12 @@ class EtcdConfiguration(pulumi.ComponentResource):
         The PEM encoded key data.
         """
         return pulumi.get(self, "key_pem")
+
+    @property
+    @pulumi.getter
+    def value(self) -> pulumi.Output['outputs.EtcdConfigurationProps']:
+        """
+        A bag of properties to be consumed by other resources.
+        """
+        return pulumi.get(self, "value")
 
