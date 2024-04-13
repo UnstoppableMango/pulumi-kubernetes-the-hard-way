@@ -1692,16 +1692,20 @@
                     "type": "string",
                     "description": "Optional systemd unit description."
                 },
+                "directory": {
+                    "type": "string",
+                    "description": "The location to create the service file."
+                },
                 "documentation": {
                     "type": "string",
                     "description": "Optional systemd unit documentation"
                 },
                 "restart": {
-                    "$ref": "#/types/kubernetes-the-hard-way::SystemdServiceRestart",
+                    "$ref": "#/types/kubernetes-the-hard-way:remote:SystemdServiceRestart",
                     "description": "Optionally override the systemd service restart behaviour. Defaults to `on-failure`."
                 },
                 "restartSec": {
-                    "type": "integer",
+                    "type": "string",
                     "description": "Optionally override the systemd service RestartSec. Defaults to `5`."
                 },
                 "service": {
@@ -1726,16 +1730,20 @@
                     "type": "string",
                     "description": "Optional systemd unit description."
                 },
+                "directory": {
+                    "type": "string",
+                    "description": "The location to create the service file."
+                },
                 "documentation": {
                     "type": "string",
                     "description": "Optional systemd unit documentation"
                 },
                 "restart": {
-                    "$ref": "#/types/kubernetes-the-hard-way::SystemdServiceRestart",
+                    "$ref": "#/types/kubernetes-the-hard-way:remote:SystemdServiceRestart",
                     "description": "Optionally override the systemd service restart behaviour. Defaults to `on-failure`."
                 },
                 "restartSec": {
-                    "type": "integer",
+                    "type": "string",
                     "description": "Optionally override the systemd service RestartSec. Defaults to `5`."
                 },
                 "wantedBy": {
