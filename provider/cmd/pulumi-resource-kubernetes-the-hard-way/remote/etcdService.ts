@@ -1,4 +1,4 @@
-import { ComponentResourceOptions, Input, Output, interpolate, output } from '@pulumi/pulumi';
+import { ComponentResourceOptions, Input, Output, all, interpolate, output } from '@pulumi/pulumi';
 import * as schema from '../schema-types';
 import { CommandBuilder } from '../tools/commandBuilder';
 import { SystemdService } from './systemdService';
@@ -11,20 +11,21 @@ export class EtcdService extends schema.EtcdService {
     const connection = output(args.connection);
     const description = output(args.description ?? 'etcd');
     const documentation = output(args.documentation ?? 'https://github.com/etcd-io/etcd');
+    const peers = all((args.peers ?? []) as Input<schema.EtcdConfigurationPropsInputs>[]); // Ugh
     const restart = output(args.restart ?? 'on-failure');
     const restartSec = output(args.restartSec ?? '5');
     const wantedBy = output(args.wantedBy ?? 'multi-user.target');
 
     // TODO: Pretty print like the guide?
     const execStart = formatExecStart(
-      configuration.etcdPath, // TODO
+      configuration.etcdPath,
       configuration.name, // TODO: Review
       configuration.caFilePath,
       configuration.certFilePath,
       configuration.keyFilePath,
       configuration.dataDirectory,
       configuration.internalIp,
-      {}, // TODO: Peers
+      peers,
     );
 
     const service = new SystemdService(name, {
@@ -75,7 +76,7 @@ const formatExecStart = (
   keyPath: Input<string>,
   dataDirectory: Input<string>,
   internalIp: Input<string>,
-  peers: Record<string, Input<string>>,
+  peers: Input<schema.EtcdConfigurationPropsInputs[]>,
   peerPort: number = 2380,
   clientPort: number = 2379
 ): Output<string> => {
@@ -83,9 +84,10 @@ const formatExecStart = (
   const clientUrl = interpolate`https://${internalIp}:${clientPort}`;
   const localhostUrl = interpolate`https://127.0.0.1:${clientPort}`;
 
-  const peerMapping = Object.entries(peers).map(([name, ip]) => {
-    return interpolate`${name}=https://${ip}:${peerPort}`;
-  }).concat(interpolate`${nodeName}=${peerUrl}`);
+  // TODO: Can we clean this up
+  const peerMapping = output(peers).apply(x => x.map(c => {
+    return interpolate`${c.name}=https://${c.internalIp}:${peerPort}`;
+  }).concat(interpolate`${nodeName}=${peerUrl}`));
 
   const initialCluster = output(peerMapping).apply(m => m.join(','));
 

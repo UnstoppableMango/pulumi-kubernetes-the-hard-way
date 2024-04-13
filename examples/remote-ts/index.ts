@@ -64,6 +64,17 @@ const etcdConfig = new EtcdConfiguration('remote', {
   etcdPath: '/some/path/that/probably/should/exist/etcd',
 });
 
+const etcdConfig2 = new EtcdConfiguration('remote2', {
+  connection: { host, port, user, password },
+  caPem: 'pretend theres pem data here',
+  certPem: 'pretend theres pem data here',
+  keyPem: 'pretend theres pem data here',
+  internalIp: '10.240.0.11',
+  configurationDirectory: path.join(basePath, 'etc', 'etcd'),
+  dataDirectory: path.join(basePath, 'var', 'lib', 'etcd'),
+  etcdPath: '/some/path/that/probably/should/exist/etcd',
+});
+
 // const etcdctl = new Etcdctl('remote', {
 //   connection: { host, port, user, password },
 //   binaryPath: etcd.etcdctlPath,
@@ -97,6 +108,7 @@ const etcdService = new EtcdService('remote-etcd', {
   connection: { host, port, user, password },
   directory: basePath,
   configuration: etcdConfig.value,
+  peers: [etcdConfig2.value],
 });
 
 export const fileStderr = file.stderr;
