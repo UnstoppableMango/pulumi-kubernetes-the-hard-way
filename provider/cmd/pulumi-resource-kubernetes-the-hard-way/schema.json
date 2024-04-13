@@ -1681,6 +1681,73 @@
             ],
             "isComponent": true
         },
+        "kubernetes-the-hard-way:remote:EtcdService": {
+            "description": "Etcd systemd service file. Will likely get replaced with a static function when https://github.com/pulumi/pulumi/issues/7583 gets resolved.",
+            "properties": {
+                "connection": {
+                    "$ref": "/command/v0.9.2/schema.json#/types/command:remote:Connection",
+                    "description": "The parameters with which to connect to the remote host."
+                },
+                "description": {
+                    "type": "string",
+                    "description": "Optional systemd unit description."
+                },
+                "documentation": {
+                    "type": "string",
+                    "description": "Optional systemd unit documentation"
+                },
+                "restart": {
+                    "$ref": "#/types/kubernetes-the-hard-way::SystemdServiceRestart",
+                    "description": "Optionally override the systemd service restart behaviour. Defaults to `on-failure`."
+                },
+                "restartSec": {
+                    "type": "integer",
+                    "description": "Optionally override the systemd service RestartSec. Defaults to `5`."
+                },
+                "service": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:remote:SystemdService",
+                    "description": "The remote systemd service."
+                },
+                "wantedBy": {
+                    "type": "string",
+                    "description": "Optionally override the systemd service wanted-by. Defaults to `multi-user.target`."
+                }
+            },
+            "required": [
+                "connection",
+                "service"
+            ],
+            "inputProperties": {
+                "connection": {
+                    "$ref": "/command/v0.9.2/schema.json#/types/command:remote:Connection",
+                    "description": "The parameters with which to connect to the remote host."
+                },
+                "description": {
+                    "type": "string",
+                    "description": "Optional systemd unit description."
+                },
+                "documentation": {
+                    "type": "string",
+                    "description": "Optional systemd unit documentation"
+                },
+                "restart": {
+                    "$ref": "#/types/kubernetes-the-hard-way::SystemdServiceRestart",
+                    "description": "Optionally override the systemd service restart behaviour. Defaults to `on-failure`."
+                },
+                "restartSec": {
+                    "type": "integer",
+                    "description": "Optionally override the systemd service RestartSec. Defaults to `5`."
+                },
+                "wantedBy": {
+                    "type": "string",
+                    "description": "Optionally override the systemd service wanted-by. Defaults to `multi-user.target`."
+                }
+            },
+            "requiredInputs": [
+                "connection"
+            ],
+            "isComponent": true
+        },
         "kubernetes-the-hard-way:remote:File": {
             "properties": {
                 "command": {
