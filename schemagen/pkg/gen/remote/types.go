@@ -1,6 +1,7 @@
 package remote
 
 import (
+	"github.com/UnstoppableMango/pulumi-kubernetes-the-hard-way/schemagen/pkg/gen/props"
 	"github.com/UnstoppableMango/pulumi-kubernetes-the-hard-way/schemagen/pkg/gen/types"
 	"github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 )
@@ -15,6 +16,30 @@ func generateTypes() map[string]schema.ComplexTypeSpec {
 			Enum: []schema.EnumValueSpec{
 				{Value: "amd64"},
 				{Value: "arm64"},
+			},
+		},
+		name("EtcdConfigurationProps"): { // TODO: This name kinda sucks
+			ObjectTypeSpec: schema.ObjectTypeSpec{
+				Description: "Props for resources that consume etcd configuration.",
+				Type:        "object",
+				Properties: map[string]schema.PropertySpec{
+					"caFilePath":    props.String("Path to the certificate authority file on the remote system."),
+					"certFilePath":  props.String("Path to the certificate file on the remote system."),
+					"dataDirectory": props.String("Etcd's data directory."),
+					"etcdPath":      props.String("Path to the etcd binary."),
+					"internalIp":    props.String("Internal IP of the etcd node."),
+					"keyFilePath":   props.String("Path to the private key file on the remote system."),
+					"name":          props.String("Name of the etcd node."),
+				},
+				Required: []string{
+					"caFilePath",
+					"certFilePath",
+					"dataDirectory",
+					"etcdPath",
+					"internalIp",
+					"keyFilePath",
+					"name",
+				},
 			},
 		},
 		name("SystemdInstallSection"): {

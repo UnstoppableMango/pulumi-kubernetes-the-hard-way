@@ -76,6 +76,10 @@ func generateEtcdConfiguration(commandSpec schema.PackageSpec) schema.ResourceSp
 			Description: "The remote key file.",
 			TypeSpec:    types.LocalResource("File", "remote"),
 		},
+		"value": {
+			Description: "A bag of properties to be consumed by other resources.",
+			TypeSpec:    types.LocalType("EtcdConfigurationProps", "remote"),
+		},
 	}
 	maps.Copy(outputs, inputs)
 
@@ -89,6 +93,7 @@ func generateEtcdConfiguration(commandSpec schema.PackageSpec) schema.ResourceSp
 			"dataDirectory",
 			"dataMkdir",
 			"keyFile",
+			"value",
 		},
 	)
 
