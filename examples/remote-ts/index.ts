@@ -93,10 +93,10 @@ const systemdService = new SystemdService('remote', {
 //   },
 // });
 
-const etcdService = new EtcdService('remote', {
+const etcdService = new EtcdService('remote-etcd', {
   connection: { host, port, user, password },
   directory: basePath,
-  configuration: etcdConfig,
+  configuration: etcdConfig.value,
 });
 
 export const fileStderr = file.stderr;

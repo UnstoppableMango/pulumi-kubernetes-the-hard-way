@@ -1,7 +1,7 @@
 import { ComponentResourceOptions, Input, Output, interpolate, output } from '@pulumi/pulumi';
 import * as schema from '../schema-types';
-import { SystemdService } from './systemdService';
 import { CommandBuilder } from '../tools/commandBuilder';
+import { SystemdService } from './systemdService';
 
 export class EtcdService extends schema.EtcdService {
   constructor(name: string, args: schema.EtcdServiceArgs, opts?: ComponentResourceOptions) {
@@ -17,13 +17,13 @@ export class EtcdService extends schema.EtcdService {
 
     // TODO: Pretty print like the guide?
     const execStart = formatExecStart(
-      output(configuration.etcdPath), // TODO
-      name, // TODO: Review
-      output(configuration.caFile.path),
-      output(configuration.certFile.path),
-      output(configuration.keyFile.path),
-      output(configuration.dataDirectory),
-      output(configuration.internalIp),
+      configuration.etcdPath, // TODO
+      configuration.name, // TODO: Review
+      configuration.caFilePath,
+      configuration.certFilePath,
+      configuration.keyFilePath,
+      configuration.dataDirectory,
+      configuration.internalIp,
       {}, // TODO: Peers
     );
 
