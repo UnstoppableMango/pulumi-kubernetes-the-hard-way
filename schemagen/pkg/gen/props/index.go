@@ -29,7 +29,14 @@ func Connection(commandSpec schema.PackageSpec) schema.PropertySpec {
 func Integer(description string) schema.PropertySpec {
 	return schema.PropertySpec{
 		Description: description,
-		TypeSpec:    types.Integer,
+		TypeSpec:    types.Boolean,
+	}
+}
+
+func OneOrMoreStrings(desctiption string) schema.PropertySpec {
+	return schema.PropertySpec{
+		Description: desctiption,
+		TypeSpec:    types.OneOrMoreStrings,
 	}
 }
 
@@ -37,5 +44,12 @@ func String(description string) schema.PropertySpec {
 	return schema.PropertySpec{
 		Description: description,
 		TypeSpec:    types.String,
+	}
+}
+
+func StringMap(description string) schema.PropertySpec {
+	return schema.PropertySpec{
+		Description: description,
+		TypeSpec:    types.StringMap,
 	}
 }
