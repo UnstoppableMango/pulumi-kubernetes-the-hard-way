@@ -12,7 +12,7 @@ func generateEtcdService(commandSpec schema.PackageSpec) schema.ResourceSpec {
 	inputs := map[string]schema.PropertySpec{
 		"configuration": {
 			Description: "Etcd configuration.",
-			TypeSpec:    types.LocalResource("EtcdConfiguration", "remote"),
+			TypeSpec:    types.LocalType("EtcdConfigurationProps", "remote"),
 		},
 		"connection":    connection(commandSpec),
 		"description":   props.String("Optional systemd unit description."),
