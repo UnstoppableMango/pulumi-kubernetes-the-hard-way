@@ -25,6 +25,7 @@
         "remote/download.ts",
         "remote/etcdConfiguration.ts",
         "remote/etcdInstall.ts",
+        "remote/etcdService.ts",
         "remote/file.ts",
         "remote/index.ts",
         "remote/kubeApiServerInstall.ts",

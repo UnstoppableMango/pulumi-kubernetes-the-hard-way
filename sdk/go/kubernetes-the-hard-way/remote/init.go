@@ -33,6 +33,8 @@ func (m *module) Construct(ctx *pulumi.Context, name, typ, urn string) (r pulumi
 		r = &EtcdConfiguration{}
 	case "kubernetes-the-hard-way:remote:EtcdInstall":
 		r = &EtcdInstall{}
+	case "kubernetes-the-hard-way:remote:EtcdService":
+		r = &EtcdService{}
 	case "kubernetes-the-hard-way:remote:File":
 		r = &File{}
 	case "kubernetes-the-hard-way:remote:KubeApiServerInstall":
