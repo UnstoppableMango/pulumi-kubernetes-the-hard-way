@@ -16,6 +16,7 @@ import {
   KubectlInstall,
   KubeletInstall,
   RuncInstall,
+  StartEtcd,
   StaticPod,
   SystemdService,
 } from './remote';
@@ -40,6 +41,7 @@ const resources: schema.ResourceConstructor = {
   'kubernetes-the-hard-way:remote:KubeletInstall': (...args) => new KubeletInstall(...args),
   'kubernetes-the-hard-way:remote:KubeProxyInstall': (...args) => new KubeProxyInstall(...args),
   'kubernetes-the-hard-way:remote:RuncInstall': (...args) => new RuncInstall(...args),
+  'kubernetes-the-hard-way:remote:StartEtcd': (...args) => new StartEtcd(...args),
   'kubernetes-the-hard-way:remote:StaticPod': (...args) => new StaticPod(...args),
   'kubernetes-the-hard-way:remote:SystemdService': (...args) => new SystemdService(...args),
   // @ts-ignore Due to the keypair subclass this refactor is a little harder
