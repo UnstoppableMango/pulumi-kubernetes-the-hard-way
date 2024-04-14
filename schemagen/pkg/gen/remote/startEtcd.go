@@ -8,9 +8,11 @@ import (
 	"github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 )
 
-func generateStartEtcd() schema.ResourceSpec {
-	inputs := map[string]schema.PropertySpec{}
-	requiredInputs := []string{}
+func generateStartEtcd(commandSpec schema.PackageSpec) schema.ResourceSpec {
+	inputs := map[string]schema.PropertySpec{
+		"connection": connection(commandSpec),
+	}
+	requiredInputs := []string{"connection"}
 
 	outputs := map[string]schema.PropertySpec{
 		"daemonReload": {
