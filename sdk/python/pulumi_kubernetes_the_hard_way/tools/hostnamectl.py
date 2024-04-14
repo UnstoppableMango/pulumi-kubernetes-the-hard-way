@@ -410,6 +410,7 @@ class Hostnamectl(pulumi.ComponentResource):
             __props__.__dict__["transient"] = transient
             __props__.__dict__["triggers"] = triggers
             __props__.__dict__["version"] = version
+            __props__.__dict__["hostnamectl_command"] = None
             __props__.__dict__["stderr"] = None
             __props__.__dict__["stdout"] = None
         super(Hostnamectl, __self__).__init__(
@@ -476,8 +477,16 @@ class Hostnamectl(pulumi.ComponentResource):
         return pulumi.get(self, "host")
 
     @property
+    @pulumi.getter(name="hostnamectlCommand")
+    def hostnamectl_command(self) -> pulumi.Output['HostnamectlCommand']:
+        """
+        Corresponds to the {COMMAND} argument.
+        """
+        return pulumi.get(self, "hostnamectl_command")
+
+    @property
     @pulumi.getter
-    def json(self) -> pulumi.Output['HostnamectlJsonMode']:
+    def json(self) -> pulumi.Output[Optional['HostnamectlJsonMode']]:
         """
         Shows output formatted as JSON.
         """

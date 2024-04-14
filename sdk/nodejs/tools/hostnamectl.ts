@@ -56,9 +56,13 @@ export class Hostnamectl extends pulumi.ComponentResource {
      */
     public readonly host!: pulumi.Output<string | undefined>;
     /**
+     * Corresponds to the {COMMAND} argument.
+     */
+    public /*out*/ readonly hostnamectlCommand!: pulumi.Output<enums.tools.HostnamectlCommand>;
+    /**
      * Shows output formatted as JSON.
      */
-    public readonly json!: pulumi.Output<enums.tools.HostnamectlJsonMode>;
+    public readonly json!: pulumi.Output<enums.tools.HostnamectlJsonMode | undefined>;
     /**
      * At what stage(s) in the resource lifecycle should the command be run
      */
@@ -138,6 +142,7 @@ export class Hostnamectl extends pulumi.ComponentResource {
             resourceInputs["transient"] = args ? args.transient : undefined;
             resourceInputs["triggers"] = args ? args.triggers : undefined;
             resourceInputs["version"] = args ? args.version : undefined;
+            resourceInputs["hostnamectlCommand"] = undefined /*out*/;
             resourceInputs["stderr"] = undefined /*out*/;
             resourceInputs["stdout"] = undefined /*out*/;
         } else {
@@ -148,6 +153,7 @@ export class Hostnamectl extends pulumi.ComponentResource {
             resourceInputs["environment"] = undefined /*out*/;
             resourceInputs["help"] = undefined /*out*/;
             resourceInputs["host"] = undefined /*out*/;
+            resourceInputs["hostnamectlCommand"] = undefined /*out*/;
             resourceInputs["json"] = undefined /*out*/;
             resourceInputs["lifecycle"] = undefined /*out*/;
             resourceInputs["machine"] = undefined /*out*/;

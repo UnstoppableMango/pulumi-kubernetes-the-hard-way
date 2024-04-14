@@ -66,7 +66,7 @@ export class Sed extends pulumi.ComponentResource {
     /**
      * edit files in place (makes backup if SUFFIX supplied)
      */
-    public readonly inPlace!: pulumi.Output<string>;
+    public readonly inPlace!: pulumi.Output<string | undefined>;
     /**
      * corresponds to the [input-file]... argument(s).
      */

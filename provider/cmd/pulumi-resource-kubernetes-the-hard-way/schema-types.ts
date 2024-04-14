@@ -948,7 +948,8 @@ export abstract class Hostnamectl<TData = any> extends (pulumi.ComponentResource
     public environment!: Record<string, string> | pulumi.Output<Record<string, string>>;
     public help!: boolean | pulumi.Output<boolean>;
     public host?: string | pulumi.Output<string>;
-    public json!: HostnamectlJsonModeOutputs | pulumi.Output<HostnamectlJsonModeOutputs>;
+    public hostnamectlCommand!: HostnamectlCommandOutputs | pulumi.Output<HostnamectlCommandOutputs>;
+    public json?: HostnamectlJsonModeOutputs | pulumi.Output<HostnamectlJsonModeOutputs>;
     public lifecycle?: CommandLifecycleOutputs | CommandLifecycleOutputs;
     public machine?: string | pulumi.Output<string>;
     public noAskPassword!: boolean | pulumi.Output<boolean>;
@@ -961,7 +962,7 @@ export abstract class Hostnamectl<TData = any> extends (pulumi.ComponentResource
     public triggers!: any[] | pulumi.Output<any[]>;
     public version!: boolean | pulumi.Output<boolean>;
     constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
-        super("kubernetes-the-hard-way:tools:Hostnamectl", name, opts.urn ? { arg: undefined, binaryPath: undefined, command: undefined, connection: undefined, environment: undefined, help: undefined, host: undefined, json: undefined, lifecycle: undefined, machine: undefined, noAskPassword: undefined, pretty: undefined, static: undefined, stderr: undefined, stdin: undefined, stdout: undefined, transient: undefined, triggers: undefined, version: undefined } : { name, args, opts }, opts);
+        super("kubernetes-the-hard-way:tools:Hostnamectl", name, opts.urn ? { arg: undefined, binaryPath: undefined, command: undefined, connection: undefined, environment: undefined, help: undefined, host: undefined, hostnamectlCommand: undefined, json: undefined, lifecycle: undefined, machine: undefined, noAskPassword: undefined, pretty: undefined, static: undefined, stderr: undefined, stdin: undefined, stdout: undefined, transient: undefined, triggers: undefined, version: undefined } : { name, args, opts }, opts);
     }
 }
 export interface HostnamectlArgs {
@@ -1139,7 +1140,7 @@ export abstract class Sed<TData = any> extends (pulumi.ComponentResource)<TData>
     public files!: unknown | pulumi.Output<unknown>;
     public followSymlinks!: boolean | pulumi.Output<boolean>;
     public help!: boolean | pulumi.Output<boolean>;
-    public inPlace!: string | pulumi.Output<string>;
+    public inPlace?: string | pulumi.Output<string>;
     public inputFiles!: unknown | pulumi.Output<unknown>;
     public lifecycle?: CommandLifecycleOutputs | CommandLifecycleOutputs;
     public lineLength?: boolean | pulumi.Output<boolean>;

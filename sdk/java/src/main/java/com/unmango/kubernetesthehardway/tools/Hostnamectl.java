@@ -12,6 +12,7 @@ import com.pulumi.core.internal.Codegen;
 import com.unmango.kubernetesthehardway.Utilities;
 import com.unmango.kubernetesthehardway.tools.HostnamectlArgs;
 import com.unmango.kubernetesthehardway.tools.enums.CommandLifecycle;
+import com.unmango.kubernetesthehardway.tools.enums.HostnamectlCommand;
 import com.unmango.kubernetesthehardway.tools.enums.HostnamectlJsonMode;
 import java.lang.Boolean;
 import java.lang.Object;
@@ -126,18 +127,32 @@ public class Hostnamectl extends com.pulumi.resources.ComponentResource {
         return Codegen.optional(this.host);
     }
     /**
+     * Corresponds to the {COMMAND} argument.
+     * 
+     */
+    @Export(name="hostnamectlCommand", refs={HostnamectlCommand.class}, tree="[0]")
+    private Output<HostnamectlCommand> hostnamectlCommand;
+
+    /**
+     * @return Corresponds to the {COMMAND} argument.
+     * 
+     */
+    public Output<HostnamectlCommand> hostnamectlCommand() {
+        return this.hostnamectlCommand;
+    }
+    /**
      * Shows output formatted as JSON.
      * 
      */
     @Export(name="json", refs={HostnamectlJsonMode.class}, tree="[0]")
-    private Output<HostnamectlJsonMode> json;
+    private Output</* @Nullable */ HostnamectlJsonMode> json;
 
     /**
      * @return Shows output formatted as JSON.
      * 
      */
-    public Output<HostnamectlJsonMode> json() {
-        return this.json;
+    public Output<Optional<HostnamectlJsonMode>> json() {
+        return Codegen.optional(this.json);
     }
     /**
      * At what stage(s) in the resource lifecycle should the command be run

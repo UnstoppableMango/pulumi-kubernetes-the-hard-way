@@ -74,7 +74,7 @@ namespace UnMango.KubernetesTheHardWay.Tools
         /// edit files in place (makes backup if SUFFIX supplied)
         /// </summary>
         [Output("inPlace")]
-        public Output<string> InPlace { get; private set; } = null!;
+        public Output<string?> InPlace { get; private set; } = null!;
 
         /// <summary>
         /// corresponds to the [input-file]... argument(s).

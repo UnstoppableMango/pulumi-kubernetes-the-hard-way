@@ -4660,6 +4660,10 @@
                     "type": "string",
                     "description": "Execute the operation remotely. Specify a hostname, or a username and hostname separated by '@', to connect to."
                 },
+                "hostnamectlCommand": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:HostnamectlCommand",
+                    "description": "Corresponds to the {COMMAND} argument."
+                },
                 "json": {
                     "$ref": "#/types/kubernetes-the-hard-way:tools:HostnamectlJsonMode",
                     "description": "Shows output formatted as JSON."
@@ -4716,7 +4720,7 @@
             "required": [
                 "command",
                 "help",
-                "json",
+                "hostnamectlCommand",
                 "noAskPassword",
                 "pretty",
                 "static",
@@ -5642,7 +5646,6 @@
                 "files",
                 "followSymlinks",
                 "help",
-                "inPlace",
                 "inputFiles",
                 "nullData",
                 "posix",

@@ -158,14 +158,14 @@ public class Sed extends com.pulumi.resources.ComponentResource {
      * 
      */
     @Export(name="inPlace", refs={String.class}, tree="[0]")
-    private Output<String> inPlace;
+    private Output</* @Nullable */ String> inPlace;
 
     /**
      * @return edit files in place (makes backup if SUFFIX supplied)
      * 
      */
-    public Output<String> inPlace() {
-        return this.inPlace;
+    public Output<Optional<String>> inPlace() {
+        return Codegen.optional(this.inPlace);
     }
     /**
      * corresponds to the [input-file]... argument(s).

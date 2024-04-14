@@ -633,7 +633,7 @@ class Sed(pulumi.ComponentResource):
 
     @property
     @pulumi.getter(name="inPlace")
-    def in_place(self) -> pulumi.Output[str]:
+    def in_place(self) -> pulumi.Output[Optional[str]]:
         """
         edit files in place (makes backup if SUFFIX supplied)
         """

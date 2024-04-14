@@ -31,8 +31,10 @@ type Hostnamectl struct {
 	Help pulumi.BoolOutput `pulumi:"help"`
 	// Execute the operation remotely. Specify a hostname, or a username and hostname separated by '@', to connect to.
 	Host pulumi.StringPtrOutput `pulumi:"host"`
+	// Corresponds to the {COMMAND} argument.
+	HostnamectlCommand HostnamectlCommandOutput `pulumi:"hostnamectlCommand"`
 	// Shows output formatted as JSON.
-	Json HostnamectlJsonModeOutput `pulumi:"json"`
+	Json HostnamectlJsonModePtrOutput `pulumi:"json"`
 	// At what stage(s) in the resource lifecycle should the command be run
 	Lifecycle CommandLifecyclePtrOutput `pulumi:"lifecycle"`
 	// Execute operation on a local container. Specify a container name to connect to, optionally prefixed by a user name to connect as and a separating '@' character.
@@ -277,9 +279,14 @@ func (o HostnamectlOutput) Host() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Hostnamectl) pulumi.StringPtrOutput { return v.Host }).(pulumi.StringPtrOutput)
 }
 
+// Corresponds to the {COMMAND} argument.
+func (o HostnamectlOutput) HostnamectlCommand() HostnamectlCommandOutput {
+	return o.ApplyT(func(v *Hostnamectl) HostnamectlCommandOutput { return v.HostnamectlCommand }).(HostnamectlCommandOutput)
+}
+
 // Shows output formatted as JSON.
-func (o HostnamectlOutput) Json() HostnamectlJsonModeOutput {
-	return o.ApplyT(func(v *Hostnamectl) HostnamectlJsonModeOutput { return v.Json }).(HostnamectlJsonModeOutput)
+func (o HostnamectlOutput) Json() HostnamectlJsonModePtrOutput {
+	return o.ApplyT(func(v *Hostnamectl) HostnamectlJsonModePtrOutput { return v.Json }).(HostnamectlJsonModePtrOutput)
 }
 
 // At what stage(s) in the resource lifecycle should the command be run

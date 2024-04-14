@@ -59,10 +59,16 @@ namespace UnMango.KubernetesTheHardWay.Tools
         public Output<string?> Host { get; private set; } = null!;
 
         /// <summary>
+        /// Corresponds to the {COMMAND} argument.
+        /// </summary>
+        [Output("hostnamectlCommand")]
+        public Output<UnMango.KubernetesTheHardWay.Tools.HostnamectlCommand> HostnamectlCommand { get; private set; } = null!;
+
+        /// <summary>
         /// Shows output formatted as JSON.
         /// </summary>
         [Output("json")]
-        public Output<UnMango.KubernetesTheHardWay.Tools.HostnamectlJsonMode> Json { get; private set; } = null!;
+        public Output<UnMango.KubernetesTheHardWay.Tools.HostnamectlJsonMode?> Json { get; private set; } = null!;
 
         /// <summary>
         /// At what stage(s) in the resource lifecycle should the command be run

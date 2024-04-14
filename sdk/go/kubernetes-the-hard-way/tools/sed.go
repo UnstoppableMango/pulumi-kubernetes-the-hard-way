@@ -36,7 +36,7 @@ type Sed struct {
 	// display this help and exit.
 	Help pulumi.BoolOutput `pulumi:"help"`
 	// edit files in place (makes backup if SUFFIX supplied)
-	InPlace pulumi.StringOutput `pulumi:"inPlace"`
+	InPlace pulumi.StringPtrOutput `pulumi:"inPlace"`
 	// corresponds to the [input-file]... argument(s).
 	InputFiles pulumi.AnyOutput `pulumi:"inputFiles"`
 	// At what stage(s) in the resource lifecycle should the command be run
@@ -329,8 +329,8 @@ func (o SedOutput) Help() pulumi.BoolOutput {
 }
 
 // edit files in place (makes backup if SUFFIX supplied)
-func (o SedOutput) InPlace() pulumi.StringOutput {
-	return o.ApplyT(func(v *Sed) pulumi.StringOutput { return v.InPlace }).(pulumi.StringOutput)
+func (o SedOutput) InPlace() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Sed) pulumi.StringPtrOutput { return v.InPlace }).(pulumi.StringPtrOutput)
 }
 
 // corresponds to the [input-file]... argument(s).
