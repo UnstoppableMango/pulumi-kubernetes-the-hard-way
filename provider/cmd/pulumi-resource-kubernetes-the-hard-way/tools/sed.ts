@@ -84,7 +84,9 @@ export class Sed extends schema.Sed {
     this.script = script as Output<string>;
     this.separate = separate;
     this.silent = silent;
+    this.stderr = command.stderr;
     this.stdin = stdin as Output<string>;
+    this.stdout = command.stdout;
     this.triggers = triggers;
     this.unbuffered = unbuffered;
     this.version = version;
