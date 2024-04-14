@@ -21,6 +21,7 @@ from .kube_scheduler_install import *
 from .kubectl_install import *
 from .kubelet_install import *
 from .runc_install import *
+from .start_etcd import *
 from .static_pod import *
 from .systemd_service import *
 from ._inputs import *
