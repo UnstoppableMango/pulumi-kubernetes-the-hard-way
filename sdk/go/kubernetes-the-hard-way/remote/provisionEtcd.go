@@ -11,20 +11,37 @@ import (
 	pulumiCommand "github.com/pulumi/pulumi-command/sdk/go/command/remote"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 	"github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/sdk/go/kubernetes-the-hard-way/internal"
+	"github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/sdk/go/kubernetes-the-hard-way/tls"
 )
 
 // Starts etcd on a remote system.
 type ProvisionEtcd struct {
 	pulumi.ResourceState
 
+	// TODO
+	Architecture ArchitecturePtrOutput `pulumi:"architecture"`
+	// TODO
+	BinaryDirectory pulumi.StringPtrOutput `pulumi:"binaryDirectory"`
+	// The TLS bundle.
+	Bundle tls.BundleOutput `pulumi:"bundle"`
 	// Etcd configuration.
 	Configuration EtcdConfigurationOutput `pulumi:"configuration"`
+	// The directory to use for etcd configuration.
+	ConfigurationDirectory pulumi.StringPtrOutput `pulumi:"configurationDirectory"`
 	// The parameters with which to connect to the remote host.
 	Connection pulumiCommand.ConnectionOutput `pulumi:"connection"`
+	// The directory to use for etcd data.
+	DataDirectory pulumi.StringPtrOutput `pulumi:"dataDirectory"`
 	// Install etcd.
 	Install EtcdInstallOutput `pulumi:"install"`
+	// The internal IP of the etcd node
+	InternalIp pulumi.StringOutput `pulumi:"internalIp"`
+	// Systemd service.
+	Service SystemdServiceOutput `pulumi:"service"`
 	// Start etcd
 	Start StartEtcdOutput `pulumi:"start"`
+	// The version to install.
+	Version pulumi.StringPtrOutput `pulumi:"version"`
 }
 
 // NewProvisionEtcd registers a new resource with the given unique name, arguments, and options.
@@ -34,8 +51,14 @@ func NewProvisionEtcd(ctx *pulumi.Context,
 		return nil, errors.New("missing one or more required arguments")
 	}
 
+	if args.Bundle == nil {
+		return nil, errors.New("invalid value for required argument 'Bundle'")
+	}
 	if args.Connection == nil {
 		return nil, errors.New("invalid value for required argument 'Connection'")
+	}
+	if args.InternalIp == nil {
+		return nil, errors.New("invalid value for required argument 'InternalIp'")
 	}
 	args.Connection = args.Connection.ToConnectionOutput().ApplyT(func(v pulumiCommand.Connection) pulumiCommand.Connection { return *v.Defaults() }).(pulumiCommand.ConnectionOutput)
 	opts = internal.PkgResourceDefaultOpts(opts)
@@ -48,18 +71,42 @@ func NewProvisionEtcd(ctx *pulumi.Context,
 }
 
 type provisionEtcdArgs struct {
-	// Etcd configuration.
-	Configuration *EtcdConfiguration `pulumi:"configuration"`
+	// TODO
+	Architecture *Architecture `pulumi:"architecture"`
+	// TODO
+	BinaryDirectory *string `pulumi:"binaryDirectory"`
+	// The TLS bundle.
+	Bundle tls.Bundle `pulumi:"bundle"`
+	// The directory to use for etcd configuration.
+	ConfigurationDirectory *string `pulumi:"configurationDirectory"`
 	// The parameters with which to connect to the remote host.
 	Connection pulumiCommand.Connection `pulumi:"connection"`
+	// The directory to use for etcd data.
+	DataDirectory *string `pulumi:"dataDirectory"`
+	// The internal IP of the etcd node
+	InternalIp string `pulumi:"internalIp"`
+	// The version to install.
+	Version *string `pulumi:"version"`
 }
 
 // The set of arguments for constructing a ProvisionEtcd resource.
 type ProvisionEtcdArgs struct {
-	// Etcd configuration.
-	Configuration EtcdConfigurationInput
+	// TODO
+	Architecture ArchitecturePtrInput
+	// TODO
+	BinaryDirectory pulumi.StringPtrInput
+	// The TLS bundle.
+	Bundle tls.BundleInput
+	// The directory to use for etcd configuration.
+	ConfigurationDirectory pulumi.StringPtrInput
 	// The parameters with which to connect to the remote host.
 	Connection pulumiCommand.ConnectionInput
+	// The directory to use for etcd data.
+	DataDirectory pulumi.StringPtrInput
+	// The internal IP of the etcd node
+	InternalIp pulumi.StringInput
+	// The version to install.
+	Version pulumi.StringPtrInput
 }
 
 func (ProvisionEtcdArgs) ElementType() reflect.Type {
@@ -149,9 +196,29 @@ func (o ProvisionEtcdOutput) ToProvisionEtcdOutputWithContext(ctx context.Contex
 	return o
 }
 
+// TODO
+func (o ProvisionEtcdOutput) Architecture() ArchitecturePtrOutput {
+	return o.ApplyT(func(v *ProvisionEtcd) ArchitecturePtrOutput { return v.Architecture }).(ArchitecturePtrOutput)
+}
+
+// TODO
+func (o ProvisionEtcdOutput) BinaryDirectory() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *ProvisionEtcd) pulumi.StringPtrOutput { return v.BinaryDirectory }).(pulumi.StringPtrOutput)
+}
+
+// The TLS bundle.
+func (o ProvisionEtcdOutput) Bundle() tls.BundleOutput {
+	return o.ApplyT(func(v *ProvisionEtcd) tls.BundleOutput { return v.Bundle }).(tls.BundleOutput)
+}
+
 // Etcd configuration.
 func (o ProvisionEtcdOutput) Configuration() EtcdConfigurationOutput {
 	return o.ApplyT(func(v *ProvisionEtcd) EtcdConfigurationOutput { return v.Configuration }).(EtcdConfigurationOutput)
+}
+
+// The directory to use for etcd configuration.
+func (o ProvisionEtcdOutput) ConfigurationDirectory() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *ProvisionEtcd) pulumi.StringPtrOutput { return v.ConfigurationDirectory }).(pulumi.StringPtrOutput)
 }
 
 // The parameters with which to connect to the remote host.
@@ -159,14 +226,34 @@ func (o ProvisionEtcdOutput) Connection() pulumiCommand.ConnectionOutput {
 	return o.ApplyT(func(v *ProvisionEtcd) pulumiCommand.ConnectionOutput { return v.Connection }).(pulumiCommand.ConnectionOutput)
 }
 
+// The directory to use for etcd data.
+func (o ProvisionEtcdOutput) DataDirectory() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *ProvisionEtcd) pulumi.StringPtrOutput { return v.DataDirectory }).(pulumi.StringPtrOutput)
+}
+
 // Install etcd.
 func (o ProvisionEtcdOutput) Install() EtcdInstallOutput {
 	return o.ApplyT(func(v *ProvisionEtcd) EtcdInstallOutput { return v.Install }).(EtcdInstallOutput)
 }
 
+// The internal IP of the etcd node
+func (o ProvisionEtcdOutput) InternalIp() pulumi.StringOutput {
+	return o.ApplyT(func(v *ProvisionEtcd) pulumi.StringOutput { return v.InternalIp }).(pulumi.StringOutput)
+}
+
+// Systemd service.
+func (o ProvisionEtcdOutput) Service() SystemdServiceOutput {
+	return o.ApplyT(func(v *ProvisionEtcd) SystemdServiceOutput { return v.Service }).(SystemdServiceOutput)
+}
+
 // Start etcd
 func (o ProvisionEtcdOutput) Start() StartEtcdOutput {
 	return o.ApplyT(func(v *ProvisionEtcd) StartEtcdOutput { return v.Start }).(StartEtcdOutput)
+}
+
+// The version to install.
+func (o ProvisionEtcdOutput) Version() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *ProvisionEtcd) pulumi.StringPtrOutput { return v.Version }).(pulumi.StringPtrOutput)
 }
 
 type ProvisionEtcdArrayOutput struct{ *pulumi.OutputState }

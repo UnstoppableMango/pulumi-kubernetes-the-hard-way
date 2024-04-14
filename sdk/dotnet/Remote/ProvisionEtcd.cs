@@ -17,10 +17,34 @@ namespace UnMango.KubernetesTheHardWay.Remote
     public partial class ProvisionEtcd : global::Pulumi.ComponentResource
     {
         /// <summary>
+        /// TODO
+        /// </summary>
+        [Output("architecture")]
+        public Output<UnMango.KubernetesTheHardWay.Remote.Architecture?> Architecture { get; private set; } = null!;
+
+        /// <summary>
+        /// TODO
+        /// </summary>
+        [Output("binaryDirectory")]
+        public Output<string?> BinaryDirectory { get; private set; } = null!;
+
+        /// <summary>
+        /// The TLS bundle.
+        /// </summary>
+        [Output("bundle")]
+        public Output<UnMango.KubernetesTheHardWay.Tls.Outputs.Bundle> Bundle { get; private set; } = null!;
+
+        /// <summary>
         /// Etcd configuration.
         /// </summary>
         [Output("configuration")]
         public Output<UnMango.KubernetesTheHardWay.Remote.EtcdConfiguration> Configuration { get; private set; } = null!;
+
+        /// <summary>
+        /// The directory to use for etcd configuration.
+        /// </summary>
+        [Output("configurationDirectory")]
+        public Output<string?> ConfigurationDirectory { get; private set; } = null!;
 
         /// <summary>
         /// The parameters with which to connect to the remote host.
@@ -29,16 +53,40 @@ namespace UnMango.KubernetesTheHardWay.Remote
         public Output<Pulumi.Command.Remote.Outputs.Connection> Connection { get; private set; } = null!;
 
         /// <summary>
+        /// The directory to use for etcd data.
+        /// </summary>
+        [Output("dataDirectory")]
+        public Output<string?> DataDirectory { get; private set; } = null!;
+
+        /// <summary>
         /// Install etcd.
         /// </summary>
         [Output("install")]
         public Output<UnMango.KubernetesTheHardWay.Remote.EtcdInstall> Install { get; private set; } = null!;
 
         /// <summary>
+        /// The internal IP of the etcd node
+        /// </summary>
+        [Output("internalIp")]
+        public Output<string> InternalIp { get; private set; } = null!;
+
+        /// <summary>
+        /// Systemd service.
+        /// </summary>
+        [Output("service")]
+        public Output<UnMango.KubernetesTheHardWay.Remote.SystemdService> Service { get; private set; } = null!;
+
+        /// <summary>
         /// Start etcd
         /// </summary>
         [Output("start")]
-        public Output<UnMango.KubernetesTheHardWay.Remote.StartEtcd?> Start { get; private set; } = null!;
+        public Output<UnMango.KubernetesTheHardWay.Remote.StartEtcd> Start { get; private set; } = null!;
+
+        /// <summary>
+        /// The version to install.
+        /// </summary>
+        [Output("version")]
+        public Output<string?> Version { get; private set; } = null!;
 
 
         /// <summary>
@@ -70,16 +118,52 @@ namespace UnMango.KubernetesTheHardWay.Remote
     public sealed class ProvisionEtcdArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
-        /// Etcd configuration.
+        /// TODO
         /// </summary>
-        [Input("configuration")]
-        public Input<UnMango.KubernetesTheHardWay.Remote.EtcdConfiguration>? Configuration { get; set; }
+        [Input("architecture")]
+        public Input<UnMango.KubernetesTheHardWay.Remote.Architecture>? Architecture { get; set; }
+
+        /// <summary>
+        /// TODO
+        /// </summary>
+        [Input("binaryDirectory")]
+        public Input<string>? BinaryDirectory { get; set; }
+
+        /// <summary>
+        /// The TLS bundle.
+        /// </summary>
+        [Input("bundle", required: true)]
+        public Input<UnMango.KubernetesTheHardWay.Tls.Inputs.BundleArgs> Bundle { get; set; } = null!;
+
+        /// <summary>
+        /// The directory to use for etcd configuration.
+        /// </summary>
+        [Input("configurationDirectory")]
+        public Input<string>? ConfigurationDirectory { get; set; }
 
         /// <summary>
         /// The parameters with which to connect to the remote host.
         /// </summary>
         [Input("connection", required: true)]
         public Input<Pulumi.Command.Remote.Inputs.ConnectionArgs> Connection { get; set; } = null!;
+
+        /// <summary>
+        /// The directory to use for etcd data.
+        /// </summary>
+        [Input("dataDirectory")]
+        public Input<string>? DataDirectory { get; set; }
+
+        /// <summary>
+        /// The internal IP of the etcd node
+        /// </summary>
+        [Input("internalIp", required: true)]
+        public Input<string> InternalIp { get; set; } = null!;
+
+        /// <summary>
+        /// The version to install.
+        /// </summary>
+        [Input("version")]
+        public Input<string>? Version { get; set; }
 
         public ProvisionEtcdArgs()
         {

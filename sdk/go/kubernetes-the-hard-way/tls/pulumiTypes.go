@@ -24,6 +24,69 @@ type Bundle struct {
 	KeyPem string `pulumi:"keyPem"`
 }
 
+// BundleInput is an input type that accepts BundleArgs and BundleOutput values.
+// You can construct a concrete instance of `BundleInput` via:
+//
+//	BundleArgs{...}
+type BundleInput interface {
+	pulumi.Input
+
+	ToBundleOutput() BundleOutput
+	ToBundleOutputWithContext(context.Context) BundleOutput
+}
+
+// A CA + Cert + Key bundle
+type BundleArgs struct {
+	// The PEM encoded certificate authority data.
+	CaPem pulumi.StringInput `pulumi:"caPem"`
+	// The PEM encoded certificate data.
+	CertPem pulumi.StringInput `pulumi:"certPem"`
+	// The PEM encoded private key data
+	KeyPem pulumi.StringInput `pulumi:"keyPem"`
+}
+
+func (BundleArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*Bundle)(nil)).Elem()
+}
+
+func (i BundleArgs) ToBundleOutput() BundleOutput {
+	return i.ToBundleOutputWithContext(context.Background())
+}
+
+func (i BundleArgs) ToBundleOutputWithContext(ctx context.Context) BundleOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BundleOutput)
+}
+
+// A CA + Cert + Key bundle
+type BundleOutput struct{ *pulumi.OutputState }
+
+func (BundleOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*Bundle)(nil)).Elem()
+}
+
+func (o BundleOutput) ToBundleOutput() BundleOutput {
+	return o
+}
+
+func (o BundleOutput) ToBundleOutputWithContext(ctx context.Context) BundleOutput {
+	return o
+}
+
+// The PEM encoded certificate authority data.
+func (o BundleOutput) CaPem() pulumi.StringOutput {
+	return o.ApplyT(func(v Bundle) string { return v.CaPem }).(pulumi.StringOutput)
+}
+
+// The PEM encoded certificate data.
+func (o BundleOutput) CertPem() pulumi.StringOutput {
+	return o.ApplyT(func(v Bundle) string { return v.CertPem }).(pulumi.StringOutput)
+}
+
+// The PEM encoded private key data
+func (o BundleOutput) KeyPem() pulumi.StringOutput {
+	return o.ApplyT(func(v Bundle) string { return v.KeyPem }).(pulumi.StringOutput)
+}
+
 // TODO
 type ClusterPkiNode struct {
 	// The IP address of the node
@@ -148,8 +211,10 @@ type KeyPair struct {
 }
 
 func init() {
+	pulumi.RegisterInputType(reflect.TypeOf((*BundleInput)(nil)).Elem(), BundleArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*ClusterPkiNodeInput)(nil)).Elem(), ClusterPkiNodeArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*ClusterPkiNodeMapInput)(nil)).Elem(), ClusterPkiNodeMap{})
+	pulumi.RegisterOutputType(BundleOutput{})
 	pulumi.RegisterOutputType(ClusterPkiNodeOutput{})
 	pulumi.RegisterOutputType(ClusterPkiNodeMapOutput{})
 }

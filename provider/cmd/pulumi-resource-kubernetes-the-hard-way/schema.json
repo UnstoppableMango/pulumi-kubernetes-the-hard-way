@@ -2577,40 +2577,102 @@
         "kubernetes-the-hard-way:remote:ProvisionEtcd": {
             "description": "Starts etcd on a remote system.",
             "properties": {
+                "architecture": {
+                    "$ref": "#/types/kubernetes-the-hard-way:remote:Architecture",
+                    "description": "TODO"
+                },
+                "binaryDirectory": {
+                    "type": "string",
+                    "description": "TODO"
+                },
+                "bundle": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tls:Bundle",
+                    "description": "The TLS bundle."
+                },
                 "configuration": {
                     "$ref": "#/resources/kubernetes-the-hard-way:remote:EtcdConfiguration",
                     "description": "Etcd configuration."
                 },
+                "configurationDirectory": {
+                    "type": "string",
+                    "description": "The directory to use for etcd configuration."
+                },
                 "connection": {
                     "$ref": "/command/v0.9.2/schema.json#/types/command:remote:Connection",
                     "description": "The parameters with which to connect to the remote host."
+                },
+                "dataDirectory": {
+                    "type": "string",
+                    "description": "The directory to use for etcd data."
                 },
                 "install": {
                     "$ref": "#/resources/kubernetes-the-hard-way:remote:EtcdInstall",
                     "description": "Install etcd."
                 },
+                "internalIp": {
+                    "type": "string",
+                    "description": "The internal IP of the etcd node"
+                },
+                "service": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:remote:SystemdService",
+                    "description": "Systemd service."
+                },
                 "start": {
                     "$ref": "#/resources/kubernetes-the-hard-way:remote:StartEtcd",
                     "description": "Start etcd"
+                },
+                "version": {
+                    "type": "string",
+                    "description": "The version to install."
                 }
             },
             "required": [
+                "bundle",
                 "connection",
+                "internalIp",
                 "configuration",
-                "install"
+                "install",
+                "service",
+                "start"
             ],
             "inputProperties": {
-                "configuration": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:remote:EtcdConfiguration",
-                    "description": "Etcd configuration."
+                "architecture": {
+                    "$ref": "#/types/kubernetes-the-hard-way:remote:Architecture",
+                    "description": "TODO"
+                },
+                "binaryDirectory": {
+                    "type": "string",
+                    "description": "TODO"
+                },
+                "bundle": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tls:Bundle",
+                    "description": "The TLS bundle."
+                },
+                "configurationDirectory": {
+                    "type": "string",
+                    "description": "The directory to use for etcd configuration."
                 },
                 "connection": {
                     "$ref": "/command/v0.9.2/schema.json#/types/command:remote:Connection",
                     "description": "The parameters with which to connect to the remote host."
+                },
+                "dataDirectory": {
+                    "type": "string",
+                    "description": "The directory to use for etcd data."
+                },
+                "internalIp": {
+                    "type": "string",
+                    "description": "The internal IP of the etcd node"
+                },
+                "version": {
+                    "type": "string",
+                    "description": "The version to install."
                 }
             },
             "requiredInputs": [
-                "connection"
+                "bundle",
+                "connection",
+                "internalIp"
             ],
             "isComponent": true
         },

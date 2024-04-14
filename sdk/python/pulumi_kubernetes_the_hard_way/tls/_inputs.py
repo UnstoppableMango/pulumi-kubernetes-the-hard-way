@@ -11,8 +11,62 @@ from .. import _utilities
 from ._enums import *
 
 __all__ = [
+    'BundleArgs',
     'ClusterPkiNodeArgs',
 ]
+
+@pulumi.input_type
+class BundleArgs:
+    def __init__(__self__, *,
+                 ca_pem: pulumi.Input[str],
+                 cert_pem: pulumi.Input[str],
+                 key_pem: pulumi.Input[str]):
+        """
+        A CA + Cert + Key bundle
+        :param pulumi.Input[str] ca_pem: The PEM encoded certificate authority data.
+        :param pulumi.Input[str] cert_pem: The PEM encoded certificate data.
+        :param pulumi.Input[str] key_pem: The PEM encoded private key data
+        """
+        pulumi.set(__self__, "ca_pem", ca_pem)
+        pulumi.set(__self__, "cert_pem", cert_pem)
+        pulumi.set(__self__, "key_pem", key_pem)
+
+    @property
+    @pulumi.getter(name="caPem")
+    def ca_pem(self) -> pulumi.Input[str]:
+        """
+        The PEM encoded certificate authority data.
+        """
+        return pulumi.get(self, "ca_pem")
+
+    @ca_pem.setter
+    def ca_pem(self, value: pulumi.Input[str]):
+        pulumi.set(self, "ca_pem", value)
+
+    @property
+    @pulumi.getter(name="certPem")
+    def cert_pem(self) -> pulumi.Input[str]:
+        """
+        The PEM encoded certificate data.
+        """
+        return pulumi.get(self, "cert_pem")
+
+    @cert_pem.setter
+    def cert_pem(self, value: pulumi.Input[str]):
+        pulumi.set(self, "cert_pem", value)
+
+    @property
+    @pulumi.getter(name="keyPem")
+    def key_pem(self) -> pulumi.Input[str]:
+        """
+        The PEM encoded private key data
+        """
+        return pulumi.get(self, "key_pem")
+
+    @key_pem.setter
+    def key_pem(self, value: pulumi.Input[str]):
+        pulumi.set(self, "key_pem", value)
+
 
 @pulumi.input_type
 class ClusterPkiNodeArgs:

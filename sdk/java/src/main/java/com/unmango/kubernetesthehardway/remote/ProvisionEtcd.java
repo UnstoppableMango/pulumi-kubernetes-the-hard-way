@@ -13,6 +13,10 @@ import com.unmango.kubernetesthehardway.remote.EtcdConfiguration;
 import com.unmango.kubernetesthehardway.remote.EtcdInstall;
 import com.unmango.kubernetesthehardway.remote.ProvisionEtcdArgs;
 import com.unmango.kubernetesthehardway.remote.StartEtcd;
+import com.unmango.kubernetesthehardway.remote.SystemdService;
+import com.unmango.kubernetesthehardway.remote.enums.Architecture;
+import com.unmango.kubernetesthehardway.tls.outputs.Bundle;
+import java.lang.String;
 import java.util.Optional;
 import javax.annotation.Nullable;
 
@@ -22,6 +26,48 @@ import javax.annotation.Nullable;
  */
 @ResourceType(type="kubernetes-the-hard-way:remote:ProvisionEtcd")
 public class ProvisionEtcd extends com.pulumi.resources.ComponentResource {
+    /**
+     * TODO
+     * 
+     */
+    @Export(name="architecture", refs={Architecture.class}, tree="[0]")
+    private Output</* @Nullable */ Architecture> architecture;
+
+    /**
+     * @return TODO
+     * 
+     */
+    public Output<Optional<Architecture>> architecture() {
+        return Codegen.optional(this.architecture);
+    }
+    /**
+     * TODO
+     * 
+     */
+    @Export(name="binaryDirectory", refs={String.class}, tree="[0]")
+    private Output</* @Nullable */ String> binaryDirectory;
+
+    /**
+     * @return TODO
+     * 
+     */
+    public Output<Optional<String>> binaryDirectory() {
+        return Codegen.optional(this.binaryDirectory);
+    }
+    /**
+     * The TLS bundle.
+     * 
+     */
+    @Export(name="bundle", refs={Bundle.class}, tree="[0]")
+    private Output<Bundle> bundle;
+
+    /**
+     * @return The TLS bundle.
+     * 
+     */
+    public Output<Bundle> bundle() {
+        return this.bundle;
+    }
     /**
      * Etcd configuration.
      * 
@@ -35,6 +81,20 @@ public class ProvisionEtcd extends com.pulumi.resources.ComponentResource {
      */
     public Output<EtcdConfiguration> configuration() {
         return this.configuration;
+    }
+    /**
+     * The directory to use for etcd configuration.
+     * 
+     */
+    @Export(name="configurationDirectory", refs={String.class}, tree="[0]")
+    private Output</* @Nullable */ String> configurationDirectory;
+
+    /**
+     * @return The directory to use for etcd configuration.
+     * 
+     */
+    public Output<Optional<String>> configurationDirectory() {
+        return Codegen.optional(this.configurationDirectory);
     }
     /**
      * The parameters with which to connect to the remote host.
@@ -51,6 +111,20 @@ public class ProvisionEtcd extends com.pulumi.resources.ComponentResource {
         return this.connection;
     }
     /**
+     * The directory to use for etcd data.
+     * 
+     */
+    @Export(name="dataDirectory", refs={String.class}, tree="[0]")
+    private Output</* @Nullable */ String> dataDirectory;
+
+    /**
+     * @return The directory to use for etcd data.
+     * 
+     */
+    public Output<Optional<String>> dataDirectory() {
+        return Codegen.optional(this.dataDirectory);
+    }
+    /**
      * Install etcd.
      * 
      */
@@ -65,18 +139,60 @@ public class ProvisionEtcd extends com.pulumi.resources.ComponentResource {
         return this.install;
     }
     /**
+     * The internal IP of the etcd node
+     * 
+     */
+    @Export(name="internalIp", refs={String.class}, tree="[0]")
+    private Output<String> internalIp;
+
+    /**
+     * @return The internal IP of the etcd node
+     * 
+     */
+    public Output<String> internalIp() {
+        return this.internalIp;
+    }
+    /**
+     * Systemd service.
+     * 
+     */
+    @Export(name="service", refs={SystemdService.class}, tree="[0]")
+    private Output<SystemdService> service;
+
+    /**
+     * @return Systemd service.
+     * 
+     */
+    public Output<SystemdService> service() {
+        return this.service;
+    }
+    /**
      * Start etcd
      * 
      */
     @Export(name="start", refs={StartEtcd.class}, tree="[0]")
-    private Output</* @Nullable */ StartEtcd> start;
+    private Output<StartEtcd> start;
 
     /**
      * @return Start etcd
      * 
      */
-    public Output<Optional<StartEtcd>> start() {
-        return Codegen.optional(this.start);
+    public Output<StartEtcd> start() {
+        return this.start;
+    }
+    /**
+     * The version to install.
+     * 
+     */
+    @Export(name="version", refs={String.class}, tree="[0]")
+    private Output</* @Nullable */ String> version;
+
+    /**
+     * @return The version to install.
+     * 
+     */
+    public Output<Optional<String>> version() {
+        return Codegen.optional(this.version);
     }
 
     /**

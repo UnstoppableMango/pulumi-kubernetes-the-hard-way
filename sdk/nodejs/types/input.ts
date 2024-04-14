@@ -563,6 +563,24 @@ export namespace remote {
 
 export namespace tls {
     /**
+     * A CA + Cert + Key bundle
+     */
+    export interface BundleArgs {
+        /**
+         * The PEM encoded certificate authority data.
+         */
+        caPem: pulumi.Input<string>;
+        /**
+         * The PEM encoded certificate data.
+         */
+        certPem: pulumi.Input<string>;
+        /**
+         * The PEM encoded private key data
+         */
+        keyPem: pulumi.Input<string>;
+    }
+
+    /**
      * TODO
      */
     export interface ClusterPkiNodeArgs {
