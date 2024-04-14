@@ -53,6 +53,7 @@
     "tools/mktemp.ts",
     "tools/mv.ts",
     "tools/rm.ts",
+    "tools/sed.ts",
     "tools/systemctl.ts",
     "tools/tar.ts",
     "tools/tee.ts",

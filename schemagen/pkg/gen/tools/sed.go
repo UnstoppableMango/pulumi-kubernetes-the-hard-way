@@ -39,7 +39,6 @@ func generateSed() schema.ResourceSpec {
 				"files",
 				"followSymlinks",
 				"help",
-				"inPlace",
 				"inputFiles",
 				"nullData",
 				"posix",

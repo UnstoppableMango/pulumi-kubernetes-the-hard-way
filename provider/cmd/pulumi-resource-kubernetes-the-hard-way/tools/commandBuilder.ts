@@ -41,6 +41,10 @@ export class CommandBuilder {
     this.opts.push(pair);
     return this;
   }
+
+  public options(option: string, value: Input<OptValue>[]): CommandBuilder {
+    throw new Error('TODO');
+  }
 }
 
 // Ideally would like for this to not be exported
