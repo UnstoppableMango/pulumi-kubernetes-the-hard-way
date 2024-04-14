@@ -80,6 +80,11 @@ export type KubeletInstall = import("./kubeletInstall").KubeletInstall;
 export const KubeletInstall: typeof import("./kubeletInstall").KubeletInstall = null as any;
 utilities.lazyLoad(exports, ["KubeletInstall"], () => require("./kubeletInstall"));
 
+export { ProvisionEtcdArgs } from "./provisionEtcd";
+export type ProvisionEtcd = import("./provisionEtcd").ProvisionEtcd;
+export const ProvisionEtcd: typeof import("./provisionEtcd").ProvisionEtcd = null as any;
+utilities.lazyLoad(exports, ["ProvisionEtcd"], () => require("./provisionEtcd"));
+
 export { RuncInstallArgs } from "./runcInstall";
 export type RuncInstall = import("./runcInstall").RuncInstall;
 export const RuncInstall: typeof import("./runcInstall").RuncInstall = null as any;
@@ -138,6 +143,8 @@ const _module = {
                 return new KubectlInstall(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:remote:KubeletInstall":
                 return new KubeletInstall(name, <any>undefined, { urn })
+            case "kubernetes-the-hard-way:remote:ProvisionEtcd":
+                return new ProvisionEtcd(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:remote:RuncInstall":
                 return new RuncInstall(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:remote:StartEtcd":

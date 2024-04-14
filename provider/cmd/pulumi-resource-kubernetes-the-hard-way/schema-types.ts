@@ -22,6 +22,7 @@ export type ResourceConstructor = {
     readonly "kubernetes-the-hard-way:remote:KubeSchedulerInstall": ConstructComponent<KubeSchedulerInstall>;
     readonly "kubernetes-the-hard-way:remote:KubectlInstall": ConstructComponent<KubectlInstall>;
     readonly "kubernetes-the-hard-way:remote:KubeletInstall": ConstructComponent<KubeletInstall>;
+    readonly "kubernetes-the-hard-way:remote:ProvisionEtcd": ConstructComponent<ProvisionEtcd>;
     readonly "kubernetes-the-hard-way:remote:RuncInstall": ConstructComponent<RuncInstall>;
     readonly "kubernetes-the-hard-way:remote:StartEtcd": ConstructComponent<StartEtcd>;
     readonly "kubernetes-the-hard-way:remote:StaticPod": ConstructComponent<StaticPod>;
@@ -472,6 +473,19 @@ export interface KubeletInstallArgs {
     readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
     readonly directory?: pulumi.Input<string>;
     readonly version?: pulumi.Input<string>;
+}
+export abstract class ProvisionEtcd<TData = any> extends (pulumi.ComponentResource)<TData> {
+    public configuration!: EtcdConfiguration | pulumi.Output<EtcdConfiguration>;
+    public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
+    public install!: EtcdInstall | pulumi.Output<EtcdInstall>;
+    public start?: StartEtcd | pulumi.Output<StartEtcd>;
+    constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
+        super("kubernetes-the-hard-way:remote:ProvisionEtcd", name, opts.urn ? { configuration: undefined, connection: undefined, install: undefined, start: undefined } : { name, args, opts }, opts);
+    }
+}
+export interface ProvisionEtcdArgs {
+    readonly configuration?: pulumi.Input<EtcdConfiguration>;
+    readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
 }
 export abstract class RuncInstall<TData = any> extends (pulumi.ComponentResource)<TData> {
     public architecture!: ArchitectureOutputs | pulumi.Output<ArchitectureOutputs>;

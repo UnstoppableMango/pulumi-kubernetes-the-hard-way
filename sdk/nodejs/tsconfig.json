@@ -35,6 +35,7 @@
         "remote/kubeSchedulerInstall.ts",
         "remote/kubectlInstall.ts",
         "remote/kubeletInstall.ts",
+        "remote/provisionEtcd.ts",
         "remote/runcInstall.ts",
         "remote/startEtcd.ts",
         "remote/staticPod.ts",

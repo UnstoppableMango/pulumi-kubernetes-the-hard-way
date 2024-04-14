@@ -1654,6 +1654,10 @@
                     "type": "string",
                     "description": "The PEM encoded certificate data."
                 },
+                "configurationChmod": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Chmod",
+                    "description": "The configuration chmod operation."
+                },
                 "configurationDirectory": {
                     "type": "string",
                     "description": "The directory to store etcd configuration.",
@@ -2563,6 +2567,46 @@
                 "version": {
                     "type": "string",
                     "description": "The version to install."
+                }
+            },
+            "requiredInputs": [
+                "connection"
+            ],
+            "isComponent": true
+        },
+        "kubernetes-the-hard-way:remote:ProvisionEtcd": {
+            "description": "Starts etcd on a remote system.",
+            "properties": {
+                "configuration": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:remote:EtcdConfiguration",
+                    "description": "Etcd configuration."
+                },
+                "connection": {
+                    "$ref": "/command/v0.9.2/schema.json#/types/command:remote:Connection",
+                    "description": "The parameters with which to connect to the remote host."
+                },
+                "install": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:remote:EtcdInstall",
+                    "description": "Install etcd."
+                },
+                "start": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:remote:StartEtcd",
+                    "description": "Start etcd"
+                }
+            },
+            "required": [
+                "connection",
+                "configuration",
+                "install"
+            ],
+            "inputProperties": {
+                "configuration": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:remote:EtcdConfiguration",
+                    "description": "Etcd configuration."
+                },
+                "connection": {
+                    "$ref": "/command/v0.9.2/schema.json#/types/command:remote:Connection",
+                    "description": "The parameters with which to connect to the remote host."
                 }
             },
             "requiredInputs": [
