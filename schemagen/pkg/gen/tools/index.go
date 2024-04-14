@@ -45,6 +45,7 @@ func Generate(commandSpec schema.PackageSpec) schema.PackageSpec {
 
 	tools := map[string]schema.ResourceSpec{
 		"Chmod":       generateChmod(),
+		"Curl":        generateCurl(),
 		"Etcdctl":     generateEtcdctl(),
 		"Hostnamectl": generateHostnamectl(),
 		"Mkdir":       generateMkdir(),
