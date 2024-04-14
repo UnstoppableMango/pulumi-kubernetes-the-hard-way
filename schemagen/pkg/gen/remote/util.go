@@ -13,13 +13,6 @@ func name(x string) string {
 	return fmt.Sprintf("kubernetes-the-hard-way:remote:%s", x)
 }
 
-func connection(commandSpec schema.PackageSpec) schema.PropertySpec {
-	return schema.PropertySpec{
-		Description: "The parameters with which to connect to the remote host.",
-		TypeSpec:    types.ExtType(commandSpec, "Connection", "remote"),
-	}
-}
-
 func generateArchiveInstall(
 	commandSpec schema.PackageSpec,
 	description string,
