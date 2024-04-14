@@ -240,6 +240,7 @@ export abstract class EtcdConfiguration<TData = any> extends (pulumi.ComponentRe
     public caPem!: string | pulumi.Output<string>;
     public certFile!: File | pulumi.Output<File>;
     public certPem!: string | pulumi.Output<string>;
+    public configurationChmod?: Chmod | pulumi.Output<Chmod>;
     public configurationDirectory!: string | pulumi.Output<string>;
     public configurationMkdir!: Mkdir | pulumi.Output<Mkdir>;
     public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
@@ -251,7 +252,7 @@ export abstract class EtcdConfiguration<TData = any> extends (pulumi.ComponentRe
     public keyPem!: string | pulumi.Output<string>;
     public value!: EtcdConfigurationPropsOutputs | pulumi.Output<EtcdConfigurationPropsOutputs>;
     constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
-        super("kubernetes-the-hard-way:remote:EtcdConfiguration", name, opts.urn ? { caFile: undefined, caPem: undefined, certFile: undefined, certPem: undefined, configurationDirectory: undefined, configurationMkdir: undefined, connection: undefined, dataDirectory: undefined, dataMkdir: undefined, etcdPath: undefined, internalIp: undefined, keyFile: undefined, keyPem: undefined, value: undefined } : { name, args, opts }, opts);
+        super("kubernetes-the-hard-way:remote:EtcdConfiguration", name, opts.urn ? { caFile: undefined, caPem: undefined, certFile: undefined, certPem: undefined, configurationChmod: undefined, configurationDirectory: undefined, configurationMkdir: undefined, connection: undefined, dataDirectory: undefined, dataMkdir: undefined, etcdPath: undefined, internalIp: undefined, keyFile: undefined, keyPem: undefined, value: undefined } : { name, args, opts }, opts);
     }
 }
 export interface EtcdConfigurationArgs {

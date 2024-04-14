@@ -26,6 +26,8 @@ type EtcdConfiguration struct {
 	CertFile FileOutput `pulumi:"certFile"`
 	// The PEM encoded certificate data.
 	CertPem pulumi.StringOutput `pulumi:"certPem"`
+	// The configuration chmod operation.
+	ConfigurationChmod tools.ChmodOutput `pulumi:"configurationChmod"`
 	// The directory to store etcd configuration.
 	ConfigurationDirectory pulumi.StringOutput `pulumi:"configurationDirectory"`
 	// The configuration mkdir operation.
@@ -233,6 +235,11 @@ func (o EtcdConfigurationOutput) CertFile() FileOutput {
 // The PEM encoded certificate data.
 func (o EtcdConfigurationOutput) CertPem() pulumi.StringOutput {
 	return o.ApplyT(func(v *EtcdConfiguration) pulumi.StringOutput { return v.CertPem }).(pulumi.StringOutput)
+}
+
+// The configuration chmod operation.
+func (o EtcdConfigurationOutput) ConfigurationChmod() tools.ChmodOutput {
+	return o.ApplyT(func(v *EtcdConfiguration) tools.ChmodOutput { return v.ConfigurationChmod }).(tools.ChmodOutput)
 }
 
 // The directory to store etcd configuration.
