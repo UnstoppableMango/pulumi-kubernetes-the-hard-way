@@ -6,7 +6,7 @@ import (
 	"github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 )
 
-func generateTypes() map[string]schema.ComplexTypeSpec {
+func generateTypes(commandSpec schema.PackageSpec) map[string]schema.ComplexTypeSpec {
 	return map[string]schema.ComplexTypeSpec{
 		name("Architecture"): {
 			ObjectTypeSpec: schema.ObjectTypeSpec{
@@ -39,6 +39,20 @@ func generateTypes() map[string]schema.ComplexTypeSpec {
 					"internalIp",
 					"keyFilePath",
 					"name",
+				},
+			},
+		},
+		name("EtcdNode"): {
+			ObjectTypeSpec: schema.ObjectTypeSpec{
+				Description: "Etcd node description.",
+				Type:        "object",
+				Properties: map[string]schema.PropertySpec{
+					"connection": props.Connection(commandSpec),
+					"internalIp": props.String("The internal IP of the node."),
+				},
+				Required: []string{
+					"connection",
+					"internalIp",
 				},
 			},
 		},

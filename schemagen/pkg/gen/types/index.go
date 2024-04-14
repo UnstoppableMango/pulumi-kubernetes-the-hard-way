@@ -7,6 +7,15 @@ import (
 	"github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 )
 
+func ArrayOf(typ string) schema.TypeSpec {
+	return schema.TypeSpec{
+		Type: "array",
+		Items: &schema.TypeSpec{
+			Type: typ,
+		},
+	}
+}
+
 var ArrayOfStrings = schema.TypeSpec{
 	Type: "array",
 	Items: &schema.TypeSpec{
