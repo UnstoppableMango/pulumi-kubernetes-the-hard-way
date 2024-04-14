@@ -6,8 +6,10 @@ import * as inputs from "../types/input";
 import * as outputs from "../types/output";
 import * as enums from "../types/enums";
 
+import * as pulumiCommand from "@pulumi/command";
 import * as pulumiKubernetes from "@pulumi/kubernetes";
 import * as pulumiTls from "@pulumi/tls";
+import * as utilities from "../utilities";
 
 export namespace config {
     export interface Cluster {
@@ -432,6 +434,29 @@ export namespace remote {
          * Name of the etcd node.
          */
         name: string;
+    }
+
+    /**
+     * Etcd node description.
+     */
+    export interface EtcdNode {
+        /**
+         * The parameters with which to connect to the remote host.
+         */
+        connection: pulumiCommand.types.output.remote.Connection;
+        /**
+         * The internal IP of the node.
+         */
+        internalIp: string;
+    }
+    /**
+     * etcdNodeProvideDefaults sets the appropriate defaults for EtcdNode
+     */
+    export function etcdNodeProvideDefaults(val: EtcdNode): EtcdNode {
+        return {
+            ...val,
+            connection: pulumiCommand.types.output.remote.connectionProvideDefaults(val.connection),
+        };
     }
 
     /**

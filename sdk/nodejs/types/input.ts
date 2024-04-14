@@ -6,8 +6,10 @@ import * as inputs from "../types/input";
 import * as outputs from "../types/output";
 import * as enums from "../types/enums";
 
+import * as pulumiCommand from "@pulumi/command";
 import * as pulumiKubernetes from "@pulumi/kubernetes";
 import * as pulumiTls from "@pulumi/tls";
+import * as utilities from "../utilities";
 
 export namespace config {
     export interface KubeconfigAdminOptions {
@@ -463,6 +465,29 @@ export namespace remote {
          * Name of the etcd node.
          */
         name: pulumi.Input<string>;
+    }
+
+    /**
+     * Etcd node description.
+     */
+    export interface EtcdNodeArgs {
+        /**
+         * The parameters with which to connect to the remote host.
+         */
+        connection: pulumi.Input<pulumiCommand.types.input.remote.ConnectionArgs>;
+        /**
+         * The internal IP of the node.
+         */
+        internalIp: pulumi.Input<string>;
+    }
+    /**
+     * etcdNodeArgsProvideDefaults sets the appropriate defaults for EtcdNodeArgs
+     */
+    export function etcdNodeArgsProvideDefaults(val: EtcdNodeArgs): EtcdNodeArgs {
+        return {
+            ...val,
+            connection: pulumi.output(val.connection).apply(pulumiCommand.types.input.remote.connectionArgsProvideDefaults),
+        };
     }
 
     /**

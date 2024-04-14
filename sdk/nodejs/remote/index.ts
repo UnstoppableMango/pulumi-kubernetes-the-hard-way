@@ -25,6 +25,11 @@ export type Download = import("./download").Download;
 export const Download: typeof import("./download").Download = null as any;
 utilities.lazyLoad(exports, ["Download"], () => require("./download"));
 
+export { EtcdClusterArgs } from "./etcdCluster";
+export type EtcdCluster = import("./etcdCluster").EtcdCluster;
+export const EtcdCluster: typeof import("./etcdCluster").EtcdCluster = null as any;
+utilities.lazyLoad(exports, ["EtcdCluster"], () => require("./etcdCluster"));
+
 export { EtcdConfigurationArgs } from "./etcdConfiguration";
 export type EtcdConfiguration = import("./etcdConfiguration").EtcdConfiguration;
 export const EtcdConfiguration: typeof import("./etcdConfiguration").EtcdConfiguration = null as any;
@@ -111,6 +116,8 @@ const _module = {
                 return new CrictlInstall(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:remote:Download":
                 return new Download(name, <any>undefined, { urn })
+            case "kubernetes-the-hard-way:remote:EtcdCluster":
+                return new EtcdCluster(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:remote:EtcdConfiguration":
                 return new EtcdConfiguration(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:remote:EtcdInstall":

@@ -11,6 +11,7 @@ export type ResourceConstructor = {
     readonly "kubernetes-the-hard-way:remote:ContainerdInstall": ConstructComponent<ContainerdInstall>;
     readonly "kubernetes-the-hard-way:remote:CrictlInstall": ConstructComponent<CrictlInstall>;
     readonly "kubernetes-the-hard-way:remote:Download": ConstructComponent<Download>;
+    readonly "kubernetes-the-hard-way:remote:EtcdCluster": ConstructComponent<EtcdCluster>;
     readonly "kubernetes-the-hard-way:remote:EtcdConfiguration": ConstructComponent<EtcdConfiguration>;
     readonly "kubernetes-the-hard-way:remote:EtcdInstall": ConstructComponent<EtcdInstall>;
     readonly "kubernetes-the-hard-way:remote:EtcdService": ConstructComponent<EtcdService>;
@@ -208,6 +209,31 @@ export interface DownloadArgs {
     readonly destination: pulumi.Input<string>;
     readonly removeOnDelete?: pulumi.Input<boolean>;
     readonly url: pulumi.Input<string>;
+}
+export abstract class EtcdCluster<TData = any> extends (pulumi.ComponentResource)<TData> {
+    public architecture?: ArchitectureOutputs | pulumi.Output<ArchitectureOutputs>;
+    public binaryDirectory?: string | pulumi.Output<string>;
+    public bundle!: BundleOutputs | pulumi.Output<BundleOutputs>;
+    public configuration!: Record<string, EtcdConfiguration> | pulumi.Output<Record<string, EtcdConfiguration>>;
+    public configurationDirectory?: string | pulumi.Output<string>;
+    public dataDirectory?: string | pulumi.Output<string>;
+    public install!: Record<string, EtcdInstall> | pulumi.Output<Record<string, EtcdInstall>>;
+    public nodes!: Record<string, EtcdNodeOutputs> | Record<string, EtcdNodeOutputs>;
+    public service!: Record<string, EtcdService> | pulumi.Output<Record<string, EtcdService>>;
+    public start!: Record<string, StartEtcd> | pulumi.Output<Record<string, StartEtcd>>;
+    public version?: string | pulumi.Output<string>;
+    constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
+        super("kubernetes-the-hard-way:remote:EtcdCluster", name, opts.urn ? { architecture: undefined, binaryDirectory: undefined, bundle: undefined, configuration: undefined, configurationDirectory: undefined, dataDirectory: undefined, install: undefined, nodes: undefined, service: undefined, start: undefined, version: undefined } : { name, args, opts }, opts);
+    }
+}
+export interface EtcdClusterArgs {
+    readonly architecture?: pulumi.Input<ArchitectureInputs>;
+    readonly binaryDirectory?: pulumi.Input<string>;
+    readonly bundle: pulumi.Input<BundleInputs>;
+    readonly configurationDirectory?: pulumi.Input<string>;
+    readonly dataDirectory?: pulumi.Input<string>;
+    readonly nodes: Record<string, pulumi.Input<EtcdNodeInputs>>;
+    readonly version?: pulumi.Input<string>;
 }
 export abstract class EtcdConfiguration<TData = any> extends (pulumi.ComponentResource)<TData> {
     public caFile!: File | pulumi.Output<File>;
@@ -1145,6 +1171,14 @@ export interface EtcdConfigurationPropsOutputs {
     readonly internalIp: pulumi.Output<string>;
     readonly keyFilePath: pulumi.Output<string>;
     readonly name: pulumi.Output<string>;
+}
+export interface EtcdNodeInputs {
+    readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
+    readonly internalIp: pulumi.Input<string>;
+}
+export interface EtcdNodeOutputs {
+    readonly connection: pulumi.Output<command.types.output.remote.Connection>;
+    readonly internalIp: pulumi.Output<string>;
 }
 export interface SystemdInstallSectionInputs {
     readonly wantedBy?: pulumi.Input<pulumi.Input<string>[]>;

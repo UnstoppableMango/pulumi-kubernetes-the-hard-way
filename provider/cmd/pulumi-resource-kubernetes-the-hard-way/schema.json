@@ -387,6 +387,24 @@
                 "name"
             ]
         },
+        "kubernetes-the-hard-way:remote:EtcdNode": {
+            "description": "Etcd node description.",
+            "properties": {
+                "connection": {
+                    "$ref": "/command/v0.9.2/schema.json#/types/command:remote:Connection",
+                    "description": "The parameters with which to connect to the remote host."
+                },
+                "internalIp": {
+                    "type": "string",
+                    "description": "The internal IP of the node."
+                }
+            },
+            "type": "object",
+            "required": [
+                "connection",
+                "internalIp"
+            ]
+        },
         "kubernetes-the-hard-way:remote:SystemdInstallSection": {
             "description": "https://www.freedesktop.org/software/systemd/man/latest/systemd.unit.html#%5BInstall%5D%20Section%20Options",
             "properties": {
@@ -1496,6 +1514,118 @@
                 "connection",
                 "destination",
                 "url"
+            ],
+            "isComponent": true
+        },
+        "kubernetes-the-hard-way:remote:EtcdCluster": {
+            "description": "Creates an etcd cluster from one or more remote systems.",
+            "properties": {
+                "architecture": {
+                    "$ref": "#/types/kubernetes-the-hard-way:remote:Architecture",
+                    "description": "TODO"
+                },
+                "binaryDirectory": {
+                    "type": "string",
+                    "description": "TODO"
+                },
+                "bundle": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tls:Bundle",
+                    "description": "The TLS bundle."
+                },
+                "configuration": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "$ref": "#/resources/kubernetes-the-hard-way:remote:EtcdConfiguration"
+                    },
+                    "description": "Map of node name to etcd configuration."
+                },
+                "configurationDirectory": {
+                    "type": "string",
+                    "description": "The directory to use for etcd configuration."
+                },
+                "dataDirectory": {
+                    "type": "string",
+                    "description": "The directory to use for etcd data."
+                },
+                "install": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "$ref": "#/resources/kubernetes-the-hard-way:remote:EtcdInstall"
+                    },
+                    "description": "Map of node name to etcd install."
+                },
+                "nodes": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "$ref": "#/types/kubernetes-the-hard-way:remote:EtcdNode"
+                    },
+                    "plain": true,
+                    "description": "Etcd node configuration. The key should be a name used to identify the node."
+                },
+                "service": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "$ref": "#/resources/kubernetes-the-hard-way:remote:EtcdService"
+                    },
+                    "description": "Map of node name to etcd systemd service."
+                },
+                "start": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "$ref": "#/resources/kubernetes-the-hard-way:remote:StartEtcd"
+                    },
+                    "description": "Map of node name to etcd start commands."
+                },
+                "version": {
+                    "type": "string",
+                    "description": "The version to install."
+                }
+            },
+            "required": [
+                "bundle",
+                "nodes",
+                "configuration",
+                "install",
+                "service",
+                "start"
+            ],
+            "inputProperties": {
+                "architecture": {
+                    "$ref": "#/types/kubernetes-the-hard-way:remote:Architecture",
+                    "description": "TODO"
+                },
+                "binaryDirectory": {
+                    "type": "string",
+                    "description": "TODO"
+                },
+                "bundle": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tls:Bundle",
+                    "description": "The TLS bundle."
+                },
+                "configurationDirectory": {
+                    "type": "string",
+                    "description": "The directory to use for etcd configuration."
+                },
+                "dataDirectory": {
+                    "type": "string",
+                    "description": "The directory to use for etcd data."
+                },
+                "nodes": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "$ref": "#/types/kubernetes-the-hard-way:remote:EtcdNode"
+                    },
+                    "plain": true,
+                    "description": "Etcd node configuration. The key should be a name used to identify the node."
+                },
+                "version": {
+                    "type": "string",
+                    "description": "The version to install."
+                }
+            },
+            "requiredInputs": [
+                "bundle",
+                "nodes"
             ],
             "isComponent": true
         },

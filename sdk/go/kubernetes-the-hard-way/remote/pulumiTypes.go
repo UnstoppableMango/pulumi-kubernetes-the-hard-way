@@ -7,6 +7,7 @@ import (
 	"context"
 	"reflect"
 
+	pulumiCommand "github.com/pulumi/pulumi-command/sdk/go/command/remote"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 	"github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/sdk/go/kubernetes-the-hard-way/internal"
 )
@@ -165,6 +166,110 @@ func (o EtcdConfigurationPropsArrayOutput) Index(i pulumi.IntInput) EtcdConfigur
 	return pulumi.All(o, i).ApplyT(func(vs []interface{}) EtcdConfigurationProps {
 		return vs[0].([]EtcdConfigurationProps)[vs[1].(int)]
 	}).(EtcdConfigurationPropsOutput)
+}
+
+// Etcd node description.
+type EtcdNode struct {
+	// The parameters with which to connect to the remote host.
+	Connection pulumiCommand.Connection `pulumi:"connection"`
+	// The internal IP of the node.
+	InternalIp string `pulumi:"internalIp"`
+}
+
+// Defaults sets the appropriate defaults for EtcdNode
+func (val *EtcdNode) Defaults() *EtcdNode {
+	if val == nil {
+		return nil
+	}
+	tmp := *val
+	tmp.Connection = *tmp.Connection.Defaults()
+
+	return &tmp
+}
+
+// EtcdNodeInput is an input type that accepts EtcdNodeArgs and EtcdNodeOutput values.
+// You can construct a concrete instance of `EtcdNodeInput` via:
+//
+//	EtcdNodeArgs{...}
+type EtcdNodeInput interface {
+	pulumi.Input
+
+	ToEtcdNodeOutput() EtcdNodeOutput
+	ToEtcdNodeOutputWithContext(context.Context) EtcdNodeOutput
+}
+
+// Etcd node description.
+type EtcdNodeArgs struct {
+	// The parameters with which to connect to the remote host.
+	Connection pulumiCommand.ConnectionInput `pulumi:"connection"`
+	// The internal IP of the node.
+	InternalIp pulumi.StringInput `pulumi:"internalIp"`
+}
+
+// Defaults sets the appropriate defaults for EtcdNodeArgs
+func (val *EtcdNodeArgs) Defaults() *EtcdNodeArgs {
+	if val == nil {
+		return nil
+	}
+	tmp := *val
+
+	return &tmp
+}
+func (EtcdNodeArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*EtcdNode)(nil)).Elem()
+}
+
+func (i EtcdNodeArgs) ToEtcdNodeOutput() EtcdNodeOutput {
+	return i.ToEtcdNodeOutputWithContext(context.Background())
+}
+
+func (i EtcdNodeArgs) ToEtcdNodeOutputWithContext(ctx context.Context) EtcdNodeOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(EtcdNodeOutput)
+}
+
+// Etcd node description.
+type EtcdNodeOutput struct{ *pulumi.OutputState }
+
+func (EtcdNodeOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*EtcdNode)(nil)).Elem()
+}
+
+func (o EtcdNodeOutput) ToEtcdNodeOutput() EtcdNodeOutput {
+	return o
+}
+
+func (o EtcdNodeOutput) ToEtcdNodeOutputWithContext(ctx context.Context) EtcdNodeOutput {
+	return o
+}
+
+// The parameters with which to connect to the remote host.
+func (o EtcdNodeOutput) Connection() pulumiCommand.ConnectionOutput {
+	return o.ApplyT(func(v EtcdNode) pulumiCommand.Connection { return v.Connection }).(pulumiCommand.ConnectionOutput)
+}
+
+// The internal IP of the node.
+func (o EtcdNodeOutput) InternalIp() pulumi.StringOutput {
+	return o.ApplyT(func(v EtcdNode) string { return v.InternalIp }).(pulumi.StringOutput)
+}
+
+type EtcdNodeMapOutput struct{ *pulumi.OutputState }
+
+func (EtcdNodeMapOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*map[string]EtcdNode)(nil)).Elem()
+}
+
+func (o EtcdNodeMapOutput) ToEtcdNodeMapOutput() EtcdNodeMapOutput {
+	return o
+}
+
+func (o EtcdNodeMapOutput) ToEtcdNodeMapOutputWithContext(ctx context.Context) EtcdNodeMapOutput {
+	return o
+}
+
+func (o EtcdNodeMapOutput) MapIndex(k pulumi.StringInput) EtcdNodeOutput {
+	return pulumi.All(o, k).ApplyT(func(vs []interface{}) EtcdNode {
+		return vs[0].(map[string]EtcdNode)[vs[1].(string)]
+	}).(EtcdNodeOutput)
 }
 
 // https://www.freedesktop.org/software/systemd/man/latest/systemd.unit.html#%5BInstall%5D%20Section%20Options
@@ -636,6 +741,7 @@ func (o SystemdUnitSectionPtrOutput) Wants() pulumi.StringArrayOutput {
 func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*EtcdConfigurationPropsInput)(nil)).Elem(), EtcdConfigurationPropsArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*EtcdConfigurationPropsArrayInput)(nil)).Elem(), EtcdConfigurationPropsArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*EtcdNodeInput)(nil)).Elem(), EtcdNodeArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*SystemdInstallSectionInput)(nil)).Elem(), SystemdInstallSectionArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*SystemdInstallSectionPtrInput)(nil)).Elem(), SystemdInstallSectionArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*SystemdServiceSectionInput)(nil)).Elem(), SystemdServiceSectionArgs{})
@@ -643,6 +749,8 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*SystemdUnitSectionPtrInput)(nil)).Elem(), SystemdUnitSectionArgs{})
 	pulumi.RegisterOutputType(EtcdConfigurationPropsOutput{})
 	pulumi.RegisterOutputType(EtcdConfigurationPropsArrayOutput{})
+	pulumi.RegisterOutputType(EtcdNodeOutput{})
+	pulumi.RegisterOutputType(EtcdNodeMapOutput{})
 	pulumi.RegisterOutputType(SystemdInstallSectionOutput{})
 	pulumi.RegisterOutputType(SystemdInstallSectionPtrOutput{})
 	pulumi.RegisterOutputType(SystemdServiceSectionOutput{})
