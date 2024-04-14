@@ -12,7 +12,7 @@ func generateEtcdctl() schema.ResourceSpec {
 		"cert":   props.String("TODO"),
 		"commands": {
 			Description: "TODO",
-			TypeSpec:    types.LocalType("EtcdctlCommand", "remote"),
+			TypeSpec:    types.LocalType("EtcdctlCommand", "tools"),
 		},
 		"endpoints": props.String("TODO"),
 		"key":       props.String("TODO"),

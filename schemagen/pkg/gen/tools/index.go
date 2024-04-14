@@ -44,17 +44,18 @@ func Generate(commandSpec schema.PackageSpec) schema.PackageSpec {
 	}
 
 	tools := map[string]schema.ResourceSpec{
-		"Chmod":     generateChmod(),
-		"Etcdctl":   generateEtcdctl(),
-		"Mkdir":     generateMkdir(),
-		"Mktemp":    generateMktemp(),
-		"Mv":        generateMv(),
-		"Rm":        generateRm(),
-		"Sed":       generateSed(),
-		"Systemctl": generateSystemctl(),
-		"Tar":       generateTar(),
-		"Tee":       generateTee(),
-		"Wget":      generateWget(),
+		"Chmod":       generateChmod(),
+		"Etcdctl":     generateEtcdctl(),
+		"Hostnamectl": generateHostnamectl(),
+		"Mkdir":       generateMkdir(),
+		"Mktemp":      generateMktemp(),
+		"Mv":          generateMv(),
+		"Rm":          generateRm(),
+		"Sed":         generateSed(),
+		"Systemctl":   generateSystemctl(),
+		"Tar":         generateTar(),
+		"Tee":         generateTee(),
+		"Wget":        generateWget(),
 	}
 
 	resources := map[string]schema.ResourceSpec{}
