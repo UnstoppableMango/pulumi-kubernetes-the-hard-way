@@ -90,7 +90,7 @@ export class Tar extends pulumi.ComponentResource {
     /**
      * Corresponds to the `--strip-components` option.
      */
-    public readonly stripComponents!: pulumi.Output<number | undefined>;
+    public readonly stripComponents!: pulumi.Output<boolean | undefined>;
     /**
      * TODO
      */
@@ -209,7 +209,7 @@ export interface TarArgs {
     /**
      * Corresponds to the `--strip-components` option.
      */
-    stripComponents?: pulumi.Input<number>;
+    stripComponents?: pulumi.Input<boolean>;
     /**
      * TODO
      */

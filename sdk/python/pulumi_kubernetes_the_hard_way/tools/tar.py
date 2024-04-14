@@ -28,7 +28,7 @@ class TarArgs:
                  on_delete: Optional[pulumi.Input[bool]] = None,
                  recursive: Optional[pulumi.Input[bool]] = None,
                  stdin: Optional[pulumi.Input[str]] = None,
-                 strip_components: Optional[pulumi.Input[int]] = None,
+                 strip_components: Optional[pulumi.Input[bool]] = None,
                  triggers: Optional[pulumi.Input[Sequence[Any]]] = None):
         """
         The set of arguments for constructing a Tar resource.
@@ -44,7 +44,7 @@ class TarArgs:
         :param pulumi.Input[bool] on_delete: Whether rm should be run when the resource is created or deleted.
         :param pulumi.Input[bool] recursive: Corresponds to the `--recursive` option.
         :param pulumi.Input[str] stdin: TODO
-        :param pulumi.Input[int] strip_components: Corresponds to the `--strip-components` option.
+        :param pulumi.Input[bool] strip_components: Corresponds to the `--strip-components` option.
         :param pulumi.Input[Sequence[Any]] triggers: TODO
         """
         pulumi.set(__self__, "archive", archive)
@@ -220,14 +220,14 @@ class TarArgs:
 
     @property
     @pulumi.getter(name="stripComponents")
-    def strip_components(self) -> Optional[pulumi.Input[int]]:
+    def strip_components(self) -> Optional[pulumi.Input[bool]]:
         """
         Corresponds to the `--strip-components` option.
         """
         return pulumi.get(self, "strip_components")
 
     @strip_components.setter
-    def strip_components(self, value: Optional[pulumi.Input[int]]):
+    def strip_components(self, value: Optional[pulumi.Input[bool]]):
         pulumi.set(self, "strip_components", value)
 
     @property
@@ -260,7 +260,7 @@ class Tar(pulumi.ComponentResource):
                  on_delete: Optional[pulumi.Input[bool]] = None,
                  recursive: Optional[pulumi.Input[bool]] = None,
                  stdin: Optional[pulumi.Input[str]] = None,
-                 strip_components: Optional[pulumi.Input[int]] = None,
+                 strip_components: Optional[pulumi.Input[bool]] = None,
                  triggers: Optional[pulumi.Input[Sequence[Any]]] = None,
                  __props__=None):
         """
@@ -280,7 +280,7 @@ class Tar(pulumi.ComponentResource):
         :param pulumi.Input[bool] on_delete: Whether rm should be run when the resource is created or deleted.
         :param pulumi.Input[bool] recursive: Corresponds to the `--recursive` option.
         :param pulumi.Input[str] stdin: TODO
-        :param pulumi.Input[int] strip_components: Corresponds to the `--strip-components` option.
+        :param pulumi.Input[bool] strip_components: Corresponds to the `--strip-components` option.
         :param pulumi.Input[Sequence[Any]] triggers: TODO
         """
         ...
@@ -319,7 +319,7 @@ class Tar(pulumi.ComponentResource):
                  on_delete: Optional[pulumi.Input[bool]] = None,
                  recursive: Optional[pulumi.Input[bool]] = None,
                  stdin: Optional[pulumi.Input[str]] = None,
-                 strip_components: Optional[pulumi.Input[int]] = None,
+                 strip_components: Optional[pulumi.Input[bool]] = None,
                  triggers: Optional[pulumi.Input[Sequence[Any]]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
@@ -482,7 +482,7 @@ class Tar(pulumi.ComponentResource):
 
     @property
     @pulumi.getter(name="stripComponents")
-    def strip_components(self) -> pulumi.Output[Optional[int]]:
+    def strip_components(self) -> pulumi.Output[Optional[bool]]:
         """
         Corresponds to the `--strip-components` option.
         """

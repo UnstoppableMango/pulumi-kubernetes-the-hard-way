@@ -10,7 +10,6 @@ import com.pulumi.core.annotations.Import;
 import com.pulumi.exceptions.MissingRequiredPropertyException;
 import com.unmango.kubernetesthehardway.tools.enums.CommandLifecycle;
 import java.lang.Boolean;
-import java.lang.Integer;
 import java.lang.Object;
 import java.lang.String;
 import java.util.List;
@@ -209,13 +208,13 @@ public final class TarArgs extends com.pulumi.resources.ResourceArgs {
      * 
      */
     @Import(name="stripComponents")
-    private @Nullable Output<Integer> stripComponents;
+    private @Nullable Output<Boolean> stripComponents;
 
     /**
      * @return Corresponds to the `--strip-components` option.
      * 
      */
-    public Optional<Output<Integer>> stripComponents() {
+    public Optional<Output<Boolean>> stripComponents() {
         return Optional.ofNullable(this.stripComponents);
     }
 
@@ -539,7 +538,7 @@ public final class TarArgs extends com.pulumi.resources.ResourceArgs {
          * @return builder
          * 
          */
-        public Builder stripComponents(@Nullable Output<Integer> stripComponents) {
+        public Builder stripComponents(@Nullable Output<Boolean> stripComponents) {
             $.stripComponents = stripComponents;
             return this;
         }
@@ -550,7 +549,7 @@ public final class TarArgs extends com.pulumi.resources.ResourceArgs {
          * @return builder
          * 
          */
-        public Builder stripComponents(Integer stripComponents) {
+        public Builder stripComponents(Boolean stripComponents) {
             return stripComponents(Output.of(stripComponents));
         }
 

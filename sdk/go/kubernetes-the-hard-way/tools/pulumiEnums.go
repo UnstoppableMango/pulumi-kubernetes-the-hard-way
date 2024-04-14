@@ -101,6 +101,342 @@ func (o CommandLifecyclePtrOutput) ToStringPtrOutputWithContext(ctx context.Cont
 	}).(pulumi.StringPtrOutput)
 }
 
+type CurlCertType string
+
+const (
+	CurlCertTypePEM = CurlCertType("PEM")
+	CurlCertTypeDER = CurlCertType("DER")
+	CurlCertTypeENG = CurlCertType("ENG")
+	CurlCertTypeP12 = CurlCertType("P12")
+)
+
+func (CurlCertType) ElementType() reflect.Type {
+	return reflect.TypeOf((*CurlCertType)(nil)).Elem()
+}
+
+func (e CurlCertType) ToCurlCertTypeOutput() CurlCertTypeOutput {
+	return pulumi.ToOutput(e).(CurlCertTypeOutput)
+}
+
+func (e CurlCertType) ToCurlCertTypeOutputWithContext(ctx context.Context) CurlCertTypeOutput {
+	return pulumi.ToOutputWithContext(ctx, e).(CurlCertTypeOutput)
+}
+
+func (e CurlCertType) ToCurlCertTypePtrOutput() CurlCertTypePtrOutput {
+	return e.ToCurlCertTypePtrOutputWithContext(context.Background())
+}
+
+func (e CurlCertType) ToCurlCertTypePtrOutputWithContext(ctx context.Context) CurlCertTypePtrOutput {
+	return CurlCertType(e).ToCurlCertTypeOutputWithContext(ctx).ToCurlCertTypePtrOutputWithContext(ctx)
+}
+
+func (e CurlCertType) ToStringOutput() pulumi.StringOutput {
+	return pulumi.ToOutput(pulumi.String(e)).(pulumi.StringOutput)
+}
+
+func (e CurlCertType) ToStringOutputWithContext(ctx context.Context) pulumi.StringOutput {
+	return pulumi.ToOutputWithContext(ctx, pulumi.String(e)).(pulumi.StringOutput)
+}
+
+func (e CurlCertType) ToStringPtrOutput() pulumi.StringPtrOutput {
+	return pulumi.String(e).ToStringPtrOutputWithContext(context.Background())
+}
+
+func (e CurlCertType) ToStringPtrOutputWithContext(ctx context.Context) pulumi.StringPtrOutput {
+	return pulumi.String(e).ToStringOutputWithContext(ctx).ToStringPtrOutputWithContext(ctx)
+}
+
+type CurlCertTypeOutput struct{ *pulumi.OutputState }
+
+func (CurlCertTypeOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*CurlCertType)(nil)).Elem()
+}
+
+func (o CurlCertTypeOutput) ToCurlCertTypeOutput() CurlCertTypeOutput {
+	return o
+}
+
+func (o CurlCertTypeOutput) ToCurlCertTypeOutputWithContext(ctx context.Context) CurlCertTypeOutput {
+	return o
+}
+
+func (o CurlCertTypeOutput) ToCurlCertTypePtrOutput() CurlCertTypePtrOutput {
+	return o.ToCurlCertTypePtrOutputWithContext(context.Background())
+}
+
+func (o CurlCertTypeOutput) ToCurlCertTypePtrOutputWithContext(ctx context.Context) CurlCertTypePtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v CurlCertType) *CurlCertType {
+		return &v
+	}).(CurlCertTypePtrOutput)
+}
+
+func (o CurlCertTypeOutput) ToStringOutput() pulumi.StringOutput {
+	return o.ToStringOutputWithContext(context.Background())
+}
+
+func (o CurlCertTypeOutput) ToStringOutputWithContext(ctx context.Context) pulumi.StringOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, e CurlCertType) string {
+		return string(e)
+	}).(pulumi.StringOutput)
+}
+
+func (o CurlCertTypeOutput) ToStringPtrOutput() pulumi.StringPtrOutput {
+	return o.ToStringPtrOutputWithContext(context.Background())
+}
+
+func (o CurlCertTypeOutput) ToStringPtrOutputWithContext(ctx context.Context) pulumi.StringPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, e CurlCertType) *string {
+		v := string(e)
+		return &v
+	}).(pulumi.StringPtrOutput)
+}
+
+type CurlCertTypePtrOutput struct{ *pulumi.OutputState }
+
+func (CurlCertTypePtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**CurlCertType)(nil)).Elem()
+}
+
+func (o CurlCertTypePtrOutput) ToCurlCertTypePtrOutput() CurlCertTypePtrOutput {
+	return o
+}
+
+func (o CurlCertTypePtrOutput) ToCurlCertTypePtrOutputWithContext(ctx context.Context) CurlCertTypePtrOutput {
+	return o
+}
+
+func (o CurlCertTypePtrOutput) Elem() CurlCertTypeOutput {
+	return o.ApplyT(func(v *CurlCertType) CurlCertType {
+		if v != nil {
+			return *v
+		}
+		var ret CurlCertType
+		return ret
+	}).(CurlCertTypeOutput)
+}
+
+func (o CurlCertTypePtrOutput) ToStringPtrOutput() pulumi.StringPtrOutput {
+	return o.ToStringPtrOutputWithContext(context.Background())
+}
+
+func (o CurlCertTypePtrOutput) ToStringPtrOutputWithContext(ctx context.Context) pulumi.StringPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, e *CurlCertType) *string {
+		if e == nil {
+			return nil
+		}
+		v := string(*e)
+		return &v
+	}).(pulumi.StringPtrOutput)
+}
+
+// CurlCertTypeInput is an input type that accepts values of the CurlCertType enum
+// A concrete instance of `CurlCertTypeInput` can be one of the following:
+//
+//	CurlCertTypePEM
+//	CurlCertTypeDER
+//	CurlCertTypeENG
+//	CurlCertTypeP12
+type CurlCertTypeInput interface {
+	pulumi.Input
+
+	ToCurlCertTypeOutput() CurlCertTypeOutput
+	ToCurlCertTypeOutputWithContext(context.Context) CurlCertTypeOutput
+}
+
+var curlCertTypePtrType = reflect.TypeOf((**CurlCertType)(nil)).Elem()
+
+type CurlCertTypePtrInput interface {
+	pulumi.Input
+
+	ToCurlCertTypePtrOutput() CurlCertTypePtrOutput
+	ToCurlCertTypePtrOutputWithContext(context.Context) CurlCertTypePtrOutput
+}
+
+type curlCertTypePtr string
+
+func CurlCertTypePtr(v string) CurlCertTypePtrInput {
+	return (*curlCertTypePtr)(&v)
+}
+
+func (*curlCertTypePtr) ElementType() reflect.Type {
+	return curlCertTypePtrType
+}
+
+func (in *curlCertTypePtr) ToCurlCertTypePtrOutput() CurlCertTypePtrOutput {
+	return pulumi.ToOutput(in).(CurlCertTypePtrOutput)
+}
+
+func (in *curlCertTypePtr) ToCurlCertTypePtrOutputWithContext(ctx context.Context) CurlCertTypePtrOutput {
+	return pulumi.ToOutputWithContext(ctx, in).(CurlCertTypePtrOutput)
+}
+
+type CurlDelegationLevel string
+
+const (
+	CurlDelegationLevelNone   = CurlDelegationLevel("none")
+	CurlDelegationLevelPolicy = CurlDelegationLevel("policy")
+	CurlDelegationLevelAlways = CurlDelegationLevel("always")
+)
+
+func (CurlDelegationLevel) ElementType() reflect.Type {
+	return reflect.TypeOf((*CurlDelegationLevel)(nil)).Elem()
+}
+
+func (e CurlDelegationLevel) ToCurlDelegationLevelOutput() CurlDelegationLevelOutput {
+	return pulumi.ToOutput(e).(CurlDelegationLevelOutput)
+}
+
+func (e CurlDelegationLevel) ToCurlDelegationLevelOutputWithContext(ctx context.Context) CurlDelegationLevelOutput {
+	return pulumi.ToOutputWithContext(ctx, e).(CurlDelegationLevelOutput)
+}
+
+func (e CurlDelegationLevel) ToCurlDelegationLevelPtrOutput() CurlDelegationLevelPtrOutput {
+	return e.ToCurlDelegationLevelPtrOutputWithContext(context.Background())
+}
+
+func (e CurlDelegationLevel) ToCurlDelegationLevelPtrOutputWithContext(ctx context.Context) CurlDelegationLevelPtrOutput {
+	return CurlDelegationLevel(e).ToCurlDelegationLevelOutputWithContext(ctx).ToCurlDelegationLevelPtrOutputWithContext(ctx)
+}
+
+func (e CurlDelegationLevel) ToStringOutput() pulumi.StringOutput {
+	return pulumi.ToOutput(pulumi.String(e)).(pulumi.StringOutput)
+}
+
+func (e CurlDelegationLevel) ToStringOutputWithContext(ctx context.Context) pulumi.StringOutput {
+	return pulumi.ToOutputWithContext(ctx, pulumi.String(e)).(pulumi.StringOutput)
+}
+
+func (e CurlDelegationLevel) ToStringPtrOutput() pulumi.StringPtrOutput {
+	return pulumi.String(e).ToStringPtrOutputWithContext(context.Background())
+}
+
+func (e CurlDelegationLevel) ToStringPtrOutputWithContext(ctx context.Context) pulumi.StringPtrOutput {
+	return pulumi.String(e).ToStringOutputWithContext(ctx).ToStringPtrOutputWithContext(ctx)
+}
+
+type CurlDelegationLevelOutput struct{ *pulumi.OutputState }
+
+func (CurlDelegationLevelOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*CurlDelegationLevel)(nil)).Elem()
+}
+
+func (o CurlDelegationLevelOutput) ToCurlDelegationLevelOutput() CurlDelegationLevelOutput {
+	return o
+}
+
+func (o CurlDelegationLevelOutput) ToCurlDelegationLevelOutputWithContext(ctx context.Context) CurlDelegationLevelOutput {
+	return o
+}
+
+func (o CurlDelegationLevelOutput) ToCurlDelegationLevelPtrOutput() CurlDelegationLevelPtrOutput {
+	return o.ToCurlDelegationLevelPtrOutputWithContext(context.Background())
+}
+
+func (o CurlDelegationLevelOutput) ToCurlDelegationLevelPtrOutputWithContext(ctx context.Context) CurlDelegationLevelPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v CurlDelegationLevel) *CurlDelegationLevel {
+		return &v
+	}).(CurlDelegationLevelPtrOutput)
+}
+
+func (o CurlDelegationLevelOutput) ToStringOutput() pulumi.StringOutput {
+	return o.ToStringOutputWithContext(context.Background())
+}
+
+func (o CurlDelegationLevelOutput) ToStringOutputWithContext(ctx context.Context) pulumi.StringOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, e CurlDelegationLevel) string {
+		return string(e)
+	}).(pulumi.StringOutput)
+}
+
+func (o CurlDelegationLevelOutput) ToStringPtrOutput() pulumi.StringPtrOutput {
+	return o.ToStringPtrOutputWithContext(context.Background())
+}
+
+func (o CurlDelegationLevelOutput) ToStringPtrOutputWithContext(ctx context.Context) pulumi.StringPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, e CurlDelegationLevel) *string {
+		v := string(e)
+		return &v
+	}).(pulumi.StringPtrOutput)
+}
+
+type CurlDelegationLevelPtrOutput struct{ *pulumi.OutputState }
+
+func (CurlDelegationLevelPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**CurlDelegationLevel)(nil)).Elem()
+}
+
+func (o CurlDelegationLevelPtrOutput) ToCurlDelegationLevelPtrOutput() CurlDelegationLevelPtrOutput {
+	return o
+}
+
+func (o CurlDelegationLevelPtrOutput) ToCurlDelegationLevelPtrOutputWithContext(ctx context.Context) CurlDelegationLevelPtrOutput {
+	return o
+}
+
+func (o CurlDelegationLevelPtrOutput) Elem() CurlDelegationLevelOutput {
+	return o.ApplyT(func(v *CurlDelegationLevel) CurlDelegationLevel {
+		if v != nil {
+			return *v
+		}
+		var ret CurlDelegationLevel
+		return ret
+	}).(CurlDelegationLevelOutput)
+}
+
+func (o CurlDelegationLevelPtrOutput) ToStringPtrOutput() pulumi.StringPtrOutput {
+	return o.ToStringPtrOutputWithContext(context.Background())
+}
+
+func (o CurlDelegationLevelPtrOutput) ToStringPtrOutputWithContext(ctx context.Context) pulumi.StringPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, e *CurlDelegationLevel) *string {
+		if e == nil {
+			return nil
+		}
+		v := string(*e)
+		return &v
+	}).(pulumi.StringPtrOutput)
+}
+
+// CurlDelegationLevelInput is an input type that accepts values of the CurlDelegationLevel enum
+// A concrete instance of `CurlDelegationLevelInput` can be one of the following:
+//
+//	CurlDelegationLevelNone
+//	CurlDelegationLevelPolicy
+//	CurlDelegationLevelAlways
+type CurlDelegationLevelInput interface {
+	pulumi.Input
+
+	ToCurlDelegationLevelOutput() CurlDelegationLevelOutput
+	ToCurlDelegationLevelOutputWithContext(context.Context) CurlDelegationLevelOutput
+}
+
+var curlDelegationLevelPtrType = reflect.TypeOf((**CurlDelegationLevel)(nil)).Elem()
+
+type CurlDelegationLevelPtrInput interface {
+	pulumi.Input
+
+	ToCurlDelegationLevelPtrOutput() CurlDelegationLevelPtrOutput
+	ToCurlDelegationLevelPtrOutputWithContext(context.Context) CurlDelegationLevelPtrOutput
+}
+
+type curlDelegationLevelPtr string
+
+func CurlDelegationLevelPtr(v string) CurlDelegationLevelPtrInput {
+	return (*curlDelegationLevelPtr)(&v)
+}
+
+func (*curlDelegationLevelPtr) ElementType() reflect.Type {
+	return curlDelegationLevelPtrType
+}
+
+func (in *curlDelegationLevelPtr) ToCurlDelegationLevelPtrOutput() CurlDelegationLevelPtrOutput {
+	return pulumi.ToOutput(in).(CurlDelegationLevelPtrOutput)
+}
+
+func (in *curlDelegationLevelPtr) ToCurlDelegationLevelPtrOutputWithContext(ctx context.Context) CurlDelegationLevelPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, in).(CurlDelegationLevelPtrOutput)
+}
+
 type EtcdctlCommand string
 
 const (
@@ -264,6 +600,352 @@ func (in *etcdctlCommandPtr) ToEtcdctlCommandPtrOutput() EtcdctlCommandPtrOutput
 
 func (in *etcdctlCommandPtr) ToEtcdctlCommandPtrOutputWithContext(ctx context.Context) EtcdctlCommandPtrOutput {
 	return pulumi.ToOutputWithContext(ctx, in).(EtcdctlCommandPtrOutput)
+}
+
+type HostnamectlCommand string
+
+const (
+	// Show system hostname and related information. If no command is specified, this is the implied default.
+	HostnamectlCommandStatus = HostnamectlCommand("status")
+	// If no argument is given, print the system hostname. If an optional argument NAME is provided then the command changes the system hostname to NAME.
+	HostnamectlCommandHostname = HostnamectlCommand("hostname")
+	// If no argument is given, print the icon name of the system. If an optional argument NAME is provided then the command changes the icon name to NAME.
+	HostnamectlCommand_Icon_Name = HostnamectlCommand("icon-name")
+	// If no argument is given, print the chassis type. If an optional argument TYPE is provided then the command changes the chassis type to TYPE.
+	HostnamectlCommandChassis = HostnamectlCommand("chassis")
+	// If no argument is given, print the deployment environment. If an optional argument ENVIRONMENT is provided then the command changes the deployment environment to ENVIRONMENT.
+	HostnamectlCommandDeployment = HostnamectlCommand("deployment")
+	// If no argument is given, print the location string for the system. If an optional argument LOCATION is provided then the command changes the location string for the system to LOCATION.
+	HostnamectlCommandLocation = HostnamectlCommand("location")
+)
+
+func (HostnamectlCommand) ElementType() reflect.Type {
+	return reflect.TypeOf((*HostnamectlCommand)(nil)).Elem()
+}
+
+func (e HostnamectlCommand) ToHostnamectlCommandOutput() HostnamectlCommandOutput {
+	return pulumi.ToOutput(e).(HostnamectlCommandOutput)
+}
+
+func (e HostnamectlCommand) ToHostnamectlCommandOutputWithContext(ctx context.Context) HostnamectlCommandOutput {
+	return pulumi.ToOutputWithContext(ctx, e).(HostnamectlCommandOutput)
+}
+
+func (e HostnamectlCommand) ToHostnamectlCommandPtrOutput() HostnamectlCommandPtrOutput {
+	return e.ToHostnamectlCommandPtrOutputWithContext(context.Background())
+}
+
+func (e HostnamectlCommand) ToHostnamectlCommandPtrOutputWithContext(ctx context.Context) HostnamectlCommandPtrOutput {
+	return HostnamectlCommand(e).ToHostnamectlCommandOutputWithContext(ctx).ToHostnamectlCommandPtrOutputWithContext(ctx)
+}
+
+func (e HostnamectlCommand) ToStringOutput() pulumi.StringOutput {
+	return pulumi.ToOutput(pulumi.String(e)).(pulumi.StringOutput)
+}
+
+func (e HostnamectlCommand) ToStringOutputWithContext(ctx context.Context) pulumi.StringOutput {
+	return pulumi.ToOutputWithContext(ctx, pulumi.String(e)).(pulumi.StringOutput)
+}
+
+func (e HostnamectlCommand) ToStringPtrOutput() pulumi.StringPtrOutput {
+	return pulumi.String(e).ToStringPtrOutputWithContext(context.Background())
+}
+
+func (e HostnamectlCommand) ToStringPtrOutputWithContext(ctx context.Context) pulumi.StringPtrOutput {
+	return pulumi.String(e).ToStringOutputWithContext(ctx).ToStringPtrOutputWithContext(ctx)
+}
+
+type HostnamectlCommandOutput struct{ *pulumi.OutputState }
+
+func (HostnamectlCommandOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*HostnamectlCommand)(nil)).Elem()
+}
+
+func (o HostnamectlCommandOutput) ToHostnamectlCommandOutput() HostnamectlCommandOutput {
+	return o
+}
+
+func (o HostnamectlCommandOutput) ToHostnamectlCommandOutputWithContext(ctx context.Context) HostnamectlCommandOutput {
+	return o
+}
+
+func (o HostnamectlCommandOutput) ToHostnamectlCommandPtrOutput() HostnamectlCommandPtrOutput {
+	return o.ToHostnamectlCommandPtrOutputWithContext(context.Background())
+}
+
+func (o HostnamectlCommandOutput) ToHostnamectlCommandPtrOutputWithContext(ctx context.Context) HostnamectlCommandPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v HostnamectlCommand) *HostnamectlCommand {
+		return &v
+	}).(HostnamectlCommandPtrOutput)
+}
+
+func (o HostnamectlCommandOutput) ToStringOutput() pulumi.StringOutput {
+	return o.ToStringOutputWithContext(context.Background())
+}
+
+func (o HostnamectlCommandOutput) ToStringOutputWithContext(ctx context.Context) pulumi.StringOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, e HostnamectlCommand) string {
+		return string(e)
+	}).(pulumi.StringOutput)
+}
+
+func (o HostnamectlCommandOutput) ToStringPtrOutput() pulumi.StringPtrOutput {
+	return o.ToStringPtrOutputWithContext(context.Background())
+}
+
+func (o HostnamectlCommandOutput) ToStringPtrOutputWithContext(ctx context.Context) pulumi.StringPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, e HostnamectlCommand) *string {
+		v := string(e)
+		return &v
+	}).(pulumi.StringPtrOutput)
+}
+
+type HostnamectlCommandPtrOutput struct{ *pulumi.OutputState }
+
+func (HostnamectlCommandPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**HostnamectlCommand)(nil)).Elem()
+}
+
+func (o HostnamectlCommandPtrOutput) ToHostnamectlCommandPtrOutput() HostnamectlCommandPtrOutput {
+	return o
+}
+
+func (o HostnamectlCommandPtrOutput) ToHostnamectlCommandPtrOutputWithContext(ctx context.Context) HostnamectlCommandPtrOutput {
+	return o
+}
+
+func (o HostnamectlCommandPtrOutput) Elem() HostnamectlCommandOutput {
+	return o.ApplyT(func(v *HostnamectlCommand) HostnamectlCommand {
+		if v != nil {
+			return *v
+		}
+		var ret HostnamectlCommand
+		return ret
+	}).(HostnamectlCommandOutput)
+}
+
+func (o HostnamectlCommandPtrOutput) ToStringPtrOutput() pulumi.StringPtrOutput {
+	return o.ToStringPtrOutputWithContext(context.Background())
+}
+
+func (o HostnamectlCommandPtrOutput) ToStringPtrOutputWithContext(ctx context.Context) pulumi.StringPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, e *HostnamectlCommand) *string {
+		if e == nil {
+			return nil
+		}
+		v := string(*e)
+		return &v
+	}).(pulumi.StringPtrOutput)
+}
+
+// HostnamectlCommandInput is an input type that accepts values of the HostnamectlCommand enum
+// A concrete instance of `HostnamectlCommandInput` can be one of the following:
+//
+//	HostnamectlCommandStatus
+//	HostnamectlCommandHostname
+//	HostnamectlCommand_Icon_Name
+//	HostnamectlCommandChassis
+//	HostnamectlCommandDeployment
+//	HostnamectlCommandLocation
+type HostnamectlCommandInput interface {
+	pulumi.Input
+
+	ToHostnamectlCommandOutput() HostnamectlCommandOutput
+	ToHostnamectlCommandOutputWithContext(context.Context) HostnamectlCommandOutput
+}
+
+var hostnamectlCommandPtrType = reflect.TypeOf((**HostnamectlCommand)(nil)).Elem()
+
+type HostnamectlCommandPtrInput interface {
+	pulumi.Input
+
+	ToHostnamectlCommandPtrOutput() HostnamectlCommandPtrOutput
+	ToHostnamectlCommandPtrOutputWithContext(context.Context) HostnamectlCommandPtrOutput
+}
+
+type hostnamectlCommandPtr string
+
+func HostnamectlCommandPtr(v string) HostnamectlCommandPtrInput {
+	return (*hostnamectlCommandPtr)(&v)
+}
+
+func (*hostnamectlCommandPtr) ElementType() reflect.Type {
+	return hostnamectlCommandPtrType
+}
+
+func (in *hostnamectlCommandPtr) ToHostnamectlCommandPtrOutput() HostnamectlCommandPtrOutput {
+	return pulumi.ToOutput(in).(HostnamectlCommandPtrOutput)
+}
+
+func (in *hostnamectlCommandPtr) ToHostnamectlCommandPtrOutputWithContext(ctx context.Context) HostnamectlCommandPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, in).(HostnamectlCommandPtrOutput)
+}
+
+type HostnamectlJsonMode string
+
+const (
+	HostnamectlJsonModeShort  = HostnamectlJsonMode("short")
+	HostnamectlJsonModePretty = HostnamectlJsonMode("pretty")
+	HostnamectlJsonModeOff    = HostnamectlJsonMode("off")
+)
+
+func (HostnamectlJsonMode) ElementType() reflect.Type {
+	return reflect.TypeOf((*HostnamectlJsonMode)(nil)).Elem()
+}
+
+func (e HostnamectlJsonMode) ToHostnamectlJsonModeOutput() HostnamectlJsonModeOutput {
+	return pulumi.ToOutput(e).(HostnamectlJsonModeOutput)
+}
+
+func (e HostnamectlJsonMode) ToHostnamectlJsonModeOutputWithContext(ctx context.Context) HostnamectlJsonModeOutput {
+	return pulumi.ToOutputWithContext(ctx, e).(HostnamectlJsonModeOutput)
+}
+
+func (e HostnamectlJsonMode) ToHostnamectlJsonModePtrOutput() HostnamectlJsonModePtrOutput {
+	return e.ToHostnamectlJsonModePtrOutputWithContext(context.Background())
+}
+
+func (e HostnamectlJsonMode) ToHostnamectlJsonModePtrOutputWithContext(ctx context.Context) HostnamectlJsonModePtrOutput {
+	return HostnamectlJsonMode(e).ToHostnamectlJsonModeOutputWithContext(ctx).ToHostnamectlJsonModePtrOutputWithContext(ctx)
+}
+
+func (e HostnamectlJsonMode) ToStringOutput() pulumi.StringOutput {
+	return pulumi.ToOutput(pulumi.String(e)).(pulumi.StringOutput)
+}
+
+func (e HostnamectlJsonMode) ToStringOutputWithContext(ctx context.Context) pulumi.StringOutput {
+	return pulumi.ToOutputWithContext(ctx, pulumi.String(e)).(pulumi.StringOutput)
+}
+
+func (e HostnamectlJsonMode) ToStringPtrOutput() pulumi.StringPtrOutput {
+	return pulumi.String(e).ToStringPtrOutputWithContext(context.Background())
+}
+
+func (e HostnamectlJsonMode) ToStringPtrOutputWithContext(ctx context.Context) pulumi.StringPtrOutput {
+	return pulumi.String(e).ToStringOutputWithContext(ctx).ToStringPtrOutputWithContext(ctx)
+}
+
+type HostnamectlJsonModeOutput struct{ *pulumi.OutputState }
+
+func (HostnamectlJsonModeOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*HostnamectlJsonMode)(nil)).Elem()
+}
+
+func (o HostnamectlJsonModeOutput) ToHostnamectlJsonModeOutput() HostnamectlJsonModeOutput {
+	return o
+}
+
+func (o HostnamectlJsonModeOutput) ToHostnamectlJsonModeOutputWithContext(ctx context.Context) HostnamectlJsonModeOutput {
+	return o
+}
+
+func (o HostnamectlJsonModeOutput) ToHostnamectlJsonModePtrOutput() HostnamectlJsonModePtrOutput {
+	return o.ToHostnamectlJsonModePtrOutputWithContext(context.Background())
+}
+
+func (o HostnamectlJsonModeOutput) ToHostnamectlJsonModePtrOutputWithContext(ctx context.Context) HostnamectlJsonModePtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v HostnamectlJsonMode) *HostnamectlJsonMode {
+		return &v
+	}).(HostnamectlJsonModePtrOutput)
+}
+
+func (o HostnamectlJsonModeOutput) ToStringOutput() pulumi.StringOutput {
+	return o.ToStringOutputWithContext(context.Background())
+}
+
+func (o HostnamectlJsonModeOutput) ToStringOutputWithContext(ctx context.Context) pulumi.StringOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, e HostnamectlJsonMode) string {
+		return string(e)
+	}).(pulumi.StringOutput)
+}
+
+func (o HostnamectlJsonModeOutput) ToStringPtrOutput() pulumi.StringPtrOutput {
+	return o.ToStringPtrOutputWithContext(context.Background())
+}
+
+func (o HostnamectlJsonModeOutput) ToStringPtrOutputWithContext(ctx context.Context) pulumi.StringPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, e HostnamectlJsonMode) *string {
+		v := string(e)
+		return &v
+	}).(pulumi.StringPtrOutput)
+}
+
+type HostnamectlJsonModePtrOutput struct{ *pulumi.OutputState }
+
+func (HostnamectlJsonModePtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**HostnamectlJsonMode)(nil)).Elem()
+}
+
+func (o HostnamectlJsonModePtrOutput) ToHostnamectlJsonModePtrOutput() HostnamectlJsonModePtrOutput {
+	return o
+}
+
+func (o HostnamectlJsonModePtrOutput) ToHostnamectlJsonModePtrOutputWithContext(ctx context.Context) HostnamectlJsonModePtrOutput {
+	return o
+}
+
+func (o HostnamectlJsonModePtrOutput) Elem() HostnamectlJsonModeOutput {
+	return o.ApplyT(func(v *HostnamectlJsonMode) HostnamectlJsonMode {
+		if v != nil {
+			return *v
+		}
+		var ret HostnamectlJsonMode
+		return ret
+	}).(HostnamectlJsonModeOutput)
+}
+
+func (o HostnamectlJsonModePtrOutput) ToStringPtrOutput() pulumi.StringPtrOutput {
+	return o.ToStringPtrOutputWithContext(context.Background())
+}
+
+func (o HostnamectlJsonModePtrOutput) ToStringPtrOutputWithContext(ctx context.Context) pulumi.StringPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, e *HostnamectlJsonMode) *string {
+		if e == nil {
+			return nil
+		}
+		v := string(*e)
+		return &v
+	}).(pulumi.StringPtrOutput)
+}
+
+// HostnamectlJsonModeInput is an input type that accepts values of the HostnamectlJsonMode enum
+// A concrete instance of `HostnamectlJsonModeInput` can be one of the following:
+//
+//	HostnamectlJsonModeShort
+//	HostnamectlJsonModePretty
+//	HostnamectlJsonModeOff
+type HostnamectlJsonModeInput interface {
+	pulumi.Input
+
+	ToHostnamectlJsonModeOutput() HostnamectlJsonModeOutput
+	ToHostnamectlJsonModeOutputWithContext(context.Context) HostnamectlJsonModeOutput
+}
+
+var hostnamectlJsonModePtrType = reflect.TypeOf((**HostnamectlJsonMode)(nil)).Elem()
+
+type HostnamectlJsonModePtrInput interface {
+	pulumi.Input
+
+	ToHostnamectlJsonModePtrOutput() HostnamectlJsonModePtrOutput
+	ToHostnamectlJsonModePtrOutputWithContext(context.Context) HostnamectlJsonModePtrOutput
+}
+
+type hostnamectlJsonModePtr string
+
+func HostnamectlJsonModePtr(v string) HostnamectlJsonModePtrInput {
+	return (*hostnamectlJsonModePtr)(&v)
+}
+
+func (*hostnamectlJsonModePtr) ElementType() reflect.Type {
+	return hostnamectlJsonModePtrType
+}
+
+func (in *hostnamectlJsonModePtr) ToHostnamectlJsonModePtrOutput() HostnamectlJsonModePtrOutput {
+	return pulumi.ToOutput(in).(HostnamectlJsonModePtrOutput)
+}
+
+func (in *hostnamectlJsonModePtr) ToHostnamectlJsonModePtrOutputWithContext(ctx context.Context) HostnamectlJsonModePtrOutput {
+	return pulumi.ToOutputWithContext(ctx, in).(HostnamectlJsonModePtrOutput)
 }
 
 type SystemctlCommand string
@@ -557,14 +1239,30 @@ func (in *teeModePtr) ToTeeModePtrOutputWithContext(ctx context.Context) TeeMode
 }
 
 func init() {
+	pulumi.RegisterInputType(reflect.TypeOf((*CurlCertTypeInput)(nil)).Elem(), CurlCertType("PEM"))
+	pulumi.RegisterInputType(reflect.TypeOf((*CurlCertTypePtrInput)(nil)).Elem(), CurlCertType("PEM"))
+	pulumi.RegisterInputType(reflect.TypeOf((*CurlDelegationLevelInput)(nil)).Elem(), CurlDelegationLevel("none"))
+	pulumi.RegisterInputType(reflect.TypeOf((*CurlDelegationLevelPtrInput)(nil)).Elem(), CurlDelegationLevel("none"))
 	pulumi.RegisterInputType(reflect.TypeOf((*EtcdctlCommandInput)(nil)).Elem(), EtcdctlCommand("member"))
 	pulumi.RegisterInputType(reflect.TypeOf((*EtcdctlCommandPtrInput)(nil)).Elem(), EtcdctlCommand("member"))
+	pulumi.RegisterInputType(reflect.TypeOf((*HostnamectlCommandInput)(nil)).Elem(), HostnamectlCommand("status"))
+	pulumi.RegisterInputType(reflect.TypeOf((*HostnamectlCommandPtrInput)(nil)).Elem(), HostnamectlCommand("status"))
+	pulumi.RegisterInputType(reflect.TypeOf((*HostnamectlJsonModeInput)(nil)).Elem(), HostnamectlJsonMode("short"))
+	pulumi.RegisterInputType(reflect.TypeOf((*HostnamectlJsonModePtrInput)(nil)).Elem(), HostnamectlJsonMode("short"))
 	pulumi.RegisterInputType(reflect.TypeOf((*TeeModeInput)(nil)).Elem(), TeeMode("warn"))
 	pulumi.RegisterInputType(reflect.TypeOf((*TeeModePtrInput)(nil)).Elem(), TeeMode("warn"))
 	pulumi.RegisterOutputType(CommandLifecycleOutput{})
 	pulumi.RegisterOutputType(CommandLifecyclePtrOutput{})
+	pulumi.RegisterOutputType(CurlCertTypeOutput{})
+	pulumi.RegisterOutputType(CurlCertTypePtrOutput{})
+	pulumi.RegisterOutputType(CurlDelegationLevelOutput{})
+	pulumi.RegisterOutputType(CurlDelegationLevelPtrOutput{})
 	pulumi.RegisterOutputType(EtcdctlCommandOutput{})
 	pulumi.RegisterOutputType(EtcdctlCommandPtrOutput{})
+	pulumi.RegisterOutputType(HostnamectlCommandOutput{})
+	pulumi.RegisterOutputType(HostnamectlCommandPtrOutput{})
+	pulumi.RegisterOutputType(HostnamectlJsonModeOutput{})
+	pulumi.RegisterOutputType(HostnamectlJsonModePtrOutput{})
 	pulumi.RegisterOutputType(SystemctlCommandOutput{})
 	pulumi.RegisterOutputType(SystemctlCommandPtrOutput{})
 	pulumi.RegisterOutputType(TeeModeOutput{})

@@ -32,11 +32,14 @@ export type ResourceConstructor = {
     readonly "kubernetes-the-hard-way:tls:EncryptionKey": ConstructComponent<EncryptionKey>;
     readonly "kubernetes-the-hard-way:tls:RootCa": ConstructComponent<RootCa>;
     readonly "kubernetes-the-hard-way:tools:Chmod": ConstructComponent<Chmod>;
+    readonly "kubernetes-the-hard-way:tools:Curl": ConstructComponent<Curl>;
     readonly "kubernetes-the-hard-way:tools:Etcdctl": ConstructComponent<Etcdctl>;
+    readonly "kubernetes-the-hard-way:tools:Hostnamectl": ConstructComponent<Hostnamectl>;
     readonly "kubernetes-the-hard-way:tools:Mkdir": ConstructComponent<Mkdir>;
     readonly "kubernetes-the-hard-way:tools:Mktemp": ConstructComponent<Mktemp>;
     readonly "kubernetes-the-hard-way:tools:Mv": ConstructComponent<Mv>;
     readonly "kubernetes-the-hard-way:tools:Rm": ConstructComponent<Rm>;
+    readonly "kubernetes-the-hard-way:tools:Sed": ConstructComponent<Sed>;
     readonly "kubernetes-the-hard-way:tools:Systemctl": ConstructComponent<Systemctl>;
     readonly "kubernetes-the-hard-way:tools:Tar": ConstructComponent<Tar>;
     readonly "kubernetes-the-hard-way:tools:Tee": ConstructComponent<Tee>;
@@ -751,6 +754,160 @@ export interface ChmodArgs {
     readonly triggers?: pulumi.Input<pulumi.Input<any>[]>;
     readonly version?: pulumi.Input<boolean>;
 }
+export abstract class Curl<TData = any> extends (pulumi.ComponentResource)<TData> {
+    public abstractUnixSocket?: string | pulumi.Output<string>;
+    public altSvc?: string | pulumi.Output<string>;
+    public anyAuth?: boolean | pulumi.Output<boolean>;
+    public append?: boolean | pulumi.Output<boolean>;
+    public awsSigv4?: string | pulumi.Output<string>;
+    public basic?: boolean | pulumi.Output<boolean>;
+    public binaryPath!: string | pulumi.Output<string>;
+    public cacert?: string | pulumi.Output<string>;
+    public capath?: string | pulumi.Output<string>;
+    public cert?: string | pulumi.Output<string>;
+    public certStatus?: boolean | pulumi.Output<boolean>;
+    public certType?: CurlCertTypeOutputs | pulumi.Output<CurlCertTypeOutputs>;
+    public ciphers?: string | pulumi.Output<string>;
+    public command!: command.remote.Command | pulumi.Output<command.remote.Command>;
+    public compressed?: boolean | pulumi.Output<boolean>;
+    public compressedSsh?: boolean | pulumi.Output<boolean>;
+    public config?: string | pulumi.Output<string>;
+    public connectTimeout?: boolean | pulumi.Output<boolean>;
+    public connectTo?: string | pulumi.Output<string>;
+    public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
+    public continueAt?: string | pulumi.Output<string>;
+    public cookie?: string | pulumi.Output<string>;
+    public cookieJar?: string | pulumi.Output<string>;
+    public createDirs?: boolean | pulumi.Output<boolean>;
+    public createFileMode?: string | pulumi.Output<string>;
+    public crlf?: boolean | pulumi.Output<boolean>;
+    public crlfFile?: string | pulumi.Output<string>;
+    public curves?: string | pulumi.Output<string>;
+    public data?: string | pulumi.Output<string>;
+    public dataAscii?: string | pulumi.Output<string>;
+    public dataBinary?: string | pulumi.Output<string>;
+    public dataRaw?: string | pulumi.Output<string>;
+    public dataUrlEncode?: string | pulumi.Output<string>;
+    public delegation?: CurlDelegationLevelOutputs | pulumi.Output<CurlDelegationLevelOutputs>;
+    public digest?: boolean | pulumi.Output<boolean>;
+    public disable?: boolean | pulumi.Output<boolean>;
+    public disableEprt?: boolean | pulumi.Output<boolean>;
+    public disableEpsv?: boolean | pulumi.Output<boolean>;
+    public disallowUsernameInUrl?: boolean | pulumi.Output<boolean>;
+    public dnsInterface?: string | pulumi.Output<string>;
+    public dnsIpv4Addr?: string | pulumi.Output<string>;
+    public dnsIpv6Addr?: string | pulumi.Output<string>;
+    public dnsServers?: string | pulumi.Output<string>;
+    public dohCertStatus?: boolean | pulumi.Output<boolean>;
+    public dohInsecure?: boolean | pulumi.Output<boolean>;
+    public dohUrl?: string | pulumi.Output<string>;
+    public dumpHeader?: string | pulumi.Output<string>;
+    public egdFile?: string | pulumi.Output<string>;
+    public engine?: string | pulumi.Output<string>;
+    public environment!: Record<string, string> | pulumi.Output<Record<string, string>>;
+    public etagCompare?: string | pulumi.Output<string>;
+    public etagSave?: string | pulumi.Output<string>;
+    public expect100Timeout?: boolean | pulumi.Output<boolean>;
+    public fail?: boolean | pulumi.Output<boolean>;
+    public failEarly?: boolean | pulumi.Output<boolean>;
+    public failWithBody?: boolean | pulumi.Output<boolean>;
+    public falseStart?: boolean | pulumi.Output<boolean>;
+    public form?: string | pulumi.Output<string>;
+    public formEscape?: boolean | pulumi.Output<boolean>;
+    public formName?: string | pulumi.Output<string>;
+    public ftpAccount?: string | pulumi.Output<string>;
+    public ftpAlternativeUser?: string | pulumi.Output<string>;
+    public ftpCreateDirs?: boolean | pulumi.Output<boolean>;
+    public ftpMethod?: string | pulumi.Output<string>;
+    public ftpPasv?: boolean | pulumi.Output<boolean>;
+    public ftpPort?: string | pulumi.Output<string>;
+    public ftpPret?: boolean | pulumi.Output<boolean>;
+    public ftpSkipPasvIp?: boolean | pulumi.Output<boolean>;
+    public ftpSslCccMode?: string | pulumi.Output<string>;
+    public lifecycle?: CommandLifecycleOutputs | CommandLifecycleOutputs;
+    public stderr!: string | pulumi.Output<string>;
+    public stdin?: string | pulumi.Output<string>;
+    public stdout!: string | pulumi.Output<string>;
+    public triggers!: any[] | pulumi.Output<any[]>;
+    public urls!: unknown | pulumi.Output<unknown>;
+    constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
+        super("kubernetes-the-hard-way:tools:Curl", name, opts.urn ? { abstractUnixSocket: undefined, altSvc: undefined, anyAuth: undefined, append: undefined, awsSigv4: undefined, basic: undefined, binaryPath: undefined, cacert: undefined, capath: undefined, cert: undefined, certStatus: undefined, certType: undefined, ciphers: undefined, command: undefined, compressed: undefined, compressedSsh: undefined, config: undefined, connectTimeout: undefined, connectTo: undefined, connection: undefined, continueAt: undefined, cookie: undefined, cookieJar: undefined, createDirs: undefined, createFileMode: undefined, crlf: undefined, crlfFile: undefined, curves: undefined, data: undefined, dataAscii: undefined, dataBinary: undefined, dataRaw: undefined, dataUrlEncode: undefined, delegation: undefined, digest: undefined, disable: undefined, disableEprt: undefined, disableEpsv: undefined, disallowUsernameInUrl: undefined, dnsInterface: undefined, dnsIpv4Addr: undefined, dnsIpv6Addr: undefined, dnsServers: undefined, dohCertStatus: undefined, dohInsecure: undefined, dohUrl: undefined, dumpHeader: undefined, egdFile: undefined, engine: undefined, environment: undefined, etagCompare: undefined, etagSave: undefined, expect100Timeout: undefined, fail: undefined, failEarly: undefined, failWithBody: undefined, falseStart: undefined, form: undefined, formEscape: undefined, formName: undefined, ftpAccount: undefined, ftpAlternativeUser: undefined, ftpCreateDirs: undefined, ftpMethod: undefined, ftpPasv: undefined, ftpPort: undefined, ftpPret: undefined, ftpSkipPasvIp: undefined, ftpSslCccMode: undefined, lifecycle: undefined, stderr: undefined, stdin: undefined, stdout: undefined, triggers: undefined, urls: undefined } : { name, args, opts }, opts);
+    }
+}
+export interface CurlArgs {
+    readonly abstractUnixSocket?: pulumi.Input<string>;
+    readonly altSvc?: pulumi.Input<string>;
+    readonly anyAuth?: pulumi.Input<boolean>;
+    readonly append?: pulumi.Input<boolean>;
+    readonly awsSigv4?: pulumi.Input<string>;
+    readonly basic?: pulumi.Input<boolean>;
+    readonly binaryPath?: pulumi.Input<string>;
+    readonly cacert?: pulumi.Input<string>;
+    readonly capath?: pulumi.Input<string>;
+    readonly cert?: pulumi.Input<string>;
+    readonly certStatus?: pulumi.Input<boolean>;
+    readonly certType?: pulumi.Input<CurlCertTypeInputs>;
+    readonly ciphers?: pulumi.Input<string>;
+    readonly compressed?: pulumi.Input<boolean>;
+    readonly compressedSsh?: pulumi.Input<boolean>;
+    readonly config?: pulumi.Input<string>;
+    readonly connectTimeout?: pulumi.Input<boolean>;
+    readonly connectTo?: pulumi.Input<string>;
+    readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
+    readonly continueAt?: pulumi.Input<string>;
+    readonly cookie?: pulumi.Input<string>;
+    readonly cookieJar?: pulumi.Input<string>;
+    readonly createDirs?: pulumi.Input<boolean>;
+    readonly createFileMode?: pulumi.Input<string>;
+    readonly crlf?: pulumi.Input<boolean>;
+    readonly crlfFile?: pulumi.Input<string>;
+    readonly curves?: pulumi.Input<string>;
+    readonly data?: pulumi.Input<string>;
+    readonly dataAscii?: pulumi.Input<string>;
+    readonly dataBinary?: pulumi.Input<string>;
+    readonly dataRaw?: pulumi.Input<string>;
+    readonly dataUrlEncode?: pulumi.Input<string>;
+    readonly delegation?: pulumi.Input<CurlDelegationLevelInputs>;
+    readonly digest?: pulumi.Input<boolean>;
+    readonly disable?: pulumi.Input<boolean>;
+    readonly disableEprt?: pulumi.Input<boolean>;
+    readonly disableEpsv?: pulumi.Input<boolean>;
+    readonly disallowUsernameInUrl?: pulumi.Input<boolean>;
+    readonly dnsInterface?: pulumi.Input<string>;
+    readonly dnsIpv4Addr?: pulumi.Input<string>;
+    readonly dnsIpv6Addr?: pulumi.Input<string>;
+    readonly dnsServers?: pulumi.Input<string>;
+    readonly dohCertStatus?: pulumi.Input<boolean>;
+    readonly dohInsecure?: pulumi.Input<boolean>;
+    readonly dohUrl?: pulumi.Input<string>;
+    readonly dumpHeader?: pulumi.Input<string>;
+    readonly egdFile?: pulumi.Input<string>;
+    readonly engine?: pulumi.Input<string>;
+    readonly environment?: pulumi.Input<Record<string, pulumi.Input<string>>>;
+    readonly etagCompare?: pulumi.Input<string>;
+    readonly etagSave?: pulumi.Input<string>;
+    readonly expect100Timeout?: pulumi.Input<boolean>;
+    readonly fail?: pulumi.Input<boolean>;
+    readonly failEarly?: pulumi.Input<boolean>;
+    readonly failWithBody?: pulumi.Input<boolean>;
+    readonly falseStart?: pulumi.Input<boolean>;
+    readonly form?: pulumi.Input<string>;
+    readonly formEscape?: pulumi.Input<boolean>;
+    readonly formName?: pulumi.Input<string>;
+    readonly ftpAccount?: pulumi.Input<string>;
+    readonly ftpAlternativeUser?: pulumi.Input<string>;
+    readonly ftpCreateDirs?: pulumi.Input<boolean>;
+    readonly ftpMethod?: pulumi.Input<string>;
+    readonly ftpPasv?: pulumi.Input<boolean>;
+    readonly ftpPort?: pulumi.Input<string>;
+    readonly ftpPret?: pulumi.Input<boolean>;
+    readonly ftpSkipPasvIp?: pulumi.Input<boolean>;
+    readonly ftpSslCccMode?: pulumi.Input<string>;
+    readonly lifecycle?: CommandLifecycleInputs;
+    readonly stdin?: pulumi.Input<string>;
+    readonly triggers?: pulumi.Input<pulumi.Input<any>[]>;
+    readonly urls: pulumi.Input<unknown>;
+}
 export abstract class Etcdctl<TData = any> extends (pulumi.ComponentResource)<TData> {
     public binaryPath!: string | pulumi.Output<string>;
     public caCert!: string | pulumi.Output<string>;
@@ -782,6 +939,49 @@ export interface EtcdctlArgs {
     readonly lifecycle?: CommandLifecycleInputs;
     readonly stdin?: pulumi.Input<string>;
     readonly triggers?: pulumi.Input<pulumi.Input<any>[]>;
+}
+export abstract class Hostnamectl<TData = any> extends (pulumi.ComponentResource)<TData> {
+    public arg?: string | pulumi.Output<string>;
+    public binaryPath!: string | pulumi.Output<string>;
+    public command!: command.remote.Command | pulumi.Output<command.remote.Command>;
+    public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
+    public environment!: Record<string, string> | pulumi.Output<Record<string, string>>;
+    public help!: boolean | pulumi.Output<boolean>;
+    public host?: string | pulumi.Output<string>;
+    public json!: HostnamectlJsonModeOutputs | pulumi.Output<HostnamectlJsonModeOutputs>;
+    public lifecycle?: CommandLifecycleOutputs | CommandLifecycleOutputs;
+    public machine?: string | pulumi.Output<string>;
+    public noAskPassword!: boolean | pulumi.Output<boolean>;
+    public pretty!: boolean | pulumi.Output<boolean>;
+    public static!: boolean | pulumi.Output<boolean>;
+    public stderr!: string | pulumi.Output<string>;
+    public stdin?: string | pulumi.Output<string>;
+    public stdout!: string | pulumi.Output<string>;
+    public transient!: boolean | pulumi.Output<boolean>;
+    public triggers!: any[] | pulumi.Output<any[]>;
+    public version!: boolean | pulumi.Output<boolean>;
+    constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
+        super("kubernetes-the-hard-way:tools:Hostnamectl", name, opts.urn ? { arg: undefined, binaryPath: undefined, command: undefined, connection: undefined, environment: undefined, help: undefined, host: undefined, json: undefined, lifecycle: undefined, machine: undefined, noAskPassword: undefined, pretty: undefined, static: undefined, stderr: undefined, stdin: undefined, stdout: undefined, transient: undefined, triggers: undefined, version: undefined } : { name, args, opts }, opts);
+    }
+}
+export interface HostnamectlArgs {
+    readonly arg?: pulumi.Input<string>;
+    readonly binaryPath?: pulumi.Input<string>;
+    readonly command: pulumi.Input<HostnamectlCommandInputs>;
+    readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
+    readonly environment?: pulumi.Input<Record<string, pulumi.Input<string>>>;
+    readonly help?: pulumi.Input<boolean>;
+    readonly host?: pulumi.Input<string>;
+    readonly json?: pulumi.Input<HostnamectlJsonModeInputs>;
+    readonly lifecycle?: CommandLifecycleInputs;
+    readonly machine?: pulumi.Input<string>;
+    readonly noAskPassword?: pulumi.Input<boolean>;
+    readonly pretty?: pulumi.Input<boolean>;
+    readonly static?: pulumi.Input<boolean>;
+    readonly stdin?: pulumi.Input<string>;
+    readonly transient?: pulumi.Input<boolean>;
+    readonly triggers?: pulumi.Input<pulumi.Input<any>[]>;
+    readonly version?: pulumi.Input<boolean>;
 }
 export abstract class Mkdir<TData = any> extends (pulumi.ComponentResource)<TData> {
     public binaryPath!: string | pulumi.Output<string>;
@@ -929,6 +1129,64 @@ export interface RmArgs {
     readonly triggers?: pulumi.Input<pulumi.Input<any>[]>;
     readonly verbose?: pulumi.Input<boolean>;
 }
+export abstract class Sed<TData = any> extends (pulumi.ComponentResource)<TData> {
+    public binaryPath!: string | pulumi.Output<string>;
+    public command!: command.remote.Command | pulumi.Output<command.remote.Command>;
+    public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
+    public debug!: boolean | pulumi.Output<boolean>;
+    public environment!: Record<string, string> | pulumi.Output<Record<string, string>>;
+    public expressions!: unknown | pulumi.Output<unknown>;
+    public files!: unknown | pulumi.Output<unknown>;
+    public followSymlinks!: boolean | pulumi.Output<boolean>;
+    public help!: boolean | pulumi.Output<boolean>;
+    public inPlace!: string | pulumi.Output<string>;
+    public inputFiles!: unknown | pulumi.Output<unknown>;
+    public lifecycle?: CommandLifecycleOutputs | CommandLifecycleOutputs;
+    public lineLength?: boolean | pulumi.Output<boolean>;
+    public nullData!: boolean | pulumi.Output<boolean>;
+    public posix!: boolean | pulumi.Output<boolean>;
+    public quiet!: boolean | pulumi.Output<boolean>;
+    public regexpExtended!: boolean | pulumi.Output<boolean>;
+    public sandbox!: boolean | pulumi.Output<boolean>;
+    public script?: string | pulumi.Output<string>;
+    public separate!: boolean | pulumi.Output<boolean>;
+    public silent!: boolean | pulumi.Output<boolean>;
+    public stderr!: string | pulumi.Output<string>;
+    public stdin?: string | pulumi.Output<string>;
+    public stdout!: string | pulumi.Output<string>;
+    public triggers!: any[] | pulumi.Output<any[]>;
+    public unbuffered!: boolean | pulumi.Output<boolean>;
+    public version!: boolean | pulumi.Output<boolean>;
+    constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
+        super("kubernetes-the-hard-way:tools:Sed", name, opts.urn ? { binaryPath: undefined, command: undefined, connection: undefined, debug: undefined, environment: undefined, expressions: undefined, files: undefined, followSymlinks: undefined, help: undefined, inPlace: undefined, inputFiles: undefined, lifecycle: undefined, lineLength: undefined, nullData: undefined, posix: undefined, quiet: undefined, regexpExtended: undefined, sandbox: undefined, script: undefined, separate: undefined, silent: undefined, stderr: undefined, stdin: undefined, stdout: undefined, triggers: undefined, unbuffered: undefined, version: undefined } : { name, args, opts }, opts);
+    }
+}
+export interface SedArgs {
+    readonly binaryPath?: pulumi.Input<string>;
+    readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
+    readonly debug?: pulumi.Input<boolean>;
+    readonly environment?: pulumi.Input<Record<string, pulumi.Input<string>>>;
+    readonly expressions?: pulumi.Input<unknown>;
+    readonly files?: pulumi.Input<unknown>;
+    readonly followSymlinks?: pulumi.Input<boolean>;
+    readonly help?: pulumi.Input<boolean>;
+    readonly inPlace?: pulumi.Input<string>;
+    readonly inputFiles?: pulumi.Input<unknown>;
+    readonly lifecycle?: CommandLifecycleInputs;
+    readonly lineLength?: pulumi.Input<boolean>;
+    readonly nullData?: pulumi.Input<boolean>;
+    readonly posix?: pulumi.Input<boolean>;
+    readonly quiet?: pulumi.Input<boolean>;
+    readonly regexpExtended?: pulumi.Input<boolean>;
+    readonly sandbox?: pulumi.Input<boolean>;
+    readonly script?: pulumi.Input<string>;
+    readonly separate?: pulumi.Input<boolean>;
+    readonly silent?: pulumi.Input<boolean>;
+    readonly stdin?: pulumi.Input<string>;
+    readonly triggers?: pulumi.Input<pulumi.Input<any>[]>;
+    readonly unbuffered?: pulumi.Input<boolean>;
+    readonly version?: pulumi.Input<boolean>;
+}
 export abstract class Systemctl<TData = any> extends (pulumi.ComponentResource)<TData> {
     public binaryPath!: string | pulumi.Output<string>;
     public command!: command.remote.Command | pulumi.Output<command.remote.Command>;
@@ -973,7 +1231,7 @@ export abstract class Tar<TData = any> extends (pulumi.ComponentResource)<TData>
     public stderr!: string | pulumi.Output<string>;
     public stdin?: string | pulumi.Output<string>;
     public stdout!: string | pulumi.Output<string>;
-    public stripComponents?: number | pulumi.Output<number>;
+    public stripComponents?: boolean | pulumi.Output<boolean>;
     public triggers!: any[] | pulumi.Output<any[]>;
     constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
         super("kubernetes-the-hard-way:tools:Tar", name, opts.urn ? { archive: undefined, binaryPath: undefined, command: undefined, connection: undefined, directory: undefined, environment: undefined, extract: undefined, files: undefined, gzip: undefined, lifecycle: undefined, onDelete: undefined, recursive: undefined, stderr: undefined, stdin: undefined, stdout: undefined, stripComponents: undefined, triggers: undefined } : { name, args, opts }, opts);
@@ -992,7 +1250,7 @@ export interface TarArgs {
     readonly onDelete?: pulumi.Input<boolean>;
     readonly recursive?: pulumi.Input<boolean>;
     readonly stdin?: pulumi.Input<string>;
-    readonly stripComponents?: pulumi.Input<number>;
+    readonly stripComponents?: pulumi.Input<boolean>;
     readonly triggers?: pulumi.Input<pulumi.Input<any>[]>;
 }
 export abstract class Tee<TData = any> extends (pulumi.ComponentResource)<TData> {
@@ -1295,8 +1553,16 @@ export type NodeRoleInputs = "controlplane" | "worker";
 export type NodeRoleOutputs = "controlplane" | "worker";
 export type CommandLifecycleInputs = "create" | "update" | "delete";
 export type CommandLifecycleOutputs = "create" | "update" | "delete";
+export type CurlCertTypeInputs = "PEM" | "DER" | "ENG" | "P12";
+export type CurlCertTypeOutputs = "PEM" | "DER" | "ENG" | "P12";
+export type CurlDelegationLevelInputs = "none" | "policy" | "always";
+export type CurlDelegationLevelOutputs = "none" | "policy" | "always";
 export type EtcdctlCommandInputs = "member" | "list";
 export type EtcdctlCommandOutputs = "member" | "list";
+export type HostnamectlCommandInputs = "status" | "hostname" | "icon-name" | "chassis" | "deployment" | "location";
+export type HostnamectlCommandOutputs = "status" | "hostname" | "icon-name" | "chassis" | "deployment" | "location";
+export type HostnamectlJsonModeInputs = "short" | "pretty" | "off";
+export type HostnamectlJsonModeOutputs = "short" | "pretty" | "off";
 export type SystemctlCommandInputs = "bind" | "cat" | "clean" | "daemon-reload" | "disable" | "enable" | "freeze" | "is-active" | "is-enabled" | "is-failed" | "isolate" | "kill" | "list-automounts" | "list-dependencies" | "list-paths" | "list-sockets" | "list-timers" | "list-units" | "mask" | "mount-image" | "reenable" | "reload" | "reload-or-restart" | "restart" | "set-property" | "show" | "start" | "status" | "stop" | "thaw" | "try-reload-or-restart" | "try-restart" | "unmask";
 export type SystemctlCommandOutputs = "bind" | "cat" | "clean" | "daemon-reload" | "disable" | "enable" | "freeze" | "is-active" | "is-enabled" | "is-failed" | "isolate" | "kill" | "list-automounts" | "list-dependencies" | "list-paths" | "list-sockets" | "list-timers" | "list-units" | "mask" | "mount-image" | "reenable" | "reload" | "reload-or-restart" | "restart" | "set-property" | "show" | "start" | "status" | "stop" | "thaw" | "try-reload-or-restart" | "try-restart" | "unmask";
 export type TeeModeInputs = "warn" | "warn-nopipe" | "exit" | "exit-nopipe";

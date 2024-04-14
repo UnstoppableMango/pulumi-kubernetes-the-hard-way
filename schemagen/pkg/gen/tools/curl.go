@@ -84,13 +84,7 @@ func generateCurl() schema.ResourceSpec {
 		"urls":                  props.OneOrMoreStrings("Corresponds to the URLs argument."),
 	}
 
-	required := []string{
-		"caCert",
-		"cert",
-		"commands",
-		"endpoints",
-		"key",
-	}
+	required := []string{"urls"}
 
 	return schema.ResourceSpec{
 		ObjectTypeSpec: schema.ObjectTypeSpec{

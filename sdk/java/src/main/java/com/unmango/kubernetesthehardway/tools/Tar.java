@@ -14,7 +14,6 @@ import com.unmango.kubernetesthehardway.Utilities;
 import com.unmango.kubernetesthehardway.tools.TarArgs;
 import com.unmango.kubernetesthehardway.tools.enums.CommandLifecycle;
 import java.lang.Boolean;
-import java.lang.Integer;
 import java.lang.Object;
 import java.lang.String;
 import java.util.List;
@@ -242,14 +241,14 @@ public class Tar extends com.pulumi.resources.ComponentResource {
      * Corresponds to the `--strip-components` option.
      * 
      */
-    @Export(name="stripComponents", refs={Integer.class}, tree="[0]")
-    private Output</* @Nullable */ Integer> stripComponents;
+    @Export(name="stripComponents", refs={Boolean.class}, tree="[0]")
+    private Output</* @Nullable */ Boolean> stripComponents;
 
     /**
      * @return Corresponds to the `--strip-components` option.
      * 
      */
-    public Output<Optional<Integer>> stripComponents() {
+    public Output<Optional<Boolean>> stripComponents() {
         return Codegen.optional(this.stripComponents);
     }
     /**

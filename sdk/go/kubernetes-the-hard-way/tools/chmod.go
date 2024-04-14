@@ -35,7 +35,7 @@ type Chmod struct {
 	Lifecycle CommandLifecyclePtrOutput `pulumi:"lifecycle"`
 	// Modes may be absolute or symbolic. An absolute mode is an octal number...
 	Mode pulumi.StringOutput `pulumi:"mode"`
-	// Do not trea '/' spcially (the default).
+	// Do not treat '/' specially (the default).
 	NoPreserveRoot pulumi.BoolOutput `pulumi:"noPreserveRoot"`
 	// Fail to operate recursively on '/'.
 	PreserveRoot pulumi.BoolOutput `pulumi:"preserveRoot"`
@@ -102,7 +102,7 @@ type chmodArgs struct {
 	Lifecycle *CommandLifecycle `pulumi:"lifecycle"`
 	// Modes may be absolute or symbolic. An absolute mode is an octal number...
 	Mode string `pulumi:"mode"`
-	// Do not trea '/' spcially (the default).
+	// Do not treat '/' specially (the default).
 	NoPreserveRoot *bool `pulumi:"noPreserveRoot"`
 	// Fail to operate recursively on '/'.
 	PreserveRoot *bool `pulumi:"preserveRoot"`
@@ -140,7 +140,7 @@ type ChmodArgs struct {
 	Lifecycle *CommandLifecycle
 	// Modes may be absolute or symbolic. An absolute mode is an octal number...
 	Mode pulumi.StringInput
-	// Do not trea '/' spcially (the default).
+	// Do not treat '/' specially (the default).
 	NoPreserveRoot pulumi.BoolPtrInput
 	// Fail to operate recursively on '/'.
 	PreserveRoot pulumi.BoolPtrInput
@@ -292,7 +292,7 @@ func (o ChmodOutput) Mode() pulumi.StringOutput {
 	return o.ApplyT(func(v *Chmod) pulumi.StringOutput { return v.Mode }).(pulumi.StringOutput)
 }
 
-// Do not trea '/' spcially (the default).
+// Do not treat '/' specially (the default).
 func (o ChmodOutput) NoPreserveRoot() pulumi.BoolOutput {
 	return o.ApplyT(func(v *Chmod) pulumi.BoolOutput { return v.NoPreserveRoot }).(pulumi.BoolOutput)
 }

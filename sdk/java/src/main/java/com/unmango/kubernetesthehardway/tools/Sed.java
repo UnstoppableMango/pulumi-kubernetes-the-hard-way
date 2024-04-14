@@ -11,7 +11,7 @@ import com.pulumi.core.annotations.Export;
 import com.pulumi.core.annotations.ResourceType;
 import com.pulumi.core.internal.Codegen;
 import com.unmango.kubernetesthehardway.Utilities;
-import com.unmango.kubernetesthehardway.tools.ChmodArgs;
+import com.unmango.kubernetesthehardway.tools.SedArgs;
 import com.unmango.kubernetesthehardway.tools.enums.CommandLifecycle;
 import java.lang.Boolean;
 import java.lang.Object;
@@ -22,11 +22,11 @@ import java.util.Optional;
 import javax.annotation.Nullable;
 
 /**
- * Abstraction over the `chmod` utility on a remote system.
+ * Abstraction over the `sed` utility on a remote system.
  * 
  */
-@ResourceType(type="kubernetes-the-hard-way:tools:Chmod")
-public class Chmod extends com.pulumi.resources.ComponentResource {
+@ResourceType(type="kubernetes-the-hard-way:tools:Sed")
+public class Sed extends com.pulumi.resources.ComponentResource {
     /**
      * Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
      * 
@@ -40,20 +40,6 @@ public class Chmod extends com.pulumi.resources.ComponentResource {
      */
     public Output<String> binaryPath() {
         return this.binaryPath;
-    }
-    /**
-     * Like verbose but report only when a change is made.
-     * 
-     */
-    @Export(name="changes", refs={Boolean.class}, tree="[0]")
-    private Output<Boolean> changes;
-
-    /**
-     * @return Like verbose but report only when a change is made.
-     * 
-     */
-    public Output<Boolean> changes() {
-        return this.changes;
     }
     /**
      * The underlying command
@@ -84,6 +70,20 @@ public class Chmod extends com.pulumi.resources.ComponentResource {
         return this.connection;
     }
     /**
+     * annotate program execution.
+     * 
+     */
+    @Export(name="debug", refs={Boolean.class}, tree="[0]")
+    private Output<Boolean> debug;
+
+    /**
+     * @return annotate program execution.
+     * 
+     */
+    public Output<Boolean> debug() {
+        return this.debug;
+    }
+    /**
      * Environment variables
      * 
      */
@@ -98,32 +98,88 @@ public class Chmod extends com.pulumi.resources.ComponentResource {
         return this.environment;
     }
     /**
-     * Corresponds to the [FILE] argument.
+     * add the script to the commands to be executed.
+     * 
+     */
+    @Export(name="expressions", refs={Either.class,String.class,List.class}, tree="[0,1,[2,1]]")
+    private Output<Either<String,List<String>>> expressions;
+
+    /**
+     * @return add the script to the commands to be executed.
+     * 
+     */
+    public Output<Either<String,List<String>>> expressions() {
+        return this.expressions;
+    }
+    /**
+     * add the contents of script-file to the commands to be executed.
      * 
      */
     @Export(name="files", refs={Either.class,String.class,List.class}, tree="[0,1,[2,1]]")
     private Output<Either<String,List<String>>> files;
 
     /**
-     * @return Corresponds to the [FILE] argument.
+     * @return add the contents of script-file to the commands to be executed.
      * 
      */
     public Output<Either<String,List<String>>> files() {
         return this.files;
     }
     /**
-     * Display help and exit.
+     * follow symlinks when processing in place
+     * 
+     */
+    @Export(name="followSymlinks", refs={Boolean.class}, tree="[0]")
+    private Output<Boolean> followSymlinks;
+
+    /**
+     * @return follow symlinks when processing in place
+     * 
+     */
+    public Output<Boolean> followSymlinks() {
+        return this.followSymlinks;
+    }
+    /**
+     * display this help and exit.
      * 
      */
     @Export(name="help", refs={Boolean.class}, tree="[0]")
     private Output<Boolean> help;
 
     /**
-     * @return Display help and exit.
+     * @return display this help and exit.
      * 
      */
     public Output<Boolean> help() {
         return this.help;
+    }
+    /**
+     * edit files in place (makes backup if SUFFIX supplied)
+     * 
+     */
+    @Export(name="inPlace", refs={String.class}, tree="[0]")
+    private Output<String> inPlace;
+
+    /**
+     * @return edit files in place (makes backup if SUFFIX supplied)
+     * 
+     */
+    public Output<String> inPlace() {
+        return this.inPlace;
+    }
+    /**
+     * corresponds to the [input-file]... argument(s).
+     * 
+     */
+    @Export(name="inputFiles", refs={Either.class,String.class,List.class}, tree="[0,1,[2,1]]")
+    private Output<Either<String,List<String>>> inputFiles;
+
+    /**
+     * @return corresponds to the [input-file]... argument(s).
+     * 
+     */
+    public Output<Either<String,List<String>>> inputFiles() {
+        return this.inputFiles;
     }
     /**
      * At what stage(s) in the resource lifecycle should the command be run
@@ -140,98 +196,126 @@ public class Chmod extends com.pulumi.resources.ComponentResource {
         return Codegen.optional(this.lifecycle);
     }
     /**
-     * Modes may be absolute or symbolic. An absolute mode is an octal number...
+     * specify the desired line-wrap length for the `l&#39; command
      * 
      */
-    @Export(name="mode", refs={String.class}, tree="[0]")
-    private Output<String> mode;
+    @Export(name="lineLength", refs={Boolean.class}, tree="[0]")
+    private Output</* @Nullable */ Boolean> lineLength;
 
     /**
-     * @return Modes may be absolute or symbolic. An absolute mode is an octal number...
+     * @return specify the desired line-wrap length for the `l&#39; command
      * 
      */
-    public Output<String> mode() {
-        return this.mode;
+    public Output<Optional<Boolean>> lineLength() {
+        return Codegen.optional(this.lineLength);
     }
     /**
-     * Do not treat &#39;/&#39; specially (the default).
+     * separate lines by NUL characters
      * 
      */
-    @Export(name="noPreserveRoot", refs={Boolean.class}, tree="[0]")
-    private Output<Boolean> noPreserveRoot;
+    @Export(name="nullData", refs={Boolean.class}, tree="[0]")
+    private Output<Boolean> nullData;
 
     /**
-     * @return Do not treat &#39;/&#39; specially (the default).
+     * @return separate lines by NUL characters
      * 
      */
-    public Output<Boolean> noPreserveRoot() {
-        return this.noPreserveRoot;
+    public Output<Boolean> nullData() {
+        return this.nullData;
     }
     /**
-     * Fail to operate recursively on &#39;/&#39;.
+     * disable all GNU extensions.
      * 
      */
-    @Export(name="preserveRoot", refs={Boolean.class}, tree="[0]")
-    private Output<Boolean> preserveRoot;
+    @Export(name="posix", refs={Boolean.class}, tree="[0]")
+    private Output<Boolean> posix;
 
     /**
-     * @return Fail to operate recursively on &#39;/&#39;.
+     * @return disable all GNU extensions.
      * 
      */
-    public Output<Boolean> preserveRoot() {
-        return this.preserveRoot;
+    public Output<Boolean> posix() {
+        return this.posix;
     }
     /**
-     * Suppress most error messages. Same as `silent`.
+     * suppress automatic printing of pattern space. Same as `silent`.
      * 
      */
     @Export(name="quiet", refs={Boolean.class}, tree="[0]")
     private Output<Boolean> quiet;
 
     /**
-     * @return Suppress most error messages. Same as `silent`.
+     * @return suppress automatic printing of pattern space. Same as `silent`.
      * 
      */
     public Output<Boolean> quiet() {
         return this.quiet;
     }
     /**
-     * Change files and directories recursively.
+     * use extended regular expressions in the script (for portability use POSIX -E).
      * 
      */
-    @Export(name="recursive", refs={Boolean.class}, tree="[0]")
-    private Output<Boolean> recursive;
+    @Export(name="regexpExtended", refs={Boolean.class}, tree="[0]")
+    private Output<Boolean> regexpExtended;
 
     /**
-     * @return Change files and directories recursively.
+     * @return use extended regular expressions in the script (for portability use POSIX -E).
      * 
      */
-    public Output<Boolean> recursive() {
-        return this.recursive;
+    public Output<Boolean> regexpExtended() {
+        return this.regexpExtended;
     }
     /**
-     * Use RFILE&#39;s mode instead of specifying MODE values. RFILE is always dereferenced if a symbolic link.
+     * operate in sandbox mode (disable e/r/w commands).
      * 
      */
-    @Export(name="reference", refs={String.class}, tree="[0]")
-    private Output</* @Nullable */ String> reference;
+    @Export(name="sandbox", refs={Boolean.class}, tree="[0]")
+    private Output<Boolean> sandbox;
 
     /**
-     * @return Use RFILE&#39;s mode instead of specifying MODE values. RFILE is always dereferenced if a symbolic link.
+     * @return operate in sandbox mode (disable e/r/w commands).
      * 
      */
-    public Output<Optional<String>> reference() {
-        return Codegen.optional(this.reference);
+    public Output<Boolean> sandbox() {
+        return this.sandbox;
     }
     /**
-     * Suppress most error messages. Same as `quiet`.
+     * script only if no other script.
+     * 
+     */
+    @Export(name="script", refs={String.class}, tree="[0]")
+    private Output</* @Nullable */ String> script;
+
+    /**
+     * @return script only if no other script.
+     * 
+     */
+    public Output<Optional<String>> script() {
+        return Codegen.optional(this.script);
+    }
+    /**
+     * consider files as separate rather than as a single, continuous long stream.
+     * 
+     */
+    @Export(name="separate", refs={Boolean.class}, tree="[0]")
+    private Output<Boolean> separate;
+
+    /**
+     * @return consider files as separate rather than as a single, continuous long stream.
+     * 
+     */
+    public Output<Boolean> separate() {
+        return this.separate;
+    }
+    /**
+     * suppress automatic printing of pattern space. Same as `quiet`.
      * 
      */
     @Export(name="silent", refs={Boolean.class}, tree="[0]")
     private Output<Boolean> silent;
 
     /**
-     * @return Suppress most error messages. Same as `quiet`.
+     * @return suppress automatic printing of pattern space. Same as `quiet`.
      * 
      */
     public Output<Boolean> silent() {
@@ -294,14 +378,28 @@ public class Chmod extends com.pulumi.resources.ComponentResource {
         return this.triggers;
     }
     /**
-     * Output version information and exit.
+     * load minimal amounts of data from the input files and flush the output buffers more often.
+     * 
+     */
+    @Export(name="unbuffered", refs={Boolean.class}, tree="[0]")
+    private Output<Boolean> unbuffered;
+
+    /**
+     * @return load minimal amounts of data from the input files and flush the output buffers more often.
+     * 
+     */
+    public Output<Boolean> unbuffered() {
+        return this.unbuffered;
+    }
+    /**
+     * output version information and exit.
      * 
      */
     @Export(name="version", refs={Boolean.class}, tree="[0]")
     private Output<Boolean> version;
 
     /**
-     * @return Output version information and exit.
+     * @return output version information and exit.
      * 
      */
     public Output<Boolean> version() {
@@ -312,15 +410,15 @@ public class Chmod extends com.pulumi.resources.ComponentResource {
      *
      * @param name The _unique_ name of the resulting resource.
      */
-    public Chmod(String name) {
-        this(name, ChmodArgs.Empty);
+    public Sed(String name) {
+        this(name, SedArgs.Empty);
     }
     /**
      *
      * @param name The _unique_ name of the resulting resource.
      * @param args The arguments to use to populate this resource's properties.
      */
-    public Chmod(String name, ChmodArgs args) {
+    public Sed(String name, SedArgs args) {
         this(name, args, null);
     }
     /**
@@ -329,8 +427,8 @@ public class Chmod extends com.pulumi.resources.ComponentResource {
      * @param args The arguments to use to populate this resource's properties.
      * @param options A bag of options that control this resource's behavior.
      */
-    public Chmod(String name, ChmodArgs args, @Nullable com.pulumi.resources.ComponentResourceOptions options) {
-        super("kubernetes-the-hard-way:tools:Chmod", name, args == null ? ChmodArgs.Empty : args, makeResourceOptions(options, Codegen.empty()), true);
+    public Sed(String name, SedArgs args, @Nullable com.pulumi.resources.ComponentResourceOptions options) {
+        super("kubernetes-the-hard-way:tools:Sed", name, args == null ? SedArgs.Empty : args, makeResourceOptions(options, Codegen.empty()), true);
     }
 
     private static com.pulumi.resources.ComponentResourceOptions makeResourceOptions(@Nullable com.pulumi.resources.ComponentResourceOptions options, @Nullable Output<String> id) {

@@ -23,8 +23,12 @@ func (m *module) Construct(ctx *pulumi.Context, name, typ, urn string) (r pulumi
 	switch typ {
 	case "kubernetes-the-hard-way:tools:Chmod":
 		r = &Chmod{}
+	case "kubernetes-the-hard-way:tools:Curl":
+		r = &Curl{}
 	case "kubernetes-the-hard-way:tools:Etcdctl":
 		r = &Etcdctl{}
+	case "kubernetes-the-hard-way:tools:Hostnamectl":
+		r = &Hostnamectl{}
 	case "kubernetes-the-hard-way:tools:Mkdir":
 		r = &Mkdir{}
 	case "kubernetes-the-hard-way:tools:Mktemp":
@@ -33,6 +37,8 @@ func (m *module) Construct(ctx *pulumi.Context, name, typ, urn string) (r pulumi
 		r = &Mv{}
 	case "kubernetes-the-hard-way:tools:Rm":
 		r = &Rm{}
+	case "kubernetes-the-hard-way:tools:Sed":
+		r = &Sed{}
 	case "kubernetes-the-hard-way:tools:Systemctl":
 		r = &Systemctl{}
 	case "kubernetes-the-hard-way:tools:Tar":

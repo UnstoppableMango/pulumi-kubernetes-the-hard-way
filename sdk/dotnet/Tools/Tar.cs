@@ -110,7 +110,7 @@ namespace UnMango.KubernetesTheHardWay.Tools
         /// Corresponds to the `--strip-components` option.
         /// </summary>
         [Output("stripComponents")]
-        public Output<int?> StripComponents { get; private set; } = null!;
+        public Output<bool?> StripComponents { get; private set; } = null!;
 
         /// <summary>
         /// TODO
@@ -229,7 +229,7 @@ namespace UnMango.KubernetesTheHardWay.Tools
         /// Corresponds to the `--strip-components` option.
         /// </summary>
         [Input("stripComponents")]
-        public Input<int>? StripComponents { get; set; }
+        public Input<bool>? StripComponents { get; set; }
 
         [Input("triggers")]
         private InputList<object>? _triggers;

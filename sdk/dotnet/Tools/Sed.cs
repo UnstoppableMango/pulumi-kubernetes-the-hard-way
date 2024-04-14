@@ -11,22 +11,16 @@ using Pulumi;
 namespace UnMango.KubernetesTheHardWay.Tools
 {
     /// <summary>
-    /// Abstraction over the `chmod` utility on a remote system.
+    /// Abstraction over the `sed` utility on a remote system.
     /// </summary>
-    [KubernetesTheHardWayResourceType("kubernetes-the-hard-way:tools:Chmod")]
-    public partial class Chmod : global::Pulumi.ComponentResource
+    [KubernetesTheHardWayResourceType("kubernetes-the-hard-way:tools:Sed")]
+    public partial class Sed : global::Pulumi.ComponentResource
     {
         /// <summary>
         /// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
         /// </summary>
         [Output("binaryPath")]
         public Output<string> BinaryPath { get; private set; } = null!;
-
-        /// <summary>
-        /// Like verbose but report only when a change is made.
-        /// </summary>
-        [Output("changes")]
-        public Output<bool> Changes { get; private set; } = null!;
 
         /// <summary>
         /// The underlying command
@@ -41,22 +35,52 @@ namespace UnMango.KubernetesTheHardWay.Tools
         public Output<Pulumi.Command.Remote.Outputs.Connection> Connection { get; private set; } = null!;
 
         /// <summary>
+        /// annotate program execution.
+        /// </summary>
+        [Output("debug")]
+        public Output<bool> Debug { get; private set; } = null!;
+
+        /// <summary>
         /// Environment variables
         /// </summary>
         [Output("environment")]
         public Output<ImmutableDictionary<string, string>> Environment { get; private set; } = null!;
 
         /// <summary>
-        /// Corresponds to the [FILE] argument.
+        /// add the script to the commands to be executed.
+        /// </summary>
+        [Output("expressions")]
+        public Output<Union<string, ImmutableArray<string>>> Expressions { get; private set; } = null!;
+
+        /// <summary>
+        /// add the contents of script-file to the commands to be executed.
         /// </summary>
         [Output("files")]
         public Output<Union<string, ImmutableArray<string>>> Files { get; private set; } = null!;
 
         /// <summary>
-        /// Display help and exit.
+        /// follow symlinks when processing in place
+        /// </summary>
+        [Output("followSymlinks")]
+        public Output<bool> FollowSymlinks { get; private set; } = null!;
+
+        /// <summary>
+        /// display this help and exit.
         /// </summary>
         [Output("help")]
         public Output<bool> Help { get; private set; } = null!;
+
+        /// <summary>
+        /// edit files in place (makes backup if SUFFIX supplied)
+        /// </summary>
+        [Output("inPlace")]
+        public Output<string> InPlace { get; private set; } = null!;
+
+        /// <summary>
+        /// corresponds to the [input-file]... argument(s).
+        /// </summary>
+        [Output("inputFiles")]
+        public Output<Union<string, ImmutableArray<string>>> InputFiles { get; private set; } = null!;
 
         /// <summary>
         /// At what stage(s) in the resource lifecycle should the command be run
@@ -65,43 +89,55 @@ namespace UnMango.KubernetesTheHardWay.Tools
         public Output<UnMango.KubernetesTheHardWay.Tools.CommandLifecycle?> Lifecycle { get; private set; } = null!;
 
         /// <summary>
-        /// Modes may be absolute or symbolic. An absolute mode is an octal number...
+        /// specify the desired line-wrap length for the `l' command
         /// </summary>
-        [Output("mode")]
-        public Output<string> Mode { get; private set; } = null!;
+        [Output("lineLength")]
+        public Output<bool?> LineLength { get; private set; } = null!;
 
         /// <summary>
-        /// Do not treat '/' specially (the default).
+        /// separate lines by NUL characters
         /// </summary>
-        [Output("noPreserveRoot")]
-        public Output<bool> NoPreserveRoot { get; private set; } = null!;
+        [Output("nullData")]
+        public Output<bool> NullData { get; private set; } = null!;
 
         /// <summary>
-        /// Fail to operate recursively on '/'.
+        /// disable all GNU extensions.
         /// </summary>
-        [Output("preserveRoot")]
-        public Output<bool> PreserveRoot { get; private set; } = null!;
+        [Output("posix")]
+        public Output<bool> Posix { get; private set; } = null!;
 
         /// <summary>
-        /// Suppress most error messages. Same as `silent`.
+        /// suppress automatic printing of pattern space. Same as `silent`.
         /// </summary>
         [Output("quiet")]
         public Output<bool> Quiet { get; private set; } = null!;
 
         /// <summary>
-        /// Change files and directories recursively.
+        /// use extended regular expressions in the script (for portability use POSIX -E).
         /// </summary>
-        [Output("recursive")]
-        public Output<bool> Recursive { get; private set; } = null!;
+        [Output("regexpExtended")]
+        public Output<bool> RegexpExtended { get; private set; } = null!;
 
         /// <summary>
-        /// Use RFILE's mode instead of specifying MODE values. RFILE is always dereferenced if a symbolic link.
+        /// operate in sandbox mode (disable e/r/w commands).
         /// </summary>
-        [Output("reference")]
-        public Output<string?> Reference { get; private set; } = null!;
+        [Output("sandbox")]
+        public Output<bool> Sandbox { get; private set; } = null!;
 
         /// <summary>
-        /// Suppress most error messages. Same as `quiet`.
+        /// script only if no other script.
+        /// </summary>
+        [Output("script")]
+        public Output<string?> Script { get; private set; } = null!;
+
+        /// <summary>
+        /// consider files as separate rather than as a single, continuous long stream.
+        /// </summary>
+        [Output("separate")]
+        public Output<bool> Separate { get; private set; } = null!;
+
+        /// <summary>
+        /// suppress automatic printing of pattern space. Same as `quiet`.
         /// </summary>
         [Output("silent")]
         public Output<bool> Silent { get; private set; } = null!;
@@ -131,21 +167,27 @@ namespace UnMango.KubernetesTheHardWay.Tools
         public Output<ImmutableArray<object>> Triggers { get; private set; } = null!;
 
         /// <summary>
-        /// Output version information and exit.
+        /// load minimal amounts of data from the input files and flush the output buffers more often.
+        /// </summary>
+        [Output("unbuffered")]
+        public Output<bool> Unbuffered { get; private set; } = null!;
+
+        /// <summary>
+        /// output version information and exit.
         /// </summary>
         [Output("version")]
         public Output<bool> Version { get; private set; } = null!;
 
 
         /// <summary>
-        /// Create a Chmod resource with the given unique name, arguments, and options.
+        /// Create a Sed resource with the given unique name, arguments, and options.
         /// </summary>
         ///
         /// <param name="name">The unique name of the resource</param>
         /// <param name="args">The arguments used to populate this resource's properties</param>
         /// <param name="options">A bag of options that control this resource's behavior</param>
-        public Chmod(string name, ChmodArgs args, ComponentResourceOptions? options = null)
-            : base("kubernetes-the-hard-way:tools:Chmod", name, args ?? new ChmodArgs(), MakeResourceOptions(options, ""), remote: true)
+        public Sed(string name, SedArgs args, ComponentResourceOptions? options = null)
+            : base("kubernetes-the-hard-way:tools:Sed", name, args ?? new SedArgs(), MakeResourceOptions(options, ""), remote: true)
         {
         }
 
@@ -163,7 +205,7 @@ namespace UnMango.KubernetesTheHardWay.Tools
         }
     }
 
-    public sealed class ChmodArgs : global::Pulumi.ResourceArgs
+    public sealed class SedArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
         /// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
@@ -172,16 +214,16 @@ namespace UnMango.KubernetesTheHardWay.Tools
         public Input<string>? BinaryPath { get; set; }
 
         /// <summary>
-        /// Like verbose but report only when a change is made.
-        /// </summary>
-        [Input("changes")]
-        public Input<bool>? Changes { get; set; }
-
-        /// <summary>
         /// Connection details for the remote system
         /// </summary>
         [Input("connection", required: true)]
         public Input<Pulumi.Command.Remote.Inputs.ConnectionArgs> Connection { get; set; } = null!;
+
+        /// <summary>
+        /// annotate program execution.
+        /// </summary>
+        [Input("debug")]
+        public Input<bool>? Debug { get; set; }
 
         [Input("environment")]
         private InputMap<string>? _environment;
@@ -196,16 +238,40 @@ namespace UnMango.KubernetesTheHardWay.Tools
         }
 
         /// <summary>
-        /// Corresponds to the [FILE] argument.
+        /// add the script to the commands to be executed.
         /// </summary>
-        [Input("files", required: true)]
-        public InputUnion<string, ImmutableArray<string>> Files { get; set; } = null!;
+        [Input("expressions")]
+        public InputUnion<string, ImmutableArray<string>>? Expressions { get; set; }
 
         /// <summary>
-        /// Display help and exit.
+        /// add the contents of script-file to the commands to be executed.
+        /// </summary>
+        [Input("files")]
+        public InputUnion<string, ImmutableArray<string>>? Files { get; set; }
+
+        /// <summary>
+        /// follow symlinks when processing in place
+        /// </summary>
+        [Input("followSymlinks")]
+        public Input<bool>? FollowSymlinks { get; set; }
+
+        /// <summary>
+        /// display this help and exit.
         /// </summary>
         [Input("help")]
         public Input<bool>? Help { get; set; }
+
+        /// <summary>
+        /// edit files in place (makes backup if SUFFIX supplied)
+        /// </summary>
+        [Input("inPlace")]
+        public Input<string>? InPlace { get; set; }
+
+        /// <summary>
+        /// corresponds to the [input-file]... argument(s).
+        /// </summary>
+        [Input("inputFiles")]
+        public InputUnion<string, ImmutableArray<string>>? InputFiles { get; set; }
 
         /// <summary>
         /// At what stage(s) in the resource lifecycle should the command be run
@@ -214,43 +280,55 @@ namespace UnMango.KubernetesTheHardWay.Tools
         public UnMango.KubernetesTheHardWay.Tools.CommandLifecycle? Lifecycle { get; set; }
 
         /// <summary>
-        /// Modes may be absolute or symbolic. An absolute mode is an octal number...
+        /// specify the desired line-wrap length for the `l' command
         /// </summary>
-        [Input("mode", required: true)]
-        public Input<string> Mode { get; set; } = null!;
+        [Input("lineLength")]
+        public Input<bool>? LineLength { get; set; }
 
         /// <summary>
-        /// Do not treat '/' specially (the default).
+        /// separate lines by NUL characters
         /// </summary>
-        [Input("noPreserveRoot")]
-        public Input<bool>? NoPreserveRoot { get; set; }
+        [Input("nullData")]
+        public Input<bool>? NullData { get; set; }
 
         /// <summary>
-        /// Fail to operate recursively on '/'.
+        /// disable all GNU extensions.
         /// </summary>
-        [Input("preserveRoot")]
-        public Input<bool>? PreserveRoot { get; set; }
+        [Input("posix")]
+        public Input<bool>? Posix { get; set; }
 
         /// <summary>
-        /// Suppress most error messages. Same as `silent`.
+        /// suppress automatic printing of pattern space. Same as `silent`.
         /// </summary>
         [Input("quiet")]
         public Input<bool>? Quiet { get; set; }
 
         /// <summary>
-        /// Change files and directories recursively.
+        /// use extended regular expressions in the script (for portability use POSIX -E).
         /// </summary>
-        [Input("recursive")]
-        public Input<bool>? Recursive { get; set; }
+        [Input("regexpExtended")]
+        public Input<bool>? RegexpExtended { get; set; }
 
         /// <summary>
-        /// Use RFILE's mode instead of specifying MODE values. RFILE is always dereferenced if a symbolic link.
+        /// operate in sandbox mode (disable e/r/w commands).
         /// </summary>
-        [Input("reference")]
-        public Input<string>? Reference { get; set; }
+        [Input("sandbox")]
+        public Input<bool>? Sandbox { get; set; }
 
         /// <summary>
-        /// Suppress most error messages. Same as `quiet`.
+        /// script only if no other script.
+        /// </summary>
+        [Input("script")]
+        public Input<string>? Script { get; set; }
+
+        /// <summary>
+        /// consider files as separate rather than as a single, continuous long stream.
+        /// </summary>
+        [Input("separate")]
+        public Input<bool>? Separate { get; set; }
+
+        /// <summary>
+        /// suppress automatic printing of pattern space. Same as `quiet`.
         /// </summary>
         [Input("silent")]
         public Input<bool>? Silent { get; set; }
@@ -274,14 +352,20 @@ namespace UnMango.KubernetesTheHardWay.Tools
         }
 
         /// <summary>
-        /// Output version information and exit.
+        /// load minimal amounts of data from the input files and flush the output buffers more often.
+        /// </summary>
+        [Input("unbuffered")]
+        public Input<bool>? Unbuffered { get; set; }
+
+        /// <summary>
+        /// output version information and exit.
         /// </summary>
         [Input("version")]
         public Input<bool>? Version { get; set; }
 
-        public ChmodArgs()
+        public SedArgs()
         {
         }
-        public static new ChmodArgs Empty => new ChmodArgs();
+        public static new SedArgs Empty => new SedArgs();
     }
 }
