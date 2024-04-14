@@ -3,15 +3,43 @@
 
 package com.unmango.kubernetesthehardway.remote;
 
-
+import com.pulumi.command.remote.inputs.ConnectionArgs;
+import com.pulumi.core.Output;
+import com.pulumi.core.annotations.Import;
+import com.pulumi.exceptions.MissingRequiredPropertyException;
+import java.util.Objects;
 
 
 public final class StartEtcdArgs extends com.pulumi.resources.ResourceArgs {
 
     public static final StartEtcdArgs Empty = new StartEtcdArgs();
 
+    /**
+     * The parameters with which to connect to the remote host.
+     * 
+     */
+    @Import(name="connection", required=true)
+    private Output<ConnectionArgs> connection;
+
+    /**
+     * @return The parameters with which to connect to the remote host.
+     * 
+     */
+    public Output<ConnectionArgs> connection() {
+        return this.connection;
+    }
+
+    private StartEtcdArgs() {}
+
+    private StartEtcdArgs(StartEtcdArgs $) {
+        this.connection = $.connection;
+    }
+
     public static Builder builder() {
         return new Builder();
+    }
+    public static Builder builder(StartEtcdArgs defaults) {
+        return new Builder(defaults);
     }
 
     public static final class Builder {
@@ -20,7 +48,36 @@ public final class StartEtcdArgs extends com.pulumi.resources.ResourceArgs {
         public Builder() {
             $ = new StartEtcdArgs();
         }
+
+        public Builder(StartEtcdArgs defaults) {
+            $ = new StartEtcdArgs(Objects.requireNonNull(defaults));
+        }
+
+        /**
+         * @param connection The parameters with which to connect to the remote host.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder connection(Output<ConnectionArgs> connection) {
+            $.connection = connection;
+            return this;
+        }
+
+        /**
+         * @param connection The parameters with which to connect to the remote host.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder connection(ConnectionArgs connection) {
+            return connection(Output.of(connection));
+        }
+
         public StartEtcdArgs build() {
+            if ($.connection == null) {
+                throw new MissingRequiredPropertyException("StartEtcdArgs", "connection");
+            }
             return $;
         }
     }

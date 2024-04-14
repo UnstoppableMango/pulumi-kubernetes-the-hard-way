@@ -17,6 +17,12 @@ namespace UnMango.KubernetesTheHardWay.Remote
     public partial class StartEtcd : global::Pulumi.ComponentResource
     {
         /// <summary>
+        /// The parameters with which to connect to the remote host.
+        /// </summary>
+        [Output("connection")]
+        public Output<Pulumi.Command.Remote.Outputs.Connection> Connection { get; private set; } = null!;
+
+        /// <summary>
         /// The daemon-reload command.
         /// </summary>
         [Output("daemonReload")]
@@ -42,7 +48,7 @@ namespace UnMango.KubernetesTheHardWay.Remote
         /// <param name="name">The unique name of the resource</param>
         /// <param name="args">The arguments used to populate this resource's properties</param>
         /// <param name="options">A bag of options that control this resource's behavior</param>
-        public StartEtcd(string name, StartEtcdArgs? args = null, ComponentResourceOptions? options = null)
+        public StartEtcd(string name, StartEtcdArgs args, ComponentResourceOptions? options = null)
             : base("kubernetes-the-hard-way:remote:StartEtcd", name, args ?? new StartEtcdArgs(), MakeResourceOptions(options, ""), remote: true)
         {
         }
@@ -63,6 +69,12 @@ namespace UnMango.KubernetesTheHardWay.Remote
 
     public sealed class StartEtcdArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// The parameters with which to connect to the remote host.
+        /// </summary>
+        [Input("connection", required: true)]
+        public Input<Pulumi.Command.Remote.Inputs.ConnectionArgs> Connection { get; set; } = null!;
+
         public StartEtcdArgs()
         {
         }

@@ -2527,6 +2527,10 @@
         "kubernetes-the-hard-way:remote:StartEtcd": {
             "description": "Starts etcd on a remote system.",
             "properties": {
+                "connection": {
+                    "$ref": "/command/v0.9.2/schema.json#/types/command:remote:Connection",
+                    "description": "The parameters with which to connect to the remote host."
+                },
                 "daemonReload": {
                     "$ref": "#/resources/kubernetes-the-hard-way:tools:Systemctl",
                     "description": "The daemon-reload command."
@@ -2541,9 +2545,19 @@
                 }
             },
             "required": [
+                "connection",
                 "daemonReload",
                 "enable",
                 "start"
+            ],
+            "inputProperties": {
+                "connection": {
+                    "$ref": "/command/v0.9.2/schema.json#/types/command:remote:Connection",
+                    "description": "The parameters with which to connect to the remote host."
+                }
+            },
+            "requiredInputs": [
+                "connection"
             ],
             "isComponent": true
         },

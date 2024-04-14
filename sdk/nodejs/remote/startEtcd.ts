@@ -4,6 +4,8 @@
 import * as pulumi from "@pulumi/pulumi";
 import * as utilities from "../utilities";
 
+import * as pulumiCommand from "@pulumi/command";
+
 import {Systemctl} from "../tools";
 
 /**
@@ -25,6 +27,10 @@ export class StartEtcd extends pulumi.ComponentResource {
     }
 
     /**
+     * The parameters with which to connect to the remote host.
+     */
+    public readonly connection!: pulumi.Output<pulumiCommand.types.output.remote.Connection>;
+    /**
      * The daemon-reload command.
      */
     public /*out*/ readonly daemonReload!: pulumi.Output<Systemctl>;
@@ -44,14 +50,19 @@ export class StartEtcd extends pulumi.ComponentResource {
      * @param args The arguments to use to populate this resource's properties.
      * @param opts A bag of options that control this resource's behavior.
      */
-    constructor(name: string, args?: StartEtcdArgs, opts?: pulumi.ComponentResourceOptions) {
+    constructor(name: string, args: StartEtcdArgs, opts?: pulumi.ComponentResourceOptions) {
         let resourceInputs: pulumi.Inputs = {};
         opts = opts || {};
         if (!opts.id) {
+            if ((!args || args.connection === undefined) && !opts.urn) {
+                throw new Error("Missing required property 'connection'");
+            }
+            resourceInputs["connection"] = args ? (args.connection ? pulumi.output(args.connection).apply(pulumiCommand.types.input.remote.connectionArgsProvideDefaults) : undefined) : undefined;
             resourceInputs["daemonReload"] = undefined /*out*/;
             resourceInputs["enable"] = undefined /*out*/;
             resourceInputs["start"] = undefined /*out*/;
         } else {
+            resourceInputs["connection"] = undefined /*out*/;
             resourceInputs["daemonReload"] = undefined /*out*/;
             resourceInputs["enable"] = undefined /*out*/;
             resourceInputs["start"] = undefined /*out*/;
@@ -65,4 +76,8 @@ export class StartEtcd extends pulumi.ComponentResource {
  * The set of arguments for constructing a StartEtcd resource.
  */
 export interface StartEtcdArgs {
+    /**
+     * The parameters with which to connect to the remote host.
+     */
+    connection: pulumi.Input<pulumiCommand.types.input.remote.ConnectionArgs>;
 }

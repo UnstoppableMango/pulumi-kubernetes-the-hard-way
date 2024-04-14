@@ -3,6 +3,7 @@
 
 package com.unmango.kubernetesthehardway.remote;
 
+import com.pulumi.command.remote.outputs.Connection;
 import com.pulumi.core.Output;
 import com.pulumi.core.annotations.Export;
 import com.pulumi.core.annotations.ResourceType;
@@ -18,6 +19,20 @@ import javax.annotation.Nullable;
  */
 @ResourceType(type="kubernetes-the-hard-way:remote:StartEtcd")
 public class StartEtcd extends com.pulumi.resources.ComponentResource {
+    /**
+     * The parameters with which to connect to the remote host.
+     * 
+     */
+    @Export(name="connection", refs={Connection.class}, tree="[0]")
+    private Output<Connection> connection;
+
+    /**
+     * @return The parameters with which to connect to the remote host.
+     * 
+     */
+    public Output<Connection> connection() {
+        return this.connection;
+    }
     /**
      * The daemon-reload command.
      * 
@@ -73,7 +88,7 @@ public class StartEtcd extends com.pulumi.resources.ComponentResource {
      * @param name The _unique_ name of the resulting resource.
      * @param args The arguments to use to populate this resource's properties.
      */
-    public StartEtcd(String name, @Nullable StartEtcdArgs args) {
+    public StartEtcd(String name, StartEtcdArgs args) {
         this(name, args, null);
     }
     /**
@@ -82,7 +97,7 @@ public class StartEtcd extends com.pulumi.resources.ComponentResource {
      * @param args The arguments to use to populate this resource's properties.
      * @param options A bag of options that control this resource's behavior.
      */
-    public StartEtcd(String name, @Nullable StartEtcdArgs args, @Nullable com.pulumi.resources.ComponentResourceOptions options) {
+    public StartEtcd(String name, StartEtcdArgs args, @Nullable com.pulumi.resources.ComponentResourceOptions options) {
         super("kubernetes-the-hard-way:remote:StartEtcd", name, args == null ? StartEtcdArgs.Empty : args, makeResourceOptions(options, Codegen.empty()), true);
     }
 

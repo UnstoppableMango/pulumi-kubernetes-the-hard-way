@@ -7,6 +7,8 @@ import (
 	"context"
 	"reflect"
 
+	"errors"
+	pulumiCommand "github.com/pulumi/pulumi-command/sdk/go/command/remote"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 	"github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/sdk/go/kubernetes-the-hard-way/internal"
 	"github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/sdk/go/kubernetes-the-hard-way/tools"
@@ -16,6 +18,8 @@ import (
 type StartEtcd struct {
 	pulumi.ResourceState
 
+	// The parameters with which to connect to the remote host.
+	Connection pulumiCommand.ConnectionOutput `pulumi:"connection"`
 	// The daemon-reload command.
 	DaemonReload tools.SystemctlOutput `pulumi:"daemonReload"`
 	// The enable command.
@@ -28,9 +32,13 @@ type StartEtcd struct {
 func NewStartEtcd(ctx *pulumi.Context,
 	name string, args *StartEtcdArgs, opts ...pulumi.ResourceOption) (*StartEtcd, error) {
 	if args == nil {
-		args = &StartEtcdArgs{}
+		return nil, errors.New("missing one or more required arguments")
 	}
 
+	if args.Connection == nil {
+		return nil, errors.New("invalid value for required argument 'Connection'")
+	}
+	args.Connection = args.Connection.ToConnectionOutput().ApplyT(func(v pulumiCommand.Connection) pulumiCommand.Connection { return *v.Defaults() }).(pulumiCommand.ConnectionOutput)
 	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource StartEtcd
 	err := ctx.RegisterRemoteComponentResource("kubernetes-the-hard-way:remote:StartEtcd", name, args, &resource, opts...)
@@ -41,10 +49,14 @@ func NewStartEtcd(ctx *pulumi.Context,
 }
 
 type startEtcdArgs struct {
+	// The parameters with which to connect to the remote host.
+	Connection pulumiCommand.Connection `pulumi:"connection"`
 }
 
 // The set of arguments for constructing a StartEtcd resource.
 type StartEtcdArgs struct {
+	// The parameters with which to connect to the remote host.
+	Connection pulumiCommand.ConnectionInput
 }
 
 func (StartEtcdArgs) ElementType() reflect.Type {
@@ -132,6 +144,11 @@ func (o StartEtcdOutput) ToStartEtcdOutput() StartEtcdOutput {
 
 func (o StartEtcdOutput) ToStartEtcdOutputWithContext(ctx context.Context) StartEtcdOutput {
 	return o
+}
+
+// The parameters with which to connect to the remote host.
+func (o StartEtcdOutput) Connection() pulumiCommand.ConnectionOutput {
+	return o.ApplyT(func(v *StartEtcd) pulumiCommand.ConnectionOutput { return v.Connection }).(pulumiCommand.ConnectionOutput)
 }
 
 // The daemon-reload command.

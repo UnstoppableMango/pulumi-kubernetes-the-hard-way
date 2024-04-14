@@ -470,14 +470,16 @@ export interface RuncInstallArgs {
     readonly version?: pulumi.Input<string>;
 }
 export abstract class StartEtcd<TData = any> extends (pulumi.ComponentResource)<TData> {
+    public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
     public daemonReload!: Systemctl | pulumi.Output<Systemctl>;
     public enable!: Systemctl | pulumi.Output<Systemctl>;
     public start!: Systemctl | pulumi.Output<Systemctl>;
     constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
-        super("kubernetes-the-hard-way:remote:StartEtcd", name, opts.urn ? { daemonReload: undefined, enable: undefined, start: undefined } : { name, args, opts }, opts);
+        super("kubernetes-the-hard-way:remote:StartEtcd", name, opts.urn ? { connection: undefined, daemonReload: undefined, enable: undefined, start: undefined } : { name, args, opts }, opts);
     }
 }
 export interface StartEtcdArgs {
+    readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
 }
 export abstract class StaticPod<TData = any> extends (pulumi.ComponentResource)<TData> {
     public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
