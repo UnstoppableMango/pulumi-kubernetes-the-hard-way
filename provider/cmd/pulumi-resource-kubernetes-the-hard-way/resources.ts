@@ -22,7 +22,7 @@ import {
   SystemdService,
 } from './remote';
 import { Certificate, ClusterPki, EncryptionKey, RootCa } from './tls';
-import { Chmod, Etcdctl, Mkdir, Mktemp, Mv, Rm, Systemctl, Tar, Tee, Wget } from './tools';
+import { Chmod, Etcdctl, Hostnamectl, Mkdir, Mktemp, Mv, Rm, Sed, Systemctl, Tar, Tee, Wget } from './tools';
 import { KubeVipManifest } from './config';
 
 const resources: schema.ResourceConstructor = {
@@ -55,10 +55,12 @@ const resources: schema.ResourceConstructor = {
   'kubernetes-the-hard-way:tls:RootCa': (...args) => new RootCa(...args),
   'kubernetes-the-hard-way:tools:Chmod': (...args) => new Chmod(...args),
   'kubernetes-the-hard-way:tools:Etcdctl': (...args) => new Etcdctl(...args),
+  'kubernetes-the-hard-way:tools:Hostnamectl': (...args) => new Hostnamectl(...args),
   'kubernetes-the-hard-way:tools:Mkdir': (...args) => new Mkdir(...args),
   'kubernetes-the-hard-way:tools:Mktemp': (...args) => new Mktemp(...args),
   'kubernetes-the-hard-way:tools:Mv': (...args) => new Mv(...args),
   'kubernetes-the-hard-way:tools:Rm': (...args) => new Rm(...args),
+  'kubernetes-the-hard-way:tools:Sed': (...args) => new Sed(...args),
   'kubernetes-the-hard-way:tools:Systemctl': (...args) => new Systemctl(...args),
   'kubernetes-the-hard-way:tools:Tar': (...args) => new Tar(...args),
   'kubernetes-the-hard-way:tools:Tee': (...args) => new Tee(...args),
