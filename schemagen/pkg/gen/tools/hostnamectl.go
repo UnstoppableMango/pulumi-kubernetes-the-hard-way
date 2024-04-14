@@ -32,10 +32,15 @@ func generateHostnamectl() schema.ResourceSpec {
 	return schema.ResourceSpec{
 		ObjectTypeSpec: schema.ObjectTypeSpec{
 			Description: "Abstraction over the `hostnamectl` utility on a remote system.",
-			Properties:  implicitOutputs(inputs, map[string]schema.PropertySpec{}),
+			Properties: implicitOutputs(inputs, map[string]schema.PropertySpec{
+				"hostnamectlCommand": {
+					Description: "Corresponds to the {COMMAND} argument.",
+					TypeSpec:    types.LocalType("HostnamectlCommand", "tools"),
+				},
+			}),
 			Required: append(required,
 				"help",
-				"json",
+				"hostnamectlCommand",
 				"noAskPassword",
 				"pretty",
 				"static",
