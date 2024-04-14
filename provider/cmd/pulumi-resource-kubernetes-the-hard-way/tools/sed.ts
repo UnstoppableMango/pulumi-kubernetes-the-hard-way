@@ -64,6 +64,7 @@ export class Sed extends schema.Sed {
     }, { parent: this });
 
     this.binaryPath = binaryPath;
+    this.command = command;
     this.connection = connection;
     this.debug = debug;
     this.environment = environment;
@@ -90,6 +91,7 @@ export class Sed extends schema.Sed {
 
     this.registerOutputs({
       binaryPath,
+      command,
       connection,
       debug,
       environment,
