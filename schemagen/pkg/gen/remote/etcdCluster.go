@@ -8,7 +8,7 @@ import (
 	"github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 )
 
-func generateEtcdCluster(commandSpec schema.PackageSpec) schema.ResourceSpec {
+func generateEtcdCluster() schema.ResourceSpec {
 	etcdNode := types.LocalType("EtcdNode", "remote")
 
 	inputs := map[string]schema.PropertySpec{
@@ -26,9 +26,12 @@ func generateEtcdCluster(commandSpec schema.PackageSpec) schema.ResourceSpec {
 		"nodes": {
 			Description: "Etcd node configuration. The key should be a name used to identify the node.",
 			TypeSpec: schema.TypeSpec{
-				Type:                 "object",
-				AdditionalProperties: &etcdNode,
-				Plain:                true,
+				Type:  "object",
+				Plain: true,
+				AdditionalProperties: &schema.TypeSpec{
+					Ref:   etcdNode.Ref,
+					Plain: true,
+				},
 			},
 		},
 		"version": props.String("The version to install."),

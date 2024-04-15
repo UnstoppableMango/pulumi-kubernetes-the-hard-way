@@ -15,7 +15,7 @@ func Generate(commandSpec schema.PackageSpec) schema.PackageSpec {
 		name("ContainerdInstall"):            generateArchiveInstall(commandSpec, "Installs containerd on a remote system", "containerd"),
 		name("CrictlInstall"):                generateArchiveInstall(commandSpec, "Installs crictl on a remote system", "crictl"),
 		name("Download"):                     generateDownload(commandSpec),
-		name("EtcdCluster"):                  generateEtcdCluster(commandSpec),
+		name("EtcdCluster"):                  generateEtcdCluster(),
 		name("EtcdConfiguration"):            generateEtcdConfiguration(commandSpec),
 		name("EtcdInstall"):                  generateArchiveInstall(commandSpec, "Installs etcd on a remote system", "etcd", "etcdctl"),
 		name("EtcdService"):                  generateEtcdService(commandSpec),

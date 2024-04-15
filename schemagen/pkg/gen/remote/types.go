@@ -47,6 +47,10 @@ func generateTypes(commandSpec schema.PackageSpec) map[string]schema.ComplexType
 				Description: "Etcd node description.",
 				Type:        "object",
 				Properties: map[string]schema.PropertySpec{
+					"architecture": {
+						Description: "The CPU architecture of the node.",
+						TypeSpec:    types.LocalType("Architecture", "remote"),
+					},
 					"connection": props.Connection(commandSpec),
 					"internalIp": props.String("The internal IP of the node."),
 				},
