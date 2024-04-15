@@ -1,7 +1,8 @@
 import { Input, Output, all, output } from '@pulumi/pulumi';
 
+type MaybeNumber = number | undefined;
 type MaybeString = string | undefined;
-type OptValue = boolean | MaybeString;
+type OptValue = boolean | MaybeString | MaybeNumber;
 
 interface Opt {
   option: string;

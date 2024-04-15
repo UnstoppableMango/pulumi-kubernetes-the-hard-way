@@ -23,7 +23,7 @@ export class Sed extends schema.Sed {
     const inPlace = output(args.inPlace);
     const inputFiles = output(args.inputFiles ?? []).apply(toArray);
     const lifecycle = args.lifecycle ?? 'create';
-    const lineLength = output(args.lineLength ?? false);
+    const lineLength = output(args.lineLength);
     const nullData = output(args.nullData ?? false);
     const posix = output(args.posix ?? false);
     const quiet = output(args.quiet ?? false);
@@ -75,7 +75,7 @@ export class Sed extends schema.Sed {
     this.inPlace = inPlace as Output<string>;
     this.inputFiles = inputFiles;
     this.lifecycle = lifecycle;
-    this.lineLength = lineLength;
+    this.lineLength = lineLength as Output<number> | undefined;
     this.nullData = nullData;
     this.posix = posix;
     this.quiet = quiet;
