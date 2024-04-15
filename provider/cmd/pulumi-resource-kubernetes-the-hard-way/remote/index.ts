@@ -13,5 +13,6 @@ export * from './kubelet';
 export * from './kubeProxy';
 export * from './kubeSchedulerInstall';
 export * from './runc';
+export * from './startEtcd';
 export * from './staticPod';
 export * from './systemdService';
