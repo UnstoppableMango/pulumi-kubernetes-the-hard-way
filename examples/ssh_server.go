@@ -2,7 +2,9 @@ package examples
 
 import (
 	"context"
+	"fmt"
 	"io"
+	"os"
 	"path/filepath"
 	"strconv"
 
@@ -44,14 +46,22 @@ func WithSshUsername(username string) SshServerOption {
 }
 
 func StartSshServer(ctx context.Context, opts ...SshServerOption) (SshServer, error) {
+	cwd, err := os.Getwd()
+	if err != nil {
+		return SshServer{}, err
+	}
+
 	options := SshServerOptions{}
 	for _, o := range opts {
 		o(&options)
 	}
 
+	fmt.Printf("CWD IS: %s\n", cwd)
+	fmt.Printf("JOINED IS: %s\n", filepath.Join(cwd, "testdata"))
+
 	req := testcontainers.ContainerRequest{
 		FromDockerfile: testcontainers.FromDockerfile{
-			Context:    filepath.Join(".", "testdata"),
+			Context:    "",
 			Dockerfile: "Dockerfile",
 		},
 		ExposedPorts: []string{internalPort},
