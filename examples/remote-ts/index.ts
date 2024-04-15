@@ -70,8 +70,8 @@ const etcdConfig2 = new EtcdConfiguration('remote2', {
   certPem: 'pretend theres pem data here',
   keyPem: 'pretend theres pem data here',
   internalIp: '10.240.0.11',
-  configurationDirectory: path.join(basePath, 'etc', 'etcd'),
-  dataDirectory: path.join(basePath, 'var', 'lib', 'etcd'),
+  configurationDirectory: path.join(basePath, 'etc', 'etcd2'),
+  dataDirectory: path.join(basePath, 'var', 'lib', 'etcd2'),
   etcdPath: '/some/path/that/probably/should/exist/etcd',
 });
 
