@@ -14,6 +14,7 @@ import com.unmango.kubernetesthehardway.Utilities;
 import com.unmango.kubernetesthehardway.tools.SedArgs;
 import com.unmango.kubernetesthehardway.tools.enums.CommandLifecycle;
 import java.lang.Boolean;
+import java.lang.Integer;
 import java.lang.Object;
 import java.lang.String;
 import java.util.List;
@@ -199,14 +200,14 @@ public class Sed extends com.pulumi.resources.ComponentResource {
      * specify the desired line-wrap length for the `l&#39; command
      * 
      */
-    @Export(name="lineLength", refs={Boolean.class}, tree="[0]")
-    private Output</* @Nullable */ Boolean> lineLength;
+    @Export(name="lineLength", refs={Integer.class}, tree="[0]")
+    private Output</* @Nullable */ Integer> lineLength;
 
     /**
      * @return specify the desired line-wrap length for the `l&#39; command
      * 
      */
-    public Output<Optional<Boolean>> lineLength() {
+    public Output<Optional<Integer>> lineLength() {
         return Codegen.optional(this.lineLength);
     }
     /**

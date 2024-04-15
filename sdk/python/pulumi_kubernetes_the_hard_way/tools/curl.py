@@ -34,7 +34,7 @@ class CurlArgs:
                  compressed: Optional[pulumi.Input[bool]] = None,
                  compressed_ssh: Optional[pulumi.Input[bool]] = None,
                  config: Optional[pulumi.Input[str]] = None,
-                 connect_timeout: Optional[pulumi.Input[bool]] = None,
+                 connect_timeout: Optional[pulumi.Input[int]] = None,
                  connect_to: Optional[pulumi.Input[str]] = None,
                  continue_at: Optional[pulumi.Input[str]] = None,
                  cookie: Optional[pulumi.Input[str]] = None,
@@ -68,7 +68,7 @@ class CurlArgs:
                  environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  etag_compare: Optional[pulumi.Input[str]] = None,
                  etag_save: Optional[pulumi.Input[str]] = None,
-                 expect100_timeout: Optional[pulumi.Input[bool]] = None,
+                 expect100_timeout: Optional[pulumi.Input[int]] = None,
                  fail: Optional[pulumi.Input[bool]] = None,
                  fail_early: Optional[pulumi.Input[bool]] = None,
                  fail_with_body: Optional[pulumi.Input[bool]] = None,
@@ -108,7 +108,7 @@ class CurlArgs:
         :param pulumi.Input[bool] compressed: (HTTP) Request a compressed response using one of the algorithms curl supports, and automatically decompress the content.
         :param pulumi.Input[bool] compressed_ssh: (SCP SFTP) Enables built-in SSH compression.
         :param pulumi.Input[str] config: Specify a text file to read curl arguments from.
-        :param pulumi.Input[bool] connect_timeout: Maximum  time  in seconds that you allow curl's connection to take.
+        :param pulumi.Input[int] connect_timeout: Maximum  time  in seconds that you allow curl's connection to take.
         :param pulumi.Input[str] connect_to: For a request to the given HOST1:PORT1 pair, connect to HOST2:PORT2 instead.
         :param pulumi.Input[str] continue_at: Continue/Resume a previous file transfer at the given offset.
         :param pulumi.Input[str] cookie: (HTTP) Pass the data to the HTTP server in the Cookie header.
@@ -142,7 +142,7 @@ class CurlArgs:
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] environment: Environment variables
         :param pulumi.Input[str] etag_compare: (HTTP) This option makes a conditional HTTP request for the specific ETag read from the given file by sending a custom If-None-Match header using the stored ETag.
         :param pulumi.Input[str] etag_save: (HTTP) This option saves an HTTP ETag to the specified file.
-        :param pulumi.Input[bool] expect100_timeout: (HTTP)  Maximum  time in seconds that you allow curl to wait for a 100-continue response when curl emits an Expects: 100-continue header in its request.
+        :param pulumi.Input[int] expect100_timeout: (HTTP)  Maximum  time in seconds that you allow curl to wait for a 100-continue response when curl emits an Expects: 100-continue header in its request.
         :param pulumi.Input[bool] fail: (HTTP) Fail silently (no output at all) on server errors.
         :param pulumi.Input[bool] fail_early: Fail and exit on the first detected transfer error.
         :param pulumi.Input[bool] fail_with_body: (HTTP)  Return an error on server errors where the HTTP response code is 400 or greater).
@@ -524,14 +524,14 @@ class CurlArgs:
 
     @property
     @pulumi.getter(name="connectTimeout")
-    def connect_timeout(self) -> Optional[pulumi.Input[bool]]:
+    def connect_timeout(self) -> Optional[pulumi.Input[int]]:
         """
         Maximum  time  in seconds that you allow curl's connection to take.
         """
         return pulumi.get(self, "connect_timeout")
 
     @connect_timeout.setter
-    def connect_timeout(self, value: Optional[pulumi.Input[bool]]):
+    def connect_timeout(self, value: Optional[pulumi.Input[int]]):
         pulumi.set(self, "connect_timeout", value)
 
     @property
@@ -932,14 +932,14 @@ class CurlArgs:
 
     @property
     @pulumi.getter(name="expect100Timeout")
-    def expect100_timeout(self) -> Optional[pulumi.Input[bool]]:
+    def expect100_timeout(self) -> Optional[pulumi.Input[int]]:
         """
         (HTTP)  Maximum  time in seconds that you allow curl to wait for a 100-continue response when curl emits an Expects: 100-continue header in its request.
         """
         return pulumi.get(self, "expect100_timeout")
 
     @expect100_timeout.setter
-    def expect100_timeout(self, value: Optional[pulumi.Input[bool]]):
+    def expect100_timeout(self, value: Optional[pulumi.Input[int]]):
         pulumi.set(self, "expect100_timeout", value)
 
     @property
@@ -1192,7 +1192,7 @@ class Curl(pulumi.ComponentResource):
                  compressed: Optional[pulumi.Input[bool]] = None,
                  compressed_ssh: Optional[pulumi.Input[bool]] = None,
                  config: Optional[pulumi.Input[str]] = None,
-                 connect_timeout: Optional[pulumi.Input[bool]] = None,
+                 connect_timeout: Optional[pulumi.Input[int]] = None,
                  connect_to: Optional[pulumi.Input[str]] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
                  continue_at: Optional[pulumi.Input[str]] = None,
@@ -1227,7 +1227,7 @@ class Curl(pulumi.ComponentResource):
                  environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  etag_compare: Optional[pulumi.Input[str]] = None,
                  etag_save: Optional[pulumi.Input[str]] = None,
-                 expect100_timeout: Optional[pulumi.Input[bool]] = None,
+                 expect100_timeout: Optional[pulumi.Input[int]] = None,
                  fail: Optional[pulumi.Input[bool]] = None,
                  fail_early: Optional[pulumi.Input[bool]] = None,
                  fail_with_body: Optional[pulumi.Input[bool]] = None,
@@ -1270,7 +1270,7 @@ class Curl(pulumi.ComponentResource):
         :param pulumi.Input[bool] compressed: (HTTP) Request a compressed response using one of the algorithms curl supports, and automatically decompress the content.
         :param pulumi.Input[bool] compressed_ssh: (SCP SFTP) Enables built-in SSH compression.
         :param pulumi.Input[str] config: Specify a text file to read curl arguments from.
-        :param pulumi.Input[bool] connect_timeout: Maximum  time  in seconds that you allow curl's connection to take.
+        :param pulumi.Input[int] connect_timeout: Maximum  time  in seconds that you allow curl's connection to take.
         :param pulumi.Input[str] connect_to: For a request to the given HOST1:PORT1 pair, connect to HOST2:PORT2 instead.
         :param pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']] connection: Connection details for the remote system
         :param pulumi.Input[str] continue_at: Continue/Resume a previous file transfer at the given offset.
@@ -1305,7 +1305,7 @@ class Curl(pulumi.ComponentResource):
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] environment: Environment variables
         :param pulumi.Input[str] etag_compare: (HTTP) This option makes a conditional HTTP request for the specific ETag read from the given file by sending a custom If-None-Match header using the stored ETag.
         :param pulumi.Input[str] etag_save: (HTTP) This option saves an HTTP ETag to the specified file.
-        :param pulumi.Input[bool] expect100_timeout: (HTTP)  Maximum  time in seconds that you allow curl to wait for a 100-continue response when curl emits an Expects: 100-continue header in its request.
+        :param pulumi.Input[int] expect100_timeout: (HTTP)  Maximum  time in seconds that you allow curl to wait for a 100-continue response when curl emits an Expects: 100-continue header in its request.
         :param pulumi.Input[bool] fail: (HTTP) Fail silently (no output at all) on server errors.
         :param pulumi.Input[bool] fail_early: Fail and exit on the first detected transfer error.
         :param pulumi.Input[bool] fail_with_body: (HTTP)  Return an error on server errors where the HTTP response code is 400 or greater).
@@ -1367,7 +1367,7 @@ class Curl(pulumi.ComponentResource):
                  compressed: Optional[pulumi.Input[bool]] = None,
                  compressed_ssh: Optional[pulumi.Input[bool]] = None,
                  config: Optional[pulumi.Input[str]] = None,
-                 connect_timeout: Optional[pulumi.Input[bool]] = None,
+                 connect_timeout: Optional[pulumi.Input[int]] = None,
                  connect_to: Optional[pulumi.Input[str]] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
                  continue_at: Optional[pulumi.Input[str]] = None,
@@ -1402,7 +1402,7 @@ class Curl(pulumi.ComponentResource):
                  environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  etag_compare: Optional[pulumi.Input[str]] = None,
                  etag_save: Optional[pulumi.Input[str]] = None,
-                 expect100_timeout: Optional[pulumi.Input[bool]] = None,
+                 expect100_timeout: Optional[pulumi.Input[int]] = None,
                  fail: Optional[pulumi.Input[bool]] = None,
                  fail_early: Optional[pulumi.Input[bool]] = None,
                  fail_with_body: Optional[pulumi.Input[bool]] = None,
@@ -1658,7 +1658,7 @@ class Curl(pulumi.ComponentResource):
 
     @property
     @pulumi.getter(name="connectTimeout")
-    def connect_timeout(self) -> pulumi.Output[Optional[bool]]:
+    def connect_timeout(self) -> pulumi.Output[Optional[int]]:
         """
         Maximum  time  in seconds that you allow curl's connection to take.
         """
@@ -1938,7 +1938,7 @@ class Curl(pulumi.ComponentResource):
 
     @property
     @pulumi.getter(name="expect100Timeout")
-    def expect100_timeout(self) -> pulumi.Output[Optional[bool]]:
+    def expect100_timeout(self) -> pulumi.Output[Optional[int]]:
         """
         (HTTP)  Maximum  time in seconds that you allow curl to wait for a 100-continue response when curl emits an Expects: 100-continue header in its request.
         """

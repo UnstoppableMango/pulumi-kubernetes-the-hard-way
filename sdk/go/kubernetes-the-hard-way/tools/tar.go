@@ -48,7 +48,7 @@ type Tar struct {
 	// TODO
 	Stdout pulumi.StringOutput `pulumi:"stdout"`
 	// Corresponds to the `--strip-components` option.
-	StripComponents pulumi.BoolPtrOutput `pulumi:"stripComponents"`
+	StripComponents pulumi.IntPtrOutput `pulumi:"stripComponents"`
 	// TODO
 	Triggers pulumi.ArrayOutput `pulumi:"triggers"`
 }
@@ -102,7 +102,7 @@ type tarArgs struct {
 	// TODO
 	Stdin *string `pulumi:"stdin"`
 	// Corresponds to the `--strip-components` option.
-	StripComponents *bool `pulumi:"stripComponents"`
+	StripComponents *int `pulumi:"stripComponents"`
 	// TODO
 	Triggers []interface{} `pulumi:"triggers"`
 }
@@ -134,7 +134,7 @@ type TarArgs struct {
 	// TODO
 	Stdin pulumi.StringPtrInput
 	// Corresponds to the `--strip-components` option.
-	StripComponents pulumi.BoolPtrInput
+	StripComponents pulumi.IntPtrInput
 	// TODO
 	Triggers pulumi.ArrayInput
 }
@@ -302,8 +302,8 @@ func (o TarOutput) Stdout() pulumi.StringOutput {
 }
 
 // Corresponds to the `--strip-components` option.
-func (o TarOutput) StripComponents() pulumi.BoolPtrOutput {
-	return o.ApplyT(func(v *Tar) pulumi.BoolPtrOutput { return v.StripComponents }).(pulumi.BoolPtrOutput)
+func (o TarOutput) StripComponents() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *Tar) pulumi.IntPtrOutput { return v.StripComponents }).(pulumi.IntPtrOutput)
 }
 
 // TODO

@@ -10,6 +10,7 @@ import com.pulumi.core.annotations.Import;
 import com.pulumi.exceptions.MissingRequiredPropertyException;
 import com.unmango.kubernetesthehardway.tools.enums.CommandLifecycle;
 import java.lang.Boolean;
+import java.lang.Integer;
 import java.lang.Object;
 import java.lang.String;
 import java.util.List;
@@ -193,13 +194,13 @@ public final class SedArgs extends com.pulumi.resources.ResourceArgs {
      * 
      */
     @Import(name="lineLength")
-    private @Nullable Output<Boolean> lineLength;
+    private @Nullable Output<Integer> lineLength;
 
     /**
      * @return specify the desired line-wrap length for the `l&#39; command
      * 
      */
-    public Optional<Output<Boolean>> lineLength() {
+    public Optional<Output<Integer>> lineLength() {
         return Optional.ofNullable(this.lineLength);
     }
 
@@ -717,7 +718,7 @@ public final class SedArgs extends com.pulumi.resources.ResourceArgs {
          * @return builder
          * 
          */
-        public Builder lineLength(@Nullable Output<Boolean> lineLength) {
+        public Builder lineLength(@Nullable Output<Integer> lineLength) {
             $.lineLength = lineLength;
             return this;
         }
@@ -728,7 +729,7 @@ public final class SedArgs extends com.pulumi.resources.ResourceArgs {
          * @return builder
          * 
          */
-        public Builder lineLength(Boolean lineLength) {
+        public Builder lineLength(Integer lineLength) {
             return lineLength(Output.of(lineLength));
         }
 

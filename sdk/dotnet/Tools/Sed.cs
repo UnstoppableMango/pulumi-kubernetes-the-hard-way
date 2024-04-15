@@ -92,7 +92,7 @@ namespace UnMango.KubernetesTheHardWay.Tools
         /// specify the desired line-wrap length for the `l' command
         /// </summary>
         [Output("lineLength")]
-        public Output<bool?> LineLength { get; private set; } = null!;
+        public Output<int?> LineLength { get; private set; } = null!;
 
         /// <summary>
         /// separate lines by NUL characters
@@ -283,7 +283,7 @@ namespace UnMango.KubernetesTheHardWay.Tools
         /// specify the desired line-wrap length for the `l' command
         /// </summary>
         [Input("lineLength")]
-        public Input<bool>? LineLength { get; set; }
+        public Input<int>? LineLength { get; set; }
 
         /// <summary>
         /// separate lines by NUL characters

@@ -27,7 +27,7 @@ class SedArgs:
                  in_place: Optional[pulumi.Input[str]] = None,
                  input_files: Optional[pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]]] = None,
                  lifecycle: Optional['CommandLifecycle'] = None,
-                 line_length: Optional[pulumi.Input[bool]] = None,
+                 line_length: Optional[pulumi.Input[int]] = None,
                  null_data: Optional[pulumi.Input[bool]] = None,
                  posix: Optional[pulumi.Input[bool]] = None,
                  quiet: Optional[pulumi.Input[bool]] = None,
@@ -53,7 +53,7 @@ class SedArgs:
         :param pulumi.Input[str] in_place: edit files in place (makes backup if SUFFIX supplied)
         :param pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]] input_files: corresponds to the [input-file]... argument(s).
         :param 'CommandLifecycle' lifecycle: At what stage(s) in the resource lifecycle should the command be run
-        :param pulumi.Input[bool] line_length: specify the desired line-wrap length for the `l' command
+        :param pulumi.Input[int] line_length: specify the desired line-wrap length for the `l' command
         :param pulumi.Input[bool] null_data: separate lines by NUL characters
         :param pulumi.Input[bool] posix: disable all GNU extensions.
         :param pulumi.Input[bool] quiet: suppress automatic printing of pattern space. Same as `silent`.
@@ -249,14 +249,14 @@ class SedArgs:
 
     @property
     @pulumi.getter(name="lineLength")
-    def line_length(self) -> Optional[pulumi.Input[bool]]:
+    def line_length(self) -> Optional[pulumi.Input[int]]:
         """
         specify the desired line-wrap length for the `l' command
         """
         return pulumi.get(self, "line_length")
 
     @line_length.setter
-    def line_length(self, value: Optional[pulumi.Input[bool]]):
+    def line_length(self, value: Optional[pulumi.Input[int]]):
         pulumi.set(self, "line_length", value)
 
     @property
@@ -420,7 +420,7 @@ class Sed(pulumi.ComponentResource):
                  in_place: Optional[pulumi.Input[str]] = None,
                  input_files: Optional[pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]]] = None,
                  lifecycle: Optional['CommandLifecycle'] = None,
-                 line_length: Optional[pulumi.Input[bool]] = None,
+                 line_length: Optional[pulumi.Input[int]] = None,
                  null_data: Optional[pulumi.Input[bool]] = None,
                  posix: Optional[pulumi.Input[bool]] = None,
                  quiet: Optional[pulumi.Input[bool]] = None,
@@ -450,7 +450,7 @@ class Sed(pulumi.ComponentResource):
         :param pulumi.Input[str] in_place: edit files in place (makes backup if SUFFIX supplied)
         :param pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]] input_files: corresponds to the [input-file]... argument(s).
         :param 'CommandLifecycle' lifecycle: At what stage(s) in the resource lifecycle should the command be run
-        :param pulumi.Input[bool] line_length: specify the desired line-wrap length for the `l' command
+        :param pulumi.Input[int] line_length: specify the desired line-wrap length for the `l' command
         :param pulumi.Input[bool] null_data: separate lines by NUL characters
         :param pulumi.Input[bool] posix: disable all GNU extensions.
         :param pulumi.Input[bool] quiet: suppress automatic printing of pattern space. Same as `silent`.
@@ -499,7 +499,7 @@ class Sed(pulumi.ComponentResource):
                  in_place: Optional[pulumi.Input[str]] = None,
                  input_files: Optional[pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]]] = None,
                  lifecycle: Optional['CommandLifecycle'] = None,
-                 line_length: Optional[pulumi.Input[bool]] = None,
+                 line_length: Optional[pulumi.Input[int]] = None,
                  null_data: Optional[pulumi.Input[bool]] = None,
                  posix: Optional[pulumi.Input[bool]] = None,
                  quiet: Optional[pulumi.Input[bool]] = None,
@@ -657,7 +657,7 @@ class Sed(pulumi.ComponentResource):
 
     @property
     @pulumi.getter(name="lineLength")
-    def line_length(self) -> pulumi.Output[Optional[bool]]:
+    def line_length(self) -> pulumi.Output[Optional[int]]:
         """
         specify the desired line-wrap length for the `l' command
         """

@@ -772,7 +772,7 @@ export abstract class Curl<TData = any> extends (pulumi.ComponentResource)<TData
     public compressed?: boolean | pulumi.Output<boolean>;
     public compressedSsh?: boolean | pulumi.Output<boolean>;
     public config?: string | pulumi.Output<string>;
-    public connectTimeout?: boolean | pulumi.Output<boolean>;
+    public connectTimeout?: number | pulumi.Output<number>;
     public connectTo?: string | pulumi.Output<string>;
     public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
     public continueAt?: string | pulumi.Output<string>;
@@ -807,7 +807,7 @@ export abstract class Curl<TData = any> extends (pulumi.ComponentResource)<TData
     public environment!: Record<string, string> | pulumi.Output<Record<string, string>>;
     public etagCompare?: string | pulumi.Output<string>;
     public etagSave?: string | pulumi.Output<string>;
-    public expect100Timeout?: boolean | pulumi.Output<boolean>;
+    public expect100Timeout?: number | pulumi.Output<number>;
     public fail?: boolean | pulumi.Output<boolean>;
     public failEarly?: boolean | pulumi.Output<boolean>;
     public failWithBody?: boolean | pulumi.Output<boolean>;
@@ -851,7 +851,7 @@ export interface CurlArgs {
     readonly compressed?: pulumi.Input<boolean>;
     readonly compressedSsh?: pulumi.Input<boolean>;
     readonly config?: pulumi.Input<string>;
-    readonly connectTimeout?: pulumi.Input<boolean>;
+    readonly connectTimeout?: pulumi.Input<number>;
     readonly connectTo?: pulumi.Input<string>;
     readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
     readonly continueAt?: pulumi.Input<string>;
@@ -886,7 +886,7 @@ export interface CurlArgs {
     readonly environment?: pulumi.Input<Record<string, pulumi.Input<string>>>;
     readonly etagCompare?: pulumi.Input<string>;
     readonly etagSave?: pulumi.Input<string>;
-    readonly expect100Timeout?: pulumi.Input<boolean>;
+    readonly expect100Timeout?: pulumi.Input<number>;
     readonly fail?: pulumi.Input<boolean>;
     readonly failEarly?: pulumi.Input<boolean>;
     readonly failWithBody?: pulumi.Input<boolean>;
@@ -1143,7 +1143,7 @@ export abstract class Sed<TData = any> extends (pulumi.ComponentResource)<TData>
     public inPlace?: string | pulumi.Output<string>;
     public inputFiles!: unknown | pulumi.Output<unknown>;
     public lifecycle?: CommandLifecycleOutputs | CommandLifecycleOutputs;
-    public lineLength?: boolean | pulumi.Output<boolean>;
+    public lineLength?: number | pulumi.Output<number>;
     public nullData!: boolean | pulumi.Output<boolean>;
     public posix!: boolean | pulumi.Output<boolean>;
     public quiet!: boolean | pulumi.Output<boolean>;
@@ -1174,7 +1174,7 @@ export interface SedArgs {
     readonly inPlace?: pulumi.Input<string>;
     readonly inputFiles?: pulumi.Input<unknown>;
     readonly lifecycle?: CommandLifecycleInputs;
-    readonly lineLength?: pulumi.Input<boolean>;
+    readonly lineLength?: pulumi.Input<number>;
     readonly nullData?: pulumi.Input<boolean>;
     readonly posix?: pulumi.Input<boolean>;
     readonly quiet?: pulumi.Input<boolean>;
@@ -1232,7 +1232,7 @@ export abstract class Tar<TData = any> extends (pulumi.ComponentResource)<TData>
     public stderr!: string | pulumi.Output<string>;
     public stdin?: string | pulumi.Output<string>;
     public stdout!: string | pulumi.Output<string>;
-    public stripComponents?: boolean | pulumi.Output<boolean>;
+    public stripComponents?: number | pulumi.Output<number>;
     public triggers!: any[] | pulumi.Output<any[]>;
     constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
         super("kubernetes-the-hard-way:tools:Tar", name, opts.urn ? { archive: undefined, binaryPath: undefined, command: undefined, connection: undefined, directory: undefined, environment: undefined, extract: undefined, files: undefined, gzip: undefined, lifecycle: undefined, onDelete: undefined, recursive: undefined, stderr: undefined, stdin: undefined, stdout: undefined, stripComponents: undefined, triggers: undefined } : { name, args, opts }, opts);
@@ -1251,7 +1251,7 @@ export interface TarArgs {
     readonly onDelete?: pulumi.Input<boolean>;
     readonly recursive?: pulumi.Input<boolean>;
     readonly stdin?: pulumi.Input<string>;
-    readonly stripComponents?: pulumi.Input<boolean>;
+    readonly stripComponents?: pulumi.Input<number>;
     readonly triggers?: pulumi.Input<pulumi.Input<any>[]>;
 }
 export abstract class Tee<TData = any> extends (pulumi.ComponentResource)<TData> {

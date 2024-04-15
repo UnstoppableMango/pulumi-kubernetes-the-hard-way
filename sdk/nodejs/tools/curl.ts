@@ -98,7 +98,7 @@ export class Curl extends pulumi.ComponentResource {
     /**
      * Maximum  time  in seconds that you allow curl's connection to take.
      */
-    public readonly connectTimeout!: pulumi.Output<boolean | undefined>;
+    public readonly connectTimeout!: pulumi.Output<number | undefined>;
     /**
      * For a request to the given HOST1:PORT1 pair, connect to HOST2:PORT2 instead.
      */
@@ -238,7 +238,7 @@ export class Curl extends pulumi.ComponentResource {
     /**
      * (HTTP)  Maximum  time in seconds that you allow curl to wait for a 100-continue response when curl emits an Expects: 100-continue header in its request.
      */
-    public readonly expect100Timeout!: pulumi.Output<boolean | undefined>;
+    public readonly expect100Timeout!: pulumi.Output<number | undefined>;
     /**
      * (HTTP) Fail silently (no output at all) on server errors.
      */
@@ -573,7 +573,7 @@ export interface CurlArgs {
     /**
      * Maximum  time  in seconds that you allow curl's connection to take.
      */
-    connectTimeout?: pulumi.Input<boolean>;
+    connectTimeout?: pulumi.Input<number>;
     /**
      * For a request to the given HOST1:PORT1 pair, connect to HOST2:PORT2 instead.
      */
@@ -713,7 +713,7 @@ export interface CurlArgs {
     /**
      * (HTTP)  Maximum  time in seconds that you allow curl to wait for a 100-continue response when curl emits an Expects: 100-continue header in its request.
      */
-    expect100Timeout?: pulumi.Input<boolean>;
+    expect100Timeout?: pulumi.Input<number>;
     /**
      * (HTTP) Fail silently (no output at all) on server errors.
      */

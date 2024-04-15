@@ -16,6 +16,7 @@ import com.unmango.kubernetesthehardway.tools.enums.CommandLifecycle;
 import com.unmango.kubernetesthehardway.tools.enums.CurlCertType;
 import com.unmango.kubernetesthehardway.tools.enums.CurlDelegationLevel;
 import java.lang.Boolean;
+import java.lang.Integer;
 import java.lang.Object;
 import java.lang.String;
 import java.util.List;
@@ -271,14 +272,14 @@ public class Curl extends com.pulumi.resources.ComponentResource {
      * Maximum  time  in seconds that you allow curl&#39;s connection to take.
      * 
      */
-    @Export(name="connectTimeout", refs={Boolean.class}, tree="[0]")
-    private Output</* @Nullable */ Boolean> connectTimeout;
+    @Export(name="connectTimeout", refs={Integer.class}, tree="[0]")
+    private Output</* @Nullable */ Integer> connectTimeout;
 
     /**
      * @return Maximum  time  in seconds that you allow curl&#39;s connection to take.
      * 
      */
-    public Output<Optional<Boolean>> connectTimeout() {
+    public Output<Optional<Integer>> connectTimeout() {
         return Codegen.optional(this.connectTimeout);
     }
     /**
@@ -761,14 +762,14 @@ public class Curl extends com.pulumi.resources.ComponentResource {
      * (HTTP)  Maximum  time in seconds that you allow curl to wait for a 100-continue response when curl emits an Expects: 100-continue header in its request.
      * 
      */
-    @Export(name="expect100Timeout", refs={Boolean.class}, tree="[0]")
-    private Output</* @Nullable */ Boolean> expect100Timeout;
+    @Export(name="expect100Timeout", refs={Integer.class}, tree="[0]")
+    private Output</* @Nullable */ Integer> expect100Timeout;
 
     /**
      * @return (HTTP)  Maximum  time in seconds that you allow curl to wait for a 100-continue response when curl emits an Expects: 100-continue header in its request.
      * 
      */
-    public Output<Optional<Boolean>> expect100Timeout() {
+    public Output<Optional<Integer>> expect100Timeout() {
         return Codegen.optional(this.expect100Timeout);
     }
     /**

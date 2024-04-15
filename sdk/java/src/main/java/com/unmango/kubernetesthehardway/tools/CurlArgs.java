@@ -12,6 +12,7 @@ import com.unmango.kubernetesthehardway.tools.enums.CommandLifecycle;
 import com.unmango.kubernetesthehardway.tools.enums.CurlCertType;
 import com.unmango.kubernetesthehardway.tools.enums.CurlDelegationLevel;
 import java.lang.Boolean;
+import java.lang.Integer;
 import java.lang.Object;
 import java.lang.String;
 import java.util.List;
@@ -270,13 +271,13 @@ public final class CurlArgs extends com.pulumi.resources.ResourceArgs {
      * 
      */
     @Import(name="connectTimeout")
-    private @Nullable Output<Boolean> connectTimeout;
+    private @Nullable Output<Integer> connectTimeout;
 
     /**
      * @return Maximum  time  in seconds that you allow curl&#39;s connection to take.
      * 
      */
-    public Optional<Output<Boolean>> connectTimeout() {
+    public Optional<Output<Integer>> connectTimeout() {
         return Optional.ofNullable(this.connectTimeout);
     }
 
@@ -795,13 +796,13 @@ public final class CurlArgs extends com.pulumi.resources.ResourceArgs {
      * 
      */
     @Import(name="expect100Timeout")
-    private @Nullable Output<Boolean> expect100Timeout;
+    private @Nullable Output<Integer> expect100Timeout;
 
     /**
      * @return (HTTP)  Maximum  time in seconds that you allow curl to wait for a 100-continue response when curl emits an Expects: 100-continue header in its request.
      * 
      */
-    public Optional<Output<Boolean>> expect100Timeout() {
+    public Optional<Output<Integer>> expect100Timeout() {
         return Optional.ofNullable(this.expect100Timeout);
     }
 
@@ -1542,7 +1543,7 @@ public final class CurlArgs extends com.pulumi.resources.ResourceArgs {
          * @return builder
          * 
          */
-        public Builder connectTimeout(@Nullable Output<Boolean> connectTimeout) {
+        public Builder connectTimeout(@Nullable Output<Integer> connectTimeout) {
             $.connectTimeout = connectTimeout;
             return this;
         }
@@ -1553,7 +1554,7 @@ public final class CurlArgs extends com.pulumi.resources.ResourceArgs {
          * @return builder
          * 
          */
-        public Builder connectTimeout(Boolean connectTimeout) {
+        public Builder connectTimeout(Integer connectTimeout) {
             return connectTimeout(Output.of(connectTimeout));
         }
 
@@ -2277,7 +2278,7 @@ public final class CurlArgs extends com.pulumi.resources.ResourceArgs {
          * @return builder
          * 
          */
-        public Builder expect100Timeout(@Nullable Output<Boolean> expect100Timeout) {
+        public Builder expect100Timeout(@Nullable Output<Integer> expect100Timeout) {
             $.expect100Timeout = expect100Timeout;
             return this;
         }
@@ -2288,7 +2289,7 @@ public final class CurlArgs extends com.pulumi.resources.ResourceArgs {
          * @return builder
          * 
          */
-        public Builder expect100Timeout(Boolean expect100Timeout) {
+        public Builder expect100Timeout(Integer expect100Timeout) {
             return expect100Timeout(Output.of(expect100Timeout));
         }
 

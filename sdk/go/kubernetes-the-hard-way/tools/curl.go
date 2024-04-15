@@ -52,7 +52,7 @@ type Curl struct {
 	// Specify a text file to read curl arguments from.
 	Config pulumi.StringPtrOutput `pulumi:"config"`
 	// Maximum  time  in seconds that you allow curl's connection to take.
-	ConnectTimeout pulumi.BoolPtrOutput `pulumi:"connectTimeout"`
+	ConnectTimeout pulumi.IntPtrOutput `pulumi:"connectTimeout"`
 	// For a request to the given HOST1:PORT1 pair, connect to HOST2:PORT2 instead.
 	ConnectTo pulumi.StringPtrOutput `pulumi:"connectTo"`
 	// Connection details for the remote system
@@ -122,7 +122,7 @@ type Curl struct {
 	// (HTTP) This option saves an HTTP ETag to the specified file.
 	EtagSave pulumi.StringPtrOutput `pulumi:"etagSave"`
 	// (HTTP)  Maximum  time in seconds that you allow curl to wait for a 100-continue response when curl emits an Expects: 100-continue header in its request.
-	Expect100Timeout pulumi.BoolPtrOutput `pulumi:"expect100Timeout"`
+	Expect100Timeout pulumi.IntPtrOutput `pulumi:"expect100Timeout"`
 	// (HTTP) Fail silently (no output at all) on server errors.
 	Fail pulumi.BoolPtrOutput `pulumi:"fail"`
 	// Fail and exit on the first detected transfer error.
@@ -226,7 +226,7 @@ type curlArgs struct {
 	// Specify a text file to read curl arguments from.
 	Config *string `pulumi:"config"`
 	// Maximum  time  in seconds that you allow curl's connection to take.
-	ConnectTimeout *bool `pulumi:"connectTimeout"`
+	ConnectTimeout *int `pulumi:"connectTimeout"`
 	// For a request to the given HOST1:PORT1 pair, connect to HOST2:PORT2 instead.
 	ConnectTo *string `pulumi:"connectTo"`
 	// Connection details for the remote system
@@ -296,7 +296,7 @@ type curlArgs struct {
 	// (HTTP) This option saves an HTTP ETag to the specified file.
 	EtagSave *string `pulumi:"etagSave"`
 	// (HTTP)  Maximum  time in seconds that you allow curl to wait for a 100-continue response when curl emits an Expects: 100-continue header in its request.
-	Expect100Timeout *bool `pulumi:"expect100Timeout"`
+	Expect100Timeout *int `pulumi:"expect100Timeout"`
 	// (HTTP) Fail silently (no output at all) on server errors.
 	Fail *bool `pulumi:"fail"`
 	// Fail and exit on the first detected transfer error.
@@ -374,7 +374,7 @@ type CurlArgs struct {
 	// Specify a text file to read curl arguments from.
 	Config pulumi.StringPtrInput
 	// Maximum  time  in seconds that you allow curl's connection to take.
-	ConnectTimeout pulumi.BoolPtrInput
+	ConnectTimeout pulumi.IntPtrInput
 	// For a request to the given HOST1:PORT1 pair, connect to HOST2:PORT2 instead.
 	ConnectTo pulumi.StringPtrInput
 	// Connection details for the remote system
@@ -444,7 +444,7 @@ type CurlArgs struct {
 	// (HTTP) This option saves an HTTP ETag to the specified file.
 	EtagSave pulumi.StringPtrInput
 	// (HTTP)  Maximum  time in seconds that you allow curl to wait for a 100-continue response when curl emits an Expects: 100-continue header in its request.
-	Expect100Timeout pulumi.BoolPtrInput
+	Expect100Timeout pulumi.IntPtrInput
 	// (HTTP) Fail silently (no output at all) on server errors.
 	Fail pulumi.BoolPtrInput
 	// Fail and exit on the first detected transfer error.
@@ -660,8 +660,8 @@ func (o CurlOutput) Config() pulumi.StringPtrOutput {
 }
 
 // Maximum  time  in seconds that you allow curl's connection to take.
-func (o CurlOutput) ConnectTimeout() pulumi.BoolPtrOutput {
-	return o.ApplyT(func(v *Curl) pulumi.BoolPtrOutput { return v.ConnectTimeout }).(pulumi.BoolPtrOutput)
+func (o CurlOutput) ConnectTimeout() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *Curl) pulumi.IntPtrOutput { return v.ConnectTimeout }).(pulumi.IntPtrOutput)
 }
 
 // For a request to the given HOST1:PORT1 pair, connect to HOST2:PORT2 instead.
@@ -835,8 +835,8 @@ func (o CurlOutput) EtagSave() pulumi.StringPtrOutput {
 }
 
 // (HTTP)  Maximum  time in seconds that you allow curl to wait for a 100-continue response when curl emits an Expects: 100-continue header in its request.
-func (o CurlOutput) Expect100Timeout() pulumi.BoolPtrOutput {
-	return o.ApplyT(func(v *Curl) pulumi.BoolPtrOutput { return v.Expect100Timeout }).(pulumi.BoolPtrOutput)
+func (o CurlOutput) Expect100Timeout() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *Curl) pulumi.IntPtrOutput { return v.Expect100Timeout }).(pulumi.IntPtrOutput)
 }
 
 // (HTTP) Fail silently (no output at all) on server errors.

@@ -122,7 +122,7 @@ namespace UnMango.KubernetesTheHardWay.Tools
         /// Maximum  time  in seconds that you allow curl's connection to take.
         /// </summary>
         [Output("connectTimeout")]
-        public Output<bool?> ConnectTimeout { get; private set; } = null!;
+        public Output<int?> ConnectTimeout { get; private set; } = null!;
 
         /// <summary>
         /// For a request to the given HOST1:PORT1 pair, connect to HOST2:PORT2 instead.
@@ -332,7 +332,7 @@ namespace UnMango.KubernetesTheHardWay.Tools
         /// (HTTP)  Maximum  time in seconds that you allow curl to wait for a 100-continue response when curl emits an Expects: 100-continue header in its request.
         /// </summary>
         [Output("expect100Timeout")]
-        public Output<bool?> Expect100Timeout { get; private set; } = null!;
+        public Output<int?> Expect100Timeout { get; private set; } = null!;
 
         /// <summary>
         /// (HTTP) Fail silently (no output at all) on server errors.
@@ -595,7 +595,7 @@ namespace UnMango.KubernetesTheHardWay.Tools
         /// Maximum  time  in seconds that you allow curl's connection to take.
         /// </summary>
         [Input("connectTimeout")]
-        public Input<bool>? ConnectTimeout { get; set; }
+        public Input<int>? ConnectTimeout { get; set; }
 
         /// <summary>
         /// For a request to the given HOST1:PORT1 pair, connect to HOST2:PORT2 instead.
@@ -811,7 +811,7 @@ namespace UnMango.KubernetesTheHardWay.Tools
         /// (HTTP)  Maximum  time in seconds that you allow curl to wait for a 100-continue response when curl emits an Expects: 100-continue header in its request.
         /// </summary>
         [Input("expect100Timeout")]
-        public Input<bool>? Expect100Timeout { get; set; }
+        public Input<int>? Expect100Timeout { get; set; }
 
         /// <summary>
         /// (HTTP) Fail silently (no output at all) on server errors.

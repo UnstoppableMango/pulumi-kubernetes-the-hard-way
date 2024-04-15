@@ -3910,7 +3910,7 @@
                     "description": "Specify a text file to read curl arguments from."
                 },
                 "connectTimeout": {
-                    "type": "boolean",
+                    "type": "integer",
                     "description": "Maximum  time  in seconds that you allow curl's connection to take."
                 },
                 "connectTo": {
@@ -4053,7 +4053,7 @@
                     "description": "(HTTP) This option saves an HTTP ETag to the specified file."
                 },
                 "expect100Timeout": {
-                    "type": "boolean",
+                    "type": "integer",
                     "description": "(HTTP)  Maximum  time in seconds that you allow curl to wait for a 100-continue response when curl emits an Expects: 100-continue header in its request."
                 },
                 "fail": {
@@ -4235,7 +4235,7 @@
                     "description": "Specify a text file to read curl arguments from."
                 },
                 "connectTimeout": {
-                    "type": "boolean",
+                    "type": "integer",
                     "description": "Maximum  time  in seconds that you allow curl's connection to take."
                 },
                 "connectTo": {
@@ -4378,7 +4378,7 @@
                     "description": "(HTTP) This option saves an HTTP ETag to the specified file."
                 },
                 "expect100Timeout": {
-                    "type": "boolean",
+                    "type": "integer",
                     "description": "(HTTP)  Maximum  time in seconds that you allow curl to wait for a 100-continue response when curl emits an Expects: 100-continue header in its request."
                 },
                 "fail": {
@@ -5577,7 +5577,7 @@
                     "description": "At what stage(s) in the resource lifecycle should the command be run"
                 },
                 "lineLength": {
-                    "type": "boolean",
+                    "type": "integer",
                     "description": "specify the desired line-wrap length for the `l' command"
                 },
                 "nullData": {
@@ -5744,7 +5744,7 @@
                     "description": "At what stage(s) in the resource lifecycle should the command be run"
                 },
                 "lineLength": {
-                    "type": "boolean",
+                    "type": "integer",
                     "description": "specify the desired line-wrap length for the `l' command"
                 },
                 "nullData": {
@@ -6006,7 +6006,7 @@
                     "description": "TODO"
                 },
                 "stripComponents": {
-                    "type": "boolean",
+                    "type": "integer",
                     "description": "Corresponds to the `--strip-components` option."
                 },
                 "triggers": {
@@ -6093,7 +6093,7 @@
                     "description": "TODO"
                 },
                 "stripComponents": {
-                    "type": "boolean",
+                    "type": "integer",
                     "description": "Corresponds to the `--strip-components` option."
                 },
                 "triggers": {

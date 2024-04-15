@@ -42,7 +42,7 @@ type Sed struct {
 	// At what stage(s) in the resource lifecycle should the command be run
 	Lifecycle CommandLifecyclePtrOutput `pulumi:"lifecycle"`
 	// specify the desired line-wrap length for the `l' command
-	LineLength pulumi.BoolPtrOutput `pulumi:"lineLength"`
+	LineLength pulumi.IntPtrOutput `pulumi:"lineLength"`
 	// separate lines by NUL characters
 	NullData pulumi.BoolOutput `pulumi:"nullData"`
 	// disable all GNU extensions.
@@ -117,7 +117,7 @@ type sedArgs struct {
 	// At what stage(s) in the resource lifecycle should the command be run
 	Lifecycle *CommandLifecycle `pulumi:"lifecycle"`
 	// specify the desired line-wrap length for the `l' command
-	LineLength *bool `pulumi:"lineLength"`
+	LineLength *int `pulumi:"lineLength"`
 	// separate lines by NUL characters
 	NullData *bool `pulumi:"nullData"`
 	// disable all GNU extensions.
@@ -169,7 +169,7 @@ type SedArgs struct {
 	// At what stage(s) in the resource lifecycle should the command be run
 	Lifecycle *CommandLifecycle
 	// specify the desired line-wrap length for the `l' command
-	LineLength pulumi.BoolPtrInput
+	LineLength pulumi.IntPtrInput
 	// separate lines by NUL characters
 	NullData pulumi.BoolPtrInput
 	// disable all GNU extensions.
@@ -344,8 +344,8 @@ func (o SedOutput) Lifecycle() CommandLifecyclePtrOutput {
 }
 
 // specify the desired line-wrap length for the `l' command
-func (o SedOutput) LineLength() pulumi.BoolPtrOutput {
-	return o.ApplyT(func(v *Sed) pulumi.BoolPtrOutput { return v.LineLength }).(pulumi.BoolPtrOutput)
+func (o SedOutput) LineLength() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *Sed) pulumi.IntPtrOutput { return v.LineLength }).(pulumi.IntPtrOutput)
 }
 
 // separate lines by NUL characters

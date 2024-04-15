@@ -78,7 +78,7 @@ export class Sed extends pulumi.ComponentResource {
     /**
      * specify the desired line-wrap length for the `l' command
      */
-    public readonly lineLength!: pulumi.Output<boolean | undefined>;
+    public readonly lineLength!: pulumi.Output<number | undefined>;
     /**
      * separate lines by NUL characters
      */
@@ -262,7 +262,7 @@ export interface SedArgs {
     /**
      * specify the desired line-wrap length for the `l' command
      */
-    lineLength?: pulumi.Input<boolean>;
+    lineLength?: pulumi.Input<number>;
     /**
      * separate lines by NUL characters
      */
