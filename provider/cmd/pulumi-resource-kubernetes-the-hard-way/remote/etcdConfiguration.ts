@@ -1,6 +1,6 @@
 import { ComponentResourceOptions, Input, Output, interpolate, output } from '@pulumi/pulumi';
 import * as schema from '../schema-types';
-import { Mkdir } from '../tools';
+import { Chmod, Mkdir } from '../tools';
 import { File } from './file';
 
 export class EtcdConfiguration extends schema.EtcdConfiguration {
@@ -10,18 +10,25 @@ export class EtcdConfiguration extends schema.EtcdConfiguration {
     const caPem = output(args.caPem);
     const certPem = output(args.certPem);
     const configurationDirectory = output(args.configurationDirectory ?? '/etc/etcd'); // Default value from schema?
+    const connection = output(args.connection);
     const dataDirectory = output(args.dataDirectory ?? '/var/lib/etcd'); // Default value from schema?
     const etcdPath = output(args.etcdPath);
     const internalIp = output(args.internalIp);
 
     const configurationMkdir = new Mkdir(`${name}-config`, {
-      connection: args.connection,
+      connection,
       directory: configurationDirectory,
       parents: true,
     }, { parent: this });
 
+    const configurationChmod = new Chmod(`${name}-data-chmod`, {
+      connection,
+      files: configurationDirectory,
+      mode: '700',
+    }, { parent: this, dependsOn: configurationMkdir });
+
     const dataMkdir = new Mkdir(`${name}-data`, {
-      connection: args.connection,
+      connection,
       directory: configurationDirectory,
       parents: true,
     }, { parent: this });
@@ -31,19 +38,19 @@ export class EtcdConfiguration extends schema.EtcdConfiguration {
     const keyFilePath = interpolate`${configurationDirectory}/kubernetes-key.pem`;
 
     const caFile = new File(`${name}-ca`, {
-      connection: args.connection,
+      connection,
       content: args.caPem,
       path: caFilePath,
-    }, { parent: this, dependsOn: configurationMkdir });
+    }, { parent: this, dependsOn: configurationChmod });
 
     const certFile = new File(`${name}-cert`, {
-      connection: args.connection,
+      connection,
       content: args.certPem,
       path: certFilePath,
-    }, { parent: this, dependsOn: configurationMkdir });
+    }, { parent: this, dependsOn: configurationChmod });
 
     const keyFile = new File(`${name}-key`, {
-      connection: args.connection,
+      connection,
       content: args.keyPem,
       path: keyFilePath,
     }, { parent: this, dependsOn: configurationMkdir });
@@ -52,6 +59,7 @@ export class EtcdConfiguration extends schema.EtcdConfiguration {
     this.caPem = caPem;
     this.certFile = certFile;
     this.certPem = certPem;
+    this.configurationChmod = configurationChmod;
     this.configurationDirectory = configurationDirectory;
     this.configurationMkdir = configurationMkdir;
     this.dataDirectory = dataDirectory;
@@ -77,6 +85,7 @@ export class EtcdConfiguration extends schema.EtcdConfiguration {
       caPem,
       certFile,
       certPem,
+      configurationChmod,
       configurationDirectory,
       configurationMkdir,
       dataDirectory,

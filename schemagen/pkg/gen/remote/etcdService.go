@@ -16,7 +16,7 @@ func generateEtcdService(commandSpec schema.PackageSpec) schema.ResourceSpec {
 			Description: "Etcd configuration.",
 			TypeSpec:    types.LocalType("EtcdConfigurationProps", "remote"),
 		},
-		"connection":    connection(commandSpec),
+		"connection":    props.Connection(commandSpec),
 		"description":   props.String("Optional systemd unit description."),
 		"directory":     props.String("The location to create the service file."),
 		"documentation": props.String("Optional systemd unit documentation"),

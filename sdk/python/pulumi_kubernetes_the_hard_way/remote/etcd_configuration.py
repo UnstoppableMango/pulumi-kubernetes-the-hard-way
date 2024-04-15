@@ -246,6 +246,7 @@ class EtcdConfiguration(pulumi.ComponentResource):
             __props__.__dict__["key_pem"] = key_pem
             __props__.__dict__["ca_file"] = None
             __props__.__dict__["cert_file"] = None
+            __props__.__dict__["configuration_chmod"] = None
             __props__.__dict__["configuration_mkdir"] = None
             __props__.__dict__["data_mkdir"] = None
             __props__.__dict__["key_file"] = None
@@ -288,6 +289,14 @@ class EtcdConfiguration(pulumi.ComponentResource):
         The PEM encoded certificate data.
         """
         return pulumi.get(self, "cert_pem")
+
+    @property
+    @pulumi.getter(name="configurationChmod")
+    def configuration_chmod(self) -> pulumi.Output[Optional['_tools.Chmod']]:
+        """
+        The configuration chmod operation.
+        """
+        return pulumi.get(self, "configuration_chmod")
 
     @property
     @pulumi.getter(name="configurationDirectory")

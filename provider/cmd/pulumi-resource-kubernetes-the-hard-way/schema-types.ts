@@ -22,6 +22,7 @@ export type ResourceConstructor = {
     readonly "kubernetes-the-hard-way:remote:KubeSchedulerInstall": ConstructComponent<KubeSchedulerInstall>;
     readonly "kubernetes-the-hard-way:remote:KubectlInstall": ConstructComponent<KubectlInstall>;
     readonly "kubernetes-the-hard-way:remote:KubeletInstall": ConstructComponent<KubeletInstall>;
+    readonly "kubernetes-the-hard-way:remote:ProvisionEtcd": ConstructComponent<ProvisionEtcd>;
     readonly "kubernetes-the-hard-way:remote:RuncInstall": ConstructComponent<RuncInstall>;
     readonly "kubernetes-the-hard-way:remote:StartEtcd": ConstructComponent<StartEtcd>;
     readonly "kubernetes-the-hard-way:remote:StaticPod": ConstructComponent<StaticPod>;
@@ -240,6 +241,7 @@ export abstract class EtcdConfiguration<TData = any> extends (pulumi.ComponentRe
     public caPem!: string | pulumi.Output<string>;
     public certFile!: File | pulumi.Output<File>;
     public certPem!: string | pulumi.Output<string>;
+    public configurationChmod?: Chmod | pulumi.Output<Chmod>;
     public configurationDirectory!: string | pulumi.Output<string>;
     public configurationMkdir!: Mkdir | pulumi.Output<Mkdir>;
     public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
@@ -251,7 +253,7 @@ export abstract class EtcdConfiguration<TData = any> extends (pulumi.ComponentRe
     public keyPem!: string | pulumi.Output<string>;
     public value!: EtcdConfigurationPropsOutputs | pulumi.Output<EtcdConfigurationPropsOutputs>;
     constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
-        super("kubernetes-the-hard-way:remote:EtcdConfiguration", name, opts.urn ? { caFile: undefined, caPem: undefined, certFile: undefined, certPem: undefined, configurationDirectory: undefined, configurationMkdir: undefined, connection: undefined, dataDirectory: undefined, dataMkdir: undefined, etcdPath: undefined, internalIp: undefined, keyFile: undefined, keyPem: undefined, value: undefined } : { name, args, opts }, opts);
+        super("kubernetes-the-hard-way:remote:EtcdConfiguration", name, opts.urn ? { caFile: undefined, caPem: undefined, certFile: undefined, certPem: undefined, configurationChmod: undefined, configurationDirectory: undefined, configurationMkdir: undefined, connection: undefined, dataDirectory: undefined, dataMkdir: undefined, etcdPath: undefined, internalIp: undefined, keyFile: undefined, keyPem: undefined, value: undefined } : { name, args, opts }, opts);
     }
 }
 export interface EtcdConfigurationArgs {
@@ -470,6 +472,33 @@ export interface KubeletInstallArgs {
     readonly architecture?: pulumi.Input<ArchitectureInputs>;
     readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
     readonly directory?: pulumi.Input<string>;
+    readonly version?: pulumi.Input<string>;
+}
+export abstract class ProvisionEtcd<TData = any> extends (pulumi.ComponentResource)<TData> {
+    public architecture?: ArchitectureOutputs | pulumi.Output<ArchitectureOutputs>;
+    public binaryDirectory?: string | pulumi.Output<string>;
+    public bundle!: BundleOutputs | pulumi.Output<BundleOutputs>;
+    public configuration!: EtcdConfiguration | pulumi.Output<EtcdConfiguration>;
+    public configurationDirectory?: string | pulumi.Output<string>;
+    public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
+    public dataDirectory?: string | pulumi.Output<string>;
+    public install!: EtcdInstall | pulumi.Output<EtcdInstall>;
+    public internalIp!: string | pulumi.Output<string>;
+    public service!: SystemdService | pulumi.Output<SystemdService>;
+    public start!: StartEtcd | pulumi.Output<StartEtcd>;
+    public version?: string | pulumi.Output<string>;
+    constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
+        super("kubernetes-the-hard-way:remote:ProvisionEtcd", name, opts.urn ? { architecture: undefined, binaryDirectory: undefined, bundle: undefined, configuration: undefined, configurationDirectory: undefined, connection: undefined, dataDirectory: undefined, install: undefined, internalIp: undefined, service: undefined, start: undefined, version: undefined } : { name, args, opts }, opts);
+    }
+}
+export interface ProvisionEtcdArgs {
+    readonly architecture?: pulumi.Input<ArchitectureInputs>;
+    readonly binaryDirectory?: pulumi.Input<string>;
+    readonly bundle: pulumi.Input<BundleInputs>;
+    readonly configurationDirectory?: pulumi.Input<string>;
+    readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
+    readonly dataDirectory?: pulumi.Input<string>;
+    readonly internalIp: pulumi.Input<string>;
     readonly version?: pulumi.Input<string>;
 }
 export abstract class RuncInstall<TData = any> extends (pulumi.ComponentResource)<TData> {

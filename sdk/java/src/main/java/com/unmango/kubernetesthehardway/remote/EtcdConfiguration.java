@@ -12,8 +12,10 @@ import com.unmango.kubernetesthehardway.Utilities;
 import com.unmango.kubernetesthehardway.remote.EtcdConfigurationArgs;
 import com.unmango.kubernetesthehardway.remote.File;
 import com.unmango.kubernetesthehardway.remote.outputs.EtcdConfigurationProps;
+import com.unmango.kubernetesthehardway.tools.Chmod;
 import com.unmango.kubernetesthehardway.tools.Mkdir;
 import java.lang.String;
+import java.util.Optional;
 import javax.annotation.Nullable;
 
 /**
@@ -77,6 +79,20 @@ public class EtcdConfiguration extends com.pulumi.resources.ComponentResource {
      */
     public Output<String> certPem() {
         return this.certPem;
+    }
+    /**
+     * The configuration chmod operation.
+     * 
+     */
+    @Export(name="configurationChmod", refs={Chmod.class}, tree="[0]")
+    private Output</* @Nullable */ Chmod> configurationChmod;
+
+    /**
+     * @return The configuration chmod operation.
+     * 
+     */
+    public Output<Optional<Chmod>> configurationChmod() {
+        return Codegen.optional(this.configurationChmod);
     }
     /**
      * The directory to store etcd configuration.

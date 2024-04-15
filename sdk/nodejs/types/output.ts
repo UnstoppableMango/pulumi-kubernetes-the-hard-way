@@ -533,6 +533,24 @@ export namespace remote {
 
 export namespace tls {
     /**
+     * A CA + Cert + Key bundle
+     */
+    export interface Bundle {
+        /**
+         * The PEM encoded certificate authority data.
+         */
+        caPem: string;
+        /**
+         * The PEM encoded certificate data.
+         */
+        certPem: string;
+        /**
+         * The PEM encoded private key data
+         */
+        keyPem: string;
+    }
+
+    /**
      * TODO
      */
     export interface ClusterPkiNode {

@@ -53,6 +53,10 @@ func generateEtcdConfiguration(commandSpec schema.PackageSpec) schema.ResourceSp
 			Description: "The remote certificate file.",
 			TypeSpec:    types.LocalResource("File", "remote"),
 		},
+		"configurationChmod": {
+			Description: "The configuration chmod operation.",
+			TypeSpec:    types.LocalResource("Chmod", "tools"),
+		},
 		"configurationMkdir": {
 			Description: "The configuration mkdir operation.",
 			TypeSpec:    types.LocalResource("Mkdir", "tools"),

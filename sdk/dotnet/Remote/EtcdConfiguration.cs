@@ -41,6 +41,12 @@ namespace UnMango.KubernetesTheHardWay.Remote
         public Output<string> CertPem { get; private set; } = null!;
 
         /// <summary>
+        /// The configuration chmod operation.
+        /// </summary>
+        [Output("configurationChmod")]
+        public Output<UnMango.KubernetesTheHardWay.Tools.Chmod?> ConfigurationChmod { get; private set; } = null!;
+
+        /// <summary>
         /// The directory to store etcd configuration.
         /// </summary>
         [Output("configurationDirectory")]

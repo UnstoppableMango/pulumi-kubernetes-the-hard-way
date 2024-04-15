@@ -11,8 +11,74 @@ from .. import _utilities
 from ._enums import *
 
 __all__ = [
+    'Bundle',
     'ClusterPkiNode',
 ]
+
+@pulumi.output_type
+class Bundle(dict):
+    """
+    A CA + Cert + Key bundle
+    """
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "caPem":
+            suggest = "ca_pem"
+        elif key == "certPem":
+            suggest = "cert_pem"
+        elif key == "keyPem":
+            suggest = "key_pem"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in Bundle. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        Bundle.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        Bundle.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 ca_pem: str,
+                 cert_pem: str,
+                 key_pem: str):
+        """
+        A CA + Cert + Key bundle
+        :param str ca_pem: The PEM encoded certificate authority data.
+        :param str cert_pem: The PEM encoded certificate data.
+        :param str key_pem: The PEM encoded private key data
+        """
+        pulumi.set(__self__, "ca_pem", ca_pem)
+        pulumi.set(__self__, "cert_pem", cert_pem)
+        pulumi.set(__self__, "key_pem", key_pem)
+
+    @property
+    @pulumi.getter(name="caPem")
+    def ca_pem(self) -> str:
+        """
+        The PEM encoded certificate authority data.
+        """
+        return pulumi.get(self, "ca_pem")
+
+    @property
+    @pulumi.getter(name="certPem")
+    def cert_pem(self) -> str:
+        """
+        The PEM encoded certificate data.
+        """
+        return pulumi.get(self, "cert_pem")
+
+    @property
+    @pulumi.getter(name="keyPem")
+    def key_pem(self) -> str:
+        """
+        The PEM encoded private key data
+        """
+        return pulumi.get(self, "key_pem")
+
 
 @pulumi.output_type
 class ClusterPkiNode(dict):

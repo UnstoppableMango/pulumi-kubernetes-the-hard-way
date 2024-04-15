@@ -9,7 +9,7 @@ import * as utilities from "../utilities";
 
 import * as pulumiCommand from "@pulumi/command";
 
-import {Mkdir} from "../tools";
+import {Chmod, Mkdir} from "../tools";
 import {File} from "./index";
 
 /**
@@ -46,6 +46,10 @@ export class EtcdConfiguration extends pulumi.ComponentResource {
      * The PEM encoded certificate data.
      */
     public readonly certPem!: pulumi.Output<string>;
+    /**
+     * The configuration chmod operation.
+     */
+    public /*out*/ readonly configurationChmod!: pulumi.Output<Chmod | undefined>;
     /**
      * The directory to store etcd configuration.
      */
@@ -126,6 +130,7 @@ export class EtcdConfiguration extends pulumi.ComponentResource {
             resourceInputs["keyPem"] = args ? args.keyPem : undefined;
             resourceInputs["caFile"] = undefined /*out*/;
             resourceInputs["certFile"] = undefined /*out*/;
+            resourceInputs["configurationChmod"] = undefined /*out*/;
             resourceInputs["configurationMkdir"] = undefined /*out*/;
             resourceInputs["dataMkdir"] = undefined /*out*/;
             resourceInputs["keyFile"] = undefined /*out*/;
@@ -135,6 +140,7 @@ export class EtcdConfiguration extends pulumi.ComponentResource {
             resourceInputs["caPem"] = undefined /*out*/;
             resourceInputs["certFile"] = undefined /*out*/;
             resourceInputs["certPem"] = undefined /*out*/;
+            resourceInputs["configurationChmod"] = undefined /*out*/;
             resourceInputs["configurationDirectory"] = undefined /*out*/;
             resourceInputs["configurationMkdir"] = undefined /*out*/;
             resourceInputs["connection"] = undefined /*out*/;
