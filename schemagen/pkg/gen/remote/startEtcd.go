@@ -4,13 +4,14 @@ import (
 	"maps"
 	"slices"
 
+	"github.com/UnstoppableMango/pulumi-kubernetes-the-hard-way/schemagen/pkg/gen/props"
 	"github.com/UnstoppableMango/pulumi-kubernetes-the-hard-way/schemagen/pkg/gen/types"
 	"github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 )
 
 func generateStartEtcd(commandSpec schema.PackageSpec) schema.ResourceSpec {
 	inputs := map[string]schema.PropertySpec{
-		"connection": connection(commandSpec),
+		"connection": props.Connection(commandSpec),
 	}
 	requiredInputs := []string{"connection"}
 
