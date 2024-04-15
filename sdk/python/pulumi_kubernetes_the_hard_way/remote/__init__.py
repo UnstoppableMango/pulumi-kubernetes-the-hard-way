@@ -10,6 +10,7 @@ from .cni_plugins_install import *
 from .containerd_install import *
 from .crictl_install import *
 from .download import *
+from .etcd_cluster import *
 from .etcd_configuration import *
 from .etcd_install import *
 from .etcd_service import *

@@ -9,9 +9,11 @@ import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
 from .. import _utilities
 from ._enums import *
+import pulumi_command
 
 __all__ = [
     'EtcdConfigurationPropsArgs',
+    'EtcdNodeArgs',
     'SystemdInstallSectionArgs',
     'SystemdServiceSectionArgs',
     'SystemdUnitSectionArgs',
@@ -128,6 +130,60 @@ class EtcdConfigurationPropsArgs:
     @name.setter
     def name(self, value: pulumi.Input[str]):
         pulumi.set(self, "name", value)
+
+
+@pulumi.input_type
+class EtcdNodeArgs:
+    def __init__(__self__, *,
+                 connection: pulumi.Input['pulumi_command.remote.ConnectionArgs'],
+                 internal_ip: pulumi.Input[str],
+                 architecture: Optional[pulumi.Input['Architecture']] = None):
+        """
+        Etcd node description.
+        :param pulumi.Input['pulumi_command.remote.ConnectionArgs'] connection: The parameters with which to connect to the remote host.
+        :param pulumi.Input[str] internal_ip: The internal IP of the node.
+        :param pulumi.Input['Architecture'] architecture: The CPU architecture of the node.
+        """
+        pulumi.set(__self__, "connection", connection)
+        pulumi.set(__self__, "internal_ip", internal_ip)
+        if architecture is not None:
+            pulumi.set(__self__, "architecture", architecture)
+
+    @property
+    @pulumi.getter
+    def connection(self) -> pulumi.Input['pulumi_command.remote.ConnectionArgs']:
+        """
+        The parameters with which to connect to the remote host.
+        """
+        return pulumi.get(self, "connection")
+
+    @connection.setter
+    def connection(self, value: pulumi.Input['pulumi_command.remote.ConnectionArgs']):
+        pulumi.set(self, "connection", value)
+
+    @property
+    @pulumi.getter(name="internalIp")
+    def internal_ip(self) -> pulumi.Input[str]:
+        """
+        The internal IP of the node.
+        """
+        return pulumi.get(self, "internal_ip")
+
+    @internal_ip.setter
+    def internal_ip(self, value: pulumi.Input[str]):
+        pulumi.set(self, "internal_ip", value)
+
+    @property
+    @pulumi.getter
+    def architecture(self) -> Optional[pulumi.Input['Architecture']]:
+        """
+        The CPU architecture of the node.
+        """
+        return pulumi.get(self, "architecture")
+
+    @architecture.setter
+    def architecture(self, value: Optional[pulumi.Input['Architecture']]):
+        pulumi.set(self, "architecture", value)
 
 
 @pulumi.input_type

@@ -9,9 +9,11 @@ import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
 from .. import _utilities
 from ._enums import *
+import pulumi_command
 
 __all__ = [
     'EtcdConfigurationProps',
+    'EtcdNode',
     'SystemdInstallSection',
     'SystemdServiceSection',
     'SystemdUnitSection',
@@ -130,6 +132,68 @@ class EtcdConfigurationProps(dict):
         Name of the etcd node.
         """
         return pulumi.get(self, "name")
+
+
+@pulumi.output_type
+class EtcdNode(dict):
+    """
+    Etcd node description.
+    """
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "internalIp":
+            suggest = "internal_ip"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in EtcdNode. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        EtcdNode.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        EtcdNode.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 connection: 'pulumi_command.remote.outputs.Connection',
+                 internal_ip: str,
+                 architecture: Optional['Architecture'] = None):
+        """
+        Etcd node description.
+        :param 'pulumi_command.remote.Connection' connection: The parameters with which to connect to the remote host.
+        :param str internal_ip: The internal IP of the node.
+        :param 'Architecture' architecture: The CPU architecture of the node.
+        """
+        pulumi.set(__self__, "connection", connection)
+        pulumi.set(__self__, "internal_ip", internal_ip)
+        if architecture is not None:
+            pulumi.set(__self__, "architecture", architecture)
+
+    @property
+    @pulumi.getter
+    def connection(self) -> 'pulumi_command.remote.outputs.Connection':
+        """
+        The parameters with which to connect to the remote host.
+        """
+        return pulumi.get(self, "connection")
+
+    @property
+    @pulumi.getter(name="internalIp")
+    def internal_ip(self) -> str:
+        """
+        The internal IP of the node.
+        """
+        return pulumi.get(self, "internal_ip")
+
+    @property
+    @pulumi.getter
+    def architecture(self) -> Optional['Architecture']:
+        """
+        The CPU architecture of the node.
+        """
+        return pulumi.get(self, "architecture")
 
 
 @pulumi.output_type

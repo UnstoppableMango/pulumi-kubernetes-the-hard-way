@@ -29,6 +29,8 @@ func (m *module) Construct(ctx *pulumi.Context, name, typ, urn string) (r pulumi
 		r = &CrictlInstall{}
 	case "kubernetes-the-hard-way:remote:Download":
 		r = &Download{}
+	case "kubernetes-the-hard-way:remote:EtcdCluster":
+		r = &EtcdCluster{}
 	case "kubernetes-the-hard-way:remote:EtcdConfiguration":
 		r = &EtcdConfiguration{}
 	case "kubernetes-the-hard-way:remote:EtcdInstall":
