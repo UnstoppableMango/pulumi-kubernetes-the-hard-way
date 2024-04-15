@@ -390,6 +390,10 @@
         "kubernetes-the-hard-way:remote:EtcdNode": {
             "description": "Etcd node description.",
             "properties": {
+                "architecture": {
+                    "$ref": "#/types/kubernetes-the-hard-way:remote:Architecture",
+                    "description": "The CPU architecture of the node."
+                },
                 "connection": {
                     "$ref": "/command/v0.9.2/schema.json#/types/command:remote:Connection",
                     "description": "The parameters with which to connect to the remote host."
@@ -1557,7 +1561,8 @@
                 "nodes": {
                     "type": "object",
                     "additionalProperties": {
-                        "$ref": "#/types/kubernetes-the-hard-way:remote:EtcdNode"
+                        "$ref": "#/types/kubernetes-the-hard-way:remote:EtcdNode",
+                        "plain": true
                     },
                     "plain": true,
                     "description": "Etcd node configuration. The key should be a name used to identify the node."
@@ -1613,7 +1618,8 @@
                 "nodes": {
                     "type": "object",
                     "additionalProperties": {
-                        "$ref": "#/types/kubernetes-the-hard-way:remote:EtcdNode"
+                        "$ref": "#/types/kubernetes-the-hard-way:remote:EtcdNode",
+                        "plain": true
                     },
                     "plain": true,
                     "description": "Etcd node configuration. The key should be a name used to identify the node."

@@ -7,8 +7,11 @@ import com.pulumi.command.remote.inputs.ConnectionArgs;
 import com.pulumi.core.Output;
 import com.pulumi.core.annotations.Import;
 import com.pulumi.exceptions.MissingRequiredPropertyException;
+import com.unmango.kubernetesthehardway.remote.enums.Architecture;
 import java.lang.String;
 import java.util.Objects;
+import java.util.Optional;
+import javax.annotation.Nullable;
 
 
 /**
@@ -18,6 +21,21 @@ import java.util.Objects;
 public final class EtcdNodeArgs extends com.pulumi.resources.ResourceArgs {
 
     public static final EtcdNodeArgs Empty = new EtcdNodeArgs();
+
+    /**
+     * The CPU architecture of the node.
+     * 
+     */
+    @Import(name="architecture")
+    private @Nullable Output<Architecture> architecture;
+
+    /**
+     * @return The CPU architecture of the node.
+     * 
+     */
+    public Optional<Output<Architecture>> architecture() {
+        return Optional.ofNullable(this.architecture);
+    }
 
     /**
      * The parameters with which to connect to the remote host.
@@ -52,6 +70,7 @@ public final class EtcdNodeArgs extends com.pulumi.resources.ResourceArgs {
     private EtcdNodeArgs() {}
 
     private EtcdNodeArgs(EtcdNodeArgs $) {
+        this.architecture = $.architecture;
         this.connection = $.connection;
         this.internalIp = $.internalIp;
     }
@@ -72,6 +91,27 @@ public final class EtcdNodeArgs extends com.pulumi.resources.ResourceArgs {
 
         public Builder(EtcdNodeArgs defaults) {
             $ = new EtcdNodeArgs(Objects.requireNonNull(defaults));
+        }
+
+        /**
+         * @param architecture The CPU architecture of the node.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder architecture(@Nullable Output<Architecture> architecture) {
+            $.architecture = architecture;
+            return this;
+        }
+
+        /**
+         * @param architecture The CPU architecture of the node.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder architecture(Architecture architecture) {
+            return architecture(Output.of(architecture));
         }
 
         /**

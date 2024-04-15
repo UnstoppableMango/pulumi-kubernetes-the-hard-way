@@ -441,6 +441,10 @@ export namespace remote {
      */
     export interface EtcdNode {
         /**
+         * The CPU architecture of the node.
+         */
+        architecture?: enums.remote.Architecture;
+        /**
          * The parameters with which to connect to the remote host.
          */
         connection: pulumiCommand.types.output.remote.Connection;

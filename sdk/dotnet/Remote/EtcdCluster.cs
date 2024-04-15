@@ -142,14 +142,14 @@ namespace UnMango.KubernetesTheHardWay.Remote
         public Input<string>? DataDirectory { get; set; }
 
         [Input("nodes", required: true)]
-        private Dictionary<string, Input<Inputs.EtcdNodeArgs>>? _nodes;
+        private Dictionary<string, Inputs.EtcdNodeArgs>? _nodes;
 
         /// <summary>
         /// Etcd node configuration. The key should be a name used to identify the node.
         /// </summary>
-        public Dictionary<string, Input<Inputs.EtcdNodeArgs>> Nodes
+        public Dictionary<string, Inputs.EtcdNodeArgs> Nodes
         {
-            get => _nodes ?? (_nodes = new Dictionary<string, Input<Inputs.EtcdNodeArgs>>());
+            get => _nodes ?? (_nodes = new Dictionary<string, Inputs.EtcdNodeArgs>());
             set => _nodes = value;
         }
 

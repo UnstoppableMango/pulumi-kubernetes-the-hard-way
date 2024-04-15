@@ -18,6 +18,10 @@ namespace UnMango.KubernetesTheHardWay.Remote.Outputs
     public sealed class EtcdNode
     {
         /// <summary>
+        /// The CPU architecture of the node.
+        /// </summary>
+        public readonly UnMango.KubernetesTheHardWay.Remote.Architecture? Architecture;
+        /// <summary>
         /// The parameters with which to connect to the remote host.
         /// </summary>
         public readonly Pulumi.Command.Remote.Outputs.Connection Connection;
@@ -28,10 +32,13 @@ namespace UnMango.KubernetesTheHardWay.Remote.Outputs
 
         [OutputConstructor]
         private EtcdNode(
+            UnMango.KubernetesTheHardWay.Remote.Architecture? architecture,
+
             Pulumi.Command.Remote.Outputs.Connection connection,
 
             string internalIp)
         {
+            Architecture = architecture;
             Connection = connection;
             InternalIp = internalIp;
         }

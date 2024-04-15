@@ -232,7 +232,7 @@ export interface EtcdClusterArgs {
     readonly bundle: pulumi.Input<BundleInputs>;
     readonly configurationDirectory?: pulumi.Input<string>;
     readonly dataDirectory?: pulumi.Input<string>;
-    readonly nodes: Record<string, pulumi.Input<EtcdNodeInputs>>;
+    readonly nodes: Record<string, EtcdNodeInputs>;
     readonly version?: pulumi.Input<string>;
 }
 export abstract class EtcdConfiguration<TData = any> extends (pulumi.ComponentResource)<TData> {
@@ -1173,10 +1173,12 @@ export interface EtcdConfigurationPropsOutputs {
     readonly name: pulumi.Output<string>;
 }
 export interface EtcdNodeInputs {
+    readonly architecture?: pulumi.Input<ArchitectureInputs>;
     readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
     readonly internalIp: pulumi.Input<string>;
 }
 export interface EtcdNodeOutputs {
+    readonly architecture?: pulumi.Output<ArchitectureOutputs>;
     readonly connection: pulumi.Output<command.types.output.remote.Connection>;
     readonly internalIp: pulumi.Output<string>;
 }

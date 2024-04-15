@@ -17,6 +17,12 @@ namespace UnMango.KubernetesTheHardWay.Remote.Inputs
     public sealed class EtcdNodeArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
+        /// The CPU architecture of the node.
+        /// </summary>
+        [Input("architecture")]
+        public Input<UnMango.KubernetesTheHardWay.Remote.Architecture>? Architecture { get; set; }
+
+        /// <summary>
         /// The parameters with which to connect to the remote host.
         /// </summary>
         [Input("connection", required: true)]

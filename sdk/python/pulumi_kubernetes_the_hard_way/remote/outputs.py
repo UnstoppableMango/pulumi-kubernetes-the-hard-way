@@ -158,14 +158,18 @@ class EtcdNode(dict):
 
     def __init__(__self__, *,
                  connection: 'pulumi_command.remote.outputs.Connection',
-                 internal_ip: str):
+                 internal_ip: str,
+                 architecture: Optional['Architecture'] = None):
         """
         Etcd node description.
         :param 'pulumi_command.remote.Connection' connection: The parameters with which to connect to the remote host.
         :param str internal_ip: The internal IP of the node.
+        :param 'Architecture' architecture: The CPU architecture of the node.
         """
         pulumi.set(__self__, "connection", connection)
         pulumi.set(__self__, "internal_ip", internal_ip)
+        if architecture is not None:
+            pulumi.set(__self__, "architecture", architecture)
 
     @property
     @pulumi.getter
@@ -182,6 +186,14 @@ class EtcdNode(dict):
         The internal IP of the node.
         """
         return pulumi.get(self, "internal_ip")
+
+    @property
+    @pulumi.getter
+    def architecture(self) -> Optional['Architecture']:
+        """
+        The CPU architecture of the node.
+        """
+        return pulumi.get(self, "architecture")
 
 
 @pulumi.output_type

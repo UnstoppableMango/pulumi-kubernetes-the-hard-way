@@ -170,6 +170,8 @@ func (o EtcdConfigurationPropsArrayOutput) Index(i pulumi.IntInput) EtcdConfigur
 
 // Etcd node description.
 type EtcdNode struct {
+	// The CPU architecture of the node.
+	Architecture *Architecture `pulumi:"architecture"`
 	// The parameters with which to connect to the remote host.
 	Connection pulumiCommand.Connection `pulumi:"connection"`
 	// The internal IP of the node.
@@ -200,6 +202,8 @@ type EtcdNodeInput interface {
 
 // Etcd node description.
 type EtcdNodeArgs struct {
+	// The CPU architecture of the node.
+	Architecture ArchitecturePtrInput `pulumi:"architecture"`
 	// The parameters with which to connect to the remote host.
 	Connection pulumiCommand.ConnectionInput `pulumi:"connection"`
 	// The internal IP of the node.
@@ -240,6 +244,11 @@ func (o EtcdNodeOutput) ToEtcdNodeOutput() EtcdNodeOutput {
 
 func (o EtcdNodeOutput) ToEtcdNodeOutputWithContext(ctx context.Context) EtcdNodeOutput {
 	return o
+}
+
+// The CPU architecture of the node.
+func (o EtcdNodeOutput) Architecture() ArchitecturePtrOutput {
+	return o.ApplyT(func(v EtcdNode) *Architecture { return v.Architecture }).(ArchitecturePtrOutput)
 }
 
 // The parameters with which to connect to the remote host.

@@ -6,11 +6,19 @@ package com.unmango.kubernetesthehardway.remote.outputs;
 import com.pulumi.command.remote.outputs.Connection;
 import com.pulumi.core.annotations.CustomType;
 import com.pulumi.exceptions.MissingRequiredPropertyException;
+import com.unmango.kubernetesthehardway.remote.enums.Architecture;
 import java.lang.String;
 import java.util.Objects;
+import java.util.Optional;
+import javax.annotation.Nullable;
 
 @CustomType
 public final class EtcdNode {
+    /**
+     * @return The CPU architecture of the node.
+     * 
+     */
+    private @Nullable Architecture architecture;
     /**
      * @return The parameters with which to connect to the remote host.
      * 
@@ -23,6 +31,13 @@ public final class EtcdNode {
     private String internalIp;
 
     private EtcdNode() {}
+    /**
+     * @return The CPU architecture of the node.
+     * 
+     */
+    public Optional<Architecture> architecture() {
+        return Optional.ofNullable(this.architecture);
+    }
     /**
      * @return The parameters with which to connect to the remote host.
      * 
@@ -47,15 +62,23 @@ public final class EtcdNode {
     }
     @CustomType.Builder
     public static final class Builder {
+        private @Nullable Architecture architecture;
         private Connection connection;
         private String internalIp;
         public Builder() {}
         public Builder(EtcdNode defaults) {
     	      Objects.requireNonNull(defaults);
+    	      this.architecture = defaults.architecture;
     	      this.connection = defaults.connection;
     	      this.internalIp = defaults.internalIp;
         }
 
+        @CustomType.Setter
+        public Builder architecture(@Nullable Architecture architecture) {
+
+            this.architecture = architecture;
+            return this;
+        }
         @CustomType.Setter
         public Builder connection(Connection connection) {
             if (connection == null) {
@@ -74,6 +97,7 @@ public final class EtcdNode {
         }
         public EtcdNode build() {
             final var _resultValue = new EtcdNode();
+            _resultValue.architecture = architecture;
             _resultValue.connection = connection;
             _resultValue.internalIp = internalIp;
             return _resultValue;
