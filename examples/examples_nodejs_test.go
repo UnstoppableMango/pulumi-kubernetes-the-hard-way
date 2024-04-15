@@ -12,7 +12,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-//go:embed test-data/example.com.html
+//go:embed testdata/example.com.html
 var exampleComHtml string
 
 func TestSimpleTs(t *testing.T) {
@@ -91,7 +91,7 @@ func TestRemoteTs(t *testing.T) {
 	defer StopSshServer(ctx, server) // TODO: Error handling?
 
 	err = server.CopyFile(ctx,
-		path.Join(getCwd(t), "test-data", "text-file.tar.gz"),
+		path.Join(getCwd(t), "testdata", "text-file.tar.gz"),
 		path.Join("/config", "text-file.tar.gz"))
 	assert.NoError(t, err)
 

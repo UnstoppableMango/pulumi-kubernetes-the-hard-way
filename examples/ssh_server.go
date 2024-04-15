@@ -3,6 +3,7 @@ package examples
 import (
 	"context"
 	"io"
+	"path/filepath"
 	"strconv"
 
 	"github.com/docker/go-connections/nat"
@@ -49,7 +50,10 @@ func StartSshServer(ctx context.Context, opts ...SshServerOption) (SshServer, er
 	}
 
 	req := testcontainers.ContainerRequest{
-		Image:        "lscr.io/linuxserver/openssh-server:latest",
+		FromDockerfile: testcontainers.FromDockerfile{
+			Context:    filepath.Join(".", "testdata"),
+			Dockerfile: "Dockerfile",
+		},
 		ExposedPorts: []string{internalPort},
 		Env: map[string]string{
 			"PUID":            "1000",

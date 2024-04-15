@@ -8,4 +8,3 @@ RUN apt update \
         wget \
     && rm -rf /var/lib/apt/lists/*
 
-RUN
