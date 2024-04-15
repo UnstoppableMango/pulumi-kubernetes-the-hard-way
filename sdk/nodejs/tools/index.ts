@@ -10,10 +10,20 @@ export type Chmod = import("./chmod").Chmod;
 export const Chmod: typeof import("./chmod").Chmod = null as any;
 utilities.lazyLoad(exports, ["Chmod"], () => require("./chmod"));
 
+export { CurlArgs } from "./curl";
+export type Curl = import("./curl").Curl;
+export const Curl: typeof import("./curl").Curl = null as any;
+utilities.lazyLoad(exports, ["Curl"], () => require("./curl"));
+
 export { EtcdctlArgs } from "./etcdctl";
 export type Etcdctl = import("./etcdctl").Etcdctl;
 export const Etcdctl: typeof import("./etcdctl").Etcdctl = null as any;
 utilities.lazyLoad(exports, ["Etcdctl"], () => require("./etcdctl"));
+
+export { HostnamectlArgs } from "./hostnamectl";
+export type Hostnamectl = import("./hostnamectl").Hostnamectl;
+export const Hostnamectl: typeof import("./hostnamectl").Hostnamectl = null as any;
+utilities.lazyLoad(exports, ["Hostnamectl"], () => require("./hostnamectl"));
 
 export { MkdirArgs } from "./mkdir";
 export type Mkdir = import("./mkdir").Mkdir;
@@ -34,6 +44,11 @@ export { RmArgs } from "./rm";
 export type Rm = import("./rm").Rm;
 export const Rm: typeof import("./rm").Rm = null as any;
 utilities.lazyLoad(exports, ["Rm"], () => require("./rm"));
+
+export { SedArgs } from "./sed";
+export type Sed = import("./sed").Sed;
+export const Sed: typeof import("./sed").Sed = null as any;
+utilities.lazyLoad(exports, ["Sed"], () => require("./sed"));
 
 export { SystemctlArgs } from "./systemctl";
 export type Systemctl = import("./systemctl").Systemctl;
@@ -65,8 +80,12 @@ const _module = {
         switch (type) {
             case "kubernetes-the-hard-way:tools:Chmod":
                 return new Chmod(name, <any>undefined, { urn })
+            case "kubernetes-the-hard-way:tools:Curl":
+                return new Curl(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:tools:Etcdctl":
                 return new Etcdctl(name, <any>undefined, { urn })
+            case "kubernetes-the-hard-way:tools:Hostnamectl":
+                return new Hostnamectl(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:tools:Mkdir":
                 return new Mkdir(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:tools:Mktemp":
@@ -75,6 +94,8 @@ const _module = {
                 return new Mv(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:tools:Rm":
                 return new Rm(name, <any>undefined, { urn })
+            case "kubernetes-the-hard-way:tools:Sed":
+                return new Sed(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:tools:Systemctl":
                 return new Systemctl(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:tools:Tar":

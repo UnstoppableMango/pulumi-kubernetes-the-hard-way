@@ -33,9 +33,23 @@ func Integer(description string) schema.PropertySpec {
 	}
 }
 
+func OneOrMoreStrings(desctiption string) schema.PropertySpec {
+	return schema.PropertySpec{
+		Description: desctiption,
+		TypeSpec:    types.OneOrMoreStrings,
+	}
+}
+
 func String(description string) schema.PropertySpec {
 	return schema.PropertySpec{
 		Description: description,
 		TypeSpec:    types.String,
+	}
+}
+
+func StringMap(description string) schema.PropertySpec {
+	return schema.PropertySpec{
+		Description: description,
+		TypeSpec:    types.StringMap,
 	}
 }

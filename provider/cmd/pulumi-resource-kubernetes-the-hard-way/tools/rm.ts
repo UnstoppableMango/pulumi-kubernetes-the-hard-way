@@ -1,13 +1,13 @@
 import { ComponentResourceOptions, Input, output } from '@pulumi/pulumi';
 import { Command } from '@pulumi/command/remote';
-import * as types from '../schema-types';
+import * as schema from '../schema-types';
 import { CommandBuilder, toArray } from './commandBuilder';
 
-export type RmArgs = types.RmArgs & {
+export type RmArgs = schema.RmArgs & {
   files: Input<string | Input<string>[]>;
 };
 
-export class Rm extends types.Rm {
+export class Rm extends schema.Rm {
   constructor(name: string, args: RmArgs, opts?: ComponentResourceOptions) {
     super(name, args, opts);
 

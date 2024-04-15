@@ -64,7 +64,7 @@ export class Chmod extends pulumi.ComponentResource {
      */
     public readonly mode!: pulumi.Output<string>;
     /**
-     * Do not trea '/' spcially (the default).
+     * Do not treat '/' specially (the default).
      */
     public readonly noPreserveRoot!: pulumi.Output<boolean>;
     /**
@@ -212,7 +212,7 @@ export interface ChmodArgs {
      */
     mode: pulumi.Input<string>;
     /**
-     * Do not trea '/' spcially (the default).
+     * Do not treat '/' specially (the default).
      */
     noPreserveRoot?: pulumi.Input<boolean>;
     /**

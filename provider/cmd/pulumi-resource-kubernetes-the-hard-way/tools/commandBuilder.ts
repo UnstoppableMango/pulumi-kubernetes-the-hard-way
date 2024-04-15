@@ -1,7 +1,8 @@
 import { Input, Output, all, output } from '@pulumi/pulumi';
 
+type MaybeNumber = number | undefined;
 type MaybeString = string | undefined;
-type OptValue = boolean | MaybeString;
+type OptValue = boolean | MaybeString | MaybeNumber;
 
 interface Opt {
   option: string;
@@ -40,6 +41,10 @@ export class CommandBuilder {
     const pair: Output<Opt> = output(value).apply(toOpt(option));
     this.opts.push(pair);
     return this;
+  }
+
+  public options(option: string, value: Input<OptValue>[]): CommandBuilder {
+    throw new Error('TODO');
   }
 }
 

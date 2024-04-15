@@ -154,14 +154,14 @@ public class Chmod extends com.pulumi.resources.ComponentResource {
         return this.mode;
     }
     /**
-     * Do not trea &#39;/&#39; spcially (the default).
+     * Do not treat &#39;/&#39; specially (the default).
      * 
      */
     @Export(name="noPreserveRoot", refs={Boolean.class}, tree="[0]")
     private Output<Boolean> noPreserveRoot;
 
     /**
-     * @return Do not trea &#39;/&#39; spcially (the default).
+     * @return Do not treat &#39;/&#39; specially (the default).
      * 
      */
     public Output<Boolean> noPreserveRoot() {

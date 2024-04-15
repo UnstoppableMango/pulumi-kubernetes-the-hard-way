@@ -37,6 +37,65 @@ namespace UnMango.KubernetesTheHardWay.Tools
     }
 
     [EnumType]
+    public readonly struct CurlCertType : IEquatable<CurlCertType>
+    {
+        private readonly string _value;
+
+        private CurlCertType(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
+        public static CurlCertType PEM { get; } = new CurlCertType("PEM");
+        public static CurlCertType DER { get; } = new CurlCertType("DER");
+        public static CurlCertType ENG { get; } = new CurlCertType("ENG");
+        public static CurlCertType P12 { get; } = new CurlCertType("P12");
+
+        public static bool operator ==(CurlCertType left, CurlCertType right) => left.Equals(right);
+        public static bool operator !=(CurlCertType left, CurlCertType right) => !left.Equals(right);
+
+        public static explicit operator string(CurlCertType value) => value._value;
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object? obj) => obj is CurlCertType other && Equals(other);
+        public bool Equals(CurlCertType other) => string.Equals(_value, other._value, StringComparison.Ordinal);
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+
+        public override string ToString() => _value;
+    }
+
+    [EnumType]
+    public readonly struct CurlDelegationLevel : IEquatable<CurlDelegationLevel>
+    {
+        private readonly string _value;
+
+        private CurlDelegationLevel(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
+        public static CurlDelegationLevel None { get; } = new CurlDelegationLevel("none");
+        public static CurlDelegationLevel Policy { get; } = new CurlDelegationLevel("policy");
+        public static CurlDelegationLevel Always { get; } = new CurlDelegationLevel("always");
+
+        public static bool operator ==(CurlDelegationLevel left, CurlDelegationLevel right) => left.Equals(right);
+        public static bool operator !=(CurlDelegationLevel left, CurlDelegationLevel right) => !left.Equals(right);
+
+        public static explicit operator string(CurlDelegationLevel value) => value._value;
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object? obj) => obj is CurlDelegationLevel other && Equals(other);
+        public bool Equals(CurlDelegationLevel other) => string.Equals(_value, other._value, StringComparison.Ordinal);
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+
+        public override string ToString() => _value;
+    }
+
+    [EnumType]
     public readonly struct EtcdctlCommand : IEquatable<EtcdctlCommand>
     {
         private readonly string _value;
@@ -57,6 +116,85 @@ namespace UnMango.KubernetesTheHardWay.Tools
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object? obj) => obj is EtcdctlCommand other && Equals(other);
         public bool Equals(EtcdctlCommand other) => string.Equals(_value, other._value, StringComparison.Ordinal);
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+
+        public override string ToString() => _value;
+    }
+
+    [EnumType]
+    public readonly struct HostnamectlCommand : IEquatable<HostnamectlCommand>
+    {
+        private readonly string _value;
+
+        private HostnamectlCommand(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
+        /// <summary>
+        /// Show system hostname and related information. If no command is specified, this is the implied default.
+        /// </summary>
+        public static HostnamectlCommand Status { get; } = new HostnamectlCommand("status");
+        /// <summary>
+        /// If no argument is given, print the system hostname. If an optional argument NAME is provided then the command changes the system hostname to NAME.
+        /// </summary>
+        public static HostnamectlCommand Hostname { get; } = new HostnamectlCommand("hostname");
+        /// <summary>
+        /// If no argument is given, print the icon name of the system. If an optional argument NAME is provided then the command changes the icon name to NAME.
+        /// </summary>
+        public static HostnamectlCommand Icon_name { get; } = new HostnamectlCommand("icon-name");
+        /// <summary>
+        /// If no argument is given, print the chassis type. If an optional argument TYPE is provided then the command changes the chassis type to TYPE.
+        /// </summary>
+        public static HostnamectlCommand Chassis { get; } = new HostnamectlCommand("chassis");
+        /// <summary>
+        /// If no argument is given, print the deployment environment. If an optional argument ENVIRONMENT is provided then the command changes the deployment environment to ENVIRONMENT.
+        /// </summary>
+        public static HostnamectlCommand Deployment { get; } = new HostnamectlCommand("deployment");
+        /// <summary>
+        /// If no argument is given, print the location string for the system. If an optional argument LOCATION is provided then the command changes the location string for the system to LOCATION.
+        /// </summary>
+        public static HostnamectlCommand Location { get; } = new HostnamectlCommand("location");
+
+        public static bool operator ==(HostnamectlCommand left, HostnamectlCommand right) => left.Equals(right);
+        public static bool operator !=(HostnamectlCommand left, HostnamectlCommand right) => !left.Equals(right);
+
+        public static explicit operator string(HostnamectlCommand value) => value._value;
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object? obj) => obj is HostnamectlCommand other && Equals(other);
+        public bool Equals(HostnamectlCommand other) => string.Equals(_value, other._value, StringComparison.Ordinal);
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+
+        public override string ToString() => _value;
+    }
+
+    [EnumType]
+    public readonly struct HostnamectlJsonMode : IEquatable<HostnamectlJsonMode>
+    {
+        private readonly string _value;
+
+        private HostnamectlJsonMode(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
+        public static HostnamectlJsonMode @Short { get; } = new HostnamectlJsonMode("short");
+        public static HostnamectlJsonMode Pretty { get; } = new HostnamectlJsonMode("pretty");
+        public static HostnamectlJsonMode Off { get; } = new HostnamectlJsonMode("off");
+
+        public static bool operator ==(HostnamectlJsonMode left, HostnamectlJsonMode right) => left.Equals(right);
+        public static bool operator !=(HostnamectlJsonMode left, HostnamectlJsonMode right) => !left.Equals(right);
+
+        public static explicit operator string(HostnamectlJsonMode value) => value._value;
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object? obj) => obj is HostnamectlJsonMode other && Equals(other);
+        public bool Equals(HostnamectlJsonMode other) => string.Equals(_value, other._value, StringComparison.Ordinal);
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value?.GetHashCode() ?? 0;

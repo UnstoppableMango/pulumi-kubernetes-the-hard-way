@@ -10,12 +10,66 @@ export const CommandLifecycle = {
 
 export type CommandLifecycle = (typeof CommandLifecycle)[keyof typeof CommandLifecycle];
 
+export const CurlCertType = {
+    PEM: "PEM",
+    DER: "DER",
+    ENG: "ENG",
+    P12: "P12",
+} as const;
+
+export type CurlCertType = (typeof CurlCertType)[keyof typeof CurlCertType];
+
+export const CurlDelegationLevel = {
+    None: "none",
+    Policy: "policy",
+    Always: "always",
+} as const;
+
+export type CurlDelegationLevel = (typeof CurlDelegationLevel)[keyof typeof CurlDelegationLevel];
+
 export const EtcdctlCommand = {
     Member: "member",
     List: "list",
 } as const;
 
 export type EtcdctlCommand = (typeof EtcdctlCommand)[keyof typeof EtcdctlCommand];
+
+export const HostnamectlCommand = {
+    /**
+     * Show system hostname and related information. If no command is specified, this is the implied default.
+     */
+    Status: "status",
+    /**
+     * If no argument is given, print the system hostname. If an optional argument NAME is provided then the command changes the system hostname to NAME.
+     */
+    Hostname: "hostname",
+    /**
+     * If no argument is given, print the icon name of the system. If an optional argument NAME is provided then the command changes the icon name to NAME.
+     */
+    Icon_name: "icon-name",
+    /**
+     * If no argument is given, print the chassis type. If an optional argument TYPE is provided then the command changes the chassis type to TYPE.
+     */
+    Chassis: "chassis",
+    /**
+     * If no argument is given, print the deployment environment. If an optional argument ENVIRONMENT is provided then the command changes the deployment environment to ENVIRONMENT.
+     */
+    Deployment: "deployment",
+    /**
+     * If no argument is given, print the location string for the system. If an optional argument LOCATION is provided then the command changes the location string for the system to LOCATION.
+     */
+    Location: "location",
+} as const;
+
+export type HostnamectlCommand = (typeof HostnamectlCommand)[keyof typeof HostnamectlCommand];
+
+export const HostnamectlJsonMode = {
+    Short: "short",
+    Pretty: "pretty",
+    Off: "off",
+} as const;
+
+export type HostnamectlJsonMode = (typeof HostnamectlJsonMode)[keyof typeof HostnamectlJsonMode];
 
 export const SystemctlCommand = {
     Bind: "bind",

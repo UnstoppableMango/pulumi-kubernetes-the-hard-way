@@ -144,14 +144,14 @@ public final class ChmodArgs extends com.pulumi.resources.ResourceArgs {
     }
 
     /**
-     * Do not trea &#39;/&#39; spcially (the default).
+     * Do not treat &#39;/&#39; specially (the default).
      * 
      */
     @Import(name="noPreserveRoot")
     private @Nullable Output<Boolean> noPreserveRoot;
 
     /**
-     * @return Do not trea &#39;/&#39; spcially (the default).
+     * @return Do not treat &#39;/&#39; specially (the default).
      * 
      */
     public Optional<Output<Boolean>> noPreserveRoot() {
@@ -497,7 +497,7 @@ public final class ChmodArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param noPreserveRoot Do not trea &#39;/&#39; spcially (the default).
+         * @param noPreserveRoot Do not treat &#39;/&#39; specially (the default).
          * 
          * @return builder
          * 
@@ -508,7 +508,7 @@ public final class ChmodArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param noPreserveRoot Do not trea &#39;/&#39; spcially (the default).
+         * @param noPreserveRoot Do not treat &#39;/&#39; specially (the default).
          * 
          * @return builder
          * 

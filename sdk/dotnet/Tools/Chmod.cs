@@ -71,7 +71,7 @@ namespace UnMango.KubernetesTheHardWay.Tools
         public Output<string> Mode { get; private set; } = null!;
 
         /// <summary>
-        /// Do not trea '/' spcially (the default).
+        /// Do not treat '/' specially (the default).
         /// </summary>
         [Output("noPreserveRoot")]
         public Output<bool> NoPreserveRoot { get; private set; } = null!;
@@ -220,7 +220,7 @@ namespace UnMango.KubernetesTheHardWay.Tools
         public Input<string> Mode { get; set; } = null!;
 
         /// <summary>
-        /// Do not trea '/' spcially (the default).
+        /// Do not treat '/' specially (the default).
         /// </summary>
         [Input("noPreserveRoot")]
         public Input<bool>? NoPreserveRoot { get; set; }

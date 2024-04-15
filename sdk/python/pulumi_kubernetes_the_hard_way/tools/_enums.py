@@ -6,7 +6,11 @@ from enum import Enum
 
 __all__ = [
     'CommandLifecycle',
+    'CurlCertType',
+    'CurlDelegationLevel',
     'EtcdctlCommand',
+    'HostnamectlCommand',
+    'HostnamectlJsonMode',
     'SystemctlCommand',
     'TeeMode',
 ]
@@ -18,9 +22,55 @@ class CommandLifecycle(str, Enum):
     DELETE = "delete"
 
 
+class CurlCertType(str, Enum):
+    PEM = "PEM"
+    DER = "DER"
+    ENG = "ENG"
+    P12 = "P12"
+
+
+class CurlDelegationLevel(str, Enum):
+    NONE = "none"
+    POLICY = "policy"
+    ALWAYS = "always"
+
+
 class EtcdctlCommand(str, Enum):
     MEMBER = "member"
     LIST = "list"
+
+
+class HostnamectlCommand(str, Enum):
+    STATUS = "status"
+    """
+    Show system hostname and related information. If no command is specified, this is the implied default.
+    """
+    HOSTNAME = "hostname"
+    """
+    If no argument is given, print the system hostname. If an optional argument NAME is provided then the command changes the system hostname to NAME.
+    """
+    ICON_NAME = "icon-name"
+    """
+    If no argument is given, print the icon name of the system. If an optional argument NAME is provided then the command changes the icon name to NAME.
+    """
+    CHASSIS = "chassis"
+    """
+    If no argument is given, print the chassis type. If an optional argument TYPE is provided then the command changes the chassis type to TYPE.
+    """
+    DEPLOYMENT = "deployment"
+    """
+    If no argument is given, print the deployment environment. If an optional argument ENVIRONMENT is provided then the command changes the deployment environment to ENVIRONMENT.
+    """
+    LOCATION = "location"
+    """
+    If no argument is given, print the location string for the system. If an optional argument LOCATION is provided then the command changes the location string for the system to LOCATION.
+    """
+
+
+class HostnamectlJsonMode(str, Enum):
+    SHORT = "short"
+    PRETTY = "pretty"
+    OFF = "off"
 
 
 class SystemctlCommand(str, Enum):

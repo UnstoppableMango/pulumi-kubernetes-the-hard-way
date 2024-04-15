@@ -43,7 +43,7 @@ class ChmodArgs:
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] environment: Environment variables
         :param pulumi.Input[bool] help: Display help and exit.
         :param 'CommandLifecycle' lifecycle: At what stage(s) in the resource lifecycle should the command be run
-        :param pulumi.Input[bool] no_preserve_root: Do not trea '/' spcially (the default).
+        :param pulumi.Input[bool] no_preserve_root: Do not treat '/' specially (the default).
         :param pulumi.Input[bool] preserve_root: Fail to operate recursively on '/'.
         :param pulumi.Input[bool] quiet: Suppress most error messages. Same as `silent`.
         :param pulumi.Input[bool] recursive: Change files and directories recursively.
@@ -185,7 +185,7 @@ class ChmodArgs:
     @pulumi.getter(name="noPreserveRoot")
     def no_preserve_root(self) -> Optional[pulumi.Input[bool]]:
         """
-        Do not trea '/' spcially (the default).
+        Do not treat '/' specially (the default).
         """
         return pulumi.get(self, "no_preserve_root")
 
@@ -326,7 +326,7 @@ class Chmod(pulumi.ComponentResource):
         :param pulumi.Input[bool] help: Display help and exit.
         :param 'CommandLifecycle' lifecycle: At what stage(s) in the resource lifecycle should the command be run
         :param pulumi.Input[str] mode: Modes may be absolute or symbolic. An absolute mode is an octal number...
-        :param pulumi.Input[bool] no_preserve_root: Do not trea '/' spcially (the default).
+        :param pulumi.Input[bool] no_preserve_root: Do not treat '/' specially (the default).
         :param pulumi.Input[bool] preserve_root: Fail to operate recursively on '/'.
         :param pulumi.Input[bool] quiet: Suppress most error messages. Same as `silent`.
         :param pulumi.Input[bool] recursive: Change files and directories recursively.
@@ -497,7 +497,7 @@ class Chmod(pulumi.ComponentResource):
     @pulumi.getter(name="noPreserveRoot")
     def no_preserve_root(self) -> pulumi.Output[bool]:
         """
-        Do not trea '/' spcially (the default).
+        Do not treat '/' specially (the default).
         """
         return pulumi.get(self, "no_preserve_root")
 
