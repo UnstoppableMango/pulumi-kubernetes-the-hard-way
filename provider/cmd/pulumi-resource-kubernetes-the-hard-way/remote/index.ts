@@ -2,6 +2,7 @@ export * from './cniPlugins';
 export * from './containerd';
 export * from './crictl';
 export * from './download';
+export * from './etcdCluster';
 export * from './etcdConfiguration';
 export * from './etcdInstall';
 export * from './etcdService';

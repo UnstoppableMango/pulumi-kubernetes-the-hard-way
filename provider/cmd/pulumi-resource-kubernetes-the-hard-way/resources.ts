@@ -5,6 +5,7 @@ import {
   ContainerdInstall,
   CrictlInstall,
   Download,
+  EtcdCluster,
   EtcdConfiguration,
   EtcdInstall,
   EtcdService,
@@ -27,6 +28,7 @@ import { KubeVipManifest } from './config';
 const resources: schema.ResourceConstructor = {
   'kubernetes-the-hard-way:config:KubeVipManifest': (...args) => new KubeVipManifest(...args),
   'kubernetes-the-hard-way:remote:Download': (...args) => new Download(...args),
+  'kubernetes-the-hard-way:remote:EtcdCluster': (...args) => new EtcdCluster(...args),
   'kubernetes-the-hard-way:remote:EtcdConfiguration': (...args) => new EtcdConfiguration(...args),
   'kubernetes-the-hard-way:remote:EtcdInstall': (...args) => new EtcdInstall(...args),
   'kubernetes-the-hard-way:remote:EtcdService': (...args) => new EtcdService(...args),

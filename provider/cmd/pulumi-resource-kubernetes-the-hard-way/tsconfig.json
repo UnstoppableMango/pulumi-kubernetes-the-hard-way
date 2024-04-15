@@ -26,6 +26,7 @@
     "remote/containerd.ts",
     "remote/crictl.ts",
     "remote/download.ts",
+    "remote/etcdCluster.ts",
     "remote/etcdConfiguration.ts",
     "remote/etcdInstall.ts",
     "remote/etcdService.ts",
