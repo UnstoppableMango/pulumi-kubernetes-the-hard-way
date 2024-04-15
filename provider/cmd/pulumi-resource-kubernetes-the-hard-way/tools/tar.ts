@@ -43,7 +43,7 @@ export class Tar extends types.Tar {
     this.stderr = command.stderr;
     this.stdin = command.stdin as Output<string>;
     this.stdout = command.stdout;
-    this.stripComponents = stripComponents as Output<number>;
+    this.stripComponents = stripComponents as Output<number> | undefined;
 
     this.registerOutputs({
       archive, command, directory, extract,
