@@ -8,6 +8,7 @@ import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
 from .. import _utilities
+from . import outputs
 from .. import tools as _tools
 from .file import File
 import pulumi_command
@@ -46,6 +47,8 @@ class EtcdConfigurationArgs:
             configuration_directory = '/etc/etcd'
         if configuration_directory is not None:
             pulumi.set(__self__, "configuration_directory", configuration_directory)
+        if data_directory is None:
+            data_directory = '/var/lib/etcd'
         if data_directory is not None:
             pulumi.set(__self__, "data_directory", data_directory)
 
@@ -229,6 +232,8 @@ class EtcdConfiguration(pulumi.ComponentResource):
             if connection is None and not opts.urn:
                 raise TypeError("Missing required property 'connection'")
             __props__.__dict__["connection"] = connection
+            if data_directory is None:
+                data_directory = '/var/lib/etcd'
             __props__.__dict__["data_directory"] = data_directory
             if etcd_path is None and not opts.urn:
                 raise TypeError("Missing required property 'etcd_path'")
@@ -244,6 +249,7 @@ class EtcdConfiguration(pulumi.ComponentResource):
             __props__.__dict__["configuration_mkdir"] = None
             __props__.__dict__["data_mkdir"] = None
             __props__.__dict__["key_file"] = None
+            __props__.__dict__["value"] = None
         super(EtcdConfiguration, __self__).__init__(
             'kubernetes-the-hard-way:remote:EtcdConfiguration',
             resource_name,
@@ -285,7 +291,7 @@ class EtcdConfiguration(pulumi.ComponentResource):
 
     @property
     @pulumi.getter(name="configurationDirectory")
-    def configuration_directory(self) -> pulumi.Output[Optional[str]]:
+    def configuration_directory(self) -> pulumi.Output[str]:
         """
         The directory to store etcd configuration.
         """
@@ -309,7 +315,7 @@ class EtcdConfiguration(pulumi.ComponentResource):
 
     @property
     @pulumi.getter(name="dataDirectory")
-    def data_directory(self) -> pulumi.Output[Optional[str]]:
+    def data_directory(self) -> pulumi.Output[str]:
         """
         The directory etcd will store its data.
         """
@@ -354,4 +360,12 @@ class EtcdConfiguration(pulumi.ComponentResource):
         The PEM encoded key data.
         """
         return pulumi.get(self, "key_pem")
+
+    @property
+    @pulumi.getter
+    def value(self) -> pulumi.Output['outputs.EtcdConfigurationProps']:
+        """
+        A bag of properties to be consumed by other resources.
+        """
+        return pulumi.get(self, "value")
 

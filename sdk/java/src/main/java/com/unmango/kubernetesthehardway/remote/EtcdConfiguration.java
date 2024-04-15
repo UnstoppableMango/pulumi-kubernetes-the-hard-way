@@ -11,9 +11,9 @@ import com.pulumi.core.internal.Codegen;
 import com.unmango.kubernetesthehardway.Utilities;
 import com.unmango.kubernetesthehardway.remote.EtcdConfigurationArgs;
 import com.unmango.kubernetesthehardway.remote.File;
+import com.unmango.kubernetesthehardway.remote.outputs.EtcdConfigurationProps;
 import com.unmango.kubernetesthehardway.tools.Mkdir;
 import java.lang.String;
-import java.util.Optional;
 import javax.annotation.Nullable;
 
 /**
@@ -83,14 +83,14 @@ public class EtcdConfiguration extends com.pulumi.resources.ComponentResource {
      * 
      */
     @Export(name="configurationDirectory", refs={String.class}, tree="[0]")
-    private Output</* @Nullable */ String> configurationDirectory;
+    private Output<String> configurationDirectory;
 
     /**
      * @return The directory to store etcd configuration.
      * 
      */
-    public Output<Optional<String>> configurationDirectory() {
-        return Codegen.optional(this.configurationDirectory);
+    public Output<String> configurationDirectory() {
+        return this.configurationDirectory;
     }
     /**
      * The configuration mkdir operation.
@@ -125,14 +125,14 @@ public class EtcdConfiguration extends com.pulumi.resources.ComponentResource {
      * 
      */
     @Export(name="dataDirectory", refs={String.class}, tree="[0]")
-    private Output</* @Nullable */ String> dataDirectory;
+    private Output<String> dataDirectory;
 
     /**
      * @return The directory etcd will store its data.
      * 
      */
-    public Output<Optional<String>> dataDirectory() {
-        return Codegen.optional(this.dataDirectory);
+    public Output<String> dataDirectory() {
+        return this.dataDirectory;
     }
     /**
      * The data mkdir operation.
@@ -203,6 +203,20 @@ public class EtcdConfiguration extends com.pulumi.resources.ComponentResource {
      */
     public Output<String> keyPem() {
         return this.keyPem;
+    }
+    /**
+     * A bag of properties to be consumed by other resources.
+     * 
+     */
+    @Export(name="value", refs={EtcdConfigurationProps.class}, tree="[0]")
+    private Output<EtcdConfigurationProps> value;
+
+    /**
+     * @return A bag of properties to be consumed by other resources.
+     * 
+     */
+    public Output<EtcdConfigurationProps> value() {
+        return this.value;
     }
 
     /**

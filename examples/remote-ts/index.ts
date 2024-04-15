@@ -1,7 +1,7 @@
 import * as path from 'node:path';
 import { Config } from '@pulumi/pulumi';
 import { Chmod, Mkdir, Mktemp, Tar, Wget } from '@unmango/pulumi-kubernetes-the-hard-way/tools';
-import { Download, EtcdConfiguration, File, StaticPod, SystemdService } from '@unmango/pulumi-kubernetes-the-hard-way/remote';
+import { Download, EtcdConfiguration, EtcdService, File, StaticPod, SystemdService } from '@unmango/pulumi-kubernetes-the-hard-way/remote';
 
 const config = new Config();
 const host = config.require('host');
@@ -61,7 +61,17 @@ const etcdConfig = new EtcdConfiguration('remote', {
   internalIp: '10.240.0.10',
   configurationDirectory: path.join(basePath, 'etc', 'etcd'),
   dataDirectory: path.join(basePath, 'var', 'lib', 'etcd'),
-  // systemdDirectory: basePath,
+  etcdPath: '/some/path/that/probably/should/exist/etcd',
+});
+
+const etcdConfig2 = new EtcdConfiguration('remote2', {
+  connection: { host, port, user, password },
+  caPem: 'pretend theres pem data here',
+  certPem: 'pretend theres pem data here',
+  keyPem: 'pretend theres pem data here',
+  internalIp: '10.240.0.11',
+  configurationDirectory: path.join(basePath, 'etc', 'etcd2'),
+  dataDirectory: path.join(basePath, 'var', 'lib', 'etcd2'),
   etcdPath: '/some/path/that/probably/should/exist/etcd',
 });
 
@@ -71,7 +81,7 @@ const etcdConfig = new EtcdConfiguration('remote', {
 //   commands: ['member', 'list'],
 // }, { dependsOn: etcd });
 
-const systemdService = new SystemdService('remote-test', {
+const systemdService = new SystemdService('remote', {
   connection: { host, port, user, password },
   directory: basePath,
   service: {
@@ -93,6 +103,13 @@ const systemdService = new SystemdService('remote-test', {
 //     },
 //   },
 // });
+
+const etcdService = new EtcdService('remote-etcd', {
+  connection: { host, port, user, password },
+  directory: basePath,
+  configuration: etcdConfig.value,
+  peers: [etcdConfig2.value],
+});
 
 export const fileStderr = file.stderr;
 export const fileStdout = file.stdout;

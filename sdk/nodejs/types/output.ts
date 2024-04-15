@@ -401,6 +401,40 @@ export namespace config {
 
 export namespace remote {
     /**
+     * Props for resources that consume etcd configuration.
+     */
+    export interface EtcdConfigurationProps {
+        /**
+         * Path to the certificate authority file on the remote system.
+         */
+        caFilePath: string;
+        /**
+         * Path to the certificate file on the remote system.
+         */
+        certFilePath: string;
+        /**
+         * Etcd's data directory.
+         */
+        dataDirectory: string;
+        /**
+         * Path to the etcd binary.
+         */
+        etcdPath: string;
+        /**
+         * Internal IP of the etcd node.
+         */
+        internalIp: string;
+        /**
+         * Path to the private key file on the remote system.
+         */
+        keyFilePath: string;
+        /**
+         * Name of the etcd node.
+         */
+        name: string;
+    }
+
+    /**
      * https://www.freedesktop.org/software/systemd/man/latest/systemd.unit.html#%5BInstall%5D%20Section%20Options
      */
     export interface SystemdInstallSection {

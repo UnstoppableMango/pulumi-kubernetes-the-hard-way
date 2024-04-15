@@ -43,7 +43,7 @@
                 "com.google.code.findbugs:jsr305": "3.0.2",
                 "com.google.code.gson:gson": "2.8.9",
                 "com.pulumi:command": "0.9.2",
-                "com.pulumi:kubernetes": "4.9.1",
+                "com.pulumi:kubernetes": "4.10.0",
                 "com.pulumi:pulumi": "0.9.9",
                 "com.pulumi:random": "4.16.0",
                 "com.pulumi:tls": "5.0.2"
@@ -54,7 +54,7 @@
         "nodejs": {
             "dependencies": {
                 "@pulumi/command": "^0.9.2",
-                "@pulumi/kubernetes": "^4.9.1",
+                "@pulumi/kubernetes": "^4.10.0",
                 "@pulumi/pulumi": "^3.0.0",
                 "@pulumi/random": "^4.16.0",
                 "@pulumi/tls": "^5.0.2"
@@ -74,7 +74,7 @@
             "requires": {
                 "pulumi": "\u003e=3.91.1,\u003c4.0.0",
                 "pulumi-command": "\u003e=0.9.2,\u003c1.0.0",
-                "pulumi-kubernetes": "\u003e=4.9.1,\u003c5.0.0",
+                "pulumi-kubernetes": "\u003e=4.10.0,\u003c5.0.0",
                 "pulumi-random": "\u003e=4.16.0,\u003c5.0.0",
                 "pulumi-tls": "\u003e=5.0.2,\u003c6.0.0"
             }
@@ -303,15 +303,15 @@
                     "const": "Pod"
                 },
                 "metadata": {
-                    "$ref": "/kubernetes/v4.9.1/schema.json#/types/kubernetes:meta/v1:ObjectMeta",
+                    "$ref": "/kubernetes/v4.10.0/schema.json#/types/kubernetes:meta/v1:ObjectMeta",
                     "description": "Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata"
                 },
                 "spec": {
-                    "$ref": "/kubernetes/v4.9.1/schema.json#/types/kubernetes:core/v1:PodSpec",
+                    "$ref": "/kubernetes/v4.10.0/schema.json#/types/kubernetes:core/v1:PodSpec",
                     "description": "Specification of the desired behavior of the pod. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status"
                 },
                 "status": {
-                    "$ref": "/kubernetes/v4.9.1/schema.json#/types/kubernetes:core/v1:PodStatus",
+                    "$ref": "/kubernetes/v4.10.0/schema.json#/types/kubernetes:core/v1:PodStatus",
                     "description": "Most recently observed status of the pod. This data may not be up to date. Populated by the system. Read-only. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status"
                 }
             },
@@ -342,6 +342,49 @@
                 {
                     "value": "arm64"
                 }
+            ]
+        },
+        "kubernetes-the-hard-way:remote:EtcdConfigurationProps": {
+            "description": "Props for resources that consume etcd configuration.",
+            "properties": {
+                "caFilePath": {
+                    "type": "string",
+                    "description": "Path to the certificate authority file on the remote system."
+                },
+                "certFilePath": {
+                    "type": "string",
+                    "description": "Path to the certificate file on the remote system."
+                },
+                "dataDirectory": {
+                    "type": "string",
+                    "description": "Etcd's data directory."
+                },
+                "etcdPath": {
+                    "type": "string",
+                    "description": "Path to the etcd binary."
+                },
+                "internalIp": {
+                    "type": "string",
+                    "description": "Internal IP of the etcd node."
+                },
+                "keyFilePath": {
+                    "type": "string",
+                    "description": "Path to the private key file on the remote system."
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Name of the etcd node."
+                }
+            },
+            "type": "object",
+            "required": [
+                "caFilePath",
+                "certFilePath",
+                "dataDirectory",
+                "etcdPath",
+                "internalIp",
+                "keyFilePath",
+                "name"
             ]
         },
         "kubernetes-the-hard-way:remote:SystemdInstallSection": {
@@ -1490,7 +1533,8 @@
                 },
                 "dataDirectory": {
                     "type": "string",
-                    "description": "The directory etcd will store its data."
+                    "description": "The directory etcd will store its data.",
+                    "default": "/var/lib/etcd"
                 },
                 "dataMkdir": {
                     "$ref": "#/resources/kubernetes-the-hard-way:tools:Mkdir",
@@ -1511,6 +1555,10 @@
                 "keyPem": {
                     "type": "string",
                     "description": "The PEM encoded key data."
+                },
+                "value": {
+                    "$ref": "#/types/kubernetes-the-hard-way:remote:EtcdConfigurationProps",
+                    "description": "A bag of properties to be consumed by other resources."
                 }
             },
             "required": [
@@ -1522,9 +1570,12 @@
                 "keyPem",
                 "caFile",
                 "certFile",
+                "configurationDirectory",
                 "configurationMkdir",
+                "dataDirectory",
                 "dataMkdir",
-                "keyFile"
+                "keyFile",
+                "value"
             ],
             "inputProperties": {
                 "caPem": {
@@ -1546,7 +1597,8 @@
                 },
                 "dataDirectory": {
                     "type": "string",
-                    "description": "The directory etcd will store its data."
+                    "description": "The directory etcd will store its data.",
+                    "default": "/var/lib/etcd"
                 },
                 "etcdPath": {
                     "type": "string",
@@ -1677,6 +1729,106 @@
                 }
             },
             "requiredInputs": [
+                "connection"
+            ],
+            "isComponent": true
+        },
+        "kubernetes-the-hard-way:remote:EtcdService": {
+            "description": "Etcd systemd service file. Will likely get replaced with a static function when https://github.com/pulumi/pulumi/issues/7583 gets resolved.",
+            "properties": {
+                "configuration": {
+                    "$ref": "#/types/kubernetes-the-hard-way:remote:EtcdConfigurationProps",
+                    "description": "Etcd configuration."
+                },
+                "connection": {
+                    "$ref": "/command/v0.9.2/schema.json#/types/command:remote:Connection",
+                    "description": "The parameters with which to connect to the remote host."
+                },
+                "description": {
+                    "type": "string",
+                    "description": "Optional systemd unit description."
+                },
+                "directory": {
+                    "type": "string",
+                    "description": "The location to create the service file."
+                },
+                "documentation": {
+                    "type": "string",
+                    "description": "Optional systemd unit documentation"
+                },
+                "peers": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/kubernetes-the-hard-way:remote:EtcdConfigurationProps"
+                    },
+                    "description": "Etcd peer configuration."
+                },
+                "restart": {
+                    "$ref": "#/types/kubernetes-the-hard-way:remote:SystemdServiceRestart",
+                    "description": "Optionally override the systemd service restart behaviour. Defaults to `on-failure`."
+                },
+                "restartSec": {
+                    "type": "string",
+                    "description": "Optionally override the systemd service RestartSec. Defaults to `5`."
+                },
+                "service": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:remote:SystemdService",
+                    "description": "The remote systemd service."
+                },
+                "wantedBy": {
+                    "type": "string",
+                    "description": "Optionally override the systemd service wanted-by. Defaults to `multi-user.target`."
+                }
+            },
+            "required": [
+                "configuration",
+                "connection",
+                "peers",
+                "service"
+            ],
+            "inputProperties": {
+                "configuration": {
+                    "$ref": "#/types/kubernetes-the-hard-way:remote:EtcdConfigurationProps",
+                    "description": "Etcd configuration."
+                },
+                "connection": {
+                    "$ref": "/command/v0.9.2/schema.json#/types/command:remote:Connection",
+                    "description": "The parameters with which to connect to the remote host."
+                },
+                "description": {
+                    "type": "string",
+                    "description": "Optional systemd unit description."
+                },
+                "directory": {
+                    "type": "string",
+                    "description": "The location to create the service file."
+                },
+                "documentation": {
+                    "type": "string",
+                    "description": "Optional systemd unit documentation"
+                },
+                "peers": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/kubernetes-the-hard-way:remote:EtcdConfigurationProps"
+                    },
+                    "description": "Etcd peer configuration."
+                },
+                "restart": {
+                    "$ref": "#/types/kubernetes-the-hard-way:remote:SystemdServiceRestart",
+                    "description": "Optionally override the systemd service restart behaviour. Defaults to `on-failure`."
+                },
+                "restartSec": {
+                    "type": "string",
+                    "description": "Optionally override the systemd service RestartSec. Defaults to `5`."
+                },
+                "wantedBy": {
+                    "type": "string",
+                    "description": "Optionally override the systemd service wanted-by. Defaults to `multi-user.target`."
+                }
+            },
+            "requiredInputs": [
+                "configuration",
                 "connection"
             ],
             "isComponent": true

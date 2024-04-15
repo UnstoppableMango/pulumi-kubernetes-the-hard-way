@@ -27,13 +27,13 @@ type EtcdConfiguration struct {
 	// The PEM encoded certificate data.
 	CertPem pulumi.StringOutput `pulumi:"certPem"`
 	// The directory to store etcd configuration.
-	ConfigurationDirectory pulumi.StringPtrOutput `pulumi:"configurationDirectory"`
+	ConfigurationDirectory pulumi.StringOutput `pulumi:"configurationDirectory"`
 	// The configuration mkdir operation.
 	ConfigurationMkdir tools.MkdirOutput `pulumi:"configurationMkdir"`
 	// The parameters with which to connect to the remote host.
 	Connection pulumiCommand.ConnectionOutput `pulumi:"connection"`
 	// The directory etcd will store its data.
-	DataDirectory pulumi.StringPtrOutput `pulumi:"dataDirectory"`
+	DataDirectory pulumi.StringOutput `pulumi:"dataDirectory"`
 	// The data mkdir operation.
 	DataMkdir tools.MkdirOutput `pulumi:"dataMkdir"`
 	// The path to the `etcd` binary.
@@ -44,6 +44,8 @@ type EtcdConfiguration struct {
 	KeyFile FileOutput `pulumi:"keyFile"`
 	// The PEM encoded key data.
 	KeyPem pulumi.StringOutput `pulumi:"keyPem"`
+	// A bag of properties to be consumed by other resources.
+	Value EtcdConfigurationPropsOutput `pulumi:"value"`
 }
 
 // NewEtcdConfiguration registers a new resource with the given unique name, arguments, and options.
@@ -75,6 +77,9 @@ func NewEtcdConfiguration(ctx *pulumi.Context,
 		args.ConfigurationDirectory = pulumi.StringPtr("/etc/etcd")
 	}
 	args.Connection = args.Connection.ToConnectionOutput().ApplyT(func(v pulumiCommand.Connection) pulumiCommand.Connection { return *v.Defaults() }).(pulumiCommand.ConnectionOutput)
+	if args.DataDirectory == nil {
+		args.DataDirectory = pulumi.StringPtr("/var/lib/etcd")
+	}
 	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource EtcdConfiguration
 	err := ctx.RegisterRemoteComponentResource("kubernetes-the-hard-way:remote:EtcdConfiguration", name, args, &resource, opts...)
@@ -231,8 +236,8 @@ func (o EtcdConfigurationOutput) CertPem() pulumi.StringOutput {
 }
 
 // The directory to store etcd configuration.
-func (o EtcdConfigurationOutput) ConfigurationDirectory() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *EtcdConfiguration) pulumi.StringPtrOutput { return v.ConfigurationDirectory }).(pulumi.StringPtrOutput)
+func (o EtcdConfigurationOutput) ConfigurationDirectory() pulumi.StringOutput {
+	return o.ApplyT(func(v *EtcdConfiguration) pulumi.StringOutput { return v.ConfigurationDirectory }).(pulumi.StringOutput)
 }
 
 // The configuration mkdir operation.
@@ -246,8 +251,8 @@ func (o EtcdConfigurationOutput) Connection() pulumiCommand.ConnectionOutput {
 }
 
 // The directory etcd will store its data.
-func (o EtcdConfigurationOutput) DataDirectory() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *EtcdConfiguration) pulumi.StringPtrOutput { return v.DataDirectory }).(pulumi.StringPtrOutput)
+func (o EtcdConfigurationOutput) DataDirectory() pulumi.StringOutput {
+	return o.ApplyT(func(v *EtcdConfiguration) pulumi.StringOutput { return v.DataDirectory }).(pulumi.StringOutput)
 }
 
 // The data mkdir operation.
@@ -273,6 +278,11 @@ func (o EtcdConfigurationOutput) KeyFile() FileOutput {
 // The PEM encoded key data.
 func (o EtcdConfigurationOutput) KeyPem() pulumi.StringOutput {
 	return o.ApplyT(func(v *EtcdConfiguration) pulumi.StringOutput { return v.KeyPem }).(pulumi.StringOutput)
+}
+
+// A bag of properties to be consumed by other resources.
+func (o EtcdConfigurationOutput) Value() EtcdConfigurationPropsOutput {
+	return o.ApplyT(func(v *EtcdConfiguration) EtcdConfigurationPropsOutput { return v.Value }).(EtcdConfigurationPropsOutput)
 }
 
 type EtcdConfigurationArrayOutput struct{ *pulumi.OutputState }

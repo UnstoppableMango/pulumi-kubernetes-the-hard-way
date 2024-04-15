@@ -35,6 +35,11 @@ export type EtcdInstall = import("./etcdInstall").EtcdInstall;
 export const EtcdInstall: typeof import("./etcdInstall").EtcdInstall = null as any;
 utilities.lazyLoad(exports, ["EtcdInstall"], () => require("./etcdInstall"));
 
+export { EtcdServiceArgs } from "./etcdService";
+export type EtcdService = import("./etcdService").EtcdService;
+export const EtcdService: typeof import("./etcdService").EtcdService = null as any;
+utilities.lazyLoad(exports, ["EtcdService"], () => require("./etcdService"));
+
 export { FileArgs } from "./file";
 export type File = import("./file").File;
 export const File: typeof import("./file").File = null as any;
@@ -105,6 +110,8 @@ const _module = {
                 return new EtcdConfiguration(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:remote:EtcdInstall":
                 return new EtcdInstall(name, <any>undefined, { urn })
+            case "kubernetes-the-hard-way:remote:EtcdService":
+                return new EtcdService(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:remote:File":
                 return new File(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:remote:KubeApiServerInstall":

@@ -4,6 +4,7 @@ export * from './crictl';
 export * from './download';
 export * from './etcdConfiguration';
 export * from './etcdInstall';
+export * from './etcdService';
 export * from './file';
 export * from './kubeApiServerInstall';
 export * from './kubeControllerManagerInstall';

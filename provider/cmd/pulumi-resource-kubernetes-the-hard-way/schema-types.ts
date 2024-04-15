@@ -13,6 +13,7 @@ export type ResourceConstructor = {
     readonly "kubernetes-the-hard-way:remote:Download": ConstructComponent<Download>;
     readonly "kubernetes-the-hard-way:remote:EtcdConfiguration": ConstructComponent<EtcdConfiguration>;
     readonly "kubernetes-the-hard-way:remote:EtcdInstall": ConstructComponent<EtcdInstall>;
+    readonly "kubernetes-the-hard-way:remote:EtcdService": ConstructComponent<EtcdService>;
     readonly "kubernetes-the-hard-way:remote:File": ConstructComponent<File>;
     readonly "kubernetes-the-hard-way:remote:KubeApiServerInstall": ConstructComponent<KubeApiServerInstall>;
     readonly "kubernetes-the-hard-way:remote:KubeControllerManagerInstall": ConstructComponent<KubeControllerManagerInstall>;
@@ -44,6 +45,7 @@ export type Functions = {
     "kubernetes-the-hard-way:tls:ClusterPki/getKubeconfig": (inputs: ClusterPki_getKubeconfigInputs) => Promise<ClusterPki_getKubeconfigOutputs>;
 };
 import * as command from "@pulumi/command";
+import * as kubernetes from "@pulumi/kubernetes";
 import * as random from "@pulumi/random";
 import * as tls from "@pulumi/tls";
 export abstract class KubeVipManifest<TData = any> extends (pulumi.ComponentResource)<TData> {
@@ -211,17 +213,18 @@ export abstract class EtcdConfiguration<TData = any> extends (pulumi.ComponentRe
     public caPem!: string | pulumi.Output<string>;
     public certFile!: File | pulumi.Output<File>;
     public certPem!: string | pulumi.Output<string>;
-    public configurationDirectory?: string | pulumi.Output<string>;
+    public configurationDirectory!: string | pulumi.Output<string>;
     public configurationMkdir!: Mkdir | pulumi.Output<Mkdir>;
     public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
-    public dataDirectory?: string | pulumi.Output<string>;
+    public dataDirectory!: string | pulumi.Output<string>;
     public dataMkdir!: Mkdir | pulumi.Output<Mkdir>;
     public etcdPath!: string | pulumi.Output<string>;
     public internalIp!: string | pulumi.Output<string>;
     public keyFile!: File | pulumi.Output<File>;
     public keyPem!: string | pulumi.Output<string>;
+    public value!: EtcdConfigurationPropsOutputs | pulumi.Output<EtcdConfigurationPropsOutputs>;
     constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
-        super("kubernetes-the-hard-way:remote:EtcdConfiguration", name, opts.urn ? { caFile: undefined, caPem: undefined, certFile: undefined, certPem: undefined, configurationDirectory: undefined, configurationMkdir: undefined, connection: undefined, dataDirectory: undefined, dataMkdir: undefined, etcdPath: undefined, internalIp: undefined, keyFile: undefined, keyPem: undefined } : { name, args, opts }, opts);
+        super("kubernetes-the-hard-way:remote:EtcdConfiguration", name, opts.urn ? { caFile: undefined, caPem: undefined, certFile: undefined, certPem: undefined, configurationDirectory: undefined, configurationMkdir: undefined, connection: undefined, dataDirectory: undefined, dataMkdir: undefined, etcdPath: undefined, internalIp: undefined, keyFile: undefined, keyPem: undefined, value: undefined } : { name, args, opts }, opts);
     }
 }
 export interface EtcdConfigurationArgs {
@@ -260,6 +263,32 @@ export interface EtcdInstallArgs {
     readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
     readonly directory?: pulumi.Input<string>;
     readonly version?: pulumi.Input<string>;
+}
+export abstract class EtcdService<TData = any> extends (pulumi.ComponentResource)<TData> {
+    public configuration!: EtcdConfigurationPropsOutputs | pulumi.Output<EtcdConfigurationPropsOutputs>;
+    public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
+    public description?: string | pulumi.Output<string>;
+    public directory?: string | pulumi.Output<string>;
+    public documentation?: string | pulumi.Output<string>;
+    public peers!: EtcdConfigurationPropsOutputs[] | pulumi.Output<EtcdConfigurationPropsOutputs[]>;
+    public restart?: SystemdServiceRestartOutputs | pulumi.Output<SystemdServiceRestartOutputs>;
+    public restartSec?: string | pulumi.Output<string>;
+    public service!: SystemdService | pulumi.Output<SystemdService>;
+    public wantedBy?: string | pulumi.Output<string>;
+    constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
+        super("kubernetes-the-hard-way:remote:EtcdService", name, opts.urn ? { configuration: undefined, connection: undefined, description: undefined, directory: undefined, documentation: undefined, peers: undefined, restart: undefined, restartSec: undefined, service: undefined, wantedBy: undefined } : { name, args, opts }, opts);
+    }
+}
+export interface EtcdServiceArgs {
+    readonly configuration: pulumi.Input<EtcdConfigurationPropsInputs>;
+    readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
+    readonly description?: pulumi.Input<string>;
+    readonly directory?: pulumi.Input<string>;
+    readonly documentation?: pulumi.Input<string>;
+    readonly peers?: pulumi.Input<pulumi.Input<EtcdConfigurationPropsInputs>[]>;
+    readonly restart?: pulumi.Input<SystemdServiceRestartInputs>;
+    readonly restartSec?: pulumi.Input<string>;
+    readonly wantedBy?: pulumi.Input<string>;
 }
 export abstract class File<TData = any> extends (pulumi.ComponentResource)<TData> {
     public command!: command.remote.Command | pulumi.Output<command.remote.Command>;
@@ -1065,16 +1094,16 @@ export interface KubeconfigWorkerOptionsOutputs {
 export interface PodManifestInputs {
     readonly apiVersion?: pulumi.Input<string>;
     readonly kind?: pulumi.Input<string>;
-    readonly metadata?: pulumi.Input<unknown>;
-    readonly spec?: pulumi.Input<unknown>;
-    readonly status?: pulumi.Input<unknown>;
+    readonly metadata?: pulumi.Input<kubernetes.types.input.meta.v1.ObjectMeta>;
+    readonly spec?: pulumi.Input<kubernetes.types.input.core.v1.PodSpec>;
+    readonly status?: pulumi.Input<kubernetes.types.input.core.v1.PodStatus>;
 }
 export interface PodManifestOutputs {
     readonly apiVersion?: pulumi.Output<string>;
     readonly kind?: pulumi.Output<string>;
-    readonly metadata?: pulumi.Output<unknown>;
-    readonly spec?: pulumi.Output<unknown>;
-    readonly status?: pulumi.Output<unknown>;
+    readonly metadata?: pulumi.Output<kubernetes.types.output.meta.v1.ObjectMeta>;
+    readonly spec?: pulumi.Output<kubernetes.types.output.core.v1.PodSpec>;
+    readonly status?: pulumi.Output<kubernetes.types.output.core.v1.PodStatus>;
 }
 export interface UserInputs {
     readonly clientCertificateData: pulumi.Input<string>;
@@ -1086,6 +1115,24 @@ export interface UserOutputs {
 }
 export type ArchitectureInputs = "amd64" | "arm64";
 export type ArchitectureOutputs = "amd64" | "arm64";
+export interface EtcdConfigurationPropsInputs {
+    readonly caFilePath: pulumi.Input<string>;
+    readonly certFilePath: pulumi.Input<string>;
+    readonly dataDirectory: pulumi.Input<string>;
+    readonly etcdPath: pulumi.Input<string>;
+    readonly internalIp: pulumi.Input<string>;
+    readonly keyFilePath: pulumi.Input<string>;
+    readonly name: pulumi.Input<string>;
+}
+export interface EtcdConfigurationPropsOutputs {
+    readonly caFilePath: pulumi.Output<string>;
+    readonly certFilePath: pulumi.Output<string>;
+    readonly dataDirectory: pulumi.Output<string>;
+    readonly etcdPath: pulumi.Output<string>;
+    readonly internalIp: pulumi.Output<string>;
+    readonly keyFilePath: pulumi.Output<string>;
+    readonly name: pulumi.Output<string>;
+}
 export interface SystemdInstallSectionInputs {
     readonly wantedBy?: pulumi.Input<pulumi.Input<string>[]>;
 }

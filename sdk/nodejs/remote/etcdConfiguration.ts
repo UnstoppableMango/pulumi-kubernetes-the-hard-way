@@ -2,6 +2,9 @@
 // *** Do not edit by hand unless you're certain you know what you are doing! ***
 
 import * as pulumi from "@pulumi/pulumi";
+import * as inputs from "../types/input";
+import * as outputs from "../types/output";
+import * as enums from "../types/enums";
 import * as utilities from "../utilities";
 
 import * as pulumiCommand from "@pulumi/command";
@@ -46,7 +49,7 @@ export class EtcdConfiguration extends pulumi.ComponentResource {
     /**
      * The directory to store etcd configuration.
      */
-    public readonly configurationDirectory!: pulumi.Output<string | undefined>;
+    public readonly configurationDirectory!: pulumi.Output<string>;
     /**
      * The configuration mkdir operation.
      */
@@ -58,7 +61,7 @@ export class EtcdConfiguration extends pulumi.ComponentResource {
     /**
      * The directory etcd will store its data.
      */
-    public readonly dataDirectory!: pulumi.Output<string | undefined>;
+    public readonly dataDirectory!: pulumi.Output<string>;
     /**
      * The data mkdir operation.
      */
@@ -79,6 +82,10 @@ export class EtcdConfiguration extends pulumi.ComponentResource {
      * The PEM encoded key data.
      */
     public readonly keyPem!: pulumi.Output<string>;
+    /**
+     * A bag of properties to be consumed by other resources.
+     */
+    public /*out*/ readonly value!: pulumi.Output<outputs.remote.EtcdConfigurationProps>;
 
     /**
      * Create a EtcdConfiguration resource with the given unique name, arguments, and options.
@@ -113,7 +120,7 @@ export class EtcdConfiguration extends pulumi.ComponentResource {
             resourceInputs["certPem"] = args ? args.certPem : undefined;
             resourceInputs["configurationDirectory"] = (args ? args.configurationDirectory : undefined) ?? "/etc/etcd";
             resourceInputs["connection"] = args ? (args.connection ? pulumi.output(args.connection).apply(pulumiCommand.types.input.remote.connectionArgsProvideDefaults) : undefined) : undefined;
-            resourceInputs["dataDirectory"] = args ? args.dataDirectory : undefined;
+            resourceInputs["dataDirectory"] = (args ? args.dataDirectory : undefined) ?? "/var/lib/etcd";
             resourceInputs["etcdPath"] = args ? args.etcdPath : undefined;
             resourceInputs["internalIp"] = args ? args.internalIp : undefined;
             resourceInputs["keyPem"] = args ? args.keyPem : undefined;
@@ -122,6 +129,7 @@ export class EtcdConfiguration extends pulumi.ComponentResource {
             resourceInputs["configurationMkdir"] = undefined /*out*/;
             resourceInputs["dataMkdir"] = undefined /*out*/;
             resourceInputs["keyFile"] = undefined /*out*/;
+            resourceInputs["value"] = undefined /*out*/;
         } else {
             resourceInputs["caFile"] = undefined /*out*/;
             resourceInputs["caPem"] = undefined /*out*/;
@@ -136,6 +144,7 @@ export class EtcdConfiguration extends pulumi.ComponentResource {
             resourceInputs["internalIp"] = undefined /*out*/;
             resourceInputs["keyFile"] = undefined /*out*/;
             resourceInputs["keyPem"] = undefined /*out*/;
+            resourceInputs["value"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         super(EtcdConfiguration.__pulumiType, name, resourceInputs, opts, true /*remote*/);

@@ -13,6 +13,160 @@ import (
 
 var _ = internal.GetEnvOrDefault
 
+// Props for resources that consume etcd configuration.
+type EtcdConfigurationProps struct {
+	// Path to the certificate authority file on the remote system.
+	CaFilePath string `pulumi:"caFilePath"`
+	// Path to the certificate file on the remote system.
+	CertFilePath string `pulumi:"certFilePath"`
+	// Etcd's data directory.
+	DataDirectory string `pulumi:"dataDirectory"`
+	// Path to the etcd binary.
+	EtcdPath string `pulumi:"etcdPath"`
+	// Internal IP of the etcd node.
+	InternalIp string `pulumi:"internalIp"`
+	// Path to the private key file on the remote system.
+	KeyFilePath string `pulumi:"keyFilePath"`
+	// Name of the etcd node.
+	Name string `pulumi:"name"`
+}
+
+// EtcdConfigurationPropsInput is an input type that accepts EtcdConfigurationPropsArgs and EtcdConfigurationPropsOutput values.
+// You can construct a concrete instance of `EtcdConfigurationPropsInput` via:
+//
+//	EtcdConfigurationPropsArgs{...}
+type EtcdConfigurationPropsInput interface {
+	pulumi.Input
+
+	ToEtcdConfigurationPropsOutput() EtcdConfigurationPropsOutput
+	ToEtcdConfigurationPropsOutputWithContext(context.Context) EtcdConfigurationPropsOutput
+}
+
+// Props for resources that consume etcd configuration.
+type EtcdConfigurationPropsArgs struct {
+	// Path to the certificate authority file on the remote system.
+	CaFilePath pulumi.StringInput `pulumi:"caFilePath"`
+	// Path to the certificate file on the remote system.
+	CertFilePath pulumi.StringInput `pulumi:"certFilePath"`
+	// Etcd's data directory.
+	DataDirectory pulumi.StringInput `pulumi:"dataDirectory"`
+	// Path to the etcd binary.
+	EtcdPath pulumi.StringInput `pulumi:"etcdPath"`
+	// Internal IP of the etcd node.
+	InternalIp pulumi.StringInput `pulumi:"internalIp"`
+	// Path to the private key file on the remote system.
+	KeyFilePath pulumi.StringInput `pulumi:"keyFilePath"`
+	// Name of the etcd node.
+	Name pulumi.StringInput `pulumi:"name"`
+}
+
+func (EtcdConfigurationPropsArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*EtcdConfigurationProps)(nil)).Elem()
+}
+
+func (i EtcdConfigurationPropsArgs) ToEtcdConfigurationPropsOutput() EtcdConfigurationPropsOutput {
+	return i.ToEtcdConfigurationPropsOutputWithContext(context.Background())
+}
+
+func (i EtcdConfigurationPropsArgs) ToEtcdConfigurationPropsOutputWithContext(ctx context.Context) EtcdConfigurationPropsOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(EtcdConfigurationPropsOutput)
+}
+
+// EtcdConfigurationPropsArrayInput is an input type that accepts EtcdConfigurationPropsArray and EtcdConfigurationPropsArrayOutput values.
+// You can construct a concrete instance of `EtcdConfigurationPropsArrayInput` via:
+//
+//	EtcdConfigurationPropsArray{ EtcdConfigurationPropsArgs{...} }
+type EtcdConfigurationPropsArrayInput interface {
+	pulumi.Input
+
+	ToEtcdConfigurationPropsArrayOutput() EtcdConfigurationPropsArrayOutput
+	ToEtcdConfigurationPropsArrayOutputWithContext(context.Context) EtcdConfigurationPropsArrayOutput
+}
+
+type EtcdConfigurationPropsArray []EtcdConfigurationPropsInput
+
+func (EtcdConfigurationPropsArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]EtcdConfigurationProps)(nil)).Elem()
+}
+
+func (i EtcdConfigurationPropsArray) ToEtcdConfigurationPropsArrayOutput() EtcdConfigurationPropsArrayOutput {
+	return i.ToEtcdConfigurationPropsArrayOutputWithContext(context.Background())
+}
+
+func (i EtcdConfigurationPropsArray) ToEtcdConfigurationPropsArrayOutputWithContext(ctx context.Context) EtcdConfigurationPropsArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(EtcdConfigurationPropsArrayOutput)
+}
+
+// Props for resources that consume etcd configuration.
+type EtcdConfigurationPropsOutput struct{ *pulumi.OutputState }
+
+func (EtcdConfigurationPropsOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*EtcdConfigurationProps)(nil)).Elem()
+}
+
+func (o EtcdConfigurationPropsOutput) ToEtcdConfigurationPropsOutput() EtcdConfigurationPropsOutput {
+	return o
+}
+
+func (o EtcdConfigurationPropsOutput) ToEtcdConfigurationPropsOutputWithContext(ctx context.Context) EtcdConfigurationPropsOutput {
+	return o
+}
+
+// Path to the certificate authority file on the remote system.
+func (o EtcdConfigurationPropsOutput) CaFilePath() pulumi.StringOutput {
+	return o.ApplyT(func(v EtcdConfigurationProps) string { return v.CaFilePath }).(pulumi.StringOutput)
+}
+
+// Path to the certificate file on the remote system.
+func (o EtcdConfigurationPropsOutput) CertFilePath() pulumi.StringOutput {
+	return o.ApplyT(func(v EtcdConfigurationProps) string { return v.CertFilePath }).(pulumi.StringOutput)
+}
+
+// Etcd's data directory.
+func (o EtcdConfigurationPropsOutput) DataDirectory() pulumi.StringOutput {
+	return o.ApplyT(func(v EtcdConfigurationProps) string { return v.DataDirectory }).(pulumi.StringOutput)
+}
+
+// Path to the etcd binary.
+func (o EtcdConfigurationPropsOutput) EtcdPath() pulumi.StringOutput {
+	return o.ApplyT(func(v EtcdConfigurationProps) string { return v.EtcdPath }).(pulumi.StringOutput)
+}
+
+// Internal IP of the etcd node.
+func (o EtcdConfigurationPropsOutput) InternalIp() pulumi.StringOutput {
+	return o.ApplyT(func(v EtcdConfigurationProps) string { return v.InternalIp }).(pulumi.StringOutput)
+}
+
+// Path to the private key file on the remote system.
+func (o EtcdConfigurationPropsOutput) KeyFilePath() pulumi.StringOutput {
+	return o.ApplyT(func(v EtcdConfigurationProps) string { return v.KeyFilePath }).(pulumi.StringOutput)
+}
+
+// Name of the etcd node.
+func (o EtcdConfigurationPropsOutput) Name() pulumi.StringOutput {
+	return o.ApplyT(func(v EtcdConfigurationProps) string { return v.Name }).(pulumi.StringOutput)
+}
+
+type EtcdConfigurationPropsArrayOutput struct{ *pulumi.OutputState }
+
+func (EtcdConfigurationPropsArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]EtcdConfigurationProps)(nil)).Elem()
+}
+
+func (o EtcdConfigurationPropsArrayOutput) ToEtcdConfigurationPropsArrayOutput() EtcdConfigurationPropsArrayOutput {
+	return o
+}
+
+func (o EtcdConfigurationPropsArrayOutput) ToEtcdConfigurationPropsArrayOutputWithContext(ctx context.Context) EtcdConfigurationPropsArrayOutput {
+	return o
+}
+
+func (o EtcdConfigurationPropsArrayOutput) Index(i pulumi.IntInput) EtcdConfigurationPropsOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) EtcdConfigurationProps {
+		return vs[0].([]EtcdConfigurationProps)[vs[1].(int)]
+	}).(EtcdConfigurationPropsOutput)
+}
+
 // https://www.freedesktop.org/software/systemd/man/latest/systemd.unit.html#%5BInstall%5D%20Section%20Options
 type SystemdInstallSection struct {
 	// A symbolic link is created in the .wants/, .requires/, or .upholds/ directory of each of the listed units when this unit is installed by systemctl enable.
@@ -480,11 +634,15 @@ func (o SystemdUnitSectionPtrOutput) Wants() pulumi.StringArrayOutput {
 }
 
 func init() {
+	pulumi.RegisterInputType(reflect.TypeOf((*EtcdConfigurationPropsInput)(nil)).Elem(), EtcdConfigurationPropsArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*EtcdConfigurationPropsArrayInput)(nil)).Elem(), EtcdConfigurationPropsArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*SystemdInstallSectionInput)(nil)).Elem(), SystemdInstallSectionArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*SystemdInstallSectionPtrInput)(nil)).Elem(), SystemdInstallSectionArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*SystemdServiceSectionInput)(nil)).Elem(), SystemdServiceSectionArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*SystemdUnitSectionInput)(nil)).Elem(), SystemdUnitSectionArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*SystemdUnitSectionPtrInput)(nil)).Elem(), SystemdUnitSectionArgs{})
+	pulumi.RegisterOutputType(EtcdConfigurationPropsOutput{})
+	pulumi.RegisterOutputType(EtcdConfigurationPropsArrayOutput{})
 	pulumi.RegisterOutputType(SystemdInstallSectionOutput{})
 	pulumi.RegisterOutputType(SystemdInstallSectionPtrOutput{})
 	pulumi.RegisterOutputType(SystemdServiceSectionOutput{})

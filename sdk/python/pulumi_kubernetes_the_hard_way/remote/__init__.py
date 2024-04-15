@@ -12,6 +12,7 @@ from .crictl_install import *
 from .download import *
 from .etcd_configuration import *
 from .etcd_install import *
+from .etcd_service import *
 from .file import *
 from .kube_api_server_install import *
 from .kube_controller_manager_install import *
