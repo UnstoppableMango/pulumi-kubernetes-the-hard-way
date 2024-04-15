@@ -29,7 +29,7 @@ func Connection(commandSpec schema.PackageSpec) schema.PropertySpec {
 func Integer(description string) schema.PropertySpec {
 	return schema.PropertySpec{
 		Description: description,
-		TypeSpec:    types.Boolean,
+		TypeSpec:    types.Integer,
 	}
 }
 
