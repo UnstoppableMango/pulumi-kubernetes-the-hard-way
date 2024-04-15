@@ -6,5 +6,42 @@
   "ignorePaths": [
     "examples/*/**",
     "sdk/*/**"
+  ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "fileMatch": [".awsx.version"],
+      "matchStrings": ["(?<currentValue>\\S+)"],
+      "depNameTemplate": "pulumi/pulumi-awsx",
+      "datasourceTemplate": "github-tags"
+    },
+    {
+      "customType": "regex",
+      "fileMatch": [".pulumi-java.version"],
+      "matchStrings": ["(?<currentValue>\\S+)"],
+      "depNameTemplate": "pulumi/pulumi-java",
+      "datasourceTemplate": "github-tags"
+    },
+    {
+      "customType": "regex",
+      "fileMatch": [".pulumi.version"],
+      "matchStrings": ["(?<currentValue>\\S+)"],
+      "depNameTemplate": "pulumi/pulumi",
+      "datasourceTemplate": "github-tags"
+    },
+    {
+      "customType": "regex",
+      "fileMatch": [".pulumictl.version"],
+      "matchStrings": ["(?<currentValue>\\S+)"],
+      "depNameTemplate": "pulumi/pulumictl",
+      "datasourceTemplate": "github-tags"
+    },
+    {
+      "customType": "regex",
+      "fileMatch": [".schema-tools.version"],
+      "matchStrings": ["(?<currentValue>\\S+)"],
+      "depNameTemplate": "pulumi/schema-tools",
+      "datasourceTemplate": "github-tags"
+    }
   ]
 }
