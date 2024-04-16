@@ -23,6 +23,9 @@ RUN echo 'root:root' | chpasswd \
 
 RUN systemctl enable ssh
 
+# Fix for CI until we get tests refactored
+RUN mkdir /config && chown 'test:root' /config
+
 EXPOSE 22
 
 ENTRYPOINT ["/sbin/init"]
