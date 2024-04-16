@@ -1,16 +1,19 @@
 package examples
 
 import (
+	"archive/tar"
+	"bytes"
 	"context"
 	"io"
-	"strconv"
+	"os"
 
+	"github.com/docker/docker/api/types/container"
 	"github.com/docker/go-connections/nat"
 	"github.com/testcontainers/testcontainers-go"
 	"github.com/testcontainers/testcontainers-go/wait"
 )
 
-const internalPort = "2222"
+const internalPort = "22/tcp"
 
 type SshServer struct {
 	Container testcontainers.Container
@@ -43,25 +46,45 @@ func WithSshUsername(username string) SshServerOption {
 }
 
 func StartSshServer(ctx context.Context, opts ...SshServerOption) (SshServer, error) {
+	cwd, err := os.Getwd()
+	if err != nil {
+		return SshServer{}, err
+	}
+
 	options := SshServerOptions{}
 	for _, o := range opts {
 		o(&options)
 	}
 
+	var buf bytes.Buffer
+	ctxWriter := tar.NewWriter(&buf)
+	ctxWriter.AddFS(os.DirFS(cwd))
+	if err := ctxWriter.Close(); err != nil {
+		return SshServer{}, err
+	}
+
 	req := testcontainers.ContainerRequest{
-		Image:        "lscr.io/linuxserver/openssh-server:latest",
+		// Idfk why this is being dumb
+		// FromDockerfile: testcontainers.FromDockerfile{
+		// 	ContextArchive: bytes.NewReader(buf.Bytes()),
+		// },
+		Image:        "kthw:dev",
 		ExposedPorts: []string{internalPort},
-		Env: map[string]string{
-			"PUID":            "1000",
-			"PGID":            "1000",
-			"TZ":              "America/Chicago",
-			"USER_NAME":       options.Username,
-			"PASSWORD_ACCESS": strconv.FormatBool(options.Password != ""),
-			"USER_PASSWORD":   options.Password,
-			"PUBLIC_KEY":      options.PublicKey,
-			"SUDO_ACCESS":     "true",
+		// Env: map[string]string{
+		// 	"PUID":            "1000",
+		// 	"PGID":            "1000",
+		// 	"TZ":              "America/Chicago",
+		// 	"USER_NAME":       options.Username,
+		// 	"PASSWORD_ACCESS": strconv.FormatBool(options.Password != ""),
+		// 	"USER_PASSWORD":   options.Password,
+		// 	"PUBLIC_KEY":      options.PublicKey,
+		// 	"SUDO_ACCESS":     "true",
+		// },
+		Privileged: true,
+		HostConfigModifier: func(hc *container.HostConfig) {
+			hc.CapAdd = append(hc.CapAdd, "ALL")
 		},
-		WaitingFor: wait.ForExposedPort(), // TODO: What's a good condition
+		WaitingFor: wait.ForExposedPort(),
 	}
 
 	c, err := testcontainers.GenericContainer(ctx, testcontainers.GenericContainerRequest{

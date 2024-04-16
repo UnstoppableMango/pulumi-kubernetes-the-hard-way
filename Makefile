@@ -68,11 +68,14 @@ test_python: provider build_python
 	cd examples && go test -v $(TEST_SHORT) -tags=python -timeout 2h $(TEST_RUN)
 test_go: provider
 	cd examples && go test -v $(TEST_SHORT) -tags=go -timeout 2h $(TEST_RUN)
-test_nodejs: provider install_nodejs_sdk
+test_nodejs: provider install_nodejs_sdk .make/examples_dockerfile
 	cd examples && go test -v $(TEST_SHORT) -tags=nodejs -timeout 2h $(TEST_RUN)
 
 .PHONY: install_provider
 install_provider: .make/install_provider
+
+.PHONY: docker
+docker: .make/examples_dockerfile
 
 .PHONY: generate generate_java generate_nodejs generate_python generate_dotnet generate_go generate_types generate_schema
 generate: generate_schema generate_types generate_java generate_nodejs generate_python generate_dotnet generate_go
@@ -119,6 +122,12 @@ link_examples: install_nodejs_sdk
 	cd examples/remote-install-ts && yarn link '@unmango/pulumi-kubernetes-the-hard-way'
 	cd examples/remote-ts && yarn link '@unmango/pulumi-kubernetes-the-hard-way'
 	cd examples/simple-ts && yarn link '@unmango/pulumi-kubernetes-the-hard-way'
+
+.PHONY: tidy
+tidy:
+	cd examples && go mod tidy
+	cd schemagen && go mod tidy
+	cd sdk && go mod tidy
 
 .PHONY: clean
 clean:
@@ -353,3 +362,6 @@ provider/scripts/vendor/pulumi-schema.d.ts: .awsx.version
 	cd provider/cmd/${PROVIDER}/ && \
 		yarn run pkg . ${PKG_ARGS} --target node16 --output ${WORKING_DIR}/bin/${PROVIDER}
 	@touch $@
+
+.make/examples_dockerfile: examples/Dockerfile
+	cd examples && docker build -t kthw:dev .

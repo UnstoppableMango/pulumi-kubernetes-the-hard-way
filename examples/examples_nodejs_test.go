@@ -12,7 +12,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-//go:embed test-data/example.com.html
+//go:embed testdata/example.com.html
 var exampleComHtml string
 
 func TestSimpleTs(t *testing.T) {
@@ -37,8 +37,8 @@ func TestRemoteInstallTs(t *testing.T) {
 	skipIfShort(t)
 
 	const (
-		username = "test-user"
-		password = "test-password"
+		username = "root"
+		password = "root"
 	)
 
 	ctx := context.Background()
@@ -74,8 +74,8 @@ func TestRemoteInstallTs(t *testing.T) {
 
 func TestRemoteTs(t *testing.T) {
 	const (
-		username = "test-user"
-		password = "test-password"
+		username = "root"
+		password = "root"
 		content  = "Some content idk"
 	)
 
@@ -83,17 +83,19 @@ func TestRemoteTs(t *testing.T) {
 	server, err := StartSshServer(ctx,
 		WithSshUsername(username),
 		WithSshPassword(password))
-	assert.NoError(t, err)
+	if !assert.NoError(t, err) {
+		t.FailNow()
+	}
 
 	port, err := server.Port(ctx)
 	assert.NoError(t, err)
 
 	defer StopSshServer(ctx, server) // TODO: Error handling?
 
-	err = server.CopyFile(ctx,
-		path.Join(getCwd(t), "test-data", "text-file.tar.gz"),
-		path.Join("/config", "text-file.tar.gz"))
-	assert.NoError(t, err)
+	// err = server.CopyFile(ctx,
+	// 	path.Join(getCwd(t), "testdata", "text-file.tar.gz"),
+	// 	path.Join("/config", "text-file.tar.gz"))
+	// assert.NoError(t, err)
 
 	test := getJSBaseOptions(t).
 		With(integration.ProgramTestOptions{

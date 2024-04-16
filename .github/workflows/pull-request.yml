@@ -80,6 +80,9 @@ jobs:
       - name: Install dependencies
         run: make install_${{ matrix.language }}_sdk
 
+      - name: Build test image
+        uses: ./.github/actions/build-test-image
+
       - name: Run tests
         run: |
           set -euo pipefail
