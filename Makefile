@@ -119,9 +119,9 @@ install_sdks: install_dotnet_sdk install_nodejs_sdk
 .PHONY: link link_examples
 link: link_examples
 link_examples: install_nodejs_sdk
-	cd examples/remote-install-ts && yarn link '@unmango/pulumi-kubernetes-the-hard-way'
-	cd examples/remote-ts && yarn link '@unmango/pulumi-kubernetes-the-hard-way'
-	cd examples/simple-ts && yarn link '@unmango/pulumi-kubernetes-the-hard-way'
+	find ${WORKING_DIR}/examples -type d -name '*-ts' \
+		-exec echo 'Linking: {}' \; \
+		-exec sh -c 'cd {} && yarn link "@unmango/pulumi-kubernetes-the-hard-way"' \;
 
 .PHONY: tidy
 tidy:
