@@ -15,9 +15,9 @@ RUN apt update \
     && rm -rf /var/lib/apt/lists/*
 
 RUN echo 'root:root' | chpasswd \
+    && sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config \
     && printf '#!/bin/sh\nexit 0' > /usr/sbin/policy-rc.d \
-    && printf "systemctl start systemd-logind" >> /etc/profile \
-    && useradd -rm -d /home/ubuntu -s /bin/bash -g root -G sudo -u 6969 test \
+    && useradd -rm -d /home/test -s /bin/bash -g root -G sudo -u 6969 test \
     && echo 'test:test' | chpasswd
 # RUN echo 'test ALL=(ALL) NOPASSWD: ALL' | tee -a /etc/sudoers
 

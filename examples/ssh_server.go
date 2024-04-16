@@ -64,7 +64,6 @@ func StartSshServer(ctx context.Context, opts ...SshServerOption) (SshServer, er
 	}
 
 	req := testcontainers.ContainerRequest{
-		Name: "node1",
 		// Idfk why this is being dumb
 		// FromDockerfile: testcontainers.FromDockerfile{
 		// 	ContextArchive: bytes.NewReader(buf.Bytes()),

@@ -37,8 +37,8 @@ func TestRemoteInstallTs(t *testing.T) {
 	skipIfShort(t)
 
 	const (
-		username = "test-user"
-		password = "test-password"
+		username = "root"
+		password = "root"
 	)
 
 	ctx := context.Background()
