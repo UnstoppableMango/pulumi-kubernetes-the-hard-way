@@ -84,7 +84,9 @@ func TestRemoteTs(t *testing.T) {
 	server, err := StartSshServer(ctx,
 		WithSshUsername(username),
 		WithSshPassword(password))
-	assert.NoError(t, err)
+	if !assert.NoError(t, err) {
+		t.FailNow()
+	}
 
 	_, err = server.Port(ctx)
 	assert.NoError(t, err)
