@@ -1,5 +1,6 @@
 {
     "name": "remote-install-ts",
+    "license": "Apache-2.0",
     "main": "index.ts",
     "devDependencies": {
         "@types/node": "^18"
