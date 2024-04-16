@@ -16,7 +16,6 @@ import (
 var exampleComHtml string
 
 func TestSimpleTs(t *testing.T) {
-	skipIfShort(t)
 	test := getJSBaseOptions(t).
 		With(integration.ProgramTestOptions{
 			Dir:           path.Join(getCwd(t), "simple-ts"),
@@ -75,8 +74,8 @@ func TestRemoteInstallTs(t *testing.T) {
 
 func TestRemoteTs(t *testing.T) {
 	const (
-		username = "test-user"
-		password = "test-password"
+		username = "root"
+		password = "root"
 		content  = "Some content idk"
 	)
 
@@ -88,7 +87,7 @@ func TestRemoteTs(t *testing.T) {
 		t.FailNow()
 	}
 
-	_, err = server.Port(ctx)
+	port, err := server.Port(ctx)
 	assert.NoError(t, err)
 
 	defer StopSshServer(ctx, server) // TODO: Error handling?
@@ -98,40 +97,40 @@ func TestRemoteTs(t *testing.T) {
 		path.Join("/config", "text-file.tar.gz"))
 	assert.NoError(t, err)
 
-	// test := getJSBaseOptions(t).
-	// 	With(integration.ProgramTestOptions{
-	// 		Dir:           path.Join(getCwd(t), "remote-ts"),
-	// 		Quick:         true,
-	// 		SkipRefresh:   true,
-	// 		RunUpdateTest: false,
-	// 		Config: map[string]string{
-	// 			"host":     "localhost",
-	// 			"port":     port,
-	// 			"user":     username,
-	// 			"password": password,
-	// 			"content":  content,
-	// 			"basePath": "/config",
-	// 		},
-	// 		ExtraRuntimeValidation: func(t *testing.T, stack integration.RuntimeValidationStackInfo) {
-	// 			assert.Equal(t, content, stack.Outputs["fileStdout"])
-	// 			assert.Empty(t, stack.Outputs["fileStderr"])
+	test := getJSBaseOptions(t).
+		With(integration.ProgramTestOptions{
+			Dir:           path.Join(getCwd(t), "remote-ts"),
+			Quick:         true,
+			SkipRefresh:   true,
+			RunUpdateTest: false,
+			Config: map[string]string{
+				"host":     "localhost",
+				"port":     port,
+				"user":     username,
+				"password": password,
+				"content":  content,
+				"basePath": "/config",
+			},
+			ExtraRuntimeValidation: func(t *testing.T, stack integration.RuntimeValidationStackInfo) {
+				assert.Equal(t, content, stack.Outputs["fileStdout"])
+				assert.Empty(t, stack.Outputs["fileStderr"])
 
-	// 			// Wget outputs progress to stderr
-	// 			assert.Empty(t, stack.Outputs["wgetStdout"])
-	// 			assert.NotEmpty(t, stack.Outputs["wgetStderr"])
+				// Wget outputs progress to stderr
+				assert.Empty(t, stack.Outputs["wgetStdout"])
+				assert.NotEmpty(t, stack.Outputs["wgetStderr"])
 
-	// 			data, err := server.ReadFile(ctx, "/config/index.html")
-	// 			assert.NoError(t, err)
-	// 			assert.Equal(t, exampleComHtml, data)
+				data, err := server.ReadFile(ctx, "/config/index.html")
+				assert.NoError(t, err)
+				assert.Equal(t, exampleComHtml, data)
 
-	// 			// assert.Empty(t, stack.Outputs["tarStdout"])
-	// 			// assert.Empty(t, stack.Outputs["tarStderr"])
+				// assert.Empty(t, stack.Outputs["tarStdout"])
+				// assert.Empty(t, stack.Outputs["tarStderr"])
 
-	// 			assert.NotEmpty(t, stack.Outputs["mktemp"])
-	// 		},
-	// 	})
+				assert.NotEmpty(t, stack.Outputs["mktemp"])
+			},
+		})
 
-	// integration.ProgramTest(t, &test)
+	integration.ProgramTest(t, &test)
 }
 
 func getJSBaseOptions(t *testing.T) integration.ProgramTestOptions {
