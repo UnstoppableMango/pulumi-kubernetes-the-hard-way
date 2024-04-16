@@ -5,10 +5,12 @@ package examples
 import (
 	"context"
 	_ "embed"
+	"fmt"
 	"path"
 	"testing"
 
 	"github.com/pulumi/pulumi/pkg/v3/testing/integration"
+	"github.com/pulumi/pulumi/sdk/v3/go/common/apitype"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -127,6 +129,34 @@ func TestRemoteTs(t *testing.T) {
 				// assert.Empty(t, stack.Outputs["tarStderr"])
 
 				assert.NotEmpty(t, stack.Outputs["mktemp"])
+			},
+		})
+
+	integration.ProgramTest(t, &test)
+}
+
+func TestTlsTs(t *testing.T) {
+	validateRootCa := func(t *testing.T, res apitype.ResourceV3) {
+		assert.NotEmpty(t, res.Outputs)
+		fmt.Print(res.Outputs)
+		assert.Equal(t, []string{"cert_signing", "key_encipherment", "server_auth", "client_auth"}, res.Outputs["allowedUses"])
+
+		// We need to actuall add these as outputs first
+		// assert.Equal(t, "RSA", res.Outputs["algorithm"])
+		// assert.Equal(t, 256, res.Outputs["validityPeriodHours"])
+	}
+
+	test := getJSBaseOptions(t).
+		With(integration.ProgramTestOptions{
+			Dir:   path.Join(getCwd(t), "tls-ts"),
+			Quick: true,
+			ExtraRuntimeValidation: func(t *testing.T, stack integration.RuntimeValidationStackInfo) {
+				for _, res := range stack.Deployment.Resources {
+					switch res.Type {
+					case "kubernetes-the-hard-way:tls:RootCa":
+						validateRootCa(t, res)
+					}
+				}
 			},
 		})
 
