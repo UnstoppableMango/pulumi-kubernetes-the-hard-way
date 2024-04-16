@@ -124,6 +124,9 @@ jobs:
         with:
           language: ${{ matrix.language }}
 
+      - name: Build test image
+        uses: ./.github/actions/build-test-image
+
       - name: Run tests
         if: ${{ ! inputs.short_test }}
         run: |
