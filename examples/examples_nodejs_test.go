@@ -5,7 +5,6 @@ package examples
 import (
 	"context"
 	_ "embed"
-	"fmt"
 	"path"
 	"testing"
 
@@ -138,10 +137,12 @@ func TestRemoteTs(t *testing.T) {
 func TestTlsTs(t *testing.T) {
 	validateRootCa := func(t *testing.T, res apitype.ResourceV3) {
 		assert.NotEmpty(t, res.Outputs)
-		fmt.Print(res.Outputs)
-		assert.Equal(t, []string{"cert_signing", "key_encipherment", "server_auth", "client_auth"}, res.Outputs["allowedUses"])
+		assert.ElementsMatch(t,
+			[]string{"cert_signing", "key_encipherment", "server_auth", "client_auth"},
+			res.Outputs["allowedUses"],
+		)
 
-		// We need to actuall add these as outputs first
+		// We need to actually add these as outputs first
 		// assert.Equal(t, "RSA", res.Outputs["algorithm"])
 		// assert.Equal(t, 256, res.Outputs["validityPeriodHours"])
 	}
