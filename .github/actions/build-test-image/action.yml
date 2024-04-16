@@ -13,3 +13,5 @@ runs:
         context: examples
         load: true
         tags: kthw:dev
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
