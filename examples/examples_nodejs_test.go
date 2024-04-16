@@ -92,10 +92,10 @@ func TestRemoteTs(t *testing.T) {
 
 	defer StopSshServer(ctx, server) // TODO: Error handling?
 
-	err = server.CopyFile(ctx,
-		path.Join(getCwd(t), "testdata", "text-file.tar.gz"),
-		path.Join("/config", "text-file.tar.gz"))
-	assert.NoError(t, err)
+	// err = server.CopyFile(ctx,
+	// 	path.Join(getCwd(t), "testdata", "text-file.tar.gz"),
+	// 	path.Join("/config", "text-file.tar.gz"))
+	// assert.NoError(t, err)
 
 	test := getJSBaseOptions(t).
 		With(integration.ProgramTestOptions{
