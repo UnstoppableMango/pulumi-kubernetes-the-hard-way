@@ -143,7 +143,12 @@ func TestTlsTs(t *testing.T) {
 		)
 
 		assert.Equal(t, "RSA", res.Outputs["algorithm"])
-		assert.Equal(t, 256, res.Outputs["validityPeriodHours"])
+
+		if res.Parent.Type() == "kubernetes-the-hard-way:tls:ClusterPki" {
+			assert.Equal(t, 8076., res.Outputs["validityPeriodHours"])
+		} else {
+			assert.Equal(t, 256., res.Outputs["validityPeriodHours"])
+		}
 	}
 
 	test := getJSBaseOptions(t).
