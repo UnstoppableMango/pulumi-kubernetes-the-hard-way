@@ -3,6 +3,7 @@ import { SelfSignedCert } from '@pulumi/tls';
 import * as schema from '../schema-types';
 import { AllowedUsage } from '../types';
 import { toAllowedUsage } from '../util';
+import { File, InstallInputs, InstallOutputs, install } from '../remote';
 import { KeyPair } from './keypair';
 import { Certificate } from './certificate';
 
@@ -67,18 +68,34 @@ export class RootCa extends schema.RootCa {
     this.allowedUses = cert.allowedUses.apply(toAllowedUsage);
     this.cert = cert;
     this.certPem = cert.certPem;
+    this.dnsNames = dnsNames;
     this.ecdsaCurve = ecdsaCurve;
     this.key = key;
     this.keyAlgorithm = key.algorithm; // TODO
+    this.privateKeyPem = key.privateKeyPem;
+    this.publicKeyPem = key.publicKeyPem;
     this.validityPeriodHours = validityPeriodHours;
-    this.dnsNames = dnsNames;
 
     this.registerOutputs({
+      algorithm,
       allowedUses: this.allowedUses,
-      cert, certPem: cert.certPem, key,
-      privateKeyPem: key.privateKeyPem,
-      publicKeyPem: key.publicKeyPem,
+      cert,
+      certPem: this.certPem,
+      dnsNames,
+      ecdsaCurve,
+      key,
+      privateKeyPem: this.privateKeyPem,
+      publicKeyPem: this.publicKeyPem,
+      validityPeriodHours,
     });
+  }
+
+  public async installCert(args: InstallInputs): Promise<InstallOutputs> {
+    return { result: installCert(this, args) };
+  }
+
+  public async installKey(args: InstallInputs): Promise<InstallOutputs> {
+    return { result: installKey(this, args) };
   }
 
   public async newCertificate(args: NewCertificateInputs): Promise<NewCertificateOutputs> {
@@ -99,6 +116,14 @@ export class RootCa extends schema.RootCa {
 
     return { result: cert };
   }
+}
+
+function installCert(ca: RootCa, args: InstallInputs): File {
+  return install(args, ca.certPem);
+}
+
+function installKey(ca: RootCa, args: InstallInputs): File {
+  return install(args, ca.publicKeyPem);
 }
 
 export function newCertificate(ca: Input<RootCa>, args: NewCertificateInputs): Certificate {
