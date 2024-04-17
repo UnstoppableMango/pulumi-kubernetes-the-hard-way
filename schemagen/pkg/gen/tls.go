@@ -4,6 +4,7 @@ import (
 	"maps"
 	"slices"
 
+	"github.com/UnstoppableMango/pulumi-kubernetes-the-hard-way/schemagen/pkg/gen/types"
 	"github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 )
 
@@ -485,6 +486,10 @@ func generateRootCa(tlsSpec schema.PackageSpec) schema.ResourceSpec {
 		"algorithm": {
 			Description: "Name of the algorithm to use when generating the private key.",
 			TypeSpec:    schema.TypeSpec{Ref: localType("Algorithm", "tls")},
+		},
+		"ecdsaCurve": {
+			Description: "TODO",
+			TypeSpec:    types.LocalType("EcdsaCurve", "tls"),
 		},
 		"subject": {
 			Description: "TODO",

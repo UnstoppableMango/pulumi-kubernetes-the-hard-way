@@ -56,9 +56,9 @@ export class RootCa extends pulumi.ComponentResource {
      */
     public readonly earlyRenewalHours!: pulumi.Output<number>;
     /**
-     * When `algorithm` is `ECDSA`, the name of the elliptic curve to use. Currently-supported values are: `P224`, `P256`, `P384`, `P521`. (default: `P224`).
+     * TODO
      */
-    public readonly ecdsaCurve!: pulumi.Output<string>;
+    public readonly ecdsaCurve!: pulumi.Output<enums.tls.EcdsaCurve>;
     /**
      * List of IP addresses for which a certificate is being requested (i.e. certificate subjects).
      */
@@ -236,9 +236,9 @@ export interface RootCaArgs {
      */
     earlyRenewalHours?: pulumi.Input<number>;
     /**
-     * When `algorithm` is `ECDSA`, the name of the elliptic curve to use. Currently-supported values are: `P224`, `P256`, `P384`, `P521`. (default: `P224`).
+     * TODO
      */
-    ecdsaCurve?: pulumi.Input<string>;
+    ecdsaCurve?: pulumi.Input<enums.tls.EcdsaCurve>;
     /**
      * List of IP addresses for which a certificate is being requested (i.e. certificate subjects).
      */

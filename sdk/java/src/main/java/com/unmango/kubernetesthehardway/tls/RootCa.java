@@ -13,6 +13,7 @@ import com.pulumi.tls.outputs.SelfSignedCertSubject;
 import com.unmango.kubernetesthehardway.Utilities;
 import com.unmango.kubernetesthehardway.tls.RootCaArgs;
 import com.unmango.kubernetesthehardway.tls.enums.Algorithm;
+import com.unmango.kubernetesthehardway.tls.enums.EcdsaCurve;
 import java.lang.Boolean;
 import java.lang.Integer;
 import java.lang.String;
@@ -119,17 +120,17 @@ public class RootCa extends com.pulumi.resources.ComponentResource {
         return this.earlyRenewalHours;
     }
     /**
-     * When `algorithm` is `ECDSA`, the name of the elliptic curve to use. Currently-supported values are: `P224`, `P256`, `P384`, `P521`. (default: `P224`).
+     * TODO
      * 
      */
-    @Export(name="ecdsaCurve", refs={String.class}, tree="[0]")
-    private Output<String> ecdsaCurve;
+    @Export(name="ecdsaCurve", refs={EcdsaCurve.class}, tree="[0]")
+    private Output<EcdsaCurve> ecdsaCurve;
 
     /**
-     * @return When `algorithm` is `ECDSA`, the name of the elliptic curve to use. Currently-supported values are: `P224`, `P256`, `P384`, `P521`. (default: `P224`).
+     * @return TODO
      * 
      */
-    public Output<String> ecdsaCurve() {
+    public Output<EcdsaCurve> ecdsaCurve() {
         return this.ecdsaCurve;
     }
     /**

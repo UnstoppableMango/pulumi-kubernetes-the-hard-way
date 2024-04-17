@@ -8,6 +8,7 @@ import com.pulumi.core.annotations.Import;
 import com.pulumi.exceptions.MissingRequiredPropertyException;
 import com.pulumi.tls.inputs.SelfSignedCertSubjectArgs;
 import com.unmango.kubernetesthehardway.tls.enums.Algorithm;
+import com.unmango.kubernetesthehardway.tls.enums.EcdsaCurve;
 import java.lang.Boolean;
 import java.lang.Integer;
 import java.lang.String;
@@ -75,17 +76,17 @@ public final class RootCaArgs extends com.pulumi.resources.ResourceArgs {
     }
 
     /**
-     * When `algorithm` is `ECDSA`, the name of the elliptic curve to use. Currently-supported values are: `P224`, `P256`, `P384`, `P521`. (default: `P224`).
+     * TODO
      * 
      */
     @Import(name="ecdsaCurve")
-    private @Nullable Output<String> ecdsaCurve;
+    private @Nullable Output<EcdsaCurve> ecdsaCurve;
 
     /**
-     * @return When `algorithm` is `ECDSA`, the name of the elliptic curve to use. Currently-supported values are: `P224`, `P256`, `P384`, `P521`. (default: `P224`).
+     * @return TODO
      * 
      */
-    public Optional<Output<String>> ecdsaCurve() {
+    public Optional<Output<EcdsaCurve>> ecdsaCurve() {
         return Optional.ofNullable(this.ecdsaCurve);
     }
 
@@ -310,23 +311,23 @@ public final class RootCaArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param ecdsaCurve When `algorithm` is `ECDSA`, the name of the elliptic curve to use. Currently-supported values are: `P224`, `P256`, `P384`, `P521`. (default: `P224`).
+         * @param ecdsaCurve TODO
          * 
          * @return builder
          * 
          */
-        public Builder ecdsaCurve(@Nullable Output<String> ecdsaCurve) {
+        public Builder ecdsaCurve(@Nullable Output<EcdsaCurve> ecdsaCurve) {
             $.ecdsaCurve = ecdsaCurve;
             return this;
         }
 
         /**
-         * @param ecdsaCurve When `algorithm` is `ECDSA`, the name of the elliptic curve to use. Currently-supported values are: `P224`, `P256`, `P384`, `P521`. (default: `P224`).
+         * @param ecdsaCurve TODO
          * 
          * @return builder
          * 
          */
-        public Builder ecdsaCurve(String ecdsaCurve) {
+        public Builder ecdsaCurve(EcdsaCurve ecdsaCurve) {
             return ecdsaCurve(Output.of(ecdsaCurve));
         }
 

@@ -20,7 +20,7 @@ class RootCaArgs:
                  algorithm: Optional[pulumi.Input['Algorithm']] = None,
                  dns_names: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  early_renewal_hours: Optional[pulumi.Input[int]] = None,
-                 ecdsa_curve: Optional[pulumi.Input[str]] = None,
+                 ecdsa_curve: Optional[pulumi.Input['EcdsaCurve']] = None,
                  ip_addresses: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  rsa_bits: Optional[pulumi.Input[int]] = None,
                  set_authority_key_id: Optional[pulumi.Input[bool]] = None,
@@ -37,7 +37,7 @@ class RootCaArgs:
                certificate remains valid until its true expiration time, since this resource does not (and cannot) support certificate
                revocation. Also, this advance update can only be performed should the Terraform configuration be applied during the
                early renewal period. (default: `0`)
-        :param pulumi.Input[str] ecdsa_curve: When `algorithm` is `ECDSA`, the name of the elliptic curve to use. Currently-supported values are: `P224`, `P256`, `P384`, `P521`. (default: `P224`).
+        :param pulumi.Input['EcdsaCurve'] ecdsa_curve: TODO
         :param pulumi.Input[Sequence[pulumi.Input[str]]] ip_addresses: List of IP addresses for which a certificate is being requested (i.e. certificate subjects).
         :param pulumi.Input[int] rsa_bits: When `algorithm` is `RSA`, the size of the generated RSA key, in bits (default: `2048`).
         :param pulumi.Input[bool] set_authority_key_id: Should the generated certificate include an [authority key identifier](https://datatracker.ietf.org/doc/html/rfc5280#section-4.2.1.1): for self-signed certificates this is the same value as the [subject key identifier](https://datatracker.ietf.org/doc/html/rfc5280#section-4.2.1.2) (default: `false`).
@@ -121,14 +121,14 @@ class RootCaArgs:
 
     @property
     @pulumi.getter(name="ecdsaCurve")
-    def ecdsa_curve(self) -> Optional[pulumi.Input[str]]:
+    def ecdsa_curve(self) -> Optional[pulumi.Input['EcdsaCurve']]:
         """
-        When `algorithm` is `ECDSA`, the name of the elliptic curve to use. Currently-supported values are: `P224`, `P256`, `P384`, `P521`. (default: `P224`).
+        TODO
         """
         return pulumi.get(self, "ecdsa_curve")
 
     @ecdsa_curve.setter
-    def ecdsa_curve(self, value: Optional[pulumi.Input[str]]):
+    def ecdsa_curve(self, value: Optional[pulumi.Input['EcdsaCurve']]):
         pulumi.set(self, "ecdsa_curve", value)
 
     @property
@@ -212,7 +212,7 @@ class RootCa(pulumi.ComponentResource):
                  algorithm: Optional[pulumi.Input['Algorithm']] = None,
                  dns_names: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  early_renewal_hours: Optional[pulumi.Input[int]] = None,
-                 ecdsa_curve: Optional[pulumi.Input[str]] = None,
+                 ecdsa_curve: Optional[pulumi.Input['EcdsaCurve']] = None,
                  ip_addresses: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  rsa_bits: Optional[pulumi.Input[int]] = None,
                  set_authority_key_id: Optional[pulumi.Input[bool]] = None,
@@ -233,7 +233,7 @@ class RootCa(pulumi.ComponentResource):
                certificate remains valid until its true expiration time, since this resource does not (and cannot) support certificate
                revocation. Also, this advance update can only be performed should the Terraform configuration be applied during the
                early renewal period. (default: `0`)
-        :param pulumi.Input[str] ecdsa_curve: When `algorithm` is `ECDSA`, the name of the elliptic curve to use. Currently-supported values are: `P224`, `P256`, `P384`, `P521`. (default: `P224`).
+        :param pulumi.Input['EcdsaCurve'] ecdsa_curve: TODO
         :param pulumi.Input[Sequence[pulumi.Input[str]]] ip_addresses: List of IP addresses for which a certificate is being requested (i.e. certificate subjects).
         :param pulumi.Input[int] rsa_bits: When `algorithm` is `RSA`, the size of the generated RSA key, in bits (default: `2048`).
         :param pulumi.Input[bool] set_authority_key_id: Should the generated certificate include an [authority key identifier](https://datatracker.ietf.org/doc/html/rfc5280#section-4.2.1.1): for self-signed certificates this is the same value as the [subject key identifier](https://datatracker.ietf.org/doc/html/rfc5280#section-4.2.1.2) (default: `false`).
@@ -269,7 +269,7 @@ class RootCa(pulumi.ComponentResource):
                  algorithm: Optional[pulumi.Input['Algorithm']] = None,
                  dns_names: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  early_renewal_hours: Optional[pulumi.Input[int]] = None,
-                 ecdsa_curve: Optional[pulumi.Input[str]] = None,
+                 ecdsa_curve: Optional[pulumi.Input['EcdsaCurve']] = None,
                  ip_addresses: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  rsa_bits: Optional[pulumi.Input[int]] = None,
                  set_authority_key_id: Optional[pulumi.Input[bool]] = None,
@@ -378,9 +378,9 @@ class RootCa(pulumi.ComponentResource):
 
     @property
     @pulumi.getter(name="ecdsaCurve")
-    def ecdsa_curve(self) -> pulumi.Output[str]:
+    def ecdsa_curve(self) -> pulumi.Output['EcdsaCurve']:
         """
-        When `algorithm` is `ECDSA`, the name of the elliptic curve to use. Currently-supported values are: `P224`, `P256`, `P384`, `P521`. (default: `P224`).
+        TODO
         """
         return pulumi.get(self, "ecdsa_curve")
 

@@ -672,7 +672,7 @@ export abstract class RootCa<TData = any> extends (pulumi.ComponentResource)<TDa
     public certPem!: string | pulumi.Output<string>;
     public dnsNames?: string[] | pulumi.Output<string[]>;
     public earlyRenewalHours!: number | pulumi.Output<number>;
-    public ecdsaCurve!: string | pulumi.Output<string>;
+    public ecdsaCurve!: EcdsaCurveOutputs | pulumi.Output<EcdsaCurveOutputs>;
     public ipAddresses?: string[] | pulumi.Output<string[]>;
     public isCaCertificate!: boolean | pulumi.Output<boolean>;
     public key!: tls.PrivateKey | pulumi.Output<tls.PrivateKey>;
@@ -701,7 +701,7 @@ export interface RootCaArgs {
     readonly algorithm?: pulumi.Input<AlgorithmInputs>;
     readonly dnsNames?: pulumi.Input<pulumi.Input<string>[]>;
     readonly earlyRenewalHours?: pulumi.Input<number>;
-    readonly ecdsaCurve?: pulumi.Input<string>;
+    readonly ecdsaCurve?: pulumi.Input<EcdsaCurveInputs>;
     readonly ipAddresses?: pulumi.Input<pulumi.Input<string>[]>;
     readonly rsaBits?: pulumi.Input<number>;
     readonly setAuthorityKeyId?: pulumi.Input<boolean>;

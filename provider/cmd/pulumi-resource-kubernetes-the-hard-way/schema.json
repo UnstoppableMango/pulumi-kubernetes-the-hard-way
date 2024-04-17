@@ -3448,8 +3448,8 @@
                     "description": "The resource will consider the certificate to have expired the given number of hours before its actual expiry time. This\ncan be useful to deploy an updated certificate in advance of the expiration of the current certificate. However, the old\ncertificate remains valid until its true expiration time, since this resource does not (and cannot) support certificate\nrevocation. Also, this advance update can only be performed should the Terraform configuration be applied during the\nearly renewal period. (default: `0`)\n"
                 },
                 "ecdsaCurve": {
-                    "type": "string",
-                    "description": "When `algorithm` is `ECDSA`, the name of the elliptic curve to use. Currently-supported values are: `P224`, `P256`, `P384`, `P521`. (default: `P224`).\n"
+                    "$ref": "#/types/kubernetes-the-hard-way:tls:EcdsaCurve",
+                    "description": "TODO"
                 },
                 "ipAddresses": {
                     "type": "array",
@@ -3581,8 +3581,8 @@
                     "description": "The resource will consider the certificate to have expired the given number of hours before its actual expiry time. This\ncan be useful to deploy an updated certificate in advance of the expiration of the current certificate. However, the old\ncertificate remains valid until its true expiration time, since this resource does not (and cannot) support certificate\nrevocation. Also, this advance update can only be performed should the Terraform configuration be applied during the\nearly renewal period. (default: `0`)\n"
                 },
                 "ecdsaCurve": {
-                    "type": "string",
-                    "description": "When `algorithm` is `ECDSA`, the name of the elliptic curve to use. Currently-supported values are: `P224`, `P256`, `P384`, `P521`. (default: `P224`).\n"
+                    "$ref": "#/types/kubernetes-the-hard-way:tls:EcdsaCurve",
+                    "description": "TODO"
                 },
                 "ipAddresses": {
                     "type": "array",
