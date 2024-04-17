@@ -76,7 +76,7 @@
     {
       "matchPackagePatterns": [
         "pulumi/pulumi/sdk",
-        "pulumi/pulumi/pkg",
+        "pulumi/pulumi/pkg"
       ],
       "matchPackageNames": [
         "pulumi/pulumi",
