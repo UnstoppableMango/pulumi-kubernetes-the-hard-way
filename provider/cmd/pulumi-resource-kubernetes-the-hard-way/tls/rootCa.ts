@@ -115,6 +115,6 @@ export function newCertificate(ca: Input<RootCa>, args: NewCertificateInputs): C
     subject: args.subject,
     uris: args.uris,
     caCertPem: self.certPem,
-    caPrivateKeyPem: self.privateKeyPem,
+    caPrivateKeyPem: self.privateKeyPem as Output<string>, // TODO: Wtf
   }, args.options);
 }
