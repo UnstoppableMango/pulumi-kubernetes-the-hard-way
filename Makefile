@@ -6,7 +6,7 @@ PROVIDER        := pulumi-resource-${PACK}
 WORKING_DIR     := $(shell pwd)
 SCHEMA_FILE     := ${WORKING_DIR}/provider/cmd/${PROVIDER}/schema.json
 PROVIDER_PKG    := ${WORKING_DIR}/provider/cmd/${PROVIDER}/package.json
-PROVIDER_SRC    := $(shell find ${WORKING_DIR}/provider/cmd/${PROVIDER} -type f -name '*.ts' -path node_modules -prune)
+PROVIDER_SRC    := $(shell find ${WORKING_DIR}/provider/cmd/${PROVIDER} -type f -name '*.ts' -not -path '*node_modules*')
 SCHEMAGEN_SRC   := $(shell find ${WORKING_DIR}/schemagen -type f -name '*.go')
 
 GOOS ?= $(shell go env GOOS)
