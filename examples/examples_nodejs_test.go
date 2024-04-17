@@ -142,9 +142,8 @@ func TestTlsTs(t *testing.T) {
 			res.Outputs["allowedUses"],
 		)
 
-		// We need to actually add these as outputs first
-		// assert.Equal(t, "RSA", res.Outputs["algorithm"])
-		// assert.Equal(t, 256, res.Outputs["validityPeriodHours"])
+		assert.Equal(t, "RSA", res.Outputs["algorithm"])
+		assert.Equal(t, 256, res.Outputs["validityPeriodHours"])
 	}
 
 	test := getJSBaseOptions(t).
