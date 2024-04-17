@@ -520,10 +520,10 @@
   resolved "https://registry.yarnpkg.com/@pulumi/query/-/query-0.3.0.tgz#f496608e86a18c3dd31b6c533408e2441c29071d"
   integrity sha512-xfo+yLRM2zVjVEA4p23IjQWzyWl1ZhWOGobsBqRpIarzLvwNH/RAGaoehdxlhx4X92302DrpdIFgTICMN4P38w==
 
-"@pulumi/random@4.16.0":
-  version "4.16.0"
-  resolved "https://registry.yarnpkg.com/@pulumi/random/-/random-4.16.0.tgz#a9fd085d08fa0a16e66afad558c3e5dc69010de5"
-  integrity sha512-cHwlhy/+xTWCt7gwlJoG0q1l234YLxWtSWI61MzekWSsthbtcYruXo2bUlgcXWX5V4/lHjvQG84l5n1aTNZJoA==
+"@pulumi/random@4.16.1":
+  version "4.16.1"
+  resolved "https://registry.yarnpkg.com/@pulumi/random/-/random-4.16.1.tgz#2d4cccbebbca26611aa6828da9fbcade72b1b84a"
+  integrity sha512-WbjxA7rqOqJkDT4mEltQkJ97GGjCLHJ6e/8r/HRdpoJ4xapfqgAVdt4/dgVtHBsxngglNkauL2uOy/h4Jh1Arg==
   dependencies:
     "@pulumi/pulumi" "^3.0.0"
 
