@@ -1,11 +1,10 @@
-import { ComponentResourceOptions, Input, Inputs, Output, output } from '@pulumi/pulumi';
+import { ComponentResourceOptions, Input, Output, output } from '@pulumi/pulumi';
 import { SelfSignedCert } from '@pulumi/tls';
-import { SelfSignedCertSubject } from '@pulumi/tls/types/input';
 import * as schema from '../schema-types';
-import { KeyPair, KeyPairArgs } from './keypair';
-import { Certificate } from './certificate';
 import { AllowedUsage } from '../types';
 import { toAllowedUsage } from '../util';
+import { KeyPair } from './keypair';
+import { Certificate } from './certificate';
 
 export type NewCertificateInputs = Omit<schema.CertificateArgs, 'caCertPem' | 'caPrivateKeyPem'> & {
   name: string;
@@ -16,33 +15,30 @@ export interface NewCertificateOutputs {
   result: Certificate;
 }
 
-export interface RootCaArgs extends KeyPairArgs {
-  subject?: Input<SelfSignedCertSubject>;
-}
-
-export class RootCa extends KeyPair<SelfSignedCert> {
-  public static readonly __pulumiType: string = 'kubernetes-the-hard-way:tls:RootCa';
-
+export class RootCa extends schema.RootCa {
   public readonly allowedUses!: Output<AllowedUsage[]>;
   public readonly cert!: SelfSignedCert;
   public readonly certPem!: Output<string>;
 
-  constructor(name: string, args: RootCaArgs, opts?: ComponentResourceOptions) {
-    const props = {
-      allowedUses: undefined,
-      cert: undefined,
-      certPem: undefined,
-      key: undefined,
-      privateKeyPem: undefined,
-      publicKeyPem: undefined,
-    };
+  constructor(name: string, args: schema.RootCaArgs, opts?: ComponentResourceOptions) {
+    super(name, args, opts);
 
-    super(RootCa.__pulumiType, name, opts?.urn ? props : args, opts);
+    const algorithm = output(args.algorithm ?? 'RSA');
+    const dnsNames = output(args.dnsNames ?? []);
+    const earlyRenewalHours = output(args.earlyRenewalHours);
+    const ecdsaCurve = output(args.ecdsaCurve ?? 'P256');
+    const ipAddresses = output(args.ipAddresses ?? []);
+    const rsaBits = output(args.rsaBits);
+    const setAuthorityKeyId = output(args.setAuthorityKeyId);
+    const subject = output(args.subject);
+    const validityPeriodHours = output(args.validityPeriodHours);
 
-    // Rehydrating
-    if (opts?.urn) return;
-
-    const key = this.key;
+    const key = KeyPair.key(name, {
+      algorithm,
+      validityPeriodHours,
+      ecdsaCurve,
+      rsaBits: args.rsaBits,
+    }, this);
 
     const cert = new SelfSignedCert(name, {
       isCaCertificate: true,
@@ -53,23 +49,29 @@ export class RootCa extends KeyPair<SelfSignedCert> {
         AllowedUsage.ClientAuth,
       ],
       privateKeyPem: key.privateKeyPem,
-      validityPeriodHours: args.validityPeriodHours,
-      subject: output(args.subject).apply(subject => ({
-        commonName: subject?.commonName ?? 'Kubernetes',
-        country: subject?.country,
-        locality: subject?.locality,
-        organization: subject?.organization,
-        organizationalUnit: subject?.organizationalUnit,
-        postalCode: subject?.postalCode,
-        province: subject?.province,
-        serialNumber: subject?.serialNumber,
-        streetAddresses: subject?.streetAddresses,
+      validityPeriodHours: validityPeriodHours,
+      subject: subject.apply(s => ({
+        commonName: s?.commonName ?? 'Kubernetes',
+        country: s?.country,
+        locality: s?.locality,
+        organization: s?.organization,
+        organizationalUnit: s?.organizationalUnit,
+        postalCode: s?.postalCode,
+        province: s?.province,
+        serialNumber: s?.serialNumber,
+        streetAddresses: s?.streetAddresses,
       })),
     }, { parent: this });
 
+    this.algorithm = algorithm;
     this.allowedUses = cert.allowedUses.apply(toAllowedUsage);
     this.cert = cert;
     this.certPem = cert.certPem;
+    this.ecdsaCurve = ecdsaCurve;
+    this.key = key;
+    this.keyAlgorithm = key.algorithm; // TODO
+    this.validityPeriodHours = validityPeriodHours;
+    this.dnsNames = dnsNames;
 
     this.registerOutputs({
       allowedUses: this.allowedUses,
