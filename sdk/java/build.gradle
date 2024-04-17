@@ -47,7 +47,7 @@ dependencies {
     implementation("com.pulumi:command:0.10.0")
     implementation("com.pulumi:kubernetes:4.10.0")
     implementation("com.pulumi:pulumi:0.9.9")
-    implementation("com.pulumi:random:4.16.0")
+    implementation("com.pulumi:random:4.16.1")
     implementation("com.pulumi:tls:5.0.2")
 }
 
