@@ -149,6 +149,12 @@ func TestTlsTs(t *testing.T) {
 		} else {
 			assert.Equal(t, 256., res.Outputs["validityPeriodHours"])
 		}
+
+		assert.NotNil(t, res.Outputs["cert"])
+		assert.NotNil(t, res.Outputs["certPem"])
+		assert.NotNil(t, res.Outputs["key"])
+		assert.NotNil(t, res.Outputs["privateKeyPem"])
+		assert.NotNil(t, res.Outputs["publicKeyPem"])
 	}
 
 	test := getJSBaseOptions(t).
