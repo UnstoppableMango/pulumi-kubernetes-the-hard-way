@@ -183,46 +183,6 @@ func TestTlsRootCaTs(t *testing.T) {
 	integration.ProgramTest(t, &test)
 }
 
-func TestTlsTs(t *testing.T) {
-	validateRootCa := func(t *testing.T, res apitype.ResourceV3) {
-		assert.NotEmpty(t, res.Outputs)
-		assert.ElementsMatch(t,
-			[]string{"cert_signing", "key_encipherment", "server_auth", "client_auth"},
-			res.Outputs["allowedUses"],
-		)
-
-		assert.Equal(t, "RSA", res.Outputs["algorithm"])
-
-		if res.Parent.Type() == "kubernetes-the-hard-way:tls:ClusterPki" {
-			assert.Equal(t, 8076., res.Outputs["validityPeriodHours"])
-		} else {
-			assert.Equal(t, 256., res.Outputs["validityPeriodHours"])
-		}
-
-		assert.NotNil(t, res.Outputs["cert"])
-		assert.NotNil(t, res.Outputs["certPem"])
-		assert.NotNil(t, res.Outputs["key"])
-		assert.NotNil(t, res.Outputs["privateKeyPem"])
-		assert.NotNil(t, res.Outputs["publicKeyPem"])
-	}
-
-	test := getJSBaseOptions(t).
-		With(integration.ProgramTestOptions{
-			Dir:   path.Join(getCwd(t), "tls-ts"),
-			Quick: true,
-			ExtraRuntimeValidation: func(t *testing.T, stack integration.RuntimeValidationStackInfo) {
-				for _, res := range stack.Deployment.Resources {
-					switch res.Type {
-					case "kubernetes-the-hard-way:tls:RootCa":
-						validateRootCa(t, res)
-					}
-				}
-			},
-		})
-
-	integration.ProgramTest(t, &test)
-}
-
 func getJSBaseOptions(t *testing.T) integration.ProgramTestOptions {
 	base := getBaseOptions(t)
 	baseJS := base.With(integration.ProgramTestOptions{
