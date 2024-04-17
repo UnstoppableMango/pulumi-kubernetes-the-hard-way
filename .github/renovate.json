@@ -43,5 +43,46 @@
       "depNameTemplate": "pulumi/schema-tools",
       "datasourceTemplate": "github-tags"
     }
+  ],
+  "packageRules": [
+    {
+      "matchPackagePatterns": [
+        "pulumi/pulumi-command",
+        "@pulumi/command"
+      ],
+      "groupName": "pulumi-command"
+    },
+    {
+      "matchPackagePatterns": [
+        "pulumi/pulumi-kubernetes",
+        "@pulumi/kubernetes"
+      ],
+      "groupName": "pulumi-kubernetes"
+    },
+    {
+      "matchPackagePatterns": [
+        "pulumi/pulumi-random",
+        "@pulumi/random"
+      ],
+      "groupName": "pulumi-random"
+    },
+    {
+      "matchPackagePatterns": [
+        "pulumi/pulumi-tls",
+        "@pulumi/tls"
+      ],
+      "groupName": "pulumi-tls"
+    },
+    {
+      "matchPackagePatterns": [
+        "pulumi/pulumi/sdk",
+        "pulumi/pulumi/pkg",
+      ],
+      "matchPackageNames": [
+        "pulumi/pulumi",
+        "@pulumi/pulumi"
+      ],
+      "groupName": "pulumi"
+    }
   ]
 }
