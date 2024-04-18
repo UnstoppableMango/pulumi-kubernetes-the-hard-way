@@ -81,6 +81,23 @@ func TestRemoteEtcdInstallTs(t *testing.T) {
 				"password": password,
 			},
 			ExtraRuntimeValidation: func(t *testing.T, stack integration.RuntimeValidationStackInfo) {
+				etcdctlVersion, ok := stack.Outputs["etcdctlVersion"]
+				assert.True(t, ok, "Output `etcdctlVersion` was not set")
+				assert.Equal(t, "etcdctl version: 3.4.15\nAPI version: 3.4", etcdctlVersion) // TODO: No hardcoded versions
+
+				validatedResources := []string{}
+				for _, res := range stack.Deployment.Resources {
+					if res.Type != "kubernetes-the-hard-way:tls:EtcdInstall" {
+						continue
+					}
+					switch res.URN.Name() {
+					case "simple":
+						// validateSimple(t, res)
+						validatedResources = append(validatedResources, "simple")
+					}
+				}
+
+				assert.Equal(t, []string{"simple"}, validatedResources, "Not all resources were validated")
 			},
 		})
 
