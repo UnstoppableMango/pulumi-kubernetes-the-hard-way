@@ -5,7 +5,7 @@
     "bin": "bin/index.js",
     "dependencies": {
         "@pulumi/command": "0.10.0",
-        "@pulumi/kubernetes": "4.10.0",
+        "@pulumi/kubernetes": "4.11.0",
         "@pulumi/pulumi": "^3.111.1",
         "@pulumi/random": "4.16.1",
         "@pulumi/tls": "5.0.2",
