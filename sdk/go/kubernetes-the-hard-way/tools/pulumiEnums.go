@@ -440,8 +440,9 @@ func (in *curlDelegationLevelPtr) ToCurlDelegationLevelPtrOutputWithContext(ctx 
 type EtcdctlCommand string
 
 const (
-	EtcdctlCommandMember = EtcdctlCommand("member")
-	EtcdctlCommandList   = EtcdctlCommand("list")
+	EtcdctlCommandMember  = EtcdctlCommand("member")
+	EtcdctlCommandList    = EtcdctlCommand("list")
+	EtcdctlCommandVersion = EtcdctlCommand("version")
 )
 
 func (EtcdctlCommand) ElementType() reflect.Type {
@@ -568,6 +569,7 @@ func (o EtcdctlCommandPtrOutput) ToStringPtrOutputWithContext(ctx context.Contex
 //
 //	EtcdctlCommandMember
 //	EtcdctlCommandList
+//	EtcdctlCommandVersion
 type EtcdctlCommandInput interface {
 	pulumi.Input
 

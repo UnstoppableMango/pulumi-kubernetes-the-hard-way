@@ -30,6 +30,7 @@ export type CurlDelegationLevel = (typeof CurlDelegationLevel)[keyof typeof Curl
 export const EtcdctlCommand = {
     Member: "member",
     List: "list",
+    Version: "version",
 } as const;
 
 export type EtcdctlCommand = (typeof EtcdctlCommand)[keyof typeof EtcdctlCommand];

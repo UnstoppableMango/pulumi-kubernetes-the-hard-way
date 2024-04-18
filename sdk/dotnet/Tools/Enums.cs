@@ -107,6 +107,7 @@ namespace UnMango.KubernetesTheHardWay.Tools
 
         public static EtcdctlCommand Member { get; } = new EtcdctlCommand("member");
         public static EtcdctlCommand List { get; } = new EtcdctlCommand("list");
+        public static EtcdctlCommand Version { get; } = new EtcdctlCommand("version");
 
         public static bool operator ==(EtcdctlCommand left, EtcdctlCommand right) => left.Equals(right);
         public static bool operator !=(EtcdctlCommand left, EtcdctlCommand right) => !left.Equals(right);
