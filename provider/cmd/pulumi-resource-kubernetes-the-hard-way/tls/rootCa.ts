@@ -1,5 +1,6 @@
 import { ComponentResourceOptions, Input, Output, output } from '@pulumi/pulumi';
 import { SelfSignedCert } from '@pulumi/tls';
+import { SelfSignedCertSubject } from '@pulumi/tls/types/output';
 import * as schema from '../schema-types';
 import { AllowedUsage } from '../types';
 import { toAllowedUsage } from '../util';
@@ -31,7 +32,9 @@ export class RootCa extends schema.RootCa {
     const ipAddresses = output(args.ipAddresses ?? []);
     const rsaBits = output(args.rsaBits);
     const setAuthorityKeyId = output(args.setAuthorityKeyId);
+    const setSubjectKeyId = output(args.setSubjectKeyId);
     const subject = output(args.subject);
+    const uris = output(args.uris ?? []);
     const validityPeriodHours = output(args.validityPeriodHours);
 
     const key = KeyPair.key(name, {
@@ -51,6 +54,12 @@ export class RootCa extends schema.RootCa {
       ],
       privateKeyPem: key.privateKeyPem,
       validityPeriodHours: validityPeriodHours,
+      dnsNames,
+      ipAddresses,
+      uris,
+      setAuthorityKeyId: args.setAuthorityKeyId,
+      setSubjectKeyId: args.setSubjectKeyId,
+      earlyRenewalHours: args.earlyRenewalHours,
       subject: subject.apply(s => ({
         commonName: s?.commonName ?? 'Kubernetes',
         country: s?.country,
@@ -69,12 +78,28 @@ export class RootCa extends schema.RootCa {
     this.cert = cert;
     this.certPem = cert.certPem;
     this.dnsNames = dnsNames;
+    this.earlyRenewalHours = cert.earlyRenewalHours;
     this.ecdsaCurve = ecdsaCurve;
+    this.ipAddresses = ipAddresses;
+    this.isCaCertificate = cert.isCaCertificate;
     this.key = key;
-    this.keyAlgorithm = key.algorithm; // TODO
+    this.keyAlgorithm = cert.keyAlgorithm;
+    this.privateKeyOpenssh = key.privateKeyOpenssh;
     this.privateKeyPem = key.privateKeyPem;
+    this.privateKeyPemPkcs8 = key.privateKeyPemPkcs8;
+    this.publicKeyFingerprintMd5 = key.publicKeyFingerprintMd5;
+    this.publicKeyFingerprintSha256 = key.publicKeyFingerprintSha256;
+    this.publicKeyOpenssh = key.publicKeyOpenssh;
     this.publicKeyPem = key.publicKeyPem;
+    this.readyForRenewal = cert.readyForRenewal;
+    this.rsaBits = key.rsaBits;
+    this.setAuthorityKeyId = cert.setAuthorityKeyId;
+    this.setSubjectKeyId = cert.setSubjectKeyId;
+    this.subject = subject as Output<SelfSignedCertSubject> | undefined;
+    this.uris = uris;
+    this.validityEndTime = cert.validityEndTime;
     this.validityPeriodHours = validityPeriodHours;
+    this.validityStartTime = cert.validityStartTime;
 
     this.registerOutputs({
       algorithm,
@@ -82,11 +107,28 @@ export class RootCa extends schema.RootCa {
       cert,
       certPem: this.certPem,
       dnsNames,
+      earlyRenewalHours,
       ecdsaCurve,
+      ipAddresses,
+      isCaCertificate: this.isCaCertificate,
       key,
+      keyAlgorithm: this.keyAlgorithm,
+      privateKeyOpenSsh: this.privateKeyOpenssh,
       privateKeyPem: this.privateKeyPem,
+      privateKeyPemPkcs8: this.privateKeyPemPkcs8,
+      publicKeyFingerprintMd5: this.publicKeyFingerprintMd5,
+      publicKeyFingerprintSha256: this.publicKeyFingerprintSha256,
+      publicKeyOpenssh: this.publicKeyOpenssh,
       publicKeyPem: this.publicKeyPem,
+      readyForRenewal: this.readyForRenewal,
+      rsaBits,
+      setAuthorityKeyId,
+      setSubjectKeyId,
+      subject,
+      uris,
+      validityEndTime: this.validityEndTime,
       validityPeriodHours,
+      validityStartTime: this.validityStartTime,
     });
   }
 
