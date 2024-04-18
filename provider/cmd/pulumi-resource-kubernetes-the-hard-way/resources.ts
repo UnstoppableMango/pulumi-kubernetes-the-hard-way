@@ -21,6 +21,7 @@ import {
   StaticPod,
   SystemdService,
 } from './remote';
+import { ProvisionEtcd } from './remote/provisionEtcd';
 import { Certificate, ClusterPki, EncryptionKey, RootCa } from './tls';
 import { Chmod, Etcdctl, Hostnamectl, Mkdir, Mktemp, Mv, Rm, Sed, Systemctl, Tar, Tee, Wget } from './tools';
 import { KubeVipManifest } from './config';
@@ -42,6 +43,7 @@ const resources: schema.ResourceConstructor = {
   'kubernetes-the-hard-way:remote:KubectlInstall': (...args) => new KubectlInstall(...args),
   'kubernetes-the-hard-way:remote:KubeletInstall': (...args) => new KubeletInstall(...args),
   'kubernetes-the-hard-way:remote:KubeProxyInstall': (...args) => new KubeProxyInstall(...args),
+  'kubernetes-the-hard-way:remote:ProvisionEtcd': (...args) => new ProvisionEtcd(...args),
   'kubernetes-the-hard-way:remote:RuncInstall': (...args) => new RuncInstall(...args),
   'kubernetes-the-hard-way:remote:StartEtcd': (...args) => new StartEtcd(...args),
   'kubernetes-the-hard-way:remote:StaticPod': (...args) => new StaticPod(...args),
@@ -52,6 +54,7 @@ const resources: schema.ResourceConstructor = {
   'kubernetes-the-hard-way:tls:EncryptionKey': (...args) => new EncryptionKey(...args),
   'kubernetes-the-hard-way:tls:RootCa': (...args) => new RootCa(...args),
   'kubernetes-the-hard-way:tools:Chmod': (...args) => new Chmod(...args),
+  'kubernetes-the-hard-way:tools:Curl': (...args) => { throw new Error('TODO') },
   'kubernetes-the-hard-way:tools:Etcdctl': (...args) => new Etcdctl(...args),
   'kubernetes-the-hard-way:tools:Hostnamectl': (...args) => new Hostnamectl(...args),
   'kubernetes-the-hard-way:tools:Mkdir': (...args) => new Mkdir(...args),
