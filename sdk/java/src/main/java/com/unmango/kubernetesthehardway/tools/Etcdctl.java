@@ -45,28 +45,28 @@ public class Etcdctl extends com.pulumi.resources.ComponentResource {
      * 
      */
     @Export(name="caCert", refs={String.class}, tree="[0]")
-    private Output<String> caCert;
+    private Output</* @Nullable */ String> caCert;
 
     /**
      * @return TODO
      * 
      */
-    public Output<String> caCert() {
-        return this.caCert;
+    public Output<Optional<String>> caCert() {
+        return Codegen.optional(this.caCert);
     }
     /**
      * TODO
      * 
      */
     @Export(name="cert", refs={String.class}, tree="[0]")
-    private Output<String> cert;
+    private Output</* @Nullable */ String> cert;
 
     /**
      * @return TODO
      * 
      */
-    public Output<String> cert() {
-        return this.cert;
+    public Output<Optional<String>> cert() {
+        return Codegen.optional(this.cert);
     }
     /**
      * The underlying command
@@ -115,14 +115,14 @@ public class Etcdctl extends com.pulumi.resources.ComponentResource {
      * 
      */
     @Export(name="endpoints", refs={String.class}, tree="[0]")
-    private Output<String> endpoints;
+    private Output</* @Nullable */ String> endpoints;
 
     /**
      * @return TODO
      * 
      */
-    public Output<String> endpoints() {
-        return this.endpoints;
+    public Output<Optional<String>> endpoints() {
+        return Codegen.optional(this.endpoints);
     }
     /**
      * Environment variables
@@ -143,14 +143,14 @@ public class Etcdctl extends com.pulumi.resources.ComponentResource {
      * 
      */
     @Export(name="key", refs={String.class}, tree="[0]")
-    private Output<String> key;
+    private Output</* @Nullable */ String> key;
 
     /**
      * @return TODO
      * 
      */
-    public Output<String> key() {
-        return this.key;
+    public Output<Optional<String>> key() {
+        return Codegen.optional(this.key);
     }
     /**
      * At what stage(s) in the resource lifecycle should the command be run

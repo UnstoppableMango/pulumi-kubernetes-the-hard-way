@@ -4562,11 +4562,7 @@
                 }
             },
             "required": [
-                "caCert",
-                "cert",
                 "commands",
-                "endpoints",
-                "key",
                 "binaryPath",
                 "command",
                 "connection",
@@ -4629,11 +4625,7 @@
                 }
             },
             "requiredInputs": [
-                "caCert",
-                "cert",
                 "commands",
-                "endpoints",
-                "key",
                 "connection"
             ],
             "isComponent": true

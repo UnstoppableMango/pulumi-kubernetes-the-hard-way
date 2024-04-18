@@ -912,14 +912,14 @@ export interface CurlArgs {
 }
 export abstract class Etcdctl<TData = any> extends (pulumi.ComponentResource)<TData> {
     public binaryPath!: string | pulumi.Output<string>;
-    public caCert!: string | pulumi.Output<string>;
-    public cert!: string | pulumi.Output<string>;
+    public caCert?: string | pulumi.Output<string>;
+    public cert?: string | pulumi.Output<string>;
     public command!: command.remote.Command | pulumi.Output<command.remote.Command>;
     public commands!: EtcdctlCommandOutputs | pulumi.Output<EtcdctlCommandOutputs>;
     public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
-    public endpoints!: string | pulumi.Output<string>;
+    public endpoints?: string | pulumi.Output<string>;
     public environment!: Record<string, string> | pulumi.Output<Record<string, string>>;
-    public key!: string | pulumi.Output<string>;
+    public key?: string | pulumi.Output<string>;
     public lifecycle?: CommandLifecycleOutputs | CommandLifecycleOutputs;
     public stderr!: string | pulumi.Output<string>;
     public stdin?: string | pulumi.Output<string>;
@@ -931,13 +931,13 @@ export abstract class Etcdctl<TData = any> extends (pulumi.ComponentResource)<TD
 }
 export interface EtcdctlArgs {
     readonly binaryPath?: pulumi.Input<string>;
-    readonly caCert: pulumi.Input<string>;
-    readonly cert: pulumi.Input<string>;
+    readonly caCert?: pulumi.Input<string>;
+    readonly cert?: pulumi.Input<string>;
     readonly commands: pulumi.Input<EtcdctlCommandInputs>;
     readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
-    readonly endpoints: pulumi.Input<string>;
+    readonly endpoints?: pulumi.Input<string>;
     readonly environment?: pulumi.Input<Record<string, pulumi.Input<string>>>;
-    readonly key: pulumi.Input<string>;
+    readonly key?: pulumi.Input<string>;
     readonly lifecycle?: CommandLifecycleInputs;
     readonly stdin?: pulumi.Input<string>;
     readonly triggers?: pulumi.Input<pulumi.Input<any>[]>;

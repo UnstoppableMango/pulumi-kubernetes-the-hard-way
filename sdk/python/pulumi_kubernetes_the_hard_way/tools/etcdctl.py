@@ -16,71 +16,51 @@ __all__ = ['EtcdctlArgs', 'Etcdctl']
 @pulumi.input_type
 class EtcdctlArgs:
     def __init__(__self__, *,
-                 ca_cert: pulumi.Input[str],
-                 cert: pulumi.Input[str],
                  commands: pulumi.Input['EtcdctlCommand'],
                  connection: pulumi.Input['pulumi_command.remote.ConnectionArgs'],
-                 endpoints: pulumi.Input[str],
-                 key: pulumi.Input[str],
                  binary_path: Optional[pulumi.Input[str]] = None,
+                 ca_cert: Optional[pulumi.Input[str]] = None,
+                 cert: Optional[pulumi.Input[str]] = None,
+                 endpoints: Optional[pulumi.Input[str]] = None,
                  environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
+                 key: Optional[pulumi.Input[str]] = None,
                  lifecycle: Optional['CommandLifecycle'] = None,
                  stdin: Optional[pulumi.Input[str]] = None,
                  triggers: Optional[pulumi.Input[Sequence[Any]]] = None):
         """
         The set of arguments for constructing a Etcdctl resource.
-        :param pulumi.Input[str] ca_cert: TODO
-        :param pulumi.Input[str] cert: TODO
         :param pulumi.Input['EtcdctlCommand'] commands: TODO
         :param pulumi.Input['pulumi_command.remote.ConnectionArgs'] connection: Connection details for the remote system
-        :param pulumi.Input[str] endpoints: TODO
-        :param pulumi.Input[str] key: TODO
         :param pulumi.Input[str] binary_path: Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+        :param pulumi.Input[str] ca_cert: TODO
+        :param pulumi.Input[str] cert: TODO
+        :param pulumi.Input[str] endpoints: TODO
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] environment: Environment variables
+        :param pulumi.Input[str] key: TODO
         :param 'CommandLifecycle' lifecycle: At what stage(s) in the resource lifecycle should the command be run
         :param pulumi.Input[str] stdin: TODO
         :param pulumi.Input[Sequence[Any]] triggers: TODO
         """
-        pulumi.set(__self__, "ca_cert", ca_cert)
-        pulumi.set(__self__, "cert", cert)
         pulumi.set(__self__, "commands", commands)
         pulumi.set(__self__, "connection", connection)
-        pulumi.set(__self__, "endpoints", endpoints)
-        pulumi.set(__self__, "key", key)
         if binary_path is not None:
             pulumi.set(__self__, "binary_path", binary_path)
+        if ca_cert is not None:
+            pulumi.set(__self__, "ca_cert", ca_cert)
+        if cert is not None:
+            pulumi.set(__self__, "cert", cert)
+        if endpoints is not None:
+            pulumi.set(__self__, "endpoints", endpoints)
         if environment is not None:
             pulumi.set(__self__, "environment", environment)
+        if key is not None:
+            pulumi.set(__self__, "key", key)
         if lifecycle is not None:
             pulumi.set(__self__, "lifecycle", lifecycle)
         if stdin is not None:
             pulumi.set(__self__, "stdin", stdin)
         if triggers is not None:
             pulumi.set(__self__, "triggers", triggers)
-
-    @property
-    @pulumi.getter(name="caCert")
-    def ca_cert(self) -> pulumi.Input[str]:
-        """
-        TODO
-        """
-        return pulumi.get(self, "ca_cert")
-
-    @ca_cert.setter
-    def ca_cert(self, value: pulumi.Input[str]):
-        pulumi.set(self, "ca_cert", value)
-
-    @property
-    @pulumi.getter
-    def cert(self) -> pulumi.Input[str]:
-        """
-        TODO
-        """
-        return pulumi.get(self, "cert")
-
-    @cert.setter
-    def cert(self, value: pulumi.Input[str]):
-        pulumi.set(self, "cert", value)
 
     @property
     @pulumi.getter
@@ -107,30 +87,6 @@ class EtcdctlArgs:
         pulumi.set(self, "connection", value)
 
     @property
-    @pulumi.getter
-    def endpoints(self) -> pulumi.Input[str]:
-        """
-        TODO
-        """
-        return pulumi.get(self, "endpoints")
-
-    @endpoints.setter
-    def endpoints(self, value: pulumi.Input[str]):
-        pulumi.set(self, "endpoints", value)
-
-    @property
-    @pulumi.getter
-    def key(self) -> pulumi.Input[str]:
-        """
-        TODO
-        """
-        return pulumi.get(self, "key")
-
-    @key.setter
-    def key(self, value: pulumi.Input[str]):
-        pulumi.set(self, "key", value)
-
-    @property
     @pulumi.getter(name="binaryPath")
     def binary_path(self) -> Optional[pulumi.Input[str]]:
         """
@@ -143,6 +99,42 @@ class EtcdctlArgs:
         pulumi.set(self, "binary_path", value)
 
     @property
+    @pulumi.getter(name="caCert")
+    def ca_cert(self) -> Optional[pulumi.Input[str]]:
+        """
+        TODO
+        """
+        return pulumi.get(self, "ca_cert")
+
+    @ca_cert.setter
+    def ca_cert(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "ca_cert", value)
+
+    @property
+    @pulumi.getter
+    def cert(self) -> Optional[pulumi.Input[str]]:
+        """
+        TODO
+        """
+        return pulumi.get(self, "cert")
+
+    @cert.setter
+    def cert(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "cert", value)
+
+    @property
+    @pulumi.getter
+    def endpoints(self) -> Optional[pulumi.Input[str]]:
+        """
+        TODO
+        """
+        return pulumi.get(self, "endpoints")
+
+    @endpoints.setter
+    def endpoints(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "endpoints", value)
+
+    @property
     @pulumi.getter
     def environment(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
         """
@@ -153,6 +145,18 @@ class EtcdctlArgs:
     @environment.setter
     def environment(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
         pulumi.set(self, "environment", value)
+
+    @property
+    @pulumi.getter
+    def key(self) -> Optional[pulumi.Input[str]]:
+        """
+        TODO
+        """
+        return pulumi.get(self, "key")
+
+    @key.setter
+    def key(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "key", value)
 
     @property
     @pulumi.getter
@@ -272,11 +276,7 @@ class Etcdctl(pulumi.ComponentResource):
             __props__ = EtcdctlArgs.__new__(EtcdctlArgs)
 
             __props__.__dict__["binary_path"] = binary_path
-            if ca_cert is None and not opts.urn:
-                raise TypeError("Missing required property 'ca_cert'")
             __props__.__dict__["ca_cert"] = ca_cert
-            if cert is None and not opts.urn:
-                raise TypeError("Missing required property 'cert'")
             __props__.__dict__["cert"] = cert
             if commands is None and not opts.urn:
                 raise TypeError("Missing required property 'commands'")
@@ -284,12 +284,8 @@ class Etcdctl(pulumi.ComponentResource):
             if connection is None and not opts.urn:
                 raise TypeError("Missing required property 'connection'")
             __props__.__dict__["connection"] = connection
-            if endpoints is None and not opts.urn:
-                raise TypeError("Missing required property 'endpoints'")
             __props__.__dict__["endpoints"] = endpoints
             __props__.__dict__["environment"] = environment
-            if key is None and not opts.urn:
-                raise TypeError("Missing required property 'key'")
             __props__.__dict__["key"] = key
             __props__.__dict__["lifecycle"] = lifecycle
             __props__.__dict__["stdin"] = stdin
@@ -314,7 +310,7 @@ class Etcdctl(pulumi.ComponentResource):
 
     @property
     @pulumi.getter(name="caCert")
-    def ca_cert(self) -> pulumi.Output[str]:
+    def ca_cert(self) -> pulumi.Output[Optional[str]]:
         """
         TODO
         """
@@ -322,7 +318,7 @@ class Etcdctl(pulumi.ComponentResource):
 
     @property
     @pulumi.getter
-    def cert(self) -> pulumi.Output[str]:
+    def cert(self) -> pulumi.Output[Optional[str]]:
         """
         TODO
         """
@@ -354,7 +350,7 @@ class Etcdctl(pulumi.ComponentResource):
 
     @property
     @pulumi.getter
-    def endpoints(self) -> pulumi.Output[str]:
+    def endpoints(self) -> pulumi.Output[Optional[str]]:
         """
         TODO
         """
@@ -370,7 +366,7 @@ class Etcdctl(pulumi.ComponentResource):
 
     @property
     @pulumi.getter
-    def key(self) -> pulumi.Output[str]:
+    def key(self) -> pulumi.Output[Optional[str]]:
         """
         TODO
         """

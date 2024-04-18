@@ -26,13 +26,13 @@ namespace UnMango.KubernetesTheHardWay.Tools
         /// TODO
         /// </summary>
         [Output("caCert")]
-        public Output<string> CaCert { get; private set; } = null!;
+        public Output<string?> CaCert { get; private set; } = null!;
 
         /// <summary>
         /// TODO
         /// </summary>
         [Output("cert")]
-        public Output<string> Cert { get; private set; } = null!;
+        public Output<string?> Cert { get; private set; } = null!;
 
         /// <summary>
         /// The underlying command
@@ -56,7 +56,7 @@ namespace UnMango.KubernetesTheHardWay.Tools
         /// TODO
         /// </summary>
         [Output("endpoints")]
-        public Output<string> Endpoints { get; private set; } = null!;
+        public Output<string?> Endpoints { get; private set; } = null!;
 
         /// <summary>
         /// Environment variables
@@ -68,7 +68,7 @@ namespace UnMango.KubernetesTheHardWay.Tools
         /// TODO
         /// </summary>
         [Output("key")]
-        public Output<string> Key { get; private set; } = null!;
+        public Output<string?> Key { get; private set; } = null!;
 
         /// <summary>
         /// At what stage(s) in the resource lifecycle should the command be run
@@ -138,14 +138,14 @@ namespace UnMango.KubernetesTheHardWay.Tools
         /// <summary>
         /// TODO
         /// </summary>
-        [Input("caCert", required: true)]
-        public Input<string> CaCert { get; set; } = null!;
+        [Input("caCert")]
+        public Input<string>? CaCert { get; set; }
 
         /// <summary>
         /// TODO
         /// </summary>
-        [Input("cert", required: true)]
-        public Input<string> Cert { get; set; } = null!;
+        [Input("cert")]
+        public Input<string>? Cert { get; set; }
 
         /// <summary>
         /// TODO
@@ -162,8 +162,8 @@ namespace UnMango.KubernetesTheHardWay.Tools
         /// <summary>
         /// TODO
         /// </summary>
-        [Input("endpoints", required: true)]
-        public Input<string> Endpoints { get; set; } = null!;
+        [Input("endpoints")]
+        public Input<string>? Endpoints { get; set; }
 
         [Input("environment")]
         private InputMap<string>? _environment;
@@ -180,8 +180,8 @@ namespace UnMango.KubernetesTheHardWay.Tools
         /// <summary>
         /// TODO
         /// </summary>
-        [Input("key", required: true)]
-        public Input<string> Key { get; set; } = null!;
+        [Input("key")]
+        public Input<string>? Key { get; set; }
 
         /// <summary>
         /// At what stage(s) in the resource lifecycle should the command be run
