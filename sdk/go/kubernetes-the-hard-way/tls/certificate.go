@@ -43,8 +43,8 @@ type Certificate struct {
 	// revocation. Also, this advance update can only be performed should the Terraform configuration be applied during the
 	// early renewal period. (default: `0`)
 	EarlyRenewalHours pulumi.IntOutput `pulumi:"earlyRenewalHours"`
-	// When `algorithm` is `ECDSA`, the name of the elliptic curve to use. Currently-supported values are: `P224`, `P256`, `P384`, `P521`. (default: `P224`).
-	EcdsaCurve pulumi.StringOutput `pulumi:"ecdsaCurve"`
+	// TODO
+	EcdsaCurve EcdsaCurveOutput `pulumi:"ecdsaCurve"`
 	// List of IP addresses for which a certificate is being requested (i.e. certificate subjects).
 	IpAddresses pulumi.StringArrayOutput `pulumi:"ipAddresses"`
 	// Is the generated certificate representing a Certificate Authority (CA) (default: `false`).
@@ -136,8 +136,8 @@ type certificateArgs struct {
 	// revocation. Also, this advance update can only be performed should the Terraform configuration be applied during the
 	// early renewal period. (default: `0`)
 	EarlyRenewalHours *int `pulumi:"earlyRenewalHours"`
-	// When `algorithm` is `ECDSA`, the name of the elliptic curve to use. Currently-supported values are: `P224`, `P256`, `P384`, `P521`. (default: `P224`).
-	EcdsaCurve *string `pulumi:"ecdsaCurve"`
+	// TODO
+	EcdsaCurve *EcdsaCurve `pulumi:"ecdsaCurve"`
 	// List of IP addresses for which a certificate is being requested (i.e. certificate subjects).
 	IpAddresses []string `pulumi:"ipAddresses"`
 	// Is the generated certificate representing a Certificate Authority (CA) (default: `false`).
@@ -172,8 +172,8 @@ type CertificateArgs struct {
 	// revocation. Also, this advance update can only be performed should the Terraform configuration be applied during the
 	// early renewal period. (default: `0`)
 	EarlyRenewalHours pulumi.IntPtrInput
-	// When `algorithm` is `ECDSA`, the name of the elliptic curve to use. Currently-supported values are: `P224`, `P256`, `P384`, `P521`. (default: `P224`).
-	EcdsaCurve pulumi.StringPtrInput
+	// TODO
+	EcdsaCurve EcdsaCurvePtrInput
 	// List of IP addresses for which a certificate is being requested (i.e. certificate subjects).
 	IpAddresses pulumi.StringArrayInput
 	// Is the generated certificate representing a Certificate Authority (CA) (default: `false`).
@@ -336,9 +336,9 @@ func (o CertificateOutput) EarlyRenewalHours() pulumi.IntOutput {
 	return o.ApplyT(func(v *Certificate) pulumi.IntOutput { return v.EarlyRenewalHours }).(pulumi.IntOutput)
 }
 
-// When `algorithm` is `ECDSA`, the name of the elliptic curve to use. Currently-supported values are: `P224`, `P256`, `P384`, `P521`. (default: `P224`).
-func (o CertificateOutput) EcdsaCurve() pulumi.StringOutput {
-	return o.ApplyT(func(v *Certificate) pulumi.StringOutput { return v.EcdsaCurve }).(pulumi.StringOutput)
+// TODO
+func (o CertificateOutput) EcdsaCurve() EcdsaCurveOutput {
+	return o.ApplyT(func(v *Certificate) EcdsaCurveOutput { return v.EcdsaCurve }).(EcdsaCurveOutput)
 }
 
 // List of IP addresses for which a certificate is being requested (i.e. certificate subjects).

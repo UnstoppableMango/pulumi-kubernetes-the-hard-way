@@ -87,10 +87,10 @@ namespace UnMango.KubernetesTheHardWay.Tls
         public Output<int> EarlyRenewalHours { get; private set; } = null!;
 
         /// <summary>
-        /// When `algorithm` is `ECDSA`, the name of the elliptic curve to use. Currently-supported values are: `P224`, `P256`, `P384`, `P521`. (default: `P224`).
+        /// TODO
         /// </summary>
         [Output("ecdsaCurve")]
-        public Output<string> EcdsaCurve { get; private set; } = null!;
+        public Output<UnMango.KubernetesTheHardWay.Tls.EcdsaCurve> EcdsaCurve { get; private set; } = null!;
 
         /// <summary>
         /// List of IP addresses for which a certificate is being requested (i.e. certificate subjects).
@@ -298,10 +298,10 @@ namespace UnMango.KubernetesTheHardWay.Tls
         public Input<int>? EarlyRenewalHours { get; set; }
 
         /// <summary>
-        /// When `algorithm` is `ECDSA`, the name of the elliptic curve to use. Currently-supported values are: `P224`, `P256`, `P384`, `P521`. (default: `P224`).
+        /// TODO
         /// </summary>
         [Input("ecdsaCurve")]
-        public Input<string>? EcdsaCurve { get; set; }
+        public Input<UnMango.KubernetesTheHardWay.Tls.EcdsaCurve>? EcdsaCurve { get; set; }
 
         [Input("ipAddresses")]
         private InputList<string>? _ipAddresses;

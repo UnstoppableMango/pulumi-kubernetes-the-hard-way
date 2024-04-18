@@ -225,6 +225,10 @@ func generateCertificate(tlsSpec schema.PackageSpec) schema.ResourceSpec {
 				Items: &schema.TypeSpec{Ref: localType("AllowedUsage", "tls")},
 			},
 		},
+		"ecdsaCurve": {
+			Description: "TODO",
+			TypeSpec:    types.LocalType("EcdsaCurve", "tls"),
+		},
 		"subject": {
 			Description: "TODO",
 			TypeSpec:    schema.TypeSpec{Ref: refType(tlsSpec, "CertRequestSubject", "index", "CertRequestSubject")},
