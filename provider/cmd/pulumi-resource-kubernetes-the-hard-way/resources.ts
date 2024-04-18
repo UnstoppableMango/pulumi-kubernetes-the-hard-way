@@ -49,7 +49,6 @@ const resources: schema.ResourceConstructor = {
   'kubernetes-the-hard-way:remote:StaticPod': (...args) => new StaticPod(...args),
   'kubernetes-the-hard-way:remote:SystemdService': (...args) => new SystemdService(...args),
   'kubernetes-the-hard-way:tls:Certificate': (...args) => new Certificate(...args),
-  // @ts-ignore This refactor loosely depends on the KeyPair refactors
   'kubernetes-the-hard-way:tls:ClusterPki': (...args) => new ClusterPki(...args),
   'kubernetes-the-hard-way:tls:EncryptionKey': (...args) => new EncryptionKey(...args),
   'kubernetes-the-hard-way:tls:RootCa': (...args) => new RootCa(...args),

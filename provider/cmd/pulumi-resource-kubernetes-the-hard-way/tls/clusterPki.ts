@@ -1,4 +1,5 @@
-import { ComponentResource, ComponentResourceOptions, Input, InvokeOptions, Output, all, interpolate, log, output } from '@pulumi/pulumi';
+import { ComponentResourceOptions, Input, Output, all, interpolate, output } from '@pulumi/pulumi';
+import * as schema from '../schema-types';
 import { RootCa, newCertificate } from './rootCa';
 import { Certificate } from './certificate';
 import { Kubeconfig, KubeconfigOptions } from '../config';
@@ -20,69 +21,34 @@ export interface NodeArgs {
   role: Input<NodeRole>;
 }
 
-export interface ClusterPkiArgs<T extends NodeMapInput = NodeMapInput> {
-  algorithm?: Input<Algorithm>;
-  clusterName: Input<string>;
+export interface ClusterPkiArgs<T extends NodeMapInput = NodeMapInput> extends schema.ClusterPkiArgs {
   nodes: T;
-  publicIp: Input<string>;
-  rsaBits?: Input<number>;
-  validityPeriodHours?: Input<number>;
 }
 
 type CertMap<T> = {
   [P in keyof T]: Certificate;
 }
 
-export class ClusterPki<T extends NodeMapInput = NodeMapInput> extends ComponentResource {
-  public static readonly __pulumiType: string = 'kubernetes-the-hard-way:tls:ClusterPki';
+export class ClusterPki<T extends NodeMapInput = NodeMapInput> extends schema.ClusterPki {
   public static readonly defaultAlgorithm: Algorithm = 'RSA';
   public static readonly defaultExpiry: number = 8760;
   public static readonly defaultRsaBits: number = 2048;
 
-  public readonly admin!: Certificate;
-  public readonly algorithm!: Output<Algorithm>;
-  public readonly clusterName!: Output<string>;
-  public readonly controllerManager!: Certificate;
-  public readonly validityPeriodHours!: Output<number>;
-  public readonly kubelet!: CertMap<T>;
-  public readonly kubeProxy!: Certificate;
-  public readonly kubernetes!: Certificate;
-  public readonly kubeScheduler!: Certificate;
-  public readonly publicIp!: Output<string>;
-  public readonly ca!: RootCa;
-  public readonly serviceAccounts!: Certificate;
-  public readonly rsaBits!: Output<number>;
-
   constructor(private name: string, args: ClusterPkiArgs<T>, opts?: ComponentResourceOptions) {
-    const props = {
-      admin: undefined,
-      algorithm: undefined,
-      clusterName: undefined,
-      controllerManager: undefined,
-      validityPeriodHours: undefined,
-      kubelet: undefined,
-      kubeProxy: undefined,
-      kubernetes: undefined,
-      kubeScheduler: undefined,
-      publicIp: undefined,
-      ca: undefined,
-      serviceAccounts: undefined,
-      rsaBits: undefined,
-    };
-
-    super(ClusterPki.__pulumiType, name, opts?.urn ? props : args, opts);
-
-    // Rehydrating
+    super(name, args, opts);
     if (opts?.urn) return;
 
     const algorithm = output(args.algorithm ?? ClusterPki.defaultAlgorithm);
     const clusterName = output(args.clusterName);
-    const validityPeriodHours = output(args.validityPeriodHours ?? ClusterPki.defaultExpiry);
+    const ecdsaCurve = output(args.ecdsaCurve ?? 'P256');
     const publicIp = output(args.publicIp);
     const rsaBits = output(args.rsaBits ?? ClusterPki.defaultRsaBits);
+    const validityPeriodHours = output(args.validityPeriodHours ?? ClusterPki.defaultExpiry);
 
     const ca = new RootCa(name, {
-      algorithm, rsaBits, validityPeriodHours: validityPeriodHours,
+      algorithm,
+      rsaBits,
+      validityPeriodHours,
       subject: {
         commonName: clusterName,
       },
@@ -90,7 +56,8 @@ export class ClusterPki<T extends NodeMapInput = NodeMapInput> extends Component
 
     const admin = newCertificate(ca, {
       name: this.certName('admin'),
-      algorithm, rsaBits,
+      algorithm,
+      rsaBits,
       validityPeriodHours,
       allowedUses: ca.allowedUses, // TODO
       subject: {
@@ -102,7 +69,9 @@ export class ClusterPki<T extends NodeMapInput = NodeMapInput> extends Component
 
     const controllerManager = newCertificate(ca, {
       name: this.certName('controller-manager'),
-      algorithm, rsaBits, validityPeriodHours,
+      algorithm,
+      rsaBits,
+      validityPeriodHours,
       allowedUses: ca.allowedUses, // TODO
       subject: {
         commonName: 'system:kube-controller-manager',
@@ -116,7 +85,9 @@ export class ClusterPki<T extends NodeMapInput = NodeMapInput> extends Component
       const node = output(args.nodes[key]);
       kubelet[key] = newCertificate(ca, {
         name: this.certName(`${key}-worker`),
-        algorithm, rsaBits, validityPeriodHours,
+        algorithm,
+        rsaBits,
+        validityPeriodHours,
         allowedUses: ca.allowedUses, // TODO
         ipAddresses: [node.ip],
         subject: {
@@ -129,7 +100,9 @@ export class ClusterPki<T extends NodeMapInput = NodeMapInput> extends Component
 
     const kubeProxy = newCertificate(ca, {
       name: this.certName('kube-proxy'),
-      algorithm, rsaBits, validityPeriodHours,
+      algorithm,
+      rsaBits,
+      validityPeriodHours,
       allowedUses: ca.allowedUses, // TODO
       subject: {
         commonName: 'system:kube-proxy',
@@ -140,7 +113,9 @@ export class ClusterPki<T extends NodeMapInput = NodeMapInput> extends Component
 
     const kubeScheduler = newCertificate(ca, {
       name: this.certName('kube-scheduler'),
-      algorithm, rsaBits, validityPeriodHours,
+      algorithm,
+      rsaBits,
+      validityPeriodHours,
       allowedUses: ca.allowedUses, // TODO
       subject: {
         commonName: 'system:kube-scheduler',
@@ -151,7 +126,9 @@ export class ClusterPki<T extends NodeMapInput = NodeMapInput> extends Component
 
     const kubernetes = newCertificate(ca, {
       name: this.certName('kubernetes'),
-      algorithm, rsaBits, validityPeriodHours,
+      algorithm,
+      rsaBits,
+      validityPeriodHours,
       allowedUses: ca.allowedUses, // TODO
       subject: {
         commonName: 'kubernetes',
@@ -176,7 +153,9 @@ export class ClusterPki<T extends NodeMapInput = NodeMapInput> extends Component
 
     const serviceAccounts = newCertificate(ca, {
       name: this.certName('service-accounts'),
-      algorithm, rsaBits, validityPeriodHours,
+      algorithm,
+      rsaBits,
+      validityPeriodHours,
       allowedUses: ca.allowedUses, // TODO
       subject: {
         commonName: 'service-accounts',
@@ -187,22 +166,34 @@ export class ClusterPki<T extends NodeMapInput = NodeMapInput> extends Component
 
     this.admin = admin;
     this.algorithm = algorithm;
-    this.controllerManager = controllerManager;
+    this.ca = ca;
     this.clusterName = clusterName;
-    this.validityPeriodHours = validityPeriodHours;
+    this.controllerManager = controllerManager;
+    this.ecdsaCurve = ecdsaCurve;
     this.kubelet = kubelet as CertMap<T>; // TODO: Can we refactor away from a cast?
     this.kubeProxy = kubeProxy;
-    this.kubeScheduler = kubeScheduler;
     this.kubernetes = kubernetes;
+    this.kubeScheduler = kubeScheduler;
     this.publicIp = publicIp;
-    this.ca = ca;
-    this.serviceAccounts = serviceAccounts;
     this.rsaBits = rsaBits;
+    this.serviceAccounts = serviceAccounts;
+    this.validityPeriodHours = validityPeriodHours;
 
     this.registerOutputs({
-      admin, algorithm, controllerManager, clusterName,
-      kubeProxy, kubeScheduler, kubernetes, publicIp, ca,
-      serviceAccounts, rsaBits, validityPeriodHours,
+      admin,
+      algorithm,
+      ecdsaCurve,
+      ca,
+      clusterName,
+      controllerManager,
+      kubelet,
+      kubeProxy,
+      kubernetes,
+      kubeScheduler,
+      publicIp,
+      rsaBits,
+      serviceAccounts,
+      validityPeriodHours,
     });
   }
 
@@ -249,7 +240,7 @@ export class ClusterPki<T extends NodeMapInput = NodeMapInput> extends Component
     return `${this.name}-${type}`;
   }
 
-  private getCert(options: KubeconfigOptions): Output<Certificate> {
+  private getCert(options: KubeconfigOptions): Output<schema.Certificate> {
     switch (options.type) {
       case 'admin':
         return output(this.admin);
@@ -260,7 +251,7 @@ export class ClusterPki<T extends NodeMapInput = NodeMapInput> extends Component
       case 'kube-scheduler':
         return output(this.kubeScheduler);
       case 'worker':
-        return output(options.name).apply(n => this.kubelet[n]);
+        return all([options.name, this.kubelet]).apply(([n, k]) => k[n]);
       default:
         throw new Error('unsupported kubeconfig type');
     }
