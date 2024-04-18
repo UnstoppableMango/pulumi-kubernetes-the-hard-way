@@ -12,6 +12,8 @@ import (
 )
 
 func TestTlsRootCaTs(t *testing.T) {
+	skipIfShort(t)
+
 	validateSimple := func(t *testing.T, res apitype.ResourceV3) {
 		assert.NotEmpty(t, res.Outputs)
 		allowedUses, ok := res.Outputs["allowedUses"]
@@ -61,6 +63,8 @@ func TestTlsRootCaTs(t *testing.T) {
 }
 
 func TestTlsCertificateTs(t *testing.T) {
+	skipIfShort(t)
+
 	validateSimple := func(t *testing.T, res apitype.ResourceV3) {
 		assert.NotEmpty(t, res.Outputs)
 		allowedUses, ok := res.Outputs["allowedUses"]
@@ -107,6 +111,8 @@ func TestTlsCertificateTs(t *testing.T) {
 }
 
 func TestTlsClusterPkiTs(t *testing.T) {
+	skipIfShort(t)
+
 	validateSimple := func(t *testing.T, res apitype.ResourceV3) {
 		assert.NotEmpty(t, res.Outputs)
 
