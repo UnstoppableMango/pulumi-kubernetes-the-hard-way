@@ -642,7 +642,11 @@
                     "description": "The role a node should be configured for"
                 }
             },
-            "type": "object"
+            "type": "object",
+            "required": [
+                "ip",
+                "role"
+            ]
         },
         "kubernetes-the-hard-way:tls:EcdsaCurve": {
             "description": "ECDSA algorithm curve",
@@ -2960,6 +2964,10 @@
                 "unit": {
                     "$ref": "#/types/kubernetes-the-hard-way:remote:SystemdUnitSection",
                     "description": "Describes the [Unit] section of a systemd service file."
+                },
+                "unitName": {
+                    "type": "string",
+                    "description": "Name of the systemd unit."
                 }
             },
             "required": [
@@ -2989,6 +2997,10 @@
                 "unit": {
                     "$ref": "#/types/kubernetes-the-hard-way:remote:SystemdUnitSection",
                     "description": "Describes the [Unit] section of a systemd service file."
+                },
+                "unitName": {
+                    "type": "string",
+                    "description": "Name of the systemd unit."
                 }
             },
             "requiredInputs": [

@@ -5,11 +5,10 @@ package com.unmango.kubernetesthehardway.tls.inputs;
 
 import com.pulumi.core.Output;
 import com.pulumi.core.annotations.Import;
+import com.pulumi.exceptions.MissingRequiredPropertyException;
 import com.unmango.kubernetesthehardway.tls.enums.NodeRole;
 import java.lang.String;
 import java.util.Objects;
-import java.util.Optional;
-import javax.annotation.Nullable;
 
 
 /**
@@ -24,30 +23,30 @@ public final class ClusterPkiNodeArgs extends com.pulumi.resources.ResourceArgs 
      * The IP address of the node
      * 
      */
-    @Import(name="ip")
-    private @Nullable Output<String> ip;
+    @Import(name="ip", required=true)
+    private Output<String> ip;
 
     /**
      * @return The IP address of the node
      * 
      */
-    public Optional<Output<String>> ip() {
-        return Optional.ofNullable(this.ip);
+    public Output<String> ip() {
+        return this.ip;
     }
 
     /**
      * The role a node should be configured for
      * 
      */
-    @Import(name="role")
-    private @Nullable Output<NodeRole> role;
+    @Import(name="role", required=true)
+    private Output<NodeRole> role;
 
     /**
      * @return The role a node should be configured for
      * 
      */
-    public Optional<Output<NodeRole>> role() {
-        return Optional.ofNullable(this.role);
+    public Output<NodeRole> role() {
+        return this.role;
     }
 
     private ClusterPkiNodeArgs() {}
@@ -81,7 +80,7 @@ public final class ClusterPkiNodeArgs extends com.pulumi.resources.ResourceArgs 
          * @return builder
          * 
          */
-        public Builder ip(@Nullable Output<String> ip) {
+        public Builder ip(Output<String> ip) {
             $.ip = ip;
             return this;
         }
@@ -102,7 +101,7 @@ public final class ClusterPkiNodeArgs extends com.pulumi.resources.ResourceArgs 
          * @return builder
          * 
          */
-        public Builder role(@Nullable Output<NodeRole> role) {
+        public Builder role(Output<NodeRole> role) {
             $.role = role;
             return this;
         }
@@ -118,6 +117,12 @@ public final class ClusterPkiNodeArgs extends com.pulumi.resources.ResourceArgs 
         }
 
         public ClusterPkiNodeArgs build() {
+            if ($.ip == null) {
+                throw new MissingRequiredPropertyException("ClusterPkiNodeArgs", "ip");
+            }
+            if ($.role == null) {
+                throw new MissingRequiredPropertyException("ClusterPkiNodeArgs", "role");
+            }
             return $;
         }
     }

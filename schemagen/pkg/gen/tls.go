@@ -78,6 +78,7 @@ func generateTls(randomSpec, tlsSpec schema.PackageSpec) schema.PackageSpec {
 						},
 					},
 				},
+				Required: []string{"ip", "role"},
 			},
 		},
 		tlsMod + "EcdsaCurve": {

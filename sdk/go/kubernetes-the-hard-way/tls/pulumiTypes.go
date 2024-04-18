@@ -90,9 +90,9 @@ func (o BundleOutput) KeyPem() pulumi.StringOutput {
 // TODO
 type ClusterPkiNode struct {
 	// The IP address of the node
-	Ip *string `pulumi:"ip"`
+	Ip string `pulumi:"ip"`
 	// The role a node should be configured for
-	Role *NodeRole `pulumi:"role"`
+	Role NodeRole `pulumi:"role"`
 }
 
 // ClusterPkiNodeInput is an input type that accepts ClusterPkiNodeArgs and ClusterPkiNodeOutput values.
@@ -109,9 +109,9 @@ type ClusterPkiNodeInput interface {
 // TODO
 type ClusterPkiNodeArgs struct {
 	// The IP address of the node
-	Ip pulumi.StringPtrInput `pulumi:"ip"`
+	Ip pulumi.StringInput `pulumi:"ip"`
 	// The role a node should be configured for
-	Role NodeRolePtrInput `pulumi:"role"`
+	Role NodeRoleInput `pulumi:"role"`
 }
 
 func (ClusterPkiNodeArgs) ElementType() reflect.Type {
@@ -167,13 +167,13 @@ func (o ClusterPkiNodeOutput) ToClusterPkiNodeOutputWithContext(ctx context.Cont
 }
 
 // The IP address of the node
-func (o ClusterPkiNodeOutput) Ip() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v ClusterPkiNode) *string { return v.Ip }).(pulumi.StringPtrOutput)
+func (o ClusterPkiNodeOutput) Ip() pulumi.StringOutput {
+	return o.ApplyT(func(v ClusterPkiNode) string { return v.Ip }).(pulumi.StringOutput)
 }
 
 // The role a node should be configured for
-func (o ClusterPkiNodeOutput) Role() NodeRolePtrOutput {
-	return o.ApplyT(func(v ClusterPkiNode) *NodeRole { return v.Role }).(NodeRolePtrOutput)
+func (o ClusterPkiNodeOutput) Role() NodeRoleOutput {
+	return o.ApplyT(func(v ClusterPkiNode) NodeRole { return v.Role }).(NodeRoleOutput)
 }
 
 type ClusterPkiNodeMapOutput struct{ *pulumi.OutputState }

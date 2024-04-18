@@ -96,6 +96,21 @@ public final class SystemdServiceArgs extends com.pulumi.resources.ResourceArgs 
         return Optional.ofNullable(this.unit);
     }
 
+    /**
+     * Name of the systemd unit.
+     * 
+     */
+    @Import(name="unitName")
+    private @Nullable Output<String> unitName;
+
+    /**
+     * @return Name of the systemd unit.
+     * 
+     */
+    public Optional<Output<String>> unitName() {
+        return Optional.ofNullable(this.unitName);
+    }
+
     private SystemdServiceArgs() {}
 
     private SystemdServiceArgs(SystemdServiceArgs $) {
@@ -104,6 +119,7 @@ public final class SystemdServiceArgs extends com.pulumi.resources.ResourceArgs 
         this.install = $.install;
         this.service = $.service;
         this.unit = $.unit;
+        this.unitName = $.unitName;
     }
 
     public static Builder builder() {
@@ -227,6 +243,27 @@ public final class SystemdServiceArgs extends com.pulumi.resources.ResourceArgs 
          */
         public Builder unit(SystemdUnitSectionArgs unit) {
             return unit(Output.of(unit));
+        }
+
+        /**
+         * @param unitName Name of the systemd unit.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder unitName(@Nullable Output<String> unitName) {
+            $.unitName = unitName;
+            return this;
+        }
+
+        /**
+         * @param unitName Name of the systemd unit.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder unitName(String unitName) {
+            return unitName(Output.of(unitName));
         }
 
         public SystemdServiceArgs build() {

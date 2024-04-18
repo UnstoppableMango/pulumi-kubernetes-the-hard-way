@@ -19,14 +19,14 @@ namespace UnMango.KubernetesTheHardWay.Tls.Inputs
         /// <summary>
         /// The IP address of the node
         /// </summary>
-        [Input("ip")]
-        public Input<string>? Ip { get; set; }
+        [Input("ip", required: true)]
+        public Input<string> Ip { get; set; } = null!;
 
         /// <summary>
         /// The role a node should be configured for
         /// </summary>
-        [Input("role")]
-        public Input<UnMango.KubernetesTheHardWay.Tls.NodeRole>? Role { get; set; }
+        [Input("role", required: true)]
+        public Input<UnMango.KubernetesTheHardWay.Tls.NodeRole> Role { get; set; } = null!;
 
         public ClusterPkiNodeArgs()
         {

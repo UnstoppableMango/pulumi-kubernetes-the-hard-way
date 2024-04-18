@@ -562,8 +562,9 @@ export abstract class SystemdService<TData = any> extends (pulumi.ComponentResou
     public install?: SystemdInstallSectionOutputs | pulumi.Output<SystemdInstallSectionOutputs>;
     public service!: SystemdServiceSectionOutputs | pulumi.Output<SystemdServiceSectionOutputs>;
     public unit?: SystemdUnitSectionOutputs | pulumi.Output<SystemdUnitSectionOutputs>;
+    public unitName?: string | pulumi.Output<string>;
     constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
-        super("kubernetes-the-hard-way:remote:SystemdService", name, opts.urn ? { connection: undefined, directory: undefined, file: undefined, install: undefined, service: undefined, unit: undefined } : { name, args, opts }, opts);
+        super("kubernetes-the-hard-way:remote:SystemdService", name, opts.urn ? { connection: undefined, directory: undefined, file: undefined, install: undefined, service: undefined, unit: undefined, unitName: undefined } : { name, args, opts }, opts);
     }
 }
 export interface SystemdServiceArgs {
@@ -572,6 +573,7 @@ export interface SystemdServiceArgs {
     readonly install?: pulumi.Input<SystemdInstallSectionInputs>;
     readonly service: pulumi.Input<SystemdServiceSectionInputs>;
     readonly unit?: pulumi.Input<SystemdUnitSectionInputs>;
+    readonly unitName?: pulumi.Input<string>;
 }
 export abstract class Certificate<TData = any> extends (pulumi.ComponentResource)<TData> {
     public algorithm!: AlgorithmOutputs | pulumi.Output<AlgorithmOutputs>;
@@ -1527,12 +1529,12 @@ export interface BundleOutputs {
     readonly keyPem: pulumi.Output<string>;
 }
 export interface ClusterPkiNodeInputs {
-    readonly ip?: pulumi.Input<string>;
-    readonly role?: pulumi.Input<NodeRoleInputs>;
+    readonly ip: pulumi.Input<string>;
+    readonly role: pulumi.Input<NodeRoleInputs>;
 }
 export interface ClusterPkiNodeOutputs {
-    readonly ip?: pulumi.Output<string>;
-    readonly role?: pulumi.Output<NodeRoleOutputs>;
+    readonly ip: pulumi.Output<string>;
+    readonly role: pulumi.Output<NodeRoleOutputs>;
 }
 export type EcdsaCurveInputs = "P224" | "P256" | "P384" | "P521";
 export type EcdsaCurveOutputs = "P224" | "P256" | "P384" | "P521";

@@ -53,6 +53,10 @@ export class SystemdService extends pulumi.ComponentResource {
      * Describes the [Unit] section of a systemd service file.
      */
     public readonly unit!: pulumi.Output<outputs.remote.SystemdUnitSection | undefined>;
+    /**
+     * Name of the systemd unit.
+     */
+    public readonly unitName!: pulumi.Output<string | undefined>;
 
     /**
      * Create a SystemdService resource with the given unique name, arguments, and options.
@@ -76,6 +80,7 @@ export class SystemdService extends pulumi.ComponentResource {
             resourceInputs["install"] = args ? args.install : undefined;
             resourceInputs["service"] = args ? args.service : undefined;
             resourceInputs["unit"] = args ? args.unit : undefined;
+            resourceInputs["unitName"] = args ? args.unitName : undefined;
             resourceInputs["file"] = undefined /*out*/;
         } else {
             resourceInputs["connection"] = undefined /*out*/;
@@ -84,6 +89,7 @@ export class SystemdService extends pulumi.ComponentResource {
             resourceInputs["install"] = undefined /*out*/;
             resourceInputs["service"] = undefined /*out*/;
             resourceInputs["unit"] = undefined /*out*/;
+            resourceInputs["unitName"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         super(SystemdService.__pulumiType, name, resourceInputs, opts, true /*remote*/);
@@ -114,4 +120,8 @@ export interface SystemdServiceArgs {
      * Describes the [Unit] section of a systemd service file.
      */
     unit?: pulumi.Input<inputs.remote.SystemdUnitSectionArgs>;
+    /**
+     * Name of the systemd unit.
+     */
+    unitName?: pulumi.Input<string>;
 }

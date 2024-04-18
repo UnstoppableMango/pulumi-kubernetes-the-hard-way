@@ -108,6 +108,20 @@ public class SystemdService extends com.pulumi.resources.ComponentResource {
     public Output<Optional<SystemdUnitSection>> unit() {
         return Codegen.optional(this.unit);
     }
+    /**
+     * Name of the systemd unit.
+     * 
+     */
+    @Export(name="unitName", refs={String.class}, tree="[0]")
+    private Output</* @Nullable */ String> unitName;
+
+    /**
+     * @return Name of the systemd unit.
+     * 
+     */
+    public Output<Optional<String>> unitName() {
+        return Codegen.optional(this.unitName);
+    }
 
     /**
      *

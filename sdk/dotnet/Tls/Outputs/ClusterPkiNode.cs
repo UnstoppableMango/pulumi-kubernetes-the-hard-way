@@ -20,17 +20,17 @@ namespace UnMango.KubernetesTheHardWay.Tls.Outputs
         /// <summary>
         /// The IP address of the node
         /// </summary>
-        public readonly string? Ip;
+        public readonly string Ip;
         /// <summary>
         /// The role a node should be configured for
         /// </summary>
-        public readonly UnMango.KubernetesTheHardWay.Tls.NodeRole? Role;
+        public readonly UnMango.KubernetesTheHardWay.Tls.NodeRole Role;
 
         [OutputConstructor]
         private ClusterPkiNode(
-            string? ip,
+            string ip,
 
-            UnMango.KubernetesTheHardWay.Tls.NodeRole? role)
+            UnMango.KubernetesTheHardWay.Tls.NodeRole role)
         {
             Ip = ip;
             Role = role;

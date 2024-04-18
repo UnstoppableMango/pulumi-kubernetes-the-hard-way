@@ -587,11 +587,11 @@ export namespace tls {
         /**
          * The IP address of the node
          */
-        ip?: pulumi.Input<string>;
+        ip: pulumi.Input<string>;
         /**
          * The role a node should be configured for
          */
-        role?: pulumi.Input<enums.tls.NodeRole>;
+        role: pulumi.Input<enums.tls.NodeRole>;
     }
 
 }

@@ -4,11 +4,10 @@
 package com.unmango.kubernetesthehardway.tls.outputs;
 
 import com.pulumi.core.annotations.CustomType;
+import com.pulumi.exceptions.MissingRequiredPropertyException;
 import com.unmango.kubernetesthehardway.tls.enums.NodeRole;
 import java.lang.String;
 import java.util.Objects;
-import java.util.Optional;
-import javax.annotation.Nullable;
 
 @CustomType
 public final class ClusterPkiNode {
@@ -16,27 +15,27 @@ public final class ClusterPkiNode {
      * @return The IP address of the node
      * 
      */
-    private @Nullable String ip;
+    private String ip;
     /**
      * @return The role a node should be configured for
      * 
      */
-    private @Nullable NodeRole role;
+    private NodeRole role;
 
     private ClusterPkiNode() {}
     /**
      * @return The IP address of the node
      * 
      */
-    public Optional<String> ip() {
-        return Optional.ofNullable(this.ip);
+    public String ip() {
+        return this.ip;
     }
     /**
      * @return The role a node should be configured for
      * 
      */
-    public Optional<NodeRole> role() {
-        return Optional.ofNullable(this.role);
+    public NodeRole role() {
+        return this.role;
     }
 
     public static Builder builder() {
@@ -48,8 +47,8 @@ public final class ClusterPkiNode {
     }
     @CustomType.Builder
     public static final class Builder {
-        private @Nullable String ip;
-        private @Nullable NodeRole role;
+        private String ip;
+        private NodeRole role;
         public Builder() {}
         public Builder(ClusterPkiNode defaults) {
     	      Objects.requireNonNull(defaults);
@@ -58,14 +57,18 @@ public final class ClusterPkiNode {
         }
 
         @CustomType.Setter
-        public Builder ip(@Nullable String ip) {
-
+        public Builder ip(String ip) {
+            if (ip == null) {
+              throw new MissingRequiredPropertyException("ClusterPkiNode", "ip");
+            }
             this.ip = ip;
             return this;
         }
         @CustomType.Setter
-        public Builder role(@Nullable NodeRole role) {
-
+        public Builder role(NodeRole role) {
+            if (role == null) {
+              throw new MissingRequiredPropertyException("ClusterPkiNode", "role");
+            }
             this.role = role;
             return this;
         }

@@ -29,6 +29,8 @@ type SystemdService struct {
 	Service SystemdServiceSectionOutput `pulumi:"service"`
 	// Describes the [Unit] section of a systemd service file.
 	Unit SystemdUnitSectionPtrOutput `pulumi:"unit"`
+	// Name of the systemd unit.
+	UnitName pulumi.StringPtrOutput `pulumi:"unitName"`
 }
 
 // NewSystemdService registers a new resource with the given unique name, arguments, and options.
@@ -68,6 +70,8 @@ type systemdServiceArgs struct {
 	Service SystemdServiceSection `pulumi:"service"`
 	// Describes the [Unit] section of a systemd service file.
 	Unit *SystemdUnitSection `pulumi:"unit"`
+	// Name of the systemd unit.
+	UnitName *string `pulumi:"unitName"`
 }
 
 // The set of arguments for constructing a SystemdService resource.
@@ -82,6 +86,8 @@ type SystemdServiceArgs struct {
 	Service SystemdServiceSectionInput
 	// Describes the [Unit] section of a systemd service file.
 	Unit SystemdUnitSectionPtrInput
+	// Name of the systemd unit.
+	UnitName pulumi.StringPtrInput
 }
 
 func (SystemdServiceArgs) ElementType() reflect.Type {
@@ -199,6 +205,11 @@ func (o SystemdServiceOutput) Service() SystemdServiceSectionOutput {
 // Describes the [Unit] section of a systemd service file.
 func (o SystemdServiceOutput) Unit() SystemdUnitSectionPtrOutput {
 	return o.ApplyT(func(v *SystemdService) SystemdUnitSectionPtrOutput { return v.Unit }).(SystemdUnitSectionPtrOutput)
+}
+
+// Name of the systemd unit.
+func (o SystemdServiceOutput) UnitName() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *SystemdService) pulumi.StringPtrOutput { return v.UnitName }).(pulumi.StringPtrOutput)
 }
 
 type SystemdServiceArrayOutput struct{ *pulumi.OutputState }
