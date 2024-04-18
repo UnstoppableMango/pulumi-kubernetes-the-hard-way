@@ -24,6 +24,7 @@ export class RootCa extends schema.RootCa {
 
   constructor(name: string, args: schema.RootCaArgs, opts?: ComponentResourceOptions) {
     super(name, args, opts);
+    if (opts?.urn) return;
 
     const algorithm = output(args.algorithm ?? 'RSA');
     const dnsNames = output(args.dnsNames ?? []);

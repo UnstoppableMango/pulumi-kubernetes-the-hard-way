@@ -9,6 +9,7 @@ import { KeyPair } from './keypair';
 export class Certificate extends schema.Certificate {
   constructor(name: string, args: schema.CertificateArgs, opts?: ComponentResourceOptions) {
     super(name, args, opts);
+    if (opts?.urn) return;
 
     const algorithm = output(args.algorithm ?? 'RSA');
     const allowedUses = output(args.allowedUses);
