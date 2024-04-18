@@ -6,6 +6,7 @@ import { SystemdService } from './systemdService';
 export class EtcdService extends schema.EtcdService {
   constructor(name: string, args: schema.EtcdServiceArgs, opts?: ComponentResourceOptions) {
     super(name, args, opts);
+    if (opts?.urn) return;
 
     const configuration = output(args.configuration);
     const connection = output(args.connection);
@@ -31,6 +32,7 @@ export class EtcdService extends schema.EtcdService {
     const service = new SystemdService(name, {
       connection,
       directory: args.directory,
+      unitName: 'etcd',
       unit: {
         description,
         documentation: [documentation],

@@ -8,14 +8,18 @@ export class Systemctl extends schema.Systemctl {
     super(name, args, opts);
 
     const connection = output(args.connection);
-    const systemctlCommand = output(args.command);
+    const systemctlCommand = args.command;
     const environment = output(args.environment ?? {});
     const lifecycle = args.lifecycle ?? 'create';
     const unit = output(args.unit);
 
     const builder = new CommandBuilder('systemctl')
-      .arg(systemctlCommand)
-      .arg(args.unit);
+      .arg(systemctlCommand);
+
+    // TODO: Little bit smarter check here
+    if (systemctlCommand !== 'daemon-reload') {
+      builder.arg(args.unit);
+    }
 
     const command = new Command(name, {
       connection,
