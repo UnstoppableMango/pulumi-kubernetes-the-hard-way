@@ -27,7 +27,8 @@
       "fileMatch": [".pulumi.version"],
       "matchStrings": ["(?<currentValue>\\S+)"],
       "depNameTemplate": "pulumi/pulumi",
-      "datasourceTemplate": "github-tags"
+      "datasourceTemplate": "github-tags",
+      "extractVersionTemplate": "^v(?<version>.*)"
     },
     {
       "customType": "regex",
