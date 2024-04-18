@@ -6,7 +6,7 @@ PROVIDER        := pulumi-resource-${PACK}
 WORKING_DIR     := $(shell pwd)
 SCHEMA_FILE     := ${WORKING_DIR}/provider/cmd/${PROVIDER}/schema.json
 PROVIDER_PKG    := ${WORKING_DIR}/provider/cmd/${PROVIDER}/package.json
-PROVIDER_SRC    := $(shell find ${WORKING_DIR}/provider/cmd/${PROVIDER} -type f -name '*.ts' -path node_modules -prune)
+PROVIDER_SRC    := $(shell find ${WORKING_DIR}/provider/cmd/${PROVIDER} -type f -name '*.ts' -not -path '*node_modules*')
 SCHEMAGEN_SRC   := $(shell find ${WORKING_DIR}/schemagen -type f -name '*.go')
 
 GOOS ?= $(shell go env GOOS)
@@ -119,9 +119,9 @@ install_sdks: install_dotnet_sdk install_nodejs_sdk
 .PHONY: link link_examples
 link: link_examples
 link_examples: install_nodejs_sdk
-	cd examples/remote-install-ts && yarn link '@unmango/pulumi-kubernetes-the-hard-way'
-	cd examples/remote-ts && yarn link '@unmango/pulumi-kubernetes-the-hard-way'
-	cd examples/simple-ts && yarn link '@unmango/pulumi-kubernetes-the-hard-way'
+	find ${WORKING_DIR}/examples -type d -name '*-ts' \
+		-exec echo 'Linking: {}' \; \
+		-exec sh -c 'cd {} && yarn link "@unmango/pulumi-kubernetes-the-hard-way"' \;
 
 .PHONY: tidy
 tidy:
