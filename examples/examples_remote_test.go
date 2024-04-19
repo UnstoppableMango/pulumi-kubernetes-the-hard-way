@@ -36,42 +36,27 @@ func TestRemoteEtcdClusterTs(t *testing.T) {
 	validateSimple := func(t *testing.T, res apitype.ResourceV3) {
 		assert.NotEmpty(t, res.Outputs)
 
-		// arch, ok := res.Outputs["architecture"]
-		// assert.True(t, ok, "Output `architecture` was not set")
-		// assert.Equal(t, "amd64", arch)
+		install, ok := res.Outputs["install"]
+		assert.True(t, ok, "Output `install` was not set")
+		assert.Contains(t, install, "node0")
 
-		// archiveName, ok := res.Outputs["archiveName"]
-		// assert.True(t, ok, "Output `archiveName` was not set")
-		// assert.Equal(t, "etcd-v3.4.15-linux-amd64.tar.gz", archiveName)
+		configuration, ok := res.Outputs["configuration"]
+		assert.True(t, ok, "Output `configuration` was not set")
+		assert.Contains(t, configuration, "node0")
 
-		// directory, ok := res.Outputs["directory"]
-		// assert.True(t, ok, "Output `directory` was not set")
-		// assert.Equal(t, "/usr/local/bin", directory)
+		nodes, ok := res.Outputs["nodes"]
+		assert.True(t, ok, "Output `nodes` was not set")
+		assert.Contains(t, nodes, "node0")
 
-		// etcdPath, ok := res.Outputs["etcdPath"]
-		// assert.True(t, ok, "Output `etcdPath` was not set")
-		// assert.Equal(t, "/usr/local/bin/etcd", etcdPath)
+		service, ok := res.Outputs["service"]
+		assert.True(t, ok, "Output `service` was not set")
+		assert.Contains(t, service, "node0")
 
-		// etcdctlPath, ok := res.Outputs["etcdctlPath"]
-		// assert.True(t, ok, "Output `etcdctlPath` was not set")
-		// assert.Equal(t, "/usr/local/bin/etcdctl", etcdctlPath)
-
-		// name, ok := res.Outputs["name"]
-		// assert.True(t, ok, "Output `name` was not set")
-		// assert.Equal(t, "simple", name)
-
-		// url, ok := res.Outputs["url"]
-		// assert.True(t, ok, "Output `url` was not set")
-		// assert.Equal(t, "https://github.com/etcd-io/etcd/releases/download/v3.4.15/etcd-v3.4.15-linux-amd64.tar.gz", url)
-
-		// version, ok := res.Outputs["version"]
-		// assert.True(t, ok, "Output `version` was not set")
-		// assert.Equal(t, "3.4.15", version)
+		start, ok := res.Outputs["start"]
+		assert.True(t, ok, "Output `start` was not set")
+		assert.Contains(t, start, "node0")
 
 		assert.Contains(t, res.Outputs, "bundle")
-		assert.Contains(t, res.Outputs, "configuration")
-		assert.Contains(t, res.Outputs, "nodes")
-		assert.Contains(t, res.Outputs, "service")
 	}
 
 	test := getJSBaseOptions(t).
