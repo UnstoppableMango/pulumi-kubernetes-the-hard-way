@@ -99,6 +99,24 @@ func StopSshServer(ctx context.Context, server SshServer) error {
 	return server.Container.Terminate(ctx)
 }
 
+func (s *SshServer) Exec(ctx context.Context, command []string) (string, error) {
+	_, reader, err := s.Container.Exec(ctx, command)
+	if err != nil {
+		return "", err
+	}
+
+	// if code != 0 {
+	// 	return "", errors.New("non-zero exit code")
+	// }
+
+	res, err := io.ReadAll(reader)
+	if err != nil {
+		return "", err
+	}
+
+	return string(res), nil
+}
+
 func (s *SshServer) Port(ctx context.Context) (string, error) {
 	port, err := s.Container.MappedPort(ctx, nat.Port(internalPort))
 

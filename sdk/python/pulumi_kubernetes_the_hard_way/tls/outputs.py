@@ -86,21 +86,19 @@ class ClusterPkiNode(dict):
     TODO
     """
     def __init__(__self__, *,
-                 ip: Optional[str] = None,
-                 role: Optional['NodeRole'] = None):
+                 ip: str,
+                 role: 'NodeRole'):
         """
         TODO
         :param str ip: The IP address of the node
         :param 'NodeRole' role: The role a node should be configured for
         """
-        if ip is not None:
-            pulumi.set(__self__, "ip", ip)
-        if role is not None:
-            pulumi.set(__self__, "role", role)
+        pulumi.set(__self__, "ip", ip)
+        pulumi.set(__self__, "role", role)
 
     @property
     @pulumi.getter
-    def ip(self) -> Optional[str]:
+    def ip(self) -> str:
         """
         The IP address of the node
         """
@@ -108,7 +106,7 @@ class ClusterPkiNode(dict):
 
     @property
     @pulumi.getter
-    def role(self) -> Optional['NodeRole']:
+    def role(self) -> 'NodeRole':
         """
         The role a node should be configured for
         """

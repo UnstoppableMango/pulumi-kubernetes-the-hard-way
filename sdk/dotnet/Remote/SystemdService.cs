@@ -52,6 +52,12 @@ namespace UnMango.KubernetesTheHardWay.Remote
         [Output("unit")]
         public Output<Outputs.SystemdUnitSection?> Unit { get; private set; } = null!;
 
+        /// <summary>
+        /// Name of the systemd unit.
+        /// </summary>
+        [Output("unitName")]
+        public Output<string?> UnitName { get; private set; } = null!;
+
 
         /// <summary>
         /// Create a SystemdService resource with the given unique name, arguments, and options.
@@ -110,6 +116,12 @@ namespace UnMango.KubernetesTheHardWay.Remote
         /// </summary>
         [Input("unit")]
         public Input<Inputs.SystemdUnitSectionArgs>? Unit { get; set; }
+
+        /// <summary>
+        /// Name of the systemd unit.
+        /// </summary>
+        [Input("unitName")]
+        public Input<string>? UnitName { get; set; }
 
         public SystemdServiceArgs()
         {

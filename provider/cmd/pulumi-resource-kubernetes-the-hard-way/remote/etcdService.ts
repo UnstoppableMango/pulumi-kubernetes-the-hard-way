@@ -6,6 +6,7 @@ import { SystemdService } from './systemdService';
 export class EtcdService extends schema.EtcdService {
   constructor(name: string, args: schema.EtcdServiceArgs, opts?: ComponentResourceOptions) {
     super(name, args, opts);
+    if (opts?.urn) return;
 
     const configuration = output(args.configuration);
     const connection = output(args.connection);
@@ -31,6 +32,7 @@ export class EtcdService extends schema.EtcdService {
     const service = new SystemdService(name, {
       connection,
       directory: args.directory,
+      unitName: 'etcd',
       unit: {
         description,
         documentation: [documentation],
@@ -103,7 +105,7 @@ const formatExecStart = (
     .option('--client-cert-auth', true)
     .option('--initial-advertise-peer-urls', peerUrl)
     .option('--listen-peer-urls', peerUrl)
-    .option('--listen-client-urls', interpolate`${clientUrl},${localhostUrl}`)
+    .option('--listen-client-urls', interpolate`${clientUrl}`) // TODO: We can be a little smarter about this
     .option('--advertise-client-urls', clientUrl)
     .option('--initial-cluster-token', 'etcd-cluster-0') // TODO
     .option('--initial-cluster', initialCluster)

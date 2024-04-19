@@ -42,6 +42,7 @@ func generateTypes() map[string]schema.ComplexTypeSpec {
 			Enum: []schema.EnumValueSpec{
 				{Value: "member"},
 				{Value: "list"},
+				{Value: "version"},
 			},
 		},
 		name("HostnamectlCommand"): {

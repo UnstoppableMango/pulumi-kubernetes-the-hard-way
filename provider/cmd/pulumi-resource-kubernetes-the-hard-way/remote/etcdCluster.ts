@@ -12,6 +12,7 @@ type MapFunc<T> = {
 export class EtcdCluster extends schema.EtcdCluster {
   constructor(name: string, args: schema.EtcdClusterArgs, opts?: ComponentResourceOptions) {
     super(name, args, opts);
+    if (opts?.urn) return;
 
     const architecture = output(args.architecture);
     const binaryDirectory = output(args.architecture);
@@ -59,7 +60,14 @@ export class EtcdCluster extends schema.EtcdCluster {
     const start = mapNodes((node, props) => {
       return new StartEtcd(`${name}-${node}`, {
         connection: props.connection,
-      }, { parent: this });
+      }, {
+        parent: this,
+        dependsOn: [
+          install[node],
+          configuration[node],
+          service[node],
+        ],
+      });
     }, nodes);
 
     this.architecture = architecture as Output<schema.ArchitectureOutputs> | undefined;

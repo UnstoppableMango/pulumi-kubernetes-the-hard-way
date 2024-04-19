@@ -20,9 +20,9 @@ type Etcdctl struct {
 	// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
 	BinaryPath pulumi.StringOutput `pulumi:"binaryPath"`
 	// TODO
-	CaCert pulumi.StringOutput `pulumi:"caCert"`
+	CaCert pulumi.StringPtrOutput `pulumi:"caCert"`
 	// TODO
-	Cert pulumi.StringOutput `pulumi:"cert"`
+	Cert pulumi.StringPtrOutput `pulumi:"cert"`
 	// The underlying command
 	Command pulumiCommand.CommandOutput `pulumi:"command"`
 	// TODO
@@ -30,11 +30,11 @@ type Etcdctl struct {
 	// Connection details for the remote system
 	Connection pulumiCommand.ConnectionOutput `pulumi:"connection"`
 	// TODO
-	Endpoints pulumi.StringOutput `pulumi:"endpoints"`
+	Endpoints pulumi.StringPtrOutput `pulumi:"endpoints"`
 	// Environment variables
 	Environment pulumi.StringMapOutput `pulumi:"environment"`
 	// TODO
-	Key pulumi.StringOutput `pulumi:"key"`
+	Key pulumi.StringPtrOutput `pulumi:"key"`
 	// At what stage(s) in the resource lifecycle should the command be run
 	Lifecycle CommandLifecyclePtrOutput `pulumi:"lifecycle"`
 	// TODO
@@ -54,23 +54,11 @@ func NewEtcdctl(ctx *pulumi.Context,
 		return nil, errors.New("missing one or more required arguments")
 	}
 
-	if args.CaCert == nil {
-		return nil, errors.New("invalid value for required argument 'CaCert'")
-	}
-	if args.Cert == nil {
-		return nil, errors.New("invalid value for required argument 'Cert'")
-	}
 	if args.Commands == nil {
 		return nil, errors.New("invalid value for required argument 'Commands'")
 	}
 	if args.Connection == nil {
 		return nil, errors.New("invalid value for required argument 'Connection'")
-	}
-	if args.Endpoints == nil {
-		return nil, errors.New("invalid value for required argument 'Endpoints'")
-	}
-	if args.Key == nil {
-		return nil, errors.New("invalid value for required argument 'Key'")
 	}
 	args.Connection = args.Connection.ToConnectionOutput().ApplyT(func(v pulumiCommand.Connection) pulumiCommand.Connection { return *v.Defaults() }).(pulumiCommand.ConnectionOutput)
 	opts = internal.PkgResourceDefaultOpts(opts)
@@ -86,19 +74,19 @@ type etcdctlArgs struct {
 	// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
 	BinaryPath *string `pulumi:"binaryPath"`
 	// TODO
-	CaCert string `pulumi:"caCert"`
+	CaCert *string `pulumi:"caCert"`
 	// TODO
-	Cert string `pulumi:"cert"`
+	Cert *string `pulumi:"cert"`
 	// TODO
 	Commands EtcdctlCommand `pulumi:"commands"`
 	// Connection details for the remote system
 	Connection pulumiCommand.Connection `pulumi:"connection"`
 	// TODO
-	Endpoints string `pulumi:"endpoints"`
+	Endpoints *string `pulumi:"endpoints"`
 	// Environment variables
 	Environment map[string]string `pulumi:"environment"`
 	// TODO
-	Key string `pulumi:"key"`
+	Key *string `pulumi:"key"`
 	// At what stage(s) in the resource lifecycle should the command be run
 	Lifecycle *CommandLifecycle `pulumi:"lifecycle"`
 	// TODO
@@ -112,19 +100,19 @@ type EtcdctlArgs struct {
 	// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
 	BinaryPath pulumi.StringPtrInput
 	// TODO
-	CaCert pulumi.StringInput
+	CaCert pulumi.StringPtrInput
 	// TODO
-	Cert pulumi.StringInput
+	Cert pulumi.StringPtrInput
 	// TODO
 	Commands EtcdctlCommandInput
 	// Connection details for the remote system
 	Connection pulumiCommand.ConnectionInput
 	// TODO
-	Endpoints pulumi.StringInput
+	Endpoints pulumi.StringPtrInput
 	// Environment variables
 	Environment pulumi.StringMapInput
 	// TODO
-	Key pulumi.StringInput
+	Key pulumi.StringPtrInput
 	// At what stage(s) in the resource lifecycle should the command be run
 	Lifecycle *CommandLifecycle
 	// TODO
@@ -226,13 +214,13 @@ func (o EtcdctlOutput) BinaryPath() pulumi.StringOutput {
 }
 
 // TODO
-func (o EtcdctlOutput) CaCert() pulumi.StringOutput {
-	return o.ApplyT(func(v *Etcdctl) pulumi.StringOutput { return v.CaCert }).(pulumi.StringOutput)
+func (o EtcdctlOutput) CaCert() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Etcdctl) pulumi.StringPtrOutput { return v.CaCert }).(pulumi.StringPtrOutput)
 }
 
 // TODO
-func (o EtcdctlOutput) Cert() pulumi.StringOutput {
-	return o.ApplyT(func(v *Etcdctl) pulumi.StringOutput { return v.Cert }).(pulumi.StringOutput)
+func (o EtcdctlOutput) Cert() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Etcdctl) pulumi.StringPtrOutput { return v.Cert }).(pulumi.StringPtrOutput)
 }
 
 // The underlying command
@@ -251,8 +239,8 @@ func (o EtcdctlOutput) Connection() pulumiCommand.ConnectionOutput {
 }
 
 // TODO
-func (o EtcdctlOutput) Endpoints() pulumi.StringOutput {
-	return o.ApplyT(func(v *Etcdctl) pulumi.StringOutput { return v.Endpoints }).(pulumi.StringOutput)
+func (o EtcdctlOutput) Endpoints() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Etcdctl) pulumi.StringPtrOutput { return v.Endpoints }).(pulumi.StringPtrOutput)
 }
 
 // Environment variables
@@ -261,8 +249,8 @@ func (o EtcdctlOutput) Environment() pulumi.StringMapOutput {
 }
 
 // TODO
-func (o EtcdctlOutput) Key() pulumi.StringOutput {
-	return o.ApplyT(func(v *Etcdctl) pulumi.StringOutput { return v.Key }).(pulumi.StringOutput)
+func (o EtcdctlOutput) Key() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Etcdctl) pulumi.StringPtrOutput { return v.Key }).(pulumi.StringPtrOutput)
 }
 
 // At what stage(s) in the resource lifecycle should the command be run

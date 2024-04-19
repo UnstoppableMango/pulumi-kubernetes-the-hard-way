@@ -23,7 +23,8 @@ class SystemdServiceArgs:
                  service: pulumi.Input['SystemdServiceSectionArgs'],
                  directory: Optional[pulumi.Input[str]] = None,
                  install: Optional[pulumi.Input['SystemdInstallSectionArgs']] = None,
-                 unit: Optional[pulumi.Input['SystemdUnitSectionArgs']] = None):
+                 unit: Optional[pulumi.Input['SystemdUnitSectionArgs']] = None,
+                 unit_name: Optional[pulumi.Input[str]] = None):
         """
         The set of arguments for constructing a SystemdService resource.
         :param pulumi.Input['pulumi_command.remote.ConnectionArgs'] connection: The parameters with which to connect to the remote host.
@@ -31,6 +32,7 @@ class SystemdServiceArgs:
         :param pulumi.Input[str] directory: The location to create the service file.
         :param pulumi.Input['SystemdInstallSectionArgs'] install: Describes the [Install] section of a systemd service file.
         :param pulumi.Input['SystemdUnitSectionArgs'] unit: Describes the [Unit] section of a systemd service file.
+        :param pulumi.Input[str] unit_name: Name of the systemd unit.
         """
         pulumi.set(__self__, "connection", connection)
         pulumi.set(__self__, "service", service)
@@ -42,6 +44,8 @@ class SystemdServiceArgs:
             pulumi.set(__self__, "install", install)
         if unit is not None:
             pulumi.set(__self__, "unit", unit)
+        if unit_name is not None:
+            pulumi.set(__self__, "unit_name", unit_name)
 
     @property
     @pulumi.getter
@@ -103,6 +107,18 @@ class SystemdServiceArgs:
     def unit(self, value: Optional[pulumi.Input['SystemdUnitSectionArgs']]):
         pulumi.set(self, "unit", value)
 
+    @property
+    @pulumi.getter(name="unitName")
+    def unit_name(self) -> Optional[pulumi.Input[str]]:
+        """
+        Name of the systemd unit.
+        """
+        return pulumi.get(self, "unit_name")
+
+    @unit_name.setter
+    def unit_name(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "unit_name", value)
+
 
 class SystemdService(pulumi.ComponentResource):
     @overload
@@ -114,6 +130,7 @@ class SystemdService(pulumi.ComponentResource):
                  install: Optional[pulumi.Input[pulumi.InputType['SystemdInstallSectionArgs']]] = None,
                  service: Optional[pulumi.Input[pulumi.InputType['SystemdServiceSectionArgs']]] = None,
                  unit: Optional[pulumi.Input[pulumi.InputType['SystemdUnitSectionArgs']]] = None,
+                 unit_name: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         """
         A systemd service on a remote system.
@@ -125,6 +142,7 @@ class SystemdService(pulumi.ComponentResource):
         :param pulumi.Input[pulumi.InputType['SystemdInstallSectionArgs']] install: Describes the [Install] section of a systemd service file.
         :param pulumi.Input[pulumi.InputType['SystemdServiceSectionArgs']] service: Describes the [Service] section of a systemd service file.
         :param pulumi.Input[pulumi.InputType['SystemdUnitSectionArgs']] unit: Describes the [Unit] section of a systemd service file.
+        :param pulumi.Input[str] unit_name: Name of the systemd unit.
         """
         ...
     @overload
@@ -155,6 +173,7 @@ class SystemdService(pulumi.ComponentResource):
                  install: Optional[pulumi.Input[pulumi.InputType['SystemdInstallSectionArgs']]] = None,
                  service: Optional[pulumi.Input[pulumi.InputType['SystemdServiceSectionArgs']]] = None,
                  unit: Optional[pulumi.Input[pulumi.InputType['SystemdUnitSectionArgs']]] = None,
+                 unit_name: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):
@@ -177,6 +196,7 @@ class SystemdService(pulumi.ComponentResource):
                 raise TypeError("Missing required property 'service'")
             __props__.__dict__["service"] = service
             __props__.__dict__["unit"] = unit
+            __props__.__dict__["unit_name"] = unit_name
             __props__.__dict__["file"] = None
         super(SystemdService, __self__).__init__(
             'kubernetes-the-hard-way:remote:SystemdService',
@@ -232,4 +252,12 @@ class SystemdService(pulumi.ComponentResource):
         Describes the [Unit] section of a systemd service file.
         """
         return pulumi.get(self, "unit")
+
+    @property
+    @pulumi.getter(name="unitName")
+    def unit_name(self) -> pulumi.Output[Optional[str]]:
+        """
+        Name of the systemd unit.
+        """
+        return pulumi.get(self, "unit_name")
 

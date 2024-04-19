@@ -38,6 +38,7 @@ class CurlDelegationLevel(str, Enum):
 class EtcdctlCommand(str, Enum):
     MEMBER = "member"
     LIST = "list"
+    VERSION = "version"
 
 
 class HostnamectlCommand(str, Enum):

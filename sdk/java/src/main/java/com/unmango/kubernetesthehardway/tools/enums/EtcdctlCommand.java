@@ -11,7 +11,8 @@ import java.util.StringJoiner;
     @EnumType
     public enum EtcdctlCommand {
         Member("member"),
-        List("list");
+        List("list"),
+        Version("version");
 
         private final String value;
 

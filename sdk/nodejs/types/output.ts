@@ -557,11 +557,11 @@ export namespace tls {
         /**
          * The IP address of the node
          */
-        ip?: string;
+        ip: string;
         /**
          * The role a node should be configured for
          */
-        role?: enums.tls.NodeRole;
+        role: enums.tls.NodeRole;
     }
 
 }

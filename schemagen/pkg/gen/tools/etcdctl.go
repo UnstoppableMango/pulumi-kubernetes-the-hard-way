@@ -18,13 +18,7 @@ func generateEtcdctl() schema.ResourceSpec {
 		"key":       props.String("TODO"),
 	}
 
-	required := []string{
-		"caCert",
-		"cert",
-		"commands",
-		"endpoints",
-		"key",
-	}
+	required := []string{"commands"}
 
 	return schema.ResourceSpec{
 		ObjectTypeSpec: schema.ObjectTypeSpec{

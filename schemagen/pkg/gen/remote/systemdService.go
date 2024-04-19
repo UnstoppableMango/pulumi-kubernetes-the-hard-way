@@ -3,6 +3,7 @@ package remote
 import (
 	"maps"
 
+	"github.com/UnstoppableMango/pulumi-kubernetes-the-hard-way/schemagen/pkg/gen/props"
 	"github.com/UnstoppableMango/pulumi-kubernetes-the-hard-way/schemagen/pkg/gen/types"
 	"github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 )
@@ -30,6 +31,7 @@ func generateSystemdService(commandSpec schema.PackageSpec) schema.ResourceSpec 
 			Description: "Describes the [Unit] section of a systemd service file.",
 			TypeSpec:    types.LocalType("SystemdUnitSection", "remote"),
 		},
+		"unitName": props.String("Name of the systemd unit."),
 	}
 
 	requiredInputs := []string{

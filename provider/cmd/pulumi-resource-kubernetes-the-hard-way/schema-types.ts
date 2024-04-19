@@ -562,8 +562,9 @@ export abstract class SystemdService<TData = any> extends (pulumi.ComponentResou
     public install?: SystemdInstallSectionOutputs | pulumi.Output<SystemdInstallSectionOutputs>;
     public service!: SystemdServiceSectionOutputs | pulumi.Output<SystemdServiceSectionOutputs>;
     public unit?: SystemdUnitSectionOutputs | pulumi.Output<SystemdUnitSectionOutputs>;
+    public unitName?: string | pulumi.Output<string>;
     constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
-        super("kubernetes-the-hard-way:remote:SystemdService", name, opts.urn ? { connection: undefined, directory: undefined, file: undefined, install: undefined, service: undefined, unit: undefined } : { name, args, opts }, opts);
+        super("kubernetes-the-hard-way:remote:SystemdService", name, opts.urn ? { connection: undefined, directory: undefined, file: undefined, install: undefined, service: undefined, unit: undefined, unitName: undefined } : { name, args, opts }, opts);
     }
 }
 export interface SystemdServiceArgs {
@@ -572,6 +573,7 @@ export interface SystemdServiceArgs {
     readonly install?: pulumi.Input<SystemdInstallSectionInputs>;
     readonly service: pulumi.Input<SystemdServiceSectionInputs>;
     readonly unit?: pulumi.Input<SystemdUnitSectionInputs>;
+    readonly unitName?: pulumi.Input<string>;
 }
 export abstract class Certificate<TData = any> extends (pulumi.ComponentResource)<TData> {
     public algorithm!: AlgorithmOutputs | pulumi.Output<AlgorithmOutputs>;
@@ -910,14 +912,14 @@ export interface CurlArgs {
 }
 export abstract class Etcdctl<TData = any> extends (pulumi.ComponentResource)<TData> {
     public binaryPath!: string | pulumi.Output<string>;
-    public caCert!: string | pulumi.Output<string>;
-    public cert!: string | pulumi.Output<string>;
+    public caCert?: string | pulumi.Output<string>;
+    public cert?: string | pulumi.Output<string>;
     public command!: command.remote.Command | pulumi.Output<command.remote.Command>;
     public commands!: EtcdctlCommandOutputs | pulumi.Output<EtcdctlCommandOutputs>;
     public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
-    public endpoints!: string | pulumi.Output<string>;
+    public endpoints?: string | pulumi.Output<string>;
     public environment!: Record<string, string> | pulumi.Output<Record<string, string>>;
-    public key!: string | pulumi.Output<string>;
+    public key?: string | pulumi.Output<string>;
     public lifecycle?: CommandLifecycleOutputs | CommandLifecycleOutputs;
     public stderr!: string | pulumi.Output<string>;
     public stdin?: string | pulumi.Output<string>;
@@ -929,13 +931,13 @@ export abstract class Etcdctl<TData = any> extends (pulumi.ComponentResource)<TD
 }
 export interface EtcdctlArgs {
     readonly binaryPath?: pulumi.Input<string>;
-    readonly caCert: pulumi.Input<string>;
-    readonly cert: pulumi.Input<string>;
+    readonly caCert?: pulumi.Input<string>;
+    readonly cert?: pulumi.Input<string>;
     readonly commands: pulumi.Input<EtcdctlCommandInputs>;
     readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
-    readonly endpoints: pulumi.Input<string>;
+    readonly endpoints?: pulumi.Input<string>;
     readonly environment?: pulumi.Input<Record<string, pulumi.Input<string>>>;
-    readonly key: pulumi.Input<string>;
+    readonly key?: pulumi.Input<string>;
     readonly lifecycle?: CommandLifecycleInputs;
     readonly stdin?: pulumi.Input<string>;
     readonly triggers?: pulumi.Input<pulumi.Input<any>[]>;
@@ -1527,12 +1529,12 @@ export interface BundleOutputs {
     readonly keyPem: pulumi.Output<string>;
 }
 export interface ClusterPkiNodeInputs {
-    readonly ip?: pulumi.Input<string>;
-    readonly role?: pulumi.Input<NodeRoleInputs>;
+    readonly ip: pulumi.Input<string>;
+    readonly role: pulumi.Input<NodeRoleInputs>;
 }
 export interface ClusterPkiNodeOutputs {
-    readonly ip?: pulumi.Output<string>;
-    readonly role?: pulumi.Output<NodeRoleOutputs>;
+    readonly ip: pulumi.Output<string>;
+    readonly role: pulumi.Output<NodeRoleOutputs>;
 }
 export type EcdsaCurveInputs = "P224" | "P256" | "P384" | "P521";
 export type EcdsaCurveOutputs = "P224" | "P256" | "P384" | "P521";
@@ -1558,8 +1560,8 @@ export type CurlCertTypeInputs = "PEM" | "DER" | "ENG" | "P12";
 export type CurlCertTypeOutputs = "PEM" | "DER" | "ENG" | "P12";
 export type CurlDelegationLevelInputs = "none" | "policy" | "always";
 export type CurlDelegationLevelOutputs = "none" | "policy" | "always";
-export type EtcdctlCommandInputs = "member" | "list";
-export type EtcdctlCommandOutputs = "member" | "list";
+export type EtcdctlCommandInputs = "member" | "list" | "version";
+export type EtcdctlCommandOutputs = "member" | "list" | "version";
 export type HostnamectlCommandInputs = "status" | "hostname" | "icon-name" | "chassis" | "deployment" | "location";
 export type HostnamectlCommandOutputs = "status" | "hostname" | "icon-name" | "chassis" | "deployment" | "location";
 export type HostnamectlJsonModeInputs = "short" | "pretty" | "off";

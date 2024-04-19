@@ -41,30 +41,30 @@ public final class EtcdctlArgs extends com.pulumi.resources.ResourceArgs {
      * TODO
      * 
      */
-    @Import(name="caCert", required=true)
-    private Output<String> caCert;
+    @Import(name="caCert")
+    private @Nullable Output<String> caCert;
 
     /**
      * @return TODO
      * 
      */
-    public Output<String> caCert() {
-        return this.caCert;
+    public Optional<Output<String>> caCert() {
+        return Optional.ofNullable(this.caCert);
     }
 
     /**
      * TODO
      * 
      */
-    @Import(name="cert", required=true)
-    private Output<String> cert;
+    @Import(name="cert")
+    private @Nullable Output<String> cert;
 
     /**
      * @return TODO
      * 
      */
-    public Output<String> cert() {
-        return this.cert;
+    public Optional<Output<String>> cert() {
+        return Optional.ofNullable(this.cert);
     }
 
     /**
@@ -101,15 +101,15 @@ public final class EtcdctlArgs extends com.pulumi.resources.ResourceArgs {
      * TODO
      * 
      */
-    @Import(name="endpoints", required=true)
-    private Output<String> endpoints;
+    @Import(name="endpoints")
+    private @Nullable Output<String> endpoints;
 
     /**
      * @return TODO
      * 
      */
-    public Output<String> endpoints() {
-        return this.endpoints;
+    public Optional<Output<String>> endpoints() {
+        return Optional.ofNullable(this.endpoints);
     }
 
     /**
@@ -131,15 +131,15 @@ public final class EtcdctlArgs extends com.pulumi.resources.ResourceArgs {
      * TODO
      * 
      */
-    @Import(name="key", required=true)
-    private Output<String> key;
+    @Import(name="key")
+    private @Nullable Output<String> key;
 
     /**
      * @return TODO
      * 
      */
-    public Output<String> key() {
-        return this.key;
+    public Optional<Output<String>> key() {
+        return Optional.ofNullable(this.key);
     }
 
     /**
@@ -248,7 +248,7 @@ public final class EtcdctlArgs extends com.pulumi.resources.ResourceArgs {
          * @return builder
          * 
          */
-        public Builder caCert(Output<String> caCert) {
+        public Builder caCert(@Nullable Output<String> caCert) {
             $.caCert = caCert;
             return this;
         }
@@ -269,7 +269,7 @@ public final class EtcdctlArgs extends com.pulumi.resources.ResourceArgs {
          * @return builder
          * 
          */
-        public Builder cert(Output<String> cert) {
+        public Builder cert(@Nullable Output<String> cert) {
             $.cert = cert;
             return this;
         }
@@ -332,7 +332,7 @@ public final class EtcdctlArgs extends com.pulumi.resources.ResourceArgs {
          * @return builder
          * 
          */
-        public Builder endpoints(Output<String> endpoints) {
+        public Builder endpoints(@Nullable Output<String> endpoints) {
             $.endpoints = endpoints;
             return this;
         }
@@ -374,7 +374,7 @@ public final class EtcdctlArgs extends com.pulumi.resources.ResourceArgs {
          * @return builder
          * 
          */
-        public Builder key(Output<String> key) {
+        public Builder key(@Nullable Output<String> key) {
             $.key = key;
             return this;
         }
@@ -453,23 +453,11 @@ public final class EtcdctlArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         public EtcdctlArgs build() {
-            if ($.caCert == null) {
-                throw new MissingRequiredPropertyException("EtcdctlArgs", "caCert");
-            }
-            if ($.cert == null) {
-                throw new MissingRequiredPropertyException("EtcdctlArgs", "cert");
-            }
             if ($.commands == null) {
                 throw new MissingRequiredPropertyException("EtcdctlArgs", "commands");
             }
             if ($.connection == null) {
                 throw new MissingRequiredPropertyException("EtcdctlArgs", "connection");
-            }
-            if ($.endpoints == null) {
-                throw new MissingRequiredPropertyException("EtcdctlArgs", "endpoints");
-            }
-            if ($.key == null) {
-                throw new MissingRequiredPropertyException("EtcdctlArgs", "key");
             }
             return $;
         }

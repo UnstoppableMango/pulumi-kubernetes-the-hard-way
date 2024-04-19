@@ -71,40 +71,38 @@ class BundleArgs:
 @pulumi.input_type
 class ClusterPkiNodeArgs:
     def __init__(__self__, *,
-                 ip: Optional[pulumi.Input[str]] = None,
-                 role: Optional[pulumi.Input['NodeRole']] = None):
+                 ip: pulumi.Input[str],
+                 role: pulumi.Input['NodeRole']):
         """
         TODO
         :param pulumi.Input[str] ip: The IP address of the node
         :param pulumi.Input['NodeRole'] role: The role a node should be configured for
         """
-        if ip is not None:
-            pulumi.set(__self__, "ip", ip)
-        if role is not None:
-            pulumi.set(__self__, "role", role)
+        pulumi.set(__self__, "ip", ip)
+        pulumi.set(__self__, "role", role)
 
     @property
     @pulumi.getter
-    def ip(self) -> Optional[pulumi.Input[str]]:
+    def ip(self) -> pulumi.Input[str]:
         """
         The IP address of the node
         """
         return pulumi.get(self, "ip")
 
     @ip.setter
-    def ip(self, value: Optional[pulumi.Input[str]]):
+    def ip(self, value: pulumi.Input[str]):
         pulumi.set(self, "ip", value)
 
     @property
     @pulumi.getter
-    def role(self) -> Optional[pulumi.Input['NodeRole']]:
+    def role(self) -> pulumi.Input['NodeRole']:
         """
         The role a node should be configured for
         """
         return pulumi.get(self, "role")
 
     @role.setter
-    def role(self, value: Optional[pulumi.Input['NodeRole']]):
+    def role(self, value: pulumi.Input['NodeRole']):
         pulumi.set(self, "role", value)
 
 

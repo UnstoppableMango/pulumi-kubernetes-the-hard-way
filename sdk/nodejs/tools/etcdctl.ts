@@ -34,11 +34,11 @@ export class Etcdctl extends pulumi.ComponentResource {
     /**
      * TODO
      */
-    public readonly caCert!: pulumi.Output<string>;
+    public readonly caCert!: pulumi.Output<string | undefined>;
     /**
      * TODO
      */
-    public readonly cert!: pulumi.Output<string>;
+    public readonly cert!: pulumi.Output<string | undefined>;
     /**
      * The underlying command
      */
@@ -54,7 +54,7 @@ export class Etcdctl extends pulumi.ComponentResource {
     /**
      * TODO
      */
-    public readonly endpoints!: pulumi.Output<string>;
+    public readonly endpoints!: pulumi.Output<string | undefined>;
     /**
      * Environment variables
      */
@@ -62,7 +62,7 @@ export class Etcdctl extends pulumi.ComponentResource {
     /**
      * TODO
      */
-    public readonly key!: pulumi.Output<string>;
+    public readonly key!: pulumi.Output<string | undefined>;
     /**
      * At what stage(s) in the resource lifecycle should the command be run
      */
@@ -95,23 +95,11 @@ export class Etcdctl extends pulumi.ComponentResource {
         let resourceInputs: pulumi.Inputs = {};
         opts = opts || {};
         if (!opts.id) {
-            if ((!args || args.caCert === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'caCert'");
-            }
-            if ((!args || args.cert === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'cert'");
-            }
             if ((!args || args.commands === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'commands'");
             }
             if ((!args || args.connection === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'connection'");
-            }
-            if ((!args || args.endpoints === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'endpoints'");
-            }
-            if ((!args || args.key === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'key'");
             }
             resourceInputs["binaryPath"] = args ? args.binaryPath : undefined;
             resourceInputs["caCert"] = args ? args.caCert : undefined;
@@ -159,11 +147,11 @@ export interface EtcdctlArgs {
     /**
      * TODO
      */
-    caCert: pulumi.Input<string>;
+    caCert?: pulumi.Input<string>;
     /**
      * TODO
      */
-    cert: pulumi.Input<string>;
+    cert?: pulumi.Input<string>;
     /**
      * TODO
      */
@@ -175,7 +163,7 @@ export interface EtcdctlArgs {
     /**
      * TODO
      */
-    endpoints: pulumi.Input<string>;
+    endpoints?: pulumi.Input<string>;
     /**
      * Environment variables
      */
@@ -183,7 +171,7 @@ export interface EtcdctlArgs {
     /**
      * TODO
      */
-    key: pulumi.Input<string>;
+    key?: pulumi.Input<string>;
     /**
      * At what stage(s) in the resource lifecycle should the command be run
      */
