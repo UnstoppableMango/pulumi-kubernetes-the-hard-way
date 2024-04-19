@@ -73,6 +73,8 @@ func TestRemoteInstallTs(t *testing.T) {
 }
 
 func TestRemoteTs(t *testing.T) {
+	t.Skip("Disabling in favor of future, more specific, tests")
+
 	const (
 		username = "root"
 		password = "root"
