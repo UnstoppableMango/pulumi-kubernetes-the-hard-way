@@ -29,7 +29,7 @@ const simple = new EtcdCluster('simple', {
   nodes: {
     node0: {
       connection: { host, port, user, password },
-      internalIp: '10.69.0.2',
+      internalIp: '0.0.0.0',
       architecture: 'amd64',
     },
   },
