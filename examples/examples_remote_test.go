@@ -61,10 +61,7 @@ func TestRemoteEtcdClusterTs(t *testing.T) {
 
 	test := getJSBaseOptions(t).
 		With(integration.ProgramTestOptions{
-			Dir:           path.Join(getCwd(t), "remote", "etcd-cluster-ts"),
-			Quick:         true,
-			SkipRefresh:   true,
-			RunUpdateTest: false,
+			Dir: path.Join(getCwd(t), "remote", "etcd-cluster-ts"),
 			Config: map[string]string{
 				"host":     "localhost",
 				"port":     port,
@@ -156,10 +153,7 @@ func TestRemoteEtcdInstallTs(t *testing.T) {
 
 	test := getJSBaseOptions(t).
 		With(integration.ProgramTestOptions{
-			Dir:           path.Join(getCwd(t), "remote", "etcd-install-ts"),
-			Quick:         true,
-			SkipRefresh:   true,
-			RunUpdateTest: false,
+			Dir: path.Join(getCwd(t), "remote", "etcd-install-ts"),
 			Config: map[string]string{
 				"host":     "localhost",
 				"port":     port,
