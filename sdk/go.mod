@@ -10,7 +10,7 @@ require (
 	github.com/pulumi/pulumi-kubernetes/sdk/v4 v4.11.0
 	github.com/pulumi/pulumi-random/sdk/v4 v4.16.1
 	github.com/pulumi/pulumi-tls/sdk/v5 v5.0.2
-	github.com/pulumi/pulumi/sdk/v3 v3.113.2
+	github.com/pulumi/pulumi/sdk/v3 v3.113.3
 )
 
 require (
