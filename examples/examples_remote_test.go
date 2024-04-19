@@ -33,6 +33,47 @@ func TestRemoteEtcdClusterTs(t *testing.T) {
 
 	defer StopSshServer(ctx, server) // TODO: Error handling?
 
+	validateSimple := func(t *testing.T, res apitype.ResourceV3) {
+		assert.NotEmpty(t, res.Outputs)
+
+		// arch, ok := res.Outputs["architecture"]
+		// assert.True(t, ok, "Output `architecture` was not set")
+		// assert.Equal(t, "amd64", arch)
+
+		// archiveName, ok := res.Outputs["archiveName"]
+		// assert.True(t, ok, "Output `archiveName` was not set")
+		// assert.Equal(t, "etcd-v3.4.15-linux-amd64.tar.gz", archiveName)
+
+		// directory, ok := res.Outputs["directory"]
+		// assert.True(t, ok, "Output `directory` was not set")
+		// assert.Equal(t, "/usr/local/bin", directory)
+
+		// etcdPath, ok := res.Outputs["etcdPath"]
+		// assert.True(t, ok, "Output `etcdPath` was not set")
+		// assert.Equal(t, "/usr/local/bin/etcd", etcdPath)
+
+		// etcdctlPath, ok := res.Outputs["etcdctlPath"]
+		// assert.True(t, ok, "Output `etcdctlPath` was not set")
+		// assert.Equal(t, "/usr/local/bin/etcdctl", etcdctlPath)
+
+		// name, ok := res.Outputs["name"]
+		// assert.True(t, ok, "Output `name` was not set")
+		// assert.Equal(t, "simple", name)
+
+		// url, ok := res.Outputs["url"]
+		// assert.True(t, ok, "Output `url` was not set")
+		// assert.Equal(t, "https://github.com/etcd-io/etcd/releases/download/v3.4.15/etcd-v3.4.15-linux-amd64.tar.gz", url)
+
+		// version, ok := res.Outputs["version"]
+		// assert.True(t, ok, "Output `version` was not set")
+		// assert.Equal(t, "3.4.15", version)
+
+		assert.Contains(t, res.Outputs, "bundle")
+		assert.Contains(t, res.Outputs, "configuration")
+		assert.Contains(t, res.Outputs, "nodes")
+		assert.Contains(t, res.Outputs, "service")
+	}
+
 	test := getJSBaseOptions(t).
 		With(integration.ProgramTestOptions{
 			Dir:           path.Join(getCwd(t), "remote", "etcd-cluster-ts"),
@@ -46,6 +87,19 @@ func TestRemoteEtcdClusterTs(t *testing.T) {
 				"password": password,
 			},
 			ExtraRuntimeValidation: func(t *testing.T, stack integration.RuntimeValidationStackInfo) {
+				validatedResources := []string{}
+				for _, res := range stack.Deployment.Resources {
+					if res.Type != "kubernetes-the-hard-way:remote:EtcdCluster" {
+						continue
+					}
+					switch res.URN.Name() {
+					case "simple":
+						validateSimple(t, res)
+						validatedResources = append(validatedResources, "simple")
+					}
+				}
+
+				assert.Equal(t, []string{"simple"}, validatedResources, "Not all resources were validated")
 			},
 		})
 
