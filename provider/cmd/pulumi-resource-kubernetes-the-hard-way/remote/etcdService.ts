@@ -105,7 +105,7 @@ const formatExecStart = (
     .option('--client-cert-auth', true)
     .option('--initial-advertise-peer-urls', peerUrl)
     .option('--listen-peer-urls', peerUrl)
-    .option('--listen-client-urls', interpolate`${clientUrl},${localhostUrl}`)
+    .option('--listen-client-urls', interpolate`${clientUrl}`) // TODO: We can be a little smarter about this
     .option('--advertise-client-urls', clientUrl)
     .option('--initial-cluster-token', 'etcd-cluster-0') // TODO
     .option('--initial-cluster', initialCluster)

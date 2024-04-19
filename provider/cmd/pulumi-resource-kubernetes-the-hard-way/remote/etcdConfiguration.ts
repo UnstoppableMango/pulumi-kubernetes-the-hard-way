@@ -98,20 +98,3 @@ export class EtcdConfiguration extends schema.EtcdConfiguration {
     });
   }
 }
-
-function formatSystemdFile(execStart: Input<string>): Output<string> {
-  // Would be nice to not have [Unit] hangout up here all alone
-  return interpolate`[Unit]
-Description=etcd
-Documentation=https://github.com/etcd-io/etcd
-
-[Service]
-Type=notify
-ExecStart=${execStart}
-Restart=on-failure
-RestartSec=5
-
-[Install]
-WantedBy=multi-user.target
-`;
-}
