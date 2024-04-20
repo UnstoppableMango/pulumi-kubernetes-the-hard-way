@@ -34,10 +34,15 @@ func Generate(commandSpec schema.PackageSpec) schema.PackageSpec {
 	types := generateTypes()
 
 	resources := map[string]schema.ResourceSpec{}
-	for n, t := range tools {
-		maps.Copy(types, t.types)
-		types[name(n)+"Opts"] = t.optsType
-		resources[name(n)] = t.resourceSpec(commandSpec, n)
+	for name, tool := range tools {
+		for typeName, typ := range tool.types {
+			types[qualifyName(name)+typeName] = typ
+		}
+		types[qualifyName(name)+"Opts"] = tool.optsType
+		resources[qualifyName(name)] = tool.resourceSpec(
+			commandSpec,
+			optsType(name),
+		)
 	}
 
 	return schema.PackageSpec{
@@ -47,13 +52,16 @@ func Generate(commandSpec schema.PackageSpec) schema.PackageSpec {
 	}
 }
 
-func name(x string) string {
+func qualifyName(x string) string {
 	return fmt.Sprintf("kubernetes-the-hard-way:tools:%s", x)
 }
 
-func (tool tool) resourceSpec(commandSpec schema.PackageSpec, name string) schema.ResourceSpec {
+func optsType(x string) schema.TypeSpec {
+	return types.LocalType(x+"Opts", "tools")
+}
+
+func (tool tool) resourceSpec(commandSpec schema.PackageSpec, optsType schema.TypeSpec) schema.ResourceSpec {
 	command := commandSpec.Resources["command:remote:Command"]
-	optsType := types.LocalType(name, "tools")
 
 	inputs := map[string]schema.PropertySpec{
 		"binaryPath": props.String("Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH"),

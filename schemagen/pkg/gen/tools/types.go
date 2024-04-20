@@ -4,7 +4,7 @@ import "github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 
 func generateTypes() map[string]schema.ComplexTypeSpec {
 	return map[string]schema.ComplexTypeSpec{
-		name("CommandLifecycle"): {
+		qualifyName("CommandLifecycle"): {
 			ObjectTypeSpec: schema.ObjectTypeSpec{
 				Type: "string",
 			},
@@ -14,7 +14,7 @@ func generateTypes() map[string]schema.ComplexTypeSpec {
 				{Value: "delete"},
 			},
 		},
-		name("CurlCertType"): {
+		qualifyName("CurlCertType"): {
 			ObjectTypeSpec: schema.ObjectTypeSpec{
 				Type: "string",
 			},
@@ -25,7 +25,7 @@ func generateTypes() map[string]schema.ComplexTypeSpec {
 				{Value: "P12"},
 			},
 		},
-		name("CurlDelegationLevel"): {
+		qualifyName("CurlDelegationLevel"): {
 			ObjectTypeSpec: schema.ObjectTypeSpec{
 				Type: "string",
 			},
@@ -35,7 +35,7 @@ func generateTypes() map[string]schema.ComplexTypeSpec {
 				{Value: "always"},
 			},
 		},
-		name("EtcdctlCommand"): {
+		qualifyName("EtcdctlCommand"): {
 			ObjectTypeSpec: schema.ObjectTypeSpec{
 				Type: "string",
 			},
@@ -45,7 +45,7 @@ func generateTypes() map[string]schema.ComplexTypeSpec {
 				{Value: "version"},
 			},
 		},
-		name("HostnamectlCommand"): {
+		qualifyName("HostnamectlCommand"): {
 			ObjectTypeSpec: schema.ObjectTypeSpec{
 				Type: "string",
 			},
@@ -58,7 +58,7 @@ func generateTypes() map[string]schema.ComplexTypeSpec {
 				{Value: "location", Description: "If no argument is given, print the location string for the system. If an optional argument LOCATION is provided then the command changes the location string for the system to LOCATION."},
 			},
 		},
-		name("HostnamectlJsonMode"): {
+		qualifyName("HostnamectlJsonMode"): {
 			ObjectTypeSpec: schema.ObjectTypeSpec{
 				Type: "string",
 			},
@@ -68,7 +68,7 @@ func generateTypes() map[string]schema.ComplexTypeSpec {
 				{Value: "off"},
 			},
 		},
-		name("SystemctlCommand"): {
+		qualifyName("SystemctlCommand"): {
 			ObjectTypeSpec: schema.ObjectTypeSpec{
 				Type: "string",
 			},
@@ -108,7 +108,7 @@ func generateTypes() map[string]schema.ComplexTypeSpec {
 				{Value: "unmask"},
 			},
 		},
-		name("TeeMode"): {
+		qualifyName("TeeMode"): {
 			ObjectTypeSpec: schema.ObjectTypeSpec{
 				Type: "string",
 			},
