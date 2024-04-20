@@ -15,54 +15,35 @@ import (
 
 // Abstraction over the `mv` utility on a remote system.
 type Mv struct {
-	pulumi.ResourceState
+	pulumi.CustomResourceState
 
-	// Corresponds to the `-b` and `--backup` options depending on whether [CONTROL] is supplied.
-	Backup pulumi.BoolOutput `pulumi:"backup"`
 	// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
 	BinaryPath pulumi.StringOutput `pulumi:"binaryPath"`
 	// The underlying command
 	Command pulumiCommand.CommandOutput `pulumi:"command"`
 	// Connection details for the remote system
 	Connection pulumiCommand.ConnectionOutput `pulumi:"connection"`
-	// Corresponds to the `--context` option.
-	Context pulumi.BoolOutput `pulumi:"context"`
-	// Corresponds to the [CONTROL] argument for the `--backup` option.
-	Control pulumi.BoolPtrOutput `pulumi:"control"`
-	// Corresponds to the [DEST] argument.
-	Dest pulumi.StringPtrOutput `pulumi:"dest"`
-	// Corresponds to the [DIRECTORY] argument.
-	Directory pulumi.StringPtrOutput `pulumi:"directory"`
+	// The command to run on create.
+	Create MvOptsPtrOutput `pulumi:"create"`
+	// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+	// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+	// Command resource from previous create or update steps.
+	Delete MvOptsPtrOutput `pulumi:"delete"`
 	// Environment variables
 	Environment pulumi.StringMapOutput `pulumi:"environment"`
-	// Corresponds to the `--force` option.
-	Force pulumi.BoolOutput `pulumi:"force"`
-	// At what stage(s) in the resource lifecycle should the command be run
-	Lifecycle CommandLifecyclePtrOutput `pulumi:"lifecycle"`
-	// Corresponds to the `--no-clobber` option.
-	NoClobber pulumi.BoolOutput `pulumi:"noClobber"`
-	// Corresponds to the `--no-target-directory` option.
-	NoTargetDirectory pulumi.BoolOutput `pulumi:"noTargetDirectory"`
-	// Corresponds to the [SOURCE] argument.
-	Source pulumi.AnyOutput `pulumi:"source"`
 	// TODO
 	Stderr pulumi.StringOutput `pulumi:"stderr"`
 	// TODO
 	Stdin pulumi.StringPtrOutput `pulumi:"stdin"`
 	// TODO
 	Stdout pulumi.StringOutput `pulumi:"stdout"`
-	// Corresponds to the `--strip-trailing-slashes` option.
-	StripTrailingSlashes pulumi.BoolOutput `pulumi:"stripTrailingSlashes"`
-	// Corresponds to the `--suffix` option.
-	Suffix pulumi.StringPtrOutput `pulumi:"suffix"`
-	// Corresponds to the `--target-directory` option.
-	TargetDirectory pulumi.BoolPtrOutput `pulumi:"targetDirectory"`
 	// TODO
 	Triggers pulumi.ArrayOutput `pulumi:"triggers"`
-	// Corresponds to the `--update` option.
-	Update pulumi.BoolOutput `pulumi:"update"`
-	// Corresponds to the `--verbose` option.
-	Verbose pulumi.BoolOutput `pulumi:"verbose"`
+	// The command to run on update, if empty, create will
+	// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+	// are set to the stdout and stderr properties of the Command resource from previous
+	// create or update steps.
+	Update MvOptsPtrOutput `pulumi:"update"`
 }
 
 // NewMv registers a new resource with the given unique name, arguments, and options.
@@ -75,104 +56,86 @@ func NewMv(ctx *pulumi.Context,
 	if args.Connection == nil {
 		return nil, errors.New("invalid value for required argument 'Connection'")
 	}
-	if args.Source == nil {
-		return nil, errors.New("invalid value for required argument 'Source'")
-	}
 	args.Connection = args.Connection.ToConnectionOutput().ApplyT(func(v pulumiCommand.Connection) pulumiCommand.Connection { return *v.Defaults() }).(pulumiCommand.ConnectionOutput)
 	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource Mv
-	err := ctx.RegisterRemoteComponentResource("kubernetes-the-hard-way:tools:Mv", name, args, &resource, opts...)
+	err := ctx.RegisterResource("kubernetes-the-hard-way:tools:Mv", name, args, &resource, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return &resource, nil
 }
 
+// GetMv gets an existing Mv resource's state with the given name, ID, and optional
+// state properties that are used to uniquely qualify the lookup (nil if not required).
+func GetMv(ctx *pulumi.Context,
+	name string, id pulumi.IDInput, state *MvState, opts ...pulumi.ResourceOption) (*Mv, error) {
+	var resource Mv
+	err := ctx.ReadResource("kubernetes-the-hard-way:tools:Mv", name, id, state, &resource, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return &resource, nil
+}
+
+// Input properties used for looking up and filtering Mv resources.
+type mvState struct {
+}
+
+type MvState struct {
+}
+
+func (MvState) ElementType() reflect.Type {
+	return reflect.TypeOf((*mvState)(nil)).Elem()
+}
+
 type mvArgs struct {
-	// Corresponds to the `-b` and `--backup` options depending on whether [CONTROL] is supplied.
-	Backup *bool `pulumi:"backup"`
 	// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
 	BinaryPath *string `pulumi:"binaryPath"`
 	// Connection details for the remote system
 	Connection pulumiCommand.Connection `pulumi:"connection"`
-	// Corresponds to the `--context` option.
-	Context *bool `pulumi:"context"`
-	// Corresponds to the [CONTROL] argument for the `--backup` option.
-	Control *bool `pulumi:"control"`
-	// Corresponds to the [DEST] argument.
-	Dest *string `pulumi:"dest"`
-	// Corresponds to the [DIRECTORY] argument.
-	Directory *string `pulumi:"directory"`
+	// The command to run on create.
+	Create *MvOpts `pulumi:"create"`
+	// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+	// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+	// Command resource from previous create or update steps.
+	Delete *MvOpts `pulumi:"delete"`
 	// Environment variables
 	Environment map[string]string `pulumi:"environment"`
-	// Corresponds to the `--force` option.
-	Force *bool `pulumi:"force"`
-	// At what stage(s) in the resource lifecycle should the command be run
-	Lifecycle *CommandLifecycle `pulumi:"lifecycle"`
-	// Corresponds to the `--no-clobber` option.
-	NoClobber *bool `pulumi:"noClobber"`
-	// Corresponds to the `--no-target-directory` option.
-	NoTargetDirectory *bool `pulumi:"noTargetDirectory"`
-	// Corresponds to the [SOURCE] argument.
-	Source interface{} `pulumi:"source"`
 	// TODO
 	Stdin *string `pulumi:"stdin"`
-	// Corresponds to the `--strip-trailing-slashes` option.
-	StripTrailingSlashes *bool `pulumi:"stripTrailingSlashes"`
-	// Corresponds to the `--suffix` option.
-	Suffix *string `pulumi:"suffix"`
-	// Corresponds to the `--target-directory` option.
-	TargetDirectory *bool `pulumi:"targetDirectory"`
 	// TODO
 	Triggers []interface{} `pulumi:"triggers"`
-	// Corresponds to the `--update` option.
-	Update *bool `pulumi:"update"`
-	// Corresponds to the `--verbose` option.
-	Verbose *bool `pulumi:"verbose"`
+	// The command to run on update, if empty, create will
+	// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+	// are set to the stdout and stderr properties of the Command resource from previous
+	// create or update steps.
+	Update *MvOpts `pulumi:"update"`
 }
 
 // The set of arguments for constructing a Mv resource.
 type MvArgs struct {
-	// Corresponds to the `-b` and `--backup` options depending on whether [CONTROL] is supplied.
-	Backup *bool
 	// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
 	BinaryPath pulumi.StringPtrInput
 	// Connection details for the remote system
 	Connection pulumiCommand.ConnectionInput
-	// Corresponds to the `--context` option.
-	Context pulumi.BoolPtrInput
-	// Corresponds to the [CONTROL] argument for the `--backup` option.
-	Control pulumi.BoolPtrInput
-	// Corresponds to the [DEST] argument.
-	Dest pulumi.StringPtrInput
-	// Corresponds to the [DIRECTORY] argument.
-	Directory pulumi.StringPtrInput
+	// The command to run on create.
+	Create MvOptsPtrInput
+	// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+	// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+	// Command resource from previous create or update steps.
+	Delete MvOptsPtrInput
 	// Environment variables
 	Environment pulumi.StringMapInput
-	// Corresponds to the `--force` option.
-	Force pulumi.BoolPtrInput
-	// At what stage(s) in the resource lifecycle should the command be run
-	Lifecycle *CommandLifecycle
-	// Corresponds to the `--no-clobber` option.
-	NoClobber pulumi.BoolPtrInput
-	// Corresponds to the `--no-target-directory` option.
-	NoTargetDirectory pulumi.BoolPtrInput
-	// Corresponds to the [SOURCE] argument.
-	Source pulumi.Input
 	// TODO
 	Stdin pulumi.StringPtrInput
-	// Corresponds to the `--strip-trailing-slashes` option.
-	StripTrailingSlashes pulumi.BoolPtrInput
-	// Corresponds to the `--suffix` option.
-	Suffix pulumi.StringPtrInput
-	// Corresponds to the `--target-directory` option.
-	TargetDirectory pulumi.BoolPtrInput
 	// TODO
 	Triggers pulumi.ArrayInput
-	// Corresponds to the `--update` option.
-	Update pulumi.BoolPtrInput
-	// Corresponds to the `--verbose` option.
-	Verbose pulumi.BoolPtrInput
+	// The command to run on update, if empty, create will
+	// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+	// are set to the stdout and stderr properties of the Command resource from previous
+	// create or update steps.
+	Update MvOptsPtrInput
 }
 
 func (MvArgs) ElementType() reflect.Type {
@@ -262,11 +225,6 @@ func (o MvOutput) ToMvOutputWithContext(ctx context.Context) MvOutput {
 	return o
 }
 
-// Corresponds to the `-b` and `--backup` options depending on whether [CONTROL] is supplied.
-func (o MvOutput) Backup() pulumi.BoolOutput {
-	return o.ApplyT(func(v *Mv) pulumi.BoolOutput { return v.Backup }).(pulumi.BoolOutput)
-}
-
 // Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
 func (o MvOutput) BinaryPath() pulumi.StringOutput {
 	return o.ApplyT(func(v *Mv) pulumi.StringOutput { return v.BinaryPath }).(pulumi.StringOutput)
@@ -282,54 +240,21 @@ func (o MvOutput) Connection() pulumiCommand.ConnectionOutput {
 	return o.ApplyT(func(v *Mv) pulumiCommand.ConnectionOutput { return v.Connection }).(pulumiCommand.ConnectionOutput)
 }
 
-// Corresponds to the `--context` option.
-func (o MvOutput) Context() pulumi.BoolOutput {
-	return o.ApplyT(func(v *Mv) pulumi.BoolOutput { return v.Context }).(pulumi.BoolOutput)
+// The command to run on create.
+func (o MvOutput) Create() MvOptsPtrOutput {
+	return o.ApplyT(func(v *Mv) MvOptsPtrOutput { return v.Create }).(MvOptsPtrOutput)
 }
 
-// Corresponds to the [CONTROL] argument for the `--backup` option.
-func (o MvOutput) Control() pulumi.BoolPtrOutput {
-	return o.ApplyT(func(v *Mv) pulumi.BoolPtrOutput { return v.Control }).(pulumi.BoolPtrOutput)
-}
-
-// Corresponds to the [DEST] argument.
-func (o MvOutput) Dest() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Mv) pulumi.StringPtrOutput { return v.Dest }).(pulumi.StringPtrOutput)
-}
-
-// Corresponds to the [DIRECTORY] argument.
-func (o MvOutput) Directory() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Mv) pulumi.StringPtrOutput { return v.Directory }).(pulumi.StringPtrOutput)
+// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+// Command resource from previous create or update steps.
+func (o MvOutput) Delete() MvOptsPtrOutput {
+	return o.ApplyT(func(v *Mv) MvOptsPtrOutput { return v.Delete }).(MvOptsPtrOutput)
 }
 
 // Environment variables
 func (o MvOutput) Environment() pulumi.StringMapOutput {
 	return o.ApplyT(func(v *Mv) pulumi.StringMapOutput { return v.Environment }).(pulumi.StringMapOutput)
-}
-
-// Corresponds to the `--force` option.
-func (o MvOutput) Force() pulumi.BoolOutput {
-	return o.ApplyT(func(v *Mv) pulumi.BoolOutput { return v.Force }).(pulumi.BoolOutput)
-}
-
-// At what stage(s) in the resource lifecycle should the command be run
-func (o MvOutput) Lifecycle() CommandLifecyclePtrOutput {
-	return o.ApplyT(func(v *Mv) CommandLifecyclePtrOutput { return v.Lifecycle }).(CommandLifecyclePtrOutput)
-}
-
-// Corresponds to the `--no-clobber` option.
-func (o MvOutput) NoClobber() pulumi.BoolOutput {
-	return o.ApplyT(func(v *Mv) pulumi.BoolOutput { return v.NoClobber }).(pulumi.BoolOutput)
-}
-
-// Corresponds to the `--no-target-directory` option.
-func (o MvOutput) NoTargetDirectory() pulumi.BoolOutput {
-	return o.ApplyT(func(v *Mv) pulumi.BoolOutput { return v.NoTargetDirectory }).(pulumi.BoolOutput)
-}
-
-// Corresponds to the [SOURCE] argument.
-func (o MvOutput) Source() pulumi.AnyOutput {
-	return o.ApplyT(func(v *Mv) pulumi.AnyOutput { return v.Source }).(pulumi.AnyOutput)
 }
 
 // TODO
@@ -347,34 +272,17 @@ func (o MvOutput) Stdout() pulumi.StringOutput {
 	return o.ApplyT(func(v *Mv) pulumi.StringOutput { return v.Stdout }).(pulumi.StringOutput)
 }
 
-// Corresponds to the `--strip-trailing-slashes` option.
-func (o MvOutput) StripTrailingSlashes() pulumi.BoolOutput {
-	return o.ApplyT(func(v *Mv) pulumi.BoolOutput { return v.StripTrailingSlashes }).(pulumi.BoolOutput)
-}
-
-// Corresponds to the `--suffix` option.
-func (o MvOutput) Suffix() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Mv) pulumi.StringPtrOutput { return v.Suffix }).(pulumi.StringPtrOutput)
-}
-
-// Corresponds to the `--target-directory` option.
-func (o MvOutput) TargetDirectory() pulumi.BoolPtrOutput {
-	return o.ApplyT(func(v *Mv) pulumi.BoolPtrOutput { return v.TargetDirectory }).(pulumi.BoolPtrOutput)
-}
-
 // TODO
 func (o MvOutput) Triggers() pulumi.ArrayOutput {
 	return o.ApplyT(func(v *Mv) pulumi.ArrayOutput { return v.Triggers }).(pulumi.ArrayOutput)
 }
 
-// Corresponds to the `--update` option.
-func (o MvOutput) Update() pulumi.BoolOutput {
-	return o.ApplyT(func(v *Mv) pulumi.BoolOutput { return v.Update }).(pulumi.BoolOutput)
-}
-
-// Corresponds to the `--verbose` option.
-func (o MvOutput) Verbose() pulumi.BoolOutput {
-	return o.ApplyT(func(v *Mv) pulumi.BoolOutput { return v.Verbose }).(pulumi.BoolOutput)
+// The command to run on update, if empty, create will
+// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+// are set to the stdout and stderr properties of the Command resource from previous
+// create or update steps.
+func (o MvOutput) Update() MvOptsPtrOutput {
+	return o.ApplyT(func(v *Mv) MvOptsPtrOutput { return v.Update }).(MvOptsPtrOutput)
 }
 
 type MvArrayOutput struct{ *pulumi.OutputState }

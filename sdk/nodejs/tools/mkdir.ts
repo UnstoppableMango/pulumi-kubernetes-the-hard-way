@@ -12,7 +12,19 @@ import * as pulumiCommand from "@pulumi/command";
 /**
  * Abstraction over the `mkdir` utility on a remote system.
  */
-export class Mkdir extends pulumi.ComponentResource {
+export class Mkdir extends pulumi.CustomResource {
+    /**
+     * Get an existing Mkdir resource's state with the given name, ID, and optional extra
+     * properties used to qualify the lookup.
+     *
+     * @param name The _unique_ name of the resulting resource.
+     * @param id The _unique_ provider ID of the resource to lookup.
+     * @param opts Optional settings to control the behavior of the CustomResource.
+     */
+    public static get(name: string, id: pulumi.Input<pulumi.ID>, opts?: pulumi.CustomResourceOptions): Mkdir {
+        return new Mkdir(name, undefined as any, { ...opts, id: id });
+    }
+
     /** @internal */
     public static readonly __pulumiType = 'kubernetes-the-hard-way:tools:Mkdir';
 
@@ -40,25 +52,19 @@ export class Mkdir extends pulumi.ComponentResource {
      */
     public readonly connection!: pulumi.Output<pulumiCommand.types.output.remote.Connection>;
     /**
-     * The fully qualified path of the directory on the remote system.
+     * The command to run on create.
      */
-    public readonly directory!: pulumi.Output<string>;
+    public readonly create!: pulumi.Output<outputs.tools.MkdirOpts | undefined>;
+    /**
+     * The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+     * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+     * Command resource from previous create or update steps.
+     */
+    public readonly delete!: pulumi.Output<outputs.tools.MkdirOpts | undefined>;
     /**
      * Environment variables
      */
     public readonly environment!: pulumi.Output<{[key: string]: string}>;
-    /**
-     * At what stage(s) in the resource lifecycle should the command be run
-     */
-    public readonly lifecycle!: pulumi.Output<enums.tools.CommandLifecycle | undefined>;
-    /**
-     * Corresponds to the `--parents` option.
-     */
-    public readonly parents!: pulumi.Output<boolean>;
-    /**
-     * Remove the created directory when the `Mkdir` resource is deleted or updated.
-     */
-    public readonly removeOnDelete!: pulumi.Output<boolean>;
     /**
      * TODO
      */
@@ -75,6 +81,13 @@ export class Mkdir extends pulumi.ComponentResource {
      * TODO
      */
     public readonly triggers!: pulumi.Output<any[]>;
+    /**
+     * The command to run on update, if empty, create will 
+     * run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
+     * are set to the stdout and stderr properties of the Command resource from previous 
+     * create or update steps.
+     */
+    public readonly update!: pulumi.Output<outputs.tools.MkdirOpts | undefined>;
 
     /**
      * Create a Mkdir resource with the given unique name, arguments, and options.
@@ -83,25 +96,21 @@ export class Mkdir extends pulumi.ComponentResource {
      * @param args The arguments to use to populate this resource's properties.
      * @param opts A bag of options that control this resource's behavior.
      */
-    constructor(name: string, args: MkdirArgs, opts?: pulumi.ComponentResourceOptions) {
+    constructor(name: string, args: MkdirArgs, opts?: pulumi.CustomResourceOptions) {
         let resourceInputs: pulumi.Inputs = {};
         opts = opts || {};
         if (!opts.id) {
             if ((!args || args.connection === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'connection'");
             }
-            if ((!args || args.directory === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'directory'");
-            }
             resourceInputs["binaryPath"] = args ? args.binaryPath : undefined;
             resourceInputs["connection"] = args ? (args.connection ? pulumi.output(args.connection).apply(pulumiCommand.types.input.remote.connectionArgsProvideDefaults) : undefined) : undefined;
-            resourceInputs["directory"] = args ? args.directory : undefined;
+            resourceInputs["create"] = args ? args.create : undefined;
+            resourceInputs["delete"] = args ? args.delete : undefined;
             resourceInputs["environment"] = args ? args.environment : undefined;
-            resourceInputs["lifecycle"] = args ? args.lifecycle : undefined;
-            resourceInputs["parents"] = args ? args.parents : undefined;
-            resourceInputs["removeOnDelete"] = args ? args.removeOnDelete : undefined;
             resourceInputs["stdin"] = args ? args.stdin : undefined;
             resourceInputs["triggers"] = args ? args.triggers : undefined;
+            resourceInputs["update"] = args ? args.update : undefined;
             resourceInputs["command"] = undefined /*out*/;
             resourceInputs["stderr"] = undefined /*out*/;
             resourceInputs["stdout"] = undefined /*out*/;
@@ -109,18 +118,17 @@ export class Mkdir extends pulumi.ComponentResource {
             resourceInputs["binaryPath"] = undefined /*out*/;
             resourceInputs["command"] = undefined /*out*/;
             resourceInputs["connection"] = undefined /*out*/;
-            resourceInputs["directory"] = undefined /*out*/;
+            resourceInputs["create"] = undefined /*out*/;
+            resourceInputs["delete"] = undefined /*out*/;
             resourceInputs["environment"] = undefined /*out*/;
-            resourceInputs["lifecycle"] = undefined /*out*/;
-            resourceInputs["parents"] = undefined /*out*/;
-            resourceInputs["removeOnDelete"] = undefined /*out*/;
             resourceInputs["stderr"] = undefined /*out*/;
             resourceInputs["stdin"] = undefined /*out*/;
             resourceInputs["stdout"] = undefined /*out*/;
             resourceInputs["triggers"] = undefined /*out*/;
+            resourceInputs["update"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
-        super(Mkdir.__pulumiType, name, resourceInputs, opts, true /*remote*/);
+        super(Mkdir.__pulumiType, name, resourceInputs, opts);
     }
 }
 
@@ -137,25 +145,19 @@ export interface MkdirArgs {
      */
     connection: pulumi.Input<pulumiCommand.types.input.remote.ConnectionArgs>;
     /**
-     * The fully qualified path of the directory on the remote system.
+     * The command to run on create.
      */
-    directory: pulumi.Input<string>;
+    create?: pulumi.Input<inputs.tools.MkdirOptsArgs>;
+    /**
+     * The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+     * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+     * Command resource from previous create or update steps.
+     */
+    delete?: pulumi.Input<inputs.tools.MkdirOptsArgs>;
     /**
      * Environment variables
      */
     environment?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
-    /**
-     * At what stage(s) in the resource lifecycle should the command be run
-     */
-    lifecycle?: enums.tools.CommandLifecycle;
-    /**
-     * Corresponds to the `--parents` option.
-     */
-    parents?: pulumi.Input<boolean>;
-    /**
-     * Remove the created directory when the `Mkdir` resource is deleted or updated.
-     */
-    removeOnDelete?: pulumi.Input<boolean>;
     /**
      * TODO
      */
@@ -164,4 +166,11 @@ export interface MkdirArgs {
      * TODO
      */
     triggers?: pulumi.Input<any[]>;
+    /**
+     * The command to run on update, if empty, create will 
+     * run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
+     * are set to the stdout and stderr properties of the Command resource from previous 
+     * create or update steps.
+     */
+    update?: pulumi.Input<inputs.tools.MkdirOptsArgs>;
 }

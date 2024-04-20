@@ -7,10 +7,7 @@ import com.pulumi.command.remote.inputs.ConnectionArgs;
 import com.pulumi.core.Output;
 import com.pulumi.core.annotations.Import;
 import com.pulumi.exceptions.MissingRequiredPropertyException;
-import com.unmango.kubernetesthehardway.tools.enums.CommandLifecycle;
-import com.unmango.kubernetesthehardway.tools.enums.HostnamectlCommand;
-import com.unmango.kubernetesthehardway.tools.enums.HostnamectlJsonMode;
-import java.lang.Boolean;
+import com.unmango.kubernetesthehardway.tools.inputs.HostnamectlOptsArgs;
 import java.lang.Object;
 import java.lang.String;
 import java.util.List;
@@ -25,21 +22,6 @@ public final class HostnamectlArgs extends com.pulumi.resources.ResourceArgs {
     public static final HostnamectlArgs Empty = new HostnamectlArgs();
 
     /**
-     * The argument for the specified `command`.
-     * 
-     */
-    @Import(name="arg")
-    private @Nullable Output<String> arg;
-
-    /**
-     * @return The argument for the specified `command`.
-     * 
-     */
-    public Optional<Output<String>> arg() {
-        return Optional.ofNullable(this.arg);
-    }
-
-    /**
      * Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
      * 
      */
@@ -52,21 +34,6 @@ public final class HostnamectlArgs extends com.pulumi.resources.ResourceArgs {
      */
     public Optional<Output<String>> binaryPath() {
         return Optional.ofNullable(this.binaryPath);
-    }
-
-    /**
-     * Corresponds to the {COMMAND} argument.
-     * 
-     */
-    @Import(name="command", required=true)
-    private Output<HostnamectlCommand> command;
-
-    /**
-     * @return Corresponds to the {COMMAND} argument.
-     * 
-     */
-    public Output<HostnamectlCommand> command() {
-        return this.command;
     }
 
     /**
@@ -85,6 +52,40 @@ public final class HostnamectlArgs extends com.pulumi.resources.ResourceArgs {
     }
 
     /**
+     * The command to run on create.
+     * 
+     */
+    @Import(name="create")
+    private @Nullable Output<HostnamectlOptsArgs> create;
+
+    /**
+     * @return The command to run on create.
+     * 
+     */
+    public Optional<Output<HostnamectlOptsArgs>> create() {
+        return Optional.ofNullable(this.create);
+    }
+
+    /**
+     * The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+     * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+     * Command resource from previous create or update steps.
+     * 
+     */
+    @Import(name="delete")
+    private @Nullable Output<HostnamectlOptsArgs> delete;
+
+    /**
+     * @return The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+     * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+     * Command resource from previous create or update steps.
+     * 
+     */
+    public Optional<Output<HostnamectlOptsArgs>> delete() {
+        return Optional.ofNullable(this.delete);
+    }
+
+    /**
      * Environment variables
      * 
      */
@@ -97,126 +98,6 @@ public final class HostnamectlArgs extends com.pulumi.resources.ResourceArgs {
      */
     public Optional<Output<Map<String,String>>> environment() {
         return Optional.ofNullable(this.environment);
-    }
-
-    /**
-     * Print a short help text and exit.
-     * 
-     */
-    @Import(name="help")
-    private @Nullable Output<Boolean> help;
-
-    /**
-     * @return Print a short help text and exit.
-     * 
-     */
-    public Optional<Output<Boolean>> help() {
-        return Optional.ofNullable(this.help);
-    }
-
-    /**
-     * Execute the operation remotely. Specify a hostname, or a username and hostname separated by &#39;@&#39;, to connect to.
-     * 
-     */
-    @Import(name="host")
-    private @Nullable Output<String> host;
-
-    /**
-     * @return Execute the operation remotely. Specify a hostname, or a username and hostname separated by &#39;@&#39;, to connect to.
-     * 
-     */
-    public Optional<Output<String>> host() {
-        return Optional.ofNullable(this.host);
-    }
-
-    /**
-     * Shows output formatted as JSON.
-     * 
-     */
-    @Import(name="json")
-    private @Nullable Output<HostnamectlJsonMode> json;
-
-    /**
-     * @return Shows output formatted as JSON.
-     * 
-     */
-    public Optional<Output<HostnamectlJsonMode>> json() {
-        return Optional.ofNullable(this.json);
-    }
-
-    /**
-     * At what stage(s) in the resource lifecycle should the command be run
-     * 
-     */
-    @Import(name="lifecycle")
-    private @Nullable CommandLifecycle lifecycle;
-
-    /**
-     * @return At what stage(s) in the resource lifecycle should the command be run
-     * 
-     */
-    public Optional<CommandLifecycle> lifecycle() {
-        return Optional.ofNullable(this.lifecycle);
-    }
-
-    /**
-     * Execute operation on a local container. Specify a container name to connect to, optionally prefixed by a user name to connect as and a separating &#39;@&#39; character.
-     * 
-     */
-    @Import(name="machine")
-    private @Nullable Output<String> machine;
-
-    /**
-     * @return Execute operation on a local container. Specify a container name to connect to, optionally prefixed by a user name to connect as and a separating &#39;@&#39; character.
-     * 
-     */
-    public Optional<Output<String>> machine() {
-        return Optional.ofNullable(this.machine);
-    }
-
-    /**
-     * Do not query the user for authentication for privileged operations.
-     * 
-     */
-    @Import(name="noAskPassword")
-    private @Nullable Output<Boolean> noAskPassword;
-
-    /**
-     * @return Do not query the user for authentication for privileged operations.
-     * 
-     */
-    public Optional<Output<Boolean>> noAskPassword() {
-        return Optional.ofNullable(this.noAskPassword);
-    }
-
-    /**
-     * If status is invoked (or no explicit command is given) and one of these switches is specified, hostnamectl will print out just this selected hostname. Same as `static` and `transient`.
-     * 
-     */
-    @Import(name="pretty")
-    private @Nullable Output<Boolean> pretty;
-
-    /**
-     * @return If status is invoked (or no explicit command is given) and one of these switches is specified, hostnamectl will print out just this selected hostname. Same as `static` and `transient`.
-     * 
-     */
-    public Optional<Output<Boolean>> pretty() {
-        return Optional.ofNullable(this.pretty);
-    }
-
-    /**
-     * If status is invoked (or no explicit command is given) and one of these switches is specified, hostnamectl will print out just this selected hostname. Same as `transient` and `pretty`.
-     * 
-     */
-    @Import(name="static")
-    private @Nullable Output<Boolean> static_;
-
-    /**
-     * @return If status is invoked (or no explicit command is given) and one of these switches is specified, hostnamectl will print out just this selected hostname. Same as `transient` and `pretty`.
-     * 
-     */
-    public Optional<Output<Boolean>> static_() {
-        return Optional.ofNullable(this.static_);
     }
 
     /**
@@ -235,21 +116,6 @@ public final class HostnamectlArgs extends com.pulumi.resources.ResourceArgs {
     }
 
     /**
-     * If status is invoked (or no explicit command is given) and one of these switches is specified, hostnamectl will print out just this selected hostname. Same as `static` and `pretty`.
-     * 
-     */
-    @Import(name="transient")
-    private @Nullable Output<Boolean> transient_;
-
-    /**
-     * @return If status is invoked (or no explicit command is given) and one of these switches is specified, hostnamectl will print out just this selected hostname. Same as `static` and `pretty`.
-     * 
-     */
-    public Optional<Output<Boolean>> transient_() {
-        return Optional.ofNullable(this.transient_);
-    }
-
-    /**
      * TODO
      * 
      */
@@ -265,40 +131,37 @@ public final class HostnamectlArgs extends com.pulumi.resources.ResourceArgs {
     }
 
     /**
-     * Print a short version string and exit.
+     * The command to run on update, if empty, create will
+     * run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+     * are set to the stdout and stderr properties of the Command resource from previous
+     * create or update steps.
      * 
      */
-    @Import(name="version")
-    private @Nullable Output<Boolean> version;
+    @Import(name="update")
+    private @Nullable Output<HostnamectlOptsArgs> update;
 
     /**
-     * @return Print a short version string and exit.
+     * @return The command to run on update, if empty, create will
+     * run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+     * are set to the stdout and stderr properties of the Command resource from previous
+     * create or update steps.
      * 
      */
-    public Optional<Output<Boolean>> version() {
-        return Optional.ofNullable(this.version);
+    public Optional<Output<HostnamectlOptsArgs>> update() {
+        return Optional.ofNullable(this.update);
     }
 
     private HostnamectlArgs() {}
 
     private HostnamectlArgs(HostnamectlArgs $) {
-        this.arg = $.arg;
         this.binaryPath = $.binaryPath;
-        this.command = $.command;
         this.connection = $.connection;
+        this.create = $.create;
+        this.delete = $.delete;
         this.environment = $.environment;
-        this.help = $.help;
-        this.host = $.host;
-        this.json = $.json;
-        this.lifecycle = $.lifecycle;
-        this.machine = $.machine;
-        this.noAskPassword = $.noAskPassword;
-        this.pretty = $.pretty;
-        this.static_ = $.static_;
         this.stdin = $.stdin;
-        this.transient_ = $.transient_;
         this.triggers = $.triggers;
-        this.version = $.version;
+        this.update = $.update;
     }
 
     public static Builder builder() {
@@ -317,27 +180,6 @@ public final class HostnamectlArgs extends com.pulumi.resources.ResourceArgs {
 
         public Builder(HostnamectlArgs defaults) {
             $ = new HostnamectlArgs(Objects.requireNonNull(defaults));
-        }
-
-        /**
-         * @param arg The argument for the specified `command`.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder arg(@Nullable Output<String> arg) {
-            $.arg = arg;
-            return this;
-        }
-
-        /**
-         * @param arg The argument for the specified `command`.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder arg(String arg) {
-            return arg(Output.of(arg));
         }
 
         /**
@@ -362,27 +204,6 @@ public final class HostnamectlArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param command Corresponds to the {COMMAND} argument.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder command(Output<HostnamectlCommand> command) {
-            $.command = command;
-            return this;
-        }
-
-        /**
-         * @param command Corresponds to the {COMMAND} argument.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder command(HostnamectlCommand command) {
-            return command(Output.of(command));
-        }
-
-        /**
          * @param connection Connection details for the remote system
          * 
          * @return builder
@@ -401,6 +222,52 @@ public final class HostnamectlArgs extends com.pulumi.resources.ResourceArgs {
          */
         public Builder connection(ConnectionArgs connection) {
             return connection(Output.of(connection));
+        }
+
+        /**
+         * @param create The command to run on create.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder create(@Nullable Output<HostnamectlOptsArgs> create) {
+            $.create = create;
+            return this;
+        }
+
+        /**
+         * @param create The command to run on create.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder create(HostnamectlOptsArgs create) {
+            return create(Output.of(create));
+        }
+
+        /**
+         * @param delete The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+         * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+         * Command resource from previous create or update steps.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder delete(@Nullable Output<HostnamectlOptsArgs> delete) {
+            $.delete = delete;
+            return this;
+        }
+
+        /**
+         * @param delete The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+         * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+         * Command resource from previous create or update steps.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder delete(HostnamectlOptsArgs delete) {
+            return delete(Output.of(delete));
         }
 
         /**
@@ -425,164 +292,6 @@ public final class HostnamectlArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param help Print a short help text and exit.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder help(@Nullable Output<Boolean> help) {
-            $.help = help;
-            return this;
-        }
-
-        /**
-         * @param help Print a short help text and exit.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder help(Boolean help) {
-            return help(Output.of(help));
-        }
-
-        /**
-         * @param host Execute the operation remotely. Specify a hostname, or a username and hostname separated by &#39;@&#39;, to connect to.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder host(@Nullable Output<String> host) {
-            $.host = host;
-            return this;
-        }
-
-        /**
-         * @param host Execute the operation remotely. Specify a hostname, or a username and hostname separated by &#39;@&#39;, to connect to.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder host(String host) {
-            return host(Output.of(host));
-        }
-
-        /**
-         * @param json Shows output formatted as JSON.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder json(@Nullable Output<HostnamectlJsonMode> json) {
-            $.json = json;
-            return this;
-        }
-
-        /**
-         * @param json Shows output formatted as JSON.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder json(HostnamectlJsonMode json) {
-            return json(Output.of(json));
-        }
-
-        /**
-         * @param lifecycle At what stage(s) in the resource lifecycle should the command be run
-         * 
-         * @return builder
-         * 
-         */
-        public Builder lifecycle(@Nullable CommandLifecycle lifecycle) {
-            $.lifecycle = lifecycle;
-            return this;
-        }
-
-        /**
-         * @param machine Execute operation on a local container. Specify a container name to connect to, optionally prefixed by a user name to connect as and a separating &#39;@&#39; character.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder machine(@Nullable Output<String> machine) {
-            $.machine = machine;
-            return this;
-        }
-
-        /**
-         * @param machine Execute operation on a local container. Specify a container name to connect to, optionally prefixed by a user name to connect as and a separating &#39;@&#39; character.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder machine(String machine) {
-            return machine(Output.of(machine));
-        }
-
-        /**
-         * @param noAskPassword Do not query the user for authentication for privileged operations.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder noAskPassword(@Nullable Output<Boolean> noAskPassword) {
-            $.noAskPassword = noAskPassword;
-            return this;
-        }
-
-        /**
-         * @param noAskPassword Do not query the user for authentication for privileged operations.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder noAskPassword(Boolean noAskPassword) {
-            return noAskPassword(Output.of(noAskPassword));
-        }
-
-        /**
-         * @param pretty If status is invoked (or no explicit command is given) and one of these switches is specified, hostnamectl will print out just this selected hostname. Same as `static` and `transient`.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder pretty(@Nullable Output<Boolean> pretty) {
-            $.pretty = pretty;
-            return this;
-        }
-
-        /**
-         * @param pretty If status is invoked (or no explicit command is given) and one of these switches is specified, hostnamectl will print out just this selected hostname. Same as `static` and `transient`.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder pretty(Boolean pretty) {
-            return pretty(Output.of(pretty));
-        }
-
-        /**
-         * @param static_ If status is invoked (or no explicit command is given) and one of these switches is specified, hostnamectl will print out just this selected hostname. Same as `transient` and `pretty`.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder static_(@Nullable Output<Boolean> static_) {
-            $.static_ = static_;
-            return this;
-        }
-
-        /**
-         * @param static_ If status is invoked (or no explicit command is given) and one of these switches is specified, hostnamectl will print out just this selected hostname. Same as `transient` and `pretty`.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder static_(Boolean static_) {
-            return static_(Output.of(static_));
-        }
-
-        /**
          * @param stdin TODO
          * 
          * @return builder
@@ -601,27 +310,6 @@ public final class HostnamectlArgs extends com.pulumi.resources.ResourceArgs {
          */
         public Builder stdin(String stdin) {
             return stdin(Output.of(stdin));
-        }
-
-        /**
-         * @param transient_ If status is invoked (or no explicit command is given) and one of these switches is specified, hostnamectl will print out just this selected hostname. Same as `static` and `pretty`.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder transient_(@Nullable Output<Boolean> transient_) {
-            $.transient_ = transient_;
-            return this;
-        }
-
-        /**
-         * @param transient_ If status is invoked (or no explicit command is given) and one of these switches is specified, hostnamectl will print out just this selected hostname. Same as `static` and `pretty`.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder transient_(Boolean transient_) {
-            return transient_(Output.of(transient_));
         }
 
         /**
@@ -656,30 +344,33 @@ public final class HostnamectlArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param version Print a short version string and exit.
+         * @param update The command to run on update, if empty, create will
+         * run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+         * are set to the stdout and stderr properties of the Command resource from previous
+         * create or update steps.
          * 
          * @return builder
          * 
          */
-        public Builder version(@Nullable Output<Boolean> version) {
-            $.version = version;
+        public Builder update(@Nullable Output<HostnamectlOptsArgs> update) {
+            $.update = update;
             return this;
         }
 
         /**
-         * @param version Print a short version string and exit.
+         * @param update The command to run on update, if empty, create will
+         * run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+         * are set to the stdout and stderr properties of the Command resource from previous
+         * create or update steps.
          * 
          * @return builder
          * 
          */
-        public Builder version(Boolean version) {
-            return version(Output.of(version));
+        public Builder update(HostnamectlOptsArgs update) {
+            return update(Output.of(update));
         }
 
         public HostnamectlArgs build() {
-            if ($.command == null) {
-                throw new MissingRequiredPropertyException("HostnamectlArgs", "command");
-            }
             if ($.connection == null) {
                 throw new MissingRequiredPropertyException("HostnamectlArgs", "connection");
             }

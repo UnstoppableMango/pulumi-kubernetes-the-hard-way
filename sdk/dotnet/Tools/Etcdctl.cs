@@ -14,7 +14,7 @@ namespace UnMango.KubernetesTheHardWay.Tools
     /// Abstraction over the `etcdctl` utility on a remote system.
     /// </summary>
     [KubernetesTheHardWayResourceType("kubernetes-the-hard-way:tools:Etcdctl")]
-    public partial class Etcdctl : global::Pulumi.ComponentResource
+    public partial class Etcdctl : global::Pulumi.CustomResource
     {
         /// <summary>
         /// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
@@ -23,28 +23,10 @@ namespace UnMango.KubernetesTheHardWay.Tools
         public Output<string> BinaryPath { get; private set; } = null!;
 
         /// <summary>
-        /// TODO
-        /// </summary>
-        [Output("caCert")]
-        public Output<string?> CaCert { get; private set; } = null!;
-
-        /// <summary>
-        /// TODO
-        /// </summary>
-        [Output("cert")]
-        public Output<string?> Cert { get; private set; } = null!;
-
-        /// <summary>
         /// The underlying command
         /// </summary>
         [Output("command")]
         public Output<Pulumi.Command.Remote.Command> Command { get; private set; } = null!;
-
-        /// <summary>
-        /// TODO
-        /// </summary>
-        [Output("commands")]
-        public Output<UnMango.KubernetesTheHardWay.Tools.EtcdctlCommand> Commands { get; private set; } = null!;
 
         /// <summary>
         /// Connection details for the remote system
@@ -53,28 +35,24 @@ namespace UnMango.KubernetesTheHardWay.Tools
         public Output<Pulumi.Command.Remote.Outputs.Connection> Connection { get; private set; } = null!;
 
         /// <summary>
-        /// TODO
+        /// The command to run on create.
         /// </summary>
-        [Output("endpoints")]
-        public Output<string?> Endpoints { get; private set; } = null!;
+        [Output("create")]
+        public Output<Outputs.EtcdctlOpts?> Create { get; private set; } = null!;
+
+        /// <summary>
+        /// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+        /// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+        /// Command resource from previous create or update steps.
+        /// </summary>
+        [Output("delete")]
+        public Output<Outputs.EtcdctlOpts?> Delete { get; private set; } = null!;
 
         /// <summary>
         /// Environment variables
         /// </summary>
         [Output("environment")]
         public Output<ImmutableDictionary<string, string>> Environment { get; private set; } = null!;
-
-        /// <summary>
-        /// TODO
-        /// </summary>
-        [Output("key")]
-        public Output<string?> Key { get; private set; } = null!;
-
-        /// <summary>
-        /// At what stage(s) in the resource lifecycle should the command be run
-        /// </summary>
-        [Output("lifecycle")]
-        public Output<UnMango.KubernetesTheHardWay.Tools.CommandLifecycle?> Lifecycle { get; private set; } = null!;
 
         /// <summary>
         /// TODO
@@ -100,6 +78,15 @@ namespace UnMango.KubernetesTheHardWay.Tools
         [Output("triggers")]
         public Output<ImmutableArray<object>> Triggers { get; private set; } = null!;
 
+        /// <summary>
+        /// The command to run on update, if empty, create will 
+        /// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
+        /// are set to the stdout and stderr properties of the Command resource from previous 
+        /// create or update steps.
+        /// </summary>
+        [Output("update")]
+        public Output<Outputs.EtcdctlOpts?> Update { get; private set; } = null!;
+
 
         /// <summary>
         /// Create a Etcdctl resource with the given unique name, arguments, and options.
@@ -108,22 +95,43 @@ namespace UnMango.KubernetesTheHardWay.Tools
         /// <param name="name">The unique name of the resource</param>
         /// <param name="args">The arguments used to populate this resource's properties</param>
         /// <param name="options">A bag of options that control this resource's behavior</param>
-        public Etcdctl(string name, EtcdctlArgs args, ComponentResourceOptions? options = null)
-            : base("kubernetes-the-hard-way:tools:Etcdctl", name, args ?? new EtcdctlArgs(), MakeResourceOptions(options, ""), remote: true)
+        public Etcdctl(string name, EtcdctlArgs args, CustomResourceOptions? options = null)
+            : base("kubernetes-the-hard-way:tools:Etcdctl", name, args ?? new EtcdctlArgs(), MakeResourceOptions(options, ""))
+        {
+        }
+        internal Etcdctl(string name, ImmutableDictionary<string, object?> dictionary, CustomResourceOptions? options = null)
+            : base("kubernetes-the-hard-way:tools:Etcdctl", name, new DictionaryResourceArgs(dictionary), MakeResourceOptions(options, ""))
         {
         }
 
-        private static ComponentResourceOptions MakeResourceOptions(ComponentResourceOptions? options, Input<string>? id)
+        private Etcdctl(string name, Input<string> id, CustomResourceOptions? options = null)
+            : base("kubernetes-the-hard-way:tools:Etcdctl", name, null, MakeResourceOptions(options, id))
         {
-            var defaultOptions = new ComponentResourceOptions
+        }
+
+        private static CustomResourceOptions MakeResourceOptions(CustomResourceOptions? options, Input<string>? id)
+        {
+            var defaultOptions = new CustomResourceOptions
             {
                 Version = Utilities.Version,
                 PluginDownloadURL = "github://api.github.com/UnstoppableMango",
             };
-            var merged = ComponentResourceOptions.Merge(defaultOptions, options);
+            var merged = CustomResourceOptions.Merge(defaultOptions, options);
             // Override the ID if one was specified for consistency with other language SDKs.
             merged.Id = id ?? merged.Id;
             return merged;
+        }
+        /// <summary>
+        /// Get an existing Etcdctl resource's state with the given name, ID, and optional extra
+        /// properties used to qualify the lookup.
+        /// </summary>
+        ///
+        /// <param name="name">The unique name of the resulting resource.</param>
+        /// <param name="id">The unique provider ID of the resource to lookup.</param>
+        /// <param name="options">A bag of options that control this resource's behavior</param>
+        public static Etcdctl Get(string name, Input<string> id, CustomResourceOptions? options = null)
+        {
+            return new Etcdctl(name, id, options);
         }
     }
 
@@ -136,34 +144,24 @@ namespace UnMango.KubernetesTheHardWay.Tools
         public Input<string>? BinaryPath { get; set; }
 
         /// <summary>
-        /// TODO
-        /// </summary>
-        [Input("caCert")]
-        public Input<string>? CaCert { get; set; }
-
-        /// <summary>
-        /// TODO
-        /// </summary>
-        [Input("cert")]
-        public Input<string>? Cert { get; set; }
-
-        /// <summary>
-        /// TODO
-        /// </summary>
-        [Input("commands", required: true)]
-        public Input<UnMango.KubernetesTheHardWay.Tools.EtcdctlCommand> Commands { get; set; } = null!;
-
-        /// <summary>
         /// Connection details for the remote system
         /// </summary>
         [Input("connection", required: true)]
         public Input<Pulumi.Command.Remote.Inputs.ConnectionArgs> Connection { get; set; } = null!;
 
         /// <summary>
-        /// TODO
+        /// The command to run on create.
         /// </summary>
-        [Input("endpoints")]
-        public Input<string>? Endpoints { get; set; }
+        [Input("create")]
+        public Input<Inputs.EtcdctlOptsArgs>? Create { get; set; }
+
+        /// <summary>
+        /// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+        /// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+        /// Command resource from previous create or update steps.
+        /// </summary>
+        [Input("delete")]
+        public Input<Inputs.EtcdctlOptsArgs>? Delete { get; set; }
 
         [Input("environment")]
         private InputMap<string>? _environment;
@@ -176,18 +174,6 @@ namespace UnMango.KubernetesTheHardWay.Tools
             get => _environment ?? (_environment = new InputMap<string>());
             set => _environment = value;
         }
-
-        /// <summary>
-        /// TODO
-        /// </summary>
-        [Input("key")]
-        public Input<string>? Key { get; set; }
-
-        /// <summary>
-        /// At what stage(s) in the resource lifecycle should the command be run
-        /// </summary>
-        [Input("lifecycle")]
-        public UnMango.KubernetesTheHardWay.Tools.CommandLifecycle? Lifecycle { get; set; }
 
         /// <summary>
         /// TODO
@@ -206,6 +192,15 @@ namespace UnMango.KubernetesTheHardWay.Tools
             get => _triggers ?? (_triggers = new InputList<object>());
             set => _triggers = value;
         }
+
+        /// <summary>
+        /// The command to run on update, if empty, create will 
+        /// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
+        /// are set to the stdout and stderr properties of the Command resource from previous 
+        /// create or update steps.
+        /// </summary>
+        [Input("update")]
+        public Input<Inputs.EtcdctlOptsArgs>? Update { get; set; }
 
         public EtcdctlArgs()
         {

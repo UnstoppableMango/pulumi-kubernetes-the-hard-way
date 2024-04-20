@@ -14,14 +14,8 @@ namespace UnMango.KubernetesTheHardWay.Tools
     /// Abstraction over the `hostnamectl` utility on a remote system.
     /// </summary>
     [KubernetesTheHardWayResourceType("kubernetes-the-hard-way:tools:Hostnamectl")]
-    public partial class Hostnamectl : global::Pulumi.ComponentResource
+    public partial class Hostnamectl : global::Pulumi.CustomResource
     {
-        /// <summary>
-        /// The argument for the specified `command`.
-        /// </summary>
-        [Output("arg")]
-        public Output<string?> Arg { get; private set; } = null!;
-
         /// <summary>
         /// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
         /// </summary>
@@ -41,64 +35,24 @@ namespace UnMango.KubernetesTheHardWay.Tools
         public Output<Pulumi.Command.Remote.Outputs.Connection> Connection { get; private set; } = null!;
 
         /// <summary>
+        /// The command to run on create.
+        /// </summary>
+        [Output("create")]
+        public Output<Outputs.HostnamectlOpts?> Create { get; private set; } = null!;
+
+        /// <summary>
+        /// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+        /// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+        /// Command resource from previous create or update steps.
+        /// </summary>
+        [Output("delete")]
+        public Output<Outputs.HostnamectlOpts?> Delete { get; private set; } = null!;
+
+        /// <summary>
         /// Environment variables
         /// </summary>
         [Output("environment")]
         public Output<ImmutableDictionary<string, string>> Environment { get; private set; } = null!;
-
-        /// <summary>
-        /// Print a short help text and exit.
-        /// </summary>
-        [Output("help")]
-        public Output<bool> Help { get; private set; } = null!;
-
-        /// <summary>
-        /// Execute the operation remotely. Specify a hostname, or a username and hostname separated by '@', to connect to.
-        /// </summary>
-        [Output("host")]
-        public Output<string?> Host { get; private set; } = null!;
-
-        /// <summary>
-        /// Corresponds to the {COMMAND} argument.
-        /// </summary>
-        [Output("hostnamectlCommand")]
-        public Output<UnMango.KubernetesTheHardWay.Tools.HostnamectlCommand> HostnamectlCommand { get; private set; } = null!;
-
-        /// <summary>
-        /// Shows output formatted as JSON.
-        /// </summary>
-        [Output("json")]
-        public Output<UnMango.KubernetesTheHardWay.Tools.HostnamectlJsonMode?> Json { get; private set; } = null!;
-
-        /// <summary>
-        /// At what stage(s) in the resource lifecycle should the command be run
-        /// </summary>
-        [Output("lifecycle")]
-        public Output<UnMango.KubernetesTheHardWay.Tools.CommandLifecycle?> Lifecycle { get; private set; } = null!;
-
-        /// <summary>
-        /// Execute operation on a local container. Specify a container name to connect to, optionally prefixed by a user name to connect as and a separating '@' character.
-        /// </summary>
-        [Output("machine")]
-        public Output<string?> Machine { get; private set; } = null!;
-
-        /// <summary>
-        /// Do not query the user for authentication for privileged operations.
-        /// </summary>
-        [Output("noAskPassword")]
-        public Output<bool> NoAskPassword { get; private set; } = null!;
-
-        /// <summary>
-        /// If status is invoked (or no explicit command is given) and one of these switches is specified, hostnamectl will print out just this selected hostname. Same as `static` and `transient`.
-        /// </summary>
-        [Output("pretty")]
-        public Output<bool> Pretty { get; private set; } = null!;
-
-        /// <summary>
-        /// If status is invoked (or no explicit command is given) and one of these switches is specified, hostnamectl will print out just this selected hostname. Same as `transient` and `pretty`.
-        /// </summary>
-        [Output("static")]
-        public Output<bool> Static { get; private set; } = null!;
 
         /// <summary>
         /// TODO
@@ -119,22 +73,19 @@ namespace UnMango.KubernetesTheHardWay.Tools
         public Output<string> Stdout { get; private set; } = null!;
 
         /// <summary>
-        /// If status is invoked (or no explicit command is given) and one of these switches is specified, hostnamectl will print out just this selected hostname. Same as `static` and `pretty`.
-        /// </summary>
-        [Output("transient")]
-        public Output<bool> Transient { get; private set; } = null!;
-
-        /// <summary>
         /// TODO
         /// </summary>
         [Output("triggers")]
         public Output<ImmutableArray<object>> Triggers { get; private set; } = null!;
 
         /// <summary>
-        /// Print a short version string and exit.
+        /// The command to run on update, if empty, create will 
+        /// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
+        /// are set to the stdout and stderr properties of the Command resource from previous 
+        /// create or update steps.
         /// </summary>
-        [Output("version")]
-        public Output<bool> Version { get; private set; } = null!;
+        [Output("update")]
+        public Output<Outputs.HostnamectlOpts?> Update { get; private set; } = null!;
 
 
         /// <summary>
@@ -144,33 +95,48 @@ namespace UnMango.KubernetesTheHardWay.Tools
         /// <param name="name">The unique name of the resource</param>
         /// <param name="args">The arguments used to populate this resource's properties</param>
         /// <param name="options">A bag of options that control this resource's behavior</param>
-        public Hostnamectl(string name, HostnamectlArgs args, ComponentResourceOptions? options = null)
-            : base("kubernetes-the-hard-way:tools:Hostnamectl", name, args ?? new HostnamectlArgs(), MakeResourceOptions(options, ""), remote: true)
+        public Hostnamectl(string name, HostnamectlArgs args, CustomResourceOptions? options = null)
+            : base("kubernetes-the-hard-way:tools:Hostnamectl", name, args ?? new HostnamectlArgs(), MakeResourceOptions(options, ""))
+        {
+        }
+        internal Hostnamectl(string name, ImmutableDictionary<string, object?> dictionary, CustomResourceOptions? options = null)
+            : base("kubernetes-the-hard-way:tools:Hostnamectl", name, new DictionaryResourceArgs(dictionary), MakeResourceOptions(options, ""))
         {
         }
 
-        private static ComponentResourceOptions MakeResourceOptions(ComponentResourceOptions? options, Input<string>? id)
+        private Hostnamectl(string name, Input<string> id, CustomResourceOptions? options = null)
+            : base("kubernetes-the-hard-way:tools:Hostnamectl", name, null, MakeResourceOptions(options, id))
         {
-            var defaultOptions = new ComponentResourceOptions
+        }
+
+        private static CustomResourceOptions MakeResourceOptions(CustomResourceOptions? options, Input<string>? id)
+        {
+            var defaultOptions = new CustomResourceOptions
             {
                 Version = Utilities.Version,
                 PluginDownloadURL = "github://api.github.com/UnstoppableMango",
             };
-            var merged = ComponentResourceOptions.Merge(defaultOptions, options);
+            var merged = CustomResourceOptions.Merge(defaultOptions, options);
             // Override the ID if one was specified for consistency with other language SDKs.
             merged.Id = id ?? merged.Id;
             return merged;
+        }
+        /// <summary>
+        /// Get an existing Hostnamectl resource's state with the given name, ID, and optional extra
+        /// properties used to qualify the lookup.
+        /// </summary>
+        ///
+        /// <param name="name">The unique name of the resulting resource.</param>
+        /// <param name="id">The unique provider ID of the resource to lookup.</param>
+        /// <param name="options">A bag of options that control this resource's behavior</param>
+        public static Hostnamectl Get(string name, Input<string> id, CustomResourceOptions? options = null)
+        {
+            return new Hostnamectl(name, id, options);
         }
     }
 
     public sealed class HostnamectlArgs : global::Pulumi.ResourceArgs
     {
-        /// <summary>
-        /// The argument for the specified `command`.
-        /// </summary>
-        [Input("arg")]
-        public Input<string>? Arg { get; set; }
-
         /// <summary>
         /// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
         /// </summary>
@@ -178,16 +144,24 @@ namespace UnMango.KubernetesTheHardWay.Tools
         public Input<string>? BinaryPath { get; set; }
 
         /// <summary>
-        /// Corresponds to the {COMMAND} argument.
-        /// </summary>
-        [Input("command", required: true)]
-        public Input<UnMango.KubernetesTheHardWay.Tools.HostnamectlCommand> Command { get; set; } = null!;
-
-        /// <summary>
         /// Connection details for the remote system
         /// </summary>
         [Input("connection", required: true)]
         public Input<Pulumi.Command.Remote.Inputs.ConnectionArgs> Connection { get; set; } = null!;
+
+        /// <summary>
+        /// The command to run on create.
+        /// </summary>
+        [Input("create")]
+        public Input<Inputs.HostnamectlOptsArgs>? Create { get; set; }
+
+        /// <summary>
+        /// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+        /// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+        /// Command resource from previous create or update steps.
+        /// </summary>
+        [Input("delete")]
+        public Input<Inputs.HostnamectlOptsArgs>? Delete { get; set; }
 
         [Input("environment")]
         private InputMap<string>? _environment;
@@ -202,64 +176,10 @@ namespace UnMango.KubernetesTheHardWay.Tools
         }
 
         /// <summary>
-        /// Print a short help text and exit.
-        /// </summary>
-        [Input("help")]
-        public Input<bool>? Help { get; set; }
-
-        /// <summary>
-        /// Execute the operation remotely. Specify a hostname, or a username and hostname separated by '@', to connect to.
-        /// </summary>
-        [Input("host")]
-        public Input<string>? Host { get; set; }
-
-        /// <summary>
-        /// Shows output formatted as JSON.
-        /// </summary>
-        [Input("json")]
-        public Input<UnMango.KubernetesTheHardWay.Tools.HostnamectlJsonMode>? Json { get; set; }
-
-        /// <summary>
-        /// At what stage(s) in the resource lifecycle should the command be run
-        /// </summary>
-        [Input("lifecycle")]
-        public UnMango.KubernetesTheHardWay.Tools.CommandLifecycle? Lifecycle { get; set; }
-
-        /// <summary>
-        /// Execute operation on a local container. Specify a container name to connect to, optionally prefixed by a user name to connect as and a separating '@' character.
-        /// </summary>
-        [Input("machine")]
-        public Input<string>? Machine { get; set; }
-
-        /// <summary>
-        /// Do not query the user for authentication for privileged operations.
-        /// </summary>
-        [Input("noAskPassword")]
-        public Input<bool>? NoAskPassword { get; set; }
-
-        /// <summary>
-        /// If status is invoked (or no explicit command is given) and one of these switches is specified, hostnamectl will print out just this selected hostname. Same as `static` and `transient`.
-        /// </summary>
-        [Input("pretty")]
-        public Input<bool>? Pretty { get; set; }
-
-        /// <summary>
-        /// If status is invoked (or no explicit command is given) and one of these switches is specified, hostnamectl will print out just this selected hostname. Same as `transient` and `pretty`.
-        /// </summary>
-        [Input("static")]
-        public Input<bool>? Static { get; set; }
-
-        /// <summary>
         /// TODO
         /// </summary>
         [Input("stdin")]
         public Input<string>? Stdin { get; set; }
-
-        /// <summary>
-        /// If status is invoked (or no explicit command is given) and one of these switches is specified, hostnamectl will print out just this selected hostname. Same as `static` and `pretty`.
-        /// </summary>
-        [Input("transient")]
-        public Input<bool>? Transient { get; set; }
 
         [Input("triggers")]
         private InputList<object>? _triggers;
@@ -274,10 +194,13 @@ namespace UnMango.KubernetesTheHardWay.Tools
         }
 
         /// <summary>
-        /// Print a short version string and exit.
+        /// The command to run on update, if empty, create will 
+        /// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
+        /// are set to the stdout and stderr properties of the Command resource from previous 
+        /// create or update steps.
         /// </summary>
-        [Input("version")]
-        public Input<bool>? Version { get; set; }
+        [Input("update")]
+        public Input<Inputs.HostnamectlOptsArgs>? Update { get; set; }
 
         public HostnamectlArgs()
         {

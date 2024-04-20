@@ -14,7 +14,7 @@ namespace UnMango.KubernetesTheHardWay.Tools
     /// Abstraction over the `systemctl` utility on a remote system.
     /// </summary>
     [KubernetesTheHardWayResourceType("kubernetes-the-hard-way:tools:Systemctl")]
-    public partial class Systemctl : global::Pulumi.ComponentResource
+    public partial class Systemctl : global::Pulumi.CustomResource
     {
         /// <summary>
         /// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
@@ -35,22 +35,24 @@ namespace UnMango.KubernetesTheHardWay.Tools
         public Output<Pulumi.Command.Remote.Outputs.Connection> Connection { get; private set; } = null!;
 
         /// <summary>
+        /// The command to run on create.
+        /// </summary>
+        [Output("create")]
+        public Output<Outputs.SystemctlOpts?> Create { get; private set; } = null!;
+
+        /// <summary>
+        /// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+        /// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+        /// Command resource from previous create or update steps.
+        /// </summary>
+        [Output("delete")]
+        public Output<Outputs.SystemctlOpts?> Delete { get; private set; } = null!;
+
+        /// <summary>
         /// Environment variables
         /// </summary>
         [Output("environment")]
         public Output<ImmutableDictionary<string, string>> Environment { get; private set; } = null!;
-
-        /// <summary>
-        /// At what stage(s) in the resource lifecycle should the command be run
-        /// </summary>
-        [Output("lifecycle")]
-        public Output<UnMango.KubernetesTheHardWay.Tools.CommandLifecycle?> Lifecycle { get; private set; } = null!;
-
-        /// <summary>
-        /// Corresponds to the [PATTERN] argument
-        /// </summary>
-        [Output("pattern")]
-        public Output<string?> Pattern { get; private set; } = null!;
 
         /// <summary>
         /// TODO
@@ -71,22 +73,19 @@ namespace UnMango.KubernetesTheHardWay.Tools
         public Output<string> Stdout { get; private set; } = null!;
 
         /// <summary>
-        /// Corresponds to the COMMAND argument.
-        /// </summary>
-        [Output("systemctlCommand")]
-        public Output<UnMango.KubernetesTheHardWay.Tools.SystemctlCommand> SystemctlCommand { get; private set; } = null!;
-
-        /// <summary>
         /// TODO
         /// </summary>
         [Output("triggers")]
         public Output<ImmutableArray<object>> Triggers { get; private set; } = null!;
 
         /// <summary>
-        /// Corresponds to the [UNIT...] argument.
+        /// The command to run on update, if empty, create will 
+        /// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
+        /// are set to the stdout and stderr properties of the Command resource from previous 
+        /// create or update steps.
         /// </summary>
-        [Output("unit")]
-        public Output<string> Unit { get; private set; } = null!;
+        [Output("update")]
+        public Output<Outputs.SystemctlOpts?> Update { get; private set; } = null!;
 
 
         /// <summary>
@@ -96,22 +95,43 @@ namespace UnMango.KubernetesTheHardWay.Tools
         /// <param name="name">The unique name of the resource</param>
         /// <param name="args">The arguments used to populate this resource's properties</param>
         /// <param name="options">A bag of options that control this resource's behavior</param>
-        public Systemctl(string name, SystemctlArgs args, ComponentResourceOptions? options = null)
-            : base("kubernetes-the-hard-way:tools:Systemctl", name, args ?? new SystemctlArgs(), MakeResourceOptions(options, ""), remote: true)
+        public Systemctl(string name, SystemctlArgs args, CustomResourceOptions? options = null)
+            : base("kubernetes-the-hard-way:tools:Systemctl", name, args ?? new SystemctlArgs(), MakeResourceOptions(options, ""))
+        {
+        }
+        internal Systemctl(string name, ImmutableDictionary<string, object?> dictionary, CustomResourceOptions? options = null)
+            : base("kubernetes-the-hard-way:tools:Systemctl", name, new DictionaryResourceArgs(dictionary), MakeResourceOptions(options, ""))
         {
         }
 
-        private static ComponentResourceOptions MakeResourceOptions(ComponentResourceOptions? options, Input<string>? id)
+        private Systemctl(string name, Input<string> id, CustomResourceOptions? options = null)
+            : base("kubernetes-the-hard-way:tools:Systemctl", name, null, MakeResourceOptions(options, id))
         {
-            var defaultOptions = new ComponentResourceOptions
+        }
+
+        private static CustomResourceOptions MakeResourceOptions(CustomResourceOptions? options, Input<string>? id)
+        {
+            var defaultOptions = new CustomResourceOptions
             {
                 Version = Utilities.Version,
                 PluginDownloadURL = "github://api.github.com/UnstoppableMango",
             };
-            var merged = ComponentResourceOptions.Merge(defaultOptions, options);
+            var merged = CustomResourceOptions.Merge(defaultOptions, options);
             // Override the ID if one was specified for consistency with other language SDKs.
             merged.Id = id ?? merged.Id;
             return merged;
+        }
+        /// <summary>
+        /// Get an existing Systemctl resource's state with the given name, ID, and optional extra
+        /// properties used to qualify the lookup.
+        /// </summary>
+        ///
+        /// <param name="name">The unique name of the resulting resource.</param>
+        /// <param name="id">The unique provider ID of the resource to lookup.</param>
+        /// <param name="options">A bag of options that control this resource's behavior</param>
+        public static Systemctl Get(string name, Input<string> id, CustomResourceOptions? options = null)
+        {
+            return new Systemctl(name, id, options);
         }
     }
 
@@ -124,16 +144,24 @@ namespace UnMango.KubernetesTheHardWay.Tools
         public Input<string>? BinaryPath { get; set; }
 
         /// <summary>
-        /// Corresponds to the COMMAND argument.
-        /// </summary>
-        [Input("command", required: true)]
-        public UnMango.KubernetesTheHardWay.Tools.SystemctlCommand Command { get; set; }
-
-        /// <summary>
         /// Connection details for the remote system
         /// </summary>
         [Input("connection", required: true)]
         public Input<Pulumi.Command.Remote.Inputs.ConnectionArgs> Connection { get; set; } = null!;
+
+        /// <summary>
+        /// The command to run on create.
+        /// </summary>
+        [Input("create")]
+        public Input<Inputs.SystemctlOptsArgs>? Create { get; set; }
+
+        /// <summary>
+        /// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+        /// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+        /// Command resource from previous create or update steps.
+        /// </summary>
+        [Input("delete")]
+        public Input<Inputs.SystemctlOptsArgs>? Delete { get; set; }
 
         [Input("environment")]
         private InputMap<string>? _environment;
@@ -146,18 +174,6 @@ namespace UnMango.KubernetesTheHardWay.Tools
             get => _environment ?? (_environment = new InputMap<string>());
             set => _environment = value;
         }
-
-        /// <summary>
-        /// At what stage(s) in the resource lifecycle should the command be run
-        /// </summary>
-        [Input("lifecycle")]
-        public UnMango.KubernetesTheHardWay.Tools.CommandLifecycle? Lifecycle { get; set; }
-
-        /// <summary>
-        /// Corresponds to the [PATTERN] argument
-        /// </summary>
-        [Input("pattern")]
-        public Input<string>? Pattern { get; set; }
 
         /// <summary>
         /// TODO
@@ -178,10 +194,13 @@ namespace UnMango.KubernetesTheHardWay.Tools
         }
 
         /// <summary>
-        /// Corresponds to the [UNIT...] argument.
+        /// The command to run on update, if empty, create will 
+        /// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
+        /// are set to the stdout and stderr properties of the Command resource from previous 
+        /// create or update steps.
         /// </summary>
-        [Input("unit", required: true)]
-        public Input<string> Unit { get; set; } = null!;
+        [Input("update")]
+        public Input<Inputs.SystemctlOptsArgs>? Update { get; set; }
 
         public SystemctlArgs()
         {

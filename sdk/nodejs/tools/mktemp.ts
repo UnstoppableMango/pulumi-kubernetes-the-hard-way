@@ -10,9 +10,21 @@ import * as utilities from "../utilities";
 import * as pulumiCommand from "@pulumi/command";
 
 /**
- * Abstraction over the `mkdir` utility on a remote system.
+ * Abstraction over the `mktemp` utility on a remote system.
  */
-export class Mktemp extends pulumi.ComponentResource {
+export class Mktemp extends pulumi.CustomResource {
+    /**
+     * Get an existing Mktemp resource's state with the given name, ID, and optional extra
+     * properties used to qualify the lookup.
+     *
+     * @param name The _unique_ name of the resulting resource.
+     * @param id The _unique_ provider ID of the resource to lookup.
+     * @param opts Optional settings to control the behavior of the CustomResource.
+     */
+    public static get(name: string, id: pulumi.Input<pulumi.ID>, opts?: pulumi.CustomResourceOptions): Mktemp {
+        return new Mktemp(name, undefined as any, { ...opts, id: id });
+    }
+
     /** @internal */
     public static readonly __pulumiType = 'kubernetes-the-hard-way:tools:Mktemp';
 
@@ -40,25 +52,19 @@ export class Mktemp extends pulumi.ComponentResource {
      */
     public readonly connection!: pulumi.Output<pulumiCommand.types.output.remote.Connection>;
     /**
-     * Corresponds to the `--directory` option.
+     * The command to run on create.
      */
-    public readonly directory!: pulumi.Output<boolean | undefined>;
+    public readonly create!: pulumi.Output<outputs.tools.MktempOpts | undefined>;
     /**
-     * Corresponds to the `--dry-run` option.
+     * The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+     * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+     * Command resource from previous create or update steps.
      */
-    public readonly dryRun!: pulumi.Output<boolean>;
+    public readonly delete!: pulumi.Output<outputs.tools.MktempOpts | undefined>;
     /**
      * Environment variables
      */
     public readonly environment!: pulumi.Output<{[key: string]: string}>;
-    /**
-     * At what stage(s) in the resource lifecycle should the command be run
-     */
-    public readonly lifecycle!: pulumi.Output<enums.tools.CommandLifecycle | undefined>;
-    /**
-     * Corresponds to the `--quiet` option.
-     */
-    public readonly quiet!: pulumi.Output<boolean>;
     /**
      * TODO
      */
@@ -72,21 +78,16 @@ export class Mktemp extends pulumi.ComponentResource {
      */
     public /*out*/ readonly stdout!: pulumi.Output<string>;
     /**
-     * Corresponds to the `--suffix` option.
-     */
-    public readonly suffix!: pulumi.Output<string | undefined>;
-    /**
-     * Corresponds to the [TEMPLATE] argument.
-     */
-    public readonly template!: pulumi.Output<string | undefined>;
-    /**
-     * Corresponds to the `--tmpdir` option.
-     */
-    public readonly tmpdir!: pulumi.Output<string | undefined>;
-    /**
      * TODO
      */
     public readonly triggers!: pulumi.Output<any[]>;
+    /**
+     * The command to run on update, if empty, create will 
+     * run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
+     * are set to the stdout and stderr properties of the Command resource from previous 
+     * create or update steps.
+     */
+    public readonly update!: pulumi.Output<outputs.tools.MktempOpts | undefined>;
 
     /**
      * Create a Mktemp resource with the given unique name, arguments, and options.
@@ -95,7 +96,7 @@ export class Mktemp extends pulumi.ComponentResource {
      * @param args The arguments to use to populate this resource's properties.
      * @param opts A bag of options that control this resource's behavior.
      */
-    constructor(name: string, args: MktempArgs, opts?: pulumi.ComponentResourceOptions) {
+    constructor(name: string, args: MktempArgs, opts?: pulumi.CustomResourceOptions) {
         let resourceInputs: pulumi.Inputs = {};
         opts = opts || {};
         if (!opts.id) {
@@ -104,16 +105,12 @@ export class Mktemp extends pulumi.ComponentResource {
             }
             resourceInputs["binaryPath"] = args ? args.binaryPath : undefined;
             resourceInputs["connection"] = args ? (args.connection ? pulumi.output(args.connection).apply(pulumiCommand.types.input.remote.connectionArgsProvideDefaults) : undefined) : undefined;
-            resourceInputs["directory"] = args ? args.directory : undefined;
-            resourceInputs["dryRun"] = args ? args.dryRun : undefined;
+            resourceInputs["create"] = args ? args.create : undefined;
+            resourceInputs["delete"] = args ? args.delete : undefined;
             resourceInputs["environment"] = args ? args.environment : undefined;
-            resourceInputs["lifecycle"] = args ? args.lifecycle : undefined;
-            resourceInputs["quiet"] = args ? args.quiet : undefined;
             resourceInputs["stdin"] = args ? args.stdin : undefined;
-            resourceInputs["suffix"] = args ? args.suffix : undefined;
-            resourceInputs["template"] = args ? args.template : undefined;
-            resourceInputs["tmpdir"] = args ? args.tmpdir : undefined;
             resourceInputs["triggers"] = args ? args.triggers : undefined;
+            resourceInputs["update"] = args ? args.update : undefined;
             resourceInputs["command"] = undefined /*out*/;
             resourceInputs["stderr"] = undefined /*out*/;
             resourceInputs["stdout"] = undefined /*out*/;
@@ -121,21 +118,17 @@ export class Mktemp extends pulumi.ComponentResource {
             resourceInputs["binaryPath"] = undefined /*out*/;
             resourceInputs["command"] = undefined /*out*/;
             resourceInputs["connection"] = undefined /*out*/;
-            resourceInputs["directory"] = undefined /*out*/;
-            resourceInputs["dryRun"] = undefined /*out*/;
+            resourceInputs["create"] = undefined /*out*/;
+            resourceInputs["delete"] = undefined /*out*/;
             resourceInputs["environment"] = undefined /*out*/;
-            resourceInputs["lifecycle"] = undefined /*out*/;
-            resourceInputs["quiet"] = undefined /*out*/;
             resourceInputs["stderr"] = undefined /*out*/;
             resourceInputs["stdin"] = undefined /*out*/;
             resourceInputs["stdout"] = undefined /*out*/;
-            resourceInputs["suffix"] = undefined /*out*/;
-            resourceInputs["template"] = undefined /*out*/;
-            resourceInputs["tmpdir"] = undefined /*out*/;
             resourceInputs["triggers"] = undefined /*out*/;
+            resourceInputs["update"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
-        super(Mktemp.__pulumiType, name, resourceInputs, opts, true /*remote*/);
+        super(Mktemp.__pulumiType, name, resourceInputs, opts);
     }
 }
 
@@ -152,43 +145,32 @@ export interface MktempArgs {
      */
     connection: pulumi.Input<pulumiCommand.types.input.remote.ConnectionArgs>;
     /**
-     * Corresponds to the `--directory` option.
+     * The command to run on create.
      */
-    directory?: pulumi.Input<boolean>;
+    create?: pulumi.Input<inputs.tools.MktempOptsArgs>;
     /**
-     * Corresponds to the `--dry-run` option.
+     * The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+     * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+     * Command resource from previous create or update steps.
      */
-    dryRun?: pulumi.Input<boolean>;
+    delete?: pulumi.Input<inputs.tools.MktempOptsArgs>;
     /**
      * Environment variables
      */
     environment?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
-     * At what stage(s) in the resource lifecycle should the command be run
-     */
-    lifecycle?: enums.tools.CommandLifecycle;
-    /**
-     * Corresponds to the `--quiet` option.
-     */
-    quiet?: pulumi.Input<boolean>;
-    /**
      * TODO
      */
     stdin?: pulumi.Input<string>;
     /**
-     * Corresponds to the `--suffix` option.
-     */
-    suffix?: pulumi.Input<string>;
-    /**
-     * Corresponds to the [TEMPLATE] argument.
-     */
-    template?: pulumi.Input<string>;
-    /**
-     * Corresponds to the `--tmpdir` option.
-     */
-    tmpdir?: pulumi.Input<string>;
-    /**
      * TODO
      */
     triggers?: pulumi.Input<any[]>;
+    /**
+     * The command to run on update, if empty, create will 
+     * run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
+     * are set to the stdout and stderr properties of the Command resource from previous 
+     * create or update steps.
+     */
+    update?: pulumi.Input<inputs.tools.MktempOptsArgs>;
 }

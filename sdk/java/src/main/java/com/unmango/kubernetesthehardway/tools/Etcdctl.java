@@ -11,8 +11,7 @@ import com.pulumi.core.annotations.ResourceType;
 import com.pulumi.core.internal.Codegen;
 import com.unmango.kubernetesthehardway.Utilities;
 import com.unmango.kubernetesthehardway.tools.EtcdctlArgs;
-import com.unmango.kubernetesthehardway.tools.enums.CommandLifecycle;
-import com.unmango.kubernetesthehardway.tools.enums.EtcdctlCommand;
+import com.unmango.kubernetesthehardway.tools.outputs.EtcdctlOpts;
 import java.lang.Object;
 import java.lang.String;
 import java.util.List;
@@ -25,7 +24,7 @@ import javax.annotation.Nullable;
  * 
  */
 @ResourceType(type="kubernetes-the-hard-way:tools:Etcdctl")
-public class Etcdctl extends com.pulumi.resources.ComponentResource {
+public class Etcdctl extends com.pulumi.resources.CustomResource {
     /**
      * Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
      * 
@@ -39,34 +38,6 @@ public class Etcdctl extends com.pulumi.resources.ComponentResource {
      */
     public Output<String> binaryPath() {
         return this.binaryPath;
-    }
-    /**
-     * TODO
-     * 
-     */
-    @Export(name="caCert", refs={String.class}, tree="[0]")
-    private Output</* @Nullable */ String> caCert;
-
-    /**
-     * @return TODO
-     * 
-     */
-    public Output<Optional<String>> caCert() {
-        return Codegen.optional(this.caCert);
-    }
-    /**
-     * TODO
-     * 
-     */
-    @Export(name="cert", refs={String.class}, tree="[0]")
-    private Output</* @Nullable */ String> cert;
-
-    /**
-     * @return TODO
-     * 
-     */
-    public Output<Optional<String>> cert() {
-        return Codegen.optional(this.cert);
     }
     /**
      * The underlying command
@@ -83,20 +54,6 @@ public class Etcdctl extends com.pulumi.resources.ComponentResource {
         return this.command;
     }
     /**
-     * TODO
-     * 
-     */
-    @Export(name="commands", refs={EtcdctlCommand.class}, tree="[0]")
-    private Output<EtcdctlCommand> commands;
-
-    /**
-     * @return TODO
-     * 
-     */
-    public Output<EtcdctlCommand> commands() {
-        return this.commands;
-    }
-    /**
      * Connection details for the remote system
      * 
      */
@@ -111,18 +68,36 @@ public class Etcdctl extends com.pulumi.resources.ComponentResource {
         return this.connection;
     }
     /**
-     * TODO
+     * The command to run on create.
      * 
      */
-    @Export(name="endpoints", refs={String.class}, tree="[0]")
-    private Output</* @Nullable */ String> endpoints;
+    @Export(name="create", refs={EtcdctlOpts.class}, tree="[0]")
+    private Output</* @Nullable */ EtcdctlOpts> create;
 
     /**
-     * @return TODO
+     * @return The command to run on create.
      * 
      */
-    public Output<Optional<String>> endpoints() {
-        return Codegen.optional(this.endpoints);
+    public Output<Optional<EtcdctlOpts>> create() {
+        return Codegen.optional(this.create);
+    }
+    /**
+     * The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+     * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+     * Command resource from previous create or update steps.
+     * 
+     */
+    @Export(name="delete", refs={EtcdctlOpts.class}, tree="[0]")
+    private Output</* @Nullable */ EtcdctlOpts> delete;
+
+    /**
+     * @return The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+     * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+     * Command resource from previous create or update steps.
+     * 
+     */
+    public Output<Optional<EtcdctlOpts>> delete() {
+        return Codegen.optional(this.delete);
     }
     /**
      * Environment variables
@@ -137,34 +112,6 @@ public class Etcdctl extends com.pulumi.resources.ComponentResource {
      */
     public Output<Map<String,String>> environment() {
         return this.environment;
-    }
-    /**
-     * TODO
-     * 
-     */
-    @Export(name="key", refs={String.class}, tree="[0]")
-    private Output</* @Nullable */ String> key;
-
-    /**
-     * @return TODO
-     * 
-     */
-    public Output<Optional<String>> key() {
-        return Codegen.optional(this.key);
-    }
-    /**
-     * At what stage(s) in the resource lifecycle should the command be run
-     * 
-     */
-    @Export(name="lifecycle", refs={CommandLifecycle.class}, tree="[0]")
-    private Output</* @Nullable */ CommandLifecycle> lifecycle;
-
-    /**
-     * @return At what stage(s) in the resource lifecycle should the command be run
-     * 
-     */
-    public Output<Optional<CommandLifecycle>> lifecycle() {
-        return Codegen.optional(this.lifecycle);
     }
     /**
      * TODO
@@ -222,6 +169,26 @@ public class Etcdctl extends com.pulumi.resources.ComponentResource {
     public Output<List<Object>> triggers() {
         return this.triggers;
     }
+    /**
+     * The command to run on update, if empty, create will
+     * run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+     * are set to the stdout and stderr properties of the Command resource from previous
+     * create or update steps.
+     * 
+     */
+    @Export(name="update", refs={EtcdctlOpts.class}, tree="[0]")
+    private Output</* @Nullable */ EtcdctlOpts> update;
+
+    /**
+     * @return The command to run on update, if empty, create will
+     * run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+     * are set to the stdout and stderr properties of the Command resource from previous
+     * create or update steps.
+     * 
+     */
+    public Output<Optional<EtcdctlOpts>> update() {
+        return Codegen.optional(this.update);
+    }
 
     /**
      *
@@ -244,15 +211,30 @@ public class Etcdctl extends com.pulumi.resources.ComponentResource {
      * @param args The arguments to use to populate this resource's properties.
      * @param options A bag of options that control this resource's behavior.
      */
-    public Etcdctl(String name, EtcdctlArgs args, @Nullable com.pulumi.resources.ComponentResourceOptions options) {
-        super("kubernetes-the-hard-way:tools:Etcdctl", name, args == null ? EtcdctlArgs.Empty : args, makeResourceOptions(options, Codegen.empty()), true);
+    public Etcdctl(String name, EtcdctlArgs args, @Nullable com.pulumi.resources.CustomResourceOptions options) {
+        super("kubernetes-the-hard-way:tools:Etcdctl", name, args == null ? EtcdctlArgs.Empty : args, makeResourceOptions(options, Codegen.empty()));
     }
 
-    private static com.pulumi.resources.ComponentResourceOptions makeResourceOptions(@Nullable com.pulumi.resources.ComponentResourceOptions options, @Nullable Output<String> id) {
-        var defaultOptions = com.pulumi.resources.ComponentResourceOptions.builder()
+    private Etcdctl(String name, Output<String> id, @Nullable com.pulumi.resources.CustomResourceOptions options) {
+        super("kubernetes-the-hard-way:tools:Etcdctl", name, null, makeResourceOptions(options, id));
+    }
+
+    private static com.pulumi.resources.CustomResourceOptions makeResourceOptions(@Nullable com.pulumi.resources.CustomResourceOptions options, @Nullable Output<String> id) {
+        var defaultOptions = com.pulumi.resources.CustomResourceOptions.builder()
             .version(Utilities.getVersion())
             .build();
-        return com.pulumi.resources.ComponentResourceOptions.merge(defaultOptions, options, id);
+        return com.pulumi.resources.CustomResourceOptions.merge(defaultOptions, options, id);
     }
 
+    /**
+     * Get an existing Host resource's state with the given name, ID, and optional extra
+     * properties used to qualify the lookup.
+     *
+     * @param name The _unique_ name of the resulting resource.
+     * @param id The _unique_ provider ID of the resource to lookup.
+     * @param options Optional settings to control the behavior of the CustomResource.
+     */
+    public static Etcdctl get(String name, Output<String> id, @Nullable com.pulumi.resources.CustomResourceOptions options) {
+        return new Etcdctl(name, id, options);
+    }
 }

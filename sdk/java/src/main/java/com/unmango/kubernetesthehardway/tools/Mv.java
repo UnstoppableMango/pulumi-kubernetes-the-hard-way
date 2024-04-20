@@ -5,15 +5,13 @@ package com.unmango.kubernetesthehardway.tools;
 
 import com.pulumi.command.remote.Command;
 import com.pulumi.command.remote.outputs.Connection;
-import com.pulumi.core.Either;
 import com.pulumi.core.Output;
 import com.pulumi.core.annotations.Export;
 import com.pulumi.core.annotations.ResourceType;
 import com.pulumi.core.internal.Codegen;
 import com.unmango.kubernetesthehardway.Utilities;
 import com.unmango.kubernetesthehardway.tools.MvArgs;
-import com.unmango.kubernetesthehardway.tools.enums.CommandLifecycle;
-import java.lang.Boolean;
+import com.unmango.kubernetesthehardway.tools.outputs.MvOpts;
 import java.lang.Object;
 import java.lang.String;
 import java.util.List;
@@ -26,21 +24,7 @@ import javax.annotation.Nullable;
  * 
  */
 @ResourceType(type="kubernetes-the-hard-way:tools:Mv")
-public class Mv extends com.pulumi.resources.ComponentResource {
-    /**
-     * Corresponds to the `-b` and `--backup` options depending on whether [CONTROL] is supplied.
-     * 
-     */
-    @Export(name="backup", refs={Boolean.class}, tree="[0]")
-    private Output<Boolean> backup;
-
-    /**
-     * @return Corresponds to the `-b` and `--backup` options depending on whether [CONTROL] is supplied.
-     * 
-     */
-    public Output<Boolean> backup() {
-        return this.backup;
-    }
+public class Mv extends com.pulumi.resources.CustomResource {
     /**
      * Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
      * 
@@ -84,60 +68,36 @@ public class Mv extends com.pulumi.resources.ComponentResource {
         return this.connection;
     }
     /**
-     * Corresponds to the `--context` option.
+     * The command to run on create.
      * 
      */
-    @Export(name="context", refs={Boolean.class}, tree="[0]")
-    private Output<Boolean> context;
+    @Export(name="create", refs={MvOpts.class}, tree="[0]")
+    private Output</* @Nullable */ MvOpts> create;
 
     /**
-     * @return Corresponds to the `--context` option.
+     * @return The command to run on create.
      * 
      */
-    public Output<Boolean> context() {
-        return this.context;
+    public Output<Optional<MvOpts>> create() {
+        return Codegen.optional(this.create);
     }
     /**
-     * Corresponds to the [CONTROL] argument for the `--backup` option.
+     * The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+     * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+     * Command resource from previous create or update steps.
      * 
      */
-    @Export(name="control", refs={Boolean.class}, tree="[0]")
-    private Output</* @Nullable */ Boolean> control;
+    @Export(name="delete", refs={MvOpts.class}, tree="[0]")
+    private Output</* @Nullable */ MvOpts> delete;
 
     /**
-     * @return Corresponds to the [CONTROL] argument for the `--backup` option.
+     * @return The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+     * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+     * Command resource from previous create or update steps.
      * 
      */
-    public Output<Optional<Boolean>> control() {
-        return Codegen.optional(this.control);
-    }
-    /**
-     * Corresponds to the [DEST] argument.
-     * 
-     */
-    @Export(name="dest", refs={String.class}, tree="[0]")
-    private Output</* @Nullable */ String> dest;
-
-    /**
-     * @return Corresponds to the [DEST] argument.
-     * 
-     */
-    public Output<Optional<String>> dest() {
-        return Codegen.optional(this.dest);
-    }
-    /**
-     * Corresponds to the [DIRECTORY] argument.
-     * 
-     */
-    @Export(name="directory", refs={String.class}, tree="[0]")
-    private Output</* @Nullable */ String> directory;
-
-    /**
-     * @return Corresponds to the [DIRECTORY] argument.
-     * 
-     */
-    public Output<Optional<String>> directory() {
-        return Codegen.optional(this.directory);
+    public Output<Optional<MvOpts>> delete() {
+        return Codegen.optional(this.delete);
     }
     /**
      * Environment variables
@@ -152,76 +112,6 @@ public class Mv extends com.pulumi.resources.ComponentResource {
      */
     public Output<Map<String,String>> environment() {
         return this.environment;
-    }
-    /**
-     * Corresponds to the `--force` option.
-     * 
-     */
-    @Export(name="force", refs={Boolean.class}, tree="[0]")
-    private Output<Boolean> force;
-
-    /**
-     * @return Corresponds to the `--force` option.
-     * 
-     */
-    public Output<Boolean> force() {
-        return this.force;
-    }
-    /**
-     * At what stage(s) in the resource lifecycle should the command be run
-     * 
-     */
-    @Export(name="lifecycle", refs={CommandLifecycle.class}, tree="[0]")
-    private Output</* @Nullable */ CommandLifecycle> lifecycle;
-
-    /**
-     * @return At what stage(s) in the resource lifecycle should the command be run
-     * 
-     */
-    public Output<Optional<CommandLifecycle>> lifecycle() {
-        return Codegen.optional(this.lifecycle);
-    }
-    /**
-     * Corresponds to the `--no-clobber` option.
-     * 
-     */
-    @Export(name="noClobber", refs={Boolean.class}, tree="[0]")
-    private Output<Boolean> noClobber;
-
-    /**
-     * @return Corresponds to the `--no-clobber` option.
-     * 
-     */
-    public Output<Boolean> noClobber() {
-        return this.noClobber;
-    }
-    /**
-     * Corresponds to the `--no-target-directory` option.
-     * 
-     */
-    @Export(name="noTargetDirectory", refs={Boolean.class}, tree="[0]")
-    private Output<Boolean> noTargetDirectory;
-
-    /**
-     * @return Corresponds to the `--no-target-directory` option.
-     * 
-     */
-    public Output<Boolean> noTargetDirectory() {
-        return this.noTargetDirectory;
-    }
-    /**
-     * Corresponds to the [SOURCE] argument.
-     * 
-     */
-    @Export(name="source", refs={Either.class,String.class,List.class}, tree="[0,1,[2,1]]")
-    private Output<Either<String,List<String>>> source;
-
-    /**
-     * @return Corresponds to the [SOURCE] argument.
-     * 
-     */
-    public Output<Either<String,List<String>>> source() {
-        return this.source;
     }
     /**
      * TODO
@@ -266,48 +156,6 @@ public class Mv extends com.pulumi.resources.ComponentResource {
         return this.stdout;
     }
     /**
-     * Corresponds to the `--strip-trailing-slashes` option.
-     * 
-     */
-    @Export(name="stripTrailingSlashes", refs={Boolean.class}, tree="[0]")
-    private Output<Boolean> stripTrailingSlashes;
-
-    /**
-     * @return Corresponds to the `--strip-trailing-slashes` option.
-     * 
-     */
-    public Output<Boolean> stripTrailingSlashes() {
-        return this.stripTrailingSlashes;
-    }
-    /**
-     * Corresponds to the `--suffix` option.
-     * 
-     */
-    @Export(name="suffix", refs={String.class}, tree="[0]")
-    private Output</* @Nullable */ String> suffix;
-
-    /**
-     * @return Corresponds to the `--suffix` option.
-     * 
-     */
-    public Output<Optional<String>> suffix() {
-        return Codegen.optional(this.suffix);
-    }
-    /**
-     * Corresponds to the `--target-directory` option.
-     * 
-     */
-    @Export(name="targetDirectory", refs={Boolean.class}, tree="[0]")
-    private Output</* @Nullable */ Boolean> targetDirectory;
-
-    /**
-     * @return Corresponds to the `--target-directory` option.
-     * 
-     */
-    public Output<Optional<Boolean>> targetDirectory() {
-        return Codegen.optional(this.targetDirectory);
-    }
-    /**
      * TODO
      * 
      */
@@ -322,32 +170,24 @@ public class Mv extends com.pulumi.resources.ComponentResource {
         return this.triggers;
     }
     /**
-     * Corresponds to the `--update` option.
+     * The command to run on update, if empty, create will
+     * run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+     * are set to the stdout and stderr properties of the Command resource from previous
+     * create or update steps.
      * 
      */
-    @Export(name="update", refs={Boolean.class}, tree="[0]")
-    private Output<Boolean> update;
+    @Export(name="update", refs={MvOpts.class}, tree="[0]")
+    private Output</* @Nullable */ MvOpts> update;
 
     /**
-     * @return Corresponds to the `--update` option.
+     * @return The command to run on update, if empty, create will
+     * run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+     * are set to the stdout and stderr properties of the Command resource from previous
+     * create or update steps.
      * 
      */
-    public Output<Boolean> update() {
-        return this.update;
-    }
-    /**
-     * Corresponds to the `--verbose` option.
-     * 
-     */
-    @Export(name="verbose", refs={Boolean.class}, tree="[0]")
-    private Output<Boolean> verbose;
-
-    /**
-     * @return Corresponds to the `--verbose` option.
-     * 
-     */
-    public Output<Boolean> verbose() {
-        return this.verbose;
+    public Output<Optional<MvOpts>> update() {
+        return Codegen.optional(this.update);
     }
 
     /**
@@ -371,15 +211,30 @@ public class Mv extends com.pulumi.resources.ComponentResource {
      * @param args The arguments to use to populate this resource's properties.
      * @param options A bag of options that control this resource's behavior.
      */
-    public Mv(String name, MvArgs args, @Nullable com.pulumi.resources.ComponentResourceOptions options) {
-        super("kubernetes-the-hard-way:tools:Mv", name, args == null ? MvArgs.Empty : args, makeResourceOptions(options, Codegen.empty()), true);
+    public Mv(String name, MvArgs args, @Nullable com.pulumi.resources.CustomResourceOptions options) {
+        super("kubernetes-the-hard-way:tools:Mv", name, args == null ? MvArgs.Empty : args, makeResourceOptions(options, Codegen.empty()));
     }
 
-    private static com.pulumi.resources.ComponentResourceOptions makeResourceOptions(@Nullable com.pulumi.resources.ComponentResourceOptions options, @Nullable Output<String> id) {
-        var defaultOptions = com.pulumi.resources.ComponentResourceOptions.builder()
+    private Mv(String name, Output<String> id, @Nullable com.pulumi.resources.CustomResourceOptions options) {
+        super("kubernetes-the-hard-way:tools:Mv", name, null, makeResourceOptions(options, id));
+    }
+
+    private static com.pulumi.resources.CustomResourceOptions makeResourceOptions(@Nullable com.pulumi.resources.CustomResourceOptions options, @Nullable Output<String> id) {
+        var defaultOptions = com.pulumi.resources.CustomResourceOptions.builder()
             .version(Utilities.getVersion())
             .build();
-        return com.pulumi.resources.ComponentResourceOptions.merge(defaultOptions, options, id);
+        return com.pulumi.resources.CustomResourceOptions.merge(defaultOptions, options, id);
     }
 
+    /**
+     * Get an existing Host resource's state with the given name, ID, and optional extra
+     * properties used to qualify the lookup.
+     *
+     * @param name The _unique_ name of the resulting resource.
+     * @param id The _unique_ provider ID of the resource to lookup.
+     * @param options Optional settings to control the behavior of the CustomResource.
+     */
+    public static Mv get(String name, Output<String> id, @Nullable com.pulumi.resources.CustomResourceOptions options) {
+        return new Mv(name, id, options);
+    }
 }

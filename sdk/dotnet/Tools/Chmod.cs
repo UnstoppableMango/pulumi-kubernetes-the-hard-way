@@ -14,19 +14,13 @@ namespace UnMango.KubernetesTheHardWay.Tools
     /// Abstraction over the `chmod` utility on a remote system.
     /// </summary>
     [KubernetesTheHardWayResourceType("kubernetes-the-hard-way:tools:Chmod")]
-    public partial class Chmod : global::Pulumi.ComponentResource
+    public partial class Chmod : global::Pulumi.CustomResource
     {
         /// <summary>
         /// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
         /// </summary>
         [Output("binaryPath")]
         public Output<string> BinaryPath { get; private set; } = null!;
-
-        /// <summary>
-        /// Like verbose but report only when a change is made.
-        /// </summary>
-        [Output("changes")]
-        public Output<bool> Changes { get; private set; } = null!;
 
         /// <summary>
         /// The underlying command
@@ -41,70 +35,24 @@ namespace UnMango.KubernetesTheHardWay.Tools
         public Output<Pulumi.Command.Remote.Outputs.Connection> Connection { get; private set; } = null!;
 
         /// <summary>
+        /// The command to run on create.
+        /// </summary>
+        [Output("create")]
+        public Output<Outputs.ChmodOpts?> Create { get; private set; } = null!;
+
+        /// <summary>
+        /// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+        /// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+        /// Command resource from previous create or update steps.
+        /// </summary>
+        [Output("delete")]
+        public Output<Outputs.ChmodOpts?> Delete { get; private set; } = null!;
+
+        /// <summary>
         /// Environment variables
         /// </summary>
         [Output("environment")]
         public Output<ImmutableDictionary<string, string>> Environment { get; private set; } = null!;
-
-        /// <summary>
-        /// Corresponds to the [FILE] argument.
-        /// </summary>
-        [Output("files")]
-        public Output<Union<string, ImmutableArray<string>>> Files { get; private set; } = null!;
-
-        /// <summary>
-        /// Display help and exit.
-        /// </summary>
-        [Output("help")]
-        public Output<bool> Help { get; private set; } = null!;
-
-        /// <summary>
-        /// At what stage(s) in the resource lifecycle should the command be run
-        /// </summary>
-        [Output("lifecycle")]
-        public Output<UnMango.KubernetesTheHardWay.Tools.CommandLifecycle?> Lifecycle { get; private set; } = null!;
-
-        /// <summary>
-        /// Modes may be absolute or symbolic. An absolute mode is an octal number...
-        /// </summary>
-        [Output("mode")]
-        public Output<string> Mode { get; private set; } = null!;
-
-        /// <summary>
-        /// Do not treat '/' specially (the default).
-        /// </summary>
-        [Output("noPreserveRoot")]
-        public Output<bool> NoPreserveRoot { get; private set; } = null!;
-
-        /// <summary>
-        /// Fail to operate recursively on '/'.
-        /// </summary>
-        [Output("preserveRoot")]
-        public Output<bool> PreserveRoot { get; private set; } = null!;
-
-        /// <summary>
-        /// Suppress most error messages. Same as `silent`.
-        /// </summary>
-        [Output("quiet")]
-        public Output<bool> Quiet { get; private set; } = null!;
-
-        /// <summary>
-        /// Change files and directories recursively.
-        /// </summary>
-        [Output("recursive")]
-        public Output<bool> Recursive { get; private set; } = null!;
-
-        /// <summary>
-        /// Use RFILE's mode instead of specifying MODE values. RFILE is always dereferenced if a symbolic link.
-        /// </summary>
-        [Output("reference")]
-        public Output<string?> Reference { get; private set; } = null!;
-
-        /// <summary>
-        /// Suppress most error messages. Same as `quiet`.
-        /// </summary>
-        [Output("silent")]
-        public Output<bool> Silent { get; private set; } = null!;
 
         /// <summary>
         /// TODO
@@ -131,10 +79,13 @@ namespace UnMango.KubernetesTheHardWay.Tools
         public Output<ImmutableArray<object>> Triggers { get; private set; } = null!;
 
         /// <summary>
-        /// Output version information and exit.
+        /// The command to run on update, if empty, create will 
+        /// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
+        /// are set to the stdout and stderr properties of the Command resource from previous 
+        /// create or update steps.
         /// </summary>
-        [Output("version")]
-        public Output<bool> Version { get; private set; } = null!;
+        [Output("update")]
+        public Output<Outputs.ChmodOpts?> Update { get; private set; } = null!;
 
 
         /// <summary>
@@ -144,22 +95,43 @@ namespace UnMango.KubernetesTheHardWay.Tools
         /// <param name="name">The unique name of the resource</param>
         /// <param name="args">The arguments used to populate this resource's properties</param>
         /// <param name="options">A bag of options that control this resource's behavior</param>
-        public Chmod(string name, ChmodArgs args, ComponentResourceOptions? options = null)
-            : base("kubernetes-the-hard-way:tools:Chmod", name, args ?? new ChmodArgs(), MakeResourceOptions(options, ""), remote: true)
+        public Chmod(string name, ChmodArgs args, CustomResourceOptions? options = null)
+            : base("kubernetes-the-hard-way:tools:Chmod", name, args ?? new ChmodArgs(), MakeResourceOptions(options, ""))
+        {
+        }
+        internal Chmod(string name, ImmutableDictionary<string, object?> dictionary, CustomResourceOptions? options = null)
+            : base("kubernetes-the-hard-way:tools:Chmod", name, new DictionaryResourceArgs(dictionary), MakeResourceOptions(options, ""))
         {
         }
 
-        private static ComponentResourceOptions MakeResourceOptions(ComponentResourceOptions? options, Input<string>? id)
+        private Chmod(string name, Input<string> id, CustomResourceOptions? options = null)
+            : base("kubernetes-the-hard-way:tools:Chmod", name, null, MakeResourceOptions(options, id))
         {
-            var defaultOptions = new ComponentResourceOptions
+        }
+
+        private static CustomResourceOptions MakeResourceOptions(CustomResourceOptions? options, Input<string>? id)
+        {
+            var defaultOptions = new CustomResourceOptions
             {
                 Version = Utilities.Version,
                 PluginDownloadURL = "github://api.github.com/UnstoppableMango",
             };
-            var merged = ComponentResourceOptions.Merge(defaultOptions, options);
+            var merged = CustomResourceOptions.Merge(defaultOptions, options);
             // Override the ID if one was specified for consistency with other language SDKs.
             merged.Id = id ?? merged.Id;
             return merged;
+        }
+        /// <summary>
+        /// Get an existing Chmod resource's state with the given name, ID, and optional extra
+        /// properties used to qualify the lookup.
+        /// </summary>
+        ///
+        /// <param name="name">The unique name of the resulting resource.</param>
+        /// <param name="id">The unique provider ID of the resource to lookup.</param>
+        /// <param name="options">A bag of options that control this resource's behavior</param>
+        public static Chmod Get(string name, Input<string> id, CustomResourceOptions? options = null)
+        {
+            return new Chmod(name, id, options);
         }
     }
 
@@ -172,16 +144,24 @@ namespace UnMango.KubernetesTheHardWay.Tools
         public Input<string>? BinaryPath { get; set; }
 
         /// <summary>
-        /// Like verbose but report only when a change is made.
-        /// </summary>
-        [Input("changes")]
-        public Input<bool>? Changes { get; set; }
-
-        /// <summary>
         /// Connection details for the remote system
         /// </summary>
         [Input("connection", required: true)]
         public Input<Pulumi.Command.Remote.Inputs.ConnectionArgs> Connection { get; set; } = null!;
+
+        /// <summary>
+        /// The command to run on create.
+        /// </summary>
+        [Input("create")]
+        public Input<Inputs.ChmodOptsArgs>? Create { get; set; }
+
+        /// <summary>
+        /// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+        /// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+        /// Command resource from previous create or update steps.
+        /// </summary>
+        [Input("delete")]
+        public Input<Inputs.ChmodOptsArgs>? Delete { get; set; }
 
         [Input("environment")]
         private InputMap<string>? _environment;
@@ -194,66 +174,6 @@ namespace UnMango.KubernetesTheHardWay.Tools
             get => _environment ?? (_environment = new InputMap<string>());
             set => _environment = value;
         }
-
-        /// <summary>
-        /// Corresponds to the [FILE] argument.
-        /// </summary>
-        [Input("files", required: true)]
-        public InputUnion<string, ImmutableArray<string>> Files { get; set; } = null!;
-
-        /// <summary>
-        /// Display help and exit.
-        /// </summary>
-        [Input("help")]
-        public Input<bool>? Help { get; set; }
-
-        /// <summary>
-        /// At what stage(s) in the resource lifecycle should the command be run
-        /// </summary>
-        [Input("lifecycle")]
-        public UnMango.KubernetesTheHardWay.Tools.CommandLifecycle? Lifecycle { get; set; }
-
-        /// <summary>
-        /// Modes may be absolute or symbolic. An absolute mode is an octal number...
-        /// </summary>
-        [Input("mode", required: true)]
-        public Input<string> Mode { get; set; } = null!;
-
-        /// <summary>
-        /// Do not treat '/' specially (the default).
-        /// </summary>
-        [Input("noPreserveRoot")]
-        public Input<bool>? NoPreserveRoot { get; set; }
-
-        /// <summary>
-        /// Fail to operate recursively on '/'.
-        /// </summary>
-        [Input("preserveRoot")]
-        public Input<bool>? PreserveRoot { get; set; }
-
-        /// <summary>
-        /// Suppress most error messages. Same as `silent`.
-        /// </summary>
-        [Input("quiet")]
-        public Input<bool>? Quiet { get; set; }
-
-        /// <summary>
-        /// Change files and directories recursively.
-        /// </summary>
-        [Input("recursive")]
-        public Input<bool>? Recursive { get; set; }
-
-        /// <summary>
-        /// Use RFILE's mode instead of specifying MODE values. RFILE is always dereferenced if a symbolic link.
-        /// </summary>
-        [Input("reference")]
-        public Input<string>? Reference { get; set; }
-
-        /// <summary>
-        /// Suppress most error messages. Same as `quiet`.
-        /// </summary>
-        [Input("silent")]
-        public Input<bool>? Silent { get; set; }
 
         /// <summary>
         /// TODO
@@ -274,10 +194,13 @@ namespace UnMango.KubernetesTheHardWay.Tools
         }
 
         /// <summary>
-        /// Output version information and exit.
+        /// The command to run on update, if empty, create will 
+        /// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
+        /// are set to the stdout and stderr properties of the Command resource from previous 
+        /// create or update steps.
         /// </summary>
-        [Input("version")]
-        public Input<bool>? Version { get; set; }
+        [Input("update")]
+        public Input<Inputs.ChmodOptsArgs>? Update { get; set; }
 
         public ChmodArgs()
         {

@@ -12,7 +12,19 @@ import * as pulumiCommand from "@pulumi/command";
 /**
  * Abstraction over the `wget` utility on a remote system.
  */
-export class Wget extends pulumi.ComponentResource {
+export class Wget extends pulumi.CustomResource {
+    /**
+     * Get an existing Wget resource's state with the given name, ID, and optional extra
+     * properties used to qualify the lookup.
+     *
+     * @param name The _unique_ name of the resulting resource.
+     * @param id The _unique_ provider ID of the resource to lookup.
+     * @param opts Optional settings to control the behavior of the CustomResource.
+     */
+    public static get(name: string, id: pulumi.Input<pulumi.ID>, opts?: pulumi.CustomResourceOptions): Wget {
+        return new Wget(name, undefined as any, { ...opts, id: id });
+    }
+
     /** @internal */
     public static readonly __pulumiType = 'kubernetes-the-hard-way:tools:Wget';
 
@@ -40,33 +52,19 @@ export class Wget extends pulumi.ComponentResource {
      */
     public readonly connection!: pulumi.Output<pulumiCommand.types.output.remote.Connection>;
     /**
-     * The  directory prefix is the directory where all other files and subdirectories will be saved to, i.e. the top of the retrieval tree.  The default is . (the current directory).
+     * The command to run on create.
      */
-    public readonly directoryPrefix!: pulumi.Output<string | undefined>;
+    public readonly create!: pulumi.Output<outputs.tools.WgetOpts | undefined>;
+    /**
+     * The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+     * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+     * Command resource from previous create or update steps.
+     */
+    public readonly delete!: pulumi.Output<outputs.tools.WgetOpts | undefined>;
     /**
      * Environment variables
      */
     public readonly environment!: pulumi.Output<{[key: string]: string}>;
-    /**
-     * When in recursive mode, only HTTPS links are followed.
-     */
-    public readonly httpsOnly!: pulumi.Output<boolean>;
-    /**
-     * At what stage(s) in the resource lifecycle should the command be run
-     */
-    public readonly lifecycle!: pulumi.Output<enums.tools.CommandLifecycle | undefined>;
-    /**
-     * Turn off verbose without being completely quiet (use -q for that), which means that error messages and basic information still get printed.
-     */
-    public readonly noVerbose!: pulumi.Output<boolean>;
-    /**
-     * The  documents  will  not  be  written  to the appropriate files, but all will be concatenated together and written to file.
-     */
-    public readonly outputDocument!: pulumi.Output<string | undefined>;
-    /**
-     * Turn off Wget's output.
-     */
-    public readonly quiet!: pulumi.Output<boolean>;
     /**
      * TODO
      */
@@ -80,17 +78,16 @@ export class Wget extends pulumi.ComponentResource {
      */
     public /*out*/ readonly stdout!: pulumi.Output<string>;
     /**
-     * Turn on time-stamping.
-     */
-    public readonly timestamping!: pulumi.Output<boolean>;
-    /**
      * TODO
      */
     public readonly triggers!: pulumi.Output<any[]>;
     /**
-     * Corresponds to the [URL...] argument.
+     * The command to run on update, if empty, create will 
+     * run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
+     * are set to the stdout and stderr properties of the Command resource from previous 
+     * create or update steps.
      */
-    public readonly url!: pulumi.Output<string | string[]>;
+    public readonly update!: pulumi.Output<outputs.tools.WgetOpts | undefined>;
 
     /**
      * Create a Wget resource with the given unique name, arguments, and options.
@@ -99,29 +96,21 @@ export class Wget extends pulumi.ComponentResource {
      * @param args The arguments to use to populate this resource's properties.
      * @param opts A bag of options that control this resource's behavior.
      */
-    constructor(name: string, args: WgetArgs, opts?: pulumi.ComponentResourceOptions) {
+    constructor(name: string, args: WgetArgs, opts?: pulumi.CustomResourceOptions) {
         let resourceInputs: pulumi.Inputs = {};
         opts = opts || {};
         if (!opts.id) {
             if ((!args || args.connection === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'connection'");
             }
-            if ((!args || args.url === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'url'");
-            }
             resourceInputs["binaryPath"] = args ? args.binaryPath : undefined;
             resourceInputs["connection"] = args ? (args.connection ? pulumi.output(args.connection).apply(pulumiCommand.types.input.remote.connectionArgsProvideDefaults) : undefined) : undefined;
-            resourceInputs["directoryPrefix"] = args ? args.directoryPrefix : undefined;
+            resourceInputs["create"] = args ? args.create : undefined;
+            resourceInputs["delete"] = args ? args.delete : undefined;
             resourceInputs["environment"] = args ? args.environment : undefined;
-            resourceInputs["httpsOnly"] = args ? args.httpsOnly : undefined;
-            resourceInputs["lifecycle"] = args ? args.lifecycle : undefined;
-            resourceInputs["noVerbose"] = args ? args.noVerbose : undefined;
-            resourceInputs["outputDocument"] = args ? args.outputDocument : undefined;
-            resourceInputs["quiet"] = args ? args.quiet : undefined;
             resourceInputs["stdin"] = args ? args.stdin : undefined;
-            resourceInputs["timestamping"] = args ? args.timestamping : undefined;
             resourceInputs["triggers"] = args ? args.triggers : undefined;
-            resourceInputs["url"] = args ? args.url : undefined;
+            resourceInputs["update"] = args ? args.update : undefined;
             resourceInputs["command"] = undefined /*out*/;
             resourceInputs["stderr"] = undefined /*out*/;
             resourceInputs["stdout"] = undefined /*out*/;
@@ -129,22 +118,17 @@ export class Wget extends pulumi.ComponentResource {
             resourceInputs["binaryPath"] = undefined /*out*/;
             resourceInputs["command"] = undefined /*out*/;
             resourceInputs["connection"] = undefined /*out*/;
-            resourceInputs["directoryPrefix"] = undefined /*out*/;
+            resourceInputs["create"] = undefined /*out*/;
+            resourceInputs["delete"] = undefined /*out*/;
             resourceInputs["environment"] = undefined /*out*/;
-            resourceInputs["httpsOnly"] = undefined /*out*/;
-            resourceInputs["lifecycle"] = undefined /*out*/;
-            resourceInputs["noVerbose"] = undefined /*out*/;
-            resourceInputs["outputDocument"] = undefined /*out*/;
-            resourceInputs["quiet"] = undefined /*out*/;
             resourceInputs["stderr"] = undefined /*out*/;
             resourceInputs["stdin"] = undefined /*out*/;
             resourceInputs["stdout"] = undefined /*out*/;
-            resourceInputs["timestamping"] = undefined /*out*/;
             resourceInputs["triggers"] = undefined /*out*/;
-            resourceInputs["url"] = undefined /*out*/;
+            resourceInputs["update"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
-        super(Wget.__pulumiType, name, resourceInputs, opts, true /*remote*/);
+        super(Wget.__pulumiType, name, resourceInputs, opts);
     }
 }
 
@@ -161,47 +145,32 @@ export interface WgetArgs {
      */
     connection: pulumi.Input<pulumiCommand.types.input.remote.ConnectionArgs>;
     /**
-     * The  directory prefix is the directory where all other files and subdirectories will be saved to, i.e. the top of the retrieval tree.  The default is . (the current directory).
+     * The command to run on create.
      */
-    directoryPrefix?: pulumi.Input<string>;
+    create?: pulumi.Input<inputs.tools.WgetOptsArgs>;
+    /**
+     * The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+     * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+     * Command resource from previous create or update steps.
+     */
+    delete?: pulumi.Input<inputs.tools.WgetOptsArgs>;
     /**
      * Environment variables
      */
     environment?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
-     * When in recursive mode, only HTTPS links are followed.
-     */
-    httpsOnly?: pulumi.Input<boolean>;
-    /**
-     * At what stage(s) in the resource lifecycle should the command be run
-     */
-    lifecycle?: enums.tools.CommandLifecycle;
-    /**
-     * Turn off verbose without being completely quiet (use -q for that), which means that error messages and basic information still get printed.
-     */
-    noVerbose?: pulumi.Input<boolean>;
-    /**
-     * The  documents  will  not  be  written  to the appropriate files, but all will be concatenated together and written to file.
-     */
-    outputDocument?: pulumi.Input<string>;
-    /**
-     * Turn off Wget's output.
-     */
-    quiet?: pulumi.Input<boolean>;
-    /**
      * TODO
      */
     stdin?: pulumi.Input<string>;
-    /**
-     * Turn on time-stamping.
-     */
-    timestamping?: pulumi.Input<boolean>;
     /**
      * TODO
      */
     triggers?: pulumi.Input<any[]>;
     /**
-     * Corresponds to the [URL...] argument.
+     * The command to run on update, if empty, create will 
+     * run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
+     * are set to the stdout and stderr properties of the Command resource from previous 
+     * create or update steps.
      */
-    url: pulumi.Input<string | pulumi.Input<string>[]>;
+    update?: pulumi.Input<inputs.tools.WgetOptsArgs>;
 }

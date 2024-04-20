@@ -4,12 +4,10 @@
 package com.unmango.kubernetesthehardway.tools;
 
 import com.pulumi.command.remote.inputs.ConnectionArgs;
-import com.pulumi.core.Either;
 import com.pulumi.core.Output;
 import com.pulumi.core.annotations.Import;
 import com.pulumi.exceptions.MissingRequiredPropertyException;
-import com.unmango.kubernetesthehardway.tools.enums.CommandLifecycle;
-import java.lang.Boolean;
+import com.unmango.kubernetesthehardway.tools.inputs.RmOptsArgs;
 import java.lang.Object;
 import java.lang.String;
 import java.util.List;
@@ -54,18 +52,37 @@ public final class RmArgs extends com.pulumi.resources.ResourceArgs {
     }
 
     /**
-     * Corresponds to the `--dir` option.
+     * The command to run on create.
      * 
      */
-    @Import(name="dir")
-    private @Nullable Output<Boolean> dir;
+    @Import(name="create")
+    private @Nullable Output<RmOptsArgs> create;
 
     /**
-     * @return Corresponds to the `--dir` option.
+     * @return The command to run on create.
      * 
      */
-    public Optional<Output<Boolean>> dir() {
-        return Optional.ofNullable(this.dir);
+    public Optional<Output<RmOptsArgs>> create() {
+        return Optional.ofNullable(this.create);
+    }
+
+    /**
+     * The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+     * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+     * Command resource from previous create or update steps.
+     * 
+     */
+    @Import(name="delete")
+    private @Nullable Output<RmOptsArgs> delete;
+
+    /**
+     * @return The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+     * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+     * Command resource from previous create or update steps.
+     * 
+     */
+    public Optional<Output<RmOptsArgs>> delete() {
+        return Optional.ofNullable(this.delete);
     }
 
     /**
@@ -81,81 +98,6 @@ public final class RmArgs extends com.pulumi.resources.ResourceArgs {
      */
     public Optional<Output<Map<String,String>>> environment() {
         return Optional.ofNullable(this.environment);
-    }
-
-    /**
-     * Corresponds to the [FILE] argument.
-     * 
-     */
-    @Import(name="files", required=true)
-    private Output<Either<String,List<String>>> files;
-
-    /**
-     * @return Corresponds to the [FILE] argument.
-     * 
-     */
-    public Output<Either<String,List<String>>> files() {
-        return this.files;
-    }
-
-    /**
-     * Corresponds to the `--force` option.
-     * 
-     */
-    @Import(name="force")
-    private @Nullable Output<Boolean> force;
-
-    /**
-     * @return Corresponds to the `--force` option.
-     * 
-     */
-    public Optional<Output<Boolean>> force() {
-        return Optional.ofNullable(this.force);
-    }
-
-    /**
-     * At what stage(s) in the resource lifecycle should the command be run
-     * 
-     */
-    @Import(name="lifecycle")
-    private @Nullable CommandLifecycle lifecycle;
-
-    /**
-     * @return At what stage(s) in the resource lifecycle should the command be run
-     * 
-     */
-    public Optional<CommandLifecycle> lifecycle() {
-        return Optional.ofNullable(this.lifecycle);
-    }
-
-    /**
-     * Whether rm should be run when the resource is created or deleted.
-     * 
-     */
-    @Import(name="onDelete")
-    private @Nullable Output<Boolean> onDelete;
-
-    /**
-     * @return Whether rm should be run when the resource is created or deleted.
-     * 
-     */
-    public Optional<Output<Boolean>> onDelete() {
-        return Optional.ofNullable(this.onDelete);
-    }
-
-    /**
-     * Corresponds to the `--recursive` option.
-     * 
-     */
-    @Import(name="recursive")
-    private @Nullable Output<Boolean> recursive;
-
-    /**
-     * @return Corresponds to the `--recursive` option.
-     * 
-     */
-    public Optional<Output<Boolean>> recursive() {
-        return Optional.ofNullable(this.recursive);
     }
 
     /**
@@ -189,18 +131,24 @@ public final class RmArgs extends com.pulumi.resources.ResourceArgs {
     }
 
     /**
-     * Corresponds to the `--verbose` option.
+     * The command to run on update, if empty, create will
+     * run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+     * are set to the stdout and stderr properties of the Command resource from previous
+     * create or update steps.
      * 
      */
-    @Import(name="verbose")
-    private @Nullable Output<Boolean> verbose;
+    @Import(name="update")
+    private @Nullable Output<RmOptsArgs> update;
 
     /**
-     * @return Corresponds to the `--verbose` option.
+     * @return The command to run on update, if empty, create will
+     * run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+     * are set to the stdout and stderr properties of the Command resource from previous
+     * create or update steps.
      * 
      */
-    public Optional<Output<Boolean>> verbose() {
-        return Optional.ofNullable(this.verbose);
+    public Optional<Output<RmOptsArgs>> update() {
+        return Optional.ofNullable(this.update);
     }
 
     private RmArgs() {}
@@ -208,16 +156,12 @@ public final class RmArgs extends com.pulumi.resources.ResourceArgs {
     private RmArgs(RmArgs $) {
         this.binaryPath = $.binaryPath;
         this.connection = $.connection;
-        this.dir = $.dir;
+        this.create = $.create;
+        this.delete = $.delete;
         this.environment = $.environment;
-        this.files = $.files;
-        this.force = $.force;
-        this.lifecycle = $.lifecycle;
-        this.onDelete = $.onDelete;
-        this.recursive = $.recursive;
         this.stdin = $.stdin;
         this.triggers = $.triggers;
-        this.verbose = $.verbose;
+        this.update = $.update;
     }
 
     public static Builder builder() {
@@ -281,24 +225,49 @@ public final class RmArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param dir Corresponds to the `--dir` option.
+         * @param create The command to run on create.
          * 
          * @return builder
          * 
          */
-        public Builder dir(@Nullable Output<Boolean> dir) {
-            $.dir = dir;
+        public Builder create(@Nullable Output<RmOptsArgs> create) {
+            $.create = create;
             return this;
         }
 
         /**
-         * @param dir Corresponds to the `--dir` option.
+         * @param create The command to run on create.
          * 
          * @return builder
          * 
          */
-        public Builder dir(Boolean dir) {
-            return dir(Output.of(dir));
+        public Builder create(RmOptsArgs create) {
+            return create(Output.of(create));
+        }
+
+        /**
+         * @param delete The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+         * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+         * Command resource from previous create or update steps.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder delete(@Nullable Output<RmOptsArgs> delete) {
+            $.delete = delete;
+            return this;
+        }
+
+        /**
+         * @param delete The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+         * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+         * Command resource from previous create or update steps.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder delete(RmOptsArgs delete) {
+            return delete(Output.of(delete));
         }
 
         /**
@@ -320,121 +289,6 @@ public final class RmArgs extends com.pulumi.resources.ResourceArgs {
          */
         public Builder environment(Map<String,String> environment) {
             return environment(Output.of(environment));
-        }
-
-        /**
-         * @param files Corresponds to the [FILE] argument.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder files(Output<Either<String,List<String>>> files) {
-            $.files = files;
-            return this;
-        }
-
-        /**
-         * @param files Corresponds to the [FILE] argument.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder files(Either<String,List<String>> files) {
-            return files(Output.of(files));
-        }
-
-        /**
-         * @param files Corresponds to the [FILE] argument.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder files(String files) {
-            return files(Either.ofLeft(files));
-        }
-
-        /**
-         * @param files Corresponds to the [FILE] argument.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder files(List<String> files) {
-            return files(Either.ofRight(files));
-        }
-
-        /**
-         * @param force Corresponds to the `--force` option.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder force(@Nullable Output<Boolean> force) {
-            $.force = force;
-            return this;
-        }
-
-        /**
-         * @param force Corresponds to the `--force` option.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder force(Boolean force) {
-            return force(Output.of(force));
-        }
-
-        /**
-         * @param lifecycle At what stage(s) in the resource lifecycle should the command be run
-         * 
-         * @return builder
-         * 
-         */
-        public Builder lifecycle(@Nullable CommandLifecycle lifecycle) {
-            $.lifecycle = lifecycle;
-            return this;
-        }
-
-        /**
-         * @param onDelete Whether rm should be run when the resource is created or deleted.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder onDelete(@Nullable Output<Boolean> onDelete) {
-            $.onDelete = onDelete;
-            return this;
-        }
-
-        /**
-         * @param onDelete Whether rm should be run when the resource is created or deleted.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder onDelete(Boolean onDelete) {
-            return onDelete(Output.of(onDelete));
-        }
-
-        /**
-         * @param recursive Corresponds to the `--recursive` option.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder recursive(@Nullable Output<Boolean> recursive) {
-            $.recursive = recursive;
-            return this;
-        }
-
-        /**
-         * @param recursive Corresponds to the `--recursive` option.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder recursive(Boolean recursive) {
-            return recursive(Output.of(recursive));
         }
 
         /**
@@ -490,32 +344,35 @@ public final class RmArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param verbose Corresponds to the `--verbose` option.
+         * @param update The command to run on update, if empty, create will
+         * run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+         * are set to the stdout and stderr properties of the Command resource from previous
+         * create or update steps.
          * 
          * @return builder
          * 
          */
-        public Builder verbose(@Nullable Output<Boolean> verbose) {
-            $.verbose = verbose;
+        public Builder update(@Nullable Output<RmOptsArgs> update) {
+            $.update = update;
             return this;
         }
 
         /**
-         * @param verbose Corresponds to the `--verbose` option.
+         * @param update The command to run on update, if empty, create will
+         * run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+         * are set to the stdout and stderr properties of the Command resource from previous
+         * create or update steps.
          * 
          * @return builder
          * 
          */
-        public Builder verbose(Boolean verbose) {
-            return verbose(Output.of(verbose));
+        public Builder update(RmOptsArgs update) {
+            return update(Output.of(update));
         }
 
         public RmArgs build() {
             if ($.connection == null) {
                 throw new MissingRequiredPropertyException("RmArgs", "connection");
-            }
-            if ($.files == null) {
-                throw new MissingRequiredPropertyException("RmArgs", "files");
             }
             return $;
         }

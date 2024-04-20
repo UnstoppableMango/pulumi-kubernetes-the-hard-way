@@ -12,7 +12,19 @@ import * as pulumiCommand from "@pulumi/command";
 /**
  * Abstraction over the `sed` utility on a remote system.
  */
-export class Sed extends pulumi.ComponentResource {
+export class Sed extends pulumi.CustomResource {
+    /**
+     * Get an existing Sed resource's state with the given name, ID, and optional extra
+     * properties used to qualify the lookup.
+     *
+     * @param name The _unique_ name of the resulting resource.
+     * @param id The _unique_ provider ID of the resource to lookup.
+     * @param opts Optional settings to control the behavior of the CustomResource.
+     */
+    public static get(name: string, id: pulumi.Input<pulumi.ID>, opts?: pulumi.CustomResourceOptions): Sed {
+        return new Sed(name, undefined as any, { ...opts, id: id });
+    }
+
     /** @internal */
     public static readonly __pulumiType = 'kubernetes-the-hard-way:tools:Sed';
 
@@ -40,77 +52,19 @@ export class Sed extends pulumi.ComponentResource {
      */
     public readonly connection!: pulumi.Output<pulumiCommand.types.output.remote.Connection>;
     /**
-     * annotate program execution.
+     * The command to run on create.
      */
-    public readonly debug!: pulumi.Output<boolean>;
+    public readonly create!: pulumi.Output<outputs.tools.SedOpts | undefined>;
+    /**
+     * The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+     * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+     * Command resource from previous create or update steps.
+     */
+    public readonly delete!: pulumi.Output<outputs.tools.SedOpts | undefined>;
     /**
      * Environment variables
      */
     public readonly environment!: pulumi.Output<{[key: string]: string}>;
-    /**
-     * add the script to the commands to be executed.
-     */
-    public readonly expressions!: pulumi.Output<string | string[]>;
-    /**
-     * add the contents of script-file to the commands to be executed.
-     */
-    public readonly files!: pulumi.Output<string | string[]>;
-    /**
-     * follow symlinks when processing in place
-     */
-    public readonly followSymlinks!: pulumi.Output<boolean>;
-    /**
-     * display this help and exit.
-     */
-    public readonly help!: pulumi.Output<boolean>;
-    /**
-     * edit files in place (makes backup if SUFFIX supplied)
-     */
-    public readonly inPlace!: pulumi.Output<string | undefined>;
-    /**
-     * corresponds to the [input-file]... argument(s).
-     */
-    public readonly inputFiles!: pulumi.Output<string | string[]>;
-    /**
-     * At what stage(s) in the resource lifecycle should the command be run
-     */
-    public readonly lifecycle!: pulumi.Output<enums.tools.CommandLifecycle | undefined>;
-    /**
-     * specify the desired line-wrap length for the `l' command
-     */
-    public readonly lineLength!: pulumi.Output<number | undefined>;
-    /**
-     * separate lines by NUL characters
-     */
-    public readonly nullData!: pulumi.Output<boolean>;
-    /**
-     * disable all GNU extensions.
-     */
-    public readonly posix!: pulumi.Output<boolean>;
-    /**
-     * suppress automatic printing of pattern space. Same as `silent`.
-     */
-    public readonly quiet!: pulumi.Output<boolean>;
-    /**
-     * use extended regular expressions in the script (for portability use POSIX -E).
-     */
-    public readonly regexpExtended!: pulumi.Output<boolean>;
-    /**
-     * operate in sandbox mode (disable e/r/w commands).
-     */
-    public readonly sandbox!: pulumi.Output<boolean>;
-    /**
-     * script only if no other script.
-     */
-    public readonly script!: pulumi.Output<string | undefined>;
-    /**
-     * consider files as separate rather than as a single, continuous long stream.
-     */
-    public readonly separate!: pulumi.Output<boolean>;
-    /**
-     * suppress automatic printing of pattern space. Same as `quiet`.
-     */
-    public readonly silent!: pulumi.Output<boolean>;
     /**
      * TODO
      */
@@ -128,13 +82,12 @@ export class Sed extends pulumi.ComponentResource {
      */
     public readonly triggers!: pulumi.Output<any[]>;
     /**
-     * load minimal amounts of data from the input files and flush the output buffers more often.
+     * The command to run on update, if empty, create will 
+     * run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
+     * are set to the stdout and stderr properties of the Command resource from previous 
+     * create or update steps.
      */
-    public readonly unbuffered!: pulumi.Output<boolean>;
-    /**
-     * output version information and exit.
-     */
-    public readonly version!: pulumi.Output<boolean>;
+    public readonly update!: pulumi.Output<outputs.tools.SedOpts | undefined>;
 
     /**
      * Create a Sed resource with the given unique name, arguments, and options.
@@ -143,7 +96,7 @@ export class Sed extends pulumi.ComponentResource {
      * @param args The arguments to use to populate this resource's properties.
      * @param opts A bag of options that control this resource's behavior.
      */
-    constructor(name: string, args: SedArgs, opts?: pulumi.ComponentResourceOptions) {
+    constructor(name: string, args: SedArgs, opts?: pulumi.CustomResourceOptions) {
         let resourceInputs: pulumi.Inputs = {};
         opts = opts || {};
         if (!opts.id) {
@@ -152,28 +105,12 @@ export class Sed extends pulumi.ComponentResource {
             }
             resourceInputs["binaryPath"] = args ? args.binaryPath : undefined;
             resourceInputs["connection"] = args ? (args.connection ? pulumi.output(args.connection).apply(pulumiCommand.types.input.remote.connectionArgsProvideDefaults) : undefined) : undefined;
-            resourceInputs["debug"] = args ? args.debug : undefined;
+            resourceInputs["create"] = args ? args.create : undefined;
+            resourceInputs["delete"] = args ? args.delete : undefined;
             resourceInputs["environment"] = args ? args.environment : undefined;
-            resourceInputs["expressions"] = args ? args.expressions : undefined;
-            resourceInputs["files"] = args ? args.files : undefined;
-            resourceInputs["followSymlinks"] = args ? args.followSymlinks : undefined;
-            resourceInputs["help"] = args ? args.help : undefined;
-            resourceInputs["inPlace"] = args ? args.inPlace : undefined;
-            resourceInputs["inputFiles"] = args ? args.inputFiles : undefined;
-            resourceInputs["lifecycle"] = args ? args.lifecycle : undefined;
-            resourceInputs["lineLength"] = args ? args.lineLength : undefined;
-            resourceInputs["nullData"] = args ? args.nullData : undefined;
-            resourceInputs["posix"] = args ? args.posix : undefined;
-            resourceInputs["quiet"] = args ? args.quiet : undefined;
-            resourceInputs["regexpExtended"] = args ? args.regexpExtended : undefined;
-            resourceInputs["sandbox"] = args ? args.sandbox : undefined;
-            resourceInputs["script"] = args ? args.script : undefined;
-            resourceInputs["separate"] = args ? args.separate : undefined;
-            resourceInputs["silent"] = args ? args.silent : undefined;
             resourceInputs["stdin"] = args ? args.stdin : undefined;
             resourceInputs["triggers"] = args ? args.triggers : undefined;
-            resourceInputs["unbuffered"] = args ? args.unbuffered : undefined;
-            resourceInputs["version"] = args ? args.version : undefined;
+            resourceInputs["update"] = args ? args.update : undefined;
             resourceInputs["command"] = undefined /*out*/;
             resourceInputs["stderr"] = undefined /*out*/;
             resourceInputs["stdout"] = undefined /*out*/;
@@ -181,33 +118,17 @@ export class Sed extends pulumi.ComponentResource {
             resourceInputs["binaryPath"] = undefined /*out*/;
             resourceInputs["command"] = undefined /*out*/;
             resourceInputs["connection"] = undefined /*out*/;
-            resourceInputs["debug"] = undefined /*out*/;
+            resourceInputs["create"] = undefined /*out*/;
+            resourceInputs["delete"] = undefined /*out*/;
             resourceInputs["environment"] = undefined /*out*/;
-            resourceInputs["expressions"] = undefined /*out*/;
-            resourceInputs["files"] = undefined /*out*/;
-            resourceInputs["followSymlinks"] = undefined /*out*/;
-            resourceInputs["help"] = undefined /*out*/;
-            resourceInputs["inPlace"] = undefined /*out*/;
-            resourceInputs["inputFiles"] = undefined /*out*/;
-            resourceInputs["lifecycle"] = undefined /*out*/;
-            resourceInputs["lineLength"] = undefined /*out*/;
-            resourceInputs["nullData"] = undefined /*out*/;
-            resourceInputs["posix"] = undefined /*out*/;
-            resourceInputs["quiet"] = undefined /*out*/;
-            resourceInputs["regexpExtended"] = undefined /*out*/;
-            resourceInputs["sandbox"] = undefined /*out*/;
-            resourceInputs["script"] = undefined /*out*/;
-            resourceInputs["separate"] = undefined /*out*/;
-            resourceInputs["silent"] = undefined /*out*/;
             resourceInputs["stderr"] = undefined /*out*/;
             resourceInputs["stdin"] = undefined /*out*/;
             resourceInputs["stdout"] = undefined /*out*/;
             resourceInputs["triggers"] = undefined /*out*/;
-            resourceInputs["unbuffered"] = undefined /*out*/;
-            resourceInputs["version"] = undefined /*out*/;
+            resourceInputs["update"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
-        super(Sed.__pulumiType, name, resourceInputs, opts, true /*remote*/);
+        super(Sed.__pulumiType, name, resourceInputs, opts);
     }
 }
 
@@ -224,77 +145,19 @@ export interface SedArgs {
      */
     connection: pulumi.Input<pulumiCommand.types.input.remote.ConnectionArgs>;
     /**
-     * annotate program execution.
+     * The command to run on create.
      */
-    debug?: pulumi.Input<boolean>;
+    create?: pulumi.Input<inputs.tools.SedOptsArgs>;
+    /**
+     * The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+     * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+     * Command resource from previous create or update steps.
+     */
+    delete?: pulumi.Input<inputs.tools.SedOptsArgs>;
     /**
      * Environment variables
      */
     environment?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
-    /**
-     * add the script to the commands to be executed.
-     */
-    expressions?: pulumi.Input<string | pulumi.Input<string>[]>;
-    /**
-     * add the contents of script-file to the commands to be executed.
-     */
-    files?: pulumi.Input<string | pulumi.Input<string>[]>;
-    /**
-     * follow symlinks when processing in place
-     */
-    followSymlinks?: pulumi.Input<boolean>;
-    /**
-     * display this help and exit.
-     */
-    help?: pulumi.Input<boolean>;
-    /**
-     * edit files in place (makes backup if SUFFIX supplied)
-     */
-    inPlace?: pulumi.Input<string>;
-    /**
-     * corresponds to the [input-file]... argument(s).
-     */
-    inputFiles?: pulumi.Input<string | pulumi.Input<string>[]>;
-    /**
-     * At what stage(s) in the resource lifecycle should the command be run
-     */
-    lifecycle?: enums.tools.CommandLifecycle;
-    /**
-     * specify the desired line-wrap length for the `l' command
-     */
-    lineLength?: pulumi.Input<number>;
-    /**
-     * separate lines by NUL characters
-     */
-    nullData?: pulumi.Input<boolean>;
-    /**
-     * disable all GNU extensions.
-     */
-    posix?: pulumi.Input<boolean>;
-    /**
-     * suppress automatic printing of pattern space. Same as `silent`.
-     */
-    quiet?: pulumi.Input<boolean>;
-    /**
-     * use extended regular expressions in the script (for portability use POSIX -E).
-     */
-    regexpExtended?: pulumi.Input<boolean>;
-    /**
-     * operate in sandbox mode (disable e/r/w commands).
-     */
-    sandbox?: pulumi.Input<boolean>;
-    /**
-     * script only if no other script.
-     */
-    script?: pulumi.Input<string>;
-    /**
-     * consider files as separate rather than as a single, continuous long stream.
-     */
-    separate?: pulumi.Input<boolean>;
-    /**
-     * suppress automatic printing of pattern space. Same as `quiet`.
-     */
-    silent?: pulumi.Input<boolean>;
     /**
      * TODO
      */
@@ -304,11 +167,10 @@ export interface SedArgs {
      */
     triggers?: pulumi.Input<any[]>;
     /**
-     * load minimal amounts of data from the input files and flush the output buffers more often.
+     * The command to run on update, if empty, create will 
+     * run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
+     * are set to the stdout and stderr properties of the Command resource from previous 
+     * create or update steps.
      */
-    unbuffered?: pulumi.Input<boolean>;
-    /**
-     * output version information and exit.
-     */
-    version?: pulumi.Input<boolean>;
+    update?: pulumi.Input<inputs.tools.SedOptsArgs>;
 }

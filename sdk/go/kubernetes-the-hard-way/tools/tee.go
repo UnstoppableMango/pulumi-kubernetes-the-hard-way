@@ -15,38 +15,35 @@ import (
 
 // Abstraction over the `rm` utility on a remote system.
 type Tee struct {
-	pulumi.ResourceState
+	pulumi.CustomResourceState
 
-	// Append to the given FILEs, do not overwrite
-	Append pulumi.BoolOutput `pulumi:"append"`
 	// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
 	BinaryPath pulumi.StringOutput `pulumi:"binaryPath"`
 	// The underlying command
 	Command pulumiCommand.CommandOutput `pulumi:"command"`
 	// Connection details for the remote system
 	Connection pulumiCommand.ConnectionOutput `pulumi:"connection"`
+	// The command to run on create.
+	Create TeeOptsPtrOutput `pulumi:"create"`
+	// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+	// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+	// Command resource from previous create or update steps.
+	Delete TeeOptsPtrOutput `pulumi:"delete"`
 	// Environment variables
 	Environment pulumi.StringMapOutput `pulumi:"environment"`
-	// Corresponds to the [FILE] argument.
-	Files pulumi.AnyOutput `pulumi:"files"`
-	// Ignore interrupt signals.
-	IgnoreInterrupts pulumi.BoolOutput `pulumi:"ignoreInterrupts"`
-	// At what stage(s) in the resource lifecycle should the command be run
-	Lifecycle CommandLifecyclePtrOutput `pulumi:"lifecycle"`
-	// Set behavior on write error.
-	OutputError TeeModePtrOutput `pulumi:"outputError"`
-	// Operate in a more appropriate MODE with pipes.
-	Pipe pulumi.BoolOutput `pulumi:"pipe"`
 	// TODO
 	Stderr pulumi.StringOutput `pulumi:"stderr"`
 	// TODO
-	Stdin pulumi.StringOutput `pulumi:"stdin"`
+	Stdin pulumi.StringPtrOutput `pulumi:"stdin"`
 	// TODO
 	Stdout pulumi.StringOutput `pulumi:"stdout"`
 	// TODO
 	Triggers pulumi.ArrayOutput `pulumi:"triggers"`
-	// Output version information and exit.
-	Version pulumi.BoolOutput `pulumi:"version"`
+	// The command to run on update, if empty, create will
+	// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+	// are set to the stdout and stderr properties of the Command resource from previous
+	// create or update steps.
+	Update TeeOptsPtrOutput `pulumi:"update"`
 }
 
 // NewTee registers a new resource with the given unique name, arguments, and options.
@@ -59,75 +56,86 @@ func NewTee(ctx *pulumi.Context,
 	if args.Connection == nil {
 		return nil, errors.New("invalid value for required argument 'Connection'")
 	}
-	if args.Files == nil {
-		return nil, errors.New("invalid value for required argument 'Files'")
-	}
-	if args.Stdin == nil {
-		return nil, errors.New("invalid value for required argument 'Stdin'")
-	}
 	args.Connection = args.Connection.ToConnectionOutput().ApplyT(func(v pulumiCommand.Connection) pulumiCommand.Connection { return *v.Defaults() }).(pulumiCommand.ConnectionOutput)
 	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource Tee
-	err := ctx.RegisterRemoteComponentResource("kubernetes-the-hard-way:tools:Tee", name, args, &resource, opts...)
+	err := ctx.RegisterResource("kubernetes-the-hard-way:tools:Tee", name, args, &resource, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return &resource, nil
 }
 
+// GetTee gets an existing Tee resource's state with the given name, ID, and optional
+// state properties that are used to uniquely qualify the lookup (nil if not required).
+func GetTee(ctx *pulumi.Context,
+	name string, id pulumi.IDInput, state *TeeState, opts ...pulumi.ResourceOption) (*Tee, error) {
+	var resource Tee
+	err := ctx.ReadResource("kubernetes-the-hard-way:tools:Tee", name, id, state, &resource, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return &resource, nil
+}
+
+// Input properties used for looking up and filtering Tee resources.
+type teeState struct {
+}
+
+type TeeState struct {
+}
+
+func (TeeState) ElementType() reflect.Type {
+	return reflect.TypeOf((*teeState)(nil)).Elem()
+}
+
 type teeArgs struct {
-	// Append to the given FILEs, do not overwrite
-	Append *bool `pulumi:"append"`
 	// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
 	BinaryPath *string `pulumi:"binaryPath"`
 	// Connection details for the remote system
 	Connection pulumiCommand.Connection `pulumi:"connection"`
+	// The command to run on create.
+	Create *TeeOpts `pulumi:"create"`
+	// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+	// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+	// Command resource from previous create or update steps.
+	Delete *TeeOpts `pulumi:"delete"`
 	// Environment variables
 	Environment map[string]string `pulumi:"environment"`
-	// Corresponds to the [FILE] argument.
-	Files interface{} `pulumi:"files"`
-	// Ignore interrupt signals.
-	IgnoreInterrupts *bool `pulumi:"ignoreInterrupts"`
-	// At what stage(s) in the resource lifecycle should the command be run
-	Lifecycle *CommandLifecycle `pulumi:"lifecycle"`
-	// Set behavior on write error.
-	OutputError *TeeMode `pulumi:"outputError"`
-	// Operate in a more appropriate MODE with pipes.
-	Pipe *bool `pulumi:"pipe"`
 	// TODO
-	Stdin string `pulumi:"stdin"`
+	Stdin *string `pulumi:"stdin"`
 	// TODO
 	Triggers []interface{} `pulumi:"triggers"`
-	// Output version information and exit.
-	Version *bool `pulumi:"version"`
+	// The command to run on update, if empty, create will
+	// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+	// are set to the stdout and stderr properties of the Command resource from previous
+	// create or update steps.
+	Update *TeeOpts `pulumi:"update"`
 }
 
 // The set of arguments for constructing a Tee resource.
 type TeeArgs struct {
-	// Append to the given FILEs, do not overwrite
-	Append pulumi.BoolPtrInput
 	// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
 	BinaryPath pulumi.StringPtrInput
 	// Connection details for the remote system
 	Connection pulumiCommand.ConnectionInput
+	// The command to run on create.
+	Create TeeOptsPtrInput
+	// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+	// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+	// Command resource from previous create or update steps.
+	Delete TeeOptsPtrInput
 	// Environment variables
 	Environment pulumi.StringMapInput
-	// Corresponds to the [FILE] argument.
-	Files pulumi.Input
-	// Ignore interrupt signals.
-	IgnoreInterrupts pulumi.BoolPtrInput
-	// At what stage(s) in the resource lifecycle should the command be run
-	Lifecycle *CommandLifecycle
-	// Set behavior on write error.
-	OutputError TeeModePtrInput
-	// Operate in a more appropriate MODE with pipes.
-	Pipe pulumi.BoolPtrInput
 	// TODO
-	Stdin pulumi.StringInput
+	Stdin pulumi.StringPtrInput
 	// TODO
 	Triggers pulumi.ArrayInput
-	// Output version information and exit.
-	Version pulumi.BoolPtrInput
+	// The command to run on update, if empty, create will
+	// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+	// are set to the stdout and stderr properties of the Command resource from previous
+	// create or update steps.
+	Update TeeOptsPtrInput
 }
 
 func (TeeArgs) ElementType() reflect.Type {
@@ -217,11 +225,6 @@ func (o TeeOutput) ToTeeOutputWithContext(ctx context.Context) TeeOutput {
 	return o
 }
 
-// Append to the given FILEs, do not overwrite
-func (o TeeOutput) Append() pulumi.BoolOutput {
-	return o.ApplyT(func(v *Tee) pulumi.BoolOutput { return v.Append }).(pulumi.BoolOutput)
-}
-
 // Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
 func (o TeeOutput) BinaryPath() pulumi.StringOutput {
 	return o.ApplyT(func(v *Tee) pulumi.StringOutput { return v.BinaryPath }).(pulumi.StringOutput)
@@ -237,34 +240,21 @@ func (o TeeOutput) Connection() pulumiCommand.ConnectionOutput {
 	return o.ApplyT(func(v *Tee) pulumiCommand.ConnectionOutput { return v.Connection }).(pulumiCommand.ConnectionOutput)
 }
 
+// The command to run on create.
+func (o TeeOutput) Create() TeeOptsPtrOutput {
+	return o.ApplyT(func(v *Tee) TeeOptsPtrOutput { return v.Create }).(TeeOptsPtrOutput)
+}
+
+// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+// Command resource from previous create or update steps.
+func (o TeeOutput) Delete() TeeOptsPtrOutput {
+	return o.ApplyT(func(v *Tee) TeeOptsPtrOutput { return v.Delete }).(TeeOptsPtrOutput)
+}
+
 // Environment variables
 func (o TeeOutput) Environment() pulumi.StringMapOutput {
 	return o.ApplyT(func(v *Tee) pulumi.StringMapOutput { return v.Environment }).(pulumi.StringMapOutput)
-}
-
-// Corresponds to the [FILE] argument.
-func (o TeeOutput) Files() pulumi.AnyOutput {
-	return o.ApplyT(func(v *Tee) pulumi.AnyOutput { return v.Files }).(pulumi.AnyOutput)
-}
-
-// Ignore interrupt signals.
-func (o TeeOutput) IgnoreInterrupts() pulumi.BoolOutput {
-	return o.ApplyT(func(v *Tee) pulumi.BoolOutput { return v.IgnoreInterrupts }).(pulumi.BoolOutput)
-}
-
-// At what stage(s) in the resource lifecycle should the command be run
-func (o TeeOutput) Lifecycle() CommandLifecyclePtrOutput {
-	return o.ApplyT(func(v *Tee) CommandLifecyclePtrOutput { return v.Lifecycle }).(CommandLifecyclePtrOutput)
-}
-
-// Set behavior on write error.
-func (o TeeOutput) OutputError() TeeModePtrOutput {
-	return o.ApplyT(func(v *Tee) TeeModePtrOutput { return v.OutputError }).(TeeModePtrOutput)
-}
-
-// Operate in a more appropriate MODE with pipes.
-func (o TeeOutput) Pipe() pulumi.BoolOutput {
-	return o.ApplyT(func(v *Tee) pulumi.BoolOutput { return v.Pipe }).(pulumi.BoolOutput)
 }
 
 // TODO
@@ -273,8 +263,8 @@ func (o TeeOutput) Stderr() pulumi.StringOutput {
 }
 
 // TODO
-func (o TeeOutput) Stdin() pulumi.StringOutput {
-	return o.ApplyT(func(v *Tee) pulumi.StringOutput { return v.Stdin }).(pulumi.StringOutput)
+func (o TeeOutput) Stdin() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Tee) pulumi.StringPtrOutput { return v.Stdin }).(pulumi.StringPtrOutput)
 }
 
 // TODO
@@ -287,9 +277,12 @@ func (o TeeOutput) Triggers() pulumi.ArrayOutput {
 	return o.ApplyT(func(v *Tee) pulumi.ArrayOutput { return v.Triggers }).(pulumi.ArrayOutput)
 }
 
-// Output version information and exit.
-func (o TeeOutput) Version() pulumi.BoolOutput {
-	return o.ApplyT(func(v *Tee) pulumi.BoolOutput { return v.Version }).(pulumi.BoolOutput)
+// The command to run on update, if empty, create will
+// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+// are set to the stdout and stderr properties of the Command resource from previous
+// create or update steps.
+func (o TeeOutput) Update() TeeOptsPtrOutput {
+	return o.ApplyT(func(v *Tee) TeeOptsPtrOutput { return v.Update }).(TeeOptsPtrOutput)
 }
 
 type TeeArrayOutput struct{ *pulumi.OutputState }

@@ -8,7 +8,8 @@ import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
 from .. import _utilities
-from ._enums import *
+from . import outputs
+from ._inputs import *
 import pulumi_command
 
 __all__ = ['ChmodArgs', 'Chmod']
@@ -17,73 +18,44 @@ __all__ = ['ChmodArgs', 'Chmod']
 class ChmodArgs:
     def __init__(__self__, *,
                  connection: pulumi.Input['pulumi_command.remote.ConnectionArgs'],
-                 files: pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]],
-                 mode: pulumi.Input[str],
                  binary_path: Optional[pulumi.Input[str]] = None,
-                 changes: Optional[pulumi.Input[bool]] = None,
+                 create: Optional[pulumi.Input['ChmodOptsArgs']] = None,
+                 delete: Optional[pulumi.Input['ChmodOptsArgs']] = None,
                  environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-                 help: Optional[pulumi.Input[bool]] = None,
-                 lifecycle: Optional['CommandLifecycle'] = None,
-                 no_preserve_root: Optional[pulumi.Input[bool]] = None,
-                 preserve_root: Optional[pulumi.Input[bool]] = None,
-                 quiet: Optional[pulumi.Input[bool]] = None,
-                 recursive: Optional[pulumi.Input[bool]] = None,
-                 reference: Optional[pulumi.Input[str]] = None,
-                 silent: Optional[pulumi.Input[bool]] = None,
                  stdin: Optional[pulumi.Input[str]] = None,
                  triggers: Optional[pulumi.Input[Sequence[Any]]] = None,
-                 version: Optional[pulumi.Input[bool]] = None):
+                 update: Optional[pulumi.Input['ChmodOptsArgs']] = None):
         """
         The set of arguments for constructing a Chmod resource.
         :param pulumi.Input['pulumi_command.remote.ConnectionArgs'] connection: Connection details for the remote system
-        :param pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]] files: Corresponds to the [FILE] argument.
-        :param pulumi.Input[str] mode: Modes may be absolute or symbolic. An absolute mode is an octal number...
         :param pulumi.Input[str] binary_path: Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
-        :param pulumi.Input[bool] changes: Like verbose but report only when a change is made.
+        :param pulumi.Input['ChmodOptsArgs'] create: The command to run on create.
+        :param pulumi.Input['ChmodOptsArgs'] delete: The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+               and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+               Command resource from previous create or update steps.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] environment: Environment variables
-        :param pulumi.Input[bool] help: Display help and exit.
-        :param 'CommandLifecycle' lifecycle: At what stage(s) in the resource lifecycle should the command be run
-        :param pulumi.Input[bool] no_preserve_root: Do not treat '/' specially (the default).
-        :param pulumi.Input[bool] preserve_root: Fail to operate recursively on '/'.
-        :param pulumi.Input[bool] quiet: Suppress most error messages. Same as `silent`.
-        :param pulumi.Input[bool] recursive: Change files and directories recursively.
-        :param pulumi.Input[str] reference: Use RFILE's mode instead of specifying MODE values. RFILE is always dereferenced if a symbolic link.
-        :param pulumi.Input[bool] silent: Suppress most error messages. Same as `quiet`.
         :param pulumi.Input[str] stdin: TODO
         :param pulumi.Input[Sequence[Any]] triggers: TODO
-        :param pulumi.Input[bool] version: Output version information and exit.
+        :param pulumi.Input['ChmodOptsArgs'] update: The command to run on update, if empty, create will 
+               run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
+               are set to the stdout and stderr properties of the Command resource from previous 
+               create or update steps.
         """
         pulumi.set(__self__, "connection", connection)
-        pulumi.set(__self__, "files", files)
-        pulumi.set(__self__, "mode", mode)
         if binary_path is not None:
             pulumi.set(__self__, "binary_path", binary_path)
-        if changes is not None:
-            pulumi.set(__self__, "changes", changes)
+        if create is not None:
+            pulumi.set(__self__, "create", create)
+        if delete is not None:
+            pulumi.set(__self__, "delete", delete)
         if environment is not None:
             pulumi.set(__self__, "environment", environment)
-        if help is not None:
-            pulumi.set(__self__, "help", help)
-        if lifecycle is not None:
-            pulumi.set(__self__, "lifecycle", lifecycle)
-        if no_preserve_root is not None:
-            pulumi.set(__self__, "no_preserve_root", no_preserve_root)
-        if preserve_root is not None:
-            pulumi.set(__self__, "preserve_root", preserve_root)
-        if quiet is not None:
-            pulumi.set(__self__, "quiet", quiet)
-        if recursive is not None:
-            pulumi.set(__self__, "recursive", recursive)
-        if reference is not None:
-            pulumi.set(__self__, "reference", reference)
-        if silent is not None:
-            pulumi.set(__self__, "silent", silent)
         if stdin is not None:
             pulumi.set(__self__, "stdin", stdin)
         if triggers is not None:
             pulumi.set(__self__, "triggers", triggers)
-        if version is not None:
-            pulumi.set(__self__, "version", version)
+        if update is not None:
+            pulumi.set(__self__, "update", update)
 
     @property
     @pulumi.getter
@@ -96,30 +68,6 @@ class ChmodArgs:
     @connection.setter
     def connection(self, value: pulumi.Input['pulumi_command.remote.ConnectionArgs']):
         pulumi.set(self, "connection", value)
-
-    @property
-    @pulumi.getter
-    def files(self) -> pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]]:
-        """
-        Corresponds to the [FILE] argument.
-        """
-        return pulumi.get(self, "files")
-
-    @files.setter
-    def files(self, value: pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]]):
-        pulumi.set(self, "files", value)
-
-    @property
-    @pulumi.getter
-    def mode(self) -> pulumi.Input[str]:
-        """
-        Modes may be absolute or symbolic. An absolute mode is an octal number...
-        """
-        return pulumi.get(self, "mode")
-
-    @mode.setter
-    def mode(self, value: pulumi.Input[str]):
-        pulumi.set(self, "mode", value)
 
     @property
     @pulumi.getter(name="binaryPath")
@@ -135,15 +83,29 @@ class ChmodArgs:
 
     @property
     @pulumi.getter
-    def changes(self) -> Optional[pulumi.Input[bool]]:
+    def create(self) -> Optional[pulumi.Input['ChmodOptsArgs']]:
         """
-        Like verbose but report only when a change is made.
+        The command to run on create.
         """
-        return pulumi.get(self, "changes")
+        return pulumi.get(self, "create")
 
-    @changes.setter
-    def changes(self, value: Optional[pulumi.Input[bool]]):
-        pulumi.set(self, "changes", value)
+    @create.setter
+    def create(self, value: Optional[pulumi.Input['ChmodOptsArgs']]):
+        pulumi.set(self, "create", value)
+
+    @property
+    @pulumi.getter
+    def delete(self) -> Optional[pulumi.Input['ChmodOptsArgs']]:
+        """
+        The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+        and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+        Command resource from previous create or update steps.
+        """
+        return pulumi.get(self, "delete")
+
+    @delete.setter
+    def delete(self, value: Optional[pulumi.Input['ChmodOptsArgs']]):
+        pulumi.set(self, "delete", value)
 
     @property
     @pulumi.getter
@@ -156,102 +118,6 @@ class ChmodArgs:
     @environment.setter
     def environment(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
         pulumi.set(self, "environment", value)
-
-    @property
-    @pulumi.getter
-    def help(self) -> Optional[pulumi.Input[bool]]:
-        """
-        Display help and exit.
-        """
-        return pulumi.get(self, "help")
-
-    @help.setter
-    def help(self, value: Optional[pulumi.Input[bool]]):
-        pulumi.set(self, "help", value)
-
-    @property
-    @pulumi.getter
-    def lifecycle(self) -> Optional['CommandLifecycle']:
-        """
-        At what stage(s) in the resource lifecycle should the command be run
-        """
-        return pulumi.get(self, "lifecycle")
-
-    @lifecycle.setter
-    def lifecycle(self, value: Optional['CommandLifecycle']):
-        pulumi.set(self, "lifecycle", value)
-
-    @property
-    @pulumi.getter(name="noPreserveRoot")
-    def no_preserve_root(self) -> Optional[pulumi.Input[bool]]:
-        """
-        Do not treat '/' specially (the default).
-        """
-        return pulumi.get(self, "no_preserve_root")
-
-    @no_preserve_root.setter
-    def no_preserve_root(self, value: Optional[pulumi.Input[bool]]):
-        pulumi.set(self, "no_preserve_root", value)
-
-    @property
-    @pulumi.getter(name="preserveRoot")
-    def preserve_root(self) -> Optional[pulumi.Input[bool]]:
-        """
-        Fail to operate recursively on '/'.
-        """
-        return pulumi.get(self, "preserve_root")
-
-    @preserve_root.setter
-    def preserve_root(self, value: Optional[pulumi.Input[bool]]):
-        pulumi.set(self, "preserve_root", value)
-
-    @property
-    @pulumi.getter
-    def quiet(self) -> Optional[pulumi.Input[bool]]:
-        """
-        Suppress most error messages. Same as `silent`.
-        """
-        return pulumi.get(self, "quiet")
-
-    @quiet.setter
-    def quiet(self, value: Optional[pulumi.Input[bool]]):
-        pulumi.set(self, "quiet", value)
-
-    @property
-    @pulumi.getter
-    def recursive(self) -> Optional[pulumi.Input[bool]]:
-        """
-        Change files and directories recursively.
-        """
-        return pulumi.get(self, "recursive")
-
-    @recursive.setter
-    def recursive(self, value: Optional[pulumi.Input[bool]]):
-        pulumi.set(self, "recursive", value)
-
-    @property
-    @pulumi.getter
-    def reference(self) -> Optional[pulumi.Input[str]]:
-        """
-        Use RFILE's mode instead of specifying MODE values. RFILE is always dereferenced if a symbolic link.
-        """
-        return pulumi.get(self, "reference")
-
-    @reference.setter
-    def reference(self, value: Optional[pulumi.Input[str]]):
-        pulumi.set(self, "reference", value)
-
-    @property
-    @pulumi.getter
-    def silent(self) -> Optional[pulumi.Input[bool]]:
-        """
-        Suppress most error messages. Same as `quiet`.
-        """
-        return pulumi.get(self, "silent")
-
-    @silent.setter
-    def silent(self, value: Optional[pulumi.Input[bool]]):
-        pulumi.set(self, "silent", value)
 
     @property
     @pulumi.getter
@@ -279,39 +145,33 @@ class ChmodArgs:
 
     @property
     @pulumi.getter
-    def version(self) -> Optional[pulumi.Input[bool]]:
+    def update(self) -> Optional[pulumi.Input['ChmodOptsArgs']]:
         """
-        Output version information and exit.
+        The command to run on update, if empty, create will 
+        run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
+        are set to the stdout and stderr properties of the Command resource from previous 
+        create or update steps.
         """
-        return pulumi.get(self, "version")
+        return pulumi.get(self, "update")
 
-    @version.setter
-    def version(self, value: Optional[pulumi.Input[bool]]):
-        pulumi.set(self, "version", value)
+    @update.setter
+    def update(self, value: Optional[pulumi.Input['ChmodOptsArgs']]):
+        pulumi.set(self, "update", value)
 
 
-class Chmod(pulumi.ComponentResource):
+class Chmod(pulumi.CustomResource):
     @overload
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  binary_path: Optional[pulumi.Input[str]] = None,
-                 changes: Optional[pulumi.Input[bool]] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
+                 create: Optional[pulumi.Input[pulumi.InputType['ChmodOptsArgs']]] = None,
+                 delete: Optional[pulumi.Input[pulumi.InputType['ChmodOptsArgs']]] = None,
                  environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-                 files: Optional[pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]]] = None,
-                 help: Optional[pulumi.Input[bool]] = None,
-                 lifecycle: Optional['CommandLifecycle'] = None,
-                 mode: Optional[pulumi.Input[str]] = None,
-                 no_preserve_root: Optional[pulumi.Input[bool]] = None,
-                 preserve_root: Optional[pulumi.Input[bool]] = None,
-                 quiet: Optional[pulumi.Input[bool]] = None,
-                 recursive: Optional[pulumi.Input[bool]] = None,
-                 reference: Optional[pulumi.Input[str]] = None,
-                 silent: Optional[pulumi.Input[bool]] = None,
                  stdin: Optional[pulumi.Input[str]] = None,
                  triggers: Optional[pulumi.Input[Sequence[Any]]] = None,
-                 version: Optional[pulumi.Input[bool]] = None,
+                 update: Optional[pulumi.Input[pulumi.InputType['ChmodOptsArgs']]] = None,
                  __props__=None):
         """
         Abstraction over the `chmod` utility on a remote system.
@@ -319,22 +179,18 @@ class Chmod(pulumi.ComponentResource):
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[str] binary_path: Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
-        :param pulumi.Input[bool] changes: Like verbose but report only when a change is made.
         :param pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']] connection: Connection details for the remote system
+        :param pulumi.Input[pulumi.InputType['ChmodOptsArgs']] create: The command to run on create.
+        :param pulumi.Input[pulumi.InputType['ChmodOptsArgs']] delete: The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+               and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+               Command resource from previous create or update steps.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] environment: Environment variables
-        :param pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]] files: Corresponds to the [FILE] argument.
-        :param pulumi.Input[bool] help: Display help and exit.
-        :param 'CommandLifecycle' lifecycle: At what stage(s) in the resource lifecycle should the command be run
-        :param pulumi.Input[str] mode: Modes may be absolute or symbolic. An absolute mode is an octal number...
-        :param pulumi.Input[bool] no_preserve_root: Do not treat '/' specially (the default).
-        :param pulumi.Input[bool] preserve_root: Fail to operate recursively on '/'.
-        :param pulumi.Input[bool] quiet: Suppress most error messages. Same as `silent`.
-        :param pulumi.Input[bool] recursive: Change files and directories recursively.
-        :param pulumi.Input[str] reference: Use RFILE's mode instead of specifying MODE values. RFILE is always dereferenced if a symbolic link.
-        :param pulumi.Input[bool] silent: Suppress most error messages. Same as `quiet`.
         :param pulumi.Input[str] stdin: TODO
         :param pulumi.Input[Sequence[Any]] triggers: TODO
-        :param pulumi.Input[bool] version: Output version information and exit.
+        :param pulumi.Input[pulumi.InputType['ChmodOptsArgs']] update: The command to run on update, if empty, create will 
+               run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
+               are set to the stdout and stderr properties of the Command resource from previous 
+               create or update steps.
         """
         ...
     @overload
@@ -361,56 +217,32 @@ class Chmod(pulumi.ComponentResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  binary_path: Optional[pulumi.Input[str]] = None,
-                 changes: Optional[pulumi.Input[bool]] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
+                 create: Optional[pulumi.Input[pulumi.InputType['ChmodOptsArgs']]] = None,
+                 delete: Optional[pulumi.Input[pulumi.InputType['ChmodOptsArgs']]] = None,
                  environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-                 files: Optional[pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]]] = None,
-                 help: Optional[pulumi.Input[bool]] = None,
-                 lifecycle: Optional['CommandLifecycle'] = None,
-                 mode: Optional[pulumi.Input[str]] = None,
-                 no_preserve_root: Optional[pulumi.Input[bool]] = None,
-                 preserve_root: Optional[pulumi.Input[bool]] = None,
-                 quiet: Optional[pulumi.Input[bool]] = None,
-                 recursive: Optional[pulumi.Input[bool]] = None,
-                 reference: Optional[pulumi.Input[str]] = None,
-                 silent: Optional[pulumi.Input[bool]] = None,
                  stdin: Optional[pulumi.Input[str]] = None,
                  triggers: Optional[pulumi.Input[Sequence[Any]]] = None,
-                 version: Optional[pulumi.Input[bool]] = None,
+                 update: Optional[pulumi.Input[pulumi.InputType['ChmodOptsArgs']]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):
             raise TypeError('Expected resource options to be a ResourceOptions instance')
-        if opts.id is not None:
-            raise ValueError('ComponentResource classes do not support opts.id')
-        else:
+        if opts.id is None:
             if __props__ is not None:
                 raise TypeError('__props__ is only valid when passed in combination with a valid opts.id to get an existing resource')
             __props__ = ChmodArgs.__new__(ChmodArgs)
 
             __props__.__dict__["binary_path"] = binary_path
-            __props__.__dict__["changes"] = changes
             if connection is None and not opts.urn:
                 raise TypeError("Missing required property 'connection'")
             __props__.__dict__["connection"] = connection
+            __props__.__dict__["create"] = create
+            __props__.__dict__["delete"] = delete
             __props__.__dict__["environment"] = environment
-            if files is None and not opts.urn:
-                raise TypeError("Missing required property 'files'")
-            __props__.__dict__["files"] = files
-            __props__.__dict__["help"] = help
-            __props__.__dict__["lifecycle"] = lifecycle
-            if mode is None and not opts.urn:
-                raise TypeError("Missing required property 'mode'")
-            __props__.__dict__["mode"] = mode
-            __props__.__dict__["no_preserve_root"] = no_preserve_root
-            __props__.__dict__["preserve_root"] = preserve_root
-            __props__.__dict__["quiet"] = quiet
-            __props__.__dict__["recursive"] = recursive
-            __props__.__dict__["reference"] = reference
-            __props__.__dict__["silent"] = silent
             __props__.__dict__["stdin"] = stdin
             __props__.__dict__["triggers"] = triggers
-            __props__.__dict__["version"] = version
+            __props__.__dict__["update"] = update
             __props__.__dict__["command"] = None
             __props__.__dict__["stderr"] = None
             __props__.__dict__["stdout"] = None
@@ -418,8 +250,36 @@ class Chmod(pulumi.ComponentResource):
             'kubernetes-the-hard-way:tools:Chmod',
             resource_name,
             __props__,
-            opts,
-            remote=True)
+            opts)
+
+    @staticmethod
+    def get(resource_name: str,
+            id: pulumi.Input[str],
+            opts: Optional[pulumi.ResourceOptions] = None) -> 'Chmod':
+        """
+        Get an existing Chmod resource's state with the given name, id, and optional extra
+        properties used to qualify the lookup.
+
+        :param str resource_name: The unique name of the resulting resource.
+        :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
+        :param pulumi.ResourceOptions opts: Options for the resource.
+        """
+        opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
+
+        __props__ = ChmodArgs.__new__(ChmodArgs)
+
+        __props__.__dict__["binary_path"] = None
+        __props__.__dict__["command"] = None
+        __props__.__dict__["connection"] = None
+        __props__.__dict__["create"] = None
+        __props__.__dict__["delete"] = None
+        __props__.__dict__["environment"] = None
+        __props__.__dict__["stderr"] = None
+        __props__.__dict__["stdin"] = None
+        __props__.__dict__["stdout"] = None
+        __props__.__dict__["triggers"] = None
+        __props__.__dict__["update"] = None
+        return Chmod(resource_name, opts=opts, __props__=__props__)
 
     @property
     @pulumi.getter(name="binaryPath")
@@ -428,14 +288,6 @@ class Chmod(pulumi.ComponentResource):
         Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
         """
         return pulumi.get(self, "binary_path")
-
-    @property
-    @pulumi.getter
-    def changes(self) -> pulumi.Output[bool]:
-        """
-        Like verbose but report only when a change is made.
-        """
-        return pulumi.get(self, "changes")
 
     @property
     @pulumi.getter
@@ -455,91 +307,29 @@ class Chmod(pulumi.ComponentResource):
 
     @property
     @pulumi.getter
+    def create(self) -> pulumi.Output[Optional['outputs.ChmodOpts']]:
+        """
+        The command to run on create.
+        """
+        return pulumi.get(self, "create")
+
+    @property
+    @pulumi.getter
+    def delete(self) -> pulumi.Output[Optional['outputs.ChmodOpts']]:
+        """
+        The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+        and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+        Command resource from previous create or update steps.
+        """
+        return pulumi.get(self, "delete")
+
+    @property
+    @pulumi.getter
     def environment(self) -> pulumi.Output[Mapping[str, str]]:
         """
         Environment variables
         """
         return pulumi.get(self, "environment")
-
-    @property
-    @pulumi.getter
-    def files(self) -> pulumi.Output[Any]:
-        """
-        Corresponds to the [FILE] argument.
-        """
-        return pulumi.get(self, "files")
-
-    @property
-    @pulumi.getter
-    def help(self) -> pulumi.Output[bool]:
-        """
-        Display help and exit.
-        """
-        return pulumi.get(self, "help")
-
-    @property
-    @pulumi.getter
-    def lifecycle(self) -> pulumi.Output[Optional['CommandLifecycle']]:
-        """
-        At what stage(s) in the resource lifecycle should the command be run
-        """
-        return pulumi.get(self, "lifecycle")
-
-    @property
-    @pulumi.getter
-    def mode(self) -> pulumi.Output[str]:
-        """
-        Modes may be absolute or symbolic. An absolute mode is an octal number...
-        """
-        return pulumi.get(self, "mode")
-
-    @property
-    @pulumi.getter(name="noPreserveRoot")
-    def no_preserve_root(self) -> pulumi.Output[bool]:
-        """
-        Do not treat '/' specially (the default).
-        """
-        return pulumi.get(self, "no_preserve_root")
-
-    @property
-    @pulumi.getter(name="preserveRoot")
-    def preserve_root(self) -> pulumi.Output[bool]:
-        """
-        Fail to operate recursively on '/'.
-        """
-        return pulumi.get(self, "preserve_root")
-
-    @property
-    @pulumi.getter
-    def quiet(self) -> pulumi.Output[bool]:
-        """
-        Suppress most error messages. Same as `silent`.
-        """
-        return pulumi.get(self, "quiet")
-
-    @property
-    @pulumi.getter
-    def recursive(self) -> pulumi.Output[bool]:
-        """
-        Change files and directories recursively.
-        """
-        return pulumi.get(self, "recursive")
-
-    @property
-    @pulumi.getter
-    def reference(self) -> pulumi.Output[Optional[str]]:
-        """
-        Use RFILE's mode instead of specifying MODE values. RFILE is always dereferenced if a symbolic link.
-        """
-        return pulumi.get(self, "reference")
-
-    @property
-    @pulumi.getter
-    def silent(self) -> pulumi.Output[bool]:
-        """
-        Suppress most error messages. Same as `quiet`.
-        """
-        return pulumi.get(self, "silent")
 
     @property
     @pulumi.getter
@@ -575,9 +365,12 @@ class Chmod(pulumi.ComponentResource):
 
     @property
     @pulumi.getter
-    def version(self) -> pulumi.Output[bool]:
+    def update(self) -> pulumi.Output[Optional['outputs.ChmodOpts']]:
         """
-        Output version information and exit.
+        The command to run on update, if empty, create will 
+        run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
+        are set to the stdout and stderr properties of the Command resource from previous 
+        create or update steps.
         """
-        return pulumi.get(self, "version")
+        return pulumi.get(self, "update")
 

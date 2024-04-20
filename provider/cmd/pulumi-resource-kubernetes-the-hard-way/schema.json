@@ -718,6 +718,63 @@
                 }
             ]
         },
+        "kubernetes-the-hard-way:tools:ChmodOpts": {
+            "description": "Abstraction over the `chmod` utility on a remote system.",
+            "properties": {
+                "changes": {
+                    "type": "boolean",
+                    "description": "Like verbose but report only when a change is made."
+                },
+                "files": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "Corresponds to the [FILE] argument."
+                },
+                "help": {
+                    "type": "boolean",
+                    "description": "Display help and exit."
+                },
+                "mode": {
+                    "type": "string",
+                    "description": "Modes may be absolute or symbolic. An absolute mode is an octal number..."
+                },
+                "noPreserveRoot": {
+                    "type": "boolean",
+                    "description": "Do not treat '/' specially (the default)."
+                },
+                "preserveRoot": {
+                    "type": "boolean",
+                    "description": "Fail to operate recursively on '/'."
+                },
+                "quiet": {
+                    "type": "boolean",
+                    "description": "Suppress most error messages. Same as `silent`."
+                },
+                "recursive": {
+                    "type": "boolean",
+                    "description": "Change files and directories recursively."
+                },
+                "reference": {
+                    "type": "string",
+                    "description": "Use RFILE's mode instead of specifying MODE values. RFILE is always dereferenced if a symbolic link."
+                },
+                "silent": {
+                    "type": "boolean",
+                    "description": "Suppress most error messages. Same as `quiet`."
+                },
+                "version": {
+                    "type": "boolean",
+                    "description": "Output version information and exit."
+                }
+            },
+            "type": "object",
+            "required": [
+                "files",
+                "mode"
+            ]
+        },
         "kubernetes-the-hard-way:tools:CommandLifecycle": {
             "type": "string",
             "enum": [
@@ -763,6 +820,282 @@
                 }
             ]
         },
+        "kubernetes-the-hard-way:tools:CurlOpts": {
+            "description": "Abstraction over the `curl` utility on a remote system. Transfer a URL.",
+            "properties": {
+                "abstractUnixSocket": {
+                    "type": "string",
+                    "description": "(HTTP) Connect through an abstract Unix domain socket, instead of using the network."
+                },
+                "altSvc": {
+                    "type": "string",
+                    "description": "(HTTPS)  This  option enables the alt-svc parser in curl."
+                },
+                "anyAuth": {
+                    "type": "boolean",
+                    "description": "(HTTP) Tells curl to figure out authentication method by itself, and use the most secure one the remote site claims to support."
+                },
+                "append": {
+                    "type": "boolean",
+                    "description": "(FTP SFTP) When used in an upload, this makes curl append to the target file instead of overwriting it."
+                },
+                "awsSigv4": {
+                    "type": "string",
+                    "description": "Use AWS V4 signature authentication in the transfer."
+                },
+                "basic": {
+                    "type": "boolean",
+                    "description": "(HTTP) Tells curl to use HTTP Basic authentication with the remote host."
+                },
+                "cacert": {
+                    "type": "string",
+                    "description": "(TLS)  Tells curl to use the specified certificate file to verify the peer."
+                },
+                "capath": {
+                    "type": "string",
+                    "description": "(TLS) Tells curl to use the specified certificate directory to verify the peer."
+                },
+                "cert": {
+                    "type": "string",
+                    "description": "(TLS)  Tells  curl to use the specified client certificate file when getting a file with HTTPS, FTPS or another SSL-based protocol."
+                },
+                "certStatus": {
+                    "type": "boolean",
+                    "description": "(TLS) Tells curl to verify the status of the server certificate by using the Certificate Status Request (aka. OCSP stapling) TLS extension."
+                },
+                "certType": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:CurlCertType",
+                    "description": "(TLS) Tells curl what type the provided client certificate is using."
+                },
+                "ciphers": {
+                    "type": "string",
+                    "description": "(TLS) Specifies which ciphers to use in the connection."
+                },
+                "compressed": {
+                    "type": "boolean",
+                    "description": "(HTTP) Request a compressed response using one of the algorithms curl supports, and automatically decompress the content."
+                },
+                "compressedSsh": {
+                    "type": "boolean",
+                    "description": "(SCP SFTP) Enables built-in SSH compression."
+                },
+                "config": {
+                    "type": "string",
+                    "description": "Specify a text file to read curl arguments from."
+                },
+                "connectTimeout": {
+                    "type": "integer",
+                    "description": "Maximum  time  in seconds that you allow curl's connection to take."
+                },
+                "connectTo": {
+                    "type": "string",
+                    "description": "For a request to the given HOST1:PORT1 pair, connect to HOST2:PORT2 instead."
+                },
+                "continueAt": {
+                    "type": "string",
+                    "description": "Continue/Resume a previous file transfer at the given offset."
+                },
+                "cookie": {
+                    "type": "string",
+                    "description": "(HTTP) Pass the data to the HTTP server in the Cookie header."
+                },
+                "cookieJar": {
+                    "type": "string",
+                    "description": "(HTTP)  Specify  to which file you want curl to write all cookies after a completed operation."
+                },
+                "createDirs": {
+                    "type": "boolean",
+                    "description": "When used in conjunction with the -o, --output option, curl will create the necessary local directory hierarchy as needed."
+                },
+                "createFileMode": {
+                    "type": "string",
+                    "description": "(SFTP SCP FILE) When curl is used to create files remotely using one of the supported protocols, this option allows the user to set which 'mode' to set on the file at creation time, instead of the default 0644."
+                },
+                "crlf": {
+                    "type": "boolean",
+                    "description": "(FTP SMTP) Convert LF to CRLF in upload. Useful for MVS (OS/390)."
+                },
+                "crlfFile": {
+                    "type": "string",
+                    "description": "(TLS) Provide a file using PEM format with a Certificate Revocation List that may specify peer certificates that are to be considered revoked."
+                },
+                "curves": {
+                    "type": "string",
+                    "description": "(TLS)  Tells curl to request specific curves to use during SSL session establishment according to RFC 8422, 5.1."
+                },
+                "data": {
+                    "type": "string",
+                    "description": "(HTTP  MQTT) Sends the specified data in a POST request to the HTTP server, in the same way that a browser does when a user has filled in an HTML form and presses the submit button."
+                },
+                "dataAscii": {
+                    "type": "string",
+                    "description": "(HTTP) This is just an alias for -d, --data."
+                },
+                "dataBinary": {
+                    "type": "string",
+                    "description": "(HTTP) This posts data exactly as specified with no extra processing whatsoever."
+                },
+                "dataRaw": {
+                    "type": "string",
+                    "description": "(HTTP) This posts data similarly to -d, --data but without the special interpretation of the @ character."
+                },
+                "dataUrlEncode": {
+                    "type": "string",
+                    "description": "(HTTP) This posts data, similar to the other -d, --data options with the exception that this performs URL-encoding."
+                },
+                "delegation": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:CurlDelegationLevel",
+                    "description": "(GSS/kerberos) Set LEVEL to tell the server what it is allowed to delegate when it comes to user credentials."
+                },
+                "digest": {
+                    "type": "boolean",
+                    "description": "(HTTP) Enables HTTP Digest authentication."
+                },
+                "disable": {
+                    "type": "boolean",
+                    "description": "If used as the first parameter on the command line, the curlrc config file will not be read and used."
+                },
+                "disableEprt": {
+                    "type": "boolean",
+                    "description": "(FTP) Tell curl to disable the use of the EPRT and LPRT commands when doing active FTP transfers"
+                },
+                "disableEpsv": {
+                    "type": "boolean",
+                    "description": "(FTP)  Tell  curl to disable the use of the EPSV command when doing passive FTP transfers"
+                },
+                "disallowUsernameInUrl": {
+                    "type": "boolean",
+                    "description": "(HTTP) This tells curl to exit if passed a url containing a username."
+                },
+                "dnsInterface": {
+                    "type": "string",
+                    "description": "(DNS)  Tell  curl  to send outgoing DNS requests through \u003cinterface\u003e."
+                },
+                "dnsIpv4Addr": {
+                    "type": "string",
+                    "description": "(DNS) Tell curl to bind to \u003cip-address\u003e when making IPv4 DNS requests, so that the DNS requests originate from this address."
+                },
+                "dnsIpv6Addr": {
+                    "type": "string",
+                    "description": "(DNS) Tell curl to bind to \u003cip-address\u003e when making IPv6 DNS requests, so that the DNS requests originate from this address."
+                },
+                "dnsServers": {
+                    "type": "string",
+                    "description": "Set the list of DNS servers to be used instead of the system default."
+                },
+                "dohCertStatus": {
+                    "type": "boolean",
+                    "description": "Same as --cert-status but used for DoH (DNS-over-HTTPS)."
+                },
+                "dohInsecure": {
+                    "type": "boolean",
+                    "description": "Same as -k, --insecure but used for DoH (DNS-over-HTTPS)."
+                },
+                "dohUrl": {
+                    "type": "string",
+                    "description": "Specifies which DNS-over-HTTPS (DoH) server to use to resolve hostnames, instead of using the default name resolver mechanism."
+                },
+                "dumpHeader": {
+                    "type": "string",
+                    "description": "(HTTP FTP) Write the received protocol headers to the specified file."
+                },
+                "egdFile": {
+                    "type": "string",
+                    "description": "(TLS) Specify the path name to the Entropy Gathering Daemon socket."
+                },
+                "engine": {
+                    "type": "string",
+                    "description": "(TLS) Select the OpenSSL crypto engine to use for cipher operations."
+                },
+                "etagCompare": {
+                    "type": "string",
+                    "description": "(HTTP) This option makes a conditional HTTP request for the specific ETag read from the given file by sending a custom If-None-Match header using the stored ETag."
+                },
+                "etagSave": {
+                    "type": "string",
+                    "description": "(HTTP) This option saves an HTTP ETag to the specified file."
+                },
+                "expect100Timeout": {
+                    "type": "integer",
+                    "description": "(HTTP)  Maximum  time in seconds that you allow curl to wait for a 100-continue response when curl emits an Expects: 100-continue header in its request."
+                },
+                "fail": {
+                    "type": "boolean",
+                    "description": "(HTTP) Fail silently (no output at all) on server errors."
+                },
+                "failEarly": {
+                    "type": "boolean",
+                    "description": "Fail and exit on the first detected transfer error."
+                },
+                "failWithBody": {
+                    "type": "boolean",
+                    "description": "(HTTP)  Return an error on server errors where the HTTP response code is 400 or greater)."
+                },
+                "falseStart": {
+                    "type": "boolean",
+                    "description": "(TLS) Tells curl to use false start during the TLS handshake."
+                },
+                "form": {
+                    "type": "string",
+                    "description": "(HTTP SMTP IMAP) For HTTP protocol family, this lets curl emulate a filled-in form in which a user has pressed the submit button."
+                },
+                "formEscape": {
+                    "type": "boolean",
+                    "description": "(HTTP) Tells curl to pass on names of multipart form fields and files using backslash-escaping instead of percent-encoding."
+                },
+                "formName": {
+                    "type": "string",
+                    "description": "(HTTP SMTP IMAP) Similar to -F, --form except that the value string for the named parameter is used literally."
+                },
+                "ftpAccount": {
+                    "type": "string",
+                    "description": "(FTP) When an FTP server asks for 'account data' after user name and password has been provided, this data is sent off using the ACCT command."
+                },
+                "ftpAlternativeUser": {
+                    "type": "string",
+                    "description": "(FTP) If authenticating with the USER and PASS commands fails, send this command."
+                },
+                "ftpCreateDirs": {
+                    "type": "boolean",
+                    "description": "(FTP  SFTP) When an FTP or SFTP URL/operation uses a path that does not currently exist on the server, the standard behavior of curl is to fail."
+                },
+                "ftpMethod": {
+                    "type": "string",
+                    "description": "(FTP) Control what method curl should use to reach a file on an FTP(S) server."
+                },
+                "ftpPasv": {
+                    "type": "boolean",
+                    "description": "(FTP) Use passive mode for the data connection."
+                },
+                "ftpPort": {
+                    "type": "string",
+                    "description": "(FTP)  Reverses  the  default  initiator/listener  roles  when connecting with FTP."
+                },
+                "ftpPret": {
+                    "type": "boolean",
+                    "description": "(FTP) Tell curl to send a PRET command before PASV (and EPSV)."
+                },
+                "ftpSkipPasvIp": {
+                    "type": "boolean",
+                    "description": "(FTP)  Tell  curl  to  not use the IP address the server suggests in its response to curl's PASV command when curl connects the data connection."
+                },
+                "ftpSslCccMode": {
+                    "type": "string",
+                    "description": "(FTP) Sets the CCC mode. The passive mode will not initiate the shutdown, but instead wait for the server to do it, and will not reply to the shutdown from the  server."
+                },
+                "urls": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "Corresponds to the URLs argument."
+                }
+            },
+            "type": "object",
+            "required": [
+                "urls"
+            ]
+        },
         "kubernetes-the-hard-way:tools:EtcdctlCommand": {
             "type": "string",
             "enum": [
@@ -775,6 +1108,35 @@
                 {
                     "value": "version"
                 }
+            ]
+        },
+        "kubernetes-the-hard-way:tools:EtcdctlOpts": {
+            "description": "Abstraction over the `etcdctl` utility on a remote system.",
+            "properties": {
+                "caCert": {
+                    "type": "string",
+                    "description": "TODO"
+                },
+                "cert": {
+                    "type": "string",
+                    "description": "TODO"
+                },
+                "commands": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:EtcdctlCommand",
+                    "description": "TODO"
+                },
+                "endpoints": {
+                    "type": "string",
+                    "description": "TODO"
+                },
+                "key": {
+                    "type": "string",
+                    "description": "TODO"
+                }
+            },
+            "type": "object",
+            "required": [
+                "commands"
             ]
         },
         "kubernetes-the-hard-way:tools:HostnamectlCommand": {
@@ -819,6 +1181,302 @@
                     "value": "off"
                 }
             ]
+        },
+        "kubernetes-the-hard-way:tools:HostnamectlOpts": {
+            "description": "Abstraction over the `hostnamectl` utility on a remote system.",
+            "properties": {
+                "arg": {
+                    "type": "string",
+                    "description": "The argument for the specified `command`."
+                },
+                "command": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:HostnamectlCommand",
+                    "description": "Corresponds to the {COMMAND} argument."
+                },
+                "help": {
+                    "type": "boolean",
+                    "description": "Print a short help text and exit."
+                },
+                "host": {
+                    "type": "string",
+                    "description": "Execute the operation remotely. Specify a hostname, or a username and hostname separated by '@', to connect to."
+                },
+                "json": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:HostnamectlJsonMode",
+                    "description": "Shows output formatted as JSON."
+                },
+                "machine": {
+                    "type": "string",
+                    "description": "Execute operation on a local container. Specify a container name to connect to, optionally prefixed by a user name to connect as and a separating '@' character."
+                },
+                "noAskPassword": {
+                    "type": "boolean",
+                    "description": "Do not query the user for authentication for privileged operations."
+                },
+                "pretty": {
+                    "type": "boolean",
+                    "description": "If status is invoked (or no explicit command is given) and one of these switches is specified, hostnamectl will print out just this selected hostname. Same as `static` and `transient`."
+                },
+                "static": {
+                    "type": "boolean",
+                    "description": "If status is invoked (or no explicit command is given) and one of these switches is specified, hostnamectl will print out just this selected hostname. Same as `transient` and `pretty`."
+                },
+                "transient": {
+                    "type": "boolean",
+                    "description": "If status is invoked (or no explicit command is given) and one of these switches is specified, hostnamectl will print out just this selected hostname. Same as `static` and `pretty`."
+                },
+                "version": {
+                    "type": "boolean",
+                    "description": "Print a short version string and exit."
+                }
+            },
+            "type": "object",
+            "required": [
+                "command"
+            ]
+        },
+        "kubernetes-the-hard-way:tools:MkdirOpts": {
+            "description": "Abstraction over the `mkdir` utility on a remote system.",
+            "properties": {
+                "directory": {
+                    "type": "string",
+                    "description": "The fully qualified path of the directory on the remote system."
+                },
+                "parents": {
+                    "type": "boolean",
+                    "description": "Corresponds to the `--parents` option."
+                },
+                "removeOnDelete": {
+                    "type": "boolean",
+                    "description": "Remove the created directory when the `Mkdir` resource is deleted or updated."
+                }
+            },
+            "type": "object",
+            "required": [
+                "directory"
+            ]
+        },
+        "kubernetes-the-hard-way:tools:MktempOpts": {
+            "description": "Abstraction over the `mktemp` utility on a remote system.",
+            "properties": {
+                "directory": {
+                    "type": "boolean",
+                    "description": "Corresponds to the `--directory` option."
+                },
+                "dryRun": {
+                    "type": "boolean",
+                    "description": "Corresponds to the `--dry-run` option."
+                },
+                "quiet": {
+                    "type": "boolean",
+                    "description": "Corresponds to the `--quiet` option."
+                },
+                "suffix": {
+                    "type": "string",
+                    "description": "Corresponds to the `--suffix` option."
+                },
+                "template": {
+                    "type": "string",
+                    "description": "Corresponds to the [TEMPLATE] argument."
+                },
+                "tmpdir": {
+                    "type": "string",
+                    "description": "Corresponds to the `--tmpdir` option."
+                }
+            },
+            "type": "object"
+        },
+        "kubernetes-the-hard-way:tools:MvOpts": {
+            "description": "Abstraction over the `mv` utility on a remote system.",
+            "properties": {
+                "backup": {
+                    "type": "boolean",
+                    "plain": true,
+                    "description": "Corresponds to the `-b` and `--backup` options depending on whether [CONTROL] is supplied."
+                },
+                "context": {
+                    "type": "boolean",
+                    "description": "Corresponds to the `--context` option."
+                },
+                "control": {
+                    "type": "boolean",
+                    "description": "Corresponds to the [CONTROL] argument for the `--backup` option."
+                },
+                "dest": {
+                    "type": "string",
+                    "description": "Corresponds to the [DEST] argument."
+                },
+                "directory": {
+                    "type": "string",
+                    "description": "Corresponds to the [DIRECTORY] argument."
+                },
+                "force": {
+                    "type": "boolean",
+                    "description": "Corresponds to the `--force` option."
+                },
+                "noClobber": {
+                    "type": "boolean",
+                    "description": "Corresponds to the `--no-clobber` option."
+                },
+                "noTargetDirectory": {
+                    "type": "boolean",
+                    "description": "Corresponds to the `--no-target-directory` option."
+                },
+                "source": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "Corresponds to the [SOURCE] argument."
+                },
+                "stripTrailingSlashes": {
+                    "type": "boolean",
+                    "description": "Corresponds to the `--strip-trailing-slashes` option."
+                },
+                "suffix": {
+                    "type": "string",
+                    "description": "Corresponds to the `--suffix` option."
+                },
+                "targetDirectory": {
+                    "type": "boolean",
+                    "description": "Corresponds to the `--target-directory` option."
+                },
+                "update": {
+                    "type": "boolean",
+                    "description": "Corresponds to the `--update` option."
+                },
+                "verbose": {
+                    "type": "boolean",
+                    "description": "Corresponds to the `--verbose` option."
+                }
+            },
+            "type": "object",
+            "required": [
+                "source"
+            ]
+        },
+        "kubernetes-the-hard-way:tools:RmOpts": {
+            "description": "Abstraction over the `rm` utility on a remote system.",
+            "properties": {
+                "dir": {
+                    "type": "boolean",
+                    "description": "Corresponds to the `--dir` option."
+                },
+                "files": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "Corresponds to the [FILE] argument."
+                },
+                "force": {
+                    "type": "boolean",
+                    "description": "Corresponds to the `--force` option."
+                },
+                "onDelete": {
+                    "type": "boolean",
+                    "description": "Whether rm should be run when the resource is created or deleted."
+                },
+                "recursive": {
+                    "type": "boolean",
+                    "description": "Corresponds to the `--recursive` option."
+                },
+                "verbose": {
+                    "type": "boolean",
+                    "description": "Corresponds to the `--verbose` option."
+                }
+            },
+            "type": "object",
+            "required": [
+                "files"
+            ]
+        },
+        "kubernetes-the-hard-way:tools:SedOpts": {
+            "description": "Abstraction over the `sed` utility on a remote system.",
+            "properties": {
+                "debug": {
+                    "type": "boolean",
+                    "description": "annotate program execution."
+                },
+                "expressions": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "add the script to the commands to be executed."
+                },
+                "files": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "add the contents of script-file to the commands to be executed."
+                },
+                "followSymlinks": {
+                    "type": "boolean",
+                    "description": "follow symlinks when processing in place"
+                },
+                "help": {
+                    "type": "boolean",
+                    "description": "display this help and exit."
+                },
+                "inPlace": {
+                    "type": "string",
+                    "description": "edit files in place (makes backup if SUFFIX supplied)"
+                },
+                "inputFiles": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "corresponds to the [input-file]... argument(s)."
+                },
+                "lineLength": {
+                    "type": "integer",
+                    "description": "specify the desired line-wrap length for the `l' command"
+                },
+                "nullData": {
+                    "type": "boolean",
+                    "description": "separate lines by NUL characters"
+                },
+                "posix": {
+                    "type": "boolean",
+                    "description": "disable all GNU extensions."
+                },
+                "quiet": {
+                    "type": "boolean",
+                    "description": "suppress automatic printing of pattern space. Same as `silent`."
+                },
+                "regexpExtended": {
+                    "type": "boolean",
+                    "description": "use extended regular expressions in the script (for portability use POSIX -E)."
+                },
+                "sandbox": {
+                    "type": "boolean",
+                    "description": "operate in sandbox mode (disable e/r/w commands)."
+                },
+                "script": {
+                    "type": "string",
+                    "description": "script only if no other script."
+                },
+                "separate": {
+                    "type": "boolean",
+                    "description": "consider files as separate rather than as a single, continuous long stream."
+                },
+                "silent": {
+                    "type": "boolean",
+                    "description": "suppress automatic printing of pattern space. Same as `quiet`."
+                },
+                "unbuffered": {
+                    "type": "boolean",
+                    "description": "load minimal amounts of data from the input files and flush the output buffers more often."
+                },
+                "version": {
+                    "type": "boolean",
+                    "description": "output version information and exit."
+                }
+            },
+            "type": "object"
         },
         "kubernetes-the-hard-way:tools:SystemctlCommand": {
             "type": "string",
@@ -924,6 +1582,73 @@
                 }
             ]
         },
+        "kubernetes-the-hard-way:tools:SystemctlOpts": {
+            "description": "Abstraction over the `systemctl` utility on a remote system.",
+            "properties": {
+                "command": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:SystemctlCommand",
+                    "plain": true,
+                    "description": "Corresponds to the COMMAND argument."
+                },
+                "pattern": {
+                    "type": "string",
+                    "description": "Corresponds to the [PATTERN] argument"
+                },
+                "unit": {
+                    "type": "string",
+                    "description": "Corresponds to the [UNIT...] argument."
+                }
+            },
+            "type": "object",
+            "required": [
+                "command",
+                "unit"
+            ]
+        },
+        "kubernetes-the-hard-way:tools:TarOpts": {
+            "description": "Abstraction over the `tar` utility on a remote system.",
+            "properties": {
+                "archive": {
+                    "type": "string",
+                    "description": "Corresponds to the [ARCHIVE] argument."
+                },
+                "directory": {
+                    "type": "string",
+                    "description": "Corresponds to the `--directory` option."
+                },
+                "extract": {
+                    "type": "boolean",
+                    "description": "Corresponds to the `--extract` option."
+                },
+                "files": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "Corresponds to the [FILE] argument."
+                },
+                "gzip": {
+                    "type": "boolean",
+                    "description": "Corresponds to the `--gzip` option."
+                },
+                "onDelete": {
+                    "type": "boolean",
+                    "description": "Whether rm should be run when the resource is created or deleted."
+                },
+                "recursive": {
+                    "type": "boolean",
+                    "description": "Corresponds to the `--recursive` option."
+                },
+                "stripComponents": {
+                    "type": "integer",
+                    "description": "Corresponds to the `--strip-components` option."
+                }
+            },
+            "type": "object",
+            "required": [
+                "archive"
+            ]
+        },
         "kubernetes-the-hard-way:tools:TeeMode": {
             "type": "string",
             "enum": [
@@ -939,6 +1664,82 @@
                 {
                     "value": "exit-nopipe"
                 }
+            ]
+        },
+        "kubernetes-the-hard-way:tools:TeeOpts": {
+            "description": "Abstraction over the `rm` utility on a remote system.",
+            "properties": {
+                "append": {
+                    "type": "boolean",
+                    "description": "Append to the given FILEs, do not overwrite"
+                },
+                "files": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "Corresponds to the [FILE] argument."
+                },
+                "ignoreInterrupts": {
+                    "type": "boolean",
+                    "description": "Ignore interrupt signals."
+                },
+                "outputError": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:TeeMode",
+                    "description": "Set behavior on write error."
+                },
+                "pipe": {
+                    "type": "boolean",
+                    "description": "Operate in a more appropriate MODE with pipes."
+                },
+                "version": {
+                    "type": "boolean",
+                    "description": "Output version information and exit."
+                }
+            },
+            "type": "object",
+            "required": [
+                "files"
+            ]
+        },
+        "kubernetes-the-hard-way:tools:WgetOpts": {
+            "description": "Abstraction over the `wget` utility on a remote system.",
+            "properties": {
+                "directoryPrefix": {
+                    "type": "string",
+                    "description": "The  directory prefix is the directory where all other files and subdirectories will be saved to, i.e. the top of the retrieval tree.  The default is . (the current directory)."
+                },
+                "httpsOnly": {
+                    "type": "boolean",
+                    "description": "When in recursive mode, only HTTPS links are followed."
+                },
+                "noVerbose": {
+                    "type": "boolean",
+                    "description": "Turn off verbose without being completely quiet (use -q for that), which means that error messages and basic information still get printed."
+                },
+                "outputDocument": {
+                    "type": "string",
+                    "description": "The  documents  will  not  be  written  to the appropriate files, but all will be concatenated together and written to file."
+                },
+                "quiet": {
+                    "type": "boolean",
+                    "description": "Turn off Wget's output."
+                },
+                "timestamping": {
+                    "type": "boolean",
+                    "description": "Turn on time-stamping."
+                },
+                "url": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "Corresponds to the [URL...] argument."
+                }
+            },
+            "type": "object",
+            "required": [
+                "url"
             ]
         }
     },
@@ -3646,10 +4447,6 @@
                     "type": "string",
                     "description": "Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH"
                 },
-                "changes": {
-                    "type": "boolean",
-                    "description": "Like verbose but report only when a change is made."
-                },
                 "command": {
                     "$ref": "/command/v0.10.0/schema.json#/resources/command:remote:Command",
                     "description": "The underlying command"
@@ -3658,63 +4455,20 @@
                     "$ref": "/command/v0.10.0/schema.json#/types/command:remote:Connection",
                     "description": "Connection details for the remote system"
                 },
+                "create": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:ChmodOpts",
+                    "description": "The command to run on create."
+                },
+                "delete": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:ChmodOpts",
+                    "description": "The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT\nand PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the\nCommand resource from previous create or update steps."
+                },
                 "environment": {
                     "type": "object",
                     "additionalProperties": {
                         "type": "string"
                     },
                     "description": "Environment variables"
-                },
-                "files": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
-                        }
-                    ],
-                    "description": "Corresponds to the [FILE] argument."
-                },
-                "help": {
-                    "type": "boolean",
-                    "description": "Display help and exit."
-                },
-                "lifecycle": {
-                    "$ref": "#/types/kubernetes-the-hard-way:tools:CommandLifecycle",
-                    "plain": true,
-                    "description": "At what stage(s) in the resource lifecycle should the command be run"
-                },
-                "mode": {
-                    "type": "string",
-                    "description": "Modes may be absolute or symbolic. An absolute mode is an octal number..."
-                },
-                "noPreserveRoot": {
-                    "type": "boolean",
-                    "description": "Do not treat '/' specially (the default)."
-                },
-                "preserveRoot": {
-                    "type": "boolean",
-                    "description": "Fail to operate recursively on '/'."
-                },
-                "quiet": {
-                    "type": "boolean",
-                    "description": "Suppress most error messages. Same as `silent`."
-                },
-                "recursive": {
-                    "type": "boolean",
-                    "description": "Change files and directories recursively."
-                },
-                "reference": {
-                    "type": "string",
-                    "description": "Use RFILE's mode instead of specifying MODE values. RFILE is always dereferenced if a symbolic link."
-                },
-                "silent": {
-                    "type": "boolean",
-                    "description": "Suppress most error messages. Same as `quiet`."
                 },
                 "stderr": {
                     "type": "string",
@@ -3735,22 +4489,12 @@
                     },
                     "description": "TODO"
                 },
-                "version": {
-                    "type": "boolean",
-                    "description": "Output version information and exit."
+                "update": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:ChmodOpts",
+                    "description": "The command to run on update, if empty, create will \nrun again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR \nare set to the stdout and stderr properties of the Command resource from previous \ncreate or update steps."
                 }
             },
             "required": [
-                "files",
-                "mode",
-                "changes",
-                "help",
-                "noPreserveRoot",
-                "preserveRoot",
-                "quiet",
-                "recursive",
-                "silent",
-                "version",
                 "binaryPath",
                 "command",
                 "connection",
@@ -3764,13 +4508,17 @@
                     "type": "string",
                     "description": "Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH"
                 },
-                "changes": {
-                    "type": "boolean",
-                    "description": "Like verbose but report only when a change is made."
-                },
                 "connection": {
                     "$ref": "/command/v0.10.0/schema.json#/types/command:remote:Connection",
                     "description": "Connection details for the remote system"
+                },
+                "create": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:ChmodOpts",
+                    "description": "The command to run on create."
+                },
+                "delete": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:ChmodOpts",
+                    "description": "The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT\nand PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the\nCommand resource from previous create or update steps."
                 },
                 "environment": {
                     "type": "object",
@@ -3778,57 +4526,6 @@
                         "type": "string"
                     },
                     "description": "Environment variables"
-                },
-                "files": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
-                        }
-                    ],
-                    "description": "Corresponds to the [FILE] argument."
-                },
-                "help": {
-                    "type": "boolean",
-                    "description": "Display help and exit."
-                },
-                "lifecycle": {
-                    "$ref": "#/types/kubernetes-the-hard-way:tools:CommandLifecycle",
-                    "plain": true,
-                    "description": "At what stage(s) in the resource lifecycle should the command be run"
-                },
-                "mode": {
-                    "type": "string",
-                    "description": "Modes may be absolute or symbolic. An absolute mode is an octal number..."
-                },
-                "noPreserveRoot": {
-                    "type": "boolean",
-                    "description": "Do not treat '/' specially (the default)."
-                },
-                "preserveRoot": {
-                    "type": "boolean",
-                    "description": "Fail to operate recursively on '/'."
-                },
-                "quiet": {
-                    "type": "boolean",
-                    "description": "Suppress most error messages. Same as `silent`."
-                },
-                "recursive": {
-                    "type": "boolean",
-                    "description": "Change files and directories recursively."
-                },
-                "reference": {
-                    "type": "string",
-                    "description": "Use RFILE's mode instead of specifying MODE values. RFILE is always dereferenced if a symbolic link."
-                },
-                "silent": {
-                    "type": "boolean",
-                    "description": "Suppress most error messages. Same as `quiet`."
                 },
                 "stdin": {
                     "type": "string",
@@ -3841,216 +4538,37 @@
                     },
                     "description": "TODO"
                 },
-                "version": {
-                    "type": "boolean",
-                    "description": "Output version information and exit."
+                "update": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:ChmodOpts",
+                    "description": "The command to run on update, if empty, create will \nrun again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR \nare set to the stdout and stderr properties of the Command resource from previous \ncreate or update steps."
                 }
             },
             "requiredInputs": [
-                "files",
-                "mode",
                 "connection"
-            ],
-            "isComponent": true
+            ]
         },
         "kubernetes-the-hard-way:tools:Curl": {
             "description": "Abstraction over the `curl` utility on a remote system. Transfer a URL.",
             "properties": {
-                "abstractUnixSocket": {
-                    "type": "string",
-                    "description": "(HTTP) Connect through an abstract Unix domain socket, instead of using the network."
-                },
-                "altSvc": {
-                    "type": "string",
-                    "description": "(HTTPS)  This  option enables the alt-svc parser in curl."
-                },
-                "anyAuth": {
-                    "type": "boolean",
-                    "description": "(HTTP) Tells curl to figure out authentication method by itself, and use the most secure one the remote site claims to support."
-                },
-                "append": {
-                    "type": "boolean",
-                    "description": "(FTP SFTP) When used in an upload, this makes curl append to the target file instead of overwriting it."
-                },
-                "awsSigv4": {
-                    "type": "string",
-                    "description": "Use AWS V4 signature authentication in the transfer."
-                },
-                "basic": {
-                    "type": "boolean",
-                    "description": "(HTTP) Tells curl to use HTTP Basic authentication with the remote host."
-                },
                 "binaryPath": {
                     "type": "string",
                     "description": "Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH"
-                },
-                "cacert": {
-                    "type": "string",
-                    "description": "(TLS)  Tells curl to use the specified certificate file to verify the peer."
-                },
-                "capath": {
-                    "type": "string",
-                    "description": "(TLS) Tells curl to use the specified certificate directory to verify the peer."
-                },
-                "cert": {
-                    "type": "string",
-                    "description": "(TLS)  Tells  curl to use the specified client certificate file when getting a file with HTTPS, FTPS or another SSL-based protocol."
-                },
-                "certStatus": {
-                    "type": "boolean",
-                    "description": "(TLS) Tells curl to verify the status of the server certificate by using the Certificate Status Request (aka. OCSP stapling) TLS extension."
-                },
-                "certType": {
-                    "$ref": "#/types/kubernetes-the-hard-way:tools:CurlCertType",
-                    "description": "(TLS) Tells curl what type the provided client certificate is using."
-                },
-                "ciphers": {
-                    "type": "string",
-                    "description": "(TLS) Specifies which ciphers to use in the connection."
                 },
                 "command": {
                     "$ref": "/command/v0.10.0/schema.json#/resources/command:remote:Command",
                     "description": "The underlying command"
                 },
-                "compressed": {
-                    "type": "boolean",
-                    "description": "(HTTP) Request a compressed response using one of the algorithms curl supports, and automatically decompress the content."
-                },
-                "compressedSsh": {
-                    "type": "boolean",
-                    "description": "(SCP SFTP) Enables built-in SSH compression."
-                },
-                "config": {
-                    "type": "string",
-                    "description": "Specify a text file to read curl arguments from."
-                },
-                "connectTimeout": {
-                    "type": "integer",
-                    "description": "Maximum  time  in seconds that you allow curl's connection to take."
-                },
-                "connectTo": {
-                    "type": "string",
-                    "description": "For a request to the given HOST1:PORT1 pair, connect to HOST2:PORT2 instead."
-                },
                 "connection": {
                     "$ref": "/command/v0.10.0/schema.json#/types/command:remote:Connection",
                     "description": "Connection details for the remote system"
                 },
-                "continueAt": {
-                    "type": "string",
-                    "description": "Continue/Resume a previous file transfer at the given offset."
+                "create": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:CurlOpts",
+                    "description": "The command to run on create."
                 },
-                "cookie": {
-                    "type": "string",
-                    "description": "(HTTP) Pass the data to the HTTP server in the Cookie header."
-                },
-                "cookieJar": {
-                    "type": "string",
-                    "description": "(HTTP)  Specify  to which file you want curl to write all cookies after a completed operation."
-                },
-                "createDirs": {
-                    "type": "boolean",
-                    "description": "When used in conjunction with the -o, --output option, curl will create the necessary local directory hierarchy as needed."
-                },
-                "createFileMode": {
-                    "type": "string",
-                    "description": "(SFTP SCP FILE) When curl is used to create files remotely using one of the supported protocols, this option allows the user to set which 'mode' to set on the file at creation time, instead of the default 0644."
-                },
-                "crlf": {
-                    "type": "boolean",
-                    "description": "(FTP SMTP) Convert LF to CRLF in upload. Useful for MVS (OS/390)."
-                },
-                "crlfFile": {
-                    "type": "string",
-                    "description": "(TLS) Provide a file using PEM format with a Certificate Revocation List that may specify peer certificates that are to be considered revoked."
-                },
-                "curves": {
-                    "type": "string",
-                    "description": "(TLS)  Tells curl to request specific curves to use during SSL session establishment according to RFC 8422, 5.1."
-                },
-                "data": {
-                    "type": "string",
-                    "description": "(HTTP  MQTT) Sends the specified data in a POST request to the HTTP server, in the same way that a browser does when a user has filled in an HTML form and presses the submit button."
-                },
-                "dataAscii": {
-                    "type": "string",
-                    "description": "(HTTP) This is just an alias for -d, --data."
-                },
-                "dataBinary": {
-                    "type": "string",
-                    "description": "(HTTP) This posts data exactly as specified with no extra processing whatsoever."
-                },
-                "dataRaw": {
-                    "type": "string",
-                    "description": "(HTTP) This posts data similarly to -d, --data but without the special interpretation of the @ character."
-                },
-                "dataUrlEncode": {
-                    "type": "string",
-                    "description": "(HTTP) This posts data, similar to the other -d, --data options with the exception that this performs URL-encoding."
-                },
-                "delegation": {
-                    "$ref": "#/types/kubernetes-the-hard-way:tools:CurlDelegationLevel",
-                    "description": "(GSS/kerberos) Set LEVEL to tell the server what it is allowed to delegate when it comes to user credentials."
-                },
-                "digest": {
-                    "type": "boolean",
-                    "description": "(HTTP) Enables HTTP Digest authentication."
-                },
-                "disable": {
-                    "type": "boolean",
-                    "description": "If used as the first parameter on the command line, the curlrc config file will not be read and used."
-                },
-                "disableEprt": {
-                    "type": "boolean",
-                    "description": "(FTP) Tell curl to disable the use of the EPRT and LPRT commands when doing active FTP transfers"
-                },
-                "disableEpsv": {
-                    "type": "boolean",
-                    "description": "(FTP)  Tell  curl to disable the use of the EPSV command when doing passive FTP transfers"
-                },
-                "disallowUsernameInUrl": {
-                    "type": "boolean",
-                    "description": "(HTTP) This tells curl to exit if passed a url containing a username."
-                },
-                "dnsInterface": {
-                    "type": "string",
-                    "description": "(DNS)  Tell  curl  to send outgoing DNS requests through \u003cinterface\u003e."
-                },
-                "dnsIpv4Addr": {
-                    "type": "string",
-                    "description": "(DNS) Tell curl to bind to \u003cip-address\u003e when making IPv4 DNS requests, so that the DNS requests originate from this address."
-                },
-                "dnsIpv6Addr": {
-                    "type": "string",
-                    "description": "(DNS) Tell curl to bind to \u003cip-address\u003e when making IPv6 DNS requests, so that the DNS requests originate from this address."
-                },
-                "dnsServers": {
-                    "type": "string",
-                    "description": "Set the list of DNS servers to be used instead of the system default."
-                },
-                "dohCertStatus": {
-                    "type": "boolean",
-                    "description": "Same as --cert-status but used for DoH (DNS-over-HTTPS)."
-                },
-                "dohInsecure": {
-                    "type": "boolean",
-                    "description": "Same as -k, --insecure but used for DoH (DNS-over-HTTPS)."
-                },
-                "dohUrl": {
-                    "type": "string",
-                    "description": "Specifies which DNS-over-HTTPS (DoH) server to use to resolve hostnames, instead of using the default name resolver mechanism."
-                },
-                "dumpHeader": {
-                    "type": "string",
-                    "description": "(HTTP FTP) Write the received protocol headers to the specified file."
-                },
-                "egdFile": {
-                    "type": "string",
-                    "description": "(TLS) Specify the path name to the Entropy Gathering Daemon socket."
-                },
-                "engine": {
-                    "type": "string",
-                    "description": "(TLS) Select the OpenSSL crypto engine to use for cipher operations."
+                "delete": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:CurlOpts",
+                    "description": "The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT\nand PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the\nCommand resource from previous create or update steps."
                 },
                 "environment": {
                     "type": "object",
@@ -4058,87 +4576,6 @@
                         "type": "string"
                     },
                     "description": "Environment variables"
-                },
-                "etagCompare": {
-                    "type": "string",
-                    "description": "(HTTP) This option makes a conditional HTTP request for the specific ETag read from the given file by sending a custom If-None-Match header using the stored ETag."
-                },
-                "etagSave": {
-                    "type": "string",
-                    "description": "(HTTP) This option saves an HTTP ETag to the specified file."
-                },
-                "expect100Timeout": {
-                    "type": "integer",
-                    "description": "(HTTP)  Maximum  time in seconds that you allow curl to wait for a 100-continue response when curl emits an Expects: 100-continue header in its request."
-                },
-                "fail": {
-                    "type": "boolean",
-                    "description": "(HTTP) Fail silently (no output at all) on server errors."
-                },
-                "failEarly": {
-                    "type": "boolean",
-                    "description": "Fail and exit on the first detected transfer error."
-                },
-                "failWithBody": {
-                    "type": "boolean",
-                    "description": "(HTTP)  Return an error on server errors where the HTTP response code is 400 or greater)."
-                },
-                "falseStart": {
-                    "type": "boolean",
-                    "description": "(TLS) Tells curl to use false start during the TLS handshake."
-                },
-                "form": {
-                    "type": "string",
-                    "description": "(HTTP SMTP IMAP) For HTTP protocol family, this lets curl emulate a filled-in form in which a user has pressed the submit button."
-                },
-                "formEscape": {
-                    "type": "boolean",
-                    "description": "(HTTP) Tells curl to pass on names of multipart form fields and files using backslash-escaping instead of percent-encoding."
-                },
-                "formName": {
-                    "type": "string",
-                    "description": "(HTTP SMTP IMAP) Similar to -F, --form except that the value string for the named parameter is used literally."
-                },
-                "ftpAccount": {
-                    "type": "string",
-                    "description": "(FTP) When an FTP server asks for 'account data' after user name and password has been provided, this data is sent off using the ACCT command."
-                },
-                "ftpAlternativeUser": {
-                    "type": "string",
-                    "description": "(FTP) If authenticating with the USER and PASS commands fails, send this command."
-                },
-                "ftpCreateDirs": {
-                    "type": "boolean",
-                    "description": "(FTP  SFTP) When an FTP or SFTP URL/operation uses a path that does not currently exist on the server, the standard behavior of curl is to fail."
-                },
-                "ftpMethod": {
-                    "type": "string",
-                    "description": "(FTP) Control what method curl should use to reach a file on an FTP(S) server."
-                },
-                "ftpPasv": {
-                    "type": "boolean",
-                    "description": "(FTP) Use passive mode for the data connection."
-                },
-                "ftpPort": {
-                    "type": "string",
-                    "description": "(FTP)  Reverses  the  default  initiator/listener  roles  when connecting with FTP."
-                },
-                "ftpPret": {
-                    "type": "boolean",
-                    "description": "(FTP) Tell curl to send a PRET command before PASV (and EPSV)."
-                },
-                "ftpSkipPasvIp": {
-                    "type": "boolean",
-                    "description": "(FTP)  Tell  curl  to  not use the IP address the server suggests in its response to curl's PASV command when curl connects the data connection."
-                },
-                "ftpSslCccMode": {
-                    "type": "string",
-                    "description": "(FTP) Sets the CCC mode. The passive mode will not initiate the shutdown, but instead wait for the server to do it, and will not reply to the shutdown from the  server."
-                },
-                "lifecycle": {
-                    "$ref": "#/types/kubernetes-the-hard-way:tools:CommandLifecycle",
-                    "plain": true,
-                    "description": "At what stage(s) in the resource lifecycle should the command be run"
                 },
                 "stderr": {
                     "type": "string",
@@ -4159,23 +4596,12 @@
                     },
                     "description": "TODO"
                 },
-                "urls": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
-                        }
-                    ],
-                    "description": "Corresponds to the URLs argument."
+                "update": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:CurlOpts",
+                    "description": "The command to run on update, if empty, create will \nrun again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR \nare set to the stdout and stderr properties of the Command resource from previous \ncreate or update steps."
                 }
             },
             "required": [
-                "urls",
                 "binaryPath",
                 "command",
                 "connection",
@@ -4185,197 +4611,21 @@
                 "triggers"
             ],
             "inputProperties": {
-                "abstractUnixSocket": {
-                    "type": "string",
-                    "description": "(HTTP) Connect through an abstract Unix domain socket, instead of using the network."
-                },
-                "altSvc": {
-                    "type": "string",
-                    "description": "(HTTPS)  This  option enables the alt-svc parser in curl."
-                },
-                "anyAuth": {
-                    "type": "boolean",
-                    "description": "(HTTP) Tells curl to figure out authentication method by itself, and use the most secure one the remote site claims to support."
-                },
-                "append": {
-                    "type": "boolean",
-                    "description": "(FTP SFTP) When used in an upload, this makes curl append to the target file instead of overwriting it."
-                },
-                "awsSigv4": {
-                    "type": "string",
-                    "description": "Use AWS V4 signature authentication in the transfer."
-                },
-                "basic": {
-                    "type": "boolean",
-                    "description": "(HTTP) Tells curl to use HTTP Basic authentication with the remote host."
-                },
                 "binaryPath": {
                     "type": "string",
                     "description": "Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH"
-                },
-                "cacert": {
-                    "type": "string",
-                    "description": "(TLS)  Tells curl to use the specified certificate file to verify the peer."
-                },
-                "capath": {
-                    "type": "string",
-                    "description": "(TLS) Tells curl to use the specified certificate directory to verify the peer."
-                },
-                "cert": {
-                    "type": "string",
-                    "description": "(TLS)  Tells  curl to use the specified client certificate file when getting a file with HTTPS, FTPS or another SSL-based protocol."
-                },
-                "certStatus": {
-                    "type": "boolean",
-                    "description": "(TLS) Tells curl to verify the status of the server certificate by using the Certificate Status Request (aka. OCSP stapling) TLS extension."
-                },
-                "certType": {
-                    "$ref": "#/types/kubernetes-the-hard-way:tools:CurlCertType",
-                    "description": "(TLS) Tells curl what type the provided client certificate is using."
-                },
-                "ciphers": {
-                    "type": "string",
-                    "description": "(TLS) Specifies which ciphers to use in the connection."
-                },
-                "compressed": {
-                    "type": "boolean",
-                    "description": "(HTTP) Request a compressed response using one of the algorithms curl supports, and automatically decompress the content."
-                },
-                "compressedSsh": {
-                    "type": "boolean",
-                    "description": "(SCP SFTP) Enables built-in SSH compression."
-                },
-                "config": {
-                    "type": "string",
-                    "description": "Specify a text file to read curl arguments from."
-                },
-                "connectTimeout": {
-                    "type": "integer",
-                    "description": "Maximum  time  in seconds that you allow curl's connection to take."
-                },
-                "connectTo": {
-                    "type": "string",
-                    "description": "For a request to the given HOST1:PORT1 pair, connect to HOST2:PORT2 instead."
                 },
                 "connection": {
                     "$ref": "/command/v0.10.0/schema.json#/types/command:remote:Connection",
                     "description": "Connection details for the remote system"
                 },
-                "continueAt": {
-                    "type": "string",
-                    "description": "Continue/Resume a previous file transfer at the given offset."
+                "create": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:CurlOpts",
+                    "description": "The command to run on create."
                 },
-                "cookie": {
-                    "type": "string",
-                    "description": "(HTTP) Pass the data to the HTTP server in the Cookie header."
-                },
-                "cookieJar": {
-                    "type": "string",
-                    "description": "(HTTP)  Specify  to which file you want curl to write all cookies after a completed operation."
-                },
-                "createDirs": {
-                    "type": "boolean",
-                    "description": "When used in conjunction with the -o, --output option, curl will create the necessary local directory hierarchy as needed."
-                },
-                "createFileMode": {
-                    "type": "string",
-                    "description": "(SFTP SCP FILE) When curl is used to create files remotely using one of the supported protocols, this option allows the user to set which 'mode' to set on the file at creation time, instead of the default 0644."
-                },
-                "crlf": {
-                    "type": "boolean",
-                    "description": "(FTP SMTP) Convert LF to CRLF in upload. Useful for MVS (OS/390)."
-                },
-                "crlfFile": {
-                    "type": "string",
-                    "description": "(TLS) Provide a file using PEM format with a Certificate Revocation List that may specify peer certificates that are to be considered revoked."
-                },
-                "curves": {
-                    "type": "string",
-                    "description": "(TLS)  Tells curl to request specific curves to use during SSL session establishment according to RFC 8422, 5.1."
-                },
-                "data": {
-                    "type": "string",
-                    "description": "(HTTP  MQTT) Sends the specified data in a POST request to the HTTP server, in the same way that a browser does when a user has filled in an HTML form and presses the submit button."
-                },
-                "dataAscii": {
-                    "type": "string",
-                    "description": "(HTTP) This is just an alias for -d, --data."
-                },
-                "dataBinary": {
-                    "type": "string",
-                    "description": "(HTTP) This posts data exactly as specified with no extra processing whatsoever."
-                },
-                "dataRaw": {
-                    "type": "string",
-                    "description": "(HTTP) This posts data similarly to -d, --data but without the special interpretation of the @ character."
-                },
-                "dataUrlEncode": {
-                    "type": "string",
-                    "description": "(HTTP) This posts data, similar to the other -d, --data options with the exception that this performs URL-encoding."
-                },
-                "delegation": {
-                    "$ref": "#/types/kubernetes-the-hard-way:tools:CurlDelegationLevel",
-                    "description": "(GSS/kerberos) Set LEVEL to tell the server what it is allowed to delegate when it comes to user credentials."
-                },
-                "digest": {
-                    "type": "boolean",
-                    "description": "(HTTP) Enables HTTP Digest authentication."
-                },
-                "disable": {
-                    "type": "boolean",
-                    "description": "If used as the first parameter on the command line, the curlrc config file will not be read and used."
-                },
-                "disableEprt": {
-                    "type": "boolean",
-                    "description": "(FTP) Tell curl to disable the use of the EPRT and LPRT commands when doing active FTP transfers"
-                },
-                "disableEpsv": {
-                    "type": "boolean",
-                    "description": "(FTP)  Tell  curl to disable the use of the EPSV command when doing passive FTP transfers"
-                },
-                "disallowUsernameInUrl": {
-                    "type": "boolean",
-                    "description": "(HTTP) This tells curl to exit if passed a url containing a username."
-                },
-                "dnsInterface": {
-                    "type": "string",
-                    "description": "(DNS)  Tell  curl  to send outgoing DNS requests through \u003cinterface\u003e."
-                },
-                "dnsIpv4Addr": {
-                    "type": "string",
-                    "description": "(DNS) Tell curl to bind to \u003cip-address\u003e when making IPv4 DNS requests, so that the DNS requests originate from this address."
-                },
-                "dnsIpv6Addr": {
-                    "type": "string",
-                    "description": "(DNS) Tell curl to bind to \u003cip-address\u003e when making IPv6 DNS requests, so that the DNS requests originate from this address."
-                },
-                "dnsServers": {
-                    "type": "string",
-                    "description": "Set the list of DNS servers to be used instead of the system default."
-                },
-                "dohCertStatus": {
-                    "type": "boolean",
-                    "description": "Same as --cert-status but used for DoH (DNS-over-HTTPS)."
-                },
-                "dohInsecure": {
-                    "type": "boolean",
-                    "description": "Same as -k, --insecure but used for DoH (DNS-over-HTTPS)."
-                },
-                "dohUrl": {
-                    "type": "string",
-                    "description": "Specifies which DNS-over-HTTPS (DoH) server to use to resolve hostnames, instead of using the default name resolver mechanism."
-                },
-                "dumpHeader": {
-                    "type": "string",
-                    "description": "(HTTP FTP) Write the received protocol headers to the specified file."
-                },
-                "egdFile": {
-                    "type": "string",
-                    "description": "(TLS) Specify the path name to the Entropy Gathering Daemon socket."
-                },
-                "engine": {
-                    "type": "string",
-                    "description": "(TLS) Select the OpenSSL crypto engine to use for cipher operations."
+                "delete": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:CurlOpts",
+                    "description": "The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT\nand PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the\nCommand resource from previous create or update steps."
                 },
                 "environment": {
                     "type": "object",
@@ -4383,87 +4633,6 @@
                         "type": "string"
                     },
                     "description": "Environment variables"
-                },
-                "etagCompare": {
-                    "type": "string",
-                    "description": "(HTTP) This option makes a conditional HTTP request for the specific ETag read from the given file by sending a custom If-None-Match header using the stored ETag."
-                },
-                "etagSave": {
-                    "type": "string",
-                    "description": "(HTTP) This option saves an HTTP ETag to the specified file."
-                },
-                "expect100Timeout": {
-                    "type": "integer",
-                    "description": "(HTTP)  Maximum  time in seconds that you allow curl to wait for a 100-continue response when curl emits an Expects: 100-continue header in its request."
-                },
-                "fail": {
-                    "type": "boolean",
-                    "description": "(HTTP) Fail silently (no output at all) on server errors."
-                },
-                "failEarly": {
-                    "type": "boolean",
-                    "description": "Fail and exit on the first detected transfer error."
-                },
-                "failWithBody": {
-                    "type": "boolean",
-                    "description": "(HTTP)  Return an error on server errors where the HTTP response code is 400 or greater)."
-                },
-                "falseStart": {
-                    "type": "boolean",
-                    "description": "(TLS) Tells curl to use false start during the TLS handshake."
-                },
-                "form": {
-                    "type": "string",
-                    "description": "(HTTP SMTP IMAP) For HTTP protocol family, this lets curl emulate a filled-in form in which a user has pressed the submit button."
-                },
-                "formEscape": {
-                    "type": "boolean",
-                    "description": "(HTTP) Tells curl to pass on names of multipart form fields and files using backslash-escaping instead of percent-encoding."
-                },
-                "formName": {
-                    "type": "string",
-                    "description": "(HTTP SMTP IMAP) Similar to -F, --form except that the value string for the named parameter is used literally."
-                },
-                "ftpAccount": {
-                    "type": "string",
-                    "description": "(FTP) When an FTP server asks for 'account data' after user name and password has been provided, this data is sent off using the ACCT command."
-                },
-                "ftpAlternativeUser": {
-                    "type": "string",
-                    "description": "(FTP) If authenticating with the USER and PASS commands fails, send this command."
-                },
-                "ftpCreateDirs": {
-                    "type": "boolean",
-                    "description": "(FTP  SFTP) When an FTP or SFTP URL/operation uses a path that does not currently exist on the server, the standard behavior of curl is to fail."
-                },
-                "ftpMethod": {
-                    "type": "string",
-                    "description": "(FTP) Control what method curl should use to reach a file on an FTP(S) server."
-                },
-                "ftpPasv": {
-                    "type": "boolean",
-                    "description": "(FTP) Use passive mode for the data connection."
-                },
-                "ftpPort": {
-                    "type": "string",
-                    "description": "(FTP)  Reverses  the  default  initiator/listener  roles  when connecting with FTP."
-                },
-                "ftpPret": {
-                    "type": "boolean",
-                    "description": "(FTP) Tell curl to send a PRET command before PASV (and EPSV)."
-                },
-                "ftpSkipPasvIp": {
-                    "type": "boolean",
-                    "description": "(FTP)  Tell  curl  to  not use the IP address the server suggests in its response to curl's PASV command when curl connects the data connection."
-                },
-                "ftpSslCccMode": {
-                    "type": "string",
-                    "description": "(FTP) Sets the CCC mode. The passive mode will not initiate the shutdown, but instead wait for the server to do it, and will not reply to the shutdown from the  server."
-                },
-                "lifecycle": {
-                    "$ref": "#/types/kubernetes-the-hard-way:tools:CommandLifecycle",
-                    "plain": true,
-                    "description": "At what stage(s) in the resource lifecycle should the command be run"
                 },
                 "stdin": {
                     "type": "string",
@@ -4476,26 +4645,14 @@
                     },
                     "description": "TODO"
                 },
-                "urls": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
-                        }
-                    ],
-                    "description": "Corresponds to the URLs argument."
+                "update": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:CurlOpts",
+                    "description": "The command to run on update, if empty, create will \nrun again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR \nare set to the stdout and stderr properties of the Command resource from previous \ncreate or update steps."
                 }
             },
             "requiredInputs": [
-                "urls",
                 "connection"
-            ],
-            "isComponent": true
+            ]
         },
         "kubernetes-the-hard-way:tools:Etcdctl": {
             "description": "Abstraction over the `etcdctl` utility on a remote system.",
@@ -4504,29 +4661,21 @@
                     "type": "string",
                     "description": "Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH"
                 },
-                "caCert": {
-                    "type": "string",
-                    "description": "TODO"
-                },
-                "cert": {
-                    "type": "string",
-                    "description": "TODO"
-                },
                 "command": {
                     "$ref": "/command/v0.10.0/schema.json#/resources/command:remote:Command",
                     "description": "The underlying command"
-                },
-                "commands": {
-                    "$ref": "#/types/kubernetes-the-hard-way:tools:EtcdctlCommand",
-                    "description": "TODO"
                 },
                 "connection": {
                     "$ref": "/command/v0.10.0/schema.json#/types/command:remote:Connection",
                     "description": "Connection details for the remote system"
                 },
-                "endpoints": {
-                    "type": "string",
-                    "description": "TODO"
+                "create": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:EtcdctlOpts",
+                    "description": "The command to run on create."
+                },
+                "delete": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:EtcdctlOpts",
+                    "description": "The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT\nand PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the\nCommand resource from previous create or update steps."
                 },
                 "environment": {
                     "type": "object",
@@ -4534,15 +4683,6 @@
                         "type": "string"
                     },
                     "description": "Environment variables"
-                },
-                "key": {
-                    "type": "string",
-                    "description": "TODO"
-                },
-                "lifecycle": {
-                    "$ref": "#/types/kubernetes-the-hard-way:tools:CommandLifecycle",
-                    "plain": true,
-                    "description": "At what stage(s) in the resource lifecycle should the command be run"
                 },
                 "stderr": {
                     "type": "string",
@@ -4562,10 +4702,13 @@
                         "$ref": "pulumi.json#/Any"
                     },
                     "description": "TODO"
+                },
+                "update": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:EtcdctlOpts",
+                    "description": "The command to run on update, if empty, create will \nrun again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR \nare set to the stdout and stderr properties of the Command resource from previous \ncreate or update steps."
                 }
             },
             "required": [
-                "commands",
                 "binaryPath",
                 "command",
                 "connection",
@@ -4579,25 +4722,17 @@
                     "type": "string",
                     "description": "Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH"
                 },
-                "caCert": {
-                    "type": "string",
-                    "description": "TODO"
-                },
-                "cert": {
-                    "type": "string",
-                    "description": "TODO"
-                },
-                "commands": {
-                    "$ref": "#/types/kubernetes-the-hard-way:tools:EtcdctlCommand",
-                    "description": "TODO"
-                },
                 "connection": {
                     "$ref": "/command/v0.10.0/schema.json#/types/command:remote:Connection",
                     "description": "Connection details for the remote system"
                 },
-                "endpoints": {
-                    "type": "string",
-                    "description": "TODO"
+                "create": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:EtcdctlOpts",
+                    "description": "The command to run on create."
+                },
+                "delete": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:EtcdctlOpts",
+                    "description": "The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT\nand PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the\nCommand resource from previous create or update steps."
                 },
                 "environment": {
                     "type": "object",
@@ -4605,15 +4740,6 @@
                         "type": "string"
                     },
                     "description": "Environment variables"
-                },
-                "key": {
-                    "type": "string",
-                    "description": "TODO"
-                },
-                "lifecycle": {
-                    "$ref": "#/types/kubernetes-the-hard-way:tools:CommandLifecycle",
-                    "plain": true,
-                    "description": "At what stage(s) in the resource lifecycle should the command be run"
                 },
                 "stdin": {
                     "type": "string",
@@ -4625,21 +4751,19 @@
                         "$ref": "pulumi.json#/Any"
                     },
                     "description": "TODO"
+                },
+                "update": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:EtcdctlOpts",
+                    "description": "The command to run on update, if empty, create will \nrun again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR \nare set to the stdout and stderr properties of the Command resource from previous \ncreate or update steps."
                 }
             },
             "requiredInputs": [
-                "commands",
                 "connection"
-            ],
-            "isComponent": true
+            ]
         },
         "kubernetes-the-hard-way:tools:Hostnamectl": {
             "description": "Abstraction over the `hostnamectl` utility on a remote system.",
             "properties": {
-                "arg": {
-                    "type": "string",
-                    "description": "The argument for the specified `command`."
-                },
                 "binaryPath": {
                     "type": "string",
                     "description": "Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH"
@@ -4652,49 +4776,20 @@
                     "$ref": "/command/v0.10.0/schema.json#/types/command:remote:Connection",
                     "description": "Connection details for the remote system"
                 },
+                "create": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:HostnamectlOpts",
+                    "description": "The command to run on create."
+                },
+                "delete": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:HostnamectlOpts",
+                    "description": "The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT\nand PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the\nCommand resource from previous create or update steps."
+                },
                 "environment": {
                     "type": "object",
                     "additionalProperties": {
                         "type": "string"
                     },
                     "description": "Environment variables"
-                },
-                "help": {
-                    "type": "boolean",
-                    "description": "Print a short help text and exit."
-                },
-                "host": {
-                    "type": "string",
-                    "description": "Execute the operation remotely. Specify a hostname, or a username and hostname separated by '@', to connect to."
-                },
-                "hostnamectlCommand": {
-                    "$ref": "#/types/kubernetes-the-hard-way:tools:HostnamectlCommand",
-                    "description": "Corresponds to the {COMMAND} argument."
-                },
-                "json": {
-                    "$ref": "#/types/kubernetes-the-hard-way:tools:HostnamectlJsonMode",
-                    "description": "Shows output formatted as JSON."
-                },
-                "lifecycle": {
-                    "$ref": "#/types/kubernetes-the-hard-way:tools:CommandLifecycle",
-                    "plain": true,
-                    "description": "At what stage(s) in the resource lifecycle should the command be run"
-                },
-                "machine": {
-                    "type": "string",
-                    "description": "Execute operation on a local container. Specify a container name to connect to, optionally prefixed by a user name to connect as and a separating '@' character."
-                },
-                "noAskPassword": {
-                    "type": "boolean",
-                    "description": "Do not query the user for authentication for privileged operations."
-                },
-                "pretty": {
-                    "type": "boolean",
-                    "description": "If status is invoked (or no explicit command is given) and one of these switches is specified, hostnamectl will print out just this selected hostname. Same as `static` and `transient`."
-                },
-                "static": {
-                    "type": "boolean",
-                    "description": "If status is invoked (or no explicit command is given) and one of these switches is specified, hostnamectl will print out just this selected hostname. Same as `transient` and `pretty`."
                 },
                 "stderr": {
                     "type": "string",
@@ -4708,10 +4803,6 @@
                     "type": "string",
                     "description": "TODO"
                 },
-                "transient": {
-                    "type": "boolean",
-                    "description": "If status is invoked (or no explicit command is given) and one of these switches is specified, hostnamectl will print out just this selected hostname. Same as `static` and `pretty`."
-                },
                 "triggers": {
                     "type": "array",
                     "items": {
@@ -4719,20 +4810,12 @@
                     },
                     "description": "TODO"
                 },
-                "version": {
-                    "type": "boolean",
-                    "description": "Print a short version string and exit."
+                "update": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:HostnamectlOpts",
+                    "description": "The command to run on update, if empty, create will \nrun again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR \nare set to the stdout and stderr properties of the Command resource from previous \ncreate or update steps."
                 }
             },
             "required": [
-                "command",
-                "help",
-                "hostnamectlCommand",
-                "noAskPassword",
-                "pretty",
-                "static",
-                "transient",
-                "version",
                 "binaryPath",
                 "command",
                 "connection",
@@ -4742,21 +4825,21 @@
                 "triggers"
             ],
             "inputProperties": {
-                "arg": {
-                    "type": "string",
-                    "description": "The argument for the specified `command`."
-                },
                 "binaryPath": {
                     "type": "string",
                     "description": "Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH"
                 },
-                "command": {
-                    "$ref": "#/types/kubernetes-the-hard-way:tools:HostnamectlCommand",
-                    "description": "Corresponds to the {COMMAND} argument."
-                },
                 "connection": {
                     "$ref": "/command/v0.10.0/schema.json#/types/command:remote:Connection",
                     "description": "Connection details for the remote system"
+                },
+                "create": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:HostnamectlOpts",
+                    "description": "The command to run on create."
+                },
+                "delete": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:HostnamectlOpts",
+                    "description": "The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT\nand PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the\nCommand resource from previous create or update steps."
                 },
                 "environment": {
                     "type": "object",
@@ -4765,46 +4848,9 @@
                     },
                     "description": "Environment variables"
                 },
-                "help": {
-                    "type": "boolean",
-                    "description": "Print a short help text and exit."
-                },
-                "host": {
-                    "type": "string",
-                    "description": "Execute the operation remotely. Specify a hostname, or a username and hostname separated by '@', to connect to."
-                },
-                "json": {
-                    "$ref": "#/types/kubernetes-the-hard-way:tools:HostnamectlJsonMode",
-                    "description": "Shows output formatted as JSON."
-                },
-                "lifecycle": {
-                    "$ref": "#/types/kubernetes-the-hard-way:tools:CommandLifecycle",
-                    "plain": true,
-                    "description": "At what stage(s) in the resource lifecycle should the command be run"
-                },
-                "machine": {
-                    "type": "string",
-                    "description": "Execute operation on a local container. Specify a container name to connect to, optionally prefixed by a user name to connect as and a separating '@' character."
-                },
-                "noAskPassword": {
-                    "type": "boolean",
-                    "description": "Do not query the user for authentication for privileged operations."
-                },
-                "pretty": {
-                    "type": "boolean",
-                    "description": "If status is invoked (or no explicit command is given) and one of these switches is specified, hostnamectl will print out just this selected hostname. Same as `static` and `transient`."
-                },
-                "static": {
-                    "type": "boolean",
-                    "description": "If status is invoked (or no explicit command is given) and one of these switches is specified, hostnamectl will print out just this selected hostname. Same as `transient` and `pretty`."
-                },
                 "stdin": {
                     "type": "string",
                     "description": "TODO"
-                },
-                "transient": {
-                    "type": "boolean",
-                    "description": "If status is invoked (or no explicit command is given) and one of these switches is specified, hostnamectl will print out just this selected hostname. Same as `static` and `pretty`."
                 },
                 "triggers": {
                     "type": "array",
@@ -4813,16 +4859,14 @@
                     },
                     "description": "TODO"
                 },
-                "version": {
-                    "type": "boolean",
-                    "description": "Print a short version string and exit."
+                "update": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:HostnamectlOpts",
+                    "description": "The command to run on update, if empty, create will \nrun again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR \nare set to the stdout and stderr properties of the Command resource from previous \ncreate or update steps."
                 }
             },
             "requiredInputs": [
-                "command",
                 "connection"
-            ],
-            "isComponent": true
+            ]
         },
         "kubernetes-the-hard-way:tools:Mkdir": {
             "description": "Abstraction over the `mkdir` utility on a remote system.",
@@ -4839,9 +4883,13 @@
                     "$ref": "/command/v0.10.0/schema.json#/types/command:remote:Connection",
                     "description": "Connection details for the remote system"
                 },
-                "directory": {
-                    "type": "string",
-                    "description": "The fully qualified path of the directory on the remote system."
+                "create": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:MkdirOpts",
+                    "description": "The command to run on create."
+                },
+                "delete": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:MkdirOpts",
+                    "description": "The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT\nand PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the\nCommand resource from previous create or update steps."
                 },
                 "environment": {
                     "type": "object",
@@ -4849,19 +4897,6 @@
                         "type": "string"
                     },
                     "description": "Environment variables"
-                },
-                "lifecycle": {
-                    "$ref": "#/types/kubernetes-the-hard-way:tools:CommandLifecycle",
-                    "plain": true,
-                    "description": "At what stage(s) in the resource lifecycle should the command be run"
-                },
-                "parents": {
-                    "type": "boolean",
-                    "description": "Corresponds to the `--parents` option."
-                },
-                "removeOnDelete": {
-                    "type": "boolean",
-                    "description": "Remove the created directory when the `Mkdir` resource is deleted or updated."
                 },
                 "stderr": {
                     "type": "string",
@@ -4881,12 +4916,13 @@
                         "$ref": "pulumi.json#/Any"
                     },
                     "description": "TODO"
+                },
+                "update": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:MkdirOpts",
+                    "description": "The command to run on update, if empty, create will \nrun again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR \nare set to the stdout and stderr properties of the Command resource from previous \ncreate or update steps."
                 }
             },
             "required": [
-                "directory",
-                "parents",
-                "removeOnDelete",
                 "binaryPath",
                 "command",
                 "connection",
@@ -4904,9 +4940,13 @@
                     "$ref": "/command/v0.10.0/schema.json#/types/command:remote:Connection",
                     "description": "Connection details for the remote system"
                 },
-                "directory": {
-                    "type": "string",
-                    "description": "The fully qualified path of the directory on the remote system."
+                "create": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:MkdirOpts",
+                    "description": "The command to run on create."
+                },
+                "delete": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:MkdirOpts",
+                    "description": "The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT\nand PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the\nCommand resource from previous create or update steps."
                 },
                 "environment": {
                     "type": "object",
@@ -4914,19 +4954,6 @@
                         "type": "string"
                     },
                     "description": "Environment variables"
-                },
-                "lifecycle": {
-                    "$ref": "#/types/kubernetes-the-hard-way:tools:CommandLifecycle",
-                    "plain": true,
-                    "description": "At what stage(s) in the resource lifecycle should the command be run"
-                },
-                "parents": {
-                    "type": "boolean",
-                    "description": "Corresponds to the `--parents` option."
-                },
-                "removeOnDelete": {
-                    "type": "boolean",
-                    "description": "Remove the created directory when the `Mkdir` resource is deleted or updated."
                 },
                 "stdin": {
                     "type": "string",
@@ -4938,16 +4965,18 @@
                         "$ref": "pulumi.json#/Any"
                     },
                     "description": "TODO"
+                },
+                "update": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:MkdirOpts",
+                    "description": "The command to run on update, if empty, create will \nrun again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR \nare set to the stdout and stderr properties of the Command resource from previous \ncreate or update steps."
                 }
             },
             "requiredInputs": [
-                "directory",
                 "connection"
-            ],
-            "isComponent": true
+            ]
         },
         "kubernetes-the-hard-way:tools:Mktemp": {
-            "description": "Abstraction over the `mkdir` utility on a remote system.",
+            "description": "Abstraction over the `mktemp` utility on a remote system.",
             "properties": {
                 "binaryPath": {
                     "type": "string",
@@ -4961,13 +4990,13 @@
                     "$ref": "/command/v0.10.0/schema.json#/types/command:remote:Connection",
                     "description": "Connection details for the remote system"
                 },
-                "directory": {
-                    "type": "boolean",
-                    "description": "Corresponds to the `--directory` option."
+                "create": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:MktempOpts",
+                    "description": "The command to run on create."
                 },
-                "dryRun": {
-                    "type": "boolean",
-                    "description": "Corresponds to the `--dry-run` option."
+                "delete": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:MktempOpts",
+                    "description": "The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT\nand PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the\nCommand resource from previous create or update steps."
                 },
                 "environment": {
                     "type": "object",
@@ -4975,15 +5004,6 @@
                         "type": "string"
                     },
                     "description": "Environment variables"
-                },
-                "lifecycle": {
-                    "$ref": "#/types/kubernetes-the-hard-way:tools:CommandLifecycle",
-                    "plain": true,
-                    "description": "At what stage(s) in the resource lifecycle should the command be run"
-                },
-                "quiet": {
-                    "type": "boolean",
-                    "description": "Corresponds to the `--quiet` option."
                 },
                 "stderr": {
                     "type": "string",
@@ -4997,29 +5017,19 @@
                     "type": "string",
                     "description": "TODO"
                 },
-                "suffix": {
-                    "type": "string",
-                    "description": "Corresponds to the `--suffix` option."
-                },
-                "template": {
-                    "type": "string",
-                    "description": "Corresponds to the [TEMPLATE] argument."
-                },
-                "tmpdir": {
-                    "type": "string",
-                    "description": "Corresponds to the `--tmpdir` option."
-                },
                 "triggers": {
                     "type": "array",
                     "items": {
                         "$ref": "pulumi.json#/Any"
                     },
                     "description": "TODO"
+                },
+                "update": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:MktempOpts",
+                    "description": "The command to run on update, if empty, create will \nrun again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR \nare set to the stdout and stderr properties of the Command resource from previous \ncreate or update steps."
                 }
             },
             "required": [
-                "dryRun",
-                "quiet",
                 "binaryPath",
                 "command",
                 "connection",
@@ -5037,13 +5047,13 @@
                     "$ref": "/command/v0.10.0/schema.json#/types/command:remote:Connection",
                     "description": "Connection details for the remote system"
                 },
-                "directory": {
-                    "type": "boolean",
-                    "description": "Corresponds to the `--directory` option."
+                "create": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:MktempOpts",
+                    "description": "The command to run on create."
                 },
-                "dryRun": {
-                    "type": "boolean",
-                    "description": "Corresponds to the `--dry-run` option."
+                "delete": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:MktempOpts",
+                    "description": "The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT\nand PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the\nCommand resource from previous create or update steps."
                 },
                 "environment": {
                     "type": "object",
@@ -5052,30 +5062,9 @@
                     },
                     "description": "Environment variables"
                 },
-                "lifecycle": {
-                    "$ref": "#/types/kubernetes-the-hard-way:tools:CommandLifecycle",
-                    "plain": true,
-                    "description": "At what stage(s) in the resource lifecycle should the command be run"
-                },
-                "quiet": {
-                    "type": "boolean",
-                    "description": "Corresponds to the `--quiet` option."
-                },
                 "stdin": {
                     "type": "string",
                     "description": "TODO"
-                },
-                "suffix": {
-                    "type": "string",
-                    "description": "Corresponds to the `--suffix` option."
-                },
-                "template": {
-                    "type": "string",
-                    "description": "Corresponds to the [TEMPLATE] argument."
-                },
-                "tmpdir": {
-                    "type": "string",
-                    "description": "Corresponds to the `--tmpdir` option."
                 },
                 "triggers": {
                     "type": "array",
@@ -5083,21 +5072,19 @@
                         "$ref": "pulumi.json#/Any"
                     },
                     "description": "TODO"
+                },
+                "update": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:MktempOpts",
+                    "description": "The command to run on update, if empty, create will \nrun again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR \nare set to the stdout and stderr properties of the Command resource from previous \ncreate or update steps."
                 }
             },
             "requiredInputs": [
                 "connection"
-            ],
-            "isComponent": true
+            ]
         },
         "kubernetes-the-hard-way:tools:Mv": {
             "description": "Abstraction over the `mv` utility on a remote system.",
             "properties": {
-                "backup": {
-                    "type": "boolean",
-                    "plain": true,
-                    "description": "Corresponds to the `-b` and `--backup` options depending on whether [CONTROL] is supplied."
-                },
                 "binaryPath": {
                     "type": "string",
                     "description": "Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH"
@@ -5110,21 +5097,13 @@
                     "$ref": "/command/v0.10.0/schema.json#/types/command:remote:Connection",
                     "description": "Connection details for the remote system"
                 },
-                "context": {
-                    "type": "boolean",
-                    "description": "Corresponds to the `--context` option."
+                "create": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:MvOpts",
+                    "description": "The command to run on create."
                 },
-                "control": {
-                    "type": "boolean",
-                    "description": "Corresponds to the [CONTROL] argument for the `--backup` option."
-                },
-                "dest": {
-                    "type": "string",
-                    "description": "Corresponds to the [DEST] argument."
-                },
-                "directory": {
-                    "type": "string",
-                    "description": "Corresponds to the [DIRECTORY] argument."
+                "delete": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:MvOpts",
+                    "description": "The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT\nand PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the\nCommand resource from previous create or update steps."
                 },
                 "environment": {
                     "type": "object",
@@ -5132,37 +5111,6 @@
                         "type": "string"
                     },
                     "description": "Environment variables"
-                },
-                "force": {
-                    "type": "boolean",
-                    "description": "Corresponds to the `--force` option."
-                },
-                "lifecycle": {
-                    "$ref": "#/types/kubernetes-the-hard-way:tools:CommandLifecycle",
-                    "plain": true,
-                    "description": "At what stage(s) in the resource lifecycle should the command be run"
-                },
-                "noClobber": {
-                    "type": "boolean",
-                    "description": "Corresponds to the `--no-clobber` option."
-                },
-                "noTargetDirectory": {
-                    "type": "boolean",
-                    "description": "Corresponds to the `--no-target-directory` option."
-                },
-                "source": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
-                        }
-                    ],
-                    "description": "Corresponds to the [SOURCE] argument."
                 },
                 "stderr": {
                     "type": "string",
@@ -5176,18 +5124,6 @@
                     "type": "string",
                     "description": "TODO"
                 },
-                "stripTrailingSlashes": {
-                    "type": "boolean",
-                    "description": "Corresponds to the `--strip-trailing-slashes` option."
-                },
-                "suffix": {
-                    "type": "string",
-                    "description": "Corresponds to the `--suffix` option."
-                },
-                "targetDirectory": {
-                    "type": "boolean",
-                    "description": "Corresponds to the `--target-directory` option."
-                },
                 "triggers": {
                     "type": "array",
                     "items": {
@@ -5196,25 +5132,11 @@
                     "description": "TODO"
                 },
                 "update": {
-                    "type": "boolean",
-                    "description": "Corresponds to the `--update` option."
-                },
-                "verbose": {
-                    "type": "boolean",
-                    "description": "Corresponds to the `--verbose` option."
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:MvOpts",
+                    "description": "The command to run on update, if empty, create will \nrun again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR \nare set to the stdout and stderr properties of the Command resource from previous \ncreate or update steps."
                 }
             },
             "required": [
-                "source",
-                "backup",
-                "context",
-                "force",
-                "noClobber",
-                "noTargetDirectory",
-                "source",
-                "stripTrailingSlashes",
-                "update",
-                "verbose",
                 "binaryPath",
                 "command",
                 "connection",
@@ -5224,11 +5146,6 @@
                 "triggers"
             ],
             "inputProperties": {
-                "backup": {
-                    "type": "boolean",
-                    "plain": true,
-                    "description": "Corresponds to the `-b` and `--backup` options depending on whether [CONTROL] is supplied."
-                },
                 "binaryPath": {
                     "type": "string",
                     "description": "Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH"
@@ -5237,21 +5154,13 @@
                     "$ref": "/command/v0.10.0/schema.json#/types/command:remote:Connection",
                     "description": "Connection details for the remote system"
                 },
-                "context": {
-                    "type": "boolean",
-                    "description": "Corresponds to the `--context` option."
+                "create": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:MvOpts",
+                    "description": "The command to run on create."
                 },
-                "control": {
-                    "type": "boolean",
-                    "description": "Corresponds to the [CONTROL] argument for the `--backup` option."
-                },
-                "dest": {
-                    "type": "string",
-                    "description": "Corresponds to the [DEST] argument."
-                },
-                "directory": {
-                    "type": "string",
-                    "description": "Corresponds to the [DIRECTORY] argument."
+                "delete": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:MvOpts",
+                    "description": "The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT\nand PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the\nCommand resource from previous create or update steps."
                 },
                 "environment": {
                     "type": "object",
@@ -5260,52 +5169,9 @@
                     },
                     "description": "Environment variables"
                 },
-                "force": {
-                    "type": "boolean",
-                    "description": "Corresponds to the `--force` option."
-                },
-                "lifecycle": {
-                    "$ref": "#/types/kubernetes-the-hard-way:tools:CommandLifecycle",
-                    "plain": true,
-                    "description": "At what stage(s) in the resource lifecycle should the command be run"
-                },
-                "noClobber": {
-                    "type": "boolean",
-                    "description": "Corresponds to the `--no-clobber` option."
-                },
-                "noTargetDirectory": {
-                    "type": "boolean",
-                    "description": "Corresponds to the `--no-target-directory` option."
-                },
-                "source": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
-                        }
-                    ],
-                    "description": "Corresponds to the [SOURCE] argument."
-                },
                 "stdin": {
                     "type": "string",
                     "description": "TODO"
-                },
-                "stripTrailingSlashes": {
-                    "type": "boolean",
-                    "description": "Corresponds to the `--strip-trailing-slashes` option."
-                },
-                "suffix": {
-                    "type": "string",
-                    "description": "Corresponds to the `--suffix` option."
-                },
-                "targetDirectory": {
-                    "type": "boolean",
-                    "description": "Corresponds to the `--target-directory` option."
                 },
                 "triggers": {
                     "type": "array",
@@ -5315,19 +5181,13 @@
                     "description": "TODO"
                 },
                 "update": {
-                    "type": "boolean",
-                    "description": "Corresponds to the `--update` option."
-                },
-                "verbose": {
-                    "type": "boolean",
-                    "description": "Corresponds to the `--verbose` option."
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:MvOpts",
+                    "description": "The command to run on update, if empty, create will \nrun again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR \nare set to the stdout and stderr properties of the Command resource from previous \ncreate or update steps."
                 }
             },
             "requiredInputs": [
-                "source",
                 "connection"
-            ],
-            "isComponent": true
+            ]
         },
         "kubernetes-the-hard-way:tools:Rm": {
             "description": "Abstraction over the `rm` utility on a remote system.",
@@ -5344,9 +5204,13 @@
                     "$ref": "/command/v0.10.0/schema.json#/types/command:remote:Connection",
                     "description": "Connection details for the remote system"
                 },
-                "dir": {
-                    "type": "boolean",
-                    "description": "Corresponds to the `--dir` option."
+                "create": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:RmOpts",
+                    "description": "The command to run on create."
+                },
+                "delete": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:RmOpts",
+                    "description": "The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT\nand PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the\nCommand resource from previous create or update steps."
                 },
                 "environment": {
                     "type": "object",
@@ -5354,37 +5218,6 @@
                         "type": "string"
                     },
                     "description": "Environment variables"
-                },
-                "files": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
-                        }
-                    ],
-                    "description": "Corresponds to the [FILE] argument."
-                },
-                "force": {
-                    "type": "boolean",
-                    "description": "Corresponds to the `--force` option."
-                },
-                "lifecycle": {
-                    "$ref": "#/types/kubernetes-the-hard-way:tools:CommandLifecycle",
-                    "plain": true,
-                    "description": "At what stage(s) in the resource lifecycle should the command be run"
-                },
-                "onDelete": {
-                    "type": "boolean",
-                    "description": "Whether rm should be run when the resource is created or deleted."
-                },
-                "recursive": {
-                    "type": "boolean",
-                    "description": "Corresponds to the `--recursive` option."
                 },
                 "stderr": {
                     "type": "string",
@@ -5405,18 +5238,12 @@
                     },
                     "description": "TODO"
                 },
-                "verbose": {
-                    "type": "boolean",
-                    "description": "Corresponds to the `--verbose` option."
+                "update": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:RmOpts",
+                    "description": "The command to run on update, if empty, create will \nrun again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR \nare set to the stdout and stderr properties of the Command resource from previous \ncreate or update steps."
                 }
             },
             "required": [
-                "files",
-                "dir",
-                "force",
-                "onDelete",
-                "recursive",
-                "verbose",
                 "binaryPath",
                 "command",
                 "connection",
@@ -5434,9 +5261,13 @@
                     "$ref": "/command/v0.10.0/schema.json#/types/command:remote:Connection",
                     "description": "Connection details for the remote system"
                 },
-                "dir": {
-                    "type": "boolean",
-                    "description": "Corresponds to the `--dir` option."
+                "create": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:RmOpts",
+                    "description": "The command to run on create."
+                },
+                "delete": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:RmOpts",
+                    "description": "The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT\nand PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the\nCommand resource from previous create or update steps."
                 },
                 "environment": {
                     "type": "object",
@@ -5444,37 +5275,6 @@
                         "type": "string"
                     },
                     "description": "Environment variables"
-                },
-                "files": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
-                        }
-                    ],
-                    "description": "Corresponds to the [FILE] argument."
-                },
-                "force": {
-                    "type": "boolean",
-                    "description": "Corresponds to the `--force` option."
-                },
-                "lifecycle": {
-                    "$ref": "#/types/kubernetes-the-hard-way:tools:CommandLifecycle",
-                    "plain": true,
-                    "description": "At what stage(s) in the resource lifecycle should the command be run"
-                },
-                "onDelete": {
-                    "type": "boolean",
-                    "description": "Whether rm should be run when the resource is created or deleted."
-                },
-                "recursive": {
-                    "type": "boolean",
-                    "description": "Corresponds to the `--recursive` option."
                 },
                 "stdin": {
                     "type": "string",
@@ -5487,16 +5287,14 @@
                     },
                     "description": "TODO"
                 },
-                "verbose": {
-                    "type": "boolean",
-                    "description": "Corresponds to the `--verbose` option."
+                "update": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:RmOpts",
+                    "description": "The command to run on update, if empty, create will \nrun again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR \nare set to the stdout and stderr properties of the Command resource from previous \ncreate or update steps."
                 }
             },
             "requiredInputs": [
-                "files",
                 "connection"
-            ],
-            "isComponent": true
+            ]
         },
         "kubernetes-the-hard-way:tools:Sed": {
             "description": "Abstraction over the `sed` utility on a remote system.",
@@ -5513,9 +5311,13 @@
                     "$ref": "/command/v0.10.0/schema.json#/types/command:remote:Connection",
                     "description": "Connection details for the remote system"
                 },
-                "debug": {
-                    "type": "boolean",
-                    "description": "annotate program execution."
+                "create": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:SedOpts",
+                    "description": "The command to run on create."
+                },
+                "delete": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:SedOpts",
+                    "description": "The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT\nand PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the\nCommand resource from previous create or update steps."
                 },
                 "environment": {
                     "type": "object",
@@ -5523,101 +5325,6 @@
                         "type": "string"
                     },
                     "description": "Environment variables"
-                },
-                "expressions": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
-                        }
-                    ],
-                    "description": "add the script to the commands to be executed."
-                },
-                "files": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
-                        }
-                    ],
-                    "description": "add the contents of script-file to the commands to be executed."
-                },
-                "followSymlinks": {
-                    "type": "boolean",
-                    "description": "follow symlinks when processing in place"
-                },
-                "help": {
-                    "type": "boolean",
-                    "description": "display this help and exit."
-                },
-                "inPlace": {
-                    "type": "string",
-                    "description": "edit files in place (makes backup if SUFFIX supplied)"
-                },
-                "inputFiles": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
-                        }
-                    ],
-                    "description": "corresponds to the [input-file]... argument(s)."
-                },
-                "lifecycle": {
-                    "$ref": "#/types/kubernetes-the-hard-way:tools:CommandLifecycle",
-                    "plain": true,
-                    "description": "At what stage(s) in the resource lifecycle should the command be run"
-                },
-                "lineLength": {
-                    "type": "integer",
-                    "description": "specify the desired line-wrap length for the `l' command"
-                },
-                "nullData": {
-                    "type": "boolean",
-                    "description": "separate lines by NUL characters"
-                },
-                "posix": {
-                    "type": "boolean",
-                    "description": "disable all GNU extensions."
-                },
-                "quiet": {
-                    "type": "boolean",
-                    "description": "suppress automatic printing of pattern space. Same as `silent`."
-                },
-                "regexpExtended": {
-                    "type": "boolean",
-                    "description": "use extended regular expressions in the script (for portability use POSIX -E)."
-                },
-                "sandbox": {
-                    "type": "boolean",
-                    "description": "operate in sandbox mode (disable e/r/w commands)."
-                },
-                "script": {
-                    "type": "string",
-                    "description": "script only if no other script."
-                },
-                "separate": {
-                    "type": "boolean",
-                    "description": "consider files as separate rather than as a single, continuous long stream."
-                },
-                "silent": {
-                    "type": "boolean",
-                    "description": "suppress automatic printing of pattern space. Same as `quiet`."
                 },
                 "stderr": {
                     "type": "string",
@@ -5638,31 +5345,12 @@
                     },
                     "description": "TODO"
                 },
-                "unbuffered": {
-                    "type": "boolean",
-                    "description": "load minimal amounts of data from the input files and flush the output buffers more often."
-                },
-                "version": {
-                    "type": "boolean",
-                    "description": "output version information and exit."
+                "update": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:SedOpts",
+                    "description": "The command to run on update, if empty, create will \nrun again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR \nare set to the stdout and stderr properties of the Command resource from previous \ncreate or update steps."
                 }
             },
             "required": [
-                "debug",
-                "expressions",
-                "files",
-                "followSymlinks",
-                "help",
-                "inputFiles",
-                "nullData",
-                "posix",
-                "quiet",
-                "regexpExtended",
-                "sandbox",
-                "separate",
-                "silent",
-                "unbuffered",
-                "version",
                 "binaryPath",
                 "command",
                 "connection",
@@ -5680,9 +5368,13 @@
                     "$ref": "/command/v0.10.0/schema.json#/types/command:remote:Connection",
                     "description": "Connection details for the remote system"
                 },
-                "debug": {
-                    "type": "boolean",
-                    "description": "annotate program execution."
+                "create": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:SedOpts",
+                    "description": "The command to run on create."
+                },
+                "delete": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:SedOpts",
+                    "description": "The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT\nand PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the\nCommand resource from previous create or update steps."
                 },
                 "environment": {
                     "type": "object",
@@ -5690,101 +5382,6 @@
                         "type": "string"
                     },
                     "description": "Environment variables"
-                },
-                "expressions": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
-                        }
-                    ],
-                    "description": "add the script to the commands to be executed."
-                },
-                "files": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
-                        }
-                    ],
-                    "description": "add the contents of script-file to the commands to be executed."
-                },
-                "followSymlinks": {
-                    "type": "boolean",
-                    "description": "follow symlinks when processing in place"
-                },
-                "help": {
-                    "type": "boolean",
-                    "description": "display this help and exit."
-                },
-                "inPlace": {
-                    "type": "string",
-                    "description": "edit files in place (makes backup if SUFFIX supplied)"
-                },
-                "inputFiles": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
-                        }
-                    ],
-                    "description": "corresponds to the [input-file]... argument(s)."
-                },
-                "lifecycle": {
-                    "$ref": "#/types/kubernetes-the-hard-way:tools:CommandLifecycle",
-                    "plain": true,
-                    "description": "At what stage(s) in the resource lifecycle should the command be run"
-                },
-                "lineLength": {
-                    "type": "integer",
-                    "description": "specify the desired line-wrap length for the `l' command"
-                },
-                "nullData": {
-                    "type": "boolean",
-                    "description": "separate lines by NUL characters"
-                },
-                "posix": {
-                    "type": "boolean",
-                    "description": "disable all GNU extensions."
-                },
-                "quiet": {
-                    "type": "boolean",
-                    "description": "suppress automatic printing of pattern space. Same as `silent`."
-                },
-                "regexpExtended": {
-                    "type": "boolean",
-                    "description": "use extended regular expressions in the script (for portability use POSIX -E)."
-                },
-                "sandbox": {
-                    "type": "boolean",
-                    "description": "operate in sandbox mode (disable e/r/w commands)."
-                },
-                "script": {
-                    "type": "string",
-                    "description": "script only if no other script."
-                },
-                "separate": {
-                    "type": "boolean",
-                    "description": "consider files as separate rather than as a single, continuous long stream."
-                },
-                "silent": {
-                    "type": "boolean",
-                    "description": "suppress automatic printing of pattern space. Same as `quiet`."
                 },
                 "stdin": {
                     "type": "string",
@@ -5797,19 +5394,14 @@
                     },
                     "description": "TODO"
                 },
-                "unbuffered": {
-                    "type": "boolean",
-                    "description": "load minimal amounts of data from the input files and flush the output buffers more often."
-                },
-                "version": {
-                    "type": "boolean",
-                    "description": "output version information and exit."
+                "update": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:SedOpts",
+                    "description": "The command to run on update, if empty, create will \nrun again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR \nare set to the stdout and stderr properties of the Command resource from previous \ncreate or update steps."
                 }
             },
             "requiredInputs": [
                 "connection"
-            ],
-            "isComponent": true
+            ]
         },
         "kubernetes-the-hard-way:tools:Systemctl": {
             "description": "Abstraction over the `systemctl` utility on a remote system.",
@@ -5826,21 +5418,20 @@
                     "$ref": "/command/v0.10.0/schema.json#/types/command:remote:Connection",
                     "description": "Connection details for the remote system"
                 },
+                "create": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:SystemctlOpts",
+                    "description": "The command to run on create."
+                },
+                "delete": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:SystemctlOpts",
+                    "description": "The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT\nand PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the\nCommand resource from previous create or update steps."
+                },
                 "environment": {
                     "type": "object",
                     "additionalProperties": {
                         "type": "string"
                     },
                     "description": "Environment variables"
-                },
-                "lifecycle": {
-                    "$ref": "#/types/kubernetes-the-hard-way:tools:CommandLifecycle",
-                    "plain": true,
-                    "description": "At what stage(s) in the resource lifecycle should the command be run"
-                },
-                "pattern": {
-                    "type": "string",
-                    "description": "Corresponds to the [PATTERN] argument"
                 },
                 "stderr": {
                     "type": "string",
@@ -5854,11 +5445,6 @@
                     "type": "string",
                     "description": "TODO"
                 },
-                "systemctlCommand": {
-                    "$ref": "#/types/kubernetes-the-hard-way:tools:SystemctlCommand",
-                    "plain": true,
-                    "description": "Corresponds to the COMMAND argument."
-                },
                 "triggers": {
                     "type": "array",
                     "items": {
@@ -5866,14 +5452,12 @@
                     },
                     "description": "TODO"
                 },
-                "unit": {
-                    "type": "string",
-                    "description": "Corresponds to the [UNIT...] argument."
+                "update": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:SystemctlOpts",
+                    "description": "The command to run on update, if empty, create will \nrun again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR \nare set to the stdout and stderr properties of the Command resource from previous \ncreate or update steps."
                 }
             },
             "required": [
-                "systemctlCommand",
-                "unit",
                 "binaryPath",
                 "command",
                 "connection",
@@ -5887,14 +5471,17 @@
                     "type": "string",
                     "description": "Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH"
                 },
-                "command": {
-                    "$ref": "#/types/kubernetes-the-hard-way:tools:SystemctlCommand",
-                    "plain": true,
-                    "description": "Corresponds to the COMMAND argument."
-                },
                 "connection": {
                     "$ref": "/command/v0.10.0/schema.json#/types/command:remote:Connection",
                     "description": "Connection details for the remote system"
+                },
+                "create": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:SystemctlOpts",
+                    "description": "The command to run on create."
+                },
+                "delete": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:SystemctlOpts",
+                    "description": "The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT\nand PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the\nCommand resource from previous create or update steps."
                 },
                 "environment": {
                     "type": "object",
@@ -5902,15 +5489,6 @@
                         "type": "string"
                     },
                     "description": "Environment variables"
-                },
-                "lifecycle": {
-                    "$ref": "#/types/kubernetes-the-hard-way:tools:CommandLifecycle",
-                    "plain": true,
-                    "description": "At what stage(s) in the resource lifecycle should the command be run"
-                },
-                "pattern": {
-                    "type": "string",
-                    "description": "Corresponds to the [PATTERN] argument"
                 },
                 "stdin": {
                     "type": "string",
@@ -5923,25 +5501,18 @@
                     },
                     "description": "TODO"
                 },
-                "unit": {
-                    "type": "string",
-                    "description": "Corresponds to the [UNIT...] argument."
+                "update": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:SystemctlOpts",
+                    "description": "The command to run on update, if empty, create will \nrun again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR \nare set to the stdout and stderr properties of the Command resource from previous \ncreate or update steps."
                 }
             },
             "requiredInputs": [
-                "command",
-                "unit",
                 "connection"
-            ],
-            "isComponent": true
+            ]
         },
         "kubernetes-the-hard-way:tools:Tar": {
-            "description": "Abstraction over the `rm` utility on a remote system.",
+            "description": "Abstraction over the `tar` utility on a remote system.",
             "properties": {
-                "archive": {
-                    "type": "string",
-                    "description": "Corresponds to the [ARCHIVE] argument."
-                },
                 "binaryPath": {
                     "type": "string",
                     "description": "Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH"
@@ -5954,9 +5525,13 @@
                     "$ref": "/command/v0.10.0/schema.json#/types/command:remote:Connection",
                     "description": "Connection details for the remote system"
                 },
-                "directory": {
-                    "type": "string",
-                    "description": "Corresponds to the `--directory` option."
+                "create": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:TarOpts",
+                    "description": "The command to run on create."
+                },
+                "delete": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:TarOpts",
+                    "description": "The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT\nand PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the\nCommand resource from previous create or update steps."
                 },
                 "environment": {
                     "type": "object",
@@ -5964,41 +5539,6 @@
                         "type": "string"
                     },
                     "description": "Environment variables"
-                },
-                "extract": {
-                    "type": "boolean",
-                    "description": "Corresponds to the `--extract` option."
-                },
-                "files": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
-                        }
-                    ],
-                    "description": "Corresponds to the [FILE] argument."
-                },
-                "gzip": {
-                    "type": "boolean",
-                    "description": "Corresponds to the `--gzip` option."
-                },
-                "lifecycle": {
-                    "$ref": "#/types/kubernetes-the-hard-way:tools:CommandLifecycle",
-                    "plain": true,
-                    "description": "At what stage(s) in the resource lifecycle should the command be run"
-                },
-                "onDelete": {
-                    "type": "boolean",
-                    "description": "Whether rm should be run when the resource is created or deleted."
-                },
-                "recursive": {
-                    "type": "boolean",
-                    "description": "Corresponds to the `--recursive` option."
                 },
                 "stderr": {
                     "type": "string",
@@ -6012,22 +5552,19 @@
                     "type": "string",
                     "description": "TODO"
                 },
-                "stripComponents": {
-                    "type": "integer",
-                    "description": "Corresponds to the `--strip-components` option."
-                },
                 "triggers": {
                     "type": "array",
                     "items": {
                         "$ref": "pulumi.json#/Any"
                     },
                     "description": "TODO"
+                },
+                "update": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:TarOpts",
+                    "description": "The command to run on update, if empty, create will \nrun again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR \nare set to the stdout and stderr properties of the Command resource from previous \ncreate or update steps."
                 }
             },
             "required": [
-                "archive",
-                "extract",
-                "files",
                 "binaryPath",
                 "command",
                 "connection",
@@ -6037,10 +5574,6 @@
                 "triggers"
             ],
             "inputProperties": {
-                "archive": {
-                    "type": "string",
-                    "description": "Corresponds to the [ARCHIVE] argument."
-                },
                 "binaryPath": {
                     "type": "string",
                     "description": "Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH"
@@ -6049,9 +5582,13 @@
                     "$ref": "/command/v0.10.0/schema.json#/types/command:remote:Connection",
                     "description": "Connection details for the remote system"
                 },
-                "directory": {
-                    "type": "string",
-                    "description": "Corresponds to the `--directory` option."
+                "create": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:TarOpts",
+                    "description": "The command to run on create."
+                },
+                "delete": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:TarOpts",
+                    "description": "The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT\nand PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the\nCommand resource from previous create or update steps."
                 },
                 "environment": {
                     "type": "object",
@@ -6060,48 +5597,9 @@
                     },
                     "description": "Environment variables"
                 },
-                "extract": {
-                    "type": "boolean",
-                    "description": "Corresponds to the `--extract` option."
-                },
-                "files": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
-                        }
-                    ],
-                    "description": "Corresponds to the [FILE] argument."
-                },
-                "gzip": {
-                    "type": "boolean",
-                    "description": "Corresponds to the `--gzip` option."
-                },
-                "lifecycle": {
-                    "$ref": "#/types/kubernetes-the-hard-way:tools:CommandLifecycle",
-                    "plain": true,
-                    "description": "At what stage(s) in the resource lifecycle should the command be run"
-                },
-                "onDelete": {
-                    "type": "boolean",
-                    "description": "Whether rm should be run when the resource is created or deleted."
-                },
-                "recursive": {
-                    "type": "boolean",
-                    "description": "Corresponds to the `--recursive` option."
-                },
                 "stdin": {
                     "type": "string",
                     "description": "TODO"
-                },
-                "stripComponents": {
-                    "type": "integer",
-                    "description": "Corresponds to the `--strip-components` option."
                 },
                 "triggers": {
                     "type": "array",
@@ -6109,21 +5607,19 @@
                         "$ref": "pulumi.json#/Any"
                     },
                     "description": "TODO"
+                },
+                "update": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:TarOpts",
+                    "description": "The command to run on update, if empty, create will \nrun again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR \nare set to the stdout and stderr properties of the Command resource from previous \ncreate or update steps."
                 }
             },
             "requiredInputs": [
-                "archive",
                 "connection"
-            ],
-            "isComponent": true
+            ]
         },
         "kubernetes-the-hard-way:tools:Tee": {
             "description": "Abstraction over the `rm` utility on a remote system.",
             "properties": {
-                "append": {
-                    "type": "boolean",
-                    "description": "Append to the given FILEs, do not overwrite"
-                },
                 "binaryPath": {
                     "type": "string",
                     "description": "Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH"
@@ -6136,43 +5632,20 @@
                     "$ref": "/command/v0.10.0/schema.json#/types/command:remote:Connection",
                     "description": "Connection details for the remote system"
                 },
+                "create": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:TeeOpts",
+                    "description": "The command to run on create."
+                },
+                "delete": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:TeeOpts",
+                    "description": "The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT\nand PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the\nCommand resource from previous create or update steps."
+                },
                 "environment": {
                     "type": "object",
                     "additionalProperties": {
                         "type": "string"
                     },
                     "description": "Environment variables"
-                },
-                "files": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
-                        }
-                    ],
-                    "description": "Corresponds to the [FILE] argument."
-                },
-                "ignoreInterrupts": {
-                    "type": "boolean",
-                    "description": "Ignore interrupt signals."
-                },
-                "lifecycle": {
-                    "$ref": "#/types/kubernetes-the-hard-way:tools:CommandLifecycle",
-                    "plain": true,
-                    "description": "At what stage(s) in the resource lifecycle should the command be run"
-                },
-                "outputError": {
-                    "$ref": "#/types/kubernetes-the-hard-way:tools:TeeMode",
-                    "description": "Set behavior on write error."
-                },
-                "pipe": {
-                    "type": "boolean",
-                    "description": "Operate in a more appropriate MODE with pipes."
                 },
                 "stderr": {
                     "type": "string",
@@ -6193,18 +5666,12 @@
                     },
                     "description": "TODO"
                 },
-                "version": {
-                    "type": "boolean",
-                    "description": "Output version information and exit."
+                "update": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:TeeOpts",
+                    "description": "The command to run on update, if empty, create will \nrun again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR \nare set to the stdout and stderr properties of the Command resource from previous \ncreate or update steps."
                 }
             },
             "required": [
-                "files",
-                "stdin",
-                "append",
-                "ignoreInterrupts",
-                "pipe",
-                "version",
                 "binaryPath",
                 "command",
                 "connection",
@@ -6214,10 +5681,6 @@
                 "triggers"
             ],
             "inputProperties": {
-                "append": {
-                    "type": "boolean",
-                    "description": "Append to the given FILEs, do not overwrite"
-                },
                 "binaryPath": {
                     "type": "string",
                     "description": "Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH"
@@ -6226,43 +5689,20 @@
                     "$ref": "/command/v0.10.0/schema.json#/types/command:remote:Connection",
                     "description": "Connection details for the remote system"
                 },
+                "create": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:TeeOpts",
+                    "description": "The command to run on create."
+                },
+                "delete": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:TeeOpts",
+                    "description": "The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT\nand PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the\nCommand resource from previous create or update steps."
+                },
                 "environment": {
                     "type": "object",
                     "additionalProperties": {
                         "type": "string"
                     },
                     "description": "Environment variables"
-                },
-                "files": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
-                        }
-                    ],
-                    "description": "Corresponds to the [FILE] argument."
-                },
-                "ignoreInterrupts": {
-                    "type": "boolean",
-                    "description": "Ignore interrupt signals."
-                },
-                "lifecycle": {
-                    "$ref": "#/types/kubernetes-the-hard-way:tools:CommandLifecycle",
-                    "plain": true,
-                    "description": "At what stage(s) in the resource lifecycle should the command be run"
-                },
-                "outputError": {
-                    "$ref": "#/types/kubernetes-the-hard-way:tools:TeeMode",
-                    "description": "Set behavior on write error."
-                },
-                "pipe": {
-                    "type": "boolean",
-                    "description": "Operate in a more appropriate MODE with pipes."
                 },
                 "stdin": {
                     "type": "string",
@@ -6275,17 +5715,14 @@
                     },
                     "description": "TODO"
                 },
-                "version": {
-                    "type": "boolean",
-                    "description": "Output version information and exit."
+                "update": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:TeeOpts",
+                    "description": "The command to run on update, if empty, create will \nrun again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR \nare set to the stdout and stderr properties of the Command resource from previous \ncreate or update steps."
                 }
             },
             "requiredInputs": [
-                "files",
-                "stdin",
                 "connection"
-            ],
-            "isComponent": true
+            ]
         },
         "kubernetes-the-hard-way:tools:Wget": {
             "description": "Abstraction over the `wget` utility on a remote system.",
@@ -6302,9 +5739,13 @@
                     "$ref": "/command/v0.10.0/schema.json#/types/command:remote:Connection",
                     "description": "Connection details for the remote system"
                 },
-                "directoryPrefix": {
-                    "type": "string",
-                    "description": "The  directory prefix is the directory where all other files and subdirectories will be saved to, i.e. the top of the retrieval tree.  The default is . (the current directory)."
+                "create": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:WgetOpts",
+                    "description": "The command to run on create."
+                },
+                "delete": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:WgetOpts",
+                    "description": "The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT\nand PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the\nCommand resource from previous create or update steps."
                 },
                 "environment": {
                     "type": "object",
@@ -6312,27 +5753,6 @@
                         "type": "string"
                     },
                     "description": "Environment variables"
-                },
-                "httpsOnly": {
-                    "type": "boolean",
-                    "description": "When in recursive mode, only HTTPS links are followed."
-                },
-                "lifecycle": {
-                    "$ref": "#/types/kubernetes-the-hard-way:tools:CommandLifecycle",
-                    "plain": true,
-                    "description": "At what stage(s) in the resource lifecycle should the command be run"
-                },
-                "noVerbose": {
-                    "type": "boolean",
-                    "description": "Turn off verbose without being completely quiet (use -q for that), which means that error messages and basic information still get printed."
-                },
-                "outputDocument": {
-                    "type": "string",
-                    "description": "The  documents  will  not  be  written  to the appropriate files, but all will be concatenated together and written to file."
-                },
-                "quiet": {
-                    "type": "boolean",
-                    "description": "Turn off Wget's output."
                 },
                 "stderr": {
                     "type": "string",
@@ -6346,10 +5766,6 @@
                     "type": "string",
                     "description": "TODO"
                 },
-                "timestamping": {
-                    "type": "boolean",
-                    "description": "Turn on time-stamping."
-                },
                 "triggers": {
                     "type": "array",
                     "items": {
@@ -6357,27 +5773,12 @@
                     },
                     "description": "TODO"
                 },
-                "url": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
-                        }
-                    ],
-                    "description": "Corresponds to the [URL...] argument."
+                "update": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:WgetOpts",
+                    "description": "The command to run on update, if empty, create will \nrun again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR \nare set to the stdout and stderr properties of the Command resource from previous \ncreate or update steps."
                 }
             },
             "required": [
-                "url",
-                "httpsOnly",
-                "quiet",
-                "noVerbose",
-                "timestamping",
                 "binaryPath",
                 "command",
                 "connection",
@@ -6395,9 +5796,13 @@
                     "$ref": "/command/v0.10.0/schema.json#/types/command:remote:Connection",
                     "description": "Connection details for the remote system"
                 },
-                "directoryPrefix": {
-                    "type": "string",
-                    "description": "The  directory prefix is the directory where all other files and subdirectories will be saved to, i.e. the top of the retrieval tree.  The default is . (the current directory)."
+                "create": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:WgetOpts",
+                    "description": "The command to run on create."
+                },
+                "delete": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:WgetOpts",
+                    "description": "The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT\nand PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the\nCommand resource from previous create or update steps."
                 },
                 "environment": {
                     "type": "object",
@@ -6406,34 +5811,9 @@
                     },
                     "description": "Environment variables"
                 },
-                "httpsOnly": {
-                    "type": "boolean",
-                    "description": "When in recursive mode, only HTTPS links are followed."
-                },
-                "lifecycle": {
-                    "$ref": "#/types/kubernetes-the-hard-way:tools:CommandLifecycle",
-                    "plain": true,
-                    "description": "At what stage(s) in the resource lifecycle should the command be run"
-                },
-                "noVerbose": {
-                    "type": "boolean",
-                    "description": "Turn off verbose without being completely quiet (use -q for that), which means that error messages and basic information still get printed."
-                },
-                "outputDocument": {
-                    "type": "string",
-                    "description": "The  documents  will  not  be  written  to the appropriate files, but all will be concatenated together and written to file."
-                },
-                "quiet": {
-                    "type": "boolean",
-                    "description": "Turn off Wget's output."
-                },
                 "stdin": {
                     "type": "string",
                     "description": "TODO"
-                },
-                "timestamping": {
-                    "type": "boolean",
-                    "description": "Turn on time-stamping."
                 },
                 "triggers": {
                     "type": "array",
@@ -6442,26 +5822,14 @@
                     },
                     "description": "TODO"
                 },
-                "url": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
-                        }
-                    ],
-                    "description": "Corresponds to the [URL...] argument."
+                "update": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:WgetOpts",
+                    "description": "The command to run on update, if empty, create will \nrun again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR \nare set to the stdout and stderr properties of the Command resource from previous \ncreate or update steps."
                 }
             },
             "requiredInputs": [
-                "url",
                 "connection"
-            ],
-            "isComponent": true
+            ]
         }
     },
     "functions": {

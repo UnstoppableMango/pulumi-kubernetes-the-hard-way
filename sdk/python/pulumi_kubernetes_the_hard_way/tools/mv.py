@@ -8,7 +8,8 @@ import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
 from .. import _utilities
-from ._enums import *
+from . import outputs
+from ._inputs import *
 import pulumi_command
 
 __all__ = ['MvArgs', 'Mv']
@@ -17,86 +18,44 @@ __all__ = ['MvArgs', 'Mv']
 class MvArgs:
     def __init__(__self__, *,
                  connection: pulumi.Input['pulumi_command.remote.ConnectionArgs'],
-                 source: pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]],
-                 backup: Optional[bool] = None,
                  binary_path: Optional[pulumi.Input[str]] = None,
-                 context: Optional[pulumi.Input[bool]] = None,
-                 control: Optional[pulumi.Input[bool]] = None,
-                 dest: Optional[pulumi.Input[str]] = None,
-                 directory: Optional[pulumi.Input[str]] = None,
+                 create: Optional[pulumi.Input['MvOptsArgs']] = None,
+                 delete: Optional[pulumi.Input['MvOptsArgs']] = None,
                  environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-                 force: Optional[pulumi.Input[bool]] = None,
-                 lifecycle: Optional['CommandLifecycle'] = None,
-                 no_clobber: Optional[pulumi.Input[bool]] = None,
-                 no_target_directory: Optional[pulumi.Input[bool]] = None,
                  stdin: Optional[pulumi.Input[str]] = None,
-                 strip_trailing_slashes: Optional[pulumi.Input[bool]] = None,
-                 suffix: Optional[pulumi.Input[str]] = None,
-                 target_directory: Optional[pulumi.Input[bool]] = None,
                  triggers: Optional[pulumi.Input[Sequence[Any]]] = None,
-                 update: Optional[pulumi.Input[bool]] = None,
-                 verbose: Optional[pulumi.Input[bool]] = None):
+                 update: Optional[pulumi.Input['MvOptsArgs']] = None):
         """
         The set of arguments for constructing a Mv resource.
         :param pulumi.Input['pulumi_command.remote.ConnectionArgs'] connection: Connection details for the remote system
-        :param pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]] source: Corresponds to the [SOURCE] argument.
-        :param bool backup: Corresponds to the `-b` and `--backup` options depending on whether [CONTROL] is supplied.
         :param pulumi.Input[str] binary_path: Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
-        :param pulumi.Input[bool] context: Corresponds to the `--context` option.
-        :param pulumi.Input[bool] control: Corresponds to the [CONTROL] argument for the `--backup` option.
-        :param pulumi.Input[str] dest: Corresponds to the [DEST] argument.
-        :param pulumi.Input[str] directory: Corresponds to the [DIRECTORY] argument.
+        :param pulumi.Input['MvOptsArgs'] create: The command to run on create.
+        :param pulumi.Input['MvOptsArgs'] delete: The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+               and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+               Command resource from previous create or update steps.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] environment: Environment variables
-        :param pulumi.Input[bool] force: Corresponds to the `--force` option.
-        :param 'CommandLifecycle' lifecycle: At what stage(s) in the resource lifecycle should the command be run
-        :param pulumi.Input[bool] no_clobber: Corresponds to the `--no-clobber` option.
-        :param pulumi.Input[bool] no_target_directory: Corresponds to the `--no-target-directory` option.
         :param pulumi.Input[str] stdin: TODO
-        :param pulumi.Input[bool] strip_trailing_slashes: Corresponds to the `--strip-trailing-slashes` option.
-        :param pulumi.Input[str] suffix: Corresponds to the `--suffix` option.
-        :param pulumi.Input[bool] target_directory: Corresponds to the `--target-directory` option.
         :param pulumi.Input[Sequence[Any]] triggers: TODO
-        :param pulumi.Input[bool] update: Corresponds to the `--update` option.
-        :param pulumi.Input[bool] verbose: Corresponds to the `--verbose` option.
+        :param pulumi.Input['MvOptsArgs'] update: The command to run on update, if empty, create will 
+               run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
+               are set to the stdout and stderr properties of the Command resource from previous 
+               create or update steps.
         """
         pulumi.set(__self__, "connection", connection)
-        pulumi.set(__self__, "source", source)
-        if backup is not None:
-            pulumi.set(__self__, "backup", backup)
         if binary_path is not None:
             pulumi.set(__self__, "binary_path", binary_path)
-        if context is not None:
-            pulumi.set(__self__, "context", context)
-        if control is not None:
-            pulumi.set(__self__, "control", control)
-        if dest is not None:
-            pulumi.set(__self__, "dest", dest)
-        if directory is not None:
-            pulumi.set(__self__, "directory", directory)
+        if create is not None:
+            pulumi.set(__self__, "create", create)
+        if delete is not None:
+            pulumi.set(__self__, "delete", delete)
         if environment is not None:
             pulumi.set(__self__, "environment", environment)
-        if force is not None:
-            pulumi.set(__self__, "force", force)
-        if lifecycle is not None:
-            pulumi.set(__self__, "lifecycle", lifecycle)
-        if no_clobber is not None:
-            pulumi.set(__self__, "no_clobber", no_clobber)
-        if no_target_directory is not None:
-            pulumi.set(__self__, "no_target_directory", no_target_directory)
         if stdin is not None:
             pulumi.set(__self__, "stdin", stdin)
-        if strip_trailing_slashes is not None:
-            pulumi.set(__self__, "strip_trailing_slashes", strip_trailing_slashes)
-        if suffix is not None:
-            pulumi.set(__self__, "suffix", suffix)
-        if target_directory is not None:
-            pulumi.set(__self__, "target_directory", target_directory)
         if triggers is not None:
             pulumi.set(__self__, "triggers", triggers)
         if update is not None:
             pulumi.set(__self__, "update", update)
-        if verbose is not None:
-            pulumi.set(__self__, "verbose", verbose)
 
     @property
     @pulumi.getter
@@ -109,30 +68,6 @@ class MvArgs:
     @connection.setter
     def connection(self, value: pulumi.Input['pulumi_command.remote.ConnectionArgs']):
         pulumi.set(self, "connection", value)
-
-    @property
-    @pulumi.getter
-    def source(self) -> pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]]:
-        """
-        Corresponds to the [SOURCE] argument.
-        """
-        return pulumi.get(self, "source")
-
-    @source.setter
-    def source(self, value: pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]]):
-        pulumi.set(self, "source", value)
-
-    @property
-    @pulumi.getter
-    def backup(self) -> Optional[bool]:
-        """
-        Corresponds to the `-b` and `--backup` options depending on whether [CONTROL] is supplied.
-        """
-        return pulumi.get(self, "backup")
-
-    @backup.setter
-    def backup(self, value: Optional[bool]):
-        pulumi.set(self, "backup", value)
 
     @property
     @pulumi.getter(name="binaryPath")
@@ -148,51 +83,29 @@ class MvArgs:
 
     @property
     @pulumi.getter
-    def context(self) -> Optional[pulumi.Input[bool]]:
+    def create(self) -> Optional[pulumi.Input['MvOptsArgs']]:
         """
-        Corresponds to the `--context` option.
+        The command to run on create.
         """
-        return pulumi.get(self, "context")
+        return pulumi.get(self, "create")
 
-    @context.setter
-    def context(self, value: Optional[pulumi.Input[bool]]):
-        pulumi.set(self, "context", value)
-
-    @property
-    @pulumi.getter
-    def control(self) -> Optional[pulumi.Input[bool]]:
-        """
-        Corresponds to the [CONTROL] argument for the `--backup` option.
-        """
-        return pulumi.get(self, "control")
-
-    @control.setter
-    def control(self, value: Optional[pulumi.Input[bool]]):
-        pulumi.set(self, "control", value)
+    @create.setter
+    def create(self, value: Optional[pulumi.Input['MvOptsArgs']]):
+        pulumi.set(self, "create", value)
 
     @property
     @pulumi.getter
-    def dest(self) -> Optional[pulumi.Input[str]]:
+    def delete(self) -> Optional[pulumi.Input['MvOptsArgs']]:
         """
-        Corresponds to the [DEST] argument.
+        The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+        and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+        Command resource from previous create or update steps.
         """
-        return pulumi.get(self, "dest")
+        return pulumi.get(self, "delete")
 
-    @dest.setter
-    def dest(self, value: Optional[pulumi.Input[str]]):
-        pulumi.set(self, "dest", value)
-
-    @property
-    @pulumi.getter
-    def directory(self) -> Optional[pulumi.Input[str]]:
-        """
-        Corresponds to the [DIRECTORY] argument.
-        """
-        return pulumi.get(self, "directory")
-
-    @directory.setter
-    def directory(self, value: Optional[pulumi.Input[str]]):
-        pulumi.set(self, "directory", value)
+    @delete.setter
+    def delete(self, value: Optional[pulumi.Input['MvOptsArgs']]):
+        pulumi.set(self, "delete", value)
 
     @property
     @pulumi.getter
@@ -208,54 +121,6 @@ class MvArgs:
 
     @property
     @pulumi.getter
-    def force(self) -> Optional[pulumi.Input[bool]]:
-        """
-        Corresponds to the `--force` option.
-        """
-        return pulumi.get(self, "force")
-
-    @force.setter
-    def force(self, value: Optional[pulumi.Input[bool]]):
-        pulumi.set(self, "force", value)
-
-    @property
-    @pulumi.getter
-    def lifecycle(self) -> Optional['CommandLifecycle']:
-        """
-        At what stage(s) in the resource lifecycle should the command be run
-        """
-        return pulumi.get(self, "lifecycle")
-
-    @lifecycle.setter
-    def lifecycle(self, value: Optional['CommandLifecycle']):
-        pulumi.set(self, "lifecycle", value)
-
-    @property
-    @pulumi.getter(name="noClobber")
-    def no_clobber(self) -> Optional[pulumi.Input[bool]]:
-        """
-        Corresponds to the `--no-clobber` option.
-        """
-        return pulumi.get(self, "no_clobber")
-
-    @no_clobber.setter
-    def no_clobber(self, value: Optional[pulumi.Input[bool]]):
-        pulumi.set(self, "no_clobber", value)
-
-    @property
-    @pulumi.getter(name="noTargetDirectory")
-    def no_target_directory(self) -> Optional[pulumi.Input[bool]]:
-        """
-        Corresponds to the `--no-target-directory` option.
-        """
-        return pulumi.get(self, "no_target_directory")
-
-    @no_target_directory.setter
-    def no_target_directory(self, value: Optional[pulumi.Input[bool]]):
-        pulumi.set(self, "no_target_directory", value)
-
-    @property
-    @pulumi.getter
     def stdin(self) -> Optional[pulumi.Input[str]]:
         """
         TODO
@@ -265,42 +130,6 @@ class MvArgs:
     @stdin.setter
     def stdin(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "stdin", value)
-
-    @property
-    @pulumi.getter(name="stripTrailingSlashes")
-    def strip_trailing_slashes(self) -> Optional[pulumi.Input[bool]]:
-        """
-        Corresponds to the `--strip-trailing-slashes` option.
-        """
-        return pulumi.get(self, "strip_trailing_slashes")
-
-    @strip_trailing_slashes.setter
-    def strip_trailing_slashes(self, value: Optional[pulumi.Input[bool]]):
-        pulumi.set(self, "strip_trailing_slashes", value)
-
-    @property
-    @pulumi.getter
-    def suffix(self) -> Optional[pulumi.Input[str]]:
-        """
-        Corresponds to the `--suffix` option.
-        """
-        return pulumi.get(self, "suffix")
-
-    @suffix.setter
-    def suffix(self, value: Optional[pulumi.Input[str]]):
-        pulumi.set(self, "suffix", value)
-
-    @property
-    @pulumi.getter(name="targetDirectory")
-    def target_directory(self) -> Optional[pulumi.Input[bool]]:
-        """
-        Corresponds to the `--target-directory` option.
-        """
-        return pulumi.get(self, "target_directory")
-
-    @target_directory.setter
-    def target_directory(self, value: Optional[pulumi.Input[bool]]):
-        pulumi.set(self, "target_directory", value)
 
     @property
     @pulumi.getter
@@ -316,80 +145,52 @@ class MvArgs:
 
     @property
     @pulumi.getter
-    def update(self) -> Optional[pulumi.Input[bool]]:
+    def update(self) -> Optional[pulumi.Input['MvOptsArgs']]:
         """
-        Corresponds to the `--update` option.
+        The command to run on update, if empty, create will 
+        run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
+        are set to the stdout and stderr properties of the Command resource from previous 
+        create or update steps.
         """
         return pulumi.get(self, "update")
 
     @update.setter
-    def update(self, value: Optional[pulumi.Input[bool]]):
+    def update(self, value: Optional[pulumi.Input['MvOptsArgs']]):
         pulumi.set(self, "update", value)
 
-    @property
-    @pulumi.getter
-    def verbose(self) -> Optional[pulumi.Input[bool]]:
-        """
-        Corresponds to the `--verbose` option.
-        """
-        return pulumi.get(self, "verbose")
 
-    @verbose.setter
-    def verbose(self, value: Optional[pulumi.Input[bool]]):
-        pulumi.set(self, "verbose", value)
-
-
-class Mv(pulumi.ComponentResource):
+class Mv(pulumi.CustomResource):
     @overload
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 backup: Optional[bool] = None,
                  binary_path: Optional[pulumi.Input[str]] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
-                 context: Optional[pulumi.Input[bool]] = None,
-                 control: Optional[pulumi.Input[bool]] = None,
-                 dest: Optional[pulumi.Input[str]] = None,
-                 directory: Optional[pulumi.Input[str]] = None,
+                 create: Optional[pulumi.Input[pulumi.InputType['MvOptsArgs']]] = None,
+                 delete: Optional[pulumi.Input[pulumi.InputType['MvOptsArgs']]] = None,
                  environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-                 force: Optional[pulumi.Input[bool]] = None,
-                 lifecycle: Optional['CommandLifecycle'] = None,
-                 no_clobber: Optional[pulumi.Input[bool]] = None,
-                 no_target_directory: Optional[pulumi.Input[bool]] = None,
-                 source: Optional[pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]]] = None,
                  stdin: Optional[pulumi.Input[str]] = None,
-                 strip_trailing_slashes: Optional[pulumi.Input[bool]] = None,
-                 suffix: Optional[pulumi.Input[str]] = None,
-                 target_directory: Optional[pulumi.Input[bool]] = None,
                  triggers: Optional[pulumi.Input[Sequence[Any]]] = None,
-                 update: Optional[pulumi.Input[bool]] = None,
-                 verbose: Optional[pulumi.Input[bool]] = None,
+                 update: Optional[pulumi.Input[pulumi.InputType['MvOptsArgs']]] = None,
                  __props__=None):
         """
         Abstraction over the `mv` utility on a remote system.
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param bool backup: Corresponds to the `-b` and `--backup` options depending on whether [CONTROL] is supplied.
         :param pulumi.Input[str] binary_path: Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
         :param pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']] connection: Connection details for the remote system
-        :param pulumi.Input[bool] context: Corresponds to the `--context` option.
-        :param pulumi.Input[bool] control: Corresponds to the [CONTROL] argument for the `--backup` option.
-        :param pulumi.Input[str] dest: Corresponds to the [DEST] argument.
-        :param pulumi.Input[str] directory: Corresponds to the [DIRECTORY] argument.
+        :param pulumi.Input[pulumi.InputType['MvOptsArgs']] create: The command to run on create.
+        :param pulumi.Input[pulumi.InputType['MvOptsArgs']] delete: The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+               and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+               Command resource from previous create or update steps.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] environment: Environment variables
-        :param pulumi.Input[bool] force: Corresponds to the `--force` option.
-        :param 'CommandLifecycle' lifecycle: At what stage(s) in the resource lifecycle should the command be run
-        :param pulumi.Input[bool] no_clobber: Corresponds to the `--no-clobber` option.
-        :param pulumi.Input[bool] no_target_directory: Corresponds to the `--no-target-directory` option.
-        :param pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]] source: Corresponds to the [SOURCE] argument.
         :param pulumi.Input[str] stdin: TODO
-        :param pulumi.Input[bool] strip_trailing_slashes: Corresponds to the `--strip-trailing-slashes` option.
-        :param pulumi.Input[str] suffix: Corresponds to the `--suffix` option.
-        :param pulumi.Input[bool] target_directory: Corresponds to the `--target-directory` option.
         :param pulumi.Input[Sequence[Any]] triggers: TODO
-        :param pulumi.Input[bool] update: Corresponds to the `--update` option.
-        :param pulumi.Input[bool] verbose: Corresponds to the `--verbose` option.
+        :param pulumi.Input[pulumi.InputType['MvOptsArgs']] update: The command to run on update, if empty, create will 
+               run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
+               are set to the stdout and stderr properties of the Command resource from previous 
+               create or update steps.
         """
         ...
     @overload
@@ -415,61 +216,33 @@ class Mv(pulumi.ComponentResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 backup: Optional[bool] = None,
                  binary_path: Optional[pulumi.Input[str]] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
-                 context: Optional[pulumi.Input[bool]] = None,
-                 control: Optional[pulumi.Input[bool]] = None,
-                 dest: Optional[pulumi.Input[str]] = None,
-                 directory: Optional[pulumi.Input[str]] = None,
+                 create: Optional[pulumi.Input[pulumi.InputType['MvOptsArgs']]] = None,
+                 delete: Optional[pulumi.Input[pulumi.InputType['MvOptsArgs']]] = None,
                  environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-                 force: Optional[pulumi.Input[bool]] = None,
-                 lifecycle: Optional['CommandLifecycle'] = None,
-                 no_clobber: Optional[pulumi.Input[bool]] = None,
-                 no_target_directory: Optional[pulumi.Input[bool]] = None,
-                 source: Optional[pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]]] = None,
                  stdin: Optional[pulumi.Input[str]] = None,
-                 strip_trailing_slashes: Optional[pulumi.Input[bool]] = None,
-                 suffix: Optional[pulumi.Input[str]] = None,
-                 target_directory: Optional[pulumi.Input[bool]] = None,
                  triggers: Optional[pulumi.Input[Sequence[Any]]] = None,
-                 update: Optional[pulumi.Input[bool]] = None,
-                 verbose: Optional[pulumi.Input[bool]] = None,
+                 update: Optional[pulumi.Input[pulumi.InputType['MvOptsArgs']]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):
             raise TypeError('Expected resource options to be a ResourceOptions instance')
-        if opts.id is not None:
-            raise ValueError('ComponentResource classes do not support opts.id')
-        else:
+        if opts.id is None:
             if __props__ is not None:
                 raise TypeError('__props__ is only valid when passed in combination with a valid opts.id to get an existing resource')
             __props__ = MvArgs.__new__(MvArgs)
 
-            __props__.__dict__["backup"] = backup
             __props__.__dict__["binary_path"] = binary_path
             if connection is None and not opts.urn:
                 raise TypeError("Missing required property 'connection'")
             __props__.__dict__["connection"] = connection
-            __props__.__dict__["context"] = context
-            __props__.__dict__["control"] = control
-            __props__.__dict__["dest"] = dest
-            __props__.__dict__["directory"] = directory
+            __props__.__dict__["create"] = create
+            __props__.__dict__["delete"] = delete
             __props__.__dict__["environment"] = environment
-            __props__.__dict__["force"] = force
-            __props__.__dict__["lifecycle"] = lifecycle
-            __props__.__dict__["no_clobber"] = no_clobber
-            __props__.__dict__["no_target_directory"] = no_target_directory
-            if source is None and not opts.urn:
-                raise TypeError("Missing required property 'source'")
-            __props__.__dict__["source"] = source
             __props__.__dict__["stdin"] = stdin
-            __props__.__dict__["strip_trailing_slashes"] = strip_trailing_slashes
-            __props__.__dict__["suffix"] = suffix
-            __props__.__dict__["target_directory"] = target_directory
             __props__.__dict__["triggers"] = triggers
             __props__.__dict__["update"] = update
-            __props__.__dict__["verbose"] = verbose
             __props__.__dict__["command"] = None
             __props__.__dict__["stderr"] = None
             __props__.__dict__["stdout"] = None
@@ -477,16 +250,36 @@ class Mv(pulumi.ComponentResource):
             'kubernetes-the-hard-way:tools:Mv',
             resource_name,
             __props__,
-            opts,
-            remote=True)
+            opts)
 
-    @property
-    @pulumi.getter
-    def backup(self) -> pulumi.Output[bool]:
+    @staticmethod
+    def get(resource_name: str,
+            id: pulumi.Input[str],
+            opts: Optional[pulumi.ResourceOptions] = None) -> 'Mv':
         """
-        Corresponds to the `-b` and `--backup` options depending on whether [CONTROL] is supplied.
+        Get an existing Mv resource's state with the given name, id, and optional extra
+        properties used to qualify the lookup.
+
+        :param str resource_name: The unique name of the resulting resource.
+        :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
+        :param pulumi.ResourceOptions opts: Options for the resource.
         """
-        return pulumi.get(self, "backup")
+        opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
+
+        __props__ = MvArgs.__new__(MvArgs)
+
+        __props__.__dict__["binary_path"] = None
+        __props__.__dict__["command"] = None
+        __props__.__dict__["connection"] = None
+        __props__.__dict__["create"] = None
+        __props__.__dict__["delete"] = None
+        __props__.__dict__["environment"] = None
+        __props__.__dict__["stderr"] = None
+        __props__.__dict__["stdin"] = None
+        __props__.__dict__["stdout"] = None
+        __props__.__dict__["triggers"] = None
+        __props__.__dict__["update"] = None
+        return Mv(resource_name, opts=opts, __props__=__props__)
 
     @property
     @pulumi.getter(name="binaryPath")
@@ -514,35 +307,21 @@ class Mv(pulumi.ComponentResource):
 
     @property
     @pulumi.getter
-    def context(self) -> pulumi.Output[bool]:
+    def create(self) -> pulumi.Output[Optional['outputs.MvOpts']]:
         """
-        Corresponds to the `--context` option.
+        The command to run on create.
         """
-        return pulumi.get(self, "context")
+        return pulumi.get(self, "create")
 
     @property
     @pulumi.getter
-    def control(self) -> pulumi.Output[Optional[bool]]:
+    def delete(self) -> pulumi.Output[Optional['outputs.MvOpts']]:
         """
-        Corresponds to the [CONTROL] argument for the `--backup` option.
+        The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+        and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+        Command resource from previous create or update steps.
         """
-        return pulumi.get(self, "control")
-
-    @property
-    @pulumi.getter
-    def dest(self) -> pulumi.Output[Optional[str]]:
-        """
-        Corresponds to the [DEST] argument.
-        """
-        return pulumi.get(self, "dest")
-
-    @property
-    @pulumi.getter
-    def directory(self) -> pulumi.Output[Optional[str]]:
-        """
-        Corresponds to the [DIRECTORY] argument.
-        """
-        return pulumi.get(self, "directory")
+        return pulumi.get(self, "delete")
 
     @property
     @pulumi.getter
@@ -551,46 +330,6 @@ class Mv(pulumi.ComponentResource):
         Environment variables
         """
         return pulumi.get(self, "environment")
-
-    @property
-    @pulumi.getter
-    def force(self) -> pulumi.Output[bool]:
-        """
-        Corresponds to the `--force` option.
-        """
-        return pulumi.get(self, "force")
-
-    @property
-    @pulumi.getter
-    def lifecycle(self) -> pulumi.Output[Optional['CommandLifecycle']]:
-        """
-        At what stage(s) in the resource lifecycle should the command be run
-        """
-        return pulumi.get(self, "lifecycle")
-
-    @property
-    @pulumi.getter(name="noClobber")
-    def no_clobber(self) -> pulumi.Output[bool]:
-        """
-        Corresponds to the `--no-clobber` option.
-        """
-        return pulumi.get(self, "no_clobber")
-
-    @property
-    @pulumi.getter(name="noTargetDirectory")
-    def no_target_directory(self) -> pulumi.Output[bool]:
-        """
-        Corresponds to the `--no-target-directory` option.
-        """
-        return pulumi.get(self, "no_target_directory")
-
-    @property
-    @pulumi.getter
-    def source(self) -> pulumi.Output[Any]:
-        """
-        Corresponds to the [SOURCE] argument.
-        """
-        return pulumi.get(self, "source")
 
     @property
     @pulumi.getter
@@ -617,30 +356,6 @@ class Mv(pulumi.ComponentResource):
         return pulumi.get(self, "stdout")
 
     @property
-    @pulumi.getter(name="stripTrailingSlashes")
-    def strip_trailing_slashes(self) -> pulumi.Output[bool]:
-        """
-        Corresponds to the `--strip-trailing-slashes` option.
-        """
-        return pulumi.get(self, "strip_trailing_slashes")
-
-    @property
-    @pulumi.getter
-    def suffix(self) -> pulumi.Output[Optional[str]]:
-        """
-        Corresponds to the `--suffix` option.
-        """
-        return pulumi.get(self, "suffix")
-
-    @property
-    @pulumi.getter(name="targetDirectory")
-    def target_directory(self) -> pulumi.Output[Optional[bool]]:
-        """
-        Corresponds to the `--target-directory` option.
-        """
-        return pulumi.get(self, "target_directory")
-
-    @property
     @pulumi.getter
     def triggers(self) -> pulumi.Output[Sequence[Any]]:
         """
@@ -650,17 +365,12 @@ class Mv(pulumi.ComponentResource):
 
     @property
     @pulumi.getter
-    def update(self) -> pulumi.Output[bool]:
+    def update(self) -> pulumi.Output[Optional['outputs.MvOpts']]:
         """
-        Corresponds to the `--update` option.
+        The command to run on update, if empty, create will 
+        run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
+        are set to the stdout and stderr properties of the Command resource from previous 
+        create or update steps.
         """
         return pulumi.get(self, "update")
-
-    @property
-    @pulumi.getter
-    def verbose(self) -> pulumi.Output[bool]:
-        """
-        Corresponds to the `--verbose` option.
-        """
-        return pulumi.get(self, "verbose")
 

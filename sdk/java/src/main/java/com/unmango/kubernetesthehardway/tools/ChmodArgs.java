@@ -4,12 +4,10 @@
 package com.unmango.kubernetesthehardway.tools;
 
 import com.pulumi.command.remote.inputs.ConnectionArgs;
-import com.pulumi.core.Either;
 import com.pulumi.core.Output;
 import com.pulumi.core.annotations.Import;
 import com.pulumi.exceptions.MissingRequiredPropertyException;
-import com.unmango.kubernetesthehardway.tools.enums.CommandLifecycle;
-import java.lang.Boolean;
+import com.unmango.kubernetesthehardway.tools.inputs.ChmodOptsArgs;
 import java.lang.Object;
 import java.lang.String;
 import java.util.List;
@@ -39,21 +37,6 @@ public final class ChmodArgs extends com.pulumi.resources.ResourceArgs {
     }
 
     /**
-     * Like verbose but report only when a change is made.
-     * 
-     */
-    @Import(name="changes")
-    private @Nullable Output<Boolean> changes;
-
-    /**
-     * @return Like verbose but report only when a change is made.
-     * 
-     */
-    public Optional<Output<Boolean>> changes() {
-        return Optional.ofNullable(this.changes);
-    }
-
-    /**
      * Connection details for the remote system
      * 
      */
@@ -69,6 +52,40 @@ public final class ChmodArgs extends com.pulumi.resources.ResourceArgs {
     }
 
     /**
+     * The command to run on create.
+     * 
+     */
+    @Import(name="create")
+    private @Nullable Output<ChmodOptsArgs> create;
+
+    /**
+     * @return The command to run on create.
+     * 
+     */
+    public Optional<Output<ChmodOptsArgs>> create() {
+        return Optional.ofNullable(this.create);
+    }
+
+    /**
+     * The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+     * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+     * Command resource from previous create or update steps.
+     * 
+     */
+    @Import(name="delete")
+    private @Nullable Output<ChmodOptsArgs> delete;
+
+    /**
+     * @return The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+     * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+     * Command resource from previous create or update steps.
+     * 
+     */
+    public Optional<Output<ChmodOptsArgs>> delete() {
+        return Optional.ofNullable(this.delete);
+    }
+
+    /**
      * Environment variables
      * 
      */
@@ -81,156 +98,6 @@ public final class ChmodArgs extends com.pulumi.resources.ResourceArgs {
      */
     public Optional<Output<Map<String,String>>> environment() {
         return Optional.ofNullable(this.environment);
-    }
-
-    /**
-     * Corresponds to the [FILE] argument.
-     * 
-     */
-    @Import(name="files", required=true)
-    private Output<Either<String,List<String>>> files;
-
-    /**
-     * @return Corresponds to the [FILE] argument.
-     * 
-     */
-    public Output<Either<String,List<String>>> files() {
-        return this.files;
-    }
-
-    /**
-     * Display help and exit.
-     * 
-     */
-    @Import(name="help")
-    private @Nullable Output<Boolean> help;
-
-    /**
-     * @return Display help and exit.
-     * 
-     */
-    public Optional<Output<Boolean>> help() {
-        return Optional.ofNullable(this.help);
-    }
-
-    /**
-     * At what stage(s) in the resource lifecycle should the command be run
-     * 
-     */
-    @Import(name="lifecycle")
-    private @Nullable CommandLifecycle lifecycle;
-
-    /**
-     * @return At what stage(s) in the resource lifecycle should the command be run
-     * 
-     */
-    public Optional<CommandLifecycle> lifecycle() {
-        return Optional.ofNullable(this.lifecycle);
-    }
-
-    /**
-     * Modes may be absolute or symbolic. An absolute mode is an octal number...
-     * 
-     */
-    @Import(name="mode", required=true)
-    private Output<String> mode;
-
-    /**
-     * @return Modes may be absolute or symbolic. An absolute mode is an octal number...
-     * 
-     */
-    public Output<String> mode() {
-        return this.mode;
-    }
-
-    /**
-     * Do not treat &#39;/&#39; specially (the default).
-     * 
-     */
-    @Import(name="noPreserveRoot")
-    private @Nullable Output<Boolean> noPreserveRoot;
-
-    /**
-     * @return Do not treat &#39;/&#39; specially (the default).
-     * 
-     */
-    public Optional<Output<Boolean>> noPreserveRoot() {
-        return Optional.ofNullable(this.noPreserveRoot);
-    }
-
-    /**
-     * Fail to operate recursively on &#39;/&#39;.
-     * 
-     */
-    @Import(name="preserveRoot")
-    private @Nullable Output<Boolean> preserveRoot;
-
-    /**
-     * @return Fail to operate recursively on &#39;/&#39;.
-     * 
-     */
-    public Optional<Output<Boolean>> preserveRoot() {
-        return Optional.ofNullable(this.preserveRoot);
-    }
-
-    /**
-     * Suppress most error messages. Same as `silent`.
-     * 
-     */
-    @Import(name="quiet")
-    private @Nullable Output<Boolean> quiet;
-
-    /**
-     * @return Suppress most error messages. Same as `silent`.
-     * 
-     */
-    public Optional<Output<Boolean>> quiet() {
-        return Optional.ofNullable(this.quiet);
-    }
-
-    /**
-     * Change files and directories recursively.
-     * 
-     */
-    @Import(name="recursive")
-    private @Nullable Output<Boolean> recursive;
-
-    /**
-     * @return Change files and directories recursively.
-     * 
-     */
-    public Optional<Output<Boolean>> recursive() {
-        return Optional.ofNullable(this.recursive);
-    }
-
-    /**
-     * Use RFILE&#39;s mode instead of specifying MODE values. RFILE is always dereferenced if a symbolic link.
-     * 
-     */
-    @Import(name="reference")
-    private @Nullable Output<String> reference;
-
-    /**
-     * @return Use RFILE&#39;s mode instead of specifying MODE values. RFILE is always dereferenced if a symbolic link.
-     * 
-     */
-    public Optional<Output<String>> reference() {
-        return Optional.ofNullable(this.reference);
-    }
-
-    /**
-     * Suppress most error messages. Same as `quiet`.
-     * 
-     */
-    @Import(name="silent")
-    private @Nullable Output<Boolean> silent;
-
-    /**
-     * @return Suppress most error messages. Same as `quiet`.
-     * 
-     */
-    public Optional<Output<Boolean>> silent() {
-        return Optional.ofNullable(this.silent);
     }
 
     /**
@@ -264,40 +131,37 @@ public final class ChmodArgs extends com.pulumi.resources.ResourceArgs {
     }
 
     /**
-     * Output version information and exit.
+     * The command to run on update, if empty, create will
+     * run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+     * are set to the stdout and stderr properties of the Command resource from previous
+     * create or update steps.
      * 
      */
-    @Import(name="version")
-    private @Nullable Output<Boolean> version;
+    @Import(name="update")
+    private @Nullable Output<ChmodOptsArgs> update;
 
     /**
-     * @return Output version information and exit.
+     * @return The command to run on update, if empty, create will
+     * run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+     * are set to the stdout and stderr properties of the Command resource from previous
+     * create or update steps.
      * 
      */
-    public Optional<Output<Boolean>> version() {
-        return Optional.ofNullable(this.version);
+    public Optional<Output<ChmodOptsArgs>> update() {
+        return Optional.ofNullable(this.update);
     }
 
     private ChmodArgs() {}
 
     private ChmodArgs(ChmodArgs $) {
         this.binaryPath = $.binaryPath;
-        this.changes = $.changes;
         this.connection = $.connection;
+        this.create = $.create;
+        this.delete = $.delete;
         this.environment = $.environment;
-        this.files = $.files;
-        this.help = $.help;
-        this.lifecycle = $.lifecycle;
-        this.mode = $.mode;
-        this.noPreserveRoot = $.noPreserveRoot;
-        this.preserveRoot = $.preserveRoot;
-        this.quiet = $.quiet;
-        this.recursive = $.recursive;
-        this.reference = $.reference;
-        this.silent = $.silent;
         this.stdin = $.stdin;
         this.triggers = $.triggers;
-        this.version = $.version;
+        this.update = $.update;
     }
 
     public static Builder builder() {
@@ -340,27 +204,6 @@ public final class ChmodArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param changes Like verbose but report only when a change is made.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder changes(@Nullable Output<Boolean> changes) {
-            $.changes = changes;
-            return this;
-        }
-
-        /**
-         * @param changes Like verbose but report only when a change is made.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder changes(Boolean changes) {
-            return changes(Output.of(changes));
-        }
-
-        /**
          * @param connection Connection details for the remote system
          * 
          * @return builder
@@ -382,6 +225,52 @@ public final class ChmodArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
+         * @param create The command to run on create.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder create(@Nullable Output<ChmodOptsArgs> create) {
+            $.create = create;
+            return this;
+        }
+
+        /**
+         * @param create The command to run on create.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder create(ChmodOptsArgs create) {
+            return create(Output.of(create));
+        }
+
+        /**
+         * @param delete The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+         * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+         * Command resource from previous create or update steps.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder delete(@Nullable Output<ChmodOptsArgs> delete) {
+            $.delete = delete;
+            return this;
+        }
+
+        /**
+         * @param delete The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+         * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+         * Command resource from previous create or update steps.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder delete(ChmodOptsArgs delete) {
+            return delete(Output.of(delete));
+        }
+
+        /**
          * @param environment Environment variables
          * 
          * @return builder
@@ -400,226 +289,6 @@ public final class ChmodArgs extends com.pulumi.resources.ResourceArgs {
          */
         public Builder environment(Map<String,String> environment) {
             return environment(Output.of(environment));
-        }
-
-        /**
-         * @param files Corresponds to the [FILE] argument.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder files(Output<Either<String,List<String>>> files) {
-            $.files = files;
-            return this;
-        }
-
-        /**
-         * @param files Corresponds to the [FILE] argument.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder files(Either<String,List<String>> files) {
-            return files(Output.of(files));
-        }
-
-        /**
-         * @param files Corresponds to the [FILE] argument.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder files(String files) {
-            return files(Either.ofLeft(files));
-        }
-
-        /**
-         * @param files Corresponds to the [FILE] argument.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder files(List<String> files) {
-            return files(Either.ofRight(files));
-        }
-
-        /**
-         * @param help Display help and exit.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder help(@Nullable Output<Boolean> help) {
-            $.help = help;
-            return this;
-        }
-
-        /**
-         * @param help Display help and exit.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder help(Boolean help) {
-            return help(Output.of(help));
-        }
-
-        /**
-         * @param lifecycle At what stage(s) in the resource lifecycle should the command be run
-         * 
-         * @return builder
-         * 
-         */
-        public Builder lifecycle(@Nullable CommandLifecycle lifecycle) {
-            $.lifecycle = lifecycle;
-            return this;
-        }
-
-        /**
-         * @param mode Modes may be absolute or symbolic. An absolute mode is an octal number...
-         * 
-         * @return builder
-         * 
-         */
-        public Builder mode(Output<String> mode) {
-            $.mode = mode;
-            return this;
-        }
-
-        /**
-         * @param mode Modes may be absolute or symbolic. An absolute mode is an octal number...
-         * 
-         * @return builder
-         * 
-         */
-        public Builder mode(String mode) {
-            return mode(Output.of(mode));
-        }
-
-        /**
-         * @param noPreserveRoot Do not treat &#39;/&#39; specially (the default).
-         * 
-         * @return builder
-         * 
-         */
-        public Builder noPreserveRoot(@Nullable Output<Boolean> noPreserveRoot) {
-            $.noPreserveRoot = noPreserveRoot;
-            return this;
-        }
-
-        /**
-         * @param noPreserveRoot Do not treat &#39;/&#39; specially (the default).
-         * 
-         * @return builder
-         * 
-         */
-        public Builder noPreserveRoot(Boolean noPreserveRoot) {
-            return noPreserveRoot(Output.of(noPreserveRoot));
-        }
-
-        /**
-         * @param preserveRoot Fail to operate recursively on &#39;/&#39;.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder preserveRoot(@Nullable Output<Boolean> preserveRoot) {
-            $.preserveRoot = preserveRoot;
-            return this;
-        }
-
-        /**
-         * @param preserveRoot Fail to operate recursively on &#39;/&#39;.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder preserveRoot(Boolean preserveRoot) {
-            return preserveRoot(Output.of(preserveRoot));
-        }
-
-        /**
-         * @param quiet Suppress most error messages. Same as `silent`.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder quiet(@Nullable Output<Boolean> quiet) {
-            $.quiet = quiet;
-            return this;
-        }
-
-        /**
-         * @param quiet Suppress most error messages. Same as `silent`.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder quiet(Boolean quiet) {
-            return quiet(Output.of(quiet));
-        }
-
-        /**
-         * @param recursive Change files and directories recursively.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder recursive(@Nullable Output<Boolean> recursive) {
-            $.recursive = recursive;
-            return this;
-        }
-
-        /**
-         * @param recursive Change files and directories recursively.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder recursive(Boolean recursive) {
-            return recursive(Output.of(recursive));
-        }
-
-        /**
-         * @param reference Use RFILE&#39;s mode instead of specifying MODE values. RFILE is always dereferenced if a symbolic link.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder reference(@Nullable Output<String> reference) {
-            $.reference = reference;
-            return this;
-        }
-
-        /**
-         * @param reference Use RFILE&#39;s mode instead of specifying MODE values. RFILE is always dereferenced if a symbolic link.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder reference(String reference) {
-            return reference(Output.of(reference));
-        }
-
-        /**
-         * @param silent Suppress most error messages. Same as `quiet`.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder silent(@Nullable Output<Boolean> silent) {
-            $.silent = silent;
-            return this;
-        }
-
-        /**
-         * @param silent Suppress most error messages. Same as `quiet`.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder silent(Boolean silent) {
-            return silent(Output.of(silent));
         }
 
         /**
@@ -675,35 +344,35 @@ public final class ChmodArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param version Output version information and exit.
+         * @param update The command to run on update, if empty, create will
+         * run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+         * are set to the stdout and stderr properties of the Command resource from previous
+         * create or update steps.
          * 
          * @return builder
          * 
          */
-        public Builder version(@Nullable Output<Boolean> version) {
-            $.version = version;
+        public Builder update(@Nullable Output<ChmodOptsArgs> update) {
+            $.update = update;
             return this;
         }
 
         /**
-         * @param version Output version information and exit.
+         * @param update The command to run on update, if empty, create will
+         * run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+         * are set to the stdout and stderr properties of the Command resource from previous
+         * create or update steps.
          * 
          * @return builder
          * 
          */
-        public Builder version(Boolean version) {
-            return version(Output.of(version));
+        public Builder update(ChmodOptsArgs update) {
+            return update(Output.of(update));
         }
 
         public ChmodArgs build() {
             if ($.connection == null) {
                 throw new MissingRequiredPropertyException("ChmodArgs", "connection");
-            }
-            if ($.files == null) {
-                throw new MissingRequiredPropertyException("ChmodArgs", "files");
-            }
-            if ($.mode == null) {
-                throw new MissingRequiredPropertyException("ChmodArgs", "mode");
             }
             return $;
         }

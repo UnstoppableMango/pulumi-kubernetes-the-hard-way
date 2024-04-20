@@ -595,3 +595,739 @@ export namespace tls {
     }
 
 }
+
+export namespace tools {
+    /**
+     * Abstraction over the `chmod` utility on a remote system.
+     */
+    export interface ChmodOptsArgs {
+        /**
+         * Like verbose but report only when a change is made.
+         */
+        changes?: pulumi.Input<boolean>;
+        /**
+         * Corresponds to the [FILE] argument.
+         */
+        files: pulumi.Input<pulumi.Input<string>[]>;
+        /**
+         * Display help and exit.
+         */
+        help?: pulumi.Input<boolean>;
+        /**
+         * Modes may be absolute or symbolic. An absolute mode is an octal number...
+         */
+        mode: pulumi.Input<string>;
+        /**
+         * Do not treat '/' specially (the default).
+         */
+        noPreserveRoot?: pulumi.Input<boolean>;
+        /**
+         * Fail to operate recursively on '/'.
+         */
+        preserveRoot?: pulumi.Input<boolean>;
+        /**
+         * Suppress most error messages. Same as `silent`.
+         */
+        quiet?: pulumi.Input<boolean>;
+        /**
+         * Change files and directories recursively.
+         */
+        recursive?: pulumi.Input<boolean>;
+        /**
+         * Use RFILE's mode instead of specifying MODE values. RFILE is always dereferenced if a symbolic link.
+         */
+        reference?: pulumi.Input<string>;
+        /**
+         * Suppress most error messages. Same as `quiet`.
+         */
+        silent?: pulumi.Input<boolean>;
+        /**
+         * Output version information and exit.
+         */
+        version?: pulumi.Input<boolean>;
+    }
+
+    /**
+     * Abstraction over the `curl` utility on a remote system. Transfer a URL.
+     */
+    export interface CurlOptsArgs {
+        /**
+         * (HTTP) Connect through an abstract Unix domain socket, instead of using the network.
+         */
+        abstractUnixSocket?: pulumi.Input<string>;
+        /**
+         * (HTTPS)  This  option enables the alt-svc parser in curl.
+         */
+        altSvc?: pulumi.Input<string>;
+        /**
+         * (HTTP) Tells curl to figure out authentication method by itself, and use the most secure one the remote site claims to support.
+         */
+        anyAuth?: pulumi.Input<boolean>;
+        /**
+         * (FTP SFTP) When used in an upload, this makes curl append to the target file instead of overwriting it.
+         */
+        append?: pulumi.Input<boolean>;
+        /**
+         * Use AWS V4 signature authentication in the transfer.
+         */
+        awsSigv4?: pulumi.Input<string>;
+        /**
+         * (HTTP) Tells curl to use HTTP Basic authentication with the remote host.
+         */
+        basic?: pulumi.Input<boolean>;
+        /**
+         * (TLS)  Tells curl to use the specified certificate file to verify the peer.
+         */
+        cacert?: pulumi.Input<string>;
+        /**
+         * (TLS) Tells curl to use the specified certificate directory to verify the peer.
+         */
+        capath?: pulumi.Input<string>;
+        /**
+         * (TLS)  Tells  curl to use the specified client certificate file when getting a file with HTTPS, FTPS or another SSL-based protocol.
+         */
+        cert?: pulumi.Input<string>;
+        /**
+         * (TLS) Tells curl to verify the status of the server certificate by using the Certificate Status Request (aka. OCSP stapling) TLS extension.
+         */
+        certStatus?: pulumi.Input<boolean>;
+        /**
+         * (TLS) Tells curl what type the provided client certificate is using.
+         */
+        certType?: pulumi.Input<enums.tools.CurlCertType>;
+        /**
+         * (TLS) Specifies which ciphers to use in the connection.
+         */
+        ciphers?: pulumi.Input<string>;
+        /**
+         * (HTTP) Request a compressed response using one of the algorithms curl supports, and automatically decompress the content.
+         */
+        compressed?: pulumi.Input<boolean>;
+        /**
+         * (SCP SFTP) Enables built-in SSH compression.
+         */
+        compressedSsh?: pulumi.Input<boolean>;
+        /**
+         * Specify a text file to read curl arguments from.
+         */
+        config?: pulumi.Input<string>;
+        /**
+         * Maximum  time  in seconds that you allow curl's connection to take.
+         */
+        connectTimeout?: pulumi.Input<number>;
+        /**
+         * For a request to the given HOST1:PORT1 pair, connect to HOST2:PORT2 instead.
+         */
+        connectTo?: pulumi.Input<string>;
+        /**
+         * Continue/Resume a previous file transfer at the given offset.
+         */
+        continueAt?: pulumi.Input<string>;
+        /**
+         * (HTTP) Pass the data to the HTTP server in the Cookie header.
+         */
+        cookie?: pulumi.Input<string>;
+        /**
+         * (HTTP)  Specify  to which file you want curl to write all cookies after a completed operation.
+         */
+        cookieJar?: pulumi.Input<string>;
+        /**
+         * When used in conjunction with the -o, --output option, curl will create the necessary local directory hierarchy as needed.
+         */
+        createDirs?: pulumi.Input<boolean>;
+        /**
+         * (SFTP SCP FILE) When curl is used to create files remotely using one of the supported protocols, this option allows the user to set which 'mode' to set on the file at creation time, instead of the default 0644.
+         */
+        createFileMode?: pulumi.Input<string>;
+        /**
+         * (FTP SMTP) Convert LF to CRLF in upload. Useful for MVS (OS/390).
+         */
+        crlf?: pulumi.Input<boolean>;
+        /**
+         * (TLS) Provide a file using PEM format with a Certificate Revocation List that may specify peer certificates that are to be considered revoked.
+         */
+        crlfFile?: pulumi.Input<string>;
+        /**
+         * (TLS)  Tells curl to request specific curves to use during SSL session establishment according to RFC 8422, 5.1.
+         */
+        curves?: pulumi.Input<string>;
+        /**
+         * (HTTP  MQTT) Sends the specified data in a POST request to the HTTP server, in the same way that a browser does when a user has filled in an HTML form and presses the submit button.
+         */
+        data?: pulumi.Input<string>;
+        /**
+         * (HTTP) This is just an alias for -d, --data.
+         */
+        dataAscii?: pulumi.Input<string>;
+        /**
+         * (HTTP) This posts data exactly as specified with no extra processing whatsoever.
+         */
+        dataBinary?: pulumi.Input<string>;
+        /**
+         * (HTTP) This posts data similarly to -d, --data but without the special interpretation of the @ character.
+         */
+        dataRaw?: pulumi.Input<string>;
+        /**
+         * (HTTP) This posts data, similar to the other -d, --data options with the exception that this performs URL-encoding.
+         */
+        dataUrlEncode?: pulumi.Input<string>;
+        /**
+         * (GSS/kerberos) Set LEVEL to tell the server what it is allowed to delegate when it comes to user credentials.
+         */
+        delegation?: pulumi.Input<enums.tools.CurlDelegationLevel>;
+        /**
+         * (HTTP) Enables HTTP Digest authentication.
+         */
+        digest?: pulumi.Input<boolean>;
+        /**
+         * If used as the first parameter on the command line, the curlrc config file will not be read and used.
+         */
+        disable?: pulumi.Input<boolean>;
+        /**
+         * (FTP) Tell curl to disable the use of the EPRT and LPRT commands when doing active FTP transfers
+         */
+        disableEprt?: pulumi.Input<boolean>;
+        /**
+         * (FTP)  Tell  curl to disable the use of the EPSV command when doing passive FTP transfers
+         */
+        disableEpsv?: pulumi.Input<boolean>;
+        /**
+         * (HTTP) This tells curl to exit if passed a url containing a username.
+         */
+        disallowUsernameInUrl?: pulumi.Input<boolean>;
+        /**
+         * (DNS)  Tell  curl  to send outgoing DNS requests through <interface>.
+         */
+        dnsInterface?: pulumi.Input<string>;
+        /**
+         * (DNS) Tell curl to bind to <ip-address> when making IPv4 DNS requests, so that the DNS requests originate from this address.
+         */
+        dnsIpv4Addr?: pulumi.Input<string>;
+        /**
+         * (DNS) Tell curl to bind to <ip-address> when making IPv6 DNS requests, so that the DNS requests originate from this address.
+         */
+        dnsIpv6Addr?: pulumi.Input<string>;
+        /**
+         * Set the list of DNS servers to be used instead of the system default.
+         */
+        dnsServers?: pulumi.Input<string>;
+        /**
+         * Same as --cert-status but used for DoH (DNS-over-HTTPS).
+         */
+        dohCertStatus?: pulumi.Input<boolean>;
+        /**
+         * Same as -k, --insecure but used for DoH (DNS-over-HTTPS).
+         */
+        dohInsecure?: pulumi.Input<boolean>;
+        /**
+         * Specifies which DNS-over-HTTPS (DoH) server to use to resolve hostnames, instead of using the default name resolver mechanism.
+         */
+        dohUrl?: pulumi.Input<string>;
+        /**
+         * (HTTP FTP) Write the received protocol headers to the specified file.
+         */
+        dumpHeader?: pulumi.Input<string>;
+        /**
+         * (TLS) Specify the path name to the Entropy Gathering Daemon socket.
+         */
+        egdFile?: pulumi.Input<string>;
+        /**
+         * (TLS) Select the OpenSSL crypto engine to use for cipher operations.
+         */
+        engine?: pulumi.Input<string>;
+        /**
+         * (HTTP) This option makes a conditional HTTP request for the specific ETag read from the given file by sending a custom If-None-Match header using the stored ETag.
+         */
+        etagCompare?: pulumi.Input<string>;
+        /**
+         * (HTTP) This option saves an HTTP ETag to the specified file.
+         */
+        etagSave?: pulumi.Input<string>;
+        /**
+         * (HTTP)  Maximum  time in seconds that you allow curl to wait for a 100-continue response when curl emits an Expects: 100-continue header in its request.
+         */
+        expect100Timeout?: pulumi.Input<number>;
+        /**
+         * (HTTP) Fail silently (no output at all) on server errors.
+         */
+        fail?: pulumi.Input<boolean>;
+        /**
+         * Fail and exit on the first detected transfer error.
+         */
+        failEarly?: pulumi.Input<boolean>;
+        /**
+         * (HTTP)  Return an error on server errors where the HTTP response code is 400 or greater).
+         */
+        failWithBody?: pulumi.Input<boolean>;
+        /**
+         * (TLS) Tells curl to use false start during the TLS handshake.
+         */
+        falseStart?: pulumi.Input<boolean>;
+        /**
+         * (HTTP SMTP IMAP) For HTTP protocol family, this lets curl emulate a filled-in form in which a user has pressed the submit button.
+         */
+        form?: pulumi.Input<string>;
+        /**
+         * (HTTP) Tells curl to pass on names of multipart form fields and files using backslash-escaping instead of percent-encoding.
+         */
+        formEscape?: pulumi.Input<boolean>;
+        /**
+         * (HTTP SMTP IMAP) Similar to -F, --form except that the value string for the named parameter is used literally.
+         */
+        formName?: pulumi.Input<string>;
+        /**
+         * (FTP) When an FTP server asks for 'account data' after user name and password has been provided, this data is sent off using the ACCT command.
+         */
+        ftpAccount?: pulumi.Input<string>;
+        /**
+         * (FTP) If authenticating with the USER and PASS commands fails, send this command.
+         */
+        ftpAlternativeUser?: pulumi.Input<string>;
+        /**
+         * (FTP  SFTP) When an FTP or SFTP URL/operation uses a path that does not currently exist on the server, the standard behavior of curl is to fail.
+         */
+        ftpCreateDirs?: pulumi.Input<boolean>;
+        /**
+         * (FTP) Control what method curl should use to reach a file on an FTP(S) server.
+         */
+        ftpMethod?: pulumi.Input<string>;
+        /**
+         * (FTP) Use passive mode for the data connection.
+         */
+        ftpPasv?: pulumi.Input<boolean>;
+        /**
+         * (FTP)  Reverses  the  default  initiator/listener  roles  when connecting with FTP.
+         */
+        ftpPort?: pulumi.Input<string>;
+        /**
+         * (FTP) Tell curl to send a PRET command before PASV (and EPSV).
+         */
+        ftpPret?: pulumi.Input<boolean>;
+        /**
+         * (FTP)  Tell  curl  to  not use the IP address the server suggests in its response to curl's PASV command when curl connects the data connection.
+         */
+        ftpSkipPasvIp?: pulumi.Input<boolean>;
+        /**
+         * (FTP) Sets the CCC mode. The passive mode will not initiate the shutdown, but instead wait for the server to do it, and will not reply to the shutdown from the  server.
+         */
+        ftpSslCccMode?: pulumi.Input<string>;
+        /**
+         * Corresponds to the URLs argument.
+         */
+        urls: pulumi.Input<pulumi.Input<string>[]>;
+    }
+
+    /**
+     * Abstraction over the `etcdctl` utility on a remote system.
+     */
+    export interface EtcdctlOptsArgs {
+        /**
+         * TODO
+         */
+        caCert?: pulumi.Input<string>;
+        /**
+         * TODO
+         */
+        cert?: pulumi.Input<string>;
+        /**
+         * TODO
+         */
+        commands: pulumi.Input<enums.tools.EtcdctlCommand>;
+        /**
+         * TODO
+         */
+        endpoints?: pulumi.Input<string>;
+        /**
+         * TODO
+         */
+        key?: pulumi.Input<string>;
+    }
+
+    /**
+     * Abstraction over the `hostnamectl` utility on a remote system.
+     */
+    export interface HostnamectlOptsArgs {
+        /**
+         * The argument for the specified `command`.
+         */
+        arg?: pulumi.Input<string>;
+        /**
+         * Corresponds to the {COMMAND} argument.
+         */
+        command: pulumi.Input<enums.tools.HostnamectlCommand>;
+        /**
+         * Print a short help text and exit.
+         */
+        help?: pulumi.Input<boolean>;
+        /**
+         * Execute the operation remotely. Specify a hostname, or a username and hostname separated by '@', to connect to.
+         */
+        host?: pulumi.Input<string>;
+        /**
+         * Shows output formatted as JSON.
+         */
+        json?: pulumi.Input<enums.tools.HostnamectlJsonMode>;
+        /**
+         * Execute operation on a local container. Specify a container name to connect to, optionally prefixed by a user name to connect as and a separating '@' character.
+         */
+        machine?: pulumi.Input<string>;
+        /**
+         * Do not query the user for authentication for privileged operations.
+         */
+        noAskPassword?: pulumi.Input<boolean>;
+        /**
+         * If status is invoked (or no explicit command is given) and one of these switches is specified, hostnamectl will print out just this selected hostname. Same as `static` and `transient`.
+         */
+        pretty?: pulumi.Input<boolean>;
+        /**
+         * If status is invoked (or no explicit command is given) and one of these switches is specified, hostnamectl will print out just this selected hostname. Same as `transient` and `pretty`.
+         */
+        static?: pulumi.Input<boolean>;
+        /**
+         * If status is invoked (or no explicit command is given) and one of these switches is specified, hostnamectl will print out just this selected hostname. Same as `static` and `pretty`.
+         */
+        transient?: pulumi.Input<boolean>;
+        /**
+         * Print a short version string and exit.
+         */
+        version?: pulumi.Input<boolean>;
+    }
+
+    /**
+     * Abstraction over the `mkdir` utility on a remote system.
+     */
+    export interface MkdirOptsArgs {
+        /**
+         * The fully qualified path of the directory on the remote system.
+         */
+        directory: pulumi.Input<string>;
+        /**
+         * Corresponds to the `--parents` option.
+         */
+        parents?: pulumi.Input<boolean>;
+        /**
+         * Remove the created directory when the `Mkdir` resource is deleted or updated.
+         */
+        removeOnDelete?: pulumi.Input<boolean>;
+    }
+
+    /**
+     * Abstraction over the `mktemp` utility on a remote system.
+     */
+    export interface MktempOptsArgs {
+        /**
+         * Corresponds to the `--directory` option.
+         */
+        directory?: pulumi.Input<boolean>;
+        /**
+         * Corresponds to the `--dry-run` option.
+         */
+        dryRun?: pulumi.Input<boolean>;
+        /**
+         * Corresponds to the `--quiet` option.
+         */
+        quiet?: pulumi.Input<boolean>;
+        /**
+         * Corresponds to the `--suffix` option.
+         */
+        suffix?: pulumi.Input<string>;
+        /**
+         * Corresponds to the [TEMPLATE] argument.
+         */
+        template?: pulumi.Input<string>;
+        /**
+         * Corresponds to the `--tmpdir` option.
+         */
+        tmpdir?: pulumi.Input<string>;
+    }
+
+    /**
+     * Abstraction over the `mv` utility on a remote system.
+     */
+    export interface MvOptsArgs {
+        /**
+         * Corresponds to the `-b` and `--backup` options depending on whether [CONTROL] is supplied.
+         */
+        backup?: boolean;
+        /**
+         * Corresponds to the `--context` option.
+         */
+        context?: pulumi.Input<boolean>;
+        /**
+         * Corresponds to the [CONTROL] argument for the `--backup` option.
+         */
+        control?: pulumi.Input<boolean>;
+        /**
+         * Corresponds to the [DEST] argument.
+         */
+        dest?: pulumi.Input<string>;
+        /**
+         * Corresponds to the [DIRECTORY] argument.
+         */
+        directory?: pulumi.Input<string>;
+        /**
+         * Corresponds to the `--force` option.
+         */
+        force?: pulumi.Input<boolean>;
+        /**
+         * Corresponds to the `--no-clobber` option.
+         */
+        noClobber?: pulumi.Input<boolean>;
+        /**
+         * Corresponds to the `--no-target-directory` option.
+         */
+        noTargetDirectory?: pulumi.Input<boolean>;
+        /**
+         * Corresponds to the [SOURCE] argument.
+         */
+        source: pulumi.Input<pulumi.Input<string>[]>;
+        /**
+         * Corresponds to the `--strip-trailing-slashes` option.
+         */
+        stripTrailingSlashes?: pulumi.Input<boolean>;
+        /**
+         * Corresponds to the `--suffix` option.
+         */
+        suffix?: pulumi.Input<string>;
+        /**
+         * Corresponds to the `--target-directory` option.
+         */
+        targetDirectory?: pulumi.Input<boolean>;
+        /**
+         * Corresponds to the `--update` option.
+         */
+        update?: pulumi.Input<boolean>;
+        /**
+         * Corresponds to the `--verbose` option.
+         */
+        verbose?: pulumi.Input<boolean>;
+    }
+
+    /**
+     * Abstraction over the `rm` utility on a remote system.
+     */
+    export interface RmOptsArgs {
+        /**
+         * Corresponds to the `--dir` option.
+         */
+        dir?: pulumi.Input<boolean>;
+        /**
+         * Corresponds to the [FILE] argument.
+         */
+        files: pulumi.Input<pulumi.Input<string>[]>;
+        /**
+         * Corresponds to the `--force` option.
+         */
+        force?: pulumi.Input<boolean>;
+        /**
+         * Whether rm should be run when the resource is created or deleted.
+         */
+        onDelete?: pulumi.Input<boolean>;
+        /**
+         * Corresponds to the `--recursive` option.
+         */
+        recursive?: pulumi.Input<boolean>;
+        /**
+         * Corresponds to the `--verbose` option.
+         */
+        verbose?: pulumi.Input<boolean>;
+    }
+
+    /**
+     * Abstraction over the `sed` utility on a remote system.
+     */
+    export interface SedOptsArgs {
+        /**
+         * annotate program execution.
+         */
+        debug?: pulumi.Input<boolean>;
+        /**
+         * add the script to the commands to be executed.
+         */
+        expressions?: pulumi.Input<pulumi.Input<string>[]>;
+        /**
+         * add the contents of script-file to the commands to be executed.
+         */
+        files?: pulumi.Input<pulumi.Input<string>[]>;
+        /**
+         * follow symlinks when processing in place
+         */
+        followSymlinks?: pulumi.Input<boolean>;
+        /**
+         * display this help and exit.
+         */
+        help?: pulumi.Input<boolean>;
+        /**
+         * edit files in place (makes backup if SUFFIX supplied)
+         */
+        inPlace?: pulumi.Input<string>;
+        /**
+         * corresponds to the [input-file]... argument(s).
+         */
+        inputFiles?: pulumi.Input<pulumi.Input<string>[]>;
+        /**
+         * specify the desired line-wrap length for the `l' command
+         */
+        lineLength?: pulumi.Input<number>;
+        /**
+         * separate lines by NUL characters
+         */
+        nullData?: pulumi.Input<boolean>;
+        /**
+         * disable all GNU extensions.
+         */
+        posix?: pulumi.Input<boolean>;
+        /**
+         * suppress automatic printing of pattern space. Same as `silent`.
+         */
+        quiet?: pulumi.Input<boolean>;
+        /**
+         * use extended regular expressions in the script (for portability use POSIX -E).
+         */
+        regexpExtended?: pulumi.Input<boolean>;
+        /**
+         * operate in sandbox mode (disable e/r/w commands).
+         */
+        sandbox?: pulumi.Input<boolean>;
+        /**
+         * script only if no other script.
+         */
+        script?: pulumi.Input<string>;
+        /**
+         * consider files as separate rather than as a single, continuous long stream.
+         */
+        separate?: pulumi.Input<boolean>;
+        /**
+         * suppress automatic printing of pattern space. Same as `quiet`.
+         */
+        silent?: pulumi.Input<boolean>;
+        /**
+         * load minimal amounts of data from the input files and flush the output buffers more often.
+         */
+        unbuffered?: pulumi.Input<boolean>;
+        /**
+         * output version information and exit.
+         */
+        version?: pulumi.Input<boolean>;
+    }
+
+    /**
+     * Abstraction over the `systemctl` utility on a remote system.
+     */
+    export interface SystemctlOptsArgs {
+        /**
+         * Corresponds to the COMMAND argument.
+         */
+        command: enums.tools.SystemctlCommand;
+        /**
+         * Corresponds to the [PATTERN] argument
+         */
+        pattern?: pulumi.Input<string>;
+        /**
+         * Corresponds to the [UNIT...] argument.
+         */
+        unit: pulumi.Input<string>;
+    }
+
+    /**
+     * Abstraction over the `tar` utility on a remote system.
+     */
+    export interface TarOptsArgs {
+        /**
+         * Corresponds to the [ARCHIVE] argument.
+         */
+        archive: pulumi.Input<string>;
+        /**
+         * Corresponds to the `--directory` option.
+         */
+        directory?: pulumi.Input<string>;
+        /**
+         * Corresponds to the `--extract` option.
+         */
+        extract?: pulumi.Input<boolean>;
+        /**
+         * Corresponds to the [FILE] argument.
+         */
+        files?: pulumi.Input<pulumi.Input<string>[]>;
+        /**
+         * Corresponds to the `--gzip` option.
+         */
+        gzip?: pulumi.Input<boolean>;
+        /**
+         * Whether rm should be run when the resource is created or deleted.
+         */
+        onDelete?: pulumi.Input<boolean>;
+        /**
+         * Corresponds to the `--recursive` option.
+         */
+        recursive?: pulumi.Input<boolean>;
+        /**
+         * Corresponds to the `--strip-components` option.
+         */
+        stripComponents?: pulumi.Input<number>;
+    }
+
+    /**
+     * Abstraction over the `rm` utility on a remote system.
+     */
+    export interface TeeOptsArgs {
+        /**
+         * Append to the given FILEs, do not overwrite
+         */
+        append?: pulumi.Input<boolean>;
+        /**
+         * Corresponds to the [FILE] argument.
+         */
+        files: pulumi.Input<pulumi.Input<string>[]>;
+        /**
+         * Ignore interrupt signals.
+         */
+        ignoreInterrupts?: pulumi.Input<boolean>;
+        /**
+         * Set behavior on write error.
+         */
+        outputError?: pulumi.Input<enums.tools.TeeMode>;
+        /**
+         * Operate in a more appropriate MODE with pipes.
+         */
+        pipe?: pulumi.Input<boolean>;
+        /**
+         * Output version information and exit.
+         */
+        version?: pulumi.Input<boolean>;
+    }
+
+    /**
+     * Abstraction over the `wget` utility on a remote system.
+     */
+    export interface WgetOptsArgs {
+        /**
+         * The  directory prefix is the directory where all other files and subdirectories will be saved to, i.e. the top of the retrieval tree.  The default is . (the current directory).
+         */
+        directoryPrefix?: pulumi.Input<string>;
+        /**
+         * When in recursive mode, only HTTPS links are followed.
+         */
+        httpsOnly?: pulumi.Input<boolean>;
+        /**
+         * Turn off verbose without being completely quiet (use -q for that), which means that error messages and basic information still get printed.
+         */
+        noVerbose?: pulumi.Input<boolean>;
+        /**
+         * The  documents  will  not  be  written  to the appropriate files, but all will be concatenated together and written to file.
+         */
+        outputDocument?: pulumi.Input<string>;
+        /**
+         * Turn off Wget's output.
+         */
+        quiet?: pulumi.Input<boolean>;
+        /**
+         * Turn on time-stamping.
+         */
+        timestamping?: pulumi.Input<boolean>;
+        /**
+         * Corresponds to the [URL...] argument.
+         */
+        url: pulumi.Input<pulumi.Input<string>[]>;
+    }
+}

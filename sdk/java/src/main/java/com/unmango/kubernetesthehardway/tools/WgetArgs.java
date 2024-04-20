@@ -4,12 +4,10 @@
 package com.unmango.kubernetesthehardway.tools;
 
 import com.pulumi.command.remote.inputs.ConnectionArgs;
-import com.pulumi.core.Either;
 import com.pulumi.core.Output;
 import com.pulumi.core.annotations.Import;
 import com.pulumi.exceptions.MissingRequiredPropertyException;
-import com.unmango.kubernetesthehardway.tools.enums.CommandLifecycle;
-import java.lang.Boolean;
+import com.unmango.kubernetesthehardway.tools.inputs.WgetOptsArgs;
 import java.lang.Object;
 import java.lang.String;
 import java.util.List;
@@ -54,18 +52,37 @@ public final class WgetArgs extends com.pulumi.resources.ResourceArgs {
     }
 
     /**
-     * The  directory prefix is the directory where all other files and subdirectories will be saved to, i.e. the top of the retrieval tree.  The default is . (the current directory).
+     * The command to run on create.
      * 
      */
-    @Import(name="directoryPrefix")
-    private @Nullable Output<String> directoryPrefix;
+    @Import(name="create")
+    private @Nullable Output<WgetOptsArgs> create;
 
     /**
-     * @return The  directory prefix is the directory where all other files and subdirectories will be saved to, i.e. the top of the retrieval tree.  The default is . (the current directory).
+     * @return The command to run on create.
      * 
      */
-    public Optional<Output<String>> directoryPrefix() {
-        return Optional.ofNullable(this.directoryPrefix);
+    public Optional<Output<WgetOptsArgs>> create() {
+        return Optional.ofNullable(this.create);
+    }
+
+    /**
+     * The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+     * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+     * Command resource from previous create or update steps.
+     * 
+     */
+    @Import(name="delete")
+    private @Nullable Output<WgetOptsArgs> delete;
+
+    /**
+     * @return The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+     * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+     * Command resource from previous create or update steps.
+     * 
+     */
+    public Optional<Output<WgetOptsArgs>> delete() {
+        return Optional.ofNullable(this.delete);
     }
 
     /**
@@ -84,81 +101,6 @@ public final class WgetArgs extends com.pulumi.resources.ResourceArgs {
     }
 
     /**
-     * When in recursive mode, only HTTPS links are followed.
-     * 
-     */
-    @Import(name="httpsOnly")
-    private @Nullable Output<Boolean> httpsOnly;
-
-    /**
-     * @return When in recursive mode, only HTTPS links are followed.
-     * 
-     */
-    public Optional<Output<Boolean>> httpsOnly() {
-        return Optional.ofNullable(this.httpsOnly);
-    }
-
-    /**
-     * At what stage(s) in the resource lifecycle should the command be run
-     * 
-     */
-    @Import(name="lifecycle")
-    private @Nullable CommandLifecycle lifecycle;
-
-    /**
-     * @return At what stage(s) in the resource lifecycle should the command be run
-     * 
-     */
-    public Optional<CommandLifecycle> lifecycle() {
-        return Optional.ofNullable(this.lifecycle);
-    }
-
-    /**
-     * Turn off verbose without being completely quiet (use -q for that), which means that error messages and basic information still get printed.
-     * 
-     */
-    @Import(name="noVerbose")
-    private @Nullable Output<Boolean> noVerbose;
-
-    /**
-     * @return Turn off verbose without being completely quiet (use -q for that), which means that error messages and basic information still get printed.
-     * 
-     */
-    public Optional<Output<Boolean>> noVerbose() {
-        return Optional.ofNullable(this.noVerbose);
-    }
-
-    /**
-     * The  documents  will  not  be  written  to the appropriate files, but all will be concatenated together and written to file.
-     * 
-     */
-    @Import(name="outputDocument")
-    private @Nullable Output<String> outputDocument;
-
-    /**
-     * @return The  documents  will  not  be  written  to the appropriate files, but all will be concatenated together and written to file.
-     * 
-     */
-    public Optional<Output<String>> outputDocument() {
-        return Optional.ofNullable(this.outputDocument);
-    }
-
-    /**
-     * Turn off Wget&#39;s output.
-     * 
-     */
-    @Import(name="quiet")
-    private @Nullable Output<Boolean> quiet;
-
-    /**
-     * @return Turn off Wget&#39;s output.
-     * 
-     */
-    public Optional<Output<Boolean>> quiet() {
-        return Optional.ofNullable(this.quiet);
-    }
-
-    /**
      * TODO
      * 
      */
@@ -171,21 +113,6 @@ public final class WgetArgs extends com.pulumi.resources.ResourceArgs {
      */
     public Optional<Output<String>> stdin() {
         return Optional.ofNullable(this.stdin);
-    }
-
-    /**
-     * Turn on time-stamping.
-     * 
-     */
-    @Import(name="timestamping")
-    private @Nullable Output<Boolean> timestamping;
-
-    /**
-     * @return Turn on time-stamping.
-     * 
-     */
-    public Optional<Output<Boolean>> timestamping() {
-        return Optional.ofNullable(this.timestamping);
     }
 
     /**
@@ -204,18 +131,24 @@ public final class WgetArgs extends com.pulumi.resources.ResourceArgs {
     }
 
     /**
-     * Corresponds to the [URL...] argument.
+     * The command to run on update, if empty, create will
+     * run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+     * are set to the stdout and stderr properties of the Command resource from previous
+     * create or update steps.
      * 
      */
-    @Import(name="url", required=true)
-    private Output<Either<String,List<String>>> url;
+    @Import(name="update")
+    private @Nullable Output<WgetOptsArgs> update;
 
     /**
-     * @return Corresponds to the [URL...] argument.
+     * @return The command to run on update, if empty, create will
+     * run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+     * are set to the stdout and stderr properties of the Command resource from previous
+     * create or update steps.
      * 
      */
-    public Output<Either<String,List<String>>> url() {
-        return this.url;
+    public Optional<Output<WgetOptsArgs>> update() {
+        return Optional.ofNullable(this.update);
     }
 
     private WgetArgs() {}
@@ -223,17 +156,12 @@ public final class WgetArgs extends com.pulumi.resources.ResourceArgs {
     private WgetArgs(WgetArgs $) {
         this.binaryPath = $.binaryPath;
         this.connection = $.connection;
-        this.directoryPrefix = $.directoryPrefix;
+        this.create = $.create;
+        this.delete = $.delete;
         this.environment = $.environment;
-        this.httpsOnly = $.httpsOnly;
-        this.lifecycle = $.lifecycle;
-        this.noVerbose = $.noVerbose;
-        this.outputDocument = $.outputDocument;
-        this.quiet = $.quiet;
         this.stdin = $.stdin;
-        this.timestamping = $.timestamping;
         this.triggers = $.triggers;
-        this.url = $.url;
+        this.update = $.update;
     }
 
     public static Builder builder() {
@@ -297,24 +225,49 @@ public final class WgetArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param directoryPrefix The  directory prefix is the directory where all other files and subdirectories will be saved to, i.e. the top of the retrieval tree.  The default is . (the current directory).
+         * @param create The command to run on create.
          * 
          * @return builder
          * 
          */
-        public Builder directoryPrefix(@Nullable Output<String> directoryPrefix) {
-            $.directoryPrefix = directoryPrefix;
+        public Builder create(@Nullable Output<WgetOptsArgs> create) {
+            $.create = create;
             return this;
         }
 
         /**
-         * @param directoryPrefix The  directory prefix is the directory where all other files and subdirectories will be saved to, i.e. the top of the retrieval tree.  The default is . (the current directory).
+         * @param create The command to run on create.
          * 
          * @return builder
          * 
          */
-        public Builder directoryPrefix(String directoryPrefix) {
-            return directoryPrefix(Output.of(directoryPrefix));
+        public Builder create(WgetOptsArgs create) {
+            return create(Output.of(create));
+        }
+
+        /**
+         * @param delete The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+         * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+         * Command resource from previous create or update steps.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder delete(@Nullable Output<WgetOptsArgs> delete) {
+            $.delete = delete;
+            return this;
+        }
+
+        /**
+         * @param delete The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+         * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+         * Command resource from previous create or update steps.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder delete(WgetOptsArgs delete) {
+            return delete(Output.of(delete));
         }
 
         /**
@@ -339,101 +292,6 @@ public final class WgetArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param httpsOnly When in recursive mode, only HTTPS links are followed.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder httpsOnly(@Nullable Output<Boolean> httpsOnly) {
-            $.httpsOnly = httpsOnly;
-            return this;
-        }
-
-        /**
-         * @param httpsOnly When in recursive mode, only HTTPS links are followed.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder httpsOnly(Boolean httpsOnly) {
-            return httpsOnly(Output.of(httpsOnly));
-        }
-
-        /**
-         * @param lifecycle At what stage(s) in the resource lifecycle should the command be run
-         * 
-         * @return builder
-         * 
-         */
-        public Builder lifecycle(@Nullable CommandLifecycle lifecycle) {
-            $.lifecycle = lifecycle;
-            return this;
-        }
-
-        /**
-         * @param noVerbose Turn off verbose without being completely quiet (use -q for that), which means that error messages and basic information still get printed.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder noVerbose(@Nullable Output<Boolean> noVerbose) {
-            $.noVerbose = noVerbose;
-            return this;
-        }
-
-        /**
-         * @param noVerbose Turn off verbose without being completely quiet (use -q for that), which means that error messages and basic information still get printed.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder noVerbose(Boolean noVerbose) {
-            return noVerbose(Output.of(noVerbose));
-        }
-
-        /**
-         * @param outputDocument The  documents  will  not  be  written  to the appropriate files, but all will be concatenated together and written to file.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder outputDocument(@Nullable Output<String> outputDocument) {
-            $.outputDocument = outputDocument;
-            return this;
-        }
-
-        /**
-         * @param outputDocument The  documents  will  not  be  written  to the appropriate files, but all will be concatenated together and written to file.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder outputDocument(String outputDocument) {
-            return outputDocument(Output.of(outputDocument));
-        }
-
-        /**
-         * @param quiet Turn off Wget&#39;s output.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder quiet(@Nullable Output<Boolean> quiet) {
-            $.quiet = quiet;
-            return this;
-        }
-
-        /**
-         * @param quiet Turn off Wget&#39;s output.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder quiet(Boolean quiet) {
-            return quiet(Output.of(quiet));
-        }
-
-        /**
          * @param stdin TODO
          * 
          * @return builder
@@ -452,27 +310,6 @@ public final class WgetArgs extends com.pulumi.resources.ResourceArgs {
          */
         public Builder stdin(String stdin) {
             return stdin(Output.of(stdin));
-        }
-
-        /**
-         * @param timestamping Turn on time-stamping.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder timestamping(@Nullable Output<Boolean> timestamping) {
-            $.timestamping = timestamping;
-            return this;
-        }
-
-        /**
-         * @param timestamping Turn on time-stamping.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder timestamping(Boolean timestamping) {
-            return timestamping(Output.of(timestamping));
         }
 
         /**
@@ -507,52 +344,35 @@ public final class WgetArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param url Corresponds to the [URL...] argument.
+         * @param update The command to run on update, if empty, create will
+         * run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+         * are set to the stdout and stderr properties of the Command resource from previous
+         * create or update steps.
          * 
          * @return builder
          * 
          */
-        public Builder url(Output<Either<String,List<String>>> url) {
-            $.url = url;
+        public Builder update(@Nullable Output<WgetOptsArgs> update) {
+            $.update = update;
             return this;
         }
 
         /**
-         * @param url Corresponds to the [URL...] argument.
+         * @param update The command to run on update, if empty, create will
+         * run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+         * are set to the stdout and stderr properties of the Command resource from previous
+         * create or update steps.
          * 
          * @return builder
          * 
          */
-        public Builder url(Either<String,List<String>> url) {
-            return url(Output.of(url));
-        }
-
-        /**
-         * @param url Corresponds to the [URL...] argument.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder url(String url) {
-            return url(Either.ofLeft(url));
-        }
-
-        /**
-         * @param url Corresponds to the [URL...] argument.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder url(List<String> url) {
-            return url(Either.ofRight(url));
+        public Builder update(WgetOptsArgs update) {
+            return update(Output.of(update));
         }
 
         public WgetArgs build() {
             if ($.connection == null) {
                 throw new MissingRequiredPropertyException("WgetArgs", "connection");
-            }
-            if ($.url == null) {
-                throw new MissingRequiredPropertyException("WgetArgs", "url");
             }
             return $;
         }

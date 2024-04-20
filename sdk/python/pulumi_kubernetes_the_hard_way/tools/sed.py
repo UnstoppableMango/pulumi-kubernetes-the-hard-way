@@ -8,7 +8,8 @@ import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
 from .. import _utilities
-from ._enums import *
+from . import outputs
+from ._inputs import *
 import pulumi_command
 
 __all__ = ['SedArgs', 'Sed']
@@ -18,102 +19,43 @@ class SedArgs:
     def __init__(__self__, *,
                  connection: pulumi.Input['pulumi_command.remote.ConnectionArgs'],
                  binary_path: Optional[pulumi.Input[str]] = None,
-                 debug: Optional[pulumi.Input[bool]] = None,
+                 create: Optional[pulumi.Input['SedOptsArgs']] = None,
+                 delete: Optional[pulumi.Input['SedOptsArgs']] = None,
                  environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-                 expressions: Optional[pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]]] = None,
-                 files: Optional[pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]]] = None,
-                 follow_symlinks: Optional[pulumi.Input[bool]] = None,
-                 help: Optional[pulumi.Input[bool]] = None,
-                 in_place: Optional[pulumi.Input[str]] = None,
-                 input_files: Optional[pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]]] = None,
-                 lifecycle: Optional['CommandLifecycle'] = None,
-                 line_length: Optional[pulumi.Input[int]] = None,
-                 null_data: Optional[pulumi.Input[bool]] = None,
-                 posix: Optional[pulumi.Input[bool]] = None,
-                 quiet: Optional[pulumi.Input[bool]] = None,
-                 regexp_extended: Optional[pulumi.Input[bool]] = None,
-                 sandbox: Optional[pulumi.Input[bool]] = None,
-                 script: Optional[pulumi.Input[str]] = None,
-                 separate: Optional[pulumi.Input[bool]] = None,
-                 silent: Optional[pulumi.Input[bool]] = None,
                  stdin: Optional[pulumi.Input[str]] = None,
                  triggers: Optional[pulumi.Input[Sequence[Any]]] = None,
-                 unbuffered: Optional[pulumi.Input[bool]] = None,
-                 version: Optional[pulumi.Input[bool]] = None):
+                 update: Optional[pulumi.Input['SedOptsArgs']] = None):
         """
         The set of arguments for constructing a Sed resource.
         :param pulumi.Input['pulumi_command.remote.ConnectionArgs'] connection: Connection details for the remote system
         :param pulumi.Input[str] binary_path: Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
-        :param pulumi.Input[bool] debug: annotate program execution.
+        :param pulumi.Input['SedOptsArgs'] create: The command to run on create.
+        :param pulumi.Input['SedOptsArgs'] delete: The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+               and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+               Command resource from previous create or update steps.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] environment: Environment variables
-        :param pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]] expressions: add the script to the commands to be executed.
-        :param pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]] files: add the contents of script-file to the commands to be executed.
-        :param pulumi.Input[bool] follow_symlinks: follow symlinks when processing in place
-        :param pulumi.Input[bool] help: display this help and exit.
-        :param pulumi.Input[str] in_place: edit files in place (makes backup if SUFFIX supplied)
-        :param pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]] input_files: corresponds to the [input-file]... argument(s).
-        :param 'CommandLifecycle' lifecycle: At what stage(s) in the resource lifecycle should the command be run
-        :param pulumi.Input[int] line_length: specify the desired line-wrap length for the `l' command
-        :param pulumi.Input[bool] null_data: separate lines by NUL characters
-        :param pulumi.Input[bool] posix: disable all GNU extensions.
-        :param pulumi.Input[bool] quiet: suppress automatic printing of pattern space. Same as `silent`.
-        :param pulumi.Input[bool] regexp_extended: use extended regular expressions in the script (for portability use POSIX -E).
-        :param pulumi.Input[bool] sandbox: operate in sandbox mode (disable e/r/w commands).
-        :param pulumi.Input[str] script: script only if no other script.
-        :param pulumi.Input[bool] separate: consider files as separate rather than as a single, continuous long stream.
-        :param pulumi.Input[bool] silent: suppress automatic printing of pattern space. Same as `quiet`.
         :param pulumi.Input[str] stdin: TODO
         :param pulumi.Input[Sequence[Any]] triggers: TODO
-        :param pulumi.Input[bool] unbuffered: load minimal amounts of data from the input files and flush the output buffers more often.
-        :param pulumi.Input[bool] version: output version information and exit.
+        :param pulumi.Input['SedOptsArgs'] update: The command to run on update, if empty, create will 
+               run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
+               are set to the stdout and stderr properties of the Command resource from previous 
+               create or update steps.
         """
         pulumi.set(__self__, "connection", connection)
         if binary_path is not None:
             pulumi.set(__self__, "binary_path", binary_path)
-        if debug is not None:
-            pulumi.set(__self__, "debug", debug)
+        if create is not None:
+            pulumi.set(__self__, "create", create)
+        if delete is not None:
+            pulumi.set(__self__, "delete", delete)
         if environment is not None:
             pulumi.set(__self__, "environment", environment)
-        if expressions is not None:
-            pulumi.set(__self__, "expressions", expressions)
-        if files is not None:
-            pulumi.set(__self__, "files", files)
-        if follow_symlinks is not None:
-            pulumi.set(__self__, "follow_symlinks", follow_symlinks)
-        if help is not None:
-            pulumi.set(__self__, "help", help)
-        if in_place is not None:
-            pulumi.set(__self__, "in_place", in_place)
-        if input_files is not None:
-            pulumi.set(__self__, "input_files", input_files)
-        if lifecycle is not None:
-            pulumi.set(__self__, "lifecycle", lifecycle)
-        if line_length is not None:
-            pulumi.set(__self__, "line_length", line_length)
-        if null_data is not None:
-            pulumi.set(__self__, "null_data", null_data)
-        if posix is not None:
-            pulumi.set(__self__, "posix", posix)
-        if quiet is not None:
-            pulumi.set(__self__, "quiet", quiet)
-        if regexp_extended is not None:
-            pulumi.set(__self__, "regexp_extended", regexp_extended)
-        if sandbox is not None:
-            pulumi.set(__self__, "sandbox", sandbox)
-        if script is not None:
-            pulumi.set(__self__, "script", script)
-        if separate is not None:
-            pulumi.set(__self__, "separate", separate)
-        if silent is not None:
-            pulumi.set(__self__, "silent", silent)
         if stdin is not None:
             pulumi.set(__self__, "stdin", stdin)
         if triggers is not None:
             pulumi.set(__self__, "triggers", triggers)
-        if unbuffered is not None:
-            pulumi.set(__self__, "unbuffered", unbuffered)
-        if version is not None:
-            pulumi.set(__self__, "version", version)
+        if update is not None:
+            pulumi.set(__self__, "update", update)
 
     @property
     @pulumi.getter
@@ -141,15 +83,29 @@ class SedArgs:
 
     @property
     @pulumi.getter
-    def debug(self) -> Optional[pulumi.Input[bool]]:
+    def create(self) -> Optional[pulumi.Input['SedOptsArgs']]:
         """
-        annotate program execution.
+        The command to run on create.
         """
-        return pulumi.get(self, "debug")
+        return pulumi.get(self, "create")
 
-    @debug.setter
-    def debug(self, value: Optional[pulumi.Input[bool]]):
-        pulumi.set(self, "debug", value)
+    @create.setter
+    def create(self, value: Optional[pulumi.Input['SedOptsArgs']]):
+        pulumi.set(self, "create", value)
+
+    @property
+    @pulumi.getter
+    def delete(self) -> Optional[pulumi.Input['SedOptsArgs']]:
+        """
+        The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+        and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+        Command resource from previous create or update steps.
+        """
+        return pulumi.get(self, "delete")
+
+    @delete.setter
+    def delete(self, value: Optional[pulumi.Input['SedOptsArgs']]):
+        pulumi.set(self, "delete", value)
 
     @property
     @pulumi.getter
@@ -162,198 +118,6 @@ class SedArgs:
     @environment.setter
     def environment(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
         pulumi.set(self, "environment", value)
-
-    @property
-    @pulumi.getter
-    def expressions(self) -> Optional[pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]]]:
-        """
-        add the script to the commands to be executed.
-        """
-        return pulumi.get(self, "expressions")
-
-    @expressions.setter
-    def expressions(self, value: Optional[pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]]]):
-        pulumi.set(self, "expressions", value)
-
-    @property
-    @pulumi.getter
-    def files(self) -> Optional[pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]]]:
-        """
-        add the contents of script-file to the commands to be executed.
-        """
-        return pulumi.get(self, "files")
-
-    @files.setter
-    def files(self, value: Optional[pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]]]):
-        pulumi.set(self, "files", value)
-
-    @property
-    @pulumi.getter(name="followSymlinks")
-    def follow_symlinks(self) -> Optional[pulumi.Input[bool]]:
-        """
-        follow symlinks when processing in place
-        """
-        return pulumi.get(self, "follow_symlinks")
-
-    @follow_symlinks.setter
-    def follow_symlinks(self, value: Optional[pulumi.Input[bool]]):
-        pulumi.set(self, "follow_symlinks", value)
-
-    @property
-    @pulumi.getter
-    def help(self) -> Optional[pulumi.Input[bool]]:
-        """
-        display this help and exit.
-        """
-        return pulumi.get(self, "help")
-
-    @help.setter
-    def help(self, value: Optional[pulumi.Input[bool]]):
-        pulumi.set(self, "help", value)
-
-    @property
-    @pulumi.getter(name="inPlace")
-    def in_place(self) -> Optional[pulumi.Input[str]]:
-        """
-        edit files in place (makes backup if SUFFIX supplied)
-        """
-        return pulumi.get(self, "in_place")
-
-    @in_place.setter
-    def in_place(self, value: Optional[pulumi.Input[str]]):
-        pulumi.set(self, "in_place", value)
-
-    @property
-    @pulumi.getter(name="inputFiles")
-    def input_files(self) -> Optional[pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]]]:
-        """
-        corresponds to the [input-file]... argument(s).
-        """
-        return pulumi.get(self, "input_files")
-
-    @input_files.setter
-    def input_files(self, value: Optional[pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]]]):
-        pulumi.set(self, "input_files", value)
-
-    @property
-    @pulumi.getter
-    def lifecycle(self) -> Optional['CommandLifecycle']:
-        """
-        At what stage(s) in the resource lifecycle should the command be run
-        """
-        return pulumi.get(self, "lifecycle")
-
-    @lifecycle.setter
-    def lifecycle(self, value: Optional['CommandLifecycle']):
-        pulumi.set(self, "lifecycle", value)
-
-    @property
-    @pulumi.getter(name="lineLength")
-    def line_length(self) -> Optional[pulumi.Input[int]]:
-        """
-        specify the desired line-wrap length for the `l' command
-        """
-        return pulumi.get(self, "line_length")
-
-    @line_length.setter
-    def line_length(self, value: Optional[pulumi.Input[int]]):
-        pulumi.set(self, "line_length", value)
-
-    @property
-    @pulumi.getter(name="nullData")
-    def null_data(self) -> Optional[pulumi.Input[bool]]:
-        """
-        separate lines by NUL characters
-        """
-        return pulumi.get(self, "null_data")
-
-    @null_data.setter
-    def null_data(self, value: Optional[pulumi.Input[bool]]):
-        pulumi.set(self, "null_data", value)
-
-    @property
-    @pulumi.getter
-    def posix(self) -> Optional[pulumi.Input[bool]]:
-        """
-        disable all GNU extensions.
-        """
-        return pulumi.get(self, "posix")
-
-    @posix.setter
-    def posix(self, value: Optional[pulumi.Input[bool]]):
-        pulumi.set(self, "posix", value)
-
-    @property
-    @pulumi.getter
-    def quiet(self) -> Optional[pulumi.Input[bool]]:
-        """
-        suppress automatic printing of pattern space. Same as `silent`.
-        """
-        return pulumi.get(self, "quiet")
-
-    @quiet.setter
-    def quiet(self, value: Optional[pulumi.Input[bool]]):
-        pulumi.set(self, "quiet", value)
-
-    @property
-    @pulumi.getter(name="regexpExtended")
-    def regexp_extended(self) -> Optional[pulumi.Input[bool]]:
-        """
-        use extended regular expressions in the script (for portability use POSIX -E).
-        """
-        return pulumi.get(self, "regexp_extended")
-
-    @regexp_extended.setter
-    def regexp_extended(self, value: Optional[pulumi.Input[bool]]):
-        pulumi.set(self, "regexp_extended", value)
-
-    @property
-    @pulumi.getter
-    def sandbox(self) -> Optional[pulumi.Input[bool]]:
-        """
-        operate in sandbox mode (disable e/r/w commands).
-        """
-        return pulumi.get(self, "sandbox")
-
-    @sandbox.setter
-    def sandbox(self, value: Optional[pulumi.Input[bool]]):
-        pulumi.set(self, "sandbox", value)
-
-    @property
-    @pulumi.getter
-    def script(self) -> Optional[pulumi.Input[str]]:
-        """
-        script only if no other script.
-        """
-        return pulumi.get(self, "script")
-
-    @script.setter
-    def script(self, value: Optional[pulumi.Input[str]]):
-        pulumi.set(self, "script", value)
-
-    @property
-    @pulumi.getter
-    def separate(self) -> Optional[pulumi.Input[bool]]:
-        """
-        consider files as separate rather than as a single, continuous long stream.
-        """
-        return pulumi.get(self, "separate")
-
-    @separate.setter
-    def separate(self, value: Optional[pulumi.Input[bool]]):
-        pulumi.set(self, "separate", value)
-
-    @property
-    @pulumi.getter
-    def silent(self) -> Optional[pulumi.Input[bool]]:
-        """
-        suppress automatic printing of pattern space. Same as `quiet`.
-        """
-        return pulumi.get(self, "silent")
-
-    @silent.setter
-    def silent(self, value: Optional[pulumi.Input[bool]]):
-        pulumi.set(self, "silent", value)
 
     @property
     @pulumi.getter
@@ -381,58 +145,33 @@ class SedArgs:
 
     @property
     @pulumi.getter
-    def unbuffered(self) -> Optional[pulumi.Input[bool]]:
+    def update(self) -> Optional[pulumi.Input['SedOptsArgs']]:
         """
-        load minimal amounts of data from the input files and flush the output buffers more often.
+        The command to run on update, if empty, create will 
+        run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
+        are set to the stdout and stderr properties of the Command resource from previous 
+        create or update steps.
         """
-        return pulumi.get(self, "unbuffered")
+        return pulumi.get(self, "update")
 
-    @unbuffered.setter
-    def unbuffered(self, value: Optional[pulumi.Input[bool]]):
-        pulumi.set(self, "unbuffered", value)
-
-    @property
-    @pulumi.getter
-    def version(self) -> Optional[pulumi.Input[bool]]:
-        """
-        output version information and exit.
-        """
-        return pulumi.get(self, "version")
-
-    @version.setter
-    def version(self, value: Optional[pulumi.Input[bool]]):
-        pulumi.set(self, "version", value)
+    @update.setter
+    def update(self, value: Optional[pulumi.Input['SedOptsArgs']]):
+        pulumi.set(self, "update", value)
 
 
-class Sed(pulumi.ComponentResource):
+class Sed(pulumi.CustomResource):
     @overload
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  binary_path: Optional[pulumi.Input[str]] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
-                 debug: Optional[pulumi.Input[bool]] = None,
+                 create: Optional[pulumi.Input[pulumi.InputType['SedOptsArgs']]] = None,
+                 delete: Optional[pulumi.Input[pulumi.InputType['SedOptsArgs']]] = None,
                  environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-                 expressions: Optional[pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]]] = None,
-                 files: Optional[pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]]] = None,
-                 follow_symlinks: Optional[pulumi.Input[bool]] = None,
-                 help: Optional[pulumi.Input[bool]] = None,
-                 in_place: Optional[pulumi.Input[str]] = None,
-                 input_files: Optional[pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]]] = None,
-                 lifecycle: Optional['CommandLifecycle'] = None,
-                 line_length: Optional[pulumi.Input[int]] = None,
-                 null_data: Optional[pulumi.Input[bool]] = None,
-                 posix: Optional[pulumi.Input[bool]] = None,
-                 quiet: Optional[pulumi.Input[bool]] = None,
-                 regexp_extended: Optional[pulumi.Input[bool]] = None,
-                 sandbox: Optional[pulumi.Input[bool]] = None,
-                 script: Optional[pulumi.Input[str]] = None,
-                 separate: Optional[pulumi.Input[bool]] = None,
-                 silent: Optional[pulumi.Input[bool]] = None,
                  stdin: Optional[pulumi.Input[str]] = None,
                  triggers: Optional[pulumi.Input[Sequence[Any]]] = None,
-                 unbuffered: Optional[pulumi.Input[bool]] = None,
-                 version: Optional[pulumi.Input[bool]] = None,
+                 update: Optional[pulumi.Input[pulumi.InputType['SedOptsArgs']]] = None,
                  __props__=None):
         """
         Abstraction over the `sed` utility on a remote system.
@@ -441,28 +180,17 @@ class Sed(pulumi.ComponentResource):
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[str] binary_path: Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
         :param pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']] connection: Connection details for the remote system
-        :param pulumi.Input[bool] debug: annotate program execution.
+        :param pulumi.Input[pulumi.InputType['SedOptsArgs']] create: The command to run on create.
+        :param pulumi.Input[pulumi.InputType['SedOptsArgs']] delete: The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+               and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+               Command resource from previous create or update steps.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] environment: Environment variables
-        :param pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]] expressions: add the script to the commands to be executed.
-        :param pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]] files: add the contents of script-file to the commands to be executed.
-        :param pulumi.Input[bool] follow_symlinks: follow symlinks when processing in place
-        :param pulumi.Input[bool] help: display this help and exit.
-        :param pulumi.Input[str] in_place: edit files in place (makes backup if SUFFIX supplied)
-        :param pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]] input_files: corresponds to the [input-file]... argument(s).
-        :param 'CommandLifecycle' lifecycle: At what stage(s) in the resource lifecycle should the command be run
-        :param pulumi.Input[int] line_length: specify the desired line-wrap length for the `l' command
-        :param pulumi.Input[bool] null_data: separate lines by NUL characters
-        :param pulumi.Input[bool] posix: disable all GNU extensions.
-        :param pulumi.Input[bool] quiet: suppress automatic printing of pattern space. Same as `silent`.
-        :param pulumi.Input[bool] regexp_extended: use extended regular expressions in the script (for portability use POSIX -E).
-        :param pulumi.Input[bool] sandbox: operate in sandbox mode (disable e/r/w commands).
-        :param pulumi.Input[str] script: script only if no other script.
-        :param pulumi.Input[bool] separate: consider files as separate rather than as a single, continuous long stream.
-        :param pulumi.Input[bool] silent: suppress automatic printing of pattern space. Same as `quiet`.
         :param pulumi.Input[str] stdin: TODO
         :param pulumi.Input[Sequence[Any]] triggers: TODO
-        :param pulumi.Input[bool] unbuffered: load minimal amounts of data from the input files and flush the output buffers more often.
-        :param pulumi.Input[bool] version: output version information and exit.
+        :param pulumi.Input[pulumi.InputType['SedOptsArgs']] update: The command to run on update, if empty, create will 
+               run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
+               are set to the stdout and stderr properties of the Command resource from previous 
+               create or update steps.
         """
         ...
     @overload
@@ -490,35 +218,17 @@ class Sed(pulumi.ComponentResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  binary_path: Optional[pulumi.Input[str]] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
-                 debug: Optional[pulumi.Input[bool]] = None,
+                 create: Optional[pulumi.Input[pulumi.InputType['SedOptsArgs']]] = None,
+                 delete: Optional[pulumi.Input[pulumi.InputType['SedOptsArgs']]] = None,
                  environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-                 expressions: Optional[pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]]] = None,
-                 files: Optional[pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]]] = None,
-                 follow_symlinks: Optional[pulumi.Input[bool]] = None,
-                 help: Optional[pulumi.Input[bool]] = None,
-                 in_place: Optional[pulumi.Input[str]] = None,
-                 input_files: Optional[pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]]] = None,
-                 lifecycle: Optional['CommandLifecycle'] = None,
-                 line_length: Optional[pulumi.Input[int]] = None,
-                 null_data: Optional[pulumi.Input[bool]] = None,
-                 posix: Optional[pulumi.Input[bool]] = None,
-                 quiet: Optional[pulumi.Input[bool]] = None,
-                 regexp_extended: Optional[pulumi.Input[bool]] = None,
-                 sandbox: Optional[pulumi.Input[bool]] = None,
-                 script: Optional[pulumi.Input[str]] = None,
-                 separate: Optional[pulumi.Input[bool]] = None,
-                 silent: Optional[pulumi.Input[bool]] = None,
                  stdin: Optional[pulumi.Input[str]] = None,
                  triggers: Optional[pulumi.Input[Sequence[Any]]] = None,
-                 unbuffered: Optional[pulumi.Input[bool]] = None,
-                 version: Optional[pulumi.Input[bool]] = None,
+                 update: Optional[pulumi.Input[pulumi.InputType['SedOptsArgs']]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):
             raise TypeError('Expected resource options to be a ResourceOptions instance')
-        if opts.id is not None:
-            raise ValueError('ComponentResource classes do not support opts.id')
-        else:
+        if opts.id is None:
             if __props__ is not None:
                 raise TypeError('__props__ is only valid when passed in combination with a valid opts.id to get an existing resource')
             __props__ = SedArgs.__new__(SedArgs)
@@ -527,28 +237,12 @@ class Sed(pulumi.ComponentResource):
             if connection is None and not opts.urn:
                 raise TypeError("Missing required property 'connection'")
             __props__.__dict__["connection"] = connection
-            __props__.__dict__["debug"] = debug
+            __props__.__dict__["create"] = create
+            __props__.__dict__["delete"] = delete
             __props__.__dict__["environment"] = environment
-            __props__.__dict__["expressions"] = expressions
-            __props__.__dict__["files"] = files
-            __props__.__dict__["follow_symlinks"] = follow_symlinks
-            __props__.__dict__["help"] = help
-            __props__.__dict__["in_place"] = in_place
-            __props__.__dict__["input_files"] = input_files
-            __props__.__dict__["lifecycle"] = lifecycle
-            __props__.__dict__["line_length"] = line_length
-            __props__.__dict__["null_data"] = null_data
-            __props__.__dict__["posix"] = posix
-            __props__.__dict__["quiet"] = quiet
-            __props__.__dict__["regexp_extended"] = regexp_extended
-            __props__.__dict__["sandbox"] = sandbox
-            __props__.__dict__["script"] = script
-            __props__.__dict__["separate"] = separate
-            __props__.__dict__["silent"] = silent
             __props__.__dict__["stdin"] = stdin
             __props__.__dict__["triggers"] = triggers
-            __props__.__dict__["unbuffered"] = unbuffered
-            __props__.__dict__["version"] = version
+            __props__.__dict__["update"] = update
             __props__.__dict__["command"] = None
             __props__.__dict__["stderr"] = None
             __props__.__dict__["stdout"] = None
@@ -556,8 +250,36 @@ class Sed(pulumi.ComponentResource):
             'kubernetes-the-hard-way:tools:Sed',
             resource_name,
             __props__,
-            opts,
-            remote=True)
+            opts)
+
+    @staticmethod
+    def get(resource_name: str,
+            id: pulumi.Input[str],
+            opts: Optional[pulumi.ResourceOptions] = None) -> 'Sed':
+        """
+        Get an existing Sed resource's state with the given name, id, and optional extra
+        properties used to qualify the lookup.
+
+        :param str resource_name: The unique name of the resulting resource.
+        :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
+        :param pulumi.ResourceOptions opts: Options for the resource.
+        """
+        opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
+
+        __props__ = SedArgs.__new__(SedArgs)
+
+        __props__.__dict__["binary_path"] = None
+        __props__.__dict__["command"] = None
+        __props__.__dict__["connection"] = None
+        __props__.__dict__["create"] = None
+        __props__.__dict__["delete"] = None
+        __props__.__dict__["environment"] = None
+        __props__.__dict__["stderr"] = None
+        __props__.__dict__["stdin"] = None
+        __props__.__dict__["stdout"] = None
+        __props__.__dict__["triggers"] = None
+        __props__.__dict__["update"] = None
+        return Sed(resource_name, opts=opts, __props__=__props__)
 
     @property
     @pulumi.getter(name="binaryPath")
@@ -585,11 +307,21 @@ class Sed(pulumi.ComponentResource):
 
     @property
     @pulumi.getter
-    def debug(self) -> pulumi.Output[bool]:
+    def create(self) -> pulumi.Output[Optional['outputs.SedOpts']]:
         """
-        annotate program execution.
+        The command to run on create.
         """
-        return pulumi.get(self, "debug")
+        return pulumi.get(self, "create")
+
+    @property
+    @pulumi.getter
+    def delete(self) -> pulumi.Output[Optional['outputs.SedOpts']]:
+        """
+        The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+        and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+        Command resource from previous create or update steps.
+        """
+        return pulumi.get(self, "delete")
 
     @property
     @pulumi.getter
@@ -598,134 +330,6 @@ class Sed(pulumi.ComponentResource):
         Environment variables
         """
         return pulumi.get(self, "environment")
-
-    @property
-    @pulumi.getter
-    def expressions(self) -> pulumi.Output[Any]:
-        """
-        add the script to the commands to be executed.
-        """
-        return pulumi.get(self, "expressions")
-
-    @property
-    @pulumi.getter
-    def files(self) -> pulumi.Output[Any]:
-        """
-        add the contents of script-file to the commands to be executed.
-        """
-        return pulumi.get(self, "files")
-
-    @property
-    @pulumi.getter(name="followSymlinks")
-    def follow_symlinks(self) -> pulumi.Output[bool]:
-        """
-        follow symlinks when processing in place
-        """
-        return pulumi.get(self, "follow_symlinks")
-
-    @property
-    @pulumi.getter
-    def help(self) -> pulumi.Output[bool]:
-        """
-        display this help and exit.
-        """
-        return pulumi.get(self, "help")
-
-    @property
-    @pulumi.getter(name="inPlace")
-    def in_place(self) -> pulumi.Output[Optional[str]]:
-        """
-        edit files in place (makes backup if SUFFIX supplied)
-        """
-        return pulumi.get(self, "in_place")
-
-    @property
-    @pulumi.getter(name="inputFiles")
-    def input_files(self) -> pulumi.Output[Any]:
-        """
-        corresponds to the [input-file]... argument(s).
-        """
-        return pulumi.get(self, "input_files")
-
-    @property
-    @pulumi.getter
-    def lifecycle(self) -> pulumi.Output[Optional['CommandLifecycle']]:
-        """
-        At what stage(s) in the resource lifecycle should the command be run
-        """
-        return pulumi.get(self, "lifecycle")
-
-    @property
-    @pulumi.getter(name="lineLength")
-    def line_length(self) -> pulumi.Output[Optional[int]]:
-        """
-        specify the desired line-wrap length for the `l' command
-        """
-        return pulumi.get(self, "line_length")
-
-    @property
-    @pulumi.getter(name="nullData")
-    def null_data(self) -> pulumi.Output[bool]:
-        """
-        separate lines by NUL characters
-        """
-        return pulumi.get(self, "null_data")
-
-    @property
-    @pulumi.getter
-    def posix(self) -> pulumi.Output[bool]:
-        """
-        disable all GNU extensions.
-        """
-        return pulumi.get(self, "posix")
-
-    @property
-    @pulumi.getter
-    def quiet(self) -> pulumi.Output[bool]:
-        """
-        suppress automatic printing of pattern space. Same as `silent`.
-        """
-        return pulumi.get(self, "quiet")
-
-    @property
-    @pulumi.getter(name="regexpExtended")
-    def regexp_extended(self) -> pulumi.Output[bool]:
-        """
-        use extended regular expressions in the script (for portability use POSIX -E).
-        """
-        return pulumi.get(self, "regexp_extended")
-
-    @property
-    @pulumi.getter
-    def sandbox(self) -> pulumi.Output[bool]:
-        """
-        operate in sandbox mode (disable e/r/w commands).
-        """
-        return pulumi.get(self, "sandbox")
-
-    @property
-    @pulumi.getter
-    def script(self) -> pulumi.Output[Optional[str]]:
-        """
-        script only if no other script.
-        """
-        return pulumi.get(self, "script")
-
-    @property
-    @pulumi.getter
-    def separate(self) -> pulumi.Output[bool]:
-        """
-        consider files as separate rather than as a single, continuous long stream.
-        """
-        return pulumi.get(self, "separate")
-
-    @property
-    @pulumi.getter
-    def silent(self) -> pulumi.Output[bool]:
-        """
-        suppress automatic printing of pattern space. Same as `quiet`.
-        """
-        return pulumi.get(self, "silent")
 
     @property
     @pulumi.getter
@@ -761,17 +365,12 @@ class Sed(pulumi.ComponentResource):
 
     @property
     @pulumi.getter
-    def unbuffered(self) -> pulumi.Output[bool]:
+    def update(self) -> pulumi.Output[Optional['outputs.SedOpts']]:
         """
-        load minimal amounts of data from the input files and flush the output buffers more often.
+        The command to run on update, if empty, create will 
+        run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
+        are set to the stdout and stderr properties of the Command resource from previous 
+        create or update steps.
         """
-        return pulumi.get(self, "unbuffered")
-
-    @property
-    @pulumi.getter
-    def version(self) -> pulumi.Output[bool]:
-        """
-        output version information and exit.
-        """
-        return pulumi.get(self, "version")
+        return pulumi.get(self, "update")
 

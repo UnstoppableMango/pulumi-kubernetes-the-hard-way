@@ -7,8 +7,7 @@ import com.pulumi.command.remote.inputs.ConnectionArgs;
 import com.pulumi.core.Output;
 import com.pulumi.core.annotations.Import;
 import com.pulumi.exceptions.MissingRequiredPropertyException;
-import com.unmango.kubernetesthehardway.tools.enums.CommandLifecycle;
-import com.unmango.kubernetesthehardway.tools.enums.EtcdctlCommand;
+import com.unmango.kubernetesthehardway.tools.inputs.EtcdctlOptsArgs;
 import java.lang.Object;
 import java.lang.String;
 import java.util.List;
@@ -38,51 +37,6 @@ public final class EtcdctlArgs extends com.pulumi.resources.ResourceArgs {
     }
 
     /**
-     * TODO
-     * 
-     */
-    @Import(name="caCert")
-    private @Nullable Output<String> caCert;
-
-    /**
-     * @return TODO
-     * 
-     */
-    public Optional<Output<String>> caCert() {
-        return Optional.ofNullable(this.caCert);
-    }
-
-    /**
-     * TODO
-     * 
-     */
-    @Import(name="cert")
-    private @Nullable Output<String> cert;
-
-    /**
-     * @return TODO
-     * 
-     */
-    public Optional<Output<String>> cert() {
-        return Optional.ofNullable(this.cert);
-    }
-
-    /**
-     * TODO
-     * 
-     */
-    @Import(name="commands", required=true)
-    private Output<EtcdctlCommand> commands;
-
-    /**
-     * @return TODO
-     * 
-     */
-    public Output<EtcdctlCommand> commands() {
-        return this.commands;
-    }
-
-    /**
      * Connection details for the remote system
      * 
      */
@@ -98,18 +52,37 @@ public final class EtcdctlArgs extends com.pulumi.resources.ResourceArgs {
     }
 
     /**
-     * TODO
+     * The command to run on create.
      * 
      */
-    @Import(name="endpoints")
-    private @Nullable Output<String> endpoints;
+    @Import(name="create")
+    private @Nullable Output<EtcdctlOptsArgs> create;
 
     /**
-     * @return TODO
+     * @return The command to run on create.
      * 
      */
-    public Optional<Output<String>> endpoints() {
-        return Optional.ofNullable(this.endpoints);
+    public Optional<Output<EtcdctlOptsArgs>> create() {
+        return Optional.ofNullable(this.create);
+    }
+
+    /**
+     * The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+     * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+     * Command resource from previous create or update steps.
+     * 
+     */
+    @Import(name="delete")
+    private @Nullable Output<EtcdctlOptsArgs> delete;
+
+    /**
+     * @return The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+     * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+     * Command resource from previous create or update steps.
+     * 
+     */
+    public Optional<Output<EtcdctlOptsArgs>> delete() {
+        return Optional.ofNullable(this.delete);
     }
 
     /**
@@ -125,36 +98,6 @@ public final class EtcdctlArgs extends com.pulumi.resources.ResourceArgs {
      */
     public Optional<Output<Map<String,String>>> environment() {
         return Optional.ofNullable(this.environment);
-    }
-
-    /**
-     * TODO
-     * 
-     */
-    @Import(name="key")
-    private @Nullable Output<String> key;
-
-    /**
-     * @return TODO
-     * 
-     */
-    public Optional<Output<String>> key() {
-        return Optional.ofNullable(this.key);
-    }
-
-    /**
-     * At what stage(s) in the resource lifecycle should the command be run
-     * 
-     */
-    @Import(name="lifecycle")
-    private @Nullable CommandLifecycle lifecycle;
-
-    /**
-     * @return At what stage(s) in the resource lifecycle should the command be run
-     * 
-     */
-    public Optional<CommandLifecycle> lifecycle() {
-        return Optional.ofNullable(this.lifecycle);
     }
 
     /**
@@ -187,20 +130,38 @@ public final class EtcdctlArgs extends com.pulumi.resources.ResourceArgs {
         return Optional.ofNullable(this.triggers);
     }
 
+    /**
+     * The command to run on update, if empty, create will
+     * run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+     * are set to the stdout and stderr properties of the Command resource from previous
+     * create or update steps.
+     * 
+     */
+    @Import(name="update")
+    private @Nullable Output<EtcdctlOptsArgs> update;
+
+    /**
+     * @return The command to run on update, if empty, create will
+     * run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+     * are set to the stdout and stderr properties of the Command resource from previous
+     * create or update steps.
+     * 
+     */
+    public Optional<Output<EtcdctlOptsArgs>> update() {
+        return Optional.ofNullable(this.update);
+    }
+
     private EtcdctlArgs() {}
 
     private EtcdctlArgs(EtcdctlArgs $) {
         this.binaryPath = $.binaryPath;
-        this.caCert = $.caCert;
-        this.cert = $.cert;
-        this.commands = $.commands;
         this.connection = $.connection;
-        this.endpoints = $.endpoints;
+        this.create = $.create;
+        this.delete = $.delete;
         this.environment = $.environment;
-        this.key = $.key;
-        this.lifecycle = $.lifecycle;
         this.stdin = $.stdin;
         this.triggers = $.triggers;
+        this.update = $.update;
     }
 
     public static Builder builder() {
@@ -243,69 +204,6 @@ public final class EtcdctlArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param caCert TODO
-         * 
-         * @return builder
-         * 
-         */
-        public Builder caCert(@Nullable Output<String> caCert) {
-            $.caCert = caCert;
-            return this;
-        }
-
-        /**
-         * @param caCert TODO
-         * 
-         * @return builder
-         * 
-         */
-        public Builder caCert(String caCert) {
-            return caCert(Output.of(caCert));
-        }
-
-        /**
-         * @param cert TODO
-         * 
-         * @return builder
-         * 
-         */
-        public Builder cert(@Nullable Output<String> cert) {
-            $.cert = cert;
-            return this;
-        }
-
-        /**
-         * @param cert TODO
-         * 
-         * @return builder
-         * 
-         */
-        public Builder cert(String cert) {
-            return cert(Output.of(cert));
-        }
-
-        /**
-         * @param commands TODO
-         * 
-         * @return builder
-         * 
-         */
-        public Builder commands(Output<EtcdctlCommand> commands) {
-            $.commands = commands;
-            return this;
-        }
-
-        /**
-         * @param commands TODO
-         * 
-         * @return builder
-         * 
-         */
-        public Builder commands(EtcdctlCommand commands) {
-            return commands(Output.of(commands));
-        }
-
-        /**
          * @param connection Connection details for the remote system
          * 
          * @return builder
@@ -327,24 +225,49 @@ public final class EtcdctlArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param endpoints TODO
+         * @param create The command to run on create.
          * 
          * @return builder
          * 
          */
-        public Builder endpoints(@Nullable Output<String> endpoints) {
-            $.endpoints = endpoints;
+        public Builder create(@Nullable Output<EtcdctlOptsArgs> create) {
+            $.create = create;
             return this;
         }
 
         /**
-         * @param endpoints TODO
+         * @param create The command to run on create.
          * 
          * @return builder
          * 
          */
-        public Builder endpoints(String endpoints) {
-            return endpoints(Output.of(endpoints));
+        public Builder create(EtcdctlOptsArgs create) {
+            return create(Output.of(create));
+        }
+
+        /**
+         * @param delete The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+         * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+         * Command resource from previous create or update steps.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder delete(@Nullable Output<EtcdctlOptsArgs> delete) {
+            $.delete = delete;
+            return this;
+        }
+
+        /**
+         * @param delete The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+         * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+         * Command resource from previous create or update steps.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder delete(EtcdctlOptsArgs delete) {
+            return delete(Output.of(delete));
         }
 
         /**
@@ -366,38 +289,6 @@ public final class EtcdctlArgs extends com.pulumi.resources.ResourceArgs {
          */
         public Builder environment(Map<String,String> environment) {
             return environment(Output.of(environment));
-        }
-
-        /**
-         * @param key TODO
-         * 
-         * @return builder
-         * 
-         */
-        public Builder key(@Nullable Output<String> key) {
-            $.key = key;
-            return this;
-        }
-
-        /**
-         * @param key TODO
-         * 
-         * @return builder
-         * 
-         */
-        public Builder key(String key) {
-            return key(Output.of(key));
-        }
-
-        /**
-         * @param lifecycle At what stage(s) in the resource lifecycle should the command be run
-         * 
-         * @return builder
-         * 
-         */
-        public Builder lifecycle(@Nullable CommandLifecycle lifecycle) {
-            $.lifecycle = lifecycle;
-            return this;
         }
 
         /**
@@ -452,10 +343,34 @@ public final class EtcdctlArgs extends com.pulumi.resources.ResourceArgs {
             return triggers(List.of(triggers));
         }
 
+        /**
+         * @param update The command to run on update, if empty, create will
+         * run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+         * are set to the stdout and stderr properties of the Command resource from previous
+         * create or update steps.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder update(@Nullable Output<EtcdctlOptsArgs> update) {
+            $.update = update;
+            return this;
+        }
+
+        /**
+         * @param update The command to run on update, if empty, create will
+         * run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+         * are set to the stdout and stderr properties of the Command resource from previous
+         * create or update steps.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder update(EtcdctlOptsArgs update) {
+            return update(Output.of(update));
+        }
+
         public EtcdctlArgs build() {
-            if ($.commands == null) {
-                throw new MissingRequiredPropertyException("EtcdctlArgs", "commands");
-            }
             if ($.connection == null) {
                 throw new MissingRequiredPropertyException("EtcdctlArgs", "connection");
             }

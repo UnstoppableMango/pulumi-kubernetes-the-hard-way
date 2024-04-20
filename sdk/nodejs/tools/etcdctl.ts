@@ -12,7 +12,19 @@ import * as pulumiCommand from "@pulumi/command";
 /**
  * Abstraction over the `etcdctl` utility on a remote system.
  */
-export class Etcdctl extends pulumi.ComponentResource {
+export class Etcdctl extends pulumi.CustomResource {
+    /**
+     * Get an existing Etcdctl resource's state with the given name, ID, and optional extra
+     * properties used to qualify the lookup.
+     *
+     * @param name The _unique_ name of the resulting resource.
+     * @param id The _unique_ provider ID of the resource to lookup.
+     * @param opts Optional settings to control the behavior of the CustomResource.
+     */
+    public static get(name: string, id: pulumi.Input<pulumi.ID>, opts?: pulumi.CustomResourceOptions): Etcdctl {
+        return new Etcdctl(name, undefined as any, { ...opts, id: id });
+    }
+
     /** @internal */
     public static readonly __pulumiType = 'kubernetes-the-hard-way:tools:Etcdctl';
 
@@ -32,41 +44,27 @@ export class Etcdctl extends pulumi.ComponentResource {
      */
     public readonly binaryPath!: pulumi.Output<string>;
     /**
-     * TODO
-     */
-    public readonly caCert!: pulumi.Output<string | undefined>;
-    /**
-     * TODO
-     */
-    public readonly cert!: pulumi.Output<string | undefined>;
-    /**
      * The underlying command
      */
     public /*out*/ readonly command!: pulumi.Output<pulumiCommand.remote.Command>;
-    /**
-     * TODO
-     */
-    public readonly commands!: pulumi.Output<enums.tools.EtcdctlCommand>;
     /**
      * Connection details for the remote system
      */
     public readonly connection!: pulumi.Output<pulumiCommand.types.output.remote.Connection>;
     /**
-     * TODO
+     * The command to run on create.
      */
-    public readonly endpoints!: pulumi.Output<string | undefined>;
+    public readonly create!: pulumi.Output<outputs.tools.EtcdctlOpts | undefined>;
+    /**
+     * The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+     * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+     * Command resource from previous create or update steps.
+     */
+    public readonly delete!: pulumi.Output<outputs.tools.EtcdctlOpts | undefined>;
     /**
      * Environment variables
      */
     public readonly environment!: pulumi.Output<{[key: string]: string}>;
-    /**
-     * TODO
-     */
-    public readonly key!: pulumi.Output<string | undefined>;
-    /**
-     * At what stage(s) in the resource lifecycle should the command be run
-     */
-    public readonly lifecycle!: pulumi.Output<enums.tools.CommandLifecycle | undefined>;
     /**
      * TODO
      */
@@ -83,6 +81,13 @@ export class Etcdctl extends pulumi.ComponentResource {
      * TODO
      */
     public readonly triggers!: pulumi.Output<any[]>;
+    /**
+     * The command to run on update, if empty, create will 
+     * run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
+     * are set to the stdout and stderr properties of the Command resource from previous 
+     * create or update steps.
+     */
+    public readonly update!: pulumi.Output<outputs.tools.EtcdctlOpts | undefined>;
 
     /**
      * Create a Etcdctl resource with the given unique name, arguments, and options.
@@ -91,48 +96,39 @@ export class Etcdctl extends pulumi.ComponentResource {
      * @param args The arguments to use to populate this resource's properties.
      * @param opts A bag of options that control this resource's behavior.
      */
-    constructor(name: string, args: EtcdctlArgs, opts?: pulumi.ComponentResourceOptions) {
+    constructor(name: string, args: EtcdctlArgs, opts?: pulumi.CustomResourceOptions) {
         let resourceInputs: pulumi.Inputs = {};
         opts = opts || {};
         if (!opts.id) {
-            if ((!args || args.commands === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'commands'");
-            }
             if ((!args || args.connection === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'connection'");
             }
             resourceInputs["binaryPath"] = args ? args.binaryPath : undefined;
-            resourceInputs["caCert"] = args ? args.caCert : undefined;
-            resourceInputs["cert"] = args ? args.cert : undefined;
-            resourceInputs["commands"] = args ? args.commands : undefined;
             resourceInputs["connection"] = args ? (args.connection ? pulumi.output(args.connection).apply(pulumiCommand.types.input.remote.connectionArgsProvideDefaults) : undefined) : undefined;
-            resourceInputs["endpoints"] = args ? args.endpoints : undefined;
+            resourceInputs["create"] = args ? args.create : undefined;
+            resourceInputs["delete"] = args ? args.delete : undefined;
             resourceInputs["environment"] = args ? args.environment : undefined;
-            resourceInputs["key"] = args ? args.key : undefined;
-            resourceInputs["lifecycle"] = args ? args.lifecycle : undefined;
             resourceInputs["stdin"] = args ? args.stdin : undefined;
             resourceInputs["triggers"] = args ? args.triggers : undefined;
+            resourceInputs["update"] = args ? args.update : undefined;
             resourceInputs["command"] = undefined /*out*/;
             resourceInputs["stderr"] = undefined /*out*/;
             resourceInputs["stdout"] = undefined /*out*/;
         } else {
             resourceInputs["binaryPath"] = undefined /*out*/;
-            resourceInputs["caCert"] = undefined /*out*/;
-            resourceInputs["cert"] = undefined /*out*/;
             resourceInputs["command"] = undefined /*out*/;
-            resourceInputs["commands"] = undefined /*out*/;
             resourceInputs["connection"] = undefined /*out*/;
-            resourceInputs["endpoints"] = undefined /*out*/;
+            resourceInputs["create"] = undefined /*out*/;
+            resourceInputs["delete"] = undefined /*out*/;
             resourceInputs["environment"] = undefined /*out*/;
-            resourceInputs["key"] = undefined /*out*/;
-            resourceInputs["lifecycle"] = undefined /*out*/;
             resourceInputs["stderr"] = undefined /*out*/;
             resourceInputs["stdin"] = undefined /*out*/;
             resourceInputs["stdout"] = undefined /*out*/;
             resourceInputs["triggers"] = undefined /*out*/;
+            resourceInputs["update"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
-        super(Etcdctl.__pulumiType, name, resourceInputs, opts, true /*remote*/);
+        super(Etcdctl.__pulumiType, name, resourceInputs, opts);
     }
 }
 
@@ -145,37 +141,23 @@ export interface EtcdctlArgs {
      */
     binaryPath?: pulumi.Input<string>;
     /**
-     * TODO
-     */
-    caCert?: pulumi.Input<string>;
-    /**
-     * TODO
-     */
-    cert?: pulumi.Input<string>;
-    /**
-     * TODO
-     */
-    commands: pulumi.Input<enums.tools.EtcdctlCommand>;
-    /**
      * Connection details for the remote system
      */
     connection: pulumi.Input<pulumiCommand.types.input.remote.ConnectionArgs>;
     /**
-     * TODO
+     * The command to run on create.
      */
-    endpoints?: pulumi.Input<string>;
+    create?: pulumi.Input<inputs.tools.EtcdctlOptsArgs>;
+    /**
+     * The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+     * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+     * Command resource from previous create or update steps.
+     */
+    delete?: pulumi.Input<inputs.tools.EtcdctlOptsArgs>;
     /**
      * Environment variables
      */
     environment?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
-    /**
-     * TODO
-     */
-    key?: pulumi.Input<string>;
-    /**
-     * At what stage(s) in the resource lifecycle should the command be run
-     */
-    lifecycle?: enums.tools.CommandLifecycle;
     /**
      * TODO
      */
@@ -184,4 +166,11 @@ export interface EtcdctlArgs {
      * TODO
      */
     triggers?: pulumi.Input<any[]>;
+    /**
+     * The command to run on update, if empty, create will 
+     * run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
+     * are set to the stdout and stderr properties of the Command resource from previous 
+     * create or update steps.
+     */
+    update?: pulumi.Input<inputs.tools.EtcdctlOptsArgs>;
 }

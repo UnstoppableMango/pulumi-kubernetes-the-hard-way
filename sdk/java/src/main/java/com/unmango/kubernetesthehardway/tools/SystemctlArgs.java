@@ -7,8 +7,7 @@ import com.pulumi.command.remote.inputs.ConnectionArgs;
 import com.pulumi.core.Output;
 import com.pulumi.core.annotations.Import;
 import com.pulumi.exceptions.MissingRequiredPropertyException;
-import com.unmango.kubernetesthehardway.tools.enums.CommandLifecycle;
-import com.unmango.kubernetesthehardway.tools.enums.SystemctlCommand;
+import com.unmango.kubernetesthehardway.tools.inputs.SystemctlOptsArgs;
 import java.lang.Object;
 import java.lang.String;
 import java.util.List;
@@ -38,21 +37,6 @@ public final class SystemctlArgs extends com.pulumi.resources.ResourceArgs {
     }
 
     /**
-     * Corresponds to the COMMAND argument.
-     * 
-     */
-    @Import(name="command", required=true)
-    private SystemctlCommand command;
-
-    /**
-     * @return Corresponds to the COMMAND argument.
-     * 
-     */
-    public SystemctlCommand command() {
-        return this.command;
-    }
-
-    /**
      * Connection details for the remote system
      * 
      */
@@ -68,6 +52,40 @@ public final class SystemctlArgs extends com.pulumi.resources.ResourceArgs {
     }
 
     /**
+     * The command to run on create.
+     * 
+     */
+    @Import(name="create")
+    private @Nullable Output<SystemctlOptsArgs> create;
+
+    /**
+     * @return The command to run on create.
+     * 
+     */
+    public Optional<Output<SystemctlOptsArgs>> create() {
+        return Optional.ofNullable(this.create);
+    }
+
+    /**
+     * The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+     * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+     * Command resource from previous create or update steps.
+     * 
+     */
+    @Import(name="delete")
+    private @Nullable Output<SystemctlOptsArgs> delete;
+
+    /**
+     * @return The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+     * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+     * Command resource from previous create or update steps.
+     * 
+     */
+    public Optional<Output<SystemctlOptsArgs>> delete() {
+        return Optional.ofNullable(this.delete);
+    }
+
+    /**
      * Environment variables
      * 
      */
@@ -80,36 +98,6 @@ public final class SystemctlArgs extends com.pulumi.resources.ResourceArgs {
      */
     public Optional<Output<Map<String,String>>> environment() {
         return Optional.ofNullable(this.environment);
-    }
-
-    /**
-     * At what stage(s) in the resource lifecycle should the command be run
-     * 
-     */
-    @Import(name="lifecycle")
-    private @Nullable CommandLifecycle lifecycle;
-
-    /**
-     * @return At what stage(s) in the resource lifecycle should the command be run
-     * 
-     */
-    public Optional<CommandLifecycle> lifecycle() {
-        return Optional.ofNullable(this.lifecycle);
-    }
-
-    /**
-     * Corresponds to the [PATTERN] argument
-     * 
-     */
-    @Import(name="pattern")
-    private @Nullable Output<String> pattern;
-
-    /**
-     * @return Corresponds to the [PATTERN] argument
-     * 
-     */
-    public Optional<Output<String>> pattern() {
-        return Optional.ofNullable(this.pattern);
     }
 
     /**
@@ -143,32 +131,37 @@ public final class SystemctlArgs extends com.pulumi.resources.ResourceArgs {
     }
 
     /**
-     * Corresponds to the [UNIT...] argument.
+     * The command to run on update, if empty, create will
+     * run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+     * are set to the stdout and stderr properties of the Command resource from previous
+     * create or update steps.
      * 
      */
-    @Import(name="unit", required=true)
-    private Output<String> unit;
+    @Import(name="update")
+    private @Nullable Output<SystemctlOptsArgs> update;
 
     /**
-     * @return Corresponds to the [UNIT...] argument.
+     * @return The command to run on update, if empty, create will
+     * run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+     * are set to the stdout and stderr properties of the Command resource from previous
+     * create or update steps.
      * 
      */
-    public Output<String> unit() {
-        return this.unit;
+    public Optional<Output<SystemctlOptsArgs>> update() {
+        return Optional.ofNullable(this.update);
     }
 
     private SystemctlArgs() {}
 
     private SystemctlArgs(SystemctlArgs $) {
         this.binaryPath = $.binaryPath;
-        this.command = $.command;
         this.connection = $.connection;
+        this.create = $.create;
+        this.delete = $.delete;
         this.environment = $.environment;
-        this.lifecycle = $.lifecycle;
-        this.pattern = $.pattern;
         this.stdin = $.stdin;
         this.triggers = $.triggers;
-        this.unit = $.unit;
+        this.update = $.update;
     }
 
     public static Builder builder() {
@@ -211,17 +204,6 @@ public final class SystemctlArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param command Corresponds to the COMMAND argument.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder command(SystemctlCommand command) {
-            $.command = command;
-            return this;
-        }
-
-        /**
          * @param connection Connection details for the remote system
          * 
          * @return builder
@@ -243,6 +225,52 @@ public final class SystemctlArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
+         * @param create The command to run on create.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder create(@Nullable Output<SystemctlOptsArgs> create) {
+            $.create = create;
+            return this;
+        }
+
+        /**
+         * @param create The command to run on create.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder create(SystemctlOptsArgs create) {
+            return create(Output.of(create));
+        }
+
+        /**
+         * @param delete The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+         * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+         * Command resource from previous create or update steps.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder delete(@Nullable Output<SystemctlOptsArgs> delete) {
+            $.delete = delete;
+            return this;
+        }
+
+        /**
+         * @param delete The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+         * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+         * Command resource from previous create or update steps.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder delete(SystemctlOptsArgs delete) {
+            return delete(Output.of(delete));
+        }
+
+        /**
          * @param environment Environment variables
          * 
          * @return builder
@@ -261,38 +289,6 @@ public final class SystemctlArgs extends com.pulumi.resources.ResourceArgs {
          */
         public Builder environment(Map<String,String> environment) {
             return environment(Output.of(environment));
-        }
-
-        /**
-         * @param lifecycle At what stage(s) in the resource lifecycle should the command be run
-         * 
-         * @return builder
-         * 
-         */
-        public Builder lifecycle(@Nullable CommandLifecycle lifecycle) {
-            $.lifecycle = lifecycle;
-            return this;
-        }
-
-        /**
-         * @param pattern Corresponds to the [PATTERN] argument
-         * 
-         * @return builder
-         * 
-         */
-        public Builder pattern(@Nullable Output<String> pattern) {
-            $.pattern = pattern;
-            return this;
-        }
-
-        /**
-         * @param pattern Corresponds to the [PATTERN] argument
-         * 
-         * @return builder
-         * 
-         */
-        public Builder pattern(String pattern) {
-            return pattern(Output.of(pattern));
         }
 
         /**
@@ -348,35 +344,35 @@ public final class SystemctlArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param unit Corresponds to the [UNIT...] argument.
+         * @param update The command to run on update, if empty, create will
+         * run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+         * are set to the stdout and stderr properties of the Command resource from previous
+         * create or update steps.
          * 
          * @return builder
          * 
          */
-        public Builder unit(Output<String> unit) {
-            $.unit = unit;
+        public Builder update(@Nullable Output<SystemctlOptsArgs> update) {
+            $.update = update;
             return this;
         }
 
         /**
-         * @param unit Corresponds to the [UNIT...] argument.
+         * @param update The command to run on update, if empty, create will
+         * run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+         * are set to the stdout and stderr properties of the Command resource from previous
+         * create or update steps.
          * 
          * @return builder
          * 
          */
-        public Builder unit(String unit) {
-            return unit(Output.of(unit));
+        public Builder update(SystemctlOptsArgs update) {
+            return update(Output.of(update));
         }
 
         public SystemctlArgs build() {
-            if ($.command == null) {
-                throw new MissingRequiredPropertyException("SystemctlArgs", "command");
-            }
             if ($.connection == null) {
                 throw new MissingRequiredPropertyException("SystemctlArgs", "connection");
-            }
-            if ($.unit == null) {
-                throw new MissingRequiredPropertyException("SystemctlArgs", "unit");
             }
             return $;
         }

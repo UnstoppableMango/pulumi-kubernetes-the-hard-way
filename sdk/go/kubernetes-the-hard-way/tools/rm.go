@@ -15,7 +15,7 @@ import (
 
 // Abstraction over the `rm` utility on a remote system.
 type Rm struct {
-	pulumi.ResourceState
+	pulumi.CustomResourceState
 
 	// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
 	BinaryPath pulumi.StringOutput `pulumi:"binaryPath"`
@@ -23,20 +23,14 @@ type Rm struct {
 	Command pulumiCommand.CommandOutput `pulumi:"command"`
 	// Connection details for the remote system
 	Connection pulumiCommand.ConnectionOutput `pulumi:"connection"`
-	// Corresponds to the `--dir` option.
-	Dir pulumi.BoolOutput `pulumi:"dir"`
+	// The command to run on create.
+	Create RmOptsPtrOutput `pulumi:"create"`
+	// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+	// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+	// Command resource from previous create or update steps.
+	Delete RmOptsPtrOutput `pulumi:"delete"`
 	// Environment variables
 	Environment pulumi.StringMapOutput `pulumi:"environment"`
-	// Corresponds to the [FILE] argument.
-	Files pulumi.AnyOutput `pulumi:"files"`
-	// Corresponds to the `--force` option.
-	Force pulumi.BoolOutput `pulumi:"force"`
-	// At what stage(s) in the resource lifecycle should the command be run
-	Lifecycle CommandLifecyclePtrOutput `pulumi:"lifecycle"`
-	// Whether rm should be run when the resource is created or deleted.
-	OnDelete pulumi.BoolOutput `pulumi:"onDelete"`
-	// Corresponds to the `--recursive` option.
-	Recursive pulumi.BoolOutput `pulumi:"recursive"`
 	// TODO
 	Stderr pulumi.StringOutput `pulumi:"stderr"`
 	// TODO
@@ -45,8 +39,11 @@ type Rm struct {
 	Stdout pulumi.StringOutput `pulumi:"stdout"`
 	// TODO
 	Triggers pulumi.ArrayOutput `pulumi:"triggers"`
-	// Corresponds to the `--verbose` option.
-	Verbose pulumi.BoolOutput `pulumi:"verbose"`
+	// The command to run on update, if empty, create will
+	// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+	// are set to the stdout and stderr properties of the Command resource from previous
+	// create or update steps.
+	Update RmOptsPtrOutput `pulumi:"update"`
 }
 
 // NewRm registers a new resource with the given unique name, arguments, and options.
@@ -59,17 +56,37 @@ func NewRm(ctx *pulumi.Context,
 	if args.Connection == nil {
 		return nil, errors.New("invalid value for required argument 'Connection'")
 	}
-	if args.Files == nil {
-		return nil, errors.New("invalid value for required argument 'Files'")
-	}
 	args.Connection = args.Connection.ToConnectionOutput().ApplyT(func(v pulumiCommand.Connection) pulumiCommand.Connection { return *v.Defaults() }).(pulumiCommand.ConnectionOutput)
 	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource Rm
-	err := ctx.RegisterRemoteComponentResource("kubernetes-the-hard-way:tools:Rm", name, args, &resource, opts...)
+	err := ctx.RegisterResource("kubernetes-the-hard-way:tools:Rm", name, args, &resource, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return &resource, nil
+}
+
+// GetRm gets an existing Rm resource's state with the given name, ID, and optional
+// state properties that are used to uniquely qualify the lookup (nil if not required).
+func GetRm(ctx *pulumi.Context,
+	name string, id pulumi.IDInput, state *RmState, opts ...pulumi.ResourceOption) (*Rm, error) {
+	var resource Rm
+	err := ctx.ReadResource("kubernetes-the-hard-way:tools:Rm", name, id, state, &resource, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return &resource, nil
+}
+
+// Input properties used for looking up and filtering Rm resources.
+type rmState struct {
+}
+
+type RmState struct {
+}
+
+func (RmState) ElementType() reflect.Type {
+	return reflect.TypeOf((*rmState)(nil)).Elem()
 }
 
 type rmArgs struct {
@@ -77,26 +94,23 @@ type rmArgs struct {
 	BinaryPath *string `pulumi:"binaryPath"`
 	// Connection details for the remote system
 	Connection pulumiCommand.Connection `pulumi:"connection"`
-	// Corresponds to the `--dir` option.
-	Dir *bool `pulumi:"dir"`
+	// The command to run on create.
+	Create *RmOpts `pulumi:"create"`
+	// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+	// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+	// Command resource from previous create or update steps.
+	Delete *RmOpts `pulumi:"delete"`
 	// Environment variables
 	Environment map[string]string `pulumi:"environment"`
-	// Corresponds to the [FILE] argument.
-	Files interface{} `pulumi:"files"`
-	// Corresponds to the `--force` option.
-	Force *bool `pulumi:"force"`
-	// At what stage(s) in the resource lifecycle should the command be run
-	Lifecycle *CommandLifecycle `pulumi:"lifecycle"`
-	// Whether rm should be run when the resource is created or deleted.
-	OnDelete *bool `pulumi:"onDelete"`
-	// Corresponds to the `--recursive` option.
-	Recursive *bool `pulumi:"recursive"`
 	// TODO
 	Stdin *string `pulumi:"stdin"`
 	// TODO
 	Triggers []interface{} `pulumi:"triggers"`
-	// Corresponds to the `--verbose` option.
-	Verbose *bool `pulumi:"verbose"`
+	// The command to run on update, if empty, create will
+	// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+	// are set to the stdout and stderr properties of the Command resource from previous
+	// create or update steps.
+	Update *RmOpts `pulumi:"update"`
 }
 
 // The set of arguments for constructing a Rm resource.
@@ -105,26 +119,23 @@ type RmArgs struct {
 	BinaryPath pulumi.StringPtrInput
 	// Connection details for the remote system
 	Connection pulumiCommand.ConnectionInput
-	// Corresponds to the `--dir` option.
-	Dir pulumi.BoolPtrInput
+	// The command to run on create.
+	Create RmOptsPtrInput
+	// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+	// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+	// Command resource from previous create or update steps.
+	Delete RmOptsPtrInput
 	// Environment variables
 	Environment pulumi.StringMapInput
-	// Corresponds to the [FILE] argument.
-	Files pulumi.Input
-	// Corresponds to the `--force` option.
-	Force pulumi.BoolPtrInput
-	// At what stage(s) in the resource lifecycle should the command be run
-	Lifecycle *CommandLifecycle
-	// Whether rm should be run when the resource is created or deleted.
-	OnDelete pulumi.BoolPtrInput
-	// Corresponds to the `--recursive` option.
-	Recursive pulumi.BoolPtrInput
 	// TODO
 	Stdin pulumi.StringPtrInput
 	// TODO
 	Triggers pulumi.ArrayInput
-	// Corresponds to the `--verbose` option.
-	Verbose pulumi.BoolPtrInput
+	// The command to run on update, if empty, create will
+	// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+	// are set to the stdout and stderr properties of the Command resource from previous
+	// create or update steps.
+	Update RmOptsPtrInput
 }
 
 func (RmArgs) ElementType() reflect.Type {
@@ -229,39 +240,21 @@ func (o RmOutput) Connection() pulumiCommand.ConnectionOutput {
 	return o.ApplyT(func(v *Rm) pulumiCommand.ConnectionOutput { return v.Connection }).(pulumiCommand.ConnectionOutput)
 }
 
-// Corresponds to the `--dir` option.
-func (o RmOutput) Dir() pulumi.BoolOutput {
-	return o.ApplyT(func(v *Rm) pulumi.BoolOutput { return v.Dir }).(pulumi.BoolOutput)
+// The command to run on create.
+func (o RmOutput) Create() RmOptsPtrOutput {
+	return o.ApplyT(func(v *Rm) RmOptsPtrOutput { return v.Create }).(RmOptsPtrOutput)
+}
+
+// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+// Command resource from previous create or update steps.
+func (o RmOutput) Delete() RmOptsPtrOutput {
+	return o.ApplyT(func(v *Rm) RmOptsPtrOutput { return v.Delete }).(RmOptsPtrOutput)
 }
 
 // Environment variables
 func (o RmOutput) Environment() pulumi.StringMapOutput {
 	return o.ApplyT(func(v *Rm) pulumi.StringMapOutput { return v.Environment }).(pulumi.StringMapOutput)
-}
-
-// Corresponds to the [FILE] argument.
-func (o RmOutput) Files() pulumi.AnyOutput {
-	return o.ApplyT(func(v *Rm) pulumi.AnyOutput { return v.Files }).(pulumi.AnyOutput)
-}
-
-// Corresponds to the `--force` option.
-func (o RmOutput) Force() pulumi.BoolOutput {
-	return o.ApplyT(func(v *Rm) pulumi.BoolOutput { return v.Force }).(pulumi.BoolOutput)
-}
-
-// At what stage(s) in the resource lifecycle should the command be run
-func (o RmOutput) Lifecycle() CommandLifecyclePtrOutput {
-	return o.ApplyT(func(v *Rm) CommandLifecyclePtrOutput { return v.Lifecycle }).(CommandLifecyclePtrOutput)
-}
-
-// Whether rm should be run when the resource is created or deleted.
-func (o RmOutput) OnDelete() pulumi.BoolOutput {
-	return o.ApplyT(func(v *Rm) pulumi.BoolOutput { return v.OnDelete }).(pulumi.BoolOutput)
-}
-
-// Corresponds to the `--recursive` option.
-func (o RmOutput) Recursive() pulumi.BoolOutput {
-	return o.ApplyT(func(v *Rm) pulumi.BoolOutput { return v.Recursive }).(pulumi.BoolOutput)
 }
 
 // TODO
@@ -284,9 +277,12 @@ func (o RmOutput) Triggers() pulumi.ArrayOutput {
 	return o.ApplyT(func(v *Rm) pulumi.ArrayOutput { return v.Triggers }).(pulumi.ArrayOutput)
 }
 
-// Corresponds to the `--verbose` option.
-func (o RmOutput) Verbose() pulumi.BoolOutput {
-	return o.ApplyT(func(v *Rm) pulumi.BoolOutput { return v.Verbose }).(pulumi.BoolOutput)
+// The command to run on update, if empty, create will
+// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+// are set to the stdout and stderr properties of the Command resource from previous
+// create or update steps.
+func (o RmOutput) Update() RmOptsPtrOutput {
+	return o.ApplyT(func(v *Rm) RmOptsPtrOutput { return v.Update }).(RmOptsPtrOutput)
 }
 
 type RmArrayOutput struct{ *pulumi.OutputState }

@@ -8,7 +8,8 @@ import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
 from .. import _utilities
-from ._enums import *
+from . import outputs
+from ._inputs import *
 import pulumi_command
 
 __all__ = ['WgetArgs', 'Wget']
@@ -17,58 +18,44 @@ __all__ = ['WgetArgs', 'Wget']
 class WgetArgs:
     def __init__(__self__, *,
                  connection: pulumi.Input['pulumi_command.remote.ConnectionArgs'],
-                 url: pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]],
                  binary_path: Optional[pulumi.Input[str]] = None,
-                 directory_prefix: Optional[pulumi.Input[str]] = None,
+                 create: Optional[pulumi.Input['WgetOptsArgs']] = None,
+                 delete: Optional[pulumi.Input['WgetOptsArgs']] = None,
                  environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-                 https_only: Optional[pulumi.Input[bool]] = None,
-                 lifecycle: Optional['CommandLifecycle'] = None,
-                 no_verbose: Optional[pulumi.Input[bool]] = None,
-                 output_document: Optional[pulumi.Input[str]] = None,
-                 quiet: Optional[pulumi.Input[bool]] = None,
                  stdin: Optional[pulumi.Input[str]] = None,
-                 timestamping: Optional[pulumi.Input[bool]] = None,
-                 triggers: Optional[pulumi.Input[Sequence[Any]]] = None):
+                 triggers: Optional[pulumi.Input[Sequence[Any]]] = None,
+                 update: Optional[pulumi.Input['WgetOptsArgs']] = None):
         """
         The set of arguments for constructing a Wget resource.
         :param pulumi.Input['pulumi_command.remote.ConnectionArgs'] connection: Connection details for the remote system
-        :param pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]] url: Corresponds to the [URL...] argument.
         :param pulumi.Input[str] binary_path: Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
-        :param pulumi.Input[str] directory_prefix: The  directory prefix is the directory where all other files and subdirectories will be saved to, i.e. the top of the retrieval tree.  The default is . (the current directory).
+        :param pulumi.Input['WgetOptsArgs'] create: The command to run on create.
+        :param pulumi.Input['WgetOptsArgs'] delete: The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+               and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+               Command resource from previous create or update steps.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] environment: Environment variables
-        :param pulumi.Input[bool] https_only: When in recursive mode, only HTTPS links are followed.
-        :param 'CommandLifecycle' lifecycle: At what stage(s) in the resource lifecycle should the command be run
-        :param pulumi.Input[bool] no_verbose: Turn off verbose without being completely quiet (use -q for that), which means that error messages and basic information still get printed.
-        :param pulumi.Input[str] output_document: The  documents  will  not  be  written  to the appropriate files, but all will be concatenated together and written to file.
-        :param pulumi.Input[bool] quiet: Turn off Wget's output.
         :param pulumi.Input[str] stdin: TODO
-        :param pulumi.Input[bool] timestamping: Turn on time-stamping.
         :param pulumi.Input[Sequence[Any]] triggers: TODO
+        :param pulumi.Input['WgetOptsArgs'] update: The command to run on update, if empty, create will 
+               run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
+               are set to the stdout and stderr properties of the Command resource from previous 
+               create or update steps.
         """
         pulumi.set(__self__, "connection", connection)
-        pulumi.set(__self__, "url", url)
         if binary_path is not None:
             pulumi.set(__self__, "binary_path", binary_path)
-        if directory_prefix is not None:
-            pulumi.set(__self__, "directory_prefix", directory_prefix)
+        if create is not None:
+            pulumi.set(__self__, "create", create)
+        if delete is not None:
+            pulumi.set(__self__, "delete", delete)
         if environment is not None:
             pulumi.set(__self__, "environment", environment)
-        if https_only is not None:
-            pulumi.set(__self__, "https_only", https_only)
-        if lifecycle is not None:
-            pulumi.set(__self__, "lifecycle", lifecycle)
-        if no_verbose is not None:
-            pulumi.set(__self__, "no_verbose", no_verbose)
-        if output_document is not None:
-            pulumi.set(__self__, "output_document", output_document)
-        if quiet is not None:
-            pulumi.set(__self__, "quiet", quiet)
         if stdin is not None:
             pulumi.set(__self__, "stdin", stdin)
-        if timestamping is not None:
-            pulumi.set(__self__, "timestamping", timestamping)
         if triggers is not None:
             pulumi.set(__self__, "triggers", triggers)
+        if update is not None:
+            pulumi.set(__self__, "update", update)
 
     @property
     @pulumi.getter
@@ -83,18 +70,6 @@ class WgetArgs:
         pulumi.set(self, "connection", value)
 
     @property
-    @pulumi.getter
-    def url(self) -> pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]]:
-        """
-        Corresponds to the [URL...] argument.
-        """
-        return pulumi.get(self, "url")
-
-    @url.setter
-    def url(self, value: pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]]):
-        pulumi.set(self, "url", value)
-
-    @property
     @pulumi.getter(name="binaryPath")
     def binary_path(self) -> Optional[pulumi.Input[str]]:
         """
@@ -107,16 +82,30 @@ class WgetArgs:
         pulumi.set(self, "binary_path", value)
 
     @property
-    @pulumi.getter(name="directoryPrefix")
-    def directory_prefix(self) -> Optional[pulumi.Input[str]]:
+    @pulumi.getter
+    def create(self) -> Optional[pulumi.Input['WgetOptsArgs']]:
         """
-        The  directory prefix is the directory where all other files and subdirectories will be saved to, i.e. the top of the retrieval tree.  The default is . (the current directory).
+        The command to run on create.
         """
-        return pulumi.get(self, "directory_prefix")
+        return pulumi.get(self, "create")
 
-    @directory_prefix.setter
-    def directory_prefix(self, value: Optional[pulumi.Input[str]]):
-        pulumi.set(self, "directory_prefix", value)
+    @create.setter
+    def create(self, value: Optional[pulumi.Input['WgetOptsArgs']]):
+        pulumi.set(self, "create", value)
+
+    @property
+    @pulumi.getter
+    def delete(self) -> Optional[pulumi.Input['WgetOptsArgs']]:
+        """
+        The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+        and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+        Command resource from previous create or update steps.
+        """
+        return pulumi.get(self, "delete")
+
+    @delete.setter
+    def delete(self, value: Optional[pulumi.Input['WgetOptsArgs']]):
+        pulumi.set(self, "delete", value)
 
     @property
     @pulumi.getter
@@ -129,66 +118,6 @@ class WgetArgs:
     @environment.setter
     def environment(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
         pulumi.set(self, "environment", value)
-
-    @property
-    @pulumi.getter(name="httpsOnly")
-    def https_only(self) -> Optional[pulumi.Input[bool]]:
-        """
-        When in recursive mode, only HTTPS links are followed.
-        """
-        return pulumi.get(self, "https_only")
-
-    @https_only.setter
-    def https_only(self, value: Optional[pulumi.Input[bool]]):
-        pulumi.set(self, "https_only", value)
-
-    @property
-    @pulumi.getter
-    def lifecycle(self) -> Optional['CommandLifecycle']:
-        """
-        At what stage(s) in the resource lifecycle should the command be run
-        """
-        return pulumi.get(self, "lifecycle")
-
-    @lifecycle.setter
-    def lifecycle(self, value: Optional['CommandLifecycle']):
-        pulumi.set(self, "lifecycle", value)
-
-    @property
-    @pulumi.getter(name="noVerbose")
-    def no_verbose(self) -> Optional[pulumi.Input[bool]]:
-        """
-        Turn off verbose without being completely quiet (use -q for that), which means that error messages and basic information still get printed.
-        """
-        return pulumi.get(self, "no_verbose")
-
-    @no_verbose.setter
-    def no_verbose(self, value: Optional[pulumi.Input[bool]]):
-        pulumi.set(self, "no_verbose", value)
-
-    @property
-    @pulumi.getter(name="outputDocument")
-    def output_document(self) -> Optional[pulumi.Input[str]]:
-        """
-        The  documents  will  not  be  written  to the appropriate files, but all will be concatenated together and written to file.
-        """
-        return pulumi.get(self, "output_document")
-
-    @output_document.setter
-    def output_document(self, value: Optional[pulumi.Input[str]]):
-        pulumi.set(self, "output_document", value)
-
-    @property
-    @pulumi.getter
-    def quiet(self) -> Optional[pulumi.Input[bool]]:
-        """
-        Turn off Wget's output.
-        """
-        return pulumi.get(self, "quiet")
-
-    @quiet.setter
-    def quiet(self, value: Optional[pulumi.Input[bool]]):
-        pulumi.set(self, "quiet", value)
 
     @property
     @pulumi.getter
@@ -204,18 +133,6 @@ class WgetArgs:
 
     @property
     @pulumi.getter
-    def timestamping(self) -> Optional[pulumi.Input[bool]]:
-        """
-        Turn on time-stamping.
-        """
-        return pulumi.get(self, "timestamping")
-
-    @timestamping.setter
-    def timestamping(self, value: Optional[pulumi.Input[bool]]):
-        pulumi.set(self, "timestamping", value)
-
-    @property
-    @pulumi.getter
     def triggers(self) -> Optional[pulumi.Input[Sequence[Any]]]:
         """
         TODO
@@ -226,25 +143,35 @@ class WgetArgs:
     def triggers(self, value: Optional[pulumi.Input[Sequence[Any]]]):
         pulumi.set(self, "triggers", value)
 
+    @property
+    @pulumi.getter
+    def update(self) -> Optional[pulumi.Input['WgetOptsArgs']]:
+        """
+        The command to run on update, if empty, create will 
+        run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
+        are set to the stdout and stderr properties of the Command resource from previous 
+        create or update steps.
+        """
+        return pulumi.get(self, "update")
 
-class Wget(pulumi.ComponentResource):
+    @update.setter
+    def update(self, value: Optional[pulumi.Input['WgetOptsArgs']]):
+        pulumi.set(self, "update", value)
+
+
+class Wget(pulumi.CustomResource):
     @overload
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  binary_path: Optional[pulumi.Input[str]] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
-                 directory_prefix: Optional[pulumi.Input[str]] = None,
+                 create: Optional[pulumi.Input[pulumi.InputType['WgetOptsArgs']]] = None,
+                 delete: Optional[pulumi.Input[pulumi.InputType['WgetOptsArgs']]] = None,
                  environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-                 https_only: Optional[pulumi.Input[bool]] = None,
-                 lifecycle: Optional['CommandLifecycle'] = None,
-                 no_verbose: Optional[pulumi.Input[bool]] = None,
-                 output_document: Optional[pulumi.Input[str]] = None,
-                 quiet: Optional[pulumi.Input[bool]] = None,
                  stdin: Optional[pulumi.Input[str]] = None,
-                 timestamping: Optional[pulumi.Input[bool]] = None,
                  triggers: Optional[pulumi.Input[Sequence[Any]]] = None,
-                 url: Optional[pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]]] = None,
+                 update: Optional[pulumi.Input[pulumi.InputType['WgetOptsArgs']]] = None,
                  __props__=None):
         """
         Abstraction over the `wget` utility on a remote system.
@@ -253,17 +180,17 @@ class Wget(pulumi.ComponentResource):
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[str] binary_path: Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
         :param pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']] connection: Connection details for the remote system
-        :param pulumi.Input[str] directory_prefix: The  directory prefix is the directory where all other files and subdirectories will be saved to, i.e. the top of the retrieval tree.  The default is . (the current directory).
+        :param pulumi.Input[pulumi.InputType['WgetOptsArgs']] create: The command to run on create.
+        :param pulumi.Input[pulumi.InputType['WgetOptsArgs']] delete: The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+               and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+               Command resource from previous create or update steps.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] environment: Environment variables
-        :param pulumi.Input[bool] https_only: When in recursive mode, only HTTPS links are followed.
-        :param 'CommandLifecycle' lifecycle: At what stage(s) in the resource lifecycle should the command be run
-        :param pulumi.Input[bool] no_verbose: Turn off verbose without being completely quiet (use -q for that), which means that error messages and basic information still get printed.
-        :param pulumi.Input[str] output_document: The  documents  will  not  be  written  to the appropriate files, but all will be concatenated together and written to file.
-        :param pulumi.Input[bool] quiet: Turn off Wget's output.
         :param pulumi.Input[str] stdin: TODO
-        :param pulumi.Input[bool] timestamping: Turn on time-stamping.
         :param pulumi.Input[Sequence[Any]] triggers: TODO
-        :param pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]] url: Corresponds to the [URL...] argument.
+        :param pulumi.Input[pulumi.InputType['WgetOptsArgs']] update: The command to run on update, if empty, create will 
+               run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
+               are set to the stdout and stderr properties of the Command resource from previous 
+               create or update steps.
         """
         ...
     @overload
@@ -291,24 +218,17 @@ class Wget(pulumi.ComponentResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  binary_path: Optional[pulumi.Input[str]] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
-                 directory_prefix: Optional[pulumi.Input[str]] = None,
+                 create: Optional[pulumi.Input[pulumi.InputType['WgetOptsArgs']]] = None,
+                 delete: Optional[pulumi.Input[pulumi.InputType['WgetOptsArgs']]] = None,
                  environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-                 https_only: Optional[pulumi.Input[bool]] = None,
-                 lifecycle: Optional['CommandLifecycle'] = None,
-                 no_verbose: Optional[pulumi.Input[bool]] = None,
-                 output_document: Optional[pulumi.Input[str]] = None,
-                 quiet: Optional[pulumi.Input[bool]] = None,
                  stdin: Optional[pulumi.Input[str]] = None,
-                 timestamping: Optional[pulumi.Input[bool]] = None,
                  triggers: Optional[pulumi.Input[Sequence[Any]]] = None,
-                 url: Optional[pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]]] = None,
+                 update: Optional[pulumi.Input[pulumi.InputType['WgetOptsArgs']]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):
             raise TypeError('Expected resource options to be a ResourceOptions instance')
-        if opts.id is not None:
-            raise ValueError('ComponentResource classes do not support opts.id')
-        else:
+        if opts.id is None:
             if __props__ is not None:
                 raise TypeError('__props__ is only valid when passed in combination with a valid opts.id to get an existing resource')
             __props__ = WgetArgs.__new__(WgetArgs)
@@ -317,19 +237,12 @@ class Wget(pulumi.ComponentResource):
             if connection is None and not opts.urn:
                 raise TypeError("Missing required property 'connection'")
             __props__.__dict__["connection"] = connection
-            __props__.__dict__["directory_prefix"] = directory_prefix
+            __props__.__dict__["create"] = create
+            __props__.__dict__["delete"] = delete
             __props__.__dict__["environment"] = environment
-            __props__.__dict__["https_only"] = https_only
-            __props__.__dict__["lifecycle"] = lifecycle
-            __props__.__dict__["no_verbose"] = no_verbose
-            __props__.__dict__["output_document"] = output_document
-            __props__.__dict__["quiet"] = quiet
             __props__.__dict__["stdin"] = stdin
-            __props__.__dict__["timestamping"] = timestamping
             __props__.__dict__["triggers"] = triggers
-            if url is None and not opts.urn:
-                raise TypeError("Missing required property 'url'")
-            __props__.__dict__["url"] = url
+            __props__.__dict__["update"] = update
             __props__.__dict__["command"] = None
             __props__.__dict__["stderr"] = None
             __props__.__dict__["stdout"] = None
@@ -337,8 +250,36 @@ class Wget(pulumi.ComponentResource):
             'kubernetes-the-hard-way:tools:Wget',
             resource_name,
             __props__,
-            opts,
-            remote=True)
+            opts)
+
+    @staticmethod
+    def get(resource_name: str,
+            id: pulumi.Input[str],
+            opts: Optional[pulumi.ResourceOptions] = None) -> 'Wget':
+        """
+        Get an existing Wget resource's state with the given name, id, and optional extra
+        properties used to qualify the lookup.
+
+        :param str resource_name: The unique name of the resulting resource.
+        :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
+        :param pulumi.ResourceOptions opts: Options for the resource.
+        """
+        opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
+
+        __props__ = WgetArgs.__new__(WgetArgs)
+
+        __props__.__dict__["binary_path"] = None
+        __props__.__dict__["command"] = None
+        __props__.__dict__["connection"] = None
+        __props__.__dict__["create"] = None
+        __props__.__dict__["delete"] = None
+        __props__.__dict__["environment"] = None
+        __props__.__dict__["stderr"] = None
+        __props__.__dict__["stdin"] = None
+        __props__.__dict__["stdout"] = None
+        __props__.__dict__["triggers"] = None
+        __props__.__dict__["update"] = None
+        return Wget(resource_name, opts=opts, __props__=__props__)
 
     @property
     @pulumi.getter(name="binaryPath")
@@ -365,12 +306,22 @@ class Wget(pulumi.ComponentResource):
         return pulumi.get(self, "connection")
 
     @property
-    @pulumi.getter(name="directoryPrefix")
-    def directory_prefix(self) -> pulumi.Output[Optional[str]]:
+    @pulumi.getter
+    def create(self) -> pulumi.Output[Optional['outputs.WgetOpts']]:
         """
-        The  directory prefix is the directory where all other files and subdirectories will be saved to, i.e. the top of the retrieval tree.  The default is . (the current directory).
+        The command to run on create.
         """
-        return pulumi.get(self, "directory_prefix")
+        return pulumi.get(self, "create")
+
+    @property
+    @pulumi.getter
+    def delete(self) -> pulumi.Output[Optional['outputs.WgetOpts']]:
+        """
+        The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+        and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+        Command resource from previous create or update steps.
+        """
+        return pulumi.get(self, "delete")
 
     @property
     @pulumi.getter
@@ -379,46 +330,6 @@ class Wget(pulumi.ComponentResource):
         Environment variables
         """
         return pulumi.get(self, "environment")
-
-    @property
-    @pulumi.getter(name="httpsOnly")
-    def https_only(self) -> pulumi.Output[bool]:
-        """
-        When in recursive mode, only HTTPS links are followed.
-        """
-        return pulumi.get(self, "https_only")
-
-    @property
-    @pulumi.getter
-    def lifecycle(self) -> pulumi.Output[Optional['CommandLifecycle']]:
-        """
-        At what stage(s) in the resource lifecycle should the command be run
-        """
-        return pulumi.get(self, "lifecycle")
-
-    @property
-    @pulumi.getter(name="noVerbose")
-    def no_verbose(self) -> pulumi.Output[bool]:
-        """
-        Turn off verbose without being completely quiet (use -q for that), which means that error messages and basic information still get printed.
-        """
-        return pulumi.get(self, "no_verbose")
-
-    @property
-    @pulumi.getter(name="outputDocument")
-    def output_document(self) -> pulumi.Output[Optional[str]]:
-        """
-        The  documents  will  not  be  written  to the appropriate files, but all will be concatenated together and written to file.
-        """
-        return pulumi.get(self, "output_document")
-
-    @property
-    @pulumi.getter
-    def quiet(self) -> pulumi.Output[bool]:
-        """
-        Turn off Wget's output.
-        """
-        return pulumi.get(self, "quiet")
 
     @property
     @pulumi.getter
@@ -446,14 +357,6 @@ class Wget(pulumi.ComponentResource):
 
     @property
     @pulumi.getter
-    def timestamping(self) -> pulumi.Output[bool]:
-        """
-        Turn on time-stamping.
-        """
-        return pulumi.get(self, "timestamping")
-
-    @property
-    @pulumi.getter
     def triggers(self) -> pulumi.Output[Sequence[Any]]:
         """
         TODO
@@ -462,9 +365,12 @@ class Wget(pulumi.ComponentResource):
 
     @property
     @pulumi.getter
-    def url(self) -> pulumi.Output[Any]:
+    def update(self) -> pulumi.Output[Optional['outputs.WgetOpts']]:
         """
-        Corresponds to the [URL...] argument.
+        The command to run on update, if empty, create will 
+        run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
+        are set to the stdout and stderr properties of the Command resource from previous 
+        create or update steps.
         """
-        return pulumi.get(self, "url")
+        return pulumi.get(self, "update")
 

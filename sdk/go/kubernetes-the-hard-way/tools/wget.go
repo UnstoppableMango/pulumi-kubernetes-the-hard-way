@@ -15,7 +15,7 @@ import (
 
 // Abstraction over the `wget` utility on a remote system.
 type Wget struct {
-	pulumi.ResourceState
+	pulumi.CustomResourceState
 
 	// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
 	BinaryPath pulumi.StringOutput `pulumi:"binaryPath"`
@@ -23,32 +23,27 @@ type Wget struct {
 	Command pulumiCommand.CommandOutput `pulumi:"command"`
 	// Connection details for the remote system
 	Connection pulumiCommand.ConnectionOutput `pulumi:"connection"`
-	// The  directory prefix is the directory where all other files and subdirectories will be saved to, i.e. the top of the retrieval tree.  The default is . (the current directory).
-	DirectoryPrefix pulumi.StringPtrOutput `pulumi:"directoryPrefix"`
+	// The command to run on create.
+	Create WgetOptsPtrOutput `pulumi:"create"`
+	// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+	// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+	// Command resource from previous create or update steps.
+	Delete WgetOptsPtrOutput `pulumi:"delete"`
 	// Environment variables
 	Environment pulumi.StringMapOutput `pulumi:"environment"`
-	// When in recursive mode, only HTTPS links are followed.
-	HttpsOnly pulumi.BoolOutput `pulumi:"httpsOnly"`
-	// At what stage(s) in the resource lifecycle should the command be run
-	Lifecycle CommandLifecyclePtrOutput `pulumi:"lifecycle"`
-	// Turn off verbose without being completely quiet (use -q for that), which means that error messages and basic information still get printed.
-	NoVerbose pulumi.BoolOutput `pulumi:"noVerbose"`
-	// The  documents  will  not  be  written  to the appropriate files, but all will be concatenated together and written to file.
-	OutputDocument pulumi.StringPtrOutput `pulumi:"outputDocument"`
-	// Turn off Wget's output.
-	Quiet pulumi.BoolOutput `pulumi:"quiet"`
 	// TODO
 	Stderr pulumi.StringOutput `pulumi:"stderr"`
 	// TODO
 	Stdin pulumi.StringPtrOutput `pulumi:"stdin"`
 	// TODO
 	Stdout pulumi.StringOutput `pulumi:"stdout"`
-	// Turn on time-stamping.
-	Timestamping pulumi.BoolOutput `pulumi:"timestamping"`
 	// TODO
 	Triggers pulumi.ArrayOutput `pulumi:"triggers"`
-	// Corresponds to the [URL...] argument.
-	Url pulumi.AnyOutput `pulumi:"url"`
+	// The command to run on update, if empty, create will
+	// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+	// are set to the stdout and stderr properties of the Command resource from previous
+	// create or update steps.
+	Update WgetOptsPtrOutput `pulumi:"update"`
 }
 
 // NewWget registers a new resource with the given unique name, arguments, and options.
@@ -61,17 +56,37 @@ func NewWget(ctx *pulumi.Context,
 	if args.Connection == nil {
 		return nil, errors.New("invalid value for required argument 'Connection'")
 	}
-	if args.Url == nil {
-		return nil, errors.New("invalid value for required argument 'Url'")
-	}
 	args.Connection = args.Connection.ToConnectionOutput().ApplyT(func(v pulumiCommand.Connection) pulumiCommand.Connection { return *v.Defaults() }).(pulumiCommand.ConnectionOutput)
 	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource Wget
-	err := ctx.RegisterRemoteComponentResource("kubernetes-the-hard-way:tools:Wget", name, args, &resource, opts...)
+	err := ctx.RegisterResource("kubernetes-the-hard-way:tools:Wget", name, args, &resource, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return &resource, nil
+}
+
+// GetWget gets an existing Wget resource's state with the given name, ID, and optional
+// state properties that are used to uniquely qualify the lookup (nil if not required).
+func GetWget(ctx *pulumi.Context,
+	name string, id pulumi.IDInput, state *WgetState, opts ...pulumi.ResourceOption) (*Wget, error) {
+	var resource Wget
+	err := ctx.ReadResource("kubernetes-the-hard-way:tools:Wget", name, id, state, &resource, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return &resource, nil
+}
+
+// Input properties used for looking up and filtering Wget resources.
+type wgetState struct {
+}
+
+type WgetState struct {
+}
+
+func (WgetState) ElementType() reflect.Type {
+	return reflect.TypeOf((*wgetState)(nil)).Elem()
 }
 
 type wgetArgs struct {
@@ -79,28 +94,23 @@ type wgetArgs struct {
 	BinaryPath *string `pulumi:"binaryPath"`
 	// Connection details for the remote system
 	Connection pulumiCommand.Connection `pulumi:"connection"`
-	// The  directory prefix is the directory where all other files and subdirectories will be saved to, i.e. the top of the retrieval tree.  The default is . (the current directory).
-	DirectoryPrefix *string `pulumi:"directoryPrefix"`
+	// The command to run on create.
+	Create *WgetOpts `pulumi:"create"`
+	// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+	// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+	// Command resource from previous create or update steps.
+	Delete *WgetOpts `pulumi:"delete"`
 	// Environment variables
 	Environment map[string]string `pulumi:"environment"`
-	// When in recursive mode, only HTTPS links are followed.
-	HttpsOnly *bool `pulumi:"httpsOnly"`
-	// At what stage(s) in the resource lifecycle should the command be run
-	Lifecycle *CommandLifecycle `pulumi:"lifecycle"`
-	// Turn off verbose without being completely quiet (use -q for that), which means that error messages and basic information still get printed.
-	NoVerbose *bool `pulumi:"noVerbose"`
-	// The  documents  will  not  be  written  to the appropriate files, but all will be concatenated together and written to file.
-	OutputDocument *string `pulumi:"outputDocument"`
-	// Turn off Wget's output.
-	Quiet *bool `pulumi:"quiet"`
 	// TODO
 	Stdin *string `pulumi:"stdin"`
-	// Turn on time-stamping.
-	Timestamping *bool `pulumi:"timestamping"`
 	// TODO
 	Triggers []interface{} `pulumi:"triggers"`
-	// Corresponds to the [URL...] argument.
-	Url interface{} `pulumi:"url"`
+	// The command to run on update, if empty, create will
+	// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+	// are set to the stdout and stderr properties of the Command resource from previous
+	// create or update steps.
+	Update *WgetOpts `pulumi:"update"`
 }
 
 // The set of arguments for constructing a Wget resource.
@@ -109,28 +119,23 @@ type WgetArgs struct {
 	BinaryPath pulumi.StringPtrInput
 	// Connection details for the remote system
 	Connection pulumiCommand.ConnectionInput
-	// The  directory prefix is the directory where all other files and subdirectories will be saved to, i.e. the top of the retrieval tree.  The default is . (the current directory).
-	DirectoryPrefix pulumi.StringPtrInput
+	// The command to run on create.
+	Create WgetOptsPtrInput
+	// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+	// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+	// Command resource from previous create or update steps.
+	Delete WgetOptsPtrInput
 	// Environment variables
 	Environment pulumi.StringMapInput
-	// When in recursive mode, only HTTPS links are followed.
-	HttpsOnly pulumi.BoolPtrInput
-	// At what stage(s) in the resource lifecycle should the command be run
-	Lifecycle *CommandLifecycle
-	// Turn off verbose without being completely quiet (use -q for that), which means that error messages and basic information still get printed.
-	NoVerbose pulumi.BoolPtrInput
-	// The  documents  will  not  be  written  to the appropriate files, but all will be concatenated together and written to file.
-	OutputDocument pulumi.StringPtrInput
-	// Turn off Wget's output.
-	Quiet pulumi.BoolPtrInput
 	// TODO
 	Stdin pulumi.StringPtrInput
-	// Turn on time-stamping.
-	Timestamping pulumi.BoolPtrInput
 	// TODO
 	Triggers pulumi.ArrayInput
-	// Corresponds to the [URL...] argument.
-	Url pulumi.Input
+	// The command to run on update, if empty, create will
+	// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+	// are set to the stdout and stderr properties of the Command resource from previous
+	// create or update steps.
+	Update WgetOptsPtrInput
 }
 
 func (WgetArgs) ElementType() reflect.Type {
@@ -235,39 +240,21 @@ func (o WgetOutput) Connection() pulumiCommand.ConnectionOutput {
 	return o.ApplyT(func(v *Wget) pulumiCommand.ConnectionOutput { return v.Connection }).(pulumiCommand.ConnectionOutput)
 }
 
-// The  directory prefix is the directory where all other files and subdirectories will be saved to, i.e. the top of the retrieval tree.  The default is . (the current directory).
-func (o WgetOutput) DirectoryPrefix() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Wget) pulumi.StringPtrOutput { return v.DirectoryPrefix }).(pulumi.StringPtrOutput)
+// The command to run on create.
+func (o WgetOutput) Create() WgetOptsPtrOutput {
+	return o.ApplyT(func(v *Wget) WgetOptsPtrOutput { return v.Create }).(WgetOptsPtrOutput)
+}
+
+// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+// Command resource from previous create or update steps.
+func (o WgetOutput) Delete() WgetOptsPtrOutput {
+	return o.ApplyT(func(v *Wget) WgetOptsPtrOutput { return v.Delete }).(WgetOptsPtrOutput)
 }
 
 // Environment variables
 func (o WgetOutput) Environment() pulumi.StringMapOutput {
 	return o.ApplyT(func(v *Wget) pulumi.StringMapOutput { return v.Environment }).(pulumi.StringMapOutput)
-}
-
-// When in recursive mode, only HTTPS links are followed.
-func (o WgetOutput) HttpsOnly() pulumi.BoolOutput {
-	return o.ApplyT(func(v *Wget) pulumi.BoolOutput { return v.HttpsOnly }).(pulumi.BoolOutput)
-}
-
-// At what stage(s) in the resource lifecycle should the command be run
-func (o WgetOutput) Lifecycle() CommandLifecyclePtrOutput {
-	return o.ApplyT(func(v *Wget) CommandLifecyclePtrOutput { return v.Lifecycle }).(CommandLifecyclePtrOutput)
-}
-
-// Turn off verbose without being completely quiet (use -q for that), which means that error messages and basic information still get printed.
-func (o WgetOutput) NoVerbose() pulumi.BoolOutput {
-	return o.ApplyT(func(v *Wget) pulumi.BoolOutput { return v.NoVerbose }).(pulumi.BoolOutput)
-}
-
-// The  documents  will  not  be  written  to the appropriate files, but all will be concatenated together and written to file.
-func (o WgetOutput) OutputDocument() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Wget) pulumi.StringPtrOutput { return v.OutputDocument }).(pulumi.StringPtrOutput)
-}
-
-// Turn off Wget's output.
-func (o WgetOutput) Quiet() pulumi.BoolOutput {
-	return o.ApplyT(func(v *Wget) pulumi.BoolOutput { return v.Quiet }).(pulumi.BoolOutput)
 }
 
 // TODO
@@ -285,19 +272,17 @@ func (o WgetOutput) Stdout() pulumi.StringOutput {
 	return o.ApplyT(func(v *Wget) pulumi.StringOutput { return v.Stdout }).(pulumi.StringOutput)
 }
 
-// Turn on time-stamping.
-func (o WgetOutput) Timestamping() pulumi.BoolOutput {
-	return o.ApplyT(func(v *Wget) pulumi.BoolOutput { return v.Timestamping }).(pulumi.BoolOutput)
-}
-
 // TODO
 func (o WgetOutput) Triggers() pulumi.ArrayOutput {
 	return o.ApplyT(func(v *Wget) pulumi.ArrayOutput { return v.Triggers }).(pulumi.ArrayOutput)
 }
 
-// Corresponds to the [URL...] argument.
-func (o WgetOutput) Url() pulumi.AnyOutput {
-	return o.ApplyT(func(v *Wget) pulumi.AnyOutput { return v.Url }).(pulumi.AnyOutput)
+// The command to run on update, if empty, create will
+// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+// are set to the stdout and stderr properties of the Command resource from previous
+// create or update steps.
+func (o WgetOutput) Update() WgetOptsPtrOutput {
+	return o.ApplyT(func(v *Wget) WgetOptsPtrOutput { return v.Update }).(WgetOptsPtrOutput)
 }
 
 type WgetArrayOutput struct{ *pulumi.OutputState }

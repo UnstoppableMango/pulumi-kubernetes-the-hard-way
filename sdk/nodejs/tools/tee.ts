@@ -12,7 +12,19 @@ import * as pulumiCommand from "@pulumi/command";
 /**
  * Abstraction over the `rm` utility on a remote system.
  */
-export class Tee extends pulumi.ComponentResource {
+export class Tee extends pulumi.CustomResource {
+    /**
+     * Get an existing Tee resource's state with the given name, ID, and optional extra
+     * properties used to qualify the lookup.
+     *
+     * @param name The _unique_ name of the resulting resource.
+     * @param id The _unique_ provider ID of the resource to lookup.
+     * @param opts Optional settings to control the behavior of the CustomResource.
+     */
+    public static get(name: string, id: pulumi.Input<pulumi.ID>, opts?: pulumi.CustomResourceOptions): Tee {
+        return new Tee(name, undefined as any, { ...opts, id: id });
+    }
+
     /** @internal */
     public static readonly __pulumiType = 'kubernetes-the-hard-way:tools:Tee';
 
@@ -28,10 +40,6 @@ export class Tee extends pulumi.ComponentResource {
     }
 
     /**
-     * Append to the given FILEs, do not overwrite
-     */
-    public readonly append!: pulumi.Output<boolean>;
-    /**
      * Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
      */
     public readonly binaryPath!: pulumi.Output<string>;
@@ -44,29 +52,19 @@ export class Tee extends pulumi.ComponentResource {
      */
     public readonly connection!: pulumi.Output<pulumiCommand.types.output.remote.Connection>;
     /**
+     * The command to run on create.
+     */
+    public readonly create!: pulumi.Output<outputs.tools.TeeOpts | undefined>;
+    /**
+     * The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+     * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+     * Command resource from previous create or update steps.
+     */
+    public readonly delete!: pulumi.Output<outputs.tools.TeeOpts | undefined>;
+    /**
      * Environment variables
      */
     public readonly environment!: pulumi.Output<{[key: string]: string}>;
-    /**
-     * Corresponds to the [FILE] argument.
-     */
-    public readonly files!: pulumi.Output<string | string[]>;
-    /**
-     * Ignore interrupt signals.
-     */
-    public readonly ignoreInterrupts!: pulumi.Output<boolean>;
-    /**
-     * At what stage(s) in the resource lifecycle should the command be run
-     */
-    public readonly lifecycle!: pulumi.Output<enums.tools.CommandLifecycle | undefined>;
-    /**
-     * Set behavior on write error.
-     */
-    public readonly outputError!: pulumi.Output<enums.tools.TeeMode | undefined>;
-    /**
-     * Operate in a more appropriate MODE with pipes.
-     */
-    public readonly pipe!: pulumi.Output<boolean>;
     /**
      * TODO
      */
@@ -74,7 +72,7 @@ export class Tee extends pulumi.ComponentResource {
     /**
      * TODO
      */
-    public readonly stdin!: pulumi.Output<string>;
+    public readonly stdin!: pulumi.Output<string | undefined>;
     /**
      * TODO
      */
@@ -84,9 +82,12 @@ export class Tee extends pulumi.ComponentResource {
      */
     public readonly triggers!: pulumi.Output<any[]>;
     /**
-     * Output version information and exit.
+     * The command to run on update, if empty, create will 
+     * run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
+     * are set to the stdout and stderr properties of the Command resource from previous 
+     * create or update steps.
      */
-    public readonly version!: pulumi.Output<boolean>;
+    public readonly update!: pulumi.Output<outputs.tools.TeeOpts | undefined>;
 
     /**
      * Create a Tee resource with the given unique name, arguments, and options.
@@ -95,53 +96,39 @@ export class Tee extends pulumi.ComponentResource {
      * @param args The arguments to use to populate this resource's properties.
      * @param opts A bag of options that control this resource's behavior.
      */
-    constructor(name: string, args: TeeArgs, opts?: pulumi.ComponentResourceOptions) {
+    constructor(name: string, args: TeeArgs, opts?: pulumi.CustomResourceOptions) {
         let resourceInputs: pulumi.Inputs = {};
         opts = opts || {};
         if (!opts.id) {
             if ((!args || args.connection === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'connection'");
             }
-            if ((!args || args.files === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'files'");
-            }
-            if ((!args || args.stdin === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'stdin'");
-            }
-            resourceInputs["append"] = args ? args.append : undefined;
             resourceInputs["binaryPath"] = args ? args.binaryPath : undefined;
             resourceInputs["connection"] = args ? (args.connection ? pulumi.output(args.connection).apply(pulumiCommand.types.input.remote.connectionArgsProvideDefaults) : undefined) : undefined;
+            resourceInputs["create"] = args ? args.create : undefined;
+            resourceInputs["delete"] = args ? args.delete : undefined;
             resourceInputs["environment"] = args ? args.environment : undefined;
-            resourceInputs["files"] = args ? args.files : undefined;
-            resourceInputs["ignoreInterrupts"] = args ? args.ignoreInterrupts : undefined;
-            resourceInputs["lifecycle"] = args ? args.lifecycle : undefined;
-            resourceInputs["outputError"] = args ? args.outputError : undefined;
-            resourceInputs["pipe"] = args ? args.pipe : undefined;
             resourceInputs["stdin"] = args ? args.stdin : undefined;
             resourceInputs["triggers"] = args ? args.triggers : undefined;
-            resourceInputs["version"] = args ? args.version : undefined;
+            resourceInputs["update"] = args ? args.update : undefined;
             resourceInputs["command"] = undefined /*out*/;
             resourceInputs["stderr"] = undefined /*out*/;
             resourceInputs["stdout"] = undefined /*out*/;
         } else {
-            resourceInputs["append"] = undefined /*out*/;
             resourceInputs["binaryPath"] = undefined /*out*/;
             resourceInputs["command"] = undefined /*out*/;
             resourceInputs["connection"] = undefined /*out*/;
+            resourceInputs["create"] = undefined /*out*/;
+            resourceInputs["delete"] = undefined /*out*/;
             resourceInputs["environment"] = undefined /*out*/;
-            resourceInputs["files"] = undefined /*out*/;
-            resourceInputs["ignoreInterrupts"] = undefined /*out*/;
-            resourceInputs["lifecycle"] = undefined /*out*/;
-            resourceInputs["outputError"] = undefined /*out*/;
-            resourceInputs["pipe"] = undefined /*out*/;
             resourceInputs["stderr"] = undefined /*out*/;
             resourceInputs["stdin"] = undefined /*out*/;
             resourceInputs["stdout"] = undefined /*out*/;
             resourceInputs["triggers"] = undefined /*out*/;
-            resourceInputs["version"] = undefined /*out*/;
+            resourceInputs["update"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
-        super(Tee.__pulumiType, name, resourceInputs, opts, true /*remote*/);
+        super(Tee.__pulumiType, name, resourceInputs, opts);
     }
 }
 
@@ -149,10 +136,6 @@ export class Tee extends pulumi.ComponentResource {
  * The set of arguments for constructing a Tee resource.
  */
 export interface TeeArgs {
-    /**
-     * Append to the given FILEs, do not overwrite
-     */
-    append?: pulumi.Input<boolean>;
     /**
      * Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
      */
@@ -162,39 +145,32 @@ export interface TeeArgs {
      */
     connection: pulumi.Input<pulumiCommand.types.input.remote.ConnectionArgs>;
     /**
+     * The command to run on create.
+     */
+    create?: pulumi.Input<inputs.tools.TeeOptsArgs>;
+    /**
+     * The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+     * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+     * Command resource from previous create or update steps.
+     */
+    delete?: pulumi.Input<inputs.tools.TeeOptsArgs>;
+    /**
      * Environment variables
      */
     environment?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
-     * Corresponds to the [FILE] argument.
-     */
-    files: pulumi.Input<string | pulumi.Input<string>[]>;
-    /**
-     * Ignore interrupt signals.
-     */
-    ignoreInterrupts?: pulumi.Input<boolean>;
-    /**
-     * At what stage(s) in the resource lifecycle should the command be run
-     */
-    lifecycle?: enums.tools.CommandLifecycle;
-    /**
-     * Set behavior on write error.
-     */
-    outputError?: pulumi.Input<enums.tools.TeeMode>;
-    /**
-     * Operate in a more appropriate MODE with pipes.
-     */
-    pipe?: pulumi.Input<boolean>;
-    /**
      * TODO
      */
-    stdin: pulumi.Input<string>;
+    stdin?: pulumi.Input<string>;
     /**
      * TODO
      */
     triggers?: pulumi.Input<any[]>;
     /**
-     * Output version information and exit.
+     * The command to run on update, if empty, create will 
+     * run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
+     * are set to the stdout and stderr properties of the Command resource from previous 
+     * create or update steps.
      */
-    version?: pulumi.Input<boolean>;
+    update?: pulumi.Input<inputs.tools.TeeOptsArgs>;
 }

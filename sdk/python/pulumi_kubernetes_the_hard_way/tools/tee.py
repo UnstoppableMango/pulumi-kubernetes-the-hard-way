@@ -8,7 +8,9 @@ import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
 from .. import _utilities
+from . import outputs
 from ._enums import *
+from ._inputs import *
 import pulumi_command
 
 __all__ = ['TeeArgs', 'Tee']
@@ -17,53 +19,44 @@ __all__ = ['TeeArgs', 'Tee']
 class TeeArgs:
     def __init__(__self__, *,
                  connection: pulumi.Input['pulumi_command.remote.ConnectionArgs'],
-                 files: pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]],
-                 stdin: pulumi.Input[str],
-                 append: Optional[pulumi.Input[bool]] = None,
                  binary_path: Optional[pulumi.Input[str]] = None,
+                 create: Optional[pulumi.Input['TeeOptsArgs']] = None,
+                 delete: Optional[pulumi.Input['TeeOptsArgs']] = None,
                  environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-                 ignore_interrupts: Optional[pulumi.Input[bool]] = None,
-                 lifecycle: Optional['CommandLifecycle'] = None,
-                 output_error: Optional[pulumi.Input['TeeMode']] = None,
-                 pipe: Optional[pulumi.Input[bool]] = None,
+                 stdin: Optional[pulumi.Input[str]] = None,
                  triggers: Optional[pulumi.Input[Sequence[Any]]] = None,
-                 version: Optional[pulumi.Input[bool]] = None):
+                 update: Optional[pulumi.Input['TeeOptsArgs']] = None):
         """
         The set of arguments for constructing a Tee resource.
         :param pulumi.Input['pulumi_command.remote.ConnectionArgs'] connection: Connection details for the remote system
-        :param pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]] files: Corresponds to the [FILE] argument.
-        :param pulumi.Input[str] stdin: TODO
-        :param pulumi.Input[bool] append: Append to the given FILEs, do not overwrite
         :param pulumi.Input[str] binary_path: Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+        :param pulumi.Input['TeeOptsArgs'] create: The command to run on create.
+        :param pulumi.Input['TeeOptsArgs'] delete: The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+               and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+               Command resource from previous create or update steps.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] environment: Environment variables
-        :param pulumi.Input[bool] ignore_interrupts: Ignore interrupt signals.
-        :param 'CommandLifecycle' lifecycle: At what stage(s) in the resource lifecycle should the command be run
-        :param pulumi.Input['TeeMode'] output_error: Set behavior on write error.
-        :param pulumi.Input[bool] pipe: Operate in a more appropriate MODE with pipes.
+        :param pulumi.Input[str] stdin: TODO
         :param pulumi.Input[Sequence[Any]] triggers: TODO
-        :param pulumi.Input[bool] version: Output version information and exit.
+        :param pulumi.Input['TeeOptsArgs'] update: The command to run on update, if empty, create will 
+               run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
+               are set to the stdout and stderr properties of the Command resource from previous 
+               create or update steps.
         """
         pulumi.set(__self__, "connection", connection)
-        pulumi.set(__self__, "files", files)
-        pulumi.set(__self__, "stdin", stdin)
-        if append is not None:
-            pulumi.set(__self__, "append", append)
         if binary_path is not None:
             pulumi.set(__self__, "binary_path", binary_path)
+        if create is not None:
+            pulumi.set(__self__, "create", create)
+        if delete is not None:
+            pulumi.set(__self__, "delete", delete)
         if environment is not None:
             pulumi.set(__self__, "environment", environment)
-        if ignore_interrupts is not None:
-            pulumi.set(__self__, "ignore_interrupts", ignore_interrupts)
-        if lifecycle is not None:
-            pulumi.set(__self__, "lifecycle", lifecycle)
-        if output_error is not None:
-            pulumi.set(__self__, "output_error", output_error)
-        if pipe is not None:
-            pulumi.set(__self__, "pipe", pipe)
+        if stdin is not None:
+            pulumi.set(__self__, "stdin", stdin)
         if triggers is not None:
             pulumi.set(__self__, "triggers", triggers)
-        if version is not None:
-            pulumi.set(__self__, "version", version)
+        if update is not None:
+            pulumi.set(__self__, "update", update)
 
     @property
     @pulumi.getter
@@ -76,42 +69,6 @@ class TeeArgs:
     @connection.setter
     def connection(self, value: pulumi.Input['pulumi_command.remote.ConnectionArgs']):
         pulumi.set(self, "connection", value)
-
-    @property
-    @pulumi.getter
-    def files(self) -> pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]]:
-        """
-        Corresponds to the [FILE] argument.
-        """
-        return pulumi.get(self, "files")
-
-    @files.setter
-    def files(self, value: pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]]):
-        pulumi.set(self, "files", value)
-
-    @property
-    @pulumi.getter
-    def stdin(self) -> pulumi.Input[str]:
-        """
-        TODO
-        """
-        return pulumi.get(self, "stdin")
-
-    @stdin.setter
-    def stdin(self, value: pulumi.Input[str]):
-        pulumi.set(self, "stdin", value)
-
-    @property
-    @pulumi.getter
-    def append(self) -> Optional[pulumi.Input[bool]]:
-        """
-        Append to the given FILEs, do not overwrite
-        """
-        return pulumi.get(self, "append")
-
-    @append.setter
-    def append(self, value: Optional[pulumi.Input[bool]]):
-        pulumi.set(self, "append", value)
 
     @property
     @pulumi.getter(name="binaryPath")
@@ -127,6 +84,32 @@ class TeeArgs:
 
     @property
     @pulumi.getter
+    def create(self) -> Optional[pulumi.Input['TeeOptsArgs']]:
+        """
+        The command to run on create.
+        """
+        return pulumi.get(self, "create")
+
+    @create.setter
+    def create(self, value: Optional[pulumi.Input['TeeOptsArgs']]):
+        pulumi.set(self, "create", value)
+
+    @property
+    @pulumi.getter
+    def delete(self) -> Optional[pulumi.Input['TeeOptsArgs']]:
+        """
+        The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+        and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+        Command resource from previous create or update steps.
+        """
+        return pulumi.get(self, "delete")
+
+    @delete.setter
+    def delete(self, value: Optional[pulumi.Input['TeeOptsArgs']]):
+        pulumi.set(self, "delete", value)
+
+    @property
+    @pulumi.getter
     def environment(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
         """
         Environment variables
@@ -138,52 +121,16 @@ class TeeArgs:
         pulumi.set(self, "environment", value)
 
     @property
-    @pulumi.getter(name="ignoreInterrupts")
-    def ignore_interrupts(self) -> Optional[pulumi.Input[bool]]:
-        """
-        Ignore interrupt signals.
-        """
-        return pulumi.get(self, "ignore_interrupts")
-
-    @ignore_interrupts.setter
-    def ignore_interrupts(self, value: Optional[pulumi.Input[bool]]):
-        pulumi.set(self, "ignore_interrupts", value)
-
-    @property
     @pulumi.getter
-    def lifecycle(self) -> Optional['CommandLifecycle']:
+    def stdin(self) -> Optional[pulumi.Input[str]]:
         """
-        At what stage(s) in the resource lifecycle should the command be run
+        TODO
         """
-        return pulumi.get(self, "lifecycle")
+        return pulumi.get(self, "stdin")
 
-    @lifecycle.setter
-    def lifecycle(self, value: Optional['CommandLifecycle']):
-        pulumi.set(self, "lifecycle", value)
-
-    @property
-    @pulumi.getter(name="outputError")
-    def output_error(self) -> Optional[pulumi.Input['TeeMode']]:
-        """
-        Set behavior on write error.
-        """
-        return pulumi.get(self, "output_error")
-
-    @output_error.setter
-    def output_error(self, value: Optional[pulumi.Input['TeeMode']]):
-        pulumi.set(self, "output_error", value)
-
-    @property
-    @pulumi.getter
-    def pipe(self) -> Optional[pulumi.Input[bool]]:
-        """
-        Operate in a more appropriate MODE with pipes.
-        """
-        return pulumi.get(self, "pipe")
-
-    @pipe.setter
-    def pipe(self, value: Optional[pulumi.Input[bool]]):
-        pulumi.set(self, "pipe", value)
+    @stdin.setter
+    def stdin(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "stdin", value)
 
     @property
     @pulumi.getter
@@ -199,52 +146,52 @@ class TeeArgs:
 
     @property
     @pulumi.getter
-    def version(self) -> Optional[pulumi.Input[bool]]:
+    def update(self) -> Optional[pulumi.Input['TeeOptsArgs']]:
         """
-        Output version information and exit.
+        The command to run on update, if empty, create will 
+        run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
+        are set to the stdout and stderr properties of the Command resource from previous 
+        create or update steps.
         """
-        return pulumi.get(self, "version")
+        return pulumi.get(self, "update")
 
-    @version.setter
-    def version(self, value: Optional[pulumi.Input[bool]]):
-        pulumi.set(self, "version", value)
+    @update.setter
+    def update(self, value: Optional[pulumi.Input['TeeOptsArgs']]):
+        pulumi.set(self, "update", value)
 
 
-class Tee(pulumi.ComponentResource):
+class Tee(pulumi.CustomResource):
     @overload
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 append: Optional[pulumi.Input[bool]] = None,
                  binary_path: Optional[pulumi.Input[str]] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
+                 create: Optional[pulumi.Input[pulumi.InputType['TeeOptsArgs']]] = None,
+                 delete: Optional[pulumi.Input[pulumi.InputType['TeeOptsArgs']]] = None,
                  environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-                 files: Optional[pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]]] = None,
-                 ignore_interrupts: Optional[pulumi.Input[bool]] = None,
-                 lifecycle: Optional['CommandLifecycle'] = None,
-                 output_error: Optional[pulumi.Input['TeeMode']] = None,
-                 pipe: Optional[pulumi.Input[bool]] = None,
                  stdin: Optional[pulumi.Input[str]] = None,
                  triggers: Optional[pulumi.Input[Sequence[Any]]] = None,
-                 version: Optional[pulumi.Input[bool]] = None,
+                 update: Optional[pulumi.Input[pulumi.InputType['TeeOptsArgs']]] = None,
                  __props__=None):
         """
         Abstraction over the `rm` utility on a remote system.
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[bool] append: Append to the given FILEs, do not overwrite
         :param pulumi.Input[str] binary_path: Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
         :param pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']] connection: Connection details for the remote system
+        :param pulumi.Input[pulumi.InputType['TeeOptsArgs']] create: The command to run on create.
+        :param pulumi.Input[pulumi.InputType['TeeOptsArgs']] delete: The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+               and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+               Command resource from previous create or update steps.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] environment: Environment variables
-        :param pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]] files: Corresponds to the [FILE] argument.
-        :param pulumi.Input[bool] ignore_interrupts: Ignore interrupt signals.
-        :param 'CommandLifecycle' lifecycle: At what stage(s) in the resource lifecycle should the command be run
-        :param pulumi.Input['TeeMode'] output_error: Set behavior on write error.
-        :param pulumi.Input[bool] pipe: Operate in a more appropriate MODE with pipes.
         :param pulumi.Input[str] stdin: TODO
         :param pulumi.Input[Sequence[Any]] triggers: TODO
-        :param pulumi.Input[bool] version: Output version information and exit.
+        :param pulumi.Input[pulumi.InputType['TeeOptsArgs']] update: The command to run on update, if empty, create will 
+               run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
+               are set to the stdout and stderr properties of the Command resource from previous 
+               create or update steps.
         """
         ...
     @overload
@@ -270,47 +217,33 @@ class Tee(pulumi.ComponentResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 append: Optional[pulumi.Input[bool]] = None,
                  binary_path: Optional[pulumi.Input[str]] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
+                 create: Optional[pulumi.Input[pulumi.InputType['TeeOptsArgs']]] = None,
+                 delete: Optional[pulumi.Input[pulumi.InputType['TeeOptsArgs']]] = None,
                  environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-                 files: Optional[pulumi.Input[Union[str, Sequence[pulumi.Input[str]]]]] = None,
-                 ignore_interrupts: Optional[pulumi.Input[bool]] = None,
-                 lifecycle: Optional['CommandLifecycle'] = None,
-                 output_error: Optional[pulumi.Input['TeeMode']] = None,
-                 pipe: Optional[pulumi.Input[bool]] = None,
                  stdin: Optional[pulumi.Input[str]] = None,
                  triggers: Optional[pulumi.Input[Sequence[Any]]] = None,
-                 version: Optional[pulumi.Input[bool]] = None,
+                 update: Optional[pulumi.Input[pulumi.InputType['TeeOptsArgs']]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):
             raise TypeError('Expected resource options to be a ResourceOptions instance')
-        if opts.id is not None:
-            raise ValueError('ComponentResource classes do not support opts.id')
-        else:
+        if opts.id is None:
             if __props__ is not None:
                 raise TypeError('__props__ is only valid when passed in combination with a valid opts.id to get an existing resource')
             __props__ = TeeArgs.__new__(TeeArgs)
 
-            __props__.__dict__["append"] = append
             __props__.__dict__["binary_path"] = binary_path
             if connection is None and not opts.urn:
                 raise TypeError("Missing required property 'connection'")
             __props__.__dict__["connection"] = connection
+            __props__.__dict__["create"] = create
+            __props__.__dict__["delete"] = delete
             __props__.__dict__["environment"] = environment
-            if files is None and not opts.urn:
-                raise TypeError("Missing required property 'files'")
-            __props__.__dict__["files"] = files
-            __props__.__dict__["ignore_interrupts"] = ignore_interrupts
-            __props__.__dict__["lifecycle"] = lifecycle
-            __props__.__dict__["output_error"] = output_error
-            __props__.__dict__["pipe"] = pipe
-            if stdin is None and not opts.urn:
-                raise TypeError("Missing required property 'stdin'")
             __props__.__dict__["stdin"] = stdin
             __props__.__dict__["triggers"] = triggers
-            __props__.__dict__["version"] = version
+            __props__.__dict__["update"] = update
             __props__.__dict__["command"] = None
             __props__.__dict__["stderr"] = None
             __props__.__dict__["stdout"] = None
@@ -318,16 +251,36 @@ class Tee(pulumi.ComponentResource):
             'kubernetes-the-hard-way:tools:Tee',
             resource_name,
             __props__,
-            opts,
-            remote=True)
+            opts)
 
-    @property
-    @pulumi.getter
-    def append(self) -> pulumi.Output[bool]:
+    @staticmethod
+    def get(resource_name: str,
+            id: pulumi.Input[str],
+            opts: Optional[pulumi.ResourceOptions] = None) -> 'Tee':
         """
-        Append to the given FILEs, do not overwrite
+        Get an existing Tee resource's state with the given name, id, and optional extra
+        properties used to qualify the lookup.
+
+        :param str resource_name: The unique name of the resulting resource.
+        :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
+        :param pulumi.ResourceOptions opts: Options for the resource.
         """
-        return pulumi.get(self, "append")
+        opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
+
+        __props__ = TeeArgs.__new__(TeeArgs)
+
+        __props__.__dict__["binary_path"] = None
+        __props__.__dict__["command"] = None
+        __props__.__dict__["connection"] = None
+        __props__.__dict__["create"] = None
+        __props__.__dict__["delete"] = None
+        __props__.__dict__["environment"] = None
+        __props__.__dict__["stderr"] = None
+        __props__.__dict__["stdin"] = None
+        __props__.__dict__["stdout"] = None
+        __props__.__dict__["triggers"] = None
+        __props__.__dict__["update"] = None
+        return Tee(resource_name, opts=opts, __props__=__props__)
 
     @property
     @pulumi.getter(name="binaryPath")
@@ -355,51 +308,29 @@ class Tee(pulumi.ComponentResource):
 
     @property
     @pulumi.getter
+    def create(self) -> pulumi.Output[Optional['outputs.TeeOpts']]:
+        """
+        The command to run on create.
+        """
+        return pulumi.get(self, "create")
+
+    @property
+    @pulumi.getter
+    def delete(self) -> pulumi.Output[Optional['outputs.TeeOpts']]:
+        """
+        The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+        and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+        Command resource from previous create or update steps.
+        """
+        return pulumi.get(self, "delete")
+
+    @property
+    @pulumi.getter
     def environment(self) -> pulumi.Output[Mapping[str, str]]:
         """
         Environment variables
         """
         return pulumi.get(self, "environment")
-
-    @property
-    @pulumi.getter
-    def files(self) -> pulumi.Output[Any]:
-        """
-        Corresponds to the [FILE] argument.
-        """
-        return pulumi.get(self, "files")
-
-    @property
-    @pulumi.getter(name="ignoreInterrupts")
-    def ignore_interrupts(self) -> pulumi.Output[bool]:
-        """
-        Ignore interrupt signals.
-        """
-        return pulumi.get(self, "ignore_interrupts")
-
-    @property
-    @pulumi.getter
-    def lifecycle(self) -> pulumi.Output[Optional['CommandLifecycle']]:
-        """
-        At what stage(s) in the resource lifecycle should the command be run
-        """
-        return pulumi.get(self, "lifecycle")
-
-    @property
-    @pulumi.getter(name="outputError")
-    def output_error(self) -> pulumi.Output[Optional['TeeMode']]:
-        """
-        Set behavior on write error.
-        """
-        return pulumi.get(self, "output_error")
-
-    @property
-    @pulumi.getter
-    def pipe(self) -> pulumi.Output[bool]:
-        """
-        Operate in a more appropriate MODE with pipes.
-        """
-        return pulumi.get(self, "pipe")
 
     @property
     @pulumi.getter
@@ -411,7 +342,7 @@ class Tee(pulumi.ComponentResource):
 
     @property
     @pulumi.getter
-    def stdin(self) -> pulumi.Output[str]:
+    def stdin(self) -> pulumi.Output[Optional[str]]:
         """
         TODO
         """
@@ -435,9 +366,12 @@ class Tee(pulumi.ComponentResource):
 
     @property
     @pulumi.getter
-    def version(self) -> pulumi.Output[bool]:
+    def update(self) -> pulumi.Output[Optional['outputs.TeeOpts']]:
         """
-        Output version information and exit.
+        The command to run on update, if empty, create will 
+        run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
+        are set to the stdout and stderr properties of the Command resource from previous 
+        create or update steps.
         """
-        return pulumi.get(self, "version")
+        return pulumi.get(self, "update")
 

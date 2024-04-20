@@ -14,7 +14,7 @@ namespace UnMango.KubernetesTheHardWay.Tools
     /// Abstraction over the `sed` utility on a remote system.
     /// </summary>
     [KubernetesTheHardWayResourceType("kubernetes-the-hard-way:tools:Sed")]
-    public partial class Sed : global::Pulumi.ComponentResource
+    public partial class Sed : global::Pulumi.CustomResource
     {
         /// <summary>
         /// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
@@ -35,112 +35,24 @@ namespace UnMango.KubernetesTheHardWay.Tools
         public Output<Pulumi.Command.Remote.Outputs.Connection> Connection { get; private set; } = null!;
 
         /// <summary>
-        /// annotate program execution.
+        /// The command to run on create.
         /// </summary>
-        [Output("debug")]
-        public Output<bool> Debug { get; private set; } = null!;
+        [Output("create")]
+        public Output<Outputs.SedOpts?> Create { get; private set; } = null!;
+
+        /// <summary>
+        /// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+        /// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+        /// Command resource from previous create or update steps.
+        /// </summary>
+        [Output("delete")]
+        public Output<Outputs.SedOpts?> Delete { get; private set; } = null!;
 
         /// <summary>
         /// Environment variables
         /// </summary>
         [Output("environment")]
         public Output<ImmutableDictionary<string, string>> Environment { get; private set; } = null!;
-
-        /// <summary>
-        /// add the script to the commands to be executed.
-        /// </summary>
-        [Output("expressions")]
-        public Output<Union<string, ImmutableArray<string>>> Expressions { get; private set; } = null!;
-
-        /// <summary>
-        /// add the contents of script-file to the commands to be executed.
-        /// </summary>
-        [Output("files")]
-        public Output<Union<string, ImmutableArray<string>>> Files { get; private set; } = null!;
-
-        /// <summary>
-        /// follow symlinks when processing in place
-        /// </summary>
-        [Output("followSymlinks")]
-        public Output<bool> FollowSymlinks { get; private set; } = null!;
-
-        /// <summary>
-        /// display this help and exit.
-        /// </summary>
-        [Output("help")]
-        public Output<bool> Help { get; private set; } = null!;
-
-        /// <summary>
-        /// edit files in place (makes backup if SUFFIX supplied)
-        /// </summary>
-        [Output("inPlace")]
-        public Output<string?> InPlace { get; private set; } = null!;
-
-        /// <summary>
-        /// corresponds to the [input-file]... argument(s).
-        /// </summary>
-        [Output("inputFiles")]
-        public Output<Union<string, ImmutableArray<string>>> InputFiles { get; private set; } = null!;
-
-        /// <summary>
-        /// At what stage(s) in the resource lifecycle should the command be run
-        /// </summary>
-        [Output("lifecycle")]
-        public Output<UnMango.KubernetesTheHardWay.Tools.CommandLifecycle?> Lifecycle { get; private set; } = null!;
-
-        /// <summary>
-        /// specify the desired line-wrap length for the `l' command
-        /// </summary>
-        [Output("lineLength")]
-        public Output<int?> LineLength { get; private set; } = null!;
-
-        /// <summary>
-        /// separate lines by NUL characters
-        /// </summary>
-        [Output("nullData")]
-        public Output<bool> NullData { get; private set; } = null!;
-
-        /// <summary>
-        /// disable all GNU extensions.
-        /// </summary>
-        [Output("posix")]
-        public Output<bool> Posix { get; private set; } = null!;
-
-        /// <summary>
-        /// suppress automatic printing of pattern space. Same as `silent`.
-        /// </summary>
-        [Output("quiet")]
-        public Output<bool> Quiet { get; private set; } = null!;
-
-        /// <summary>
-        /// use extended regular expressions in the script (for portability use POSIX -E).
-        /// </summary>
-        [Output("regexpExtended")]
-        public Output<bool> RegexpExtended { get; private set; } = null!;
-
-        /// <summary>
-        /// operate in sandbox mode (disable e/r/w commands).
-        /// </summary>
-        [Output("sandbox")]
-        public Output<bool> Sandbox { get; private set; } = null!;
-
-        /// <summary>
-        /// script only if no other script.
-        /// </summary>
-        [Output("script")]
-        public Output<string?> Script { get; private set; } = null!;
-
-        /// <summary>
-        /// consider files as separate rather than as a single, continuous long stream.
-        /// </summary>
-        [Output("separate")]
-        public Output<bool> Separate { get; private set; } = null!;
-
-        /// <summary>
-        /// suppress automatic printing of pattern space. Same as `quiet`.
-        /// </summary>
-        [Output("silent")]
-        public Output<bool> Silent { get; private set; } = null!;
 
         /// <summary>
         /// TODO
@@ -167,16 +79,13 @@ namespace UnMango.KubernetesTheHardWay.Tools
         public Output<ImmutableArray<object>> Triggers { get; private set; } = null!;
 
         /// <summary>
-        /// load minimal amounts of data from the input files and flush the output buffers more often.
+        /// The command to run on update, if empty, create will 
+        /// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
+        /// are set to the stdout and stderr properties of the Command resource from previous 
+        /// create or update steps.
         /// </summary>
-        [Output("unbuffered")]
-        public Output<bool> Unbuffered { get; private set; } = null!;
-
-        /// <summary>
-        /// output version information and exit.
-        /// </summary>
-        [Output("version")]
-        public Output<bool> Version { get; private set; } = null!;
+        [Output("update")]
+        public Output<Outputs.SedOpts?> Update { get; private set; } = null!;
 
 
         /// <summary>
@@ -186,22 +95,43 @@ namespace UnMango.KubernetesTheHardWay.Tools
         /// <param name="name">The unique name of the resource</param>
         /// <param name="args">The arguments used to populate this resource's properties</param>
         /// <param name="options">A bag of options that control this resource's behavior</param>
-        public Sed(string name, SedArgs args, ComponentResourceOptions? options = null)
-            : base("kubernetes-the-hard-way:tools:Sed", name, args ?? new SedArgs(), MakeResourceOptions(options, ""), remote: true)
+        public Sed(string name, SedArgs args, CustomResourceOptions? options = null)
+            : base("kubernetes-the-hard-way:tools:Sed", name, args ?? new SedArgs(), MakeResourceOptions(options, ""))
+        {
+        }
+        internal Sed(string name, ImmutableDictionary<string, object?> dictionary, CustomResourceOptions? options = null)
+            : base("kubernetes-the-hard-way:tools:Sed", name, new DictionaryResourceArgs(dictionary), MakeResourceOptions(options, ""))
         {
         }
 
-        private static ComponentResourceOptions MakeResourceOptions(ComponentResourceOptions? options, Input<string>? id)
+        private Sed(string name, Input<string> id, CustomResourceOptions? options = null)
+            : base("kubernetes-the-hard-way:tools:Sed", name, null, MakeResourceOptions(options, id))
         {
-            var defaultOptions = new ComponentResourceOptions
+        }
+
+        private static CustomResourceOptions MakeResourceOptions(CustomResourceOptions? options, Input<string>? id)
+        {
+            var defaultOptions = new CustomResourceOptions
             {
                 Version = Utilities.Version,
                 PluginDownloadURL = "github://api.github.com/UnstoppableMango",
             };
-            var merged = ComponentResourceOptions.Merge(defaultOptions, options);
+            var merged = CustomResourceOptions.Merge(defaultOptions, options);
             // Override the ID if one was specified for consistency with other language SDKs.
             merged.Id = id ?? merged.Id;
             return merged;
+        }
+        /// <summary>
+        /// Get an existing Sed resource's state with the given name, ID, and optional extra
+        /// properties used to qualify the lookup.
+        /// </summary>
+        ///
+        /// <param name="name">The unique name of the resulting resource.</param>
+        /// <param name="id">The unique provider ID of the resource to lookup.</param>
+        /// <param name="options">A bag of options that control this resource's behavior</param>
+        public static Sed Get(string name, Input<string> id, CustomResourceOptions? options = null)
+        {
+            return new Sed(name, id, options);
         }
     }
 
@@ -220,10 +150,18 @@ namespace UnMango.KubernetesTheHardWay.Tools
         public Input<Pulumi.Command.Remote.Inputs.ConnectionArgs> Connection { get; set; } = null!;
 
         /// <summary>
-        /// annotate program execution.
+        /// The command to run on create.
         /// </summary>
-        [Input("debug")]
-        public Input<bool>? Debug { get; set; }
+        [Input("create")]
+        public Input<Inputs.SedOptsArgs>? Create { get; set; }
+
+        /// <summary>
+        /// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+        /// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+        /// Command resource from previous create or update steps.
+        /// </summary>
+        [Input("delete")]
+        public Input<Inputs.SedOptsArgs>? Delete { get; set; }
 
         [Input("environment")]
         private InputMap<string>? _environment;
@@ -236,102 +174,6 @@ namespace UnMango.KubernetesTheHardWay.Tools
             get => _environment ?? (_environment = new InputMap<string>());
             set => _environment = value;
         }
-
-        /// <summary>
-        /// add the script to the commands to be executed.
-        /// </summary>
-        [Input("expressions")]
-        public InputUnion<string, ImmutableArray<string>>? Expressions { get; set; }
-
-        /// <summary>
-        /// add the contents of script-file to the commands to be executed.
-        /// </summary>
-        [Input("files")]
-        public InputUnion<string, ImmutableArray<string>>? Files { get; set; }
-
-        /// <summary>
-        /// follow symlinks when processing in place
-        /// </summary>
-        [Input("followSymlinks")]
-        public Input<bool>? FollowSymlinks { get; set; }
-
-        /// <summary>
-        /// display this help and exit.
-        /// </summary>
-        [Input("help")]
-        public Input<bool>? Help { get; set; }
-
-        /// <summary>
-        /// edit files in place (makes backup if SUFFIX supplied)
-        /// </summary>
-        [Input("inPlace")]
-        public Input<string>? InPlace { get; set; }
-
-        /// <summary>
-        /// corresponds to the [input-file]... argument(s).
-        /// </summary>
-        [Input("inputFiles")]
-        public InputUnion<string, ImmutableArray<string>>? InputFiles { get; set; }
-
-        /// <summary>
-        /// At what stage(s) in the resource lifecycle should the command be run
-        /// </summary>
-        [Input("lifecycle")]
-        public UnMango.KubernetesTheHardWay.Tools.CommandLifecycle? Lifecycle { get; set; }
-
-        /// <summary>
-        /// specify the desired line-wrap length for the `l' command
-        /// </summary>
-        [Input("lineLength")]
-        public Input<int>? LineLength { get; set; }
-
-        /// <summary>
-        /// separate lines by NUL characters
-        /// </summary>
-        [Input("nullData")]
-        public Input<bool>? NullData { get; set; }
-
-        /// <summary>
-        /// disable all GNU extensions.
-        /// </summary>
-        [Input("posix")]
-        public Input<bool>? Posix { get; set; }
-
-        /// <summary>
-        /// suppress automatic printing of pattern space. Same as `silent`.
-        /// </summary>
-        [Input("quiet")]
-        public Input<bool>? Quiet { get; set; }
-
-        /// <summary>
-        /// use extended regular expressions in the script (for portability use POSIX -E).
-        /// </summary>
-        [Input("regexpExtended")]
-        public Input<bool>? RegexpExtended { get; set; }
-
-        /// <summary>
-        /// operate in sandbox mode (disable e/r/w commands).
-        /// </summary>
-        [Input("sandbox")]
-        public Input<bool>? Sandbox { get; set; }
-
-        /// <summary>
-        /// script only if no other script.
-        /// </summary>
-        [Input("script")]
-        public Input<string>? Script { get; set; }
-
-        /// <summary>
-        /// consider files as separate rather than as a single, continuous long stream.
-        /// </summary>
-        [Input("separate")]
-        public Input<bool>? Separate { get; set; }
-
-        /// <summary>
-        /// suppress automatic printing of pattern space. Same as `quiet`.
-        /// </summary>
-        [Input("silent")]
-        public Input<bool>? Silent { get; set; }
 
         /// <summary>
         /// TODO
@@ -352,16 +194,13 @@ namespace UnMango.KubernetesTheHardWay.Tools
         }
 
         /// <summary>
-        /// load minimal amounts of data from the input files and flush the output buffers more often.
+        /// The command to run on update, if empty, create will 
+        /// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
+        /// are set to the stdout and stderr properties of the Command resource from previous 
+        /// create or update steps.
         /// </summary>
-        [Input("unbuffered")]
-        public Input<bool>? Unbuffered { get; set; }
-
-        /// <summary>
-        /// output version information and exit.
-        /// </summary>
-        [Input("version")]
-        public Input<bool>? Version { get; set; }
+        [Input("update")]
+        public Input<Inputs.SedOptsArgs>? Update { get; set; }
 
         public SedArgs()
         {

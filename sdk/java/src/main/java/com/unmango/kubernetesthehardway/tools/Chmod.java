@@ -5,15 +5,13 @@ package com.unmango.kubernetesthehardway.tools;
 
 import com.pulumi.command.remote.Command;
 import com.pulumi.command.remote.outputs.Connection;
-import com.pulumi.core.Either;
 import com.pulumi.core.Output;
 import com.pulumi.core.annotations.Export;
 import com.pulumi.core.annotations.ResourceType;
 import com.pulumi.core.internal.Codegen;
 import com.unmango.kubernetesthehardway.Utilities;
 import com.unmango.kubernetesthehardway.tools.ChmodArgs;
-import com.unmango.kubernetesthehardway.tools.enums.CommandLifecycle;
-import java.lang.Boolean;
+import com.unmango.kubernetesthehardway.tools.outputs.ChmodOpts;
 import java.lang.Object;
 import java.lang.String;
 import java.util.List;
@@ -26,7 +24,7 @@ import javax.annotation.Nullable;
  * 
  */
 @ResourceType(type="kubernetes-the-hard-way:tools:Chmod")
-public class Chmod extends com.pulumi.resources.ComponentResource {
+public class Chmod extends com.pulumi.resources.CustomResource {
     /**
      * Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
      * 
@@ -40,20 +38,6 @@ public class Chmod extends com.pulumi.resources.ComponentResource {
      */
     public Output<String> binaryPath() {
         return this.binaryPath;
-    }
-    /**
-     * Like verbose but report only when a change is made.
-     * 
-     */
-    @Export(name="changes", refs={Boolean.class}, tree="[0]")
-    private Output<Boolean> changes;
-
-    /**
-     * @return Like verbose but report only when a change is made.
-     * 
-     */
-    public Output<Boolean> changes() {
-        return this.changes;
     }
     /**
      * The underlying command
@@ -84,6 +68,38 @@ public class Chmod extends com.pulumi.resources.ComponentResource {
         return this.connection;
     }
     /**
+     * The command to run on create.
+     * 
+     */
+    @Export(name="create", refs={ChmodOpts.class}, tree="[0]")
+    private Output</* @Nullable */ ChmodOpts> create;
+
+    /**
+     * @return The command to run on create.
+     * 
+     */
+    public Output<Optional<ChmodOpts>> create() {
+        return Codegen.optional(this.create);
+    }
+    /**
+     * The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+     * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+     * Command resource from previous create or update steps.
+     * 
+     */
+    @Export(name="delete", refs={ChmodOpts.class}, tree="[0]")
+    private Output</* @Nullable */ ChmodOpts> delete;
+
+    /**
+     * @return The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+     * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+     * Command resource from previous create or update steps.
+     * 
+     */
+    public Output<Optional<ChmodOpts>> delete() {
+        return Codegen.optional(this.delete);
+    }
+    /**
      * Environment variables
      * 
      */
@@ -96,146 +112,6 @@ public class Chmod extends com.pulumi.resources.ComponentResource {
      */
     public Output<Map<String,String>> environment() {
         return this.environment;
-    }
-    /**
-     * Corresponds to the [FILE] argument.
-     * 
-     */
-    @Export(name="files", refs={Either.class,String.class,List.class}, tree="[0,1,[2,1]]")
-    private Output<Either<String,List<String>>> files;
-
-    /**
-     * @return Corresponds to the [FILE] argument.
-     * 
-     */
-    public Output<Either<String,List<String>>> files() {
-        return this.files;
-    }
-    /**
-     * Display help and exit.
-     * 
-     */
-    @Export(name="help", refs={Boolean.class}, tree="[0]")
-    private Output<Boolean> help;
-
-    /**
-     * @return Display help and exit.
-     * 
-     */
-    public Output<Boolean> help() {
-        return this.help;
-    }
-    /**
-     * At what stage(s) in the resource lifecycle should the command be run
-     * 
-     */
-    @Export(name="lifecycle", refs={CommandLifecycle.class}, tree="[0]")
-    private Output</* @Nullable */ CommandLifecycle> lifecycle;
-
-    /**
-     * @return At what stage(s) in the resource lifecycle should the command be run
-     * 
-     */
-    public Output<Optional<CommandLifecycle>> lifecycle() {
-        return Codegen.optional(this.lifecycle);
-    }
-    /**
-     * Modes may be absolute or symbolic. An absolute mode is an octal number...
-     * 
-     */
-    @Export(name="mode", refs={String.class}, tree="[0]")
-    private Output<String> mode;
-
-    /**
-     * @return Modes may be absolute or symbolic. An absolute mode is an octal number...
-     * 
-     */
-    public Output<String> mode() {
-        return this.mode;
-    }
-    /**
-     * Do not treat &#39;/&#39; specially (the default).
-     * 
-     */
-    @Export(name="noPreserveRoot", refs={Boolean.class}, tree="[0]")
-    private Output<Boolean> noPreserveRoot;
-
-    /**
-     * @return Do not treat &#39;/&#39; specially (the default).
-     * 
-     */
-    public Output<Boolean> noPreserveRoot() {
-        return this.noPreserveRoot;
-    }
-    /**
-     * Fail to operate recursively on &#39;/&#39;.
-     * 
-     */
-    @Export(name="preserveRoot", refs={Boolean.class}, tree="[0]")
-    private Output<Boolean> preserveRoot;
-
-    /**
-     * @return Fail to operate recursively on &#39;/&#39;.
-     * 
-     */
-    public Output<Boolean> preserveRoot() {
-        return this.preserveRoot;
-    }
-    /**
-     * Suppress most error messages. Same as `silent`.
-     * 
-     */
-    @Export(name="quiet", refs={Boolean.class}, tree="[0]")
-    private Output<Boolean> quiet;
-
-    /**
-     * @return Suppress most error messages. Same as `silent`.
-     * 
-     */
-    public Output<Boolean> quiet() {
-        return this.quiet;
-    }
-    /**
-     * Change files and directories recursively.
-     * 
-     */
-    @Export(name="recursive", refs={Boolean.class}, tree="[0]")
-    private Output<Boolean> recursive;
-
-    /**
-     * @return Change files and directories recursively.
-     * 
-     */
-    public Output<Boolean> recursive() {
-        return this.recursive;
-    }
-    /**
-     * Use RFILE&#39;s mode instead of specifying MODE values. RFILE is always dereferenced if a symbolic link.
-     * 
-     */
-    @Export(name="reference", refs={String.class}, tree="[0]")
-    private Output</* @Nullable */ String> reference;
-
-    /**
-     * @return Use RFILE&#39;s mode instead of specifying MODE values. RFILE is always dereferenced if a symbolic link.
-     * 
-     */
-    public Output<Optional<String>> reference() {
-        return Codegen.optional(this.reference);
-    }
-    /**
-     * Suppress most error messages. Same as `quiet`.
-     * 
-     */
-    @Export(name="silent", refs={Boolean.class}, tree="[0]")
-    private Output<Boolean> silent;
-
-    /**
-     * @return Suppress most error messages. Same as `quiet`.
-     * 
-     */
-    public Output<Boolean> silent() {
-        return this.silent;
     }
     /**
      * TODO
@@ -294,18 +170,24 @@ public class Chmod extends com.pulumi.resources.ComponentResource {
         return this.triggers;
     }
     /**
-     * Output version information and exit.
+     * The command to run on update, if empty, create will
+     * run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+     * are set to the stdout and stderr properties of the Command resource from previous
+     * create or update steps.
      * 
      */
-    @Export(name="version", refs={Boolean.class}, tree="[0]")
-    private Output<Boolean> version;
+    @Export(name="update", refs={ChmodOpts.class}, tree="[0]")
+    private Output</* @Nullable */ ChmodOpts> update;
 
     /**
-     * @return Output version information and exit.
+     * @return The command to run on update, if empty, create will
+     * run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+     * are set to the stdout and stderr properties of the Command resource from previous
+     * create or update steps.
      * 
      */
-    public Output<Boolean> version() {
-        return this.version;
+    public Output<Optional<ChmodOpts>> update() {
+        return Codegen.optional(this.update);
     }
 
     /**
@@ -329,15 +211,30 @@ public class Chmod extends com.pulumi.resources.ComponentResource {
      * @param args The arguments to use to populate this resource's properties.
      * @param options A bag of options that control this resource's behavior.
      */
-    public Chmod(String name, ChmodArgs args, @Nullable com.pulumi.resources.ComponentResourceOptions options) {
-        super("kubernetes-the-hard-way:tools:Chmod", name, args == null ? ChmodArgs.Empty : args, makeResourceOptions(options, Codegen.empty()), true);
+    public Chmod(String name, ChmodArgs args, @Nullable com.pulumi.resources.CustomResourceOptions options) {
+        super("kubernetes-the-hard-way:tools:Chmod", name, args == null ? ChmodArgs.Empty : args, makeResourceOptions(options, Codegen.empty()));
     }
 
-    private static com.pulumi.resources.ComponentResourceOptions makeResourceOptions(@Nullable com.pulumi.resources.ComponentResourceOptions options, @Nullable Output<String> id) {
-        var defaultOptions = com.pulumi.resources.ComponentResourceOptions.builder()
+    private Chmod(String name, Output<String> id, @Nullable com.pulumi.resources.CustomResourceOptions options) {
+        super("kubernetes-the-hard-way:tools:Chmod", name, null, makeResourceOptions(options, id));
+    }
+
+    private static com.pulumi.resources.CustomResourceOptions makeResourceOptions(@Nullable com.pulumi.resources.CustomResourceOptions options, @Nullable Output<String> id) {
+        var defaultOptions = com.pulumi.resources.CustomResourceOptions.builder()
             .version(Utilities.getVersion())
             .build();
-        return com.pulumi.resources.ComponentResourceOptions.merge(defaultOptions, options, id);
+        return com.pulumi.resources.CustomResourceOptions.merge(defaultOptions, options, id);
     }
 
+    /**
+     * Get an existing Host resource's state with the given name, ID, and optional extra
+     * properties used to qualify the lookup.
+     *
+     * @param name The _unique_ name of the resulting resource.
+     * @param id The _unique_ provider ID of the resource to lookup.
+     * @param options Optional settings to control the behavior of the CustomResource.
+     */
+    public static Chmod get(String name, Output<String> id, @Nullable com.pulumi.resources.CustomResourceOptions options) {
+        return new Chmod(name, id, options);
+    }
 }

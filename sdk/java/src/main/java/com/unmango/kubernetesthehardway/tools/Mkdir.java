@@ -11,8 +11,7 @@ import com.pulumi.core.annotations.ResourceType;
 import com.pulumi.core.internal.Codegen;
 import com.unmango.kubernetesthehardway.Utilities;
 import com.unmango.kubernetesthehardway.tools.MkdirArgs;
-import com.unmango.kubernetesthehardway.tools.enums.CommandLifecycle;
-import java.lang.Boolean;
+import com.unmango.kubernetesthehardway.tools.outputs.MkdirOpts;
 import java.lang.Object;
 import java.lang.String;
 import java.util.List;
@@ -25,7 +24,7 @@ import javax.annotation.Nullable;
  * 
  */
 @ResourceType(type="kubernetes-the-hard-way:tools:Mkdir")
-public class Mkdir extends com.pulumi.resources.ComponentResource {
+public class Mkdir extends com.pulumi.resources.CustomResource {
     /**
      * Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
      * 
@@ -69,18 +68,36 @@ public class Mkdir extends com.pulumi.resources.ComponentResource {
         return this.connection;
     }
     /**
-     * The fully qualified path of the directory on the remote system.
+     * The command to run on create.
      * 
      */
-    @Export(name="directory", refs={String.class}, tree="[0]")
-    private Output<String> directory;
+    @Export(name="create", refs={MkdirOpts.class}, tree="[0]")
+    private Output</* @Nullable */ MkdirOpts> create;
 
     /**
-     * @return The fully qualified path of the directory on the remote system.
+     * @return The command to run on create.
      * 
      */
-    public Output<String> directory() {
-        return this.directory;
+    public Output<Optional<MkdirOpts>> create() {
+        return Codegen.optional(this.create);
+    }
+    /**
+     * The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+     * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+     * Command resource from previous create or update steps.
+     * 
+     */
+    @Export(name="delete", refs={MkdirOpts.class}, tree="[0]")
+    private Output</* @Nullable */ MkdirOpts> delete;
+
+    /**
+     * @return The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+     * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+     * Command resource from previous create or update steps.
+     * 
+     */
+    public Output<Optional<MkdirOpts>> delete() {
+        return Codegen.optional(this.delete);
     }
     /**
      * Environment variables
@@ -95,48 +112,6 @@ public class Mkdir extends com.pulumi.resources.ComponentResource {
      */
     public Output<Map<String,String>> environment() {
         return this.environment;
-    }
-    /**
-     * At what stage(s) in the resource lifecycle should the command be run
-     * 
-     */
-    @Export(name="lifecycle", refs={CommandLifecycle.class}, tree="[0]")
-    private Output</* @Nullable */ CommandLifecycle> lifecycle;
-
-    /**
-     * @return At what stage(s) in the resource lifecycle should the command be run
-     * 
-     */
-    public Output<Optional<CommandLifecycle>> lifecycle() {
-        return Codegen.optional(this.lifecycle);
-    }
-    /**
-     * Corresponds to the `--parents` option.
-     * 
-     */
-    @Export(name="parents", refs={Boolean.class}, tree="[0]")
-    private Output<Boolean> parents;
-
-    /**
-     * @return Corresponds to the `--parents` option.
-     * 
-     */
-    public Output<Boolean> parents() {
-        return this.parents;
-    }
-    /**
-     * Remove the created directory when the `Mkdir` resource is deleted or updated.
-     * 
-     */
-    @Export(name="removeOnDelete", refs={Boolean.class}, tree="[0]")
-    private Output<Boolean> removeOnDelete;
-
-    /**
-     * @return Remove the created directory when the `Mkdir` resource is deleted or updated.
-     * 
-     */
-    public Output<Boolean> removeOnDelete() {
-        return this.removeOnDelete;
     }
     /**
      * TODO
@@ -194,6 +169,26 @@ public class Mkdir extends com.pulumi.resources.ComponentResource {
     public Output<List<Object>> triggers() {
         return this.triggers;
     }
+    /**
+     * The command to run on update, if empty, create will
+     * run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+     * are set to the stdout and stderr properties of the Command resource from previous
+     * create or update steps.
+     * 
+     */
+    @Export(name="update", refs={MkdirOpts.class}, tree="[0]")
+    private Output</* @Nullable */ MkdirOpts> update;
+
+    /**
+     * @return The command to run on update, if empty, create will
+     * run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+     * are set to the stdout and stderr properties of the Command resource from previous
+     * create or update steps.
+     * 
+     */
+    public Output<Optional<MkdirOpts>> update() {
+        return Codegen.optional(this.update);
+    }
 
     /**
      *
@@ -216,15 +211,30 @@ public class Mkdir extends com.pulumi.resources.ComponentResource {
      * @param args The arguments to use to populate this resource's properties.
      * @param options A bag of options that control this resource's behavior.
      */
-    public Mkdir(String name, MkdirArgs args, @Nullable com.pulumi.resources.ComponentResourceOptions options) {
-        super("kubernetes-the-hard-way:tools:Mkdir", name, args == null ? MkdirArgs.Empty : args, makeResourceOptions(options, Codegen.empty()), true);
+    public Mkdir(String name, MkdirArgs args, @Nullable com.pulumi.resources.CustomResourceOptions options) {
+        super("kubernetes-the-hard-way:tools:Mkdir", name, args == null ? MkdirArgs.Empty : args, makeResourceOptions(options, Codegen.empty()));
     }
 
-    private static com.pulumi.resources.ComponentResourceOptions makeResourceOptions(@Nullable com.pulumi.resources.ComponentResourceOptions options, @Nullable Output<String> id) {
-        var defaultOptions = com.pulumi.resources.ComponentResourceOptions.builder()
+    private Mkdir(String name, Output<String> id, @Nullable com.pulumi.resources.CustomResourceOptions options) {
+        super("kubernetes-the-hard-way:tools:Mkdir", name, null, makeResourceOptions(options, id));
+    }
+
+    private static com.pulumi.resources.CustomResourceOptions makeResourceOptions(@Nullable com.pulumi.resources.CustomResourceOptions options, @Nullable Output<String> id) {
+        var defaultOptions = com.pulumi.resources.CustomResourceOptions.builder()
             .version(Utilities.getVersion())
             .build();
-        return com.pulumi.resources.ComponentResourceOptions.merge(defaultOptions, options, id);
+        return com.pulumi.resources.CustomResourceOptions.merge(defaultOptions, options, id);
     }
 
+    /**
+     * Get an existing Host resource's state with the given name, ID, and optional extra
+     * properties used to qualify the lookup.
+     *
+     * @param name The _unique_ name of the resulting resource.
+     * @param id The _unique_ provider ID of the resource to lookup.
+     * @param options Optional settings to control the behavior of the CustomResource.
+     */
+    public static Mkdir get(String name, Output<String> id, @Nullable com.pulumi.resources.CustomResourceOptions options) {
+        return new Mkdir(name, id, options);
+    }
 }

@@ -15,7 +15,7 @@ import (
 
 // Abstraction over the `sed` utility on a remote system.
 type Sed struct {
-	pulumi.ResourceState
+	pulumi.CustomResourceState
 
 	// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
 	BinaryPath pulumi.StringOutput `pulumi:"binaryPath"`
@@ -23,42 +23,14 @@ type Sed struct {
 	Command pulumiCommand.CommandOutput `pulumi:"command"`
 	// Connection details for the remote system
 	Connection pulumiCommand.ConnectionOutput `pulumi:"connection"`
-	// annotate program execution.
-	Debug pulumi.BoolOutput `pulumi:"debug"`
+	// The command to run on create.
+	Create SedOptsPtrOutput `pulumi:"create"`
+	// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+	// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+	// Command resource from previous create or update steps.
+	Delete SedOptsPtrOutput `pulumi:"delete"`
 	// Environment variables
 	Environment pulumi.StringMapOutput `pulumi:"environment"`
-	// add the script to the commands to be executed.
-	Expressions pulumi.AnyOutput `pulumi:"expressions"`
-	// add the contents of script-file to the commands to be executed.
-	Files pulumi.AnyOutput `pulumi:"files"`
-	// follow symlinks when processing in place
-	FollowSymlinks pulumi.BoolOutput `pulumi:"followSymlinks"`
-	// display this help and exit.
-	Help pulumi.BoolOutput `pulumi:"help"`
-	// edit files in place (makes backup if SUFFIX supplied)
-	InPlace pulumi.StringPtrOutput `pulumi:"inPlace"`
-	// corresponds to the [input-file]... argument(s).
-	InputFiles pulumi.AnyOutput `pulumi:"inputFiles"`
-	// At what stage(s) in the resource lifecycle should the command be run
-	Lifecycle CommandLifecyclePtrOutput `pulumi:"lifecycle"`
-	// specify the desired line-wrap length for the `l' command
-	LineLength pulumi.IntPtrOutput `pulumi:"lineLength"`
-	// separate lines by NUL characters
-	NullData pulumi.BoolOutput `pulumi:"nullData"`
-	// disable all GNU extensions.
-	Posix pulumi.BoolOutput `pulumi:"posix"`
-	// suppress automatic printing of pattern space. Same as `silent`.
-	Quiet pulumi.BoolOutput `pulumi:"quiet"`
-	// use extended regular expressions in the script (for portability use POSIX -E).
-	RegexpExtended pulumi.BoolOutput `pulumi:"regexpExtended"`
-	// operate in sandbox mode (disable e/r/w commands).
-	Sandbox pulumi.BoolOutput `pulumi:"sandbox"`
-	// script only if no other script.
-	Script pulumi.StringPtrOutput `pulumi:"script"`
-	// consider files as separate rather than as a single, continuous long stream.
-	Separate pulumi.BoolOutput `pulumi:"separate"`
-	// suppress automatic printing of pattern space. Same as `quiet`.
-	Silent pulumi.BoolOutput `pulumi:"silent"`
 	// TODO
 	Stderr pulumi.StringOutput `pulumi:"stderr"`
 	// TODO
@@ -67,10 +39,11 @@ type Sed struct {
 	Stdout pulumi.StringOutput `pulumi:"stdout"`
 	// TODO
 	Triggers pulumi.ArrayOutput `pulumi:"triggers"`
-	// load minimal amounts of data from the input files and flush the output buffers more often.
-	Unbuffered pulumi.BoolOutput `pulumi:"unbuffered"`
-	// output version information and exit.
-	Version pulumi.BoolOutput `pulumi:"version"`
+	// The command to run on update, if empty, create will
+	// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+	// are set to the stdout and stderr properties of the Command resource from previous
+	// create or update steps.
+	Update SedOptsPtrOutput `pulumi:"update"`
 }
 
 // NewSed registers a new resource with the given unique name, arguments, and options.
@@ -86,11 +59,34 @@ func NewSed(ctx *pulumi.Context,
 	args.Connection = args.Connection.ToConnectionOutput().ApplyT(func(v pulumiCommand.Connection) pulumiCommand.Connection { return *v.Defaults() }).(pulumiCommand.ConnectionOutput)
 	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource Sed
-	err := ctx.RegisterRemoteComponentResource("kubernetes-the-hard-way:tools:Sed", name, args, &resource, opts...)
+	err := ctx.RegisterResource("kubernetes-the-hard-way:tools:Sed", name, args, &resource, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return &resource, nil
+}
+
+// GetSed gets an existing Sed resource's state with the given name, ID, and optional
+// state properties that are used to uniquely qualify the lookup (nil if not required).
+func GetSed(ctx *pulumi.Context,
+	name string, id pulumi.IDInput, state *SedState, opts ...pulumi.ResourceOption) (*Sed, error) {
+	var resource Sed
+	err := ctx.ReadResource("kubernetes-the-hard-way:tools:Sed", name, id, state, &resource, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return &resource, nil
+}
+
+// Input properties used for looking up and filtering Sed resources.
+type sedState struct {
+}
+
+type SedState struct {
+}
+
+func (SedState) ElementType() reflect.Type {
+	return reflect.TypeOf((*sedState)(nil)).Elem()
 }
 
 type sedArgs struct {
@@ -98,50 +94,23 @@ type sedArgs struct {
 	BinaryPath *string `pulumi:"binaryPath"`
 	// Connection details for the remote system
 	Connection pulumiCommand.Connection `pulumi:"connection"`
-	// annotate program execution.
-	Debug *bool `pulumi:"debug"`
+	// The command to run on create.
+	Create *SedOpts `pulumi:"create"`
+	// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+	// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+	// Command resource from previous create or update steps.
+	Delete *SedOpts `pulumi:"delete"`
 	// Environment variables
 	Environment map[string]string `pulumi:"environment"`
-	// add the script to the commands to be executed.
-	Expressions interface{} `pulumi:"expressions"`
-	// add the contents of script-file to the commands to be executed.
-	Files interface{} `pulumi:"files"`
-	// follow symlinks when processing in place
-	FollowSymlinks *bool `pulumi:"followSymlinks"`
-	// display this help and exit.
-	Help *bool `pulumi:"help"`
-	// edit files in place (makes backup if SUFFIX supplied)
-	InPlace *string `pulumi:"inPlace"`
-	// corresponds to the [input-file]... argument(s).
-	InputFiles interface{} `pulumi:"inputFiles"`
-	// At what stage(s) in the resource lifecycle should the command be run
-	Lifecycle *CommandLifecycle `pulumi:"lifecycle"`
-	// specify the desired line-wrap length for the `l' command
-	LineLength *int `pulumi:"lineLength"`
-	// separate lines by NUL characters
-	NullData *bool `pulumi:"nullData"`
-	// disable all GNU extensions.
-	Posix *bool `pulumi:"posix"`
-	// suppress automatic printing of pattern space. Same as `silent`.
-	Quiet *bool `pulumi:"quiet"`
-	// use extended regular expressions in the script (for portability use POSIX -E).
-	RegexpExtended *bool `pulumi:"regexpExtended"`
-	// operate in sandbox mode (disable e/r/w commands).
-	Sandbox *bool `pulumi:"sandbox"`
-	// script only if no other script.
-	Script *string `pulumi:"script"`
-	// consider files as separate rather than as a single, continuous long stream.
-	Separate *bool `pulumi:"separate"`
-	// suppress automatic printing of pattern space. Same as `quiet`.
-	Silent *bool `pulumi:"silent"`
 	// TODO
 	Stdin *string `pulumi:"stdin"`
 	// TODO
 	Triggers []interface{} `pulumi:"triggers"`
-	// load minimal amounts of data from the input files and flush the output buffers more often.
-	Unbuffered *bool `pulumi:"unbuffered"`
-	// output version information and exit.
-	Version *bool `pulumi:"version"`
+	// The command to run on update, if empty, create will
+	// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+	// are set to the stdout and stderr properties of the Command resource from previous
+	// create or update steps.
+	Update *SedOpts `pulumi:"update"`
 }
 
 // The set of arguments for constructing a Sed resource.
@@ -150,50 +119,23 @@ type SedArgs struct {
 	BinaryPath pulumi.StringPtrInput
 	// Connection details for the remote system
 	Connection pulumiCommand.ConnectionInput
-	// annotate program execution.
-	Debug pulumi.BoolPtrInput
+	// The command to run on create.
+	Create SedOptsPtrInput
+	// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+	// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+	// Command resource from previous create or update steps.
+	Delete SedOptsPtrInput
 	// Environment variables
 	Environment pulumi.StringMapInput
-	// add the script to the commands to be executed.
-	Expressions pulumi.Input
-	// add the contents of script-file to the commands to be executed.
-	Files pulumi.Input
-	// follow symlinks when processing in place
-	FollowSymlinks pulumi.BoolPtrInput
-	// display this help and exit.
-	Help pulumi.BoolPtrInput
-	// edit files in place (makes backup if SUFFIX supplied)
-	InPlace pulumi.StringPtrInput
-	// corresponds to the [input-file]... argument(s).
-	InputFiles pulumi.Input
-	// At what stage(s) in the resource lifecycle should the command be run
-	Lifecycle *CommandLifecycle
-	// specify the desired line-wrap length for the `l' command
-	LineLength pulumi.IntPtrInput
-	// separate lines by NUL characters
-	NullData pulumi.BoolPtrInput
-	// disable all GNU extensions.
-	Posix pulumi.BoolPtrInput
-	// suppress automatic printing of pattern space. Same as `silent`.
-	Quiet pulumi.BoolPtrInput
-	// use extended regular expressions in the script (for portability use POSIX -E).
-	RegexpExtended pulumi.BoolPtrInput
-	// operate in sandbox mode (disable e/r/w commands).
-	Sandbox pulumi.BoolPtrInput
-	// script only if no other script.
-	Script pulumi.StringPtrInput
-	// consider files as separate rather than as a single, continuous long stream.
-	Separate pulumi.BoolPtrInput
-	// suppress automatic printing of pattern space. Same as `quiet`.
-	Silent pulumi.BoolPtrInput
 	// TODO
 	Stdin pulumi.StringPtrInput
 	// TODO
 	Triggers pulumi.ArrayInput
-	// load minimal amounts of data from the input files and flush the output buffers more often.
-	Unbuffered pulumi.BoolPtrInput
-	// output version information and exit.
-	Version pulumi.BoolPtrInput
+	// The command to run on update, if empty, create will
+	// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+	// are set to the stdout and stderr properties of the Command resource from previous
+	// create or update steps.
+	Update SedOptsPtrInput
 }
 
 func (SedArgs) ElementType() reflect.Type {
@@ -298,94 +240,21 @@ func (o SedOutput) Connection() pulumiCommand.ConnectionOutput {
 	return o.ApplyT(func(v *Sed) pulumiCommand.ConnectionOutput { return v.Connection }).(pulumiCommand.ConnectionOutput)
 }
 
-// annotate program execution.
-func (o SedOutput) Debug() pulumi.BoolOutput {
-	return o.ApplyT(func(v *Sed) pulumi.BoolOutput { return v.Debug }).(pulumi.BoolOutput)
+// The command to run on create.
+func (o SedOutput) Create() SedOptsPtrOutput {
+	return o.ApplyT(func(v *Sed) SedOptsPtrOutput { return v.Create }).(SedOptsPtrOutput)
+}
+
+// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+// Command resource from previous create or update steps.
+func (o SedOutput) Delete() SedOptsPtrOutput {
+	return o.ApplyT(func(v *Sed) SedOptsPtrOutput { return v.Delete }).(SedOptsPtrOutput)
 }
 
 // Environment variables
 func (o SedOutput) Environment() pulumi.StringMapOutput {
 	return o.ApplyT(func(v *Sed) pulumi.StringMapOutput { return v.Environment }).(pulumi.StringMapOutput)
-}
-
-// add the script to the commands to be executed.
-func (o SedOutput) Expressions() pulumi.AnyOutput {
-	return o.ApplyT(func(v *Sed) pulumi.AnyOutput { return v.Expressions }).(pulumi.AnyOutput)
-}
-
-// add the contents of script-file to the commands to be executed.
-func (o SedOutput) Files() pulumi.AnyOutput {
-	return o.ApplyT(func(v *Sed) pulumi.AnyOutput { return v.Files }).(pulumi.AnyOutput)
-}
-
-// follow symlinks when processing in place
-func (o SedOutput) FollowSymlinks() pulumi.BoolOutput {
-	return o.ApplyT(func(v *Sed) pulumi.BoolOutput { return v.FollowSymlinks }).(pulumi.BoolOutput)
-}
-
-// display this help and exit.
-func (o SedOutput) Help() pulumi.BoolOutput {
-	return o.ApplyT(func(v *Sed) pulumi.BoolOutput { return v.Help }).(pulumi.BoolOutput)
-}
-
-// edit files in place (makes backup if SUFFIX supplied)
-func (o SedOutput) InPlace() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Sed) pulumi.StringPtrOutput { return v.InPlace }).(pulumi.StringPtrOutput)
-}
-
-// corresponds to the [input-file]... argument(s).
-func (o SedOutput) InputFiles() pulumi.AnyOutput {
-	return o.ApplyT(func(v *Sed) pulumi.AnyOutput { return v.InputFiles }).(pulumi.AnyOutput)
-}
-
-// At what stage(s) in the resource lifecycle should the command be run
-func (o SedOutput) Lifecycle() CommandLifecyclePtrOutput {
-	return o.ApplyT(func(v *Sed) CommandLifecyclePtrOutput { return v.Lifecycle }).(CommandLifecyclePtrOutput)
-}
-
-// specify the desired line-wrap length for the `l' command
-func (o SedOutput) LineLength() pulumi.IntPtrOutput {
-	return o.ApplyT(func(v *Sed) pulumi.IntPtrOutput { return v.LineLength }).(pulumi.IntPtrOutput)
-}
-
-// separate lines by NUL characters
-func (o SedOutput) NullData() pulumi.BoolOutput {
-	return o.ApplyT(func(v *Sed) pulumi.BoolOutput { return v.NullData }).(pulumi.BoolOutput)
-}
-
-// disable all GNU extensions.
-func (o SedOutput) Posix() pulumi.BoolOutput {
-	return o.ApplyT(func(v *Sed) pulumi.BoolOutput { return v.Posix }).(pulumi.BoolOutput)
-}
-
-// suppress automatic printing of pattern space. Same as `silent`.
-func (o SedOutput) Quiet() pulumi.BoolOutput {
-	return o.ApplyT(func(v *Sed) pulumi.BoolOutput { return v.Quiet }).(pulumi.BoolOutput)
-}
-
-// use extended regular expressions in the script (for portability use POSIX -E).
-func (o SedOutput) RegexpExtended() pulumi.BoolOutput {
-	return o.ApplyT(func(v *Sed) pulumi.BoolOutput { return v.RegexpExtended }).(pulumi.BoolOutput)
-}
-
-// operate in sandbox mode (disable e/r/w commands).
-func (o SedOutput) Sandbox() pulumi.BoolOutput {
-	return o.ApplyT(func(v *Sed) pulumi.BoolOutput { return v.Sandbox }).(pulumi.BoolOutput)
-}
-
-// script only if no other script.
-func (o SedOutput) Script() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Sed) pulumi.StringPtrOutput { return v.Script }).(pulumi.StringPtrOutput)
-}
-
-// consider files as separate rather than as a single, continuous long stream.
-func (o SedOutput) Separate() pulumi.BoolOutput {
-	return o.ApplyT(func(v *Sed) pulumi.BoolOutput { return v.Separate }).(pulumi.BoolOutput)
-}
-
-// suppress automatic printing of pattern space. Same as `quiet`.
-func (o SedOutput) Silent() pulumi.BoolOutput {
-	return o.ApplyT(func(v *Sed) pulumi.BoolOutput { return v.Silent }).(pulumi.BoolOutput)
 }
 
 // TODO
@@ -408,14 +277,12 @@ func (o SedOutput) Triggers() pulumi.ArrayOutput {
 	return o.ApplyT(func(v *Sed) pulumi.ArrayOutput { return v.Triggers }).(pulumi.ArrayOutput)
 }
 
-// load minimal amounts of data from the input files and flush the output buffers more often.
-func (o SedOutput) Unbuffered() pulumi.BoolOutput {
-	return o.ApplyT(func(v *Sed) pulumi.BoolOutput { return v.Unbuffered }).(pulumi.BoolOutput)
-}
-
-// output version information and exit.
-func (o SedOutput) Version() pulumi.BoolOutput {
-	return o.ApplyT(func(v *Sed) pulumi.BoolOutput { return v.Version }).(pulumi.BoolOutput)
+// The command to run on update, if empty, create will
+// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+// are set to the stdout and stderr properties of the Command resource from previous
+// create or update steps.
+func (o SedOutput) Update() SedOptsPtrOutput {
+	return o.ApplyT(func(v *Sed) SedOptsPtrOutput { return v.Update }).(SedOptsPtrOutput)
 }
 
 type SedArrayOutput struct{ *pulumi.OutputState }

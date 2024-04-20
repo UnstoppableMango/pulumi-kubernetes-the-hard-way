@@ -5,15 +5,13 @@ package com.unmango.kubernetesthehardway.tools;
 
 import com.pulumi.command.remote.Command;
 import com.pulumi.command.remote.outputs.Connection;
-import com.pulumi.core.Either;
 import com.pulumi.core.Output;
 import com.pulumi.core.annotations.Export;
 import com.pulumi.core.annotations.ResourceType;
 import com.pulumi.core.internal.Codegen;
 import com.unmango.kubernetesthehardway.Utilities;
 import com.unmango.kubernetesthehardway.tools.WgetArgs;
-import com.unmango.kubernetesthehardway.tools.enums.CommandLifecycle;
-import java.lang.Boolean;
+import com.unmango.kubernetesthehardway.tools.outputs.WgetOpts;
 import java.lang.Object;
 import java.lang.String;
 import java.util.List;
@@ -26,7 +24,7 @@ import javax.annotation.Nullable;
  * 
  */
 @ResourceType(type="kubernetes-the-hard-way:tools:Wget")
-public class Wget extends com.pulumi.resources.ComponentResource {
+public class Wget extends com.pulumi.resources.CustomResource {
     /**
      * Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
      * 
@@ -70,18 +68,36 @@ public class Wget extends com.pulumi.resources.ComponentResource {
         return this.connection;
     }
     /**
-     * The  directory prefix is the directory where all other files and subdirectories will be saved to, i.e. the top of the retrieval tree.  The default is . (the current directory).
+     * The command to run on create.
      * 
      */
-    @Export(name="directoryPrefix", refs={String.class}, tree="[0]")
-    private Output</* @Nullable */ String> directoryPrefix;
+    @Export(name="create", refs={WgetOpts.class}, tree="[0]")
+    private Output</* @Nullable */ WgetOpts> create;
 
     /**
-     * @return The  directory prefix is the directory where all other files and subdirectories will be saved to, i.e. the top of the retrieval tree.  The default is . (the current directory).
+     * @return The command to run on create.
      * 
      */
-    public Output<Optional<String>> directoryPrefix() {
-        return Codegen.optional(this.directoryPrefix);
+    public Output<Optional<WgetOpts>> create() {
+        return Codegen.optional(this.create);
+    }
+    /**
+     * The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+     * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+     * Command resource from previous create or update steps.
+     * 
+     */
+    @Export(name="delete", refs={WgetOpts.class}, tree="[0]")
+    private Output</* @Nullable */ WgetOpts> delete;
+
+    /**
+     * @return The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+     * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+     * Command resource from previous create or update steps.
+     * 
+     */
+    public Output<Optional<WgetOpts>> delete() {
+        return Codegen.optional(this.delete);
     }
     /**
      * Environment variables
@@ -96,76 +112,6 @@ public class Wget extends com.pulumi.resources.ComponentResource {
      */
     public Output<Map<String,String>> environment() {
         return this.environment;
-    }
-    /**
-     * When in recursive mode, only HTTPS links are followed.
-     * 
-     */
-    @Export(name="httpsOnly", refs={Boolean.class}, tree="[0]")
-    private Output<Boolean> httpsOnly;
-
-    /**
-     * @return When in recursive mode, only HTTPS links are followed.
-     * 
-     */
-    public Output<Boolean> httpsOnly() {
-        return this.httpsOnly;
-    }
-    /**
-     * At what stage(s) in the resource lifecycle should the command be run
-     * 
-     */
-    @Export(name="lifecycle", refs={CommandLifecycle.class}, tree="[0]")
-    private Output</* @Nullable */ CommandLifecycle> lifecycle;
-
-    /**
-     * @return At what stage(s) in the resource lifecycle should the command be run
-     * 
-     */
-    public Output<Optional<CommandLifecycle>> lifecycle() {
-        return Codegen.optional(this.lifecycle);
-    }
-    /**
-     * Turn off verbose without being completely quiet (use -q for that), which means that error messages and basic information still get printed.
-     * 
-     */
-    @Export(name="noVerbose", refs={Boolean.class}, tree="[0]")
-    private Output<Boolean> noVerbose;
-
-    /**
-     * @return Turn off verbose without being completely quiet (use -q for that), which means that error messages and basic information still get printed.
-     * 
-     */
-    public Output<Boolean> noVerbose() {
-        return this.noVerbose;
-    }
-    /**
-     * The  documents  will  not  be  written  to the appropriate files, but all will be concatenated together and written to file.
-     * 
-     */
-    @Export(name="outputDocument", refs={String.class}, tree="[0]")
-    private Output</* @Nullable */ String> outputDocument;
-
-    /**
-     * @return The  documents  will  not  be  written  to the appropriate files, but all will be concatenated together and written to file.
-     * 
-     */
-    public Output<Optional<String>> outputDocument() {
-        return Codegen.optional(this.outputDocument);
-    }
-    /**
-     * Turn off Wget&#39;s output.
-     * 
-     */
-    @Export(name="quiet", refs={Boolean.class}, tree="[0]")
-    private Output<Boolean> quiet;
-
-    /**
-     * @return Turn off Wget&#39;s output.
-     * 
-     */
-    public Output<Boolean> quiet() {
-        return this.quiet;
     }
     /**
      * TODO
@@ -210,20 +156,6 @@ public class Wget extends com.pulumi.resources.ComponentResource {
         return this.stdout;
     }
     /**
-     * Turn on time-stamping.
-     * 
-     */
-    @Export(name="timestamping", refs={Boolean.class}, tree="[0]")
-    private Output<Boolean> timestamping;
-
-    /**
-     * @return Turn on time-stamping.
-     * 
-     */
-    public Output<Boolean> timestamping() {
-        return this.timestamping;
-    }
-    /**
      * TODO
      * 
      */
@@ -238,18 +170,24 @@ public class Wget extends com.pulumi.resources.ComponentResource {
         return this.triggers;
     }
     /**
-     * Corresponds to the [URL...] argument.
+     * The command to run on update, if empty, create will
+     * run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+     * are set to the stdout and stderr properties of the Command resource from previous
+     * create or update steps.
      * 
      */
-    @Export(name="url", refs={Either.class,String.class,List.class}, tree="[0,1,[2,1]]")
-    private Output<Either<String,List<String>>> url;
+    @Export(name="update", refs={WgetOpts.class}, tree="[0]")
+    private Output</* @Nullable */ WgetOpts> update;
 
     /**
-     * @return Corresponds to the [URL...] argument.
+     * @return The command to run on update, if empty, create will
+     * run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+     * are set to the stdout and stderr properties of the Command resource from previous
+     * create or update steps.
      * 
      */
-    public Output<Either<String,List<String>>> url() {
-        return this.url;
+    public Output<Optional<WgetOpts>> update() {
+        return Codegen.optional(this.update);
     }
 
     /**
@@ -273,15 +211,30 @@ public class Wget extends com.pulumi.resources.ComponentResource {
      * @param args The arguments to use to populate this resource's properties.
      * @param options A bag of options that control this resource's behavior.
      */
-    public Wget(String name, WgetArgs args, @Nullable com.pulumi.resources.ComponentResourceOptions options) {
-        super("kubernetes-the-hard-way:tools:Wget", name, args == null ? WgetArgs.Empty : args, makeResourceOptions(options, Codegen.empty()), true);
+    public Wget(String name, WgetArgs args, @Nullable com.pulumi.resources.CustomResourceOptions options) {
+        super("kubernetes-the-hard-way:tools:Wget", name, args == null ? WgetArgs.Empty : args, makeResourceOptions(options, Codegen.empty()));
     }
 
-    private static com.pulumi.resources.ComponentResourceOptions makeResourceOptions(@Nullable com.pulumi.resources.ComponentResourceOptions options, @Nullable Output<String> id) {
-        var defaultOptions = com.pulumi.resources.ComponentResourceOptions.builder()
+    private Wget(String name, Output<String> id, @Nullable com.pulumi.resources.CustomResourceOptions options) {
+        super("kubernetes-the-hard-way:tools:Wget", name, null, makeResourceOptions(options, id));
+    }
+
+    private static com.pulumi.resources.CustomResourceOptions makeResourceOptions(@Nullable com.pulumi.resources.CustomResourceOptions options, @Nullable Output<String> id) {
+        var defaultOptions = com.pulumi.resources.CustomResourceOptions.builder()
             .version(Utilities.getVersion())
             .build();
-        return com.pulumi.resources.ComponentResourceOptions.merge(defaultOptions, options, id);
+        return com.pulumi.resources.CustomResourceOptions.merge(defaultOptions, options, id);
     }
 
+    /**
+     * Get an existing Host resource's state with the given name, ID, and optional extra
+     * properties used to qualify the lookup.
+     *
+     * @param name The _unique_ name of the resulting resource.
+     * @param id The _unique_ provider ID of the resource to lookup.
+     * @param options Optional settings to control the behavior of the CustomResource.
+     */
+    public static Wget get(String name, Output<String> id, @Nullable com.pulumi.resources.CustomResourceOptions options) {
+        return new Wget(name, id, options);
+    }
 }

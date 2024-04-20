@@ -11,8 +11,7 @@ import com.pulumi.core.annotations.ResourceType;
 import com.pulumi.core.internal.Codegen;
 import com.unmango.kubernetesthehardway.Utilities;
 import com.unmango.kubernetesthehardway.tools.MktempArgs;
-import com.unmango.kubernetesthehardway.tools.enums.CommandLifecycle;
-import java.lang.Boolean;
+import com.unmango.kubernetesthehardway.tools.outputs.MktempOpts;
 import java.lang.Object;
 import java.lang.String;
 import java.util.List;
@@ -21,11 +20,11 @@ import java.util.Optional;
 import javax.annotation.Nullable;
 
 /**
- * Abstraction over the `mkdir` utility on a remote system.
+ * Abstraction over the `mktemp` utility on a remote system.
  * 
  */
 @ResourceType(type="kubernetes-the-hard-way:tools:Mktemp")
-public class Mktemp extends com.pulumi.resources.ComponentResource {
+public class Mktemp extends com.pulumi.resources.CustomResource {
     /**
      * Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
      * 
@@ -69,32 +68,36 @@ public class Mktemp extends com.pulumi.resources.ComponentResource {
         return this.connection;
     }
     /**
-     * Corresponds to the `--directory` option.
+     * The command to run on create.
      * 
      */
-    @Export(name="directory", refs={Boolean.class}, tree="[0]")
-    private Output</* @Nullable */ Boolean> directory;
+    @Export(name="create", refs={MktempOpts.class}, tree="[0]")
+    private Output</* @Nullable */ MktempOpts> create;
 
     /**
-     * @return Corresponds to the `--directory` option.
+     * @return The command to run on create.
      * 
      */
-    public Output<Optional<Boolean>> directory() {
-        return Codegen.optional(this.directory);
+    public Output<Optional<MktempOpts>> create() {
+        return Codegen.optional(this.create);
     }
     /**
-     * Corresponds to the `--dry-run` option.
+     * The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+     * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+     * Command resource from previous create or update steps.
      * 
      */
-    @Export(name="dryRun", refs={Boolean.class}, tree="[0]")
-    private Output<Boolean> dryRun;
+    @Export(name="delete", refs={MktempOpts.class}, tree="[0]")
+    private Output</* @Nullable */ MktempOpts> delete;
 
     /**
-     * @return Corresponds to the `--dry-run` option.
+     * @return The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+     * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+     * Command resource from previous create or update steps.
      * 
      */
-    public Output<Boolean> dryRun() {
-        return this.dryRun;
+    public Output<Optional<MktempOpts>> delete() {
+        return Codegen.optional(this.delete);
     }
     /**
      * Environment variables
@@ -109,34 +112,6 @@ public class Mktemp extends com.pulumi.resources.ComponentResource {
      */
     public Output<Map<String,String>> environment() {
         return this.environment;
-    }
-    /**
-     * At what stage(s) in the resource lifecycle should the command be run
-     * 
-     */
-    @Export(name="lifecycle", refs={CommandLifecycle.class}, tree="[0]")
-    private Output</* @Nullable */ CommandLifecycle> lifecycle;
-
-    /**
-     * @return At what stage(s) in the resource lifecycle should the command be run
-     * 
-     */
-    public Output<Optional<CommandLifecycle>> lifecycle() {
-        return Codegen.optional(this.lifecycle);
-    }
-    /**
-     * Corresponds to the `--quiet` option.
-     * 
-     */
-    @Export(name="quiet", refs={Boolean.class}, tree="[0]")
-    private Output<Boolean> quiet;
-
-    /**
-     * @return Corresponds to the `--quiet` option.
-     * 
-     */
-    public Output<Boolean> quiet() {
-        return this.quiet;
     }
     /**
      * TODO
@@ -181,48 +156,6 @@ public class Mktemp extends com.pulumi.resources.ComponentResource {
         return this.stdout;
     }
     /**
-     * Corresponds to the `--suffix` option.
-     * 
-     */
-    @Export(name="suffix", refs={String.class}, tree="[0]")
-    private Output</* @Nullable */ String> suffix;
-
-    /**
-     * @return Corresponds to the `--suffix` option.
-     * 
-     */
-    public Output<Optional<String>> suffix() {
-        return Codegen.optional(this.suffix);
-    }
-    /**
-     * Corresponds to the [TEMPLATE] argument.
-     * 
-     */
-    @Export(name="template", refs={String.class}, tree="[0]")
-    private Output</* @Nullable */ String> template;
-
-    /**
-     * @return Corresponds to the [TEMPLATE] argument.
-     * 
-     */
-    public Output<Optional<String>> template() {
-        return Codegen.optional(this.template);
-    }
-    /**
-     * Corresponds to the `--tmpdir` option.
-     * 
-     */
-    @Export(name="tmpdir", refs={String.class}, tree="[0]")
-    private Output</* @Nullable */ String> tmpdir;
-
-    /**
-     * @return Corresponds to the `--tmpdir` option.
-     * 
-     */
-    public Output<Optional<String>> tmpdir() {
-        return Codegen.optional(this.tmpdir);
-    }
-    /**
      * TODO
      * 
      */
@@ -235,6 +168,26 @@ public class Mktemp extends com.pulumi.resources.ComponentResource {
      */
     public Output<List<Object>> triggers() {
         return this.triggers;
+    }
+    /**
+     * The command to run on update, if empty, create will
+     * run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+     * are set to the stdout and stderr properties of the Command resource from previous
+     * create or update steps.
+     * 
+     */
+    @Export(name="update", refs={MktempOpts.class}, tree="[0]")
+    private Output</* @Nullable */ MktempOpts> update;
+
+    /**
+     * @return The command to run on update, if empty, create will
+     * run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+     * are set to the stdout and stderr properties of the Command resource from previous
+     * create or update steps.
+     * 
+     */
+    public Output<Optional<MktempOpts>> update() {
+        return Codegen.optional(this.update);
     }
 
     /**
@@ -258,15 +211,30 @@ public class Mktemp extends com.pulumi.resources.ComponentResource {
      * @param args The arguments to use to populate this resource's properties.
      * @param options A bag of options that control this resource's behavior.
      */
-    public Mktemp(String name, MktempArgs args, @Nullable com.pulumi.resources.ComponentResourceOptions options) {
-        super("kubernetes-the-hard-way:tools:Mktemp", name, args == null ? MktempArgs.Empty : args, makeResourceOptions(options, Codegen.empty()), true);
+    public Mktemp(String name, MktempArgs args, @Nullable com.pulumi.resources.CustomResourceOptions options) {
+        super("kubernetes-the-hard-way:tools:Mktemp", name, args == null ? MktempArgs.Empty : args, makeResourceOptions(options, Codegen.empty()));
     }
 
-    private static com.pulumi.resources.ComponentResourceOptions makeResourceOptions(@Nullable com.pulumi.resources.ComponentResourceOptions options, @Nullable Output<String> id) {
-        var defaultOptions = com.pulumi.resources.ComponentResourceOptions.builder()
+    private Mktemp(String name, Output<String> id, @Nullable com.pulumi.resources.CustomResourceOptions options) {
+        super("kubernetes-the-hard-way:tools:Mktemp", name, null, makeResourceOptions(options, id));
+    }
+
+    private static com.pulumi.resources.CustomResourceOptions makeResourceOptions(@Nullable com.pulumi.resources.CustomResourceOptions options, @Nullable Output<String> id) {
+        var defaultOptions = com.pulumi.resources.CustomResourceOptions.builder()
             .version(Utilities.getVersion())
             .build();
-        return com.pulumi.resources.ComponentResourceOptions.merge(defaultOptions, options, id);
+        return com.pulumi.resources.CustomResourceOptions.merge(defaultOptions, options, id);
     }
 
+    /**
+     * Get an existing Host resource's state with the given name, ID, and optional extra
+     * properties used to qualify the lookup.
+     *
+     * @param name The _unique_ name of the resulting resource.
+     * @param id The _unique_ provider ID of the resource to lookup.
+     * @param options Optional settings to control the behavior of the CustomResource.
+     */
+    public static Mktemp get(String name, Output<String> id, @Nullable com.pulumi.resources.CustomResourceOptions options) {
+        return new Mktemp(name, id, options);
+    }
 }

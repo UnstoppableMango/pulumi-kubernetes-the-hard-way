@@ -11,17 +11,11 @@ using Pulumi;
 namespace UnMango.KubernetesTheHardWay.Tools
 {
     /// <summary>
-    /// Abstraction over the `rm` utility on a remote system.
+    /// Abstraction over the `tar` utility on a remote system.
     /// </summary>
     [KubernetesTheHardWayResourceType("kubernetes-the-hard-way:tools:Tar")]
-    public partial class Tar : global::Pulumi.ComponentResource
+    public partial class Tar : global::Pulumi.CustomResource
     {
-        /// <summary>
-        /// Corresponds to the [ARCHIVE] argument.
-        /// </summary>
-        [Output("archive")]
-        public Output<string> Archive { get; private set; } = null!;
-
         /// <summary>
         /// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
         /// </summary>
@@ -41,52 +35,24 @@ namespace UnMango.KubernetesTheHardWay.Tools
         public Output<Pulumi.Command.Remote.Outputs.Connection> Connection { get; private set; } = null!;
 
         /// <summary>
-        /// Corresponds to the `--directory` option.
+        /// The command to run on create.
         /// </summary>
-        [Output("directory")]
-        public Output<string?> Directory { get; private set; } = null!;
+        [Output("create")]
+        public Output<Outputs.TarOpts?> Create { get; private set; } = null!;
+
+        /// <summary>
+        /// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+        /// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+        /// Command resource from previous create or update steps.
+        /// </summary>
+        [Output("delete")]
+        public Output<Outputs.TarOpts?> Delete { get; private set; } = null!;
 
         /// <summary>
         /// Environment variables
         /// </summary>
         [Output("environment")]
         public Output<ImmutableDictionary<string, string>> Environment { get; private set; } = null!;
-
-        /// <summary>
-        /// Corresponds to the `--extract` option.
-        /// </summary>
-        [Output("extract")]
-        public Output<bool> Extract { get; private set; } = null!;
-
-        /// <summary>
-        /// Corresponds to the [FILE] argument.
-        /// </summary>
-        [Output("files")]
-        public Output<Union<string, ImmutableArray<string>>> Files { get; private set; } = null!;
-
-        /// <summary>
-        /// Corresponds to the `--gzip` option.
-        /// </summary>
-        [Output("gzip")]
-        public Output<bool?> Gzip { get; private set; } = null!;
-
-        /// <summary>
-        /// At what stage(s) in the resource lifecycle should the command be run
-        /// </summary>
-        [Output("lifecycle")]
-        public Output<UnMango.KubernetesTheHardWay.Tools.CommandLifecycle?> Lifecycle { get; private set; } = null!;
-
-        /// <summary>
-        /// Whether rm should be run when the resource is created or deleted.
-        /// </summary>
-        [Output("onDelete")]
-        public Output<bool?> OnDelete { get; private set; } = null!;
-
-        /// <summary>
-        /// Corresponds to the `--recursive` option.
-        /// </summary>
-        [Output("recursive")]
-        public Output<bool?> Recursive { get; private set; } = null!;
 
         /// <summary>
         /// TODO
@@ -107,16 +73,19 @@ namespace UnMango.KubernetesTheHardWay.Tools
         public Output<string> Stdout { get; private set; } = null!;
 
         /// <summary>
-        /// Corresponds to the `--strip-components` option.
-        /// </summary>
-        [Output("stripComponents")]
-        public Output<int?> StripComponents { get; private set; } = null!;
-
-        /// <summary>
         /// TODO
         /// </summary>
         [Output("triggers")]
         public Output<ImmutableArray<object>> Triggers { get; private set; } = null!;
+
+        /// <summary>
+        /// The command to run on update, if empty, create will 
+        /// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
+        /// are set to the stdout and stderr properties of the Command resource from previous 
+        /// create or update steps.
+        /// </summary>
+        [Output("update")]
+        public Output<Outputs.TarOpts?> Update { get; private set; } = null!;
 
 
         /// <summary>
@@ -126,33 +95,48 @@ namespace UnMango.KubernetesTheHardWay.Tools
         /// <param name="name">The unique name of the resource</param>
         /// <param name="args">The arguments used to populate this resource's properties</param>
         /// <param name="options">A bag of options that control this resource's behavior</param>
-        public Tar(string name, TarArgs args, ComponentResourceOptions? options = null)
-            : base("kubernetes-the-hard-way:tools:Tar", name, args ?? new TarArgs(), MakeResourceOptions(options, ""), remote: true)
+        public Tar(string name, TarArgs args, CustomResourceOptions? options = null)
+            : base("kubernetes-the-hard-way:tools:Tar", name, args ?? new TarArgs(), MakeResourceOptions(options, ""))
+        {
+        }
+        internal Tar(string name, ImmutableDictionary<string, object?> dictionary, CustomResourceOptions? options = null)
+            : base("kubernetes-the-hard-way:tools:Tar", name, new DictionaryResourceArgs(dictionary), MakeResourceOptions(options, ""))
         {
         }
 
-        private static ComponentResourceOptions MakeResourceOptions(ComponentResourceOptions? options, Input<string>? id)
+        private Tar(string name, Input<string> id, CustomResourceOptions? options = null)
+            : base("kubernetes-the-hard-way:tools:Tar", name, null, MakeResourceOptions(options, id))
         {
-            var defaultOptions = new ComponentResourceOptions
+        }
+
+        private static CustomResourceOptions MakeResourceOptions(CustomResourceOptions? options, Input<string>? id)
+        {
+            var defaultOptions = new CustomResourceOptions
             {
                 Version = Utilities.Version,
                 PluginDownloadURL = "github://api.github.com/UnstoppableMango",
             };
-            var merged = ComponentResourceOptions.Merge(defaultOptions, options);
+            var merged = CustomResourceOptions.Merge(defaultOptions, options);
             // Override the ID if one was specified for consistency with other language SDKs.
             merged.Id = id ?? merged.Id;
             return merged;
+        }
+        /// <summary>
+        /// Get an existing Tar resource's state with the given name, ID, and optional extra
+        /// properties used to qualify the lookup.
+        /// </summary>
+        ///
+        /// <param name="name">The unique name of the resulting resource.</param>
+        /// <param name="id">The unique provider ID of the resource to lookup.</param>
+        /// <param name="options">A bag of options that control this resource's behavior</param>
+        public static Tar Get(string name, Input<string> id, CustomResourceOptions? options = null)
+        {
+            return new Tar(name, id, options);
         }
     }
 
     public sealed class TarArgs : global::Pulumi.ResourceArgs
     {
-        /// <summary>
-        /// Corresponds to the [ARCHIVE] argument.
-        /// </summary>
-        [Input("archive", required: true)]
-        public Input<string> Archive { get; set; } = null!;
-
         /// <summary>
         /// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
         /// </summary>
@@ -166,10 +150,18 @@ namespace UnMango.KubernetesTheHardWay.Tools
         public Input<Pulumi.Command.Remote.Inputs.ConnectionArgs> Connection { get; set; } = null!;
 
         /// <summary>
-        /// Corresponds to the `--directory` option.
+        /// The command to run on create.
         /// </summary>
-        [Input("directory")]
-        public Input<string>? Directory { get; set; }
+        [Input("create")]
+        public Input<Inputs.TarOptsArgs>? Create { get; set; }
+
+        /// <summary>
+        /// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+        /// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+        /// Command resource from previous create or update steps.
+        /// </summary>
+        [Input("delete")]
+        public Input<Inputs.TarOptsArgs>? Delete { get; set; }
 
         [Input("environment")]
         private InputMap<string>? _environment;
@@ -184,52 +176,10 @@ namespace UnMango.KubernetesTheHardWay.Tools
         }
 
         /// <summary>
-        /// Corresponds to the `--extract` option.
-        /// </summary>
-        [Input("extract")]
-        public Input<bool>? Extract { get; set; }
-
-        /// <summary>
-        /// Corresponds to the [FILE] argument.
-        /// </summary>
-        [Input("files")]
-        public InputUnion<string, ImmutableArray<string>>? Files { get; set; }
-
-        /// <summary>
-        /// Corresponds to the `--gzip` option.
-        /// </summary>
-        [Input("gzip")]
-        public Input<bool>? Gzip { get; set; }
-
-        /// <summary>
-        /// At what stage(s) in the resource lifecycle should the command be run
-        /// </summary>
-        [Input("lifecycle")]
-        public UnMango.KubernetesTheHardWay.Tools.CommandLifecycle? Lifecycle { get; set; }
-
-        /// <summary>
-        /// Whether rm should be run when the resource is created or deleted.
-        /// </summary>
-        [Input("onDelete")]
-        public Input<bool>? OnDelete { get; set; }
-
-        /// <summary>
-        /// Corresponds to the `--recursive` option.
-        /// </summary>
-        [Input("recursive")]
-        public Input<bool>? Recursive { get; set; }
-
-        /// <summary>
         /// TODO
         /// </summary>
         [Input("stdin")]
         public Input<string>? Stdin { get; set; }
-
-        /// <summary>
-        /// Corresponds to the `--strip-components` option.
-        /// </summary>
-        [Input("stripComponents")]
-        public Input<int>? StripComponents { get; set; }
 
         [Input("triggers")]
         private InputList<object>? _triggers;
@@ -242,6 +192,15 @@ namespace UnMango.KubernetesTheHardWay.Tools
             get => _triggers ?? (_triggers = new InputList<object>());
             set => _triggers = value;
         }
+
+        /// <summary>
+        /// The command to run on update, if empty, create will 
+        /// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
+        /// are set to the stdout and stderr properties of the Command resource from previous 
+        /// create or update steps.
+        /// </summary>
+        [Input("update")]
+        public Input<Inputs.TarOptsArgs>? Update { get; set; }
 
         public TarArgs()
         {

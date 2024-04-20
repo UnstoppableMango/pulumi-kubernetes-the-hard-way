@@ -18,89 +18,6 @@ const (
 	CommandLifecycleDelete = CommandLifecycle("delete")
 )
 
-type CommandLifecycleOutput struct{ *pulumi.OutputState }
-
-func (CommandLifecycleOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*CommandLifecycle)(nil)).Elem()
-}
-
-func (o CommandLifecycleOutput) ToCommandLifecycleOutput() CommandLifecycleOutput {
-	return o
-}
-
-func (o CommandLifecycleOutput) ToCommandLifecycleOutputWithContext(ctx context.Context) CommandLifecycleOutput {
-	return o
-}
-
-func (o CommandLifecycleOutput) ToCommandLifecyclePtrOutput() CommandLifecyclePtrOutput {
-	return o.ToCommandLifecyclePtrOutputWithContext(context.Background())
-}
-
-func (o CommandLifecycleOutput) ToCommandLifecyclePtrOutputWithContext(ctx context.Context) CommandLifecyclePtrOutput {
-	return o.ApplyTWithContext(ctx, func(_ context.Context, v CommandLifecycle) *CommandLifecycle {
-		return &v
-	}).(CommandLifecyclePtrOutput)
-}
-
-func (o CommandLifecycleOutput) ToStringOutput() pulumi.StringOutput {
-	return o.ToStringOutputWithContext(context.Background())
-}
-
-func (o CommandLifecycleOutput) ToStringOutputWithContext(ctx context.Context) pulumi.StringOutput {
-	return o.ApplyTWithContext(ctx, func(_ context.Context, e CommandLifecycle) string {
-		return string(e)
-	}).(pulumi.StringOutput)
-}
-
-func (o CommandLifecycleOutput) ToStringPtrOutput() pulumi.StringPtrOutput {
-	return o.ToStringPtrOutputWithContext(context.Background())
-}
-
-func (o CommandLifecycleOutput) ToStringPtrOutputWithContext(ctx context.Context) pulumi.StringPtrOutput {
-	return o.ApplyTWithContext(ctx, func(_ context.Context, e CommandLifecycle) *string {
-		v := string(e)
-		return &v
-	}).(pulumi.StringPtrOutput)
-}
-
-type CommandLifecyclePtrOutput struct{ *pulumi.OutputState }
-
-func (CommandLifecyclePtrOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((**CommandLifecycle)(nil)).Elem()
-}
-
-func (o CommandLifecyclePtrOutput) ToCommandLifecyclePtrOutput() CommandLifecyclePtrOutput {
-	return o
-}
-
-func (o CommandLifecyclePtrOutput) ToCommandLifecyclePtrOutputWithContext(ctx context.Context) CommandLifecyclePtrOutput {
-	return o
-}
-
-func (o CommandLifecyclePtrOutput) Elem() CommandLifecycleOutput {
-	return o.ApplyT(func(v *CommandLifecycle) CommandLifecycle {
-		if v != nil {
-			return *v
-		}
-		var ret CommandLifecycle
-		return ret
-	}).(CommandLifecycleOutput)
-}
-
-func (o CommandLifecyclePtrOutput) ToStringPtrOutput() pulumi.StringPtrOutput {
-	return o.ToStringPtrOutputWithContext(context.Background())
-}
-
-func (o CommandLifecyclePtrOutput) ToStringPtrOutputWithContext(ctx context.Context) pulumi.StringPtrOutput {
-	return o.ApplyTWithContext(ctx, func(_ context.Context, e *CommandLifecycle) *string {
-		if e == nil {
-			return nil
-		}
-		v := string(*e)
-		return &v
-	}).(pulumi.StringPtrOutput)
-}
-
 type CurlCertType string
 
 const (
@@ -988,6 +905,42 @@ const (
 	SystemctlCommandUnmask                 = SystemctlCommand("unmask")
 )
 
+func (SystemctlCommand) ElementType() reflect.Type {
+	return reflect.TypeOf((*SystemctlCommand)(nil)).Elem()
+}
+
+func (e SystemctlCommand) ToSystemctlCommandOutput() SystemctlCommandOutput {
+	return pulumi.ToOutput(e).(SystemctlCommandOutput)
+}
+
+func (e SystemctlCommand) ToSystemctlCommandOutputWithContext(ctx context.Context) SystemctlCommandOutput {
+	return pulumi.ToOutputWithContext(ctx, e).(SystemctlCommandOutput)
+}
+
+func (e SystemctlCommand) ToSystemctlCommandPtrOutput() SystemctlCommandPtrOutput {
+	return e.ToSystemctlCommandPtrOutputWithContext(context.Background())
+}
+
+func (e SystemctlCommand) ToSystemctlCommandPtrOutputWithContext(ctx context.Context) SystemctlCommandPtrOutput {
+	return SystemctlCommand(e).ToSystemctlCommandOutputWithContext(ctx).ToSystemctlCommandPtrOutputWithContext(ctx)
+}
+
+func (e SystemctlCommand) ToStringOutput() pulumi.StringOutput {
+	return pulumi.ToOutput(pulumi.String(e)).(pulumi.StringOutput)
+}
+
+func (e SystemctlCommand) ToStringOutputWithContext(ctx context.Context) pulumi.StringOutput {
+	return pulumi.ToOutputWithContext(ctx, pulumi.String(e)).(pulumi.StringOutput)
+}
+
+func (e SystemctlCommand) ToStringPtrOutput() pulumi.StringPtrOutput {
+	return pulumi.String(e).ToStringPtrOutputWithContext(context.Background())
+}
+
+func (e SystemctlCommand) ToStringPtrOutputWithContext(ctx context.Context) pulumi.StringPtrOutput {
+	return pulumi.String(e).ToStringOutputWithContext(ctx).ToStringPtrOutputWithContext(ctx)
+}
+
 type SystemctlCommandOutput struct{ *pulumi.OutputState }
 
 func (SystemctlCommandOutput) ElementType() reflect.Type {
@@ -1069,6 +1022,76 @@ func (o SystemctlCommandPtrOutput) ToStringPtrOutputWithContext(ctx context.Cont
 		v := string(*e)
 		return &v
 	}).(pulumi.StringPtrOutput)
+}
+
+// SystemctlCommandInput is an input type that accepts values of the SystemctlCommand enum
+// A concrete instance of `SystemctlCommandInput` can be one of the following:
+//
+//	SystemctlCommandBind
+//	SystemctlCommandCat
+//	SystemctlCommandClean
+//	SystemctlCommand_Daemon_Reload
+//	SystemctlCommandDisable
+//	SystemctlCommandEnable
+//	SystemctlCommandFreeze
+//	SystemctlCommand_Is_Active
+//	SystemctlCommand_Is_Enabled
+//	SystemctlCommand_Is_Failed
+//	SystemctlCommandIsolate
+//	SystemctlCommandKill
+//	SystemctlCommand_List_Automounts
+//	SystemctlCommand_List_Dependencies
+//	SystemctlCommand_List_Paths
+//	SystemctlCommand_List_Sockets
+//	SystemctlCommand_List_Timers
+//	SystemctlCommand_List_Units
+//	SystemctlCommandMask
+//	SystemctlCommand_Mount_Image
+//	SystemctlCommandReenable
+//	SystemctlCommandReload
+//	SystemctlCommand_Reload_Or_Restart
+//	SystemctlCommandRestart
+//	SystemctlCommand_Set_Property
+//	SystemctlCommandShow
+//	SystemctlCommandStart
+//	SystemctlCommandStatus
+//	SystemctlCommandStop
+//	SystemctlCommandThaw
+//	SystemctlCommand_Try_Reload_Or_Restart
+//	SystemctlCommand_Try_Restart
+//	SystemctlCommandUnmask
+type SystemctlCommandInput interface {
+	pulumi.Input
+
+	ToSystemctlCommandOutput() SystemctlCommandOutput
+	ToSystemctlCommandOutputWithContext(context.Context) SystemctlCommandOutput
+}
+
+var systemctlCommandPtrType = reflect.TypeOf((**SystemctlCommand)(nil)).Elem()
+
+type SystemctlCommandPtrInput interface {
+	pulumi.Input
+
+	ToSystemctlCommandPtrOutput() SystemctlCommandPtrOutput
+	ToSystemctlCommandPtrOutputWithContext(context.Context) SystemctlCommandPtrOutput
+}
+
+type systemctlCommandPtr string
+
+func SystemctlCommandPtr(v string) SystemctlCommandPtrInput {
+	return (*systemctlCommandPtr)(&v)
+}
+
+func (*systemctlCommandPtr) ElementType() reflect.Type {
+	return systemctlCommandPtrType
+}
+
+func (in *systemctlCommandPtr) ToSystemctlCommandPtrOutput() SystemctlCommandPtrOutput {
+	return pulumi.ToOutput(in).(SystemctlCommandPtrOutput)
+}
+
+func (in *systemctlCommandPtr) ToSystemctlCommandPtrOutputWithContext(ctx context.Context) SystemctlCommandPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, in).(SystemctlCommandPtrOutput)
 }
 
 type TeeMode string
@@ -1251,10 +1274,10 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*HostnamectlCommandPtrInput)(nil)).Elem(), HostnamectlCommand("status"))
 	pulumi.RegisterInputType(reflect.TypeOf((*HostnamectlJsonModeInput)(nil)).Elem(), HostnamectlJsonMode("short"))
 	pulumi.RegisterInputType(reflect.TypeOf((*HostnamectlJsonModePtrInput)(nil)).Elem(), HostnamectlJsonMode("short"))
+	pulumi.RegisterInputType(reflect.TypeOf((*SystemctlCommandInput)(nil)).Elem(), SystemctlCommand("bind"))
+	pulumi.RegisterInputType(reflect.TypeOf((*SystemctlCommandPtrInput)(nil)).Elem(), SystemctlCommand("bind"))
 	pulumi.RegisterInputType(reflect.TypeOf((*TeeModeInput)(nil)).Elem(), TeeMode("warn"))
 	pulumi.RegisterInputType(reflect.TypeOf((*TeeModePtrInput)(nil)).Elem(), TeeMode("warn"))
-	pulumi.RegisterOutputType(CommandLifecycleOutput{})
-	pulumi.RegisterOutputType(CommandLifecyclePtrOutput{})
 	pulumi.RegisterOutputType(CurlCertTypeOutput{})
 	pulumi.RegisterOutputType(CurlCertTypePtrOutput{})
 	pulumi.RegisterOutputType(CurlDelegationLevelOutput{})
