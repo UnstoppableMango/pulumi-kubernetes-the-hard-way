@@ -56,13 +56,13 @@ public final class MktempArgs extends com.pulumi.resources.ResourceArgs {
      * 
      */
     @Import(name="create")
-    private @Nullable Output<MktempOptsArgs> create;
+    private @Nullable MktempOptsArgs create;
 
     /**
      * @return The command to run on create.
      * 
      */
-    public Optional<Output<MktempOptsArgs>> create() {
+    public Optional<MktempOptsArgs> create() {
         return Optional.ofNullable(this.create);
     }
 
@@ -73,7 +73,7 @@ public final class MktempArgs extends com.pulumi.resources.ResourceArgs {
      * 
      */
     @Import(name="delete")
-    private @Nullable Output<MktempOptsArgs> delete;
+    private @Nullable MktempOptsArgs delete;
 
     /**
      * @return The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
@@ -81,7 +81,7 @@ public final class MktempArgs extends com.pulumi.resources.ResourceArgs {
      * Command resource from previous create or update steps.
      * 
      */
-    public Optional<Output<MktempOptsArgs>> delete() {
+    public Optional<MktempOptsArgs> delete() {
         return Optional.ofNullable(this.delete);
     }
 
@@ -138,7 +138,7 @@ public final class MktempArgs extends com.pulumi.resources.ResourceArgs {
      * 
      */
     @Import(name="update")
-    private @Nullable Output<MktempOptsArgs> update;
+    private @Nullable MktempOptsArgs update;
 
     /**
      * @return The command to run on update, if empty, create will
@@ -147,7 +147,7 @@ public final class MktempArgs extends com.pulumi.resources.ResourceArgs {
      * create or update steps.
      * 
      */
-    public Optional<Output<MktempOptsArgs>> update() {
+    public Optional<MktempOptsArgs> update() {
         return Optional.ofNullable(this.update);
     }
 
@@ -230,22 +230,12 @@ public final class MktempArgs extends com.pulumi.resources.ResourceArgs {
          * @return builder
          * 
          */
-        public Builder create(@Nullable Output<MktempOptsArgs> create) {
+        public Builder create(@Nullable MktempOptsArgs create) {
             $.create = create;
             return this;
         }
 
         /**
-         * @param create The command to run on create.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder create(MktempOptsArgs create) {
-            return create(Output.of(create));
-        }
-
-        /**
          * @param delete The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
          * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
          * Command resource from previous create or update steps.
@@ -253,21 +243,9 @@ public final class MktempArgs extends com.pulumi.resources.ResourceArgs {
          * @return builder
          * 
          */
-        public Builder delete(@Nullable Output<MktempOptsArgs> delete) {
+        public Builder delete(@Nullable MktempOptsArgs delete) {
             $.delete = delete;
             return this;
-        }
-
-        /**
-         * @param delete The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
-         * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
-         * Command resource from previous create or update steps.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder delete(MktempOptsArgs delete) {
-            return delete(Output.of(delete));
         }
 
         /**
@@ -352,22 +330,9 @@ public final class MktempArgs extends com.pulumi.resources.ResourceArgs {
          * @return builder
          * 
          */
-        public Builder update(@Nullable Output<MktempOptsArgs> update) {
+        public Builder update(@Nullable MktempOptsArgs update) {
             $.update = update;
             return this;
-        }
-
-        /**
-         * @param update The command to run on update, if empty, create will
-         * run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
-         * are set to the stdout and stderr properties of the Command resource from previous
-         * create or update steps.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder update(MktempOptsArgs update) {
-            return update(Output.of(update));
         }
 
         public MktempArgs build() {

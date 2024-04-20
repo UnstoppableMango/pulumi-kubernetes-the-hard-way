@@ -58,7 +58,9 @@ func qualifyName(x string) string {
 }
 
 func optsType(x string) schema.TypeSpec {
-	return types.LocalType(x+"Opts", "tools")
+	typ := types.LocalType(x+"Opts", "tools")
+	typ.Plain = true
+	return typ
 }
 
 func (tool tool) resourceSpec(commandSpec schema.PackageSpec, optsType schema.TypeSpec) schema.ResourceSpec {

@@ -20,24 +20,24 @@ class CurlArgs:
     def __init__(__self__, *,
                  connection: pulumi.Input['pulumi_command.remote.ConnectionArgs'],
                  binary_path: Optional[pulumi.Input[str]] = None,
-                 create: Optional[pulumi.Input['CurlOptsArgs']] = None,
-                 delete: Optional[pulumi.Input['CurlOptsArgs']] = None,
+                 create: Optional['CurlOptsArgs'] = None,
+                 delete: Optional['CurlOptsArgs'] = None,
                  environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  stdin: Optional[pulumi.Input[str]] = None,
                  triggers: Optional[pulumi.Input[Sequence[Any]]] = None,
-                 update: Optional[pulumi.Input['CurlOptsArgs']] = None):
+                 update: Optional['CurlOptsArgs'] = None):
         """
         The set of arguments for constructing a Curl resource.
         :param pulumi.Input['pulumi_command.remote.ConnectionArgs'] connection: Connection details for the remote system
         :param pulumi.Input[str] binary_path: Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
-        :param pulumi.Input['CurlOptsArgs'] create: The command to run on create.
-        :param pulumi.Input['CurlOptsArgs'] delete: The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+        :param 'CurlOptsArgs' create: The command to run on create.
+        :param 'CurlOptsArgs' delete: The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
                and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
                Command resource from previous create or update steps.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] environment: Environment variables
         :param pulumi.Input[str] stdin: TODO
         :param pulumi.Input[Sequence[Any]] triggers: TODO
-        :param pulumi.Input['CurlOptsArgs'] update: The command to run on update, if empty, create will 
+        :param 'CurlOptsArgs' update: The command to run on update, if empty, create will 
                run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
                are set to the stdout and stderr properties of the Command resource from previous 
                create or update steps.
@@ -84,19 +84,19 @@ class CurlArgs:
 
     @property
     @pulumi.getter
-    def create(self) -> Optional[pulumi.Input['CurlOptsArgs']]:
+    def create(self) -> Optional['CurlOptsArgs']:
         """
         The command to run on create.
         """
         return pulumi.get(self, "create")
 
     @create.setter
-    def create(self, value: Optional[pulumi.Input['CurlOptsArgs']]):
+    def create(self, value: Optional['CurlOptsArgs']):
         pulumi.set(self, "create", value)
 
     @property
     @pulumi.getter
-    def delete(self) -> Optional[pulumi.Input['CurlOptsArgs']]:
+    def delete(self) -> Optional['CurlOptsArgs']:
         """
         The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
         and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
@@ -105,7 +105,7 @@ class CurlArgs:
         return pulumi.get(self, "delete")
 
     @delete.setter
-    def delete(self, value: Optional[pulumi.Input['CurlOptsArgs']]):
+    def delete(self, value: Optional['CurlOptsArgs']):
         pulumi.set(self, "delete", value)
 
     @property
@@ -146,7 +146,7 @@ class CurlArgs:
 
     @property
     @pulumi.getter
-    def update(self) -> Optional[pulumi.Input['CurlOptsArgs']]:
+    def update(self) -> Optional['CurlOptsArgs']:
         """
         The command to run on update, if empty, create will 
         run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
@@ -156,7 +156,7 @@ class CurlArgs:
         return pulumi.get(self, "update")
 
     @update.setter
-    def update(self, value: Optional[pulumi.Input['CurlOptsArgs']]):
+    def update(self, value: Optional['CurlOptsArgs']):
         pulumi.set(self, "update", value)
 
 
@@ -167,12 +167,12 @@ class Curl(pulumi.CustomResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  binary_path: Optional[pulumi.Input[str]] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
-                 create: Optional[pulumi.Input[pulumi.InputType['CurlOptsArgs']]] = None,
-                 delete: Optional[pulumi.Input[pulumi.InputType['CurlOptsArgs']]] = None,
+                 create: Optional[pulumi.InputType['CurlOptsArgs']] = None,
+                 delete: Optional[pulumi.InputType['CurlOptsArgs']] = None,
                  environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  stdin: Optional[pulumi.Input[str]] = None,
                  triggers: Optional[pulumi.Input[Sequence[Any]]] = None,
-                 update: Optional[pulumi.Input[pulumi.InputType['CurlOptsArgs']]] = None,
+                 update: Optional[pulumi.InputType['CurlOptsArgs']] = None,
                  __props__=None):
         """
         Abstraction over the `curl` utility on a remote system. Transfer a URL.
@@ -181,14 +181,14 @@ class Curl(pulumi.CustomResource):
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[str] binary_path: Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
         :param pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']] connection: Connection details for the remote system
-        :param pulumi.Input[pulumi.InputType['CurlOptsArgs']] create: The command to run on create.
-        :param pulumi.Input[pulumi.InputType['CurlOptsArgs']] delete: The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+        :param pulumi.InputType['CurlOptsArgs'] create: The command to run on create.
+        :param pulumi.InputType['CurlOptsArgs'] delete: The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
                and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
                Command resource from previous create or update steps.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] environment: Environment variables
         :param pulumi.Input[str] stdin: TODO
         :param pulumi.Input[Sequence[Any]] triggers: TODO
-        :param pulumi.Input[pulumi.InputType['CurlOptsArgs']] update: The command to run on update, if empty, create will 
+        :param pulumi.InputType['CurlOptsArgs'] update: The command to run on update, if empty, create will 
                run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
                are set to the stdout and stderr properties of the Command resource from previous 
                create or update steps.
@@ -219,12 +219,12 @@ class Curl(pulumi.CustomResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  binary_path: Optional[pulumi.Input[str]] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
-                 create: Optional[pulumi.Input[pulumi.InputType['CurlOptsArgs']]] = None,
-                 delete: Optional[pulumi.Input[pulumi.InputType['CurlOptsArgs']]] = None,
+                 create: Optional[pulumi.InputType['CurlOptsArgs']] = None,
+                 delete: Optional[pulumi.InputType['CurlOptsArgs']] = None,
                  environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  stdin: Optional[pulumi.Input[str]] = None,
                  triggers: Optional[pulumi.Input[Sequence[Any]]] = None,
-                 update: Optional[pulumi.Input[pulumi.InputType['CurlOptsArgs']]] = None,
+                 update: Optional[pulumi.InputType['CurlOptsArgs']] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):

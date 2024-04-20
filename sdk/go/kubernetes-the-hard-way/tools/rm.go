@@ -120,11 +120,11 @@ type RmArgs struct {
 	// Connection details for the remote system
 	Connection pulumiCommand.ConnectionInput
 	// The command to run on create.
-	Create RmOptsPtrInput
+	Create *RmOptsArgs
 	// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
 	// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
 	// Command resource from previous create or update steps.
-	Delete RmOptsPtrInput
+	Delete *RmOptsArgs
 	// Environment variables
 	Environment pulumi.StringMapInput
 	// TODO
@@ -135,7 +135,7 @@ type RmArgs struct {
 	// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
 	// are set to the stdout and stderr properties of the Command resource from previous
 	// create or update steps.
-	Update RmOptsPtrInput
+	Update *RmOptsArgs
 }
 
 func (RmArgs) ElementType() reflect.Type {

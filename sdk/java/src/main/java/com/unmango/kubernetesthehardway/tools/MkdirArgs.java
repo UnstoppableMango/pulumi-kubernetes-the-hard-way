@@ -56,13 +56,13 @@ public final class MkdirArgs extends com.pulumi.resources.ResourceArgs {
      * 
      */
     @Import(name="create")
-    private @Nullable Output<MkdirOptsArgs> create;
+    private @Nullable MkdirOptsArgs create;
 
     /**
      * @return The command to run on create.
      * 
      */
-    public Optional<Output<MkdirOptsArgs>> create() {
+    public Optional<MkdirOptsArgs> create() {
         return Optional.ofNullable(this.create);
     }
 
@@ -73,7 +73,7 @@ public final class MkdirArgs extends com.pulumi.resources.ResourceArgs {
      * 
      */
     @Import(name="delete")
-    private @Nullable Output<MkdirOptsArgs> delete;
+    private @Nullable MkdirOptsArgs delete;
 
     /**
      * @return The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
@@ -81,7 +81,7 @@ public final class MkdirArgs extends com.pulumi.resources.ResourceArgs {
      * Command resource from previous create or update steps.
      * 
      */
-    public Optional<Output<MkdirOptsArgs>> delete() {
+    public Optional<MkdirOptsArgs> delete() {
         return Optional.ofNullable(this.delete);
     }
 
@@ -138,7 +138,7 @@ public final class MkdirArgs extends com.pulumi.resources.ResourceArgs {
      * 
      */
     @Import(name="update")
-    private @Nullable Output<MkdirOptsArgs> update;
+    private @Nullable MkdirOptsArgs update;
 
     /**
      * @return The command to run on update, if empty, create will
@@ -147,7 +147,7 @@ public final class MkdirArgs extends com.pulumi.resources.ResourceArgs {
      * create or update steps.
      * 
      */
-    public Optional<Output<MkdirOptsArgs>> update() {
+    public Optional<MkdirOptsArgs> update() {
         return Optional.ofNullable(this.update);
     }
 
@@ -230,22 +230,12 @@ public final class MkdirArgs extends com.pulumi.resources.ResourceArgs {
          * @return builder
          * 
          */
-        public Builder create(@Nullable Output<MkdirOptsArgs> create) {
+        public Builder create(@Nullable MkdirOptsArgs create) {
             $.create = create;
             return this;
         }
 
         /**
-         * @param create The command to run on create.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder create(MkdirOptsArgs create) {
-            return create(Output.of(create));
-        }
-
-        /**
          * @param delete The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
          * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
          * Command resource from previous create or update steps.
@@ -253,21 +243,9 @@ public final class MkdirArgs extends com.pulumi.resources.ResourceArgs {
          * @return builder
          * 
          */
-        public Builder delete(@Nullable Output<MkdirOptsArgs> delete) {
+        public Builder delete(@Nullable MkdirOptsArgs delete) {
             $.delete = delete;
             return this;
-        }
-
-        /**
-         * @param delete The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
-         * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
-         * Command resource from previous create or update steps.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder delete(MkdirOptsArgs delete) {
-            return delete(Output.of(delete));
         }
 
         /**
@@ -352,22 +330,9 @@ public final class MkdirArgs extends com.pulumi.resources.ResourceArgs {
          * @return builder
          * 
          */
-        public Builder update(@Nullable Output<MkdirOptsArgs> update) {
+        public Builder update(@Nullable MkdirOptsArgs update) {
             $.update = update;
             return this;
-        }
-
-        /**
-         * @param update The command to run on update, if empty, create will
-         * run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
-         * are set to the stdout and stderr properties of the Command resource from previous
-         * create or update steps.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder update(MkdirOptsArgs update) {
-            return update(Output.of(update));
         }
 
         public MkdirArgs build() {

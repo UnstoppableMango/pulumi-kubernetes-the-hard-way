@@ -20,24 +20,24 @@ class TeeArgs:
     def __init__(__self__, *,
                  connection: pulumi.Input['pulumi_command.remote.ConnectionArgs'],
                  binary_path: Optional[pulumi.Input[str]] = None,
-                 create: Optional[pulumi.Input['TeeOptsArgs']] = None,
-                 delete: Optional[pulumi.Input['TeeOptsArgs']] = None,
+                 create: Optional['TeeOptsArgs'] = None,
+                 delete: Optional['TeeOptsArgs'] = None,
                  environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  stdin: Optional[pulumi.Input[str]] = None,
                  triggers: Optional[pulumi.Input[Sequence[Any]]] = None,
-                 update: Optional[pulumi.Input['TeeOptsArgs']] = None):
+                 update: Optional['TeeOptsArgs'] = None):
         """
         The set of arguments for constructing a Tee resource.
         :param pulumi.Input['pulumi_command.remote.ConnectionArgs'] connection: Connection details for the remote system
         :param pulumi.Input[str] binary_path: Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
-        :param pulumi.Input['TeeOptsArgs'] create: The command to run on create.
-        :param pulumi.Input['TeeOptsArgs'] delete: The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+        :param 'TeeOptsArgs' create: The command to run on create.
+        :param 'TeeOptsArgs' delete: The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
                and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
                Command resource from previous create or update steps.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] environment: Environment variables
         :param pulumi.Input[str] stdin: TODO
         :param pulumi.Input[Sequence[Any]] triggers: TODO
-        :param pulumi.Input['TeeOptsArgs'] update: The command to run on update, if empty, create will 
+        :param 'TeeOptsArgs' update: The command to run on update, if empty, create will 
                run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
                are set to the stdout and stderr properties of the Command resource from previous 
                create or update steps.
@@ -84,19 +84,19 @@ class TeeArgs:
 
     @property
     @pulumi.getter
-    def create(self) -> Optional[pulumi.Input['TeeOptsArgs']]:
+    def create(self) -> Optional['TeeOptsArgs']:
         """
         The command to run on create.
         """
         return pulumi.get(self, "create")
 
     @create.setter
-    def create(self, value: Optional[pulumi.Input['TeeOptsArgs']]):
+    def create(self, value: Optional['TeeOptsArgs']):
         pulumi.set(self, "create", value)
 
     @property
     @pulumi.getter
-    def delete(self) -> Optional[pulumi.Input['TeeOptsArgs']]:
+    def delete(self) -> Optional['TeeOptsArgs']:
         """
         The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
         and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
@@ -105,7 +105,7 @@ class TeeArgs:
         return pulumi.get(self, "delete")
 
     @delete.setter
-    def delete(self, value: Optional[pulumi.Input['TeeOptsArgs']]):
+    def delete(self, value: Optional['TeeOptsArgs']):
         pulumi.set(self, "delete", value)
 
     @property
@@ -146,7 +146,7 @@ class TeeArgs:
 
     @property
     @pulumi.getter
-    def update(self) -> Optional[pulumi.Input['TeeOptsArgs']]:
+    def update(self) -> Optional['TeeOptsArgs']:
         """
         The command to run on update, if empty, create will 
         run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
@@ -156,7 +156,7 @@ class TeeArgs:
         return pulumi.get(self, "update")
 
     @update.setter
-    def update(self, value: Optional[pulumi.Input['TeeOptsArgs']]):
+    def update(self, value: Optional['TeeOptsArgs']):
         pulumi.set(self, "update", value)
 
 
@@ -167,12 +167,12 @@ class Tee(pulumi.CustomResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  binary_path: Optional[pulumi.Input[str]] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
-                 create: Optional[pulumi.Input[pulumi.InputType['TeeOptsArgs']]] = None,
-                 delete: Optional[pulumi.Input[pulumi.InputType['TeeOptsArgs']]] = None,
+                 create: Optional[pulumi.InputType['TeeOptsArgs']] = None,
+                 delete: Optional[pulumi.InputType['TeeOptsArgs']] = None,
                  environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  stdin: Optional[pulumi.Input[str]] = None,
                  triggers: Optional[pulumi.Input[Sequence[Any]]] = None,
-                 update: Optional[pulumi.Input[pulumi.InputType['TeeOptsArgs']]] = None,
+                 update: Optional[pulumi.InputType['TeeOptsArgs']] = None,
                  __props__=None):
         """
         Abstraction over the `rm` utility on a remote system.
@@ -181,14 +181,14 @@ class Tee(pulumi.CustomResource):
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[str] binary_path: Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
         :param pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']] connection: Connection details for the remote system
-        :param pulumi.Input[pulumi.InputType['TeeOptsArgs']] create: The command to run on create.
-        :param pulumi.Input[pulumi.InputType['TeeOptsArgs']] delete: The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+        :param pulumi.InputType['TeeOptsArgs'] create: The command to run on create.
+        :param pulumi.InputType['TeeOptsArgs'] delete: The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
                and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
                Command resource from previous create or update steps.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] environment: Environment variables
         :param pulumi.Input[str] stdin: TODO
         :param pulumi.Input[Sequence[Any]] triggers: TODO
-        :param pulumi.Input[pulumi.InputType['TeeOptsArgs']] update: The command to run on update, if empty, create will 
+        :param pulumi.InputType['TeeOptsArgs'] update: The command to run on update, if empty, create will 
                run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
                are set to the stdout and stderr properties of the Command resource from previous 
                create or update steps.
@@ -219,12 +219,12 @@ class Tee(pulumi.CustomResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  binary_path: Optional[pulumi.Input[str]] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
-                 create: Optional[pulumi.Input[pulumi.InputType['TeeOptsArgs']]] = None,
-                 delete: Optional[pulumi.Input[pulumi.InputType['TeeOptsArgs']]] = None,
+                 create: Optional[pulumi.InputType['TeeOptsArgs']] = None,
+                 delete: Optional[pulumi.InputType['TeeOptsArgs']] = None,
                  environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  stdin: Optional[pulumi.Input[str]] = None,
                  triggers: Optional[pulumi.Input[Sequence[Any]]] = None,
-                 update: Optional[pulumi.Input[pulumi.InputType['TeeOptsArgs']]] = None,
+                 update: Optional[pulumi.InputType['TeeOptsArgs']] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):

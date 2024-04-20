@@ -19,24 +19,24 @@ class SedArgs:
     def __init__(__self__, *,
                  connection: pulumi.Input['pulumi_command.remote.ConnectionArgs'],
                  binary_path: Optional[pulumi.Input[str]] = None,
-                 create: Optional[pulumi.Input['SedOptsArgs']] = None,
-                 delete: Optional[pulumi.Input['SedOptsArgs']] = None,
+                 create: Optional['SedOptsArgs'] = None,
+                 delete: Optional['SedOptsArgs'] = None,
                  environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  stdin: Optional[pulumi.Input[str]] = None,
                  triggers: Optional[pulumi.Input[Sequence[Any]]] = None,
-                 update: Optional[pulumi.Input['SedOptsArgs']] = None):
+                 update: Optional['SedOptsArgs'] = None):
         """
         The set of arguments for constructing a Sed resource.
         :param pulumi.Input['pulumi_command.remote.ConnectionArgs'] connection: Connection details for the remote system
         :param pulumi.Input[str] binary_path: Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
-        :param pulumi.Input['SedOptsArgs'] create: The command to run on create.
-        :param pulumi.Input['SedOptsArgs'] delete: The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+        :param 'SedOptsArgs' create: The command to run on create.
+        :param 'SedOptsArgs' delete: The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
                and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
                Command resource from previous create or update steps.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] environment: Environment variables
         :param pulumi.Input[str] stdin: TODO
         :param pulumi.Input[Sequence[Any]] triggers: TODO
-        :param pulumi.Input['SedOptsArgs'] update: The command to run on update, if empty, create will 
+        :param 'SedOptsArgs' update: The command to run on update, if empty, create will 
                run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
                are set to the stdout and stderr properties of the Command resource from previous 
                create or update steps.
@@ -83,19 +83,19 @@ class SedArgs:
 
     @property
     @pulumi.getter
-    def create(self) -> Optional[pulumi.Input['SedOptsArgs']]:
+    def create(self) -> Optional['SedOptsArgs']:
         """
         The command to run on create.
         """
         return pulumi.get(self, "create")
 
     @create.setter
-    def create(self, value: Optional[pulumi.Input['SedOptsArgs']]):
+    def create(self, value: Optional['SedOptsArgs']):
         pulumi.set(self, "create", value)
 
     @property
     @pulumi.getter
-    def delete(self) -> Optional[pulumi.Input['SedOptsArgs']]:
+    def delete(self) -> Optional['SedOptsArgs']:
         """
         The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
         and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
@@ -104,7 +104,7 @@ class SedArgs:
         return pulumi.get(self, "delete")
 
     @delete.setter
-    def delete(self, value: Optional[pulumi.Input['SedOptsArgs']]):
+    def delete(self, value: Optional['SedOptsArgs']):
         pulumi.set(self, "delete", value)
 
     @property
@@ -145,7 +145,7 @@ class SedArgs:
 
     @property
     @pulumi.getter
-    def update(self) -> Optional[pulumi.Input['SedOptsArgs']]:
+    def update(self) -> Optional['SedOptsArgs']:
         """
         The command to run on update, if empty, create will 
         run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
@@ -155,7 +155,7 @@ class SedArgs:
         return pulumi.get(self, "update")
 
     @update.setter
-    def update(self, value: Optional[pulumi.Input['SedOptsArgs']]):
+    def update(self, value: Optional['SedOptsArgs']):
         pulumi.set(self, "update", value)
 
 
@@ -166,12 +166,12 @@ class Sed(pulumi.CustomResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  binary_path: Optional[pulumi.Input[str]] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
-                 create: Optional[pulumi.Input[pulumi.InputType['SedOptsArgs']]] = None,
-                 delete: Optional[pulumi.Input[pulumi.InputType['SedOptsArgs']]] = None,
+                 create: Optional[pulumi.InputType['SedOptsArgs']] = None,
+                 delete: Optional[pulumi.InputType['SedOptsArgs']] = None,
                  environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  stdin: Optional[pulumi.Input[str]] = None,
                  triggers: Optional[pulumi.Input[Sequence[Any]]] = None,
-                 update: Optional[pulumi.Input[pulumi.InputType['SedOptsArgs']]] = None,
+                 update: Optional[pulumi.InputType['SedOptsArgs']] = None,
                  __props__=None):
         """
         Abstraction over the `sed` utility on a remote system.
@@ -180,14 +180,14 @@ class Sed(pulumi.CustomResource):
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[str] binary_path: Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
         :param pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']] connection: Connection details for the remote system
-        :param pulumi.Input[pulumi.InputType['SedOptsArgs']] create: The command to run on create.
-        :param pulumi.Input[pulumi.InputType['SedOptsArgs']] delete: The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+        :param pulumi.InputType['SedOptsArgs'] create: The command to run on create.
+        :param pulumi.InputType['SedOptsArgs'] delete: The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
                and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
                Command resource from previous create or update steps.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] environment: Environment variables
         :param pulumi.Input[str] stdin: TODO
         :param pulumi.Input[Sequence[Any]] triggers: TODO
-        :param pulumi.Input[pulumi.InputType['SedOptsArgs']] update: The command to run on update, if empty, create will 
+        :param pulumi.InputType['SedOptsArgs'] update: The command to run on update, if empty, create will 
                run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
                are set to the stdout and stderr properties of the Command resource from previous 
                create or update steps.
@@ -218,12 +218,12 @@ class Sed(pulumi.CustomResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  binary_path: Optional[pulumi.Input[str]] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
-                 create: Optional[pulumi.Input[pulumi.InputType['SedOptsArgs']]] = None,
-                 delete: Optional[pulumi.Input[pulumi.InputType['SedOptsArgs']]] = None,
+                 create: Optional[pulumi.InputType['SedOptsArgs']] = None,
+                 delete: Optional[pulumi.InputType['SedOptsArgs']] = None,
                  environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  stdin: Optional[pulumi.Input[str]] = None,
                  triggers: Optional[pulumi.Input[Sequence[Any]]] = None,
-                 update: Optional[pulumi.Input[pulumi.InputType['SedOptsArgs']]] = None,
+                 update: Optional[pulumi.InputType['SedOptsArgs']] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):

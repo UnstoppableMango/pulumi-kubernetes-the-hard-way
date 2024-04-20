@@ -147,13 +147,13 @@ export interface SystemctlArgs {
     /**
      * The command to run on create.
      */
-    create?: pulumi.Input<inputs.tools.SystemctlOptsArgs>;
+    create?: inputs.tools.SystemctlOptsArgs;
     /**
      * The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
      * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
      * Command resource from previous create or update steps.
      */
-    delete?: pulumi.Input<inputs.tools.SystemctlOptsArgs>;
+    delete?: inputs.tools.SystemctlOptsArgs;
     /**
      * Environment variables
      */
@@ -172,5 +172,5 @@ export interface SystemctlArgs {
      * are set to the stdout and stderr properties of the Command resource from previous 
      * create or update steps.
      */
-    update?: pulumi.Input<inputs.tools.SystemctlOptsArgs>;
+    update?: inputs.tools.SystemctlOptsArgs;
 }

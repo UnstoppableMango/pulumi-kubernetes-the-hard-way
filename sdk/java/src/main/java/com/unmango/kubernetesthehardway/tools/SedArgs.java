@@ -56,13 +56,13 @@ public final class SedArgs extends com.pulumi.resources.ResourceArgs {
      * 
      */
     @Import(name="create")
-    private @Nullable Output<SedOptsArgs> create;
+    private @Nullable SedOptsArgs create;
 
     /**
      * @return The command to run on create.
      * 
      */
-    public Optional<Output<SedOptsArgs>> create() {
+    public Optional<SedOptsArgs> create() {
         return Optional.ofNullable(this.create);
     }
 
@@ -73,7 +73,7 @@ public final class SedArgs extends com.pulumi.resources.ResourceArgs {
      * 
      */
     @Import(name="delete")
-    private @Nullable Output<SedOptsArgs> delete;
+    private @Nullable SedOptsArgs delete;
 
     /**
      * @return The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
@@ -81,7 +81,7 @@ public final class SedArgs extends com.pulumi.resources.ResourceArgs {
      * Command resource from previous create or update steps.
      * 
      */
-    public Optional<Output<SedOptsArgs>> delete() {
+    public Optional<SedOptsArgs> delete() {
         return Optional.ofNullable(this.delete);
     }
 
@@ -138,7 +138,7 @@ public final class SedArgs extends com.pulumi.resources.ResourceArgs {
      * 
      */
     @Import(name="update")
-    private @Nullable Output<SedOptsArgs> update;
+    private @Nullable SedOptsArgs update;
 
     /**
      * @return The command to run on update, if empty, create will
@@ -147,7 +147,7 @@ public final class SedArgs extends com.pulumi.resources.ResourceArgs {
      * create or update steps.
      * 
      */
-    public Optional<Output<SedOptsArgs>> update() {
+    public Optional<SedOptsArgs> update() {
         return Optional.ofNullable(this.update);
     }
 
@@ -230,22 +230,12 @@ public final class SedArgs extends com.pulumi.resources.ResourceArgs {
          * @return builder
          * 
          */
-        public Builder create(@Nullable Output<SedOptsArgs> create) {
+        public Builder create(@Nullable SedOptsArgs create) {
             $.create = create;
             return this;
         }
 
         /**
-         * @param create The command to run on create.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder create(SedOptsArgs create) {
-            return create(Output.of(create));
-        }
-
-        /**
          * @param delete The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
          * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
          * Command resource from previous create or update steps.
@@ -253,21 +243,9 @@ public final class SedArgs extends com.pulumi.resources.ResourceArgs {
          * @return builder
          * 
          */
-        public Builder delete(@Nullable Output<SedOptsArgs> delete) {
+        public Builder delete(@Nullable SedOptsArgs delete) {
             $.delete = delete;
             return this;
-        }
-
-        /**
-         * @param delete The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
-         * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
-         * Command resource from previous create or update steps.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder delete(SedOptsArgs delete) {
-            return delete(Output.of(delete));
         }
 
         /**
@@ -352,22 +330,9 @@ public final class SedArgs extends com.pulumi.resources.ResourceArgs {
          * @return builder
          * 
          */
-        public Builder update(@Nullable Output<SedOptsArgs> update) {
+        public Builder update(@Nullable SedOptsArgs update) {
             $.update = update;
             return this;
-        }
-
-        /**
-         * @param update The command to run on update, if empty, create will
-         * run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
-         * are set to the stdout and stderr properties of the Command resource from previous
-         * create or update steps.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder update(SedOptsArgs update) {
-            return update(Output.of(update));
         }
 
         public SedArgs build() {

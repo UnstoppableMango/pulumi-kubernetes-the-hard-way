@@ -4457,10 +4457,12 @@
                 },
                 "create": {
                     "$ref": "#/types/kubernetes-the-hard-way:tools:ChmodOpts",
+                    "plain": true,
                     "description": "The command to run on create."
                 },
                 "delete": {
                     "$ref": "#/types/kubernetes-the-hard-way:tools:ChmodOpts",
+                    "plain": true,
                     "description": "The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT\nand PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the\nCommand resource from previous create or update steps."
                 },
                 "environment": {
@@ -4491,6 +4493,7 @@
                 },
                 "update": {
                     "$ref": "#/types/kubernetes-the-hard-way:tools:ChmodOpts",
+                    "plain": true,
                     "description": "The command to run on update, if empty, create will \nrun again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR \nare set to the stdout and stderr properties of the Command resource from previous \ncreate or update steps."
                 }
             },
@@ -4514,10 +4517,12 @@
                 },
                 "create": {
                     "$ref": "#/types/kubernetes-the-hard-way:tools:ChmodOpts",
+                    "plain": true,
                     "description": "The command to run on create."
                 },
                 "delete": {
                     "$ref": "#/types/kubernetes-the-hard-way:tools:ChmodOpts",
+                    "plain": true,
                     "description": "The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT\nand PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the\nCommand resource from previous create or update steps."
                 },
                 "environment": {
@@ -4540,6 +4545,7 @@
                 },
                 "update": {
                     "$ref": "#/types/kubernetes-the-hard-way:tools:ChmodOpts",
+                    "plain": true,
                     "description": "The command to run on update, if empty, create will \nrun again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR \nare set to the stdout and stderr properties of the Command resource from previous \ncreate or update steps."
                 }
             },
@@ -4564,10 +4570,12 @@
                 },
                 "create": {
                     "$ref": "#/types/kubernetes-the-hard-way:tools:CurlOpts",
+                    "plain": true,
                     "description": "The command to run on create."
                 },
                 "delete": {
                     "$ref": "#/types/kubernetes-the-hard-way:tools:CurlOpts",
+                    "plain": true,
                     "description": "The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT\nand PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the\nCommand resource from previous create or update steps."
                 },
                 "environment": {
@@ -4598,6 +4606,7 @@
                 },
                 "update": {
                     "$ref": "#/types/kubernetes-the-hard-way:tools:CurlOpts",
+                    "plain": true,
                     "description": "The command to run on update, if empty, create will \nrun again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR \nare set to the stdout and stderr properties of the Command resource from previous \ncreate or update steps."
                 }
             },
@@ -4621,10 +4630,12 @@
                 },
                 "create": {
                     "$ref": "#/types/kubernetes-the-hard-way:tools:CurlOpts",
+                    "plain": true,
                     "description": "The command to run on create."
                 },
                 "delete": {
                     "$ref": "#/types/kubernetes-the-hard-way:tools:CurlOpts",
+                    "plain": true,
                     "description": "The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT\nand PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the\nCommand resource from previous create or update steps."
                 },
                 "environment": {
@@ -4647,6 +4658,7 @@
                 },
                 "update": {
                     "$ref": "#/types/kubernetes-the-hard-way:tools:CurlOpts",
+                    "plain": true,
                     "description": "The command to run on update, if empty, create will \nrun again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR \nare set to the stdout and stderr properties of the Command resource from previous \ncreate or update steps."
                 }
             },
@@ -4671,10 +4683,12 @@
                 },
                 "create": {
                     "$ref": "#/types/kubernetes-the-hard-way:tools:EtcdctlOpts",
+                    "plain": true,
                     "description": "The command to run on create."
                 },
                 "delete": {
                     "$ref": "#/types/kubernetes-the-hard-way:tools:EtcdctlOpts",
+                    "plain": true,
                     "description": "The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT\nand PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the\nCommand resource from previous create or update steps."
                 },
                 "environment": {
@@ -4705,6 +4719,7 @@
                 },
                 "update": {
                     "$ref": "#/types/kubernetes-the-hard-way:tools:EtcdctlOpts",
+                    "plain": true,
                     "description": "The command to run on update, if empty, create will \nrun again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR \nare set to the stdout and stderr properties of the Command resource from previous \ncreate or update steps."
                 }
             },
@@ -4728,10 +4743,12 @@
                 },
                 "create": {
                     "$ref": "#/types/kubernetes-the-hard-way:tools:EtcdctlOpts",
+                    "plain": true,
                     "description": "The command to run on create."
                 },
                 "delete": {
                     "$ref": "#/types/kubernetes-the-hard-way:tools:EtcdctlOpts",
+                    "plain": true,
                     "description": "The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT\nand PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the\nCommand resource from previous create or update steps."
                 },
                 "environment": {
@@ -4754,6 +4771,7 @@
                 },
                 "update": {
                     "$ref": "#/types/kubernetes-the-hard-way:tools:EtcdctlOpts",
+                    "plain": true,
                     "description": "The command to run on update, if empty, create will \nrun again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR \nare set to the stdout and stderr properties of the Command resource from previous \ncreate or update steps."
                 }
             },
@@ -4778,10 +4796,12 @@
                 },
                 "create": {
                     "$ref": "#/types/kubernetes-the-hard-way:tools:HostnamectlOpts",
+                    "plain": true,
                     "description": "The command to run on create."
                 },
                 "delete": {
                     "$ref": "#/types/kubernetes-the-hard-way:tools:HostnamectlOpts",
+                    "plain": true,
                     "description": "The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT\nand PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the\nCommand resource from previous create or update steps."
                 },
                 "environment": {
@@ -4812,6 +4832,7 @@
                 },
                 "update": {
                     "$ref": "#/types/kubernetes-the-hard-way:tools:HostnamectlOpts",
+                    "plain": true,
                     "description": "The command to run on update, if empty, create will \nrun again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR \nare set to the stdout and stderr properties of the Command resource from previous \ncreate or update steps."
                 }
             },
@@ -4835,10 +4856,12 @@
                 },
                 "create": {
                     "$ref": "#/types/kubernetes-the-hard-way:tools:HostnamectlOpts",
+                    "plain": true,
                     "description": "The command to run on create."
                 },
                 "delete": {
                     "$ref": "#/types/kubernetes-the-hard-way:tools:HostnamectlOpts",
+                    "plain": true,
                     "description": "The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT\nand PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the\nCommand resource from previous create or update steps."
                 },
                 "environment": {
@@ -4861,6 +4884,7 @@
                 },
                 "update": {
                     "$ref": "#/types/kubernetes-the-hard-way:tools:HostnamectlOpts",
+                    "plain": true,
                     "description": "The command to run on update, if empty, create will \nrun again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR \nare set to the stdout and stderr properties of the Command resource from previous \ncreate or update steps."
                 }
             },
@@ -4885,10 +4909,12 @@
                 },
                 "create": {
                     "$ref": "#/types/kubernetes-the-hard-way:tools:MkdirOpts",
+                    "plain": true,
                     "description": "The command to run on create."
                 },
                 "delete": {
                     "$ref": "#/types/kubernetes-the-hard-way:tools:MkdirOpts",
+                    "plain": true,
                     "description": "The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT\nand PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the\nCommand resource from previous create or update steps."
                 },
                 "environment": {
@@ -4919,6 +4945,7 @@
                 },
                 "update": {
                     "$ref": "#/types/kubernetes-the-hard-way:tools:MkdirOpts",
+                    "plain": true,
                     "description": "The command to run on update, if empty, create will \nrun again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR \nare set to the stdout and stderr properties of the Command resource from previous \ncreate or update steps."
                 }
             },
@@ -4942,10 +4969,12 @@
                 },
                 "create": {
                     "$ref": "#/types/kubernetes-the-hard-way:tools:MkdirOpts",
+                    "plain": true,
                     "description": "The command to run on create."
                 },
                 "delete": {
                     "$ref": "#/types/kubernetes-the-hard-way:tools:MkdirOpts",
+                    "plain": true,
                     "description": "The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT\nand PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the\nCommand resource from previous create or update steps."
                 },
                 "environment": {
@@ -4968,6 +4997,7 @@
                 },
                 "update": {
                     "$ref": "#/types/kubernetes-the-hard-way:tools:MkdirOpts",
+                    "plain": true,
                     "description": "The command to run on update, if empty, create will \nrun again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR \nare set to the stdout and stderr properties of the Command resource from previous \ncreate or update steps."
                 }
             },
@@ -4992,10 +5022,12 @@
                 },
                 "create": {
                     "$ref": "#/types/kubernetes-the-hard-way:tools:MktempOpts",
+                    "plain": true,
                     "description": "The command to run on create."
                 },
                 "delete": {
                     "$ref": "#/types/kubernetes-the-hard-way:tools:MktempOpts",
+                    "plain": true,
                     "description": "The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT\nand PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the\nCommand resource from previous create or update steps."
                 },
                 "environment": {
@@ -5026,6 +5058,7 @@
                 },
                 "update": {
                     "$ref": "#/types/kubernetes-the-hard-way:tools:MktempOpts",
+                    "plain": true,
                     "description": "The command to run on update, if empty, create will \nrun again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR \nare set to the stdout and stderr properties of the Command resource from previous \ncreate or update steps."
                 }
             },
@@ -5049,10 +5082,12 @@
                 },
                 "create": {
                     "$ref": "#/types/kubernetes-the-hard-way:tools:MktempOpts",
+                    "plain": true,
                     "description": "The command to run on create."
                 },
                 "delete": {
                     "$ref": "#/types/kubernetes-the-hard-way:tools:MktempOpts",
+                    "plain": true,
                     "description": "The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT\nand PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the\nCommand resource from previous create or update steps."
                 },
                 "environment": {
@@ -5075,6 +5110,7 @@
                 },
                 "update": {
                     "$ref": "#/types/kubernetes-the-hard-way:tools:MktempOpts",
+                    "plain": true,
                     "description": "The command to run on update, if empty, create will \nrun again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR \nare set to the stdout and stderr properties of the Command resource from previous \ncreate or update steps."
                 }
             },
@@ -5099,10 +5135,12 @@
                 },
                 "create": {
                     "$ref": "#/types/kubernetes-the-hard-way:tools:MvOpts",
+                    "plain": true,
                     "description": "The command to run on create."
                 },
                 "delete": {
                     "$ref": "#/types/kubernetes-the-hard-way:tools:MvOpts",
+                    "plain": true,
                     "description": "The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT\nand PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the\nCommand resource from previous create or update steps."
                 },
                 "environment": {
@@ -5133,6 +5171,7 @@
                 },
                 "update": {
                     "$ref": "#/types/kubernetes-the-hard-way:tools:MvOpts",
+                    "plain": true,
                     "description": "The command to run on update, if empty, create will \nrun again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR \nare set to the stdout and stderr properties of the Command resource from previous \ncreate or update steps."
                 }
             },
@@ -5156,10 +5195,12 @@
                 },
                 "create": {
                     "$ref": "#/types/kubernetes-the-hard-way:tools:MvOpts",
+                    "plain": true,
                     "description": "The command to run on create."
                 },
                 "delete": {
                     "$ref": "#/types/kubernetes-the-hard-way:tools:MvOpts",
+                    "plain": true,
                     "description": "The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT\nand PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the\nCommand resource from previous create or update steps."
                 },
                 "environment": {
@@ -5182,6 +5223,7 @@
                 },
                 "update": {
                     "$ref": "#/types/kubernetes-the-hard-way:tools:MvOpts",
+                    "plain": true,
                     "description": "The command to run on update, if empty, create will \nrun again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR \nare set to the stdout and stderr properties of the Command resource from previous \ncreate or update steps."
                 }
             },
@@ -5206,10 +5248,12 @@
                 },
                 "create": {
                     "$ref": "#/types/kubernetes-the-hard-way:tools:RmOpts",
+                    "plain": true,
                     "description": "The command to run on create."
                 },
                 "delete": {
                     "$ref": "#/types/kubernetes-the-hard-way:tools:RmOpts",
+                    "plain": true,
                     "description": "The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT\nand PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the\nCommand resource from previous create or update steps."
                 },
                 "environment": {
@@ -5240,6 +5284,7 @@
                 },
                 "update": {
                     "$ref": "#/types/kubernetes-the-hard-way:tools:RmOpts",
+                    "plain": true,
                     "description": "The command to run on update, if empty, create will \nrun again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR \nare set to the stdout and stderr properties of the Command resource from previous \ncreate or update steps."
                 }
             },
@@ -5263,10 +5308,12 @@
                 },
                 "create": {
                     "$ref": "#/types/kubernetes-the-hard-way:tools:RmOpts",
+                    "plain": true,
                     "description": "The command to run on create."
                 },
                 "delete": {
                     "$ref": "#/types/kubernetes-the-hard-way:tools:RmOpts",
+                    "plain": true,
                     "description": "The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT\nand PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the\nCommand resource from previous create or update steps."
                 },
                 "environment": {
@@ -5289,6 +5336,7 @@
                 },
                 "update": {
                     "$ref": "#/types/kubernetes-the-hard-way:tools:RmOpts",
+                    "plain": true,
                     "description": "The command to run on update, if empty, create will \nrun again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR \nare set to the stdout and stderr properties of the Command resource from previous \ncreate or update steps."
                 }
             },
@@ -5313,10 +5361,12 @@
                 },
                 "create": {
                     "$ref": "#/types/kubernetes-the-hard-way:tools:SedOpts",
+                    "plain": true,
                     "description": "The command to run on create."
                 },
                 "delete": {
                     "$ref": "#/types/kubernetes-the-hard-way:tools:SedOpts",
+                    "plain": true,
                     "description": "The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT\nand PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the\nCommand resource from previous create or update steps."
                 },
                 "environment": {
@@ -5347,6 +5397,7 @@
                 },
                 "update": {
                     "$ref": "#/types/kubernetes-the-hard-way:tools:SedOpts",
+                    "plain": true,
                     "description": "The command to run on update, if empty, create will \nrun again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR \nare set to the stdout and stderr properties of the Command resource from previous \ncreate or update steps."
                 }
             },
@@ -5370,10 +5421,12 @@
                 },
                 "create": {
                     "$ref": "#/types/kubernetes-the-hard-way:tools:SedOpts",
+                    "plain": true,
                     "description": "The command to run on create."
                 },
                 "delete": {
                     "$ref": "#/types/kubernetes-the-hard-way:tools:SedOpts",
+                    "plain": true,
                     "description": "The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT\nand PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the\nCommand resource from previous create or update steps."
                 },
                 "environment": {
@@ -5396,6 +5449,7 @@
                 },
                 "update": {
                     "$ref": "#/types/kubernetes-the-hard-way:tools:SedOpts",
+                    "plain": true,
                     "description": "The command to run on update, if empty, create will \nrun again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR \nare set to the stdout and stderr properties of the Command resource from previous \ncreate or update steps."
                 }
             },
@@ -5420,10 +5474,12 @@
                 },
                 "create": {
                     "$ref": "#/types/kubernetes-the-hard-way:tools:SystemctlOpts",
+                    "plain": true,
                     "description": "The command to run on create."
                 },
                 "delete": {
                     "$ref": "#/types/kubernetes-the-hard-way:tools:SystemctlOpts",
+                    "plain": true,
                     "description": "The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT\nand PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the\nCommand resource from previous create or update steps."
                 },
                 "environment": {
@@ -5454,6 +5510,7 @@
                 },
                 "update": {
                     "$ref": "#/types/kubernetes-the-hard-way:tools:SystemctlOpts",
+                    "plain": true,
                     "description": "The command to run on update, if empty, create will \nrun again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR \nare set to the stdout and stderr properties of the Command resource from previous \ncreate or update steps."
                 }
             },
@@ -5477,10 +5534,12 @@
                 },
                 "create": {
                     "$ref": "#/types/kubernetes-the-hard-way:tools:SystemctlOpts",
+                    "plain": true,
                     "description": "The command to run on create."
                 },
                 "delete": {
                     "$ref": "#/types/kubernetes-the-hard-way:tools:SystemctlOpts",
+                    "plain": true,
                     "description": "The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT\nand PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the\nCommand resource from previous create or update steps."
                 },
                 "environment": {
@@ -5503,6 +5562,7 @@
                 },
                 "update": {
                     "$ref": "#/types/kubernetes-the-hard-way:tools:SystemctlOpts",
+                    "plain": true,
                     "description": "The command to run on update, if empty, create will \nrun again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR \nare set to the stdout and stderr properties of the Command resource from previous \ncreate or update steps."
                 }
             },
@@ -5527,10 +5587,12 @@
                 },
                 "create": {
                     "$ref": "#/types/kubernetes-the-hard-way:tools:TarOpts",
+                    "plain": true,
                     "description": "The command to run on create."
                 },
                 "delete": {
                     "$ref": "#/types/kubernetes-the-hard-way:tools:TarOpts",
+                    "plain": true,
                     "description": "The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT\nand PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the\nCommand resource from previous create or update steps."
                 },
                 "environment": {
@@ -5561,6 +5623,7 @@
                 },
                 "update": {
                     "$ref": "#/types/kubernetes-the-hard-way:tools:TarOpts",
+                    "plain": true,
                     "description": "The command to run on update, if empty, create will \nrun again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR \nare set to the stdout and stderr properties of the Command resource from previous \ncreate or update steps."
                 }
             },
@@ -5584,10 +5647,12 @@
                 },
                 "create": {
                     "$ref": "#/types/kubernetes-the-hard-way:tools:TarOpts",
+                    "plain": true,
                     "description": "The command to run on create."
                 },
                 "delete": {
                     "$ref": "#/types/kubernetes-the-hard-way:tools:TarOpts",
+                    "plain": true,
                     "description": "The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT\nand PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the\nCommand resource from previous create or update steps."
                 },
                 "environment": {
@@ -5610,6 +5675,7 @@
                 },
                 "update": {
                     "$ref": "#/types/kubernetes-the-hard-way:tools:TarOpts",
+                    "plain": true,
                     "description": "The command to run on update, if empty, create will \nrun again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR \nare set to the stdout and stderr properties of the Command resource from previous \ncreate or update steps."
                 }
             },
@@ -5634,10 +5700,12 @@
                 },
                 "create": {
                     "$ref": "#/types/kubernetes-the-hard-way:tools:TeeOpts",
+                    "plain": true,
                     "description": "The command to run on create."
                 },
                 "delete": {
                     "$ref": "#/types/kubernetes-the-hard-way:tools:TeeOpts",
+                    "plain": true,
                     "description": "The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT\nand PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the\nCommand resource from previous create or update steps."
                 },
                 "environment": {
@@ -5668,6 +5736,7 @@
                 },
                 "update": {
                     "$ref": "#/types/kubernetes-the-hard-way:tools:TeeOpts",
+                    "plain": true,
                     "description": "The command to run on update, if empty, create will \nrun again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR \nare set to the stdout and stderr properties of the Command resource from previous \ncreate or update steps."
                 }
             },
@@ -5691,10 +5760,12 @@
                 },
                 "create": {
                     "$ref": "#/types/kubernetes-the-hard-way:tools:TeeOpts",
+                    "plain": true,
                     "description": "The command to run on create."
                 },
                 "delete": {
                     "$ref": "#/types/kubernetes-the-hard-way:tools:TeeOpts",
+                    "plain": true,
                     "description": "The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT\nand PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the\nCommand resource from previous create or update steps."
                 },
                 "environment": {
@@ -5717,6 +5788,7 @@
                 },
                 "update": {
                     "$ref": "#/types/kubernetes-the-hard-way:tools:TeeOpts",
+                    "plain": true,
                     "description": "The command to run on update, if empty, create will \nrun again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR \nare set to the stdout and stderr properties of the Command resource from previous \ncreate or update steps."
                 }
             },
@@ -5741,10 +5813,12 @@
                 },
                 "create": {
                     "$ref": "#/types/kubernetes-the-hard-way:tools:WgetOpts",
+                    "plain": true,
                     "description": "The command to run on create."
                 },
                 "delete": {
                     "$ref": "#/types/kubernetes-the-hard-way:tools:WgetOpts",
+                    "plain": true,
                     "description": "The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT\nand PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the\nCommand resource from previous create or update steps."
                 },
                 "environment": {
@@ -5775,6 +5849,7 @@
                 },
                 "update": {
                     "$ref": "#/types/kubernetes-the-hard-way:tools:WgetOpts",
+                    "plain": true,
                     "description": "The command to run on update, if empty, create will \nrun again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR \nare set to the stdout and stderr properties of the Command resource from previous \ncreate or update steps."
                 }
             },
@@ -5798,10 +5873,12 @@
                 },
                 "create": {
                     "$ref": "#/types/kubernetes-the-hard-way:tools:WgetOpts",
+                    "plain": true,
                     "description": "The command to run on create."
                 },
                 "delete": {
                     "$ref": "#/types/kubernetes-the-hard-way:tools:WgetOpts",
+                    "plain": true,
                     "description": "The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT\nand PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the\nCommand resource from previous create or update steps."
                 },
                 "environment": {
@@ -5824,6 +5901,7 @@
                 },
                 "update": {
                     "$ref": "#/types/kubernetes-the-hard-way:tools:WgetOpts",
+                    "plain": true,
                     "description": "The command to run on update, if empty, create will \nrun again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR \nare set to the stdout and stderr properties of the Command resource from previous \ncreate or update steps."
                 }
             },

@@ -120,11 +120,11 @@ type TeeArgs struct {
 	// Connection details for the remote system
 	Connection pulumiCommand.ConnectionInput
 	// The command to run on create.
-	Create TeeOptsPtrInput
+	Create *TeeOptsArgs
 	// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
 	// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
 	// Command resource from previous create or update steps.
-	Delete TeeOptsPtrInput
+	Delete *TeeOptsArgs
 	// Environment variables
 	Environment pulumi.StringMapInput
 	// TODO
@@ -135,7 +135,7 @@ type TeeArgs struct {
 	// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
 	// are set to the stdout and stderr properties of the Command resource from previous
 	// create or update steps.
-	Update TeeOptsPtrInput
+	Update *TeeOptsArgs
 }
 
 func (TeeArgs) ElementType() reflect.Type {

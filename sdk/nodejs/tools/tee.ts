@@ -147,13 +147,13 @@ export interface TeeArgs {
     /**
      * The command to run on create.
      */
-    create?: pulumi.Input<inputs.tools.TeeOptsArgs>;
+    create?: inputs.tools.TeeOptsArgs;
     /**
      * The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
      * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
      * Command resource from previous create or update steps.
      */
-    delete?: pulumi.Input<inputs.tools.TeeOptsArgs>;
+    delete?: inputs.tools.TeeOptsArgs;
     /**
      * Environment variables
      */
@@ -172,5 +172,5 @@ export interface TeeArgs {
      * are set to the stdout and stderr properties of the Command resource from previous 
      * create or update steps.
      */
-    update?: pulumi.Input<inputs.tools.TeeOptsArgs>;
+    update?: inputs.tools.TeeOptsArgs;
 }

@@ -56,13 +56,13 @@ public final class HostnamectlArgs extends com.pulumi.resources.ResourceArgs {
      * 
      */
     @Import(name="create")
-    private @Nullable Output<HostnamectlOptsArgs> create;
+    private @Nullable HostnamectlOptsArgs create;
 
     /**
      * @return The command to run on create.
      * 
      */
-    public Optional<Output<HostnamectlOptsArgs>> create() {
+    public Optional<HostnamectlOptsArgs> create() {
         return Optional.ofNullable(this.create);
     }
 
@@ -73,7 +73,7 @@ public final class HostnamectlArgs extends com.pulumi.resources.ResourceArgs {
      * 
      */
     @Import(name="delete")
-    private @Nullable Output<HostnamectlOptsArgs> delete;
+    private @Nullable HostnamectlOptsArgs delete;
 
     /**
      * @return The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
@@ -81,7 +81,7 @@ public final class HostnamectlArgs extends com.pulumi.resources.ResourceArgs {
      * Command resource from previous create or update steps.
      * 
      */
-    public Optional<Output<HostnamectlOptsArgs>> delete() {
+    public Optional<HostnamectlOptsArgs> delete() {
         return Optional.ofNullable(this.delete);
     }
 
@@ -138,7 +138,7 @@ public final class HostnamectlArgs extends com.pulumi.resources.ResourceArgs {
      * 
      */
     @Import(name="update")
-    private @Nullable Output<HostnamectlOptsArgs> update;
+    private @Nullable HostnamectlOptsArgs update;
 
     /**
      * @return The command to run on update, if empty, create will
@@ -147,7 +147,7 @@ public final class HostnamectlArgs extends com.pulumi.resources.ResourceArgs {
      * create or update steps.
      * 
      */
-    public Optional<Output<HostnamectlOptsArgs>> update() {
+    public Optional<HostnamectlOptsArgs> update() {
         return Optional.ofNullable(this.update);
     }
 
@@ -230,22 +230,12 @@ public final class HostnamectlArgs extends com.pulumi.resources.ResourceArgs {
          * @return builder
          * 
          */
-        public Builder create(@Nullable Output<HostnamectlOptsArgs> create) {
+        public Builder create(@Nullable HostnamectlOptsArgs create) {
             $.create = create;
             return this;
         }
 
         /**
-         * @param create The command to run on create.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder create(HostnamectlOptsArgs create) {
-            return create(Output.of(create));
-        }
-
-        /**
          * @param delete The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
          * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
          * Command resource from previous create or update steps.
@@ -253,21 +243,9 @@ public final class HostnamectlArgs extends com.pulumi.resources.ResourceArgs {
          * @return builder
          * 
          */
-        public Builder delete(@Nullable Output<HostnamectlOptsArgs> delete) {
+        public Builder delete(@Nullable HostnamectlOptsArgs delete) {
             $.delete = delete;
             return this;
-        }
-
-        /**
-         * @param delete The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
-         * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
-         * Command resource from previous create or update steps.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder delete(HostnamectlOptsArgs delete) {
-            return delete(Output.of(delete));
         }
 
         /**
@@ -352,22 +330,9 @@ public final class HostnamectlArgs extends com.pulumi.resources.ResourceArgs {
          * @return builder
          * 
          */
-        public Builder update(@Nullable Output<HostnamectlOptsArgs> update) {
+        public Builder update(@Nullable HostnamectlOptsArgs update) {
             $.update = update;
             return this;
-        }
-
-        /**
-         * @param update The command to run on update, if empty, create will
-         * run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
-         * are set to the stdout and stderr properties of the Command resource from previous
-         * create or update steps.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder update(HostnamectlOptsArgs update) {
-            return update(Output.of(update));
         }
 
         public HostnamectlArgs build() {

@@ -56,13 +56,13 @@ public final class TeeArgs extends com.pulumi.resources.ResourceArgs {
      * 
      */
     @Import(name="create")
-    private @Nullable Output<TeeOptsArgs> create;
+    private @Nullable TeeOptsArgs create;
 
     /**
      * @return The command to run on create.
      * 
      */
-    public Optional<Output<TeeOptsArgs>> create() {
+    public Optional<TeeOptsArgs> create() {
         return Optional.ofNullable(this.create);
     }
 
@@ -73,7 +73,7 @@ public final class TeeArgs extends com.pulumi.resources.ResourceArgs {
      * 
      */
     @Import(name="delete")
-    private @Nullable Output<TeeOptsArgs> delete;
+    private @Nullable TeeOptsArgs delete;
 
     /**
      * @return The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
@@ -81,7 +81,7 @@ public final class TeeArgs extends com.pulumi.resources.ResourceArgs {
      * Command resource from previous create or update steps.
      * 
      */
-    public Optional<Output<TeeOptsArgs>> delete() {
+    public Optional<TeeOptsArgs> delete() {
         return Optional.ofNullable(this.delete);
     }
 
@@ -138,7 +138,7 @@ public final class TeeArgs extends com.pulumi.resources.ResourceArgs {
      * 
      */
     @Import(name="update")
-    private @Nullable Output<TeeOptsArgs> update;
+    private @Nullable TeeOptsArgs update;
 
     /**
      * @return The command to run on update, if empty, create will
@@ -147,7 +147,7 @@ public final class TeeArgs extends com.pulumi.resources.ResourceArgs {
      * create or update steps.
      * 
      */
-    public Optional<Output<TeeOptsArgs>> update() {
+    public Optional<TeeOptsArgs> update() {
         return Optional.ofNullable(this.update);
     }
 
@@ -230,22 +230,12 @@ public final class TeeArgs extends com.pulumi.resources.ResourceArgs {
          * @return builder
          * 
          */
-        public Builder create(@Nullable Output<TeeOptsArgs> create) {
+        public Builder create(@Nullable TeeOptsArgs create) {
             $.create = create;
             return this;
         }
 
         /**
-         * @param create The command to run on create.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder create(TeeOptsArgs create) {
-            return create(Output.of(create));
-        }
-
-        /**
          * @param delete The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
          * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
          * Command resource from previous create or update steps.
@@ -253,21 +243,9 @@ public final class TeeArgs extends com.pulumi.resources.ResourceArgs {
          * @return builder
          * 
          */
-        public Builder delete(@Nullable Output<TeeOptsArgs> delete) {
+        public Builder delete(@Nullable TeeOptsArgs delete) {
             $.delete = delete;
             return this;
-        }
-
-        /**
-         * @param delete The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
-         * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
-         * Command resource from previous create or update steps.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder delete(TeeOptsArgs delete) {
-            return delete(Output.of(delete));
         }
 
         /**
@@ -352,22 +330,9 @@ public final class TeeArgs extends com.pulumi.resources.ResourceArgs {
          * @return builder
          * 
          */
-        public Builder update(@Nullable Output<TeeOptsArgs> update) {
+        public Builder update(@Nullable TeeOptsArgs update) {
             $.update = update;
             return this;
-        }
-
-        /**
-         * @param update The command to run on update, if empty, create will
-         * run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
-         * are set to the stdout and stderr properties of the Command resource from previous
-         * create or update steps.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder update(TeeOptsArgs update) {
-            return update(Output.of(update));
         }
 
         public TeeArgs build() {

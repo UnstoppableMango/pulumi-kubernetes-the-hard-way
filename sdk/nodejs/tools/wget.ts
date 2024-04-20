@@ -147,13 +147,13 @@ export interface WgetArgs {
     /**
      * The command to run on create.
      */
-    create?: pulumi.Input<inputs.tools.WgetOptsArgs>;
+    create?: inputs.tools.WgetOptsArgs;
     /**
      * The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
      * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
      * Command resource from previous create or update steps.
      */
-    delete?: pulumi.Input<inputs.tools.WgetOptsArgs>;
+    delete?: inputs.tools.WgetOptsArgs;
     /**
      * Environment variables
      */
@@ -172,5 +172,5 @@ export interface WgetArgs {
      * are set to the stdout and stderr properties of the Command resource from previous 
      * create or update steps.
      */
-    update?: pulumi.Input<inputs.tools.WgetOptsArgs>;
+    update?: inputs.tools.WgetOptsArgs;
 }

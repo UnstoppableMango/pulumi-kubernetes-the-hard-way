@@ -19,24 +19,24 @@ class WgetArgs:
     def __init__(__self__, *,
                  connection: pulumi.Input['pulumi_command.remote.ConnectionArgs'],
                  binary_path: Optional[pulumi.Input[str]] = None,
-                 create: Optional[pulumi.Input['WgetOptsArgs']] = None,
-                 delete: Optional[pulumi.Input['WgetOptsArgs']] = None,
+                 create: Optional['WgetOptsArgs'] = None,
+                 delete: Optional['WgetOptsArgs'] = None,
                  environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  stdin: Optional[pulumi.Input[str]] = None,
                  triggers: Optional[pulumi.Input[Sequence[Any]]] = None,
-                 update: Optional[pulumi.Input['WgetOptsArgs']] = None):
+                 update: Optional['WgetOptsArgs'] = None):
         """
         The set of arguments for constructing a Wget resource.
         :param pulumi.Input['pulumi_command.remote.ConnectionArgs'] connection: Connection details for the remote system
         :param pulumi.Input[str] binary_path: Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
-        :param pulumi.Input['WgetOptsArgs'] create: The command to run on create.
-        :param pulumi.Input['WgetOptsArgs'] delete: The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+        :param 'WgetOptsArgs' create: The command to run on create.
+        :param 'WgetOptsArgs' delete: The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
                and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
                Command resource from previous create or update steps.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] environment: Environment variables
         :param pulumi.Input[str] stdin: TODO
         :param pulumi.Input[Sequence[Any]] triggers: TODO
-        :param pulumi.Input['WgetOptsArgs'] update: The command to run on update, if empty, create will 
+        :param 'WgetOptsArgs' update: The command to run on update, if empty, create will 
                run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
                are set to the stdout and stderr properties of the Command resource from previous 
                create or update steps.
@@ -83,19 +83,19 @@ class WgetArgs:
 
     @property
     @pulumi.getter
-    def create(self) -> Optional[pulumi.Input['WgetOptsArgs']]:
+    def create(self) -> Optional['WgetOptsArgs']:
         """
         The command to run on create.
         """
         return pulumi.get(self, "create")
 
     @create.setter
-    def create(self, value: Optional[pulumi.Input['WgetOptsArgs']]):
+    def create(self, value: Optional['WgetOptsArgs']):
         pulumi.set(self, "create", value)
 
     @property
     @pulumi.getter
-    def delete(self) -> Optional[pulumi.Input['WgetOptsArgs']]:
+    def delete(self) -> Optional['WgetOptsArgs']:
         """
         The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
         and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
@@ -104,7 +104,7 @@ class WgetArgs:
         return pulumi.get(self, "delete")
 
     @delete.setter
-    def delete(self, value: Optional[pulumi.Input['WgetOptsArgs']]):
+    def delete(self, value: Optional['WgetOptsArgs']):
         pulumi.set(self, "delete", value)
 
     @property
@@ -145,7 +145,7 @@ class WgetArgs:
 
     @property
     @pulumi.getter
-    def update(self) -> Optional[pulumi.Input['WgetOptsArgs']]:
+    def update(self) -> Optional['WgetOptsArgs']:
         """
         The command to run on update, if empty, create will 
         run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
@@ -155,7 +155,7 @@ class WgetArgs:
         return pulumi.get(self, "update")
 
     @update.setter
-    def update(self, value: Optional[pulumi.Input['WgetOptsArgs']]):
+    def update(self, value: Optional['WgetOptsArgs']):
         pulumi.set(self, "update", value)
 
 
@@ -166,12 +166,12 @@ class Wget(pulumi.CustomResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  binary_path: Optional[pulumi.Input[str]] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
-                 create: Optional[pulumi.Input[pulumi.InputType['WgetOptsArgs']]] = None,
-                 delete: Optional[pulumi.Input[pulumi.InputType['WgetOptsArgs']]] = None,
+                 create: Optional[pulumi.InputType['WgetOptsArgs']] = None,
+                 delete: Optional[pulumi.InputType['WgetOptsArgs']] = None,
                  environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  stdin: Optional[pulumi.Input[str]] = None,
                  triggers: Optional[pulumi.Input[Sequence[Any]]] = None,
-                 update: Optional[pulumi.Input[pulumi.InputType['WgetOptsArgs']]] = None,
+                 update: Optional[pulumi.InputType['WgetOptsArgs']] = None,
                  __props__=None):
         """
         Abstraction over the `wget` utility on a remote system.
@@ -180,14 +180,14 @@ class Wget(pulumi.CustomResource):
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[str] binary_path: Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
         :param pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']] connection: Connection details for the remote system
-        :param pulumi.Input[pulumi.InputType['WgetOptsArgs']] create: The command to run on create.
-        :param pulumi.Input[pulumi.InputType['WgetOptsArgs']] delete: The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+        :param pulumi.InputType['WgetOptsArgs'] create: The command to run on create.
+        :param pulumi.InputType['WgetOptsArgs'] delete: The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
                and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
                Command resource from previous create or update steps.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] environment: Environment variables
         :param pulumi.Input[str] stdin: TODO
         :param pulumi.Input[Sequence[Any]] triggers: TODO
-        :param pulumi.Input[pulumi.InputType['WgetOptsArgs']] update: The command to run on update, if empty, create will 
+        :param pulumi.InputType['WgetOptsArgs'] update: The command to run on update, if empty, create will 
                run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
                are set to the stdout and stderr properties of the Command resource from previous 
                create or update steps.
@@ -218,12 +218,12 @@ class Wget(pulumi.CustomResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  binary_path: Optional[pulumi.Input[str]] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
-                 create: Optional[pulumi.Input[pulumi.InputType['WgetOptsArgs']]] = None,
-                 delete: Optional[pulumi.Input[pulumi.InputType['WgetOptsArgs']]] = None,
+                 create: Optional[pulumi.InputType['WgetOptsArgs']] = None,
+                 delete: Optional[pulumi.InputType['WgetOptsArgs']] = None,
                  environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  stdin: Optional[pulumi.Input[str]] = None,
                  triggers: Optional[pulumi.Input[Sequence[Any]]] = None,
-                 update: Optional[pulumi.Input[pulumi.InputType['WgetOptsArgs']]] = None,
+                 update: Optional[pulumi.InputType['WgetOptsArgs']] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):

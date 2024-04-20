@@ -147,13 +147,13 @@ export interface MvArgs {
     /**
      * The command to run on create.
      */
-    create?: pulumi.Input<inputs.tools.MvOptsArgs>;
+    create?: inputs.tools.MvOptsArgs;
     /**
      * The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
      * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
      * Command resource from previous create or update steps.
      */
-    delete?: pulumi.Input<inputs.tools.MvOptsArgs>;
+    delete?: inputs.tools.MvOptsArgs;
     /**
      * Environment variables
      */
@@ -172,5 +172,5 @@ export interface MvArgs {
      * are set to the stdout and stderr properties of the Command resource from previous 
      * create or update steps.
      */
-    update?: pulumi.Input<inputs.tools.MvOptsArgs>;
+    update?: inputs.tools.MvOptsArgs;
 }

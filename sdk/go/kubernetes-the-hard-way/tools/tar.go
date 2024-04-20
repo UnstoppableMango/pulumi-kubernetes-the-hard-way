@@ -120,11 +120,11 @@ type TarArgs struct {
 	// Connection details for the remote system
 	Connection pulumiCommand.ConnectionInput
 	// The command to run on create.
-	Create TarOptsPtrInput
+	Create *TarOptsArgs
 	// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
 	// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
 	// Command resource from previous create or update steps.
-	Delete TarOptsPtrInput
+	Delete *TarOptsArgs
 	// Environment variables
 	Environment pulumi.StringMapInput
 	// TODO
@@ -135,7 +135,7 @@ type TarArgs struct {
 	// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
 	// are set to the stdout and stderr properties of the Command resource from previous
 	// create or update steps.
-	Update TarOptsPtrInput
+	Update *TarOptsArgs
 }
 
 func (TarArgs) ElementType() reflect.Type {

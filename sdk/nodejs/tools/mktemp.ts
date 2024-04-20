@@ -147,13 +147,13 @@ export interface MktempArgs {
     /**
      * The command to run on create.
      */
-    create?: pulumi.Input<inputs.tools.MktempOptsArgs>;
+    create?: inputs.tools.MktempOptsArgs;
     /**
      * The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
      * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
      * Command resource from previous create or update steps.
      */
-    delete?: pulumi.Input<inputs.tools.MktempOptsArgs>;
+    delete?: inputs.tools.MktempOptsArgs;
     /**
      * Environment variables
      */
@@ -172,5 +172,5 @@ export interface MktempArgs {
      * are set to the stdout and stderr properties of the Command resource from previous 
      * create or update steps.
      */
-    update?: pulumi.Input<inputs.tools.MktempOptsArgs>;
+    update?: inputs.tools.MktempOptsArgs;
 }

@@ -153,7 +153,7 @@ namespace UnMango.KubernetesTheHardWay.Tools
         /// The command to run on create.
         /// </summary>
         [Input("create")]
-        public Input<Inputs.WgetOptsArgs>? Create { get; set; }
+        public Inputs.WgetOptsArgs? Create { get; set; }
 
         /// <summary>
         /// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
@@ -161,7 +161,7 @@ namespace UnMango.KubernetesTheHardWay.Tools
         /// Command resource from previous create or update steps.
         /// </summary>
         [Input("delete")]
-        public Input<Inputs.WgetOptsArgs>? Delete { get; set; }
+        public Inputs.WgetOptsArgs? Delete { get; set; }
 
         [Input("environment")]
         private InputMap<string>? _environment;
@@ -200,7 +200,7 @@ namespace UnMango.KubernetesTheHardWay.Tools
         /// create or update steps.
         /// </summary>
         [Input("update")]
-        public Input<Inputs.WgetOptsArgs>? Update { get; set; }
+        public Inputs.WgetOptsArgs? Update { get; set; }
 
         public WgetArgs()
         {
