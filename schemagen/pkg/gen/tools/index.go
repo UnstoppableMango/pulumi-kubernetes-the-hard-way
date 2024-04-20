@@ -7,6 +7,40 @@ import (
 )
 
 func Generate(commandSpec schema.PackageSpec) schema.PackageSpec {
+	mkCmd := makeCommand(commandSpec)
+	tools := map[string]schema.ResourceSpec{
+		"Chmod":       generateChmod(),
+		"Curl":        generateCurl(),
+		"Etcdctl":     generateEtcdctl(),
+		"Hostnamectl": generateHostnamectl(),
+		"Mkdir":       generateMkdir(),
+		"Mktemp":      generateMktemp(),
+		"Mv":          generateMv(),
+		"Rm":          generateRm(),
+		"Sed":         generateSed(),
+		"Systemctl":   generateSystemctl(),
+		"Tar":         generateTar(),
+		"Tee":         generateTee(),
+		"Wget":        generateWget(),
+	}
+
+	types := generateTypes()
+
+	resources := map[string]schema.ResourceSpec{}
+	for tool, typ := range tools {
+		c, r := mkCmd(typ)
+		types[name(tool)+"Opts"] = c
+		resources[name(tool)] = r
+	}
+
+	return schema.PackageSpec{
+		Functions: map[string]schema.FunctionSpec{},
+		Resources: resources,
+		Types:     types,
+	}
+}
+
+func makeCommand(commandSpec schema.PackageSpec) func(r schema.ResourceSpec) (schema.ComplexTypeSpec, schema.ResourceSpec) {
 	commonProps := map[string]schema.PropertySpec{
 		"binaryPath": props.String("Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH"),
 		"connection": {
@@ -43,37 +77,27 @@ func Generate(commandSpec schema.PackageSpec) schema.PackageSpec {
 		"stdout": props.String("TODO"),
 	}
 
-	tools := map[string]schema.ResourceSpec{
-		"Chmod":       generateChmod(),
-		"Curl":        generateCurl(),
-		"Etcdctl":     generateEtcdctl(),
-		"Hostnamectl": generateHostnamectl(),
-		"Mkdir":       generateMkdir(),
-		"Mktemp":      generateMktemp(),
-		"Mv":          generateMv(),
-		"Rm":          generateRm(),
-		"Sed":         generateSed(),
-		"Systemctl":   generateSystemctl(),
-		"Tar":         generateTar(),
-		"Tee":         generateTee(),
-		"Wget":        generateWget(),
-	}
+	return func(r schema.ResourceSpec) (schema.ComplexTypeSpec, schema.ResourceSpec) {
+		c := schema.ComplexTypeSpec{
+			ObjectTypeSpec: schema.ObjectTypeSpec{
+				Description: r.Description,
+				Properties:  r.Properties,
+			},
+		}
 
-	resources := map[string]schema.ResourceSpec{}
-	for tool, resource := range tools {
 		for propName, prop := range commonProps {
-			resource.InputProperties[propName] = prop
-			resource.Properties[propName] = prop
+			r.InputProperties[propName] = prop
+			r.Properties[propName] = prop
 		}
 		for name, prop := range commonOutputs {
-			resource.Properties[name] = prop
+			r.Properties[name] = prop
 		}
 
-		resource.IsComponent = true
-		resource.RequiredInputs = append(resource.RequiredInputs,
+		r.IsComponent = true
+		r.RequiredInputs = append(r.RequiredInputs,
 			"connection",
 		)
-		resource.Required = append(resource.Required,
+		r.Required = append(r.Required,
 			"binaryPath",
 			"command",
 			"connection",
@@ -83,12 +107,6 @@ func Generate(commandSpec schema.PackageSpec) schema.PackageSpec {
 			"triggers",
 		)
 
-		resources[name(tool)] = resource
-	}
-
-	return schema.PackageSpec{
-		Functions: map[string]schema.FunctionSpec{},
-		Resources: resources,
-		Types:     generateTypes(),
+		return c, r
 	}
 }
