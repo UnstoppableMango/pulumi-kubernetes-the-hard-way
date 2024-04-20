@@ -58,6 +58,7 @@
     "tools/systemctl.ts",
     "tools/tar.ts",
     "tools/tee.ts",
+    "tools/tool.ts",
     "tools/wget.ts",
     "tls/certificate.ts",
     "tls/clusterPki.ts",
