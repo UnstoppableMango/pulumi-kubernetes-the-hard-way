@@ -5,8 +5,8 @@ import (
 	"github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 )
 
-func generateChmod() ([]schema.ComplexTypeSpec, schema.ResourceSpec) {
-	types := []schema.ComplexTypeSpec{}
+func generateChmod() tool {
+	types := map[string]schema.ComplexTypeSpec{}
 
 	inputs := map[string]schema.PropertySpec{
 		"changes":        props.Boolean("Like verbose but report only when a change is made."),
@@ -24,22 +24,33 @@ func generateChmod() ([]schema.ComplexTypeSpec, schema.ResourceSpec) {
 
 	required := []string{"files", "mode"}
 
-	return types, schema.ResourceSpec{
+	typ := schema.ComplexTypeSpec{
 		ObjectTypeSpec: schema.ObjectTypeSpec{
 			Description: "Abstraction over the `chmod` utility on a remote system.",
-			Properties:  implicitOutputs(inputs, map[string]schema.PropertySpec{}),
-			Required: append(required,
-				"changes",
-				"help",
-				"noPreserveRoot",
-				"preserveRoot",
-				"quiet",
-				"recursive",
-				"silent",
-				"version",
-			),
+			Properties:  inputs,
+			Required:    required,
 		},
-		InputProperties: inputs,
-		RequiredInputs:  required,
 	}
+
+	return tool{optsType: typ, types: types}
 }
+
+// If we ever get a way to add the "required outputs" logic around a complexType
+// resource := schema.ResourceSpec{
+// 	ObjectTypeSpec: schema.ObjectTypeSpec{
+// 		Description: "Abstraction over the `chmod` utility on a remote system.",
+// 		Properties:  implicitOutputs(inputs, map[string]schema.PropertySpec{}),
+// 		Required: append(required,
+// 			"changes",
+// 			"help",
+// 			"noPreserveRoot",
+// 			"preserveRoot",
+// 			"quiet",
+// 			"recursive",
+// 			"silent",
+// 			"version",
+// 		),
+// 	},
+// 	InputProperties: inputs,
+// 	RequiredInputs:  required,
+// }

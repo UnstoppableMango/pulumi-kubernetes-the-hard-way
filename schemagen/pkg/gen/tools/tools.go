@@ -1,14 +1,21 @@
 package tools
 
 import (
+	"fmt"
+	"maps"
+
 	"github.com/UnstoppableMango/pulumi-kubernetes-the-hard-way/schemagen/pkg/gen/props"
 	"github.com/UnstoppableMango/pulumi-kubernetes-the-hard-way/schemagen/pkg/gen/types"
 	"github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 )
 
+type tool struct {
+	optsType schema.ComplexTypeSpec
+	types    map[string]schema.ComplexTypeSpec
+}
+
 func Generate(commandSpec schema.PackageSpec) schema.PackageSpec {
-	mkCmd := makeCommand(commandSpec)
-	tools := map[string]schema.ResourceSpec{
+	tools := map[string]tool{
 		"Chmod":       generateChmod(),
 		"Curl":        generateCurl(),
 		"Etcdctl":     generateEtcdctl(),
@@ -27,10 +34,10 @@ func Generate(commandSpec schema.PackageSpec) schema.PackageSpec {
 	types := generateTypes()
 
 	resources := map[string]schema.ResourceSpec{}
-	for tool, typ := range tools {
-		c, r := mkCmd(typ)
-		types[name(tool)+"Opts"] = c
-		resources[name(tool)] = r
+	for n, t := range tools {
+		maps.Copy(types, t.types)
+		types[name(n)+"Opts"] = t.optsType
+		resources[name(n)] = t.resourceSpec(commandSpec, n)
 	}
 
 	return schema.PackageSpec{
@@ -40,22 +47,30 @@ func Generate(commandSpec schema.PackageSpec) schema.PackageSpec {
 	}
 }
 
-func makeCommand(commandSpec schema.PackageSpec) func(r schema.ResourceSpec) (schema.ComplexTypeSpec, schema.ResourceSpec) {
-	commonProps := map[string]schema.PropertySpec{
+func name(x string) string {
+	return fmt.Sprintf("kubernetes-the-hard-way:tools:%s", x)
+}
+
+func (tool tool) resourceSpec(commandSpec schema.PackageSpec, name string) schema.ResourceSpec {
+	command := commandSpec.Resources["command:remote:Command"]
+	optsType := types.LocalType(name, "tools")
+
+	inputs := map[string]schema.PropertySpec{
 		"binaryPath": props.String("Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH"),
+		"create": {
+			Description: command.InputProperties["create"].Description,
+			TypeSpec:    optsType,
+		},
 		"connection": {
 			Description: "Connection details for the remote system",
 			TypeSpec:    types.ExtType(commandSpec, "Connection", "remote"),
 		},
-		"environment": props.StringMap("Environment variables"),
-		"lifecycle": {
-			Description: "At what stage(s) in the resource lifecycle should the command be run",
-			TypeSpec: schema.TypeSpec{
-				Ref:   types.LocalType("CommandLifecycle", "tools").Ref,
-				Plain: true,
-			},
+		"delete": {
+			Description: command.InputProperties["delete"].Description,
+			TypeSpec:    optsType,
 		},
-		"stdin": props.String("TODO"),
+		"environment": props.StringMap("Environment variables"),
+		"stdin":       props.String("TODO"),
 		"triggers": {
 			Description: "TODO",
 			TypeSpec: schema.TypeSpec{
@@ -65,9 +80,13 @@ func makeCommand(commandSpec schema.PackageSpec) func(r schema.ResourceSpec) (sc
 				},
 			},
 		},
+		"update": {
+			Description: command.InputProperties["update"].Description,
+			TypeSpec:    optsType,
+		},
 	}
 
-	commonOutputs := map[string]schema.PropertySpec{
+	outputs := map[string]schema.PropertySpec{
 		"command": {
 			Description: "The underlying command",
 			TypeSpec:    types.ExtResource(commandSpec, "Command", "remote"),
@@ -76,37 +95,23 @@ func makeCommand(commandSpec schema.PackageSpec) func(r schema.ResourceSpec) (sc
 		"stdin":  props.String("TODO"),
 		"stdout": props.String("TODO"),
 	}
+	maps.Copy(outputs, inputs)
 
-	return func(r schema.ResourceSpec) (schema.ComplexTypeSpec, schema.ResourceSpec) {
-		c := schema.ComplexTypeSpec{
-			ObjectTypeSpec: schema.ObjectTypeSpec{
-				Description: r.Description,
-				Properties:  r.Properties,
+	return schema.ResourceSpec{
+		ObjectTypeSpec: schema.ObjectTypeSpec{
+			Description: tool.optsType.Description,
+			Properties:  outputs,
+			Required: []string{
+				"binaryPath",
+				"command",
+				"connection",
+				"environment",
+				"stderr",
+				"stdout",
+				"triggers",
 			},
-		}
-
-		for propName, prop := range commonProps {
-			r.InputProperties[propName] = prop
-			r.Properties[propName] = prop
-		}
-		for name, prop := range commonOutputs {
-			r.Properties[name] = prop
-		}
-
-		r.IsComponent = true
-		r.RequiredInputs = append(r.RequiredInputs,
-			"connection",
-		)
-		r.Required = append(r.Required,
-			"binaryPath",
-			"command",
-			"connection",
-			"environment",
-			"stderr",
-			"stdout",
-			"triggers",
-		)
-
-		return c, r
+		},
+		InputProperties: inputs,
+		RequiredInputs:  []string{"connection"},
 	}
 }

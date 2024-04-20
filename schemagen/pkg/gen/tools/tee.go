@@ -6,7 +6,7 @@ import (
 	"github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 )
 
-func generateTee() schema.ResourceSpec {
+func generateTee() tool {
 	inputs := map[string]schema.PropertySpec{
 		"append":           props.Boolean("Append to the given FILEs, do not overwrite"),
 		"files":            props.ArrayOf("string", "Corresponds to the [FILE] argument."),
@@ -24,18 +24,29 @@ func generateTee() schema.ResourceSpec {
 		"stdin",
 	}
 
-	return schema.ResourceSpec{
+	typ := schema.ComplexTypeSpec{
 		ObjectTypeSpec: schema.ObjectTypeSpec{
 			Description: "Abstraction over the `rm` utility on a remote system.",
-			Properties:  implicitOutputs(inputs, map[string]schema.PropertySpec{}),
-			Required: append(required,
-				"append",
-				"ignoreInterrupts",
-				"pipe",
-				"version",
-			),
+			Properties:  inputs,
+			Required:    required,
 		},
-		InputProperties: inputs,
-		RequiredInputs:  required,
 	}
+
+	return tool{optsType: typ, types: map[string]schema.ComplexTypeSpec{}}
 }
+
+// If we ever get a way to add the "required outputs" logic around a complexType
+// resource := schema.ResourceSpec{
+// 	ObjectTypeSpec: schema.ObjectTypeSpec{
+// 		Description: "Abstraction over the `rm` utility on a remote system.",
+// 		Properties:  implicitOutputs(inputs, map[string]schema.PropertySpec{}),
+// 		Required: append(required,
+// 			"append",
+// 			"ignoreInterrupts",
+// 			"pipe",
+// 			"version",
+// 		),
+// 	},
+// 	InputProperties: inputs,
+// 	RequiredInputs:  required,
+// }

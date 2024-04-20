@@ -5,7 +5,7 @@ import (
 	"github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 )
 
-func generateMv() schema.ResourceSpec {
+func generateMv() tool {
 	inputs := map[string]schema.PropertySpec{
 		"backup": {
 			Description: "Corresponds to the `-b` and `--backup` options depending on whether [CONTROL] is supplied.",
@@ -29,27 +29,36 @@ func generateMv() schema.ResourceSpec {
 		"verbose":              props.Boolean("Corresponds to the `--verbose` option."),
 	}
 
-	required := []string{
-		"source",
-	}
+	required := []string{"source"}
 
-	return schema.ResourceSpec{
+	typ := schema.ComplexTypeSpec{
 		ObjectTypeSpec: schema.ObjectTypeSpec{
 			Description: "Abstraction over the `mv` utility on a remote system.",
-			Properties:  implicitOutputs(inputs, map[string]schema.PropertySpec{}),
-			Required: append(required,
-				"backup",
-				"context",
-				"force",
-				"noClobber",
-				"noTargetDirectory",
-				"source",
-				"stripTrailingSlashes",
-				"update",
-				"verbose",
-			),
+			Properties:  inputs,
+			Required:    required,
 		},
-		InputProperties: inputs,
-		RequiredInputs:  required,
 	}
+
+	return tool{optsType: typ, types: map[string]schema.ComplexTypeSpec{}}
 }
+
+// If we ever get a way to add the "required outputs" logic around a complexType
+// resource := schema.ResourceSpec{
+// 	ObjectTypeSpec: schema.ObjectTypeSpec{
+// 		Description: "Abstraction over the `mv` utility on a remote system.",
+// 		Properties:  implicitOutputs(inputs, map[string]schema.PropertySpec{}),
+// 		Required: append(required,
+// 			"backup",
+// 			"context",
+// 			"force",
+// 			"noClobber",
+// 			"noTargetDirectory",
+// 			"source",
+// 			"stripTrailingSlashes",
+// 			"update",
+// 			"verbose",
+// 		),
+// 	},
+// 	InputProperties: inputs,
+// 	RequiredInputs:  required,
+// }

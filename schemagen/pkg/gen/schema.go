@@ -11,6 +11,7 @@ import (
 
 	"os"
 
+	"github.com/UnstoppableMango/pulumi-kubernetes-the-hard-way/schemagen/pkg/gen/internal"
 	"github.com/UnstoppableMango/pulumi-kubernetes-the-hard-way/schemagen/pkg/gen/remote"
 	"github.com/UnstoppableMango/pulumi-kubernetes-the-hard-way/schemagen/pkg/gen/tools"
 	"github.com/pulumi/pulumi/pkg/v3/codegen/schema"
@@ -104,7 +105,7 @@ func GenerateSchema(packageDir string) schema.PackageSpec {
 		Types:     map[string]schema.ComplexTypeSpec{},
 	}
 
-	return extendSchemas(packageSpec,
+	return internal.ExtendSchemas(packageSpec,
 		generateConfig(kubernetesSpec),
 		remote.Generate(commandSpec),
 		generateTls(randomSpec, tlsSpec),
@@ -112,36 +113,9 @@ func GenerateSchema(packageDir string) schema.PackageSpec {
 	)
 }
 
-func extendSchemas(spec schema.PackageSpec, extensions ...schema.PackageSpec) schema.PackageSpec {
-	for _, extension := range extensions {
-		for k, v := range extension.Resources {
-			if _, found := spec.Resources[k]; found {
-				log.Fatalf("resource already defined %q", k)
-			}
-			spec.Resources[k] = v
-		}
-
-		for k, v := range extension.Types {
-			if _, found := spec.Types[k]; found {
-				log.Fatalf("type already defined %q", k)
-			}
-			spec.Types[k] = v
-		}
-
-		for k, v := range extension.Functions {
-			if _, found := spec.Functions[k]; found {
-				log.Fatalf("function already defined %q", k)
-			}
-			spec.Functions[k] = v
-		}
-	}
-
-	return spec
-}
-
 func rawMessage(v interface{}) schema.RawMessage {
 	bytes, err := json.Marshal(v)
-	contract.Assert(err == nil)
+	contract.Assertf(err == nil, "err was not nil: %s", err)
 	return bytes
 }
 

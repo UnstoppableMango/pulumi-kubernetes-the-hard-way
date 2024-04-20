@@ -5,7 +5,7 @@ import (
 	"github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 )
 
-func generateSed() schema.ResourceSpec {
+func generateSed() tool {
 	inputs := map[string]schema.PropertySpec{
 		"debug":          props.Boolean("annotate program execution."),
 		"expressions":    props.ArrayOf("string", "add the script to the commands to be executed."),
@@ -29,29 +29,40 @@ func generateSed() schema.ResourceSpec {
 
 	required := []string{}
 
-	return schema.ResourceSpec{
+	typ := schema.ComplexTypeSpec{
 		ObjectTypeSpec: schema.ObjectTypeSpec{
 			Description: "Abstraction over the `sed` utility on a remote system.",
-			Properties:  implicitOutputs(inputs, map[string]schema.PropertySpec{}),
-			Required: append(required,
-				"debug",
-				"expressions",
-				"files",
-				"followSymlinks",
-				"help",
-				"inputFiles",
-				"nullData",
-				"posix",
-				"quiet",
-				"regexpExtended",
-				"sandbox",
-				"separate",
-				"silent",
-				"unbuffered",
-				"version",
-			),
+			Properties:  inputs,
+			Required:    required,
 		},
-		InputProperties: inputs,
-		RequiredInputs:  required,
 	}
+
+	return tool{optsType: typ, types: map[string]schema.ComplexTypeSpec{}}
 }
+
+// If we ever get a way to add the "required outputs" logic around a complexType
+// resource := schema.ResourceSpec{
+// 	ObjectTypeSpec: schema.ObjectTypeSpec{
+// 		Description: "Abstraction over the `sed` utility on a remote system.",
+// 		Properties:  implicitOutputs(inputs, map[string]schema.PropertySpec{}),
+// 		Required: append(required,
+// 			"debug",
+// 			"expressions",
+// 			"files",
+// 			"followSymlinks",
+// 			"help",
+// 			"inputFiles",
+// 			"nullData",
+// 			"posix",
+// 			"quiet",
+// 			"regexpExtended",
+// 			"sandbox",
+// 			"separate",
+// 			"silent",
+// 			"unbuffered",
+// 			"version",
+// 		),
+// 	},
+// 	InputProperties: inputs,
+// 	RequiredInputs:  required,
+// }
