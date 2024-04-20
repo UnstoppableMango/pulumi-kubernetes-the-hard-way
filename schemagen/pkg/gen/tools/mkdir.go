@@ -18,6 +18,7 @@ func generateMkdir() tool {
 	typ := schema.ComplexTypeSpec{
 		ObjectTypeSpec: schema.ObjectTypeSpec{
 			Description: "Abstraction over the `mkdir` utility on a remote system.",
+			Type:        "object",
 			Properties:  inputs,
 			Required:    required,
 		},

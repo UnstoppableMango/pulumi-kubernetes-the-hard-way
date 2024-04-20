@@ -32,6 +32,7 @@ func generateHostnamectl() tool {
 	typ := schema.ComplexTypeSpec{
 		ObjectTypeSpec: schema.ObjectTypeSpec{
 			Description: "Abstraction over the `hostnamectl` utility on a remote system.",
+			Type:        "object",
 			Properties:  inputs,
 			Required:    required,
 		},

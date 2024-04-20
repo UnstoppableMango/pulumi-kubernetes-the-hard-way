@@ -21,6 +21,7 @@ func generateWget() tool {
 	typ := schema.ComplexTypeSpec{
 		ObjectTypeSpec: schema.ObjectTypeSpec{
 			Description: "Abstraction over the `wget` utility on a remote system.",
+			Type:        "object",
 			Properties:  inputs,
 			Required:    required,
 		},

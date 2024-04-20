@@ -19,14 +19,12 @@ func generateTee() tool {
 		"version": props.Boolean("Output version information and exit."),
 	}
 
-	required := []string{
-		"files",
-		"stdin",
-	}
+	required := []string{"files"}
 
 	typ := schema.ComplexTypeSpec{
 		ObjectTypeSpec: schema.ObjectTypeSpec{
 			Description: "Abstraction over the `rm` utility on a remote system.",
+			Type:        "object",
 			Properties:  inputs,
 			Required:    required,
 		},

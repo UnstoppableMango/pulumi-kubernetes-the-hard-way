@@ -27,6 +27,7 @@ func generateSystemctl() tool {
 	typ := schema.ComplexTypeSpec{
 		ObjectTypeSpec: schema.ObjectTypeSpec{
 			Description: "Abstraction over the `systemctl` utility on a remote system.",
+			Type:        "object",
 			Properties:  inputs,
 			Required:    required,
 		},

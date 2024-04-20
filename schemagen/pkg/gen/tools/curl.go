@@ -89,6 +89,7 @@ func generateCurl() tool {
 	typ := schema.ComplexTypeSpec{
 		ObjectTypeSpec: schema.ObjectTypeSpec{
 			Description: "Abstraction over the `curl` utility on a remote system. Transfer a URL.",
+			Type:        "object",
 			Properties:  inputs,
 			Required:    required,
 		},
