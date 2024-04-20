@@ -8,7 +8,7 @@ import (
 func generateRm() schema.ResourceSpec {
 	inputs := map[string]schema.PropertySpec{
 		"dir":   props.Boolean("Corresponds to the `--dir` option."),
-		"files": props.OneOrMoreStrings("Corresponds to the [FILE] argument."),
+		"files": props.ArrayOf("string", "Corresponds to the [FILE] argument."),
 		"force": props.Boolean("Corresponds to the `--force` option."),
 		// TODO: Reconsider this SOLID violation
 		"onDelete":  props.Boolean("Whether rm should be run when the resource is created or deleted."),

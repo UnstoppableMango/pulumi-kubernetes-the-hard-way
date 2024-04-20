@@ -9,7 +9,7 @@ import (
 func generateTee() schema.ResourceSpec {
 	inputs := map[string]schema.PropertySpec{
 		"append":           props.Boolean("Append to the given FILEs, do not overwrite"),
-		"files":            props.OneOrMoreStrings("Corresponds to the [FILE] argument."),
+		"files":            props.ArrayOf("string", "Corresponds to the [FILE] argument."),
 		"ignoreInterrupts": props.Boolean("Ignore interrupt signals."),
 		"outputError": {
 			Description: "Set behavior on write error.",

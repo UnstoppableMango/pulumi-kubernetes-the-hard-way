@@ -21,7 +21,7 @@ func generateMv() schema.ResourceSpec {
 		"force":                props.Boolean("Corresponds to the `--force` option."),
 		"noClobber":            props.Boolean("Corresponds to the `--no-clobber` option."),
 		"noTargetDirectory":    props.Boolean("Corresponds to the `--no-target-directory` option."),
-		"source":               props.OneOrMoreStrings("Corresponds to the [SOURCE] argument."),
+		"source":               props.ArrayOf("string", "Corresponds to the [SOURCE] argument."),
 		"stripTrailingSlashes": props.Boolean("Corresponds to the `--strip-trailing-slashes` option."),
 		"suffix":               props.String("Corresponds to the `--suffix` option."),
 		"targetDirectory":      props.Boolean("Corresponds to the `--target-directory` option."),

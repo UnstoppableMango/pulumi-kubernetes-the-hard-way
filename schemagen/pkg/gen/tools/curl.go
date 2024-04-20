@@ -81,7 +81,7 @@ func generateCurl() schema.ResourceSpec {
 		"ftpPret":               props.Boolean("(FTP) Tell curl to send a PRET command before PASV (and EPSV)."),
 		"ftpSkipPasvIp":         props.Boolean("(FTP)  Tell  curl  to  not use the IP address the server suggests in its response to curl's PASV command when curl connects the data connection."),
 		"ftpSslCccMode":         props.String("(FTP) Sets the CCC mode. The passive mode will not initiate the shutdown, but instead wait for the server to do it, and will not reply to the shutdown from the  server."),
-		"urls":                  props.OneOrMoreStrings("Corresponds to the URLs argument."),
+		"urls":                  props.ArrayOf("string", "Corresponds to the URLs argument."),
 	}
 
 	required := []string{"urls"}

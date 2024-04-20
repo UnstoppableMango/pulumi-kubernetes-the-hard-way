@@ -8,12 +8,12 @@ import (
 func generateSed() schema.ResourceSpec {
 	inputs := map[string]schema.PropertySpec{
 		"debug":          props.Boolean("annotate program execution."),
-		"expressions":    props.OneOrMoreStrings("add the script to the commands to be executed."),
-		"files":          props.OneOrMoreStrings("add the contents of script-file to the commands to be executed."),
+		"expressions":    props.ArrayOf("string", "add the script to the commands to be executed."),
+		"files":          props.ArrayOf("string", "add the contents of script-file to the commands to be executed."),
 		"followSymlinks": props.Boolean("follow symlinks when processing in place"),
 		"help":           props.Boolean("display this help and exit."),
 		"inPlace":        props.String("edit files in place (makes backup if SUFFIX supplied)"),
-		"inputFiles":     props.OneOrMoreStrings("corresponds to the [input-file]... argument(s)."),
+		"inputFiles":     props.ArrayOf("string", "corresponds to the [input-file]... argument(s)."),
 		"lineLength":     props.Integer("specify the desired line-wrap length for the `l' command"),
 		"nullData":       props.Boolean("separate lines by NUL characters"),
 		"posix":          props.Boolean("disable all GNU extensions."),

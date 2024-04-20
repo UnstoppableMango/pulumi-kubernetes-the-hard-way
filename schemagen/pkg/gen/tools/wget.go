@@ -13,7 +13,7 @@ func generateWget() schema.ResourceSpec {
 		"outputDocument":  props.String("The  documents  will  not  be  written  to the appropriate files, but all will be concatenated together and written to file."),
 		"quiet":           props.Boolean("Turn off Wget's output."),
 		"timestamping":    props.Boolean("Turn on time-stamping."),
-		"url":             props.OneOrMoreStrings("Corresponds to the [URL...] argument."),
+		"url":             props.ArrayOf("string", "Corresponds to the [URL...] argument."),
 	}
 
 	required := []string{

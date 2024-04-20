@@ -10,7 +10,7 @@ func generateTar() schema.ResourceSpec {
 		"archive":   props.String("Corresponds to the [ARCHIVE] argument."),
 		"directory": props.String("Corresponds to the `--directory` option."),
 		"extract":   props.Boolean("Corresponds to the `--extract` option."),
-		"files":     props.OneOrMoreStrings("Corresponds to the [FILE] argument."),
+		"files":     props.ArrayOf("string", "Corresponds to the [FILE] argument."),
 		"gzip":      props.Boolean("Corresponds to the `--gzip` option."),
 		// TODO: Reconsider this SOLID violation
 		"onDelete":        props.Boolean("Whether rm should be run when the resource is created or deleted."),
