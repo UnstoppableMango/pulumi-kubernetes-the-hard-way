@@ -32,8 +32,9 @@ func Generate(commandSpec schema.PackageSpec) schema.PackageSpec {
 	}
 
 	types := generateTypes()
-
 	resources := map[string]schema.ResourceSpec{}
+
+	// TODO: This gets confusing fast
 	for name, tool := range tools {
 		for typeName, typ := range tool.types {
 			types[qualifyName(name)+typeName] = typ
