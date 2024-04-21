@@ -389,7 +389,7 @@ function genFunctionInputs(
 
 function genFunctionOutputs(
   functionName: string,
-  objectDef: pulumiSchema.ObjectTypeDetails2 | undefined,
+  objectDef: pulumiSchema.ObjectTypeDetails | undefined,
 ) {
   const outputProperties = genTypeProperties(objectDef?.properties, objectDef?.required, "Output");
   return ts.factory.createInterfaceDeclaration(
