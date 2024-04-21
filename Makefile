@@ -145,7 +145,7 @@ clean:
 		dotnet nuget remove source "$(WORKING_DIR)" \
 	; fi
 
-vendor: provider/scripts/vendor/generate-provider-types.ts provider/scripts/vendor/pulumi-schema.d.ts
+vendor: provider/scripts/vendor/pulumi-schema.d.ts
 
 .PHONY: upgrade_tools upgrade_java upgrade_pulumi upgrade_pulumictl upgrade_schematools upgrade_yq
 upgrade_tools: upgrade_java upgrade_pulumi upgrade_pulumictl upgrade_schematools upgrade_yq
@@ -245,19 +245,10 @@ provider/cmd/$(PROVIDER)/schema.json: $(SCHEMAGEN_SRC)
 	cd schemagen/cmd/pulumi-gen-kubernetes-the-hard-way && \
 		go run main.go ${WORKING_DIR}/provider/cmd/${PROVIDER}
 
-provider/scripts/vendor/generate-provider-types.ts: AWSX_VERSION := $(shell cat .awsx.version)
-provider/scripts/vendor/generate-provider-types.ts: .awsx.version
-	@mkdir -p provider/scripts/vendor
-	cd provider/scripts && \
-		curl -sSL 'https://raw.githubusercontent.com/pulumi/pulumi-awsx/v$(AWSX_VERSION)/awsx/scripts/generate-provider-types.ts' > vendor/generate-provider-types.ts && \
-		patch vendor/generate-provider-types.ts patches/0001-fixes.patch && \
-		patch vendor/generate-provider-types.ts patches/0002-undefinedResource.patch && \
-		patch vendor/generate-provider-types.ts patches/0003-addKubernetes.patch
-
 provider/scripts/vendor/pulumi-schema.d.ts: AWSX_VERSION := $(shell cat .awsx.version)
 provider/scripts/vendor/pulumi-schema.d.ts: .awsx.version
 	@mkdir -p provider/scripts/vendor
-	curl -sSL 'https://raw.githubusercontent.com/pulumi/pulumi-awsx/v$(AWSX_VERSION)/awsx/scripts/pulumi-schema.d.ts' > provider/scripts/vendor/pulumi-schema.d.ts
+	curl -sSL 'https://raw.githubusercontent.com/pulumi/pulumi-awsx/v$(AWSX_VERSION)/awsx/scripts/pulumi-schema.d.ts' > $@
 
 # --------- Sentinel targets --------- #
 

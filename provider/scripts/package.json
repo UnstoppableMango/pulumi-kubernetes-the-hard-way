@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "license": "Apache-2.0",
   "scripts": {
-    "gen-types": "ts-node vendor/generate-provider-types.ts"
+    "gen-types": "ts-node generate-provider-types.ts"
   },
   "devDependencies": {
     "@types/node": "^20.12.2",
