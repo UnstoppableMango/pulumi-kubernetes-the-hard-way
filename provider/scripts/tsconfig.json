@@ -1,8 +1,8 @@
 {
-    "compilerOptions": {
-        "moduleResolution": "node"
-    },
-    "files": [
-        "vendor/generate-provider-types.ts",
-    ]
+  "compilerOptions": {
+    "moduleResolution": "node"
+  },
+  "files": [
+    "generate-provider-types.ts",
+  ]
 }

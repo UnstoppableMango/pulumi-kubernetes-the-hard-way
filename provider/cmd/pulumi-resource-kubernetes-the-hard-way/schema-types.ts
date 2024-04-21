@@ -1263,14 +1263,14 @@ export interface ClusterPkiNodeOutputs {
 export type EcdsaCurveInputs = "P224" | "P256" | "P384" | "P521";
 export type EcdsaCurveOutputs = "P224" | "P256" | "P384" | "P521";
 export interface KeyPairInputs {
-    readonly cert: pulumi.Input<unknown>;
+    readonly cert: pulumi.Input<tls.LocallySignedCert | tls.SelfSignedCert>;
     readonly certPem: pulumi.Input<string>;
     readonly key: pulumi.Input<tls.PrivateKey>;
     readonly privateKeyPem: pulumi.Input<string>;
     readonly publicKeyPem: pulumi.Input<string>;
 }
 export interface KeyPairOutputs {
-    readonly cert: pulumi.Output<unknown>;
+    readonly cert: pulumi.Output<tls.LocallySignedCert | tls.SelfSignedCert>;
     readonly certPem: pulumi.Output<string>;
     readonly key: pulumi.Output<tls.PrivateKey>;
     readonly privateKeyPem: pulumi.Output<string>;
