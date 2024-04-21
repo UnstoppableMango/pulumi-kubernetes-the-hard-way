@@ -42,13 +42,13 @@ export class Etcdctl extends pulumi.ComponentResource {
     /**
      * The command to run on create.
      */
-    public readonly create!: pulumi.Output<outputs.tools.EtcdctlOpts | undefined>;
+    public readonly create!: pulumi.Output<string | outputs.tools.EtcdctlOpts | undefined>;
     /**
      * The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
      * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
      * Command resource from previous create or update steps.
      */
-    public readonly delete!: pulumi.Output<outputs.tools.EtcdctlOpts | undefined>;
+    public readonly delete!: pulumi.Output<string | outputs.tools.EtcdctlOpts | undefined>;
     /**
      * Environment variables
      */
@@ -75,7 +75,7 @@ export class Etcdctl extends pulumi.ComponentResource {
      * are set to the stdout and stderr properties of the Command resource from previous 
      * create or update steps.
      */
-    public readonly update!: pulumi.Output<outputs.tools.EtcdctlOpts | undefined>;
+    public readonly update!: pulumi.Output<string | outputs.tools.EtcdctlOpts | undefined>;
 
     /**
      * Create a Etcdctl resource with the given unique name, arguments, and options.
@@ -135,13 +135,13 @@ export interface EtcdctlArgs {
     /**
      * The command to run on create.
      */
-    create?: inputs.tools.EtcdctlOptsArgs;
+    create?: pulumi.Input<string> | pulumi.Input<inputs.tools.EtcdctlOptsArgs>;
     /**
      * The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
      * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
      * Command resource from previous create or update steps.
      */
-    delete?: inputs.tools.EtcdctlOptsArgs;
+    delete?: pulumi.Input<string> | pulumi.Input<inputs.tools.EtcdctlOptsArgs>;
     /**
      * Environment variables
      */
@@ -160,5 +160,5 @@ export interface EtcdctlArgs {
      * are set to the stdout and stderr properties of the Command resource from previous 
      * create or update steps.
      */
-    update?: inputs.tools.EtcdctlOptsArgs;
+    update?: pulumi.Input<string> | pulumi.Input<inputs.tools.EtcdctlOptsArgs>;
 }

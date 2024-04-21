@@ -42,13 +42,13 @@ export class Hostnamectl extends pulumi.ComponentResource {
     /**
      * The command to run on create.
      */
-    public readonly create!: pulumi.Output<outputs.tools.HostnamectlOpts | undefined>;
+    public readonly create!: pulumi.Output<string | outputs.tools.HostnamectlOpts | undefined>;
     /**
      * The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
      * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
      * Command resource from previous create or update steps.
      */
-    public readonly delete!: pulumi.Output<outputs.tools.HostnamectlOpts | undefined>;
+    public readonly delete!: pulumi.Output<string | outputs.tools.HostnamectlOpts | undefined>;
     /**
      * Environment variables
      */
@@ -75,7 +75,7 @@ export class Hostnamectl extends pulumi.ComponentResource {
      * are set to the stdout and stderr properties of the Command resource from previous 
      * create or update steps.
      */
-    public readonly update!: pulumi.Output<outputs.tools.HostnamectlOpts | undefined>;
+    public readonly update!: pulumi.Output<string | outputs.tools.HostnamectlOpts | undefined>;
 
     /**
      * Create a Hostnamectl resource with the given unique name, arguments, and options.
@@ -135,13 +135,13 @@ export interface HostnamectlArgs {
     /**
      * The command to run on create.
      */
-    create?: inputs.tools.HostnamectlOptsArgs;
+    create?: pulumi.Input<string> | pulumi.Input<inputs.tools.HostnamectlOptsArgs>;
     /**
      * The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
      * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
      * Command resource from previous create or update steps.
      */
-    delete?: inputs.tools.HostnamectlOptsArgs;
+    delete?: pulumi.Input<string> | pulumi.Input<inputs.tools.HostnamectlOptsArgs>;
     /**
      * Environment variables
      */
@@ -160,5 +160,5 @@ export interface HostnamectlArgs {
      * are set to the stdout and stderr properties of the Command resource from previous 
      * create or update steps.
      */
-    update?: inputs.tools.HostnamectlOptsArgs;
+    update?: pulumi.Input<string> | pulumi.Input<inputs.tools.HostnamectlOptsArgs>;
 }

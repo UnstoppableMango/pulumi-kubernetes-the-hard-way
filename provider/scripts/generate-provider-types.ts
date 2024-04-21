@@ -106,6 +106,12 @@ const getPlainType = (
   typeDefinition: pulumiSchema.TypeReference,
   direction: Direction,
 ): ts.TypeNode => {
+  if (typeDefinition.oneOf) {
+    return ts.factory.createUnionTypeNode(typeDefinition.oneOf.map(t => {
+      return getType(t, direction);
+    }));
+  }
+
   switch (typeDefinition.type) {
     case "string":
       return ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword);
@@ -137,16 +143,7 @@ const getType = (
     return plainType;
   }
 
-  let type = plainType;
-  if (typeDefinition.oneOf) {
-    const types = typeDefinition.oneOf.map(t => {
-      return getPlainType(t, direction);
-    });
-
-    type = ts.factory.createUnionTypeNode(types);
-  }
-
-  return ts.factory.createTypeReferenceNode("pulumi." + direction, [type]);
+  return ts.factory.createTypeReferenceNode("pulumi." + direction, [plainType]);
 };
 
 function genTypeProperties(
@@ -179,10 +176,13 @@ function genClassProperties(
   }
   const requiredLookup = new Set(required);
   return Object.entries(properties).map(([propKey, typeDefinition]) => {
-    const type = ts.factory.createUnionTypeNode([
-      getType(typeDefinition, "Output", true),
-      getType(typeDefinition, "Output", false),
-    ]);
+    const cases = [getType(typeDefinition, "Output", true)];
+
+    if (!typeDefinition.plain) {
+      cases.push(getType(typeDefinition, "Output", false));
+    }
+
+    const type = ts.factory.createUnionTypeNode(cases);
     return ts.factory.createPropertyDeclaration(
       [ts.factory.createModifier(ts.SyntaxKind.PublicKeyword)],
       propKey,
@@ -318,7 +318,7 @@ const genResourceAbstractType = (
       ),
     ],
     [heritage],
-    [...genClassProperties(resource.properties as any, resource.required as any), constructor],
+    [...genClassProperties(resource.properties, resource.required), constructor],
   );
 
   return resourceType;

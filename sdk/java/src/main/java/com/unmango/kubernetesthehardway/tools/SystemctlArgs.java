@@ -4,6 +4,7 @@
 package com.unmango.kubernetesthehardway.tools;
 
 import com.pulumi.command.remote.inputs.ConnectionArgs;
+import com.pulumi.core.Either;
 import com.pulumi.core.Output;
 import com.pulumi.core.annotations.Import;
 import com.pulumi.exceptions.MissingRequiredPropertyException;
@@ -56,13 +57,13 @@ public final class SystemctlArgs extends com.pulumi.resources.ResourceArgs {
      * 
      */
     @Import(name="create")
-    private @Nullable SystemctlOptsArgs create;
+    private @Nullable Either<String,SystemctlOptsArgs> create;
 
     /**
      * @return The command to run on create.
      * 
      */
-    public Optional<SystemctlOptsArgs> create() {
+    public Optional<Either<String,SystemctlOptsArgs>> create() {
         return Optional.ofNullable(this.create);
     }
 
@@ -73,7 +74,7 @@ public final class SystemctlArgs extends com.pulumi.resources.ResourceArgs {
      * 
      */
     @Import(name="delete")
-    private @Nullable SystemctlOptsArgs delete;
+    private @Nullable Either<String,SystemctlOptsArgs> delete;
 
     /**
      * @return The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
@@ -81,7 +82,7 @@ public final class SystemctlArgs extends com.pulumi.resources.ResourceArgs {
      * Command resource from previous create or update steps.
      * 
      */
-    public Optional<SystemctlOptsArgs> delete() {
+    public Optional<Either<String,SystemctlOptsArgs>> delete() {
         return Optional.ofNullable(this.delete);
     }
 
@@ -138,7 +139,7 @@ public final class SystemctlArgs extends com.pulumi.resources.ResourceArgs {
      * 
      */
     @Import(name="update")
-    private @Nullable SystemctlOptsArgs update;
+    private @Nullable Either<String,SystemctlOptsArgs> update;
 
     /**
      * @return The command to run on update, if empty, create will
@@ -147,7 +148,7 @@ public final class SystemctlArgs extends com.pulumi.resources.ResourceArgs {
      * create or update steps.
      * 
      */
-    public Optional<SystemctlOptsArgs> update() {
+    public Optional<Either<String,SystemctlOptsArgs>> update() {
         return Optional.ofNullable(this.update);
     }
 
@@ -230,8 +231,41 @@ public final class SystemctlArgs extends com.pulumi.resources.ResourceArgs {
          * @return builder
          * 
          */
-        public Builder create(@Nullable SystemctlOptsArgs create) {
+        public Builder create(@Nullable Either<String,SystemctlOptsArgs> create) {
             $.create = create;
+            return this;
+        }
+
+        /**
+         * @param create The command to run on create.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder create(String create) {
+            return create(Either.ofLeft(create));
+        }
+
+        /**
+         * @param create The command to run on create.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder create(SystemctlOptsArgs create) {
+            return create(Either.ofRight(create));
+        }
+
+        /**
+         * @param delete The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+         * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+         * Command resource from previous create or update steps.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder delete(@Nullable Either<String,SystemctlOptsArgs> delete) {
+            $.delete = delete;
             return this;
         }
 
@@ -243,9 +277,20 @@ public final class SystemctlArgs extends com.pulumi.resources.ResourceArgs {
          * @return builder
          * 
          */
-        public Builder delete(@Nullable SystemctlOptsArgs delete) {
-            $.delete = delete;
-            return this;
+        public Builder delete(String delete) {
+            return delete(Either.ofLeft(delete));
+        }
+
+        /**
+         * @param delete The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+         * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+         * Command resource from previous create or update steps.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder delete(SystemctlOptsArgs delete) {
+            return delete(Either.ofRight(delete));
         }
 
         /**
@@ -330,9 +375,35 @@ public final class SystemctlArgs extends com.pulumi.resources.ResourceArgs {
          * @return builder
          * 
          */
-        public Builder update(@Nullable SystemctlOptsArgs update) {
+        public Builder update(@Nullable Either<String,SystemctlOptsArgs> update) {
             $.update = update;
             return this;
+        }
+
+        /**
+         * @param update The command to run on update, if empty, create will
+         * run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+         * are set to the stdout and stderr properties of the Command resource from previous
+         * create or update steps.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder update(String update) {
+            return update(Either.ofLeft(update));
+        }
+
+        /**
+         * @param update The command to run on update, if empty, create will
+         * run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+         * are set to the stdout and stderr properties of the Command resource from previous
+         * create or update steps.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder update(SystemctlOptsArgs update) {
+            return update(Either.ofRight(update));
         }
 
         public SystemctlArgs build() {

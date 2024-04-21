@@ -42,13 +42,13 @@ export class Rm extends pulumi.ComponentResource {
     /**
      * The command to run on create.
      */
-    public readonly create!: pulumi.Output<outputs.tools.RmOpts | undefined>;
+    public readonly create!: pulumi.Output<string | outputs.tools.RmOpts | undefined>;
     /**
      * The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
      * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
      * Command resource from previous create or update steps.
      */
-    public readonly delete!: pulumi.Output<outputs.tools.RmOpts | undefined>;
+    public readonly delete!: pulumi.Output<string | outputs.tools.RmOpts | undefined>;
     /**
      * Environment variables
      */
@@ -75,7 +75,7 @@ export class Rm extends pulumi.ComponentResource {
      * are set to the stdout and stderr properties of the Command resource from previous 
      * create or update steps.
      */
-    public readonly update!: pulumi.Output<outputs.tools.RmOpts | undefined>;
+    public readonly update!: pulumi.Output<string | outputs.tools.RmOpts | undefined>;
 
     /**
      * Create a Rm resource with the given unique name, arguments, and options.
@@ -135,13 +135,13 @@ export interface RmArgs {
     /**
      * The command to run on create.
      */
-    create?: inputs.tools.RmOptsArgs;
+    create?: pulumi.Input<string> | pulumi.Input<inputs.tools.RmOptsArgs>;
     /**
      * The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
      * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
      * Command resource from previous create or update steps.
      */
-    delete?: inputs.tools.RmOptsArgs;
+    delete?: pulumi.Input<string> | pulumi.Input<inputs.tools.RmOptsArgs>;
     /**
      * Environment variables
      */
@@ -160,5 +160,5 @@ export interface RmArgs {
      * are set to the stdout and stderr properties of the Command resource from previous 
      * create or update steps.
      */
-    update?: inputs.tools.RmOptsArgs;
+    update?: pulumi.Input<string> | pulumi.Input<inputs.tools.RmOptsArgs>;
 }

@@ -14,24 +14,24 @@ export type ToolFactory<T, U> = {
 interface ToolInputs<T> {
   binaryPath?: string | Input<string>;
   connection: Input<types.input.remote.ConnectionArgs>;
-  create?: T;
-  delete?: T;
+  create?: Input<string> | T;
+  delete?: Input<string> | T;
   environment?: Input<Record<string, Input<string>>>;
   stdin?: string | Input<string>;
   triggers?: any[] | Input<any[]>;
-  update?: T;
+  update?: Input<string> | T;
 }
 
 interface ToolOutputs<T> {
   binaryPath: string | Output<string>;
   command: Command | Output<Command>;
   connection: types.output.remote.Connection | Output<types.output.remote.Connection>;
-  create?: T | Output<T>;
-  delete?: T | Output<T>;
+  create?: Output<string> | T | Output<T>;
+  delete?: Output<string> | T | Output<T>;
   environment: Record<string, string> | Output<Record<string, string>>;
   stdin?: string | Output<string>;
   triggers: any[] | Output<any[]>;
-  update?: T | Output<T>;
+  update?: Output<string> | T | Output<T>;
 }
 
 type ToolResource<T> = ToolOutputs<T> & ComponentResource & {
@@ -70,7 +70,13 @@ function makeTool<T, U>(
   const triggers = output(args.triggers ?? []);
 
   const builder = new CommandBuilder(binaryPath)
-  const format = (o?: T) => o ? apply(builder, o).command : undefined;
+  const format = (o?: T | Input<string>): Output<string> | undefined => {
+    if (!o) return undefined;
+    if (typeof o === 'string' || Output.isInstance(o)) {
+      return output(o);
+    };
+    return apply(builder, o as T).command;
+  };
 
   const command = new Command(name, {
     connection,
@@ -82,7 +88,14 @@ function makeTool<T, U>(
     delete: format(args.delete),
   }, { parent: resource });
 
-  const map = (i?: T) => i ? toOutput(i) : undefined;
+  const map = (i?: T | Input<string>): Output<U> | Output<string> | undefined => {
+    if (!i) return undefined;
+    if (typeof i === 'string' || Output.isInstance(i)) {
+      return output(i);
+    }
+    // UGH
+    return output(toOutput(i as T)) as Output<U>;
+  };
 
   resource.binaryPath = binaryPath;
   resource.command = command;

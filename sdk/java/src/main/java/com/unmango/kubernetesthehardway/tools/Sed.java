@@ -5,6 +5,7 @@ package com.unmango.kubernetesthehardway.tools;
 
 import com.pulumi.command.remote.Command;
 import com.pulumi.command.remote.outputs.Connection;
+import com.pulumi.core.Either;
 import com.pulumi.core.Output;
 import com.pulumi.core.annotations.Export;
 import com.pulumi.core.annotations.ResourceType;
@@ -71,14 +72,14 @@ public class Sed extends com.pulumi.resources.ComponentResource {
      * The command to run on create.
      * 
      */
-    @Export(name="create", refs={SedOpts.class}, tree="[0]")
-    private Output</* @Nullable */ SedOpts> create;
+    @Export(name="create", refs={Either.class,String.class,SedOpts.class}, tree="[0,1,2]")
+    private Output</* @Nullable */ Either<String,SedOpts>> create;
 
     /**
      * @return The command to run on create.
      * 
      */
-    public Output<Optional<SedOpts>> create() {
+    public Output<Optional<Either<String,SedOpts>>> create() {
         return Codegen.optional(this.create);
     }
     /**
@@ -87,8 +88,8 @@ public class Sed extends com.pulumi.resources.ComponentResource {
      * Command resource from previous create or update steps.
      * 
      */
-    @Export(name="delete", refs={SedOpts.class}, tree="[0]")
-    private Output</* @Nullable */ SedOpts> delete;
+    @Export(name="delete", refs={Either.class,String.class,SedOpts.class}, tree="[0,1,2]")
+    private Output</* @Nullable */ Either<String,SedOpts>> delete;
 
     /**
      * @return The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
@@ -96,7 +97,7 @@ public class Sed extends com.pulumi.resources.ComponentResource {
      * Command resource from previous create or update steps.
      * 
      */
-    public Output<Optional<SedOpts>> delete() {
+    public Output<Optional<Either<String,SedOpts>>> delete() {
         return Codegen.optional(this.delete);
     }
     /**
@@ -176,8 +177,8 @@ public class Sed extends com.pulumi.resources.ComponentResource {
      * create or update steps.
      * 
      */
-    @Export(name="update", refs={SedOpts.class}, tree="[0]")
-    private Output</* @Nullable */ SedOpts> update;
+    @Export(name="update", refs={Either.class,String.class,SedOpts.class}, tree="[0,1,2]")
+    private Output</* @Nullable */ Either<String,SedOpts>> update;
 
     /**
      * @return The command to run on update, if empty, create will
@@ -186,7 +187,7 @@ public class Sed extends com.pulumi.resources.ComponentResource {
      * create or update steps.
      * 
      */
-    public Output<Optional<SedOpts>> update() {
+    public Output<Optional<Either<String,SedOpts>>> update() {
         return Codegen.optional(this.update);
     }
 

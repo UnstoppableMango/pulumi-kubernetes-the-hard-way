@@ -24,11 +24,11 @@ type Etcdctl struct {
 	// Connection details for the remote system
 	Connection pulumiCommand.ConnectionOutput `pulumi:"connection"`
 	// The command to run on create.
-	Create EtcdctlOptsPtrOutput `pulumi:"create"`
+	Create pulumi.AnyOutput `pulumi:"create"`
 	// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
 	// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
 	// Command resource from previous create or update steps.
-	Delete EtcdctlOptsPtrOutput `pulumi:"delete"`
+	Delete pulumi.AnyOutput `pulumi:"delete"`
 	// Environment variables
 	Environment pulumi.StringMapOutput `pulumi:"environment"`
 	// TODO
@@ -43,7 +43,7 @@ type Etcdctl struct {
 	// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
 	// are set to the stdout and stderr properties of the Command resource from previous
 	// create or update steps.
-	Update EtcdctlOptsPtrOutput `pulumi:"update"`
+	Update pulumi.AnyOutput `pulumi:"update"`
 }
 
 // NewEtcdctl registers a new resource with the given unique name, arguments, and options.
@@ -72,11 +72,11 @@ type etcdctlArgs struct {
 	// Connection details for the remote system
 	Connection pulumiCommand.Connection `pulumi:"connection"`
 	// The command to run on create.
-	Create *EtcdctlOpts `pulumi:"create"`
+	Create interface{} `pulumi:"create"`
 	// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
 	// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
 	// Command resource from previous create or update steps.
-	Delete *EtcdctlOpts `pulumi:"delete"`
+	Delete interface{} `pulumi:"delete"`
 	// Environment variables
 	Environment map[string]string `pulumi:"environment"`
 	// TODO
@@ -87,7 +87,7 @@ type etcdctlArgs struct {
 	// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
 	// are set to the stdout and stderr properties of the Command resource from previous
 	// create or update steps.
-	Update *EtcdctlOpts `pulumi:"update"`
+	Update interface{} `pulumi:"update"`
 }
 
 // The set of arguments for constructing a Etcdctl resource.
@@ -97,11 +97,11 @@ type EtcdctlArgs struct {
 	// Connection details for the remote system
 	Connection pulumiCommand.ConnectionInput
 	// The command to run on create.
-	Create *EtcdctlOptsArgs
+	Create interface{}
 	// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
 	// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
 	// Command resource from previous create or update steps.
-	Delete *EtcdctlOptsArgs
+	Delete interface{}
 	// Environment variables
 	Environment pulumi.StringMapInput
 	// TODO
@@ -112,7 +112,7 @@ type EtcdctlArgs struct {
 	// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
 	// are set to the stdout and stderr properties of the Command resource from previous
 	// create or update steps.
-	Update *EtcdctlOptsArgs
+	Update interface{}
 }
 
 func (EtcdctlArgs) ElementType() reflect.Type {
@@ -218,15 +218,15 @@ func (o EtcdctlOutput) Connection() pulumiCommand.ConnectionOutput {
 }
 
 // The command to run on create.
-func (o EtcdctlOutput) Create() EtcdctlOptsPtrOutput {
-	return o.ApplyT(func(v *Etcdctl) EtcdctlOptsPtrOutput { return v.Create }).(EtcdctlOptsPtrOutput)
+func (o EtcdctlOutput) Create() pulumi.AnyOutput {
+	return o.ApplyT(func(v *Etcdctl) pulumi.AnyOutput { return v.Create }).(pulumi.AnyOutput)
 }
 
 // The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
 // and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
 // Command resource from previous create or update steps.
-func (o EtcdctlOutput) Delete() EtcdctlOptsPtrOutput {
-	return o.ApplyT(func(v *Etcdctl) EtcdctlOptsPtrOutput { return v.Delete }).(EtcdctlOptsPtrOutput)
+func (o EtcdctlOutput) Delete() pulumi.AnyOutput {
+	return o.ApplyT(func(v *Etcdctl) pulumi.AnyOutput { return v.Delete }).(pulumi.AnyOutput)
 }
 
 // Environment variables
@@ -258,8 +258,8 @@ func (o EtcdctlOutput) Triggers() pulumi.ArrayOutput {
 // run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
 // are set to the stdout and stderr properties of the Command resource from previous
 // create or update steps.
-func (o EtcdctlOutput) Update() EtcdctlOptsPtrOutput {
-	return o.ApplyT(func(v *Etcdctl) EtcdctlOptsPtrOutput { return v.Update }).(EtcdctlOptsPtrOutput)
+func (o EtcdctlOutput) Update() pulumi.AnyOutput {
+	return o.ApplyT(func(v *Etcdctl) pulumi.AnyOutput { return v.Update }).(pulumi.AnyOutput)
 }
 
 type EtcdctlArrayOutput struct{ *pulumi.OutputState }

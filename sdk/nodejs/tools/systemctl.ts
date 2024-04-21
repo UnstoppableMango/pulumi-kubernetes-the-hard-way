@@ -42,13 +42,13 @@ export class Systemctl extends pulumi.ComponentResource {
     /**
      * The command to run on create.
      */
-    public readonly create!: pulumi.Output<outputs.tools.SystemctlOpts | undefined>;
+    public readonly create!: pulumi.Output<string | outputs.tools.SystemctlOpts | undefined>;
     /**
      * The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
      * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
      * Command resource from previous create or update steps.
      */
-    public readonly delete!: pulumi.Output<outputs.tools.SystemctlOpts | undefined>;
+    public readonly delete!: pulumi.Output<string | outputs.tools.SystemctlOpts | undefined>;
     /**
      * Environment variables
      */
@@ -75,7 +75,7 @@ export class Systemctl extends pulumi.ComponentResource {
      * are set to the stdout and stderr properties of the Command resource from previous 
      * create or update steps.
      */
-    public readonly update!: pulumi.Output<outputs.tools.SystemctlOpts | undefined>;
+    public readonly update!: pulumi.Output<string | outputs.tools.SystemctlOpts | undefined>;
 
     /**
      * Create a Systemctl resource with the given unique name, arguments, and options.
@@ -135,13 +135,13 @@ export interface SystemctlArgs {
     /**
      * The command to run on create.
      */
-    create?: inputs.tools.SystemctlOptsArgs;
+    create?: pulumi.Input<string> | pulumi.Input<inputs.tools.SystemctlOptsArgs>;
     /**
      * The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
      * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
      * Command resource from previous create or update steps.
      */
-    delete?: inputs.tools.SystemctlOptsArgs;
+    delete?: pulumi.Input<string> | pulumi.Input<inputs.tools.SystemctlOptsArgs>;
     /**
      * Environment variables
      */
@@ -160,5 +160,5 @@ export interface SystemctlArgs {
      * are set to the stdout and stderr properties of the Command resource from previous 
      * create or update steps.
      */
-    update?: inputs.tools.SystemctlOptsArgs;
+    update?: pulumi.Input<string> | pulumi.Input<inputs.tools.SystemctlOptsArgs>;
 }

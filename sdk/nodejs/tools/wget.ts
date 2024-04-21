@@ -42,13 +42,13 @@ export class Wget extends pulumi.ComponentResource {
     /**
      * The command to run on create.
      */
-    public readonly create!: pulumi.Output<outputs.tools.WgetOpts | undefined>;
+    public readonly create!: pulumi.Output<string | outputs.tools.WgetOpts | undefined>;
     /**
      * The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
      * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
      * Command resource from previous create or update steps.
      */
-    public readonly delete!: pulumi.Output<outputs.tools.WgetOpts | undefined>;
+    public readonly delete!: pulumi.Output<string | outputs.tools.WgetOpts | undefined>;
     /**
      * Environment variables
      */
@@ -75,7 +75,7 @@ export class Wget extends pulumi.ComponentResource {
      * are set to the stdout and stderr properties of the Command resource from previous 
      * create or update steps.
      */
-    public readonly update!: pulumi.Output<outputs.tools.WgetOpts | undefined>;
+    public readonly update!: pulumi.Output<string | outputs.tools.WgetOpts | undefined>;
 
     /**
      * Create a Wget resource with the given unique name, arguments, and options.
@@ -135,13 +135,13 @@ export interface WgetArgs {
     /**
      * The command to run on create.
      */
-    create?: inputs.tools.WgetOptsArgs;
+    create?: pulumi.Input<string> | pulumi.Input<inputs.tools.WgetOptsArgs>;
     /**
      * The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
      * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
      * Command resource from previous create or update steps.
      */
-    delete?: inputs.tools.WgetOptsArgs;
+    delete?: pulumi.Input<string> | pulumi.Input<inputs.tools.WgetOptsArgs>;
     /**
      * Environment variables
      */
@@ -160,5 +160,5 @@ export interface WgetArgs {
      * are set to the stdout and stderr properties of the Command resource from previous 
      * create or update steps.
      */
-    update?: inputs.tools.WgetOptsArgs;
+    update?: pulumi.Input<string> | pulumi.Input<inputs.tools.WgetOptsArgs>;
 }

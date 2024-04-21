@@ -5,6 +5,7 @@ package com.unmango.kubernetesthehardway.tools;
 
 import com.pulumi.command.remote.Command;
 import com.pulumi.command.remote.outputs.Connection;
+import com.pulumi.core.Either;
 import com.pulumi.core.Output;
 import com.pulumi.core.annotations.Export;
 import com.pulumi.core.annotations.ResourceType;
@@ -71,14 +72,14 @@ public class Tee extends com.pulumi.resources.ComponentResource {
      * The command to run on create.
      * 
      */
-    @Export(name="create", refs={TeeOpts.class}, tree="[0]")
-    private Output</* @Nullable */ TeeOpts> create;
+    @Export(name="create", refs={Either.class,String.class,TeeOpts.class}, tree="[0,1,2]")
+    private Output</* @Nullable */ Either<String,TeeOpts>> create;
 
     /**
      * @return The command to run on create.
      * 
      */
-    public Output<Optional<TeeOpts>> create() {
+    public Output<Optional<Either<String,TeeOpts>>> create() {
         return Codegen.optional(this.create);
     }
     /**
@@ -87,8 +88,8 @@ public class Tee extends com.pulumi.resources.ComponentResource {
      * Command resource from previous create or update steps.
      * 
      */
-    @Export(name="delete", refs={TeeOpts.class}, tree="[0]")
-    private Output</* @Nullable */ TeeOpts> delete;
+    @Export(name="delete", refs={Either.class,String.class,TeeOpts.class}, tree="[0,1,2]")
+    private Output</* @Nullable */ Either<String,TeeOpts>> delete;
 
     /**
      * @return The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
@@ -96,7 +97,7 @@ public class Tee extends com.pulumi.resources.ComponentResource {
      * Command resource from previous create or update steps.
      * 
      */
-    public Output<Optional<TeeOpts>> delete() {
+    public Output<Optional<Either<String,TeeOpts>>> delete() {
         return Codegen.optional(this.delete);
     }
     /**
@@ -176,8 +177,8 @@ public class Tee extends com.pulumi.resources.ComponentResource {
      * create or update steps.
      * 
      */
-    @Export(name="update", refs={TeeOpts.class}, tree="[0]")
-    private Output</* @Nullable */ TeeOpts> update;
+    @Export(name="update", refs={Either.class,String.class,TeeOpts.class}, tree="[0,1,2]")
+    private Output</* @Nullable */ Either<String,TeeOpts>> update;
 
     /**
      * @return The command to run on update, if empty, create will
@@ -186,7 +187,7 @@ public class Tee extends com.pulumi.resources.ComponentResource {
      * create or update steps.
      * 
      */
-    public Output<Optional<TeeOpts>> update() {
+    public Output<Optional<Either<String,TeeOpts>>> update() {
         return Codegen.optional(this.update);
     }
 

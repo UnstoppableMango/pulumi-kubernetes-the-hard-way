@@ -24,11 +24,11 @@ type Systemctl struct {
 	// Connection details for the remote system
 	Connection pulumiCommand.ConnectionOutput `pulumi:"connection"`
 	// The command to run on create.
-	Create SystemctlOptsPtrOutput `pulumi:"create"`
+	Create pulumi.AnyOutput `pulumi:"create"`
 	// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
 	// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
 	// Command resource from previous create or update steps.
-	Delete SystemctlOptsPtrOutput `pulumi:"delete"`
+	Delete pulumi.AnyOutput `pulumi:"delete"`
 	// Environment variables
 	Environment pulumi.StringMapOutput `pulumi:"environment"`
 	// TODO
@@ -43,7 +43,7 @@ type Systemctl struct {
 	// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
 	// are set to the stdout and stderr properties of the Command resource from previous
 	// create or update steps.
-	Update SystemctlOptsPtrOutput `pulumi:"update"`
+	Update pulumi.AnyOutput `pulumi:"update"`
 }
 
 // NewSystemctl registers a new resource with the given unique name, arguments, and options.
@@ -72,11 +72,11 @@ type systemctlArgs struct {
 	// Connection details for the remote system
 	Connection pulumiCommand.Connection `pulumi:"connection"`
 	// The command to run on create.
-	Create *SystemctlOpts `pulumi:"create"`
+	Create interface{} `pulumi:"create"`
 	// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
 	// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
 	// Command resource from previous create or update steps.
-	Delete *SystemctlOpts `pulumi:"delete"`
+	Delete interface{} `pulumi:"delete"`
 	// Environment variables
 	Environment map[string]string `pulumi:"environment"`
 	// TODO
@@ -87,7 +87,7 @@ type systemctlArgs struct {
 	// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
 	// are set to the stdout and stderr properties of the Command resource from previous
 	// create or update steps.
-	Update *SystemctlOpts `pulumi:"update"`
+	Update interface{} `pulumi:"update"`
 }
 
 // The set of arguments for constructing a Systemctl resource.
@@ -97,11 +97,11 @@ type SystemctlArgs struct {
 	// Connection details for the remote system
 	Connection pulumiCommand.ConnectionInput
 	// The command to run on create.
-	Create *SystemctlOptsArgs
+	Create interface{}
 	// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
 	// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
 	// Command resource from previous create or update steps.
-	Delete *SystemctlOptsArgs
+	Delete interface{}
 	// Environment variables
 	Environment pulumi.StringMapInput
 	// TODO
@@ -112,7 +112,7 @@ type SystemctlArgs struct {
 	// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
 	// are set to the stdout and stderr properties of the Command resource from previous
 	// create or update steps.
-	Update *SystemctlOptsArgs
+	Update interface{}
 }
 
 func (SystemctlArgs) ElementType() reflect.Type {
@@ -218,15 +218,15 @@ func (o SystemctlOutput) Connection() pulumiCommand.ConnectionOutput {
 }
 
 // The command to run on create.
-func (o SystemctlOutput) Create() SystemctlOptsPtrOutput {
-	return o.ApplyT(func(v *Systemctl) SystemctlOptsPtrOutput { return v.Create }).(SystemctlOptsPtrOutput)
+func (o SystemctlOutput) Create() pulumi.AnyOutput {
+	return o.ApplyT(func(v *Systemctl) pulumi.AnyOutput { return v.Create }).(pulumi.AnyOutput)
 }
 
 // The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
 // and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
 // Command resource from previous create or update steps.
-func (o SystemctlOutput) Delete() SystemctlOptsPtrOutput {
-	return o.ApplyT(func(v *Systemctl) SystemctlOptsPtrOutput { return v.Delete }).(SystemctlOptsPtrOutput)
+func (o SystemctlOutput) Delete() pulumi.AnyOutput {
+	return o.ApplyT(func(v *Systemctl) pulumi.AnyOutput { return v.Delete }).(pulumi.AnyOutput)
 }
 
 // Environment variables
@@ -258,8 +258,8 @@ func (o SystemctlOutput) Triggers() pulumi.ArrayOutput {
 // run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
 // are set to the stdout and stderr properties of the Command resource from previous
 // create or update steps.
-func (o SystemctlOutput) Update() SystemctlOptsPtrOutput {
-	return o.ApplyT(func(v *Systemctl) SystemctlOptsPtrOutput { return v.Update }).(SystemctlOptsPtrOutput)
+func (o SystemctlOutput) Update() pulumi.AnyOutput {
+	return o.ApplyT(func(v *Systemctl) pulumi.AnyOutput { return v.Update }).(pulumi.AnyOutput)
 }
 
 type SystemctlArrayOutput struct{ *pulumi.OutputState }

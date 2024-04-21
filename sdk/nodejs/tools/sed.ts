@@ -42,13 +42,13 @@ export class Sed extends pulumi.ComponentResource {
     /**
      * The command to run on create.
      */
-    public readonly create!: pulumi.Output<outputs.tools.SedOpts | undefined>;
+    public readonly create!: pulumi.Output<string | outputs.tools.SedOpts | undefined>;
     /**
      * The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
      * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
      * Command resource from previous create or update steps.
      */
-    public readonly delete!: pulumi.Output<outputs.tools.SedOpts | undefined>;
+    public readonly delete!: pulumi.Output<string | outputs.tools.SedOpts | undefined>;
     /**
      * Environment variables
      */
@@ -75,7 +75,7 @@ export class Sed extends pulumi.ComponentResource {
      * are set to the stdout and stderr properties of the Command resource from previous 
      * create or update steps.
      */
-    public readonly update!: pulumi.Output<outputs.tools.SedOpts | undefined>;
+    public readonly update!: pulumi.Output<string | outputs.tools.SedOpts | undefined>;
 
     /**
      * Create a Sed resource with the given unique name, arguments, and options.
@@ -135,13 +135,13 @@ export interface SedArgs {
     /**
      * The command to run on create.
      */
-    create?: inputs.tools.SedOptsArgs;
+    create?: pulumi.Input<string> | pulumi.Input<inputs.tools.SedOptsArgs>;
     /**
      * The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
      * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
      * Command resource from previous create or update steps.
      */
-    delete?: inputs.tools.SedOptsArgs;
+    delete?: pulumi.Input<string> | pulumi.Input<inputs.tools.SedOptsArgs>;
     /**
      * Environment variables
      */
@@ -160,5 +160,5 @@ export interface SedArgs {
      * are set to the stdout and stderr properties of the Command resource from previous 
      * create or update steps.
      */
-    update?: inputs.tools.SedOptsArgs;
+    update?: pulumi.Input<string> | pulumi.Input<inputs.tools.SedOptsArgs>;
 }
