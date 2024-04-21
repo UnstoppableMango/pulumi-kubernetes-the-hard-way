@@ -2,7 +2,7 @@ module github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/sdk
 
 go 1.21
 
-toolchain go1.22.1
+toolchain go1.22.2
 
 require (
 	github.com/blang/semver v3.5.1+incompatible
