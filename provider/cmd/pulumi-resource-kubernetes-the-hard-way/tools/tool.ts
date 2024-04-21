@@ -3,8 +3,6 @@ import { types } from '@pulumi/command';
 import { Command } from '@pulumi/command/remote';
 import { CommandBuilder } from './commandBuilder';
 
-type CommandOr<T> = Input<string> | T;
-
 export type ApplyInputs<T> = {
   (builder: CommandBuilder, inputs: T): CommandBuilder;
 }
@@ -57,7 +55,7 @@ export function factory<T, U>(
   );
 }
 
-function makeTool<T extends Object, U>(
+function makeTool<T, U>(
   name: string,
   args: ToolInputs<T>,
   defaultPath: string,
@@ -72,12 +70,12 @@ function makeTool<T extends Object, U>(
   const triggers = output(args.triggers ?? []);
 
   const builder = new CommandBuilder(binaryPath)
-  const format = (o?: CommandOr<T>) => {
+  const format = (o?: T | Input<string>): Output<string> | undefined => {
     if (!o) return undefined;
-    return output(o).apply(x => {
-      return typeof x === 'string'
-        ? x : apply(builder, x);
-    })
+    if (typeof o === 'string' || Output.isInstance(o)) {
+      return output(o);
+    };
+    return apply(builder, o as T).command;
   };
 
   const command = new Command(name, {
@@ -90,11 +88,13 @@ function makeTool<T extends Object, U>(
     delete: format(args.delete),
   }, { parent: resource });
 
-  const map = (i?: T | Input<string>) => {
+  const map = (i?: T | Input<string>): Output<U> | Output<string> | undefined => {
     if (!i) return undefined;
-    return output(i).apply(x => {
-
-    });
+    if (typeof i === 'string' || Output.isInstance(i)) {
+      return output(i);
+    }
+    // UGH
+    return output(toOutput(i as T)) as Output<U>;
   };
 
   resource.binaryPath = binaryPath;
