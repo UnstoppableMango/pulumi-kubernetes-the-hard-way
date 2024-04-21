@@ -24,11 +24,11 @@ type Mkdir struct {
 	// Connection details for the remote system
 	Connection pulumiCommand.ConnectionOutput `pulumi:"connection"`
 	// The command to run on create.
-	Create MkdirOptsPtrOutput `pulumi:"create"`
+	Create pulumi.AnyOutput `pulumi:"create"`
 	// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
 	// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
 	// Command resource from previous create or update steps.
-	Delete MkdirOptsPtrOutput `pulumi:"delete"`
+	Delete pulumi.AnyOutput `pulumi:"delete"`
 	// Environment variables
 	Environment pulumi.StringMapOutput `pulumi:"environment"`
 	// TODO
@@ -43,7 +43,7 @@ type Mkdir struct {
 	// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
 	// are set to the stdout and stderr properties of the Command resource from previous
 	// create or update steps.
-	Update MkdirOptsPtrOutput `pulumi:"update"`
+	Update pulumi.AnyOutput `pulumi:"update"`
 }
 
 // NewMkdir registers a new resource with the given unique name, arguments, and options.
@@ -72,11 +72,11 @@ type mkdirArgs struct {
 	// Connection details for the remote system
 	Connection pulumiCommand.Connection `pulumi:"connection"`
 	// The command to run on create.
-	Create *MkdirOpts `pulumi:"create"`
+	Create interface{} `pulumi:"create"`
 	// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
 	// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
 	// Command resource from previous create or update steps.
-	Delete *MkdirOpts `pulumi:"delete"`
+	Delete interface{} `pulumi:"delete"`
 	// Environment variables
 	Environment map[string]string `pulumi:"environment"`
 	// TODO
@@ -87,7 +87,7 @@ type mkdirArgs struct {
 	// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
 	// are set to the stdout and stderr properties of the Command resource from previous
 	// create or update steps.
-	Update *MkdirOpts `pulumi:"update"`
+	Update interface{} `pulumi:"update"`
 }
 
 // The set of arguments for constructing a Mkdir resource.
@@ -97,11 +97,11 @@ type MkdirArgs struct {
 	// Connection details for the remote system
 	Connection pulumiCommand.ConnectionInput
 	// The command to run on create.
-	Create *MkdirOptsArgs
+	Create interface{}
 	// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
 	// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
 	// Command resource from previous create or update steps.
-	Delete *MkdirOptsArgs
+	Delete interface{}
 	// Environment variables
 	Environment pulumi.StringMapInput
 	// TODO
@@ -112,7 +112,7 @@ type MkdirArgs struct {
 	// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
 	// are set to the stdout and stderr properties of the Command resource from previous
 	// create or update steps.
-	Update *MkdirOptsArgs
+	Update interface{}
 }
 
 func (MkdirArgs) ElementType() reflect.Type {
@@ -218,15 +218,15 @@ func (o MkdirOutput) Connection() pulumiCommand.ConnectionOutput {
 }
 
 // The command to run on create.
-func (o MkdirOutput) Create() MkdirOptsPtrOutput {
-	return o.ApplyT(func(v *Mkdir) MkdirOptsPtrOutput { return v.Create }).(MkdirOptsPtrOutput)
+func (o MkdirOutput) Create() pulumi.AnyOutput {
+	return o.ApplyT(func(v *Mkdir) pulumi.AnyOutput { return v.Create }).(pulumi.AnyOutput)
 }
 
 // The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
 // and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
 // Command resource from previous create or update steps.
-func (o MkdirOutput) Delete() MkdirOptsPtrOutput {
-	return o.ApplyT(func(v *Mkdir) MkdirOptsPtrOutput { return v.Delete }).(MkdirOptsPtrOutput)
+func (o MkdirOutput) Delete() pulumi.AnyOutput {
+	return o.ApplyT(func(v *Mkdir) pulumi.AnyOutput { return v.Delete }).(pulumi.AnyOutput)
 }
 
 // Environment variables
@@ -258,8 +258,8 @@ func (o MkdirOutput) Triggers() pulumi.ArrayOutput {
 // run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
 // are set to the stdout and stderr properties of the Command resource from previous
 // create or update steps.
-func (o MkdirOutput) Update() MkdirOptsPtrOutput {
-	return o.ApplyT(func(v *Mkdir) MkdirOptsPtrOutput { return v.Update }).(MkdirOptsPtrOutput)
+func (o MkdirOutput) Update() pulumi.AnyOutput {
+	return o.ApplyT(func(v *Mkdir) pulumi.AnyOutput { return v.Update }).(pulumi.AnyOutput)
 }
 
 type MkdirArrayOutput struct{ *pulumi.OutputState }

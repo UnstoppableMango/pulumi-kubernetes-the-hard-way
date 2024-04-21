@@ -42,13 +42,13 @@ export class Chmod extends pulumi.ComponentResource {
     /**
      * The command to run on create.
      */
-    public readonly create!: pulumi.Output<outputs.tools.ChmodOpts | undefined>;
+    public readonly create!: pulumi.Output<string | outputs.tools.ChmodOpts | undefined>;
     /**
      * The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
      * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
      * Command resource from previous create or update steps.
      */
-    public readonly delete!: pulumi.Output<outputs.tools.ChmodOpts | undefined>;
+    public readonly delete!: pulumi.Output<string | outputs.tools.ChmodOpts | undefined>;
     /**
      * Environment variables
      */
@@ -75,7 +75,7 @@ export class Chmod extends pulumi.ComponentResource {
      * are set to the stdout and stderr properties of the Command resource from previous 
      * create or update steps.
      */
-    public readonly update!: pulumi.Output<outputs.tools.ChmodOpts | undefined>;
+    public readonly update!: pulumi.Output<string | outputs.tools.ChmodOpts | undefined>;
 
     /**
      * Create a Chmod resource with the given unique name, arguments, and options.
@@ -135,13 +135,13 @@ export interface ChmodArgs {
     /**
      * The command to run on create.
      */
-    create?: inputs.tools.ChmodOptsArgs;
+    create?: pulumi.Input<string> | pulumi.Input<inputs.tools.ChmodOptsArgs>;
     /**
      * The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
      * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
      * Command resource from previous create or update steps.
      */
-    delete?: inputs.tools.ChmodOptsArgs;
+    delete?: pulumi.Input<string> | pulumi.Input<inputs.tools.ChmodOptsArgs>;
     /**
      * Environment variables
      */
@@ -160,5 +160,5 @@ export interface ChmodArgs {
      * are set to the stdout and stderr properties of the Command resource from previous 
      * create or update steps.
      */
-    update?: inputs.tools.ChmodOptsArgs;
+    update?: pulumi.Input<string> | pulumi.Input<inputs.tools.ChmodOptsArgs>;
 }

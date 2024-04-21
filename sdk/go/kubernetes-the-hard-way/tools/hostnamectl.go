@@ -24,11 +24,11 @@ type Hostnamectl struct {
 	// Connection details for the remote system
 	Connection pulumiCommand.ConnectionOutput `pulumi:"connection"`
 	// The command to run on create.
-	Create HostnamectlOptsPtrOutput `pulumi:"create"`
+	Create pulumi.AnyOutput `pulumi:"create"`
 	// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
 	// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
 	// Command resource from previous create or update steps.
-	Delete HostnamectlOptsPtrOutput `pulumi:"delete"`
+	Delete pulumi.AnyOutput `pulumi:"delete"`
 	// Environment variables
 	Environment pulumi.StringMapOutput `pulumi:"environment"`
 	// TODO
@@ -43,7 +43,7 @@ type Hostnamectl struct {
 	// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
 	// are set to the stdout and stderr properties of the Command resource from previous
 	// create or update steps.
-	Update HostnamectlOptsPtrOutput `pulumi:"update"`
+	Update pulumi.AnyOutput `pulumi:"update"`
 }
 
 // NewHostnamectl registers a new resource with the given unique name, arguments, and options.
@@ -72,11 +72,11 @@ type hostnamectlArgs struct {
 	// Connection details for the remote system
 	Connection pulumiCommand.Connection `pulumi:"connection"`
 	// The command to run on create.
-	Create *HostnamectlOpts `pulumi:"create"`
+	Create interface{} `pulumi:"create"`
 	// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
 	// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
 	// Command resource from previous create or update steps.
-	Delete *HostnamectlOpts `pulumi:"delete"`
+	Delete interface{} `pulumi:"delete"`
 	// Environment variables
 	Environment map[string]string `pulumi:"environment"`
 	// TODO
@@ -87,7 +87,7 @@ type hostnamectlArgs struct {
 	// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
 	// are set to the stdout and stderr properties of the Command resource from previous
 	// create or update steps.
-	Update *HostnamectlOpts `pulumi:"update"`
+	Update interface{} `pulumi:"update"`
 }
 
 // The set of arguments for constructing a Hostnamectl resource.
@@ -97,11 +97,11 @@ type HostnamectlArgs struct {
 	// Connection details for the remote system
 	Connection pulumiCommand.ConnectionInput
 	// The command to run on create.
-	Create *HostnamectlOptsArgs
+	Create interface{}
 	// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
 	// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
 	// Command resource from previous create or update steps.
-	Delete *HostnamectlOptsArgs
+	Delete interface{}
 	// Environment variables
 	Environment pulumi.StringMapInput
 	// TODO
@@ -112,7 +112,7 @@ type HostnamectlArgs struct {
 	// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
 	// are set to the stdout and stderr properties of the Command resource from previous
 	// create or update steps.
-	Update *HostnamectlOptsArgs
+	Update interface{}
 }
 
 func (HostnamectlArgs) ElementType() reflect.Type {
@@ -218,15 +218,15 @@ func (o HostnamectlOutput) Connection() pulumiCommand.ConnectionOutput {
 }
 
 // The command to run on create.
-func (o HostnamectlOutput) Create() HostnamectlOptsPtrOutput {
-	return o.ApplyT(func(v *Hostnamectl) HostnamectlOptsPtrOutput { return v.Create }).(HostnamectlOptsPtrOutput)
+func (o HostnamectlOutput) Create() pulumi.AnyOutput {
+	return o.ApplyT(func(v *Hostnamectl) pulumi.AnyOutput { return v.Create }).(pulumi.AnyOutput)
 }
 
 // The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
 // and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
 // Command resource from previous create or update steps.
-func (o HostnamectlOutput) Delete() HostnamectlOptsPtrOutput {
-	return o.ApplyT(func(v *Hostnamectl) HostnamectlOptsPtrOutput { return v.Delete }).(HostnamectlOptsPtrOutput)
+func (o HostnamectlOutput) Delete() pulumi.AnyOutput {
+	return o.ApplyT(func(v *Hostnamectl) pulumi.AnyOutput { return v.Delete }).(pulumi.AnyOutput)
 }
 
 // Environment variables
@@ -258,8 +258,8 @@ func (o HostnamectlOutput) Triggers() pulumi.ArrayOutput {
 // run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
 // are set to the stdout and stderr properties of the Command resource from previous
 // create or update steps.
-func (o HostnamectlOutput) Update() HostnamectlOptsPtrOutput {
-	return o.ApplyT(func(v *Hostnamectl) HostnamectlOptsPtrOutput { return v.Update }).(HostnamectlOptsPtrOutput)
+func (o HostnamectlOutput) Update() pulumi.AnyOutput {
+	return o.ApplyT(func(v *Hostnamectl) pulumi.AnyOutput { return v.Update }).(pulumi.AnyOutput)
 }
 
 type HostnamectlArrayOutput struct{ *pulumi.OutputState }

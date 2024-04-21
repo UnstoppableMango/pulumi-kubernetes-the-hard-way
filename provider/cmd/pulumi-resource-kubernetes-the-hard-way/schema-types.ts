@@ -201,7 +201,7 @@ export abstract class Download<TData = any> extends (pulumi.ComponentResource)<T
     public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
     public destination!: string | pulumi.Output<string>;
     public mkdir!: Mkdir | pulumi.Output<Mkdir>;
-    public removeOnDelete!: boolean | boolean;
+    public removeOnDelete!: boolean;
     public url!: string | pulumi.Output<string>;
     public wget!: Wget | pulumi.Output<Wget>;
     constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
@@ -222,7 +222,7 @@ export abstract class EtcdCluster<TData = any> extends (pulumi.ComponentResource
     public configurationDirectory?: string | pulumi.Output<string>;
     public dataDirectory?: string | pulumi.Output<string>;
     public install!: Record<string, EtcdInstall> | pulumi.Output<Record<string, EtcdInstall>>;
-    public nodes!: Record<string, EtcdNodeOutputs> | Record<string, EtcdNodeOutputs>;
+    public nodes!: Record<string, EtcdNodeOutputs>;
     public service!: Record<string, EtcdService> | pulumi.Output<Record<string, EtcdService>>;
     public start!: Record<string, StartEtcd> | pulumi.Output<Record<string, StartEtcd>>;
     public version?: string | pulumi.Output<string>;
@@ -716,14 +716,14 @@ export abstract class Chmod<TData = any> extends (pulumi.ComponentResource)<TDat
     public binaryPath!: string | pulumi.Output<string>;
     public command!: command.remote.Command | pulumi.Output<command.remote.Command>;
     public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
-    public create?: ChmodOptsOutputs | ChmodOptsOutputs;
-    public delete?: ChmodOptsOutputs | ChmodOptsOutputs;
+    public create?: (pulumi.Output<string> | ChmodOptsOutputs);
+    public delete?: (pulumi.Output<string> | ChmodOptsOutputs);
     public environment!: Record<string, string> | pulumi.Output<Record<string, string>>;
     public stderr!: string | pulumi.Output<string>;
     public stdin?: string | pulumi.Output<string>;
     public stdout!: string | pulumi.Output<string>;
     public triggers!: any[] | pulumi.Output<any[]>;
-    public update?: ChmodOptsOutputs | ChmodOptsOutputs;
+    public update?: (pulumi.Output<string> | ChmodOptsOutputs);
     constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
         super("kubernetes-the-hard-way:tools:Chmod", name, opts.urn ? { binaryPath: undefined, command: undefined, connection: undefined, create: undefined, delete: undefined, environment: undefined, stderr: undefined, stdin: undefined, stdout: undefined, triggers: undefined, update: undefined } : { name, args, opts }, opts);
     }
@@ -731,25 +731,25 @@ export abstract class Chmod<TData = any> extends (pulumi.ComponentResource)<TDat
 export interface ChmodArgs {
     readonly binaryPath?: pulumi.Input<string>;
     readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
-    readonly create?: ChmodOptsInputs;
-    readonly delete?: ChmodOptsInputs;
+    readonly create?: pulumi.Input<string> | ChmodOptsInputs;
+    readonly delete?: pulumi.Input<string> | ChmodOptsInputs;
     readonly environment?: pulumi.Input<Record<string, pulumi.Input<string>>>;
     readonly stdin?: pulumi.Input<string>;
     readonly triggers?: pulumi.Input<pulumi.Input<any>[]>;
-    readonly update?: ChmodOptsInputs;
+    readonly update?: pulumi.Input<string> | ChmodOptsInputs;
 }
 export abstract class Curl<TData = any> extends (pulumi.ComponentResource)<TData> {
     public binaryPath!: string | pulumi.Output<string>;
     public command!: command.remote.Command | pulumi.Output<command.remote.Command>;
     public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
-    public create?: CurlOptsOutputs | CurlOptsOutputs;
-    public delete?: CurlOptsOutputs | CurlOptsOutputs;
+    public create?: (pulumi.Output<string> | CurlOptsOutputs);
+    public delete?: (pulumi.Output<string> | CurlOptsOutputs);
     public environment!: Record<string, string> | pulumi.Output<Record<string, string>>;
     public stderr!: string | pulumi.Output<string>;
     public stdin?: string | pulumi.Output<string>;
     public stdout!: string | pulumi.Output<string>;
     public triggers!: any[] | pulumi.Output<any[]>;
-    public update?: CurlOptsOutputs | CurlOptsOutputs;
+    public update?: (pulumi.Output<string> | CurlOptsOutputs);
     constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
         super("kubernetes-the-hard-way:tools:Curl", name, opts.urn ? { binaryPath: undefined, command: undefined, connection: undefined, create: undefined, delete: undefined, environment: undefined, stderr: undefined, stdin: undefined, stdout: undefined, triggers: undefined, update: undefined } : { name, args, opts }, opts);
     }
@@ -757,25 +757,25 @@ export abstract class Curl<TData = any> extends (pulumi.ComponentResource)<TData
 export interface CurlArgs {
     readonly binaryPath?: pulumi.Input<string>;
     readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
-    readonly create?: CurlOptsInputs;
-    readonly delete?: CurlOptsInputs;
+    readonly create?: pulumi.Input<string> | CurlOptsInputs;
+    readonly delete?: pulumi.Input<string> | CurlOptsInputs;
     readonly environment?: pulumi.Input<Record<string, pulumi.Input<string>>>;
     readonly stdin?: pulumi.Input<string>;
     readonly triggers?: pulumi.Input<pulumi.Input<any>[]>;
-    readonly update?: CurlOptsInputs;
+    readonly update?: pulumi.Input<string> | CurlOptsInputs;
 }
 export abstract class Etcdctl<TData = any> extends (pulumi.ComponentResource)<TData> {
     public binaryPath!: string | pulumi.Output<string>;
     public command!: command.remote.Command | pulumi.Output<command.remote.Command>;
     public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
-    public create?: EtcdctlOptsOutputs | EtcdctlOptsOutputs;
-    public delete?: EtcdctlOptsOutputs | EtcdctlOptsOutputs;
+    public create?: (pulumi.Output<string> | EtcdctlOptsOutputs);
+    public delete?: (pulumi.Output<string> | EtcdctlOptsOutputs);
     public environment!: Record<string, string> | pulumi.Output<Record<string, string>>;
     public stderr!: string | pulumi.Output<string>;
     public stdin?: string | pulumi.Output<string>;
     public stdout!: string | pulumi.Output<string>;
     public triggers!: any[] | pulumi.Output<any[]>;
-    public update?: EtcdctlOptsOutputs | EtcdctlOptsOutputs;
+    public update?: (pulumi.Output<string> | EtcdctlOptsOutputs);
     constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
         super("kubernetes-the-hard-way:tools:Etcdctl", name, opts.urn ? { binaryPath: undefined, command: undefined, connection: undefined, create: undefined, delete: undefined, environment: undefined, stderr: undefined, stdin: undefined, stdout: undefined, triggers: undefined, update: undefined } : { name, args, opts }, opts);
     }
@@ -783,25 +783,25 @@ export abstract class Etcdctl<TData = any> extends (pulumi.ComponentResource)<TD
 export interface EtcdctlArgs {
     readonly binaryPath?: pulumi.Input<string>;
     readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
-    readonly create?: EtcdctlOptsInputs;
-    readonly delete?: EtcdctlOptsInputs;
+    readonly create?: pulumi.Input<string> | EtcdctlOptsInputs;
+    readonly delete?: pulumi.Input<string> | EtcdctlOptsInputs;
     readonly environment?: pulumi.Input<Record<string, pulumi.Input<string>>>;
     readonly stdin?: pulumi.Input<string>;
     readonly triggers?: pulumi.Input<pulumi.Input<any>[]>;
-    readonly update?: EtcdctlOptsInputs;
+    readonly update?: pulumi.Input<string> | EtcdctlOptsInputs;
 }
 export abstract class Hostnamectl<TData = any> extends (pulumi.ComponentResource)<TData> {
     public binaryPath!: string | pulumi.Output<string>;
     public command!: command.remote.Command | pulumi.Output<command.remote.Command>;
     public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
-    public create?: HostnamectlOptsOutputs | HostnamectlOptsOutputs;
-    public delete?: HostnamectlOptsOutputs | HostnamectlOptsOutputs;
+    public create?: (pulumi.Output<string> | HostnamectlOptsOutputs);
+    public delete?: (pulumi.Output<string> | HostnamectlOptsOutputs);
     public environment!: Record<string, string> | pulumi.Output<Record<string, string>>;
     public stderr!: string | pulumi.Output<string>;
     public stdin?: string | pulumi.Output<string>;
     public stdout!: string | pulumi.Output<string>;
     public triggers!: any[] | pulumi.Output<any[]>;
-    public update?: HostnamectlOptsOutputs | HostnamectlOptsOutputs;
+    public update?: (pulumi.Output<string> | HostnamectlOptsOutputs);
     constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
         super("kubernetes-the-hard-way:tools:Hostnamectl", name, opts.urn ? { binaryPath: undefined, command: undefined, connection: undefined, create: undefined, delete: undefined, environment: undefined, stderr: undefined, stdin: undefined, stdout: undefined, triggers: undefined, update: undefined } : { name, args, opts }, opts);
     }
@@ -809,25 +809,25 @@ export abstract class Hostnamectl<TData = any> extends (pulumi.ComponentResource
 export interface HostnamectlArgs {
     readonly binaryPath?: pulumi.Input<string>;
     readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
-    readonly create?: HostnamectlOptsInputs;
-    readonly delete?: HostnamectlOptsInputs;
+    readonly create?: pulumi.Input<string> | HostnamectlOptsInputs;
+    readonly delete?: pulumi.Input<string> | HostnamectlOptsInputs;
     readonly environment?: pulumi.Input<Record<string, pulumi.Input<string>>>;
     readonly stdin?: pulumi.Input<string>;
     readonly triggers?: pulumi.Input<pulumi.Input<any>[]>;
-    readonly update?: HostnamectlOptsInputs;
+    readonly update?: pulumi.Input<string> | HostnamectlOptsInputs;
 }
 export abstract class Mkdir<TData = any> extends (pulumi.ComponentResource)<TData> {
     public binaryPath!: string | pulumi.Output<string>;
     public command!: command.remote.Command | pulumi.Output<command.remote.Command>;
     public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
-    public create?: MkdirOptsOutputs | MkdirOptsOutputs;
-    public delete?: MkdirOptsOutputs | MkdirOptsOutputs;
+    public create?: (pulumi.Output<string> | MkdirOptsOutputs);
+    public delete?: (pulumi.Output<string> | MkdirOptsOutputs);
     public environment!: Record<string, string> | pulumi.Output<Record<string, string>>;
     public stderr!: string | pulumi.Output<string>;
     public stdin?: string | pulumi.Output<string>;
     public stdout!: string | pulumi.Output<string>;
     public triggers!: any[] | pulumi.Output<any[]>;
-    public update?: MkdirOptsOutputs | MkdirOptsOutputs;
+    public update?: (pulumi.Output<string> | MkdirOptsOutputs);
     constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
         super("kubernetes-the-hard-way:tools:Mkdir", name, opts.urn ? { binaryPath: undefined, command: undefined, connection: undefined, create: undefined, delete: undefined, environment: undefined, stderr: undefined, stdin: undefined, stdout: undefined, triggers: undefined, update: undefined } : { name, args, opts }, opts);
     }
@@ -835,25 +835,25 @@ export abstract class Mkdir<TData = any> extends (pulumi.ComponentResource)<TDat
 export interface MkdirArgs {
     readonly binaryPath?: pulumi.Input<string>;
     readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
-    readonly create?: MkdirOptsInputs;
-    readonly delete?: MkdirOptsInputs;
+    readonly create?: pulumi.Input<string> | MkdirOptsInputs;
+    readonly delete?: pulumi.Input<string> | MkdirOptsInputs;
     readonly environment?: pulumi.Input<Record<string, pulumi.Input<string>>>;
     readonly stdin?: pulumi.Input<string>;
     readonly triggers?: pulumi.Input<pulumi.Input<any>[]>;
-    readonly update?: MkdirOptsInputs;
+    readonly update?: pulumi.Input<string> | MkdirOptsInputs;
 }
 export abstract class Mktemp<TData = any> extends (pulumi.ComponentResource)<TData> {
     public binaryPath!: string | pulumi.Output<string>;
     public command!: command.remote.Command | pulumi.Output<command.remote.Command>;
     public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
-    public create?: MktempOptsOutputs | MktempOptsOutputs;
-    public delete?: MktempOptsOutputs | MktempOptsOutputs;
+    public create?: (pulumi.Output<string> | MktempOptsOutputs);
+    public delete?: (pulumi.Output<string> | MktempOptsOutputs);
     public environment!: Record<string, string> | pulumi.Output<Record<string, string>>;
     public stderr!: string | pulumi.Output<string>;
     public stdin?: string | pulumi.Output<string>;
     public stdout!: string | pulumi.Output<string>;
     public triggers!: any[] | pulumi.Output<any[]>;
-    public update?: MktempOptsOutputs | MktempOptsOutputs;
+    public update?: (pulumi.Output<string> | MktempOptsOutputs);
     constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
         super("kubernetes-the-hard-way:tools:Mktemp", name, opts.urn ? { binaryPath: undefined, command: undefined, connection: undefined, create: undefined, delete: undefined, environment: undefined, stderr: undefined, stdin: undefined, stdout: undefined, triggers: undefined, update: undefined } : { name, args, opts }, opts);
     }
@@ -861,25 +861,25 @@ export abstract class Mktemp<TData = any> extends (pulumi.ComponentResource)<TDa
 export interface MktempArgs {
     readonly binaryPath?: pulumi.Input<string>;
     readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
-    readonly create?: MktempOptsInputs;
-    readonly delete?: MktempOptsInputs;
+    readonly create?: pulumi.Input<string> | MktempOptsInputs;
+    readonly delete?: pulumi.Input<string> | MktempOptsInputs;
     readonly environment?: pulumi.Input<Record<string, pulumi.Input<string>>>;
     readonly stdin?: pulumi.Input<string>;
     readonly triggers?: pulumi.Input<pulumi.Input<any>[]>;
-    readonly update?: MktempOptsInputs;
+    readonly update?: pulumi.Input<string> | MktempOptsInputs;
 }
 export abstract class Mv<TData = any> extends (pulumi.ComponentResource)<TData> {
     public binaryPath!: string | pulumi.Output<string>;
     public command!: command.remote.Command | pulumi.Output<command.remote.Command>;
     public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
-    public create?: MvOptsOutputs | MvOptsOutputs;
-    public delete?: MvOptsOutputs | MvOptsOutputs;
+    public create?: (pulumi.Output<string> | MvOptsOutputs);
+    public delete?: (pulumi.Output<string> | MvOptsOutputs);
     public environment!: Record<string, string> | pulumi.Output<Record<string, string>>;
     public stderr!: string | pulumi.Output<string>;
     public stdin?: string | pulumi.Output<string>;
     public stdout!: string | pulumi.Output<string>;
     public triggers!: any[] | pulumi.Output<any[]>;
-    public update?: MvOptsOutputs | MvOptsOutputs;
+    public update?: (pulumi.Output<string> | MvOptsOutputs);
     constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
         super("kubernetes-the-hard-way:tools:Mv", name, opts.urn ? { binaryPath: undefined, command: undefined, connection: undefined, create: undefined, delete: undefined, environment: undefined, stderr: undefined, stdin: undefined, stdout: undefined, triggers: undefined, update: undefined } : { name, args, opts }, opts);
     }
@@ -887,25 +887,25 @@ export abstract class Mv<TData = any> extends (pulumi.ComponentResource)<TData> 
 export interface MvArgs {
     readonly binaryPath?: pulumi.Input<string>;
     readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
-    readonly create?: MvOptsInputs;
-    readonly delete?: MvOptsInputs;
+    readonly create?: pulumi.Input<string> | MvOptsInputs;
+    readonly delete?: pulumi.Input<string> | MvOptsInputs;
     readonly environment?: pulumi.Input<Record<string, pulumi.Input<string>>>;
     readonly stdin?: pulumi.Input<string>;
     readonly triggers?: pulumi.Input<pulumi.Input<any>[]>;
-    readonly update?: MvOptsInputs;
+    readonly update?: pulumi.Input<string> | MvOptsInputs;
 }
 export abstract class Rm<TData = any> extends (pulumi.ComponentResource)<TData> {
     public binaryPath!: string | pulumi.Output<string>;
     public command!: command.remote.Command | pulumi.Output<command.remote.Command>;
     public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
-    public create?: RmOptsOutputs | RmOptsOutputs;
-    public delete?: RmOptsOutputs | RmOptsOutputs;
+    public create?: (pulumi.Output<string> | RmOptsOutputs);
+    public delete?: (pulumi.Output<string> | RmOptsOutputs);
     public environment!: Record<string, string> | pulumi.Output<Record<string, string>>;
     public stderr!: string | pulumi.Output<string>;
     public stdin?: string | pulumi.Output<string>;
     public stdout!: string | pulumi.Output<string>;
     public triggers!: any[] | pulumi.Output<any[]>;
-    public update?: RmOptsOutputs | RmOptsOutputs;
+    public update?: (pulumi.Output<string> | RmOptsOutputs);
     constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
         super("kubernetes-the-hard-way:tools:Rm", name, opts.urn ? { binaryPath: undefined, command: undefined, connection: undefined, create: undefined, delete: undefined, environment: undefined, stderr: undefined, stdin: undefined, stdout: undefined, triggers: undefined, update: undefined } : { name, args, opts }, opts);
     }
@@ -913,25 +913,25 @@ export abstract class Rm<TData = any> extends (pulumi.ComponentResource)<TData> 
 export interface RmArgs {
     readonly binaryPath?: pulumi.Input<string>;
     readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
-    readonly create?: RmOptsInputs;
-    readonly delete?: RmOptsInputs;
+    readonly create?: pulumi.Input<string> | RmOptsInputs;
+    readonly delete?: pulumi.Input<string> | RmOptsInputs;
     readonly environment?: pulumi.Input<Record<string, pulumi.Input<string>>>;
     readonly stdin?: pulumi.Input<string>;
     readonly triggers?: pulumi.Input<pulumi.Input<any>[]>;
-    readonly update?: RmOptsInputs;
+    readonly update?: pulumi.Input<string> | RmOptsInputs;
 }
 export abstract class Sed<TData = any> extends (pulumi.ComponentResource)<TData> {
     public binaryPath!: string | pulumi.Output<string>;
     public command!: command.remote.Command | pulumi.Output<command.remote.Command>;
     public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
-    public create?: SedOptsOutputs | SedOptsOutputs;
-    public delete?: SedOptsOutputs | SedOptsOutputs;
+    public create?: (pulumi.Output<string> | SedOptsOutputs);
+    public delete?: (pulumi.Output<string> | SedOptsOutputs);
     public environment!: Record<string, string> | pulumi.Output<Record<string, string>>;
     public stderr!: string | pulumi.Output<string>;
     public stdin?: string | pulumi.Output<string>;
     public stdout!: string | pulumi.Output<string>;
     public triggers!: any[] | pulumi.Output<any[]>;
-    public update?: SedOptsOutputs | SedOptsOutputs;
+    public update?: (pulumi.Output<string> | SedOptsOutputs);
     constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
         super("kubernetes-the-hard-way:tools:Sed", name, opts.urn ? { binaryPath: undefined, command: undefined, connection: undefined, create: undefined, delete: undefined, environment: undefined, stderr: undefined, stdin: undefined, stdout: undefined, triggers: undefined, update: undefined } : { name, args, opts }, opts);
     }
@@ -939,25 +939,25 @@ export abstract class Sed<TData = any> extends (pulumi.ComponentResource)<TData>
 export interface SedArgs {
     readonly binaryPath?: pulumi.Input<string>;
     readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
-    readonly create?: SedOptsInputs;
-    readonly delete?: SedOptsInputs;
+    readonly create?: pulumi.Input<string> | SedOptsInputs;
+    readonly delete?: pulumi.Input<string> | SedOptsInputs;
     readonly environment?: pulumi.Input<Record<string, pulumi.Input<string>>>;
     readonly stdin?: pulumi.Input<string>;
     readonly triggers?: pulumi.Input<pulumi.Input<any>[]>;
-    readonly update?: SedOptsInputs;
+    readonly update?: pulumi.Input<string> | SedOptsInputs;
 }
 export abstract class Systemctl<TData = any> extends (pulumi.ComponentResource)<TData> {
     public binaryPath!: string | pulumi.Output<string>;
     public command!: command.remote.Command | pulumi.Output<command.remote.Command>;
     public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
-    public create?: SystemctlOptsOutputs | SystemctlOptsOutputs;
-    public delete?: SystemctlOptsOutputs | SystemctlOptsOutputs;
+    public create?: (pulumi.Output<string> | SystemctlOptsOutputs);
+    public delete?: (pulumi.Output<string> | SystemctlOptsOutputs);
     public environment!: Record<string, string> | pulumi.Output<Record<string, string>>;
     public stderr!: string | pulumi.Output<string>;
     public stdin?: string | pulumi.Output<string>;
     public stdout!: string | pulumi.Output<string>;
     public triggers!: any[] | pulumi.Output<any[]>;
-    public update?: SystemctlOptsOutputs | SystemctlOptsOutputs;
+    public update?: (pulumi.Output<string> | SystemctlOptsOutputs);
     constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
         super("kubernetes-the-hard-way:tools:Systemctl", name, opts.urn ? { binaryPath: undefined, command: undefined, connection: undefined, create: undefined, delete: undefined, environment: undefined, stderr: undefined, stdin: undefined, stdout: undefined, triggers: undefined, update: undefined } : { name, args, opts }, opts);
     }
@@ -965,25 +965,25 @@ export abstract class Systemctl<TData = any> extends (pulumi.ComponentResource)<
 export interface SystemctlArgs {
     readonly binaryPath?: pulumi.Input<string>;
     readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
-    readonly create?: SystemctlOptsInputs;
-    readonly delete?: SystemctlOptsInputs;
+    readonly create?: pulumi.Input<string> | SystemctlOptsInputs;
+    readonly delete?: pulumi.Input<string> | SystemctlOptsInputs;
     readonly environment?: pulumi.Input<Record<string, pulumi.Input<string>>>;
     readonly stdin?: pulumi.Input<string>;
     readonly triggers?: pulumi.Input<pulumi.Input<any>[]>;
-    readonly update?: SystemctlOptsInputs;
+    readonly update?: pulumi.Input<string> | SystemctlOptsInputs;
 }
 export abstract class Tar<TData = any> extends (pulumi.ComponentResource)<TData> {
     public binaryPath!: string | pulumi.Output<string>;
     public command!: command.remote.Command | pulumi.Output<command.remote.Command>;
     public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
-    public create?: TarOptsOutputs | TarOptsOutputs;
-    public delete?: TarOptsOutputs | TarOptsOutputs;
+    public create?: (pulumi.Output<string> | TarOptsOutputs);
+    public delete?: (pulumi.Output<string> | TarOptsOutputs);
     public environment!: Record<string, string> | pulumi.Output<Record<string, string>>;
     public stderr!: string | pulumi.Output<string>;
     public stdin?: string | pulumi.Output<string>;
     public stdout!: string | pulumi.Output<string>;
     public triggers!: any[] | pulumi.Output<any[]>;
-    public update?: TarOptsOutputs | TarOptsOutputs;
+    public update?: (pulumi.Output<string> | TarOptsOutputs);
     constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
         super("kubernetes-the-hard-way:tools:Tar", name, opts.urn ? { binaryPath: undefined, command: undefined, connection: undefined, create: undefined, delete: undefined, environment: undefined, stderr: undefined, stdin: undefined, stdout: undefined, triggers: undefined, update: undefined } : { name, args, opts }, opts);
     }
@@ -991,25 +991,25 @@ export abstract class Tar<TData = any> extends (pulumi.ComponentResource)<TData>
 export interface TarArgs {
     readonly binaryPath?: pulumi.Input<string>;
     readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
-    readonly create?: TarOptsInputs;
-    readonly delete?: TarOptsInputs;
+    readonly create?: pulumi.Input<string> | TarOptsInputs;
+    readonly delete?: pulumi.Input<string> | TarOptsInputs;
     readonly environment?: pulumi.Input<Record<string, pulumi.Input<string>>>;
     readonly stdin?: pulumi.Input<string>;
     readonly triggers?: pulumi.Input<pulumi.Input<any>[]>;
-    readonly update?: TarOptsInputs;
+    readonly update?: pulumi.Input<string> | TarOptsInputs;
 }
 export abstract class Tee<TData = any> extends (pulumi.ComponentResource)<TData> {
     public binaryPath!: string | pulumi.Output<string>;
     public command!: command.remote.Command | pulumi.Output<command.remote.Command>;
     public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
-    public create?: TeeOptsOutputs | TeeOptsOutputs;
-    public delete?: TeeOptsOutputs | TeeOptsOutputs;
+    public create?: (pulumi.Output<string> | TeeOptsOutputs);
+    public delete?: (pulumi.Output<string> | TeeOptsOutputs);
     public environment!: Record<string, string> | pulumi.Output<Record<string, string>>;
     public stderr!: string | pulumi.Output<string>;
     public stdin?: string | pulumi.Output<string>;
     public stdout!: string | pulumi.Output<string>;
     public triggers!: any[] | pulumi.Output<any[]>;
-    public update?: TeeOptsOutputs | TeeOptsOutputs;
+    public update?: (pulumi.Output<string> | TeeOptsOutputs);
     constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
         super("kubernetes-the-hard-way:tools:Tee", name, opts.urn ? { binaryPath: undefined, command: undefined, connection: undefined, create: undefined, delete: undefined, environment: undefined, stderr: undefined, stdin: undefined, stdout: undefined, triggers: undefined, update: undefined } : { name, args, opts }, opts);
     }
@@ -1017,25 +1017,25 @@ export abstract class Tee<TData = any> extends (pulumi.ComponentResource)<TData>
 export interface TeeArgs {
     readonly binaryPath?: pulumi.Input<string>;
     readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
-    readonly create?: TeeOptsInputs;
-    readonly delete?: TeeOptsInputs;
+    readonly create?: pulumi.Input<string> | TeeOptsInputs;
+    readonly delete?: pulumi.Input<string> | TeeOptsInputs;
     readonly environment?: pulumi.Input<Record<string, pulumi.Input<string>>>;
     readonly stdin?: pulumi.Input<string>;
     readonly triggers?: pulumi.Input<pulumi.Input<any>[]>;
-    readonly update?: TeeOptsInputs;
+    readonly update?: pulumi.Input<string> | TeeOptsInputs;
 }
 export abstract class Wget<TData = any> extends (pulumi.ComponentResource)<TData> {
     public binaryPath!: string | pulumi.Output<string>;
     public command!: command.remote.Command | pulumi.Output<command.remote.Command>;
     public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
-    public create?: WgetOptsOutputs | WgetOptsOutputs;
-    public delete?: WgetOptsOutputs | WgetOptsOutputs;
+    public create?: (pulumi.Output<string> | WgetOptsOutputs);
+    public delete?: (pulumi.Output<string> | WgetOptsOutputs);
     public environment!: Record<string, string> | pulumi.Output<Record<string, string>>;
     public stderr!: string | pulumi.Output<string>;
     public stdin?: string | pulumi.Output<string>;
     public stdout!: string | pulumi.Output<string>;
     public triggers!: any[] | pulumi.Output<any[]>;
-    public update?: WgetOptsOutputs | WgetOptsOutputs;
+    public update?: (pulumi.Output<string> | WgetOptsOutputs);
     constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
         super("kubernetes-the-hard-way:tools:Wget", name, opts.urn ? { binaryPath: undefined, command: undefined, connection: undefined, create: undefined, delete: undefined, environment: undefined, stderr: undefined, stdin: undefined, stdout: undefined, triggers: undefined, update: undefined } : { name, args, opts }, opts);
     }
@@ -1043,12 +1043,12 @@ export abstract class Wget<TData = any> extends (pulumi.ComponentResource)<TData
 export interface WgetArgs {
     readonly binaryPath?: pulumi.Input<string>;
     readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
-    readonly create?: WgetOptsInputs;
-    readonly delete?: WgetOptsInputs;
+    readonly create?: pulumi.Input<string> | WgetOptsInputs;
+    readonly delete?: pulumi.Input<string> | WgetOptsInputs;
     readonly environment?: pulumi.Input<Record<string, pulumi.Input<string>>>;
     readonly stdin?: pulumi.Input<string>;
     readonly triggers?: pulumi.Input<pulumi.Input<any>[]>;
-    readonly update?: WgetOptsInputs;
+    readonly update?: pulumi.Input<string> | WgetOptsInputs;
 }
 export interface ClusterInputs {
     readonly certificateAuthorityData: pulumi.Input<string>;
@@ -1263,14 +1263,14 @@ export interface ClusterPkiNodeOutputs {
 export type EcdsaCurveInputs = "P224" | "P256" | "P384" | "P521";
 export type EcdsaCurveOutputs = "P224" | "P256" | "P384" | "P521";
 export interface KeyPairInputs {
-    readonly cert: pulumi.Input<tls.LocallySignedCert | tls.SelfSignedCert>;
+    readonly cert: pulumi.Input<pulumi.Input<tls.LocallySignedCert> | pulumi.Input<tls.SelfSignedCert>>;
     readonly certPem: pulumi.Input<string>;
     readonly key: pulumi.Input<tls.PrivateKey>;
     readonly privateKeyPem: pulumi.Input<string>;
     readonly publicKeyPem: pulumi.Input<string>;
 }
 export interface KeyPairOutputs {
-    readonly cert: pulumi.Output<tls.LocallySignedCert | tls.SelfSignedCert>;
+    readonly cert: pulumi.Output<pulumi.Output<tls.LocallySignedCert> | pulumi.Output<tls.SelfSignedCert>>;
     readonly certPem: pulumi.Output<string>;
     readonly key: pulumi.Output<tls.PrivateKey>;
     readonly privateKeyPem: pulumi.Output<string>;
@@ -1706,14 +1706,14 @@ export interface getKubeVipManifestOutputs {
 }
 export interface getKubeconfigInputs {
     readonly caPem: pulumi.Input<string>;
-    readonly options: unknown;
+    readonly options: pulumi.Input<KubeconfigAdminOptionsInputs> | pulumi.Input<KubeconfigKubeControllerManagerOptionsInputs> | pulumi.Input<KubeconfigKubeProxyOptionsInputs> | pulumi.Input<KubeconfigKubeSchedulerOptionsInputs> | pulumi.Input<KubeconfigWorkerOptionsInputs>;
 }
 export interface getKubeconfigOutputs {
     readonly result: pulumi.Output<KubeconfigOutputs>;
 }
 export interface ClusterPki_getKubeconfigInputs {
     readonly __self__: pulumi.Input<ClusterPki>;
-    readonly options: unknown;
+    readonly options: pulumi.Input<KubeconfigAdminOptionsInputs> | pulumi.Input<KubeconfigKubeControllerManagerOptionsInputs> | pulumi.Input<KubeconfigKubeProxyOptionsInputs> | pulumi.Input<KubeconfigKubeSchedulerOptionsInputs> | pulumi.Input<KubeconfigWorkerOptionsInputs>;
 }
 export interface ClusterPki_getKubeconfigOutputs {
     readonly result: pulumi.Output<KubeconfigOutputs>;

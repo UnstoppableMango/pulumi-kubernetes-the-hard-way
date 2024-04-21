@@ -4,6 +4,7 @@
 package com.unmango.kubernetesthehardway.tools;
 
 import com.pulumi.command.remote.inputs.ConnectionArgs;
+import com.pulumi.core.Either;
 import com.pulumi.core.Output;
 import com.pulumi.core.annotations.Import;
 import com.pulumi.exceptions.MissingRequiredPropertyException;
@@ -56,13 +57,13 @@ public final class TarArgs extends com.pulumi.resources.ResourceArgs {
      * 
      */
     @Import(name="create")
-    private @Nullable TarOptsArgs create;
+    private @Nullable Either<String,TarOptsArgs> create;
 
     /**
      * @return The command to run on create.
      * 
      */
-    public Optional<TarOptsArgs> create() {
+    public Optional<Either<String,TarOptsArgs>> create() {
         return Optional.ofNullable(this.create);
     }
 
@@ -73,7 +74,7 @@ public final class TarArgs extends com.pulumi.resources.ResourceArgs {
      * 
      */
     @Import(name="delete")
-    private @Nullable TarOptsArgs delete;
+    private @Nullable Either<String,TarOptsArgs> delete;
 
     /**
      * @return The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
@@ -81,7 +82,7 @@ public final class TarArgs extends com.pulumi.resources.ResourceArgs {
      * Command resource from previous create or update steps.
      * 
      */
-    public Optional<TarOptsArgs> delete() {
+    public Optional<Either<String,TarOptsArgs>> delete() {
         return Optional.ofNullable(this.delete);
     }
 
@@ -138,7 +139,7 @@ public final class TarArgs extends com.pulumi.resources.ResourceArgs {
      * 
      */
     @Import(name="update")
-    private @Nullable TarOptsArgs update;
+    private @Nullable Either<String,TarOptsArgs> update;
 
     /**
      * @return The command to run on update, if empty, create will
@@ -147,7 +148,7 @@ public final class TarArgs extends com.pulumi.resources.ResourceArgs {
      * create or update steps.
      * 
      */
-    public Optional<TarOptsArgs> update() {
+    public Optional<Either<String,TarOptsArgs>> update() {
         return Optional.ofNullable(this.update);
     }
 
@@ -230,8 +231,41 @@ public final class TarArgs extends com.pulumi.resources.ResourceArgs {
          * @return builder
          * 
          */
-        public Builder create(@Nullable TarOptsArgs create) {
+        public Builder create(@Nullable Either<String,TarOptsArgs> create) {
             $.create = create;
+            return this;
+        }
+
+        /**
+         * @param create The command to run on create.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder create(String create) {
+            return create(Either.ofLeft(create));
+        }
+
+        /**
+         * @param create The command to run on create.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder create(TarOptsArgs create) {
+            return create(Either.ofRight(create));
+        }
+
+        /**
+         * @param delete The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+         * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+         * Command resource from previous create or update steps.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder delete(@Nullable Either<String,TarOptsArgs> delete) {
+            $.delete = delete;
             return this;
         }
 
@@ -243,9 +277,20 @@ public final class TarArgs extends com.pulumi.resources.ResourceArgs {
          * @return builder
          * 
          */
-        public Builder delete(@Nullable TarOptsArgs delete) {
-            $.delete = delete;
-            return this;
+        public Builder delete(String delete) {
+            return delete(Either.ofLeft(delete));
+        }
+
+        /**
+         * @param delete The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+         * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+         * Command resource from previous create or update steps.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder delete(TarOptsArgs delete) {
+            return delete(Either.ofRight(delete));
         }
 
         /**
@@ -330,9 +375,35 @@ public final class TarArgs extends com.pulumi.resources.ResourceArgs {
          * @return builder
          * 
          */
-        public Builder update(@Nullable TarOptsArgs update) {
+        public Builder update(@Nullable Either<String,TarOptsArgs> update) {
             $.update = update;
             return this;
+        }
+
+        /**
+         * @param update The command to run on update, if empty, create will
+         * run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+         * are set to the stdout and stderr properties of the Command resource from previous
+         * create or update steps.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder update(String update) {
+            return update(Either.ofLeft(update));
+        }
+
+        /**
+         * @param update The command to run on update, if empty, create will
+         * run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+         * are set to the stdout and stderr properties of the Command resource from previous
+         * create or update steps.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder update(TarOptsArgs update) {
+            return update(Either.ofRight(update));
         }
 
         public TarArgs build() {

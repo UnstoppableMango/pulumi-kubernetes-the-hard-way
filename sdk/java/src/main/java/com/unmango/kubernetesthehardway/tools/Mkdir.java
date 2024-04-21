@@ -5,6 +5,7 @@ package com.unmango.kubernetesthehardway.tools;
 
 import com.pulumi.command.remote.Command;
 import com.pulumi.command.remote.outputs.Connection;
+import com.pulumi.core.Either;
 import com.pulumi.core.Output;
 import com.pulumi.core.annotations.Export;
 import com.pulumi.core.annotations.ResourceType;
@@ -71,14 +72,14 @@ public class Mkdir extends com.pulumi.resources.ComponentResource {
      * The command to run on create.
      * 
      */
-    @Export(name="create", refs={MkdirOpts.class}, tree="[0]")
-    private Output</* @Nullable */ MkdirOpts> create;
+    @Export(name="create", refs={Either.class,String.class,MkdirOpts.class}, tree="[0,1,2]")
+    private Output</* @Nullable */ Either<String,MkdirOpts>> create;
 
     /**
      * @return The command to run on create.
      * 
      */
-    public Output<Optional<MkdirOpts>> create() {
+    public Output<Optional<Either<String,MkdirOpts>>> create() {
         return Codegen.optional(this.create);
     }
     /**
@@ -87,8 +88,8 @@ public class Mkdir extends com.pulumi.resources.ComponentResource {
      * Command resource from previous create or update steps.
      * 
      */
-    @Export(name="delete", refs={MkdirOpts.class}, tree="[0]")
-    private Output</* @Nullable */ MkdirOpts> delete;
+    @Export(name="delete", refs={Either.class,String.class,MkdirOpts.class}, tree="[0,1,2]")
+    private Output</* @Nullable */ Either<String,MkdirOpts>> delete;
 
     /**
      * @return The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
@@ -96,7 +97,7 @@ public class Mkdir extends com.pulumi.resources.ComponentResource {
      * Command resource from previous create or update steps.
      * 
      */
-    public Output<Optional<MkdirOpts>> delete() {
+    public Output<Optional<Either<String,MkdirOpts>>> delete() {
         return Codegen.optional(this.delete);
     }
     /**
@@ -176,8 +177,8 @@ public class Mkdir extends com.pulumi.resources.ComponentResource {
      * create or update steps.
      * 
      */
-    @Export(name="update", refs={MkdirOpts.class}, tree="[0]")
-    private Output</* @Nullable */ MkdirOpts> update;
+    @Export(name="update", refs={Either.class,String.class,MkdirOpts.class}, tree="[0,1,2]")
+    private Output</* @Nullable */ Either<String,MkdirOpts>> update;
 
     /**
      * @return The command to run on update, if empty, create will
@@ -186,7 +187,7 @@ public class Mkdir extends com.pulumi.resources.ComponentResource {
      * create or update steps.
      * 
      */
-    public Output<Optional<MkdirOpts>> update() {
+    public Output<Optional<Either<String,MkdirOpts>>> update() {
         return Codegen.optional(this.update);
     }
 

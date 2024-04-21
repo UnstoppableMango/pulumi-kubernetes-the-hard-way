@@ -24,11 +24,11 @@ type Wget struct {
 	// Connection details for the remote system
 	Connection pulumiCommand.ConnectionOutput `pulumi:"connection"`
 	// The command to run on create.
-	Create WgetOptsPtrOutput `pulumi:"create"`
+	Create pulumi.AnyOutput `pulumi:"create"`
 	// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
 	// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
 	// Command resource from previous create or update steps.
-	Delete WgetOptsPtrOutput `pulumi:"delete"`
+	Delete pulumi.AnyOutput `pulumi:"delete"`
 	// Environment variables
 	Environment pulumi.StringMapOutput `pulumi:"environment"`
 	// TODO
@@ -43,7 +43,7 @@ type Wget struct {
 	// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
 	// are set to the stdout and stderr properties of the Command resource from previous
 	// create or update steps.
-	Update WgetOptsPtrOutput `pulumi:"update"`
+	Update pulumi.AnyOutput `pulumi:"update"`
 }
 
 // NewWget registers a new resource with the given unique name, arguments, and options.
@@ -72,11 +72,11 @@ type wgetArgs struct {
 	// Connection details for the remote system
 	Connection pulumiCommand.Connection `pulumi:"connection"`
 	// The command to run on create.
-	Create *WgetOpts `pulumi:"create"`
+	Create interface{} `pulumi:"create"`
 	// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
 	// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
 	// Command resource from previous create or update steps.
-	Delete *WgetOpts `pulumi:"delete"`
+	Delete interface{} `pulumi:"delete"`
 	// Environment variables
 	Environment map[string]string `pulumi:"environment"`
 	// TODO
@@ -87,7 +87,7 @@ type wgetArgs struct {
 	// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
 	// are set to the stdout and stderr properties of the Command resource from previous
 	// create or update steps.
-	Update *WgetOpts `pulumi:"update"`
+	Update interface{} `pulumi:"update"`
 }
 
 // The set of arguments for constructing a Wget resource.
@@ -97,11 +97,11 @@ type WgetArgs struct {
 	// Connection details for the remote system
 	Connection pulumiCommand.ConnectionInput
 	// The command to run on create.
-	Create *WgetOptsArgs
+	Create interface{}
 	// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
 	// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
 	// Command resource from previous create or update steps.
-	Delete *WgetOptsArgs
+	Delete interface{}
 	// Environment variables
 	Environment pulumi.StringMapInput
 	// TODO
@@ -112,7 +112,7 @@ type WgetArgs struct {
 	// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
 	// are set to the stdout and stderr properties of the Command resource from previous
 	// create or update steps.
-	Update *WgetOptsArgs
+	Update interface{}
 }
 
 func (WgetArgs) ElementType() reflect.Type {
@@ -218,15 +218,15 @@ func (o WgetOutput) Connection() pulumiCommand.ConnectionOutput {
 }
 
 // The command to run on create.
-func (o WgetOutput) Create() WgetOptsPtrOutput {
-	return o.ApplyT(func(v *Wget) WgetOptsPtrOutput { return v.Create }).(WgetOptsPtrOutput)
+func (o WgetOutput) Create() pulumi.AnyOutput {
+	return o.ApplyT(func(v *Wget) pulumi.AnyOutput { return v.Create }).(pulumi.AnyOutput)
 }
 
 // The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
 // and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
 // Command resource from previous create or update steps.
-func (o WgetOutput) Delete() WgetOptsPtrOutput {
-	return o.ApplyT(func(v *Wget) WgetOptsPtrOutput { return v.Delete }).(WgetOptsPtrOutput)
+func (o WgetOutput) Delete() pulumi.AnyOutput {
+	return o.ApplyT(func(v *Wget) pulumi.AnyOutput { return v.Delete }).(pulumi.AnyOutput)
 }
 
 // Environment variables
@@ -258,8 +258,8 @@ func (o WgetOutput) Triggers() pulumi.ArrayOutput {
 // run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
 // are set to the stdout and stderr properties of the Command resource from previous
 // create or update steps.
-func (o WgetOutput) Update() WgetOptsPtrOutput {
-	return o.ApplyT(func(v *Wget) WgetOptsPtrOutput { return v.Update }).(WgetOptsPtrOutput)
+func (o WgetOutput) Update() pulumi.AnyOutput {
+	return o.ApplyT(func(v *Wget) pulumi.AnyOutput { return v.Update }).(pulumi.AnyOutput)
 }
 
 type WgetArrayOutput struct{ *pulumi.OutputState }

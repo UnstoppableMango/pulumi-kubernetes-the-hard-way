@@ -38,7 +38,7 @@ namespace UnMango.KubernetesTheHardWay.Tools
         /// The command to run on create.
         /// </summary>
         [Output("create")]
-        public Output<Outputs.WgetOpts?> Create { get; private set; } = null!;
+        public Output<Union<string, Outputs.WgetOpts>?> Create { get; private set; } = null!;
 
         /// <summary>
         /// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
@@ -46,7 +46,7 @@ namespace UnMango.KubernetesTheHardWay.Tools
         /// Command resource from previous create or update steps.
         /// </summary>
         [Output("delete")]
-        public Output<Outputs.WgetOpts?> Delete { get; private set; } = null!;
+        public Output<Union<string, Outputs.WgetOpts>?> Delete { get; private set; } = null!;
 
         /// <summary>
         /// Environment variables
@@ -85,7 +85,7 @@ namespace UnMango.KubernetesTheHardWay.Tools
         /// create or update steps.
         /// </summary>
         [Output("update")]
-        public Output<Outputs.WgetOpts?> Update { get; private set; } = null!;
+        public Output<Union<string, Outputs.WgetOpts>?> Update { get; private set; } = null!;
 
 
         /// <summary>
@@ -132,7 +132,7 @@ namespace UnMango.KubernetesTheHardWay.Tools
         /// The command to run on create.
         /// </summary>
         [Input("create")]
-        public Inputs.WgetOptsArgs? Create { get; set; }
+        public Union<Input<string>, Inputs.WgetOptsArgs>? Create { get; set; }
 
         /// <summary>
         /// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
@@ -140,7 +140,7 @@ namespace UnMango.KubernetesTheHardWay.Tools
         /// Command resource from previous create or update steps.
         /// </summary>
         [Input("delete")]
-        public Inputs.WgetOptsArgs? Delete { get; set; }
+        public Union<Input<string>, Inputs.WgetOptsArgs>? Delete { get; set; }
 
         [Input("environment")]
         private InputMap<string>? _environment;
@@ -179,7 +179,7 @@ namespace UnMango.KubernetesTheHardWay.Tools
         /// create or update steps.
         /// </summary>
         [Input("update")]
-        public Inputs.WgetOptsArgs? Update { get; set; }
+        public Union<Input<string>, Inputs.WgetOptsArgs>? Update { get; set; }
 
         public WgetArgs()
         {

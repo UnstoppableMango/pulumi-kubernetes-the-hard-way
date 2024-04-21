@@ -42,13 +42,13 @@ export class Mktemp extends pulumi.ComponentResource {
     /**
      * The command to run on create.
      */
-    public readonly create!: pulumi.Output<outputs.tools.MktempOpts | undefined>;
+    public readonly create!: pulumi.Output<string | outputs.tools.MktempOpts | undefined>;
     /**
      * The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
      * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
      * Command resource from previous create or update steps.
      */
-    public readonly delete!: pulumi.Output<outputs.tools.MktempOpts | undefined>;
+    public readonly delete!: pulumi.Output<string | outputs.tools.MktempOpts | undefined>;
     /**
      * Environment variables
      */
@@ -75,7 +75,7 @@ export class Mktemp extends pulumi.ComponentResource {
      * are set to the stdout and stderr properties of the Command resource from previous 
      * create or update steps.
      */
-    public readonly update!: pulumi.Output<outputs.tools.MktempOpts | undefined>;
+    public readonly update!: pulumi.Output<string | outputs.tools.MktempOpts | undefined>;
 
     /**
      * Create a Mktemp resource with the given unique name, arguments, and options.
@@ -135,13 +135,13 @@ export interface MktempArgs {
     /**
      * The command to run on create.
      */
-    create?: inputs.tools.MktempOptsArgs;
+    create?: pulumi.Input<string> | pulumi.Input<inputs.tools.MktempOptsArgs>;
     /**
      * The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
      * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
      * Command resource from previous create or update steps.
      */
-    delete?: inputs.tools.MktempOptsArgs;
+    delete?: pulumi.Input<string> | pulumi.Input<inputs.tools.MktempOptsArgs>;
     /**
      * Environment variables
      */
@@ -160,5 +160,5 @@ export interface MktempArgs {
      * are set to the stdout and stderr properties of the Command resource from previous 
      * create or update steps.
      */
-    update?: inputs.tools.MktempOptsArgs;
+    update?: pulumi.Input<string> | pulumi.Input<inputs.tools.MktempOptsArgs>;
 }

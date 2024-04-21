@@ -4,6 +4,7 @@
 package com.unmango.kubernetesthehardway.tools;
 
 import com.pulumi.command.remote.inputs.ConnectionArgs;
+import com.pulumi.core.Either;
 import com.pulumi.core.Output;
 import com.pulumi.core.annotations.Import;
 import com.pulumi.exceptions.MissingRequiredPropertyException;
@@ -56,13 +57,13 @@ public final class TeeArgs extends com.pulumi.resources.ResourceArgs {
      * 
      */
     @Import(name="create")
-    private @Nullable TeeOptsArgs create;
+    private @Nullable Either<String,TeeOptsArgs> create;
 
     /**
      * @return The command to run on create.
      * 
      */
-    public Optional<TeeOptsArgs> create() {
+    public Optional<Either<String,TeeOptsArgs>> create() {
         return Optional.ofNullable(this.create);
     }
 
@@ -73,7 +74,7 @@ public final class TeeArgs extends com.pulumi.resources.ResourceArgs {
      * 
      */
     @Import(name="delete")
-    private @Nullable TeeOptsArgs delete;
+    private @Nullable Either<String,TeeOptsArgs> delete;
 
     /**
      * @return The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
@@ -81,7 +82,7 @@ public final class TeeArgs extends com.pulumi.resources.ResourceArgs {
      * Command resource from previous create or update steps.
      * 
      */
-    public Optional<TeeOptsArgs> delete() {
+    public Optional<Either<String,TeeOptsArgs>> delete() {
         return Optional.ofNullable(this.delete);
     }
 
@@ -138,7 +139,7 @@ public final class TeeArgs extends com.pulumi.resources.ResourceArgs {
      * 
      */
     @Import(name="update")
-    private @Nullable TeeOptsArgs update;
+    private @Nullable Either<String,TeeOptsArgs> update;
 
     /**
      * @return The command to run on update, if empty, create will
@@ -147,7 +148,7 @@ public final class TeeArgs extends com.pulumi.resources.ResourceArgs {
      * create or update steps.
      * 
      */
-    public Optional<TeeOptsArgs> update() {
+    public Optional<Either<String,TeeOptsArgs>> update() {
         return Optional.ofNullable(this.update);
     }
 
@@ -230,8 +231,41 @@ public final class TeeArgs extends com.pulumi.resources.ResourceArgs {
          * @return builder
          * 
          */
-        public Builder create(@Nullable TeeOptsArgs create) {
+        public Builder create(@Nullable Either<String,TeeOptsArgs> create) {
             $.create = create;
+            return this;
+        }
+
+        /**
+         * @param create The command to run on create.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder create(String create) {
+            return create(Either.ofLeft(create));
+        }
+
+        /**
+         * @param create The command to run on create.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder create(TeeOptsArgs create) {
+            return create(Either.ofRight(create));
+        }
+
+        /**
+         * @param delete The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+         * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+         * Command resource from previous create or update steps.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder delete(@Nullable Either<String,TeeOptsArgs> delete) {
+            $.delete = delete;
             return this;
         }
 
@@ -243,9 +277,20 @@ public final class TeeArgs extends com.pulumi.resources.ResourceArgs {
          * @return builder
          * 
          */
-        public Builder delete(@Nullable TeeOptsArgs delete) {
-            $.delete = delete;
-            return this;
+        public Builder delete(String delete) {
+            return delete(Either.ofLeft(delete));
+        }
+
+        /**
+         * @param delete The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+         * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+         * Command resource from previous create or update steps.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder delete(TeeOptsArgs delete) {
+            return delete(Either.ofRight(delete));
         }
 
         /**
@@ -330,9 +375,35 @@ public final class TeeArgs extends com.pulumi.resources.ResourceArgs {
          * @return builder
          * 
          */
-        public Builder update(@Nullable TeeOptsArgs update) {
+        public Builder update(@Nullable Either<String,TeeOptsArgs> update) {
             $.update = update;
             return this;
+        }
+
+        /**
+         * @param update The command to run on update, if empty, create will
+         * run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+         * are set to the stdout and stderr properties of the Command resource from previous
+         * create or update steps.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder update(String update) {
+            return update(Either.ofLeft(update));
+        }
+
+        /**
+         * @param update The command to run on update, if empty, create will
+         * run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+         * are set to the stdout and stderr properties of the Command resource from previous
+         * create or update steps.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder update(TeeOptsArgs update) {
+            return update(Either.ofRight(update));
         }
 
         public TeeArgs build() {

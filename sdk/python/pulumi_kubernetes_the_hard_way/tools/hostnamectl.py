@@ -20,24 +20,24 @@ class HostnamectlArgs:
     def __init__(__self__, *,
                  connection: pulumi.Input['pulumi_command.remote.ConnectionArgs'],
                  binary_path: Optional[pulumi.Input[str]] = None,
-                 create: Optional['HostnamectlOptsArgs'] = None,
-                 delete: Optional['HostnamectlOptsArgs'] = None,
+                 create: Optional[Union[pulumi.Input[str], pulumi.Input['HostnamectlOptsArgs']]] = None,
+                 delete: Optional[Union[pulumi.Input[str], pulumi.Input['HostnamectlOptsArgs']]] = None,
                  environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  stdin: Optional[pulumi.Input[str]] = None,
                  triggers: Optional[pulumi.Input[Sequence[Any]]] = None,
-                 update: Optional['HostnamectlOptsArgs'] = None):
+                 update: Optional[Union[pulumi.Input[str], pulumi.Input['HostnamectlOptsArgs']]] = None):
         """
         The set of arguments for constructing a Hostnamectl resource.
         :param pulumi.Input['pulumi_command.remote.ConnectionArgs'] connection: Connection details for the remote system
         :param pulumi.Input[str] binary_path: Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
-        :param 'HostnamectlOptsArgs' create: The command to run on create.
-        :param 'HostnamectlOptsArgs' delete: The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+        :param Union[pulumi.Input[str], pulumi.Input['HostnamectlOptsArgs']] create: The command to run on create.
+        :param Union[pulumi.Input[str], pulumi.Input['HostnamectlOptsArgs']] delete: The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
                and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
                Command resource from previous create or update steps.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] environment: Environment variables
         :param pulumi.Input[str] stdin: TODO
         :param pulumi.Input[Sequence[Any]] triggers: TODO
-        :param 'HostnamectlOptsArgs' update: The command to run on update, if empty, create will 
+        :param Union[pulumi.Input[str], pulumi.Input['HostnamectlOptsArgs']] update: The command to run on update, if empty, create will 
                run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
                are set to the stdout and stderr properties of the Command resource from previous 
                create or update steps.
@@ -84,19 +84,19 @@ class HostnamectlArgs:
 
     @property
     @pulumi.getter
-    def create(self) -> Optional['HostnamectlOptsArgs']:
+    def create(self) -> Optional[Union[pulumi.Input[str], pulumi.Input['HostnamectlOptsArgs']]]:
         """
         The command to run on create.
         """
         return pulumi.get(self, "create")
 
     @create.setter
-    def create(self, value: Optional['HostnamectlOptsArgs']):
+    def create(self, value: Optional[Union[pulumi.Input[str], pulumi.Input['HostnamectlOptsArgs']]]):
         pulumi.set(self, "create", value)
 
     @property
     @pulumi.getter
-    def delete(self) -> Optional['HostnamectlOptsArgs']:
+    def delete(self) -> Optional[Union[pulumi.Input[str], pulumi.Input['HostnamectlOptsArgs']]]:
         """
         The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
         and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
@@ -105,7 +105,7 @@ class HostnamectlArgs:
         return pulumi.get(self, "delete")
 
     @delete.setter
-    def delete(self, value: Optional['HostnamectlOptsArgs']):
+    def delete(self, value: Optional[Union[pulumi.Input[str], pulumi.Input['HostnamectlOptsArgs']]]):
         pulumi.set(self, "delete", value)
 
     @property
@@ -146,7 +146,7 @@ class HostnamectlArgs:
 
     @property
     @pulumi.getter
-    def update(self) -> Optional['HostnamectlOptsArgs']:
+    def update(self) -> Optional[Union[pulumi.Input[str], pulumi.Input['HostnamectlOptsArgs']]]:
         """
         The command to run on update, if empty, create will 
         run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
@@ -156,7 +156,7 @@ class HostnamectlArgs:
         return pulumi.get(self, "update")
 
     @update.setter
-    def update(self, value: Optional['HostnamectlOptsArgs']):
+    def update(self, value: Optional[Union[pulumi.Input[str], pulumi.Input['HostnamectlOptsArgs']]]):
         pulumi.set(self, "update", value)
 
 
@@ -167,12 +167,12 @@ class Hostnamectl(pulumi.ComponentResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  binary_path: Optional[pulumi.Input[str]] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
-                 create: Optional[pulumi.InputType['HostnamectlOptsArgs']] = None,
-                 delete: Optional[pulumi.InputType['HostnamectlOptsArgs']] = None,
+                 create: Optional[Union[pulumi.Input[str], pulumi.Input[pulumi.InputType['HostnamectlOptsArgs']]]] = None,
+                 delete: Optional[Union[pulumi.Input[str], pulumi.Input[pulumi.InputType['HostnamectlOptsArgs']]]] = None,
                  environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  stdin: Optional[pulumi.Input[str]] = None,
                  triggers: Optional[pulumi.Input[Sequence[Any]]] = None,
-                 update: Optional[pulumi.InputType['HostnamectlOptsArgs']] = None,
+                 update: Optional[Union[pulumi.Input[str], pulumi.Input[pulumi.InputType['HostnamectlOptsArgs']]]] = None,
                  __props__=None):
         """
         Abstraction over the `hostnamectl` utility on a remote system.
@@ -181,14 +181,14 @@ class Hostnamectl(pulumi.ComponentResource):
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[str] binary_path: Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
         :param pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']] connection: Connection details for the remote system
-        :param pulumi.InputType['HostnamectlOptsArgs'] create: The command to run on create.
-        :param pulumi.InputType['HostnamectlOptsArgs'] delete: The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+        :param Union[pulumi.Input[str], pulumi.Input[pulumi.InputType['HostnamectlOptsArgs']]] create: The command to run on create.
+        :param Union[pulumi.Input[str], pulumi.Input[pulumi.InputType['HostnamectlOptsArgs']]] delete: The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
                and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
                Command resource from previous create or update steps.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] environment: Environment variables
         :param pulumi.Input[str] stdin: TODO
         :param pulumi.Input[Sequence[Any]] triggers: TODO
-        :param pulumi.InputType['HostnamectlOptsArgs'] update: The command to run on update, if empty, create will 
+        :param Union[pulumi.Input[str], pulumi.Input[pulumi.InputType['HostnamectlOptsArgs']]] update: The command to run on update, if empty, create will 
                run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
                are set to the stdout and stderr properties of the Command resource from previous 
                create or update steps.
@@ -219,12 +219,12 @@ class Hostnamectl(pulumi.ComponentResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  binary_path: Optional[pulumi.Input[str]] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
-                 create: Optional[pulumi.InputType['HostnamectlOptsArgs']] = None,
-                 delete: Optional[pulumi.InputType['HostnamectlOptsArgs']] = None,
+                 create: Optional[Union[pulumi.Input[str], pulumi.Input[pulumi.InputType['HostnamectlOptsArgs']]]] = None,
+                 delete: Optional[Union[pulumi.Input[str], pulumi.Input[pulumi.InputType['HostnamectlOptsArgs']]]] = None,
                  environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  stdin: Optional[pulumi.Input[str]] = None,
                  triggers: Optional[pulumi.Input[Sequence[Any]]] = None,
-                 update: Optional[pulumi.InputType['HostnamectlOptsArgs']] = None,
+                 update: Optional[Union[pulumi.Input[str], pulumi.Input[pulumi.InputType['HostnamectlOptsArgs']]]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):
@@ -282,7 +282,7 @@ class Hostnamectl(pulumi.ComponentResource):
 
     @property
     @pulumi.getter
-    def create(self) -> pulumi.Output[Optional['outputs.HostnamectlOpts']]:
+    def create(self) -> pulumi.Output[Optional[Any]]:
         """
         The command to run on create.
         """
@@ -290,7 +290,7 @@ class Hostnamectl(pulumi.ComponentResource):
 
     @property
     @pulumi.getter
-    def delete(self) -> pulumi.Output[Optional['outputs.HostnamectlOpts']]:
+    def delete(self) -> pulumi.Output[Optional[Any]]:
         """
         The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
         and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
@@ -340,7 +340,7 @@ class Hostnamectl(pulumi.ComponentResource):
 
     @property
     @pulumi.getter
-    def update(self) -> pulumi.Output[Optional['outputs.HostnamectlOpts']]:
+    def update(self) -> pulumi.Output[Optional[Any]]:
         """
         The command to run on update, if empty, create will 
         run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 

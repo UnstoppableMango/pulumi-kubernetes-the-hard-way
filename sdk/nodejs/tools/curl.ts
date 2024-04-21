@@ -42,13 +42,13 @@ export class Curl extends pulumi.ComponentResource {
     /**
      * The command to run on create.
      */
-    public readonly create!: pulumi.Output<outputs.tools.CurlOpts | undefined>;
+    public readonly create!: pulumi.Output<string | outputs.tools.CurlOpts | undefined>;
     /**
      * The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
      * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
      * Command resource from previous create or update steps.
      */
-    public readonly delete!: pulumi.Output<outputs.tools.CurlOpts | undefined>;
+    public readonly delete!: pulumi.Output<string | outputs.tools.CurlOpts | undefined>;
     /**
      * Environment variables
      */
@@ -75,7 +75,7 @@ export class Curl extends pulumi.ComponentResource {
      * are set to the stdout and stderr properties of the Command resource from previous 
      * create or update steps.
      */
-    public readonly update!: pulumi.Output<outputs.tools.CurlOpts | undefined>;
+    public readonly update!: pulumi.Output<string | outputs.tools.CurlOpts | undefined>;
 
     /**
      * Create a Curl resource with the given unique name, arguments, and options.
@@ -135,13 +135,13 @@ export interface CurlArgs {
     /**
      * The command to run on create.
      */
-    create?: inputs.tools.CurlOptsArgs;
+    create?: pulumi.Input<string> | pulumi.Input<inputs.tools.CurlOptsArgs>;
     /**
      * The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
      * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
      * Command resource from previous create or update steps.
      */
-    delete?: inputs.tools.CurlOptsArgs;
+    delete?: pulumi.Input<string> | pulumi.Input<inputs.tools.CurlOptsArgs>;
     /**
      * Environment variables
      */
@@ -160,5 +160,5 @@ export interface CurlArgs {
      * are set to the stdout and stderr properties of the Command resource from previous 
      * create or update steps.
      */
-    update?: inputs.tools.CurlOptsArgs;
+    update?: pulumi.Input<string> | pulumi.Input<inputs.tools.CurlOptsArgs>;
 }

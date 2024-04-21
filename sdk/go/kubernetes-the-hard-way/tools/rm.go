@@ -24,11 +24,11 @@ type Rm struct {
 	// Connection details for the remote system
 	Connection pulumiCommand.ConnectionOutput `pulumi:"connection"`
 	// The command to run on create.
-	Create RmOptsPtrOutput `pulumi:"create"`
+	Create pulumi.AnyOutput `pulumi:"create"`
 	// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
 	// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
 	// Command resource from previous create or update steps.
-	Delete RmOptsPtrOutput `pulumi:"delete"`
+	Delete pulumi.AnyOutput `pulumi:"delete"`
 	// Environment variables
 	Environment pulumi.StringMapOutput `pulumi:"environment"`
 	// TODO
@@ -43,7 +43,7 @@ type Rm struct {
 	// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
 	// are set to the stdout and stderr properties of the Command resource from previous
 	// create or update steps.
-	Update RmOptsPtrOutput `pulumi:"update"`
+	Update pulumi.AnyOutput `pulumi:"update"`
 }
 
 // NewRm registers a new resource with the given unique name, arguments, and options.
@@ -72,11 +72,11 @@ type rmArgs struct {
 	// Connection details for the remote system
 	Connection pulumiCommand.Connection `pulumi:"connection"`
 	// The command to run on create.
-	Create *RmOpts `pulumi:"create"`
+	Create interface{} `pulumi:"create"`
 	// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
 	// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
 	// Command resource from previous create or update steps.
-	Delete *RmOpts `pulumi:"delete"`
+	Delete interface{} `pulumi:"delete"`
 	// Environment variables
 	Environment map[string]string `pulumi:"environment"`
 	// TODO
@@ -87,7 +87,7 @@ type rmArgs struct {
 	// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
 	// are set to the stdout and stderr properties of the Command resource from previous
 	// create or update steps.
-	Update *RmOpts `pulumi:"update"`
+	Update interface{} `pulumi:"update"`
 }
 
 // The set of arguments for constructing a Rm resource.
@@ -97,11 +97,11 @@ type RmArgs struct {
 	// Connection details for the remote system
 	Connection pulumiCommand.ConnectionInput
 	// The command to run on create.
-	Create *RmOptsArgs
+	Create interface{}
 	// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
 	// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
 	// Command resource from previous create or update steps.
-	Delete *RmOptsArgs
+	Delete interface{}
 	// Environment variables
 	Environment pulumi.StringMapInput
 	// TODO
@@ -112,7 +112,7 @@ type RmArgs struct {
 	// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
 	// are set to the stdout and stderr properties of the Command resource from previous
 	// create or update steps.
-	Update *RmOptsArgs
+	Update interface{}
 }
 
 func (RmArgs) ElementType() reflect.Type {
@@ -218,15 +218,15 @@ func (o RmOutput) Connection() pulumiCommand.ConnectionOutput {
 }
 
 // The command to run on create.
-func (o RmOutput) Create() RmOptsPtrOutput {
-	return o.ApplyT(func(v *Rm) RmOptsPtrOutput { return v.Create }).(RmOptsPtrOutput)
+func (o RmOutput) Create() pulumi.AnyOutput {
+	return o.ApplyT(func(v *Rm) pulumi.AnyOutput { return v.Create }).(pulumi.AnyOutput)
 }
 
 // The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
 // and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
 // Command resource from previous create or update steps.
-func (o RmOutput) Delete() RmOptsPtrOutput {
-	return o.ApplyT(func(v *Rm) RmOptsPtrOutput { return v.Delete }).(RmOptsPtrOutput)
+func (o RmOutput) Delete() pulumi.AnyOutput {
+	return o.ApplyT(func(v *Rm) pulumi.AnyOutput { return v.Delete }).(pulumi.AnyOutput)
 }
 
 // Environment variables
@@ -258,8 +258,8 @@ func (o RmOutput) Triggers() pulumi.ArrayOutput {
 // run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
 // are set to the stdout and stderr properties of the Command resource from previous
 // create or update steps.
-func (o RmOutput) Update() RmOptsPtrOutput {
-	return o.ApplyT(func(v *Rm) RmOptsPtrOutput { return v.Update }).(RmOptsPtrOutput)
+func (o RmOutput) Update() pulumi.AnyOutput {
+	return o.ApplyT(func(v *Rm) pulumi.AnyOutput { return v.Update }).(pulumi.AnyOutput)
 }
 
 type RmArrayOutput struct{ *pulumi.OutputState }

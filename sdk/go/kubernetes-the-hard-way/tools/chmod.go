@@ -24,11 +24,11 @@ type Chmod struct {
 	// Connection details for the remote system
 	Connection pulumiCommand.ConnectionOutput `pulumi:"connection"`
 	// The command to run on create.
-	Create ChmodOptsPtrOutput `pulumi:"create"`
+	Create pulumi.AnyOutput `pulumi:"create"`
 	// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
 	// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
 	// Command resource from previous create or update steps.
-	Delete ChmodOptsPtrOutput `pulumi:"delete"`
+	Delete pulumi.AnyOutput `pulumi:"delete"`
 	// Environment variables
 	Environment pulumi.StringMapOutput `pulumi:"environment"`
 	// TODO
@@ -43,7 +43,7 @@ type Chmod struct {
 	// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
 	// are set to the stdout and stderr properties of the Command resource from previous
 	// create or update steps.
-	Update ChmodOptsPtrOutput `pulumi:"update"`
+	Update pulumi.AnyOutput `pulumi:"update"`
 }
 
 // NewChmod registers a new resource with the given unique name, arguments, and options.
@@ -72,11 +72,11 @@ type chmodArgs struct {
 	// Connection details for the remote system
 	Connection pulumiCommand.Connection `pulumi:"connection"`
 	// The command to run on create.
-	Create *ChmodOpts `pulumi:"create"`
+	Create interface{} `pulumi:"create"`
 	// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
 	// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
 	// Command resource from previous create or update steps.
-	Delete *ChmodOpts `pulumi:"delete"`
+	Delete interface{} `pulumi:"delete"`
 	// Environment variables
 	Environment map[string]string `pulumi:"environment"`
 	// TODO
@@ -87,7 +87,7 @@ type chmodArgs struct {
 	// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
 	// are set to the stdout and stderr properties of the Command resource from previous
 	// create or update steps.
-	Update *ChmodOpts `pulumi:"update"`
+	Update interface{} `pulumi:"update"`
 }
 
 // The set of arguments for constructing a Chmod resource.
@@ -97,11 +97,11 @@ type ChmodArgs struct {
 	// Connection details for the remote system
 	Connection pulumiCommand.ConnectionInput
 	// The command to run on create.
-	Create *ChmodOptsArgs
+	Create interface{}
 	// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
 	// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
 	// Command resource from previous create or update steps.
-	Delete *ChmodOptsArgs
+	Delete interface{}
 	// Environment variables
 	Environment pulumi.StringMapInput
 	// TODO
@@ -112,7 +112,7 @@ type ChmodArgs struct {
 	// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
 	// are set to the stdout and stderr properties of the Command resource from previous
 	// create or update steps.
-	Update *ChmodOptsArgs
+	Update interface{}
 }
 
 func (ChmodArgs) ElementType() reflect.Type {
@@ -218,15 +218,15 @@ func (o ChmodOutput) Connection() pulumiCommand.ConnectionOutput {
 }
 
 // The command to run on create.
-func (o ChmodOutput) Create() ChmodOptsPtrOutput {
-	return o.ApplyT(func(v *Chmod) ChmodOptsPtrOutput { return v.Create }).(ChmodOptsPtrOutput)
+func (o ChmodOutput) Create() pulumi.AnyOutput {
+	return o.ApplyT(func(v *Chmod) pulumi.AnyOutput { return v.Create }).(pulumi.AnyOutput)
 }
 
 // The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
 // and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
 // Command resource from previous create or update steps.
-func (o ChmodOutput) Delete() ChmodOptsPtrOutput {
-	return o.ApplyT(func(v *Chmod) ChmodOptsPtrOutput { return v.Delete }).(ChmodOptsPtrOutput)
+func (o ChmodOutput) Delete() pulumi.AnyOutput {
+	return o.ApplyT(func(v *Chmod) pulumi.AnyOutput { return v.Delete }).(pulumi.AnyOutput)
 }
 
 // Environment variables
@@ -258,8 +258,8 @@ func (o ChmodOutput) Triggers() pulumi.ArrayOutput {
 // run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
 // are set to the stdout and stderr properties of the Command resource from previous
 // create or update steps.
-func (o ChmodOutput) Update() ChmodOptsPtrOutput {
-	return o.ApplyT(func(v *Chmod) ChmodOptsPtrOutput { return v.Update }).(ChmodOptsPtrOutput)
+func (o ChmodOutput) Update() pulumi.AnyOutput {
+	return o.ApplyT(func(v *Chmod) pulumi.AnyOutput { return v.Update }).(pulumi.AnyOutput)
 }
 
 type ChmodArrayOutput struct{ *pulumi.OutputState }
