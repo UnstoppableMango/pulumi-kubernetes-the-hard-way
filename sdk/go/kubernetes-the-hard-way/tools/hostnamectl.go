@@ -17,46 +17,33 @@ import (
 type Hostnamectl struct {
 	pulumi.ResourceState
 
-	// The argument for the specified `command`.
-	Arg pulumi.StringPtrOutput `pulumi:"arg"`
 	// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
 	BinaryPath pulumi.StringOutput `pulumi:"binaryPath"`
 	// The underlying command
 	Command pulumiCommand.CommandOutput `pulumi:"command"`
 	// Connection details for the remote system
 	Connection pulumiCommand.ConnectionOutput `pulumi:"connection"`
+	// The command to run on create.
+	Create HostnamectlOptsPtrOutput `pulumi:"create"`
+	// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+	// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+	// Command resource from previous create or update steps.
+	Delete HostnamectlOptsPtrOutput `pulumi:"delete"`
 	// Environment variables
 	Environment pulumi.StringMapOutput `pulumi:"environment"`
-	// Print a short help text and exit.
-	Help pulumi.BoolOutput `pulumi:"help"`
-	// Execute the operation remotely. Specify a hostname, or a username and hostname separated by '@', to connect to.
-	Host pulumi.StringPtrOutput `pulumi:"host"`
-	// Corresponds to the {COMMAND} argument.
-	HostnamectlCommand HostnamectlCommandOutput `pulumi:"hostnamectlCommand"`
-	// Shows output formatted as JSON.
-	Json HostnamectlJsonModePtrOutput `pulumi:"json"`
-	// At what stage(s) in the resource lifecycle should the command be run
-	Lifecycle CommandLifecyclePtrOutput `pulumi:"lifecycle"`
-	// Execute operation on a local container. Specify a container name to connect to, optionally prefixed by a user name to connect as and a separating '@' character.
-	Machine pulumi.StringPtrOutput `pulumi:"machine"`
-	// Do not query the user for authentication for privileged operations.
-	NoAskPassword pulumi.BoolOutput `pulumi:"noAskPassword"`
-	// If status is invoked (or no explicit command is given) and one of these switches is specified, hostnamectl will print out just this selected hostname. Same as `static` and `transient`.
-	Pretty pulumi.BoolOutput `pulumi:"pretty"`
-	// If status is invoked (or no explicit command is given) and one of these switches is specified, hostnamectl will print out just this selected hostname. Same as `transient` and `pretty`.
-	Static pulumi.BoolOutput `pulumi:"static"`
 	// TODO
 	Stderr pulumi.StringOutput `pulumi:"stderr"`
 	// TODO
 	Stdin pulumi.StringPtrOutput `pulumi:"stdin"`
 	// TODO
 	Stdout pulumi.StringOutput `pulumi:"stdout"`
-	// If status is invoked (or no explicit command is given) and one of these switches is specified, hostnamectl will print out just this selected hostname. Same as `static` and `pretty`.
-	Transient pulumi.BoolOutput `pulumi:"transient"`
 	// TODO
 	Triggers pulumi.ArrayOutput `pulumi:"triggers"`
-	// Print a short version string and exit.
-	Version pulumi.BoolOutput `pulumi:"version"`
+	// The command to run on update, if empty, create will
+	// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+	// are set to the stdout and stderr properties of the Command resource from previous
+	// create or update steps.
+	Update HostnamectlOptsPtrOutput `pulumi:"update"`
 }
 
 // NewHostnamectl registers a new resource with the given unique name, arguments, and options.
@@ -66,9 +53,6 @@ func NewHostnamectl(ctx *pulumi.Context,
 		return nil, errors.New("missing one or more required arguments")
 	}
 
-	if args.Command == nil {
-		return nil, errors.New("invalid value for required argument 'Command'")
-	}
 	if args.Connection == nil {
 		return nil, errors.New("invalid value for required argument 'Connection'")
 	}
@@ -83,78 +67,52 @@ func NewHostnamectl(ctx *pulumi.Context,
 }
 
 type hostnamectlArgs struct {
-	// The argument for the specified `command`.
-	Arg *string `pulumi:"arg"`
 	// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
 	BinaryPath *string `pulumi:"binaryPath"`
-	// Corresponds to the {COMMAND} argument.
-	Command HostnamectlCommand `pulumi:"command"`
 	// Connection details for the remote system
 	Connection pulumiCommand.Connection `pulumi:"connection"`
+	// The command to run on create.
+	Create *HostnamectlOpts `pulumi:"create"`
+	// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+	// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+	// Command resource from previous create or update steps.
+	Delete *HostnamectlOpts `pulumi:"delete"`
 	// Environment variables
 	Environment map[string]string `pulumi:"environment"`
-	// Print a short help text and exit.
-	Help *bool `pulumi:"help"`
-	// Execute the operation remotely. Specify a hostname, or a username and hostname separated by '@', to connect to.
-	Host *string `pulumi:"host"`
-	// Shows output formatted as JSON.
-	Json *HostnamectlJsonMode `pulumi:"json"`
-	// At what stage(s) in the resource lifecycle should the command be run
-	Lifecycle *CommandLifecycle `pulumi:"lifecycle"`
-	// Execute operation on a local container. Specify a container name to connect to, optionally prefixed by a user name to connect as and a separating '@' character.
-	Machine *string `pulumi:"machine"`
-	// Do not query the user for authentication for privileged operations.
-	NoAskPassword *bool `pulumi:"noAskPassword"`
-	// If status is invoked (or no explicit command is given) and one of these switches is specified, hostnamectl will print out just this selected hostname. Same as `static` and `transient`.
-	Pretty *bool `pulumi:"pretty"`
-	// If status is invoked (or no explicit command is given) and one of these switches is specified, hostnamectl will print out just this selected hostname. Same as `transient` and `pretty`.
-	Static *bool `pulumi:"static"`
 	// TODO
 	Stdin *string `pulumi:"stdin"`
-	// If status is invoked (or no explicit command is given) and one of these switches is specified, hostnamectl will print out just this selected hostname. Same as `static` and `pretty`.
-	Transient *bool `pulumi:"transient"`
 	// TODO
 	Triggers []interface{} `pulumi:"triggers"`
-	// Print a short version string and exit.
-	Version *bool `pulumi:"version"`
+	// The command to run on update, if empty, create will
+	// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+	// are set to the stdout and stderr properties of the Command resource from previous
+	// create or update steps.
+	Update *HostnamectlOpts `pulumi:"update"`
 }
 
 // The set of arguments for constructing a Hostnamectl resource.
 type HostnamectlArgs struct {
-	// The argument for the specified `command`.
-	Arg pulumi.StringPtrInput
 	// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
 	BinaryPath pulumi.StringPtrInput
-	// Corresponds to the {COMMAND} argument.
-	Command HostnamectlCommandInput
 	// Connection details for the remote system
 	Connection pulumiCommand.ConnectionInput
+	// The command to run on create.
+	Create *HostnamectlOptsArgs
+	// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+	// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+	// Command resource from previous create or update steps.
+	Delete *HostnamectlOptsArgs
 	// Environment variables
 	Environment pulumi.StringMapInput
-	// Print a short help text and exit.
-	Help pulumi.BoolPtrInput
-	// Execute the operation remotely. Specify a hostname, or a username and hostname separated by '@', to connect to.
-	Host pulumi.StringPtrInput
-	// Shows output formatted as JSON.
-	Json HostnamectlJsonModePtrInput
-	// At what stage(s) in the resource lifecycle should the command be run
-	Lifecycle *CommandLifecycle
-	// Execute operation on a local container. Specify a container name to connect to, optionally prefixed by a user name to connect as and a separating '@' character.
-	Machine pulumi.StringPtrInput
-	// Do not query the user for authentication for privileged operations.
-	NoAskPassword pulumi.BoolPtrInput
-	// If status is invoked (or no explicit command is given) and one of these switches is specified, hostnamectl will print out just this selected hostname. Same as `static` and `transient`.
-	Pretty pulumi.BoolPtrInput
-	// If status is invoked (or no explicit command is given) and one of these switches is specified, hostnamectl will print out just this selected hostname. Same as `transient` and `pretty`.
-	Static pulumi.BoolPtrInput
 	// TODO
 	Stdin pulumi.StringPtrInput
-	// If status is invoked (or no explicit command is given) and one of these switches is specified, hostnamectl will print out just this selected hostname. Same as `static` and `pretty`.
-	Transient pulumi.BoolPtrInput
 	// TODO
 	Triggers pulumi.ArrayInput
-	// Print a short version string and exit.
-	Version pulumi.BoolPtrInput
+	// The command to run on update, if empty, create will
+	// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+	// are set to the stdout and stderr properties of the Command resource from previous
+	// create or update steps.
+	Update *HostnamectlOptsArgs
 }
 
 func (HostnamectlArgs) ElementType() reflect.Type {
@@ -244,11 +202,6 @@ func (o HostnamectlOutput) ToHostnamectlOutputWithContext(ctx context.Context) H
 	return o
 }
 
-// The argument for the specified `command`.
-func (o HostnamectlOutput) Arg() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Hostnamectl) pulumi.StringPtrOutput { return v.Arg }).(pulumi.StringPtrOutput)
-}
-
 // Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
 func (o HostnamectlOutput) BinaryPath() pulumi.StringOutput {
 	return o.ApplyT(func(v *Hostnamectl) pulumi.StringOutput { return v.BinaryPath }).(pulumi.StringOutput)
@@ -264,54 +217,21 @@ func (o HostnamectlOutput) Connection() pulumiCommand.ConnectionOutput {
 	return o.ApplyT(func(v *Hostnamectl) pulumiCommand.ConnectionOutput { return v.Connection }).(pulumiCommand.ConnectionOutput)
 }
 
+// The command to run on create.
+func (o HostnamectlOutput) Create() HostnamectlOptsPtrOutput {
+	return o.ApplyT(func(v *Hostnamectl) HostnamectlOptsPtrOutput { return v.Create }).(HostnamectlOptsPtrOutput)
+}
+
+// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+// Command resource from previous create or update steps.
+func (o HostnamectlOutput) Delete() HostnamectlOptsPtrOutput {
+	return o.ApplyT(func(v *Hostnamectl) HostnamectlOptsPtrOutput { return v.Delete }).(HostnamectlOptsPtrOutput)
+}
+
 // Environment variables
 func (o HostnamectlOutput) Environment() pulumi.StringMapOutput {
 	return o.ApplyT(func(v *Hostnamectl) pulumi.StringMapOutput { return v.Environment }).(pulumi.StringMapOutput)
-}
-
-// Print a short help text and exit.
-func (o HostnamectlOutput) Help() pulumi.BoolOutput {
-	return o.ApplyT(func(v *Hostnamectl) pulumi.BoolOutput { return v.Help }).(pulumi.BoolOutput)
-}
-
-// Execute the operation remotely. Specify a hostname, or a username and hostname separated by '@', to connect to.
-func (o HostnamectlOutput) Host() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Hostnamectl) pulumi.StringPtrOutput { return v.Host }).(pulumi.StringPtrOutput)
-}
-
-// Corresponds to the {COMMAND} argument.
-func (o HostnamectlOutput) HostnamectlCommand() HostnamectlCommandOutput {
-	return o.ApplyT(func(v *Hostnamectl) HostnamectlCommandOutput { return v.HostnamectlCommand }).(HostnamectlCommandOutput)
-}
-
-// Shows output formatted as JSON.
-func (o HostnamectlOutput) Json() HostnamectlJsonModePtrOutput {
-	return o.ApplyT(func(v *Hostnamectl) HostnamectlJsonModePtrOutput { return v.Json }).(HostnamectlJsonModePtrOutput)
-}
-
-// At what stage(s) in the resource lifecycle should the command be run
-func (o HostnamectlOutput) Lifecycle() CommandLifecyclePtrOutput {
-	return o.ApplyT(func(v *Hostnamectl) CommandLifecyclePtrOutput { return v.Lifecycle }).(CommandLifecyclePtrOutput)
-}
-
-// Execute operation on a local container. Specify a container name to connect to, optionally prefixed by a user name to connect as and a separating '@' character.
-func (o HostnamectlOutput) Machine() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Hostnamectl) pulumi.StringPtrOutput { return v.Machine }).(pulumi.StringPtrOutput)
-}
-
-// Do not query the user for authentication for privileged operations.
-func (o HostnamectlOutput) NoAskPassword() pulumi.BoolOutput {
-	return o.ApplyT(func(v *Hostnamectl) pulumi.BoolOutput { return v.NoAskPassword }).(pulumi.BoolOutput)
-}
-
-// If status is invoked (or no explicit command is given) and one of these switches is specified, hostnamectl will print out just this selected hostname. Same as `static` and `transient`.
-func (o HostnamectlOutput) Pretty() pulumi.BoolOutput {
-	return o.ApplyT(func(v *Hostnamectl) pulumi.BoolOutput { return v.Pretty }).(pulumi.BoolOutput)
-}
-
-// If status is invoked (or no explicit command is given) and one of these switches is specified, hostnamectl will print out just this selected hostname. Same as `transient` and `pretty`.
-func (o HostnamectlOutput) Static() pulumi.BoolOutput {
-	return o.ApplyT(func(v *Hostnamectl) pulumi.BoolOutput { return v.Static }).(pulumi.BoolOutput)
 }
 
 // TODO
@@ -329,19 +249,17 @@ func (o HostnamectlOutput) Stdout() pulumi.StringOutput {
 	return o.ApplyT(func(v *Hostnamectl) pulumi.StringOutput { return v.Stdout }).(pulumi.StringOutput)
 }
 
-// If status is invoked (or no explicit command is given) and one of these switches is specified, hostnamectl will print out just this selected hostname. Same as `static` and `pretty`.
-func (o HostnamectlOutput) Transient() pulumi.BoolOutput {
-	return o.ApplyT(func(v *Hostnamectl) pulumi.BoolOutput { return v.Transient }).(pulumi.BoolOutput)
-}
-
 // TODO
 func (o HostnamectlOutput) Triggers() pulumi.ArrayOutput {
 	return o.ApplyT(func(v *Hostnamectl) pulumi.ArrayOutput { return v.Triggers }).(pulumi.ArrayOutput)
 }
 
-// Print a short version string and exit.
-func (o HostnamectlOutput) Version() pulumi.BoolOutput {
-	return o.ApplyT(func(v *Hostnamectl) pulumi.BoolOutput { return v.Version }).(pulumi.BoolOutput)
+// The command to run on update, if empty, create will
+// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+// are set to the stdout and stderr properties of the Command resource from previous
+// create or update steps.
+func (o HostnamectlOutput) Update() HostnamectlOptsPtrOutput {
+	return o.ApplyT(func(v *Hostnamectl) HostnamectlOptsPtrOutput { return v.Update }).(HostnamectlOptsPtrOutput)
 }
 
 type HostnamectlArrayOutput struct{ *pulumi.OutputState }

@@ -11,7 +11,7 @@ using Pulumi;
 namespace UnMango.KubernetesTheHardWay.Tools
 {
     /// <summary>
-    /// Abstraction over the `mkdir` utility on a remote system.
+    /// Abstraction over the `mktemp` utility on a remote system.
     /// </summary>
     [KubernetesTheHardWayResourceType("kubernetes-the-hard-way:tools:Mktemp")]
     public partial class Mktemp : global::Pulumi.ComponentResource
@@ -35,34 +35,24 @@ namespace UnMango.KubernetesTheHardWay.Tools
         public Output<Pulumi.Command.Remote.Outputs.Connection> Connection { get; private set; } = null!;
 
         /// <summary>
-        /// Corresponds to the `--directory` option.
+        /// The command to run on create.
         /// </summary>
-        [Output("directory")]
-        public Output<bool?> Directory { get; private set; } = null!;
+        [Output("create")]
+        public Output<Outputs.MktempOpts?> Create { get; private set; } = null!;
 
         /// <summary>
-        /// Corresponds to the `--dry-run` option.
+        /// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+        /// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+        /// Command resource from previous create or update steps.
         /// </summary>
-        [Output("dryRun")]
-        public Output<bool> DryRun { get; private set; } = null!;
+        [Output("delete")]
+        public Output<Outputs.MktempOpts?> Delete { get; private set; } = null!;
 
         /// <summary>
         /// Environment variables
         /// </summary>
         [Output("environment")]
         public Output<ImmutableDictionary<string, string>> Environment { get; private set; } = null!;
-
-        /// <summary>
-        /// At what stage(s) in the resource lifecycle should the command be run
-        /// </summary>
-        [Output("lifecycle")]
-        public Output<UnMango.KubernetesTheHardWay.Tools.CommandLifecycle?> Lifecycle { get; private set; } = null!;
-
-        /// <summary>
-        /// Corresponds to the `--quiet` option.
-        /// </summary>
-        [Output("quiet")]
-        public Output<bool> Quiet { get; private set; } = null!;
 
         /// <summary>
         /// TODO
@@ -83,28 +73,19 @@ namespace UnMango.KubernetesTheHardWay.Tools
         public Output<string> Stdout { get; private set; } = null!;
 
         /// <summary>
-        /// Corresponds to the `--suffix` option.
-        /// </summary>
-        [Output("suffix")]
-        public Output<string?> Suffix { get; private set; } = null!;
-
-        /// <summary>
-        /// Corresponds to the [TEMPLATE] argument.
-        /// </summary>
-        [Output("template")]
-        public Output<string?> Template { get; private set; } = null!;
-
-        /// <summary>
-        /// Corresponds to the `--tmpdir` option.
-        /// </summary>
-        [Output("tmpdir")]
-        public Output<string?> Tmpdir { get; private set; } = null!;
-
-        /// <summary>
         /// TODO
         /// </summary>
         [Output("triggers")]
         public Output<ImmutableArray<object>> Triggers { get; private set; } = null!;
+
+        /// <summary>
+        /// The command to run on update, if empty, create will 
+        /// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
+        /// are set to the stdout and stderr properties of the Command resource from previous 
+        /// create or update steps.
+        /// </summary>
+        [Output("update")]
+        public Output<Outputs.MktempOpts?> Update { get; private set; } = null!;
 
 
         /// <summary>
@@ -148,16 +129,18 @@ namespace UnMango.KubernetesTheHardWay.Tools
         public Input<Pulumi.Command.Remote.Inputs.ConnectionArgs> Connection { get; set; } = null!;
 
         /// <summary>
-        /// Corresponds to the `--directory` option.
+        /// The command to run on create.
         /// </summary>
-        [Input("directory")]
-        public Input<bool>? Directory { get; set; }
+        [Input("create")]
+        public Inputs.MktempOptsArgs? Create { get; set; }
 
         /// <summary>
-        /// Corresponds to the `--dry-run` option.
+        /// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+        /// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+        /// Command resource from previous create or update steps.
         /// </summary>
-        [Input("dryRun")]
-        public Input<bool>? DryRun { get; set; }
+        [Input("delete")]
+        public Inputs.MktempOptsArgs? Delete { get; set; }
 
         [Input("environment")]
         private InputMap<string>? _environment;
@@ -172,40 +155,10 @@ namespace UnMango.KubernetesTheHardWay.Tools
         }
 
         /// <summary>
-        /// At what stage(s) in the resource lifecycle should the command be run
-        /// </summary>
-        [Input("lifecycle")]
-        public UnMango.KubernetesTheHardWay.Tools.CommandLifecycle? Lifecycle { get; set; }
-
-        /// <summary>
-        /// Corresponds to the `--quiet` option.
-        /// </summary>
-        [Input("quiet")]
-        public Input<bool>? Quiet { get; set; }
-
-        /// <summary>
         /// TODO
         /// </summary>
         [Input("stdin")]
         public Input<string>? Stdin { get; set; }
-
-        /// <summary>
-        /// Corresponds to the `--suffix` option.
-        /// </summary>
-        [Input("suffix")]
-        public Input<string>? Suffix { get; set; }
-
-        /// <summary>
-        /// Corresponds to the [TEMPLATE] argument.
-        /// </summary>
-        [Input("template")]
-        public Input<string>? Template { get; set; }
-
-        /// <summary>
-        /// Corresponds to the `--tmpdir` option.
-        /// </summary>
-        [Input("tmpdir")]
-        public Input<string>? Tmpdir { get; set; }
 
         [Input("triggers")]
         private InputList<object>? _triggers;
@@ -218,6 +171,15 @@ namespace UnMango.KubernetesTheHardWay.Tools
             get => _triggers ?? (_triggers = new InputList<object>());
             set => _triggers = value;
         }
+
+        /// <summary>
+        /// The command to run on update, if empty, create will 
+        /// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
+        /// are set to the stdout and stderr properties of the Command resource from previous 
+        /// create or update steps.
+        /// </summary>
+        [Input("update")]
+        public Inputs.MktempOptsArgs? Update { get; set; }
 
         public MktempArgs()
         {

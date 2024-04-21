@@ -5,10 +5,10 @@ import (
 	"github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 )
 
-func generateRm() schema.ResourceSpec {
+func generateRm() tool {
 	inputs := map[string]schema.PropertySpec{
 		"dir":   props.Boolean("Corresponds to the `--dir` option."),
-		"files": props.OneOrMoreStrings("Corresponds to the [FILE] argument."),
+		"files": props.ArrayOf("string", "Corresponds to the [FILE] argument."),
 		"force": props.Boolean("Corresponds to the `--force` option."),
 		// TODO: Reconsider this SOLID violation
 		"onDelete":  props.Boolean("Whether rm should be run when the resource is created or deleted."),
@@ -16,23 +16,33 @@ func generateRm() schema.ResourceSpec {
 		"verbose":   props.Boolean("Corresponds to the `--verbose` option."),
 	}
 
-	required := []string{
-		"files",
-	}
+	required := []string{"files"}
 
-	return schema.ResourceSpec{
+	typ := schema.ComplexTypeSpec{
 		ObjectTypeSpec: schema.ObjectTypeSpec{
 			Description: "Abstraction over the `rm` utility on a remote system.",
-			Properties:  implicitOutputs(inputs, map[string]schema.PropertySpec{}),
-			Required: append(required,
-				"dir",
-				"force",
-				"onDelete",
-				"recursive",
-				"verbose",
-			),
+			Type:        "object",
+			Properties:  inputs,
+			Required:    required,
 		},
-		InputProperties: inputs,
-		RequiredInputs:  required,
 	}
+
+	return tool{optsType: typ, types: map[string]schema.ComplexTypeSpec{}}
 }
+
+// If we ever get a way to add the "required outputs" logic around a complexType
+// resource := schema.ResourceSpec{
+// 	ObjectTypeSpec: schema.ObjectTypeSpec{
+// 		Description: "Abstraction over the `rm` utility on a remote system.",
+// 		Properties:  implicitOutputs(inputs, map[string]schema.PropertySpec{}),
+// 		Required: append(required,
+// 			"dir",
+// 			"force",
+// 			"onDelete",
+// 			"recursive",
+// 			"verbose",
+// 		),
+// 	},
+// 	InputProperties: inputs,
+// 	RequiredInputs:  required,
+// }

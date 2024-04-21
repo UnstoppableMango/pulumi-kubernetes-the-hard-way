@@ -17,12 +17,6 @@ namespace UnMango.KubernetesTheHardWay.Tools
     public partial class Tee : global::Pulumi.ComponentResource
     {
         /// <summary>
-        /// Append to the given FILEs, do not overwrite
-        /// </summary>
-        [Output("append")]
-        public Output<bool> Append { get; private set; } = null!;
-
-        /// <summary>
         /// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
         /// </summary>
         [Output("binaryPath")]
@@ -41,40 +35,24 @@ namespace UnMango.KubernetesTheHardWay.Tools
         public Output<Pulumi.Command.Remote.Outputs.Connection> Connection { get; private set; } = null!;
 
         /// <summary>
+        /// The command to run on create.
+        /// </summary>
+        [Output("create")]
+        public Output<Outputs.TeeOpts?> Create { get; private set; } = null!;
+
+        /// <summary>
+        /// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+        /// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+        /// Command resource from previous create or update steps.
+        /// </summary>
+        [Output("delete")]
+        public Output<Outputs.TeeOpts?> Delete { get; private set; } = null!;
+
+        /// <summary>
         /// Environment variables
         /// </summary>
         [Output("environment")]
         public Output<ImmutableDictionary<string, string>> Environment { get; private set; } = null!;
-
-        /// <summary>
-        /// Corresponds to the [FILE] argument.
-        /// </summary>
-        [Output("files")]
-        public Output<Union<string, ImmutableArray<string>>> Files { get; private set; } = null!;
-
-        /// <summary>
-        /// Ignore interrupt signals.
-        /// </summary>
-        [Output("ignoreInterrupts")]
-        public Output<bool> IgnoreInterrupts { get; private set; } = null!;
-
-        /// <summary>
-        /// At what stage(s) in the resource lifecycle should the command be run
-        /// </summary>
-        [Output("lifecycle")]
-        public Output<UnMango.KubernetesTheHardWay.Tools.CommandLifecycle?> Lifecycle { get; private set; } = null!;
-
-        /// <summary>
-        /// Set behavior on write error.
-        /// </summary>
-        [Output("outputError")]
-        public Output<UnMango.KubernetesTheHardWay.Tools.TeeMode?> OutputError { get; private set; } = null!;
-
-        /// <summary>
-        /// Operate in a more appropriate MODE with pipes.
-        /// </summary>
-        [Output("pipe")]
-        public Output<bool> Pipe { get; private set; } = null!;
 
         /// <summary>
         /// TODO
@@ -86,7 +64,7 @@ namespace UnMango.KubernetesTheHardWay.Tools
         /// TODO
         /// </summary>
         [Output("stdin")]
-        public Output<string> Stdin { get; private set; } = null!;
+        public Output<string?> Stdin { get; private set; } = null!;
 
         /// <summary>
         /// TODO
@@ -101,10 +79,13 @@ namespace UnMango.KubernetesTheHardWay.Tools
         public Output<ImmutableArray<object>> Triggers { get; private set; } = null!;
 
         /// <summary>
-        /// Output version information and exit.
+        /// The command to run on update, if empty, create will 
+        /// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
+        /// are set to the stdout and stderr properties of the Command resource from previous 
+        /// create or update steps.
         /// </summary>
-        [Output("version")]
-        public Output<bool> Version { get; private set; } = null!;
+        [Output("update")]
+        public Output<Outputs.TeeOpts?> Update { get; private set; } = null!;
 
 
         /// <summary>
@@ -136,12 +117,6 @@ namespace UnMango.KubernetesTheHardWay.Tools
     public sealed class TeeArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
-        /// Append to the given FILEs, do not overwrite
-        /// </summary>
-        [Input("append")]
-        public Input<bool>? Append { get; set; }
-
-        /// <summary>
         /// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
         /// </summary>
         [Input("binaryPath")]
@@ -152,6 +127,20 @@ namespace UnMango.KubernetesTheHardWay.Tools
         /// </summary>
         [Input("connection", required: true)]
         public Input<Pulumi.Command.Remote.Inputs.ConnectionArgs> Connection { get; set; } = null!;
+
+        /// <summary>
+        /// The command to run on create.
+        /// </summary>
+        [Input("create")]
+        public Inputs.TeeOptsArgs? Create { get; set; }
+
+        /// <summary>
+        /// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+        /// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+        /// Command resource from previous create or update steps.
+        /// </summary>
+        [Input("delete")]
+        public Inputs.TeeOptsArgs? Delete { get; set; }
 
         [Input("environment")]
         private InputMap<string>? _environment;
@@ -166,40 +155,10 @@ namespace UnMango.KubernetesTheHardWay.Tools
         }
 
         /// <summary>
-        /// Corresponds to the [FILE] argument.
-        /// </summary>
-        [Input("files", required: true)]
-        public InputUnion<string, ImmutableArray<string>> Files { get; set; } = null!;
-
-        /// <summary>
-        /// Ignore interrupt signals.
-        /// </summary>
-        [Input("ignoreInterrupts")]
-        public Input<bool>? IgnoreInterrupts { get; set; }
-
-        /// <summary>
-        /// At what stage(s) in the resource lifecycle should the command be run
-        /// </summary>
-        [Input("lifecycle")]
-        public UnMango.KubernetesTheHardWay.Tools.CommandLifecycle? Lifecycle { get; set; }
-
-        /// <summary>
-        /// Set behavior on write error.
-        /// </summary>
-        [Input("outputError")]
-        public Input<UnMango.KubernetesTheHardWay.Tools.TeeMode>? OutputError { get; set; }
-
-        /// <summary>
-        /// Operate in a more appropriate MODE with pipes.
-        /// </summary>
-        [Input("pipe")]
-        public Input<bool>? Pipe { get; set; }
-
-        /// <summary>
         /// TODO
         /// </summary>
-        [Input("stdin", required: true)]
-        public Input<string> Stdin { get; set; } = null!;
+        [Input("stdin")]
+        public Input<string>? Stdin { get; set; }
 
         [Input("triggers")]
         private InputList<object>? _triggers;
@@ -214,10 +173,13 @@ namespace UnMango.KubernetesTheHardWay.Tools
         }
 
         /// <summary>
-        /// Output version information and exit.
+        /// The command to run on update, if empty, create will 
+        /// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
+        /// are set to the stdout and stderr properties of the Command resource from previous 
+        /// create or update steps.
         /// </summary>
-        [Input("version")]
-        public Input<bool>? Version { get; set; }
+        [Input("update")]
+        public Inputs.TeeOptsArgs? Update { get; set; }
 
         public TeeArgs()
         {

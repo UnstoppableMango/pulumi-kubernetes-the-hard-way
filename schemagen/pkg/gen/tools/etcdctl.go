@@ -6,7 +6,7 @@ import (
 	"github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 )
 
-func generateEtcdctl() schema.ResourceSpec {
+func generateEtcdctl() tool {
 	inputs := map[string]schema.PropertySpec{
 		"caCert": props.String("TODO"),
 		"cert":   props.String("TODO"),
@@ -20,13 +20,25 @@ func generateEtcdctl() schema.ResourceSpec {
 
 	required := []string{"commands"}
 
-	return schema.ResourceSpec{
+	typ := schema.ComplexTypeSpec{
 		ObjectTypeSpec: schema.ObjectTypeSpec{
 			Description: "Abstraction over the `etcdctl` utility on a remote system.",
-			Properties:  implicitOutputs(inputs, map[string]schema.PropertySpec{}),
+			Type:        "object",
+			Properties:  inputs,
 			Required:    required,
 		},
-		InputProperties: inputs,
-		RequiredInputs:  required,
 	}
+
+	return tool{optsType: typ, types: map[string]schema.ComplexTypeSpec{}}
 }
+
+// If we ever get a way to add the "required outputs" logic around a complexType
+// resource := schema.ResourceSpec{
+// 	ObjectTypeSpec: schema.ObjectTypeSpec{
+// 		Description: "Abstraction over the `etcdctl` utility on a remote system.",
+// 		Properties:  implicitOutputs(inputs, map[string]schema.PropertySpec{}),
+// 		Required:    required,
+// 	},
+// 	InputProperties: inputs,
+// 	RequiredInputs:  required,
+// }

@@ -18,8 +18,10 @@ const file = new File('remote', {
 
 const chmod = new Chmod('remote', {
    connection: { host, port, user, password },
-   files: file.path,
-   mode: 'u+x',
+   create: {
+    files: [file.path],
+    mode: 'u+x',
+  }
 });
 
 const wget = new Wget('remote', {
@@ -30,8 +32,10 @@ const wget = new Wget('remote', {
 
 const mkdir = new Mkdir('remote', {
   connection: { host, port, user, password },
-  directory: path.join(basePath, 'test-dir', 'subdir'),
-  parents: true,
+  create: {
+    directory: path.join(basePath, 'test-dir', 'subdir'),
+    parents: true,
+  },
 });
 
 const tmp = new Mktemp('remote', {

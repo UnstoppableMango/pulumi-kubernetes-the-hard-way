@@ -40,33 +40,19 @@ export class Rm extends pulumi.ComponentResource {
      */
     public readonly connection!: pulumi.Output<pulumiCommand.types.output.remote.Connection>;
     /**
-     * Corresponds to the `--dir` option.
+     * The command to run on create.
      */
-    public readonly dir!: pulumi.Output<boolean>;
+    public readonly create!: pulumi.Output<outputs.tools.RmOpts | undefined>;
+    /**
+     * The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+     * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+     * Command resource from previous create or update steps.
+     */
+    public readonly delete!: pulumi.Output<outputs.tools.RmOpts | undefined>;
     /**
      * Environment variables
      */
     public readonly environment!: pulumi.Output<{[key: string]: string}>;
-    /**
-     * Corresponds to the [FILE] argument.
-     */
-    public readonly files!: pulumi.Output<string | string[]>;
-    /**
-     * Corresponds to the `--force` option.
-     */
-    public readonly force!: pulumi.Output<boolean>;
-    /**
-     * At what stage(s) in the resource lifecycle should the command be run
-     */
-    public readonly lifecycle!: pulumi.Output<enums.tools.CommandLifecycle | undefined>;
-    /**
-     * Whether rm should be run when the resource is created or deleted.
-     */
-    public readonly onDelete!: pulumi.Output<boolean>;
-    /**
-     * Corresponds to the `--recursive` option.
-     */
-    public readonly recursive!: pulumi.Output<boolean>;
     /**
      * TODO
      */
@@ -84,9 +70,12 @@ export class Rm extends pulumi.ComponentResource {
      */
     public readonly triggers!: pulumi.Output<any[]>;
     /**
-     * Corresponds to the `--verbose` option.
+     * The command to run on update, if empty, create will 
+     * run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
+     * are set to the stdout and stderr properties of the Command resource from previous 
+     * create or update steps.
      */
-    public readonly verbose!: pulumi.Output<boolean>;
+    public readonly update!: pulumi.Output<outputs.tools.RmOpts | undefined>;
 
     /**
      * Create a Rm resource with the given unique name, arguments, and options.
@@ -102,21 +91,14 @@ export class Rm extends pulumi.ComponentResource {
             if ((!args || args.connection === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'connection'");
             }
-            if ((!args || args.files === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'files'");
-            }
             resourceInputs["binaryPath"] = args ? args.binaryPath : undefined;
             resourceInputs["connection"] = args ? (args.connection ? pulumi.output(args.connection).apply(pulumiCommand.types.input.remote.connectionArgsProvideDefaults) : undefined) : undefined;
-            resourceInputs["dir"] = args ? args.dir : undefined;
+            resourceInputs["create"] = args ? args.create : undefined;
+            resourceInputs["delete"] = args ? args.delete : undefined;
             resourceInputs["environment"] = args ? args.environment : undefined;
-            resourceInputs["files"] = args ? args.files : undefined;
-            resourceInputs["force"] = args ? args.force : undefined;
-            resourceInputs["lifecycle"] = args ? args.lifecycle : undefined;
-            resourceInputs["onDelete"] = args ? args.onDelete : undefined;
-            resourceInputs["recursive"] = args ? args.recursive : undefined;
             resourceInputs["stdin"] = args ? args.stdin : undefined;
             resourceInputs["triggers"] = args ? args.triggers : undefined;
-            resourceInputs["verbose"] = args ? args.verbose : undefined;
+            resourceInputs["update"] = args ? args.update : undefined;
             resourceInputs["command"] = undefined /*out*/;
             resourceInputs["stderr"] = undefined /*out*/;
             resourceInputs["stdout"] = undefined /*out*/;
@@ -124,18 +106,14 @@ export class Rm extends pulumi.ComponentResource {
             resourceInputs["binaryPath"] = undefined /*out*/;
             resourceInputs["command"] = undefined /*out*/;
             resourceInputs["connection"] = undefined /*out*/;
-            resourceInputs["dir"] = undefined /*out*/;
+            resourceInputs["create"] = undefined /*out*/;
+            resourceInputs["delete"] = undefined /*out*/;
             resourceInputs["environment"] = undefined /*out*/;
-            resourceInputs["files"] = undefined /*out*/;
-            resourceInputs["force"] = undefined /*out*/;
-            resourceInputs["lifecycle"] = undefined /*out*/;
-            resourceInputs["onDelete"] = undefined /*out*/;
-            resourceInputs["recursive"] = undefined /*out*/;
             resourceInputs["stderr"] = undefined /*out*/;
             resourceInputs["stdin"] = undefined /*out*/;
             resourceInputs["stdout"] = undefined /*out*/;
             resourceInputs["triggers"] = undefined /*out*/;
-            resourceInputs["verbose"] = undefined /*out*/;
+            resourceInputs["update"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         super(Rm.__pulumiType, name, resourceInputs, opts, true /*remote*/);
@@ -155,33 +133,19 @@ export interface RmArgs {
      */
     connection: pulumi.Input<pulumiCommand.types.input.remote.ConnectionArgs>;
     /**
-     * Corresponds to the `--dir` option.
+     * The command to run on create.
      */
-    dir?: pulumi.Input<boolean>;
+    create?: inputs.tools.RmOptsArgs;
+    /**
+     * The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+     * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+     * Command resource from previous create or update steps.
+     */
+    delete?: inputs.tools.RmOptsArgs;
     /**
      * Environment variables
      */
     environment?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
-    /**
-     * Corresponds to the [FILE] argument.
-     */
-    files: pulumi.Input<string | pulumi.Input<string>[]>;
-    /**
-     * Corresponds to the `--force` option.
-     */
-    force?: pulumi.Input<boolean>;
-    /**
-     * At what stage(s) in the resource lifecycle should the command be run
-     */
-    lifecycle?: enums.tools.CommandLifecycle;
-    /**
-     * Whether rm should be run when the resource is created or deleted.
-     */
-    onDelete?: pulumi.Input<boolean>;
-    /**
-     * Corresponds to the `--recursive` option.
-     */
-    recursive?: pulumi.Input<boolean>;
     /**
      * TODO
      */
@@ -191,7 +155,10 @@ export interface RmArgs {
      */
     triggers?: pulumi.Input<any[]>;
     /**
-     * Corresponds to the `--verbose` option.
+     * The command to run on update, if empty, create will 
+     * run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
+     * are set to the stdout and stderr properties of the Command resource from previous 
+     * create or update steps.
      */
-    verbose?: pulumi.Input<boolean>;
+    update?: inputs.tools.RmOptsArgs;
 }

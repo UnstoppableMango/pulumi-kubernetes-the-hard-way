@@ -8,7 +8,9 @@ import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
 from .. import _utilities
+from . import outputs
 from ._enums import *
+from ._inputs import *
 import pulumi_command
 
 __all__ = ['HostnamectlArgs', 'Hostnamectl']
@@ -16,87 +18,45 @@ __all__ = ['HostnamectlArgs', 'Hostnamectl']
 @pulumi.input_type
 class HostnamectlArgs:
     def __init__(__self__, *,
-                 command: pulumi.Input['HostnamectlCommand'],
                  connection: pulumi.Input['pulumi_command.remote.ConnectionArgs'],
-                 arg: Optional[pulumi.Input[str]] = None,
                  binary_path: Optional[pulumi.Input[str]] = None,
+                 create: Optional['HostnamectlOptsArgs'] = None,
+                 delete: Optional['HostnamectlOptsArgs'] = None,
                  environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-                 help: Optional[pulumi.Input[bool]] = None,
-                 host: Optional[pulumi.Input[str]] = None,
-                 json: Optional[pulumi.Input['HostnamectlJsonMode']] = None,
-                 lifecycle: Optional['CommandLifecycle'] = None,
-                 machine: Optional[pulumi.Input[str]] = None,
-                 no_ask_password: Optional[pulumi.Input[bool]] = None,
-                 pretty: Optional[pulumi.Input[bool]] = None,
-                 static: Optional[pulumi.Input[bool]] = None,
                  stdin: Optional[pulumi.Input[str]] = None,
-                 transient: Optional[pulumi.Input[bool]] = None,
                  triggers: Optional[pulumi.Input[Sequence[Any]]] = None,
-                 version: Optional[pulumi.Input[bool]] = None):
+                 update: Optional['HostnamectlOptsArgs'] = None):
         """
         The set of arguments for constructing a Hostnamectl resource.
-        :param pulumi.Input['HostnamectlCommand'] command: Corresponds to the {COMMAND} argument.
         :param pulumi.Input['pulumi_command.remote.ConnectionArgs'] connection: Connection details for the remote system
-        :param pulumi.Input[str] arg: The argument for the specified `command`.
         :param pulumi.Input[str] binary_path: Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+        :param 'HostnamectlOptsArgs' create: The command to run on create.
+        :param 'HostnamectlOptsArgs' delete: The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+               and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+               Command resource from previous create or update steps.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] environment: Environment variables
-        :param pulumi.Input[bool] help: Print a short help text and exit.
-        :param pulumi.Input[str] host: Execute the operation remotely. Specify a hostname, or a username and hostname separated by '@', to connect to.
-        :param pulumi.Input['HostnamectlJsonMode'] json: Shows output formatted as JSON.
-        :param 'CommandLifecycle' lifecycle: At what stage(s) in the resource lifecycle should the command be run
-        :param pulumi.Input[str] machine: Execute operation on a local container. Specify a container name to connect to, optionally prefixed by a user name to connect as and a separating '@' character.
-        :param pulumi.Input[bool] no_ask_password: Do not query the user for authentication for privileged operations.
-        :param pulumi.Input[bool] pretty: If status is invoked (or no explicit command is given) and one of these switches is specified, hostnamectl will print out just this selected hostname. Same as `static` and `transient`.
-        :param pulumi.Input[bool] static: If status is invoked (or no explicit command is given) and one of these switches is specified, hostnamectl will print out just this selected hostname. Same as `transient` and `pretty`.
         :param pulumi.Input[str] stdin: TODO
-        :param pulumi.Input[bool] transient: If status is invoked (or no explicit command is given) and one of these switches is specified, hostnamectl will print out just this selected hostname. Same as `static` and `pretty`.
         :param pulumi.Input[Sequence[Any]] triggers: TODO
-        :param pulumi.Input[bool] version: Print a short version string and exit.
+        :param 'HostnamectlOptsArgs' update: The command to run on update, if empty, create will 
+               run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
+               are set to the stdout and stderr properties of the Command resource from previous 
+               create or update steps.
         """
-        pulumi.set(__self__, "command", command)
         pulumi.set(__self__, "connection", connection)
-        if arg is not None:
-            pulumi.set(__self__, "arg", arg)
         if binary_path is not None:
             pulumi.set(__self__, "binary_path", binary_path)
+        if create is not None:
+            pulumi.set(__self__, "create", create)
+        if delete is not None:
+            pulumi.set(__self__, "delete", delete)
         if environment is not None:
             pulumi.set(__self__, "environment", environment)
-        if help is not None:
-            pulumi.set(__self__, "help", help)
-        if host is not None:
-            pulumi.set(__self__, "host", host)
-        if json is not None:
-            pulumi.set(__self__, "json", json)
-        if lifecycle is not None:
-            pulumi.set(__self__, "lifecycle", lifecycle)
-        if machine is not None:
-            pulumi.set(__self__, "machine", machine)
-        if no_ask_password is not None:
-            pulumi.set(__self__, "no_ask_password", no_ask_password)
-        if pretty is not None:
-            pulumi.set(__self__, "pretty", pretty)
-        if static is not None:
-            pulumi.set(__self__, "static", static)
         if stdin is not None:
             pulumi.set(__self__, "stdin", stdin)
-        if transient is not None:
-            pulumi.set(__self__, "transient", transient)
         if triggers is not None:
             pulumi.set(__self__, "triggers", triggers)
-        if version is not None:
-            pulumi.set(__self__, "version", version)
-
-    @property
-    @pulumi.getter
-    def command(self) -> pulumi.Input['HostnamectlCommand']:
-        """
-        Corresponds to the {COMMAND} argument.
-        """
-        return pulumi.get(self, "command")
-
-    @command.setter
-    def command(self, value: pulumi.Input['HostnamectlCommand']):
-        pulumi.set(self, "command", value)
+        if update is not None:
+            pulumi.set(__self__, "update", update)
 
     @property
     @pulumi.getter
@@ -109,18 +69,6 @@ class HostnamectlArgs:
     @connection.setter
     def connection(self, value: pulumi.Input['pulumi_command.remote.ConnectionArgs']):
         pulumi.set(self, "connection", value)
-
-    @property
-    @pulumi.getter
-    def arg(self) -> Optional[pulumi.Input[str]]:
-        """
-        The argument for the specified `command`.
-        """
-        return pulumi.get(self, "arg")
-
-    @arg.setter
-    def arg(self, value: Optional[pulumi.Input[str]]):
-        pulumi.set(self, "arg", value)
 
     @property
     @pulumi.getter(name="binaryPath")
@@ -136,6 +84,32 @@ class HostnamectlArgs:
 
     @property
     @pulumi.getter
+    def create(self) -> Optional['HostnamectlOptsArgs']:
+        """
+        The command to run on create.
+        """
+        return pulumi.get(self, "create")
+
+    @create.setter
+    def create(self, value: Optional['HostnamectlOptsArgs']):
+        pulumi.set(self, "create", value)
+
+    @property
+    @pulumi.getter
+    def delete(self) -> Optional['HostnamectlOptsArgs']:
+        """
+        The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+        and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+        Command resource from previous create or update steps.
+        """
+        return pulumi.get(self, "delete")
+
+    @delete.setter
+    def delete(self, value: Optional['HostnamectlOptsArgs']):
+        pulumi.set(self, "delete", value)
+
+    @property
+    @pulumi.getter
     def environment(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
         """
         Environment variables
@@ -145,102 +119,6 @@ class HostnamectlArgs:
     @environment.setter
     def environment(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
         pulumi.set(self, "environment", value)
-
-    @property
-    @pulumi.getter
-    def help(self) -> Optional[pulumi.Input[bool]]:
-        """
-        Print a short help text and exit.
-        """
-        return pulumi.get(self, "help")
-
-    @help.setter
-    def help(self, value: Optional[pulumi.Input[bool]]):
-        pulumi.set(self, "help", value)
-
-    @property
-    @pulumi.getter
-    def host(self) -> Optional[pulumi.Input[str]]:
-        """
-        Execute the operation remotely. Specify a hostname, or a username and hostname separated by '@', to connect to.
-        """
-        return pulumi.get(self, "host")
-
-    @host.setter
-    def host(self, value: Optional[pulumi.Input[str]]):
-        pulumi.set(self, "host", value)
-
-    @property
-    @pulumi.getter
-    def json(self) -> Optional[pulumi.Input['HostnamectlJsonMode']]:
-        """
-        Shows output formatted as JSON.
-        """
-        return pulumi.get(self, "json")
-
-    @json.setter
-    def json(self, value: Optional[pulumi.Input['HostnamectlJsonMode']]):
-        pulumi.set(self, "json", value)
-
-    @property
-    @pulumi.getter
-    def lifecycle(self) -> Optional['CommandLifecycle']:
-        """
-        At what stage(s) in the resource lifecycle should the command be run
-        """
-        return pulumi.get(self, "lifecycle")
-
-    @lifecycle.setter
-    def lifecycle(self, value: Optional['CommandLifecycle']):
-        pulumi.set(self, "lifecycle", value)
-
-    @property
-    @pulumi.getter
-    def machine(self) -> Optional[pulumi.Input[str]]:
-        """
-        Execute operation on a local container. Specify a container name to connect to, optionally prefixed by a user name to connect as and a separating '@' character.
-        """
-        return pulumi.get(self, "machine")
-
-    @machine.setter
-    def machine(self, value: Optional[pulumi.Input[str]]):
-        pulumi.set(self, "machine", value)
-
-    @property
-    @pulumi.getter(name="noAskPassword")
-    def no_ask_password(self) -> Optional[pulumi.Input[bool]]:
-        """
-        Do not query the user for authentication for privileged operations.
-        """
-        return pulumi.get(self, "no_ask_password")
-
-    @no_ask_password.setter
-    def no_ask_password(self, value: Optional[pulumi.Input[bool]]):
-        pulumi.set(self, "no_ask_password", value)
-
-    @property
-    @pulumi.getter
-    def pretty(self) -> Optional[pulumi.Input[bool]]:
-        """
-        If status is invoked (or no explicit command is given) and one of these switches is specified, hostnamectl will print out just this selected hostname. Same as `static` and `transient`.
-        """
-        return pulumi.get(self, "pretty")
-
-    @pretty.setter
-    def pretty(self, value: Optional[pulumi.Input[bool]]):
-        pulumi.set(self, "pretty", value)
-
-    @property
-    @pulumi.getter
-    def static(self) -> Optional[pulumi.Input[bool]]:
-        """
-        If status is invoked (or no explicit command is given) and one of these switches is specified, hostnamectl will print out just this selected hostname. Same as `transient` and `pretty`.
-        """
-        return pulumi.get(self, "static")
-
-    @static.setter
-    def static(self, value: Optional[pulumi.Input[bool]]):
-        pulumi.set(self, "static", value)
 
     @property
     @pulumi.getter
@@ -256,18 +134,6 @@ class HostnamectlArgs:
 
     @property
     @pulumi.getter
-    def transient(self) -> Optional[pulumi.Input[bool]]:
-        """
-        If status is invoked (or no explicit command is given) and one of these switches is specified, hostnamectl will print out just this selected hostname. Same as `static` and `pretty`.
-        """
-        return pulumi.get(self, "transient")
-
-    @transient.setter
-    def transient(self, value: Optional[pulumi.Input[bool]]):
-        pulumi.set(self, "transient", value)
-
-    @property
-    @pulumi.getter
     def triggers(self) -> Optional[pulumi.Input[Sequence[Any]]]:
         """
         TODO
@@ -280,15 +146,18 @@ class HostnamectlArgs:
 
     @property
     @pulumi.getter
-    def version(self) -> Optional[pulumi.Input[bool]]:
+    def update(self) -> Optional['HostnamectlOptsArgs']:
         """
-        Print a short version string and exit.
+        The command to run on update, if empty, create will 
+        run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
+        are set to the stdout and stderr properties of the Command resource from previous 
+        create or update steps.
         """
-        return pulumi.get(self, "version")
+        return pulumi.get(self, "update")
 
-    @version.setter
-    def version(self, value: Optional[pulumi.Input[bool]]):
-        pulumi.set(self, "version", value)
+    @update.setter
+    def update(self, value: Optional['HostnamectlOptsArgs']):
+        pulumi.set(self, "update", value)
 
 
 class Hostnamectl(pulumi.ComponentResource):
@@ -296,46 +165,33 @@ class Hostnamectl(pulumi.ComponentResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 arg: Optional[pulumi.Input[str]] = None,
                  binary_path: Optional[pulumi.Input[str]] = None,
-                 command: Optional[pulumi.Input['HostnamectlCommand']] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
+                 create: Optional[pulumi.InputType['HostnamectlOptsArgs']] = None,
+                 delete: Optional[pulumi.InputType['HostnamectlOptsArgs']] = None,
                  environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-                 help: Optional[pulumi.Input[bool]] = None,
-                 host: Optional[pulumi.Input[str]] = None,
-                 json: Optional[pulumi.Input['HostnamectlJsonMode']] = None,
-                 lifecycle: Optional['CommandLifecycle'] = None,
-                 machine: Optional[pulumi.Input[str]] = None,
-                 no_ask_password: Optional[pulumi.Input[bool]] = None,
-                 pretty: Optional[pulumi.Input[bool]] = None,
-                 static: Optional[pulumi.Input[bool]] = None,
                  stdin: Optional[pulumi.Input[str]] = None,
-                 transient: Optional[pulumi.Input[bool]] = None,
                  triggers: Optional[pulumi.Input[Sequence[Any]]] = None,
-                 version: Optional[pulumi.Input[bool]] = None,
+                 update: Optional[pulumi.InputType['HostnamectlOptsArgs']] = None,
                  __props__=None):
         """
         Abstraction over the `hostnamectl` utility on a remote system.
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[str] arg: The argument for the specified `command`.
         :param pulumi.Input[str] binary_path: Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
-        :param pulumi.Input['HostnamectlCommand'] command: Corresponds to the {COMMAND} argument.
         :param pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']] connection: Connection details for the remote system
+        :param pulumi.InputType['HostnamectlOptsArgs'] create: The command to run on create.
+        :param pulumi.InputType['HostnamectlOptsArgs'] delete: The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+               and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+               Command resource from previous create or update steps.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] environment: Environment variables
-        :param pulumi.Input[bool] help: Print a short help text and exit.
-        :param pulumi.Input[str] host: Execute the operation remotely. Specify a hostname, or a username and hostname separated by '@', to connect to.
-        :param pulumi.Input['HostnamectlJsonMode'] json: Shows output formatted as JSON.
-        :param 'CommandLifecycle' lifecycle: At what stage(s) in the resource lifecycle should the command be run
-        :param pulumi.Input[str] machine: Execute operation on a local container. Specify a container name to connect to, optionally prefixed by a user name to connect as and a separating '@' character.
-        :param pulumi.Input[bool] no_ask_password: Do not query the user for authentication for privileged operations.
-        :param pulumi.Input[bool] pretty: If status is invoked (or no explicit command is given) and one of these switches is specified, hostnamectl will print out just this selected hostname. Same as `static` and `transient`.
-        :param pulumi.Input[bool] static: If status is invoked (or no explicit command is given) and one of these switches is specified, hostnamectl will print out just this selected hostname. Same as `transient` and `pretty`.
         :param pulumi.Input[str] stdin: TODO
-        :param pulumi.Input[bool] transient: If status is invoked (or no explicit command is given) and one of these switches is specified, hostnamectl will print out just this selected hostname. Same as `static` and `pretty`.
         :param pulumi.Input[Sequence[Any]] triggers: TODO
-        :param pulumi.Input[bool] version: Print a short version string and exit.
+        :param pulumi.InputType['HostnamectlOptsArgs'] update: The command to run on update, if empty, create will 
+               run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
+               are set to the stdout and stderr properties of the Command resource from previous 
+               create or update steps.
         """
         ...
     @overload
@@ -361,23 +217,14 @@ class Hostnamectl(pulumi.ComponentResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 arg: Optional[pulumi.Input[str]] = None,
                  binary_path: Optional[pulumi.Input[str]] = None,
-                 command: Optional[pulumi.Input['HostnamectlCommand']] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
+                 create: Optional[pulumi.InputType['HostnamectlOptsArgs']] = None,
+                 delete: Optional[pulumi.InputType['HostnamectlOptsArgs']] = None,
                  environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-                 help: Optional[pulumi.Input[bool]] = None,
-                 host: Optional[pulumi.Input[str]] = None,
-                 json: Optional[pulumi.Input['HostnamectlJsonMode']] = None,
-                 lifecycle: Optional['CommandLifecycle'] = None,
-                 machine: Optional[pulumi.Input[str]] = None,
-                 no_ask_password: Optional[pulumi.Input[bool]] = None,
-                 pretty: Optional[pulumi.Input[bool]] = None,
-                 static: Optional[pulumi.Input[bool]] = None,
                  stdin: Optional[pulumi.Input[str]] = None,
-                 transient: Optional[pulumi.Input[bool]] = None,
                  triggers: Optional[pulumi.Input[Sequence[Any]]] = None,
-                 version: Optional[pulumi.Input[bool]] = None,
+                 update: Optional[pulumi.InputType['HostnamectlOptsArgs']] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):
@@ -389,28 +236,17 @@ class Hostnamectl(pulumi.ComponentResource):
                 raise TypeError('__props__ is only valid when passed in combination with a valid opts.id to get an existing resource')
             __props__ = HostnamectlArgs.__new__(HostnamectlArgs)
 
-            __props__.__dict__["arg"] = arg
             __props__.__dict__["binary_path"] = binary_path
-            if command is None and not opts.urn:
-                raise TypeError("Missing required property 'command'")
-            __props__.__dict__["command"] = command
             if connection is None and not opts.urn:
                 raise TypeError("Missing required property 'connection'")
             __props__.__dict__["connection"] = connection
+            __props__.__dict__["create"] = create
+            __props__.__dict__["delete"] = delete
             __props__.__dict__["environment"] = environment
-            __props__.__dict__["help"] = help
-            __props__.__dict__["host"] = host
-            __props__.__dict__["json"] = json
-            __props__.__dict__["lifecycle"] = lifecycle
-            __props__.__dict__["machine"] = machine
-            __props__.__dict__["no_ask_password"] = no_ask_password
-            __props__.__dict__["pretty"] = pretty
-            __props__.__dict__["static"] = static
             __props__.__dict__["stdin"] = stdin
-            __props__.__dict__["transient"] = transient
             __props__.__dict__["triggers"] = triggers
-            __props__.__dict__["version"] = version
-            __props__.__dict__["hostnamectl_command"] = None
+            __props__.__dict__["update"] = update
+            __props__.__dict__["command"] = None
             __props__.__dict__["stderr"] = None
             __props__.__dict__["stdout"] = None
         super(Hostnamectl, __self__).__init__(
@@ -419,14 +255,6 @@ class Hostnamectl(pulumi.ComponentResource):
             __props__,
             opts,
             remote=True)
-
-    @property
-    @pulumi.getter
-    def arg(self) -> pulumi.Output[Optional[str]]:
-        """
-        The argument for the specified `command`.
-        """
-        return pulumi.get(self, "arg")
 
     @property
     @pulumi.getter(name="binaryPath")
@@ -454,83 +282,29 @@ class Hostnamectl(pulumi.ComponentResource):
 
     @property
     @pulumi.getter
+    def create(self) -> pulumi.Output[Optional['outputs.HostnamectlOpts']]:
+        """
+        The command to run on create.
+        """
+        return pulumi.get(self, "create")
+
+    @property
+    @pulumi.getter
+    def delete(self) -> pulumi.Output[Optional['outputs.HostnamectlOpts']]:
+        """
+        The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+        and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+        Command resource from previous create or update steps.
+        """
+        return pulumi.get(self, "delete")
+
+    @property
+    @pulumi.getter
     def environment(self) -> pulumi.Output[Mapping[str, str]]:
         """
         Environment variables
         """
         return pulumi.get(self, "environment")
-
-    @property
-    @pulumi.getter
-    def help(self) -> pulumi.Output[bool]:
-        """
-        Print a short help text and exit.
-        """
-        return pulumi.get(self, "help")
-
-    @property
-    @pulumi.getter
-    def host(self) -> pulumi.Output[Optional[str]]:
-        """
-        Execute the operation remotely. Specify a hostname, or a username and hostname separated by '@', to connect to.
-        """
-        return pulumi.get(self, "host")
-
-    @property
-    @pulumi.getter(name="hostnamectlCommand")
-    def hostnamectl_command(self) -> pulumi.Output['HostnamectlCommand']:
-        """
-        Corresponds to the {COMMAND} argument.
-        """
-        return pulumi.get(self, "hostnamectl_command")
-
-    @property
-    @pulumi.getter
-    def json(self) -> pulumi.Output[Optional['HostnamectlJsonMode']]:
-        """
-        Shows output formatted as JSON.
-        """
-        return pulumi.get(self, "json")
-
-    @property
-    @pulumi.getter
-    def lifecycle(self) -> pulumi.Output[Optional['CommandLifecycle']]:
-        """
-        At what stage(s) in the resource lifecycle should the command be run
-        """
-        return pulumi.get(self, "lifecycle")
-
-    @property
-    @pulumi.getter
-    def machine(self) -> pulumi.Output[Optional[str]]:
-        """
-        Execute operation on a local container. Specify a container name to connect to, optionally prefixed by a user name to connect as and a separating '@' character.
-        """
-        return pulumi.get(self, "machine")
-
-    @property
-    @pulumi.getter(name="noAskPassword")
-    def no_ask_password(self) -> pulumi.Output[bool]:
-        """
-        Do not query the user for authentication for privileged operations.
-        """
-        return pulumi.get(self, "no_ask_password")
-
-    @property
-    @pulumi.getter
-    def pretty(self) -> pulumi.Output[bool]:
-        """
-        If status is invoked (or no explicit command is given) and one of these switches is specified, hostnamectl will print out just this selected hostname. Same as `static` and `transient`.
-        """
-        return pulumi.get(self, "pretty")
-
-    @property
-    @pulumi.getter
-    def static(self) -> pulumi.Output[bool]:
-        """
-        If status is invoked (or no explicit command is given) and one of these switches is specified, hostnamectl will print out just this selected hostname. Same as `transient` and `pretty`.
-        """
-        return pulumi.get(self, "static")
 
     @property
     @pulumi.getter
@@ -558,14 +332,6 @@ class Hostnamectl(pulumi.ComponentResource):
 
     @property
     @pulumi.getter
-    def transient(self) -> pulumi.Output[bool]:
-        """
-        If status is invoked (or no explicit command is given) and one of these switches is specified, hostnamectl will print out just this selected hostname. Same as `static` and `pretty`.
-        """
-        return pulumi.get(self, "transient")
-
-    @property
-    @pulumi.getter
     def triggers(self) -> pulumi.Output[Sequence[Any]]:
         """
         TODO
@@ -574,9 +340,12 @@ class Hostnamectl(pulumi.ComponentResource):
 
     @property
     @pulumi.getter
-    def version(self) -> pulumi.Output[bool]:
+    def update(self) -> pulumi.Output[Optional['outputs.HostnamectlOpts']]:
         """
-        Print a short version string and exit.
+        The command to run on update, if empty, create will 
+        run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
+        are set to the stdout and stderr properties of the Command resource from previous 
+        create or update steps.
         """
-        return pulumi.get(self, "version")
+        return pulumi.get(self, "update")
 

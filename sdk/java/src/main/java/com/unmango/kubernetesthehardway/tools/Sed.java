@@ -5,16 +5,13 @@ package com.unmango.kubernetesthehardway.tools;
 
 import com.pulumi.command.remote.Command;
 import com.pulumi.command.remote.outputs.Connection;
-import com.pulumi.core.Either;
 import com.pulumi.core.Output;
 import com.pulumi.core.annotations.Export;
 import com.pulumi.core.annotations.ResourceType;
 import com.pulumi.core.internal.Codegen;
 import com.unmango.kubernetesthehardway.Utilities;
 import com.unmango.kubernetesthehardway.tools.SedArgs;
-import com.unmango.kubernetesthehardway.tools.enums.CommandLifecycle;
-import java.lang.Boolean;
-import java.lang.Integer;
+import com.unmango.kubernetesthehardway.tools.outputs.SedOpts;
 import java.lang.Object;
 import java.lang.String;
 import java.util.List;
@@ -71,18 +68,36 @@ public class Sed extends com.pulumi.resources.ComponentResource {
         return this.connection;
     }
     /**
-     * annotate program execution.
+     * The command to run on create.
      * 
      */
-    @Export(name="debug", refs={Boolean.class}, tree="[0]")
-    private Output<Boolean> debug;
+    @Export(name="create", refs={SedOpts.class}, tree="[0]")
+    private Output</* @Nullable */ SedOpts> create;
 
     /**
-     * @return annotate program execution.
+     * @return The command to run on create.
      * 
      */
-    public Output<Boolean> debug() {
-        return this.debug;
+    public Output<Optional<SedOpts>> create() {
+        return Codegen.optional(this.create);
+    }
+    /**
+     * The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+     * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+     * Command resource from previous create or update steps.
+     * 
+     */
+    @Export(name="delete", refs={SedOpts.class}, tree="[0]")
+    private Output</* @Nullable */ SedOpts> delete;
+
+    /**
+     * @return The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+     * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+     * Command resource from previous create or update steps.
+     * 
+     */
+    public Output<Optional<SedOpts>> delete() {
+        return Codegen.optional(this.delete);
     }
     /**
      * Environment variables
@@ -97,230 +112,6 @@ public class Sed extends com.pulumi.resources.ComponentResource {
      */
     public Output<Map<String,String>> environment() {
         return this.environment;
-    }
-    /**
-     * add the script to the commands to be executed.
-     * 
-     */
-    @Export(name="expressions", refs={Either.class,String.class,List.class}, tree="[0,1,[2,1]]")
-    private Output<Either<String,List<String>>> expressions;
-
-    /**
-     * @return add the script to the commands to be executed.
-     * 
-     */
-    public Output<Either<String,List<String>>> expressions() {
-        return this.expressions;
-    }
-    /**
-     * add the contents of script-file to the commands to be executed.
-     * 
-     */
-    @Export(name="files", refs={Either.class,String.class,List.class}, tree="[0,1,[2,1]]")
-    private Output<Either<String,List<String>>> files;
-
-    /**
-     * @return add the contents of script-file to the commands to be executed.
-     * 
-     */
-    public Output<Either<String,List<String>>> files() {
-        return this.files;
-    }
-    /**
-     * follow symlinks when processing in place
-     * 
-     */
-    @Export(name="followSymlinks", refs={Boolean.class}, tree="[0]")
-    private Output<Boolean> followSymlinks;
-
-    /**
-     * @return follow symlinks when processing in place
-     * 
-     */
-    public Output<Boolean> followSymlinks() {
-        return this.followSymlinks;
-    }
-    /**
-     * display this help and exit.
-     * 
-     */
-    @Export(name="help", refs={Boolean.class}, tree="[0]")
-    private Output<Boolean> help;
-
-    /**
-     * @return display this help and exit.
-     * 
-     */
-    public Output<Boolean> help() {
-        return this.help;
-    }
-    /**
-     * edit files in place (makes backup if SUFFIX supplied)
-     * 
-     */
-    @Export(name="inPlace", refs={String.class}, tree="[0]")
-    private Output</* @Nullable */ String> inPlace;
-
-    /**
-     * @return edit files in place (makes backup if SUFFIX supplied)
-     * 
-     */
-    public Output<Optional<String>> inPlace() {
-        return Codegen.optional(this.inPlace);
-    }
-    /**
-     * corresponds to the [input-file]... argument(s).
-     * 
-     */
-    @Export(name="inputFiles", refs={Either.class,String.class,List.class}, tree="[0,1,[2,1]]")
-    private Output<Either<String,List<String>>> inputFiles;
-
-    /**
-     * @return corresponds to the [input-file]... argument(s).
-     * 
-     */
-    public Output<Either<String,List<String>>> inputFiles() {
-        return this.inputFiles;
-    }
-    /**
-     * At what stage(s) in the resource lifecycle should the command be run
-     * 
-     */
-    @Export(name="lifecycle", refs={CommandLifecycle.class}, tree="[0]")
-    private Output</* @Nullable */ CommandLifecycle> lifecycle;
-
-    /**
-     * @return At what stage(s) in the resource lifecycle should the command be run
-     * 
-     */
-    public Output<Optional<CommandLifecycle>> lifecycle() {
-        return Codegen.optional(this.lifecycle);
-    }
-    /**
-     * specify the desired line-wrap length for the `l&#39; command
-     * 
-     */
-    @Export(name="lineLength", refs={Integer.class}, tree="[0]")
-    private Output</* @Nullable */ Integer> lineLength;
-
-    /**
-     * @return specify the desired line-wrap length for the `l&#39; command
-     * 
-     */
-    public Output<Optional<Integer>> lineLength() {
-        return Codegen.optional(this.lineLength);
-    }
-    /**
-     * separate lines by NUL characters
-     * 
-     */
-    @Export(name="nullData", refs={Boolean.class}, tree="[0]")
-    private Output<Boolean> nullData;
-
-    /**
-     * @return separate lines by NUL characters
-     * 
-     */
-    public Output<Boolean> nullData() {
-        return this.nullData;
-    }
-    /**
-     * disable all GNU extensions.
-     * 
-     */
-    @Export(name="posix", refs={Boolean.class}, tree="[0]")
-    private Output<Boolean> posix;
-
-    /**
-     * @return disable all GNU extensions.
-     * 
-     */
-    public Output<Boolean> posix() {
-        return this.posix;
-    }
-    /**
-     * suppress automatic printing of pattern space. Same as `silent`.
-     * 
-     */
-    @Export(name="quiet", refs={Boolean.class}, tree="[0]")
-    private Output<Boolean> quiet;
-
-    /**
-     * @return suppress automatic printing of pattern space. Same as `silent`.
-     * 
-     */
-    public Output<Boolean> quiet() {
-        return this.quiet;
-    }
-    /**
-     * use extended regular expressions in the script (for portability use POSIX -E).
-     * 
-     */
-    @Export(name="regexpExtended", refs={Boolean.class}, tree="[0]")
-    private Output<Boolean> regexpExtended;
-
-    /**
-     * @return use extended regular expressions in the script (for portability use POSIX -E).
-     * 
-     */
-    public Output<Boolean> regexpExtended() {
-        return this.regexpExtended;
-    }
-    /**
-     * operate in sandbox mode (disable e/r/w commands).
-     * 
-     */
-    @Export(name="sandbox", refs={Boolean.class}, tree="[0]")
-    private Output<Boolean> sandbox;
-
-    /**
-     * @return operate in sandbox mode (disable e/r/w commands).
-     * 
-     */
-    public Output<Boolean> sandbox() {
-        return this.sandbox;
-    }
-    /**
-     * script only if no other script.
-     * 
-     */
-    @Export(name="script", refs={String.class}, tree="[0]")
-    private Output</* @Nullable */ String> script;
-
-    /**
-     * @return script only if no other script.
-     * 
-     */
-    public Output<Optional<String>> script() {
-        return Codegen.optional(this.script);
-    }
-    /**
-     * consider files as separate rather than as a single, continuous long stream.
-     * 
-     */
-    @Export(name="separate", refs={Boolean.class}, tree="[0]")
-    private Output<Boolean> separate;
-
-    /**
-     * @return consider files as separate rather than as a single, continuous long stream.
-     * 
-     */
-    public Output<Boolean> separate() {
-        return this.separate;
-    }
-    /**
-     * suppress automatic printing of pattern space. Same as `quiet`.
-     * 
-     */
-    @Export(name="silent", refs={Boolean.class}, tree="[0]")
-    private Output<Boolean> silent;
-
-    /**
-     * @return suppress automatic printing of pattern space. Same as `quiet`.
-     * 
-     */
-    public Output<Boolean> silent() {
-        return this.silent;
     }
     /**
      * TODO
@@ -379,32 +170,24 @@ public class Sed extends com.pulumi.resources.ComponentResource {
         return this.triggers;
     }
     /**
-     * load minimal amounts of data from the input files and flush the output buffers more often.
+     * The command to run on update, if empty, create will
+     * run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+     * are set to the stdout and stderr properties of the Command resource from previous
+     * create or update steps.
      * 
      */
-    @Export(name="unbuffered", refs={Boolean.class}, tree="[0]")
-    private Output<Boolean> unbuffered;
+    @Export(name="update", refs={SedOpts.class}, tree="[0]")
+    private Output</* @Nullable */ SedOpts> update;
 
     /**
-     * @return load minimal amounts of data from the input files and flush the output buffers more often.
+     * @return The command to run on update, if empty, create will
+     * run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+     * are set to the stdout and stderr properties of the Command resource from previous
+     * create or update steps.
      * 
      */
-    public Output<Boolean> unbuffered() {
-        return this.unbuffered;
-    }
-    /**
-     * output version information and exit.
-     * 
-     */
-    @Export(name="version", refs={Boolean.class}, tree="[0]")
-    private Output<Boolean> version;
-
-    /**
-     * @return output version information and exit.
-     * 
-     */
-    public Output<Boolean> version() {
-        return this.version;
+    public Output<Optional<SedOpts>> update() {
+        return Codegen.optional(this.update);
     }
 
     /**

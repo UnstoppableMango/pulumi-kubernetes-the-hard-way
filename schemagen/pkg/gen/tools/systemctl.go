@@ -6,7 +6,7 @@ import (
 	"github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 )
 
-func generateSystemctl() schema.ResourceSpec {
+func generateSystemctl() tool {
 	inputs := map[string]schema.PropertySpec{
 		"command": { // The common output will overwrite this, that's fine.
 			Description: "Corresponds to the COMMAND argument.",
@@ -24,18 +24,30 @@ func generateSystemctl() schema.ResourceSpec {
 		"unit",
 	}
 
-	return schema.ResourceSpec{
+	typ := schema.ComplexTypeSpec{
 		ObjectTypeSpec: schema.ObjectTypeSpec{
 			Description: "Abstraction over the `systemctl` utility on a remote system.",
-			Properties: implicitOutputs(inputs, map[string]schema.PropertySpec{
-				"systemctlCommand": inputs["command"],
-			}),
-			Required: []string{
-				"systemctlCommand",
-				"unit",
-			},
+			Type:        "object",
+			Properties:  inputs,
+			Required:    required,
 		},
-		InputProperties: inputs,
-		RequiredInputs:  required,
 	}
+
+	return tool{optsType: typ, types: map[string]schema.ComplexTypeSpec{}}
 }
+
+// If we ever get a way to add the "required outputs" logic around a complexType
+// resource := schema.ResourceSpec{
+// 	ObjectTypeSpec: schema.ObjectTypeSpec{
+// 		Description: "Abstraction over the `systemctl` utility on a remote system.",
+// 		Properties: implicitOutputs(inputs, map[string]schema.PropertySpec{
+// 			"systemctlCommand": inputs["command"],
+// 		}),
+// 		Required: []string{
+// 			"systemctlCommand",
+// 			"unit",
+// 		},
+// 	},
+// 	InputProperties: inputs,
+// 	RequiredInputs:  required,
+// }

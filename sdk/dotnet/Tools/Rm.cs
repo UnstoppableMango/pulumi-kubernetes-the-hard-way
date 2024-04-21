@@ -35,46 +35,24 @@ namespace UnMango.KubernetesTheHardWay.Tools
         public Output<Pulumi.Command.Remote.Outputs.Connection> Connection { get; private set; } = null!;
 
         /// <summary>
-        /// Corresponds to the `--dir` option.
+        /// The command to run on create.
         /// </summary>
-        [Output("dir")]
-        public Output<bool> Dir { get; private set; } = null!;
+        [Output("create")]
+        public Output<Outputs.RmOpts?> Create { get; private set; } = null!;
+
+        /// <summary>
+        /// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+        /// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+        /// Command resource from previous create or update steps.
+        /// </summary>
+        [Output("delete")]
+        public Output<Outputs.RmOpts?> Delete { get; private set; } = null!;
 
         /// <summary>
         /// Environment variables
         /// </summary>
         [Output("environment")]
         public Output<ImmutableDictionary<string, string>> Environment { get; private set; } = null!;
-
-        /// <summary>
-        /// Corresponds to the [FILE] argument.
-        /// </summary>
-        [Output("files")]
-        public Output<Union<string, ImmutableArray<string>>> Files { get; private set; } = null!;
-
-        /// <summary>
-        /// Corresponds to the `--force` option.
-        /// </summary>
-        [Output("force")]
-        public Output<bool> Force { get; private set; } = null!;
-
-        /// <summary>
-        /// At what stage(s) in the resource lifecycle should the command be run
-        /// </summary>
-        [Output("lifecycle")]
-        public Output<UnMango.KubernetesTheHardWay.Tools.CommandLifecycle?> Lifecycle { get; private set; } = null!;
-
-        /// <summary>
-        /// Whether rm should be run when the resource is created or deleted.
-        /// </summary>
-        [Output("onDelete")]
-        public Output<bool> OnDelete { get; private set; } = null!;
-
-        /// <summary>
-        /// Corresponds to the `--recursive` option.
-        /// </summary>
-        [Output("recursive")]
-        public Output<bool> Recursive { get; private set; } = null!;
 
         /// <summary>
         /// TODO
@@ -101,10 +79,13 @@ namespace UnMango.KubernetesTheHardWay.Tools
         public Output<ImmutableArray<object>> Triggers { get; private set; } = null!;
 
         /// <summary>
-        /// Corresponds to the `--verbose` option.
+        /// The command to run on update, if empty, create will 
+        /// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
+        /// are set to the stdout and stderr properties of the Command resource from previous 
+        /// create or update steps.
         /// </summary>
-        [Output("verbose")]
-        public Output<bool> Verbose { get; private set; } = null!;
+        [Output("update")]
+        public Output<Outputs.RmOpts?> Update { get; private set; } = null!;
 
 
         /// <summary>
@@ -148,10 +129,18 @@ namespace UnMango.KubernetesTheHardWay.Tools
         public Input<Pulumi.Command.Remote.Inputs.ConnectionArgs> Connection { get; set; } = null!;
 
         /// <summary>
-        /// Corresponds to the `--dir` option.
+        /// The command to run on create.
         /// </summary>
-        [Input("dir")]
-        public Input<bool>? Dir { get; set; }
+        [Input("create")]
+        public Inputs.RmOptsArgs? Create { get; set; }
+
+        /// <summary>
+        /// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+        /// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+        /// Command resource from previous create or update steps.
+        /// </summary>
+        [Input("delete")]
+        public Inputs.RmOptsArgs? Delete { get; set; }
 
         [Input("environment")]
         private InputMap<string>? _environment;
@@ -164,36 +153,6 @@ namespace UnMango.KubernetesTheHardWay.Tools
             get => _environment ?? (_environment = new InputMap<string>());
             set => _environment = value;
         }
-
-        /// <summary>
-        /// Corresponds to the [FILE] argument.
-        /// </summary>
-        [Input("files", required: true)]
-        public InputUnion<string, ImmutableArray<string>> Files { get; set; } = null!;
-
-        /// <summary>
-        /// Corresponds to the `--force` option.
-        /// </summary>
-        [Input("force")]
-        public Input<bool>? Force { get; set; }
-
-        /// <summary>
-        /// At what stage(s) in the resource lifecycle should the command be run
-        /// </summary>
-        [Input("lifecycle")]
-        public UnMango.KubernetesTheHardWay.Tools.CommandLifecycle? Lifecycle { get; set; }
-
-        /// <summary>
-        /// Whether rm should be run when the resource is created or deleted.
-        /// </summary>
-        [Input("onDelete")]
-        public Input<bool>? OnDelete { get; set; }
-
-        /// <summary>
-        /// Corresponds to the `--recursive` option.
-        /// </summary>
-        [Input("recursive")]
-        public Input<bool>? Recursive { get; set; }
 
         /// <summary>
         /// TODO
@@ -214,10 +173,13 @@ namespace UnMango.KubernetesTheHardWay.Tools
         }
 
         /// <summary>
-        /// Corresponds to the `--verbose` option.
+        /// The command to run on update, if empty, create will 
+        /// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
+        /// are set to the stdout and stderr properties of the Command resource from previous 
+        /// create or update steps.
         /// </summary>
-        [Input("verbose")]
-        public Input<bool>? Verbose { get; set; }
+        [Input("update")]
+        public Inputs.RmOptsArgs? Update { get; set; }
 
         public RmArgs()
         {

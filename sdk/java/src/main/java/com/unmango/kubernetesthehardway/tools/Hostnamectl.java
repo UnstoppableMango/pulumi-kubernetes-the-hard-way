@@ -11,10 +11,7 @@ import com.pulumi.core.annotations.ResourceType;
 import com.pulumi.core.internal.Codegen;
 import com.unmango.kubernetesthehardway.Utilities;
 import com.unmango.kubernetesthehardway.tools.HostnamectlArgs;
-import com.unmango.kubernetesthehardway.tools.enums.CommandLifecycle;
-import com.unmango.kubernetesthehardway.tools.enums.HostnamectlCommand;
-import com.unmango.kubernetesthehardway.tools.enums.HostnamectlJsonMode;
-import java.lang.Boolean;
+import com.unmango.kubernetesthehardway.tools.outputs.HostnamectlOpts;
 import java.lang.Object;
 import java.lang.String;
 import java.util.List;
@@ -28,20 +25,6 @@ import javax.annotation.Nullable;
  */
 @ResourceType(type="kubernetes-the-hard-way:tools:Hostnamectl")
 public class Hostnamectl extends com.pulumi.resources.ComponentResource {
-    /**
-     * The argument for the specified `command`.
-     * 
-     */
-    @Export(name="arg", refs={String.class}, tree="[0]")
-    private Output</* @Nullable */ String> arg;
-
-    /**
-     * @return The argument for the specified `command`.
-     * 
-     */
-    public Output<Optional<String>> arg() {
-        return Codegen.optional(this.arg);
-    }
     /**
      * Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
      * 
@@ -85,6 +68,38 @@ public class Hostnamectl extends com.pulumi.resources.ComponentResource {
         return this.connection;
     }
     /**
+     * The command to run on create.
+     * 
+     */
+    @Export(name="create", refs={HostnamectlOpts.class}, tree="[0]")
+    private Output</* @Nullable */ HostnamectlOpts> create;
+
+    /**
+     * @return The command to run on create.
+     * 
+     */
+    public Output<Optional<HostnamectlOpts>> create() {
+        return Codegen.optional(this.create);
+    }
+    /**
+     * The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+     * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+     * Command resource from previous create or update steps.
+     * 
+     */
+    @Export(name="delete", refs={HostnamectlOpts.class}, tree="[0]")
+    private Output</* @Nullable */ HostnamectlOpts> delete;
+
+    /**
+     * @return The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+     * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+     * Command resource from previous create or update steps.
+     * 
+     */
+    public Output<Optional<HostnamectlOpts>> delete() {
+        return Codegen.optional(this.delete);
+    }
+    /**
      * Environment variables
      * 
      */
@@ -97,132 +112,6 @@ public class Hostnamectl extends com.pulumi.resources.ComponentResource {
      */
     public Output<Map<String,String>> environment() {
         return this.environment;
-    }
-    /**
-     * Print a short help text and exit.
-     * 
-     */
-    @Export(name="help", refs={Boolean.class}, tree="[0]")
-    private Output<Boolean> help;
-
-    /**
-     * @return Print a short help text and exit.
-     * 
-     */
-    public Output<Boolean> help() {
-        return this.help;
-    }
-    /**
-     * Execute the operation remotely. Specify a hostname, or a username and hostname separated by &#39;@&#39;, to connect to.
-     * 
-     */
-    @Export(name="host", refs={String.class}, tree="[0]")
-    private Output</* @Nullable */ String> host;
-
-    /**
-     * @return Execute the operation remotely. Specify a hostname, or a username and hostname separated by &#39;@&#39;, to connect to.
-     * 
-     */
-    public Output<Optional<String>> host() {
-        return Codegen.optional(this.host);
-    }
-    /**
-     * Corresponds to the {COMMAND} argument.
-     * 
-     */
-    @Export(name="hostnamectlCommand", refs={HostnamectlCommand.class}, tree="[0]")
-    private Output<HostnamectlCommand> hostnamectlCommand;
-
-    /**
-     * @return Corresponds to the {COMMAND} argument.
-     * 
-     */
-    public Output<HostnamectlCommand> hostnamectlCommand() {
-        return this.hostnamectlCommand;
-    }
-    /**
-     * Shows output formatted as JSON.
-     * 
-     */
-    @Export(name="json", refs={HostnamectlJsonMode.class}, tree="[0]")
-    private Output</* @Nullable */ HostnamectlJsonMode> json;
-
-    /**
-     * @return Shows output formatted as JSON.
-     * 
-     */
-    public Output<Optional<HostnamectlJsonMode>> json() {
-        return Codegen.optional(this.json);
-    }
-    /**
-     * At what stage(s) in the resource lifecycle should the command be run
-     * 
-     */
-    @Export(name="lifecycle", refs={CommandLifecycle.class}, tree="[0]")
-    private Output</* @Nullable */ CommandLifecycle> lifecycle;
-
-    /**
-     * @return At what stage(s) in the resource lifecycle should the command be run
-     * 
-     */
-    public Output<Optional<CommandLifecycle>> lifecycle() {
-        return Codegen.optional(this.lifecycle);
-    }
-    /**
-     * Execute operation on a local container. Specify a container name to connect to, optionally prefixed by a user name to connect as and a separating &#39;@&#39; character.
-     * 
-     */
-    @Export(name="machine", refs={String.class}, tree="[0]")
-    private Output</* @Nullable */ String> machine;
-
-    /**
-     * @return Execute operation on a local container. Specify a container name to connect to, optionally prefixed by a user name to connect as and a separating &#39;@&#39; character.
-     * 
-     */
-    public Output<Optional<String>> machine() {
-        return Codegen.optional(this.machine);
-    }
-    /**
-     * Do not query the user for authentication for privileged operations.
-     * 
-     */
-    @Export(name="noAskPassword", refs={Boolean.class}, tree="[0]")
-    private Output<Boolean> noAskPassword;
-
-    /**
-     * @return Do not query the user for authentication for privileged operations.
-     * 
-     */
-    public Output<Boolean> noAskPassword() {
-        return this.noAskPassword;
-    }
-    /**
-     * If status is invoked (or no explicit command is given) and one of these switches is specified, hostnamectl will print out just this selected hostname. Same as `static` and `transient`.
-     * 
-     */
-    @Export(name="pretty", refs={Boolean.class}, tree="[0]")
-    private Output<Boolean> pretty;
-
-    /**
-     * @return If status is invoked (or no explicit command is given) and one of these switches is specified, hostnamectl will print out just this selected hostname. Same as `static` and `transient`.
-     * 
-     */
-    public Output<Boolean> pretty() {
-        return this.pretty;
-    }
-    /**
-     * If status is invoked (or no explicit command is given) and one of these switches is specified, hostnamectl will print out just this selected hostname. Same as `transient` and `pretty`.
-     * 
-     */
-    @Export(name="static", refs={Boolean.class}, tree="[0]")
-    private Output<Boolean> static_;
-
-    /**
-     * @return If status is invoked (or no explicit command is given) and one of these switches is specified, hostnamectl will print out just this selected hostname. Same as `transient` and `pretty`.
-     * 
-     */
-    public Output<Boolean> static_() {
-        return this.static_;
     }
     /**
      * TODO
@@ -267,20 +156,6 @@ public class Hostnamectl extends com.pulumi.resources.ComponentResource {
         return this.stdout;
     }
     /**
-     * If status is invoked (or no explicit command is given) and one of these switches is specified, hostnamectl will print out just this selected hostname. Same as `static` and `pretty`.
-     * 
-     */
-    @Export(name="transient", refs={Boolean.class}, tree="[0]")
-    private Output<Boolean> transient_;
-
-    /**
-     * @return If status is invoked (or no explicit command is given) and one of these switches is specified, hostnamectl will print out just this selected hostname. Same as `static` and `pretty`.
-     * 
-     */
-    public Output<Boolean> transient_() {
-        return this.transient_;
-    }
-    /**
      * TODO
      * 
      */
@@ -295,18 +170,24 @@ public class Hostnamectl extends com.pulumi.resources.ComponentResource {
         return this.triggers;
     }
     /**
-     * Print a short version string and exit.
+     * The command to run on update, if empty, create will
+     * run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+     * are set to the stdout and stderr properties of the Command resource from previous
+     * create or update steps.
      * 
      */
-    @Export(name="version", refs={Boolean.class}, tree="[0]")
-    private Output<Boolean> version;
+    @Export(name="update", refs={HostnamectlOpts.class}, tree="[0]")
+    private Output</* @Nullable */ HostnamectlOpts> update;
 
     /**
-     * @return Print a short version string and exit.
+     * @return The command to run on update, if empty, create will
+     * run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+     * are set to the stdout and stderr properties of the Command resource from previous
+     * create or update steps.
      * 
      */
-    public Output<Boolean> version() {
-        return this.version;
+    public Output<Optional<HostnamectlOpts>> update() {
+        return Codegen.optional(this.update);
     }
 
     /**

@@ -23,24 +23,27 @@ type Systemctl struct {
 	Command pulumiCommand.CommandOutput `pulumi:"command"`
 	// Connection details for the remote system
 	Connection pulumiCommand.ConnectionOutput `pulumi:"connection"`
+	// The command to run on create.
+	Create SystemctlOptsPtrOutput `pulumi:"create"`
+	// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+	// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+	// Command resource from previous create or update steps.
+	Delete SystemctlOptsPtrOutput `pulumi:"delete"`
 	// Environment variables
 	Environment pulumi.StringMapOutput `pulumi:"environment"`
-	// At what stage(s) in the resource lifecycle should the command be run
-	Lifecycle CommandLifecyclePtrOutput `pulumi:"lifecycle"`
-	// Corresponds to the [PATTERN] argument
-	Pattern pulumi.StringPtrOutput `pulumi:"pattern"`
 	// TODO
 	Stderr pulumi.StringOutput `pulumi:"stderr"`
 	// TODO
 	Stdin pulumi.StringPtrOutput `pulumi:"stdin"`
 	// TODO
 	Stdout pulumi.StringOutput `pulumi:"stdout"`
-	// Corresponds to the COMMAND argument.
-	SystemctlCommand SystemctlCommandOutput `pulumi:"systemctlCommand"`
 	// TODO
 	Triggers pulumi.ArrayOutput `pulumi:"triggers"`
-	// Corresponds to the [UNIT...] argument.
-	Unit pulumi.StringOutput `pulumi:"unit"`
+	// The command to run on update, if empty, create will
+	// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+	// are set to the stdout and stderr properties of the Command resource from previous
+	// create or update steps.
+	Update SystemctlOptsPtrOutput `pulumi:"update"`
 }
 
 // NewSystemctl registers a new resource with the given unique name, arguments, and options.
@@ -52,9 +55,6 @@ func NewSystemctl(ctx *pulumi.Context,
 
 	if args.Connection == nil {
 		return nil, errors.New("invalid value for required argument 'Connection'")
-	}
-	if args.Unit == nil {
-		return nil, errors.New("invalid value for required argument 'Unit'")
 	}
 	args.Connection = args.Connection.ToConnectionOutput().ApplyT(func(v pulumiCommand.Connection) pulumiCommand.Connection { return *v.Defaults() }).(pulumiCommand.ConnectionOutput)
 	opts = internal.PkgResourceDefaultOpts(opts)
@@ -69,44 +69,50 @@ func NewSystemctl(ctx *pulumi.Context,
 type systemctlArgs struct {
 	// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
 	BinaryPath *string `pulumi:"binaryPath"`
-	// Corresponds to the COMMAND argument.
-	Command SystemctlCommand `pulumi:"command"`
 	// Connection details for the remote system
 	Connection pulumiCommand.Connection `pulumi:"connection"`
+	// The command to run on create.
+	Create *SystemctlOpts `pulumi:"create"`
+	// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+	// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+	// Command resource from previous create or update steps.
+	Delete *SystemctlOpts `pulumi:"delete"`
 	// Environment variables
 	Environment map[string]string `pulumi:"environment"`
-	// At what stage(s) in the resource lifecycle should the command be run
-	Lifecycle *CommandLifecycle `pulumi:"lifecycle"`
-	// Corresponds to the [PATTERN] argument
-	Pattern *string `pulumi:"pattern"`
 	// TODO
 	Stdin *string `pulumi:"stdin"`
 	// TODO
 	Triggers []interface{} `pulumi:"triggers"`
-	// Corresponds to the [UNIT...] argument.
-	Unit string `pulumi:"unit"`
+	// The command to run on update, if empty, create will
+	// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+	// are set to the stdout and stderr properties of the Command resource from previous
+	// create or update steps.
+	Update *SystemctlOpts `pulumi:"update"`
 }
 
 // The set of arguments for constructing a Systemctl resource.
 type SystemctlArgs struct {
 	// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
 	BinaryPath pulumi.StringPtrInput
-	// Corresponds to the COMMAND argument.
-	Command SystemctlCommand
 	// Connection details for the remote system
 	Connection pulumiCommand.ConnectionInput
+	// The command to run on create.
+	Create *SystemctlOptsArgs
+	// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+	// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+	// Command resource from previous create or update steps.
+	Delete *SystemctlOptsArgs
 	// Environment variables
 	Environment pulumi.StringMapInput
-	// At what stage(s) in the resource lifecycle should the command be run
-	Lifecycle *CommandLifecycle
-	// Corresponds to the [PATTERN] argument
-	Pattern pulumi.StringPtrInput
 	// TODO
 	Stdin pulumi.StringPtrInput
 	// TODO
 	Triggers pulumi.ArrayInput
-	// Corresponds to the [UNIT...] argument.
-	Unit pulumi.StringInput
+	// The command to run on update, if empty, create will
+	// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+	// are set to the stdout and stderr properties of the Command resource from previous
+	// create or update steps.
+	Update *SystemctlOptsArgs
 }
 
 func (SystemctlArgs) ElementType() reflect.Type {
@@ -211,19 +217,21 @@ func (o SystemctlOutput) Connection() pulumiCommand.ConnectionOutput {
 	return o.ApplyT(func(v *Systemctl) pulumiCommand.ConnectionOutput { return v.Connection }).(pulumiCommand.ConnectionOutput)
 }
 
+// The command to run on create.
+func (o SystemctlOutput) Create() SystemctlOptsPtrOutput {
+	return o.ApplyT(func(v *Systemctl) SystemctlOptsPtrOutput { return v.Create }).(SystemctlOptsPtrOutput)
+}
+
+// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+// Command resource from previous create or update steps.
+func (o SystemctlOutput) Delete() SystemctlOptsPtrOutput {
+	return o.ApplyT(func(v *Systemctl) SystemctlOptsPtrOutput { return v.Delete }).(SystemctlOptsPtrOutput)
+}
+
 // Environment variables
 func (o SystemctlOutput) Environment() pulumi.StringMapOutput {
 	return o.ApplyT(func(v *Systemctl) pulumi.StringMapOutput { return v.Environment }).(pulumi.StringMapOutput)
-}
-
-// At what stage(s) in the resource lifecycle should the command be run
-func (o SystemctlOutput) Lifecycle() CommandLifecyclePtrOutput {
-	return o.ApplyT(func(v *Systemctl) CommandLifecyclePtrOutput { return v.Lifecycle }).(CommandLifecyclePtrOutput)
-}
-
-// Corresponds to the [PATTERN] argument
-func (o SystemctlOutput) Pattern() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Systemctl) pulumi.StringPtrOutput { return v.Pattern }).(pulumi.StringPtrOutput)
 }
 
 // TODO
@@ -241,19 +249,17 @@ func (o SystemctlOutput) Stdout() pulumi.StringOutput {
 	return o.ApplyT(func(v *Systemctl) pulumi.StringOutput { return v.Stdout }).(pulumi.StringOutput)
 }
 
-// Corresponds to the COMMAND argument.
-func (o SystemctlOutput) SystemctlCommand() SystemctlCommandOutput {
-	return o.ApplyT(func(v *Systemctl) SystemctlCommandOutput { return v.SystemctlCommand }).(SystemctlCommandOutput)
-}
-
 // TODO
 func (o SystemctlOutput) Triggers() pulumi.ArrayOutput {
 	return o.ApplyT(func(v *Systemctl) pulumi.ArrayOutput { return v.Triggers }).(pulumi.ArrayOutput)
 }
 
-// Corresponds to the [UNIT...] argument.
-func (o SystemctlOutput) Unit() pulumi.StringOutput {
-	return o.ApplyT(func(v *Systemctl) pulumi.StringOutput { return v.Unit }).(pulumi.StringOutput)
+// The command to run on update, if empty, create will
+// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+// are set to the stdout and stderr properties of the Command resource from previous
+// create or update steps.
+func (o SystemctlOutput) Update() SystemctlOptsPtrOutput {
+	return o.ApplyT(func(v *Systemctl) SystemctlOptsPtrOutput { return v.Update }).(SystemctlOptsPtrOutput)
 }
 
 type SystemctlArrayOutput struct{ *pulumi.OutputState }

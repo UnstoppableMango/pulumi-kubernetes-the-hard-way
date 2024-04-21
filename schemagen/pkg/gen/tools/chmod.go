@@ -5,10 +5,12 @@ import (
 	"github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 )
 
-func generateChmod() schema.ResourceSpec {
+func generateChmod() tool {
+	types := map[string]schema.ComplexTypeSpec{}
+
 	inputs := map[string]schema.PropertySpec{
 		"changes":        props.Boolean("Like verbose but report only when a change is made."),
-		"files":          props.OneOrMoreStrings("Corresponds to the [FILE] argument."),
+		"files":          props.ArrayOf("string", "Corresponds to the [FILE] argument."),
 		"help":           props.Boolean("Display help and exit."),
 		"mode":           props.String("Modes may be absolute or symbolic. An absolute mode is an octal number..."),
 		"noPreserveRoot": props.Boolean("Do not treat '/' specially (the default)."),
@@ -22,22 +24,34 @@ func generateChmod() schema.ResourceSpec {
 
 	required := []string{"files", "mode"}
 
-	return schema.ResourceSpec{
+	typ := schema.ComplexTypeSpec{
 		ObjectTypeSpec: schema.ObjectTypeSpec{
 			Description: "Abstraction over the `chmod` utility on a remote system.",
-			Properties:  implicitOutputs(inputs, map[string]schema.PropertySpec{}),
-			Required: append(required,
-				"changes",
-				"help",
-				"noPreserveRoot",
-				"preserveRoot",
-				"quiet",
-				"recursive",
-				"silent",
-				"version",
-			),
+			Type:        "object",
+			Properties:  inputs,
+			Required:    required,
 		},
-		InputProperties: inputs,
-		RequiredInputs:  required,
 	}
+
+	return tool{optsType: typ, types: types}
 }
+
+// If we ever get a way to add the "required outputs" logic around a complexType
+// resource := schema.ResourceSpec{
+// 	ObjectTypeSpec: schema.ObjectTypeSpec{
+// 		Description: "Abstraction over the `chmod` utility on a remote system.",
+// 		Properties:  implicitOutputs(inputs, map[string]schema.PropertySpec{}),
+// 		Required: append(required,
+// 			"changes",
+// 			"help",
+// 			"noPreserveRoot",
+// 			"preserveRoot",
+// 			"quiet",
+// 			"recursive",
+// 			"silent",
+// 			"version",
+// 		),
+// 	},
+// 	InputProperties: inputs,
+// 	RequiredInputs:  required,
+// }

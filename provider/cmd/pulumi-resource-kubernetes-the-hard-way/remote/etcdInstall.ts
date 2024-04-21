@@ -1,4 +1,4 @@
-import { ComponentResourceOptions, Output, interpolate, output } from '@pulumi/pulumi';
+import { ComponentResourceOptions, interpolate, output } from '@pulumi/pulumi';
 import * as schema from '../schema-types';
 import { archiveInstall } from './archiveInstall';
 

@@ -5,7 +5,7 @@ import (
 	"github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 )
 
-func generateMktemp() schema.ResourceSpec {
+func generateMktemp() tool {
 	inputs := map[string]schema.PropertySpec{
 		"directory": props.Boolean("Corresponds to the `--directory` option."),
 		"dryRun":    props.Boolean("Corresponds to the `--dry-run` option."),
@@ -15,16 +15,28 @@ func generateMktemp() schema.ResourceSpec {
 		"tmpdir":    props.String("Corresponds to the `--tmpdir` option."),
 	}
 
-	return schema.ResourceSpec{
+	typ := schema.ComplexTypeSpec{
 		ObjectTypeSpec: schema.ObjectTypeSpec{
-			Description: "Abstraction over the `mkdir` utility on a remote system.",
-			Properties:  implicitOutputs(inputs, map[string]schema.PropertySpec{}),
-			Required: []string{
-				"dryRun",
-				"quiet",
-			},
+			Description: "Abstraction over the `mktemp` utility on a remote system.",
+			Type:        "object",
+			Properties:  inputs,
+			Required:    []string{},
 		},
-		InputProperties: inputs,
-		RequiredInputs:  []string{},
 	}
+
+	return tool{optsType: typ, types: map[string]schema.ComplexTypeSpec{}}
 }
+
+// If we ever get a way to add the "required outputs" logic around a complexType
+// resource := schema.ResourceSpec{
+// 	ObjectTypeSpec: schema.ObjectTypeSpec{
+// 		Description: "Abstraction over the `mkdir` utility on a remote system.",
+// 		Properties:  implicitOutputs(inputs, map[string]schema.PropertySpec{}),
+// 		Required: []string{
+// 			"dryRun",
+// 			"quiet",
+// 		},
+// 	},
+// 	InputProperties: inputs,
+// 	RequiredInputs:  []string{},
+// }

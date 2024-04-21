@@ -5,15 +5,15 @@ import (
 	"github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 )
 
-func generateSed() schema.ResourceSpec {
+func generateSed() tool {
 	inputs := map[string]schema.PropertySpec{
 		"debug":          props.Boolean("annotate program execution."),
-		"expressions":    props.OneOrMoreStrings("add the script to the commands to be executed."),
-		"files":          props.OneOrMoreStrings("add the contents of script-file to the commands to be executed."),
+		"expressions":    props.ArrayOf("string", "add the script to the commands to be executed."),
+		"files":          props.ArrayOf("string", "add the contents of script-file to the commands to be executed."),
 		"followSymlinks": props.Boolean("follow symlinks when processing in place"),
 		"help":           props.Boolean("display this help and exit."),
 		"inPlace":        props.String("edit files in place (makes backup if SUFFIX supplied)"),
-		"inputFiles":     props.OneOrMoreStrings("corresponds to the [input-file]... argument(s)."),
+		"inputFiles":     props.ArrayOf("string", "corresponds to the [input-file]... argument(s)."),
 		"lineLength":     props.Integer("specify the desired line-wrap length for the `l' command"),
 		"nullData":       props.Boolean("separate lines by NUL characters"),
 		"posix":          props.Boolean("disable all GNU extensions."),
@@ -29,29 +29,41 @@ func generateSed() schema.ResourceSpec {
 
 	required := []string{}
 
-	return schema.ResourceSpec{
+	typ := schema.ComplexTypeSpec{
 		ObjectTypeSpec: schema.ObjectTypeSpec{
 			Description: "Abstraction over the `sed` utility on a remote system.",
-			Properties:  implicitOutputs(inputs, map[string]schema.PropertySpec{}),
-			Required: append(required,
-				"debug",
-				"expressions",
-				"files",
-				"followSymlinks",
-				"help",
-				"inputFiles",
-				"nullData",
-				"posix",
-				"quiet",
-				"regexpExtended",
-				"sandbox",
-				"separate",
-				"silent",
-				"unbuffered",
-				"version",
-			),
+			Type:        "object",
+			Properties:  inputs,
+			Required:    required,
 		},
-		InputProperties: inputs,
-		RequiredInputs:  required,
 	}
+
+	return tool{optsType: typ, types: map[string]schema.ComplexTypeSpec{}}
 }
+
+// If we ever get a way to add the "required outputs" logic around a complexType
+// resource := schema.ResourceSpec{
+// 	ObjectTypeSpec: schema.ObjectTypeSpec{
+// 		Description: "Abstraction over the `sed` utility on a remote system.",
+// 		Properties:  implicitOutputs(inputs, map[string]schema.PropertySpec{}),
+// 		Required: append(required,
+// 			"debug",
+// 			"expressions",
+// 			"files",
+// 			"followSymlinks",
+// 			"help",
+// 			"inputFiles",
+// 			"nullData",
+// 			"posix",
+// 			"quiet",
+// 			"regexpExtended",
+// 			"sandbox",
+// 			"separate",
+// 			"silent",
+// 			"unbuffered",
+// 			"version",
+// 		),
+// 	},
+// 	InputProperties: inputs,
+// 	RequiredInputs:  required,
+// }

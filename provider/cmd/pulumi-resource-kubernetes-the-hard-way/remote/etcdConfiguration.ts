@@ -17,20 +17,26 @@ export class EtcdConfiguration extends schema.EtcdConfiguration {
 
     const configurationMkdir = new Mkdir(`${name}-config`, {
       connection,
-      directory: configurationDirectory,
-      parents: true,
+      create: {
+        directory: configurationDirectory,
+        parents: true,
+      },
     }, { parent: this });
 
     const configurationChmod = new Chmod(`${name}-data-chmod`, {
       connection,
-      files: configurationDirectory,
-      mode: '700',
+      create: {
+        files: [configurationDirectory],
+        mode: '700',
+      },
     }, { parent: this, dependsOn: configurationMkdir });
 
     const dataMkdir = new Mkdir(`${name}-data`, {
       connection,
-      directory: configurationDirectory,
-      parents: true,
+      create: {
+        directory: configurationDirectory,
+        parents: true,
+      },
     }, { parent: this });
 
     const caFilePath = interpolate`${configurationDirectory}/ca.pem`;

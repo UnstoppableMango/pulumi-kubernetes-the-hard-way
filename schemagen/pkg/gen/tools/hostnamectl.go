@@ -6,7 +6,7 @@ import (
 	"github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 )
 
-func generateHostnamectl() schema.ResourceSpec {
+func generateHostnamectl() tool {
 	inputs := map[string]schema.PropertySpec{
 		"arg": props.String("The argument for the specified `command`."),
 		"command": {
@@ -29,26 +29,38 @@ func generateHostnamectl() schema.ResourceSpec {
 
 	required := []string{"command"}
 
-	return schema.ResourceSpec{
+	typ := schema.ComplexTypeSpec{
 		ObjectTypeSpec: schema.ObjectTypeSpec{
 			Description: "Abstraction over the `hostnamectl` utility on a remote system.",
-			Properties: implicitOutputs(inputs, map[string]schema.PropertySpec{
-				"hostnamectlCommand": {
-					Description: "Corresponds to the {COMMAND} argument.",
-					TypeSpec:    types.LocalType("HostnamectlCommand", "tools"),
-				},
-			}),
-			Required: append(required,
-				"help",
-				"hostnamectlCommand",
-				"noAskPassword",
-				"pretty",
-				"static",
-				"transient",
-				"version",
-			),
+			Type:        "object",
+			Properties:  inputs,
+			Required:    required,
 		},
-		InputProperties: inputs,
-		RequiredInputs:  required,
 	}
+
+	return tool{optsType: typ, types: map[string]schema.ComplexTypeSpec{}}
 }
+
+// If we ever get a way to add the "required outputs" logic around a complexType
+// resource := schema.ResourceSpec{
+// 	ObjectTypeSpec: schema.ObjectTypeSpec{
+// 		Description: "Abstraction over the `hostnamectl` utility on a remote system.",
+// 		Properties: implicitOutputs(inputs, map[string]schema.PropertySpec{
+// 			"hostnamectlCommand": {
+// 				Description: "Corresponds to the {COMMAND} argument.",
+// 				TypeSpec:    types.LocalType("HostnamectlCommand", "tools"),
+// 			},
+// 		}),
+// 		Required: append(required,
+// 			"help",
+// 			"hostnamectlCommand",
+// 			"noAskPassword",
+// 			"pretty",
+// 			"static",
+// 			"transient",
+// 			"version",
+// 		),
+// 	},
+// 	InputProperties: inputs,
+// 	RequiredInputs:  required,
+// }

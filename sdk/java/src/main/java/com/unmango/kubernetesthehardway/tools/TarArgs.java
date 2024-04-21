@@ -4,13 +4,10 @@
 package com.unmango.kubernetesthehardway.tools;
 
 import com.pulumi.command.remote.inputs.ConnectionArgs;
-import com.pulumi.core.Either;
 import com.pulumi.core.Output;
 import com.pulumi.core.annotations.Import;
 import com.pulumi.exceptions.MissingRequiredPropertyException;
-import com.unmango.kubernetesthehardway.tools.enums.CommandLifecycle;
-import java.lang.Boolean;
-import java.lang.Integer;
+import com.unmango.kubernetesthehardway.tools.inputs.TarOptsArgs;
 import java.lang.Object;
 import java.lang.String;
 import java.util.List;
@@ -23,21 +20,6 @@ import javax.annotation.Nullable;
 public final class TarArgs extends com.pulumi.resources.ResourceArgs {
 
     public static final TarArgs Empty = new TarArgs();
-
-    /**
-     * Corresponds to the [ARCHIVE] argument.
-     * 
-     */
-    @Import(name="archive", required=true)
-    private Output<String> archive;
-
-    /**
-     * @return Corresponds to the [ARCHIVE] argument.
-     * 
-     */
-    public Output<String> archive() {
-        return this.archive;
-    }
 
     /**
      * Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
@@ -70,18 +52,37 @@ public final class TarArgs extends com.pulumi.resources.ResourceArgs {
     }
 
     /**
-     * Corresponds to the `--directory` option.
+     * The command to run on create.
      * 
      */
-    @Import(name="directory")
-    private @Nullable Output<String> directory;
+    @Import(name="create")
+    private @Nullable TarOptsArgs create;
 
     /**
-     * @return Corresponds to the `--directory` option.
+     * @return The command to run on create.
      * 
      */
-    public Optional<Output<String>> directory() {
-        return Optional.ofNullable(this.directory);
+    public Optional<TarOptsArgs> create() {
+        return Optional.ofNullable(this.create);
+    }
+
+    /**
+     * The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+     * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+     * Command resource from previous create or update steps.
+     * 
+     */
+    @Import(name="delete")
+    private @Nullable TarOptsArgs delete;
+
+    /**
+     * @return The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+     * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+     * Command resource from previous create or update steps.
+     * 
+     */
+    public Optional<TarOptsArgs> delete() {
+        return Optional.ofNullable(this.delete);
     }
 
     /**
@@ -100,96 +101,6 @@ public final class TarArgs extends com.pulumi.resources.ResourceArgs {
     }
 
     /**
-     * Corresponds to the `--extract` option.
-     * 
-     */
-    @Import(name="extract")
-    private @Nullable Output<Boolean> extract;
-
-    /**
-     * @return Corresponds to the `--extract` option.
-     * 
-     */
-    public Optional<Output<Boolean>> extract() {
-        return Optional.ofNullable(this.extract);
-    }
-
-    /**
-     * Corresponds to the [FILE] argument.
-     * 
-     */
-    @Import(name="files")
-    private @Nullable Output<Either<String,List<String>>> files;
-
-    /**
-     * @return Corresponds to the [FILE] argument.
-     * 
-     */
-    public Optional<Output<Either<String,List<String>>>> files() {
-        return Optional.ofNullable(this.files);
-    }
-
-    /**
-     * Corresponds to the `--gzip` option.
-     * 
-     */
-    @Import(name="gzip")
-    private @Nullable Output<Boolean> gzip;
-
-    /**
-     * @return Corresponds to the `--gzip` option.
-     * 
-     */
-    public Optional<Output<Boolean>> gzip() {
-        return Optional.ofNullable(this.gzip);
-    }
-
-    /**
-     * At what stage(s) in the resource lifecycle should the command be run
-     * 
-     */
-    @Import(name="lifecycle")
-    private @Nullable CommandLifecycle lifecycle;
-
-    /**
-     * @return At what stage(s) in the resource lifecycle should the command be run
-     * 
-     */
-    public Optional<CommandLifecycle> lifecycle() {
-        return Optional.ofNullable(this.lifecycle);
-    }
-
-    /**
-     * Whether rm should be run when the resource is created or deleted.
-     * 
-     */
-    @Import(name="onDelete")
-    private @Nullable Output<Boolean> onDelete;
-
-    /**
-     * @return Whether rm should be run when the resource is created or deleted.
-     * 
-     */
-    public Optional<Output<Boolean>> onDelete() {
-        return Optional.ofNullable(this.onDelete);
-    }
-
-    /**
-     * Corresponds to the `--recursive` option.
-     * 
-     */
-    @Import(name="recursive")
-    private @Nullable Output<Boolean> recursive;
-
-    /**
-     * @return Corresponds to the `--recursive` option.
-     * 
-     */
-    public Optional<Output<Boolean>> recursive() {
-        return Optional.ofNullable(this.recursive);
-    }
-
-    /**
      * TODO
      * 
      */
@@ -202,21 +113,6 @@ public final class TarArgs extends com.pulumi.resources.ResourceArgs {
      */
     public Optional<Output<String>> stdin() {
         return Optional.ofNullable(this.stdin);
-    }
-
-    /**
-     * Corresponds to the `--strip-components` option.
-     * 
-     */
-    @Import(name="stripComponents")
-    private @Nullable Output<Integer> stripComponents;
-
-    /**
-     * @return Corresponds to the `--strip-components` option.
-     * 
-     */
-    public Optional<Output<Integer>> stripComponents() {
-        return Optional.ofNullable(this.stripComponents);
     }
 
     /**
@@ -234,23 +130,38 @@ public final class TarArgs extends com.pulumi.resources.ResourceArgs {
         return Optional.ofNullable(this.triggers);
     }
 
+    /**
+     * The command to run on update, if empty, create will
+     * run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+     * are set to the stdout and stderr properties of the Command resource from previous
+     * create or update steps.
+     * 
+     */
+    @Import(name="update")
+    private @Nullable TarOptsArgs update;
+
+    /**
+     * @return The command to run on update, if empty, create will
+     * run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+     * are set to the stdout and stderr properties of the Command resource from previous
+     * create or update steps.
+     * 
+     */
+    public Optional<TarOptsArgs> update() {
+        return Optional.ofNullable(this.update);
+    }
+
     private TarArgs() {}
 
     private TarArgs(TarArgs $) {
-        this.archive = $.archive;
         this.binaryPath = $.binaryPath;
         this.connection = $.connection;
-        this.directory = $.directory;
+        this.create = $.create;
+        this.delete = $.delete;
         this.environment = $.environment;
-        this.extract = $.extract;
-        this.files = $.files;
-        this.gzip = $.gzip;
-        this.lifecycle = $.lifecycle;
-        this.onDelete = $.onDelete;
-        this.recursive = $.recursive;
         this.stdin = $.stdin;
-        this.stripComponents = $.stripComponents;
         this.triggers = $.triggers;
+        this.update = $.update;
     }
 
     public static Builder builder() {
@@ -269,27 +180,6 @@ public final class TarArgs extends com.pulumi.resources.ResourceArgs {
 
         public Builder(TarArgs defaults) {
             $ = new TarArgs(Objects.requireNonNull(defaults));
-        }
-
-        /**
-         * @param archive Corresponds to the [ARCHIVE] argument.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder archive(Output<String> archive) {
-            $.archive = archive;
-            return this;
-        }
-
-        /**
-         * @param archive Corresponds to the [ARCHIVE] argument.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder archive(String archive) {
-            return archive(Output.of(archive));
         }
 
         /**
@@ -335,24 +225,27 @@ public final class TarArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param directory Corresponds to the `--directory` option.
+         * @param create The command to run on create.
          * 
          * @return builder
          * 
          */
-        public Builder directory(@Nullable Output<String> directory) {
-            $.directory = directory;
+        public Builder create(@Nullable TarOptsArgs create) {
+            $.create = create;
             return this;
         }
 
         /**
-         * @param directory Corresponds to the `--directory` option.
+         * @param delete The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+         * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+         * Command resource from previous create or update steps.
          * 
          * @return builder
          * 
          */
-        public Builder directory(String directory) {
-            return directory(Output.of(directory));
+        public Builder delete(@Nullable TarOptsArgs delete) {
+            $.delete = delete;
+            return this;
         }
 
         /**
@@ -377,142 +270,6 @@ public final class TarArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param extract Corresponds to the `--extract` option.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder extract(@Nullable Output<Boolean> extract) {
-            $.extract = extract;
-            return this;
-        }
-
-        /**
-         * @param extract Corresponds to the `--extract` option.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder extract(Boolean extract) {
-            return extract(Output.of(extract));
-        }
-
-        /**
-         * @param files Corresponds to the [FILE] argument.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder files(@Nullable Output<Either<String,List<String>>> files) {
-            $.files = files;
-            return this;
-        }
-
-        /**
-         * @param files Corresponds to the [FILE] argument.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder files(Either<String,List<String>> files) {
-            return files(Output.of(files));
-        }
-
-        /**
-         * @param files Corresponds to the [FILE] argument.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder files(String files) {
-            return files(Either.ofLeft(files));
-        }
-
-        /**
-         * @param files Corresponds to the [FILE] argument.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder files(List<String> files) {
-            return files(Either.ofRight(files));
-        }
-
-        /**
-         * @param gzip Corresponds to the `--gzip` option.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder gzip(@Nullable Output<Boolean> gzip) {
-            $.gzip = gzip;
-            return this;
-        }
-
-        /**
-         * @param gzip Corresponds to the `--gzip` option.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder gzip(Boolean gzip) {
-            return gzip(Output.of(gzip));
-        }
-
-        /**
-         * @param lifecycle At what stage(s) in the resource lifecycle should the command be run
-         * 
-         * @return builder
-         * 
-         */
-        public Builder lifecycle(@Nullable CommandLifecycle lifecycle) {
-            $.lifecycle = lifecycle;
-            return this;
-        }
-
-        /**
-         * @param onDelete Whether rm should be run when the resource is created or deleted.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder onDelete(@Nullable Output<Boolean> onDelete) {
-            $.onDelete = onDelete;
-            return this;
-        }
-
-        /**
-         * @param onDelete Whether rm should be run when the resource is created or deleted.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder onDelete(Boolean onDelete) {
-            return onDelete(Output.of(onDelete));
-        }
-
-        /**
-         * @param recursive Corresponds to the `--recursive` option.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder recursive(@Nullable Output<Boolean> recursive) {
-            $.recursive = recursive;
-            return this;
-        }
-
-        /**
-         * @param recursive Corresponds to the `--recursive` option.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder recursive(Boolean recursive) {
-            return recursive(Output.of(recursive));
-        }
-
-        /**
          * @param stdin TODO
          * 
          * @return builder
@@ -531,27 +288,6 @@ public final class TarArgs extends com.pulumi.resources.ResourceArgs {
          */
         public Builder stdin(String stdin) {
             return stdin(Output.of(stdin));
-        }
-
-        /**
-         * @param stripComponents Corresponds to the `--strip-components` option.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder stripComponents(@Nullable Output<Integer> stripComponents) {
-            $.stripComponents = stripComponents;
-            return this;
-        }
-
-        /**
-         * @param stripComponents Corresponds to the `--strip-components` option.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder stripComponents(Integer stripComponents) {
-            return stripComponents(Output.of(stripComponents));
         }
 
         /**
@@ -585,10 +321,21 @@ public final class TarArgs extends com.pulumi.resources.ResourceArgs {
             return triggers(List.of(triggers));
         }
 
+        /**
+         * @param update The command to run on update, if empty, create will
+         * run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+         * are set to the stdout and stderr properties of the Command resource from previous
+         * create or update steps.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder update(@Nullable TarOptsArgs update) {
+            $.update = update;
+            return this;
+        }
+
         public TarArgs build() {
-            if ($.archive == null) {
-                throw new MissingRequiredPropertyException("TarArgs", "archive");
-            }
             if ($.connection == null) {
                 throw new MissingRequiredPropertyException("TarArgs", "connection");
             }

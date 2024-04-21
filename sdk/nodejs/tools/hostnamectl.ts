@@ -28,61 +28,31 @@ export class Hostnamectl extends pulumi.ComponentResource {
     }
 
     /**
-     * The argument for the specified `command`.
-     */
-    public readonly arg!: pulumi.Output<string | undefined>;
-    /**
      * Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
      */
     public readonly binaryPath!: pulumi.Output<string>;
     /**
      * The underlying command
      */
-    public readonly command!: pulumi.Output<pulumiCommand.remote.Command>;
+    public /*out*/ readonly command!: pulumi.Output<pulumiCommand.remote.Command>;
     /**
      * Connection details for the remote system
      */
     public readonly connection!: pulumi.Output<pulumiCommand.types.output.remote.Connection>;
     /**
+     * The command to run on create.
+     */
+    public readonly create!: pulumi.Output<outputs.tools.HostnamectlOpts | undefined>;
+    /**
+     * The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+     * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+     * Command resource from previous create or update steps.
+     */
+    public readonly delete!: pulumi.Output<outputs.tools.HostnamectlOpts | undefined>;
+    /**
      * Environment variables
      */
     public readonly environment!: pulumi.Output<{[key: string]: string}>;
-    /**
-     * Print a short help text and exit.
-     */
-    public readonly help!: pulumi.Output<boolean>;
-    /**
-     * Execute the operation remotely. Specify a hostname, or a username and hostname separated by '@', to connect to.
-     */
-    public readonly host!: pulumi.Output<string | undefined>;
-    /**
-     * Corresponds to the {COMMAND} argument.
-     */
-    public /*out*/ readonly hostnamectlCommand!: pulumi.Output<enums.tools.HostnamectlCommand>;
-    /**
-     * Shows output formatted as JSON.
-     */
-    public readonly json!: pulumi.Output<enums.tools.HostnamectlJsonMode | undefined>;
-    /**
-     * At what stage(s) in the resource lifecycle should the command be run
-     */
-    public readonly lifecycle!: pulumi.Output<enums.tools.CommandLifecycle | undefined>;
-    /**
-     * Execute operation on a local container. Specify a container name to connect to, optionally prefixed by a user name to connect as and a separating '@' character.
-     */
-    public readonly machine!: pulumi.Output<string | undefined>;
-    /**
-     * Do not query the user for authentication for privileged operations.
-     */
-    public readonly noAskPassword!: pulumi.Output<boolean>;
-    /**
-     * If status is invoked (or no explicit command is given) and one of these switches is specified, hostnamectl will print out just this selected hostname. Same as `static` and `transient`.
-     */
-    public readonly pretty!: pulumi.Output<boolean>;
-    /**
-     * If status is invoked (or no explicit command is given) and one of these switches is specified, hostnamectl will print out just this selected hostname. Same as `transient` and `pretty`.
-     */
-    public readonly static!: pulumi.Output<boolean>;
     /**
      * TODO
      */
@@ -96,17 +66,16 @@ export class Hostnamectl extends pulumi.ComponentResource {
      */
     public /*out*/ readonly stdout!: pulumi.Output<string>;
     /**
-     * If status is invoked (or no explicit command is given) and one of these switches is specified, hostnamectl will print out just this selected hostname. Same as `static` and `pretty`.
-     */
-    public readonly transient!: pulumi.Output<boolean>;
-    /**
      * TODO
      */
     public readonly triggers!: pulumi.Output<any[]>;
     /**
-     * Print a short version string and exit.
+     * The command to run on update, if empty, create will 
+     * run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
+     * are set to the stdout and stderr properties of the Command resource from previous 
+     * create or update steps.
      */
-    public readonly version!: pulumi.Output<boolean>;
+    public readonly update!: pulumi.Output<outputs.tools.HostnamectlOpts | undefined>;
 
     /**
      * Create a Hostnamectl resource with the given unique name, arguments, and options.
@@ -119,53 +88,32 @@ export class Hostnamectl extends pulumi.ComponentResource {
         let resourceInputs: pulumi.Inputs = {};
         opts = opts || {};
         if (!opts.id) {
-            if ((!args || args.command === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'command'");
-            }
             if ((!args || args.connection === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'connection'");
             }
-            resourceInputs["arg"] = args ? args.arg : undefined;
             resourceInputs["binaryPath"] = args ? args.binaryPath : undefined;
-            resourceInputs["command"] = args ? args.command : undefined;
             resourceInputs["connection"] = args ? (args.connection ? pulumi.output(args.connection).apply(pulumiCommand.types.input.remote.connectionArgsProvideDefaults) : undefined) : undefined;
+            resourceInputs["create"] = args ? args.create : undefined;
+            resourceInputs["delete"] = args ? args.delete : undefined;
             resourceInputs["environment"] = args ? args.environment : undefined;
-            resourceInputs["help"] = args ? args.help : undefined;
-            resourceInputs["host"] = args ? args.host : undefined;
-            resourceInputs["json"] = args ? args.json : undefined;
-            resourceInputs["lifecycle"] = args ? args.lifecycle : undefined;
-            resourceInputs["machine"] = args ? args.machine : undefined;
-            resourceInputs["noAskPassword"] = args ? args.noAskPassword : undefined;
-            resourceInputs["pretty"] = args ? args.pretty : undefined;
-            resourceInputs["static"] = args ? args.static : undefined;
             resourceInputs["stdin"] = args ? args.stdin : undefined;
-            resourceInputs["transient"] = args ? args.transient : undefined;
             resourceInputs["triggers"] = args ? args.triggers : undefined;
-            resourceInputs["version"] = args ? args.version : undefined;
-            resourceInputs["hostnamectlCommand"] = undefined /*out*/;
+            resourceInputs["update"] = args ? args.update : undefined;
+            resourceInputs["command"] = undefined /*out*/;
             resourceInputs["stderr"] = undefined /*out*/;
             resourceInputs["stdout"] = undefined /*out*/;
         } else {
-            resourceInputs["arg"] = undefined /*out*/;
             resourceInputs["binaryPath"] = undefined /*out*/;
             resourceInputs["command"] = undefined /*out*/;
             resourceInputs["connection"] = undefined /*out*/;
+            resourceInputs["create"] = undefined /*out*/;
+            resourceInputs["delete"] = undefined /*out*/;
             resourceInputs["environment"] = undefined /*out*/;
-            resourceInputs["help"] = undefined /*out*/;
-            resourceInputs["host"] = undefined /*out*/;
-            resourceInputs["hostnamectlCommand"] = undefined /*out*/;
-            resourceInputs["json"] = undefined /*out*/;
-            resourceInputs["lifecycle"] = undefined /*out*/;
-            resourceInputs["machine"] = undefined /*out*/;
-            resourceInputs["noAskPassword"] = undefined /*out*/;
-            resourceInputs["pretty"] = undefined /*out*/;
-            resourceInputs["static"] = undefined /*out*/;
             resourceInputs["stderr"] = undefined /*out*/;
             resourceInputs["stdin"] = undefined /*out*/;
             resourceInputs["stdout"] = undefined /*out*/;
-            resourceInputs["transient"] = undefined /*out*/;
             resourceInputs["triggers"] = undefined /*out*/;
-            resourceInputs["version"] = undefined /*out*/;
+            resourceInputs["update"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         super(Hostnamectl.__pulumiType, name, resourceInputs, opts, true /*remote*/);
@@ -177,71 +125,40 @@ export class Hostnamectl extends pulumi.ComponentResource {
  */
 export interface HostnamectlArgs {
     /**
-     * The argument for the specified `command`.
-     */
-    arg?: pulumi.Input<string>;
-    /**
      * Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
      */
     binaryPath?: pulumi.Input<string>;
-    /**
-     * Corresponds to the {COMMAND} argument.
-     */
-    command: pulumi.Input<enums.tools.HostnamectlCommand>;
     /**
      * Connection details for the remote system
      */
     connection: pulumi.Input<pulumiCommand.types.input.remote.ConnectionArgs>;
     /**
+     * The command to run on create.
+     */
+    create?: inputs.tools.HostnamectlOptsArgs;
+    /**
+     * The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+     * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+     * Command resource from previous create or update steps.
+     */
+    delete?: inputs.tools.HostnamectlOptsArgs;
+    /**
      * Environment variables
      */
     environment?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
-    /**
-     * Print a short help text and exit.
-     */
-    help?: pulumi.Input<boolean>;
-    /**
-     * Execute the operation remotely. Specify a hostname, or a username and hostname separated by '@', to connect to.
-     */
-    host?: pulumi.Input<string>;
-    /**
-     * Shows output formatted as JSON.
-     */
-    json?: pulumi.Input<enums.tools.HostnamectlJsonMode>;
-    /**
-     * At what stage(s) in the resource lifecycle should the command be run
-     */
-    lifecycle?: enums.tools.CommandLifecycle;
-    /**
-     * Execute operation on a local container. Specify a container name to connect to, optionally prefixed by a user name to connect as and a separating '@' character.
-     */
-    machine?: pulumi.Input<string>;
-    /**
-     * Do not query the user for authentication for privileged operations.
-     */
-    noAskPassword?: pulumi.Input<boolean>;
-    /**
-     * If status is invoked (or no explicit command is given) and one of these switches is specified, hostnamectl will print out just this selected hostname. Same as `static` and `transient`.
-     */
-    pretty?: pulumi.Input<boolean>;
-    /**
-     * If status is invoked (or no explicit command is given) and one of these switches is specified, hostnamectl will print out just this selected hostname. Same as `transient` and `pretty`.
-     */
-    static?: pulumi.Input<boolean>;
     /**
      * TODO
      */
     stdin?: pulumi.Input<string>;
     /**
-     * If status is invoked (or no explicit command is given) and one of these switches is specified, hostnamectl will print out just this selected hostname. Same as `static` and `pretty`.
-     */
-    transient?: pulumi.Input<boolean>;
-    /**
      * TODO
      */
     triggers?: pulumi.Input<any[]>;
     /**
-     * Print a short version string and exit.
+     * The command to run on update, if empty, create will 
+     * run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
+     * are set to the stdout and stderr properties of the Command resource from previous 
+     * create or update steps.
      */
-    version?: pulumi.Input<boolean>;
+    update?: inputs.tools.HostnamectlOptsArgs;
 }

@@ -19,24 +19,18 @@ type Etcdctl struct {
 
 	// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
 	BinaryPath pulumi.StringOutput `pulumi:"binaryPath"`
-	// TODO
-	CaCert pulumi.StringPtrOutput `pulumi:"caCert"`
-	// TODO
-	Cert pulumi.StringPtrOutput `pulumi:"cert"`
 	// The underlying command
 	Command pulumiCommand.CommandOutput `pulumi:"command"`
-	// TODO
-	Commands EtcdctlCommandOutput `pulumi:"commands"`
 	// Connection details for the remote system
 	Connection pulumiCommand.ConnectionOutput `pulumi:"connection"`
-	// TODO
-	Endpoints pulumi.StringPtrOutput `pulumi:"endpoints"`
+	// The command to run on create.
+	Create EtcdctlOptsPtrOutput `pulumi:"create"`
+	// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+	// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+	// Command resource from previous create or update steps.
+	Delete EtcdctlOptsPtrOutput `pulumi:"delete"`
 	// Environment variables
 	Environment pulumi.StringMapOutput `pulumi:"environment"`
-	// TODO
-	Key pulumi.StringPtrOutput `pulumi:"key"`
-	// At what stage(s) in the resource lifecycle should the command be run
-	Lifecycle CommandLifecyclePtrOutput `pulumi:"lifecycle"`
 	// TODO
 	Stderr pulumi.StringOutput `pulumi:"stderr"`
 	// TODO
@@ -45,6 +39,11 @@ type Etcdctl struct {
 	Stdout pulumi.StringOutput `pulumi:"stdout"`
 	// TODO
 	Triggers pulumi.ArrayOutput `pulumi:"triggers"`
+	// The command to run on update, if empty, create will
+	// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+	// are set to the stdout and stderr properties of the Command resource from previous
+	// create or update steps.
+	Update EtcdctlOptsPtrOutput `pulumi:"update"`
 }
 
 // NewEtcdctl registers a new resource with the given unique name, arguments, and options.
@@ -54,9 +53,6 @@ func NewEtcdctl(ctx *pulumi.Context,
 		return nil, errors.New("missing one or more required arguments")
 	}
 
-	if args.Commands == nil {
-		return nil, errors.New("invalid value for required argument 'Commands'")
-	}
 	if args.Connection == nil {
 		return nil, errors.New("invalid value for required argument 'Connection'")
 	}
@@ -73,52 +69,50 @@ func NewEtcdctl(ctx *pulumi.Context,
 type etcdctlArgs struct {
 	// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
 	BinaryPath *string `pulumi:"binaryPath"`
-	// TODO
-	CaCert *string `pulumi:"caCert"`
-	// TODO
-	Cert *string `pulumi:"cert"`
-	// TODO
-	Commands EtcdctlCommand `pulumi:"commands"`
 	// Connection details for the remote system
 	Connection pulumiCommand.Connection `pulumi:"connection"`
-	// TODO
-	Endpoints *string `pulumi:"endpoints"`
+	// The command to run on create.
+	Create *EtcdctlOpts `pulumi:"create"`
+	// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+	// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+	// Command resource from previous create or update steps.
+	Delete *EtcdctlOpts `pulumi:"delete"`
 	// Environment variables
 	Environment map[string]string `pulumi:"environment"`
-	// TODO
-	Key *string `pulumi:"key"`
-	// At what stage(s) in the resource lifecycle should the command be run
-	Lifecycle *CommandLifecycle `pulumi:"lifecycle"`
 	// TODO
 	Stdin *string `pulumi:"stdin"`
 	// TODO
 	Triggers []interface{} `pulumi:"triggers"`
+	// The command to run on update, if empty, create will
+	// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+	// are set to the stdout and stderr properties of the Command resource from previous
+	// create or update steps.
+	Update *EtcdctlOpts `pulumi:"update"`
 }
 
 // The set of arguments for constructing a Etcdctl resource.
 type EtcdctlArgs struct {
 	// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
 	BinaryPath pulumi.StringPtrInput
-	// TODO
-	CaCert pulumi.StringPtrInput
-	// TODO
-	Cert pulumi.StringPtrInput
-	// TODO
-	Commands EtcdctlCommandInput
 	// Connection details for the remote system
 	Connection pulumiCommand.ConnectionInput
-	// TODO
-	Endpoints pulumi.StringPtrInput
+	// The command to run on create.
+	Create *EtcdctlOptsArgs
+	// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+	// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+	// Command resource from previous create or update steps.
+	Delete *EtcdctlOptsArgs
 	// Environment variables
 	Environment pulumi.StringMapInput
-	// TODO
-	Key pulumi.StringPtrInput
-	// At what stage(s) in the resource lifecycle should the command be run
-	Lifecycle *CommandLifecycle
 	// TODO
 	Stdin pulumi.StringPtrInput
 	// TODO
 	Triggers pulumi.ArrayInput
+	// The command to run on update, if empty, create will
+	// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+	// are set to the stdout and stderr properties of the Command resource from previous
+	// create or update steps.
+	Update *EtcdctlOptsArgs
 }
 
 func (EtcdctlArgs) ElementType() reflect.Type {
@@ -213,24 +207,9 @@ func (o EtcdctlOutput) BinaryPath() pulumi.StringOutput {
 	return o.ApplyT(func(v *Etcdctl) pulumi.StringOutput { return v.BinaryPath }).(pulumi.StringOutput)
 }
 
-// TODO
-func (o EtcdctlOutput) CaCert() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Etcdctl) pulumi.StringPtrOutput { return v.CaCert }).(pulumi.StringPtrOutput)
-}
-
-// TODO
-func (o EtcdctlOutput) Cert() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Etcdctl) pulumi.StringPtrOutput { return v.Cert }).(pulumi.StringPtrOutput)
-}
-
 // The underlying command
 func (o EtcdctlOutput) Command() pulumiCommand.CommandOutput {
 	return o.ApplyT(func(v *Etcdctl) pulumiCommand.CommandOutput { return v.Command }).(pulumiCommand.CommandOutput)
-}
-
-// TODO
-func (o EtcdctlOutput) Commands() EtcdctlCommandOutput {
-	return o.ApplyT(func(v *Etcdctl) EtcdctlCommandOutput { return v.Commands }).(EtcdctlCommandOutput)
 }
 
 // Connection details for the remote system
@@ -238,24 +217,21 @@ func (o EtcdctlOutput) Connection() pulumiCommand.ConnectionOutput {
 	return o.ApplyT(func(v *Etcdctl) pulumiCommand.ConnectionOutput { return v.Connection }).(pulumiCommand.ConnectionOutput)
 }
 
-// TODO
-func (o EtcdctlOutput) Endpoints() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Etcdctl) pulumi.StringPtrOutput { return v.Endpoints }).(pulumi.StringPtrOutput)
+// The command to run on create.
+func (o EtcdctlOutput) Create() EtcdctlOptsPtrOutput {
+	return o.ApplyT(func(v *Etcdctl) EtcdctlOptsPtrOutput { return v.Create }).(EtcdctlOptsPtrOutput)
+}
+
+// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+// Command resource from previous create or update steps.
+func (o EtcdctlOutput) Delete() EtcdctlOptsPtrOutput {
+	return o.ApplyT(func(v *Etcdctl) EtcdctlOptsPtrOutput { return v.Delete }).(EtcdctlOptsPtrOutput)
 }
 
 // Environment variables
 func (o EtcdctlOutput) Environment() pulumi.StringMapOutput {
 	return o.ApplyT(func(v *Etcdctl) pulumi.StringMapOutput { return v.Environment }).(pulumi.StringMapOutput)
-}
-
-// TODO
-func (o EtcdctlOutput) Key() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Etcdctl) pulumi.StringPtrOutput { return v.Key }).(pulumi.StringPtrOutput)
-}
-
-// At what stage(s) in the resource lifecycle should the command be run
-func (o EtcdctlOutput) Lifecycle() CommandLifecyclePtrOutput {
-	return o.ApplyT(func(v *Etcdctl) CommandLifecyclePtrOutput { return v.Lifecycle }).(CommandLifecyclePtrOutput)
 }
 
 // TODO
@@ -276,6 +252,14 @@ func (o EtcdctlOutput) Stdout() pulumi.StringOutput {
 // TODO
 func (o EtcdctlOutput) Triggers() pulumi.ArrayOutput {
 	return o.ApplyT(func(v *Etcdctl) pulumi.ArrayOutput { return v.Triggers }).(pulumi.ArrayOutput)
+}
+
+// The command to run on update, if empty, create will
+// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+// are set to the stdout and stderr properties of the Command resource from previous
+// create or update steps.
+func (o EtcdctlOutput) Update() EtcdctlOptsPtrOutput {
+	return o.ApplyT(func(v *Etcdctl) EtcdctlOptsPtrOutput { return v.Update }).(EtcdctlOptsPtrOutput)
 }
 
 type EtcdctlArrayOutput struct{ *pulumi.OutputState }

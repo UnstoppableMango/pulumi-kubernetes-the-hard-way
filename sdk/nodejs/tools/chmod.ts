@@ -32,10 +32,6 @@ export class Chmod extends pulumi.ComponentResource {
      */
     public readonly binaryPath!: pulumi.Output<string>;
     /**
-     * Like verbose but report only when a change is made.
-     */
-    public readonly changes!: pulumi.Output<boolean>;
-    /**
      * The underlying command
      */
     public /*out*/ readonly command!: pulumi.Output<pulumiCommand.remote.Command>;
@@ -44,49 +40,19 @@ export class Chmod extends pulumi.ComponentResource {
      */
     public readonly connection!: pulumi.Output<pulumiCommand.types.output.remote.Connection>;
     /**
+     * The command to run on create.
+     */
+    public readonly create!: pulumi.Output<outputs.tools.ChmodOpts | undefined>;
+    /**
+     * The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+     * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+     * Command resource from previous create or update steps.
+     */
+    public readonly delete!: pulumi.Output<outputs.tools.ChmodOpts | undefined>;
+    /**
      * Environment variables
      */
     public readonly environment!: pulumi.Output<{[key: string]: string}>;
-    /**
-     * Corresponds to the [FILE] argument.
-     */
-    public readonly files!: pulumi.Output<string | string[]>;
-    /**
-     * Display help and exit.
-     */
-    public readonly help!: pulumi.Output<boolean>;
-    /**
-     * At what stage(s) in the resource lifecycle should the command be run
-     */
-    public readonly lifecycle!: pulumi.Output<enums.tools.CommandLifecycle | undefined>;
-    /**
-     * Modes may be absolute or symbolic. An absolute mode is an octal number...
-     */
-    public readonly mode!: pulumi.Output<string>;
-    /**
-     * Do not treat '/' specially (the default).
-     */
-    public readonly noPreserveRoot!: pulumi.Output<boolean>;
-    /**
-     * Fail to operate recursively on '/'.
-     */
-    public readonly preserveRoot!: pulumi.Output<boolean>;
-    /**
-     * Suppress most error messages. Same as `silent`.
-     */
-    public readonly quiet!: pulumi.Output<boolean>;
-    /**
-     * Change files and directories recursively.
-     */
-    public readonly recursive!: pulumi.Output<boolean>;
-    /**
-     * Use RFILE's mode instead of specifying MODE values. RFILE is always dereferenced if a symbolic link.
-     */
-    public readonly reference!: pulumi.Output<string | undefined>;
-    /**
-     * Suppress most error messages. Same as `quiet`.
-     */
-    public readonly silent!: pulumi.Output<boolean>;
     /**
      * TODO
      */
@@ -104,9 +70,12 @@ export class Chmod extends pulumi.ComponentResource {
      */
     public readonly triggers!: pulumi.Output<any[]>;
     /**
-     * Output version information and exit.
+     * The command to run on update, if empty, create will 
+     * run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
+     * are set to the stdout and stderr properties of the Command resource from previous 
+     * create or update steps.
      */
-    public readonly version!: pulumi.Output<boolean>;
+    public readonly update!: pulumi.Output<outputs.tools.ChmodOpts | undefined>;
 
     /**
      * Create a Chmod resource with the given unique name, arguments, and options.
@@ -122,53 +91,29 @@ export class Chmod extends pulumi.ComponentResource {
             if ((!args || args.connection === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'connection'");
             }
-            if ((!args || args.files === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'files'");
-            }
-            if ((!args || args.mode === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'mode'");
-            }
             resourceInputs["binaryPath"] = args ? args.binaryPath : undefined;
-            resourceInputs["changes"] = args ? args.changes : undefined;
             resourceInputs["connection"] = args ? (args.connection ? pulumi.output(args.connection).apply(pulumiCommand.types.input.remote.connectionArgsProvideDefaults) : undefined) : undefined;
+            resourceInputs["create"] = args ? args.create : undefined;
+            resourceInputs["delete"] = args ? args.delete : undefined;
             resourceInputs["environment"] = args ? args.environment : undefined;
-            resourceInputs["files"] = args ? args.files : undefined;
-            resourceInputs["help"] = args ? args.help : undefined;
-            resourceInputs["lifecycle"] = args ? args.lifecycle : undefined;
-            resourceInputs["mode"] = args ? args.mode : undefined;
-            resourceInputs["noPreserveRoot"] = args ? args.noPreserveRoot : undefined;
-            resourceInputs["preserveRoot"] = args ? args.preserveRoot : undefined;
-            resourceInputs["quiet"] = args ? args.quiet : undefined;
-            resourceInputs["recursive"] = args ? args.recursive : undefined;
-            resourceInputs["reference"] = args ? args.reference : undefined;
-            resourceInputs["silent"] = args ? args.silent : undefined;
             resourceInputs["stdin"] = args ? args.stdin : undefined;
             resourceInputs["triggers"] = args ? args.triggers : undefined;
-            resourceInputs["version"] = args ? args.version : undefined;
+            resourceInputs["update"] = args ? args.update : undefined;
             resourceInputs["command"] = undefined /*out*/;
             resourceInputs["stderr"] = undefined /*out*/;
             resourceInputs["stdout"] = undefined /*out*/;
         } else {
             resourceInputs["binaryPath"] = undefined /*out*/;
-            resourceInputs["changes"] = undefined /*out*/;
             resourceInputs["command"] = undefined /*out*/;
             resourceInputs["connection"] = undefined /*out*/;
+            resourceInputs["create"] = undefined /*out*/;
+            resourceInputs["delete"] = undefined /*out*/;
             resourceInputs["environment"] = undefined /*out*/;
-            resourceInputs["files"] = undefined /*out*/;
-            resourceInputs["help"] = undefined /*out*/;
-            resourceInputs["lifecycle"] = undefined /*out*/;
-            resourceInputs["mode"] = undefined /*out*/;
-            resourceInputs["noPreserveRoot"] = undefined /*out*/;
-            resourceInputs["preserveRoot"] = undefined /*out*/;
-            resourceInputs["quiet"] = undefined /*out*/;
-            resourceInputs["recursive"] = undefined /*out*/;
-            resourceInputs["reference"] = undefined /*out*/;
-            resourceInputs["silent"] = undefined /*out*/;
             resourceInputs["stderr"] = undefined /*out*/;
             resourceInputs["stdin"] = undefined /*out*/;
             resourceInputs["stdout"] = undefined /*out*/;
             resourceInputs["triggers"] = undefined /*out*/;
-            resourceInputs["version"] = undefined /*out*/;
+            resourceInputs["update"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         super(Chmod.__pulumiType, name, resourceInputs, opts, true /*remote*/);
@@ -184,57 +129,23 @@ export interface ChmodArgs {
      */
     binaryPath?: pulumi.Input<string>;
     /**
-     * Like verbose but report only when a change is made.
-     */
-    changes?: pulumi.Input<boolean>;
-    /**
      * Connection details for the remote system
      */
     connection: pulumi.Input<pulumiCommand.types.input.remote.ConnectionArgs>;
     /**
+     * The command to run on create.
+     */
+    create?: inputs.tools.ChmodOptsArgs;
+    /**
+     * The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+     * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+     * Command resource from previous create or update steps.
+     */
+    delete?: inputs.tools.ChmodOptsArgs;
+    /**
      * Environment variables
      */
     environment?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
-    /**
-     * Corresponds to the [FILE] argument.
-     */
-    files: pulumi.Input<string | pulumi.Input<string>[]>;
-    /**
-     * Display help and exit.
-     */
-    help?: pulumi.Input<boolean>;
-    /**
-     * At what stage(s) in the resource lifecycle should the command be run
-     */
-    lifecycle?: enums.tools.CommandLifecycle;
-    /**
-     * Modes may be absolute or symbolic. An absolute mode is an octal number...
-     */
-    mode: pulumi.Input<string>;
-    /**
-     * Do not treat '/' specially (the default).
-     */
-    noPreserveRoot?: pulumi.Input<boolean>;
-    /**
-     * Fail to operate recursively on '/'.
-     */
-    preserveRoot?: pulumi.Input<boolean>;
-    /**
-     * Suppress most error messages. Same as `silent`.
-     */
-    quiet?: pulumi.Input<boolean>;
-    /**
-     * Change files and directories recursively.
-     */
-    recursive?: pulumi.Input<boolean>;
-    /**
-     * Use RFILE's mode instead of specifying MODE values. RFILE is always dereferenced if a symbolic link.
-     */
-    reference?: pulumi.Input<string>;
-    /**
-     * Suppress most error messages. Same as `quiet`.
-     */
-    silent?: pulumi.Input<boolean>;
     /**
      * TODO
      */
@@ -244,7 +155,10 @@ export interface ChmodArgs {
      */
     triggers?: pulumi.Input<any[]>;
     /**
-     * Output version information and exit.
+     * The command to run on update, if empty, create will 
+     * run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
+     * are set to the stdout and stderr properties of the Command resource from previous 
+     * create or update steps.
      */
-    version?: pulumi.Input<boolean>;
+    update?: inputs.tools.ChmodOptsArgs;
 }

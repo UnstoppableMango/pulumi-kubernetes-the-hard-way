@@ -13,7 +13,7 @@ import (
 	"github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/sdk/go/kubernetes-the-hard-way/internal"
 )
 
-// Abstraction over the `mkdir` utility on a remote system.
+// Abstraction over the `mktemp` utility on a remote system.
 type Mktemp struct {
 	pulumi.ResourceState
 
@@ -23,30 +23,27 @@ type Mktemp struct {
 	Command pulumiCommand.CommandOutput `pulumi:"command"`
 	// Connection details for the remote system
 	Connection pulumiCommand.ConnectionOutput `pulumi:"connection"`
-	// Corresponds to the `--directory` option.
-	Directory pulumi.BoolPtrOutput `pulumi:"directory"`
-	// Corresponds to the `--dry-run` option.
-	DryRun pulumi.BoolOutput `pulumi:"dryRun"`
+	// The command to run on create.
+	Create MktempOptsPtrOutput `pulumi:"create"`
+	// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+	// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+	// Command resource from previous create or update steps.
+	Delete MktempOptsPtrOutput `pulumi:"delete"`
 	// Environment variables
 	Environment pulumi.StringMapOutput `pulumi:"environment"`
-	// At what stage(s) in the resource lifecycle should the command be run
-	Lifecycle CommandLifecyclePtrOutput `pulumi:"lifecycle"`
-	// Corresponds to the `--quiet` option.
-	Quiet pulumi.BoolOutput `pulumi:"quiet"`
 	// TODO
 	Stderr pulumi.StringOutput `pulumi:"stderr"`
 	// TODO
 	Stdin pulumi.StringPtrOutput `pulumi:"stdin"`
 	// TODO
 	Stdout pulumi.StringOutput `pulumi:"stdout"`
-	// Corresponds to the `--suffix` option.
-	Suffix pulumi.StringPtrOutput `pulumi:"suffix"`
-	// Corresponds to the [TEMPLATE] argument.
-	Template pulumi.StringPtrOutput `pulumi:"template"`
-	// Corresponds to the `--tmpdir` option.
-	Tmpdir pulumi.StringPtrOutput `pulumi:"tmpdir"`
 	// TODO
 	Triggers pulumi.ArrayOutput `pulumi:"triggers"`
+	// The command to run on update, if empty, create will
+	// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+	// are set to the stdout and stderr properties of the Command resource from previous
+	// create or update steps.
+	Update MktempOptsPtrOutput `pulumi:"update"`
 }
 
 // NewMktemp registers a new resource with the given unique name, arguments, and options.
@@ -74,26 +71,23 @@ type mktempArgs struct {
 	BinaryPath *string `pulumi:"binaryPath"`
 	// Connection details for the remote system
 	Connection pulumiCommand.Connection `pulumi:"connection"`
-	// Corresponds to the `--directory` option.
-	Directory *bool `pulumi:"directory"`
-	// Corresponds to the `--dry-run` option.
-	DryRun *bool `pulumi:"dryRun"`
+	// The command to run on create.
+	Create *MktempOpts `pulumi:"create"`
+	// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+	// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+	// Command resource from previous create or update steps.
+	Delete *MktempOpts `pulumi:"delete"`
 	// Environment variables
 	Environment map[string]string `pulumi:"environment"`
-	// At what stage(s) in the resource lifecycle should the command be run
-	Lifecycle *CommandLifecycle `pulumi:"lifecycle"`
-	// Corresponds to the `--quiet` option.
-	Quiet *bool `pulumi:"quiet"`
 	// TODO
 	Stdin *string `pulumi:"stdin"`
-	// Corresponds to the `--suffix` option.
-	Suffix *string `pulumi:"suffix"`
-	// Corresponds to the [TEMPLATE] argument.
-	Template *string `pulumi:"template"`
-	// Corresponds to the `--tmpdir` option.
-	Tmpdir *string `pulumi:"tmpdir"`
 	// TODO
 	Triggers []interface{} `pulumi:"triggers"`
+	// The command to run on update, if empty, create will
+	// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+	// are set to the stdout and stderr properties of the Command resource from previous
+	// create or update steps.
+	Update *MktempOpts `pulumi:"update"`
 }
 
 // The set of arguments for constructing a Mktemp resource.
@@ -102,26 +96,23 @@ type MktempArgs struct {
 	BinaryPath pulumi.StringPtrInput
 	// Connection details for the remote system
 	Connection pulumiCommand.ConnectionInput
-	// Corresponds to the `--directory` option.
-	Directory pulumi.BoolPtrInput
-	// Corresponds to the `--dry-run` option.
-	DryRun pulumi.BoolPtrInput
+	// The command to run on create.
+	Create *MktempOptsArgs
+	// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+	// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+	// Command resource from previous create or update steps.
+	Delete *MktempOptsArgs
 	// Environment variables
 	Environment pulumi.StringMapInput
-	// At what stage(s) in the resource lifecycle should the command be run
-	Lifecycle *CommandLifecycle
-	// Corresponds to the `--quiet` option.
-	Quiet pulumi.BoolPtrInput
 	// TODO
 	Stdin pulumi.StringPtrInput
-	// Corresponds to the `--suffix` option.
-	Suffix pulumi.StringPtrInput
-	// Corresponds to the [TEMPLATE] argument.
-	Template pulumi.StringPtrInput
-	// Corresponds to the `--tmpdir` option.
-	Tmpdir pulumi.StringPtrInput
 	// TODO
 	Triggers pulumi.ArrayInput
+	// The command to run on update, if empty, create will
+	// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+	// are set to the stdout and stderr properties of the Command resource from previous
+	// create or update steps.
+	Update *MktempOptsArgs
 }
 
 func (MktempArgs) ElementType() reflect.Type {
@@ -226,29 +217,21 @@ func (o MktempOutput) Connection() pulumiCommand.ConnectionOutput {
 	return o.ApplyT(func(v *Mktemp) pulumiCommand.ConnectionOutput { return v.Connection }).(pulumiCommand.ConnectionOutput)
 }
 
-// Corresponds to the `--directory` option.
-func (o MktempOutput) Directory() pulumi.BoolPtrOutput {
-	return o.ApplyT(func(v *Mktemp) pulumi.BoolPtrOutput { return v.Directory }).(pulumi.BoolPtrOutput)
+// The command to run on create.
+func (o MktempOutput) Create() MktempOptsPtrOutput {
+	return o.ApplyT(func(v *Mktemp) MktempOptsPtrOutput { return v.Create }).(MktempOptsPtrOutput)
 }
 
-// Corresponds to the `--dry-run` option.
-func (o MktempOutput) DryRun() pulumi.BoolOutput {
-	return o.ApplyT(func(v *Mktemp) pulumi.BoolOutput { return v.DryRun }).(pulumi.BoolOutput)
+// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+// Command resource from previous create or update steps.
+func (o MktempOutput) Delete() MktempOptsPtrOutput {
+	return o.ApplyT(func(v *Mktemp) MktempOptsPtrOutput { return v.Delete }).(MktempOptsPtrOutput)
 }
 
 // Environment variables
 func (o MktempOutput) Environment() pulumi.StringMapOutput {
 	return o.ApplyT(func(v *Mktemp) pulumi.StringMapOutput { return v.Environment }).(pulumi.StringMapOutput)
-}
-
-// At what stage(s) in the resource lifecycle should the command be run
-func (o MktempOutput) Lifecycle() CommandLifecyclePtrOutput {
-	return o.ApplyT(func(v *Mktemp) CommandLifecyclePtrOutput { return v.Lifecycle }).(CommandLifecyclePtrOutput)
-}
-
-// Corresponds to the `--quiet` option.
-func (o MktempOutput) Quiet() pulumi.BoolOutput {
-	return o.ApplyT(func(v *Mktemp) pulumi.BoolOutput { return v.Quiet }).(pulumi.BoolOutput)
 }
 
 // TODO
@@ -266,24 +249,17 @@ func (o MktempOutput) Stdout() pulumi.StringOutput {
 	return o.ApplyT(func(v *Mktemp) pulumi.StringOutput { return v.Stdout }).(pulumi.StringOutput)
 }
 
-// Corresponds to the `--suffix` option.
-func (o MktempOutput) Suffix() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Mktemp) pulumi.StringPtrOutput { return v.Suffix }).(pulumi.StringPtrOutput)
-}
-
-// Corresponds to the [TEMPLATE] argument.
-func (o MktempOutput) Template() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Mktemp) pulumi.StringPtrOutput { return v.Template }).(pulumi.StringPtrOutput)
-}
-
-// Corresponds to the `--tmpdir` option.
-func (o MktempOutput) Tmpdir() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Mktemp) pulumi.StringPtrOutput { return v.Tmpdir }).(pulumi.StringPtrOutput)
-}
-
 // TODO
 func (o MktempOutput) Triggers() pulumi.ArrayOutput {
 	return o.ApplyT(func(v *Mktemp) pulumi.ArrayOutput { return v.Triggers }).(pulumi.ArrayOutput)
+}
+
+// The command to run on update, if empty, create will
+// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+// are set to the stdout and stderr properties of the Command resource from previous
+// create or update steps.
+func (o MktempOutput) Update() MktempOptsPtrOutput {
+	return o.ApplyT(func(v *Mktemp) MktempOptsPtrOutput { return v.Update }).(MktempOptsPtrOutput)
 }
 
 type MktempArrayOutput struct{ *pulumi.OutputState }

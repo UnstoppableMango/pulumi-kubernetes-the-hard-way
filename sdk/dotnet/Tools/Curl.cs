@@ -17,82 +17,10 @@ namespace UnMango.KubernetesTheHardWay.Tools
     public partial class Curl : global::Pulumi.ComponentResource
     {
         /// <summary>
-        /// (HTTP) Connect through an abstract Unix domain socket, instead of using the network.
-        /// </summary>
-        [Output("abstractUnixSocket")]
-        public Output<string?> AbstractUnixSocket { get; private set; } = null!;
-
-        /// <summary>
-        /// (HTTPS)  This  option enables the alt-svc parser in curl.
-        /// </summary>
-        [Output("altSvc")]
-        public Output<string?> AltSvc { get; private set; } = null!;
-
-        /// <summary>
-        /// (HTTP) Tells curl to figure out authentication method by itself, and use the most secure one the remote site claims to support.
-        /// </summary>
-        [Output("anyAuth")]
-        public Output<bool?> AnyAuth { get; private set; } = null!;
-
-        /// <summary>
-        /// (FTP SFTP) When used in an upload, this makes curl append to the target file instead of overwriting it.
-        /// </summary>
-        [Output("append")]
-        public Output<bool?> Append { get; private set; } = null!;
-
-        /// <summary>
-        /// Use AWS V4 signature authentication in the transfer.
-        /// </summary>
-        [Output("awsSigv4")]
-        public Output<string?> AwsSigv4 { get; private set; } = null!;
-
-        /// <summary>
-        /// (HTTP) Tells curl to use HTTP Basic authentication with the remote host.
-        /// </summary>
-        [Output("basic")]
-        public Output<bool?> Basic { get; private set; } = null!;
-
-        /// <summary>
         /// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
         /// </summary>
         [Output("binaryPath")]
         public Output<string> BinaryPath { get; private set; } = null!;
-
-        /// <summary>
-        /// (TLS)  Tells curl to use the specified certificate file to verify the peer.
-        /// </summary>
-        [Output("cacert")]
-        public Output<string?> Cacert { get; private set; } = null!;
-
-        /// <summary>
-        /// (TLS) Tells curl to use the specified certificate directory to verify the peer.
-        /// </summary>
-        [Output("capath")]
-        public Output<string?> Capath { get; private set; } = null!;
-
-        /// <summary>
-        /// (TLS)  Tells  curl to use the specified client certificate file when getting a file with HTTPS, FTPS or another SSL-based protocol.
-        /// </summary>
-        [Output("cert")]
-        public Output<string?> Cert { get; private set; } = null!;
-
-        /// <summary>
-        /// (TLS) Tells curl to verify the status of the server certificate by using the Certificate Status Request (aka. OCSP stapling) TLS extension.
-        /// </summary>
-        [Output("certStatus")]
-        public Output<bool?> CertStatus { get; private set; } = null!;
-
-        /// <summary>
-        /// (TLS) Tells curl what type the provided client certificate is using.
-        /// </summary>
-        [Output("certType")]
-        public Output<UnMango.KubernetesTheHardWay.Tools.CurlCertType?> CertType { get; private set; } = null!;
-
-        /// <summary>
-        /// (TLS) Specifies which ciphers to use in the connection.
-        /// </summary>
-        [Output("ciphers")]
-        public Output<string?> Ciphers { get; private set; } = null!;
 
         /// <summary>
         /// The underlying command
@@ -101,340 +29,30 @@ namespace UnMango.KubernetesTheHardWay.Tools
         public Output<Pulumi.Command.Remote.Command> Command { get; private set; } = null!;
 
         /// <summary>
-        /// (HTTP) Request a compressed response using one of the algorithms curl supports, and automatically decompress the content.
-        /// </summary>
-        [Output("compressed")]
-        public Output<bool?> Compressed { get; private set; } = null!;
-
-        /// <summary>
-        /// (SCP SFTP) Enables built-in SSH compression.
-        /// </summary>
-        [Output("compressedSsh")]
-        public Output<bool?> CompressedSsh { get; private set; } = null!;
-
-        /// <summary>
-        /// Specify a text file to read curl arguments from.
-        /// </summary>
-        [Output("config")]
-        public Output<string?> Config { get; private set; } = null!;
-
-        /// <summary>
-        /// Maximum  time  in seconds that you allow curl's connection to take.
-        /// </summary>
-        [Output("connectTimeout")]
-        public Output<int?> ConnectTimeout { get; private set; } = null!;
-
-        /// <summary>
-        /// For a request to the given HOST1:PORT1 pair, connect to HOST2:PORT2 instead.
-        /// </summary>
-        [Output("connectTo")]
-        public Output<string?> ConnectTo { get; private set; } = null!;
-
-        /// <summary>
         /// Connection details for the remote system
         /// </summary>
         [Output("connection")]
         public Output<Pulumi.Command.Remote.Outputs.Connection> Connection { get; private set; } = null!;
 
         /// <summary>
-        /// Continue/Resume a previous file transfer at the given offset.
+        /// The command to run on create.
         /// </summary>
-        [Output("continueAt")]
-        public Output<string?> ContinueAt { get; private set; } = null!;
+        [Output("create")]
+        public Output<Outputs.CurlOpts?> Create { get; private set; } = null!;
 
         /// <summary>
-        /// (HTTP) Pass the data to the HTTP server in the Cookie header.
+        /// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+        /// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+        /// Command resource from previous create or update steps.
         /// </summary>
-        [Output("cookie")]
-        public Output<string?> Cookie { get; private set; } = null!;
-
-        /// <summary>
-        /// (HTTP)  Specify  to which file you want curl to write all cookies after a completed operation.
-        /// </summary>
-        [Output("cookieJar")]
-        public Output<string?> CookieJar { get; private set; } = null!;
-
-        /// <summary>
-        /// When used in conjunction with the -o, --output option, curl will create the necessary local directory hierarchy as needed.
-        /// </summary>
-        [Output("createDirs")]
-        public Output<bool?> CreateDirs { get; private set; } = null!;
-
-        /// <summary>
-        /// (SFTP SCP FILE) When curl is used to create files remotely using one of the supported protocols, this option allows the user to set which 'mode' to set on the file at creation time, instead of the default 0644.
-        /// </summary>
-        [Output("createFileMode")]
-        public Output<string?> CreateFileMode { get; private set; } = null!;
-
-        /// <summary>
-        /// (FTP SMTP) Convert LF to CRLF in upload. Useful for MVS (OS/390).
-        /// </summary>
-        [Output("crlf")]
-        public Output<bool?> Crlf { get; private set; } = null!;
-
-        /// <summary>
-        /// (TLS) Provide a file using PEM format with a Certificate Revocation List that may specify peer certificates that are to be considered revoked.
-        /// </summary>
-        [Output("crlfFile")]
-        public Output<string?> CrlfFile { get; private set; } = null!;
-
-        /// <summary>
-        /// (TLS)  Tells curl to request specific curves to use during SSL session establishment according to RFC 8422, 5.1.
-        /// </summary>
-        [Output("curves")]
-        public Output<string?> Curves { get; private set; } = null!;
-
-        /// <summary>
-        /// (HTTP  MQTT) Sends the specified data in a POST request to the HTTP server, in the same way that a browser does when a user has filled in an HTML form and presses the submit button.
-        /// </summary>
-        [Output("data")]
-        public Output<string?> Data { get; private set; } = null!;
-
-        /// <summary>
-        /// (HTTP) This is just an alias for -d, --data.
-        /// </summary>
-        [Output("dataAscii")]
-        public Output<string?> DataAscii { get; private set; } = null!;
-
-        /// <summary>
-        /// (HTTP) This posts data exactly as specified with no extra processing whatsoever.
-        /// </summary>
-        [Output("dataBinary")]
-        public Output<string?> DataBinary { get; private set; } = null!;
-
-        /// <summary>
-        /// (HTTP) This posts data similarly to -d, --data but without the special interpretation of the @ character.
-        /// </summary>
-        [Output("dataRaw")]
-        public Output<string?> DataRaw { get; private set; } = null!;
-
-        /// <summary>
-        /// (HTTP) This posts data, similar to the other -d, --data options with the exception that this performs URL-encoding.
-        /// </summary>
-        [Output("dataUrlEncode")]
-        public Output<string?> DataUrlEncode { get; private set; } = null!;
-
-        /// <summary>
-        /// (GSS/kerberos) Set LEVEL to tell the server what it is allowed to delegate when it comes to user credentials.
-        /// </summary>
-        [Output("delegation")]
-        public Output<UnMango.KubernetesTheHardWay.Tools.CurlDelegationLevel?> Delegation { get; private set; } = null!;
-
-        /// <summary>
-        /// (HTTP) Enables HTTP Digest authentication.
-        /// </summary>
-        [Output("digest")]
-        public Output<bool?> Digest { get; private set; } = null!;
-
-        /// <summary>
-        /// If used as the first parameter on the command line, the curlrc config file will not be read and used.
-        /// </summary>
-        [Output("disable")]
-        public Output<bool?> Disable { get; private set; } = null!;
-
-        /// <summary>
-        /// (FTP) Tell curl to disable the use of the EPRT and LPRT commands when doing active FTP transfers
-        /// </summary>
-        [Output("disableEprt")]
-        public Output<bool?> DisableEprt { get; private set; } = null!;
-
-        /// <summary>
-        /// (FTP)  Tell  curl to disable the use of the EPSV command when doing passive FTP transfers
-        /// </summary>
-        [Output("disableEpsv")]
-        public Output<bool?> DisableEpsv { get; private set; } = null!;
-
-        /// <summary>
-        /// (HTTP) This tells curl to exit if passed a url containing a username.
-        /// </summary>
-        [Output("disallowUsernameInUrl")]
-        public Output<bool?> DisallowUsernameInUrl { get; private set; } = null!;
-
-        /// <summary>
-        /// (DNS)  Tell  curl  to send outgoing DNS requests through &lt;interface&gt;.
-        /// </summary>
-        [Output("dnsInterface")]
-        public Output<string?> DnsInterface { get; private set; } = null!;
-
-        /// <summary>
-        /// (DNS) Tell curl to bind to &lt;ip-address&gt; when making IPv4 DNS requests, so that the DNS requests originate from this address.
-        /// </summary>
-        [Output("dnsIpv4Addr")]
-        public Output<string?> DnsIpv4Addr { get; private set; } = null!;
-
-        /// <summary>
-        /// (DNS) Tell curl to bind to &lt;ip-address&gt; when making IPv6 DNS requests, so that the DNS requests originate from this address.
-        /// </summary>
-        [Output("dnsIpv6Addr")]
-        public Output<string?> DnsIpv6Addr { get; private set; } = null!;
-
-        /// <summary>
-        /// Set the list of DNS servers to be used instead of the system default.
-        /// </summary>
-        [Output("dnsServers")]
-        public Output<string?> DnsServers { get; private set; } = null!;
-
-        /// <summary>
-        /// Same as --cert-status but used for DoH (DNS-over-HTTPS).
-        /// </summary>
-        [Output("dohCertStatus")]
-        public Output<bool?> DohCertStatus { get; private set; } = null!;
-
-        /// <summary>
-        /// Same as -k, --insecure but used for DoH (DNS-over-HTTPS).
-        /// </summary>
-        [Output("dohInsecure")]
-        public Output<bool?> DohInsecure { get; private set; } = null!;
-
-        /// <summary>
-        /// Specifies which DNS-over-HTTPS (DoH) server to use to resolve hostnames, instead of using the default name resolver mechanism.
-        /// </summary>
-        [Output("dohUrl")]
-        public Output<string?> DohUrl { get; private set; } = null!;
-
-        /// <summary>
-        /// (HTTP FTP) Write the received protocol headers to the specified file.
-        /// </summary>
-        [Output("dumpHeader")]
-        public Output<string?> DumpHeader { get; private set; } = null!;
-
-        /// <summary>
-        /// (TLS) Specify the path name to the Entropy Gathering Daemon socket.
-        /// </summary>
-        [Output("egdFile")]
-        public Output<string?> EgdFile { get; private set; } = null!;
-
-        /// <summary>
-        /// (TLS) Select the OpenSSL crypto engine to use for cipher operations.
-        /// </summary>
-        [Output("engine")]
-        public Output<string?> Engine { get; private set; } = null!;
+        [Output("delete")]
+        public Output<Outputs.CurlOpts?> Delete { get; private set; } = null!;
 
         /// <summary>
         /// Environment variables
         /// </summary>
         [Output("environment")]
         public Output<ImmutableDictionary<string, string>> Environment { get; private set; } = null!;
-
-        /// <summary>
-        /// (HTTP) This option makes a conditional HTTP request for the specific ETag read from the given file by sending a custom If-None-Match header using the stored ETag.
-        /// </summary>
-        [Output("etagCompare")]
-        public Output<string?> EtagCompare { get; private set; } = null!;
-
-        /// <summary>
-        /// (HTTP) This option saves an HTTP ETag to the specified file.
-        /// </summary>
-        [Output("etagSave")]
-        public Output<string?> EtagSave { get; private set; } = null!;
-
-        /// <summary>
-        /// (HTTP)  Maximum  time in seconds that you allow curl to wait for a 100-continue response when curl emits an Expects: 100-continue header in its request.
-        /// </summary>
-        [Output("expect100Timeout")]
-        public Output<int?> Expect100Timeout { get; private set; } = null!;
-
-        /// <summary>
-        /// (HTTP) Fail silently (no output at all) on server errors.
-        /// </summary>
-        [Output("fail")]
-        public Output<bool?> Fail { get; private set; } = null!;
-
-        /// <summary>
-        /// Fail and exit on the first detected transfer error.
-        /// </summary>
-        [Output("failEarly")]
-        public Output<bool?> FailEarly { get; private set; } = null!;
-
-        /// <summary>
-        /// (HTTP)  Return an error on server errors where the HTTP response code is 400 or greater).
-        /// </summary>
-        [Output("failWithBody")]
-        public Output<bool?> FailWithBody { get; private set; } = null!;
-
-        /// <summary>
-        /// (TLS) Tells curl to use false start during the TLS handshake.
-        /// </summary>
-        [Output("falseStart")]
-        public Output<bool?> FalseStart { get; private set; } = null!;
-
-        /// <summary>
-        /// (HTTP SMTP IMAP) For HTTP protocol family, this lets curl emulate a filled-in form in which a user has pressed the submit button.
-        /// </summary>
-        [Output("form")]
-        public Output<string?> Form { get; private set; } = null!;
-
-        /// <summary>
-        /// (HTTP) Tells curl to pass on names of multipart form fields and files using backslash-escaping instead of percent-encoding.
-        /// </summary>
-        [Output("formEscape")]
-        public Output<bool?> FormEscape { get; private set; } = null!;
-
-        /// <summary>
-        /// (HTTP SMTP IMAP) Similar to -F, --form except that the value string for the named parameter is used literally.
-        /// </summary>
-        [Output("formName")]
-        public Output<string?> FormName { get; private set; } = null!;
-
-        /// <summary>
-        /// (FTP) When an FTP server asks for 'account data' after user name and password has been provided, this data is sent off using the ACCT command.
-        /// </summary>
-        [Output("ftpAccount")]
-        public Output<string?> FtpAccount { get; private set; } = null!;
-
-        /// <summary>
-        /// (FTP) If authenticating with the USER and PASS commands fails, send this command.
-        /// </summary>
-        [Output("ftpAlternativeUser")]
-        public Output<string?> FtpAlternativeUser { get; private set; } = null!;
-
-        /// <summary>
-        /// (FTP  SFTP) When an FTP or SFTP URL/operation uses a path that does not currently exist on the server, the standard behavior of curl is to fail.
-        /// </summary>
-        [Output("ftpCreateDirs")]
-        public Output<bool?> FtpCreateDirs { get; private set; } = null!;
-
-        /// <summary>
-        /// (FTP) Control what method curl should use to reach a file on an FTP(S) server.
-        /// </summary>
-        [Output("ftpMethod")]
-        public Output<string?> FtpMethod { get; private set; } = null!;
-
-        /// <summary>
-        /// (FTP) Use passive mode for the data connection.
-        /// </summary>
-        [Output("ftpPasv")]
-        public Output<bool?> FtpPasv { get; private set; } = null!;
-
-        /// <summary>
-        /// (FTP)  Reverses  the  default  initiator/listener  roles  when connecting with FTP.
-        /// </summary>
-        [Output("ftpPort")]
-        public Output<string?> FtpPort { get; private set; } = null!;
-
-        /// <summary>
-        /// (FTP) Tell curl to send a PRET command before PASV (and EPSV).
-        /// </summary>
-        [Output("ftpPret")]
-        public Output<bool?> FtpPret { get; private set; } = null!;
-
-        /// <summary>
-        /// (FTP)  Tell  curl  to  not use the IP address the server suggests in its response to curl's PASV command when curl connects the data connection.
-        /// </summary>
-        [Output("ftpSkipPasvIp")]
-        public Output<bool?> FtpSkipPasvIp { get; private set; } = null!;
-
-        /// <summary>
-        /// (FTP) Sets the CCC mode. The passive mode will not initiate the shutdown, but instead wait for the server to do it, and will not reply to the shutdown from the  server.
-        /// </summary>
-        [Output("ftpSslCccMode")]
-        public Output<string?> FtpSslCccMode { get; private set; } = null!;
-
-        /// <summary>
-        /// At what stage(s) in the resource lifecycle should the command be run
-        /// </summary>
-        [Output("lifecycle")]
-        public Output<UnMango.KubernetesTheHardWay.Tools.CommandLifecycle?> Lifecycle { get; private set; } = null!;
 
         /// <summary>
         /// TODO
@@ -461,10 +79,13 @@ namespace UnMango.KubernetesTheHardWay.Tools
         public Output<ImmutableArray<object>> Triggers { get; private set; } = null!;
 
         /// <summary>
-        /// Corresponds to the URLs argument.
+        /// The command to run on update, if empty, create will 
+        /// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
+        /// are set to the stdout and stderr properties of the Command resource from previous 
+        /// create or update steps.
         /// </summary>
-        [Output("urls")]
-        public Output<Union<string, ImmutableArray<string>>> Urls { get; private set; } = null!;
+        [Output("update")]
+        public Output<Outputs.CurlOpts?> Update { get; private set; } = null!;
 
 
         /// <summary>
@@ -496,112 +117,10 @@ namespace UnMango.KubernetesTheHardWay.Tools
     public sealed class CurlArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
-        /// (HTTP) Connect through an abstract Unix domain socket, instead of using the network.
-        /// </summary>
-        [Input("abstractUnixSocket")]
-        public Input<string>? AbstractUnixSocket { get; set; }
-
-        /// <summary>
-        /// (HTTPS)  This  option enables the alt-svc parser in curl.
-        /// </summary>
-        [Input("altSvc")]
-        public Input<string>? AltSvc { get; set; }
-
-        /// <summary>
-        /// (HTTP) Tells curl to figure out authentication method by itself, and use the most secure one the remote site claims to support.
-        /// </summary>
-        [Input("anyAuth")]
-        public Input<bool>? AnyAuth { get; set; }
-
-        /// <summary>
-        /// (FTP SFTP) When used in an upload, this makes curl append to the target file instead of overwriting it.
-        /// </summary>
-        [Input("append")]
-        public Input<bool>? Append { get; set; }
-
-        /// <summary>
-        /// Use AWS V4 signature authentication in the transfer.
-        /// </summary>
-        [Input("awsSigv4")]
-        public Input<string>? AwsSigv4 { get; set; }
-
-        /// <summary>
-        /// (HTTP) Tells curl to use HTTP Basic authentication with the remote host.
-        /// </summary>
-        [Input("basic")]
-        public Input<bool>? Basic { get; set; }
-
-        /// <summary>
         /// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
         /// </summary>
         [Input("binaryPath")]
         public Input<string>? BinaryPath { get; set; }
-
-        /// <summary>
-        /// (TLS)  Tells curl to use the specified certificate file to verify the peer.
-        /// </summary>
-        [Input("cacert")]
-        public Input<string>? Cacert { get; set; }
-
-        /// <summary>
-        /// (TLS) Tells curl to use the specified certificate directory to verify the peer.
-        /// </summary>
-        [Input("capath")]
-        public Input<string>? Capath { get; set; }
-
-        /// <summary>
-        /// (TLS)  Tells  curl to use the specified client certificate file when getting a file with HTTPS, FTPS or another SSL-based protocol.
-        /// </summary>
-        [Input("cert")]
-        public Input<string>? Cert { get; set; }
-
-        /// <summary>
-        /// (TLS) Tells curl to verify the status of the server certificate by using the Certificate Status Request (aka. OCSP stapling) TLS extension.
-        /// </summary>
-        [Input("certStatus")]
-        public Input<bool>? CertStatus { get; set; }
-
-        /// <summary>
-        /// (TLS) Tells curl what type the provided client certificate is using.
-        /// </summary>
-        [Input("certType")]
-        public Input<UnMango.KubernetesTheHardWay.Tools.CurlCertType>? CertType { get; set; }
-
-        /// <summary>
-        /// (TLS) Specifies which ciphers to use in the connection.
-        /// </summary>
-        [Input("ciphers")]
-        public Input<string>? Ciphers { get; set; }
-
-        /// <summary>
-        /// (HTTP) Request a compressed response using one of the algorithms curl supports, and automatically decompress the content.
-        /// </summary>
-        [Input("compressed")]
-        public Input<bool>? Compressed { get; set; }
-
-        /// <summary>
-        /// (SCP SFTP) Enables built-in SSH compression.
-        /// </summary>
-        [Input("compressedSsh")]
-        public Input<bool>? CompressedSsh { get; set; }
-
-        /// <summary>
-        /// Specify a text file to read curl arguments from.
-        /// </summary>
-        [Input("config")]
-        public Input<string>? Config { get; set; }
-
-        /// <summary>
-        /// Maximum  time  in seconds that you allow curl's connection to take.
-        /// </summary>
-        [Input("connectTimeout")]
-        public Input<int>? ConnectTimeout { get; set; }
-
-        /// <summary>
-        /// For a request to the given HOST1:PORT1 pair, connect to HOST2:PORT2 instead.
-        /// </summary>
-        [Input("connectTo")]
-        public Input<string>? ConnectTo { get; set; }
 
         /// <summary>
         /// Connection details for the remote system
@@ -610,178 +129,18 @@ namespace UnMango.KubernetesTheHardWay.Tools
         public Input<Pulumi.Command.Remote.Inputs.ConnectionArgs> Connection { get; set; } = null!;
 
         /// <summary>
-        /// Continue/Resume a previous file transfer at the given offset.
+        /// The command to run on create.
         /// </summary>
-        [Input("continueAt")]
-        public Input<string>? ContinueAt { get; set; }
+        [Input("create")]
+        public Inputs.CurlOptsArgs? Create { get; set; }
 
         /// <summary>
-        /// (HTTP) Pass the data to the HTTP server in the Cookie header.
+        /// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+        /// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+        /// Command resource from previous create or update steps.
         /// </summary>
-        [Input("cookie")]
-        public Input<string>? Cookie { get; set; }
-
-        /// <summary>
-        /// (HTTP)  Specify  to which file you want curl to write all cookies after a completed operation.
-        /// </summary>
-        [Input("cookieJar")]
-        public Input<string>? CookieJar { get; set; }
-
-        /// <summary>
-        /// When used in conjunction with the -o, --output option, curl will create the necessary local directory hierarchy as needed.
-        /// </summary>
-        [Input("createDirs")]
-        public Input<bool>? CreateDirs { get; set; }
-
-        /// <summary>
-        /// (SFTP SCP FILE) When curl is used to create files remotely using one of the supported protocols, this option allows the user to set which 'mode' to set on the file at creation time, instead of the default 0644.
-        /// </summary>
-        [Input("createFileMode")]
-        public Input<string>? CreateFileMode { get; set; }
-
-        /// <summary>
-        /// (FTP SMTP) Convert LF to CRLF in upload. Useful for MVS (OS/390).
-        /// </summary>
-        [Input("crlf")]
-        public Input<bool>? Crlf { get; set; }
-
-        /// <summary>
-        /// (TLS) Provide a file using PEM format with a Certificate Revocation List that may specify peer certificates that are to be considered revoked.
-        /// </summary>
-        [Input("crlfFile")]
-        public Input<string>? CrlfFile { get; set; }
-
-        /// <summary>
-        /// (TLS)  Tells curl to request specific curves to use during SSL session establishment according to RFC 8422, 5.1.
-        /// </summary>
-        [Input("curves")]
-        public Input<string>? Curves { get; set; }
-
-        /// <summary>
-        /// (HTTP  MQTT) Sends the specified data in a POST request to the HTTP server, in the same way that a browser does when a user has filled in an HTML form and presses the submit button.
-        /// </summary>
-        [Input("data")]
-        public Input<string>? Data { get; set; }
-
-        /// <summary>
-        /// (HTTP) This is just an alias for -d, --data.
-        /// </summary>
-        [Input("dataAscii")]
-        public Input<string>? DataAscii { get; set; }
-
-        /// <summary>
-        /// (HTTP) This posts data exactly as specified with no extra processing whatsoever.
-        /// </summary>
-        [Input("dataBinary")]
-        public Input<string>? DataBinary { get; set; }
-
-        /// <summary>
-        /// (HTTP) This posts data similarly to -d, --data but without the special interpretation of the @ character.
-        /// </summary>
-        [Input("dataRaw")]
-        public Input<string>? DataRaw { get; set; }
-
-        /// <summary>
-        /// (HTTP) This posts data, similar to the other -d, --data options with the exception that this performs URL-encoding.
-        /// </summary>
-        [Input("dataUrlEncode")]
-        public Input<string>? DataUrlEncode { get; set; }
-
-        /// <summary>
-        /// (GSS/kerberos) Set LEVEL to tell the server what it is allowed to delegate when it comes to user credentials.
-        /// </summary>
-        [Input("delegation")]
-        public Input<UnMango.KubernetesTheHardWay.Tools.CurlDelegationLevel>? Delegation { get; set; }
-
-        /// <summary>
-        /// (HTTP) Enables HTTP Digest authentication.
-        /// </summary>
-        [Input("digest")]
-        public Input<bool>? Digest { get; set; }
-
-        /// <summary>
-        /// If used as the first parameter on the command line, the curlrc config file will not be read and used.
-        /// </summary>
-        [Input("disable")]
-        public Input<bool>? Disable { get; set; }
-
-        /// <summary>
-        /// (FTP) Tell curl to disable the use of the EPRT and LPRT commands when doing active FTP transfers
-        /// </summary>
-        [Input("disableEprt")]
-        public Input<bool>? DisableEprt { get; set; }
-
-        /// <summary>
-        /// (FTP)  Tell  curl to disable the use of the EPSV command when doing passive FTP transfers
-        /// </summary>
-        [Input("disableEpsv")]
-        public Input<bool>? DisableEpsv { get; set; }
-
-        /// <summary>
-        /// (HTTP) This tells curl to exit if passed a url containing a username.
-        /// </summary>
-        [Input("disallowUsernameInUrl")]
-        public Input<bool>? DisallowUsernameInUrl { get; set; }
-
-        /// <summary>
-        /// (DNS)  Tell  curl  to send outgoing DNS requests through &lt;interface&gt;.
-        /// </summary>
-        [Input("dnsInterface")]
-        public Input<string>? DnsInterface { get; set; }
-
-        /// <summary>
-        /// (DNS) Tell curl to bind to &lt;ip-address&gt; when making IPv4 DNS requests, so that the DNS requests originate from this address.
-        /// </summary>
-        [Input("dnsIpv4Addr")]
-        public Input<string>? DnsIpv4Addr { get; set; }
-
-        /// <summary>
-        /// (DNS) Tell curl to bind to &lt;ip-address&gt; when making IPv6 DNS requests, so that the DNS requests originate from this address.
-        /// </summary>
-        [Input("dnsIpv6Addr")]
-        public Input<string>? DnsIpv6Addr { get; set; }
-
-        /// <summary>
-        /// Set the list of DNS servers to be used instead of the system default.
-        /// </summary>
-        [Input("dnsServers")]
-        public Input<string>? DnsServers { get; set; }
-
-        /// <summary>
-        /// Same as --cert-status but used for DoH (DNS-over-HTTPS).
-        /// </summary>
-        [Input("dohCertStatus")]
-        public Input<bool>? DohCertStatus { get; set; }
-
-        /// <summary>
-        /// Same as -k, --insecure but used for DoH (DNS-over-HTTPS).
-        /// </summary>
-        [Input("dohInsecure")]
-        public Input<bool>? DohInsecure { get; set; }
-
-        /// <summary>
-        /// Specifies which DNS-over-HTTPS (DoH) server to use to resolve hostnames, instead of using the default name resolver mechanism.
-        /// </summary>
-        [Input("dohUrl")]
-        public Input<string>? DohUrl { get; set; }
-
-        /// <summary>
-        /// (HTTP FTP) Write the received protocol headers to the specified file.
-        /// </summary>
-        [Input("dumpHeader")]
-        public Input<string>? DumpHeader { get; set; }
-
-        /// <summary>
-        /// (TLS) Specify the path name to the Entropy Gathering Daemon socket.
-        /// </summary>
-        [Input("egdFile")]
-        public Input<string>? EgdFile { get; set; }
-
-        /// <summary>
-        /// (TLS) Select the OpenSSL crypto engine to use for cipher operations.
-        /// </summary>
-        [Input("engine")]
-        public Input<string>? Engine { get; set; }
+        [Input("delete")]
+        public Inputs.CurlOptsArgs? Delete { get; set; }
 
         [Input("environment")]
         private InputMap<string>? _environment;
@@ -794,126 +153,6 @@ namespace UnMango.KubernetesTheHardWay.Tools
             get => _environment ?? (_environment = new InputMap<string>());
             set => _environment = value;
         }
-
-        /// <summary>
-        /// (HTTP) This option makes a conditional HTTP request for the specific ETag read from the given file by sending a custom If-None-Match header using the stored ETag.
-        /// </summary>
-        [Input("etagCompare")]
-        public Input<string>? EtagCompare { get; set; }
-
-        /// <summary>
-        /// (HTTP) This option saves an HTTP ETag to the specified file.
-        /// </summary>
-        [Input("etagSave")]
-        public Input<string>? EtagSave { get; set; }
-
-        /// <summary>
-        /// (HTTP)  Maximum  time in seconds that you allow curl to wait for a 100-continue response when curl emits an Expects: 100-continue header in its request.
-        /// </summary>
-        [Input("expect100Timeout")]
-        public Input<int>? Expect100Timeout { get; set; }
-
-        /// <summary>
-        /// (HTTP) Fail silently (no output at all) on server errors.
-        /// </summary>
-        [Input("fail")]
-        public Input<bool>? Fail { get; set; }
-
-        /// <summary>
-        /// Fail and exit on the first detected transfer error.
-        /// </summary>
-        [Input("failEarly")]
-        public Input<bool>? FailEarly { get; set; }
-
-        /// <summary>
-        /// (HTTP)  Return an error on server errors where the HTTP response code is 400 or greater).
-        /// </summary>
-        [Input("failWithBody")]
-        public Input<bool>? FailWithBody { get; set; }
-
-        /// <summary>
-        /// (TLS) Tells curl to use false start during the TLS handshake.
-        /// </summary>
-        [Input("falseStart")]
-        public Input<bool>? FalseStart { get; set; }
-
-        /// <summary>
-        /// (HTTP SMTP IMAP) For HTTP protocol family, this lets curl emulate a filled-in form in which a user has pressed the submit button.
-        /// </summary>
-        [Input("form")]
-        public Input<string>? Form { get; set; }
-
-        /// <summary>
-        /// (HTTP) Tells curl to pass on names of multipart form fields and files using backslash-escaping instead of percent-encoding.
-        /// </summary>
-        [Input("formEscape")]
-        public Input<bool>? FormEscape { get; set; }
-
-        /// <summary>
-        /// (HTTP SMTP IMAP) Similar to -F, --form except that the value string for the named parameter is used literally.
-        /// </summary>
-        [Input("formName")]
-        public Input<string>? FormName { get; set; }
-
-        /// <summary>
-        /// (FTP) When an FTP server asks for 'account data' after user name and password has been provided, this data is sent off using the ACCT command.
-        /// </summary>
-        [Input("ftpAccount")]
-        public Input<string>? FtpAccount { get; set; }
-
-        /// <summary>
-        /// (FTP) If authenticating with the USER and PASS commands fails, send this command.
-        /// </summary>
-        [Input("ftpAlternativeUser")]
-        public Input<string>? FtpAlternativeUser { get; set; }
-
-        /// <summary>
-        /// (FTP  SFTP) When an FTP or SFTP URL/operation uses a path that does not currently exist on the server, the standard behavior of curl is to fail.
-        /// </summary>
-        [Input("ftpCreateDirs")]
-        public Input<bool>? FtpCreateDirs { get; set; }
-
-        /// <summary>
-        /// (FTP) Control what method curl should use to reach a file on an FTP(S) server.
-        /// </summary>
-        [Input("ftpMethod")]
-        public Input<string>? FtpMethod { get; set; }
-
-        /// <summary>
-        /// (FTP) Use passive mode for the data connection.
-        /// </summary>
-        [Input("ftpPasv")]
-        public Input<bool>? FtpPasv { get; set; }
-
-        /// <summary>
-        /// (FTP)  Reverses  the  default  initiator/listener  roles  when connecting with FTP.
-        /// </summary>
-        [Input("ftpPort")]
-        public Input<string>? FtpPort { get; set; }
-
-        /// <summary>
-        /// (FTP) Tell curl to send a PRET command before PASV (and EPSV).
-        /// </summary>
-        [Input("ftpPret")]
-        public Input<bool>? FtpPret { get; set; }
-
-        /// <summary>
-        /// (FTP)  Tell  curl  to  not use the IP address the server suggests in its response to curl's PASV command when curl connects the data connection.
-        /// </summary>
-        [Input("ftpSkipPasvIp")]
-        public Input<bool>? FtpSkipPasvIp { get; set; }
-
-        /// <summary>
-        /// (FTP) Sets the CCC mode. The passive mode will not initiate the shutdown, but instead wait for the server to do it, and will not reply to the shutdown from the  server.
-        /// </summary>
-        [Input("ftpSslCccMode")]
-        public Input<string>? FtpSslCccMode { get; set; }
-
-        /// <summary>
-        /// At what stage(s) in the resource lifecycle should the command be run
-        /// </summary>
-        [Input("lifecycle")]
-        public UnMango.KubernetesTheHardWay.Tools.CommandLifecycle? Lifecycle { get; set; }
 
         /// <summary>
         /// TODO
@@ -934,10 +173,13 @@ namespace UnMango.KubernetesTheHardWay.Tools
         }
 
         /// <summary>
-        /// Corresponds to the URLs argument.
+        /// The command to run on update, if empty, create will 
+        /// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
+        /// are set to the stdout and stderr properties of the Command resource from previous 
+        /// create or update steps.
         /// </summary>
-        [Input("urls", required: true)]
-        public InputUnion<string, ImmutableArray<string>> Urls { get; set; } = null!;
+        [Input("update")]
+        public Inputs.CurlOptsArgs? Update { get; set; }
 
         public CurlArgs()
         {

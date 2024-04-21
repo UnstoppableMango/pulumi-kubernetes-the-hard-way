@@ -5,7 +5,7 @@ import (
 	"github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 )
 
-func generateMkdir() schema.ResourceSpec {
+func generateMkdir() tool {
 	inputs := map[string]schema.PropertySpec{
 		"directory": props.String("The fully qualified path of the directory on the remote system."),
 		"parents":   props.Boolean("Corresponds to the `--parents` option."),
@@ -13,19 +13,29 @@ func generateMkdir() schema.ResourceSpec {
 		"removeOnDelete": props.Boolean("Remove the created directory when the `Mkdir` resource is deleted or updated."),
 	}
 
-	required := []string{
-		"directory",
-	}
+	required := []string{"directory"}
 
-	return schema.ResourceSpec{
+	typ := schema.ComplexTypeSpec{
 		ObjectTypeSpec: schema.ObjectTypeSpec{
 			Description: "Abstraction over the `mkdir` utility on a remote system.",
-			Properties:  implicitOutputs(inputs, map[string]schema.PropertySpec{}),
-			Required: append(required,
-				"parents",
-				"removeOnDelete"),
+			Type:        "object",
+			Properties:  inputs,
+			Required:    required,
 		},
-		InputProperties: inputs,
-		RequiredInputs:  required,
 	}
+
+	return tool{optsType: typ, types: map[string]schema.ComplexTypeSpec{}}
 }
+
+// If we ever get a way to add the "required outputs" logic around a complexType
+// resource := schema.ResourceSpec{
+// 	ObjectTypeSpec: schema.ObjectTypeSpec{
+// 		Description: "Abstraction over the `mkdir` utility on a remote system.",
+// 		Properties:  implicitOutputs(inputs, map[string]schema.PropertySpec{}),
+// 		Required: append(required,
+// 			"parents",
+// 			"removeOnDelete"),
+// 	},
+// 	InputProperties: inputs,
+// 	RequiredInputs:  required,
+// }

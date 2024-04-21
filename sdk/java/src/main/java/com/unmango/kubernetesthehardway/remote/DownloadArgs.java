@@ -53,13 +53,13 @@ public final class DownloadArgs extends com.pulumi.resources.ResourceArgs {
      * 
      */
     @Import(name="removeOnDelete")
-    private @Nullable Output<Boolean> removeOnDelete;
+    private @Nullable Boolean removeOnDelete;
 
     /**
      * @return Remove the downloaded fiel when the resource is deleted.
      * 
      */
-    public Optional<Output<Boolean>> removeOnDelete() {
+    public Optional<Boolean> removeOnDelete() {
         return Optional.ofNullable(this.removeOnDelete);
     }
 
@@ -153,19 +153,9 @@ public final class DownloadArgs extends com.pulumi.resources.ResourceArgs {
          * @return builder
          * 
          */
-        public Builder removeOnDelete(@Nullable Output<Boolean> removeOnDelete) {
+        public Builder removeOnDelete(@Nullable Boolean removeOnDelete) {
             $.removeOnDelete = removeOnDelete;
             return this;
-        }
-
-        /**
-         * @param removeOnDelete Remove the downloaded fiel when the resource is deleted.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder removeOnDelete(Boolean removeOnDelete) {
-            return removeOnDelete(Output.of(removeOnDelete));
         }
 
         /**

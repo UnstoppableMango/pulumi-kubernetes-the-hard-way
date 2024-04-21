@@ -19,7 +19,7 @@ func generateDownload(commandSpec schema.PackageSpec) schema.ResourceSpec {
 		},
 		"removeOnDelete": {
 			Description: "Remove the downloaded fiel when the resource is deleted.",
-			TypeSpec:    types.Boolean,
+			TypeSpec:    schema.TypeSpec{Type: "boolean", Plain: true},
 		},
 		"url": {
 			Description: "The URL of the file to be downloaded.",

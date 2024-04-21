@@ -565,3 +565,740 @@ export namespace tls {
     }
 
 }
+
+export namespace tools {
+    /**
+     * Abstraction over the `chmod` utility on a remote system.
+     */
+    export interface ChmodOpts {
+        /**
+         * Like verbose but report only when a change is made.
+         */
+        changes?: boolean;
+        /**
+         * Corresponds to the [FILE] argument.
+         */
+        files: string[];
+        /**
+         * Display help and exit.
+         */
+        help?: boolean;
+        /**
+         * Modes may be absolute or symbolic. An absolute mode is an octal number...
+         */
+        mode: string;
+        /**
+         * Do not treat '/' specially (the default).
+         */
+        noPreserveRoot?: boolean;
+        /**
+         * Fail to operate recursively on '/'.
+         */
+        preserveRoot?: boolean;
+        /**
+         * Suppress most error messages. Same as `silent`.
+         */
+        quiet?: boolean;
+        /**
+         * Change files and directories recursively.
+         */
+        recursive?: boolean;
+        /**
+         * Use RFILE's mode instead of specifying MODE values. RFILE is always dereferenced if a symbolic link.
+         */
+        reference?: string;
+        /**
+         * Suppress most error messages. Same as `quiet`.
+         */
+        silent?: boolean;
+        /**
+         * Output version information and exit.
+         */
+        version?: boolean;
+    }
+
+    /**
+     * Abstraction over the `curl` utility on a remote system. Transfer a URL.
+     */
+    export interface CurlOpts {
+        /**
+         * (HTTP) Connect through an abstract Unix domain socket, instead of using the network.
+         */
+        abstractUnixSocket?: string;
+        /**
+         * (HTTPS)  This  option enables the alt-svc parser in curl.
+         */
+        altSvc?: string;
+        /**
+         * (HTTP) Tells curl to figure out authentication method by itself, and use the most secure one the remote site claims to support.
+         */
+        anyAuth?: boolean;
+        /**
+         * (FTP SFTP) When used in an upload, this makes curl append to the target file instead of overwriting it.
+         */
+        append?: boolean;
+        /**
+         * Use AWS V4 signature authentication in the transfer.
+         */
+        awsSigv4?: string;
+        /**
+         * (HTTP) Tells curl to use HTTP Basic authentication with the remote host.
+         */
+        basic?: boolean;
+        /**
+         * (TLS)  Tells curl to use the specified certificate file to verify the peer.
+         */
+        cacert?: string;
+        /**
+         * (TLS) Tells curl to use the specified certificate directory to verify the peer.
+         */
+        capath?: string;
+        /**
+         * (TLS)  Tells  curl to use the specified client certificate file when getting a file with HTTPS, FTPS or another SSL-based protocol.
+         */
+        cert?: string;
+        /**
+         * (TLS) Tells curl to verify the status of the server certificate by using the Certificate Status Request (aka. OCSP stapling) TLS extension.
+         */
+        certStatus?: boolean;
+        /**
+         * (TLS) Tells curl what type the provided client certificate is using.
+         */
+        certType?: enums.tools.CurlCertType;
+        /**
+         * (TLS) Specifies which ciphers to use in the connection.
+         */
+        ciphers?: string;
+        /**
+         * (HTTP) Request a compressed response using one of the algorithms curl supports, and automatically decompress the content.
+         */
+        compressed?: boolean;
+        /**
+         * (SCP SFTP) Enables built-in SSH compression.
+         */
+        compressedSsh?: boolean;
+        /**
+         * Specify a text file to read curl arguments from.
+         */
+        config?: string;
+        /**
+         * Maximum  time  in seconds that you allow curl's connection to take.
+         */
+        connectTimeout?: number;
+        /**
+         * For a request to the given HOST1:PORT1 pair, connect to HOST2:PORT2 instead.
+         */
+        connectTo?: string;
+        /**
+         * Continue/Resume a previous file transfer at the given offset.
+         */
+        continueAt?: string;
+        /**
+         * (HTTP) Pass the data to the HTTP server in the Cookie header.
+         */
+        cookie?: string;
+        /**
+         * (HTTP)  Specify  to which file you want curl to write all cookies after a completed operation.
+         */
+        cookieJar?: string;
+        /**
+         * When used in conjunction with the -o, --output option, curl will create the necessary local directory hierarchy as needed.
+         */
+        createDirs?: boolean;
+        /**
+         * (SFTP SCP FILE) When curl is used to create files remotely using one of the supported protocols, this option allows the user to set which 'mode' to set on the file at creation time, instead of the default 0644.
+         */
+        createFileMode?: string;
+        /**
+         * (FTP SMTP) Convert LF to CRLF in upload. Useful for MVS (OS/390).
+         */
+        crlf?: boolean;
+        /**
+         * (TLS) Provide a file using PEM format with a Certificate Revocation List that may specify peer certificates that are to be considered revoked.
+         */
+        crlfFile?: string;
+        /**
+         * (TLS)  Tells curl to request specific curves to use during SSL session establishment according to RFC 8422, 5.1.
+         */
+        curves?: string;
+        /**
+         * (HTTP  MQTT) Sends the specified data in a POST request to the HTTP server, in the same way that a browser does when a user has filled in an HTML form and presses the submit button.
+         */
+        data?: string;
+        /**
+         * (HTTP) This is just an alias for -d, --data.
+         */
+        dataAscii?: string;
+        /**
+         * (HTTP) This posts data exactly as specified with no extra processing whatsoever.
+         */
+        dataBinary?: string;
+        /**
+         * (HTTP) This posts data similarly to -d, --data but without the special interpretation of the @ character.
+         */
+        dataRaw?: string;
+        /**
+         * (HTTP) This posts data, similar to the other -d, --data options with the exception that this performs URL-encoding.
+         */
+        dataUrlEncode?: string;
+        /**
+         * (GSS/kerberos) Set LEVEL to tell the server what it is allowed to delegate when it comes to user credentials.
+         */
+        delegation?: enums.tools.CurlDelegationLevel;
+        /**
+         * (HTTP) Enables HTTP Digest authentication.
+         */
+        digest?: boolean;
+        /**
+         * If used as the first parameter on the command line, the curlrc config file will not be read and used.
+         */
+        disable?: boolean;
+        /**
+         * (FTP) Tell curl to disable the use of the EPRT and LPRT commands when doing active FTP transfers
+         */
+        disableEprt?: boolean;
+        /**
+         * (FTP)  Tell  curl to disable the use of the EPSV command when doing passive FTP transfers
+         */
+        disableEpsv?: boolean;
+        /**
+         * (HTTP) This tells curl to exit if passed a url containing a username.
+         */
+        disallowUsernameInUrl?: boolean;
+        /**
+         * (DNS)  Tell  curl  to send outgoing DNS requests through <interface>.
+         */
+        dnsInterface?: string;
+        /**
+         * (DNS) Tell curl to bind to <ip-address> when making IPv4 DNS requests, so that the DNS requests originate from this address.
+         */
+        dnsIpv4Addr?: string;
+        /**
+         * (DNS) Tell curl to bind to <ip-address> when making IPv6 DNS requests, so that the DNS requests originate from this address.
+         */
+        dnsIpv6Addr?: string;
+        /**
+         * Set the list of DNS servers to be used instead of the system default.
+         */
+        dnsServers?: string;
+        /**
+         * Same as --cert-status but used for DoH (DNS-over-HTTPS).
+         */
+        dohCertStatus?: boolean;
+        /**
+         * Same as -k, --insecure but used for DoH (DNS-over-HTTPS).
+         */
+        dohInsecure?: boolean;
+        /**
+         * Specifies which DNS-over-HTTPS (DoH) server to use to resolve hostnames, instead of using the default name resolver mechanism.
+         */
+        dohUrl?: string;
+        /**
+         * (HTTP FTP) Write the received protocol headers to the specified file.
+         */
+        dumpHeader?: string;
+        /**
+         * (TLS) Specify the path name to the Entropy Gathering Daemon socket.
+         */
+        egdFile?: string;
+        /**
+         * (TLS) Select the OpenSSL crypto engine to use for cipher operations.
+         */
+        engine?: string;
+        /**
+         * (HTTP) This option makes a conditional HTTP request for the specific ETag read from the given file by sending a custom If-None-Match header using the stored ETag.
+         */
+        etagCompare?: string;
+        /**
+         * (HTTP) This option saves an HTTP ETag to the specified file.
+         */
+        etagSave?: string;
+        /**
+         * (HTTP)  Maximum  time in seconds that you allow curl to wait for a 100-continue response when curl emits an Expects: 100-continue header in its request.
+         */
+        expect100Timeout?: number;
+        /**
+         * (HTTP) Fail silently (no output at all) on server errors.
+         */
+        fail?: boolean;
+        /**
+         * Fail and exit on the first detected transfer error.
+         */
+        failEarly?: boolean;
+        /**
+         * (HTTP)  Return an error on server errors where the HTTP response code is 400 or greater).
+         */
+        failWithBody?: boolean;
+        /**
+         * (TLS) Tells curl to use false start during the TLS handshake.
+         */
+        falseStart?: boolean;
+        /**
+         * (HTTP SMTP IMAP) For HTTP protocol family, this lets curl emulate a filled-in form in which a user has pressed the submit button.
+         */
+        form?: string;
+        /**
+         * (HTTP) Tells curl to pass on names of multipart form fields and files using backslash-escaping instead of percent-encoding.
+         */
+        formEscape?: boolean;
+        /**
+         * (HTTP SMTP IMAP) Similar to -F, --form except that the value string for the named parameter is used literally.
+         */
+        formName?: string;
+        /**
+         * (FTP) When an FTP server asks for 'account data' after user name and password has been provided, this data is sent off using the ACCT command.
+         */
+        ftpAccount?: string;
+        /**
+         * (FTP) If authenticating with the USER and PASS commands fails, send this command.
+         */
+        ftpAlternativeUser?: string;
+        /**
+         * (FTP  SFTP) When an FTP or SFTP URL/operation uses a path that does not currently exist on the server, the standard behavior of curl is to fail.
+         */
+        ftpCreateDirs?: boolean;
+        /**
+         * (FTP) Control what method curl should use to reach a file on an FTP(S) server.
+         */
+        ftpMethod?: string;
+        /**
+         * (FTP) Use passive mode for the data connection.
+         */
+        ftpPasv?: boolean;
+        /**
+         * (FTP)  Reverses  the  default  initiator/listener  roles  when connecting with FTP.
+         */
+        ftpPort?: string;
+        /**
+         * (FTP) Tell curl to send a PRET command before PASV (and EPSV).
+         */
+        ftpPret?: boolean;
+        /**
+         * (FTP)  Tell  curl  to  not use the IP address the server suggests in its response to curl's PASV command when curl connects the data connection.
+         */
+        ftpSkipPasvIp?: boolean;
+        /**
+         * (FTP) Sets the CCC mode. The passive mode will not initiate the shutdown, but instead wait for the server to do it, and will not reply to the shutdown from the  server.
+         */
+        ftpSslCccMode?: string;
+        /**
+         * Corresponds to the URLs argument.
+         */
+        urls: string[];
+    }
+
+    /**
+     * Abstraction over the `etcdctl` utility on a remote system.
+     */
+    export interface EtcdctlOpts {
+        /**
+         * TODO
+         */
+        caCert?: string;
+        /**
+         * TODO
+         */
+        cert?: string;
+        /**
+         * TODO
+         */
+        commands: enums.tools.EtcdctlCommand;
+        /**
+         * TODO
+         */
+        endpoints?: string;
+        /**
+         * TODO
+         */
+        key?: string;
+    }
+
+    /**
+     * Abstraction over the `hostnamectl` utility on a remote system.
+     */
+    export interface HostnamectlOpts {
+        /**
+         * The argument for the specified `command`.
+         */
+        arg?: string;
+        /**
+         * Corresponds to the {COMMAND} argument.
+         */
+        command: enums.tools.HostnamectlCommand;
+        /**
+         * Print a short help text and exit.
+         */
+        help?: boolean;
+        /**
+         * Execute the operation remotely. Specify a hostname, or a username and hostname separated by '@', to connect to.
+         */
+        host?: string;
+        /**
+         * Shows output formatted as JSON.
+         */
+        json?: enums.tools.HostnamectlJsonMode;
+        /**
+         * Execute operation on a local container. Specify a container name to connect to, optionally prefixed by a user name to connect as and a separating '@' character.
+         */
+        machine?: string;
+        /**
+         * Do not query the user for authentication for privileged operations.
+         */
+        noAskPassword?: boolean;
+        /**
+         * If status is invoked (or no explicit command is given) and one of these switches is specified, hostnamectl will print out just this selected hostname. Same as `static` and `transient`.
+         */
+        pretty?: boolean;
+        /**
+         * If status is invoked (or no explicit command is given) and one of these switches is specified, hostnamectl will print out just this selected hostname. Same as `transient` and `pretty`.
+         */
+        static?: boolean;
+        /**
+         * If status is invoked (or no explicit command is given) and one of these switches is specified, hostnamectl will print out just this selected hostname. Same as `static` and `pretty`.
+         */
+        transient?: boolean;
+        /**
+         * Print a short version string and exit.
+         */
+        version?: boolean;
+    }
+
+    /**
+     * Abstraction over the `mkdir` utility on a remote system.
+     */
+    export interface MkdirOpts {
+        /**
+         * The fully qualified path of the directory on the remote system.
+         */
+        directory: string;
+        /**
+         * Corresponds to the `--parents` option.
+         */
+        parents?: boolean;
+        /**
+         * Remove the created directory when the `Mkdir` resource is deleted or updated.
+         */
+        removeOnDelete?: boolean;
+    }
+
+    /**
+     * Abstraction over the `mktemp` utility on a remote system.
+     */
+    export interface MktempOpts {
+        /**
+         * Corresponds to the `--directory` option.
+         */
+        directory?: boolean;
+        /**
+         * Corresponds to the `--dry-run` option.
+         */
+        dryRun?: boolean;
+        /**
+         * Corresponds to the `--quiet` option.
+         */
+        quiet?: boolean;
+        /**
+         * Corresponds to the `--suffix` option.
+         */
+        suffix?: string;
+        /**
+         * Corresponds to the [TEMPLATE] argument.
+         */
+        template?: string;
+        /**
+         * Corresponds to the `--tmpdir` option.
+         */
+        tmpdir?: string;
+    }
+
+    /**
+     * Abstraction over the `mv` utility on a remote system.
+     */
+    export interface MvOpts {
+        /**
+         * Corresponds to the `-b` and `--backup` options depending on whether [CONTROL] is supplied.
+         */
+        backup?: boolean;
+        /**
+         * Corresponds to the `--context` option.
+         */
+        context?: boolean;
+        /**
+         * Corresponds to the [CONTROL] argument for the `--backup` option.
+         */
+        control?: boolean;
+        /**
+         * Corresponds to the [DEST] argument.
+         */
+        dest?: string;
+        /**
+         * Corresponds to the [DIRECTORY] argument.
+         */
+        directory?: string;
+        /**
+         * Corresponds to the `--force` option.
+         */
+        force?: boolean;
+        /**
+         * Corresponds to the `--no-clobber` option.
+         */
+        noClobber?: boolean;
+        /**
+         * Corresponds to the `--no-target-directory` option.
+         */
+        noTargetDirectory?: boolean;
+        /**
+         * Corresponds to the [SOURCE] argument.
+         */
+        source: string[];
+        /**
+         * Corresponds to the `--strip-trailing-slashes` option.
+         */
+        stripTrailingSlashes?: boolean;
+        /**
+         * Corresponds to the `--suffix` option.
+         */
+        suffix?: string;
+        /**
+         * Corresponds to the `--target-directory` option.
+         */
+        targetDirectory?: boolean;
+        /**
+         * Corresponds to the `--update` option.
+         */
+        update?: boolean;
+        /**
+         * Corresponds to the `--verbose` option.
+         */
+        verbose?: boolean;
+    }
+
+    /**
+     * Abstraction over the `rm` utility on a remote system.
+     */
+    export interface RmOpts {
+        /**
+         * Corresponds to the `--dir` option.
+         */
+        dir?: boolean;
+        /**
+         * Corresponds to the [FILE] argument.
+         */
+        files: string[];
+        /**
+         * Corresponds to the `--force` option.
+         */
+        force?: boolean;
+        /**
+         * Whether rm should be run when the resource is created or deleted.
+         */
+        onDelete?: boolean;
+        /**
+         * Corresponds to the `--recursive` option.
+         */
+        recursive?: boolean;
+        /**
+         * Corresponds to the `--verbose` option.
+         */
+        verbose?: boolean;
+    }
+
+    /**
+     * Abstraction over the `sed` utility on a remote system.
+     */
+    export interface SedOpts {
+        /**
+         * annotate program execution.
+         */
+        debug?: boolean;
+        /**
+         * add the script to the commands to be executed.
+         */
+        expressions?: string[];
+        /**
+         * add the contents of script-file to the commands to be executed.
+         */
+        files?: string[];
+        /**
+         * follow symlinks when processing in place
+         */
+        followSymlinks?: boolean;
+        /**
+         * display this help and exit.
+         */
+        help?: boolean;
+        /**
+         * edit files in place (makes backup if SUFFIX supplied)
+         */
+        inPlace?: string;
+        /**
+         * corresponds to the [input-file]... argument(s).
+         */
+        inputFiles?: string[];
+        /**
+         * specify the desired line-wrap length for the `l' command
+         */
+        lineLength?: number;
+        /**
+         * separate lines by NUL characters
+         */
+        nullData?: boolean;
+        /**
+         * disable all GNU extensions.
+         */
+        posix?: boolean;
+        /**
+         * suppress automatic printing of pattern space. Same as `silent`.
+         */
+        quiet?: boolean;
+        /**
+         * use extended regular expressions in the script (for portability use POSIX -E).
+         */
+        regexpExtended?: boolean;
+        /**
+         * operate in sandbox mode (disable e/r/w commands).
+         */
+        sandbox?: boolean;
+        /**
+         * script only if no other script.
+         */
+        script?: string;
+        /**
+         * consider files as separate rather than as a single, continuous long stream.
+         */
+        separate?: boolean;
+        /**
+         * suppress automatic printing of pattern space. Same as `quiet`.
+         */
+        silent?: boolean;
+        /**
+         * load minimal amounts of data from the input files and flush the output buffers more often.
+         */
+        unbuffered?: boolean;
+        /**
+         * output version information and exit.
+         */
+        version?: boolean;
+    }
+
+    /**
+     * Abstraction over the `systemctl` utility on a remote system.
+     */
+    export interface SystemctlOpts {
+        /**
+         * Corresponds to the COMMAND argument.
+         */
+        command: enums.tools.SystemctlCommand;
+        /**
+         * Corresponds to the [PATTERN] argument
+         */
+        pattern?: string;
+        /**
+         * Corresponds to the [UNIT...] argument.
+         */
+        unit: string;
+    }
+
+    /**
+     * Abstraction over the `tar` utility on a remote system.
+     */
+    export interface TarOpts {
+        /**
+         * Corresponds to the [ARCHIVE] argument.
+         */
+        archive: string;
+        /**
+         * Corresponds to the `--directory` option.
+         */
+        directory?: string;
+        /**
+         * Corresponds to the `--extract` option.
+         */
+        extract?: boolean;
+        /**
+         * Corresponds to the [FILE] argument.
+         */
+        files?: string[];
+        /**
+         * Corresponds to the `--gzip` option.
+         */
+        gzip?: boolean;
+        /**
+         * Whether rm should be run when the resource is created or deleted.
+         */
+        onDelete?: boolean;
+        /**
+         * Corresponds to the `--recursive` option.
+         */
+        recursive?: boolean;
+        /**
+         * Corresponds to the `--strip-components` option.
+         */
+        stripComponents?: number;
+    }
+
+    /**
+     * Abstraction over the `rm` utility on a remote system.
+     */
+    export interface TeeOpts {
+        /**
+         * Append to the given FILEs, do not overwrite
+         */
+        append?: boolean;
+        /**
+         * Corresponds to the [FILE] argument.
+         */
+        files: string[];
+        /**
+         * Ignore interrupt signals.
+         */
+        ignoreInterrupts?: boolean;
+        /**
+         * Set behavior on write error.
+         */
+        outputError?: enums.tools.TeeMode;
+        /**
+         * Operate in a more appropriate MODE with pipes.
+         */
+        pipe?: boolean;
+        /**
+         * Output version information and exit.
+         */
+        version?: boolean;
+    }
+
+    /**
+     * Abstraction over the `wget` utility on a remote system.
+     */
+    export interface WgetOpts {
+        /**
+         * The  directory prefix is the directory where all other files and subdirectories will be saved to, i.e. the top of the retrieval tree.  The default is . (the current directory).
+         */
+        directoryPrefix?: string;
+        /**
+         * When in recursive mode, only HTTPS links are followed.
+         */
+        httpsOnly?: boolean;
+        /**
+         * Turn off verbose without being completely quiet (use -q for that), which means that error messages and basic information still get printed.
+         */
+        noVerbose?: boolean;
+        /**
+         * The  documents  will  not  be  written  to the appropriate files, but all will be concatenated together and written to file.
+         */
+        outputDocument?: string;
+        /**
+         * Turn off Wget's output.
+         */
+        quiet?: boolean;
+        /**
+         * Turn on time-stamping.
+         */
+        timestamping?: boolean;
+        /**
+         * Corresponds to the [URL...] argument.
+         */
+        url: string[];
+    }
+
+}

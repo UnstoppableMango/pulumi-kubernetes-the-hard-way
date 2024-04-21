@@ -28,285 +28,31 @@ export class Curl extends pulumi.ComponentResource {
     }
 
     /**
-     * (HTTP) Connect through an abstract Unix domain socket, instead of using the network.
-     */
-    public readonly abstractUnixSocket!: pulumi.Output<string | undefined>;
-    /**
-     * (HTTPS)  This  option enables the alt-svc parser in curl.
-     */
-    public readonly altSvc!: pulumi.Output<string | undefined>;
-    /**
-     * (HTTP) Tells curl to figure out authentication method by itself, and use the most secure one the remote site claims to support.
-     */
-    public readonly anyAuth!: pulumi.Output<boolean | undefined>;
-    /**
-     * (FTP SFTP) When used in an upload, this makes curl append to the target file instead of overwriting it.
-     */
-    public readonly append!: pulumi.Output<boolean | undefined>;
-    /**
-     * Use AWS V4 signature authentication in the transfer.
-     */
-    public readonly awsSigv4!: pulumi.Output<string | undefined>;
-    /**
-     * (HTTP) Tells curl to use HTTP Basic authentication with the remote host.
-     */
-    public readonly basic!: pulumi.Output<boolean | undefined>;
-    /**
      * Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
      */
     public readonly binaryPath!: pulumi.Output<string>;
-    /**
-     * (TLS)  Tells curl to use the specified certificate file to verify the peer.
-     */
-    public readonly cacert!: pulumi.Output<string | undefined>;
-    /**
-     * (TLS) Tells curl to use the specified certificate directory to verify the peer.
-     */
-    public readonly capath!: pulumi.Output<string | undefined>;
-    /**
-     * (TLS)  Tells  curl to use the specified client certificate file when getting a file with HTTPS, FTPS or another SSL-based protocol.
-     */
-    public readonly cert!: pulumi.Output<string | undefined>;
-    /**
-     * (TLS) Tells curl to verify the status of the server certificate by using the Certificate Status Request (aka. OCSP stapling) TLS extension.
-     */
-    public readonly certStatus!: pulumi.Output<boolean | undefined>;
-    /**
-     * (TLS) Tells curl what type the provided client certificate is using.
-     */
-    public readonly certType!: pulumi.Output<enums.tools.CurlCertType | undefined>;
-    /**
-     * (TLS) Specifies which ciphers to use in the connection.
-     */
-    public readonly ciphers!: pulumi.Output<string | undefined>;
     /**
      * The underlying command
      */
     public /*out*/ readonly command!: pulumi.Output<pulumiCommand.remote.Command>;
     /**
-     * (HTTP) Request a compressed response using one of the algorithms curl supports, and automatically decompress the content.
-     */
-    public readonly compressed!: pulumi.Output<boolean | undefined>;
-    /**
-     * (SCP SFTP) Enables built-in SSH compression.
-     */
-    public readonly compressedSsh!: pulumi.Output<boolean | undefined>;
-    /**
-     * Specify a text file to read curl arguments from.
-     */
-    public readonly config!: pulumi.Output<string | undefined>;
-    /**
-     * Maximum  time  in seconds that you allow curl's connection to take.
-     */
-    public readonly connectTimeout!: pulumi.Output<number | undefined>;
-    /**
-     * For a request to the given HOST1:PORT1 pair, connect to HOST2:PORT2 instead.
-     */
-    public readonly connectTo!: pulumi.Output<string | undefined>;
-    /**
      * Connection details for the remote system
      */
     public readonly connection!: pulumi.Output<pulumiCommand.types.output.remote.Connection>;
     /**
-     * Continue/Resume a previous file transfer at the given offset.
+     * The command to run on create.
      */
-    public readonly continueAt!: pulumi.Output<string | undefined>;
+    public readonly create!: pulumi.Output<outputs.tools.CurlOpts | undefined>;
     /**
-     * (HTTP) Pass the data to the HTTP server in the Cookie header.
+     * The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+     * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+     * Command resource from previous create or update steps.
      */
-    public readonly cookie!: pulumi.Output<string | undefined>;
-    /**
-     * (HTTP)  Specify  to which file you want curl to write all cookies after a completed operation.
-     */
-    public readonly cookieJar!: pulumi.Output<string | undefined>;
-    /**
-     * When used in conjunction with the -o, --output option, curl will create the necessary local directory hierarchy as needed.
-     */
-    public readonly createDirs!: pulumi.Output<boolean | undefined>;
-    /**
-     * (SFTP SCP FILE) When curl is used to create files remotely using one of the supported protocols, this option allows the user to set which 'mode' to set on the file at creation time, instead of the default 0644.
-     */
-    public readonly createFileMode!: pulumi.Output<string | undefined>;
-    /**
-     * (FTP SMTP) Convert LF to CRLF in upload. Useful for MVS (OS/390).
-     */
-    public readonly crlf!: pulumi.Output<boolean | undefined>;
-    /**
-     * (TLS) Provide a file using PEM format with a Certificate Revocation List that may specify peer certificates that are to be considered revoked.
-     */
-    public readonly crlfFile!: pulumi.Output<string | undefined>;
-    /**
-     * (TLS)  Tells curl to request specific curves to use during SSL session establishment according to RFC 8422, 5.1.
-     */
-    public readonly curves!: pulumi.Output<string | undefined>;
-    /**
-     * (HTTP  MQTT) Sends the specified data in a POST request to the HTTP server, in the same way that a browser does when a user has filled in an HTML form and presses the submit button.
-     */
-    public readonly data!: pulumi.Output<string | undefined>;
-    /**
-     * (HTTP) This is just an alias for -d, --data.
-     */
-    public readonly dataAscii!: pulumi.Output<string | undefined>;
-    /**
-     * (HTTP) This posts data exactly as specified with no extra processing whatsoever.
-     */
-    public readonly dataBinary!: pulumi.Output<string | undefined>;
-    /**
-     * (HTTP) This posts data similarly to -d, --data but without the special interpretation of the @ character.
-     */
-    public readonly dataRaw!: pulumi.Output<string | undefined>;
-    /**
-     * (HTTP) This posts data, similar to the other -d, --data options with the exception that this performs URL-encoding.
-     */
-    public readonly dataUrlEncode!: pulumi.Output<string | undefined>;
-    /**
-     * (GSS/kerberos) Set LEVEL to tell the server what it is allowed to delegate when it comes to user credentials.
-     */
-    public readonly delegation!: pulumi.Output<enums.tools.CurlDelegationLevel | undefined>;
-    /**
-     * (HTTP) Enables HTTP Digest authentication.
-     */
-    public readonly digest!: pulumi.Output<boolean | undefined>;
-    /**
-     * If used as the first parameter on the command line, the curlrc config file will not be read and used.
-     */
-    public readonly disable!: pulumi.Output<boolean | undefined>;
-    /**
-     * (FTP) Tell curl to disable the use of the EPRT and LPRT commands when doing active FTP transfers
-     */
-    public readonly disableEprt!: pulumi.Output<boolean | undefined>;
-    /**
-     * (FTP)  Tell  curl to disable the use of the EPSV command when doing passive FTP transfers
-     */
-    public readonly disableEpsv!: pulumi.Output<boolean | undefined>;
-    /**
-     * (HTTP) This tells curl to exit if passed a url containing a username.
-     */
-    public readonly disallowUsernameInUrl!: pulumi.Output<boolean | undefined>;
-    /**
-     * (DNS)  Tell  curl  to send outgoing DNS requests through <interface>.
-     */
-    public readonly dnsInterface!: pulumi.Output<string | undefined>;
-    /**
-     * (DNS) Tell curl to bind to <ip-address> when making IPv4 DNS requests, so that the DNS requests originate from this address.
-     */
-    public readonly dnsIpv4Addr!: pulumi.Output<string | undefined>;
-    /**
-     * (DNS) Tell curl to bind to <ip-address> when making IPv6 DNS requests, so that the DNS requests originate from this address.
-     */
-    public readonly dnsIpv6Addr!: pulumi.Output<string | undefined>;
-    /**
-     * Set the list of DNS servers to be used instead of the system default.
-     */
-    public readonly dnsServers!: pulumi.Output<string | undefined>;
-    /**
-     * Same as --cert-status but used for DoH (DNS-over-HTTPS).
-     */
-    public readonly dohCertStatus!: pulumi.Output<boolean | undefined>;
-    /**
-     * Same as -k, --insecure but used for DoH (DNS-over-HTTPS).
-     */
-    public readonly dohInsecure!: pulumi.Output<boolean | undefined>;
-    /**
-     * Specifies which DNS-over-HTTPS (DoH) server to use to resolve hostnames, instead of using the default name resolver mechanism.
-     */
-    public readonly dohUrl!: pulumi.Output<string | undefined>;
-    /**
-     * (HTTP FTP) Write the received protocol headers to the specified file.
-     */
-    public readonly dumpHeader!: pulumi.Output<string | undefined>;
-    /**
-     * (TLS) Specify the path name to the Entropy Gathering Daemon socket.
-     */
-    public readonly egdFile!: pulumi.Output<string | undefined>;
-    /**
-     * (TLS) Select the OpenSSL crypto engine to use for cipher operations.
-     */
-    public readonly engine!: pulumi.Output<string | undefined>;
+    public readonly delete!: pulumi.Output<outputs.tools.CurlOpts | undefined>;
     /**
      * Environment variables
      */
     public readonly environment!: pulumi.Output<{[key: string]: string}>;
-    /**
-     * (HTTP) This option makes a conditional HTTP request for the specific ETag read from the given file by sending a custom If-None-Match header using the stored ETag.
-     */
-    public readonly etagCompare!: pulumi.Output<string | undefined>;
-    /**
-     * (HTTP) This option saves an HTTP ETag to the specified file.
-     */
-    public readonly etagSave!: pulumi.Output<string | undefined>;
-    /**
-     * (HTTP)  Maximum  time in seconds that you allow curl to wait for a 100-continue response when curl emits an Expects: 100-continue header in its request.
-     */
-    public readonly expect100Timeout!: pulumi.Output<number | undefined>;
-    /**
-     * (HTTP) Fail silently (no output at all) on server errors.
-     */
-    public readonly fail!: pulumi.Output<boolean | undefined>;
-    /**
-     * Fail and exit on the first detected transfer error.
-     */
-    public readonly failEarly!: pulumi.Output<boolean | undefined>;
-    /**
-     * (HTTP)  Return an error on server errors where the HTTP response code is 400 or greater).
-     */
-    public readonly failWithBody!: pulumi.Output<boolean | undefined>;
-    /**
-     * (TLS) Tells curl to use false start during the TLS handshake.
-     */
-    public readonly falseStart!: pulumi.Output<boolean | undefined>;
-    /**
-     * (HTTP SMTP IMAP) For HTTP protocol family, this lets curl emulate a filled-in form in which a user has pressed the submit button.
-     */
-    public readonly form!: pulumi.Output<string | undefined>;
-    /**
-     * (HTTP) Tells curl to pass on names of multipart form fields and files using backslash-escaping instead of percent-encoding.
-     */
-    public readonly formEscape!: pulumi.Output<boolean | undefined>;
-    /**
-     * (HTTP SMTP IMAP) Similar to -F, --form except that the value string for the named parameter is used literally.
-     */
-    public readonly formName!: pulumi.Output<string | undefined>;
-    /**
-     * (FTP) When an FTP server asks for 'account data' after user name and password has been provided, this data is sent off using the ACCT command.
-     */
-    public readonly ftpAccount!: pulumi.Output<string | undefined>;
-    /**
-     * (FTP) If authenticating with the USER and PASS commands fails, send this command.
-     */
-    public readonly ftpAlternativeUser!: pulumi.Output<string | undefined>;
-    /**
-     * (FTP  SFTP) When an FTP or SFTP URL/operation uses a path that does not currently exist on the server, the standard behavior of curl is to fail.
-     */
-    public readonly ftpCreateDirs!: pulumi.Output<boolean | undefined>;
-    /**
-     * (FTP) Control what method curl should use to reach a file on an FTP(S) server.
-     */
-    public readonly ftpMethod!: pulumi.Output<string | undefined>;
-    /**
-     * (FTP) Use passive mode for the data connection.
-     */
-    public readonly ftpPasv!: pulumi.Output<boolean | undefined>;
-    /**
-     * (FTP)  Reverses  the  default  initiator/listener  roles  when connecting with FTP.
-     */
-    public readonly ftpPort!: pulumi.Output<string | undefined>;
-    /**
-     * (FTP) Tell curl to send a PRET command before PASV (and EPSV).
-     */
-    public readonly ftpPret!: pulumi.Output<boolean | undefined>;
-    /**
-     * (FTP)  Tell  curl  to  not use the IP address the server suggests in its response to curl's PASV command when curl connects the data connection.
-     */
-    public readonly ftpSkipPasvIp!: pulumi.Output<boolean | undefined>;
-    /**
-     * (FTP) Sets the CCC mode. The passive mode will not initiate the shutdown, but instead wait for the server to do it, and will not reply to the shutdown from the  server.
-     */
-    public readonly ftpSslCccMode!: pulumi.Output<string | undefined>;
-    /**
-     * At what stage(s) in the resource lifecycle should the command be run
-     */
-    public readonly lifecycle!: pulumi.Output<enums.tools.CommandLifecycle | undefined>;
     /**
      * TODO
      */
@@ -324,9 +70,12 @@ export class Curl extends pulumi.ComponentResource {
      */
     public readonly triggers!: pulumi.Output<any[]>;
     /**
-     * Corresponds to the URLs argument.
+     * The command to run on update, if empty, create will 
+     * run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
+     * are set to the stdout and stderr properties of the Command resource from previous 
+     * create or update steps.
      */
-    public readonly urls!: pulumi.Output<string | string[]>;
+    public readonly update!: pulumi.Output<outputs.tools.CurlOpts | undefined>;
 
     /**
      * Create a Curl resource with the given unique name, arguments, and options.
@@ -342,160 +91,29 @@ export class Curl extends pulumi.ComponentResource {
             if ((!args || args.connection === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'connection'");
             }
-            if ((!args || args.urls === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'urls'");
-            }
-            resourceInputs["abstractUnixSocket"] = args ? args.abstractUnixSocket : undefined;
-            resourceInputs["altSvc"] = args ? args.altSvc : undefined;
-            resourceInputs["anyAuth"] = args ? args.anyAuth : undefined;
-            resourceInputs["append"] = args ? args.append : undefined;
-            resourceInputs["awsSigv4"] = args ? args.awsSigv4 : undefined;
-            resourceInputs["basic"] = args ? args.basic : undefined;
             resourceInputs["binaryPath"] = args ? args.binaryPath : undefined;
-            resourceInputs["cacert"] = args ? args.cacert : undefined;
-            resourceInputs["capath"] = args ? args.capath : undefined;
-            resourceInputs["cert"] = args ? args.cert : undefined;
-            resourceInputs["certStatus"] = args ? args.certStatus : undefined;
-            resourceInputs["certType"] = args ? args.certType : undefined;
-            resourceInputs["ciphers"] = args ? args.ciphers : undefined;
-            resourceInputs["compressed"] = args ? args.compressed : undefined;
-            resourceInputs["compressedSsh"] = args ? args.compressedSsh : undefined;
-            resourceInputs["config"] = args ? args.config : undefined;
-            resourceInputs["connectTimeout"] = args ? args.connectTimeout : undefined;
-            resourceInputs["connectTo"] = args ? args.connectTo : undefined;
             resourceInputs["connection"] = args ? (args.connection ? pulumi.output(args.connection).apply(pulumiCommand.types.input.remote.connectionArgsProvideDefaults) : undefined) : undefined;
-            resourceInputs["continueAt"] = args ? args.continueAt : undefined;
-            resourceInputs["cookie"] = args ? args.cookie : undefined;
-            resourceInputs["cookieJar"] = args ? args.cookieJar : undefined;
-            resourceInputs["createDirs"] = args ? args.createDirs : undefined;
-            resourceInputs["createFileMode"] = args ? args.createFileMode : undefined;
-            resourceInputs["crlf"] = args ? args.crlf : undefined;
-            resourceInputs["crlfFile"] = args ? args.crlfFile : undefined;
-            resourceInputs["curves"] = args ? args.curves : undefined;
-            resourceInputs["data"] = args ? args.data : undefined;
-            resourceInputs["dataAscii"] = args ? args.dataAscii : undefined;
-            resourceInputs["dataBinary"] = args ? args.dataBinary : undefined;
-            resourceInputs["dataRaw"] = args ? args.dataRaw : undefined;
-            resourceInputs["dataUrlEncode"] = args ? args.dataUrlEncode : undefined;
-            resourceInputs["delegation"] = args ? args.delegation : undefined;
-            resourceInputs["digest"] = args ? args.digest : undefined;
-            resourceInputs["disable"] = args ? args.disable : undefined;
-            resourceInputs["disableEprt"] = args ? args.disableEprt : undefined;
-            resourceInputs["disableEpsv"] = args ? args.disableEpsv : undefined;
-            resourceInputs["disallowUsernameInUrl"] = args ? args.disallowUsernameInUrl : undefined;
-            resourceInputs["dnsInterface"] = args ? args.dnsInterface : undefined;
-            resourceInputs["dnsIpv4Addr"] = args ? args.dnsIpv4Addr : undefined;
-            resourceInputs["dnsIpv6Addr"] = args ? args.dnsIpv6Addr : undefined;
-            resourceInputs["dnsServers"] = args ? args.dnsServers : undefined;
-            resourceInputs["dohCertStatus"] = args ? args.dohCertStatus : undefined;
-            resourceInputs["dohInsecure"] = args ? args.dohInsecure : undefined;
-            resourceInputs["dohUrl"] = args ? args.dohUrl : undefined;
-            resourceInputs["dumpHeader"] = args ? args.dumpHeader : undefined;
-            resourceInputs["egdFile"] = args ? args.egdFile : undefined;
-            resourceInputs["engine"] = args ? args.engine : undefined;
+            resourceInputs["create"] = args ? args.create : undefined;
+            resourceInputs["delete"] = args ? args.delete : undefined;
             resourceInputs["environment"] = args ? args.environment : undefined;
-            resourceInputs["etagCompare"] = args ? args.etagCompare : undefined;
-            resourceInputs["etagSave"] = args ? args.etagSave : undefined;
-            resourceInputs["expect100Timeout"] = args ? args.expect100Timeout : undefined;
-            resourceInputs["fail"] = args ? args.fail : undefined;
-            resourceInputs["failEarly"] = args ? args.failEarly : undefined;
-            resourceInputs["failWithBody"] = args ? args.failWithBody : undefined;
-            resourceInputs["falseStart"] = args ? args.falseStart : undefined;
-            resourceInputs["form"] = args ? args.form : undefined;
-            resourceInputs["formEscape"] = args ? args.formEscape : undefined;
-            resourceInputs["formName"] = args ? args.formName : undefined;
-            resourceInputs["ftpAccount"] = args ? args.ftpAccount : undefined;
-            resourceInputs["ftpAlternativeUser"] = args ? args.ftpAlternativeUser : undefined;
-            resourceInputs["ftpCreateDirs"] = args ? args.ftpCreateDirs : undefined;
-            resourceInputs["ftpMethod"] = args ? args.ftpMethod : undefined;
-            resourceInputs["ftpPasv"] = args ? args.ftpPasv : undefined;
-            resourceInputs["ftpPort"] = args ? args.ftpPort : undefined;
-            resourceInputs["ftpPret"] = args ? args.ftpPret : undefined;
-            resourceInputs["ftpSkipPasvIp"] = args ? args.ftpSkipPasvIp : undefined;
-            resourceInputs["ftpSslCccMode"] = args ? args.ftpSslCccMode : undefined;
-            resourceInputs["lifecycle"] = args ? args.lifecycle : undefined;
             resourceInputs["stdin"] = args ? args.stdin : undefined;
             resourceInputs["triggers"] = args ? args.triggers : undefined;
-            resourceInputs["urls"] = args ? args.urls : undefined;
+            resourceInputs["update"] = args ? args.update : undefined;
             resourceInputs["command"] = undefined /*out*/;
             resourceInputs["stderr"] = undefined /*out*/;
             resourceInputs["stdout"] = undefined /*out*/;
         } else {
-            resourceInputs["abstractUnixSocket"] = undefined /*out*/;
-            resourceInputs["altSvc"] = undefined /*out*/;
-            resourceInputs["anyAuth"] = undefined /*out*/;
-            resourceInputs["append"] = undefined /*out*/;
-            resourceInputs["awsSigv4"] = undefined /*out*/;
-            resourceInputs["basic"] = undefined /*out*/;
             resourceInputs["binaryPath"] = undefined /*out*/;
-            resourceInputs["cacert"] = undefined /*out*/;
-            resourceInputs["capath"] = undefined /*out*/;
-            resourceInputs["cert"] = undefined /*out*/;
-            resourceInputs["certStatus"] = undefined /*out*/;
-            resourceInputs["certType"] = undefined /*out*/;
-            resourceInputs["ciphers"] = undefined /*out*/;
             resourceInputs["command"] = undefined /*out*/;
-            resourceInputs["compressed"] = undefined /*out*/;
-            resourceInputs["compressedSsh"] = undefined /*out*/;
-            resourceInputs["config"] = undefined /*out*/;
-            resourceInputs["connectTimeout"] = undefined /*out*/;
-            resourceInputs["connectTo"] = undefined /*out*/;
             resourceInputs["connection"] = undefined /*out*/;
-            resourceInputs["continueAt"] = undefined /*out*/;
-            resourceInputs["cookie"] = undefined /*out*/;
-            resourceInputs["cookieJar"] = undefined /*out*/;
-            resourceInputs["createDirs"] = undefined /*out*/;
-            resourceInputs["createFileMode"] = undefined /*out*/;
-            resourceInputs["crlf"] = undefined /*out*/;
-            resourceInputs["crlfFile"] = undefined /*out*/;
-            resourceInputs["curves"] = undefined /*out*/;
-            resourceInputs["data"] = undefined /*out*/;
-            resourceInputs["dataAscii"] = undefined /*out*/;
-            resourceInputs["dataBinary"] = undefined /*out*/;
-            resourceInputs["dataRaw"] = undefined /*out*/;
-            resourceInputs["dataUrlEncode"] = undefined /*out*/;
-            resourceInputs["delegation"] = undefined /*out*/;
-            resourceInputs["digest"] = undefined /*out*/;
-            resourceInputs["disable"] = undefined /*out*/;
-            resourceInputs["disableEprt"] = undefined /*out*/;
-            resourceInputs["disableEpsv"] = undefined /*out*/;
-            resourceInputs["disallowUsernameInUrl"] = undefined /*out*/;
-            resourceInputs["dnsInterface"] = undefined /*out*/;
-            resourceInputs["dnsIpv4Addr"] = undefined /*out*/;
-            resourceInputs["dnsIpv6Addr"] = undefined /*out*/;
-            resourceInputs["dnsServers"] = undefined /*out*/;
-            resourceInputs["dohCertStatus"] = undefined /*out*/;
-            resourceInputs["dohInsecure"] = undefined /*out*/;
-            resourceInputs["dohUrl"] = undefined /*out*/;
-            resourceInputs["dumpHeader"] = undefined /*out*/;
-            resourceInputs["egdFile"] = undefined /*out*/;
-            resourceInputs["engine"] = undefined /*out*/;
+            resourceInputs["create"] = undefined /*out*/;
+            resourceInputs["delete"] = undefined /*out*/;
             resourceInputs["environment"] = undefined /*out*/;
-            resourceInputs["etagCompare"] = undefined /*out*/;
-            resourceInputs["etagSave"] = undefined /*out*/;
-            resourceInputs["expect100Timeout"] = undefined /*out*/;
-            resourceInputs["fail"] = undefined /*out*/;
-            resourceInputs["failEarly"] = undefined /*out*/;
-            resourceInputs["failWithBody"] = undefined /*out*/;
-            resourceInputs["falseStart"] = undefined /*out*/;
-            resourceInputs["form"] = undefined /*out*/;
-            resourceInputs["formEscape"] = undefined /*out*/;
-            resourceInputs["formName"] = undefined /*out*/;
-            resourceInputs["ftpAccount"] = undefined /*out*/;
-            resourceInputs["ftpAlternativeUser"] = undefined /*out*/;
-            resourceInputs["ftpCreateDirs"] = undefined /*out*/;
-            resourceInputs["ftpMethod"] = undefined /*out*/;
-            resourceInputs["ftpPasv"] = undefined /*out*/;
-            resourceInputs["ftpPort"] = undefined /*out*/;
-            resourceInputs["ftpPret"] = undefined /*out*/;
-            resourceInputs["ftpSkipPasvIp"] = undefined /*out*/;
-            resourceInputs["ftpSslCccMode"] = undefined /*out*/;
-            resourceInputs["lifecycle"] = undefined /*out*/;
             resourceInputs["stderr"] = undefined /*out*/;
             resourceInputs["stdin"] = undefined /*out*/;
             resourceInputs["stdout"] = undefined /*out*/;
             resourceInputs["triggers"] = undefined /*out*/;
-            resourceInputs["urls"] = undefined /*out*/;
+            resourceInputs["update"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         super(Curl.__pulumiType, name, resourceInputs, opts, true /*remote*/);
@@ -507,281 +125,27 @@ export class Curl extends pulumi.ComponentResource {
  */
 export interface CurlArgs {
     /**
-     * (HTTP) Connect through an abstract Unix domain socket, instead of using the network.
-     */
-    abstractUnixSocket?: pulumi.Input<string>;
-    /**
-     * (HTTPS)  This  option enables the alt-svc parser in curl.
-     */
-    altSvc?: pulumi.Input<string>;
-    /**
-     * (HTTP) Tells curl to figure out authentication method by itself, and use the most secure one the remote site claims to support.
-     */
-    anyAuth?: pulumi.Input<boolean>;
-    /**
-     * (FTP SFTP) When used in an upload, this makes curl append to the target file instead of overwriting it.
-     */
-    append?: pulumi.Input<boolean>;
-    /**
-     * Use AWS V4 signature authentication in the transfer.
-     */
-    awsSigv4?: pulumi.Input<string>;
-    /**
-     * (HTTP) Tells curl to use HTTP Basic authentication with the remote host.
-     */
-    basic?: pulumi.Input<boolean>;
-    /**
      * Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
      */
     binaryPath?: pulumi.Input<string>;
-    /**
-     * (TLS)  Tells curl to use the specified certificate file to verify the peer.
-     */
-    cacert?: pulumi.Input<string>;
-    /**
-     * (TLS) Tells curl to use the specified certificate directory to verify the peer.
-     */
-    capath?: pulumi.Input<string>;
-    /**
-     * (TLS)  Tells  curl to use the specified client certificate file when getting a file with HTTPS, FTPS or another SSL-based protocol.
-     */
-    cert?: pulumi.Input<string>;
-    /**
-     * (TLS) Tells curl to verify the status of the server certificate by using the Certificate Status Request (aka. OCSP stapling) TLS extension.
-     */
-    certStatus?: pulumi.Input<boolean>;
-    /**
-     * (TLS) Tells curl what type the provided client certificate is using.
-     */
-    certType?: pulumi.Input<enums.tools.CurlCertType>;
-    /**
-     * (TLS) Specifies which ciphers to use in the connection.
-     */
-    ciphers?: pulumi.Input<string>;
-    /**
-     * (HTTP) Request a compressed response using one of the algorithms curl supports, and automatically decompress the content.
-     */
-    compressed?: pulumi.Input<boolean>;
-    /**
-     * (SCP SFTP) Enables built-in SSH compression.
-     */
-    compressedSsh?: pulumi.Input<boolean>;
-    /**
-     * Specify a text file to read curl arguments from.
-     */
-    config?: pulumi.Input<string>;
-    /**
-     * Maximum  time  in seconds that you allow curl's connection to take.
-     */
-    connectTimeout?: pulumi.Input<number>;
-    /**
-     * For a request to the given HOST1:PORT1 pair, connect to HOST2:PORT2 instead.
-     */
-    connectTo?: pulumi.Input<string>;
     /**
      * Connection details for the remote system
      */
     connection: pulumi.Input<pulumiCommand.types.input.remote.ConnectionArgs>;
     /**
-     * Continue/Resume a previous file transfer at the given offset.
+     * The command to run on create.
      */
-    continueAt?: pulumi.Input<string>;
+    create?: inputs.tools.CurlOptsArgs;
     /**
-     * (HTTP) Pass the data to the HTTP server in the Cookie header.
+     * The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+     * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+     * Command resource from previous create or update steps.
      */
-    cookie?: pulumi.Input<string>;
-    /**
-     * (HTTP)  Specify  to which file you want curl to write all cookies after a completed operation.
-     */
-    cookieJar?: pulumi.Input<string>;
-    /**
-     * When used in conjunction with the -o, --output option, curl will create the necessary local directory hierarchy as needed.
-     */
-    createDirs?: pulumi.Input<boolean>;
-    /**
-     * (SFTP SCP FILE) When curl is used to create files remotely using one of the supported protocols, this option allows the user to set which 'mode' to set on the file at creation time, instead of the default 0644.
-     */
-    createFileMode?: pulumi.Input<string>;
-    /**
-     * (FTP SMTP) Convert LF to CRLF in upload. Useful for MVS (OS/390).
-     */
-    crlf?: pulumi.Input<boolean>;
-    /**
-     * (TLS) Provide a file using PEM format with a Certificate Revocation List that may specify peer certificates that are to be considered revoked.
-     */
-    crlfFile?: pulumi.Input<string>;
-    /**
-     * (TLS)  Tells curl to request specific curves to use during SSL session establishment according to RFC 8422, 5.1.
-     */
-    curves?: pulumi.Input<string>;
-    /**
-     * (HTTP  MQTT) Sends the specified data in a POST request to the HTTP server, in the same way that a browser does when a user has filled in an HTML form and presses the submit button.
-     */
-    data?: pulumi.Input<string>;
-    /**
-     * (HTTP) This is just an alias for -d, --data.
-     */
-    dataAscii?: pulumi.Input<string>;
-    /**
-     * (HTTP) This posts data exactly as specified with no extra processing whatsoever.
-     */
-    dataBinary?: pulumi.Input<string>;
-    /**
-     * (HTTP) This posts data similarly to -d, --data but without the special interpretation of the @ character.
-     */
-    dataRaw?: pulumi.Input<string>;
-    /**
-     * (HTTP) This posts data, similar to the other -d, --data options with the exception that this performs URL-encoding.
-     */
-    dataUrlEncode?: pulumi.Input<string>;
-    /**
-     * (GSS/kerberos) Set LEVEL to tell the server what it is allowed to delegate when it comes to user credentials.
-     */
-    delegation?: pulumi.Input<enums.tools.CurlDelegationLevel>;
-    /**
-     * (HTTP) Enables HTTP Digest authentication.
-     */
-    digest?: pulumi.Input<boolean>;
-    /**
-     * If used as the first parameter on the command line, the curlrc config file will not be read and used.
-     */
-    disable?: pulumi.Input<boolean>;
-    /**
-     * (FTP) Tell curl to disable the use of the EPRT and LPRT commands when doing active FTP transfers
-     */
-    disableEprt?: pulumi.Input<boolean>;
-    /**
-     * (FTP)  Tell  curl to disable the use of the EPSV command when doing passive FTP transfers
-     */
-    disableEpsv?: pulumi.Input<boolean>;
-    /**
-     * (HTTP) This tells curl to exit if passed a url containing a username.
-     */
-    disallowUsernameInUrl?: pulumi.Input<boolean>;
-    /**
-     * (DNS)  Tell  curl  to send outgoing DNS requests through <interface>.
-     */
-    dnsInterface?: pulumi.Input<string>;
-    /**
-     * (DNS) Tell curl to bind to <ip-address> when making IPv4 DNS requests, so that the DNS requests originate from this address.
-     */
-    dnsIpv4Addr?: pulumi.Input<string>;
-    /**
-     * (DNS) Tell curl to bind to <ip-address> when making IPv6 DNS requests, so that the DNS requests originate from this address.
-     */
-    dnsIpv6Addr?: pulumi.Input<string>;
-    /**
-     * Set the list of DNS servers to be used instead of the system default.
-     */
-    dnsServers?: pulumi.Input<string>;
-    /**
-     * Same as --cert-status but used for DoH (DNS-over-HTTPS).
-     */
-    dohCertStatus?: pulumi.Input<boolean>;
-    /**
-     * Same as -k, --insecure but used for DoH (DNS-over-HTTPS).
-     */
-    dohInsecure?: pulumi.Input<boolean>;
-    /**
-     * Specifies which DNS-over-HTTPS (DoH) server to use to resolve hostnames, instead of using the default name resolver mechanism.
-     */
-    dohUrl?: pulumi.Input<string>;
-    /**
-     * (HTTP FTP) Write the received protocol headers to the specified file.
-     */
-    dumpHeader?: pulumi.Input<string>;
-    /**
-     * (TLS) Specify the path name to the Entropy Gathering Daemon socket.
-     */
-    egdFile?: pulumi.Input<string>;
-    /**
-     * (TLS) Select the OpenSSL crypto engine to use for cipher operations.
-     */
-    engine?: pulumi.Input<string>;
+    delete?: inputs.tools.CurlOptsArgs;
     /**
      * Environment variables
      */
     environment?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
-    /**
-     * (HTTP) This option makes a conditional HTTP request for the specific ETag read from the given file by sending a custom If-None-Match header using the stored ETag.
-     */
-    etagCompare?: pulumi.Input<string>;
-    /**
-     * (HTTP) This option saves an HTTP ETag to the specified file.
-     */
-    etagSave?: pulumi.Input<string>;
-    /**
-     * (HTTP)  Maximum  time in seconds that you allow curl to wait for a 100-continue response when curl emits an Expects: 100-continue header in its request.
-     */
-    expect100Timeout?: pulumi.Input<number>;
-    /**
-     * (HTTP) Fail silently (no output at all) on server errors.
-     */
-    fail?: pulumi.Input<boolean>;
-    /**
-     * Fail and exit on the first detected transfer error.
-     */
-    failEarly?: pulumi.Input<boolean>;
-    /**
-     * (HTTP)  Return an error on server errors where the HTTP response code is 400 or greater).
-     */
-    failWithBody?: pulumi.Input<boolean>;
-    /**
-     * (TLS) Tells curl to use false start during the TLS handshake.
-     */
-    falseStart?: pulumi.Input<boolean>;
-    /**
-     * (HTTP SMTP IMAP) For HTTP protocol family, this lets curl emulate a filled-in form in which a user has pressed the submit button.
-     */
-    form?: pulumi.Input<string>;
-    /**
-     * (HTTP) Tells curl to pass on names of multipart form fields and files using backslash-escaping instead of percent-encoding.
-     */
-    formEscape?: pulumi.Input<boolean>;
-    /**
-     * (HTTP SMTP IMAP) Similar to -F, --form except that the value string for the named parameter is used literally.
-     */
-    formName?: pulumi.Input<string>;
-    /**
-     * (FTP) When an FTP server asks for 'account data' after user name and password has been provided, this data is sent off using the ACCT command.
-     */
-    ftpAccount?: pulumi.Input<string>;
-    /**
-     * (FTP) If authenticating with the USER and PASS commands fails, send this command.
-     */
-    ftpAlternativeUser?: pulumi.Input<string>;
-    /**
-     * (FTP  SFTP) When an FTP or SFTP URL/operation uses a path that does not currently exist on the server, the standard behavior of curl is to fail.
-     */
-    ftpCreateDirs?: pulumi.Input<boolean>;
-    /**
-     * (FTP) Control what method curl should use to reach a file on an FTP(S) server.
-     */
-    ftpMethod?: pulumi.Input<string>;
-    /**
-     * (FTP) Use passive mode for the data connection.
-     */
-    ftpPasv?: pulumi.Input<boolean>;
-    /**
-     * (FTP)  Reverses  the  default  initiator/listener  roles  when connecting with FTP.
-     */
-    ftpPort?: pulumi.Input<string>;
-    /**
-     * (FTP) Tell curl to send a PRET command before PASV (and EPSV).
-     */
-    ftpPret?: pulumi.Input<boolean>;
-    /**
-     * (FTP)  Tell  curl  to  not use the IP address the server suggests in its response to curl's PASV command when curl connects the data connection.
-     */
-    ftpSkipPasvIp?: pulumi.Input<boolean>;
-    /**
-     * (FTP) Sets the CCC mode. The passive mode will not initiate the shutdown, but instead wait for the server to do it, and will not reply to the shutdown from the  server.
-     */
-    ftpSslCccMode?: pulumi.Input<string>;
-    /**
-     * At what stage(s) in the resource lifecycle should the command be run
-     */
-    lifecycle?: enums.tools.CommandLifecycle;
     /**
      * TODO
      */
@@ -791,7 +155,10 @@ export interface CurlArgs {
      */
     triggers?: pulumi.Input<any[]>;
     /**
-     * Corresponds to the URLs argument.
+     * The command to run on update, if empty, create will 
+     * run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
+     * are set to the stdout and stderr properties of the Command resource from previous 
+     * create or update steps.
      */
-    urls: pulumi.Input<string | pulumi.Input<string>[]>;
+    update?: inputs.tools.CurlOptsArgs;
 }

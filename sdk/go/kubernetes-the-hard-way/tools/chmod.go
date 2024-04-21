@@ -19,34 +19,18 @@ type Chmod struct {
 
 	// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
 	BinaryPath pulumi.StringOutput `pulumi:"binaryPath"`
-	// Like verbose but report only when a change is made.
-	Changes pulumi.BoolOutput `pulumi:"changes"`
 	// The underlying command
 	Command pulumiCommand.CommandOutput `pulumi:"command"`
 	// Connection details for the remote system
 	Connection pulumiCommand.ConnectionOutput `pulumi:"connection"`
+	// The command to run on create.
+	Create ChmodOptsPtrOutput `pulumi:"create"`
+	// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+	// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+	// Command resource from previous create or update steps.
+	Delete ChmodOptsPtrOutput `pulumi:"delete"`
 	// Environment variables
 	Environment pulumi.StringMapOutput `pulumi:"environment"`
-	// Corresponds to the [FILE] argument.
-	Files pulumi.AnyOutput `pulumi:"files"`
-	// Display help and exit.
-	Help pulumi.BoolOutput `pulumi:"help"`
-	// At what stage(s) in the resource lifecycle should the command be run
-	Lifecycle CommandLifecyclePtrOutput `pulumi:"lifecycle"`
-	// Modes may be absolute or symbolic. An absolute mode is an octal number...
-	Mode pulumi.StringOutput `pulumi:"mode"`
-	// Do not treat '/' specially (the default).
-	NoPreserveRoot pulumi.BoolOutput `pulumi:"noPreserveRoot"`
-	// Fail to operate recursively on '/'.
-	PreserveRoot pulumi.BoolOutput `pulumi:"preserveRoot"`
-	// Suppress most error messages. Same as `silent`.
-	Quiet pulumi.BoolOutput `pulumi:"quiet"`
-	// Change files and directories recursively.
-	Recursive pulumi.BoolOutput `pulumi:"recursive"`
-	// Use RFILE's mode instead of specifying MODE values. RFILE is always dereferenced if a symbolic link.
-	Reference pulumi.StringPtrOutput `pulumi:"reference"`
-	// Suppress most error messages. Same as `quiet`.
-	Silent pulumi.BoolOutput `pulumi:"silent"`
 	// TODO
 	Stderr pulumi.StringOutput `pulumi:"stderr"`
 	// TODO
@@ -55,8 +39,11 @@ type Chmod struct {
 	Stdout pulumi.StringOutput `pulumi:"stdout"`
 	// TODO
 	Triggers pulumi.ArrayOutput `pulumi:"triggers"`
-	// Output version information and exit.
-	Version pulumi.BoolOutput `pulumi:"version"`
+	// The command to run on update, if empty, create will
+	// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+	// are set to the stdout and stderr properties of the Command resource from previous
+	// create or update steps.
+	Update ChmodOptsPtrOutput `pulumi:"update"`
 }
 
 // NewChmod registers a new resource with the given unique name, arguments, and options.
@@ -68,12 +55,6 @@ func NewChmod(ctx *pulumi.Context,
 
 	if args.Connection == nil {
 		return nil, errors.New("invalid value for required argument 'Connection'")
-	}
-	if args.Files == nil {
-		return nil, errors.New("invalid value for required argument 'Files'")
-	}
-	if args.Mode == nil {
-		return nil, errors.New("invalid value for required argument 'Mode'")
 	}
 	args.Connection = args.Connection.ToConnectionOutput().ApplyT(func(v pulumiCommand.Connection) pulumiCommand.Connection { return *v.Defaults() }).(pulumiCommand.ConnectionOutput)
 	opts = internal.PkgResourceDefaultOpts(opts)
@@ -88,76 +69,50 @@ func NewChmod(ctx *pulumi.Context,
 type chmodArgs struct {
 	// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
 	BinaryPath *string `pulumi:"binaryPath"`
-	// Like verbose but report only when a change is made.
-	Changes *bool `pulumi:"changes"`
 	// Connection details for the remote system
 	Connection pulumiCommand.Connection `pulumi:"connection"`
+	// The command to run on create.
+	Create *ChmodOpts `pulumi:"create"`
+	// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+	// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+	// Command resource from previous create or update steps.
+	Delete *ChmodOpts `pulumi:"delete"`
 	// Environment variables
 	Environment map[string]string `pulumi:"environment"`
-	// Corresponds to the [FILE] argument.
-	Files interface{} `pulumi:"files"`
-	// Display help and exit.
-	Help *bool `pulumi:"help"`
-	// At what stage(s) in the resource lifecycle should the command be run
-	Lifecycle *CommandLifecycle `pulumi:"lifecycle"`
-	// Modes may be absolute or symbolic. An absolute mode is an octal number...
-	Mode string `pulumi:"mode"`
-	// Do not treat '/' specially (the default).
-	NoPreserveRoot *bool `pulumi:"noPreserveRoot"`
-	// Fail to operate recursively on '/'.
-	PreserveRoot *bool `pulumi:"preserveRoot"`
-	// Suppress most error messages. Same as `silent`.
-	Quiet *bool `pulumi:"quiet"`
-	// Change files and directories recursively.
-	Recursive *bool `pulumi:"recursive"`
-	// Use RFILE's mode instead of specifying MODE values. RFILE is always dereferenced if a symbolic link.
-	Reference *string `pulumi:"reference"`
-	// Suppress most error messages. Same as `quiet`.
-	Silent *bool `pulumi:"silent"`
 	// TODO
 	Stdin *string `pulumi:"stdin"`
 	// TODO
 	Triggers []interface{} `pulumi:"triggers"`
-	// Output version information and exit.
-	Version *bool `pulumi:"version"`
+	// The command to run on update, if empty, create will
+	// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+	// are set to the stdout and stderr properties of the Command resource from previous
+	// create or update steps.
+	Update *ChmodOpts `pulumi:"update"`
 }
 
 // The set of arguments for constructing a Chmod resource.
 type ChmodArgs struct {
 	// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
 	BinaryPath pulumi.StringPtrInput
-	// Like verbose but report only when a change is made.
-	Changes pulumi.BoolPtrInput
 	// Connection details for the remote system
 	Connection pulumiCommand.ConnectionInput
+	// The command to run on create.
+	Create *ChmodOptsArgs
+	// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+	// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+	// Command resource from previous create or update steps.
+	Delete *ChmodOptsArgs
 	// Environment variables
 	Environment pulumi.StringMapInput
-	// Corresponds to the [FILE] argument.
-	Files pulumi.Input
-	// Display help and exit.
-	Help pulumi.BoolPtrInput
-	// At what stage(s) in the resource lifecycle should the command be run
-	Lifecycle *CommandLifecycle
-	// Modes may be absolute or symbolic. An absolute mode is an octal number...
-	Mode pulumi.StringInput
-	// Do not treat '/' specially (the default).
-	NoPreserveRoot pulumi.BoolPtrInput
-	// Fail to operate recursively on '/'.
-	PreserveRoot pulumi.BoolPtrInput
-	// Suppress most error messages. Same as `silent`.
-	Quiet pulumi.BoolPtrInput
-	// Change files and directories recursively.
-	Recursive pulumi.BoolPtrInput
-	// Use RFILE's mode instead of specifying MODE values. RFILE is always dereferenced if a symbolic link.
-	Reference pulumi.StringPtrInput
-	// Suppress most error messages. Same as `quiet`.
-	Silent pulumi.BoolPtrInput
 	// TODO
 	Stdin pulumi.StringPtrInput
 	// TODO
 	Triggers pulumi.ArrayInput
-	// Output version information and exit.
-	Version pulumi.BoolPtrInput
+	// The command to run on update, if empty, create will
+	// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+	// are set to the stdout and stderr properties of the Command resource from previous
+	// create or update steps.
+	Update *ChmodOptsArgs
 }
 
 func (ChmodArgs) ElementType() reflect.Type {
@@ -252,11 +207,6 @@ func (o ChmodOutput) BinaryPath() pulumi.StringOutput {
 	return o.ApplyT(func(v *Chmod) pulumi.StringOutput { return v.BinaryPath }).(pulumi.StringOutput)
 }
 
-// Like verbose but report only when a change is made.
-func (o ChmodOutput) Changes() pulumi.BoolOutput {
-	return o.ApplyT(func(v *Chmod) pulumi.BoolOutput { return v.Changes }).(pulumi.BoolOutput)
-}
-
 // The underlying command
 func (o ChmodOutput) Command() pulumiCommand.CommandOutput {
 	return o.ApplyT(func(v *Chmod) pulumiCommand.CommandOutput { return v.Command }).(pulumiCommand.CommandOutput)
@@ -267,59 +217,21 @@ func (o ChmodOutput) Connection() pulumiCommand.ConnectionOutput {
 	return o.ApplyT(func(v *Chmod) pulumiCommand.ConnectionOutput { return v.Connection }).(pulumiCommand.ConnectionOutput)
 }
 
+// The command to run on create.
+func (o ChmodOutput) Create() ChmodOptsPtrOutput {
+	return o.ApplyT(func(v *Chmod) ChmodOptsPtrOutput { return v.Create }).(ChmodOptsPtrOutput)
+}
+
+// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+// Command resource from previous create or update steps.
+func (o ChmodOutput) Delete() ChmodOptsPtrOutput {
+	return o.ApplyT(func(v *Chmod) ChmodOptsPtrOutput { return v.Delete }).(ChmodOptsPtrOutput)
+}
+
 // Environment variables
 func (o ChmodOutput) Environment() pulumi.StringMapOutput {
 	return o.ApplyT(func(v *Chmod) pulumi.StringMapOutput { return v.Environment }).(pulumi.StringMapOutput)
-}
-
-// Corresponds to the [FILE] argument.
-func (o ChmodOutput) Files() pulumi.AnyOutput {
-	return o.ApplyT(func(v *Chmod) pulumi.AnyOutput { return v.Files }).(pulumi.AnyOutput)
-}
-
-// Display help and exit.
-func (o ChmodOutput) Help() pulumi.BoolOutput {
-	return o.ApplyT(func(v *Chmod) pulumi.BoolOutput { return v.Help }).(pulumi.BoolOutput)
-}
-
-// At what stage(s) in the resource lifecycle should the command be run
-func (o ChmodOutput) Lifecycle() CommandLifecyclePtrOutput {
-	return o.ApplyT(func(v *Chmod) CommandLifecyclePtrOutput { return v.Lifecycle }).(CommandLifecyclePtrOutput)
-}
-
-// Modes may be absolute or symbolic. An absolute mode is an octal number...
-func (o ChmodOutput) Mode() pulumi.StringOutput {
-	return o.ApplyT(func(v *Chmod) pulumi.StringOutput { return v.Mode }).(pulumi.StringOutput)
-}
-
-// Do not treat '/' specially (the default).
-func (o ChmodOutput) NoPreserveRoot() pulumi.BoolOutput {
-	return o.ApplyT(func(v *Chmod) pulumi.BoolOutput { return v.NoPreserveRoot }).(pulumi.BoolOutput)
-}
-
-// Fail to operate recursively on '/'.
-func (o ChmodOutput) PreserveRoot() pulumi.BoolOutput {
-	return o.ApplyT(func(v *Chmod) pulumi.BoolOutput { return v.PreserveRoot }).(pulumi.BoolOutput)
-}
-
-// Suppress most error messages. Same as `silent`.
-func (o ChmodOutput) Quiet() pulumi.BoolOutput {
-	return o.ApplyT(func(v *Chmod) pulumi.BoolOutput { return v.Quiet }).(pulumi.BoolOutput)
-}
-
-// Change files and directories recursively.
-func (o ChmodOutput) Recursive() pulumi.BoolOutput {
-	return o.ApplyT(func(v *Chmod) pulumi.BoolOutput { return v.Recursive }).(pulumi.BoolOutput)
-}
-
-// Use RFILE's mode instead of specifying MODE values. RFILE is always dereferenced if a symbolic link.
-func (o ChmodOutput) Reference() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Chmod) pulumi.StringPtrOutput { return v.Reference }).(pulumi.StringPtrOutput)
-}
-
-// Suppress most error messages. Same as `quiet`.
-func (o ChmodOutput) Silent() pulumi.BoolOutput {
-	return o.ApplyT(func(v *Chmod) pulumi.BoolOutput { return v.Silent }).(pulumi.BoolOutput)
 }
 
 // TODO
@@ -342,9 +254,12 @@ func (o ChmodOutput) Triggers() pulumi.ArrayOutput {
 	return o.ApplyT(func(v *Chmod) pulumi.ArrayOutput { return v.Triggers }).(pulumi.ArrayOutput)
 }
 
-// Output version information and exit.
-func (o ChmodOutput) Version() pulumi.BoolOutput {
-	return o.ApplyT(func(v *Chmod) pulumi.BoolOutput { return v.Version }).(pulumi.BoolOutput)
+// The command to run on update, if empty, create will
+// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+// are set to the stdout and stderr properties of the Command resource from previous
+// create or update steps.
+func (o ChmodOutput) Update() ChmodOptsPtrOutput {
+	return o.ApplyT(func(v *Chmod) ChmodOptsPtrOutput { return v.Update }).(ChmodOptsPtrOutput)
 }
 
 type ChmodArrayOutput struct{ *pulumi.OutputState }

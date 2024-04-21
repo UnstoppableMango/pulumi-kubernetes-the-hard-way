@@ -6,10 +6,10 @@ import (
 	"github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 )
 
-func generateTee() schema.ResourceSpec {
+func generateTee() tool {
 	inputs := map[string]schema.PropertySpec{
 		"append":           props.Boolean("Append to the given FILEs, do not overwrite"),
-		"files":            props.OneOrMoreStrings("Corresponds to the [FILE] argument."),
+		"files":            props.ArrayOf("string", "Corresponds to the [FILE] argument."),
 		"ignoreInterrupts": props.Boolean("Ignore interrupt signals."),
 		"outputError": {
 			Description: "Set behavior on write error.",
@@ -19,23 +19,32 @@ func generateTee() schema.ResourceSpec {
 		"version": props.Boolean("Output version information and exit."),
 	}
 
-	required := []string{
-		"files",
-		"stdin",
-	}
+	required := []string{"files"}
 
-	return schema.ResourceSpec{
+	typ := schema.ComplexTypeSpec{
 		ObjectTypeSpec: schema.ObjectTypeSpec{
 			Description: "Abstraction over the `rm` utility on a remote system.",
-			Properties:  implicitOutputs(inputs, map[string]schema.PropertySpec{}),
-			Required: append(required,
-				"append",
-				"ignoreInterrupts",
-				"pipe",
-				"version",
-			),
+			Type:        "object",
+			Properties:  inputs,
+			Required:    required,
 		},
-		InputProperties: inputs,
-		RequiredInputs:  required,
 	}
+
+	return tool{optsType: typ, types: map[string]schema.ComplexTypeSpec{}}
 }
+
+// If we ever get a way to add the "required outputs" logic around a complexType
+// resource := schema.ResourceSpec{
+// 	ObjectTypeSpec: schema.ObjectTypeSpec{
+// 		Description: "Abstraction over the `rm` utility on a remote system.",
+// 		Properties:  implicitOutputs(inputs, map[string]schema.PropertySpec{}),
+// 		Required: append(required,
+// 			"append",
+// 			"ignoreInterrupts",
+// 			"pipe",
+// 			"version",
+// 		),
+// 	},
+// 	InputProperties: inputs,
+// 	RequiredInputs:  required,
+// }

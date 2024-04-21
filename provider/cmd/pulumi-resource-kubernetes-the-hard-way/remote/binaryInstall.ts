@@ -22,7 +22,7 @@ interface BinaryInstallResult {
 export function binaryInstall(name: string, args: BinaryInstallArgs, parent: Resource): BinaryInstallResult {
   const mktemp = new Mktemp(name, {
     connection: args.connection,
-    directory: true,
+    create: { directory: true },
   }, { parent });
 
   const tmpDir = mktemp.stdout;
@@ -35,23 +35,29 @@ export function binaryInstall(name: string, args: BinaryInstallArgs, parent: Res
 
   const mkdir = new Mkdir(name, {
     connection: args.connection,
-    directory: args.directory,
-    parents: true,
+    create: {
+      directory: args.directory,
+      parents: true,
+    },
   }, { parent });
 
   const binPath = interpolate`${args.directory}/${args.binName}`;
 
   const mv = new Mv(name, {
     connection: args.connection,
-    source: interpolate`${download.destination}/${args.binName}`,
-    dest: binPath,
+    create: {
+      source: [interpolate`${download.destination}/${args.binName}`],
+      dest: binPath,
+    },
   }, { parent, dependsOn: [download, mkdir] });
 
   const rm = new Rm(name, {
     connection: args.connection,
-    files: tmpDir,
-    force: true,
-    recursive: true,
+    create: {
+      files: [tmpDir],
+      force: true,
+      recursive: true,
+    },
   }, { parent, dependsOn: mv });
 
   return { mktemp, download, mkdir, mv, path: binPath, rm };

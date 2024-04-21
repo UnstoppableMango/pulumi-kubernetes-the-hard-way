@@ -5,16 +5,13 @@ package com.unmango.kubernetesthehardway.tools;
 
 import com.pulumi.command.remote.Command;
 import com.pulumi.command.remote.outputs.Connection;
-import com.pulumi.core.Either;
 import com.pulumi.core.Output;
 import com.pulumi.core.annotations.Export;
 import com.pulumi.core.annotations.ResourceType;
 import com.pulumi.core.internal.Codegen;
 import com.unmango.kubernetesthehardway.Utilities;
 import com.unmango.kubernetesthehardway.tools.TeeArgs;
-import com.unmango.kubernetesthehardway.tools.enums.CommandLifecycle;
-import com.unmango.kubernetesthehardway.tools.enums.TeeMode;
-import java.lang.Boolean;
+import com.unmango.kubernetesthehardway.tools.outputs.TeeOpts;
 import java.lang.Object;
 import java.lang.String;
 import java.util.List;
@@ -28,20 +25,6 @@ import javax.annotation.Nullable;
  */
 @ResourceType(type="kubernetes-the-hard-way:tools:Tee")
 public class Tee extends com.pulumi.resources.ComponentResource {
-    /**
-     * Append to the given FILEs, do not overwrite
-     * 
-     */
-    @Export(name="append", refs={Boolean.class}, tree="[0]")
-    private Output<Boolean> append;
-
-    /**
-     * @return Append to the given FILEs, do not overwrite
-     * 
-     */
-    public Output<Boolean> append() {
-        return this.append;
-    }
     /**
      * Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
      * 
@@ -85,6 +68,38 @@ public class Tee extends com.pulumi.resources.ComponentResource {
         return this.connection;
     }
     /**
+     * The command to run on create.
+     * 
+     */
+    @Export(name="create", refs={TeeOpts.class}, tree="[0]")
+    private Output</* @Nullable */ TeeOpts> create;
+
+    /**
+     * @return The command to run on create.
+     * 
+     */
+    public Output<Optional<TeeOpts>> create() {
+        return Codegen.optional(this.create);
+    }
+    /**
+     * The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+     * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+     * Command resource from previous create or update steps.
+     * 
+     */
+    @Export(name="delete", refs={TeeOpts.class}, tree="[0]")
+    private Output</* @Nullable */ TeeOpts> delete;
+
+    /**
+     * @return The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+     * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+     * Command resource from previous create or update steps.
+     * 
+     */
+    public Output<Optional<TeeOpts>> delete() {
+        return Codegen.optional(this.delete);
+    }
+    /**
      * Environment variables
      * 
      */
@@ -97,76 +112,6 @@ public class Tee extends com.pulumi.resources.ComponentResource {
      */
     public Output<Map<String,String>> environment() {
         return this.environment;
-    }
-    /**
-     * Corresponds to the [FILE] argument.
-     * 
-     */
-    @Export(name="files", refs={Either.class,String.class,List.class}, tree="[0,1,[2,1]]")
-    private Output<Either<String,List<String>>> files;
-
-    /**
-     * @return Corresponds to the [FILE] argument.
-     * 
-     */
-    public Output<Either<String,List<String>>> files() {
-        return this.files;
-    }
-    /**
-     * Ignore interrupt signals.
-     * 
-     */
-    @Export(name="ignoreInterrupts", refs={Boolean.class}, tree="[0]")
-    private Output<Boolean> ignoreInterrupts;
-
-    /**
-     * @return Ignore interrupt signals.
-     * 
-     */
-    public Output<Boolean> ignoreInterrupts() {
-        return this.ignoreInterrupts;
-    }
-    /**
-     * At what stage(s) in the resource lifecycle should the command be run
-     * 
-     */
-    @Export(name="lifecycle", refs={CommandLifecycle.class}, tree="[0]")
-    private Output</* @Nullable */ CommandLifecycle> lifecycle;
-
-    /**
-     * @return At what stage(s) in the resource lifecycle should the command be run
-     * 
-     */
-    public Output<Optional<CommandLifecycle>> lifecycle() {
-        return Codegen.optional(this.lifecycle);
-    }
-    /**
-     * Set behavior on write error.
-     * 
-     */
-    @Export(name="outputError", refs={TeeMode.class}, tree="[0]")
-    private Output</* @Nullable */ TeeMode> outputError;
-
-    /**
-     * @return Set behavior on write error.
-     * 
-     */
-    public Output<Optional<TeeMode>> outputError() {
-        return Codegen.optional(this.outputError);
-    }
-    /**
-     * Operate in a more appropriate MODE with pipes.
-     * 
-     */
-    @Export(name="pipe", refs={Boolean.class}, tree="[0]")
-    private Output<Boolean> pipe;
-
-    /**
-     * @return Operate in a more appropriate MODE with pipes.
-     * 
-     */
-    public Output<Boolean> pipe() {
-        return this.pipe;
     }
     /**
      * TODO
@@ -187,14 +132,14 @@ public class Tee extends com.pulumi.resources.ComponentResource {
      * 
      */
     @Export(name="stdin", refs={String.class}, tree="[0]")
-    private Output<String> stdin;
+    private Output</* @Nullable */ String> stdin;
 
     /**
      * @return TODO
      * 
      */
-    public Output<String> stdin() {
-        return this.stdin;
+    public Output<Optional<String>> stdin() {
+        return Codegen.optional(this.stdin);
     }
     /**
      * TODO
@@ -225,18 +170,24 @@ public class Tee extends com.pulumi.resources.ComponentResource {
         return this.triggers;
     }
     /**
-     * Output version information and exit.
+     * The command to run on update, if empty, create will
+     * run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+     * are set to the stdout and stderr properties of the Command resource from previous
+     * create or update steps.
      * 
      */
-    @Export(name="version", refs={Boolean.class}, tree="[0]")
-    private Output<Boolean> version;
+    @Export(name="update", refs={TeeOpts.class}, tree="[0]")
+    private Output</* @Nullable */ TeeOpts> update;
 
     /**
-     * @return Output version information and exit.
+     * @return The command to run on update, if empty, create will
+     * run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+     * are set to the stdout and stderr properties of the Command resource from previous
+     * create or update steps.
      * 
      */
-    public Output<Boolean> version() {
-        return this.version;
+    public Output<Optional<TeeOpts>> update() {
+        return Codegen.optional(this.update);
     }
 
     /**

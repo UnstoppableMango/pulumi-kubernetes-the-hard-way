@@ -17,146 +17,20 @@ import (
 type Curl struct {
 	pulumi.ResourceState
 
-	// (HTTP) Connect through an abstract Unix domain socket, instead of using the network.
-	AbstractUnixSocket pulumi.StringPtrOutput `pulumi:"abstractUnixSocket"`
-	// (HTTPS)  This  option enables the alt-svc parser in curl.
-	AltSvc pulumi.StringPtrOutput `pulumi:"altSvc"`
-	// (HTTP) Tells curl to figure out authentication method by itself, and use the most secure one the remote site claims to support.
-	AnyAuth pulumi.BoolPtrOutput `pulumi:"anyAuth"`
-	// (FTP SFTP) When used in an upload, this makes curl append to the target file instead of overwriting it.
-	Append pulumi.BoolPtrOutput `pulumi:"append"`
-	// Use AWS V4 signature authentication in the transfer.
-	AwsSigv4 pulumi.StringPtrOutput `pulumi:"awsSigv4"`
-	// (HTTP) Tells curl to use HTTP Basic authentication with the remote host.
-	Basic pulumi.BoolPtrOutput `pulumi:"basic"`
 	// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
 	BinaryPath pulumi.StringOutput `pulumi:"binaryPath"`
-	// (TLS)  Tells curl to use the specified certificate file to verify the peer.
-	Cacert pulumi.StringPtrOutput `pulumi:"cacert"`
-	// (TLS) Tells curl to use the specified certificate directory to verify the peer.
-	Capath pulumi.StringPtrOutput `pulumi:"capath"`
-	// (TLS)  Tells  curl to use the specified client certificate file when getting a file with HTTPS, FTPS or another SSL-based protocol.
-	Cert pulumi.StringPtrOutput `pulumi:"cert"`
-	// (TLS) Tells curl to verify the status of the server certificate by using the Certificate Status Request (aka. OCSP stapling) TLS extension.
-	CertStatus pulumi.BoolPtrOutput `pulumi:"certStatus"`
-	// (TLS) Tells curl what type the provided client certificate is using.
-	CertType CurlCertTypePtrOutput `pulumi:"certType"`
-	// (TLS) Specifies which ciphers to use in the connection.
-	Ciphers pulumi.StringPtrOutput `pulumi:"ciphers"`
 	// The underlying command
 	Command pulumiCommand.CommandOutput `pulumi:"command"`
-	// (HTTP) Request a compressed response using one of the algorithms curl supports, and automatically decompress the content.
-	Compressed pulumi.BoolPtrOutput `pulumi:"compressed"`
-	// (SCP SFTP) Enables built-in SSH compression.
-	CompressedSsh pulumi.BoolPtrOutput `pulumi:"compressedSsh"`
-	// Specify a text file to read curl arguments from.
-	Config pulumi.StringPtrOutput `pulumi:"config"`
-	// Maximum  time  in seconds that you allow curl's connection to take.
-	ConnectTimeout pulumi.IntPtrOutput `pulumi:"connectTimeout"`
-	// For a request to the given HOST1:PORT1 pair, connect to HOST2:PORT2 instead.
-	ConnectTo pulumi.StringPtrOutput `pulumi:"connectTo"`
 	// Connection details for the remote system
 	Connection pulumiCommand.ConnectionOutput `pulumi:"connection"`
-	// Continue/Resume a previous file transfer at the given offset.
-	ContinueAt pulumi.StringPtrOutput `pulumi:"continueAt"`
-	// (HTTP) Pass the data to the HTTP server in the Cookie header.
-	Cookie pulumi.StringPtrOutput `pulumi:"cookie"`
-	// (HTTP)  Specify  to which file you want curl to write all cookies after a completed operation.
-	CookieJar pulumi.StringPtrOutput `pulumi:"cookieJar"`
-	// When used in conjunction with the -o, --output option, curl will create the necessary local directory hierarchy as needed.
-	CreateDirs pulumi.BoolPtrOutput `pulumi:"createDirs"`
-	// (SFTP SCP FILE) When curl is used to create files remotely using one of the supported protocols, this option allows the user to set which 'mode' to set on the file at creation time, instead of the default 0644.
-	CreateFileMode pulumi.StringPtrOutput `pulumi:"createFileMode"`
-	// (FTP SMTP) Convert LF to CRLF in upload. Useful for MVS (OS/390).
-	Crlf pulumi.BoolPtrOutput `pulumi:"crlf"`
-	// (TLS) Provide a file using PEM format with a Certificate Revocation List that may specify peer certificates that are to be considered revoked.
-	CrlfFile pulumi.StringPtrOutput `pulumi:"crlfFile"`
-	// (TLS)  Tells curl to request specific curves to use during SSL session establishment according to RFC 8422, 5.1.
-	Curves pulumi.StringPtrOutput `pulumi:"curves"`
-	// (HTTP  MQTT) Sends the specified data in a POST request to the HTTP server, in the same way that a browser does when a user has filled in an HTML form and presses the submit button.
-	Data pulumi.StringPtrOutput `pulumi:"data"`
-	// (HTTP) This is just an alias for -d, --data.
-	DataAscii pulumi.StringPtrOutput `pulumi:"dataAscii"`
-	// (HTTP) This posts data exactly as specified with no extra processing whatsoever.
-	DataBinary pulumi.StringPtrOutput `pulumi:"dataBinary"`
-	// (HTTP) This posts data similarly to -d, --data but without the special interpretation of the @ character.
-	DataRaw pulumi.StringPtrOutput `pulumi:"dataRaw"`
-	// (HTTP) This posts data, similar to the other -d, --data options with the exception that this performs URL-encoding.
-	DataUrlEncode pulumi.StringPtrOutput `pulumi:"dataUrlEncode"`
-	// (GSS/kerberos) Set LEVEL to tell the server what it is allowed to delegate when it comes to user credentials.
-	Delegation CurlDelegationLevelPtrOutput `pulumi:"delegation"`
-	// (HTTP) Enables HTTP Digest authentication.
-	Digest pulumi.BoolPtrOutput `pulumi:"digest"`
-	// If used as the first parameter on the command line, the curlrc config file will not be read and used.
-	Disable pulumi.BoolPtrOutput `pulumi:"disable"`
-	// (FTP) Tell curl to disable the use of the EPRT and LPRT commands when doing active FTP transfers
-	DisableEprt pulumi.BoolPtrOutput `pulumi:"disableEprt"`
-	// (FTP)  Tell  curl to disable the use of the EPSV command when doing passive FTP transfers
-	DisableEpsv pulumi.BoolPtrOutput `pulumi:"disableEpsv"`
-	// (HTTP) This tells curl to exit if passed a url containing a username.
-	DisallowUsernameInUrl pulumi.BoolPtrOutput `pulumi:"disallowUsernameInUrl"`
-	// (DNS)  Tell  curl  to send outgoing DNS requests through <interface>.
-	DnsInterface pulumi.StringPtrOutput `pulumi:"dnsInterface"`
-	// (DNS) Tell curl to bind to <ip-address> when making IPv4 DNS requests, so that the DNS requests originate from this address.
-	DnsIpv4Addr pulumi.StringPtrOutput `pulumi:"dnsIpv4Addr"`
-	// (DNS) Tell curl to bind to <ip-address> when making IPv6 DNS requests, so that the DNS requests originate from this address.
-	DnsIpv6Addr pulumi.StringPtrOutput `pulumi:"dnsIpv6Addr"`
-	// Set the list of DNS servers to be used instead of the system default.
-	DnsServers pulumi.StringPtrOutput `pulumi:"dnsServers"`
-	// Same as --cert-status but used for DoH (DNS-over-HTTPS).
-	DohCertStatus pulumi.BoolPtrOutput `pulumi:"dohCertStatus"`
-	// Same as -k, --insecure but used for DoH (DNS-over-HTTPS).
-	DohInsecure pulumi.BoolPtrOutput `pulumi:"dohInsecure"`
-	// Specifies which DNS-over-HTTPS (DoH) server to use to resolve hostnames, instead of using the default name resolver mechanism.
-	DohUrl pulumi.StringPtrOutput `pulumi:"dohUrl"`
-	// (HTTP FTP) Write the received protocol headers to the specified file.
-	DumpHeader pulumi.StringPtrOutput `pulumi:"dumpHeader"`
-	// (TLS) Specify the path name to the Entropy Gathering Daemon socket.
-	EgdFile pulumi.StringPtrOutput `pulumi:"egdFile"`
-	// (TLS) Select the OpenSSL crypto engine to use for cipher operations.
-	Engine pulumi.StringPtrOutput `pulumi:"engine"`
+	// The command to run on create.
+	Create CurlOptsPtrOutput `pulumi:"create"`
+	// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+	// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+	// Command resource from previous create or update steps.
+	Delete CurlOptsPtrOutput `pulumi:"delete"`
 	// Environment variables
 	Environment pulumi.StringMapOutput `pulumi:"environment"`
-	// (HTTP) This option makes a conditional HTTP request for the specific ETag read from the given file by sending a custom If-None-Match header using the stored ETag.
-	EtagCompare pulumi.StringPtrOutput `pulumi:"etagCompare"`
-	// (HTTP) This option saves an HTTP ETag to the specified file.
-	EtagSave pulumi.StringPtrOutput `pulumi:"etagSave"`
-	// (HTTP)  Maximum  time in seconds that you allow curl to wait for a 100-continue response when curl emits an Expects: 100-continue header in its request.
-	Expect100Timeout pulumi.IntPtrOutput `pulumi:"expect100Timeout"`
-	// (HTTP) Fail silently (no output at all) on server errors.
-	Fail pulumi.BoolPtrOutput `pulumi:"fail"`
-	// Fail and exit on the first detected transfer error.
-	FailEarly pulumi.BoolPtrOutput `pulumi:"failEarly"`
-	// (HTTP)  Return an error on server errors where the HTTP response code is 400 or greater).
-	FailWithBody pulumi.BoolPtrOutput `pulumi:"failWithBody"`
-	// (TLS) Tells curl to use false start during the TLS handshake.
-	FalseStart pulumi.BoolPtrOutput `pulumi:"falseStart"`
-	// (HTTP SMTP IMAP) For HTTP protocol family, this lets curl emulate a filled-in form in which a user has pressed the submit button.
-	Form pulumi.StringPtrOutput `pulumi:"form"`
-	// (HTTP) Tells curl to pass on names of multipart form fields and files using backslash-escaping instead of percent-encoding.
-	FormEscape pulumi.BoolPtrOutput `pulumi:"formEscape"`
-	// (HTTP SMTP IMAP) Similar to -F, --form except that the value string for the named parameter is used literally.
-	FormName pulumi.StringPtrOutput `pulumi:"formName"`
-	// (FTP) When an FTP server asks for 'account data' after user name and password has been provided, this data is sent off using the ACCT command.
-	FtpAccount pulumi.StringPtrOutput `pulumi:"ftpAccount"`
-	// (FTP) If authenticating with the USER and PASS commands fails, send this command.
-	FtpAlternativeUser pulumi.StringPtrOutput `pulumi:"ftpAlternativeUser"`
-	// (FTP  SFTP) When an FTP or SFTP URL/operation uses a path that does not currently exist on the server, the standard behavior of curl is to fail.
-	FtpCreateDirs pulumi.BoolPtrOutput `pulumi:"ftpCreateDirs"`
-	// (FTP) Control what method curl should use to reach a file on an FTP(S) server.
-	FtpMethod pulumi.StringPtrOutput `pulumi:"ftpMethod"`
-	// (FTP) Use passive mode for the data connection.
-	FtpPasv pulumi.BoolPtrOutput `pulumi:"ftpPasv"`
-	// (FTP)  Reverses  the  default  initiator/listener  roles  when connecting with FTP.
-	FtpPort pulumi.StringPtrOutput `pulumi:"ftpPort"`
-	// (FTP) Tell curl to send a PRET command before PASV (and EPSV).
-	FtpPret pulumi.BoolPtrOutput `pulumi:"ftpPret"`
-	// (FTP)  Tell  curl  to  not use the IP address the server suggests in its response to curl's PASV command when curl connects the data connection.
-	FtpSkipPasvIp pulumi.BoolPtrOutput `pulumi:"ftpSkipPasvIp"`
-	// (FTP) Sets the CCC mode. The passive mode will not initiate the shutdown, but instead wait for the server to do it, and will not reply to the shutdown from the  server.
-	FtpSslCccMode pulumi.StringPtrOutput `pulumi:"ftpSslCccMode"`
-	// At what stage(s) in the resource lifecycle should the command be run
-	Lifecycle CommandLifecyclePtrOutput `pulumi:"lifecycle"`
 	// TODO
 	Stderr pulumi.StringOutput `pulumi:"stderr"`
 	// TODO
@@ -165,8 +39,11 @@ type Curl struct {
 	Stdout pulumi.StringOutput `pulumi:"stdout"`
 	// TODO
 	Triggers pulumi.ArrayOutput `pulumi:"triggers"`
-	// Corresponds to the URLs argument.
-	Urls pulumi.AnyOutput `pulumi:"urls"`
+	// The command to run on update, if empty, create will
+	// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+	// are set to the stdout and stderr properties of the Command resource from previous
+	// create or update steps.
+	Update CurlOptsPtrOutput `pulumi:"update"`
 }
 
 // NewCurl registers a new resource with the given unique name, arguments, and options.
@@ -179,9 +56,6 @@ func NewCurl(ctx *pulumi.Context,
 	if args.Connection == nil {
 		return nil, errors.New("invalid value for required argument 'Connection'")
 	}
-	if args.Urls == nil {
-		return nil, errors.New("invalid value for required argument 'Urls'")
-	}
 	args.Connection = args.Connection.ToConnectionOutput().ApplyT(func(v pulumiCommand.Connection) pulumiCommand.Connection { return *v.Defaults() }).(pulumiCommand.ConnectionOutput)
 	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource Curl
@@ -193,298 +67,52 @@ func NewCurl(ctx *pulumi.Context,
 }
 
 type curlArgs struct {
-	// (HTTP) Connect through an abstract Unix domain socket, instead of using the network.
-	AbstractUnixSocket *string `pulumi:"abstractUnixSocket"`
-	// (HTTPS)  This  option enables the alt-svc parser in curl.
-	AltSvc *string `pulumi:"altSvc"`
-	// (HTTP) Tells curl to figure out authentication method by itself, and use the most secure one the remote site claims to support.
-	AnyAuth *bool `pulumi:"anyAuth"`
-	// (FTP SFTP) When used in an upload, this makes curl append to the target file instead of overwriting it.
-	Append *bool `pulumi:"append"`
-	// Use AWS V4 signature authentication in the transfer.
-	AwsSigv4 *string `pulumi:"awsSigv4"`
-	// (HTTP) Tells curl to use HTTP Basic authentication with the remote host.
-	Basic *bool `pulumi:"basic"`
 	// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
 	BinaryPath *string `pulumi:"binaryPath"`
-	// (TLS)  Tells curl to use the specified certificate file to verify the peer.
-	Cacert *string `pulumi:"cacert"`
-	// (TLS) Tells curl to use the specified certificate directory to verify the peer.
-	Capath *string `pulumi:"capath"`
-	// (TLS)  Tells  curl to use the specified client certificate file when getting a file with HTTPS, FTPS or another SSL-based protocol.
-	Cert *string `pulumi:"cert"`
-	// (TLS) Tells curl to verify the status of the server certificate by using the Certificate Status Request (aka. OCSP stapling) TLS extension.
-	CertStatus *bool `pulumi:"certStatus"`
-	// (TLS) Tells curl what type the provided client certificate is using.
-	CertType *CurlCertType `pulumi:"certType"`
-	// (TLS) Specifies which ciphers to use in the connection.
-	Ciphers *string `pulumi:"ciphers"`
-	// (HTTP) Request a compressed response using one of the algorithms curl supports, and automatically decompress the content.
-	Compressed *bool `pulumi:"compressed"`
-	// (SCP SFTP) Enables built-in SSH compression.
-	CompressedSsh *bool `pulumi:"compressedSsh"`
-	// Specify a text file to read curl arguments from.
-	Config *string `pulumi:"config"`
-	// Maximum  time  in seconds that you allow curl's connection to take.
-	ConnectTimeout *int `pulumi:"connectTimeout"`
-	// For a request to the given HOST1:PORT1 pair, connect to HOST2:PORT2 instead.
-	ConnectTo *string `pulumi:"connectTo"`
 	// Connection details for the remote system
 	Connection pulumiCommand.Connection `pulumi:"connection"`
-	// Continue/Resume a previous file transfer at the given offset.
-	ContinueAt *string `pulumi:"continueAt"`
-	// (HTTP) Pass the data to the HTTP server in the Cookie header.
-	Cookie *string `pulumi:"cookie"`
-	// (HTTP)  Specify  to which file you want curl to write all cookies after a completed operation.
-	CookieJar *string `pulumi:"cookieJar"`
-	// When used in conjunction with the -o, --output option, curl will create the necessary local directory hierarchy as needed.
-	CreateDirs *bool `pulumi:"createDirs"`
-	// (SFTP SCP FILE) When curl is used to create files remotely using one of the supported protocols, this option allows the user to set which 'mode' to set on the file at creation time, instead of the default 0644.
-	CreateFileMode *string `pulumi:"createFileMode"`
-	// (FTP SMTP) Convert LF to CRLF in upload. Useful for MVS (OS/390).
-	Crlf *bool `pulumi:"crlf"`
-	// (TLS) Provide a file using PEM format with a Certificate Revocation List that may specify peer certificates that are to be considered revoked.
-	CrlfFile *string `pulumi:"crlfFile"`
-	// (TLS)  Tells curl to request specific curves to use during SSL session establishment according to RFC 8422, 5.1.
-	Curves *string `pulumi:"curves"`
-	// (HTTP  MQTT) Sends the specified data in a POST request to the HTTP server, in the same way that a browser does when a user has filled in an HTML form and presses the submit button.
-	Data *string `pulumi:"data"`
-	// (HTTP) This is just an alias for -d, --data.
-	DataAscii *string `pulumi:"dataAscii"`
-	// (HTTP) This posts data exactly as specified with no extra processing whatsoever.
-	DataBinary *string `pulumi:"dataBinary"`
-	// (HTTP) This posts data similarly to -d, --data but without the special interpretation of the @ character.
-	DataRaw *string `pulumi:"dataRaw"`
-	// (HTTP) This posts data, similar to the other -d, --data options with the exception that this performs URL-encoding.
-	DataUrlEncode *string `pulumi:"dataUrlEncode"`
-	// (GSS/kerberos) Set LEVEL to tell the server what it is allowed to delegate when it comes to user credentials.
-	Delegation *CurlDelegationLevel `pulumi:"delegation"`
-	// (HTTP) Enables HTTP Digest authentication.
-	Digest *bool `pulumi:"digest"`
-	// If used as the first parameter on the command line, the curlrc config file will not be read and used.
-	Disable *bool `pulumi:"disable"`
-	// (FTP) Tell curl to disable the use of the EPRT and LPRT commands when doing active FTP transfers
-	DisableEprt *bool `pulumi:"disableEprt"`
-	// (FTP)  Tell  curl to disable the use of the EPSV command when doing passive FTP transfers
-	DisableEpsv *bool `pulumi:"disableEpsv"`
-	// (HTTP) This tells curl to exit if passed a url containing a username.
-	DisallowUsernameInUrl *bool `pulumi:"disallowUsernameInUrl"`
-	// (DNS)  Tell  curl  to send outgoing DNS requests through <interface>.
-	DnsInterface *string `pulumi:"dnsInterface"`
-	// (DNS) Tell curl to bind to <ip-address> when making IPv4 DNS requests, so that the DNS requests originate from this address.
-	DnsIpv4Addr *string `pulumi:"dnsIpv4Addr"`
-	// (DNS) Tell curl to bind to <ip-address> when making IPv6 DNS requests, so that the DNS requests originate from this address.
-	DnsIpv6Addr *string `pulumi:"dnsIpv6Addr"`
-	// Set the list of DNS servers to be used instead of the system default.
-	DnsServers *string `pulumi:"dnsServers"`
-	// Same as --cert-status but used for DoH (DNS-over-HTTPS).
-	DohCertStatus *bool `pulumi:"dohCertStatus"`
-	// Same as -k, --insecure but used for DoH (DNS-over-HTTPS).
-	DohInsecure *bool `pulumi:"dohInsecure"`
-	// Specifies which DNS-over-HTTPS (DoH) server to use to resolve hostnames, instead of using the default name resolver mechanism.
-	DohUrl *string `pulumi:"dohUrl"`
-	// (HTTP FTP) Write the received protocol headers to the specified file.
-	DumpHeader *string `pulumi:"dumpHeader"`
-	// (TLS) Specify the path name to the Entropy Gathering Daemon socket.
-	EgdFile *string `pulumi:"egdFile"`
-	// (TLS) Select the OpenSSL crypto engine to use for cipher operations.
-	Engine *string `pulumi:"engine"`
+	// The command to run on create.
+	Create *CurlOpts `pulumi:"create"`
+	// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+	// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+	// Command resource from previous create or update steps.
+	Delete *CurlOpts `pulumi:"delete"`
 	// Environment variables
 	Environment map[string]string `pulumi:"environment"`
-	// (HTTP) This option makes a conditional HTTP request for the specific ETag read from the given file by sending a custom If-None-Match header using the stored ETag.
-	EtagCompare *string `pulumi:"etagCompare"`
-	// (HTTP) This option saves an HTTP ETag to the specified file.
-	EtagSave *string `pulumi:"etagSave"`
-	// (HTTP)  Maximum  time in seconds that you allow curl to wait for a 100-continue response when curl emits an Expects: 100-continue header in its request.
-	Expect100Timeout *int `pulumi:"expect100Timeout"`
-	// (HTTP) Fail silently (no output at all) on server errors.
-	Fail *bool `pulumi:"fail"`
-	// Fail and exit on the first detected transfer error.
-	FailEarly *bool `pulumi:"failEarly"`
-	// (HTTP)  Return an error on server errors where the HTTP response code is 400 or greater).
-	FailWithBody *bool `pulumi:"failWithBody"`
-	// (TLS) Tells curl to use false start during the TLS handshake.
-	FalseStart *bool `pulumi:"falseStart"`
-	// (HTTP SMTP IMAP) For HTTP protocol family, this lets curl emulate a filled-in form in which a user has pressed the submit button.
-	Form *string `pulumi:"form"`
-	// (HTTP) Tells curl to pass on names of multipart form fields and files using backslash-escaping instead of percent-encoding.
-	FormEscape *bool `pulumi:"formEscape"`
-	// (HTTP SMTP IMAP) Similar to -F, --form except that the value string for the named parameter is used literally.
-	FormName *string `pulumi:"formName"`
-	// (FTP) When an FTP server asks for 'account data' after user name and password has been provided, this data is sent off using the ACCT command.
-	FtpAccount *string `pulumi:"ftpAccount"`
-	// (FTP) If authenticating with the USER and PASS commands fails, send this command.
-	FtpAlternativeUser *string `pulumi:"ftpAlternativeUser"`
-	// (FTP  SFTP) When an FTP or SFTP URL/operation uses a path that does not currently exist on the server, the standard behavior of curl is to fail.
-	FtpCreateDirs *bool `pulumi:"ftpCreateDirs"`
-	// (FTP) Control what method curl should use to reach a file on an FTP(S) server.
-	FtpMethod *string `pulumi:"ftpMethod"`
-	// (FTP) Use passive mode for the data connection.
-	FtpPasv *bool `pulumi:"ftpPasv"`
-	// (FTP)  Reverses  the  default  initiator/listener  roles  when connecting with FTP.
-	FtpPort *string `pulumi:"ftpPort"`
-	// (FTP) Tell curl to send a PRET command before PASV (and EPSV).
-	FtpPret *bool `pulumi:"ftpPret"`
-	// (FTP)  Tell  curl  to  not use the IP address the server suggests in its response to curl's PASV command when curl connects the data connection.
-	FtpSkipPasvIp *bool `pulumi:"ftpSkipPasvIp"`
-	// (FTP) Sets the CCC mode. The passive mode will not initiate the shutdown, but instead wait for the server to do it, and will not reply to the shutdown from the  server.
-	FtpSslCccMode *string `pulumi:"ftpSslCccMode"`
-	// At what stage(s) in the resource lifecycle should the command be run
-	Lifecycle *CommandLifecycle `pulumi:"lifecycle"`
 	// TODO
 	Stdin *string `pulumi:"stdin"`
 	// TODO
 	Triggers []interface{} `pulumi:"triggers"`
-	// Corresponds to the URLs argument.
-	Urls interface{} `pulumi:"urls"`
+	// The command to run on update, if empty, create will
+	// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+	// are set to the stdout and stderr properties of the Command resource from previous
+	// create or update steps.
+	Update *CurlOpts `pulumi:"update"`
 }
 
 // The set of arguments for constructing a Curl resource.
 type CurlArgs struct {
-	// (HTTP) Connect through an abstract Unix domain socket, instead of using the network.
-	AbstractUnixSocket pulumi.StringPtrInput
-	// (HTTPS)  This  option enables the alt-svc parser in curl.
-	AltSvc pulumi.StringPtrInput
-	// (HTTP) Tells curl to figure out authentication method by itself, and use the most secure one the remote site claims to support.
-	AnyAuth pulumi.BoolPtrInput
-	// (FTP SFTP) When used in an upload, this makes curl append to the target file instead of overwriting it.
-	Append pulumi.BoolPtrInput
-	// Use AWS V4 signature authentication in the transfer.
-	AwsSigv4 pulumi.StringPtrInput
-	// (HTTP) Tells curl to use HTTP Basic authentication with the remote host.
-	Basic pulumi.BoolPtrInput
 	// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
 	BinaryPath pulumi.StringPtrInput
-	// (TLS)  Tells curl to use the specified certificate file to verify the peer.
-	Cacert pulumi.StringPtrInput
-	// (TLS) Tells curl to use the specified certificate directory to verify the peer.
-	Capath pulumi.StringPtrInput
-	// (TLS)  Tells  curl to use the specified client certificate file when getting a file with HTTPS, FTPS or another SSL-based protocol.
-	Cert pulumi.StringPtrInput
-	// (TLS) Tells curl to verify the status of the server certificate by using the Certificate Status Request (aka. OCSP stapling) TLS extension.
-	CertStatus pulumi.BoolPtrInput
-	// (TLS) Tells curl what type the provided client certificate is using.
-	CertType CurlCertTypePtrInput
-	// (TLS) Specifies which ciphers to use in the connection.
-	Ciphers pulumi.StringPtrInput
-	// (HTTP) Request a compressed response using one of the algorithms curl supports, and automatically decompress the content.
-	Compressed pulumi.BoolPtrInput
-	// (SCP SFTP) Enables built-in SSH compression.
-	CompressedSsh pulumi.BoolPtrInput
-	// Specify a text file to read curl arguments from.
-	Config pulumi.StringPtrInput
-	// Maximum  time  in seconds that you allow curl's connection to take.
-	ConnectTimeout pulumi.IntPtrInput
-	// For a request to the given HOST1:PORT1 pair, connect to HOST2:PORT2 instead.
-	ConnectTo pulumi.StringPtrInput
 	// Connection details for the remote system
 	Connection pulumiCommand.ConnectionInput
-	// Continue/Resume a previous file transfer at the given offset.
-	ContinueAt pulumi.StringPtrInput
-	// (HTTP) Pass the data to the HTTP server in the Cookie header.
-	Cookie pulumi.StringPtrInput
-	// (HTTP)  Specify  to which file you want curl to write all cookies after a completed operation.
-	CookieJar pulumi.StringPtrInput
-	// When used in conjunction with the -o, --output option, curl will create the necessary local directory hierarchy as needed.
-	CreateDirs pulumi.BoolPtrInput
-	// (SFTP SCP FILE) When curl is used to create files remotely using one of the supported protocols, this option allows the user to set which 'mode' to set on the file at creation time, instead of the default 0644.
-	CreateFileMode pulumi.StringPtrInput
-	// (FTP SMTP) Convert LF to CRLF in upload. Useful for MVS (OS/390).
-	Crlf pulumi.BoolPtrInput
-	// (TLS) Provide a file using PEM format with a Certificate Revocation List that may specify peer certificates that are to be considered revoked.
-	CrlfFile pulumi.StringPtrInput
-	// (TLS)  Tells curl to request specific curves to use during SSL session establishment according to RFC 8422, 5.1.
-	Curves pulumi.StringPtrInput
-	// (HTTP  MQTT) Sends the specified data in a POST request to the HTTP server, in the same way that a browser does when a user has filled in an HTML form and presses the submit button.
-	Data pulumi.StringPtrInput
-	// (HTTP) This is just an alias for -d, --data.
-	DataAscii pulumi.StringPtrInput
-	// (HTTP) This posts data exactly as specified with no extra processing whatsoever.
-	DataBinary pulumi.StringPtrInput
-	// (HTTP) This posts data similarly to -d, --data but without the special interpretation of the @ character.
-	DataRaw pulumi.StringPtrInput
-	// (HTTP) This posts data, similar to the other -d, --data options with the exception that this performs URL-encoding.
-	DataUrlEncode pulumi.StringPtrInput
-	// (GSS/kerberos) Set LEVEL to tell the server what it is allowed to delegate when it comes to user credentials.
-	Delegation CurlDelegationLevelPtrInput
-	// (HTTP) Enables HTTP Digest authentication.
-	Digest pulumi.BoolPtrInput
-	// If used as the first parameter on the command line, the curlrc config file will not be read and used.
-	Disable pulumi.BoolPtrInput
-	// (FTP) Tell curl to disable the use of the EPRT and LPRT commands when doing active FTP transfers
-	DisableEprt pulumi.BoolPtrInput
-	// (FTP)  Tell  curl to disable the use of the EPSV command when doing passive FTP transfers
-	DisableEpsv pulumi.BoolPtrInput
-	// (HTTP) This tells curl to exit if passed a url containing a username.
-	DisallowUsernameInUrl pulumi.BoolPtrInput
-	// (DNS)  Tell  curl  to send outgoing DNS requests through <interface>.
-	DnsInterface pulumi.StringPtrInput
-	// (DNS) Tell curl to bind to <ip-address> when making IPv4 DNS requests, so that the DNS requests originate from this address.
-	DnsIpv4Addr pulumi.StringPtrInput
-	// (DNS) Tell curl to bind to <ip-address> when making IPv6 DNS requests, so that the DNS requests originate from this address.
-	DnsIpv6Addr pulumi.StringPtrInput
-	// Set the list of DNS servers to be used instead of the system default.
-	DnsServers pulumi.StringPtrInput
-	// Same as --cert-status but used for DoH (DNS-over-HTTPS).
-	DohCertStatus pulumi.BoolPtrInput
-	// Same as -k, --insecure but used for DoH (DNS-over-HTTPS).
-	DohInsecure pulumi.BoolPtrInput
-	// Specifies which DNS-over-HTTPS (DoH) server to use to resolve hostnames, instead of using the default name resolver mechanism.
-	DohUrl pulumi.StringPtrInput
-	// (HTTP FTP) Write the received protocol headers to the specified file.
-	DumpHeader pulumi.StringPtrInput
-	// (TLS) Specify the path name to the Entropy Gathering Daemon socket.
-	EgdFile pulumi.StringPtrInput
-	// (TLS) Select the OpenSSL crypto engine to use for cipher operations.
-	Engine pulumi.StringPtrInput
+	// The command to run on create.
+	Create *CurlOptsArgs
+	// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+	// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+	// Command resource from previous create or update steps.
+	Delete *CurlOptsArgs
 	// Environment variables
 	Environment pulumi.StringMapInput
-	// (HTTP) This option makes a conditional HTTP request for the specific ETag read from the given file by sending a custom If-None-Match header using the stored ETag.
-	EtagCompare pulumi.StringPtrInput
-	// (HTTP) This option saves an HTTP ETag to the specified file.
-	EtagSave pulumi.StringPtrInput
-	// (HTTP)  Maximum  time in seconds that you allow curl to wait for a 100-continue response when curl emits an Expects: 100-continue header in its request.
-	Expect100Timeout pulumi.IntPtrInput
-	// (HTTP) Fail silently (no output at all) on server errors.
-	Fail pulumi.BoolPtrInput
-	// Fail and exit on the first detected transfer error.
-	FailEarly pulumi.BoolPtrInput
-	// (HTTP)  Return an error on server errors where the HTTP response code is 400 or greater).
-	FailWithBody pulumi.BoolPtrInput
-	// (TLS) Tells curl to use false start during the TLS handshake.
-	FalseStart pulumi.BoolPtrInput
-	// (HTTP SMTP IMAP) For HTTP protocol family, this lets curl emulate a filled-in form in which a user has pressed the submit button.
-	Form pulumi.StringPtrInput
-	// (HTTP) Tells curl to pass on names of multipart form fields and files using backslash-escaping instead of percent-encoding.
-	FormEscape pulumi.BoolPtrInput
-	// (HTTP SMTP IMAP) Similar to -F, --form except that the value string for the named parameter is used literally.
-	FormName pulumi.StringPtrInput
-	// (FTP) When an FTP server asks for 'account data' after user name and password has been provided, this data is sent off using the ACCT command.
-	FtpAccount pulumi.StringPtrInput
-	// (FTP) If authenticating with the USER and PASS commands fails, send this command.
-	FtpAlternativeUser pulumi.StringPtrInput
-	// (FTP  SFTP) When an FTP or SFTP URL/operation uses a path that does not currently exist on the server, the standard behavior of curl is to fail.
-	FtpCreateDirs pulumi.BoolPtrInput
-	// (FTP) Control what method curl should use to reach a file on an FTP(S) server.
-	FtpMethod pulumi.StringPtrInput
-	// (FTP) Use passive mode for the data connection.
-	FtpPasv pulumi.BoolPtrInput
-	// (FTP)  Reverses  the  default  initiator/listener  roles  when connecting with FTP.
-	FtpPort pulumi.StringPtrInput
-	// (FTP) Tell curl to send a PRET command before PASV (and EPSV).
-	FtpPret pulumi.BoolPtrInput
-	// (FTP)  Tell  curl  to  not use the IP address the server suggests in its response to curl's PASV command when curl connects the data connection.
-	FtpSkipPasvIp pulumi.BoolPtrInput
-	// (FTP) Sets the CCC mode. The passive mode will not initiate the shutdown, but instead wait for the server to do it, and will not reply to the shutdown from the  server.
-	FtpSslCccMode pulumi.StringPtrInput
-	// At what stage(s) in the resource lifecycle should the command be run
-	Lifecycle *CommandLifecycle
 	// TODO
 	Stdin pulumi.StringPtrInput
 	// TODO
 	Triggers pulumi.ArrayInput
-	// Corresponds to the URLs argument.
-	Urls pulumi.Input
+	// The command to run on update, if empty, create will
+	// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+	// are set to the stdout and stderr properties of the Command resource from previous
+	// create or update steps.
+	Update *CurlOptsArgs
 }
 
 func (CurlArgs) ElementType() reflect.Type {
@@ -574,69 +202,9 @@ func (o CurlOutput) ToCurlOutputWithContext(ctx context.Context) CurlOutput {
 	return o
 }
 
-// (HTTP) Connect through an abstract Unix domain socket, instead of using the network.
-func (o CurlOutput) AbstractUnixSocket() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Curl) pulumi.StringPtrOutput { return v.AbstractUnixSocket }).(pulumi.StringPtrOutput)
-}
-
-// (HTTPS)  This  option enables the alt-svc parser in curl.
-func (o CurlOutput) AltSvc() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Curl) pulumi.StringPtrOutput { return v.AltSvc }).(pulumi.StringPtrOutput)
-}
-
-// (HTTP) Tells curl to figure out authentication method by itself, and use the most secure one the remote site claims to support.
-func (o CurlOutput) AnyAuth() pulumi.BoolPtrOutput {
-	return o.ApplyT(func(v *Curl) pulumi.BoolPtrOutput { return v.AnyAuth }).(pulumi.BoolPtrOutput)
-}
-
-// (FTP SFTP) When used in an upload, this makes curl append to the target file instead of overwriting it.
-func (o CurlOutput) Append() pulumi.BoolPtrOutput {
-	return o.ApplyT(func(v *Curl) pulumi.BoolPtrOutput { return v.Append }).(pulumi.BoolPtrOutput)
-}
-
-// Use AWS V4 signature authentication in the transfer.
-func (o CurlOutput) AwsSigv4() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Curl) pulumi.StringPtrOutput { return v.AwsSigv4 }).(pulumi.StringPtrOutput)
-}
-
-// (HTTP) Tells curl to use HTTP Basic authentication with the remote host.
-func (o CurlOutput) Basic() pulumi.BoolPtrOutput {
-	return o.ApplyT(func(v *Curl) pulumi.BoolPtrOutput { return v.Basic }).(pulumi.BoolPtrOutput)
-}
-
 // Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
 func (o CurlOutput) BinaryPath() pulumi.StringOutput {
 	return o.ApplyT(func(v *Curl) pulumi.StringOutput { return v.BinaryPath }).(pulumi.StringOutput)
-}
-
-// (TLS)  Tells curl to use the specified certificate file to verify the peer.
-func (o CurlOutput) Cacert() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Curl) pulumi.StringPtrOutput { return v.Cacert }).(pulumi.StringPtrOutput)
-}
-
-// (TLS) Tells curl to use the specified certificate directory to verify the peer.
-func (o CurlOutput) Capath() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Curl) pulumi.StringPtrOutput { return v.Capath }).(pulumi.StringPtrOutput)
-}
-
-// (TLS)  Tells  curl to use the specified client certificate file when getting a file with HTTPS, FTPS or another SSL-based protocol.
-func (o CurlOutput) Cert() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Curl) pulumi.StringPtrOutput { return v.Cert }).(pulumi.StringPtrOutput)
-}
-
-// (TLS) Tells curl to verify the status of the server certificate by using the Certificate Status Request (aka. OCSP stapling) TLS extension.
-func (o CurlOutput) CertStatus() pulumi.BoolPtrOutput {
-	return o.ApplyT(func(v *Curl) pulumi.BoolPtrOutput { return v.CertStatus }).(pulumi.BoolPtrOutput)
-}
-
-// (TLS) Tells curl what type the provided client certificate is using.
-func (o CurlOutput) CertType() CurlCertTypePtrOutput {
-	return o.ApplyT(func(v *Curl) CurlCertTypePtrOutput { return v.CertType }).(CurlCertTypePtrOutput)
-}
-
-// (TLS) Specifies which ciphers to use in the connection.
-func (o CurlOutput) Ciphers() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Curl) pulumi.StringPtrOutput { return v.Ciphers }).(pulumi.StringPtrOutput)
 }
 
 // The underlying command
@@ -644,284 +212,26 @@ func (o CurlOutput) Command() pulumiCommand.CommandOutput {
 	return o.ApplyT(func(v *Curl) pulumiCommand.CommandOutput { return v.Command }).(pulumiCommand.CommandOutput)
 }
 
-// (HTTP) Request a compressed response using one of the algorithms curl supports, and automatically decompress the content.
-func (o CurlOutput) Compressed() pulumi.BoolPtrOutput {
-	return o.ApplyT(func(v *Curl) pulumi.BoolPtrOutput { return v.Compressed }).(pulumi.BoolPtrOutput)
-}
-
-// (SCP SFTP) Enables built-in SSH compression.
-func (o CurlOutput) CompressedSsh() pulumi.BoolPtrOutput {
-	return o.ApplyT(func(v *Curl) pulumi.BoolPtrOutput { return v.CompressedSsh }).(pulumi.BoolPtrOutput)
-}
-
-// Specify a text file to read curl arguments from.
-func (o CurlOutput) Config() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Curl) pulumi.StringPtrOutput { return v.Config }).(pulumi.StringPtrOutput)
-}
-
-// Maximum  time  in seconds that you allow curl's connection to take.
-func (o CurlOutput) ConnectTimeout() pulumi.IntPtrOutput {
-	return o.ApplyT(func(v *Curl) pulumi.IntPtrOutput { return v.ConnectTimeout }).(pulumi.IntPtrOutput)
-}
-
-// For a request to the given HOST1:PORT1 pair, connect to HOST2:PORT2 instead.
-func (o CurlOutput) ConnectTo() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Curl) pulumi.StringPtrOutput { return v.ConnectTo }).(pulumi.StringPtrOutput)
-}
-
 // Connection details for the remote system
 func (o CurlOutput) Connection() pulumiCommand.ConnectionOutput {
 	return o.ApplyT(func(v *Curl) pulumiCommand.ConnectionOutput { return v.Connection }).(pulumiCommand.ConnectionOutput)
 }
 
-// Continue/Resume a previous file transfer at the given offset.
-func (o CurlOutput) ContinueAt() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Curl) pulumi.StringPtrOutput { return v.ContinueAt }).(pulumi.StringPtrOutput)
+// The command to run on create.
+func (o CurlOutput) Create() CurlOptsPtrOutput {
+	return o.ApplyT(func(v *Curl) CurlOptsPtrOutput { return v.Create }).(CurlOptsPtrOutput)
 }
 
-// (HTTP) Pass the data to the HTTP server in the Cookie header.
-func (o CurlOutput) Cookie() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Curl) pulumi.StringPtrOutput { return v.Cookie }).(pulumi.StringPtrOutput)
-}
-
-// (HTTP)  Specify  to which file you want curl to write all cookies after a completed operation.
-func (o CurlOutput) CookieJar() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Curl) pulumi.StringPtrOutput { return v.CookieJar }).(pulumi.StringPtrOutput)
-}
-
-// When used in conjunction with the -o, --output option, curl will create the necessary local directory hierarchy as needed.
-func (o CurlOutput) CreateDirs() pulumi.BoolPtrOutput {
-	return o.ApplyT(func(v *Curl) pulumi.BoolPtrOutput { return v.CreateDirs }).(pulumi.BoolPtrOutput)
-}
-
-// (SFTP SCP FILE) When curl is used to create files remotely using one of the supported protocols, this option allows the user to set which 'mode' to set on the file at creation time, instead of the default 0644.
-func (o CurlOutput) CreateFileMode() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Curl) pulumi.StringPtrOutput { return v.CreateFileMode }).(pulumi.StringPtrOutput)
-}
-
-// (FTP SMTP) Convert LF to CRLF in upload. Useful for MVS (OS/390).
-func (o CurlOutput) Crlf() pulumi.BoolPtrOutput {
-	return o.ApplyT(func(v *Curl) pulumi.BoolPtrOutput { return v.Crlf }).(pulumi.BoolPtrOutput)
-}
-
-// (TLS) Provide a file using PEM format with a Certificate Revocation List that may specify peer certificates that are to be considered revoked.
-func (o CurlOutput) CrlfFile() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Curl) pulumi.StringPtrOutput { return v.CrlfFile }).(pulumi.StringPtrOutput)
-}
-
-// (TLS)  Tells curl to request specific curves to use during SSL session establishment according to RFC 8422, 5.1.
-func (o CurlOutput) Curves() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Curl) pulumi.StringPtrOutput { return v.Curves }).(pulumi.StringPtrOutput)
-}
-
-// (HTTP  MQTT) Sends the specified data in a POST request to the HTTP server, in the same way that a browser does when a user has filled in an HTML form and presses the submit button.
-func (o CurlOutput) Data() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Curl) pulumi.StringPtrOutput { return v.Data }).(pulumi.StringPtrOutput)
-}
-
-// (HTTP) This is just an alias for -d, --data.
-func (o CurlOutput) DataAscii() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Curl) pulumi.StringPtrOutput { return v.DataAscii }).(pulumi.StringPtrOutput)
-}
-
-// (HTTP) This posts data exactly as specified with no extra processing whatsoever.
-func (o CurlOutput) DataBinary() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Curl) pulumi.StringPtrOutput { return v.DataBinary }).(pulumi.StringPtrOutput)
-}
-
-// (HTTP) This posts data similarly to -d, --data but without the special interpretation of the @ character.
-func (o CurlOutput) DataRaw() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Curl) pulumi.StringPtrOutput { return v.DataRaw }).(pulumi.StringPtrOutput)
-}
-
-// (HTTP) This posts data, similar to the other -d, --data options with the exception that this performs URL-encoding.
-func (o CurlOutput) DataUrlEncode() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Curl) pulumi.StringPtrOutput { return v.DataUrlEncode }).(pulumi.StringPtrOutput)
-}
-
-// (GSS/kerberos) Set LEVEL to tell the server what it is allowed to delegate when it comes to user credentials.
-func (o CurlOutput) Delegation() CurlDelegationLevelPtrOutput {
-	return o.ApplyT(func(v *Curl) CurlDelegationLevelPtrOutput { return v.Delegation }).(CurlDelegationLevelPtrOutput)
-}
-
-// (HTTP) Enables HTTP Digest authentication.
-func (o CurlOutput) Digest() pulumi.BoolPtrOutput {
-	return o.ApplyT(func(v *Curl) pulumi.BoolPtrOutput { return v.Digest }).(pulumi.BoolPtrOutput)
-}
-
-// If used as the first parameter on the command line, the curlrc config file will not be read and used.
-func (o CurlOutput) Disable() pulumi.BoolPtrOutput {
-	return o.ApplyT(func(v *Curl) pulumi.BoolPtrOutput { return v.Disable }).(pulumi.BoolPtrOutput)
-}
-
-// (FTP) Tell curl to disable the use of the EPRT and LPRT commands when doing active FTP transfers
-func (o CurlOutput) DisableEprt() pulumi.BoolPtrOutput {
-	return o.ApplyT(func(v *Curl) pulumi.BoolPtrOutput { return v.DisableEprt }).(pulumi.BoolPtrOutput)
-}
-
-// (FTP)  Tell  curl to disable the use of the EPSV command when doing passive FTP transfers
-func (o CurlOutput) DisableEpsv() pulumi.BoolPtrOutput {
-	return o.ApplyT(func(v *Curl) pulumi.BoolPtrOutput { return v.DisableEpsv }).(pulumi.BoolPtrOutput)
-}
-
-// (HTTP) This tells curl to exit if passed a url containing a username.
-func (o CurlOutput) DisallowUsernameInUrl() pulumi.BoolPtrOutput {
-	return o.ApplyT(func(v *Curl) pulumi.BoolPtrOutput { return v.DisallowUsernameInUrl }).(pulumi.BoolPtrOutput)
-}
-
-// (DNS)  Tell  curl  to send outgoing DNS requests through <interface>.
-func (o CurlOutput) DnsInterface() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Curl) pulumi.StringPtrOutput { return v.DnsInterface }).(pulumi.StringPtrOutput)
-}
-
-// (DNS) Tell curl to bind to <ip-address> when making IPv4 DNS requests, so that the DNS requests originate from this address.
-func (o CurlOutput) DnsIpv4Addr() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Curl) pulumi.StringPtrOutput { return v.DnsIpv4Addr }).(pulumi.StringPtrOutput)
-}
-
-// (DNS) Tell curl to bind to <ip-address> when making IPv6 DNS requests, so that the DNS requests originate from this address.
-func (o CurlOutput) DnsIpv6Addr() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Curl) pulumi.StringPtrOutput { return v.DnsIpv6Addr }).(pulumi.StringPtrOutput)
-}
-
-// Set the list of DNS servers to be used instead of the system default.
-func (o CurlOutput) DnsServers() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Curl) pulumi.StringPtrOutput { return v.DnsServers }).(pulumi.StringPtrOutput)
-}
-
-// Same as --cert-status but used for DoH (DNS-over-HTTPS).
-func (o CurlOutput) DohCertStatus() pulumi.BoolPtrOutput {
-	return o.ApplyT(func(v *Curl) pulumi.BoolPtrOutput { return v.DohCertStatus }).(pulumi.BoolPtrOutput)
-}
-
-// Same as -k, --insecure but used for DoH (DNS-over-HTTPS).
-func (o CurlOutput) DohInsecure() pulumi.BoolPtrOutput {
-	return o.ApplyT(func(v *Curl) pulumi.BoolPtrOutput { return v.DohInsecure }).(pulumi.BoolPtrOutput)
-}
-
-// Specifies which DNS-over-HTTPS (DoH) server to use to resolve hostnames, instead of using the default name resolver mechanism.
-func (o CurlOutput) DohUrl() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Curl) pulumi.StringPtrOutput { return v.DohUrl }).(pulumi.StringPtrOutput)
-}
-
-// (HTTP FTP) Write the received protocol headers to the specified file.
-func (o CurlOutput) DumpHeader() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Curl) pulumi.StringPtrOutput { return v.DumpHeader }).(pulumi.StringPtrOutput)
-}
-
-// (TLS) Specify the path name to the Entropy Gathering Daemon socket.
-func (o CurlOutput) EgdFile() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Curl) pulumi.StringPtrOutput { return v.EgdFile }).(pulumi.StringPtrOutput)
-}
-
-// (TLS) Select the OpenSSL crypto engine to use for cipher operations.
-func (o CurlOutput) Engine() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Curl) pulumi.StringPtrOutput { return v.Engine }).(pulumi.StringPtrOutput)
+// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+// Command resource from previous create or update steps.
+func (o CurlOutput) Delete() CurlOptsPtrOutput {
+	return o.ApplyT(func(v *Curl) CurlOptsPtrOutput { return v.Delete }).(CurlOptsPtrOutput)
 }
 
 // Environment variables
 func (o CurlOutput) Environment() pulumi.StringMapOutput {
 	return o.ApplyT(func(v *Curl) pulumi.StringMapOutput { return v.Environment }).(pulumi.StringMapOutput)
-}
-
-// (HTTP) This option makes a conditional HTTP request for the specific ETag read from the given file by sending a custom If-None-Match header using the stored ETag.
-func (o CurlOutput) EtagCompare() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Curl) pulumi.StringPtrOutput { return v.EtagCompare }).(pulumi.StringPtrOutput)
-}
-
-// (HTTP) This option saves an HTTP ETag to the specified file.
-func (o CurlOutput) EtagSave() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Curl) pulumi.StringPtrOutput { return v.EtagSave }).(pulumi.StringPtrOutput)
-}
-
-// (HTTP)  Maximum  time in seconds that you allow curl to wait for a 100-continue response when curl emits an Expects: 100-continue header in its request.
-func (o CurlOutput) Expect100Timeout() pulumi.IntPtrOutput {
-	return o.ApplyT(func(v *Curl) pulumi.IntPtrOutput { return v.Expect100Timeout }).(pulumi.IntPtrOutput)
-}
-
-// (HTTP) Fail silently (no output at all) on server errors.
-func (o CurlOutput) Fail() pulumi.BoolPtrOutput {
-	return o.ApplyT(func(v *Curl) pulumi.BoolPtrOutput { return v.Fail }).(pulumi.BoolPtrOutput)
-}
-
-// Fail and exit on the first detected transfer error.
-func (o CurlOutput) FailEarly() pulumi.BoolPtrOutput {
-	return o.ApplyT(func(v *Curl) pulumi.BoolPtrOutput { return v.FailEarly }).(pulumi.BoolPtrOutput)
-}
-
-// (HTTP)  Return an error on server errors where the HTTP response code is 400 or greater).
-func (o CurlOutput) FailWithBody() pulumi.BoolPtrOutput {
-	return o.ApplyT(func(v *Curl) pulumi.BoolPtrOutput { return v.FailWithBody }).(pulumi.BoolPtrOutput)
-}
-
-// (TLS) Tells curl to use false start during the TLS handshake.
-func (o CurlOutput) FalseStart() pulumi.BoolPtrOutput {
-	return o.ApplyT(func(v *Curl) pulumi.BoolPtrOutput { return v.FalseStart }).(pulumi.BoolPtrOutput)
-}
-
-// (HTTP SMTP IMAP) For HTTP protocol family, this lets curl emulate a filled-in form in which a user has pressed the submit button.
-func (o CurlOutput) Form() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Curl) pulumi.StringPtrOutput { return v.Form }).(pulumi.StringPtrOutput)
-}
-
-// (HTTP) Tells curl to pass on names of multipart form fields and files using backslash-escaping instead of percent-encoding.
-func (o CurlOutput) FormEscape() pulumi.BoolPtrOutput {
-	return o.ApplyT(func(v *Curl) pulumi.BoolPtrOutput { return v.FormEscape }).(pulumi.BoolPtrOutput)
-}
-
-// (HTTP SMTP IMAP) Similar to -F, --form except that the value string for the named parameter is used literally.
-func (o CurlOutput) FormName() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Curl) pulumi.StringPtrOutput { return v.FormName }).(pulumi.StringPtrOutput)
-}
-
-// (FTP) When an FTP server asks for 'account data' after user name and password has been provided, this data is sent off using the ACCT command.
-func (o CurlOutput) FtpAccount() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Curl) pulumi.StringPtrOutput { return v.FtpAccount }).(pulumi.StringPtrOutput)
-}
-
-// (FTP) If authenticating with the USER and PASS commands fails, send this command.
-func (o CurlOutput) FtpAlternativeUser() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Curl) pulumi.StringPtrOutput { return v.FtpAlternativeUser }).(pulumi.StringPtrOutput)
-}
-
-// (FTP  SFTP) When an FTP or SFTP URL/operation uses a path that does not currently exist on the server, the standard behavior of curl is to fail.
-func (o CurlOutput) FtpCreateDirs() pulumi.BoolPtrOutput {
-	return o.ApplyT(func(v *Curl) pulumi.BoolPtrOutput { return v.FtpCreateDirs }).(pulumi.BoolPtrOutput)
-}
-
-// (FTP) Control what method curl should use to reach a file on an FTP(S) server.
-func (o CurlOutput) FtpMethod() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Curl) pulumi.StringPtrOutput { return v.FtpMethod }).(pulumi.StringPtrOutput)
-}
-
-// (FTP) Use passive mode for the data connection.
-func (o CurlOutput) FtpPasv() pulumi.BoolPtrOutput {
-	return o.ApplyT(func(v *Curl) pulumi.BoolPtrOutput { return v.FtpPasv }).(pulumi.BoolPtrOutput)
-}
-
-// (FTP)  Reverses  the  default  initiator/listener  roles  when connecting with FTP.
-func (o CurlOutput) FtpPort() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Curl) pulumi.StringPtrOutput { return v.FtpPort }).(pulumi.StringPtrOutput)
-}
-
-// (FTP) Tell curl to send a PRET command before PASV (and EPSV).
-func (o CurlOutput) FtpPret() pulumi.BoolPtrOutput {
-	return o.ApplyT(func(v *Curl) pulumi.BoolPtrOutput { return v.FtpPret }).(pulumi.BoolPtrOutput)
-}
-
-// (FTP)  Tell  curl  to  not use the IP address the server suggests in its response to curl's PASV command when curl connects the data connection.
-func (o CurlOutput) FtpSkipPasvIp() pulumi.BoolPtrOutput {
-	return o.ApplyT(func(v *Curl) pulumi.BoolPtrOutput { return v.FtpSkipPasvIp }).(pulumi.BoolPtrOutput)
-}
-
-// (FTP) Sets the CCC mode. The passive mode will not initiate the shutdown, but instead wait for the server to do it, and will not reply to the shutdown from the  server.
-func (o CurlOutput) FtpSslCccMode() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Curl) pulumi.StringPtrOutput { return v.FtpSslCccMode }).(pulumi.StringPtrOutput)
-}
-
-// At what stage(s) in the resource lifecycle should the command be run
-func (o CurlOutput) Lifecycle() CommandLifecyclePtrOutput {
-	return o.ApplyT(func(v *Curl) CommandLifecyclePtrOutput { return v.Lifecycle }).(CommandLifecyclePtrOutput)
 }
 
 // TODO
@@ -944,9 +254,12 @@ func (o CurlOutput) Triggers() pulumi.ArrayOutput {
 	return o.ApplyT(func(v *Curl) pulumi.ArrayOutput { return v.Triggers }).(pulumi.ArrayOutput)
 }
 
-// Corresponds to the URLs argument.
-func (o CurlOutput) Urls() pulumi.AnyOutput {
-	return o.ApplyT(func(v *Curl) pulumi.AnyOutput { return v.Urls }).(pulumi.AnyOutput)
+// The command to run on update, if empty, create will
+// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+// are set to the stdout and stderr properties of the Command resource from previous
+// create or update steps.
+func (o CurlOutput) Update() CurlOptsPtrOutput {
+	return o.ApplyT(func(v *Curl) CurlOptsPtrOutput { return v.Update }).(CurlOptsPtrOutput)
 }
 
 type CurlArrayOutput struct{ *pulumi.OutputState }

@@ -17,12 +17,6 @@ namespace UnMango.KubernetesTheHardWay.Tools
     public partial class Mv : global::Pulumi.ComponentResource
     {
         /// <summary>
-        /// Corresponds to the `-b` and `--backup` options depending on whether [CONTROL] is supplied.
-        /// </summary>
-        [Output("backup")]
-        public Output<bool> Backup { get; private set; } = null!;
-
-        /// <summary>
         /// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
         /// </summary>
         [Output("binaryPath")]
@@ -41,64 +35,24 @@ namespace UnMango.KubernetesTheHardWay.Tools
         public Output<Pulumi.Command.Remote.Outputs.Connection> Connection { get; private set; } = null!;
 
         /// <summary>
-        /// Corresponds to the `--context` option.
+        /// The command to run on create.
         /// </summary>
-        [Output("context")]
-        public Output<bool> Context { get; private set; } = null!;
+        [Output("create")]
+        public Output<Outputs.MvOpts?> Create { get; private set; } = null!;
 
         /// <summary>
-        /// Corresponds to the [CONTROL] argument for the `--backup` option.
+        /// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+        /// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+        /// Command resource from previous create or update steps.
         /// </summary>
-        [Output("control")]
-        public Output<bool?> Control { get; private set; } = null!;
-
-        /// <summary>
-        /// Corresponds to the [DEST] argument.
-        /// </summary>
-        [Output("dest")]
-        public Output<string?> Dest { get; private set; } = null!;
-
-        /// <summary>
-        /// Corresponds to the [DIRECTORY] argument.
-        /// </summary>
-        [Output("directory")]
-        public Output<string?> Directory { get; private set; } = null!;
+        [Output("delete")]
+        public Output<Outputs.MvOpts?> Delete { get; private set; } = null!;
 
         /// <summary>
         /// Environment variables
         /// </summary>
         [Output("environment")]
         public Output<ImmutableDictionary<string, string>> Environment { get; private set; } = null!;
-
-        /// <summary>
-        /// Corresponds to the `--force` option.
-        /// </summary>
-        [Output("force")]
-        public Output<bool> Force { get; private set; } = null!;
-
-        /// <summary>
-        /// At what stage(s) in the resource lifecycle should the command be run
-        /// </summary>
-        [Output("lifecycle")]
-        public Output<UnMango.KubernetesTheHardWay.Tools.CommandLifecycle?> Lifecycle { get; private set; } = null!;
-
-        /// <summary>
-        /// Corresponds to the `--no-clobber` option.
-        /// </summary>
-        [Output("noClobber")]
-        public Output<bool> NoClobber { get; private set; } = null!;
-
-        /// <summary>
-        /// Corresponds to the `--no-target-directory` option.
-        /// </summary>
-        [Output("noTargetDirectory")]
-        public Output<bool> NoTargetDirectory { get; private set; } = null!;
-
-        /// <summary>
-        /// Corresponds to the [SOURCE] argument.
-        /// </summary>
-        [Output("source")]
-        public Output<Union<string, ImmutableArray<string>>> Source { get; private set; } = null!;
 
         /// <summary>
         /// TODO
@@ -119,40 +73,19 @@ namespace UnMango.KubernetesTheHardWay.Tools
         public Output<string> Stdout { get; private set; } = null!;
 
         /// <summary>
-        /// Corresponds to the `--strip-trailing-slashes` option.
-        /// </summary>
-        [Output("stripTrailingSlashes")]
-        public Output<bool> StripTrailingSlashes { get; private set; } = null!;
-
-        /// <summary>
-        /// Corresponds to the `--suffix` option.
-        /// </summary>
-        [Output("suffix")]
-        public Output<string?> Suffix { get; private set; } = null!;
-
-        /// <summary>
-        /// Corresponds to the `--target-directory` option.
-        /// </summary>
-        [Output("targetDirectory")]
-        public Output<bool?> TargetDirectory { get; private set; } = null!;
-
-        /// <summary>
         /// TODO
         /// </summary>
         [Output("triggers")]
         public Output<ImmutableArray<object>> Triggers { get; private set; } = null!;
 
         /// <summary>
-        /// Corresponds to the `--update` option.
+        /// The command to run on update, if empty, create will 
+        /// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
+        /// are set to the stdout and stderr properties of the Command resource from previous 
+        /// create or update steps.
         /// </summary>
         [Output("update")]
-        public Output<bool> Update { get; private set; } = null!;
-
-        /// <summary>
-        /// Corresponds to the `--verbose` option.
-        /// </summary>
-        [Output("verbose")]
-        public Output<bool> Verbose { get; private set; } = null!;
+        public Output<Outputs.MvOpts?> Update { get; private set; } = null!;
 
 
         /// <summary>
@@ -184,12 +117,6 @@ namespace UnMango.KubernetesTheHardWay.Tools
     public sealed class MvArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
-        /// Corresponds to the `-b` and `--backup` options depending on whether [CONTROL] is supplied.
-        /// </summary>
-        [Input("backup")]
-        public bool? Backup { get; set; }
-
-        /// <summary>
         /// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
         /// </summary>
         [Input("binaryPath")]
@@ -202,28 +129,18 @@ namespace UnMango.KubernetesTheHardWay.Tools
         public Input<Pulumi.Command.Remote.Inputs.ConnectionArgs> Connection { get; set; } = null!;
 
         /// <summary>
-        /// Corresponds to the `--context` option.
+        /// The command to run on create.
         /// </summary>
-        [Input("context")]
-        public Input<bool>? Context { get; set; }
+        [Input("create")]
+        public Inputs.MvOptsArgs? Create { get; set; }
 
         /// <summary>
-        /// Corresponds to the [CONTROL] argument for the `--backup` option.
+        /// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+        /// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+        /// Command resource from previous create or update steps.
         /// </summary>
-        [Input("control")]
-        public Input<bool>? Control { get; set; }
-
-        /// <summary>
-        /// Corresponds to the [DEST] argument.
-        /// </summary>
-        [Input("dest")]
-        public Input<string>? Dest { get; set; }
-
-        /// <summary>
-        /// Corresponds to the [DIRECTORY] argument.
-        /// </summary>
-        [Input("directory")]
-        public Input<string>? Directory { get; set; }
+        [Input("delete")]
+        public Inputs.MvOptsArgs? Delete { get; set; }
 
         [Input("environment")]
         private InputMap<string>? _environment;
@@ -238,58 +155,10 @@ namespace UnMango.KubernetesTheHardWay.Tools
         }
 
         /// <summary>
-        /// Corresponds to the `--force` option.
-        /// </summary>
-        [Input("force")]
-        public Input<bool>? Force { get; set; }
-
-        /// <summary>
-        /// At what stage(s) in the resource lifecycle should the command be run
-        /// </summary>
-        [Input("lifecycle")]
-        public UnMango.KubernetesTheHardWay.Tools.CommandLifecycle? Lifecycle { get; set; }
-
-        /// <summary>
-        /// Corresponds to the `--no-clobber` option.
-        /// </summary>
-        [Input("noClobber")]
-        public Input<bool>? NoClobber { get; set; }
-
-        /// <summary>
-        /// Corresponds to the `--no-target-directory` option.
-        /// </summary>
-        [Input("noTargetDirectory")]
-        public Input<bool>? NoTargetDirectory { get; set; }
-
-        /// <summary>
-        /// Corresponds to the [SOURCE] argument.
-        /// </summary>
-        [Input("source", required: true)]
-        public InputUnion<string, ImmutableArray<string>> Source { get; set; } = null!;
-
-        /// <summary>
         /// TODO
         /// </summary>
         [Input("stdin")]
         public Input<string>? Stdin { get; set; }
-
-        /// <summary>
-        /// Corresponds to the `--strip-trailing-slashes` option.
-        /// </summary>
-        [Input("stripTrailingSlashes")]
-        public Input<bool>? StripTrailingSlashes { get; set; }
-
-        /// <summary>
-        /// Corresponds to the `--suffix` option.
-        /// </summary>
-        [Input("suffix")]
-        public Input<string>? Suffix { get; set; }
-
-        /// <summary>
-        /// Corresponds to the `--target-directory` option.
-        /// </summary>
-        [Input("targetDirectory")]
-        public Input<bool>? TargetDirectory { get; set; }
 
         [Input("triggers")]
         private InputList<object>? _triggers;
@@ -304,16 +173,13 @@ namespace UnMango.KubernetesTheHardWay.Tools
         }
 
         /// <summary>
-        /// Corresponds to the `--update` option.
+        /// The command to run on update, if empty, create will 
+        /// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
+        /// are set to the stdout and stderr properties of the Command resource from previous 
+        /// create or update steps.
         /// </summary>
         [Input("update")]
-        public Input<bool>? Update { get; set; }
-
-        /// <summary>
-        /// Corresponds to the `--verbose` option.
-        /// </summary>
-        [Input("verbose")]
-        public Input<bool>? Verbose { get; set; }
+        public Inputs.MvOptsArgs? Update { get; set; }
 
         public MvArgs()
         {

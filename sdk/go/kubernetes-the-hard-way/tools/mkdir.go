@@ -23,16 +23,14 @@ type Mkdir struct {
 	Command pulumiCommand.CommandOutput `pulumi:"command"`
 	// Connection details for the remote system
 	Connection pulumiCommand.ConnectionOutput `pulumi:"connection"`
-	// The fully qualified path of the directory on the remote system.
-	Directory pulumi.StringOutput `pulumi:"directory"`
+	// The command to run on create.
+	Create MkdirOptsPtrOutput `pulumi:"create"`
+	// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+	// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+	// Command resource from previous create or update steps.
+	Delete MkdirOptsPtrOutput `pulumi:"delete"`
 	// Environment variables
 	Environment pulumi.StringMapOutput `pulumi:"environment"`
-	// At what stage(s) in the resource lifecycle should the command be run
-	Lifecycle CommandLifecyclePtrOutput `pulumi:"lifecycle"`
-	// Corresponds to the `--parents` option.
-	Parents pulumi.BoolOutput `pulumi:"parents"`
-	// Remove the created directory when the `Mkdir` resource is deleted or updated.
-	RemoveOnDelete pulumi.BoolOutput `pulumi:"removeOnDelete"`
 	// TODO
 	Stderr pulumi.StringOutput `pulumi:"stderr"`
 	// TODO
@@ -41,6 +39,11 @@ type Mkdir struct {
 	Stdout pulumi.StringOutput `pulumi:"stdout"`
 	// TODO
 	Triggers pulumi.ArrayOutput `pulumi:"triggers"`
+	// The command to run on update, if empty, create will
+	// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+	// are set to the stdout and stderr properties of the Command resource from previous
+	// create or update steps.
+	Update MkdirOptsPtrOutput `pulumi:"update"`
 }
 
 // NewMkdir registers a new resource with the given unique name, arguments, and options.
@@ -52,9 +55,6 @@ func NewMkdir(ctx *pulumi.Context,
 
 	if args.Connection == nil {
 		return nil, errors.New("invalid value for required argument 'Connection'")
-	}
-	if args.Directory == nil {
-		return nil, errors.New("invalid value for required argument 'Directory'")
 	}
 	args.Connection = args.Connection.ToConnectionOutput().ApplyT(func(v pulumiCommand.Connection) pulumiCommand.Connection { return *v.Defaults() }).(pulumiCommand.ConnectionOutput)
 	opts = internal.PkgResourceDefaultOpts(opts)
@@ -71,20 +71,23 @@ type mkdirArgs struct {
 	BinaryPath *string `pulumi:"binaryPath"`
 	// Connection details for the remote system
 	Connection pulumiCommand.Connection `pulumi:"connection"`
-	// The fully qualified path of the directory on the remote system.
-	Directory string `pulumi:"directory"`
+	// The command to run on create.
+	Create *MkdirOpts `pulumi:"create"`
+	// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+	// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+	// Command resource from previous create or update steps.
+	Delete *MkdirOpts `pulumi:"delete"`
 	// Environment variables
 	Environment map[string]string `pulumi:"environment"`
-	// At what stage(s) in the resource lifecycle should the command be run
-	Lifecycle *CommandLifecycle `pulumi:"lifecycle"`
-	// Corresponds to the `--parents` option.
-	Parents *bool `pulumi:"parents"`
-	// Remove the created directory when the `Mkdir` resource is deleted or updated.
-	RemoveOnDelete *bool `pulumi:"removeOnDelete"`
 	// TODO
 	Stdin *string `pulumi:"stdin"`
 	// TODO
 	Triggers []interface{} `pulumi:"triggers"`
+	// The command to run on update, if empty, create will
+	// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+	// are set to the stdout and stderr properties of the Command resource from previous
+	// create or update steps.
+	Update *MkdirOpts `pulumi:"update"`
 }
 
 // The set of arguments for constructing a Mkdir resource.
@@ -93,20 +96,23 @@ type MkdirArgs struct {
 	BinaryPath pulumi.StringPtrInput
 	// Connection details for the remote system
 	Connection pulumiCommand.ConnectionInput
-	// The fully qualified path of the directory on the remote system.
-	Directory pulumi.StringInput
+	// The command to run on create.
+	Create *MkdirOptsArgs
+	// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+	// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+	// Command resource from previous create or update steps.
+	Delete *MkdirOptsArgs
 	// Environment variables
 	Environment pulumi.StringMapInput
-	// At what stage(s) in the resource lifecycle should the command be run
-	Lifecycle *CommandLifecycle
-	// Corresponds to the `--parents` option.
-	Parents pulumi.BoolPtrInput
-	// Remove the created directory when the `Mkdir` resource is deleted or updated.
-	RemoveOnDelete pulumi.BoolPtrInput
 	// TODO
 	Stdin pulumi.StringPtrInput
 	// TODO
 	Triggers pulumi.ArrayInput
+	// The command to run on update, if empty, create will
+	// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+	// are set to the stdout and stderr properties of the Command resource from previous
+	// create or update steps.
+	Update *MkdirOptsArgs
 }
 
 func (MkdirArgs) ElementType() reflect.Type {
@@ -211,29 +217,21 @@ func (o MkdirOutput) Connection() pulumiCommand.ConnectionOutput {
 	return o.ApplyT(func(v *Mkdir) pulumiCommand.ConnectionOutput { return v.Connection }).(pulumiCommand.ConnectionOutput)
 }
 
-// The fully qualified path of the directory on the remote system.
-func (o MkdirOutput) Directory() pulumi.StringOutput {
-	return o.ApplyT(func(v *Mkdir) pulumi.StringOutput { return v.Directory }).(pulumi.StringOutput)
+// The command to run on create.
+func (o MkdirOutput) Create() MkdirOptsPtrOutput {
+	return o.ApplyT(func(v *Mkdir) MkdirOptsPtrOutput { return v.Create }).(MkdirOptsPtrOutput)
+}
+
+// The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+// and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+// Command resource from previous create or update steps.
+func (o MkdirOutput) Delete() MkdirOptsPtrOutput {
+	return o.ApplyT(func(v *Mkdir) MkdirOptsPtrOutput { return v.Delete }).(MkdirOptsPtrOutput)
 }
 
 // Environment variables
 func (o MkdirOutput) Environment() pulumi.StringMapOutput {
 	return o.ApplyT(func(v *Mkdir) pulumi.StringMapOutput { return v.Environment }).(pulumi.StringMapOutput)
-}
-
-// At what stage(s) in the resource lifecycle should the command be run
-func (o MkdirOutput) Lifecycle() CommandLifecyclePtrOutput {
-	return o.ApplyT(func(v *Mkdir) CommandLifecyclePtrOutput { return v.Lifecycle }).(CommandLifecyclePtrOutput)
-}
-
-// Corresponds to the `--parents` option.
-func (o MkdirOutput) Parents() pulumi.BoolOutput {
-	return o.ApplyT(func(v *Mkdir) pulumi.BoolOutput { return v.Parents }).(pulumi.BoolOutput)
-}
-
-// Remove the created directory when the `Mkdir` resource is deleted or updated.
-func (o MkdirOutput) RemoveOnDelete() pulumi.BoolOutput {
-	return o.ApplyT(func(v *Mkdir) pulumi.BoolOutput { return v.RemoveOnDelete }).(pulumi.BoolOutput)
 }
 
 // TODO
@@ -254,6 +252,14 @@ func (o MkdirOutput) Stdout() pulumi.StringOutput {
 // TODO
 func (o MkdirOutput) Triggers() pulumi.ArrayOutput {
 	return o.ApplyT(func(v *Mkdir) pulumi.ArrayOutput { return v.Triggers }).(pulumi.ArrayOutput)
+}
+
+// The command to run on update, if empty, create will
+// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+// are set to the stdout and stderr properties of the Command resource from previous
+// create or update steps.
+func (o MkdirOutput) Update() MkdirOptsPtrOutput {
+	return o.ApplyT(func(v *Mkdir) MkdirOptsPtrOutput { return v.Update }).(MkdirOptsPtrOutput)
 }
 
 type MkdirArrayOutput struct{ *pulumi.OutputState }

@@ -1,5 +1,5 @@
 import { ComponentResourceOptions, output } from '@pulumi/pulumi';
-import { Mkdir, Wget } from '../tools';
+import { Mkdir, Rm, Wget } from '../tools';
 import * as types from '../schema-types';
 
 export class Download extends types.Download {
@@ -7,20 +7,24 @@ export class Download extends types.Download {
     super(name, args, opts);
 
     const destination = output(args.destination);
-    const removeOnDelete = output(args.removeOnDelete ?? false);
     const url = output(args.url);
+
+    // TODO: Remove on delete
 
     const mkdir = new Mkdir(name, {
       connection: args.connection,
-      directory: destination,
-      parents: true,
-      removeOnDelete,
+      create: {
+        directory: destination,
+        parents: true,
+      },
     }, { parent: this });
 
     const wget = new Wget(name, {
       connection: args.connection,
-      url: args.url,
-      directoryPrefix: mkdir.directory,
+      create: {
+        url: [args.url],
+        directoryPrefix: destination,
+      },
     }, { parent: this, dependsOn: mkdir });
 
     this.mkdir = mkdir;

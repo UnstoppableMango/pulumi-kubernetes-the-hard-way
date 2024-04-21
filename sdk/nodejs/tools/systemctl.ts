@@ -34,23 +34,25 @@ export class Systemctl extends pulumi.ComponentResource {
     /**
      * The underlying command
      */
-    public readonly command!: pulumi.Output<pulumiCommand.remote.Command>;
+    public /*out*/ readonly command!: pulumi.Output<pulumiCommand.remote.Command>;
     /**
      * Connection details for the remote system
      */
     public readonly connection!: pulumi.Output<pulumiCommand.types.output.remote.Connection>;
     /**
+     * The command to run on create.
+     */
+    public readonly create!: pulumi.Output<outputs.tools.SystemctlOpts | undefined>;
+    /**
+     * The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+     * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+     * Command resource from previous create or update steps.
+     */
+    public readonly delete!: pulumi.Output<outputs.tools.SystemctlOpts | undefined>;
+    /**
      * Environment variables
      */
     public readonly environment!: pulumi.Output<{[key: string]: string}>;
-    /**
-     * At what stage(s) in the resource lifecycle should the command be run
-     */
-    public readonly lifecycle!: pulumi.Output<enums.tools.CommandLifecycle | undefined>;
-    /**
-     * Corresponds to the [PATTERN] argument
-     */
-    public readonly pattern!: pulumi.Output<string | undefined>;
     /**
      * TODO
      */
@@ -64,17 +66,16 @@ export class Systemctl extends pulumi.ComponentResource {
      */
     public /*out*/ readonly stdout!: pulumi.Output<string>;
     /**
-     * Corresponds to the COMMAND argument.
-     */
-    public /*out*/ readonly systemctlCommand!: pulumi.Output<enums.tools.SystemctlCommand>;
-    /**
      * TODO
      */
     public readonly triggers!: pulumi.Output<any[]>;
     /**
-     * Corresponds to the [UNIT...] argument.
+     * The command to run on update, if empty, create will 
+     * run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
+     * are set to the stdout and stderr properties of the Command resource from previous 
+     * create or update steps.
      */
-    public readonly unit!: pulumi.Output<string>;
+    public readonly update!: pulumi.Output<outputs.tools.SystemctlOpts | undefined>;
 
     /**
      * Create a Systemctl resource with the given unique name, arguments, and options.
@@ -87,40 +88,32 @@ export class Systemctl extends pulumi.ComponentResource {
         let resourceInputs: pulumi.Inputs = {};
         opts = opts || {};
         if (!opts.id) {
-            if ((!args || args.command === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'command'");
-            }
             if ((!args || args.connection === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'connection'");
             }
-            if ((!args || args.unit === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'unit'");
-            }
             resourceInputs["binaryPath"] = args ? args.binaryPath : undefined;
-            resourceInputs["command"] = args ? args.command : undefined;
             resourceInputs["connection"] = args ? (args.connection ? pulumi.output(args.connection).apply(pulumiCommand.types.input.remote.connectionArgsProvideDefaults) : undefined) : undefined;
+            resourceInputs["create"] = args ? args.create : undefined;
+            resourceInputs["delete"] = args ? args.delete : undefined;
             resourceInputs["environment"] = args ? args.environment : undefined;
-            resourceInputs["lifecycle"] = args ? args.lifecycle : undefined;
-            resourceInputs["pattern"] = args ? args.pattern : undefined;
             resourceInputs["stdin"] = args ? args.stdin : undefined;
             resourceInputs["triggers"] = args ? args.triggers : undefined;
-            resourceInputs["unit"] = args ? args.unit : undefined;
+            resourceInputs["update"] = args ? args.update : undefined;
+            resourceInputs["command"] = undefined /*out*/;
             resourceInputs["stderr"] = undefined /*out*/;
             resourceInputs["stdout"] = undefined /*out*/;
-            resourceInputs["systemctlCommand"] = undefined /*out*/;
         } else {
             resourceInputs["binaryPath"] = undefined /*out*/;
             resourceInputs["command"] = undefined /*out*/;
             resourceInputs["connection"] = undefined /*out*/;
+            resourceInputs["create"] = undefined /*out*/;
+            resourceInputs["delete"] = undefined /*out*/;
             resourceInputs["environment"] = undefined /*out*/;
-            resourceInputs["lifecycle"] = undefined /*out*/;
-            resourceInputs["pattern"] = undefined /*out*/;
             resourceInputs["stderr"] = undefined /*out*/;
             resourceInputs["stdin"] = undefined /*out*/;
             resourceInputs["stdout"] = undefined /*out*/;
-            resourceInputs["systemctlCommand"] = undefined /*out*/;
             resourceInputs["triggers"] = undefined /*out*/;
-            resourceInputs["unit"] = undefined /*out*/;
+            resourceInputs["update"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         super(Systemctl.__pulumiType, name, resourceInputs, opts, true /*remote*/);
@@ -136,25 +129,23 @@ export interface SystemctlArgs {
      */
     binaryPath?: pulumi.Input<string>;
     /**
-     * Corresponds to the COMMAND argument.
-     */
-    command: enums.tools.SystemctlCommand;
-    /**
      * Connection details for the remote system
      */
     connection: pulumi.Input<pulumiCommand.types.input.remote.ConnectionArgs>;
     /**
+     * The command to run on create.
+     */
+    create?: inputs.tools.SystemctlOptsArgs;
+    /**
+     * The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+     * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+     * Command resource from previous create or update steps.
+     */
+    delete?: inputs.tools.SystemctlOptsArgs;
+    /**
      * Environment variables
      */
     environment?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
-    /**
-     * At what stage(s) in the resource lifecycle should the command be run
-     */
-    lifecycle?: enums.tools.CommandLifecycle;
-    /**
-     * Corresponds to the [PATTERN] argument
-     */
-    pattern?: pulumi.Input<string>;
     /**
      * TODO
      */
@@ -164,7 +155,10 @@ export interface SystemctlArgs {
      */
     triggers?: pulumi.Input<any[]>;
     /**
-     * Corresponds to the [UNIT...] argument.
+     * The command to run on update, if empty, create will 
+     * run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
+     * are set to the stdout and stderr properties of the Command resource from previous 
+     * create or update steps.
      */
-    unit: pulumi.Input<string>;
+    update?: inputs.tools.SystemctlOptsArgs;
 }

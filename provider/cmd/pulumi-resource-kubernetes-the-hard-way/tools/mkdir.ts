@@ -1,39 +1,26 @@
-import { ComponentResourceOptions, Output, all, output } from '@pulumi/pulumi';
-import { Command } from '@pulumi/command/remote';
-import * as types from '../schema-types';
-import { CommandBuilder } from './commandBuilder';
+import { ComponentResourceOptions, output } from '@pulumi/pulumi';
+import * as schema from '../schema-types';
+import * as tool from './tool';
 
-export class Mkdir extends types.Mkdir {
-  public readonly command!: Command;
-  public readonly directory!: Output<string>;
-  public readonly parents!: Output<boolean>;
-  public readonly removeOnDelete!: Output<boolean>;
+const apply = tool.factory<
+  schema.MkdirOptsInputs,
+  schema.MkdirOptsOutputs
+>(
+  'mkdir',
+  (builder, opts) => builder
+    .option('--parents', opts.parents)
+    .arg(opts.directory),
+  (i) => ({
+    directory: output(i.directory),
+    parents: tool.mapO(i.parents),
+  }),
+);
 
-  constructor(name: string, args: types.MkdirArgs, opts?: ComponentResourceOptions) {
+export class Mkdir extends schema.Mkdir {
+  constructor(name: string, args: schema.MkdirArgs, opts?: ComponentResourceOptions) {
     super(name, args, opts);
-
-    // Rehydrating
     if (opts?.urn) return;
-
-    const directory = output(args.directory);
-    const parents = output(args.parents ?? false);
-    const deleteCmd = all([args.removeOnDelete, directory])
-      .apply(([remove, dir]) => remove ? `rm -rf ${dir}` : ':');
-
-    const builder = new CommandBuilder('mkdir')
-      .option('--parents', parents)
-      .arg(directory);
-
-    const command = new Command(name, {
-      connection: args.connection,
-      create: builder.command,
-      delete: deleteCmd,
-    }, { parent: this });
-
-    this.command = command;
-    this.directory = directory;
-    this.parents = parents;
-
-    this.registerOutputs({ command, directory, parents });
+    const outputs = apply(name, args, this);
+    this.registerOutputs(outputs);
   }
 }

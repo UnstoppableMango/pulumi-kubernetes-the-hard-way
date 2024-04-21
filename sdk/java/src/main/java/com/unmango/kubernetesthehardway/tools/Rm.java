@@ -5,15 +5,13 @@ package com.unmango.kubernetesthehardway.tools;
 
 import com.pulumi.command.remote.Command;
 import com.pulumi.command.remote.outputs.Connection;
-import com.pulumi.core.Either;
 import com.pulumi.core.Output;
 import com.pulumi.core.annotations.Export;
 import com.pulumi.core.annotations.ResourceType;
 import com.pulumi.core.internal.Codegen;
 import com.unmango.kubernetesthehardway.Utilities;
 import com.unmango.kubernetesthehardway.tools.RmArgs;
-import com.unmango.kubernetesthehardway.tools.enums.CommandLifecycle;
-import java.lang.Boolean;
+import com.unmango.kubernetesthehardway.tools.outputs.RmOpts;
 import java.lang.Object;
 import java.lang.String;
 import java.util.List;
@@ -70,18 +68,36 @@ public class Rm extends com.pulumi.resources.ComponentResource {
         return this.connection;
     }
     /**
-     * Corresponds to the `--dir` option.
+     * The command to run on create.
      * 
      */
-    @Export(name="dir", refs={Boolean.class}, tree="[0]")
-    private Output<Boolean> dir;
+    @Export(name="create", refs={RmOpts.class}, tree="[0]")
+    private Output</* @Nullable */ RmOpts> create;
 
     /**
-     * @return Corresponds to the `--dir` option.
+     * @return The command to run on create.
      * 
      */
-    public Output<Boolean> dir() {
-        return this.dir;
+    public Output<Optional<RmOpts>> create() {
+        return Codegen.optional(this.create);
+    }
+    /**
+     * The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+     * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+     * Command resource from previous create or update steps.
+     * 
+     */
+    @Export(name="delete", refs={RmOpts.class}, tree="[0]")
+    private Output</* @Nullable */ RmOpts> delete;
+
+    /**
+     * @return The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+     * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+     * Command resource from previous create or update steps.
+     * 
+     */
+    public Output<Optional<RmOpts>> delete() {
+        return Codegen.optional(this.delete);
     }
     /**
      * Environment variables
@@ -96,76 +112,6 @@ public class Rm extends com.pulumi.resources.ComponentResource {
      */
     public Output<Map<String,String>> environment() {
         return this.environment;
-    }
-    /**
-     * Corresponds to the [FILE] argument.
-     * 
-     */
-    @Export(name="files", refs={Either.class,String.class,List.class}, tree="[0,1,[2,1]]")
-    private Output<Either<String,List<String>>> files;
-
-    /**
-     * @return Corresponds to the [FILE] argument.
-     * 
-     */
-    public Output<Either<String,List<String>>> files() {
-        return this.files;
-    }
-    /**
-     * Corresponds to the `--force` option.
-     * 
-     */
-    @Export(name="force", refs={Boolean.class}, tree="[0]")
-    private Output<Boolean> force;
-
-    /**
-     * @return Corresponds to the `--force` option.
-     * 
-     */
-    public Output<Boolean> force() {
-        return this.force;
-    }
-    /**
-     * At what stage(s) in the resource lifecycle should the command be run
-     * 
-     */
-    @Export(name="lifecycle", refs={CommandLifecycle.class}, tree="[0]")
-    private Output</* @Nullable */ CommandLifecycle> lifecycle;
-
-    /**
-     * @return At what stage(s) in the resource lifecycle should the command be run
-     * 
-     */
-    public Output<Optional<CommandLifecycle>> lifecycle() {
-        return Codegen.optional(this.lifecycle);
-    }
-    /**
-     * Whether rm should be run when the resource is created or deleted.
-     * 
-     */
-    @Export(name="onDelete", refs={Boolean.class}, tree="[0]")
-    private Output<Boolean> onDelete;
-
-    /**
-     * @return Whether rm should be run when the resource is created or deleted.
-     * 
-     */
-    public Output<Boolean> onDelete() {
-        return this.onDelete;
-    }
-    /**
-     * Corresponds to the `--recursive` option.
-     * 
-     */
-    @Export(name="recursive", refs={Boolean.class}, tree="[0]")
-    private Output<Boolean> recursive;
-
-    /**
-     * @return Corresponds to the `--recursive` option.
-     * 
-     */
-    public Output<Boolean> recursive() {
-        return this.recursive;
     }
     /**
      * TODO
@@ -224,18 +170,24 @@ public class Rm extends com.pulumi.resources.ComponentResource {
         return this.triggers;
     }
     /**
-     * Corresponds to the `--verbose` option.
+     * The command to run on update, if empty, create will
+     * run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+     * are set to the stdout and stderr properties of the Command resource from previous
+     * create or update steps.
      * 
      */
-    @Export(name="verbose", refs={Boolean.class}, tree="[0]")
-    private Output<Boolean> verbose;
+    @Export(name="update", refs={RmOpts.class}, tree="[0]")
+    private Output</* @Nullable */ RmOpts> update;
 
     /**
-     * @return Corresponds to the `--verbose` option.
+     * @return The command to run on update, if empty, create will
+     * run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+     * are set to the stdout and stderr properties of the Command resource from previous
+     * create or update steps.
      * 
      */
-    public Output<Boolean> verbose() {
-        return this.verbose;
+    public Output<Optional<RmOpts>> update() {
+        return Codegen.optional(this.update);
     }
 
     /**

@@ -7,8 +7,7 @@ import com.pulumi.command.remote.inputs.ConnectionArgs;
 import com.pulumi.core.Output;
 import com.pulumi.core.annotations.Import;
 import com.pulumi.exceptions.MissingRequiredPropertyException;
-import com.unmango.kubernetesthehardway.tools.enums.CommandLifecycle;
-import java.lang.Boolean;
+import com.unmango.kubernetesthehardway.tools.inputs.MkdirOptsArgs;
 import java.lang.Object;
 import java.lang.String;
 import java.util.List;
@@ -53,18 +52,37 @@ public final class MkdirArgs extends com.pulumi.resources.ResourceArgs {
     }
 
     /**
-     * The fully qualified path of the directory on the remote system.
+     * The command to run on create.
      * 
      */
-    @Import(name="directory", required=true)
-    private Output<String> directory;
+    @Import(name="create")
+    private @Nullable MkdirOptsArgs create;
 
     /**
-     * @return The fully qualified path of the directory on the remote system.
+     * @return The command to run on create.
      * 
      */
-    public Output<String> directory() {
-        return this.directory;
+    public Optional<MkdirOptsArgs> create() {
+        return Optional.ofNullable(this.create);
+    }
+
+    /**
+     * The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+     * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+     * Command resource from previous create or update steps.
+     * 
+     */
+    @Import(name="delete")
+    private @Nullable MkdirOptsArgs delete;
+
+    /**
+     * @return The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+     * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+     * Command resource from previous create or update steps.
+     * 
+     */
+    public Optional<MkdirOptsArgs> delete() {
+        return Optional.ofNullable(this.delete);
     }
 
     /**
@@ -80,51 +98,6 @@ public final class MkdirArgs extends com.pulumi.resources.ResourceArgs {
      */
     public Optional<Output<Map<String,String>>> environment() {
         return Optional.ofNullable(this.environment);
-    }
-
-    /**
-     * At what stage(s) in the resource lifecycle should the command be run
-     * 
-     */
-    @Import(name="lifecycle")
-    private @Nullable CommandLifecycle lifecycle;
-
-    /**
-     * @return At what stage(s) in the resource lifecycle should the command be run
-     * 
-     */
-    public Optional<CommandLifecycle> lifecycle() {
-        return Optional.ofNullable(this.lifecycle);
-    }
-
-    /**
-     * Corresponds to the `--parents` option.
-     * 
-     */
-    @Import(name="parents")
-    private @Nullable Output<Boolean> parents;
-
-    /**
-     * @return Corresponds to the `--parents` option.
-     * 
-     */
-    public Optional<Output<Boolean>> parents() {
-        return Optional.ofNullable(this.parents);
-    }
-
-    /**
-     * Remove the created directory when the `Mkdir` resource is deleted or updated.
-     * 
-     */
-    @Import(name="removeOnDelete")
-    private @Nullable Output<Boolean> removeOnDelete;
-
-    /**
-     * @return Remove the created directory when the `Mkdir` resource is deleted or updated.
-     * 
-     */
-    public Optional<Output<Boolean>> removeOnDelete() {
-        return Optional.ofNullable(this.removeOnDelete);
     }
 
     /**
@@ -157,18 +130,38 @@ public final class MkdirArgs extends com.pulumi.resources.ResourceArgs {
         return Optional.ofNullable(this.triggers);
     }
 
+    /**
+     * The command to run on update, if empty, create will
+     * run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+     * are set to the stdout and stderr properties of the Command resource from previous
+     * create or update steps.
+     * 
+     */
+    @Import(name="update")
+    private @Nullable MkdirOptsArgs update;
+
+    /**
+     * @return The command to run on update, if empty, create will
+     * run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+     * are set to the stdout and stderr properties of the Command resource from previous
+     * create or update steps.
+     * 
+     */
+    public Optional<MkdirOptsArgs> update() {
+        return Optional.ofNullable(this.update);
+    }
+
     private MkdirArgs() {}
 
     private MkdirArgs(MkdirArgs $) {
         this.binaryPath = $.binaryPath;
         this.connection = $.connection;
-        this.directory = $.directory;
+        this.create = $.create;
+        this.delete = $.delete;
         this.environment = $.environment;
-        this.lifecycle = $.lifecycle;
-        this.parents = $.parents;
-        this.removeOnDelete = $.removeOnDelete;
         this.stdin = $.stdin;
         this.triggers = $.triggers;
+        this.update = $.update;
     }
 
     public static Builder builder() {
@@ -232,24 +225,27 @@ public final class MkdirArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param directory The fully qualified path of the directory on the remote system.
+         * @param create The command to run on create.
          * 
          * @return builder
          * 
          */
-        public Builder directory(Output<String> directory) {
-            $.directory = directory;
+        public Builder create(@Nullable MkdirOptsArgs create) {
+            $.create = create;
             return this;
         }
 
         /**
-         * @param directory The fully qualified path of the directory on the remote system.
+         * @param delete The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+         * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+         * Command resource from previous create or update steps.
          * 
          * @return builder
          * 
          */
-        public Builder directory(String directory) {
-            return directory(Output.of(directory));
+        public Builder delete(@Nullable MkdirOptsArgs delete) {
+            $.delete = delete;
+            return this;
         }
 
         /**
@@ -271,59 +267,6 @@ public final class MkdirArgs extends com.pulumi.resources.ResourceArgs {
          */
         public Builder environment(Map<String,String> environment) {
             return environment(Output.of(environment));
-        }
-
-        /**
-         * @param lifecycle At what stage(s) in the resource lifecycle should the command be run
-         * 
-         * @return builder
-         * 
-         */
-        public Builder lifecycle(@Nullable CommandLifecycle lifecycle) {
-            $.lifecycle = lifecycle;
-            return this;
-        }
-
-        /**
-         * @param parents Corresponds to the `--parents` option.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder parents(@Nullable Output<Boolean> parents) {
-            $.parents = parents;
-            return this;
-        }
-
-        /**
-         * @param parents Corresponds to the `--parents` option.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder parents(Boolean parents) {
-            return parents(Output.of(parents));
-        }
-
-        /**
-         * @param removeOnDelete Remove the created directory when the `Mkdir` resource is deleted or updated.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder removeOnDelete(@Nullable Output<Boolean> removeOnDelete) {
-            $.removeOnDelete = removeOnDelete;
-            return this;
-        }
-
-        /**
-         * @param removeOnDelete Remove the created directory when the `Mkdir` resource is deleted or updated.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder removeOnDelete(Boolean removeOnDelete) {
-            return removeOnDelete(Output.of(removeOnDelete));
         }
 
         /**
@@ -378,12 +321,23 @@ public final class MkdirArgs extends com.pulumi.resources.ResourceArgs {
             return triggers(List.of(triggers));
         }
 
+        /**
+         * @param update The command to run on update, if empty, create will
+         * run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+         * are set to the stdout and stderr properties of the Command resource from previous
+         * create or update steps.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder update(@Nullable MkdirOptsArgs update) {
+            $.update = update;
+            return this;
+        }
+
         public MkdirArgs build() {
             if ($.connection == null) {
                 throw new MissingRequiredPropertyException("MkdirArgs", "connection");
-            }
-            if ($.directory == null) {
-                throw new MissingRequiredPropertyException("MkdirArgs", "directory");
             }
             return $;
         }

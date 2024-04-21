@@ -8,7 +8,8 @@ import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
 from .. import _utilities
-from ._enums import *
+from . import outputs
+from ._inputs import *
 import pulumi_command
 
 __all__ = ['MktempArgs', 'Mktemp']
@@ -18,54 +19,43 @@ class MktempArgs:
     def __init__(__self__, *,
                  connection: pulumi.Input['pulumi_command.remote.ConnectionArgs'],
                  binary_path: Optional[pulumi.Input[str]] = None,
-                 directory: Optional[pulumi.Input[bool]] = None,
-                 dry_run: Optional[pulumi.Input[bool]] = None,
+                 create: Optional['MktempOptsArgs'] = None,
+                 delete: Optional['MktempOptsArgs'] = None,
                  environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-                 lifecycle: Optional['CommandLifecycle'] = None,
-                 quiet: Optional[pulumi.Input[bool]] = None,
                  stdin: Optional[pulumi.Input[str]] = None,
-                 suffix: Optional[pulumi.Input[str]] = None,
-                 template: Optional[pulumi.Input[str]] = None,
-                 tmpdir: Optional[pulumi.Input[str]] = None,
-                 triggers: Optional[pulumi.Input[Sequence[Any]]] = None):
+                 triggers: Optional[pulumi.Input[Sequence[Any]]] = None,
+                 update: Optional['MktempOptsArgs'] = None):
         """
         The set of arguments for constructing a Mktemp resource.
         :param pulumi.Input['pulumi_command.remote.ConnectionArgs'] connection: Connection details for the remote system
         :param pulumi.Input[str] binary_path: Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
-        :param pulumi.Input[bool] directory: Corresponds to the `--directory` option.
-        :param pulumi.Input[bool] dry_run: Corresponds to the `--dry-run` option.
+        :param 'MktempOptsArgs' create: The command to run on create.
+        :param 'MktempOptsArgs' delete: The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+               and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+               Command resource from previous create or update steps.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] environment: Environment variables
-        :param 'CommandLifecycle' lifecycle: At what stage(s) in the resource lifecycle should the command be run
-        :param pulumi.Input[bool] quiet: Corresponds to the `--quiet` option.
         :param pulumi.Input[str] stdin: TODO
-        :param pulumi.Input[str] suffix: Corresponds to the `--suffix` option.
-        :param pulumi.Input[str] template: Corresponds to the [TEMPLATE] argument.
-        :param pulumi.Input[str] tmpdir: Corresponds to the `--tmpdir` option.
         :param pulumi.Input[Sequence[Any]] triggers: TODO
+        :param 'MktempOptsArgs' update: The command to run on update, if empty, create will 
+               run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
+               are set to the stdout and stderr properties of the Command resource from previous 
+               create or update steps.
         """
         pulumi.set(__self__, "connection", connection)
         if binary_path is not None:
             pulumi.set(__self__, "binary_path", binary_path)
-        if directory is not None:
-            pulumi.set(__self__, "directory", directory)
-        if dry_run is not None:
-            pulumi.set(__self__, "dry_run", dry_run)
+        if create is not None:
+            pulumi.set(__self__, "create", create)
+        if delete is not None:
+            pulumi.set(__self__, "delete", delete)
         if environment is not None:
             pulumi.set(__self__, "environment", environment)
-        if lifecycle is not None:
-            pulumi.set(__self__, "lifecycle", lifecycle)
-        if quiet is not None:
-            pulumi.set(__self__, "quiet", quiet)
         if stdin is not None:
             pulumi.set(__self__, "stdin", stdin)
-        if suffix is not None:
-            pulumi.set(__self__, "suffix", suffix)
-        if template is not None:
-            pulumi.set(__self__, "template", template)
-        if tmpdir is not None:
-            pulumi.set(__self__, "tmpdir", tmpdir)
         if triggers is not None:
             pulumi.set(__self__, "triggers", triggers)
+        if update is not None:
+            pulumi.set(__self__, "update", update)
 
     @property
     @pulumi.getter
@@ -93,27 +83,29 @@ class MktempArgs:
 
     @property
     @pulumi.getter
-    def directory(self) -> Optional[pulumi.Input[bool]]:
+    def create(self) -> Optional['MktempOptsArgs']:
         """
-        Corresponds to the `--directory` option.
+        The command to run on create.
         """
-        return pulumi.get(self, "directory")
+        return pulumi.get(self, "create")
 
-    @directory.setter
-    def directory(self, value: Optional[pulumi.Input[bool]]):
-        pulumi.set(self, "directory", value)
+    @create.setter
+    def create(self, value: Optional['MktempOptsArgs']):
+        pulumi.set(self, "create", value)
 
     @property
-    @pulumi.getter(name="dryRun")
-    def dry_run(self) -> Optional[pulumi.Input[bool]]:
+    @pulumi.getter
+    def delete(self) -> Optional['MktempOptsArgs']:
         """
-        Corresponds to the `--dry-run` option.
+        The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+        and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+        Command resource from previous create or update steps.
         """
-        return pulumi.get(self, "dry_run")
+        return pulumi.get(self, "delete")
 
-    @dry_run.setter
-    def dry_run(self, value: Optional[pulumi.Input[bool]]):
-        pulumi.set(self, "dry_run", value)
+    @delete.setter
+    def delete(self, value: Optional['MktempOptsArgs']):
+        pulumi.set(self, "delete", value)
 
     @property
     @pulumi.getter
@@ -129,30 +121,6 @@ class MktempArgs:
 
     @property
     @pulumi.getter
-    def lifecycle(self) -> Optional['CommandLifecycle']:
-        """
-        At what stage(s) in the resource lifecycle should the command be run
-        """
-        return pulumi.get(self, "lifecycle")
-
-    @lifecycle.setter
-    def lifecycle(self, value: Optional['CommandLifecycle']):
-        pulumi.set(self, "lifecycle", value)
-
-    @property
-    @pulumi.getter
-    def quiet(self) -> Optional[pulumi.Input[bool]]:
-        """
-        Corresponds to the `--quiet` option.
-        """
-        return pulumi.get(self, "quiet")
-
-    @quiet.setter
-    def quiet(self, value: Optional[pulumi.Input[bool]]):
-        pulumi.set(self, "quiet", value)
-
-    @property
-    @pulumi.getter
     def stdin(self) -> Optional[pulumi.Input[str]]:
         """
         TODO
@@ -162,42 +130,6 @@ class MktempArgs:
     @stdin.setter
     def stdin(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "stdin", value)
-
-    @property
-    @pulumi.getter
-    def suffix(self) -> Optional[pulumi.Input[str]]:
-        """
-        Corresponds to the `--suffix` option.
-        """
-        return pulumi.get(self, "suffix")
-
-    @suffix.setter
-    def suffix(self, value: Optional[pulumi.Input[str]]):
-        pulumi.set(self, "suffix", value)
-
-    @property
-    @pulumi.getter
-    def template(self) -> Optional[pulumi.Input[str]]:
-        """
-        Corresponds to the [TEMPLATE] argument.
-        """
-        return pulumi.get(self, "template")
-
-    @template.setter
-    def template(self, value: Optional[pulumi.Input[str]]):
-        pulumi.set(self, "template", value)
-
-    @property
-    @pulumi.getter
-    def tmpdir(self) -> Optional[pulumi.Input[str]]:
-        """
-        Corresponds to the `--tmpdir` option.
-        """
-        return pulumi.get(self, "tmpdir")
-
-    @tmpdir.setter
-    def tmpdir(self, value: Optional[pulumi.Input[str]]):
-        pulumi.set(self, "tmpdir", value)
 
     @property
     @pulumi.getter
@@ -211,6 +143,21 @@ class MktempArgs:
     def triggers(self, value: Optional[pulumi.Input[Sequence[Any]]]):
         pulumi.set(self, "triggers", value)
 
+    @property
+    @pulumi.getter
+    def update(self) -> Optional['MktempOptsArgs']:
+        """
+        The command to run on update, if empty, create will 
+        run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
+        are set to the stdout and stderr properties of the Command resource from previous 
+        create or update steps.
+        """
+        return pulumi.get(self, "update")
+
+    @update.setter
+    def update(self, value: Optional['MktempOptsArgs']):
+        pulumi.set(self, "update", value)
+
 
 class Mktemp(pulumi.ComponentResource):
     @overload
@@ -219,34 +166,31 @@ class Mktemp(pulumi.ComponentResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  binary_path: Optional[pulumi.Input[str]] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
-                 directory: Optional[pulumi.Input[bool]] = None,
-                 dry_run: Optional[pulumi.Input[bool]] = None,
+                 create: Optional[pulumi.InputType['MktempOptsArgs']] = None,
+                 delete: Optional[pulumi.InputType['MktempOptsArgs']] = None,
                  environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-                 lifecycle: Optional['CommandLifecycle'] = None,
-                 quiet: Optional[pulumi.Input[bool]] = None,
                  stdin: Optional[pulumi.Input[str]] = None,
-                 suffix: Optional[pulumi.Input[str]] = None,
-                 template: Optional[pulumi.Input[str]] = None,
-                 tmpdir: Optional[pulumi.Input[str]] = None,
                  triggers: Optional[pulumi.Input[Sequence[Any]]] = None,
+                 update: Optional[pulumi.InputType['MktempOptsArgs']] = None,
                  __props__=None):
         """
-        Abstraction over the `mkdir` utility on a remote system.
+        Abstraction over the `mktemp` utility on a remote system.
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[str] binary_path: Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
         :param pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']] connection: Connection details for the remote system
-        :param pulumi.Input[bool] directory: Corresponds to the `--directory` option.
-        :param pulumi.Input[bool] dry_run: Corresponds to the `--dry-run` option.
+        :param pulumi.InputType['MktempOptsArgs'] create: The command to run on create.
+        :param pulumi.InputType['MktempOptsArgs'] delete: The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+               and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+               Command resource from previous create or update steps.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] environment: Environment variables
-        :param 'CommandLifecycle' lifecycle: At what stage(s) in the resource lifecycle should the command be run
-        :param pulumi.Input[bool] quiet: Corresponds to the `--quiet` option.
         :param pulumi.Input[str] stdin: TODO
-        :param pulumi.Input[str] suffix: Corresponds to the `--suffix` option.
-        :param pulumi.Input[str] template: Corresponds to the [TEMPLATE] argument.
-        :param pulumi.Input[str] tmpdir: Corresponds to the `--tmpdir` option.
         :param pulumi.Input[Sequence[Any]] triggers: TODO
+        :param pulumi.InputType['MktempOptsArgs'] update: The command to run on update, if empty, create will 
+               run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
+               are set to the stdout and stderr properties of the Command resource from previous 
+               create or update steps.
         """
         ...
     @overload
@@ -255,7 +199,7 @@ class Mktemp(pulumi.ComponentResource):
                  args: MktempArgs,
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
-        Abstraction over the `mkdir` utility on a remote system.
+        Abstraction over the `mktemp` utility on a remote system.
 
         :param str resource_name: The name of the resource.
         :param MktempArgs args: The arguments to use to populate this resource's properties.
@@ -274,16 +218,12 @@ class Mktemp(pulumi.ComponentResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  binary_path: Optional[pulumi.Input[str]] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
-                 directory: Optional[pulumi.Input[bool]] = None,
-                 dry_run: Optional[pulumi.Input[bool]] = None,
+                 create: Optional[pulumi.InputType['MktempOptsArgs']] = None,
+                 delete: Optional[pulumi.InputType['MktempOptsArgs']] = None,
                  environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-                 lifecycle: Optional['CommandLifecycle'] = None,
-                 quiet: Optional[pulumi.Input[bool]] = None,
                  stdin: Optional[pulumi.Input[str]] = None,
-                 suffix: Optional[pulumi.Input[str]] = None,
-                 template: Optional[pulumi.Input[str]] = None,
-                 tmpdir: Optional[pulumi.Input[str]] = None,
                  triggers: Optional[pulumi.Input[Sequence[Any]]] = None,
+                 update: Optional[pulumi.InputType['MktempOptsArgs']] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):
@@ -299,16 +239,12 @@ class Mktemp(pulumi.ComponentResource):
             if connection is None and not opts.urn:
                 raise TypeError("Missing required property 'connection'")
             __props__.__dict__["connection"] = connection
-            __props__.__dict__["directory"] = directory
-            __props__.__dict__["dry_run"] = dry_run
+            __props__.__dict__["create"] = create
+            __props__.__dict__["delete"] = delete
             __props__.__dict__["environment"] = environment
-            __props__.__dict__["lifecycle"] = lifecycle
-            __props__.__dict__["quiet"] = quiet
             __props__.__dict__["stdin"] = stdin
-            __props__.__dict__["suffix"] = suffix
-            __props__.__dict__["template"] = template
-            __props__.__dict__["tmpdir"] = tmpdir
             __props__.__dict__["triggers"] = triggers
+            __props__.__dict__["update"] = update
             __props__.__dict__["command"] = None
             __props__.__dict__["stderr"] = None
             __props__.__dict__["stdout"] = None
@@ -345,19 +281,21 @@ class Mktemp(pulumi.ComponentResource):
 
     @property
     @pulumi.getter
-    def directory(self) -> pulumi.Output[Optional[bool]]:
+    def create(self) -> pulumi.Output[Optional['outputs.MktempOpts']]:
         """
-        Corresponds to the `--directory` option.
+        The command to run on create.
         """
-        return pulumi.get(self, "directory")
+        return pulumi.get(self, "create")
 
     @property
-    @pulumi.getter(name="dryRun")
-    def dry_run(self) -> pulumi.Output[bool]:
+    @pulumi.getter
+    def delete(self) -> pulumi.Output[Optional['outputs.MktempOpts']]:
         """
-        Corresponds to the `--dry-run` option.
+        The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+        and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+        Command resource from previous create or update steps.
         """
-        return pulumi.get(self, "dry_run")
+        return pulumi.get(self, "delete")
 
     @property
     @pulumi.getter
@@ -366,22 +304,6 @@ class Mktemp(pulumi.ComponentResource):
         Environment variables
         """
         return pulumi.get(self, "environment")
-
-    @property
-    @pulumi.getter
-    def lifecycle(self) -> pulumi.Output[Optional['CommandLifecycle']]:
-        """
-        At what stage(s) in the resource lifecycle should the command be run
-        """
-        return pulumi.get(self, "lifecycle")
-
-    @property
-    @pulumi.getter
-    def quiet(self) -> pulumi.Output[bool]:
-        """
-        Corresponds to the `--quiet` option.
-        """
-        return pulumi.get(self, "quiet")
 
     @property
     @pulumi.getter
@@ -409,33 +331,20 @@ class Mktemp(pulumi.ComponentResource):
 
     @property
     @pulumi.getter
-    def suffix(self) -> pulumi.Output[Optional[str]]:
-        """
-        Corresponds to the `--suffix` option.
-        """
-        return pulumi.get(self, "suffix")
-
-    @property
-    @pulumi.getter
-    def template(self) -> pulumi.Output[Optional[str]]:
-        """
-        Corresponds to the [TEMPLATE] argument.
-        """
-        return pulumi.get(self, "template")
-
-    @property
-    @pulumi.getter
-    def tmpdir(self) -> pulumi.Output[Optional[str]]:
-        """
-        Corresponds to the `--tmpdir` option.
-        """
-        return pulumi.get(self, "tmpdir")
-
-    @property
-    @pulumi.getter
     def triggers(self) -> pulumi.Output[Sequence[Any]]:
         """
         TODO
         """
         return pulumi.get(self, "triggers")
+
+    @property
+    @pulumi.getter
+    def update(self) -> pulumi.Output[Optional['outputs.MktempOpts']]:
+        """
+        The command to run on update, if empty, create will 
+        run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
+        are set to the stdout and stderr properties of the Command resource from previous 
+        create or update steps.
+        """
+        return pulumi.get(self, "update")
 

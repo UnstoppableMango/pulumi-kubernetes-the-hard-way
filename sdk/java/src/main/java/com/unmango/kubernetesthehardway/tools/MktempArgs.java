@@ -7,8 +7,7 @@ import com.pulumi.command.remote.inputs.ConnectionArgs;
 import com.pulumi.core.Output;
 import com.pulumi.core.annotations.Import;
 import com.pulumi.exceptions.MissingRequiredPropertyException;
-import com.unmango.kubernetesthehardway.tools.enums.CommandLifecycle;
-import java.lang.Boolean;
+import com.unmango.kubernetesthehardway.tools.inputs.MktempOptsArgs;
 import java.lang.Object;
 import java.lang.String;
 import java.util.List;
@@ -53,33 +52,37 @@ public final class MktempArgs extends com.pulumi.resources.ResourceArgs {
     }
 
     /**
-     * Corresponds to the `--directory` option.
+     * The command to run on create.
      * 
      */
-    @Import(name="directory")
-    private @Nullable Output<Boolean> directory;
+    @Import(name="create")
+    private @Nullable MktempOptsArgs create;
 
     /**
-     * @return Corresponds to the `--directory` option.
+     * @return The command to run on create.
      * 
      */
-    public Optional<Output<Boolean>> directory() {
-        return Optional.ofNullable(this.directory);
+    public Optional<MktempOptsArgs> create() {
+        return Optional.ofNullable(this.create);
     }
 
     /**
-     * Corresponds to the `--dry-run` option.
+     * The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+     * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+     * Command resource from previous create or update steps.
      * 
      */
-    @Import(name="dryRun")
-    private @Nullable Output<Boolean> dryRun;
+    @Import(name="delete")
+    private @Nullable MktempOptsArgs delete;
 
     /**
-     * @return Corresponds to the `--dry-run` option.
+     * @return The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+     * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+     * Command resource from previous create or update steps.
      * 
      */
-    public Optional<Output<Boolean>> dryRun() {
-        return Optional.ofNullable(this.dryRun);
+    public Optional<MktempOptsArgs> delete() {
+        return Optional.ofNullable(this.delete);
     }
 
     /**
@@ -98,36 +101,6 @@ public final class MktempArgs extends com.pulumi.resources.ResourceArgs {
     }
 
     /**
-     * At what stage(s) in the resource lifecycle should the command be run
-     * 
-     */
-    @Import(name="lifecycle")
-    private @Nullable CommandLifecycle lifecycle;
-
-    /**
-     * @return At what stage(s) in the resource lifecycle should the command be run
-     * 
-     */
-    public Optional<CommandLifecycle> lifecycle() {
-        return Optional.ofNullable(this.lifecycle);
-    }
-
-    /**
-     * Corresponds to the `--quiet` option.
-     * 
-     */
-    @Import(name="quiet")
-    private @Nullable Output<Boolean> quiet;
-
-    /**
-     * @return Corresponds to the `--quiet` option.
-     * 
-     */
-    public Optional<Output<Boolean>> quiet() {
-        return Optional.ofNullable(this.quiet);
-    }
-
-    /**
      * TODO
      * 
      */
@@ -140,51 +113,6 @@ public final class MktempArgs extends com.pulumi.resources.ResourceArgs {
      */
     public Optional<Output<String>> stdin() {
         return Optional.ofNullable(this.stdin);
-    }
-
-    /**
-     * Corresponds to the `--suffix` option.
-     * 
-     */
-    @Import(name="suffix")
-    private @Nullable Output<String> suffix;
-
-    /**
-     * @return Corresponds to the `--suffix` option.
-     * 
-     */
-    public Optional<Output<String>> suffix() {
-        return Optional.ofNullable(this.suffix);
-    }
-
-    /**
-     * Corresponds to the [TEMPLATE] argument.
-     * 
-     */
-    @Import(name="template")
-    private @Nullable Output<String> template;
-
-    /**
-     * @return Corresponds to the [TEMPLATE] argument.
-     * 
-     */
-    public Optional<Output<String>> template() {
-        return Optional.ofNullable(this.template);
-    }
-
-    /**
-     * Corresponds to the `--tmpdir` option.
-     * 
-     */
-    @Import(name="tmpdir")
-    private @Nullable Output<String> tmpdir;
-
-    /**
-     * @return Corresponds to the `--tmpdir` option.
-     * 
-     */
-    public Optional<Output<String>> tmpdir() {
-        return Optional.ofNullable(this.tmpdir);
     }
 
     /**
@@ -202,21 +130,38 @@ public final class MktempArgs extends com.pulumi.resources.ResourceArgs {
         return Optional.ofNullable(this.triggers);
     }
 
+    /**
+     * The command to run on update, if empty, create will
+     * run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+     * are set to the stdout and stderr properties of the Command resource from previous
+     * create or update steps.
+     * 
+     */
+    @Import(name="update")
+    private @Nullable MktempOptsArgs update;
+
+    /**
+     * @return The command to run on update, if empty, create will
+     * run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+     * are set to the stdout and stderr properties of the Command resource from previous
+     * create or update steps.
+     * 
+     */
+    public Optional<MktempOptsArgs> update() {
+        return Optional.ofNullable(this.update);
+    }
+
     private MktempArgs() {}
 
     private MktempArgs(MktempArgs $) {
         this.binaryPath = $.binaryPath;
         this.connection = $.connection;
-        this.directory = $.directory;
-        this.dryRun = $.dryRun;
+        this.create = $.create;
+        this.delete = $.delete;
         this.environment = $.environment;
-        this.lifecycle = $.lifecycle;
-        this.quiet = $.quiet;
         this.stdin = $.stdin;
-        this.suffix = $.suffix;
-        this.template = $.template;
-        this.tmpdir = $.tmpdir;
         this.triggers = $.triggers;
+        this.update = $.update;
     }
 
     public static Builder builder() {
@@ -280,45 +225,27 @@ public final class MktempArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param directory Corresponds to the `--directory` option.
+         * @param create The command to run on create.
          * 
          * @return builder
          * 
          */
-        public Builder directory(@Nullable Output<Boolean> directory) {
-            $.directory = directory;
+        public Builder create(@Nullable MktempOptsArgs create) {
+            $.create = create;
             return this;
         }
 
         /**
-         * @param directory Corresponds to the `--directory` option.
+         * @param delete The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+         * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+         * Command resource from previous create or update steps.
          * 
          * @return builder
          * 
          */
-        public Builder directory(Boolean directory) {
-            return directory(Output.of(directory));
-        }
-
-        /**
-         * @param dryRun Corresponds to the `--dry-run` option.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder dryRun(@Nullable Output<Boolean> dryRun) {
-            $.dryRun = dryRun;
+        public Builder delete(@Nullable MktempOptsArgs delete) {
+            $.delete = delete;
             return this;
-        }
-
-        /**
-         * @param dryRun Corresponds to the `--dry-run` option.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder dryRun(Boolean dryRun) {
-            return dryRun(Output.of(dryRun));
         }
 
         /**
@@ -343,38 +270,6 @@ public final class MktempArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param lifecycle At what stage(s) in the resource lifecycle should the command be run
-         * 
-         * @return builder
-         * 
-         */
-        public Builder lifecycle(@Nullable CommandLifecycle lifecycle) {
-            $.lifecycle = lifecycle;
-            return this;
-        }
-
-        /**
-         * @param quiet Corresponds to the `--quiet` option.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder quiet(@Nullable Output<Boolean> quiet) {
-            $.quiet = quiet;
-            return this;
-        }
-
-        /**
-         * @param quiet Corresponds to the `--quiet` option.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder quiet(Boolean quiet) {
-            return quiet(Output.of(quiet));
-        }
-
-        /**
          * @param stdin TODO
          * 
          * @return builder
@@ -393,69 +288,6 @@ public final class MktempArgs extends com.pulumi.resources.ResourceArgs {
          */
         public Builder stdin(String stdin) {
             return stdin(Output.of(stdin));
-        }
-
-        /**
-         * @param suffix Corresponds to the `--suffix` option.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder suffix(@Nullable Output<String> suffix) {
-            $.suffix = suffix;
-            return this;
-        }
-
-        /**
-         * @param suffix Corresponds to the `--suffix` option.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder suffix(String suffix) {
-            return suffix(Output.of(suffix));
-        }
-
-        /**
-         * @param template Corresponds to the [TEMPLATE] argument.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder template(@Nullable Output<String> template) {
-            $.template = template;
-            return this;
-        }
-
-        /**
-         * @param template Corresponds to the [TEMPLATE] argument.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder template(String template) {
-            return template(Output.of(template));
-        }
-
-        /**
-         * @param tmpdir Corresponds to the `--tmpdir` option.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder tmpdir(@Nullable Output<String> tmpdir) {
-            $.tmpdir = tmpdir;
-            return this;
-        }
-
-        /**
-         * @param tmpdir Corresponds to the `--tmpdir` option.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder tmpdir(String tmpdir) {
-            return tmpdir(Output.of(tmpdir));
         }
 
         /**
@@ -487,6 +319,20 @@ public final class MktempArgs extends com.pulumi.resources.ResourceArgs {
          */
         public Builder triggers(Object... triggers) {
             return triggers(List.of(triggers));
+        }
+
+        /**
+         * @param update The command to run on update, if empty, create will
+         * run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+         * are set to the stdout and stderr properties of the Command resource from previous
+         * create or update steps.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder update(@Nullable MktempOptsArgs update) {
+            $.update = update;
+            return this;
         }
 
         public MktempArgs build() {

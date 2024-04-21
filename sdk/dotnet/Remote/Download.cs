@@ -97,7 +97,7 @@ namespace UnMango.KubernetesTheHardWay.Remote
         /// Remove the downloaded fiel when the resource is deleted.
         /// </summary>
         [Input("removeOnDelete")]
-        public Input<bool>? RemoveOnDelete { get; set; }
+        public bool? RemoveOnDelete { get; set; }
 
         /// <summary>
         /// The URL of the file to be downloaded.

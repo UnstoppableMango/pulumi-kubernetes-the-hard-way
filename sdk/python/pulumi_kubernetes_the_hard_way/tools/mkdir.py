@@ -8,7 +8,8 @@ import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
 from .. import _utilities
-from ._enums import *
+from . import outputs
+from ._inputs import *
 import pulumi_command
 
 __all__ = ['MkdirArgs', 'Mkdir']
@@ -17,42 +18,44 @@ __all__ = ['MkdirArgs', 'Mkdir']
 class MkdirArgs:
     def __init__(__self__, *,
                  connection: pulumi.Input['pulumi_command.remote.ConnectionArgs'],
-                 directory: pulumi.Input[str],
                  binary_path: Optional[pulumi.Input[str]] = None,
+                 create: Optional['MkdirOptsArgs'] = None,
+                 delete: Optional['MkdirOptsArgs'] = None,
                  environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-                 lifecycle: Optional['CommandLifecycle'] = None,
-                 parents: Optional[pulumi.Input[bool]] = None,
-                 remove_on_delete: Optional[pulumi.Input[bool]] = None,
                  stdin: Optional[pulumi.Input[str]] = None,
-                 triggers: Optional[pulumi.Input[Sequence[Any]]] = None):
+                 triggers: Optional[pulumi.Input[Sequence[Any]]] = None,
+                 update: Optional['MkdirOptsArgs'] = None):
         """
         The set of arguments for constructing a Mkdir resource.
         :param pulumi.Input['pulumi_command.remote.ConnectionArgs'] connection: Connection details for the remote system
-        :param pulumi.Input[str] directory: The fully qualified path of the directory on the remote system.
         :param pulumi.Input[str] binary_path: Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
+        :param 'MkdirOptsArgs' create: The command to run on create.
+        :param 'MkdirOptsArgs' delete: The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+               and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+               Command resource from previous create or update steps.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] environment: Environment variables
-        :param 'CommandLifecycle' lifecycle: At what stage(s) in the resource lifecycle should the command be run
-        :param pulumi.Input[bool] parents: Corresponds to the `--parents` option.
-        :param pulumi.Input[bool] remove_on_delete: Remove the created directory when the `Mkdir` resource is deleted or updated.
         :param pulumi.Input[str] stdin: TODO
         :param pulumi.Input[Sequence[Any]] triggers: TODO
+        :param 'MkdirOptsArgs' update: The command to run on update, if empty, create will 
+               run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
+               are set to the stdout and stderr properties of the Command resource from previous 
+               create or update steps.
         """
         pulumi.set(__self__, "connection", connection)
-        pulumi.set(__self__, "directory", directory)
         if binary_path is not None:
             pulumi.set(__self__, "binary_path", binary_path)
+        if create is not None:
+            pulumi.set(__self__, "create", create)
+        if delete is not None:
+            pulumi.set(__self__, "delete", delete)
         if environment is not None:
             pulumi.set(__self__, "environment", environment)
-        if lifecycle is not None:
-            pulumi.set(__self__, "lifecycle", lifecycle)
-        if parents is not None:
-            pulumi.set(__self__, "parents", parents)
-        if remove_on_delete is not None:
-            pulumi.set(__self__, "remove_on_delete", remove_on_delete)
         if stdin is not None:
             pulumi.set(__self__, "stdin", stdin)
         if triggers is not None:
             pulumi.set(__self__, "triggers", triggers)
+        if update is not None:
+            pulumi.set(__self__, "update", update)
 
     @property
     @pulumi.getter
@@ -65,18 +68,6 @@ class MkdirArgs:
     @connection.setter
     def connection(self, value: pulumi.Input['pulumi_command.remote.ConnectionArgs']):
         pulumi.set(self, "connection", value)
-
-    @property
-    @pulumi.getter
-    def directory(self) -> pulumi.Input[str]:
-        """
-        The fully qualified path of the directory on the remote system.
-        """
-        return pulumi.get(self, "directory")
-
-    @directory.setter
-    def directory(self, value: pulumi.Input[str]):
-        pulumi.set(self, "directory", value)
 
     @property
     @pulumi.getter(name="binaryPath")
@@ -92,6 +83,32 @@ class MkdirArgs:
 
     @property
     @pulumi.getter
+    def create(self) -> Optional['MkdirOptsArgs']:
+        """
+        The command to run on create.
+        """
+        return pulumi.get(self, "create")
+
+    @create.setter
+    def create(self, value: Optional['MkdirOptsArgs']):
+        pulumi.set(self, "create", value)
+
+    @property
+    @pulumi.getter
+    def delete(self) -> Optional['MkdirOptsArgs']:
+        """
+        The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+        and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+        Command resource from previous create or update steps.
+        """
+        return pulumi.get(self, "delete")
+
+    @delete.setter
+    def delete(self, value: Optional['MkdirOptsArgs']):
+        pulumi.set(self, "delete", value)
+
+    @property
+    @pulumi.getter
     def environment(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
         """
         Environment variables
@@ -101,42 +118,6 @@ class MkdirArgs:
     @environment.setter
     def environment(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
         pulumi.set(self, "environment", value)
-
-    @property
-    @pulumi.getter
-    def lifecycle(self) -> Optional['CommandLifecycle']:
-        """
-        At what stage(s) in the resource lifecycle should the command be run
-        """
-        return pulumi.get(self, "lifecycle")
-
-    @lifecycle.setter
-    def lifecycle(self, value: Optional['CommandLifecycle']):
-        pulumi.set(self, "lifecycle", value)
-
-    @property
-    @pulumi.getter
-    def parents(self) -> Optional[pulumi.Input[bool]]:
-        """
-        Corresponds to the `--parents` option.
-        """
-        return pulumi.get(self, "parents")
-
-    @parents.setter
-    def parents(self, value: Optional[pulumi.Input[bool]]):
-        pulumi.set(self, "parents", value)
-
-    @property
-    @pulumi.getter(name="removeOnDelete")
-    def remove_on_delete(self) -> Optional[pulumi.Input[bool]]:
-        """
-        Remove the created directory when the `Mkdir` resource is deleted or updated.
-        """
-        return pulumi.get(self, "remove_on_delete")
-
-    @remove_on_delete.setter
-    def remove_on_delete(self, value: Optional[pulumi.Input[bool]]):
-        pulumi.set(self, "remove_on_delete", value)
 
     @property
     @pulumi.getter
@@ -162,6 +143,21 @@ class MkdirArgs:
     def triggers(self, value: Optional[pulumi.Input[Sequence[Any]]]):
         pulumi.set(self, "triggers", value)
 
+    @property
+    @pulumi.getter
+    def update(self) -> Optional['MkdirOptsArgs']:
+        """
+        The command to run on update, if empty, create will 
+        run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
+        are set to the stdout and stderr properties of the Command resource from previous 
+        create or update steps.
+        """
+        return pulumi.get(self, "update")
+
+    @update.setter
+    def update(self, value: Optional['MkdirOptsArgs']):
+        pulumi.set(self, "update", value)
+
 
 class Mkdir(pulumi.ComponentResource):
     @overload
@@ -170,13 +166,12 @@ class Mkdir(pulumi.ComponentResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  binary_path: Optional[pulumi.Input[str]] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
-                 directory: Optional[pulumi.Input[str]] = None,
+                 create: Optional[pulumi.InputType['MkdirOptsArgs']] = None,
+                 delete: Optional[pulumi.InputType['MkdirOptsArgs']] = None,
                  environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-                 lifecycle: Optional['CommandLifecycle'] = None,
-                 parents: Optional[pulumi.Input[bool]] = None,
-                 remove_on_delete: Optional[pulumi.Input[bool]] = None,
                  stdin: Optional[pulumi.Input[str]] = None,
                  triggers: Optional[pulumi.Input[Sequence[Any]]] = None,
+                 update: Optional[pulumi.InputType['MkdirOptsArgs']] = None,
                  __props__=None):
         """
         Abstraction over the `mkdir` utility on a remote system.
@@ -185,13 +180,17 @@ class Mkdir(pulumi.ComponentResource):
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[str] binary_path: Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
         :param pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']] connection: Connection details for the remote system
-        :param pulumi.Input[str] directory: The fully qualified path of the directory on the remote system.
+        :param pulumi.InputType['MkdirOptsArgs'] create: The command to run on create.
+        :param pulumi.InputType['MkdirOptsArgs'] delete: The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+               and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+               Command resource from previous create or update steps.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] environment: Environment variables
-        :param 'CommandLifecycle' lifecycle: At what stage(s) in the resource lifecycle should the command be run
-        :param pulumi.Input[bool] parents: Corresponds to the `--parents` option.
-        :param pulumi.Input[bool] remove_on_delete: Remove the created directory when the `Mkdir` resource is deleted or updated.
         :param pulumi.Input[str] stdin: TODO
         :param pulumi.Input[Sequence[Any]] triggers: TODO
+        :param pulumi.InputType['MkdirOptsArgs'] update: The command to run on update, if empty, create will 
+               run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
+               are set to the stdout and stderr properties of the Command resource from previous 
+               create or update steps.
         """
         ...
     @overload
@@ -219,13 +218,12 @@ class Mkdir(pulumi.ComponentResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  binary_path: Optional[pulumi.Input[str]] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
-                 directory: Optional[pulumi.Input[str]] = None,
+                 create: Optional[pulumi.InputType['MkdirOptsArgs']] = None,
+                 delete: Optional[pulumi.InputType['MkdirOptsArgs']] = None,
                  environment: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-                 lifecycle: Optional['CommandLifecycle'] = None,
-                 parents: Optional[pulumi.Input[bool]] = None,
-                 remove_on_delete: Optional[pulumi.Input[bool]] = None,
                  stdin: Optional[pulumi.Input[str]] = None,
                  triggers: Optional[pulumi.Input[Sequence[Any]]] = None,
+                 update: Optional[pulumi.InputType['MkdirOptsArgs']] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):
@@ -241,15 +239,12 @@ class Mkdir(pulumi.ComponentResource):
             if connection is None and not opts.urn:
                 raise TypeError("Missing required property 'connection'")
             __props__.__dict__["connection"] = connection
-            if directory is None and not opts.urn:
-                raise TypeError("Missing required property 'directory'")
-            __props__.__dict__["directory"] = directory
+            __props__.__dict__["create"] = create
+            __props__.__dict__["delete"] = delete
             __props__.__dict__["environment"] = environment
-            __props__.__dict__["lifecycle"] = lifecycle
-            __props__.__dict__["parents"] = parents
-            __props__.__dict__["remove_on_delete"] = remove_on_delete
             __props__.__dict__["stdin"] = stdin
             __props__.__dict__["triggers"] = triggers
+            __props__.__dict__["update"] = update
             __props__.__dict__["command"] = None
             __props__.__dict__["stderr"] = None
             __props__.__dict__["stdout"] = None
@@ -286,11 +281,21 @@ class Mkdir(pulumi.ComponentResource):
 
     @property
     @pulumi.getter
-    def directory(self) -> pulumi.Output[str]:
+    def create(self) -> pulumi.Output[Optional['outputs.MkdirOpts']]:
         """
-        The fully qualified path of the directory on the remote system.
+        The command to run on create.
         """
-        return pulumi.get(self, "directory")
+        return pulumi.get(self, "create")
+
+    @property
+    @pulumi.getter
+    def delete(self) -> pulumi.Output[Optional['outputs.MkdirOpts']]:
+        """
+        The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+        and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+        Command resource from previous create or update steps.
+        """
+        return pulumi.get(self, "delete")
 
     @property
     @pulumi.getter
@@ -299,30 +304,6 @@ class Mkdir(pulumi.ComponentResource):
         Environment variables
         """
         return pulumi.get(self, "environment")
-
-    @property
-    @pulumi.getter
-    def lifecycle(self) -> pulumi.Output[Optional['CommandLifecycle']]:
-        """
-        At what stage(s) in the resource lifecycle should the command be run
-        """
-        return pulumi.get(self, "lifecycle")
-
-    @property
-    @pulumi.getter
-    def parents(self) -> pulumi.Output[bool]:
-        """
-        Corresponds to the `--parents` option.
-        """
-        return pulumi.get(self, "parents")
-
-    @property
-    @pulumi.getter(name="removeOnDelete")
-    def remove_on_delete(self) -> pulumi.Output[bool]:
-        """
-        Remove the created directory when the `Mkdir` resource is deleted or updated.
-        """
-        return pulumi.get(self, "remove_on_delete")
 
     @property
     @pulumi.getter
@@ -355,4 +336,15 @@ class Mkdir(pulumi.ComponentResource):
         TODO
         """
         return pulumi.get(self, "triggers")
+
+    @property
+    @pulumi.getter
+    def update(self) -> pulumi.Output[Optional['outputs.MkdirOpts']]:
+        """
+        The command to run on update, if empty, create will 
+        run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
+        are set to the stdout and stderr properties of the Command resource from previous 
+        create or update steps.
+        """
+        return pulumi.get(self, "update")
 

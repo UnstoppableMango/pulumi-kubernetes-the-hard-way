@@ -5,16 +5,13 @@ package com.unmango.kubernetesthehardway.tools;
 
 import com.pulumi.command.remote.Command;
 import com.pulumi.command.remote.outputs.Connection;
-import com.pulumi.core.Either;
 import com.pulumi.core.Output;
 import com.pulumi.core.annotations.Export;
 import com.pulumi.core.annotations.ResourceType;
 import com.pulumi.core.internal.Codegen;
 import com.unmango.kubernetesthehardway.Utilities;
 import com.unmango.kubernetesthehardway.tools.TarArgs;
-import com.unmango.kubernetesthehardway.tools.enums.CommandLifecycle;
-import java.lang.Boolean;
-import java.lang.Integer;
+import com.unmango.kubernetesthehardway.tools.outputs.TarOpts;
 import java.lang.Object;
 import java.lang.String;
 import java.util.List;
@@ -23,25 +20,11 @@ import java.util.Optional;
 import javax.annotation.Nullable;
 
 /**
- * Abstraction over the `rm` utility on a remote system.
+ * Abstraction over the `tar` utility on a remote system.
  * 
  */
 @ResourceType(type="kubernetes-the-hard-way:tools:Tar")
 public class Tar extends com.pulumi.resources.ComponentResource {
-    /**
-     * Corresponds to the [ARCHIVE] argument.
-     * 
-     */
-    @Export(name="archive", refs={String.class}, tree="[0]")
-    private Output<String> archive;
-
-    /**
-     * @return Corresponds to the [ARCHIVE] argument.
-     * 
-     */
-    public Output<String> archive() {
-        return this.archive;
-    }
     /**
      * Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
      * 
@@ -85,18 +68,36 @@ public class Tar extends com.pulumi.resources.ComponentResource {
         return this.connection;
     }
     /**
-     * Corresponds to the `--directory` option.
+     * The command to run on create.
      * 
      */
-    @Export(name="directory", refs={String.class}, tree="[0]")
-    private Output</* @Nullable */ String> directory;
+    @Export(name="create", refs={TarOpts.class}, tree="[0]")
+    private Output</* @Nullable */ TarOpts> create;
 
     /**
-     * @return Corresponds to the `--directory` option.
+     * @return The command to run on create.
      * 
      */
-    public Output<Optional<String>> directory() {
-        return Codegen.optional(this.directory);
+    public Output<Optional<TarOpts>> create() {
+        return Codegen.optional(this.create);
+    }
+    /**
+     * The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+     * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+     * Command resource from previous create or update steps.
+     * 
+     */
+    @Export(name="delete", refs={TarOpts.class}, tree="[0]")
+    private Output</* @Nullable */ TarOpts> delete;
+
+    /**
+     * @return The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT
+     * and PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the
+     * Command resource from previous create or update steps.
+     * 
+     */
+    public Output<Optional<TarOpts>> delete() {
+        return Codegen.optional(this.delete);
     }
     /**
      * Environment variables
@@ -111,90 +112,6 @@ public class Tar extends com.pulumi.resources.ComponentResource {
      */
     public Output<Map<String,String>> environment() {
         return this.environment;
-    }
-    /**
-     * Corresponds to the `--extract` option.
-     * 
-     */
-    @Export(name="extract", refs={Boolean.class}, tree="[0]")
-    private Output<Boolean> extract;
-
-    /**
-     * @return Corresponds to the `--extract` option.
-     * 
-     */
-    public Output<Boolean> extract() {
-        return this.extract;
-    }
-    /**
-     * Corresponds to the [FILE] argument.
-     * 
-     */
-    @Export(name="files", refs={Either.class,String.class,List.class}, tree="[0,1,[2,1]]")
-    private Output<Either<String,List<String>>> files;
-
-    /**
-     * @return Corresponds to the [FILE] argument.
-     * 
-     */
-    public Output<Either<String,List<String>>> files() {
-        return this.files;
-    }
-    /**
-     * Corresponds to the `--gzip` option.
-     * 
-     */
-    @Export(name="gzip", refs={Boolean.class}, tree="[0]")
-    private Output</* @Nullable */ Boolean> gzip;
-
-    /**
-     * @return Corresponds to the `--gzip` option.
-     * 
-     */
-    public Output<Optional<Boolean>> gzip() {
-        return Codegen.optional(this.gzip);
-    }
-    /**
-     * At what stage(s) in the resource lifecycle should the command be run
-     * 
-     */
-    @Export(name="lifecycle", refs={CommandLifecycle.class}, tree="[0]")
-    private Output</* @Nullable */ CommandLifecycle> lifecycle;
-
-    /**
-     * @return At what stage(s) in the resource lifecycle should the command be run
-     * 
-     */
-    public Output<Optional<CommandLifecycle>> lifecycle() {
-        return Codegen.optional(this.lifecycle);
-    }
-    /**
-     * Whether rm should be run when the resource is created or deleted.
-     * 
-     */
-    @Export(name="onDelete", refs={Boolean.class}, tree="[0]")
-    private Output</* @Nullable */ Boolean> onDelete;
-
-    /**
-     * @return Whether rm should be run when the resource is created or deleted.
-     * 
-     */
-    public Output<Optional<Boolean>> onDelete() {
-        return Codegen.optional(this.onDelete);
-    }
-    /**
-     * Corresponds to the `--recursive` option.
-     * 
-     */
-    @Export(name="recursive", refs={Boolean.class}, tree="[0]")
-    private Output</* @Nullable */ Boolean> recursive;
-
-    /**
-     * @return Corresponds to the `--recursive` option.
-     * 
-     */
-    public Output<Optional<Boolean>> recursive() {
-        return Codegen.optional(this.recursive);
     }
     /**
      * TODO
@@ -239,20 +156,6 @@ public class Tar extends com.pulumi.resources.ComponentResource {
         return this.stdout;
     }
     /**
-     * Corresponds to the `--strip-components` option.
-     * 
-     */
-    @Export(name="stripComponents", refs={Integer.class}, tree="[0]")
-    private Output</* @Nullable */ Integer> stripComponents;
-
-    /**
-     * @return Corresponds to the `--strip-components` option.
-     * 
-     */
-    public Output<Optional<Integer>> stripComponents() {
-        return Codegen.optional(this.stripComponents);
-    }
-    /**
      * TODO
      * 
      */
@@ -265,6 +168,26 @@ public class Tar extends com.pulumi.resources.ComponentResource {
      */
     public Output<List<Object>> triggers() {
         return this.triggers;
+    }
+    /**
+     * The command to run on update, if empty, create will
+     * run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+     * are set to the stdout and stderr properties of the Command resource from previous
+     * create or update steps.
+     * 
+     */
+    @Export(name="update", refs={TarOpts.class}, tree="[0]")
+    private Output</* @Nullable */ TarOpts> update;
+
+    /**
+     * @return The command to run on update, if empty, create will
+     * run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
+     * are set to the stdout and stderr properties of the Command resource from previous
+     * create or update steps.
+     * 
+     */
+    public Output<Optional<TarOpts>> update() {
+        return Codegen.optional(this.update);
     }
 
     /**

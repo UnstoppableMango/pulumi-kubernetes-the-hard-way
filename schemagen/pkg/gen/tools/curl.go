@@ -8,7 +8,7 @@ import (
 
 // Oh boy this is gonna take a while
 
-func generateCurl() schema.ResourceSpec {
+func generateCurl() tool {
 	inputs := map[string]schema.PropertySpec{
 		"abstractUnixSocket": props.String("(HTTP) Connect through an abstract Unix domain socket, instead of using the network."),
 		"altSvc":             props.String("(HTTPS)  This  option enables the alt-svc parser in curl."),
@@ -81,18 +81,30 @@ func generateCurl() schema.ResourceSpec {
 		"ftpPret":               props.Boolean("(FTP) Tell curl to send a PRET command before PASV (and EPSV)."),
 		"ftpSkipPasvIp":         props.Boolean("(FTP)  Tell  curl  to  not use the IP address the server suggests in its response to curl's PASV command when curl connects the data connection."),
 		"ftpSslCccMode":         props.String("(FTP) Sets the CCC mode. The passive mode will not initiate the shutdown, but instead wait for the server to do it, and will not reply to the shutdown from the  server."),
-		"urls":                  props.OneOrMoreStrings("Corresponds to the URLs argument."),
+		"urls":                  props.ArrayOf("string", "Corresponds to the URLs argument."),
 	}
 
 	required := []string{"urls"}
 
-	return schema.ResourceSpec{
+	typ := schema.ComplexTypeSpec{
 		ObjectTypeSpec: schema.ObjectTypeSpec{
 			Description: "Abstraction over the `curl` utility on a remote system. Transfer a URL.",
-			Properties:  implicitOutputs(inputs, map[string]schema.PropertySpec{}),
+			Type:        "object",
+			Properties:  inputs,
 			Required:    required,
 		},
-		InputProperties: inputs,
-		RequiredInputs:  required,
 	}
+
+	return tool{optsType: typ, types: map[string]schema.ComplexTypeSpec{}}
 }
+
+// If we ever get a way to add the "required outputs" logic around a complexType
+// resource := schema.ResourceSpec{
+// 	ObjectTypeSpec: schema.ObjectTypeSpec{
+// 		Description: "Abstraction over the `curl` utility on a remote system. Transfer a URL.",
+// 		Properties:  implicitOutputs(inputs, map[string]schema.PropertySpec{}),
+// 		Required:    required,
+// 	},
+// 	InputProperties: inputs,
+// 	RequiredInputs:  required,
+// }

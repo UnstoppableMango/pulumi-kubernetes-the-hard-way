@@ -5,7 +5,7 @@ import (
 	"github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 )
 
-func generateWget() schema.ResourceSpec {
+func generateWget() tool {
 	inputs := map[string]schema.PropertySpec{
 		"directoryPrefix": props.String("The  directory prefix is the directory where all other files and subdirectories will be saved to, i.e. the top of the retrieval tree.  The default is . (the current directory)."),
 		"httpsOnly":       props.Boolean("When in recursive mode, only HTTPS links are followed."),
@@ -13,25 +13,35 @@ func generateWget() schema.ResourceSpec {
 		"outputDocument":  props.String("The  documents  will  not  be  written  to the appropriate files, but all will be concatenated together and written to file."),
 		"quiet":           props.Boolean("Turn off Wget's output."),
 		"timestamping":    props.Boolean("Turn on time-stamping."),
-		"url":             props.OneOrMoreStrings("Corresponds to the [URL...] argument."),
+		"url":             props.ArrayOf("string", "Corresponds to the [URL...] argument."),
 	}
 
-	required := []string{
-		"url",
-	}
+	required := []string{"url"}
 
-	return schema.ResourceSpec{
+	typ := schema.ComplexTypeSpec{
 		ObjectTypeSpec: schema.ObjectTypeSpec{
 			Description: "Abstraction over the `wget` utility on a remote system.",
-			Properties:  implicitOutputs(inputs, map[string]schema.PropertySpec{}),
-			Required: append(required,
-				"httpsOnly",
-				"quiet",
-				"noVerbose",
-				"timestamping",
-			),
+			Type:        "object",
+			Properties:  inputs,
+			Required:    required,
 		},
-		InputProperties: inputs,
-		RequiredInputs:  required,
 	}
+
+	return tool{optsType: typ, types: map[string]schema.ComplexTypeSpec{}}
 }
+
+// If we ever get a way to add the "required outputs" logic around a complexType
+// resource := schema.ResourceSpec{
+// 	ObjectTypeSpec: schema.ObjectTypeSpec{
+// 		Description: "Abstraction over the `wget` utility on a remote system.",
+// 		Properties:  implicitOutputs(inputs, map[string]schema.PropertySpec{}),
+// 		Required: append(required,
+// 			"httpsOnly",
+// 			"quiet",
+// 			"noVerbose",
+// 			"timestamping",
+// 		),
+// 	},
+// 	InputProperties: inputs,
+// 	RequiredInputs:  required,
+// }

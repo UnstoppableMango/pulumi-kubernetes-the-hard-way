@@ -16,8 +16,10 @@ export class StaticPod extends schema.StaticPod {
 
     const mkdir = new Mkdir(name, {
       connection,
-      directory,
-      parents: true,
+      create: {
+        directory,
+        parents: true,
+      },
     }, { parent: this });
 
     const file = new File(name, {
