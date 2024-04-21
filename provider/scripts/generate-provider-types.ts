@@ -136,7 +136,17 @@ const getType = (
   if (plain || typeDefinition.plain) {
     return plainType;
   }
-  return ts.factory.createTypeReferenceNode("pulumi." + direction, [plainType]);
+
+  let type = plainType;
+  if (typeDefinition.oneOf) {
+    const types = typeDefinition.oneOf.map(t => {
+      return getPlainType(t, direction);
+    });
+
+    type = ts.factory.createUnionTypeNode(types);
+  }
+
+  return ts.factory.createTypeReferenceNode("pulumi." + direction, [type]);
 };
 
 function genTypeProperties(
