@@ -60,7 +60,7 @@ export function archiveInstall<T extends ReadonlyArray<string>>(
   const mkdir = new Mkdir(name, {
     connection: args.connection,
     create: {
-      directory: directory,
+      directory,
       parents: true,
     },
   }, { parent });
@@ -73,6 +73,7 @@ export function archiveInstall<T extends ReadonlyArray<string>>(
         source: [interpolate`${download.destination}/${k}`],
         dest: interpolate`${directory}/${k}`,
       },
+      delete: interpolate`rm -f ${directory}/${k}`,
     }, { parent, dependsOn: [tar, mkdir] })
   }), {} as Maps<T, Mv>);
 
