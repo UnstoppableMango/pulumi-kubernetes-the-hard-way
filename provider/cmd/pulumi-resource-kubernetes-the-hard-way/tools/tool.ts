@@ -14,24 +14,24 @@ export type ToolFactory<T, U> = {
 interface ToolInputs<T> {
   binaryPath?: string | Input<string>;
   connection: Input<types.input.remote.ConnectionArgs>;
-  create?: T;
-  delete?: T;
+  create?: Input<string> | T;
+  delete?: Input<string> | T;
   environment?: Input<Record<string, Input<string>>>;
   stdin?: string | Input<string>;
   triggers?: any[] | Input<any[]>;
-  update?: T;
+  update?: Input<string> | T;
 }
 
 interface ToolOutputs<T> {
   binaryPath: string | Output<string>;
   command: Command | Output<Command>;
   connection: types.output.remote.Connection | Output<types.output.remote.Connection>;
-  create?: T | Output<T>;
-  delete?: T | Output<T>;
+  create?: string | T | Output<T>;
+  delete?: string | T | Output<T>;
   environment: Record<string, string> | Output<Record<string, string>>;
   stdin?: string | Output<string>;
   triggers: any[] | Output<any[]>;
-  update?: T | Output<T>;
+  update?: string | T | Output<T>;
 }
 
 type ToolResource<T> = ToolOutputs<T> & ComponentResource & {
