@@ -318,7 +318,7 @@ const genResourceAbstractType = (
       ),
     ],
     [heritage],
-    [...genClassProperties(resource.properties as any, resource.required as any), constructor],
+    [...genClassProperties(resource.properties, resource.required), constructor],
   );
 
   return resourceType;
