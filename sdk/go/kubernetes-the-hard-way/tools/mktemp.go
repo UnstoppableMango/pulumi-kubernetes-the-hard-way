@@ -15,7 +15,7 @@ import (
 
 // Abstraction over the `mktemp` utility on a remote system.
 type Mktemp struct {
-	pulumi.CustomResourceState
+	pulumi.ResourceState
 
 	// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
 	BinaryPath pulumi.StringOutput `pulumi:"binaryPath"`
@@ -59,34 +59,11 @@ func NewMktemp(ctx *pulumi.Context,
 	args.Connection = args.Connection.ToConnectionOutput().ApplyT(func(v pulumiCommand.Connection) pulumiCommand.Connection { return *v.Defaults() }).(pulumiCommand.ConnectionOutput)
 	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource Mktemp
-	err := ctx.RegisterResource("kubernetes-the-hard-way:tools:Mktemp", name, args, &resource, opts...)
+	err := ctx.RegisterRemoteComponentResource("kubernetes-the-hard-way:tools:Mktemp", name, args, &resource, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return &resource, nil
-}
-
-// GetMktemp gets an existing Mktemp resource's state with the given name, ID, and optional
-// state properties that are used to uniquely qualify the lookup (nil if not required).
-func GetMktemp(ctx *pulumi.Context,
-	name string, id pulumi.IDInput, state *MktempState, opts ...pulumi.ResourceOption) (*Mktemp, error) {
-	var resource Mktemp
-	err := ctx.ReadResource("kubernetes-the-hard-way:tools:Mktemp", name, id, state, &resource, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return &resource, nil
-}
-
-// Input properties used for looking up and filtering Mktemp resources.
-type mktempState struct {
-}
-
-type MktempState struct {
-}
-
-func (MktempState) ElementType() reflect.Type {
-	return reflect.TypeOf((*mktempState)(nil)).Elem()
 }
 
 type mktempArgs struct {

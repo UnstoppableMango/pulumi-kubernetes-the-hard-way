@@ -15,7 +15,7 @@ import (
 
 // Abstraction over the `etcdctl` utility on a remote system.
 type Etcdctl struct {
-	pulumi.CustomResourceState
+	pulumi.ResourceState
 
 	// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
 	BinaryPath pulumi.StringOutput `pulumi:"binaryPath"`
@@ -59,34 +59,11 @@ func NewEtcdctl(ctx *pulumi.Context,
 	args.Connection = args.Connection.ToConnectionOutput().ApplyT(func(v pulumiCommand.Connection) pulumiCommand.Connection { return *v.Defaults() }).(pulumiCommand.ConnectionOutput)
 	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource Etcdctl
-	err := ctx.RegisterResource("kubernetes-the-hard-way:tools:Etcdctl", name, args, &resource, opts...)
+	err := ctx.RegisterRemoteComponentResource("kubernetes-the-hard-way:tools:Etcdctl", name, args, &resource, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return &resource, nil
-}
-
-// GetEtcdctl gets an existing Etcdctl resource's state with the given name, ID, and optional
-// state properties that are used to uniquely qualify the lookup (nil if not required).
-func GetEtcdctl(ctx *pulumi.Context,
-	name string, id pulumi.IDInput, state *EtcdctlState, opts ...pulumi.ResourceOption) (*Etcdctl, error) {
-	var resource Etcdctl
-	err := ctx.ReadResource("kubernetes-the-hard-way:tools:Etcdctl", name, id, state, &resource, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return &resource, nil
-}
-
-// Input properties used for looking up and filtering Etcdctl resources.
-type etcdctlState struct {
-}
-
-type EtcdctlState struct {
-}
-
-func (EtcdctlState) ElementType() reflect.Type {
-	return reflect.TypeOf((*etcdctlState)(nil)).Elem()
 }
 
 type etcdctlArgs struct {

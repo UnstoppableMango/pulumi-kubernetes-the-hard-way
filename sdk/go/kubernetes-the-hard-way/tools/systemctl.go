@@ -15,7 +15,7 @@ import (
 
 // Abstraction over the `systemctl` utility on a remote system.
 type Systemctl struct {
-	pulumi.CustomResourceState
+	pulumi.ResourceState
 
 	// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
 	BinaryPath pulumi.StringOutput `pulumi:"binaryPath"`
@@ -59,34 +59,11 @@ func NewSystemctl(ctx *pulumi.Context,
 	args.Connection = args.Connection.ToConnectionOutput().ApplyT(func(v pulumiCommand.Connection) pulumiCommand.Connection { return *v.Defaults() }).(pulumiCommand.ConnectionOutput)
 	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource Systemctl
-	err := ctx.RegisterResource("kubernetes-the-hard-way:tools:Systemctl", name, args, &resource, opts...)
+	err := ctx.RegisterRemoteComponentResource("kubernetes-the-hard-way:tools:Systemctl", name, args, &resource, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return &resource, nil
-}
-
-// GetSystemctl gets an existing Systemctl resource's state with the given name, ID, and optional
-// state properties that are used to uniquely qualify the lookup (nil if not required).
-func GetSystemctl(ctx *pulumi.Context,
-	name string, id pulumi.IDInput, state *SystemctlState, opts ...pulumi.ResourceOption) (*Systemctl, error) {
-	var resource Systemctl
-	err := ctx.ReadResource("kubernetes-the-hard-way:tools:Systemctl", name, id, state, &resource, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return &resource, nil
-}
-
-// Input properties used for looking up and filtering Systemctl resources.
-type systemctlState struct {
-}
-
-type SystemctlState struct {
-}
-
-func (SystemctlState) ElementType() reflect.Type {
-	return reflect.TypeOf((*systemctlState)(nil)).Elem()
 }
 
 type systemctlArgs struct {

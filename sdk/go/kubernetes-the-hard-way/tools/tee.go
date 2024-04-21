@@ -15,7 +15,7 @@ import (
 
 // Abstraction over the `rm` utility on a remote system.
 type Tee struct {
-	pulumi.CustomResourceState
+	pulumi.ResourceState
 
 	// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
 	BinaryPath pulumi.StringOutput `pulumi:"binaryPath"`
@@ -59,34 +59,11 @@ func NewTee(ctx *pulumi.Context,
 	args.Connection = args.Connection.ToConnectionOutput().ApplyT(func(v pulumiCommand.Connection) pulumiCommand.Connection { return *v.Defaults() }).(pulumiCommand.ConnectionOutput)
 	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource Tee
-	err := ctx.RegisterResource("kubernetes-the-hard-way:tools:Tee", name, args, &resource, opts...)
+	err := ctx.RegisterRemoteComponentResource("kubernetes-the-hard-way:tools:Tee", name, args, &resource, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return &resource, nil
-}
-
-// GetTee gets an existing Tee resource's state with the given name, ID, and optional
-// state properties that are used to uniquely qualify the lookup (nil if not required).
-func GetTee(ctx *pulumi.Context,
-	name string, id pulumi.IDInput, state *TeeState, opts ...pulumi.ResourceOption) (*Tee, error) {
-	var resource Tee
-	err := ctx.ReadResource("kubernetes-the-hard-way:tools:Tee", name, id, state, &resource, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return &resource, nil
-}
-
-// Input properties used for looking up and filtering Tee resources.
-type teeState struct {
-}
-
-type TeeState struct {
-}
-
-func (TeeState) ElementType() reflect.Type {
-	return reflect.TypeOf((*teeState)(nil)).Elem()
 }
 
 type teeArgs struct {

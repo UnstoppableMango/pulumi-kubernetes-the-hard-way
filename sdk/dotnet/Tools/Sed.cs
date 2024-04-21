@@ -14,7 +14,7 @@ namespace UnMango.KubernetesTheHardWay.Tools
     /// Abstraction over the `sed` utility on a remote system.
     /// </summary>
     [KubernetesTheHardWayResourceType("kubernetes-the-hard-way:tools:Sed")]
-    public partial class Sed : global::Pulumi.CustomResource
+    public partial class Sed : global::Pulumi.ComponentResource
     {
         /// <summary>
         /// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
@@ -95,43 +95,22 @@ namespace UnMango.KubernetesTheHardWay.Tools
         /// <param name="name">The unique name of the resource</param>
         /// <param name="args">The arguments used to populate this resource's properties</param>
         /// <param name="options">A bag of options that control this resource's behavior</param>
-        public Sed(string name, SedArgs args, CustomResourceOptions? options = null)
-            : base("kubernetes-the-hard-way:tools:Sed", name, args ?? new SedArgs(), MakeResourceOptions(options, ""))
-        {
-        }
-        internal Sed(string name, ImmutableDictionary<string, object?> dictionary, CustomResourceOptions? options = null)
-            : base("kubernetes-the-hard-way:tools:Sed", name, new DictionaryResourceArgs(dictionary), MakeResourceOptions(options, ""))
+        public Sed(string name, SedArgs args, ComponentResourceOptions? options = null)
+            : base("kubernetes-the-hard-way:tools:Sed", name, args ?? new SedArgs(), MakeResourceOptions(options, ""), remote: true)
         {
         }
 
-        private Sed(string name, Input<string> id, CustomResourceOptions? options = null)
-            : base("kubernetes-the-hard-way:tools:Sed", name, null, MakeResourceOptions(options, id))
+        private static ComponentResourceOptions MakeResourceOptions(ComponentResourceOptions? options, Input<string>? id)
         {
-        }
-
-        private static CustomResourceOptions MakeResourceOptions(CustomResourceOptions? options, Input<string>? id)
-        {
-            var defaultOptions = new CustomResourceOptions
+            var defaultOptions = new ComponentResourceOptions
             {
                 Version = Utilities.Version,
                 PluginDownloadURL = "github://api.github.com/UnstoppableMango",
             };
-            var merged = CustomResourceOptions.Merge(defaultOptions, options);
+            var merged = ComponentResourceOptions.Merge(defaultOptions, options);
             // Override the ID if one was specified for consistency with other language SDKs.
             merged.Id = id ?? merged.Id;
             return merged;
-        }
-        /// <summary>
-        /// Get an existing Sed resource's state with the given name, ID, and optional extra
-        /// properties used to qualify the lookup.
-        /// </summary>
-        ///
-        /// <param name="name">The unique name of the resulting resource.</param>
-        /// <param name="id">The unique provider ID of the resource to lookup.</param>
-        /// <param name="options">A bag of options that control this resource's behavior</param>
-        public static Sed Get(string name, Input<string> id, CustomResourceOptions? options = null)
-        {
-            return new Sed(name, id, options);
         }
     }
 

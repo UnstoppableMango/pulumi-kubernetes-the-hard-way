@@ -109,6 +109,9 @@ func (tool tool) resourceSpec(commandSpec schema.PackageSpec, optsType schema.Ty
 	maps.Copy(outputs, inputs)
 
 	return schema.ResourceSpec{
+		IsComponent:     true,
+		InputProperties: inputs,
+		RequiredInputs:  []string{"connection"},
 		ObjectTypeSpec: schema.ObjectTypeSpec{
 			Description: tool.optsType.Description,
 			Properties:  outputs,
@@ -122,7 +125,5 @@ func (tool tool) resourceSpec(commandSpec schema.PackageSpec, optsType schema.Ty
 				"triggers",
 			},
 		},
-		InputProperties: inputs,
-		RequiredInputs:  []string{"connection"},
 	}
 }

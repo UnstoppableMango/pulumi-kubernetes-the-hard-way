@@ -15,7 +15,7 @@ import (
 
 // Abstraction over the `wget` utility on a remote system.
 type Wget struct {
-	pulumi.CustomResourceState
+	pulumi.ResourceState
 
 	// Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH
 	BinaryPath pulumi.StringOutput `pulumi:"binaryPath"`
@@ -59,34 +59,11 @@ func NewWget(ctx *pulumi.Context,
 	args.Connection = args.Connection.ToConnectionOutput().ApplyT(func(v pulumiCommand.Connection) pulumiCommand.Connection { return *v.Defaults() }).(pulumiCommand.ConnectionOutput)
 	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource Wget
-	err := ctx.RegisterResource("kubernetes-the-hard-way:tools:Wget", name, args, &resource, opts...)
+	err := ctx.RegisterRemoteComponentResource("kubernetes-the-hard-way:tools:Wget", name, args, &resource, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return &resource, nil
-}
-
-// GetWget gets an existing Wget resource's state with the given name, ID, and optional
-// state properties that are used to uniquely qualify the lookup (nil if not required).
-func GetWget(ctx *pulumi.Context,
-	name string, id pulumi.IDInput, state *WgetState, opts ...pulumi.ResourceOption) (*Wget, error) {
-	var resource Wget
-	err := ctx.ReadResource("kubernetes-the-hard-way:tools:Wget", name, id, state, &resource, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return &resource, nil
-}
-
-// Input properties used for looking up and filtering Wget resources.
-type wgetState struct {
-}
-
-type WgetState struct {
-}
-
-func (WgetState) ElementType() reflect.Type {
-	return reflect.TypeOf((*wgetState)(nil)).Elem()
 }
 
 type wgetArgs struct {

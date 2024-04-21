@@ -12,19 +12,7 @@ import * as pulumiCommand from "@pulumi/command";
 /**
  * Abstraction over the `mktemp` utility on a remote system.
  */
-export class Mktemp extends pulumi.CustomResource {
-    /**
-     * Get an existing Mktemp resource's state with the given name, ID, and optional extra
-     * properties used to qualify the lookup.
-     *
-     * @param name The _unique_ name of the resulting resource.
-     * @param id The _unique_ provider ID of the resource to lookup.
-     * @param opts Optional settings to control the behavior of the CustomResource.
-     */
-    public static get(name: string, id: pulumi.Input<pulumi.ID>, opts?: pulumi.CustomResourceOptions): Mktemp {
-        return new Mktemp(name, undefined as any, { ...opts, id: id });
-    }
-
+export class Mktemp extends pulumi.ComponentResource {
     /** @internal */
     public static readonly __pulumiType = 'kubernetes-the-hard-way:tools:Mktemp';
 
@@ -96,7 +84,7 @@ export class Mktemp extends pulumi.CustomResource {
      * @param args The arguments to use to populate this resource's properties.
      * @param opts A bag of options that control this resource's behavior.
      */
-    constructor(name: string, args: MktempArgs, opts?: pulumi.CustomResourceOptions) {
+    constructor(name: string, args: MktempArgs, opts?: pulumi.ComponentResourceOptions) {
         let resourceInputs: pulumi.Inputs = {};
         opts = opts || {};
         if (!opts.id) {
@@ -128,7 +116,7 @@ export class Mktemp extends pulumi.CustomResource {
             resourceInputs["update"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
-        super(Mktemp.__pulumiType, name, resourceInputs, opts);
+        super(Mktemp.__pulumiType, name, resourceInputs, opts, true /*remote*/);
     }
 }
 

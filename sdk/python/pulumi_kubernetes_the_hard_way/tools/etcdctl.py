@@ -160,7 +160,7 @@ class EtcdctlArgs:
         pulumi.set(self, "update", value)
 
 
-class Etcdctl(pulumi.CustomResource):
+class Etcdctl(pulumi.ComponentResource):
     @overload
     def __init__(__self__,
                  resource_name: str,
@@ -229,7 +229,9 @@ class Etcdctl(pulumi.CustomResource):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):
             raise TypeError('Expected resource options to be a ResourceOptions instance')
-        if opts.id is None:
+        if opts.id is not None:
+            raise ValueError('ComponentResource classes do not support opts.id')
+        else:
             if __props__ is not None:
                 raise TypeError('__props__ is only valid when passed in combination with a valid opts.id to get an existing resource')
             __props__ = EtcdctlArgs.__new__(EtcdctlArgs)
@@ -251,36 +253,8 @@ class Etcdctl(pulumi.CustomResource):
             'kubernetes-the-hard-way:tools:Etcdctl',
             resource_name,
             __props__,
-            opts)
-
-    @staticmethod
-    def get(resource_name: str,
-            id: pulumi.Input[str],
-            opts: Optional[pulumi.ResourceOptions] = None) -> 'Etcdctl':
-        """
-        Get an existing Etcdctl resource's state with the given name, id, and optional extra
-        properties used to qualify the lookup.
-
-        :param str resource_name: The unique name of the resulting resource.
-        :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
-        :param pulumi.ResourceOptions opts: Options for the resource.
-        """
-        opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
-
-        __props__ = EtcdctlArgs.__new__(EtcdctlArgs)
-
-        __props__.__dict__["binary_path"] = None
-        __props__.__dict__["command"] = None
-        __props__.__dict__["connection"] = None
-        __props__.__dict__["create"] = None
-        __props__.__dict__["delete"] = None
-        __props__.__dict__["environment"] = None
-        __props__.__dict__["stderr"] = None
-        __props__.__dict__["stdin"] = None
-        __props__.__dict__["stdout"] = None
-        __props__.__dict__["triggers"] = None
-        __props__.__dict__["update"] = None
-        return Etcdctl(resource_name, opts=opts, __props__=__props__)
+            opts,
+            remote=True)
 
     @property
     @pulumi.getter(name="binaryPath")

@@ -4553,7 +4553,8 @@
             },
             "requiredInputs": [
                 "connection"
-            ]
+            ],
+            "isComponent": true
         },
         "kubernetes-the-hard-way:tools:Curl": {
             "description": "Abstraction over the `curl` utility on a remote system. Transfer a URL.",
@@ -4666,7 +4667,8 @@
             },
             "requiredInputs": [
                 "connection"
-            ]
+            ],
+            "isComponent": true
         },
         "kubernetes-the-hard-way:tools:Etcdctl": {
             "description": "Abstraction over the `etcdctl` utility on a remote system.",
@@ -4779,7 +4781,8 @@
             },
             "requiredInputs": [
                 "connection"
-            ]
+            ],
+            "isComponent": true
         },
         "kubernetes-the-hard-way:tools:Hostnamectl": {
             "description": "Abstraction over the `hostnamectl` utility on a remote system.",
@@ -4892,7 +4895,8 @@
             },
             "requiredInputs": [
                 "connection"
-            ]
+            ],
+            "isComponent": true
         },
         "kubernetes-the-hard-way:tools:Mkdir": {
             "description": "Abstraction over the `mkdir` utility on a remote system.",
@@ -5005,7 +5009,8 @@
             },
             "requiredInputs": [
                 "connection"
-            ]
+            ],
+            "isComponent": true
         },
         "kubernetes-the-hard-way:tools:Mktemp": {
             "description": "Abstraction over the `mktemp` utility on a remote system.",
@@ -5118,7 +5123,8 @@
             },
             "requiredInputs": [
                 "connection"
-            ]
+            ],
+            "isComponent": true
         },
         "kubernetes-the-hard-way:tools:Mv": {
             "description": "Abstraction over the `mv` utility on a remote system.",
@@ -5231,7 +5237,8 @@
             },
             "requiredInputs": [
                 "connection"
-            ]
+            ],
+            "isComponent": true
         },
         "kubernetes-the-hard-way:tools:Rm": {
             "description": "Abstraction over the `rm` utility on a remote system.",
@@ -5344,7 +5351,8 @@
             },
             "requiredInputs": [
                 "connection"
-            ]
+            ],
+            "isComponent": true
         },
         "kubernetes-the-hard-way:tools:Sed": {
             "description": "Abstraction over the `sed` utility on a remote system.",
@@ -5457,7 +5465,8 @@
             },
             "requiredInputs": [
                 "connection"
-            ]
+            ],
+            "isComponent": true
         },
         "kubernetes-the-hard-way:tools:Systemctl": {
             "description": "Abstraction over the `systemctl` utility on a remote system.",
@@ -5570,7 +5579,8 @@
             },
             "requiredInputs": [
                 "connection"
-            ]
+            ],
+            "isComponent": true
         },
         "kubernetes-the-hard-way:tools:Tar": {
             "description": "Abstraction over the `tar` utility on a remote system.",
@@ -5683,7 +5693,8 @@
             },
             "requiredInputs": [
                 "connection"
-            ]
+            ],
+            "isComponent": true
         },
         "kubernetes-the-hard-way:tools:Tee": {
             "description": "Abstraction over the `rm` utility on a remote system.",
@@ -5796,7 +5807,8 @@
             },
             "requiredInputs": [
                 "connection"
-            ]
+            ],
+            "isComponent": true
         },
         "kubernetes-the-hard-way:tools:Wget": {
             "description": "Abstraction over the `wget` utility on a remote system.",
@@ -5909,7 +5921,8 @@
             },
             "requiredInputs": [
                 "connection"
-            ]
+            ],
+            "isComponent": true
         }
     },
     "functions": {
