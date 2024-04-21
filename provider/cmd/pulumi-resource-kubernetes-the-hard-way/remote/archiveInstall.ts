@@ -35,7 +35,7 @@ export function archiveInstall<T extends ReadonlyArray<string>>(
 
   const mktemp = new Mktemp(name, {
     connection,
-    directory: true,
+    create: { directory: true },
   }, { parent });
 
   const tmpDir = mktemp.stdout;
@@ -48,24 +48,30 @@ export function archiveInstall<T extends ReadonlyArray<string>>(
 
   const tar = new Tar(name, {
     connection: args.connection,
-    archive: interpolate`${download.destination}/${archiveName}`,
-    directory: download.destination,
-    gzip: true,
-    stripComponents: args.stripComponents,
+    create: {
+      archive: interpolate`${download.destination}/${archiveName}`,
+      directory: download.destination,
+      gzip: true,
+      stripComponents: args.stripComponents,
+    },
   }, { parent, dependsOn: download });
 
   const mkdir = new Mkdir(name, {
     connection: args.connection,
-    directory: directory,
-    parents: true,
+    create: {
+      directory: directory,
+      parents: true,
+    },
   }, { parent });
 
   const mvs = args.binaries.reduce((b, k): Maps<T, Mv> => ({
     ...b,
     [k]: new Mv(`${name}-${k}`, {
       connection,
-      source: interpolate`${download.destination}/${k}`,
-      dest: interpolate`${directory}/${k}`,
+      create: {
+        source: [interpolate`${download.destination}/${k}`],
+        dest: interpolate`${directory}/${k}`,
+      },
     }, { parent, dependsOn: [tar, mkdir] })
   }), {} as Maps<T, Mv>);
 
@@ -75,9 +81,11 @@ export function archiveInstall<T extends ReadonlyArray<string>>(
 
   const rm = new Rm(name, {
     connection,
-    files: tmpDir,
-    force: true,
-    recursive: true,
+    create: {
+      files: [tmpDir],
+      force: true,
+      recursive: true,
+    },
   }, { parent, dependsOn: Object.values(mvs) });
 
   return { download, mkdir, mktemp, mvs, paths, rm, tar };
