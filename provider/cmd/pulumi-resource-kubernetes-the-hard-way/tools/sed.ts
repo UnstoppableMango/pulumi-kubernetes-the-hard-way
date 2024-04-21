@@ -1,122 +1,56 @@
-import { ComponentResourceOptions, Input, Output, output } from '@pulumi/pulumi';
-import { Command } from '@pulumi/command/remote';
+import { ComponentResourceOptions } from '@pulumi/pulumi';
 import * as schema from '../schema-types';
-import { CommandBuilder, toArray } from './commandBuilder';
+import * as tool from './tool';
 
-type SedArgs = schema.SedArgs & {
-  files?: Input<string | Input<string>[]>;
-  inputFiles?: Input<string | Input<string>[]>;
-};
+const apply = tool.factory<
+  schema.SedOptsInputs,
+  schema.SedOptsOutputs
+>(
+  'sed',
+  (builder, opts) => builder
+    .option('--debug', opts.debug)
+    .option('--follow-symlinks', opts.followSymlinks)
+    .option('--help', opts.help)
+    .option('--in-place', opts.inPlace)
+    .option('--line-length', opts.lineLength)
+    .option('--null-data', opts.nullData)
+    .option('--posix', opts.posix)
+    .option('--quiet', opts.quiet)
+    .option('--regexp-extended', opts.regexpExtended)
+    .option('--sandbox', opts.sandbox)
+    .option('--script', opts.script)
+    .option('--separate', opts.separate)
+    .option('--silent', opts.silent)
+    .option('--unbuffered', opts.unbuffered)
+    .option('--version', opts.version)
+    .arg(opts.inputFiles),
+  (i) => ({
+    debug: tool.mapO(i.debug),
+    expressions: tool.mapO(i.expressions),
+    files: tool.mapO(i.files),
+    followSymlinks: tool.mapO(i.followSymlinks),
+    help: tool.mapO(i.help),
+    inPlace: tool.mapO(i.inPlace),
+    inputFiles: tool.mapO(i.inputFiles),
+    lineLength: tool.mapO(i.lineLength),
+    nullData: tool.mapO(i.nullData),
+    posix: tool.mapO(i.posix),
+    quiet: tool.mapO(i.quiet),
+    regexpExtended: tool.mapO(i.regexpExtended),
+    sandbox: tool.mapO(i.sandbox),
+    script: tool.mapO(i.script),
+    separate: tool.mapO(i.separate),
+    silent: tool.mapO(i.silent),
+    unbuffered: tool.mapO(i.unbuffered),
+    version: tool.mapO(i.version),
+  }),
+);
 
 export class Sed extends schema.Sed {
-  constructor(name: string, args: SedArgs, opts?: ComponentResourceOptions) {
+  constructor(name: string, args: schema.SedArgs, opts?: ComponentResourceOptions) {
     super(name, args, opts);
-
-    const binaryPath = output(args.binaryPath ?? 'sed');
-    const connection = output(args.connection);
-    const debug = output(args.debug ?? false);
-    const environment = output(args.environment ?? {});
-    const expressions = output(args.expressions) as Output<string | Output<string>[]>; // TODO
-    const files = output(args.files ?? []).apply(toArray); // TODO
-    const followSymlinks = output(args.followSymlinks ?? false);
-    const help = output(args.help ?? false);
-    const inPlace = output(args.inPlace);
-    const inputFiles = output(args.inputFiles ?? []).apply(toArray);
-    const lifecycle = args.lifecycle ?? 'create';
-    const lineLength = output(args.lineLength);
-    const nullData = output(args.nullData ?? false);
-    const posix = output(args.posix ?? false);
-    const quiet = output(args.quiet ?? false);
-    const regexpExtended = output(args.regexpExtended ?? false);
-    const sandbox = output(args.sandbox ?? false);
-    const script = output(args.script);
-    const separate = output(args.separate ?? false);
-    const silent = output(args.silent ?? false);
-    const stdin = output(args.stdin);
-    const triggers = output(args.triggers ?? []);
-    const unbuffered = output(args.unbuffered ?? false);
-    const version = output(args.version ?? false);
-
-    const builder = new CommandBuilder(binaryPath)
-      .option('--debug', debug)
-      .option('--follow-symlinks', followSymlinks)
-      .option('--help', help)
-      .option('--in-place', inPlace)
-      .option('--line-length', lineLength)
-      .option('--null-data', nullData)
-      .option('--posix', posix)
-      .option('--quiet', quiet)
-      .option('--regexp-extended', regexpExtended)
-      .option('--sandbox', sandbox)
-      .option('--script', script)
-      .option('--separate', separate)
-      .option('--silent', silent)
-      .option('--unbuffered', unbuffered)
-      .option('--version', version)
-      .arg(inputFiles);
-
-    const command = new Command(name, {
-      connection,
-      environment,
-      triggers,
-      stdin: args.stdin,
-      [lifecycle]: builder.command,
-    }, { parent: this });
-
-    this.binaryPath = binaryPath;
-    this.command = command;
-    this.connection = connection;
-    this.debug = debug;
-    this.environment = environment;
-    this.expressions = expressions;
-    this.files = files;
-    this.followSymlinks = followSymlinks;
-    this.help = help;
-    this.inPlace = inPlace as Output<string>;
-    this.inputFiles = inputFiles;
-    this.lifecycle = lifecycle;
-    this.lineLength = lineLength as Output<number> | undefined;
-    this.nullData = nullData;
-    this.posix = posix;
-    this.quiet = quiet;
-    this.regexpExtended = regexpExtended;
-    this.sandbox = sandbox;
-    this.script = script as Output<string>;
-    this.separate = separate;
-    this.silent = silent;
-    this.stderr = command.stderr;
-    this.stdin = stdin as Output<string>;
-    this.stdout = command.stdout;
-    this.triggers = triggers;
-    this.unbuffered = unbuffered;
-    this.version = version;
-
-    this.registerOutputs({
-      binaryPath,
-      command,
-      connection,
-      debug,
-      environment,
-      expressions,
-      files,
-      followSymlinks,
-      help,
-      inPlace,
-      inputFiles,
-      lifecycle,
-      lineLength,
-      nullData,
-      posix,
-      quiet,
-      regexpExtended,
-      sandbox,
-      script,
-      separate,
-      silent,
-      stdin,
-      triggers,
-      unbuffered,
-      version,
-    });
+    if (opts?.urn) return;
+    const outputs = apply(name, args, this);
+    this.registerOutputs(outputs);
   }
 }

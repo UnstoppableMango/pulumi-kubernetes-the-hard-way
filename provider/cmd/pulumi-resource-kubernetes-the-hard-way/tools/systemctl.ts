@@ -1,48 +1,34 @@
-import { ComponentResourceOptions, Output, output } from '@pulumi/pulumi';
-import { Command } from '@pulumi/command/remote';
+import { ComponentResourceOptions, output } from '@pulumi/pulumi';
 import * as schema from '../schema-types';
-import { CommandBuilder } from './commandBuilder';
+import * as tool from './tool';
+
+const apply = tool.factory<
+  schema.SystemctlOptsInputs,
+  schema.SystemctlOptsOutputs
+>(
+  'systemctl',
+  (builder, opts) => {
+    const b = builder.arg(opts.command);
+
+    // TODO: Little bit smarter check here
+    if (opts.command !== 'daemon-reload') {
+      builder.arg(opts.unit);
+    }
+
+    return b;
+  },
+  (i) => ({
+    command: i.command,
+    unit: output(i.unit),
+    pattern: tool.mapO(i.pattern),
+  }),
+);
 
 export class Systemctl extends schema.Systemctl {
   constructor(name: string, args: schema.SystemctlArgs, opts?: ComponentResourceOptions) {
     super(name, args, opts);
-
-    const connection = output(args.connection);
-    const systemctlCommand = args.command;
-    const environment = output(args.environment ?? {});
-    const lifecycle = args.lifecycle ?? 'create';
-    const unit = output(args.unit);
-
-    const builder = new CommandBuilder('systemctl')
-      .arg(systemctlCommand);
-
-    // TODO: Little bit smarter check here
-    if (systemctlCommand !== 'daemon-reload') {
-      builder.arg(args.unit);
-    }
-
-    const command = new Command(name, {
-      connection,
-      environment,
-      [lifecycle]: builder.command,
-    }, { parent: this });
-
-    this.command = command;
-    this.systemctlCommand = args.command;
-    this.connection = connection;
-    this.unit = unit as Output<string>;
-    this.stderr = command.stderr;
-    this.stdin = command.stdin as Output<string>;
-    this.stdout = command.stdout;
-
-    this.registerOutputs({
-      command,
-      systemctlCommand,
-      connection,
-      unit,
-      stderr: command.stderr,
-      stdin: command.stdin,
-      stdout: command.stdout,
-    });
+    if (opts?.urn) return;
+    const outputs = apply(name, args, this);
+    this.registerOutputs(outputs);
   }
 }
