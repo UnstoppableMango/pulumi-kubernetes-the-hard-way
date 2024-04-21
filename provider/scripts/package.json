@@ -3,10 +3,12 @@
   "version": "1.0.0",
   "license": "Apache-2.0",
   "scripts": {
+    "gen-schema-types": "curl https://raw.githubusercontent.com/pulumi/pulumi/master/pkg/codegen/schema/pulumi.json | json2ts -o vendor/pulumi-schema.d.ts --unreachableDefinitions --ignoreMinAndMaxItems",
     "gen-types": "ts-node generate-provider-types.ts"
   },
   "devDependencies": {
     "@types/node": "^20.12.2",
+    "json-schema-to-typescript": "^14.0.0",
     "ts-node": "^10.9.2",
     "typescript": "5.4.5"
   }

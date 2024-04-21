@@ -245,10 +245,11 @@ provider/cmd/$(PROVIDER)/schema.json: $(SCHEMAGEN_SRC)
 	cd schemagen/cmd/pulumi-gen-kubernetes-the-hard-way && \
 		go run main.go ${WORKING_DIR}/provider/cmd/${PROVIDER}
 
-provider/scripts/vendor/pulumi-schema.d.ts: AWSX_VERSION := $(shell cat .awsx.version)
-provider/scripts/vendor/pulumi-schema.d.ts: .awsx.version
+provider/scripts/vendor/pulumi-schema.d.ts: PULUMI_VERSION := $(shell cat .pulumi.version)
+provider/scripts/vendor/pulumi-schema.d.ts: .pulumi.version
 	@mkdir -p provider/scripts/vendor
-	curl -sSL 'https://raw.githubusercontent.com/pulumi/pulumi-awsx/v$(AWSX_VERSION)/awsx/scripts/pulumi-schema.d.ts' > $@
+	curl https://raw.githubusercontent.com/pulumi/pulumi/v$(PULUMI_VERSION)/pkg/codegen/schema/pulumi.json \
+		| json2ts -o $@ --unreachableDefinitions --ignoreMinAndMaxItems
 
 # --------- Sentinel targets --------- #
 
