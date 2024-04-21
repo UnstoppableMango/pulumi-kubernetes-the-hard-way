@@ -3,6 +3,8 @@ import { types } from '@pulumi/command';
 import { Command } from '@pulumi/command/remote';
 import { CommandBuilder } from './commandBuilder';
 
+type CommandOr<T> = Input<string> | T;
+
 export type ApplyInputs<T> = {
   (builder: CommandBuilder, inputs: T): CommandBuilder;
 }
@@ -26,12 +28,12 @@ interface ToolOutputs<T> {
   binaryPath: string | Output<string>;
   command: Command | Output<Command>;
   connection: types.output.remote.Connection | Output<types.output.remote.Connection>;
-  create?: string | T | Output<T>;
-  delete?: string | T | Output<T>;
+  create?: Output<string> | T | Output<T>;
+  delete?: Output<string> | T | Output<T>;
   environment: Record<string, string> | Output<Record<string, string>>;
   stdin?: string | Output<string>;
   triggers: any[] | Output<any[]>;
-  update?: string | T | Output<T>;
+  update?: Output<string> | T | Output<T>;
 }
 
 type ToolResource<T> = ToolOutputs<T> & ComponentResource & {
@@ -55,7 +57,7 @@ export function factory<T, U>(
   );
 }
 
-function makeTool<T, U>(
+function makeTool<T extends Object, U>(
   name: string,
   args: ToolInputs<T>,
   defaultPath: string,
@@ -70,7 +72,13 @@ function makeTool<T, U>(
   const triggers = output(args.triggers ?? []);
 
   const builder = new CommandBuilder(binaryPath)
-  const format = (o?: T) => o ? apply(builder, o).command : undefined;
+  const format = (o?: CommandOr<T>) => {
+    if (!o) return undefined;
+    return output(o).apply(x => {
+      return typeof x === 'string'
+        ? x : apply(builder, x);
+    })
+  };
 
   const command = new Command(name, {
     connection,
@@ -82,7 +90,12 @@ function makeTool<T, U>(
     delete: format(args.delete),
   }, { parent: resource });
 
-  const map = (i?: T) => i ? toOutput(i) : undefined;
+  const map = (i?: T | Input<string>) => {
+    if (!i) return undefined;
+    return output(i).apply(x => {
+
+    });
+  };
 
   resource.binaryPath = binaryPath;
   resource.command = command;
