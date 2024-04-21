@@ -201,7 +201,7 @@ export abstract class Download<TData = any> extends (pulumi.ComponentResource)<T
     public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
     public destination!: string | pulumi.Output<string>;
     public mkdir!: Mkdir | pulumi.Output<Mkdir>;
-    public removeOnDelete!: boolean | pulumi.Output<boolean>;
+    public removeOnDelete!: boolean | boolean;
     public url!: string | pulumi.Output<string>;
     public wget!: Wget | pulumi.Output<Wget>;
     constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
@@ -211,7 +211,7 @@ export abstract class Download<TData = any> extends (pulumi.ComponentResource)<T
 export interface DownloadArgs {
     readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
     readonly destination: pulumi.Input<string>;
-    readonly removeOnDelete?: pulumi.Input<boolean>;
+    readonly removeOnDelete?: boolean;
     readonly url: pulumi.Input<string>;
 }
 export abstract class EtcdCluster<TData = any> extends (pulumi.ComponentResource)<TData> {

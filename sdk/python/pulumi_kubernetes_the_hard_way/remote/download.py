@@ -19,13 +19,13 @@ class DownloadArgs:
                  connection: pulumi.Input['pulumi_command.remote.ConnectionArgs'],
                  destination: pulumi.Input[str],
                  url: pulumi.Input[str],
-                 remove_on_delete: Optional[pulumi.Input[bool]] = None):
+                 remove_on_delete: Optional[bool] = None):
         """
         The set of arguments for constructing a Download resource.
         :param pulumi.Input['pulumi_command.remote.ConnectionArgs'] connection: The parameters with which to connect to the remote host.
         :param pulumi.Input[str] destination: The fully qualified path on the remote system where the file should be downloaded to.
         :param pulumi.Input[str] url: The URL of the file to be downloaded.
-        :param pulumi.Input[bool] remove_on_delete: Remove the downloaded fiel when the resource is deleted.
+        :param bool remove_on_delete: Remove the downloaded fiel when the resource is deleted.
         """
         pulumi.set(__self__, "connection", connection)
         pulumi.set(__self__, "destination", destination)
@@ -71,14 +71,14 @@ class DownloadArgs:
 
     @property
     @pulumi.getter(name="removeOnDelete")
-    def remove_on_delete(self) -> Optional[pulumi.Input[bool]]:
+    def remove_on_delete(self) -> Optional[bool]:
         """
         Remove the downloaded fiel when the resource is deleted.
         """
         return pulumi.get(self, "remove_on_delete")
 
     @remove_on_delete.setter
-    def remove_on_delete(self, value: Optional[pulumi.Input[bool]]):
+    def remove_on_delete(self, value: Optional[bool]):
         pulumi.set(self, "remove_on_delete", value)
 
 
@@ -89,7 +89,7 @@ class Download(pulumi.ComponentResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
                  destination: Optional[pulumi.Input[str]] = None,
-                 remove_on_delete: Optional[pulumi.Input[bool]] = None,
+                 remove_on_delete: Optional[bool] = None,
                  url: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         """
@@ -99,7 +99,7 @@ class Download(pulumi.ComponentResource):
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']] connection: The parameters with which to connect to the remote host.
         :param pulumi.Input[str] destination: The fully qualified path on the remote system where the file should be downloaded to.
-        :param pulumi.Input[bool] remove_on_delete: Remove the downloaded fiel when the resource is deleted.
+        :param bool remove_on_delete: Remove the downloaded fiel when the resource is deleted.
         :param pulumi.Input[str] url: The URL of the file to be downloaded.
         """
         ...
@@ -128,7 +128,7 @@ class Download(pulumi.ComponentResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
                  destination: Optional[pulumi.Input[str]] = None,
-                 remove_on_delete: Optional[pulumi.Input[bool]] = None,
+                 remove_on_delete: Optional[bool] = None,
                  url: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)

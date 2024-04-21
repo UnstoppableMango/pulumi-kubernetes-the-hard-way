@@ -105,7 +105,7 @@ export interface DownloadArgs {
     /**
      * Remove the downloaded fiel when the resource is deleted.
      */
-    removeOnDelete?: pulumi.Input<boolean>;
+    removeOnDelete?: boolean;
     /**
      * The URL of the file to be downloaded.
      */

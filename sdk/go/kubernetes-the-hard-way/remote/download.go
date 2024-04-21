@@ -76,7 +76,7 @@ type DownloadArgs struct {
 	// The fully qualified path on the remote system where the file should be downloaded to.
 	Destination pulumi.StringInput
 	// Remove the downloaded fiel when the resource is deleted.
-	RemoveOnDelete pulumi.BoolPtrInput
+	RemoveOnDelete *bool
 	// The URL of the file to be downloaded.
 	Url pulumi.StringInput
 }

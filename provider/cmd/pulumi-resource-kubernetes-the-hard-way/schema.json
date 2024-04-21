@@ -2359,6 +2359,7 @@
                 },
                 "removeOnDelete": {
                     "type": "boolean",
+                    "plain": true,
                     "description": "Remove the downloaded fiel when the resource is deleted."
                 },
                 "url": {
@@ -2389,6 +2390,7 @@
                 },
                 "removeOnDelete": {
                     "type": "boolean",
+                    "plain": true,
                     "description": "Remove the downloaded fiel when the resource is deleted."
                 },
                 "url": {
