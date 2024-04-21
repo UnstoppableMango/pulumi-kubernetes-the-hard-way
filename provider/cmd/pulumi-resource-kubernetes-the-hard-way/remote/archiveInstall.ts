@@ -57,6 +57,7 @@ export function archiveInstall<T extends ReadonlyArray<string>>(
     },
   }, { parent, dependsOn: download });
 
+  // Ensure directory exists
   const mkdir = new Mkdir(name, {
     connection: args.connection,
     create: {

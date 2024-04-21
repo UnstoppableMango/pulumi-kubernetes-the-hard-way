@@ -3,7 +3,6 @@
 package examples
 
 import (
-	"context"
 	"path"
 	"testing"
 
@@ -20,18 +19,10 @@ func TestRemoteEtcdClusterTs(t *testing.T) {
 		password = "root"
 	)
 
-	ctx := context.Background()
-	server, err := StartSshServer(ctx,
+	node := newNode(t,
 		WithSshUsername(username),
-		WithSshPassword(password))
-	if !assert.NoError(t, err) {
-		t.FailNow()
-	}
-
-	port, err := server.Port(ctx)
-	assert.NoError(t, err)
-
-	defer StopSshServer(ctx, server) // TODO: Error handling?
+		WithSshPassword(password),
+	)
 
 	validateSimple := func(t *testing.T, res apitype.ResourceV3) {
 		assert.NotEmpty(t, res.Outputs)
@@ -64,7 +55,7 @@ func TestRemoteEtcdClusterTs(t *testing.T) {
 			Dir: path.Join(getCwd(t), "remote", "etcd-cluster-ts"),
 			Config: map[string]string{
 				"host":     "localhost",
-				"port":     port,
+				"port":     node.Port,
 				"user":     username,
 				"password": password,
 			},
@@ -96,18 +87,10 @@ func TestRemoteEtcdInstallTs(t *testing.T) {
 		password = "root"
 	)
 
-	ctx := context.Background()
-	server, err := StartSshServer(ctx,
+	node := newNode(t,
 		WithSshUsername(username),
-		WithSshPassword(password))
-	if !assert.NoError(t, err) {
-		t.FailNow()
-	}
-
-	port, err := server.Port(ctx)
-	assert.NoError(t, err)
-
-	defer StopSshServer(ctx, server) // TODO: Error handling?
+		WithSshPassword(password),
+	)
 
 	validateSimple := func(t *testing.T, res apitype.ResourceV3) {
 		assert.NotEmpty(t, res.Outputs)
@@ -158,7 +141,7 @@ func TestRemoteEtcdInstallTs(t *testing.T) {
 			RunUpdateTest: false, // TODO: Enable
 			Config: map[string]string{
 				"host":     "localhost",
-				"port":     port,
+				"port":     node.Port,
 				"user":     username,
 				"password": password,
 			},
