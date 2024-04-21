@@ -49,6 +49,7 @@ export function archiveInstall<T extends ReadonlyArray<string>>(
   const tar = new Tar(name, {
     connection: args.connection,
     create: {
+      extract: true,
       archive: interpolate`${download.destination}/${archiveName}`,
       directory: download.destination,
       gzip: true,

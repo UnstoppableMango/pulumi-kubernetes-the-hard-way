@@ -88,13 +88,25 @@ function makeTool<T, U>(
   resource.command = command;
   resource.connection = connection;
   resource.environment = environment;
+  resource.stderr = command.stderr;
   resource.stdin = stdin;
+  resource.stdout = command.stdout;
   resource.triggers = triggers;
   resource.create = map(args.create);
   resource.delete = map(args.delete);
   resource.update = map(args.update);
 
-  return resource; // Eh... its convenient
+  return {
+    binaryPath,
+    command,
+    connection,
+    environment,
+    triggers,
+    stdin,
+    create: map(args.create),
+    delete: map(args.delete),
+    update: map(args.delete),
+  };
 }
 
 export function mapO<T>(i: Input<T> | undefined): Output<Unwrap<T>> | undefined {

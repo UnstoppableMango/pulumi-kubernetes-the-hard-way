@@ -6,7 +6,7 @@ const apply = tool.factory<
   schema.WgetOptsInputs,
   schema.WgetOptsOutputs
 >(
-  'tee',
+  'wget',
   (builder, opts) => builder
     .option('--directory-prefix', opts.directoryPrefix)
     .option('--https-only', opts.httpsOnly)
