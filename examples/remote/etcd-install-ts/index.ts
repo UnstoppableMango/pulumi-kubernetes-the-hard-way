@@ -14,7 +14,7 @@ const simple = new EtcdInstall('simple', {
 
 const etcdctl = new Etcdctl('simple', {
   connection: simple.connection,
-  commands: 'version',
+  create: { commands: 'version' },
 });
 
 export const etcdctlVersion = etcdctl.command.stdout;
