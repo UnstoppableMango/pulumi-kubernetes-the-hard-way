@@ -67,6 +67,7 @@ func (tool tool) resourceSpec(commandSpec schema.PackageSpec, optsType schema.Ty
 	command := commandSpec.Resources["command:remote:Command"]
 	lifecycleType := schema.TypeSpec{
 		OneOf: []schema.TypeSpec{{Type: "string"}, optsType},
+		Plain: true,
 	}
 
 	inputs := map[string]schema.PropertySpec{
