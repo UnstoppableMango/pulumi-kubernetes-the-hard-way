@@ -65,12 +65,15 @@ func optsType(x string) schema.TypeSpec {
 
 func (tool tool) resourceSpec(commandSpec schema.PackageSpec, optsType schema.TypeSpec) schema.ResourceSpec {
 	command := commandSpec.Resources["command:remote:Command"]
+	lifecycleType := schema.TypeSpec{
+		OneOf: []schema.TypeSpec{{Type: "string"}, optsType},
+	}
 
 	inputs := map[string]schema.PropertySpec{
 		"binaryPath": props.String("Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH"),
 		"create": {
 			Description: command.InputProperties["create"].Description,
-			TypeSpec:    optsType,
+			TypeSpec:    lifecycleType,
 		},
 		"connection": {
 			Description: "Connection details for the remote system",
@@ -78,7 +81,7 @@ func (tool tool) resourceSpec(commandSpec schema.PackageSpec, optsType schema.Ty
 		},
 		"delete": {
 			Description: command.InputProperties["delete"].Description,
-			TypeSpec:    optsType,
+			TypeSpec:    lifecycleType,
 		},
 		"environment": props.StringMap("Environment variables"),
 		"stdin":       props.String("TODO"),
@@ -93,7 +96,7 @@ func (tool tool) resourceSpec(commandSpec schema.PackageSpec, optsType schema.Ty
 		},
 		"update": {
 			Description: command.InputProperties["update"].Description,
-			TypeSpec:    optsType,
+			TypeSpec:    lifecycleType,
 		},
 	}
 
