@@ -27,7 +27,7 @@ public final class SystemctlOpts {
      * @return Corresponds to the [UNIT...] argument.
      * 
      */
-    private String unit;
+    private @Nullable String unit;
 
     private SystemctlOpts() {}
     /**
@@ -48,8 +48,8 @@ public final class SystemctlOpts {
      * @return Corresponds to the [UNIT...] argument.
      * 
      */
-    public String unit() {
-        return this.unit;
+    public Optional<String> unit() {
+        return Optional.ofNullable(this.unit);
     }
 
     public static Builder builder() {
@@ -63,7 +63,7 @@ public final class SystemctlOpts {
     public static final class Builder {
         private SystemctlCommand command;
         private @Nullable String pattern;
-        private String unit;
+        private @Nullable String unit;
         public Builder() {}
         public Builder(SystemctlOpts defaults) {
     	      Objects.requireNonNull(defaults);
@@ -87,10 +87,8 @@ public final class SystemctlOpts {
             return this;
         }
         @CustomType.Setter
-        public Builder unit(String unit) {
-            if (unit == null) {
-              throw new MissingRequiredPropertyException("SystemctlOpts", "unit");
-            }
+        public Builder unit(@Nullable String unit) {
+
             this.unit = unit;
             return this;
         }

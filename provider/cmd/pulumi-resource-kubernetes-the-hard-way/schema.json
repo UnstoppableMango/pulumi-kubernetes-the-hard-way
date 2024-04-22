@@ -1601,8 +1601,7 @@
             },
             "type": "object",
             "required": [
-                "command",
-                "unit"
+                "command"
             ]
         },
         "kubernetes-the-hard-way:tools:TarOpts": {

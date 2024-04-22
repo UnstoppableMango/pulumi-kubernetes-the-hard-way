@@ -19,10 +19,7 @@ func generateSystemctl() tool {
 		"unit":    props.String("Corresponds to the [UNIT...] argument."),
 	}
 
-	required := []string{
-		"command",
-		"unit",
-	}
+	required := []string{"command"}
 
 	typ := schema.ComplexTypeSpec{
 		ObjectTypeSpec: schema.ObjectTypeSpec{

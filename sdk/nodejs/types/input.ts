@@ -1226,7 +1226,7 @@ export namespace tools {
         /**
          * Corresponds to the [UNIT...] argument.
          */
-        unit: pulumi.Input<string>;
+        unit?: pulumi.Input<string>;
     }
 
     /**

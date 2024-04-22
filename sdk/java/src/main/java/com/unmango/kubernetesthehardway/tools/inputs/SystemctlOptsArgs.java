@@ -55,15 +55,15 @@ public final class SystemctlOptsArgs extends com.pulumi.resources.ResourceArgs {
      * Corresponds to the [UNIT...] argument.
      * 
      */
-    @Import(name="unit", required=true)
-    private Output<String> unit;
+    @Import(name="unit")
+    private @Nullable Output<String> unit;
 
     /**
      * @return Corresponds to the [UNIT...] argument.
      * 
      */
-    public Output<String> unit() {
-        return this.unit;
+    public Optional<Output<String>> unit() {
+        return Optional.ofNullable(this.unit);
     }
 
     private SystemctlOptsArgs() {}
@@ -130,7 +130,7 @@ public final class SystemctlOptsArgs extends com.pulumi.resources.ResourceArgs {
          * @return builder
          * 
          */
-        public Builder unit(Output<String> unit) {
+        public Builder unit(@Nullable Output<String> unit) {
             $.unit = unit;
             return this;
         }
@@ -148,9 +148,6 @@ public final class SystemctlOptsArgs extends com.pulumi.resources.ResourceArgs {
         public SystemctlOptsArgs build() {
             if ($.command == null) {
                 throw new MissingRequiredPropertyException("SystemctlOptsArgs", "command");
-            }
-            if ($.unit == null) {
-                throw new MissingRequiredPropertyException("SystemctlOptsArgs", "unit");
             }
             return $;
         }

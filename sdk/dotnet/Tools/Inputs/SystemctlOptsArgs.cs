@@ -31,8 +31,8 @@ namespace UnMango.KubernetesTheHardWay.Tools.Inputs
         /// <summary>
         /// Corresponds to the [UNIT...] argument.
         /// </summary>
-        [Input("unit", required: true)]
-        public Input<string> Unit { get; set; } = null!;
+        [Input("unit")]
+        public Input<string>? Unit { get; set; }
 
         public SystemctlOptsArgs()
         {
