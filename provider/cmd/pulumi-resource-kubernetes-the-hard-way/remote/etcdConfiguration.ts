@@ -21,6 +21,7 @@ export class EtcdConfiguration extends schema.EtcdConfiguration {
         directory: configurationDirectory,
         parents: true,
       },
+      delete: interpolate`rm -rf ${configurationDirectory}`,
     }, { parent: this });
 
     const configurationChmod = new Chmod(`${name}-data-chmod`, {
@@ -34,9 +35,10 @@ export class EtcdConfiguration extends schema.EtcdConfiguration {
     const dataMkdir = new Mkdir(`${name}-data`, {
       connection,
       create: {
-        directory: configurationDirectory,
+        directory: dataDirectory,
         parents: true,
       },
+      delete: interpolate`rm -rf ${dataDirectory}`,
     }, { parent: this });
 
     const caFilePath = interpolate`${configurationDirectory}/ca.pem`;

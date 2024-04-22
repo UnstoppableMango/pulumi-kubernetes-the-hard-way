@@ -11,10 +11,7 @@ export class StartEtcd extends schema.StartEtcd {
 
     const daemonReload = new Systemctl(`${name}-daemon-reload`, {
       connection,
-      create: {
-        command: 'daemon-reload',
-        unit,
-      },
+      create: { command: 'daemon-reload' },
     }, { parent: this });
 
     const enable = new Systemctl(`${name}-enable`, {
@@ -23,12 +20,20 @@ export class StartEtcd extends schema.StartEtcd {
         command: 'enable',
         unit,
       },
+      delete: {
+        command: 'disable',
+        unit,
+      },
     }, { parent: this, dependsOn: daemonReload });
 
     const start = new Systemctl(`${name}-start`, {
       connection,
       create: {
         command: 'start',
+        unit,
+      },
+      delete: {
+        command: 'stop',
         unit,
       },
     }, { parent: this, dependsOn: enable });

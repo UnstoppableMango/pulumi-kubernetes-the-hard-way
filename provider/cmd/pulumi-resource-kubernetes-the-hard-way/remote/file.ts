@@ -14,8 +14,6 @@ export interface InstallOutputs {
 export class File extends schema.File {
   constructor(name: string, args: schema.FileArgs, opts?: ComponentResourceOptions) {
     super(name, args, opts);
-
-    // Rehydrating
     if (opts?.urn) return;
 
     const content = output(args.content);
@@ -25,7 +23,7 @@ export class File extends schema.File {
       connection: args.connection,
       stdin: content,
       create: interpolate`tee ${path}`,
-      delete: interpolate`rm ${path}`,
+      delete: interpolate`rm -f ${path}`,
     }, { parent: this });
 
     this.command = command;

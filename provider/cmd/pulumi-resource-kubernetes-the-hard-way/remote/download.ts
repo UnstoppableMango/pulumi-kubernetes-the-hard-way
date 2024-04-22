@@ -1,15 +1,16 @@
-import { ComponentResourceOptions, output } from '@pulumi/pulumi';
+import { ComponentResourceOptions, interpolate, output } from '@pulumi/pulumi';
 import { Mkdir, Rm, Wget } from '../tools';
 import * as types from '../schema-types';
+import path = require('node:path');
 
 export class Download extends types.Download {
   constructor(name: string, args: types.DownloadArgs, opts?: ComponentResourceOptions) {
     super(name, args, opts);
+    if (opts?.urn) return;
 
     const destination = output(args.destination);
     const url = output(args.url);
-
-    // TODO: Remove on delete
+    const file = url.apply(path.basename);
 
     const mkdir = new Mkdir(name, {
       connection: args.connection,
@@ -25,6 +26,7 @@ export class Download extends types.Download {
         url: [args.url],
         directoryPrefix: destination,
       },
+      delete: interpolate`rm -f ${file}`,
     }, { parent: this, dependsOn: mkdir });
 
     this.mkdir = mkdir;
