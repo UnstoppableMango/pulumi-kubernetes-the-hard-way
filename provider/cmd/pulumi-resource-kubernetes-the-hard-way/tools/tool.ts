@@ -69,13 +69,12 @@ function makeTool<T, U>(
   const stdin = args.stdin ? output(args.stdin) : undefined;
   const triggers = output(args.triggers ?? []);
 
-  const builder = new CommandBuilder(binaryPath)
   const format = (o?: T | Input<string>): Output<string> | undefined => {
     if (!o) return undefined;
     if (typeof o === 'string' || Output.isInstance(o)) {
       return output(o);
     };
-    return apply(builder, o as T).command;
+    return apply(new CommandBuilder(binaryPath), o as T).command;
   };
 
   const command = new Command(name, {
