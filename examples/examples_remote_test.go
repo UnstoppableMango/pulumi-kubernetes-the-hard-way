@@ -19,10 +19,10 @@ func TestRemoteEtcdClusterTs(t *testing.T) {
 		password = "root"
 	)
 
-	node := newNode(t,
-		WithSshUsername(username),
-		WithSshPassword(password),
-	)
+	node0 := newNode(t, WithSshUsername(username), WithSshPassword(password))
+	node1 := newNode(t, WithSshUsername(username), WithSshPassword(password))
+	node2 := newNode(t, WithSshUsername(username), WithSshPassword(password))
+	node3 := newNode(t, WithSshUsername(username), WithSshPassword(password))
 
 	validateSimple := func(t *testing.T, res apitype.ResourceV3) {
 		assert.NotEmpty(t, res.Outputs)
@@ -54,10 +54,22 @@ func TestRemoteEtcdClusterTs(t *testing.T) {
 		With(integration.ProgramTestOptions{
 			Dir: path.Join(getCwd(t), "remote", "etcd-cluster-ts"),
 			Config: map[string]string{
-				"host":     "localhost",
-				"port":     node.Port,
-				"user":     username,
-				"password": password,
+				"host":           "localhost",
+				"port":           node0.Port,
+				"user":           username,
+				"password":       password,
+				"node1-host":     "localhost",
+				"node1-port":     node1.Port,
+				"node1-user":     username,
+				"node1-password": password,
+				"node2-host":     "localhost",
+				"node2-port":     node2.Port,
+				"node2-user":     username,
+				"node2-password": password,
+				"node3-host":     "localhost",
+				"node3-port":     node3.Port,
+				"node3-user":     username,
+				"node3-password": password,
 			},
 			ExtraRuntimeValidation: func(t *testing.T, stack integration.RuntimeValidationStackInfo) {
 				validatedResources := []string{}
