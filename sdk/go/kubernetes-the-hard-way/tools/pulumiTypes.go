@@ -3769,7 +3769,7 @@ type SystemctlOpts struct {
 	// Corresponds to the [PATTERN] argument
 	Pattern *string `pulumi:"pattern"`
 	// Corresponds to the [UNIT...] argument.
-	Unit string `pulumi:"unit"`
+	Unit *string `pulumi:"unit"`
 }
 
 // SystemctlOptsInput is an input type that accepts SystemctlOptsArgs and SystemctlOptsOutput values.
@@ -3790,7 +3790,7 @@ type SystemctlOptsArgs struct {
 	// Corresponds to the [PATTERN] argument
 	Pattern pulumi.StringPtrInput `pulumi:"pattern"`
 	// Corresponds to the [UNIT...] argument.
-	Unit pulumi.StringInput `pulumi:"unit"`
+	Unit pulumi.StringPtrInput `pulumi:"unit"`
 }
 
 func (SystemctlOptsArgs) ElementType() reflect.Type {
@@ -3882,8 +3882,8 @@ func (o SystemctlOptsOutput) Pattern() pulumi.StringPtrOutput {
 }
 
 // Corresponds to the [UNIT...] argument.
-func (o SystemctlOptsOutput) Unit() pulumi.StringOutput {
-	return o.ApplyT(func(v SystemctlOpts) string { return v.Unit }).(pulumi.StringOutput)
+func (o SystemctlOptsOutput) Unit() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v SystemctlOpts) *string { return v.Unit }).(pulumi.StringPtrOutput)
 }
 
 type SystemctlOptsPtrOutput struct{ *pulumi.OutputState }
@@ -3936,7 +3936,7 @@ func (o SystemctlOptsPtrOutput) Unit() pulumi.StringPtrOutput {
 		if v == nil {
 			return nil
 		}
-		return &v.Unit
+		return v.Unit
 	}).(pulumi.StringPtrOutput)
 }
 

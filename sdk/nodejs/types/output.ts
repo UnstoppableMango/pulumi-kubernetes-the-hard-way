@@ -1196,7 +1196,7 @@ export namespace tools {
         /**
          * Corresponds to the [UNIT...] argument.
          */
-        unit: string;
+        unit?: string;
     }
 
     /**

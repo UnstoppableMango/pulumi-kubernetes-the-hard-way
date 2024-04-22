@@ -3,7 +3,6 @@
 package examples
 
 import (
-	"context"
 	_ "embed"
 	"path"
 	"testing"
@@ -41,16 +40,10 @@ func TestRemoteInstallTs(t *testing.T) {
 		password = "root"
 	)
 
-	ctx := context.Background()
-	server, err := StartSshServer(ctx,
+	node := newNode(t,
 		WithSshUsername(username),
-		WithSshPassword(password))
-	assert.NoError(t, err)
-
-	port, err := server.Port(ctx)
-	assert.NoError(t, err)
-
-	defer StopSshServer(ctx, server) // TODO: Error handling?
+		WithSshPassword(password),
+	)
 
 	test := getJSBaseOptions(t).
 		With(integration.ProgramTestOptions{
@@ -60,7 +53,7 @@ func TestRemoteInstallTs(t *testing.T) {
 			RunUpdateTest: false,
 			Config: map[string]string{
 				"host":     "localhost",
-				"port":     port,
+				"port":     node.Port,
 				"user":     username,
 				"password": password,
 				"basePath": "/config",
@@ -81,18 +74,10 @@ func TestRemoteTs(t *testing.T) {
 		content  = "Some content idk"
 	)
 
-	ctx := context.Background()
-	server, err := StartSshServer(ctx,
+	node := newNode(t,
 		WithSshUsername(username),
-		WithSshPassword(password))
-	if !assert.NoError(t, err) {
-		t.FailNow()
-	}
-
-	port, err := server.Port(ctx)
-	assert.NoError(t, err)
-
-	defer StopSshServer(ctx, server) // TODO: Error handling?
+		WithSshPassword(password),
+	)
 
 	// err = server.CopyFile(ctx,
 	// 	path.Join(getCwd(t), "testdata", "text-file.tar.gz"),
@@ -107,7 +92,7 @@ func TestRemoteTs(t *testing.T) {
 			RunUpdateTest: false,
 			Config: map[string]string{
 				"host":     "localhost",
-				"port":     port,
+				"port":     node.Port,
 				"user":     username,
 				"password": password,
 				"content":  content,
@@ -121,8 +106,7 @@ func TestRemoteTs(t *testing.T) {
 				assert.Empty(t, stack.Outputs["wgetStdout"])
 				assert.NotEmpty(t, stack.Outputs["wgetStderr"])
 
-				data, err := server.ReadFile(ctx, "/config/index.html")
-				assert.NoError(t, err)
+				data := node.ReadFile(t, "/config/index.html")
 				assert.Equal(t, exampleComHtml, data)
 
 				// assert.Empty(t, stack.Outputs["tarStdout"])

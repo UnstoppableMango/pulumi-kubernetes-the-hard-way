@@ -2334,18 +2334,19 @@ class SedOptsArgs:
 class SystemctlOptsArgs:
     def __init__(__self__, *,
                  command: 'SystemctlCommand',
-                 unit: pulumi.Input[str],
-                 pattern: Optional[pulumi.Input[str]] = None):
+                 pattern: Optional[pulumi.Input[str]] = None,
+                 unit: Optional[pulumi.Input[str]] = None):
         """
         Abstraction over the `systemctl` utility on a remote system.
         :param 'SystemctlCommand' command: Corresponds to the COMMAND argument.
-        :param pulumi.Input[str] unit: Corresponds to the [UNIT...] argument.
         :param pulumi.Input[str] pattern: Corresponds to the [PATTERN] argument
+        :param pulumi.Input[str] unit: Corresponds to the [UNIT...] argument.
         """
         pulumi.set(__self__, "command", command)
-        pulumi.set(__self__, "unit", unit)
         if pattern is not None:
             pulumi.set(__self__, "pattern", pattern)
+        if unit is not None:
+            pulumi.set(__self__, "unit", unit)
 
     @property
     @pulumi.getter
@@ -2361,18 +2362,6 @@ class SystemctlOptsArgs:
 
     @property
     @pulumi.getter
-    def unit(self) -> pulumi.Input[str]:
-        """
-        Corresponds to the [UNIT...] argument.
-        """
-        return pulumi.get(self, "unit")
-
-    @unit.setter
-    def unit(self, value: pulumi.Input[str]):
-        pulumi.set(self, "unit", value)
-
-    @property
-    @pulumi.getter
     def pattern(self) -> Optional[pulumi.Input[str]]:
         """
         Corresponds to the [PATTERN] argument
@@ -2382,6 +2371,18 @@ class SystemctlOptsArgs:
     @pattern.setter
     def pattern(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "pattern", value)
+
+    @property
+    @pulumi.getter
+    def unit(self) -> Optional[pulumi.Input[str]]:
+        """
+        Corresponds to the [UNIT...] argument.
+        """
+        return pulumi.get(self, "unit")
+
+    @unit.setter
+    def unit(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "unit", value)
 
 
 @pulumi.input_type

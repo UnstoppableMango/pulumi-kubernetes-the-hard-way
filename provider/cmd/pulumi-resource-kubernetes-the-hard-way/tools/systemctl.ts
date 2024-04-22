@@ -19,7 +19,7 @@ const apply = tool.factory<
   },
   (i) => ({
     command: i.command,
-    unit: output(i.unit),
+    unit: tool.mapO(i.unit),
     pattern: tool.mapO(i.pattern),
   }),
 );

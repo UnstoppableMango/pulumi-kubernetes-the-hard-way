@@ -1611,12 +1611,12 @@ export type SystemctlCommandOutputs = "bind" | "cat" | "clean" | "daemon-reload"
 export interface SystemctlOptsInputs {
     readonly command: SystemctlCommandInputs;
     readonly pattern?: pulumi.Input<string>;
-    readonly unit: pulumi.Input<string>;
+    readonly unit?: pulumi.Input<string>;
 }
 export interface SystemctlOptsOutputs {
     readonly command: SystemctlCommandOutputs;
     readonly pattern?: pulumi.Output<string>;
-    readonly unit: pulumi.Output<string>;
+    readonly unit?: pulumi.Output<string>;
 }
 export interface TarOptsInputs {
     readonly archive: pulumi.Input<string>;

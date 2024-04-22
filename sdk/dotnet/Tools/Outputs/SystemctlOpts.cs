@@ -28,7 +28,7 @@ namespace UnMango.KubernetesTheHardWay.Tools.Outputs
         /// <summary>
         /// Corresponds to the [UNIT...] argument.
         /// </summary>
-        public readonly string Unit;
+        public readonly string? Unit;
 
         [OutputConstructor]
         private SystemctlOpts(
@@ -36,7 +36,7 @@ namespace UnMango.KubernetesTheHardWay.Tools.Outputs
 
             string? pattern,
 
-            string unit)
+            string? unit)
         {
             Command = command;
             Pattern = pattern;

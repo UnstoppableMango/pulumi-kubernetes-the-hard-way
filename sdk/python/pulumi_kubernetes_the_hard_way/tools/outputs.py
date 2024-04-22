@@ -2067,18 +2067,19 @@ class SystemctlOpts(dict):
     """
     def __init__(__self__, *,
                  command: 'SystemctlCommand',
-                 unit: str,
-                 pattern: Optional[str] = None):
+                 pattern: Optional[str] = None,
+                 unit: Optional[str] = None):
         """
         Abstraction over the `systemctl` utility on a remote system.
         :param 'SystemctlCommand' command: Corresponds to the COMMAND argument.
-        :param str unit: Corresponds to the [UNIT...] argument.
         :param str pattern: Corresponds to the [PATTERN] argument
+        :param str unit: Corresponds to the [UNIT...] argument.
         """
         pulumi.set(__self__, "command", command)
-        pulumi.set(__self__, "unit", unit)
         if pattern is not None:
             pulumi.set(__self__, "pattern", pattern)
+        if unit is not None:
+            pulumi.set(__self__, "unit", unit)
 
     @property
     @pulumi.getter
@@ -2090,19 +2091,19 @@ class SystemctlOpts(dict):
 
     @property
     @pulumi.getter
-    def unit(self) -> str:
-        """
-        Corresponds to the [UNIT...] argument.
-        """
-        return pulumi.get(self, "unit")
-
-    @property
-    @pulumi.getter
     def pattern(self) -> Optional[str]:
         """
         Corresponds to the [PATTERN] argument
         """
         return pulumi.get(self, "pattern")
+
+    @property
+    @pulumi.getter
+    def unit(self) -> Optional[str]:
+        """
+        Corresponds to the [UNIT...] argument.
+        """
+        return pulumi.get(self, "unit")
 
 
 @pulumi.output_type
