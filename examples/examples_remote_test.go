@@ -22,6 +22,7 @@ func TestRemoteEtcdClusterTs(t *testing.T) {
 	node := newNode(t,
 		WithSshUsername(username),
 		WithSshPassword(password),
+		WithType(systemd),
 	)
 
 	validateSimple := func(t *testing.T, res apitype.ResourceV3) {
