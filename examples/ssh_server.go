@@ -19,10 +19,18 @@ type SshServer struct {
 	Container testcontainers.Container
 }
 
+type ServerType string
+
+const (
+	systemd ServerType = "systemd"
+	ssh     ServerType = "ssh"
+)
+
 type SshServerOptions struct {
 	Password  string
 	PublicKey string
 	Username  string
+	Type      ServerType
 }
 
 type SshServerOption func(o *SshServerOptions)
@@ -45,13 +53,19 @@ func WithSshUsername(username string) SshServerOption {
 	}
 }
 
+func WithType(typ ServerType) SshServerOption {
+	return func(o *SshServerOptions) {
+		o.Type = typ
+	}
+}
+
 func StartSshServer(ctx context.Context, opts ...SshServerOption) (SshServer, error) {
 	cwd, err := os.Getwd()
 	if err != nil {
 		return SshServer{}, err
 	}
 
-	options := SshServerOptions{}
+	options := SshServerOptions{Type: ssh}
 	for _, o := range opts {
 		o(&options)
 	}
@@ -63,12 +77,19 @@ func StartSshServer(ctx context.Context, opts ...SshServerOption) (SshServer, er
 		return SshServer{}, err
 	}
 
+	var image string
+	if options.Type == systemd {
+		image = "kthw:dev"
+	} else {
+		image = "kthw-ssh:dev"
+	}
+
 	req := testcontainers.ContainerRequest{
 		// Idfk why this is being dumb
 		// FromDockerfile: testcontainers.FromDockerfile{
 		// 	ContextArchive: bytes.NewReader(buf.Bytes()),
 		// },
-		Image:        "kthw:dev",
+		Image:        image,
 		ExposedPorts: []string{internalPort},
 		// Env: map[string]string{
 		// 	"PUID":            "1000",
