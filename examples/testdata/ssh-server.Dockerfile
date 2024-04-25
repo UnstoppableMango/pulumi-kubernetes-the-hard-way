@@ -16,7 +16,7 @@ RUN echo 'root:root' | chpasswd \
     && useradd -rm -d /home/test -s /bin/bash -g root -G sudo -u 6969 test \
     && echo 'test:test' | chpasswd
 
-RUN service start ssh
+RUN service ssh start
 
 # Fix for CI until we get tests refactored
 RUN mkdir /config && chown 'test:root' /config

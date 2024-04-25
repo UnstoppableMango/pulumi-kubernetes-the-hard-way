@@ -68,14 +68,14 @@ test_python: provider build_python
 	cd examples && go test -v $(TEST_SHORT) -tags=python -timeout 2h $(TEST_RUN)
 test_go: provider
 	cd examples && go test -v $(TEST_SHORT) -tags=go -timeout 2h $(TEST_RUN)
-test_nodejs: provider install_nodejs_sdk .make/examples_dockerfile
+test_nodejs: provider install_nodejs_sdk .make/examples_ssh_dockerfile  .make/examples_systemd_dockerfile
 	cd examples && go test -v $(TEST_SHORT) -tags=nodejs -timeout 2h $(TEST_RUN)
 
 .PHONY: install_provider
 install_provider: .make/install_provider
 
 .PHONY: docker
-docker: .make/examples_dockerfile
+docker: .make/examples_ssh_dockerfile .make/examples_systemd_dockerfile
 
 .PHONY: generate generate_java generate_nodejs generate_python generate_dotnet generate_go generate_types generate_schema
 generate: generate_schema generate_types generate_java generate_nodejs generate_python generate_dotnet generate_go
@@ -354,5 +354,8 @@ provider/scripts/vendor/pulumi-schema.d.ts: .awsx.version
 		yarn run pkg . ${PKG_ARGS} --target node16 --output ${WORKING_DIR}/bin/${PROVIDER}
 	@touch $@
 
-.make/examples_dockerfile: examples/Dockerfile
-	cd examples && docker build -t kthw:dev .
+.make/examples_ssh_dockerfile: examples/testdata/ssh-server.Dockerfile
+	cd examples/testdata && docker build -f ssh-server.Dockerfile -t kthw-ssh:dev .
+
+.make/examples_systemd_dockerfile: examples/testdata/systemd.Dockerfile
+	cd examples/testdata && docker build -f systemd.Dockerfile -t kthw-systemd:dev .

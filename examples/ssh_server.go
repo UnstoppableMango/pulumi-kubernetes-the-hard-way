@@ -79,7 +79,7 @@ func StartSshServer(ctx context.Context, opts ...SshServerOption) (SshServer, er
 
 	var image string
 	if options.Type == systemd {
-		image = "kthw:dev"
+		image = "kthw-systemd:dev"
 	} else {
 		image = "kthw-ssh:dev"
 	}
