@@ -8,6 +8,8 @@ import (
 
 	"github.com/pulumi/pulumi/pkg/v3/testing/integration"
 	"github.com/stretchr/testify/require"
+	"github.com/testcontainers/testcontainers-go/network"
+	"golang.org/x/exp/maps"
 )
 
 func getBaseOptions(t *testing.T) integration.ProgramTestOptions {
@@ -38,6 +40,13 @@ func skipIfShort(t *testing.T) {
 type node struct {
 	Server SshServer
 	Port   string
+	Ip     string
+}
+
+func (n node) Exec(t *testing.T, command []string) string {
+	result, err := n.Server.Exec(context.Background(), command)
+	require.NoError(t, err, "failed to execute command")
+	return result
 }
 
 func (n node) ReadFile(t *testing.T, file string) string {
@@ -47,16 +56,38 @@ func (n node) ReadFile(t *testing.T, file string) string {
 }
 
 func newNode(t *testing.T, opts ...SshServerOption) node {
-	server, err := StartSshServer(context.Background(), opts...)
+	ctx := context.Background()
+	server, err := StartSshServer(ctx, opts...)
 	require.NoError(t, err, "failed to start ssh server")
 
 	t.Cleanup(func() {
-		err := StopSshServer(context.Background(), server)
+		err := StopSshServer(ctx, server)
 		require.NoError(t, err)
 	})
 
-	port, err := server.Port(context.Background())
-	require.NoError(t, err, "failed to get container port")
+	port, err := server.Port(ctx)
+	require.NoError(t, err, "failed to get node port")
 
-	return node{Server: server, Port: port}
+	ip, err := server.Ip(ctx)
+	require.NoError(t, err, "failed to retrieve node IP")
+
+	return node{Server: server, Port: port, Ip: ip}
+}
+
+func newCluster(t *testing.T, config map[string][]SshServerOption) map[string]node {
+	ctx := context.Background()
+	network, err := network.New(ctx, network.WithCheckDuplicate())
+	require.NoError(t, err, "failed to create network")
+
+	t.Cleanup(func() {
+		require.NoError(t, network.Remove(ctx))
+	})
+
+	nodes := map[string]node{}
+	for _, key := range maps.Keys(config) {
+		opts := append(config[key], WithNetwork(network.Name))
+		nodes[key] = newNode(t, opts...)
+	}
+
+	return nodes
 }

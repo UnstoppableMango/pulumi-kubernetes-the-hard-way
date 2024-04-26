@@ -11,7 +11,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestRemoteEtcdClusterTs(t *testing.T) {
+func TestRemoteEtcdClusterMultiTs(t *testing.T) {
 	skipIfShort(t)
 
 	const (
@@ -19,10 +19,95 @@ func TestRemoteEtcdClusterTs(t *testing.T) {
 		password = "root"
 	)
 
-	node := newNode(t,
+	opts := []SshServerOption{
 		WithSshUsername(username),
 		WithSshPassword(password),
+	}
+	nodes := newCluster(t, map[string][]SshServerOption{
+		"node1": opts,
+		"node2": opts,
+		"node3": opts,
+	})
+
+	validateNode := func(t *testing.T, name string, outputs map[string]interface{}) {
+		install, ok := outputs["install"]
+		assert.True(t, ok, "Output `install` was not set")
+		assert.Contains(t, install, name)
+
+		configuration, ok := outputs["configuration"]
+		assert.True(t, ok, "Output `configuration` was not set")
+		assert.Contains(t, configuration, name)
+
+		nodes, ok := outputs["nodes"]
+		assert.True(t, ok, "Output `nodes` was not set")
+		assert.Contains(t, nodes, name)
+
+		service, ok := outputs["service"]
+		assert.True(t, ok, "Output `service` was not set")
+		assert.Contains(t, service, name)
+
+		start, ok := outputs["start"]
+		assert.True(t, ok, "Output `start` was not set")
+		assert.Contains(t, start, name)
+	}
+
+	validateSimple := func(t *testing.T, res apitype.ResourceV3) {
+		assert.NotEmpty(t, res.Outputs)
+		validateNode(t, "node1", res.Outputs)
+		validateNode(t, "node2", res.Outputs)
+		validateNode(t, "node3", res.Outputs)
+		assert.Contains(t, res.Outputs, "bundle")
+	}
+
+	test := getJSBaseOptions(t).
+		With(integration.ProgramTestOptions{
+			Dir: path.Join(getCwd(t), "remote", "etcd-cluster-multi-ts"),
+			Config: map[string]string{
+				"node1-host":     "localhost",
+				"node1-ip":       nodes["node1"].Ip,
+				"node1-port":     nodes["node1"].Port,
+				"node1-user":     username,
+				"node1-password": password,
+				"node2-host":     "localhost",
+				"node2-ip":       nodes["node2"].Ip,
+				"node2-port":     nodes["node2"].Port,
+				"node2-user":     username,
+				"node2-password": password,
+				"node3-host":     "localhost",
+				"node3-ip":       nodes["node3"].Ip,
+				"node3-port":     nodes["node3"].Port,
+				"node3-user":     username,
+				"node3-password": password,
+			},
+			ExtraRuntimeValidation: func(t *testing.T, stack integration.RuntimeValidationStackInfo) {
+				validatedResources := []string{}
+				for _, res := range stack.Deployment.Resources {
+					if res.Type != "kubernetes-the-hard-way:remote:EtcdCluster" {
+						continue
+					}
+					switch res.URN.Name() {
+					case "simple":
+						validateSimple(t, res)
+						validatedResources = append(validatedResources, "simple")
+					}
+				}
+
+				assert.Equal(t, []string{"simple"}, validatedResources, "Not all resources were validated")
+			},
+		})
+
+	integration.ProgramTest(t, &test)
+}
+
+func TestRemoteEtcdClusterSingleTs(t *testing.T) {
+	skipIfShort(t)
+
+	const (
+		username = "root"
+		password = "root"
 	)
+
+	node := newNode(t, WithSshUsername(username), WithSshPassword(password))
 
 	validateSimple := func(t *testing.T, res apitype.ResourceV3) {
 		assert.NotEmpty(t, res.Outputs)
@@ -52,7 +137,7 @@ func TestRemoteEtcdClusterTs(t *testing.T) {
 
 	test := getJSBaseOptions(t).
 		With(integration.ProgramTestOptions{
-			Dir: path.Join(getCwd(t), "remote", "etcd-cluster-ts"),
+			Dir: path.Join(getCwd(t), "remote", "etcd-cluster-single-ts"),
 			Config: map[string]string{
 				"host":     "localhost",
 				"port":     node.Port,
