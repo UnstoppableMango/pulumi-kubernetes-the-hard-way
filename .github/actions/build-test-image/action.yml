@@ -5,6 +5,9 @@ inputs:
   dockerfile:
     required: true
     description: The path to the dockerfile.
+  tag:
+    required: true
+    description: The tag for the image.
 
 runs:
   using: composite
@@ -18,6 +21,6 @@ runs:
         file: ${{ inputs.dockerfile }}
         context: examples
         load: true
-        tags: kthw:dev
+        tags: ${{ inputs.tag }}
         cache-from: type=gha
         cache-to: type=gha,mode=max

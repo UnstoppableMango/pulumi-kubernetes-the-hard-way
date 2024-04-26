@@ -84,11 +84,13 @@ jobs:
         uses: ./.github/actions/build-test-image
         with:
           dockerfile: examples/testdata/ssh-server.Dockerfile
+          tag: kthw-ssh:dev
 
       - name: Build systemd test image
         uses: ./.github/actions/build-test-image
         with:
           dockerfile: examples/testdata/systemd.Dockerfile
+          tag: kthw-systemd:dev
 
       - name: Run tests
         run: |
