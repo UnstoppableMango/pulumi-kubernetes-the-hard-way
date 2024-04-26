@@ -80,8 +80,15 @@ jobs:
       - name: Install dependencies
         run: make install_${{ matrix.language }}_sdk
 
-      - name: Build test image
+      - name: Build ssh server test image
         uses: ./.github/actions/build-test-image
+        with:
+          dockerfile: examples/testdata/ssh-server.Dockerfile
+
+      - name: Build systemd test image
+        uses: ./.github/actions/build-test-image
+        with:
+          dockerfile: examples/testdata/systemd.Dockerfile
 
       - name: Run tests
         run: |

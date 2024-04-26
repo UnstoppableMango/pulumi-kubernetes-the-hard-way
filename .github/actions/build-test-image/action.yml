@@ -1,6 +1,11 @@
 name: Build test image
 description: Builds the test docker image for tests
 
+inputs:
+  dockerfile:
+    required: true
+    description: The path to the dockerfile.
+
 runs:
   using: composite
   steps:
@@ -10,6 +15,7 @@ runs:
     - name: Build and push
       uses: docker/build-push-action@v5
       with:
+        file: ${{ inputs.dockerfile }}
         context: examples
         load: true
         tags: kthw:dev
