@@ -3,15 +3,17 @@
 package examples
 
 import (
+	"context"
 	"path"
 	"testing"
 
 	"github.com/pulumi/pulumi/pkg/v3/testing/integration"
 	"github.com/pulumi/pulumi/sdk/v3/go/common/apitype"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
-func TestRemoteEtcdClusterTs(t *testing.T) {
+func TestRemoteEtcdClusterMultiTs(t *testing.T) {
 	skipIfShort(t)
 
 	const (
@@ -19,10 +21,92 @@ func TestRemoteEtcdClusterTs(t *testing.T) {
 		password = "root"
 	)
 
-	node0 := newNode(t, WithSshUsername(username), WithSshPassword(password))
-	node1 := newNode(t, WithSshUsername(username), WithSshPassword(password))
-	node2 := newNode(t, WithSshUsername(username), WithSshPassword(password))
-	node3 := newNode(t, WithSshUsername(username), WithSshPassword(password))
+	opts := []SshServerOption{WithSshUsername(username), WithSshPassword(password)}
+	nodes := newCluster(t, map[string][]SshServerOption{
+		"node1": opts,
+		"node2": opts,
+		"node3": opts,
+	})
+
+	validateSimple := func(t *testing.T, res apitype.ResourceV3) {
+		assert.NotEmpty(t, res.Outputs)
+
+		// install, ok := res.Outputs["install"]
+		// assert.True(t, ok, "Output `install` was not set")
+		// assert.Contains(t, install, "node0")
+
+		// configuration, ok := res.Outputs["configuration"]
+		// assert.True(t, ok, "Output `configuration` was not set")
+		// assert.Contains(t, configuration, "node0")
+
+		// nodes, ok := res.Outputs["nodes"]
+		// assert.True(t, ok, "Output `nodes` was not set")
+		// assert.Contains(t, nodes, "node0")
+
+		// service, ok := res.Outputs["service"]
+		// assert.True(t, ok, "Output `service` was not set")
+		// assert.Contains(t, service, "node0")
+
+		// start, ok := res.Outputs["start"]
+		// assert.True(t, ok, "Output `start` was not set")
+		// assert.Contains(t, start, "node0")
+
+		// assert.Contains(t, res.Outputs, "bundle")
+	}
+
+	test := getJSBaseOptions(t).
+		With(integration.ProgramTestOptions{
+			Dir: path.Join(getCwd(t), "remote", "etcd-cluster-multi-ts"),
+			Config: map[string]string{
+				"node1-host":     "localhost",
+				"node1-ip":       nodes["node1"].Ip,
+				"node1-port":     nodes["node1"].Port,
+				"node1-user":     username,
+				"node1-password": password,
+				"node2-host":     "localhost",
+				"node2-ip":       nodes["node2"].Ip,
+				"node2-port":     nodes["node2"].Port,
+				"node2-user":     username,
+				"node2-password": password,
+				"node3-host":     "localhost",
+				"node3-ip":       nodes["node3"].Ip,
+				"node3-port":     nodes["node3"].Port,
+				"node3-user":     username,
+				"node3-password": password,
+			},
+			ExtraRuntimeValidation: func(t *testing.T, stack integration.RuntimeValidationStackInfo) {
+				validatedResources := []string{}
+				for _, res := range stack.Deployment.Resources {
+					if res.Type != "kubernetes-the-hard-way:remote:EtcdCluster" {
+						continue
+					}
+					switch res.URN.Name() {
+					case "simple":
+						validateSimple(t, res)
+						validatedResources = append(validatedResources, "simple")
+					}
+				}
+
+				assert.Equal(t, []string{"simple"}, validatedResources, "Not all resources were validated")
+			},
+		})
+
+	integration.ProgramTest(t, &test)
+	ips, _ := node1.Server.Container.ContainerIPs(context.Background())
+	require.Empty(t, ips)
+	journal := node1.Exec(t, []string{"journalctl", "-xeu", "etcd.service"})
+	assert.Empty(t, journal)
+}
+
+func TestRemoteEtcdClusterSingleTs(t *testing.T) {
+	skipIfShort(t)
+
+	const (
+		username = "root"
+		password = "root"
+	)
+
+	node := newNode(t, WithSshUsername(username), WithSshPassword(password))
 
 	validateSimple := func(t *testing.T, res apitype.ResourceV3) {
 		assert.NotEmpty(t, res.Outputs)
@@ -52,24 +136,12 @@ func TestRemoteEtcdClusterTs(t *testing.T) {
 
 	test := getJSBaseOptions(t).
 		With(integration.ProgramTestOptions{
-			Dir: path.Join(getCwd(t), "remote", "etcd-cluster-ts"),
+			Dir: path.Join(getCwd(t), "remote", "etcd-cluster-single-ts"),
 			Config: map[string]string{
-				"host":           "localhost",
-				"port":           node0.Port,
-				"user":           username,
-				"password":       password,
-				"node1-host":     "localhost",
-				"node1-port":     node1.Port,
-				"node1-user":     username,
-				"node1-password": password,
-				"node2-host":     "localhost",
-				"node2-port":     node2.Port,
-				"node2-user":     username,
-				"node2-password": password,
-				"node3-host":     "localhost",
-				"node3-port":     node3.Port,
-				"node3-user":     username,
-				"node3-password": password,
+				"host":     "localhost",
+				"port":     node.Port,
+				"user":     username,
+				"password": password,
 			},
 			ExtraRuntimeValidation: func(t *testing.T, stack integration.RuntimeValidationStackInfo) {
 				validatedResources := []string{}

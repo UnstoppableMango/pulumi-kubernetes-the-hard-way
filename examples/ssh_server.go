@@ -20,6 +20,7 @@ type SshServer struct {
 }
 
 type SshServerOptions struct {
+	Networks  []string
 	Password  string
 	PublicKey string
 	Username  string
@@ -42,6 +43,12 @@ func WithSshPublicKey(key string) SshServerOption {
 func WithSshUsername(username string) SshServerOption {
 	return func(o *SshServerOptions) {
 		o.Username = username
+	}
+}
+
+func WithNetwork(network string) SshServerOption {
+	return func(o *SshServerOptions) {
+		o.Networks = append(o.Networks, network)
 	}
 }
 
@@ -70,6 +77,7 @@ func StartSshServer(ctx context.Context, opts ...SshServerOption) (SshServer, er
 		// },
 		Image:        "kthw:dev",
 		ExposedPorts: []string{internalPort},
+		Networks:     options.Networks,
 		// Env: map[string]string{
 		// 	"PUID":            "1000",
 		// 	"PGID":            "1000",
@@ -115,6 +123,10 @@ func (s *SshServer) Exec(ctx context.Context, command []string) (string, error) 
 	}
 
 	return string(res), nil
+}
+
+func (s *SshServer) Ip(ctx context.Context) (string, error) {
+	return s.Container.ContainerIP(ctx)
 }
 
 func (s *SshServer) Port(ctx context.Context) (string, error) {
