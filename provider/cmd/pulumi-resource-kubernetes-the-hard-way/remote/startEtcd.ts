@@ -5,6 +5,7 @@ import { Systemctl } from '../tools';
 export class StartEtcd extends schema.StartEtcd {
   constructor(name: string, args: schema.StartEtcdArgs, opts?: ComponentResourceOptions) {
     super(name, args, opts);
+    if (opts?.urn) return;
 
     const connection = output(args.connection);
     const unit = 'etcd';

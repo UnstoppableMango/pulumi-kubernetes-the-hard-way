@@ -6,6 +6,7 @@ import { File } from './file';
 export class EtcdConfiguration extends schema.EtcdConfiguration {
   constructor(name: string, args: schema.EtcdConfigurationArgs, opts?: ComponentResourceOptions) {
     super(name, args, opts);
+    if (opts?.urn) return;
 
     const caPem = output(args.caPem);
     const certPem = output(args.certPem);

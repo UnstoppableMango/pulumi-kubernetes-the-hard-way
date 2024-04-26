@@ -5,6 +5,7 @@ import { binaryInstall } from './binaryInstall';
 export class KubeSchedulerInstall extends schema.KubeSchedulerInstall {
   constructor(name: string, args: schema.KubeSchedulerInstallArgs, opts?: ComponentResourceOptions) {
     super(name, args, opts);
+    if (opts?.urn) return;
 
     const architecture = output(args.architecture ?? 'amd64');
     const binName = 'kube-scheduler';

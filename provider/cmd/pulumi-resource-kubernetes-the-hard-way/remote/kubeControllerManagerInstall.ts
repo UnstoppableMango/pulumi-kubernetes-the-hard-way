@@ -5,6 +5,7 @@ import { binaryInstall } from './binaryInstall';
 export class KubeControllerManagerInstall extends schema.KubeControllerManagerInstall {
   constructor(name: string, args: schema.KubeControllerManagerInstallArgs, opts?: ComponentResourceOptions) {
     super(name, args, opts);
+    if (opts?.urn) return;
 
     const architecture = output(args.architecture ?? 'amd64');
     const binName = 'kube-controller-manager';
