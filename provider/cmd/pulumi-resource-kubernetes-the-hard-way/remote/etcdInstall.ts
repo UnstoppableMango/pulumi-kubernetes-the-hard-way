@@ -11,6 +11,7 @@ export class EtcdInstall extends schema.EtcdInstall {
 
   constructor(name: string, args: schema.EtcdInstallArgs, opts?: ComponentResourceOptions) {
     super(name, args, opts);
+    if (opts?.urn) return;
 
     const architecture = output(args.architecture ?? EtcdInstall.defaultArch);
     const connection = output(args.connection);

@@ -8,6 +8,7 @@ import { EtcdService } from './etcdService';
 export class ProvisionEtcd extends schema.ProvisionEtcd {
   constructor(name: string, args: schema.ProvisionEtcdArgs, opts?: ComponentResourceOptions) {
     super(name, args, opts);
+    if (opts?.urn) return;
 
     const bundle = output(args.bundle);
     const connection = output(args.connection);

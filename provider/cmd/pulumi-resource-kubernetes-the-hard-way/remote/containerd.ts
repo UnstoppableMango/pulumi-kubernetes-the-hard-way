@@ -5,6 +5,7 @@ import { archiveInstall } from './archiveInstall';
 export class ContainerdInstall extends schema.ContainerdInstall {
   constructor(name: string, args: schema.ContainerdInstallArgs, opts?: ComponentResourceOptions) {
     super(name, args, opts);
+    if (opts?.urn) return;
 
     const architecture = output(args.architecture ?? 'amd64');
     const connection = output(args.connection);

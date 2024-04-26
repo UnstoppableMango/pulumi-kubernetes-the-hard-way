@@ -11,6 +11,7 @@ export class EncryptionKey extends schema.EncryptionKey {
 
   constructor(name: string, args: schema.EncryptionKeyArgs, opts?: ComponentResourceOptions) {
     super(name, args, opts);
+    if (opts?.urn) return;
 
     const bytes = output(args.bytes ?? EncryptionKey.defaultBytes);
     const key = new RandomBytes(name, { length: bytes }, { parent: this });

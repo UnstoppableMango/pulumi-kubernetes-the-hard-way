@@ -23,8 +23,6 @@ export abstract class KeyPair<TCert extends CertType> extends ComponentResource 
 
   protected constructor(type: string, name: string, args: Inputs, opts?: ComponentResourceOptions) {
     super(type, name, args, opts);
-
-    // Rehydrating
     if (opts?.urn) return;
 
     const key = KeyPair.key(name, {

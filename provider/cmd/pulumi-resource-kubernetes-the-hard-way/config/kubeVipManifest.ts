@@ -6,6 +6,7 @@ import { getKubeVipManifest } from './getKubeVipManifest';
 export class KubeVipManifest extends schema.KubeVipManifest {
   constructor(name: string, args: schema.KubeVipManifestArgs, opts?: ComponentResourceOptions) {
     super(name, args, opts);
+    if (opts?.urn) return;
 
     const { result } = output(getKubeVipManifest(args));
     const yaml = result.apply(YAML.stringify);

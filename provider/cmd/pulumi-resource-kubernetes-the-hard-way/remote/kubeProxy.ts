@@ -5,6 +5,7 @@ import { binaryInstall } from './binaryInstall';
 export class KubeProxyInstall extends schema.KubeProxyInstall {
   constructor(name: string, args: schema.KubeProxyInstallArgs, opts?: ComponentResourceOptions) {
     super(name, args, opts);
+    if (opts?.urn) return;
 
     const architecture = output(args.architecture ?? 'amd64');
     const binName = 'kube-apiserver';

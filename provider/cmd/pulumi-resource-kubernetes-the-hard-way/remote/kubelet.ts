@@ -5,6 +5,7 @@ import { binaryInstall } from './binaryInstall';
 export class KubeletInstall extends schema.KubeletInstall {
   constructor(name: string, args: schema.KubeletInstallArgs, opts?: ComponentResourceOptions) {
     super(name, args, opts);
+    if (opts?.urn) return;
 
     const architecture = output(args.architecture ?? 'amd64');
     const binName = 'kube-apiserver';

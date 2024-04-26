@@ -7,6 +7,7 @@ import { File } from './file';
 export class StaticPod extends schema.StaticPod {
   constructor(name: string, args: schema.StaticPodArgs, opts?: ComponentResourceOptions) {
     super(name, args, opts);
+    if (opts?.urn) return;
 
     const connection = output(args.connection);
     const directory = '/etc/kubernetes/manifests';
