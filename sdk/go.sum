@@ -160,6 +160,8 @@ github.com/pulumi/pulumi-tls/sdk/v5 v5.0.2 h1:q6vtcBaeleTnet7iXmLQ+oGxWwAk+sEO9S
 github.com/pulumi/pulumi-tls/sdk/v5 v5.0.2/go.mod h1:9thAn8RjDhrDGZ52ElPO+qiYh4w1D5yOP5B4M6+1zco=
 github.com/pulumi/pulumi/sdk/v3 v3.113.3 h1:ySNxoL+O9TtS9WiPa9SWu6mthJryryRzP0kyYaQlNaU=
 github.com/pulumi/pulumi/sdk/v3 v3.113.3/go.mod h1:JWSzKBoHd8rlncC1DhXLf7YdV+Bk/Qf+hSZOOQh0WwQ=
+github.com/pulumi/pulumi/sdk/v3 v3.114.0 h1:KPBSvm04wE2/AdS8PlABxZAW4o7pSAnar0QOooH13no=
+github.com/pulumi/pulumi/sdk/v3 v3.114.0/go.mod h1:d6LZJHqEfpgXUd8rFSSsbaPJcocZObXeaUr87jbA5MY=
 github.com/rivo/uniseg v0.1.0/go.mod h1:J6wj4VEh+S6ZtnVlnTBMWIodfgj8LQOQFoIToxlJtxc=
 github.com/rivo/uniseg v0.2.0/go.mod h1:J6wj4VEh+S6ZtnVlnTBMWIodfgj8LQOQFoIToxlJtxc=
 github.com/rivo/uniseg v0.4.7 h1:WUdvkW8uEhrYfLC4ZzdpI2ztxP1I582+49Oc5Mq64VQ=
