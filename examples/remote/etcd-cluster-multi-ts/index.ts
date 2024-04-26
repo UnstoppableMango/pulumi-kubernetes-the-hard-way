@@ -7,16 +7,23 @@ const config = new Config();
 const pki = new ClusterPki('etcd-cluster', {
   clusterName: 'my-cluster',
   nodes: {
-    node0: {
-      // TODO: Make these two required
-      ip: '10.69.0.3',
+    node1: {
+      ip: config.require('node1-ip'),
+      role: 'controlplane',
+    },
+    node2: {
+      ip: config.require('node2-ip'),
+      role: 'controlplane',
+    },
+    node3: {
+      ip: config.require('node3-ip'),
       role: 'controlplane',
     }
   },
   publicIp: '10.69.0.1',
 });
 
-const multi = new EtcdCluster('multi', {
+const simple = new EtcdCluster('simple', {
   bundle: {
     caPem: pki.kubernetes.caCertPem,
     certPem: pki.kubernetes.certPem,

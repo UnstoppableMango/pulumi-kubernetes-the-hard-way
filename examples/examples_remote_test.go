@@ -3,14 +3,12 @@
 package examples
 
 import (
-	"context"
 	"path"
 	"testing"
 
 	"github.com/pulumi/pulumi/pkg/v3/testing/integration"
 	"github.com/pulumi/pulumi/sdk/v3/go/common/apitype"
 	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/require"
 )
 
 func TestRemoteEtcdClusterMultiTs(t *testing.T) {
@@ -21,37 +19,44 @@ func TestRemoteEtcdClusterMultiTs(t *testing.T) {
 		password = "root"
 	)
 
-	opts := []SshServerOption{WithSshUsername(username), WithSshPassword(password)}
+	opts := []SshServerOption{
+		WithSshUsername(username),
+		WithSshPassword(password),
+	}
 	nodes := newCluster(t, map[string][]SshServerOption{
 		"node1": opts,
 		"node2": opts,
 		"node3": opts,
 	})
 
+	validateNode := func(t *testing.T, name string, outputs map[string]interface{}) {
+		install, ok := outputs["install"]
+		assert.True(t, ok, "Output `install` was not set")
+		assert.Contains(t, install, name)
+
+		configuration, ok := outputs["configuration"]
+		assert.True(t, ok, "Output `configuration` was not set")
+		assert.Contains(t, configuration, name)
+
+		nodes, ok := outputs["nodes"]
+		assert.True(t, ok, "Output `nodes` was not set")
+		assert.Contains(t, nodes, name)
+
+		service, ok := outputs["service"]
+		assert.True(t, ok, "Output `service` was not set")
+		assert.Contains(t, service, name)
+
+		start, ok := outputs["start"]
+		assert.True(t, ok, "Output `start` was not set")
+		assert.Contains(t, start, name)
+	}
+
 	validateSimple := func(t *testing.T, res apitype.ResourceV3) {
 		assert.NotEmpty(t, res.Outputs)
-
-		// install, ok := res.Outputs["install"]
-		// assert.True(t, ok, "Output `install` was not set")
-		// assert.Contains(t, install, "node0")
-
-		// configuration, ok := res.Outputs["configuration"]
-		// assert.True(t, ok, "Output `configuration` was not set")
-		// assert.Contains(t, configuration, "node0")
-
-		// nodes, ok := res.Outputs["nodes"]
-		// assert.True(t, ok, "Output `nodes` was not set")
-		// assert.Contains(t, nodes, "node0")
-
-		// service, ok := res.Outputs["service"]
-		// assert.True(t, ok, "Output `service` was not set")
-		// assert.Contains(t, service, "node0")
-
-		// start, ok := res.Outputs["start"]
-		// assert.True(t, ok, "Output `start` was not set")
-		// assert.Contains(t, start, "node0")
-
-		// assert.Contains(t, res.Outputs, "bundle")
+		validateNode(t, "node1", res.Outputs)
+		validateNode(t, "node2", res.Outputs)
+		validateNode(t, "node3", res.Outputs)
+		assert.Contains(t, res.Outputs, "bundle")
 	}
 
 	test := getJSBaseOptions(t).
@@ -92,10 +97,6 @@ func TestRemoteEtcdClusterMultiTs(t *testing.T) {
 		})
 
 	integration.ProgramTest(t, &test)
-	ips, _ := node1.Server.Container.ContainerIPs(context.Background())
-	require.Empty(t, ips)
-	journal := node1.Exec(t, []string{"journalctl", "-xeu", "etcd.service"})
-	assert.Empty(t, journal)
 }
 
 func TestRemoteEtcdClusterSingleTs(t *testing.T) {

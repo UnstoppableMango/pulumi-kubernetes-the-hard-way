@@ -79,6 +79,10 @@ func newCluster(t *testing.T, config map[string][]SshServerOption) map[string]no
 	network, err := network.New(ctx, network.WithCheckDuplicate())
 	require.NoError(t, err, "failed to create network")
 
+	t.Cleanup(func() {
+		require.NoError(t, network.Remove(ctx))
+	})
+
 	nodes := map[string]node{}
 	for _, key := range maps.Keys(config) {
 		opts := append(config[key], WithNetwork(network.Name))
