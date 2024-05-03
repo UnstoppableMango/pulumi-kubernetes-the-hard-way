@@ -20,7 +20,7 @@ Note that the generated provider plugin (`pulumi-resource-kubernetes-the-hard-wa
 
 ## Prerequisites
 
-- Go 1.21
+- Go 1.22
 - Pulumi CLI
 - Node.js (to build the Node.js SDK)
 - Yarn (to build the Node.js SDK)
