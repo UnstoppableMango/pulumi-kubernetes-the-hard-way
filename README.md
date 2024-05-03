@@ -2,6 +2,18 @@
 
 This is a Pulumi implementation of Kelsey Hightower's [Kubernetes the Hard Way](https://github.com/kelseyhightower/kubernetes-the-hard-way). It attempts to provide a set of building blocks to build a kubernetes cluster from scratch.
 
+## Project Goals
+
+Outline things we plan to do.
+
+### Feature Creep
+
+Outline things we might do.
+
+### Non-Goals
+
+Outline things we won't do.
+
 ## Development
 
 Note that the generated provider plugin (`pulumi-resource-kubernetes-the-hard-way`) must be on your `PATH` to be used by Pulumi deployments.
