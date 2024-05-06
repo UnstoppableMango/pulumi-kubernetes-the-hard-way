@@ -6,7 +6,7 @@ require (
 	github.com/docker/docker v26.1.1+incompatible
 	github.com/docker/go-connections v0.5.0
 	github.com/pulumi/pulumi/pkg/v3 v3.115.1
-	github.com/pulumi/pulumi/sdk/v3 v3.115.1
+	github.com/pulumi/pulumi/sdk/v3 v3.115.2
 	github.com/stretchr/testify v1.9.0
 	github.com/testcontainers/testcontainers-go v0.30.0
 	golang.org/x/exp v0.0.0-20240416160154-fe59bbe5cc7f
