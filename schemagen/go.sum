@@ -166,6 +166,8 @@ github.com/pulumi/pulumi/pkg/v3 v3.115.0 h1:HD79vIBlHm0nllcX436949fZygJaYvvv1MPt
 github.com/pulumi/pulumi/pkg/v3 v3.115.0/go.mod h1:x4abSCpsk5fAYFe5LtAE8FSTwMEbldbjIJ81c6WNmsA=
 github.com/pulumi/pulumi/pkg/v3 v3.115.1 h1:9DnNZ9vPjVnanHTaLQcMdkQEwxHcABRAKobbX1wBv/Q=
 github.com/pulumi/pulumi/pkg/v3 v3.115.1/go.mod h1:qPOY/oQpxN0dcg8GVhiq7NzlwIPYeK4RdhzKm+T+V+k=
+github.com/pulumi/pulumi/pkg/v3 v3.115.2 h1:lMpGc/pSAsSz4ZE4IRi1/XYWzyZQpjy0OJ4TNcMIr+k=
+github.com/pulumi/pulumi/pkg/v3 v3.115.2/go.mod h1:Sbl1hEyTXpc1Yu2GbKU6h3rWyuUkrTAzTZ+MioYOZl8=
 github.com/pulumi/pulumi/sdk/v3 v3.113.3 h1:ySNxoL+O9TtS9WiPa9SWu6mthJryryRzP0kyYaQlNaU=
 github.com/pulumi/pulumi/sdk/v3 v3.113.3/go.mod h1:JWSzKBoHd8rlncC1DhXLf7YdV+Bk/Qf+hSZOOQh0WwQ=
 github.com/pulumi/pulumi/sdk/v3 v3.114.0 h1:KPBSvm04wE2/AdS8PlABxZAW4o7pSAnar0QOooH13no=
