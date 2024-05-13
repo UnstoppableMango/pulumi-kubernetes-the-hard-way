@@ -12,6 +12,22 @@ import * as pulumiTls from "@pulumi/tls";
 import * as utilities from "../utilities";
 
 export namespace config {
+    export interface ClusterArgs {
+        certificateAuthorityData: pulumi.Input<string>;
+        server: pulumi.Input<string>;
+    }
+
+    export interface ContextArgs {
+        cluster: pulumi.Input<string>;
+        user: pulumi.Input<string>;
+    }
+
+    export interface KubeconfigArgs {
+        clusters: pulumi.Input<pulumi.Input<inputs.config.ClusterArgs>[]>;
+        contexts: pulumi.Input<pulumi.Input<inputs.config.ContextArgs>[]>;
+        users: pulumi.Input<pulumi.Input<inputs.config.UserArgs>[]>;
+    }
+
     export interface KubeconfigAdminOptions {
         publicIp?: string;
         type: "admin";
@@ -430,6 +446,10 @@ export namespace config {
         status?: pulumi.Input<pulumiKubernetes.types.input.core.v1.PodStatus>;
     }
 
+    export interface UserArgs {
+        clientCertificateData: pulumi.Input<string>;
+        clientKeyData: pulumi.Input<string>;
+    }
 }
 
 export namespace remote {

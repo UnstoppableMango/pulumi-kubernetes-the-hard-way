@@ -20,6 +20,59 @@ type Cluster struct {
 	Server                   string `pulumi:"server"`
 }
 
+// ClusterInput is an input type that accepts ClusterArgs and ClusterOutput values.
+// You can construct a concrete instance of `ClusterInput` via:
+//
+//	ClusterArgs{...}
+type ClusterInput interface {
+	pulumi.Input
+
+	ToClusterOutput() ClusterOutput
+	ToClusterOutputWithContext(context.Context) ClusterOutput
+}
+
+type ClusterArgs struct {
+	CertificateAuthorityData pulumi.StringInput `pulumi:"certificateAuthorityData"`
+	Server                   pulumi.StringInput `pulumi:"server"`
+}
+
+func (ClusterArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*Cluster)(nil)).Elem()
+}
+
+func (i ClusterArgs) ToClusterOutput() ClusterOutput {
+	return i.ToClusterOutputWithContext(context.Background())
+}
+
+func (i ClusterArgs) ToClusterOutputWithContext(ctx context.Context) ClusterOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(ClusterOutput)
+}
+
+// ClusterArrayInput is an input type that accepts ClusterArray and ClusterArrayOutput values.
+// You can construct a concrete instance of `ClusterArrayInput` via:
+//
+//	ClusterArray{ ClusterArgs{...} }
+type ClusterArrayInput interface {
+	pulumi.Input
+
+	ToClusterArrayOutput() ClusterArrayOutput
+	ToClusterArrayOutputWithContext(context.Context) ClusterArrayOutput
+}
+
+type ClusterArray []ClusterInput
+
+func (ClusterArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]Cluster)(nil)).Elem()
+}
+
+func (i ClusterArray) ToClusterArrayOutput() ClusterArrayOutput {
+	return i.ToClusterArrayOutputWithContext(context.Background())
+}
+
+func (i ClusterArray) ToClusterArrayOutputWithContext(ctx context.Context) ClusterArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(ClusterArrayOutput)
+}
+
 type ClusterOutput struct{ *pulumi.OutputState }
 
 func (ClusterOutput) ElementType() reflect.Type {
@@ -65,6 +118,59 @@ func (o ClusterArrayOutput) Index(i pulumi.IntInput) ClusterOutput {
 type Context struct {
 	Cluster string `pulumi:"cluster"`
 	User    string `pulumi:"user"`
+}
+
+// ContextInput is an input type that accepts ContextArgs and ContextOutput values.
+// You can construct a concrete instance of `ContextInput` via:
+//
+//	ContextArgs{...}
+type ContextInput interface {
+	pulumi.Input
+
+	ToContextOutput() ContextOutput
+	ToContextOutputWithContext(context.Context) ContextOutput
+}
+
+type ContextArgs struct {
+	Cluster pulumi.StringInput `pulumi:"cluster"`
+	User    pulumi.StringInput `pulumi:"user"`
+}
+
+func (ContextArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*Context)(nil)).Elem()
+}
+
+func (i ContextArgs) ToContextOutput() ContextOutput {
+	return i.ToContextOutputWithContext(context.Background())
+}
+
+func (i ContextArgs) ToContextOutputWithContext(ctx context.Context) ContextOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(ContextOutput)
+}
+
+// ContextArrayInput is an input type that accepts ContextArray and ContextArrayOutput values.
+// You can construct a concrete instance of `ContextArrayInput` via:
+//
+//	ContextArray{ ContextArgs{...} }
+type ContextArrayInput interface {
+	pulumi.Input
+
+	ToContextArrayOutput() ContextArrayOutput
+	ToContextArrayOutputWithContext(context.Context) ContextArrayOutput
+}
+
+type ContextArray []ContextInput
+
+func (ContextArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]Context)(nil)).Elem()
+}
+
+func (i ContextArray) ToContextArrayOutput() ContextArrayOutput {
+	return i.ToContextArrayOutputWithContext(context.Background())
+}
+
+func (i ContextArray) ToContextArrayOutputWithContext(ctx context.Context) ContextArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(ContextArrayOutput)
 }
 
 type ContextOutput struct{ *pulumi.OutputState }
@@ -113,6 +219,35 @@ type Kubeconfig struct {
 	Clusters []Cluster `pulumi:"clusters"`
 	Contexts []Context `pulumi:"contexts"`
 	Users    []User    `pulumi:"users"`
+}
+
+// KubeconfigInput is an input type that accepts KubeconfigArgs and KubeconfigOutput values.
+// You can construct a concrete instance of `KubeconfigInput` via:
+//
+//	KubeconfigArgs{...}
+type KubeconfigInput interface {
+	pulumi.Input
+
+	ToKubeconfigOutput() KubeconfigOutput
+	ToKubeconfigOutputWithContext(context.Context) KubeconfigOutput
+}
+
+type KubeconfigArgs struct {
+	Clusters ClusterArrayInput `pulumi:"clusters"`
+	Contexts ContextArrayInput `pulumi:"contexts"`
+	Users    UserArrayInput    `pulumi:"users"`
+}
+
+func (KubeconfigArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*Kubeconfig)(nil)).Elem()
+}
+
+func (i KubeconfigArgs) ToKubeconfigOutput() KubeconfigOutput {
+	return i.ToKubeconfigOutputWithContext(context.Background())
+}
+
+func (i KubeconfigArgs) ToKubeconfigOutputWithContext(ctx context.Context) KubeconfigOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(KubeconfigOutput)
 }
 
 type KubeconfigOutput struct{ *pulumi.OutputState }
@@ -812,6 +947,59 @@ type User struct {
 	ClientKeyData         string `pulumi:"clientKeyData"`
 }
 
+// UserInput is an input type that accepts UserArgs and UserOutput values.
+// You can construct a concrete instance of `UserInput` via:
+//
+//	UserArgs{...}
+type UserInput interface {
+	pulumi.Input
+
+	ToUserOutput() UserOutput
+	ToUserOutputWithContext(context.Context) UserOutput
+}
+
+type UserArgs struct {
+	ClientCertificateData pulumi.StringInput `pulumi:"clientCertificateData"`
+	ClientKeyData         pulumi.StringInput `pulumi:"clientKeyData"`
+}
+
+func (UserArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*User)(nil)).Elem()
+}
+
+func (i UserArgs) ToUserOutput() UserOutput {
+	return i.ToUserOutputWithContext(context.Background())
+}
+
+func (i UserArgs) ToUserOutputWithContext(ctx context.Context) UserOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(UserOutput)
+}
+
+// UserArrayInput is an input type that accepts UserArray and UserArrayOutput values.
+// You can construct a concrete instance of `UserArrayInput` via:
+//
+//	UserArray{ UserArgs{...} }
+type UserArrayInput interface {
+	pulumi.Input
+
+	ToUserArrayOutput() UserArrayOutput
+	ToUserArrayOutputWithContext(context.Context) UserArrayOutput
+}
+
+type UserArray []UserInput
+
+func (UserArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]User)(nil)).Elem()
+}
+
+func (i UserArray) ToUserArrayOutput() UserArrayOutput {
+	return i.ToUserArrayOutputWithContext(context.Background())
+}
+
+func (i UserArray) ToUserArrayOutputWithContext(ctx context.Context) UserArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(UserArrayOutput)
+}
+
 type UserOutput struct{ *pulumi.OutputState }
 
 func (UserOutput) ElementType() reflect.Type {
@@ -855,12 +1043,19 @@ func (o UserArrayOutput) Index(i pulumi.IntInput) UserOutput {
 }
 
 func init() {
+	pulumi.RegisterInputType(reflect.TypeOf((*ClusterInput)(nil)).Elem(), ClusterArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*ClusterArrayInput)(nil)).Elem(), ClusterArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*ContextInput)(nil)).Elem(), ContextArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*ContextArrayInput)(nil)).Elem(), ContextArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*KubeconfigInput)(nil)).Elem(), KubeconfigArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*KubeconfigAdminOptionsInput)(nil)).Elem(), KubeconfigAdminOptionsArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*KubeconfigKubeControllerManagerOptionsInput)(nil)).Elem(), KubeconfigKubeControllerManagerOptionsArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*KubeconfigKubeProxyOptionsInput)(nil)).Elem(), KubeconfigKubeProxyOptionsArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*KubeconfigKubeSchedulerOptionsInput)(nil)).Elem(), KubeconfigKubeSchedulerOptionsArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*KubeconfigWorkerOptionsInput)(nil)).Elem(), KubeconfigWorkerOptionsArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*PodManifestInput)(nil)).Elem(), PodManifestArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*UserInput)(nil)).Elem(), UserArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*UserArrayInput)(nil)).Elem(), UserArray{})
 	pulumi.RegisterOutputType(ClusterOutput{})
 	pulumi.RegisterOutputType(ClusterArrayOutput{})
 	pulumi.RegisterOutputType(ContextOutput{})

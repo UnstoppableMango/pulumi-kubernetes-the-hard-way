@@ -80,6 +80,11 @@ export type KubeletInstall = import("./kubeletInstall").KubeletInstall;
 export const KubeletInstall: typeof import("./kubeletInstall").KubeletInstall = null as any;
 utilities.lazyLoad(exports, ["KubeletInstall"], () => require("./kubeletInstall"));
 
+export { KubernetesControlPlaneConfigurationArgs } from "./kubernetesControlPlaneConfiguration";
+export type KubernetesControlPlaneConfiguration = import("./kubernetesControlPlaneConfiguration").KubernetesControlPlaneConfiguration;
+export const KubernetesControlPlaneConfiguration: typeof import("./kubernetesControlPlaneConfiguration").KubernetesControlPlaneConfiguration = null as any;
+utilities.lazyLoad(exports, ["KubernetesControlPlaneConfiguration"], () => require("./kubernetesControlPlaneConfiguration"));
+
 export { ProvisionEtcdArgs } from "./provisionEtcd";
 export type ProvisionEtcd = import("./provisionEtcd").ProvisionEtcd;
 export const ProvisionEtcd: typeof import("./provisionEtcd").ProvisionEtcd = null as any;
@@ -143,6 +148,8 @@ const _module = {
                 return new KubectlInstall(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:remote:KubeletInstall":
                 return new KubeletInstall(name, <any>undefined, { urn })
+            case "kubernetes-the-hard-way:remote:KubernetesControlPlaneConfiguration":
+                return new KubernetesControlPlaneConfiguration(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:remote:ProvisionEtcd":
                 return new ProvisionEtcd(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:remote:RuncInstall":
