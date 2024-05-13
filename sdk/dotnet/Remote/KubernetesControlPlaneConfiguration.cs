@@ -35,6 +35,12 @@ namespace UnMango.KubernetesTheHardWay.Remote
         public Output<string?> ConfigurationDirectory { get; private set; } = null!;
 
         /// <summary>
+        /// The parameters with which to connect to the remote host.
+        /// </summary>
+        [Output("connection")]
+        public Output<Pulumi.Command.Remote.Outputs.Connection> Connection { get; private set; } = null!;
+
+        /// <summary>
         /// The YAML encryption configuration manifest.
         /// </summary>
         [Output("encryptionConfig")]
@@ -63,12 +69,6 @@ namespace UnMango.KubernetesTheHardWay.Remote
         /// </summary>
         [Output("kubeControllerManagerKubeconfig")]
         public Output<UnMango.KubernetesTheHardWay.Config.Outputs.Kubeconfig> KubeControllerManagerKubeconfig { get; private set; } = null!;
-
-        /// <summary>
-        /// The path to the 'kube-controller-manager' binary.
-        /// </summary>
-        [Output("kubeControllerManagerPath")]
-        public Output<string?> KubeControllerManagerPath { get; private set; } = null!;
 
         /// <summary>
         /// The kube-scheduler configuration manifest.
@@ -154,6 +154,12 @@ namespace UnMango.KubernetesTheHardWay.Remote
         public Input<string>? ConfigurationDirectory { get; set; }
 
         /// <summary>
+        /// The parameters with which to connect to the remote host.
+        /// </summary>
+        [Input("connection", required: true)]
+        public Input<Pulumi.Command.Remote.Inputs.ConnectionArgs> Connection { get; set; } = null!;
+
+        /// <summary>
         /// The YAML encryption configuration manifest.
         /// </summary>
         [Input("encryptionConfig", required: true)]
@@ -182,12 +188,6 @@ namespace UnMango.KubernetesTheHardWay.Remote
         /// </summary>
         [Input("kubeControllerManagerKubeconfig", required: true)]
         public Input<UnMango.KubernetesTheHardWay.Config.Inputs.KubeconfigArgs> KubeControllerManagerKubeconfig { get; set; } = null!;
-
-        /// <summary>
-        /// The path to the 'kube-controller-manager' binary.
-        /// </summary>
-        [Input("kubeControllerManagerPath")]
-        public Input<string>? KubeControllerManagerPath { get; set; }
 
         /// <summary>
         /// The kube-scheduler configuration manifest.

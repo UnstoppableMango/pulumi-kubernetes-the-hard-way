@@ -7,6 +7,8 @@ import * as outputs from "../types/output";
 import * as enums from "../types/enums";
 import * as utilities from "../utilities";
 
+import * as pulumiCommand from "@pulumi/command";
+
 /**
  * Configures Kubernetes Control Plane on a remote system.
  */
@@ -38,6 +40,10 @@ export class KubernetesControlPlaneConfiguration extends pulumi.ComponentResourc
      */
     public readonly configurationDirectory!: pulumi.Output<string | undefined>;
     /**
+     * The parameters with which to connect to the remote host.
+     */
+    public readonly connection!: pulumi.Output<pulumiCommand.types.output.remote.Connection>;
+    /**
      * The YAML encryption configuration manifest.
      */
     public readonly encryptionConfig!: pulumi.Output<string>;
@@ -57,10 +63,6 @@ export class KubernetesControlPlaneConfiguration extends pulumi.ComponentResourc
      * The kube-controller-manager kubeconfig configuration
      */
     public readonly kubeControllerManagerKubeconfig!: pulumi.Output<outputs.config.Kubeconfig>;
-    /**
-     * The path to the 'kube-controller-manager' binary.
-     */
-    public readonly kubeControllerManagerPath!: pulumi.Output<string | undefined>;
     /**
      * The kube-scheduler configuration manifest.
      */
@@ -103,6 +105,9 @@ export class KubernetesControlPlaneConfiguration extends pulumi.ComponentResourc
             if ((!args || args.caPem === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'caPem'");
             }
+            if ((!args || args.connection === undefined) && !opts.urn) {
+                throw new Error("Missing required property 'connection'");
+            }
             if ((!args || args.encryptionConfig === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'encryptionConfig'");
             }
@@ -130,12 +135,12 @@ export class KubernetesControlPlaneConfiguration extends pulumi.ComponentResourc
             resourceInputs["caKey"] = args ? args.caKey : undefined;
             resourceInputs["caPem"] = args ? args.caPem : undefined;
             resourceInputs["configurationDirectory"] = (args ? args.configurationDirectory : undefined) ?? "/etc/kubernetes/config";
+            resourceInputs["connection"] = args ? (args.connection ? pulumi.output(args.connection).apply(pulumiCommand.types.input.remote.connectionArgsProvideDefaults) : undefined) : undefined;
             resourceInputs["encryptionConfig"] = args ? args.encryptionConfig : undefined;
             resourceInputs["kubeApiServerKey"] = args ? args.kubeApiServerKey : undefined;
             resourceInputs["kubeApiServerPath"] = args ? args.kubeApiServerPath : undefined;
             resourceInputs["kubeApiServerPem"] = args ? args.kubeApiServerPem : undefined;
             resourceInputs["kubeControllerManagerKubeconfig"] = args ? args.kubeControllerManagerKubeconfig : undefined;
-            resourceInputs["kubeControllerManagerPath"] = args ? args.kubeControllerManagerPath : undefined;
             resourceInputs["kubeSchedulerConfig"] = args ? args.kubeSchedulerConfig : undefined;
             resourceInputs["kubeSchedulerKubeconfig"] = args ? args.kubeSchedulerKubeconfig : undefined;
             resourceInputs["kubeSchedulerPath"] = args ? args.kubeSchedulerPath : undefined;
@@ -146,12 +151,12 @@ export class KubernetesControlPlaneConfiguration extends pulumi.ComponentResourc
             resourceInputs["caKey"] = undefined /*out*/;
             resourceInputs["caPem"] = undefined /*out*/;
             resourceInputs["configurationDirectory"] = undefined /*out*/;
+            resourceInputs["connection"] = undefined /*out*/;
             resourceInputs["encryptionConfig"] = undefined /*out*/;
             resourceInputs["kubeApiServerKey"] = undefined /*out*/;
             resourceInputs["kubeApiServerPath"] = undefined /*out*/;
             resourceInputs["kubeApiServerPem"] = undefined /*out*/;
             resourceInputs["kubeControllerManagerKubeconfig"] = undefined /*out*/;
-            resourceInputs["kubeControllerManagerPath"] = undefined /*out*/;
             resourceInputs["kubeSchedulerConfig"] = undefined /*out*/;
             resourceInputs["kubeSchedulerKubeconfig"] = undefined /*out*/;
             resourceInputs["kubeSchedulerPath"] = undefined /*out*/;
@@ -181,6 +186,10 @@ export interface KubernetesControlPlaneConfigurationArgs {
      */
     configurationDirectory?: pulumi.Input<string>;
     /**
+     * The parameters with which to connect to the remote host.
+     */
+    connection: pulumi.Input<pulumiCommand.types.input.remote.ConnectionArgs>;
+    /**
      * The YAML encryption configuration manifest.
      */
     encryptionConfig: pulumi.Input<string>;
@@ -200,10 +209,6 @@ export interface KubernetesControlPlaneConfigurationArgs {
      * The kube-controller-manager kubeconfig configuration
      */
     kubeControllerManagerKubeconfig: pulumi.Input<inputs.config.KubeconfigArgs>;
-    /**
-     * The path to the 'kube-controller-manager' binary.
-     */
-    kubeControllerManagerPath?: pulumi.Input<string>;
     /**
      * The kube-scheduler configuration manifest.
      */

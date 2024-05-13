@@ -3,6 +3,7 @@
 
 package com.unmango.kubernetesthehardway.remote;
 
+import com.pulumi.command.remote.inputs.ConnectionArgs;
 import com.pulumi.core.Output;
 import com.pulumi.core.annotations.Import;
 import com.pulumi.core.internal.Codegen;
@@ -61,6 +62,21 @@ public final class KubernetesControlPlaneConfigurationArgs extends com.pulumi.re
      */
     public Optional<Output<String>> configurationDirectory() {
         return Optional.ofNullable(this.configurationDirectory);
+    }
+
+    /**
+     * The parameters with which to connect to the remote host.
+     * 
+     */
+    @Import(name="connection", required=true)
+    private Output<ConnectionArgs> connection;
+
+    /**
+     * @return The parameters with which to connect to the remote host.
+     * 
+     */
+    public Output<ConnectionArgs> connection() {
+        return this.connection;
     }
 
     /**
@@ -136,21 +152,6 @@ public final class KubernetesControlPlaneConfigurationArgs extends com.pulumi.re
      */
     public Output<KubeconfigArgs> kubeControllerManagerKubeconfig() {
         return this.kubeControllerManagerKubeconfig;
-    }
-
-    /**
-     * The path to the &#39;kube-controller-manager&#39; binary.
-     * 
-     */
-    @Import(name="kubeControllerManagerPath")
-    private @Nullable Output<String> kubeControllerManagerPath;
-
-    /**
-     * @return The path to the &#39;kube-controller-manager&#39; binary.
-     * 
-     */
-    public Optional<Output<String>> kubeControllerManagerPath() {
-        return Optional.ofNullable(this.kubeControllerManagerPath);
     }
 
     /**
@@ -249,12 +250,12 @@ public final class KubernetesControlPlaneConfigurationArgs extends com.pulumi.re
         this.caKey = $.caKey;
         this.caPem = $.caPem;
         this.configurationDirectory = $.configurationDirectory;
+        this.connection = $.connection;
         this.encryptionConfig = $.encryptionConfig;
         this.kubeApiServerKey = $.kubeApiServerKey;
         this.kubeApiServerPath = $.kubeApiServerPath;
         this.kubeApiServerPem = $.kubeApiServerPem;
         this.kubeControllerManagerKubeconfig = $.kubeControllerManagerKubeconfig;
-        this.kubeControllerManagerPath = $.kubeControllerManagerPath;
         this.kubeSchedulerConfig = $.kubeSchedulerConfig;
         this.kubeSchedulerKubeconfig = $.kubeSchedulerKubeconfig;
         this.kubeSchedulerPath = $.kubeSchedulerPath;
@@ -342,6 +343,27 @@ public final class KubernetesControlPlaneConfigurationArgs extends com.pulumi.re
          */
         public Builder configurationDirectory(String configurationDirectory) {
             return configurationDirectory(Output.of(configurationDirectory));
+        }
+
+        /**
+         * @param connection The parameters with which to connect to the remote host.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder connection(Output<ConnectionArgs> connection) {
+            $.connection = connection;
+            return this;
+        }
+
+        /**
+         * @param connection The parameters with which to connect to the remote host.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder connection(ConnectionArgs connection) {
+            return connection(Output.of(connection));
         }
 
         /**
@@ -447,27 +469,6 @@ public final class KubernetesControlPlaneConfigurationArgs extends com.pulumi.re
          */
         public Builder kubeControllerManagerKubeconfig(KubeconfigArgs kubeControllerManagerKubeconfig) {
             return kubeControllerManagerKubeconfig(Output.of(kubeControllerManagerKubeconfig));
-        }
-
-        /**
-         * @param kubeControllerManagerPath The path to the &#39;kube-controller-manager&#39; binary.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder kubeControllerManagerPath(@Nullable Output<String> kubeControllerManagerPath) {
-            $.kubeControllerManagerPath = kubeControllerManagerPath;
-            return this;
-        }
-
-        /**
-         * @param kubeControllerManagerPath The path to the &#39;kube-controller-manager&#39; binary.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder kubeControllerManagerPath(String kubeControllerManagerPath) {
-            return kubeControllerManagerPath(Output.of(kubeControllerManagerPath));
         }
 
         /**
@@ -604,6 +605,9 @@ public final class KubernetesControlPlaneConfigurationArgs extends com.pulumi.re
                 throw new MissingRequiredPropertyException("KubernetesControlPlaneConfigurationArgs", "caPem");
             }
             $.configurationDirectory = Codegen.stringProp("configurationDirectory").output().arg($.configurationDirectory).def("/etc/kubernetes/config").getNullable();
+            if ($.connection == null) {
+                throw new MissingRequiredPropertyException("KubernetesControlPlaneConfigurationArgs", "connection");
+            }
             if ($.encryptionConfig == null) {
                 throw new MissingRequiredPropertyException("KubernetesControlPlaneConfigurationArgs", "encryptionConfig");
             }

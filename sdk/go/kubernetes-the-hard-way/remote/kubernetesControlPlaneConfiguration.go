@@ -8,6 +8,7 @@ import (
 	"reflect"
 
 	"errors"
+	pulumiCommand "github.com/pulumi/pulumi-command/sdk/go/command/remote"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 	"github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/sdk/go/kubernetes-the-hard-way/config"
 	"github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/sdk/go/kubernetes-the-hard-way/internal"
@@ -23,6 +24,8 @@ type KubernetesControlPlaneConfiguration struct {
 	CaPem pulumi.StringOutput `pulumi:"caPem"`
 	// The directory to store Kubernetes Control Plane configuration.
 	ConfigurationDirectory pulumi.StringPtrOutput `pulumi:"configurationDirectory"`
+	// The parameters with which to connect to the remote host.
+	Connection pulumiCommand.ConnectionOutput `pulumi:"connection"`
 	// The YAML encryption configuration manifest.
 	EncryptionConfig pulumi.StringOutput `pulumi:"encryptionConfig"`
 	// The PEM encoded Kube API Server certificate key.
@@ -33,8 +36,6 @@ type KubernetesControlPlaneConfiguration struct {
 	KubeApiServerPem pulumi.StringOutput `pulumi:"kubeApiServerPem"`
 	// The kube-controller-manager kubeconfig configuration
 	KubeControllerManagerKubeconfig config.KubeconfigOutput `pulumi:"kubeControllerManagerKubeconfig"`
-	// The path to the 'kube-controller-manager' binary.
-	KubeControllerManagerPath pulumi.StringPtrOutput `pulumi:"kubeControllerManagerPath"`
 	// The kube-scheduler configuration manifest.
 	KubeSchedulerConfig pulumi.StringOutput `pulumi:"kubeSchedulerConfig"`
 	// The kube-scheduler kubeconfig configuration
@@ -61,6 +62,9 @@ func NewKubernetesControlPlaneConfiguration(ctx *pulumi.Context,
 	}
 	if args.CaPem == nil {
 		return nil, errors.New("invalid value for required argument 'CaPem'")
+	}
+	if args.Connection == nil {
+		return nil, errors.New("invalid value for required argument 'Connection'")
 	}
 	if args.EncryptionConfig == nil {
 		return nil, errors.New("invalid value for required argument 'EncryptionConfig'")
@@ -89,6 +93,7 @@ func NewKubernetesControlPlaneConfiguration(ctx *pulumi.Context,
 	if args.ConfigurationDirectory == nil {
 		args.ConfigurationDirectory = pulumi.StringPtr("/etc/kubernetes/config")
 	}
+	args.Connection = args.Connection.ToConnectionOutput().ApplyT(func(v pulumiCommand.Connection) pulumiCommand.Connection { return *v.Defaults() }).(pulumiCommand.ConnectionOutput)
 	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource KubernetesControlPlaneConfiguration
 	err := ctx.RegisterRemoteComponentResource("kubernetes-the-hard-way:remote:KubernetesControlPlaneConfiguration", name, args, &resource, opts...)
@@ -105,6 +110,8 @@ type kubernetesControlPlaneConfigurationArgs struct {
 	CaPem string `pulumi:"caPem"`
 	// The directory to store Kubernetes Control Plane configuration.
 	ConfigurationDirectory *string `pulumi:"configurationDirectory"`
+	// The parameters with which to connect to the remote host.
+	Connection pulumiCommand.Connection `pulumi:"connection"`
 	// The YAML encryption configuration manifest.
 	EncryptionConfig string `pulumi:"encryptionConfig"`
 	// The PEM encoded Kube API Server certificate key.
@@ -115,8 +122,6 @@ type kubernetesControlPlaneConfigurationArgs struct {
 	KubeApiServerPem string `pulumi:"kubeApiServerPem"`
 	// The kube-controller-manager kubeconfig configuration
 	KubeControllerManagerKubeconfig config.Kubeconfig `pulumi:"kubeControllerManagerKubeconfig"`
-	// The path to the 'kube-controller-manager' binary.
-	KubeControllerManagerPath *string `pulumi:"kubeControllerManagerPath"`
 	// The kube-scheduler configuration manifest.
 	KubeSchedulerConfig string `pulumi:"kubeSchedulerConfig"`
 	// The kube-scheduler kubeconfig configuration
@@ -139,6 +144,8 @@ type KubernetesControlPlaneConfigurationArgs struct {
 	CaPem pulumi.StringInput
 	// The directory to store Kubernetes Control Plane configuration.
 	ConfigurationDirectory pulumi.StringPtrInput
+	// The parameters with which to connect to the remote host.
+	Connection pulumiCommand.ConnectionInput
 	// The YAML encryption configuration manifest.
 	EncryptionConfig pulumi.StringInput
 	// The PEM encoded Kube API Server certificate key.
@@ -149,8 +156,6 @@ type KubernetesControlPlaneConfigurationArgs struct {
 	KubeApiServerPem pulumi.StringInput
 	// The kube-controller-manager kubeconfig configuration
 	KubeControllerManagerKubeconfig config.KubeconfigInput
-	// The path to the 'kube-controller-manager' binary.
-	KubeControllerManagerPath pulumi.StringPtrInput
 	// The kube-scheduler configuration manifest.
 	KubeSchedulerConfig pulumi.StringInput
 	// The kube-scheduler kubeconfig configuration
@@ -267,6 +272,11 @@ func (o KubernetesControlPlaneConfigurationOutput) ConfigurationDirectory() pulu
 	return o.ApplyT(func(v *KubernetesControlPlaneConfiguration) pulumi.StringPtrOutput { return v.ConfigurationDirectory }).(pulumi.StringPtrOutput)
 }
 
+// The parameters with which to connect to the remote host.
+func (o KubernetesControlPlaneConfigurationOutput) Connection() pulumiCommand.ConnectionOutput {
+	return o.ApplyT(func(v *KubernetesControlPlaneConfiguration) pulumiCommand.ConnectionOutput { return v.Connection }).(pulumiCommand.ConnectionOutput)
+}
+
 // The YAML encryption configuration manifest.
 func (o KubernetesControlPlaneConfigurationOutput) EncryptionConfig() pulumi.StringOutput {
 	return o.ApplyT(func(v *KubernetesControlPlaneConfiguration) pulumi.StringOutput { return v.EncryptionConfig }).(pulumi.StringOutput)
@@ -292,13 +302,6 @@ func (o KubernetesControlPlaneConfigurationOutput) KubeControllerManagerKubeconf
 	return o.ApplyT(func(v *KubernetesControlPlaneConfiguration) config.KubeconfigOutput {
 		return v.KubeControllerManagerKubeconfig
 	}).(config.KubeconfigOutput)
-}
-
-// The path to the 'kube-controller-manager' binary.
-func (o KubernetesControlPlaneConfigurationOutput) KubeControllerManagerPath() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *KubernetesControlPlaneConfiguration) pulumi.StringPtrOutput {
-		return v.KubeControllerManagerPath
-	}).(pulumi.StringPtrOutput)
 }
 
 // The kube-scheduler configuration manifest.

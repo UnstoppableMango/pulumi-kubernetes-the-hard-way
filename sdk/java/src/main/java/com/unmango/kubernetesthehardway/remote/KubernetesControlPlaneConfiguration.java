@@ -3,6 +3,7 @@
 
 package com.unmango.kubernetesthehardway.remote;
 
+import com.pulumi.command.remote.outputs.Connection;
 import com.pulumi.core.Output;
 import com.pulumi.core.annotations.Export;
 import com.pulumi.core.annotations.ResourceType;
@@ -61,6 +62,20 @@ public class KubernetesControlPlaneConfiguration extends com.pulumi.resources.Co
      */
     public Output<Optional<String>> configurationDirectory() {
         return Codegen.optional(this.configurationDirectory);
+    }
+    /**
+     * The parameters with which to connect to the remote host.
+     * 
+     */
+    @Export(name="connection", refs={Connection.class}, tree="[0]")
+    private Output<Connection> connection;
+
+    /**
+     * @return The parameters with which to connect to the remote host.
+     * 
+     */
+    public Output<Connection> connection() {
+        return this.connection;
     }
     /**
      * The YAML encryption configuration manifest.
@@ -131,20 +146,6 @@ public class KubernetesControlPlaneConfiguration extends com.pulumi.resources.Co
      */
     public Output<Kubeconfig> kubeControllerManagerKubeconfig() {
         return this.kubeControllerManagerKubeconfig;
-    }
-    /**
-     * The path to the &#39;kube-controller-manager&#39; binary.
-     * 
-     */
-    @Export(name="kubeControllerManagerPath", refs={String.class}, tree="[0]")
-    private Output</* @Nullable */ String> kubeControllerManagerPath;
-
-    /**
-     * @return The path to the &#39;kube-controller-manager&#39; binary.
-     * 
-     */
-    public Output<Optional<String>> kubeControllerManagerPath() {
-        return Codegen.optional(this.kubeControllerManagerPath);
     }
     /**
      * The kube-scheduler configuration manifest.

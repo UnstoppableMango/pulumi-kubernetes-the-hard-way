@@ -9,6 +9,7 @@ import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
 from .. import _utilities
 from .. import config as _config
+import pulumi_command
 
 __all__ = ['KubernetesControlPlaneConfigurationArgs', 'KubernetesControlPlaneConfiguration']
 
@@ -17,6 +18,7 @@ class KubernetesControlPlaneConfigurationArgs:
     def __init__(__self__, *,
                  ca_key: pulumi.Input[str],
                  ca_pem: pulumi.Input[str],
+                 connection: pulumi.Input['pulumi_command.remote.ConnectionArgs'],
                  encryption_config: pulumi.Input[str],
                  kube_api_server_key: pulumi.Input[str],
                  kube_api_server_pem: pulumi.Input[str],
@@ -27,13 +29,13 @@ class KubernetesControlPlaneConfigurationArgs:
                  service_accounts_pem: pulumi.Input[str],
                  configuration_directory: Optional[pulumi.Input[str]] = None,
                  kube_api_server_path: Optional[pulumi.Input[str]] = None,
-                 kube_controller_manager_path: Optional[pulumi.Input[str]] = None,
                  kube_scheduler_path: Optional[pulumi.Input[str]] = None,
                  kubectl_path: Optional[pulumi.Input[str]] = None):
         """
         The set of arguments for constructing a KubernetesControlPlaneConfiguration resource.
         :param pulumi.Input[str] ca_key: The PEM encoded certificate authority key.
         :param pulumi.Input[str] ca_pem: The PEM encoded certificate authority data.
+        :param pulumi.Input['pulumi_command.remote.ConnectionArgs'] connection: The parameters with which to connect to the remote host.
         :param pulumi.Input[str] encryption_config: The YAML encryption configuration manifest.
         :param pulumi.Input[str] kube_api_server_key: The PEM encoded Kube API Server certificate key.
         :param pulumi.Input[str] kube_api_server_pem: The PEM encoded Kube API Server certificate data.
@@ -44,12 +46,12 @@ class KubernetesControlPlaneConfigurationArgs:
         :param pulumi.Input[str] service_accounts_pem: The PEM encoded Service Accounts certificate data.
         :param pulumi.Input[str] configuration_directory: The directory to store Kubernetes Control Plane configuration.
         :param pulumi.Input[str] kube_api_server_path: The path to the 'kube-apiserver' binary.
-        :param pulumi.Input[str] kube_controller_manager_path: The path to the 'kube-controller-manager' binary.
         :param pulumi.Input[str] kube_scheduler_path: The path to the 'kube-scheduler' binary.
         :param pulumi.Input[str] kubectl_path: The path to the 'kubectl' binary.
         """
         pulumi.set(__self__, "ca_key", ca_key)
         pulumi.set(__self__, "ca_pem", ca_pem)
+        pulumi.set(__self__, "connection", connection)
         pulumi.set(__self__, "encryption_config", encryption_config)
         pulumi.set(__self__, "kube_api_server_key", kube_api_server_key)
         pulumi.set(__self__, "kube_api_server_pem", kube_api_server_pem)
@@ -64,8 +66,6 @@ class KubernetesControlPlaneConfigurationArgs:
             pulumi.set(__self__, "configuration_directory", configuration_directory)
         if kube_api_server_path is not None:
             pulumi.set(__self__, "kube_api_server_path", kube_api_server_path)
-        if kube_controller_manager_path is not None:
-            pulumi.set(__self__, "kube_controller_manager_path", kube_controller_manager_path)
         if kube_scheduler_path is not None:
             pulumi.set(__self__, "kube_scheduler_path", kube_scheduler_path)
         if kubectl_path is not None:
@@ -94,6 +94,18 @@ class KubernetesControlPlaneConfigurationArgs:
     @ca_pem.setter
     def ca_pem(self, value: pulumi.Input[str]):
         pulumi.set(self, "ca_pem", value)
+
+    @property
+    @pulumi.getter
+    def connection(self) -> pulumi.Input['pulumi_command.remote.ConnectionArgs']:
+        """
+        The parameters with which to connect to the remote host.
+        """
+        return pulumi.get(self, "connection")
+
+    @connection.setter
+    def connection(self, value: pulumi.Input['pulumi_command.remote.ConnectionArgs']):
+        pulumi.set(self, "connection", value)
 
     @property
     @pulumi.getter(name="encryptionConfig")
@@ -216,18 +228,6 @@ class KubernetesControlPlaneConfigurationArgs:
         pulumi.set(self, "kube_api_server_path", value)
 
     @property
-    @pulumi.getter(name="kubeControllerManagerPath")
-    def kube_controller_manager_path(self) -> Optional[pulumi.Input[str]]:
-        """
-        The path to the 'kube-controller-manager' binary.
-        """
-        return pulumi.get(self, "kube_controller_manager_path")
-
-    @kube_controller_manager_path.setter
-    def kube_controller_manager_path(self, value: Optional[pulumi.Input[str]]):
-        pulumi.set(self, "kube_controller_manager_path", value)
-
-    @property
     @pulumi.getter(name="kubeSchedulerPath")
     def kube_scheduler_path(self) -> Optional[pulumi.Input[str]]:
         """
@@ -260,12 +260,12 @@ class KubernetesControlPlaneConfiguration(pulumi.ComponentResource):
                  ca_key: Optional[pulumi.Input[str]] = None,
                  ca_pem: Optional[pulumi.Input[str]] = None,
                  configuration_directory: Optional[pulumi.Input[str]] = None,
+                 connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
                  encryption_config: Optional[pulumi.Input[str]] = None,
                  kube_api_server_key: Optional[pulumi.Input[str]] = None,
                  kube_api_server_path: Optional[pulumi.Input[str]] = None,
                  kube_api_server_pem: Optional[pulumi.Input[str]] = None,
                  kube_controller_manager_kubeconfig: Optional[pulumi.Input[pulumi.InputType['_config.KubeconfigArgs']]] = None,
-                 kube_controller_manager_path: Optional[pulumi.Input[str]] = None,
                  kube_scheduler_config: Optional[pulumi.Input[str]] = None,
                  kube_scheduler_kubeconfig: Optional[pulumi.Input[pulumi.InputType['_config.KubeconfigArgs']]] = None,
                  kube_scheduler_path: Optional[pulumi.Input[str]] = None,
@@ -281,12 +281,12 @@ class KubernetesControlPlaneConfiguration(pulumi.ComponentResource):
         :param pulumi.Input[str] ca_key: The PEM encoded certificate authority key.
         :param pulumi.Input[str] ca_pem: The PEM encoded certificate authority data.
         :param pulumi.Input[str] configuration_directory: The directory to store Kubernetes Control Plane configuration.
+        :param pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']] connection: The parameters with which to connect to the remote host.
         :param pulumi.Input[str] encryption_config: The YAML encryption configuration manifest.
         :param pulumi.Input[str] kube_api_server_key: The PEM encoded Kube API Server certificate key.
         :param pulumi.Input[str] kube_api_server_path: The path to the 'kube-apiserver' binary.
         :param pulumi.Input[str] kube_api_server_pem: The PEM encoded Kube API Server certificate data.
         :param pulumi.Input[pulumi.InputType['_config.KubeconfigArgs']] kube_controller_manager_kubeconfig: The kube-controller-manager kubeconfig configuration
-        :param pulumi.Input[str] kube_controller_manager_path: The path to the 'kube-controller-manager' binary.
         :param pulumi.Input[str] kube_scheduler_config: The kube-scheduler configuration manifest.
         :param pulumi.Input[pulumi.InputType['_config.KubeconfigArgs']] kube_scheduler_kubeconfig: The kube-scheduler kubeconfig configuration
         :param pulumi.Input[str] kube_scheduler_path: The path to the 'kube-scheduler' binary.
@@ -321,12 +321,12 @@ class KubernetesControlPlaneConfiguration(pulumi.ComponentResource):
                  ca_key: Optional[pulumi.Input[str]] = None,
                  ca_pem: Optional[pulumi.Input[str]] = None,
                  configuration_directory: Optional[pulumi.Input[str]] = None,
+                 connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
                  encryption_config: Optional[pulumi.Input[str]] = None,
                  kube_api_server_key: Optional[pulumi.Input[str]] = None,
                  kube_api_server_path: Optional[pulumi.Input[str]] = None,
                  kube_api_server_pem: Optional[pulumi.Input[str]] = None,
                  kube_controller_manager_kubeconfig: Optional[pulumi.Input[pulumi.InputType['_config.KubeconfigArgs']]] = None,
-                 kube_controller_manager_path: Optional[pulumi.Input[str]] = None,
                  kube_scheduler_config: Optional[pulumi.Input[str]] = None,
                  kube_scheduler_kubeconfig: Optional[pulumi.Input[pulumi.InputType['_config.KubeconfigArgs']]] = None,
                  kube_scheduler_path: Optional[pulumi.Input[str]] = None,
@@ -353,6 +353,9 @@ class KubernetesControlPlaneConfiguration(pulumi.ComponentResource):
             if configuration_directory is None:
                 configuration_directory = '/etc/kubernetes/config'
             __props__.__dict__["configuration_directory"] = configuration_directory
+            if connection is None and not opts.urn:
+                raise TypeError("Missing required property 'connection'")
+            __props__.__dict__["connection"] = connection
             if encryption_config is None and not opts.urn:
                 raise TypeError("Missing required property 'encryption_config'")
             __props__.__dict__["encryption_config"] = encryption_config
@@ -366,7 +369,6 @@ class KubernetesControlPlaneConfiguration(pulumi.ComponentResource):
             if kube_controller_manager_kubeconfig is None and not opts.urn:
                 raise TypeError("Missing required property 'kube_controller_manager_kubeconfig'")
             __props__.__dict__["kube_controller_manager_kubeconfig"] = kube_controller_manager_kubeconfig
-            __props__.__dict__["kube_controller_manager_path"] = kube_controller_manager_path
             if kube_scheduler_config is None and not opts.urn:
                 raise TypeError("Missing required property 'kube_scheduler_config'")
             __props__.__dict__["kube_scheduler_config"] = kube_scheduler_config
@@ -413,6 +415,14 @@ class KubernetesControlPlaneConfiguration(pulumi.ComponentResource):
         return pulumi.get(self, "configuration_directory")
 
     @property
+    @pulumi.getter
+    def connection(self) -> pulumi.Output['pulumi_command.remote.outputs.Connection']:
+        """
+        The parameters with which to connect to the remote host.
+        """
+        return pulumi.get(self, "connection")
+
+    @property
     @pulumi.getter(name="encryptionConfig")
     def encryption_config(self) -> pulumi.Output[str]:
         """
@@ -451,14 +461,6 @@ class KubernetesControlPlaneConfiguration(pulumi.ComponentResource):
         The kube-controller-manager kubeconfig configuration
         """
         return pulumi.get(self, "kube_controller_manager_kubeconfig")
-
-    @property
-    @pulumi.getter(name="kubeControllerManagerPath")
-    def kube_controller_manager_path(self) -> pulumi.Output[Optional[str]]:
-        """
-        The path to the 'kube-controller-manager' binary.
-        """
-        return pulumi.get(self, "kube_controller_manager_path")
 
     @property
     @pulumi.getter(name="kubeSchedulerConfig")
