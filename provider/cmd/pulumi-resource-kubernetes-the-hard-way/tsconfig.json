@@ -37,6 +37,7 @@
     "remote/kubectl.ts",
     "remote/kubelet.ts",
     "remote/kubeProxy.ts",
+    "remote/kubernetesControlPlaneConfiguration.ts",
     "remote/kubeSchedulerInstall.ts",
     "remote/provisionEtcd.ts",
     "remote/runc.ts",
