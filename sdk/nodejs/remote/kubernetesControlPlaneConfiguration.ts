@@ -64,6 +64,10 @@ export class KubernetesControlPlaneConfiguration extends pulumi.ComponentResourc
      */
     public readonly kubeControllerManagerKubeconfig!: pulumi.Output<outputs.config.Kubeconfig>;
     /**
+     * The path to the 'kube-controller-manager' binary.
+     */
+    public readonly kubeControllerManagerPath!: pulumi.Output<string | undefined>;
+    /**
      * The kube-scheduler configuration manifest.
      */
     public readonly kubeSchedulerConfig!: pulumi.Output<string>;
@@ -141,6 +145,7 @@ export class KubernetesControlPlaneConfiguration extends pulumi.ComponentResourc
             resourceInputs["kubeApiServerPath"] = args ? args.kubeApiServerPath : undefined;
             resourceInputs["kubeApiServerPem"] = args ? args.kubeApiServerPem : undefined;
             resourceInputs["kubeControllerManagerKubeconfig"] = args ? args.kubeControllerManagerKubeconfig : undefined;
+            resourceInputs["kubeControllerManagerPath"] = args ? args.kubeControllerManagerPath : undefined;
             resourceInputs["kubeSchedulerConfig"] = args ? args.kubeSchedulerConfig : undefined;
             resourceInputs["kubeSchedulerKubeconfig"] = args ? args.kubeSchedulerKubeconfig : undefined;
             resourceInputs["kubeSchedulerPath"] = args ? args.kubeSchedulerPath : undefined;
@@ -157,6 +162,7 @@ export class KubernetesControlPlaneConfiguration extends pulumi.ComponentResourc
             resourceInputs["kubeApiServerPath"] = undefined /*out*/;
             resourceInputs["kubeApiServerPem"] = undefined /*out*/;
             resourceInputs["kubeControllerManagerKubeconfig"] = undefined /*out*/;
+            resourceInputs["kubeControllerManagerPath"] = undefined /*out*/;
             resourceInputs["kubeSchedulerConfig"] = undefined /*out*/;
             resourceInputs["kubeSchedulerKubeconfig"] = undefined /*out*/;
             resourceInputs["kubeSchedulerPath"] = undefined /*out*/;
@@ -209,6 +215,10 @@ export interface KubernetesControlPlaneConfigurationArgs {
      * The kube-controller-manager kubeconfig configuration
      */
     kubeControllerManagerKubeconfig: pulumi.Input<inputs.config.KubeconfigArgs>;
+    /**
+     * The path to the 'kube-controller-manager' binary.
+     */
+    kubeControllerManagerPath?: pulumi.Input<string>;
     /**
      * The kube-scheduler configuration manifest.
      */

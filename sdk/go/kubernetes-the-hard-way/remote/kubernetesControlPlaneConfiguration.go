@@ -36,6 +36,8 @@ type KubernetesControlPlaneConfiguration struct {
 	KubeApiServerPem pulumi.StringOutput `pulumi:"kubeApiServerPem"`
 	// The kube-controller-manager kubeconfig configuration
 	KubeControllerManagerKubeconfig config.KubeconfigOutput `pulumi:"kubeControllerManagerKubeconfig"`
+	// The path to the 'kube-controller-manager' binary.
+	KubeControllerManagerPath pulumi.StringPtrOutput `pulumi:"kubeControllerManagerPath"`
 	// The kube-scheduler configuration manifest.
 	KubeSchedulerConfig pulumi.StringOutput `pulumi:"kubeSchedulerConfig"`
 	// The kube-scheduler kubeconfig configuration
@@ -122,6 +124,8 @@ type kubernetesControlPlaneConfigurationArgs struct {
 	KubeApiServerPem string `pulumi:"kubeApiServerPem"`
 	// The kube-controller-manager kubeconfig configuration
 	KubeControllerManagerKubeconfig config.Kubeconfig `pulumi:"kubeControllerManagerKubeconfig"`
+	// The path to the 'kube-controller-manager' binary.
+	KubeControllerManagerPath *string `pulumi:"kubeControllerManagerPath"`
 	// The kube-scheduler configuration manifest.
 	KubeSchedulerConfig string `pulumi:"kubeSchedulerConfig"`
 	// The kube-scheduler kubeconfig configuration
@@ -156,6 +160,8 @@ type KubernetesControlPlaneConfigurationArgs struct {
 	KubeApiServerPem pulumi.StringInput
 	// The kube-controller-manager kubeconfig configuration
 	KubeControllerManagerKubeconfig config.KubeconfigInput
+	// The path to the 'kube-controller-manager' binary.
+	KubeControllerManagerPath pulumi.StringPtrInput
 	// The kube-scheduler configuration manifest.
 	KubeSchedulerConfig pulumi.StringInput
 	// The kube-scheduler kubeconfig configuration
@@ -302,6 +308,13 @@ func (o KubernetesControlPlaneConfigurationOutput) KubeControllerManagerKubeconf
 	return o.ApplyT(func(v *KubernetesControlPlaneConfiguration) config.KubeconfigOutput {
 		return v.KubeControllerManagerKubeconfig
 	}).(config.KubeconfigOutput)
+}
+
+// The path to the 'kube-controller-manager' binary.
+func (o KubernetesControlPlaneConfigurationOutput) KubeControllerManagerPath() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *KubernetesControlPlaneConfiguration) pulumi.StringPtrOutput {
+		return v.KubeControllerManagerPath
+	}).(pulumi.StringPtrOutput)
 }
 
 // The kube-scheduler configuration manifest.

@@ -155,6 +155,21 @@ public final class KubernetesControlPlaneConfigurationArgs extends com.pulumi.re
     }
 
     /**
+     * The path to the &#39;kube-controller-manager&#39; binary.
+     * 
+     */
+    @Import(name="kubeControllerManagerPath")
+    private @Nullable Output<String> kubeControllerManagerPath;
+
+    /**
+     * @return The path to the &#39;kube-controller-manager&#39; binary.
+     * 
+     */
+    public Optional<Output<String>> kubeControllerManagerPath() {
+        return Optional.ofNullable(this.kubeControllerManagerPath);
+    }
+
+    /**
      * The kube-scheduler configuration manifest.
      * 
      */
@@ -256,6 +271,7 @@ public final class KubernetesControlPlaneConfigurationArgs extends com.pulumi.re
         this.kubeApiServerPath = $.kubeApiServerPath;
         this.kubeApiServerPem = $.kubeApiServerPem;
         this.kubeControllerManagerKubeconfig = $.kubeControllerManagerKubeconfig;
+        this.kubeControllerManagerPath = $.kubeControllerManagerPath;
         this.kubeSchedulerConfig = $.kubeSchedulerConfig;
         this.kubeSchedulerKubeconfig = $.kubeSchedulerKubeconfig;
         this.kubeSchedulerPath = $.kubeSchedulerPath;
@@ -469,6 +485,27 @@ public final class KubernetesControlPlaneConfigurationArgs extends com.pulumi.re
          */
         public Builder kubeControllerManagerKubeconfig(KubeconfigArgs kubeControllerManagerKubeconfig) {
             return kubeControllerManagerKubeconfig(Output.of(kubeControllerManagerKubeconfig));
+        }
+
+        /**
+         * @param kubeControllerManagerPath The path to the &#39;kube-controller-manager&#39; binary.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder kubeControllerManagerPath(@Nullable Output<String> kubeControllerManagerPath) {
+            $.kubeControllerManagerPath = kubeControllerManagerPath;
+            return this;
+        }
+
+        /**
+         * @param kubeControllerManagerPath The path to the &#39;kube-controller-manager&#39; binary.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder kubeControllerManagerPath(String kubeControllerManagerPath) {
+            return kubeControllerManagerPath(Output.of(kubeControllerManagerPath));
         }
 
         /**

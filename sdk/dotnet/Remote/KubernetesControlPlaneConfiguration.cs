@@ -71,6 +71,12 @@ namespace UnMango.KubernetesTheHardWay.Remote
         public Output<UnMango.KubernetesTheHardWay.Config.Outputs.Kubeconfig> KubeControllerManagerKubeconfig { get; private set; } = null!;
 
         /// <summary>
+        /// The path to the 'kube-controller-manager' binary.
+        /// </summary>
+        [Output("kubeControllerManagerPath")]
+        public Output<string?> KubeControllerManagerPath { get; private set; } = null!;
+
+        /// <summary>
         /// The kube-scheduler configuration manifest.
         /// </summary>
         [Output("kubeSchedulerConfig")]
@@ -188,6 +194,12 @@ namespace UnMango.KubernetesTheHardWay.Remote
         /// </summary>
         [Input("kubeControllerManagerKubeconfig", required: true)]
         public Input<UnMango.KubernetesTheHardWay.Config.Inputs.KubeconfigArgs> KubeControllerManagerKubeconfig { get; set; } = null!;
+
+        /// <summary>
+        /// The path to the 'kube-controller-manager' binary.
+        /// </summary>
+        [Input("kubeControllerManagerPath")]
+        public Input<string>? KubeControllerManagerPath { get; set; }
 
         /// <summary>
         /// The kube-scheduler configuration manifest.

@@ -148,6 +148,20 @@ public class KubernetesControlPlaneConfiguration extends com.pulumi.resources.Co
         return this.kubeControllerManagerKubeconfig;
     }
     /**
+     * The path to the &#39;kube-controller-manager&#39; binary.
+     * 
+     */
+    @Export(name="kubeControllerManagerPath", refs={String.class}, tree="[0]")
+    private Output</* @Nullable */ String> kubeControllerManagerPath;
+
+    /**
+     * @return The path to the &#39;kube-controller-manager&#39; binary.
+     * 
+     */
+    public Output<Optional<String>> kubeControllerManagerPath() {
+        return Codegen.optional(this.kubeControllerManagerPath);
+    }
+    /**
      * The kube-scheduler configuration manifest.
      * 
      */
