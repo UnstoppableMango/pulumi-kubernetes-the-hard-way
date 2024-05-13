@@ -22,6 +22,7 @@ export type ResourceConstructor = {
     readonly "kubernetes-the-hard-way:remote:KubeSchedulerInstall": ConstructComponent<KubeSchedulerInstall>;
     readonly "kubernetes-the-hard-way:remote:KubectlInstall": ConstructComponent<KubectlInstall>;
     readonly "kubernetes-the-hard-way:remote:KubeletInstall": ConstructComponent<KubeletInstall>;
+    readonly "kubernetes-the-hard-way:remote:KubernetesControlPlaneConfiguration": ConstructComponent<KubernetesControlPlaneConfiguration>;
     readonly "kubernetes-the-hard-way:remote:ProvisionEtcd": ConstructComponent<ProvisionEtcd>;
     readonly "kubernetes-the-hard-way:remote:RuncInstall": ConstructComponent<RuncInstall>;
     readonly "kubernetes-the-hard-way:remote:StartEtcd": ConstructComponent<StartEtcd>;
@@ -476,6 +477,43 @@ export interface KubeletInstallArgs {
     readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
     readonly directory?: pulumi.Input<string>;
     readonly version?: pulumi.Input<string>;
+}
+export abstract class KubernetesControlPlaneConfiguration<TData = any> extends (pulumi.ComponentResource)<TData> {
+    public caKey!: string | pulumi.Output<string>;
+    public caPem!: string | pulumi.Output<string>;
+    public configurationDirectory?: string | pulumi.Output<string>;
+    public encryptionConfig!: string | pulumi.Output<string>;
+    public kubeApiServerKey!: string | pulumi.Output<string>;
+    public kubeApiServerPath?: string | pulumi.Output<string>;
+    public kubeApiServerPem!: string | pulumi.Output<string>;
+    public kubeControllerManagerKubeconfig!: KubeconfigOutputs | pulumi.Output<KubeconfigOutputs>;
+    public kubeControllerManagerPath?: string | pulumi.Output<string>;
+    public kubeSchedulerConfig!: string | pulumi.Output<string>;
+    public kubeSchedulerKubeconfig!: KubeconfigOutputs | pulumi.Output<KubeconfigOutputs>;
+    public kubeSchedulerPath?: string | pulumi.Output<string>;
+    public kubectlPath?: string | pulumi.Output<string>;
+    public serviceAccountsKey!: string | pulumi.Output<string>;
+    public serviceAccountsPem!: string | pulumi.Output<string>;
+    constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
+        super("kubernetes-the-hard-way:remote:KubernetesControlPlaneConfiguration", name, opts.urn ? { caKey: undefined, caPem: undefined, configurationDirectory: undefined, encryptionConfig: undefined, kubeApiServerKey: undefined, kubeApiServerPath: undefined, kubeApiServerPem: undefined, kubeControllerManagerKubeconfig: undefined, kubeControllerManagerPath: undefined, kubeSchedulerConfig: undefined, kubeSchedulerKubeconfig: undefined, kubeSchedulerPath: undefined, kubectlPath: undefined, serviceAccountsKey: undefined, serviceAccountsPem: undefined } : { name, args, opts }, opts);
+    }
+}
+export interface KubernetesControlPlaneConfigurationArgs {
+    readonly caKey: pulumi.Input<string>;
+    readonly caPem: pulumi.Input<string>;
+    readonly configurationDirectory?: pulumi.Input<string>;
+    readonly encryptionConfig: pulumi.Input<string>;
+    readonly kubeApiServerKey: pulumi.Input<string>;
+    readonly kubeApiServerPath?: pulumi.Input<string>;
+    readonly kubeApiServerPem: pulumi.Input<string>;
+    readonly kubeControllerManagerKubeconfig: pulumi.Input<KubeconfigInputs>;
+    readonly kubeControllerManagerPath?: pulumi.Input<string>;
+    readonly kubeSchedulerConfig: pulumi.Input<string>;
+    readonly kubeSchedulerKubeconfig: pulumi.Input<KubeconfigInputs>;
+    readonly kubeSchedulerPath?: pulumi.Input<string>;
+    readonly kubectlPath?: pulumi.Input<string>;
+    readonly serviceAccountsKey: pulumi.Input<string>;
+    readonly serviceAccountsPem: pulumi.Input<string>;
 }
 export abstract class ProvisionEtcd<TData = any> extends (pulumi.ComponentResource)<TData> {
     public architecture?: ArchitectureOutputs | pulumi.Output<ArchitectureOutputs>;
