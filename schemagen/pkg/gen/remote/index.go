@@ -25,7 +25,7 @@ func Generate(commandSpec schema.PackageSpec) schema.PackageSpec {
 		name("KubectlInstall"):                      generateBinaryInstall(commandSpec, "Installs kubectl on a remote system."),
 		name("KubeletInstall"):                      generateBinaryInstall(commandSpec, "Installs kubelet on a remote system."),
 		name("KubeProxyInstall"):                    generateBinaryInstall(commandSpec, "Installs kube-proxy on a remote system."),
-		name("KubernetesControlPlaneConfiguration"): generateKubernetesControlPlaneConfiguration(),
+		name("KubernetesControlPlaneConfiguration"): generateKubernetesControlPlaneConfiguration(commandSpec),
 		name("KubeSchedulerInstall"):                generateBinaryInstall(commandSpec, "Installs kube-scheduler on a remote system."),
 		name("RuncInstall"):                         generateBinaryInstall(commandSpec, "Installs runc on a remote system."),
 		name("ProvisionEtcd"):                       generateProvisionEtcd(commandSpec),
