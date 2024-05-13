@@ -3497,6 +3497,10 @@
                     "$ref": "#/types/kubernetes-the-hard-way:config:Kubeconfig",
                     "description": "The kube-controller-manager kubeconfig configuration"
                 },
+                "kubeControllerManagerPath": {
+                    "type": "string",
+                    "description": "The path to the 'kube-controller-manager' binary."
+                },
                 "kubeSchedulerConfig": {
                     "type": "string",
                     "description": "The kube-scheduler configuration manifest."
@@ -3572,6 +3576,10 @@
                 "kubeControllerManagerKubeconfig": {
                     "$ref": "#/types/kubernetes-the-hard-way:config:Kubeconfig",
                     "description": "The kube-controller-manager kubeconfig configuration"
+                },
+                "kubeControllerManagerPath": {
+                    "type": "string",
+                    "description": "The path to the 'kube-controller-manager' binary."
                 },
                 "kubeSchedulerConfig": {
                     "type": "string",

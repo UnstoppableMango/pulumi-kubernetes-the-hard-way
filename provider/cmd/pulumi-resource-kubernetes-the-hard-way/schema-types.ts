@@ -488,6 +488,7 @@ export abstract class KubernetesControlPlaneConfiguration<TData = any> extends (
     public kubeApiServerPath?: string | pulumi.Output<string>;
     public kubeApiServerPem!: string | pulumi.Output<string>;
     public kubeControllerManagerKubeconfig!: KubeconfigOutputs | pulumi.Output<KubeconfigOutputs>;
+    public kubeControllerManagerPath?: string | pulumi.Output<string>;
     public kubeSchedulerConfig!: string | pulumi.Output<string>;
     public kubeSchedulerKubeconfig!: KubeconfigOutputs | pulumi.Output<KubeconfigOutputs>;
     public kubeSchedulerPath?: string | pulumi.Output<string>;
@@ -495,7 +496,7 @@ export abstract class KubernetesControlPlaneConfiguration<TData = any> extends (
     public serviceAccountsKey!: string | pulumi.Output<string>;
     public serviceAccountsPem!: string | pulumi.Output<string>;
     constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
-        super("kubernetes-the-hard-way:remote:KubernetesControlPlaneConfiguration", name, opts.urn ? { caKey: undefined, caPem: undefined, configurationDirectory: undefined, connection: undefined, encryptionConfig: undefined, kubeApiServerKey: undefined, kubeApiServerPath: undefined, kubeApiServerPem: undefined, kubeControllerManagerKubeconfig: undefined, kubeSchedulerConfig: undefined, kubeSchedulerKubeconfig: undefined, kubeSchedulerPath: undefined, kubectlPath: undefined, serviceAccountsKey: undefined, serviceAccountsPem: undefined } : { name, args, opts }, opts);
+        super("kubernetes-the-hard-way:remote:KubernetesControlPlaneConfiguration", name, opts.urn ? { caKey: undefined, caPem: undefined, configurationDirectory: undefined, connection: undefined, encryptionConfig: undefined, kubeApiServerKey: undefined, kubeApiServerPath: undefined, kubeApiServerPem: undefined, kubeControllerManagerKubeconfig: undefined, kubeControllerManagerPath: undefined, kubeSchedulerConfig: undefined, kubeSchedulerKubeconfig: undefined, kubeSchedulerPath: undefined, kubectlPath: undefined, serviceAccountsKey: undefined, serviceAccountsPem: undefined } : { name, args, opts }, opts);
     }
 }
 export interface KubernetesControlPlaneConfigurationArgs {
@@ -508,6 +509,7 @@ export interface KubernetesControlPlaneConfigurationArgs {
     readonly kubeApiServerPath?: pulumi.Input<string>;
     readonly kubeApiServerPem: pulumi.Input<string>;
     readonly kubeControllerManagerKubeconfig: pulumi.Input<KubeconfigInputs>;
+    readonly kubeControllerManagerPath?: pulumi.Input<string>;
     readonly kubeSchedulerConfig: pulumi.Input<string>;
     readonly kubeSchedulerKubeconfig: pulumi.Input<KubeconfigInputs>;
     readonly kubeSchedulerPath?: pulumi.Input<string>;
