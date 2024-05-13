@@ -30,7 +30,8 @@ func generateKubernetesControlPlaneConfiguration(commandSpec schema.PackageSpec)
 			Description: "The kube-controller-manager kubeconfig configuration",
 			TypeSpec:    types.LocalType("Kubeconfig", "config"),
 		},
-		"kubectlPath": props.String("The path to the 'kubectl' binary."),
+		"kubeControllerManagerPath": props.String("The path to the 'kube-controller-manager' binary."),
+		"kubectlPath":               props.String("The path to the 'kubectl' binary."),
 		"kubeSchedulerKubeconfig": {
 			Description: "The kube-scheduler kubeconfig configuration",
 			TypeSpec:    types.LocalType("Kubeconfig", "config"),
