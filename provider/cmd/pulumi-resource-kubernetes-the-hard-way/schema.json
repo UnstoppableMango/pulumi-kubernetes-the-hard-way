@@ -3457,6 +3457,160 @@
             ],
             "isComponent": true
         },
+        "kubernetes-the-hard-way:remote:KubernetesControlPlaneConfiguration": {
+            "description": "Configures Kubernetes Control Plane on a remote system.",
+            "properties": {
+                "caKey": {
+                    "type": "string",
+                    "description": "The PEM encoded certificate authority key."
+                },
+                "caPem": {
+                    "type": "string",
+                    "description": "The PEM encoded certificate authority data."
+                },
+                "configurationDirectory": {
+                    "type": "string",
+                    "description": "The directory to store Kubernetes Control Plane configuration.",
+                    "default": "/etc/kubernetes/config"
+                },
+                "encryptionConfig": {
+                    "type": "string",
+                    "description": "The YAML encryption configuration manifest."
+                },
+                "kubeApiServerKey": {
+                    "type": "string",
+                    "description": "The PEM encoded Kube API Server certificate key."
+                },
+                "kubeApiServerPath": {
+                    "type": "string",
+                    "description": "The path to the 'kube-apiserver' binary."
+                },
+                "kubeApiServerPem": {
+                    "type": "string",
+                    "description": "The PEM encoded Kube API Server certificate data."
+                },
+                "kubeControllerManagerKubeconfig": {
+                    "$ref": "#/types/kubernetes-the-hard-way:config:Kubeconfig",
+                    "description": "The kube-controller-manager kubeconfig configuration"
+                },
+                "kubeControllerManagerPath": {
+                    "type": "string",
+                    "description": "The path to the 'kube-controller-manager' binary."
+                },
+                "kubeSchedulerConfig": {
+                    "type": "string",
+                    "description": "The kube-scheduler configuration manifest."
+                },
+                "kubeSchedulerKubeconfig": {
+                    "$ref": "#/types/kubernetes-the-hard-way:config:Kubeconfig",
+                    "description": "The kube-scheduler kubeconfig configuration"
+                },
+                "kubeSchedulerPath": {
+                    "type": "string",
+                    "description": "The path to the 'kube-scheduler' binary."
+                },
+                "kubectlPath": {
+                    "type": "string",
+                    "description": "The path to the 'kubectl' binary."
+                },
+                "serviceAccountsKey": {
+                    "type": "string",
+                    "description": "The PEM encoded Service Accounts certificate key."
+                },
+                "serviceAccountsPem": {
+                    "type": "string",
+                    "description": "The PEM encoded Service Accounts certificate data."
+                }
+            },
+            "required": [
+                "caPem",
+                "caKey",
+                "kubeApiServerPem",
+                "kubeApiServerKey",
+                "serviceAccountsPem",
+                "serviceAccountsKey",
+                "encryptionConfig",
+                "kubeSchedulerConfig",
+                "kubeControllerManagerKubeconfig",
+                "kubeSchedulerKubeconfig"
+            ],
+            "inputProperties": {
+                "caKey": {
+                    "type": "string",
+                    "description": "The PEM encoded certificate authority key."
+                },
+                "caPem": {
+                    "type": "string",
+                    "description": "The PEM encoded certificate authority data."
+                },
+                "configurationDirectory": {
+                    "type": "string",
+                    "description": "The directory to store Kubernetes Control Plane configuration.",
+                    "default": "/etc/kubernetes/config"
+                },
+                "encryptionConfig": {
+                    "type": "string",
+                    "description": "The YAML encryption configuration manifest."
+                },
+                "kubeApiServerKey": {
+                    "type": "string",
+                    "description": "The PEM encoded Kube API Server certificate key."
+                },
+                "kubeApiServerPath": {
+                    "type": "string",
+                    "description": "The path to the 'kube-apiserver' binary."
+                },
+                "kubeApiServerPem": {
+                    "type": "string",
+                    "description": "The PEM encoded Kube API Server certificate data."
+                },
+                "kubeControllerManagerKubeconfig": {
+                    "$ref": "#/types/kubernetes-the-hard-way:config:Kubeconfig",
+                    "description": "The kube-controller-manager kubeconfig configuration"
+                },
+                "kubeControllerManagerPath": {
+                    "type": "string",
+                    "description": "The path to the 'kube-controller-manager' binary."
+                },
+                "kubeSchedulerConfig": {
+                    "type": "string",
+                    "description": "The kube-scheduler configuration manifest."
+                },
+                "kubeSchedulerKubeconfig": {
+                    "$ref": "#/types/kubernetes-the-hard-way:config:Kubeconfig",
+                    "description": "The kube-scheduler kubeconfig configuration"
+                },
+                "kubeSchedulerPath": {
+                    "type": "string",
+                    "description": "The path to the 'kube-scheduler' binary."
+                },
+                "kubectlPath": {
+                    "type": "string",
+                    "description": "The path to the 'kubectl' binary."
+                },
+                "serviceAccountsKey": {
+                    "type": "string",
+                    "description": "The PEM encoded Service Accounts certificate key."
+                },
+                "serviceAccountsPem": {
+                    "type": "string",
+                    "description": "The PEM encoded Service Accounts certificate data."
+                }
+            },
+            "requiredInputs": [
+                "caPem",
+                "caKey",
+                "kubeApiServerPem",
+                "kubeApiServerKey",
+                "serviceAccountsPem",
+                "serviceAccountsKey",
+                "encryptionConfig",
+                "kubeSchedulerConfig",
+                "kubeControllerManagerKubeconfig",
+                "kubeSchedulerKubeconfig"
+            ],
+            "isComponent": true
+        },
         "kubernetes-the-hard-way:remote:ProvisionEtcd": {
             "description": "Starts etcd on a remote system.",
             "properties": {
