@@ -3473,6 +3473,10 @@
                     "description": "The directory to store Kubernetes Control Plane configuration.",
                     "default": "/etc/kubernetes/config"
                 },
+                "connection": {
+                    "$ref": "/command/v0.10.0/schema.json#/types/command:remote:Connection",
+                    "description": "The parameters with which to connect to the remote host."
+                },
                 "encryptionConfig": {
                     "type": "string",
                     "description": "The YAML encryption configuration manifest."
@@ -3492,10 +3496,6 @@
                 "kubeControllerManagerKubeconfig": {
                     "$ref": "#/types/kubernetes-the-hard-way:config:Kubeconfig",
                     "description": "The kube-controller-manager kubeconfig configuration"
-                },
-                "kubeControllerManagerPath": {
-                    "type": "string",
-                    "description": "The path to the 'kube-controller-manager' binary."
                 },
                 "kubeSchedulerConfig": {
                     "type": "string",
@@ -3525,14 +3525,15 @@
             "required": [
                 "caPem",
                 "caKey",
-                "kubeApiServerPem",
-                "kubeApiServerKey",
-                "serviceAccountsPem",
-                "serviceAccountsKey",
+                "connection",
                 "encryptionConfig",
-                "kubeSchedulerConfig",
+                "kubeApiServerKey",
+                "kubeApiServerPem",
                 "kubeControllerManagerKubeconfig",
-                "kubeSchedulerKubeconfig"
+                "kubeSchedulerConfig",
+                "kubeSchedulerKubeconfig",
+                "serviceAccountsKey",
+                "serviceAccountsPem"
             ],
             "inputProperties": {
                 "caKey": {
@@ -3547,6 +3548,10 @@
                     "type": "string",
                     "description": "The directory to store Kubernetes Control Plane configuration.",
                     "default": "/etc/kubernetes/config"
+                },
+                "connection": {
+                    "$ref": "/command/v0.10.0/schema.json#/types/command:remote:Connection",
+                    "description": "The parameters with which to connect to the remote host."
                 },
                 "encryptionConfig": {
                     "type": "string",
@@ -3567,10 +3572,6 @@
                 "kubeControllerManagerKubeconfig": {
                     "$ref": "#/types/kubernetes-the-hard-way:config:Kubeconfig",
                     "description": "The kube-controller-manager kubeconfig configuration"
-                },
-                "kubeControllerManagerPath": {
-                    "type": "string",
-                    "description": "The path to the 'kube-controller-manager' binary."
                 },
                 "kubeSchedulerConfig": {
                     "type": "string",
@@ -3600,14 +3601,15 @@
             "requiredInputs": [
                 "caPem",
                 "caKey",
-                "kubeApiServerPem",
-                "kubeApiServerKey",
-                "serviceAccountsPem",
-                "serviceAccountsKey",
+                "connection",
                 "encryptionConfig",
-                "kubeSchedulerConfig",
+                "kubeApiServerKey",
+                "kubeApiServerPem",
                 "kubeControllerManagerKubeconfig",
-                "kubeSchedulerKubeconfig"
+                "kubeSchedulerConfig",
+                "kubeSchedulerKubeconfig",
+                "serviceAccountsKey",
+                "serviceAccountsPem"
             ],
             "isComponent": true
         },
