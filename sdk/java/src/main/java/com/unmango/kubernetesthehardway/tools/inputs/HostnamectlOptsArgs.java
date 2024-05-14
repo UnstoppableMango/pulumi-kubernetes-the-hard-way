@@ -69,14 +69,14 @@ public final class HostnamectlOptsArgs extends com.pulumi.resources.ResourceArgs
     }
 
     /**
-     * Execute the operation remotely. Specify a hostname, or a username and hostname separated by &#39;@&#39;, to connect to.
+     * Execute the operation remotely. Specify a hostname, or a username and hostname separated by &#39;{@literal @}&#39;, to connect to.
      * 
      */
     @Import(name="host")
     private @Nullable Output<String> host;
 
     /**
-     * @return Execute the operation remotely. Specify a hostname, or a username and hostname separated by &#39;@&#39;, to connect to.
+     * @return Execute the operation remotely. Specify a hostname, or a username and hostname separated by &#39;{@literal @}&#39;, to connect to.
      * 
      */
     public Optional<Output<String>> host() {
@@ -99,14 +99,14 @@ public final class HostnamectlOptsArgs extends com.pulumi.resources.ResourceArgs
     }
 
     /**
-     * Execute operation on a local container. Specify a container name to connect to, optionally prefixed by a user name to connect as and a separating &#39;@&#39; character.
+     * Execute operation on a local container. Specify a container name to connect to, optionally prefixed by a user name to connect as and a separating &#39;{@literal @}&#39; character.
      * 
      */
     @Import(name="machine")
     private @Nullable Output<String> machine;
 
     /**
-     * @return Execute operation on a local container. Specify a container name to connect to, optionally prefixed by a user name to connect as and a separating &#39;@&#39; character.
+     * @return Execute operation on a local container. Specify a container name to connect to, optionally prefixed by a user name to connect as and a separating &#39;{@literal @}&#39; character.
      * 
      */
     public Optional<Output<String>> machine() {
@@ -286,7 +286,7 @@ public final class HostnamectlOptsArgs extends com.pulumi.resources.ResourceArgs
         }
 
         /**
-         * @param host Execute the operation remotely. Specify a hostname, or a username and hostname separated by &#39;@&#39;, to connect to.
+         * @param host Execute the operation remotely. Specify a hostname, or a username and hostname separated by &#39;{@literal @}&#39;, to connect to.
          * 
          * @return builder
          * 
@@ -297,7 +297,7 @@ public final class HostnamectlOptsArgs extends com.pulumi.resources.ResourceArgs
         }
 
         /**
-         * @param host Execute the operation remotely. Specify a hostname, or a username and hostname separated by &#39;@&#39;, to connect to.
+         * @param host Execute the operation remotely. Specify a hostname, or a username and hostname separated by &#39;{@literal @}&#39;, to connect to.
          * 
          * @return builder
          * 
@@ -328,7 +328,7 @@ public final class HostnamectlOptsArgs extends com.pulumi.resources.ResourceArgs
         }
 
         /**
-         * @param machine Execute operation on a local container. Specify a container name to connect to, optionally prefixed by a user name to connect as and a separating &#39;@&#39; character.
+         * @param machine Execute operation on a local container. Specify a container name to connect to, optionally prefixed by a user name to connect as and a separating &#39;{@literal @}&#39; character.
          * 
          * @return builder
          * 
@@ -339,7 +339,7 @@ public final class HostnamectlOptsArgs extends com.pulumi.resources.ResourceArgs
         }
 
         /**
-         * @param machine Execute operation on a local container. Specify a container name to connect to, optionally prefixed by a user name to connect as and a separating &#39;@&#39; character.
+         * @param machine Execute operation on a local container. Specify a container name to connect to, optionally prefixed by a user name to connect as and a separating &#39;{@literal @}&#39; character.
          * 
          * @return builder
          * 

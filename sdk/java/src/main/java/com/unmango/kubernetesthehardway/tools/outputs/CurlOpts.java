@@ -158,7 +158,7 @@ public final class CurlOpts {
      */
     private @Nullable String dataBinary;
     /**
-     * @return (HTTP) This posts data similarly to -d, --data but without the special interpretation of the @ character.
+     * @return (HTTP) This posts data similarly to -d, --data but without the special interpretation of the{@literal @} character.
      * 
      */
     private @Nullable String dataRaw;
@@ -546,7 +546,7 @@ public final class CurlOpts {
         return Optional.ofNullable(this.dataBinary);
     }
     /**
-     * @return (HTTP) This posts data similarly to -d, --data but without the special interpretation of the @ character.
+     * @return (HTTP) This posts data similarly to -d, --data but without the special interpretation of the{@literal @} character.
      * 
      */
     public Optional<String> dataRaw() {
