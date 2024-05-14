@@ -31,7 +31,7 @@ public final class HostnamectlOpts {
      */
     private @Nullable Boolean help;
     /**
-     * @return Execute the operation remotely. Specify a hostname, or a username and hostname separated by &#39;@&#39;, to connect to.
+     * @return Execute the operation remotely. Specify a hostname, or a username and hostname separated by &#39;{@literal @}&#39;, to connect to.
      * 
      */
     private @Nullable String host;
@@ -41,7 +41,7 @@ public final class HostnamectlOpts {
      */
     private @Nullable HostnamectlJsonMode json;
     /**
-     * @return Execute operation on a local container. Specify a container name to connect to, optionally prefixed by a user name to connect as and a separating &#39;@&#39; character.
+     * @return Execute operation on a local container. Specify a container name to connect to, optionally prefixed by a user name to connect as and a separating &#39;{@literal @}&#39; character.
      * 
      */
     private @Nullable String machine;
@@ -94,7 +94,7 @@ public final class HostnamectlOpts {
         return Optional.ofNullable(this.help);
     }
     /**
-     * @return Execute the operation remotely. Specify a hostname, or a username and hostname separated by &#39;@&#39;, to connect to.
+     * @return Execute the operation remotely. Specify a hostname, or a username and hostname separated by &#39;{@literal @}&#39;, to connect to.
      * 
      */
     public Optional<String> host() {
@@ -108,7 +108,7 @@ public final class HostnamectlOpts {
         return Optional.ofNullable(this.json);
     }
     /**
-     * @return Execute operation on a local container. Specify a container name to connect to, optionally prefixed by a user name to connect as and a separating &#39;@&#39; character.
+     * @return Execute operation on a local container. Specify a container name to connect to, optionally prefixed by a user name to connect as and a separating &#39;{@literal @}&#39; character.
      * 
      */
     public Optional<String> machine() {

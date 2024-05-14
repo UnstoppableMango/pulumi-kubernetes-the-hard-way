@@ -446,14 +446,14 @@ public final class CurlOptsArgs extends com.pulumi.resources.ResourceArgs {
     }
 
     /**
-     * (HTTP) This posts data similarly to -d, --data but without the special interpretation of the @ character.
+     * (HTTP) This posts data similarly to -d, --data but without the special interpretation of the{@literal @} character.
      * 
      */
     @Import(name="dataRaw")
     private @Nullable Output<String> dataRaw;
 
     /**
-     * @return (HTTP) This posts data similarly to -d, --data but without the special interpretation of the @ character.
+     * @return (HTTP) This posts data similarly to -d, --data but without the special interpretation of the{@literal @} character.
      * 
      */
     public Optional<Output<String>> dataRaw() {
@@ -1693,7 +1693,7 @@ public final class CurlOptsArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param dataRaw (HTTP) This posts data similarly to -d, --data but without the special interpretation of the @ character.
+         * @param dataRaw (HTTP) This posts data similarly to -d, --data but without the special interpretation of the{@literal @} character.
          * 
          * @return builder
          * 
@@ -1704,7 +1704,7 @@ public final class CurlOptsArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param dataRaw (HTTP) This posts data similarly to -d, --data but without the special interpretation of the @ character.
+         * @param dataRaw (HTTP) This posts data similarly to -d, --data but without the special interpretation of the{@literal @} character.
          * 
          * @return builder
          * 
