@@ -13,6 +13,7 @@ func Generate(commandSpec schema.PackageSpec) schema.PackageSpec {
 			"hostLocal", "ipvlan", "loopback", "macvlan", "portmap", "ptp", "sbr",
 			"static", "tap", "tuning", "vlan", "vrf"),
 		name("ContainerdInstall"):            generateArchiveInstall(commandSpec, "Installs containerd on a remote system", "containerd"),
+		name("CniPluginConfiguration"):       generateCniPluginConfiguration(commandSpec),
 		name("CrictlInstall"):                generateArchiveInstall(commandSpec, "Installs crictl on a remote system", "crictl"),
 		name("Download"):                     generateDownload(commandSpec),
 		name("EtcdCluster"):                  generateEtcdCluster(),
