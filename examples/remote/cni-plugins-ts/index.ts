@@ -9,6 +9,7 @@ const password = config.require('password');
 
 const bridgeConfig = new CniBridgePluginConfiguration('simple', {
   connection: { host, port, user, password },
+  subnet: '10.0.69.0/24',
 });
 
 const loopbackConfig = new CniLoopbackPluginConfiguration('simple', {
