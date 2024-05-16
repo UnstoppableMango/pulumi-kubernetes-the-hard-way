@@ -50,10 +50,20 @@ export type File = import("./file").File;
 export const File: typeof import("./file").File = null as any;
 utilities.lazyLoad(exports, ["File"], () => require("./file"));
 
+export { KubeApiServerConfigurationArgs } from "./kubeApiServerConfiguration";
+export type KubeApiServerConfiguration = import("./kubeApiServerConfiguration").KubeApiServerConfiguration;
+export const KubeApiServerConfiguration: typeof import("./kubeApiServerConfiguration").KubeApiServerConfiguration = null as any;
+utilities.lazyLoad(exports, ["KubeApiServerConfiguration"], () => require("./kubeApiServerConfiguration"));
+
 export { KubeApiServerInstallArgs } from "./kubeApiServerInstall";
 export type KubeApiServerInstall = import("./kubeApiServerInstall").KubeApiServerInstall;
 export const KubeApiServerInstall: typeof import("./kubeApiServerInstall").KubeApiServerInstall = null as any;
 utilities.lazyLoad(exports, ["KubeApiServerInstall"], () => require("./kubeApiServerInstall"));
+
+export { KubeApiServerServiceArgs } from "./kubeApiServerService";
+export type KubeApiServerService = import("./kubeApiServerService").KubeApiServerService;
+export const KubeApiServerService: typeof import("./kubeApiServerService").KubeApiServerService = null as any;
+utilities.lazyLoad(exports, ["KubeApiServerService"], () => require("./kubeApiServerService"));
 
 export { KubeControllerManagerInstallArgs } from "./kubeControllerManagerInstall";
 export type KubeControllerManagerInstall = import("./kubeControllerManagerInstall").KubeControllerManagerInstall;
@@ -79,11 +89,6 @@ export { KubeletInstallArgs } from "./kubeletInstall";
 export type KubeletInstall = import("./kubeletInstall").KubeletInstall;
 export const KubeletInstall: typeof import("./kubeletInstall").KubeletInstall = null as any;
 utilities.lazyLoad(exports, ["KubeletInstall"], () => require("./kubeletInstall"));
-
-export { KubernetesControlPlaneConfigurationArgs } from "./kubernetesControlPlaneConfiguration";
-export type KubernetesControlPlaneConfiguration = import("./kubernetesControlPlaneConfiguration").KubernetesControlPlaneConfiguration;
-export const KubernetesControlPlaneConfiguration: typeof import("./kubernetesControlPlaneConfiguration").KubernetesControlPlaneConfiguration = null as any;
-utilities.lazyLoad(exports, ["KubernetesControlPlaneConfiguration"], () => require("./kubernetesControlPlaneConfiguration"));
 
 export { ProvisionEtcdArgs } from "./provisionEtcd";
 export type ProvisionEtcd = import("./provisionEtcd").ProvisionEtcd;
@@ -136,8 +141,12 @@ const _module = {
                 return new EtcdService(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:remote:File":
                 return new File(name, <any>undefined, { urn })
+            case "kubernetes-the-hard-way:remote:KubeApiServerConfiguration":
+                return new KubeApiServerConfiguration(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:remote:KubeApiServerInstall":
                 return new KubeApiServerInstall(name, <any>undefined, { urn })
+            case "kubernetes-the-hard-way:remote:KubeApiServerService":
+                return new KubeApiServerService(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:remote:KubeControllerManagerInstall":
                 return new KubeControllerManagerInstall(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:remote:KubeProxyInstall":
@@ -148,8 +157,6 @@ const _module = {
                 return new KubectlInstall(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:remote:KubeletInstall":
                 return new KubeletInstall(name, <any>undefined, { urn })
-            case "kubernetes-the-hard-way:remote:KubernetesControlPlaneConfiguration":
-                return new KubernetesControlPlaneConfiguration(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:remote:ProvisionEtcd":
                 return new ProvisionEtcd(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:remote:RuncInstall":

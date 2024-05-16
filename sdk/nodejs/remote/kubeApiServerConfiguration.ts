@@ -2,29 +2,28 @@
 // *** Do not edit by hand unless you're certain you know what you are doing! ***
 
 import * as pulumi from "@pulumi/pulumi";
-import * as inputs from "../types/input";
-import * as outputs from "../types/output";
-import * as enums from "../types/enums";
 import * as utilities from "../utilities";
 
 import * as pulumiCommand from "@pulumi/command";
 
+import {Mkdir} from "../tools";
+
 /**
- * Configures Kubernetes Control Plane on a remote system.
+ * Configures Kubernetes API Server on a remote system.
  */
-export class KubernetesControlPlaneConfiguration extends pulumi.ComponentResource {
+export class KubeApiServerConfiguration extends pulumi.ComponentResource {
     /** @internal */
-    public static readonly __pulumiType = 'kubernetes-the-hard-way:remote:KubernetesControlPlaneConfiguration';
+    public static readonly __pulumiType = 'kubernetes-the-hard-way:remote:KubeApiServerConfiguration';
 
     /**
-     * Returns true if the given object is an instance of KubernetesControlPlaneConfiguration.  This is designed to work even
+     * Returns true if the given object is an instance of KubeApiServerConfiguration.  This is designed to work even
      * when multiple copies of the Pulumi SDK have been loaded into the same process.
      */
-    public static isInstance(obj: any): obj is KubernetesControlPlaneConfiguration {
+    public static isInstance(obj: any): obj is KubeApiServerConfiguration {
         if (obj === undefined || obj === null) {
             return false;
         }
-        return obj['__pulumiType'] === KubernetesControlPlaneConfiguration.__pulumiType;
+        return obj['__pulumiType'] === KubeApiServerConfiguration.__pulumiType;
     }
 
     /**
@@ -36,9 +35,17 @@ export class KubernetesControlPlaneConfiguration extends pulumi.ComponentResourc
      */
     public readonly caPem!: pulumi.Output<string>;
     /**
+     * The PEM encoded Kube API Server certificate data.
+     */
+    public readonly certPem!: pulumi.Output<string>;
+    /**
      * The directory to store Kubernetes Control Plane configuration.
      */
     public readonly configurationDirectory!: pulumi.Output<string | undefined>;
+    /**
+     * Configuration mkdir operation
+     */
+    public /*out*/ readonly configurationMkdir!: pulumi.Output<Mkdir | undefined>;
     /**
      * The parameters with which to connect to the remote host.
      */
@@ -50,39 +57,15 @@ export class KubernetesControlPlaneConfiguration extends pulumi.ComponentResourc
     /**
      * The PEM encoded Kube API Server certificate key.
      */
-    public readonly kubeApiServerKey!: pulumi.Output<string>;
-    /**
-     * The path to the 'kube-apiserver' binary.
-     */
-    public readonly kubeApiServerPath!: pulumi.Output<string | undefined>;
-    /**
-     * The PEM encoded Kube API Server certificate data.
-     */
-    public readonly kubeApiServerPem!: pulumi.Output<string>;
-    /**
-     * The kube-controller-manager kubeconfig configuration
-     */
-    public readonly kubeControllerManagerKubeconfig!: pulumi.Output<outputs.config.Kubeconfig>;
-    /**
-     * The path to the 'kube-controller-manager' binary.
-     */
-    public readonly kubeControllerManagerPath!: pulumi.Output<string | undefined>;
-    /**
-     * The kube-scheduler configuration manifest.
-     */
-    public readonly kubeSchedulerConfig!: pulumi.Output<string>;
-    /**
-     * The kube-scheduler kubeconfig configuration
-     */
-    public readonly kubeSchedulerKubeconfig!: pulumi.Output<outputs.config.Kubeconfig>;
-    /**
-     * The path to the 'kube-scheduler' binary.
-     */
-    public readonly kubeSchedulerPath!: pulumi.Output<string | undefined>;
+    public readonly keyPem!: pulumi.Output<string>;
     /**
      * The path to the 'kubectl' binary.
      */
     public readonly kubectlPath!: pulumi.Output<string | undefined>;
+    /**
+     * The path to the 'kube-apiserver' binary.
+     */
+    public readonly path!: pulumi.Output<string | undefined>;
     /**
      * The PEM encoded Service Accounts certificate key.
      */
@@ -93,13 +76,13 @@ export class KubernetesControlPlaneConfiguration extends pulumi.ComponentResourc
     public readonly serviceAccountsPem!: pulumi.Output<string>;
 
     /**
-     * Create a KubernetesControlPlaneConfiguration resource with the given unique name, arguments, and options.
+     * Create a KubeApiServerConfiguration resource with the given unique name, arguments, and options.
      *
      * @param name The _unique_ name of the resource.
      * @param args The arguments to use to populate this resource's properties.
      * @param opts A bag of options that control this resource's behavior.
      */
-    constructor(name: string, args: KubernetesControlPlaneConfigurationArgs, opts?: pulumi.ComponentResourceOptions) {
+    constructor(name: string, args: KubeApiServerConfigurationArgs, opts?: pulumi.ComponentResourceOptions) {
         let resourceInputs: pulumi.Inputs = {};
         opts = opts || {};
         if (!opts.id) {
@@ -109,26 +92,17 @@ export class KubernetesControlPlaneConfiguration extends pulumi.ComponentResourc
             if ((!args || args.caPem === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'caPem'");
             }
+            if ((!args || args.certPem === undefined) && !opts.urn) {
+                throw new Error("Missing required property 'certPem'");
+            }
             if ((!args || args.connection === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'connection'");
             }
             if ((!args || args.encryptionConfig === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'encryptionConfig'");
             }
-            if ((!args || args.kubeApiServerKey === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'kubeApiServerKey'");
-            }
-            if ((!args || args.kubeApiServerPem === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'kubeApiServerPem'");
-            }
-            if ((!args || args.kubeControllerManagerKubeconfig === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'kubeControllerManagerKubeconfig'");
-            }
-            if ((!args || args.kubeSchedulerConfig === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'kubeSchedulerConfig'");
-            }
-            if ((!args || args.kubeSchedulerKubeconfig === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'kubeSchedulerKubeconfig'");
+            if ((!args || args.keyPem === undefined) && !opts.urn) {
+                throw new Error("Missing required property 'keyPem'");
             }
             if ((!args || args.serviceAccountsKey === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'serviceAccountsKey'");
@@ -138,47 +112,39 @@ export class KubernetesControlPlaneConfiguration extends pulumi.ComponentResourc
             }
             resourceInputs["caKey"] = args ? args.caKey : undefined;
             resourceInputs["caPem"] = args ? args.caPem : undefined;
+            resourceInputs["certPem"] = args ? args.certPem : undefined;
             resourceInputs["configurationDirectory"] = (args ? args.configurationDirectory : undefined) ?? "/etc/kubernetes/config";
             resourceInputs["connection"] = args ? (args.connection ? pulumi.output(args.connection).apply(pulumiCommand.types.input.remote.connectionArgsProvideDefaults) : undefined) : undefined;
             resourceInputs["encryptionConfig"] = args ? args.encryptionConfig : undefined;
-            resourceInputs["kubeApiServerKey"] = args ? args.kubeApiServerKey : undefined;
-            resourceInputs["kubeApiServerPath"] = args ? args.kubeApiServerPath : undefined;
-            resourceInputs["kubeApiServerPem"] = args ? args.kubeApiServerPem : undefined;
-            resourceInputs["kubeControllerManagerKubeconfig"] = args ? args.kubeControllerManagerKubeconfig : undefined;
-            resourceInputs["kubeControllerManagerPath"] = args ? args.kubeControllerManagerPath : undefined;
-            resourceInputs["kubeSchedulerConfig"] = args ? args.kubeSchedulerConfig : undefined;
-            resourceInputs["kubeSchedulerKubeconfig"] = args ? args.kubeSchedulerKubeconfig : undefined;
-            resourceInputs["kubeSchedulerPath"] = args ? args.kubeSchedulerPath : undefined;
+            resourceInputs["keyPem"] = args ? args.keyPem : undefined;
             resourceInputs["kubectlPath"] = args ? args.kubectlPath : undefined;
+            resourceInputs["path"] = args ? args.path : undefined;
             resourceInputs["serviceAccountsKey"] = args ? args.serviceAccountsKey : undefined;
             resourceInputs["serviceAccountsPem"] = args ? args.serviceAccountsPem : undefined;
+            resourceInputs["configurationMkdir"] = undefined /*out*/;
         } else {
             resourceInputs["caKey"] = undefined /*out*/;
             resourceInputs["caPem"] = undefined /*out*/;
+            resourceInputs["certPem"] = undefined /*out*/;
             resourceInputs["configurationDirectory"] = undefined /*out*/;
+            resourceInputs["configurationMkdir"] = undefined /*out*/;
             resourceInputs["connection"] = undefined /*out*/;
             resourceInputs["encryptionConfig"] = undefined /*out*/;
-            resourceInputs["kubeApiServerKey"] = undefined /*out*/;
-            resourceInputs["kubeApiServerPath"] = undefined /*out*/;
-            resourceInputs["kubeApiServerPem"] = undefined /*out*/;
-            resourceInputs["kubeControllerManagerKubeconfig"] = undefined /*out*/;
-            resourceInputs["kubeControllerManagerPath"] = undefined /*out*/;
-            resourceInputs["kubeSchedulerConfig"] = undefined /*out*/;
-            resourceInputs["kubeSchedulerKubeconfig"] = undefined /*out*/;
-            resourceInputs["kubeSchedulerPath"] = undefined /*out*/;
+            resourceInputs["keyPem"] = undefined /*out*/;
             resourceInputs["kubectlPath"] = undefined /*out*/;
+            resourceInputs["path"] = undefined /*out*/;
             resourceInputs["serviceAccountsKey"] = undefined /*out*/;
             resourceInputs["serviceAccountsPem"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
-        super(KubernetesControlPlaneConfiguration.__pulumiType, name, resourceInputs, opts, true /*remote*/);
+        super(KubeApiServerConfiguration.__pulumiType, name, resourceInputs, opts, true /*remote*/);
     }
 }
 
 /**
- * The set of arguments for constructing a KubernetesControlPlaneConfiguration resource.
+ * The set of arguments for constructing a KubeApiServerConfiguration resource.
  */
-export interface KubernetesControlPlaneConfigurationArgs {
+export interface KubeApiServerConfigurationArgs {
     /**
      * The PEM encoded certificate authority key.
      */
@@ -187,6 +153,10 @@ export interface KubernetesControlPlaneConfigurationArgs {
      * The PEM encoded certificate authority data.
      */
     caPem: pulumi.Input<string>;
+    /**
+     * The PEM encoded Kube API Server certificate data.
+     */
+    certPem: pulumi.Input<string>;
     /**
      * The directory to store Kubernetes Control Plane configuration.
      */
@@ -202,39 +172,15 @@ export interface KubernetesControlPlaneConfigurationArgs {
     /**
      * The PEM encoded Kube API Server certificate key.
      */
-    kubeApiServerKey: pulumi.Input<string>;
-    /**
-     * The path to the 'kube-apiserver' binary.
-     */
-    kubeApiServerPath?: pulumi.Input<string>;
-    /**
-     * The PEM encoded Kube API Server certificate data.
-     */
-    kubeApiServerPem: pulumi.Input<string>;
-    /**
-     * The kube-controller-manager kubeconfig configuration
-     */
-    kubeControllerManagerKubeconfig: pulumi.Input<inputs.config.KubeconfigArgs>;
-    /**
-     * The path to the 'kube-controller-manager' binary.
-     */
-    kubeControllerManagerPath?: pulumi.Input<string>;
-    /**
-     * The kube-scheduler configuration manifest.
-     */
-    kubeSchedulerConfig: pulumi.Input<string>;
-    /**
-     * The kube-scheduler kubeconfig configuration
-     */
-    kubeSchedulerKubeconfig: pulumi.Input<inputs.config.KubeconfigArgs>;
-    /**
-     * The path to the 'kube-scheduler' binary.
-     */
-    kubeSchedulerPath?: pulumi.Input<string>;
+    keyPem: pulumi.Input<string>;
     /**
      * The path to the 'kubectl' binary.
      */
     kubectlPath?: pulumi.Input<string>;
+    /**
+     * The path to the 'kube-apiserver' binary.
+     */
+    path?: pulumi.Input<string>;
     /**
      * The PEM encoded Service Accounts certificate key.
      */

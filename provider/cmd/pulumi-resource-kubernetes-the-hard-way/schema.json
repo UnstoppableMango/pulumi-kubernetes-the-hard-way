@@ -2917,6 +2917,128 @@
             ],
             "isComponent": true
         },
+        "kubernetes-the-hard-way:remote:KubeApiServerConfiguration": {
+            "description": "Configures Kubernetes API Server on a remote system.",
+            "properties": {
+                "caKey": {
+                    "type": "string",
+                    "description": "The PEM encoded certificate authority key."
+                },
+                "caPem": {
+                    "type": "string",
+                    "description": "The PEM encoded certificate authority data."
+                },
+                "certPem": {
+                    "type": "string",
+                    "description": "The PEM encoded Kube API Server certificate data."
+                },
+                "configurationDirectory": {
+                    "type": "string",
+                    "description": "The directory to store Kubernetes Control Plane configuration.",
+                    "default": "/etc/kubernetes/config"
+                },
+                "configurationMkdir": {
+                    "$ref": "#/types/kubernetes-the-hard-way:tools:Mkdir",
+                    "description": "Configuration mkdir operation"
+                },
+                "connection": {
+                    "$ref": "/command/v0.10.0/schema.json#/types/command:remote:Connection",
+                    "description": "The parameters with which to connect to the remote host."
+                },
+                "encryptionConfig": {
+                    "type": "string",
+                    "description": "The YAML encryption configuration manifest."
+                },
+                "keyPem": {
+                    "type": "string",
+                    "description": "The PEM encoded Kube API Server certificate key."
+                },
+                "kubectlPath": {
+                    "type": "string",
+                    "description": "The path to the 'kubectl' binary."
+                },
+                "path": {
+                    "type": "string",
+                    "description": "The path to the 'kube-apiserver' binary."
+                },
+                "serviceAccountsKey": {
+                    "type": "string",
+                    "description": "The PEM encoded Service Accounts certificate key."
+                },
+                "serviceAccountsPem": {
+                    "type": "string",
+                    "description": "The PEM encoded Service Accounts certificate data."
+                }
+            },
+            "required": [
+                "caPem",
+                "caKey",
+                "connection",
+                "encryptionConfig",
+                "keyPem",
+                "certPem",
+                "serviceAccountsKey",
+                "serviceAccountsPem"
+            ],
+            "inputProperties": {
+                "caKey": {
+                    "type": "string",
+                    "description": "The PEM encoded certificate authority key."
+                },
+                "caPem": {
+                    "type": "string",
+                    "description": "The PEM encoded certificate authority data."
+                },
+                "certPem": {
+                    "type": "string",
+                    "description": "The PEM encoded Kube API Server certificate data."
+                },
+                "configurationDirectory": {
+                    "type": "string",
+                    "description": "The directory to store Kubernetes Control Plane configuration.",
+                    "default": "/etc/kubernetes/config"
+                },
+                "connection": {
+                    "$ref": "/command/v0.10.0/schema.json#/types/command:remote:Connection",
+                    "description": "The parameters with which to connect to the remote host."
+                },
+                "encryptionConfig": {
+                    "type": "string",
+                    "description": "The YAML encryption configuration manifest."
+                },
+                "keyPem": {
+                    "type": "string",
+                    "description": "The PEM encoded Kube API Server certificate key."
+                },
+                "kubectlPath": {
+                    "type": "string",
+                    "description": "The path to the 'kubectl' binary."
+                },
+                "path": {
+                    "type": "string",
+                    "description": "The path to the 'kube-apiserver' binary."
+                },
+                "serviceAccountsKey": {
+                    "type": "string",
+                    "description": "The PEM encoded Service Accounts certificate key."
+                },
+                "serviceAccountsPem": {
+                    "type": "string",
+                    "description": "The PEM encoded Service Accounts certificate data."
+                }
+            },
+            "requiredInputs": [
+                "caPem",
+                "caKey",
+                "connection",
+                "encryptionConfig",
+                "keyPem",
+                "certPem",
+                "serviceAccountsKey",
+                "serviceAccountsPem"
+            ],
+            "isComponent": true
+        },
         "kubernetes-the-hard-way:remote:KubeApiServerInstall": {
             "description": "Installs kube-apiserver on a remote system.",
             "properties": {
@@ -3003,6 +3125,107 @@
                 }
             },
             "requiredInputs": [
+                "connection"
+            ],
+            "isComponent": true
+        },
+        "kubernetes-the-hard-way:remote:KubeApiServerService": {
+            "description": "Kube API Server systemd service file. Will likely get replaced with a static function when https://github.com/pulumi/pulumi/issues/7583 gets resolved.",
+            "properties": {
+                "clientCaFile": {
+                    "type": "string",
+                    "description": "If set, any request presenting a client certificate signed by one of the authorities in the client-ca-file is authenticated with an identity corresponding to the CommonName of the client certificate"
+                },
+                "configuration": {
+                    "$ref": "#/types/kubernetes-the-hard-way:remote:KubeApiServerProps",
+                    "description": "KubeApiServer configuration."
+                },
+                "connection": {
+                    "$ref": "/command/v0.10.0/schema.json#/types/command:remote:Connection",
+                    "description": "The parameters with which to connect to the remote host."
+                },
+                "description": {
+                    "type": "string",
+                    "description": "Optional systemd unit description."
+                },
+                "directory": {
+                    "type": "string",
+                    "description": "The location to create the service file."
+                },
+                "documentation": {
+                    "type": "string",
+                    "description": "Optional systemd unit documentation"
+                },
+                "etcdServers": {
+                    "type": "string",
+                    "description": "List of etcd servers to connect with (scheme://ip:port), comma separatedList of etcd servers to connect with (scheme://ip:port), comma separated"
+                },
+                "restart": {
+                    "$ref": "#/types/kubernetes-the-hard-way:remote:SystemdServiceRestart",
+                    "description": "Optionally override the systemd service restart behaviour. Defaults to `on-failure`."
+                },
+                "restartSec": {
+                    "type": "string",
+                    "description": "Optionally override the systemd service RestartSec. Defaults to `5`."
+                },
+                "service": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:remote:SystemdService",
+                    "description": "The remote systemd service."
+                },
+                "wantedBy": {
+                    "type": "string",
+                    "description": "Optionally override the systemd service wanted-by. Defaults to `multi-user.target`."
+                }
+            },
+            "required": [
+                "configuration",
+                "connection",
+                "service"
+            ],
+            "inputProperties": {
+                "clientCaFile": {
+                    "type": "string",
+                    "description": "If set, any request presenting a client certificate signed by one of the authorities in the client-ca-file is authenticated with an identity corresponding to the CommonName of the client certificate"
+                },
+                "configuration": {
+                    "$ref": "#/types/kubernetes-the-hard-way:remote:KubeApiServerProps",
+                    "description": "KubeApiServer configuration."
+                },
+                "connection": {
+                    "$ref": "/command/v0.10.0/schema.json#/types/command:remote:Connection",
+                    "description": "The parameters with which to connect to the remote host."
+                },
+                "description": {
+                    "type": "string",
+                    "description": "Optional systemd unit description."
+                },
+                "directory": {
+                    "type": "string",
+                    "description": "The location to create the service file."
+                },
+                "documentation": {
+                    "type": "string",
+                    "description": "Optional systemd unit documentation"
+                },
+                "etcdServers": {
+                    "type": "string",
+                    "description": "List of etcd servers to connect with (scheme://ip:port), comma separatedList of etcd servers to connect with (scheme://ip:port), comma separated"
+                },
+                "restart": {
+                    "$ref": "#/types/kubernetes-the-hard-way:remote:SystemdServiceRestart",
+                    "description": "Optionally override the systemd service restart behaviour. Defaults to `on-failure`."
+                },
+                "restartSec": {
+                    "type": "string",
+                    "description": "Optionally override the systemd service RestartSec. Defaults to `5`."
+                },
+                "wantedBy": {
+                    "type": "string",
+                    "description": "Optionally override the systemd service wanted-by. Defaults to `multi-user.target`."
+                }
+            },
+            "requiredInputs": [
+                "configuration",
                 "connection"
             ],
             "isComponent": true
@@ -3454,170 +3677,6 @@
             },
             "requiredInputs": [
                 "connection"
-            ],
-            "isComponent": true
-        },
-        "kubernetes-the-hard-way:remote:KubernetesControlPlaneConfiguration": {
-            "description": "Configures Kubernetes Control Plane on a remote system.",
-            "properties": {
-                "caKey": {
-                    "type": "string",
-                    "description": "The PEM encoded certificate authority key."
-                },
-                "caPem": {
-                    "type": "string",
-                    "description": "The PEM encoded certificate authority data."
-                },
-                "configurationDirectory": {
-                    "type": "string",
-                    "description": "The directory to store Kubernetes Control Plane configuration.",
-                    "default": "/etc/kubernetes/config"
-                },
-                "connection": {
-                    "$ref": "/command/v0.10.0/schema.json#/types/command:remote:Connection",
-                    "description": "The parameters with which to connect to the remote host."
-                },
-                "encryptionConfig": {
-                    "type": "string",
-                    "description": "The YAML encryption configuration manifest."
-                },
-                "kubeApiServerKey": {
-                    "type": "string",
-                    "description": "The PEM encoded Kube API Server certificate key."
-                },
-                "kubeApiServerPath": {
-                    "type": "string",
-                    "description": "The path to the 'kube-apiserver' binary."
-                },
-                "kubeApiServerPem": {
-                    "type": "string",
-                    "description": "The PEM encoded Kube API Server certificate data."
-                },
-                "kubeControllerManagerKubeconfig": {
-                    "$ref": "#/types/kubernetes-the-hard-way:config:Kubeconfig",
-                    "description": "The kube-controller-manager kubeconfig configuration"
-                },
-                "kubeControllerManagerPath": {
-                    "type": "string",
-                    "description": "The path to the 'kube-controller-manager' binary."
-                },
-                "kubeSchedulerConfig": {
-                    "type": "string",
-                    "description": "The kube-scheduler configuration manifest."
-                },
-                "kubeSchedulerKubeconfig": {
-                    "$ref": "#/types/kubernetes-the-hard-way:config:Kubeconfig",
-                    "description": "The kube-scheduler kubeconfig configuration"
-                },
-                "kubeSchedulerPath": {
-                    "type": "string",
-                    "description": "The path to the 'kube-scheduler' binary."
-                },
-                "kubectlPath": {
-                    "type": "string",
-                    "description": "The path to the 'kubectl' binary."
-                },
-                "serviceAccountsKey": {
-                    "type": "string",
-                    "description": "The PEM encoded Service Accounts certificate key."
-                },
-                "serviceAccountsPem": {
-                    "type": "string",
-                    "description": "The PEM encoded Service Accounts certificate data."
-                }
-            },
-            "required": [
-                "caPem",
-                "caKey",
-                "connection",
-                "encryptionConfig",
-                "kubeApiServerKey",
-                "kubeApiServerPem",
-                "kubeControllerManagerKubeconfig",
-                "kubeSchedulerConfig",
-                "kubeSchedulerKubeconfig",
-                "serviceAccountsKey",
-                "serviceAccountsPem"
-            ],
-            "inputProperties": {
-                "caKey": {
-                    "type": "string",
-                    "description": "The PEM encoded certificate authority key."
-                },
-                "caPem": {
-                    "type": "string",
-                    "description": "The PEM encoded certificate authority data."
-                },
-                "configurationDirectory": {
-                    "type": "string",
-                    "description": "The directory to store Kubernetes Control Plane configuration.",
-                    "default": "/etc/kubernetes/config"
-                },
-                "connection": {
-                    "$ref": "/command/v0.10.0/schema.json#/types/command:remote:Connection",
-                    "description": "The parameters with which to connect to the remote host."
-                },
-                "encryptionConfig": {
-                    "type": "string",
-                    "description": "The YAML encryption configuration manifest."
-                },
-                "kubeApiServerKey": {
-                    "type": "string",
-                    "description": "The PEM encoded Kube API Server certificate key."
-                },
-                "kubeApiServerPath": {
-                    "type": "string",
-                    "description": "The path to the 'kube-apiserver' binary."
-                },
-                "kubeApiServerPem": {
-                    "type": "string",
-                    "description": "The PEM encoded Kube API Server certificate data."
-                },
-                "kubeControllerManagerKubeconfig": {
-                    "$ref": "#/types/kubernetes-the-hard-way:config:Kubeconfig",
-                    "description": "The kube-controller-manager kubeconfig configuration"
-                },
-                "kubeControllerManagerPath": {
-                    "type": "string",
-                    "description": "The path to the 'kube-controller-manager' binary."
-                },
-                "kubeSchedulerConfig": {
-                    "type": "string",
-                    "description": "The kube-scheduler configuration manifest."
-                },
-                "kubeSchedulerKubeconfig": {
-                    "$ref": "#/types/kubernetes-the-hard-way:config:Kubeconfig",
-                    "description": "The kube-scheduler kubeconfig configuration"
-                },
-                "kubeSchedulerPath": {
-                    "type": "string",
-                    "description": "The path to the 'kube-scheduler' binary."
-                },
-                "kubectlPath": {
-                    "type": "string",
-                    "description": "The path to the 'kubectl' binary."
-                },
-                "serviceAccountsKey": {
-                    "type": "string",
-                    "description": "The PEM encoded Service Accounts certificate key."
-                },
-                "serviceAccountsPem": {
-                    "type": "string",
-                    "description": "The PEM encoded Service Accounts certificate data."
-                }
-            },
-            "requiredInputs": [
-                "caPem",
-                "caKey",
-                "connection",
-                "encryptionConfig",
-                "kubeApiServerKey",
-                "kubeApiServerPem",
-                "kubeControllerManagerKubeconfig",
-                "kubeSchedulerConfig",
-                "kubeSchedulerKubeconfig",
-                "serviceAccountsKey",
-                "serviceAccountsPem"
             ],
             "isComponent": true
         },

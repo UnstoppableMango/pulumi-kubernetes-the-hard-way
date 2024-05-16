@@ -11,10 +11,10 @@ using Pulumi;
 namespace UnMango.KubernetesTheHardWay.Remote
 {
     /// <summary>
-    /// Configures Kubernetes Control Plane on a remote system.
+    /// Configures Kubernetes API Server on a remote system.
     /// </summary>
-    [KubernetesTheHardWayResourceType("kubernetes-the-hard-way:remote:KubernetesControlPlaneConfiguration")]
-    public partial class KubernetesControlPlaneConfiguration : global::Pulumi.ComponentResource
+    [KubernetesTheHardWayResourceType("kubernetes-the-hard-way:remote:KubeApiServerConfiguration")]
+    public partial class KubeApiServerConfiguration : global::Pulumi.ComponentResource
     {
         /// <summary>
         /// The PEM encoded certificate authority key.
@@ -29,10 +29,22 @@ namespace UnMango.KubernetesTheHardWay.Remote
         public Output<string> CaPem { get; private set; } = null!;
 
         /// <summary>
+        /// The PEM encoded Kube API Server certificate data.
+        /// </summary>
+        [Output("certPem")]
+        public Output<string> CertPem { get; private set; } = null!;
+
+        /// <summary>
         /// The directory to store Kubernetes Control Plane configuration.
         /// </summary>
         [Output("configurationDirectory")]
         public Output<string?> ConfigurationDirectory { get; private set; } = null!;
+
+        /// <summary>
+        /// Configuration mkdir operation
+        /// </summary>
+        [Output("configurationMkdir")]
+        public Output<UnMango.KubernetesTheHardWay.Tools.Outputs.Mkdir?> ConfigurationMkdir { get; private set; } = null!;
 
         /// <summary>
         /// The parameters with which to connect to the remote host.
@@ -49,56 +61,20 @@ namespace UnMango.KubernetesTheHardWay.Remote
         /// <summary>
         /// The PEM encoded Kube API Server certificate key.
         /// </summary>
-        [Output("kubeApiServerKey")]
-        public Output<string> KubeApiServerKey { get; private set; } = null!;
-
-        /// <summary>
-        /// The path to the 'kube-apiserver' binary.
-        /// </summary>
-        [Output("kubeApiServerPath")]
-        public Output<string?> KubeApiServerPath { get; private set; } = null!;
-
-        /// <summary>
-        /// The PEM encoded Kube API Server certificate data.
-        /// </summary>
-        [Output("kubeApiServerPem")]
-        public Output<string> KubeApiServerPem { get; private set; } = null!;
-
-        /// <summary>
-        /// The kube-controller-manager kubeconfig configuration
-        /// </summary>
-        [Output("kubeControllerManagerKubeconfig")]
-        public Output<UnMango.KubernetesTheHardWay.Config.Outputs.Kubeconfig> KubeControllerManagerKubeconfig { get; private set; } = null!;
-
-        /// <summary>
-        /// The path to the 'kube-controller-manager' binary.
-        /// </summary>
-        [Output("kubeControllerManagerPath")]
-        public Output<string?> KubeControllerManagerPath { get; private set; } = null!;
-
-        /// <summary>
-        /// The kube-scheduler configuration manifest.
-        /// </summary>
-        [Output("kubeSchedulerConfig")]
-        public Output<string> KubeSchedulerConfig { get; private set; } = null!;
-
-        /// <summary>
-        /// The kube-scheduler kubeconfig configuration
-        /// </summary>
-        [Output("kubeSchedulerKubeconfig")]
-        public Output<UnMango.KubernetesTheHardWay.Config.Outputs.Kubeconfig> KubeSchedulerKubeconfig { get; private set; } = null!;
-
-        /// <summary>
-        /// The path to the 'kube-scheduler' binary.
-        /// </summary>
-        [Output("kubeSchedulerPath")]
-        public Output<string?> KubeSchedulerPath { get; private set; } = null!;
+        [Output("keyPem")]
+        public Output<string> KeyPem { get; private set; } = null!;
 
         /// <summary>
         /// The path to the 'kubectl' binary.
         /// </summary>
         [Output("kubectlPath")]
         public Output<string?> KubectlPath { get; private set; } = null!;
+
+        /// <summary>
+        /// The path to the 'kube-apiserver' binary.
+        /// </summary>
+        [Output("path")]
+        public Output<string?> Path { get; private set; } = null!;
 
         /// <summary>
         /// The PEM encoded Service Accounts certificate key.
@@ -114,14 +90,14 @@ namespace UnMango.KubernetesTheHardWay.Remote
 
 
         /// <summary>
-        /// Create a KubernetesControlPlaneConfiguration resource with the given unique name, arguments, and options.
+        /// Create a KubeApiServerConfiguration resource with the given unique name, arguments, and options.
         /// </summary>
         ///
         /// <param name="name">The unique name of the resource</param>
         /// <param name="args">The arguments used to populate this resource's properties</param>
         /// <param name="options">A bag of options that control this resource's behavior</param>
-        public KubernetesControlPlaneConfiguration(string name, KubernetesControlPlaneConfigurationArgs args, ComponentResourceOptions? options = null)
-            : base("kubernetes-the-hard-way:remote:KubernetesControlPlaneConfiguration", name, args ?? new KubernetesControlPlaneConfigurationArgs(), MakeResourceOptions(options, ""), remote: true)
+        public KubeApiServerConfiguration(string name, KubeApiServerConfigurationArgs args, ComponentResourceOptions? options = null)
+            : base("kubernetes-the-hard-way:remote:KubeApiServerConfiguration", name, args ?? new KubeApiServerConfigurationArgs(), MakeResourceOptions(options, ""), remote: true)
         {
         }
 
@@ -139,7 +115,7 @@ namespace UnMango.KubernetesTheHardWay.Remote
         }
     }
 
-    public sealed class KubernetesControlPlaneConfigurationArgs : global::Pulumi.ResourceArgs
+    public sealed class KubeApiServerConfigurationArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
         /// The PEM encoded certificate authority key.
@@ -152,6 +128,12 @@ namespace UnMango.KubernetesTheHardWay.Remote
         /// </summary>
         [Input("caPem", required: true)]
         public Input<string> CaPem { get; set; } = null!;
+
+        /// <summary>
+        /// The PEM encoded Kube API Server certificate data.
+        /// </summary>
+        [Input("certPem", required: true)]
+        public Input<string> CertPem { get; set; } = null!;
 
         /// <summary>
         /// The directory to store Kubernetes Control Plane configuration.
@@ -174,56 +156,20 @@ namespace UnMango.KubernetesTheHardWay.Remote
         /// <summary>
         /// The PEM encoded Kube API Server certificate key.
         /// </summary>
-        [Input("kubeApiServerKey", required: true)]
-        public Input<string> KubeApiServerKey { get; set; } = null!;
-
-        /// <summary>
-        /// The path to the 'kube-apiserver' binary.
-        /// </summary>
-        [Input("kubeApiServerPath")]
-        public Input<string>? KubeApiServerPath { get; set; }
-
-        /// <summary>
-        /// The PEM encoded Kube API Server certificate data.
-        /// </summary>
-        [Input("kubeApiServerPem", required: true)]
-        public Input<string> KubeApiServerPem { get; set; } = null!;
-
-        /// <summary>
-        /// The kube-controller-manager kubeconfig configuration
-        /// </summary>
-        [Input("kubeControllerManagerKubeconfig", required: true)]
-        public Input<UnMango.KubernetesTheHardWay.Config.Inputs.KubeconfigArgs> KubeControllerManagerKubeconfig { get; set; } = null!;
-
-        /// <summary>
-        /// The path to the 'kube-controller-manager' binary.
-        /// </summary>
-        [Input("kubeControllerManagerPath")]
-        public Input<string>? KubeControllerManagerPath { get; set; }
-
-        /// <summary>
-        /// The kube-scheduler configuration manifest.
-        /// </summary>
-        [Input("kubeSchedulerConfig", required: true)]
-        public Input<string> KubeSchedulerConfig { get; set; } = null!;
-
-        /// <summary>
-        /// The kube-scheduler kubeconfig configuration
-        /// </summary>
-        [Input("kubeSchedulerKubeconfig", required: true)]
-        public Input<UnMango.KubernetesTheHardWay.Config.Inputs.KubeconfigArgs> KubeSchedulerKubeconfig { get; set; } = null!;
-
-        /// <summary>
-        /// The path to the 'kube-scheduler' binary.
-        /// </summary>
-        [Input("kubeSchedulerPath")]
-        public Input<string>? KubeSchedulerPath { get; set; }
+        [Input("keyPem", required: true)]
+        public Input<string> KeyPem { get; set; } = null!;
 
         /// <summary>
         /// The path to the 'kubectl' binary.
         /// </summary>
         [Input("kubectlPath")]
         public Input<string>? KubectlPath { get; set; }
+
+        /// <summary>
+        /// The path to the 'kube-apiserver' binary.
+        /// </summary>
+        [Input("path")]
+        public Input<string>? Path { get; set; }
 
         /// <summary>
         /// The PEM encoded Service Accounts certificate key.
@@ -237,10 +183,10 @@ namespace UnMango.KubernetesTheHardWay.Remote
         [Input("serviceAccountsPem", required: true)]
         public Input<string> ServiceAccountsPem { get; set; } = null!;
 
-        public KubernetesControlPlaneConfigurationArgs()
+        public KubeApiServerConfigurationArgs()
         {
             ConfigurationDirectory = "/etc/kubernetes/config";
         }
-        public static new KubernetesControlPlaneConfigurationArgs Empty => new KubernetesControlPlaneConfigurationArgs();
+        public static new KubeApiServerConfigurationArgs Empty => new KubeApiServerConfigurationArgs();
     }
 }

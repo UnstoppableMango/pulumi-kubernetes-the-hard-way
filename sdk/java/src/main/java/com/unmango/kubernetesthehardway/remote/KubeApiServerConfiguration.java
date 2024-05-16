@@ -9,18 +9,18 @@ import com.pulumi.core.annotations.Export;
 import com.pulumi.core.annotations.ResourceType;
 import com.pulumi.core.internal.Codegen;
 import com.unmango.kubernetesthehardway.Utilities;
-import com.unmango.kubernetesthehardway.config.outputs.Kubeconfig;
-import com.unmango.kubernetesthehardway.remote.KubernetesControlPlaneConfigurationArgs;
+import com.unmango.kubernetesthehardway.remote.KubeApiServerConfigurationArgs;
+import com.unmango.kubernetesthehardway.tools.outputs.Mkdir;
 import java.lang.String;
 import java.util.Optional;
 import javax.annotation.Nullable;
 
 /**
- * Configures Kubernetes Control Plane on a remote system.
+ * Configures Kubernetes API Server on a remote system.
  * 
  */
-@ResourceType(type="kubernetes-the-hard-way:remote:KubernetesControlPlaneConfiguration")
-public class KubernetesControlPlaneConfiguration extends com.pulumi.resources.ComponentResource {
+@ResourceType(type="kubernetes-the-hard-way:remote:KubeApiServerConfiguration")
+public class KubeApiServerConfiguration extends com.pulumi.resources.ComponentResource {
     /**
      * The PEM encoded certificate authority key.
      * 
@@ -50,6 +50,20 @@ public class KubernetesControlPlaneConfiguration extends com.pulumi.resources.Co
         return this.caPem;
     }
     /**
+     * The PEM encoded Kube API Server certificate data.
+     * 
+     */
+    @Export(name="certPem", refs={String.class}, tree="[0]")
+    private Output<String> certPem;
+
+    /**
+     * @return The PEM encoded Kube API Server certificate data.
+     * 
+     */
+    public Output<String> certPem() {
+        return this.certPem;
+    }
+    /**
      * The directory to store Kubernetes Control Plane configuration.
      * 
      */
@@ -62,6 +76,20 @@ public class KubernetesControlPlaneConfiguration extends com.pulumi.resources.Co
      */
     public Output<Optional<String>> configurationDirectory() {
         return Codegen.optional(this.configurationDirectory);
+    }
+    /**
+     * Configuration mkdir operation
+     * 
+     */
+    @Export(name="configurationMkdir", refs={Mkdir.class}, tree="[0]")
+    private Output</* @Nullable */ Mkdir> configurationMkdir;
+
+    /**
+     * @return Configuration mkdir operation
+     * 
+     */
+    public Output<Optional<Mkdir>> configurationMkdir() {
+        return Codegen.optional(this.configurationMkdir);
     }
     /**
      * The parameters with which to connect to the remote host.
@@ -95,113 +123,15 @@ public class KubernetesControlPlaneConfiguration extends com.pulumi.resources.Co
      * The PEM encoded Kube API Server certificate key.
      * 
      */
-    @Export(name="kubeApiServerKey", refs={String.class}, tree="[0]")
-    private Output<String> kubeApiServerKey;
+    @Export(name="keyPem", refs={String.class}, tree="[0]")
+    private Output<String> keyPem;
 
     /**
      * @return The PEM encoded Kube API Server certificate key.
      * 
      */
-    public Output<String> kubeApiServerKey() {
-        return this.kubeApiServerKey;
-    }
-    /**
-     * The path to the &#39;kube-apiserver&#39; binary.
-     * 
-     */
-    @Export(name="kubeApiServerPath", refs={String.class}, tree="[0]")
-    private Output</* @Nullable */ String> kubeApiServerPath;
-
-    /**
-     * @return The path to the &#39;kube-apiserver&#39; binary.
-     * 
-     */
-    public Output<Optional<String>> kubeApiServerPath() {
-        return Codegen.optional(this.kubeApiServerPath);
-    }
-    /**
-     * The PEM encoded Kube API Server certificate data.
-     * 
-     */
-    @Export(name="kubeApiServerPem", refs={String.class}, tree="[0]")
-    private Output<String> kubeApiServerPem;
-
-    /**
-     * @return The PEM encoded Kube API Server certificate data.
-     * 
-     */
-    public Output<String> kubeApiServerPem() {
-        return this.kubeApiServerPem;
-    }
-    /**
-     * The kube-controller-manager kubeconfig configuration
-     * 
-     */
-    @Export(name="kubeControllerManagerKubeconfig", refs={Kubeconfig.class}, tree="[0]")
-    private Output<Kubeconfig> kubeControllerManagerKubeconfig;
-
-    /**
-     * @return The kube-controller-manager kubeconfig configuration
-     * 
-     */
-    public Output<Kubeconfig> kubeControllerManagerKubeconfig() {
-        return this.kubeControllerManagerKubeconfig;
-    }
-    /**
-     * The path to the &#39;kube-controller-manager&#39; binary.
-     * 
-     */
-    @Export(name="kubeControllerManagerPath", refs={String.class}, tree="[0]")
-    private Output</* @Nullable */ String> kubeControllerManagerPath;
-
-    /**
-     * @return The path to the &#39;kube-controller-manager&#39; binary.
-     * 
-     */
-    public Output<Optional<String>> kubeControllerManagerPath() {
-        return Codegen.optional(this.kubeControllerManagerPath);
-    }
-    /**
-     * The kube-scheduler configuration manifest.
-     * 
-     */
-    @Export(name="kubeSchedulerConfig", refs={String.class}, tree="[0]")
-    private Output<String> kubeSchedulerConfig;
-
-    /**
-     * @return The kube-scheduler configuration manifest.
-     * 
-     */
-    public Output<String> kubeSchedulerConfig() {
-        return this.kubeSchedulerConfig;
-    }
-    /**
-     * The kube-scheduler kubeconfig configuration
-     * 
-     */
-    @Export(name="kubeSchedulerKubeconfig", refs={Kubeconfig.class}, tree="[0]")
-    private Output<Kubeconfig> kubeSchedulerKubeconfig;
-
-    /**
-     * @return The kube-scheduler kubeconfig configuration
-     * 
-     */
-    public Output<Kubeconfig> kubeSchedulerKubeconfig() {
-        return this.kubeSchedulerKubeconfig;
-    }
-    /**
-     * The path to the &#39;kube-scheduler&#39; binary.
-     * 
-     */
-    @Export(name="kubeSchedulerPath", refs={String.class}, tree="[0]")
-    private Output</* @Nullable */ String> kubeSchedulerPath;
-
-    /**
-     * @return The path to the &#39;kube-scheduler&#39; binary.
-     * 
-     */
-    public Output<Optional<String>> kubeSchedulerPath() {
-        return Codegen.optional(this.kubeSchedulerPath);
+    public Output<String> keyPem() {
+        return this.keyPem;
     }
     /**
      * The path to the &#39;kubectl&#39; binary.
@@ -216,6 +146,20 @@ public class KubernetesControlPlaneConfiguration extends com.pulumi.resources.Co
      */
     public Output<Optional<String>> kubectlPath() {
         return Codegen.optional(this.kubectlPath);
+    }
+    /**
+     * The path to the &#39;kube-apiserver&#39; binary.
+     * 
+     */
+    @Export(name="path", refs={String.class}, tree="[0]")
+    private Output</* @Nullable */ String> path;
+
+    /**
+     * @return The path to the &#39;kube-apiserver&#39; binary.
+     * 
+     */
+    public Output<Optional<String>> path() {
+        return Codegen.optional(this.path);
     }
     /**
      * The PEM encoded Service Accounts certificate key.
@@ -250,15 +194,15 @@ public class KubernetesControlPlaneConfiguration extends com.pulumi.resources.Co
      *
      * @param name The _unique_ name of the resulting resource.
      */
-    public KubernetesControlPlaneConfiguration(String name) {
-        this(name, KubernetesControlPlaneConfigurationArgs.Empty);
+    public KubeApiServerConfiguration(String name) {
+        this(name, KubeApiServerConfigurationArgs.Empty);
     }
     /**
      *
      * @param name The _unique_ name of the resulting resource.
      * @param args The arguments to use to populate this resource's properties.
      */
-    public KubernetesControlPlaneConfiguration(String name, KubernetesControlPlaneConfigurationArgs args) {
+    public KubeApiServerConfiguration(String name, KubeApiServerConfigurationArgs args) {
         this(name, args, null);
     }
     /**
@@ -267,8 +211,8 @@ public class KubernetesControlPlaneConfiguration extends com.pulumi.resources.Co
      * @param args The arguments to use to populate this resource's properties.
      * @param options A bag of options that control this resource's behavior.
      */
-    public KubernetesControlPlaneConfiguration(String name, KubernetesControlPlaneConfigurationArgs args, @Nullable com.pulumi.resources.ComponentResourceOptions options) {
-        super("kubernetes-the-hard-way:remote:KubernetesControlPlaneConfiguration", name, args == null ? KubernetesControlPlaneConfigurationArgs.Empty : args, makeResourceOptions(options, Codegen.empty()), true);
+    public KubeApiServerConfiguration(String name, KubeApiServerConfigurationArgs args, @Nullable com.pulumi.resources.ComponentResourceOptions options) {
+        super("kubernetes-the-hard-way:remote:KubeApiServerConfiguration", name, args == null ? KubeApiServerConfigurationArgs.Empty : args, makeResourceOptions(options, Codegen.empty()), true);
     }
 
     private static com.pulumi.resources.ComponentResourceOptions makeResourceOptions(@Nullable com.pulumi.resources.ComponentResourceOptions options, @Nullable Output<String> id) {

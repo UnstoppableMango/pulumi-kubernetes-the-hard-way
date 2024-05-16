@@ -12,71 +12,13 @@ from ._enums import *
 import pulumi_kubernetes
 
 __all__ = [
-    'ClusterArgs',
-    'ContextArgs',
     'KubeconfigAdminOptions',
     'KubeconfigKubeControllerManagerOptions',
     'KubeconfigKubeProxyOptions',
     'KubeconfigKubeSchedulerOptions',
     'KubeconfigWorkerOptions',
-    'KubeconfigArgs',
     'PodManifestArgs',
-    'UserArgs',
 ]
-
-@pulumi.input_type
-class ClusterArgs:
-    def __init__(__self__, *,
-                 certificate_authority_data: pulumi.Input[str],
-                 server: pulumi.Input[str]):
-        pulumi.set(__self__, "certificate_authority_data", certificate_authority_data)
-        pulumi.set(__self__, "server", server)
-
-    @property
-    @pulumi.getter(name="certificateAuthorityData")
-    def certificate_authority_data(self) -> pulumi.Input[str]:
-        return pulumi.get(self, "certificate_authority_data")
-
-    @certificate_authority_data.setter
-    def certificate_authority_data(self, value: pulumi.Input[str]):
-        pulumi.set(self, "certificate_authority_data", value)
-
-    @property
-    @pulumi.getter
-    def server(self) -> pulumi.Input[str]:
-        return pulumi.get(self, "server")
-
-    @server.setter
-    def server(self, value: pulumi.Input[str]):
-        pulumi.set(self, "server", value)
-
-
-@pulumi.input_type
-class ContextArgs:
-    def __init__(__self__, *,
-                 cluster: pulumi.Input[str],
-                 user: pulumi.Input[str]):
-        pulumi.set(__self__, "cluster", cluster)
-        pulumi.set(__self__, "user", user)
-
-    @property
-    @pulumi.getter
-    def cluster(self) -> pulumi.Input[str]:
-        return pulumi.get(self, "cluster")
-
-    @cluster.setter
-    def cluster(self, value: pulumi.Input[str]):
-        pulumi.set(self, "cluster", value)
-
-    @property
-    @pulumi.getter
-    def user(self) -> pulumi.Input[str]:
-        return pulumi.get(self, "user")
-
-    @user.setter
-    def user(self, value: pulumi.Input[str]):
-        pulumi.set(self, "user", value)
-
 
 @pulumi.input_type
 class KubeconfigAdminOptions:
@@ -227,44 +169,6 @@ class KubeconfigWorkerOptions:
     @type.setter
     def type(self, value: Optional[str]):
         pulumi.set(self, "type", value)
-
-
-@pulumi.input_type
-class KubeconfigArgs:
-    def __init__(__self__, *,
-                 clusters: pulumi.Input[Sequence[pulumi.Input['ClusterArgs']]],
-                 contexts: pulumi.Input[Sequence[pulumi.Input['ContextArgs']]],
-                 users: pulumi.Input[Sequence[pulumi.Input['UserArgs']]]):
-        pulumi.set(__self__, "clusters", clusters)
-        pulumi.set(__self__, "contexts", contexts)
-        pulumi.set(__self__, "users", users)
-
-    @property
-    @pulumi.getter
-    def clusters(self) -> pulumi.Input[Sequence[pulumi.Input['ClusterArgs']]]:
-        return pulumi.get(self, "clusters")
-
-    @clusters.setter
-    def clusters(self, value: pulumi.Input[Sequence[pulumi.Input['ClusterArgs']]]):
-        pulumi.set(self, "clusters", value)
-
-    @property
-    @pulumi.getter
-    def contexts(self) -> pulumi.Input[Sequence[pulumi.Input['ContextArgs']]]:
-        return pulumi.get(self, "contexts")
-
-    @contexts.setter
-    def contexts(self, value: pulumi.Input[Sequence[pulumi.Input['ContextArgs']]]):
-        pulumi.set(self, "contexts", value)
-
-    @property
-    @pulumi.getter
-    def users(self) -> pulumi.Input[Sequence[pulumi.Input['UserArgs']]]:
-        return pulumi.get(self, "users")
-
-    @users.setter
-    def users(self, value: pulumi.Input[Sequence[pulumi.Input['UserArgs']]]):
-        pulumi.set(self, "users", value)
 
 
 @pulumi.input_type
@@ -694,32 +598,5 @@ class PodManifestArgs:
     @status.setter
     def status(self, value: Optional[pulumi.Input['pulumi_kubernetes.core.v1.PodStatusArgs']]):
         pulumi.set(self, "status", value)
-
-
-@pulumi.input_type
-class UserArgs:
-    def __init__(__self__, *,
-                 client_certificate_data: pulumi.Input[str],
-                 client_key_data: pulumi.Input[str]):
-        pulumi.set(__self__, "client_certificate_data", client_certificate_data)
-        pulumi.set(__self__, "client_key_data", client_key_data)
-
-    @property
-    @pulumi.getter(name="clientCertificateData")
-    def client_certificate_data(self) -> pulumi.Input[str]:
-        return pulumi.get(self, "client_certificate_data")
-
-    @client_certificate_data.setter
-    def client_certificate_data(self, value: pulumi.Input[str]):
-        pulumi.set(self, "client_certificate_data", value)
-
-    @property
-    @pulumi.getter(name="clientKeyData")
-    def client_key_data(self) -> pulumi.Input[str]:
-        return pulumi.get(self, "client_key_data")
-
-    @client_key_data.setter
-    def client_key_data(self, value: pulumi.Input[str]):
-        pulumi.set(self, "client_key_data", value)
 
 

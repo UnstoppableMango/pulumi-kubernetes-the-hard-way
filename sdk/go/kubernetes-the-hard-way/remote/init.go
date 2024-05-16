@@ -39,8 +39,12 @@ func (m *module) Construct(ctx *pulumi.Context, name, typ, urn string) (r pulumi
 		r = &EtcdService{}
 	case "kubernetes-the-hard-way:remote:File":
 		r = &File{}
+	case "kubernetes-the-hard-way:remote:KubeApiServerConfiguration":
+		r = &KubeApiServerConfiguration{}
 	case "kubernetes-the-hard-way:remote:KubeApiServerInstall":
 		r = &KubeApiServerInstall{}
+	case "kubernetes-the-hard-way:remote:KubeApiServerService":
+		r = &KubeApiServerService{}
 	case "kubernetes-the-hard-way:remote:KubeControllerManagerInstall":
 		r = &KubeControllerManagerInstall{}
 	case "kubernetes-the-hard-way:remote:KubeProxyInstall":
@@ -51,8 +55,6 @@ func (m *module) Construct(ctx *pulumi.Context, name, typ, urn string) (r pulumi
 		r = &KubectlInstall{}
 	case "kubernetes-the-hard-way:remote:KubeletInstall":
 		r = &KubeletInstall{}
-	case "kubernetes-the-hard-way:remote:KubernetesControlPlaneConfiguration":
-		r = &KubernetesControlPlaneConfiguration{}
 	case "kubernetes-the-hard-way:remote:ProvisionEtcd":
 		r = &ProvisionEtcd{}
 	case "kubernetes-the-hard-way:remote:RuncInstall":
