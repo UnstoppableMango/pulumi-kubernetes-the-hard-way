@@ -23,8 +23,10 @@ func generateCniBridgePluginConfiguration(commandSpec schema.PackageSpec) schema
 			Description: "IPAM",
 			TypeSpec:    types.LocalType("CniBridgeIpam", "remote"),
 		},
-		"name": props.String("CNI plugin name."),
-		"type": props.String("CNI plugin type."),
+		"name":   props.String("CNI plugin name."),
+		"path":   props.String("Path to put the configuration file on the remote system"),
+		"subnet": props.String("The subnet to use."),
+		"type":   props.String("CNI plugin type."),
 	}
 
 	requiredInputs := []string{"connection"}
@@ -39,6 +41,7 @@ func generateCniBridgePluginConfiguration(commandSpec schema.PackageSpec) schema
 		"ipMasq",
 		"ipam",
 		"name",
+		"path",
 		"type",
 	})
 

@@ -17,6 +17,7 @@ func generateCniLoopbackPluginConfiguration(commandSpec schema.PackageSpec) sche
 			TypeSpec:    types.ExtType(commandSpec, "Connection", "remote"),
 		},
 		"name": props.String("CNI plugin name."),
+		"path": props.String("Path to put the configuration file on the remote system"),
 		"type": props.String("CNI plugin type."),
 	}
 
@@ -28,6 +29,7 @@ func generateCniLoopbackPluginConfiguration(commandSpec schema.PackageSpec) sche
 	requiredOutputs := slices.Concat(requiredInputs, []string{
 		"cniVersion",
 		"name",
+		"path",
 		"type",
 	})
 
