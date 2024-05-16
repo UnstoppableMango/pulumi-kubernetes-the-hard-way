@@ -18,24 +18,6 @@ func generateTypes(commandSpec schema.PackageSpec) map[string]schema.ComplexType
 				{Value: "arm64"},
 			},
 		},
-		name("CniBridgePluginConfiguration"): {
-			ObjectTypeSpec: schema.ObjectTypeSpec{
-				Description: "The CNI bridge plugin configuration.",
-				Type:        "object",
-				Properties: map[string]schema.PropertySpec{
-					"cniVersion": props.String("CNI version."),
-					"name":       props.String("CNI plugin name."),
-					"type":       props.String("CNI plugin type."),
-					"bridge":     props.String("Bridge name."),
-					"isGateway":  props.Boolean("Is gateway."),
-					"ipMasq":     props.Boolean("IP masq."),
-					"ipam": {
-						Description: "IPAM",
-						TypeSpec:    types.LocalType("CniBridgeIpam", "remote"),
-					},
-				},
-			},
-		},
 		name("CniBridgeIpam"): {
 			ObjectTypeSpec: schema.ObjectTypeSpec{
 				Description: "The CNI plugins IPAM",
@@ -62,17 +44,6 @@ func generateTypes(commandSpec schema.PackageSpec) map[string]schema.ComplexType
 							},
 						},
 					},
-				},
-			},
-		},
-		name("CniLoopbackPluginConfiguration"): {
-			ObjectTypeSpec: schema.ObjectTypeSpec{
-				Description: "The CNI loopback plugin configuration.",
-				Type:        "object",
-				Properties: map[string]schema.PropertySpec{
-					"cniVersion": props.String("CNI version."),
-					"name":       props.String("CNI plugin name."),
-					"type":       props.String("CNI plugin type."),
 				},
 			},
 		},
