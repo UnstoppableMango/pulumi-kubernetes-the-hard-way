@@ -23,7 +23,43 @@ func generateTypes(commandSpec schema.PackageSpec) map[string]schema.ComplexType
 				Description: "The CNI plugins bridge configuration file.",
 				Type:        "object",
 				Properties: map[string]schema.PropertySpec{
-					"bridge": props.String("Bridge name"),
+					"cniVersion": props.String("CNI version."),
+					"bridge":     props.String("Bridge name."),
+					"isGateway":  props.Boolean("Is gateway."),
+					"ipMasq":     props.Boolean("IP masq."),
+					"ipam": {
+						Description: "IPAM",
+						TypeSpec:    types.LocalType("CniBridgeIpam", "remote"),
+					},
+				},
+			},
+		},
+		name("CniBridgeIpam"): {
+			ObjectTypeSpec: schema.ObjectTypeSpec{
+				Description: "The CNI plugins IPAM",
+				Type:        "object",
+				Properties: map[string]schema.PropertySpec{
+					"type": props.String("CNI bridge IPAM type"),
+					"ranges": {
+						Description: "IPAM ranges.",
+						TypeSpec: schema.TypeSpec{
+							Type: "array",
+							Items: &schema.TypeSpec{
+								Type:                 "object",
+								AdditionalProperties: &types.String,
+							},
+						},
+					},
+					"routes": {
+						Description: "IPAM routes.",
+						TypeSpec: schema.TypeSpec{
+							Type: "array",
+							Items: &schema.TypeSpec{
+								Type:                 "object",
+								AdditionalProperties: &types.String,
+							},
+						},
+					},
 				},
 			},
 		},
