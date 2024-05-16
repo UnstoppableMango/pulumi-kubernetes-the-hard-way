@@ -62,7 +62,7 @@ export class CniBridgePluginConfiguration extends schema.CniBridgePluginConfigur
 }
 
 function ipamDefaults(ipam?: schema.CniBridgeIpamInputs, subnet?: string): schema.CniBridgeIpamOutputs {
-  const require = (x?: string): string => {
+  const required = (x?: string): string => {
     if (!x) throw new Error('');
     return x;
   }
@@ -70,7 +70,7 @@ function ipamDefaults(ipam?: schema.CniBridgeIpamInputs, subnet?: string): schem
   return {
     type: output(ipam?.type ?? 'host-local'),
     ranges: output(ipam?.ranges).apply(x => x ?? [{
-      subnet: require(subnet),
+      subnet: required(subnet),
     }]),
     routes: output(ipam?.routes).apply(x => x ?? [{
       dst: '0.0.0.0/0',
