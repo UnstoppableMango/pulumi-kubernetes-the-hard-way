@@ -65,8 +65,6 @@ func (m *module) Construct(ctx *pulumi.Context, name, typ, urn string) (r pulumi
 		r = &StaticPod{}
 	case "kubernetes-the-hard-way:remote:SystemdService":
 		r = &SystemdService{}
-	case "kubernetes-the-hard-way:remote:WorkerConfiguration":
-		r = &WorkerConfiguration{}
 	default:
 		return nil, fmt.Errorf("unknown resource type: %s", typ)
 	}

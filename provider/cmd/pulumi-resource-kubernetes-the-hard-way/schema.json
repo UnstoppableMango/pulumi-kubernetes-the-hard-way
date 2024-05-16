@@ -4010,27 +4010,6 @@
             ],
             "isComponent": true
         },
-        "kubernetes-the-hard-way:remote:WorkerConfiguration": {
-            "description": "Kubernetes worker node configuration.",
-            "properties": {
-                "connection": {
-                    "$ref": "/command/v0.10.0/schema.json#/types/command:remote:Connection",
-                    "description": "The parameters with which to connect to the remote host."
-                }
-            },
-            "required": [
-                "connection"
-            ],
-            "inputProperties": {
-                "connection": {
-                    "$ref": "/command/v0.10.0/schema.json#/types/command:remote:Connection",
-                    "description": "The parameters with which to connect to the remote host."
-                }
-            },
-            "requiredInputs": [
-                "connection"
-            ]
-        },
         "kubernetes-the-hard-way:tls:Certificate": {
             "description": "A certificate key pair.",
             "properties": {

@@ -60,8 +60,7 @@ _utilities.register(
    "kubernetes-the-hard-way:remote:RuncInstall": "RuncInstall",
    "kubernetes-the-hard-way:remote:StartEtcd": "StartEtcd",
    "kubernetes-the-hard-way:remote:StaticPod": "StaticPod",
-   "kubernetes-the-hard-way:remote:SystemdService": "SystemdService",
-   "kubernetes-the-hard-way:remote:WorkerConfiguration": "WorkerConfiguration"
+   "kubernetes-the-hard-way:remote:SystemdService": "SystemdService"
   }
  },
  {

@@ -42,7 +42,6 @@
         "remote/startEtcd.ts",
         "remote/staticPod.ts",
         "remote/systemdService.ts",
-        "remote/workerConfiguration.ts",
         "tls/certificate.ts",
         "tls/clusterPki.ts",
         "tls/encryptionKey.ts",

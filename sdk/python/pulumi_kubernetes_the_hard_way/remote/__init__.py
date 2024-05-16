@@ -28,6 +28,5 @@ from .runc_install import *
 from .start_etcd import *
 from .static_pod import *
 from .systemd_service import *
-from .worker_configuration import *
 from ._inputs import *
 from . import outputs

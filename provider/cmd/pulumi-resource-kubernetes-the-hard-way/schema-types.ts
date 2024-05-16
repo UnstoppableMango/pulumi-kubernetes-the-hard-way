@@ -29,7 +29,6 @@ export type ResourceConstructor = {
     readonly "kubernetes-the-hard-way:remote:StartEtcd": ConstructComponent<StartEtcd>;
     readonly "kubernetes-the-hard-way:remote:StaticPod": ConstructComponent<StaticPod>;
     readonly "kubernetes-the-hard-way:remote:SystemdService": ConstructComponent<SystemdService>;
-    readonly "kubernetes-the-hard-way:remote:WorkerConfiguration": ConstructComponent<WorkerConfiguration>;
     readonly "kubernetes-the-hard-way:tls:Certificate": ConstructComponent<Certificate>;
     readonly "kubernetes-the-hard-way:tls:ClusterPki": ConstructComponent<ClusterPki>;
     readonly "kubernetes-the-hard-way:tls:EncryptionKey": ConstructComponent<EncryptionKey>;
@@ -623,15 +622,6 @@ export interface SystemdServiceArgs {
     readonly service: pulumi.Input<SystemdServiceSectionInputs>;
     readonly unit?: pulumi.Input<SystemdUnitSectionInputs>;
     readonly unitName?: pulumi.Input<string>;
-}
-export abstract class WorkerConfiguration<TData = any> extends (pulumi.ComponentResource)<TData> {
-    public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
-    constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
-        super("kubernetes-the-hard-way:remote:WorkerConfiguration", name, opts.urn ? { connection: undefined } : { name, args, opts }, opts);
-    }
-}
-export interface WorkerConfigurationArgs {
-    readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
 }
 export abstract class Certificate<TData = any> extends (pulumi.ComponentResource)<TData> {
     public algorithm!: AlgorithmOutputs | pulumi.Output<AlgorithmOutputs>;
