@@ -21,7 +21,7 @@ export class Provider implements provider.Provider {
           case 'kubernetes-the-hard-way:tls:RootCa':
             return new RootCa(name, <any>undefined, { urn });
           default:
-            throw new Error(`unknown resource type ${type}`);
+            throw new Error(`registerResourceModule: unknown resource type ${type}`);
         }
       },
     });
@@ -35,7 +35,7 @@ export class Provider implements provider.Provider {
           case 'kubernetes-the-hard-way:remote:File':
             return new File(name, <any>undefined, { urn });
           default:
-            throw new Error(`unknown resource type ${type}`);
+            throw new Error(`registerResourceModule: unknown resource type ${type}`);
         }
       }
     });
@@ -44,7 +44,7 @@ export class Provider implements provider.Provider {
   async construct(name: string, type: string, inputs: Inputs, options: ComponentResourceOptions): Promise<ConstructResult> {
     const resource = construct(name, type, inputs, options);
     if (resource === undefined) {
-      throw new Error(`unknown resource type ${type}`);
+      throw new Error(`construct: unknown resource type ${type}`);
     }
 
     return resourceToConstructResult(resource);
