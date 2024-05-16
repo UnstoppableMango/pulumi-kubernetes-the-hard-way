@@ -68,9 +68,7 @@ func TestCniPluginsTs(t *testing.T) {
 
 	test := getJSBaseOptions(t).
 		With(integration.ProgramTestOptions{
-			Dir:           path.Join(getCwd(t), "remote", "cni-plugins-ts"),
-			SkipPreview:   true,  // TODO: There is some bug surrounding this
-			RunUpdateTest: false, // TODO: Enable
+			Dir: path.Join(getCwd(t), "remote", "cni-plugins-ts"),
 			Config: map[string]string{
 				"host":     "localhost",
 				"port":     node.Port,
@@ -80,7 +78,6 @@ func TestCniPluginsTs(t *testing.T) {
 			ExtraRuntimeValidation: func(t *testing.T, stack integration.RuntimeValidationStackInfo) {
 				validatedResources := []string{}
 				for _, res := range stack.Deployment.Resources {
-					println(res.Type)
 					switch res.Type {
 					case "kubernetes-the-hard-way:remote:CniBridgePluginConfiguration":
 						switch res.URN.Name() {
