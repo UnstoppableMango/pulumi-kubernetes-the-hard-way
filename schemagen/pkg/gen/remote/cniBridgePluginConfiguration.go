@@ -31,7 +31,12 @@ func generateCniBridgePluginConfiguration(commandSpec schema.PackageSpec) schema
 
 	requiredInputs := []string{"connection"}
 
-	outputs := map[string]schema.PropertySpec{}
+	outputs := map[string]schema.PropertySpec{
+		"file": {
+			Description: "The file on the remote system.",
+			TypeSpec:    types.LocalResource("File", "remote"),
+		},
+	}
 	maps.Copy(outputs, inputs)
 
 	requiredOutputs := slices.Concat(requiredInputs, []string{
