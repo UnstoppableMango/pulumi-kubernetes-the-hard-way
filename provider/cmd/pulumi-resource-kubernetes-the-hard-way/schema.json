@@ -2004,7 +2004,8 @@
             },
             "requiredInputs": [
                 "connection"
-            ]
+            ],
+            "isComponent": true
         },
         "kubernetes-the-hard-way:remote:CniLoopbackPluginConfiguration": {
             "description": "The CNI loopback plugin configuration.",
@@ -2065,7 +2066,8 @@
             },
             "requiredInputs": [
                 "connection"
-            ]
+            ],
+            "isComponent": true
         },
         "kubernetes-the-hard-way:remote:CniPluginsInstall": {
             "description": "Installs cni-plugins on a remote system",

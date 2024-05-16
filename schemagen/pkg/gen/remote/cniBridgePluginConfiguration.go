@@ -51,6 +51,7 @@ func generateCniBridgePluginConfiguration(commandSpec schema.PackageSpec) schema
 	})
 
 	return schema.ResourceSpec{
+		IsComponent: true,
 		ObjectTypeSpec: schema.ObjectTypeSpec{
 			Description: "The CNI bridge plugin configuration.",
 			Properties:  outputs,

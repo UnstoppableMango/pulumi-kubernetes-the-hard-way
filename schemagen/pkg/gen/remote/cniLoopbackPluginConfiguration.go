@@ -39,6 +39,7 @@ func generateCniLoopbackPluginConfiguration(commandSpec schema.PackageSpec) sche
 	})
 
 	return schema.ResourceSpec{
+		IsComponent: true,
 		ObjectTypeSpec: schema.ObjectTypeSpec{
 			Description: "The CNI loopback plugin configuration.",
 			Properties:  outputs,
