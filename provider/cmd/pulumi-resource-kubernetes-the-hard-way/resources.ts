@@ -1,6 +1,8 @@
 import { ComponentResource, ComponentResourceOptions, Inputs } from '@pulumi/pulumi';
 import * as schema from './schema-types';
 import {
+  CniBridgePluginConfiguration,
+  CniLoopbackPluginConfiguration,
   CniPluginsInstall,
   ContainerdInstall,
   CrictlInstall,
@@ -28,6 +30,8 @@ import { KubeVipManifest } from './config';
 
 const resources: schema.ResourceConstructor = {
   'kubernetes-the-hard-way:config:KubeVipManifest': (...args) => new KubeVipManifest(...args),
+  'kubernetes-the-hard-way:remote:CniBridgePluginConfiguration': (...args) => new CniBridgePluginConfiguration(...args),
+  'kubernetes-the-hard-way:remote:CniLoopbackPluginConfiguration': (...args) => new CniLoopbackPluginConfiguration(...args),
   'kubernetes-the-hard-way:remote:Download': (...args) => new Download(...args),
   'kubernetes-the-hard-way:remote:EtcdCluster': (...args) => new EtcdCluster(...args),
   'kubernetes-the-hard-way:remote:EtcdConfiguration': (...args) => new EtcdConfiguration(...args),
