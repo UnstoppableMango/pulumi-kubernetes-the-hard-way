@@ -421,58 +421,6 @@ export namespace remote {
     }
 
     /**
-     * The CNI bridge plugin configuration.
-     */
-    export interface CniBridgePluginConfiguration {
-        /**
-         * Bridge name.
-         */
-        bridge?: string;
-        /**
-         * CNI version.
-         */
-        cniVersion?: string;
-        /**
-         * IP masq.
-         */
-        ipMasq?: boolean;
-        /**
-         * IPAM
-         */
-        ipam?: outputs.remote.CniBridgeIpam;
-        /**
-         * Is gateway.
-         */
-        isGateway?: boolean;
-        /**
-         * CNI plugin name.
-         */
-        name?: string;
-        /**
-         * CNI plugin type.
-         */
-        type?: string;
-    }
-
-    /**
-     * The CNI loopback plugin configuration.
-     */
-    export interface CniLoopbackPluginConfiguration {
-        /**
-         * CNI version.
-         */
-        cniVersion?: string;
-        /**
-         * CNI plugin name.
-         */
-        name?: string;
-        /**
-         * CNI plugin type.
-         */
-        type?: string;
-    }
-
-    /**
      * Props for resources that consume etcd configuration.
      */
     export interface EtcdConfigurationProps {

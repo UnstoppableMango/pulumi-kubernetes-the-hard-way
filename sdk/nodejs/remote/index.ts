@@ -5,10 +5,15 @@ import * as pulumi from "@pulumi/pulumi";
 import * as utilities from "../utilities";
 
 // Export members:
-export { CniPluginConfigurationArgs } from "./cniPluginConfiguration";
-export type CniPluginConfiguration = import("./cniPluginConfiguration").CniPluginConfiguration;
-export const CniPluginConfiguration: typeof import("./cniPluginConfiguration").CniPluginConfiguration = null as any;
-utilities.lazyLoad(exports, ["CniPluginConfiguration"], () => require("./cniPluginConfiguration"));
+export { CniBridgePluginConfigurationArgs } from "./cniBridgePluginConfiguration";
+export type CniBridgePluginConfiguration = import("./cniBridgePluginConfiguration").CniBridgePluginConfiguration;
+export const CniBridgePluginConfiguration: typeof import("./cniBridgePluginConfiguration").CniBridgePluginConfiguration = null as any;
+utilities.lazyLoad(exports, ["CniBridgePluginConfiguration"], () => require("./cniBridgePluginConfiguration"));
+
+export { CniLoopbackPluginConfigurationArgs } from "./cniLoopbackPluginConfiguration";
+export type CniLoopbackPluginConfiguration = import("./cniLoopbackPluginConfiguration").CniLoopbackPluginConfiguration;
+export const CniLoopbackPluginConfiguration: typeof import("./cniLoopbackPluginConfiguration").CniLoopbackPluginConfiguration = null as any;
+utilities.lazyLoad(exports, ["CniLoopbackPluginConfiguration"], () => require("./cniLoopbackPluginConfiguration"));
 
 export { CniPluginsInstallArgs } from "./cniPluginsInstall";
 export type CniPluginsInstall = import("./cniPluginsInstall").CniPluginsInstall;
@@ -123,8 +128,10 @@ const _module = {
     version: utilities.getVersion(),
     construct: (name: string, type: string, urn: string): pulumi.Resource => {
         switch (type) {
-            case "kubernetes-the-hard-way:remote:CniPluginConfiguration":
-                return new CniPluginConfiguration(name, <any>undefined, { urn })
+            case "kubernetes-the-hard-way:remote:CniBridgePluginConfiguration":
+                return new CniBridgePluginConfiguration(name, <any>undefined, { urn })
+            case "kubernetes-the-hard-way:remote:CniLoopbackPluginConfiguration":
+                return new CniLoopbackPluginConfiguration(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:remote:CniPluginsInstall":
                 return new CniPluginsInstall(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:remote:ContainerdInstall":

@@ -8,29 +8,31 @@ import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
 from .. import _utilities
-from . import outputs
-from ._inputs import *
 import pulumi_command
 
-__all__ = ['CniPluginConfigurationArgs', 'CniPluginConfiguration']
+__all__ = ['CniLoopbackPluginConfigurationArgs', 'CniLoopbackPluginConfiguration']
 
 @pulumi.input_type
-class CniPluginConfigurationArgs:
+class CniLoopbackPluginConfigurationArgs:
     def __init__(__self__, *,
                  connection: pulumi.Input['pulumi_command.remote.ConnectionArgs'],
-                 bridge: Optional[pulumi.Input['CniBridgePluginConfigurationArgs']] = None,
-                 loopback: Optional[pulumi.Input['CniLoopbackPluginConfigurationArgs']] = None):
+                 cni_version: Optional[pulumi.Input[str]] = None,
+                 name: Optional[pulumi.Input[str]] = None,
+                 type: Optional[pulumi.Input[str]] = None):
         """
-        The set of arguments for constructing a CniPluginConfiguration resource.
+        The set of arguments for constructing a CniLoopbackPluginConfiguration resource.
         :param pulumi.Input['pulumi_command.remote.ConnectionArgs'] connection: The parameters with which to connect to the remote host.
-        :param pulumi.Input['CniBridgePluginConfigurationArgs'] bridge: The CNI bridge configuration.
-        :param pulumi.Input['CniLoopbackPluginConfigurationArgs'] loopback: The CNI loopback configuration.
+        :param pulumi.Input[str] cni_version: CNI version.
+        :param pulumi.Input[str] name: CNI plugin name.
+        :param pulumi.Input[str] type: CNI plugin type.
         """
         pulumi.set(__self__, "connection", connection)
-        if bridge is not None:
-            pulumi.set(__self__, "bridge", bridge)
-        if loopback is not None:
-            pulumi.set(__self__, "loopback", loopback)
+        if cni_version is not None:
+            pulumi.set(__self__, "cni_version", cni_version)
+        if name is not None:
+            pulumi.set(__self__, "name", name)
+        if type is not None:
+            pulumi.set(__self__, "type", type)
 
     @property
     @pulumi.getter
@@ -45,64 +47,78 @@ class CniPluginConfigurationArgs:
         pulumi.set(self, "connection", value)
 
     @property
-    @pulumi.getter
-    def bridge(self) -> Optional[pulumi.Input['CniBridgePluginConfigurationArgs']]:
+    @pulumi.getter(name="cniVersion")
+    def cni_version(self) -> Optional[pulumi.Input[str]]:
         """
-        The CNI bridge configuration.
+        CNI version.
         """
-        return pulumi.get(self, "bridge")
+        return pulumi.get(self, "cni_version")
 
-    @bridge.setter
-    def bridge(self, value: Optional[pulumi.Input['CniBridgePluginConfigurationArgs']]):
-        pulumi.set(self, "bridge", value)
+    @cni_version.setter
+    def cni_version(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "cni_version", value)
 
     @property
     @pulumi.getter
-    def loopback(self) -> Optional[pulumi.Input['CniLoopbackPluginConfigurationArgs']]:
+    def name(self) -> Optional[pulumi.Input[str]]:
         """
-        The CNI loopback configuration.
+        CNI plugin name.
         """
-        return pulumi.get(self, "loopback")
+        return pulumi.get(self, "name")
 
-    @loopback.setter
-    def loopback(self, value: Optional[pulumi.Input['CniLoopbackPluginConfigurationArgs']]):
-        pulumi.set(self, "loopback", value)
+    @name.setter
+    def name(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "name", value)
+
+    @property
+    @pulumi.getter
+    def type(self) -> Optional[pulumi.Input[str]]:
+        """
+        CNI plugin type.
+        """
+        return pulumi.get(self, "type")
+
+    @type.setter
+    def type(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "type", value)
 
 
-class CniPluginConfiguration(pulumi.CustomResource):
+class CniLoopbackPluginConfiguration(pulumi.CustomResource):
     @overload
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 bridge: Optional[pulumi.Input[pulumi.InputType['CniBridgePluginConfigurationArgs']]] = None,
+                 cni_version: Optional[pulumi.Input[str]] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
-                 loopback: Optional[pulumi.Input[pulumi.InputType['CniLoopbackPluginConfigurationArgs']]] = None,
+                 name: Optional[pulumi.Input[str]] = None,
+                 type: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         """
-        CNI plugin configuration.
+        The CNI loopback plugin configuration.
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[pulumi.InputType['CniBridgePluginConfigurationArgs']] bridge: The CNI bridge configuration.
+        :param pulumi.Input[str] cni_version: CNI version.
         :param pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']] connection: The parameters with which to connect to the remote host.
-        :param pulumi.Input[pulumi.InputType['CniLoopbackPluginConfigurationArgs']] loopback: The CNI loopback configuration.
+        :param pulumi.Input[str] name: CNI plugin name.
+        :param pulumi.Input[str] type: CNI plugin type.
         """
         ...
     @overload
     def __init__(__self__,
                  resource_name: str,
-                 args: CniPluginConfigurationArgs,
+                 args: CniLoopbackPluginConfigurationArgs,
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
-        CNI plugin configuration.
+        The CNI loopback plugin configuration.
 
         :param str resource_name: The name of the resource.
-        :param CniPluginConfigurationArgs args: The arguments to use to populate this resource's properties.
+        :param CniLoopbackPluginConfigurationArgs args: The arguments to use to populate this resource's properties.
         :param pulumi.ResourceOptions opts: Options for the resource.
         """
         ...
     def __init__(__self__, resource_name: str, *args, **kwargs):
-        resource_args, opts = _utilities.get_resource_args_opts(CniPluginConfigurationArgs, pulumi.ResourceOptions, *args, **kwargs)
+        resource_args, opts = _utilities.get_resource_args_opts(CniLoopbackPluginConfigurationArgs, pulumi.ResourceOptions, *args, **kwargs)
         if resource_args is not None:
             __self__._internal_init(resource_name, opts, **resource_args.__dict__)
         else:
@@ -111,9 +127,10 @@ class CniPluginConfiguration(pulumi.CustomResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 bridge: Optional[pulumi.Input[pulumi.InputType['CniBridgePluginConfigurationArgs']]] = None,
+                 cni_version: Optional[pulumi.Input[str]] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
-                 loopback: Optional[pulumi.Input[pulumi.InputType['CniLoopbackPluginConfigurationArgs']]] = None,
+                 name: Optional[pulumi.Input[str]] = None,
+                 type: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):
@@ -121,15 +138,16 @@ class CniPluginConfiguration(pulumi.CustomResource):
         if opts.id is None:
             if __props__ is not None:
                 raise TypeError('__props__ is only valid when passed in combination with a valid opts.id to get an existing resource')
-            __props__ = CniPluginConfigurationArgs.__new__(CniPluginConfigurationArgs)
+            __props__ = CniLoopbackPluginConfigurationArgs.__new__(CniLoopbackPluginConfigurationArgs)
 
-            __props__.__dict__["bridge"] = bridge
+            __props__.__dict__["cni_version"] = cni_version
             if connection is None and not opts.urn:
                 raise TypeError("Missing required property 'connection'")
             __props__.__dict__["connection"] = connection
-            __props__.__dict__["loopback"] = loopback
-        super(CniPluginConfiguration, __self__).__init__(
-            'kubernetes-the-hard-way:remote:CniPluginConfiguration',
+            __props__.__dict__["name"] = name
+            __props__.__dict__["type"] = type
+        super(CniLoopbackPluginConfiguration, __self__).__init__(
+            'kubernetes-the-hard-way:remote:CniLoopbackPluginConfiguration',
             resource_name,
             __props__,
             opts)
@@ -137,9 +155,9 @@ class CniPluginConfiguration(pulumi.CustomResource):
     @staticmethod
     def get(resource_name: str,
             id: pulumi.Input[str],
-            opts: Optional[pulumi.ResourceOptions] = None) -> 'CniPluginConfiguration':
+            opts: Optional[pulumi.ResourceOptions] = None) -> 'CniLoopbackPluginConfiguration':
         """
-        Get an existing CniPluginConfiguration resource's state with the given name, id, and optional extra
+        Get an existing CniLoopbackPluginConfiguration resource's state with the given name, id, and optional extra
         properties used to qualify the lookup.
 
         :param str resource_name: The unique name of the resulting resource.
@@ -148,20 +166,21 @@ class CniPluginConfiguration(pulumi.CustomResource):
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
 
-        __props__ = CniPluginConfigurationArgs.__new__(CniPluginConfigurationArgs)
+        __props__ = CniLoopbackPluginConfigurationArgs.__new__(CniLoopbackPluginConfigurationArgs)
 
-        __props__.__dict__["bridge"] = None
+        __props__.__dict__["cni_version"] = None
         __props__.__dict__["connection"] = None
-        __props__.__dict__["loopback"] = None
-        return CniPluginConfiguration(resource_name, opts=opts, __props__=__props__)
+        __props__.__dict__["name"] = None
+        __props__.__dict__["type"] = None
+        return CniLoopbackPluginConfiguration(resource_name, opts=opts, __props__=__props__)
 
     @property
-    @pulumi.getter
-    def bridge(self) -> pulumi.Output['outputs.CniBridgePluginConfiguration']:
+    @pulumi.getter(name="cniVersion")
+    def cni_version(self) -> pulumi.Output[str]:
         """
-        The CNI bridge configuration.
+        CNI version.
         """
-        return pulumi.get(self, "bridge")
+        return pulumi.get(self, "cni_version")
 
     @property
     @pulumi.getter
@@ -173,9 +192,17 @@ class CniPluginConfiguration(pulumi.CustomResource):
 
     @property
     @pulumi.getter
-    def loopback(self) -> pulumi.Output['outputs.CniLoopbackPluginConfiguration']:
+    def name(self) -> pulumi.Output[str]:
         """
-        The CNI loopback configuration.
+        CNI plugin name.
         """
-        return pulumi.get(self, "loopback")
+        return pulumi.get(self, "name")
+
+    @property
+    @pulumi.getter
+    def type(self) -> pulumi.Output[str]:
+        """
+        CNI plugin type.
+        """
+        return pulumi.get(self, "type")
 

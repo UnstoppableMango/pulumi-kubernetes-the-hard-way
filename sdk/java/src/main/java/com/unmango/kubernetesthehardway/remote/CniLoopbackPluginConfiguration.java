@@ -9,30 +9,29 @@ import com.pulumi.core.annotations.Export;
 import com.pulumi.core.annotations.ResourceType;
 import com.pulumi.core.internal.Codegen;
 import com.unmango.kubernetesthehardway.Utilities;
-import com.unmango.kubernetesthehardway.remote.CniPluginConfigurationArgs;
-import com.unmango.kubernetesthehardway.remote.outputs.CniBridgePluginConfiguration;
-import com.unmango.kubernetesthehardway.remote.outputs.CniLoopbackPluginConfiguration;
+import com.unmango.kubernetesthehardway.remote.CniLoopbackPluginConfigurationArgs;
+import java.lang.String;
 import javax.annotation.Nullable;
 
 /**
- * CNI plugin configuration.
+ * The CNI loopback plugin configuration.
  * 
  */
-@ResourceType(type="kubernetes-the-hard-way:remote:CniPluginConfiguration")
-public class CniPluginConfiguration extends com.pulumi.resources.CustomResource {
+@ResourceType(type="kubernetes-the-hard-way:remote:CniLoopbackPluginConfiguration")
+public class CniLoopbackPluginConfiguration extends com.pulumi.resources.CustomResource {
     /**
-     * The CNI bridge configuration.
+     * CNI version.
      * 
      */
-    @Export(name="bridge", refs={CniBridgePluginConfiguration.class}, tree="[0]")
-    private Output<CniBridgePluginConfiguration> bridge;
+    @Export(name="cniVersion", refs={String.class}, tree="[0]")
+    private Output<String> cniVersion;
 
     /**
-     * @return The CNI bridge configuration.
+     * @return CNI version.
      * 
      */
-    public Output<CniBridgePluginConfiguration> bridge() {
-        return this.bridge;
+    public Output<String> cniVersion() {
+        return this.cniVersion;
     }
     /**
      * The parameters with which to connect to the remote host.
@@ -49,33 +48,47 @@ public class CniPluginConfiguration extends com.pulumi.resources.CustomResource 
         return this.connection;
     }
     /**
-     * The CNI loopback configuration.
+     * CNI plugin name.
      * 
      */
-    @Export(name="loopback", refs={CniLoopbackPluginConfiguration.class}, tree="[0]")
-    private Output<CniLoopbackPluginConfiguration> loopback;
+    @Export(name="name", refs={String.class}, tree="[0]")
+    private Output<String> name;
 
     /**
-     * @return The CNI loopback configuration.
+     * @return CNI plugin name.
      * 
      */
-    public Output<CniLoopbackPluginConfiguration> loopback() {
-        return this.loopback;
+    public Output<String> name() {
+        return this.name;
+    }
+    /**
+     * CNI plugin type.
+     * 
+     */
+    @Export(name="type", refs={String.class}, tree="[0]")
+    private Output<String> type;
+
+    /**
+     * @return CNI plugin type.
+     * 
+     */
+    public Output<String> type() {
+        return this.type;
     }
 
     /**
      *
      * @param name The _unique_ name of the resulting resource.
      */
-    public CniPluginConfiguration(String name) {
-        this(name, CniPluginConfigurationArgs.Empty);
+    public CniLoopbackPluginConfiguration(String name) {
+        this(name, CniLoopbackPluginConfigurationArgs.Empty);
     }
     /**
      *
      * @param name The _unique_ name of the resulting resource.
      * @param args The arguments to use to populate this resource's properties.
      */
-    public CniPluginConfiguration(String name, CniPluginConfigurationArgs args) {
+    public CniLoopbackPluginConfiguration(String name, CniLoopbackPluginConfigurationArgs args) {
         this(name, args, null);
     }
     /**
@@ -84,12 +97,12 @@ public class CniPluginConfiguration extends com.pulumi.resources.CustomResource 
      * @param args The arguments to use to populate this resource's properties.
      * @param options A bag of options that control this resource's behavior.
      */
-    public CniPluginConfiguration(String name, CniPluginConfigurationArgs args, @Nullable com.pulumi.resources.CustomResourceOptions options) {
-        super("kubernetes-the-hard-way:remote:CniPluginConfiguration", name, args == null ? CniPluginConfigurationArgs.Empty : args, makeResourceOptions(options, Codegen.empty()));
+    public CniLoopbackPluginConfiguration(String name, CniLoopbackPluginConfigurationArgs args, @Nullable com.pulumi.resources.CustomResourceOptions options) {
+        super("kubernetes-the-hard-way:remote:CniLoopbackPluginConfiguration", name, args == null ? CniLoopbackPluginConfigurationArgs.Empty : args, makeResourceOptions(options, Codegen.empty()));
     }
 
-    private CniPluginConfiguration(String name, Output<String> id, @Nullable com.pulumi.resources.CustomResourceOptions options) {
-        super("kubernetes-the-hard-way:remote:CniPluginConfiguration", name, null, makeResourceOptions(options, id));
+    private CniLoopbackPluginConfiguration(String name, Output<String> id, @Nullable com.pulumi.resources.CustomResourceOptions options) {
+        super("kubernetes-the-hard-way:remote:CniLoopbackPluginConfiguration", name, null, makeResourceOptions(options, id));
     }
 
     private static com.pulumi.resources.CustomResourceOptions makeResourceOptions(@Nullable com.pulumi.resources.CustomResourceOptions options, @Nullable Output<String> id) {
@@ -107,7 +120,7 @@ public class CniPluginConfiguration extends com.pulumi.resources.CustomResource 
      * @param id The _unique_ provider ID of the resource to lookup.
      * @param options Optional settings to control the behavior of the CustomResource.
      */
-    public static CniPluginConfiguration get(String name, Output<String> id, @Nullable com.pulumi.resources.CustomResourceOptions options) {
-        return new CniPluginConfiguration(name, id, options);
+    public static CniLoopbackPluginConfiguration get(String name, Output<String> id, @Nullable com.pulumi.resources.CustomResourceOptions options) {
+        return new CniLoopbackPluginConfiguration(name, id, options);
     }
 }

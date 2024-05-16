@@ -6,7 +6,8 @@ from .. import _utilities
 import typing
 # Export this package's modules as members:
 from ._enums import *
-from .cni_plugin_configuration import *
+from .cni_bridge_plugin_configuration import *
+from .cni_loopback_plugin_configuration import *
 from .cni_plugins_install import *
 from .containerd_install import *
 from .crictl_install import *
