@@ -18,6 +18,15 @@ func generateTypes(commandSpec schema.PackageSpec) map[string]schema.ComplexType
 				{Value: "arm64"},
 			},
 		},
+		name("CniBridgeConfiguration"): {
+			ObjectTypeSpec: schema.ObjectTypeSpec{
+				Description: "The CNI plugins bridge configuration file.",
+				Type:        "object",
+				Properties: map[string]schema.PropertySpec{
+					"bridge": props.String("Bridge name"),
+				},
+			},
+		},
 		name("EtcdConfigurationProps"): { // TODO: This name kinda sucks
 			ObjectTypeSpec: schema.ObjectTypeSpec{
 				Description: "Props for resources that consume etcd configuration.",
