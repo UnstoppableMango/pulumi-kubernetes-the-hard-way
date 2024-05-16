@@ -2,8 +2,8 @@ import { ComponentResourceOptions, interpolate, output } from '@pulumi/pulumi';
 import * as schema from '../schema-types';
 import { Chmod, Mkdir } from '../tools';
 
-export class KubernetesControlPlaneConfiguration extends schema.KubernetesControlPlaneConfiguration {
-  constructor(name: string, args: schema.KubernetesControlPlaneConfigurationArgs, opts?: ComponentResourceOptions) {
+export class KubeApiServerConfiguration extends schema.KubeApiServerConfiguration {
+  constructor(name: string, args: schema.KubeApiServerConfigurationArgs, opts?: ComponentResourceOptions) {
     super(name, args, opts);
     if (opts?.urn) return;
 

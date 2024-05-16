@@ -9,7 +9,7 @@ import (
 	"github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 )
 
-func generateKubernetesControlPlaneConfiguration(commandSpec schema.PackageSpec) schema.ResourceSpec {
+func generateKubeControllerManagerConfiguration(commandSpec schema.PackageSpec) schema.ResourceSpec {
 	inputs := map[string]schema.PropertySpec{
 		"caPem": props.String("The PEM encoded certificate authority data."),
 		"caKey": props.String("The PEM encoded certificate authority key."),
@@ -22,24 +22,15 @@ func generateKubernetesControlPlaneConfiguration(commandSpec schema.PackageSpec)
 			Description: "The parameters with which to connect to the remote host.",
 			TypeSpec:    types.ExtType(commandSpec, "Connection", "remote"),
 		},
-		"encryptionConfig":  props.String("The YAML encryption configuration manifest."),
-		"kubeApiServerKey":  props.String("The PEM encoded Kube API Server certificate key."),
-		"kubeApiServerPem":  props.String("The PEM encoded Kube API Server certificate data."),
-		"kubeApiServerPath": props.String("The path to the 'kube-apiserver' binary."),
+		"encryptionConfig": props.String("The YAML encryption configuration manifest."),
 		"kubeControllerManagerKubeconfig": {
 			Description: "The kube-controller-manager kubeconfig configuration",
 			TypeSpec:    types.LocalType("Kubeconfig", "config"),
 		},
 		"kubeControllerManagerPath": props.String("The path to the 'kube-controller-manager' binary."),
 		"kubectlPath":               props.String("The path to the 'kubectl' binary."),
-		"kubeSchedulerKubeconfig": {
-			Description: "The kube-scheduler kubeconfig configuration",
-			TypeSpec:    types.LocalType("Kubeconfig", "config"),
-		},
-		"kubeSchedulerConfig": props.String("The kube-scheduler configuration manifest."),
-		"kubeSchedulerPath":   props.String("The path to the 'kube-scheduler' binary."),
-		"serviceAccountsPem":  props.String("The PEM encoded Service Accounts certificate data."),
-		"serviceAccountsKey":  props.String("The PEM encoded Service Accounts certificate key."),
+		"serviceAccountsPem":        props.String("The PEM encoded Service Accounts certificate data."),
+		"serviceAccountsKey":        props.String("The PEM encoded Service Accounts certificate key."),
 	}
 
 	requiredInputs := []string{
@@ -47,11 +38,7 @@ func generateKubernetesControlPlaneConfiguration(commandSpec schema.PackageSpec)
 		"caKey",
 		"connection",
 		"encryptionConfig",
-		"kubeApiServerKey",
-		"kubeApiServerPem",
 		"kubeControllerManagerKubeconfig",
-		"kubeSchedulerConfig",
-		"kubeSchedulerKubeconfig",
 		"serviceAccountsKey",
 		"serviceAccountsPem",
 	}

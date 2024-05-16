@@ -22,7 +22,7 @@ export type ResourceConstructor = {
     readonly "kubernetes-the-hard-way:remote:KubeSchedulerInstall": ConstructComponent<KubeSchedulerInstall>;
     readonly "kubernetes-the-hard-way:remote:KubectlInstall": ConstructComponent<KubectlInstall>;
     readonly "kubernetes-the-hard-way:remote:KubeletInstall": ConstructComponent<KubeletInstall>;
-    readonly "kubernetes-the-hard-way:remote:KubernetesControlPlaneConfiguration": ConstructComponent<KubernetesControlPlaneConfiguration>;
+    readonly "kubernetes-the-hard-way:remote:KubernetesControlPlaneConfiguration": ConstructComponent<KubeApiServerConfiguration>;
     readonly "kubernetes-the-hard-way:remote:ProvisionEtcd": ConstructComponent<ProvisionEtcd>;
     readonly "kubernetes-the-hard-way:remote:RuncInstall": ConstructComponent<RuncInstall>;
     readonly "kubernetes-the-hard-way:remote:StartEtcd": ConstructComponent<StartEtcd>;
@@ -478,7 +478,7 @@ export interface KubeletInstallArgs {
     readonly directory?: pulumi.Input<string>;
     readonly version?: pulumi.Input<string>;
 }
-export abstract class KubernetesControlPlaneConfiguration<TData = any> extends (pulumi.ComponentResource)<TData> {
+export abstract class KubeApiServerConfiguration<TData = any> extends (pulumi.ComponentResource)<TData> {
     public caKey!: string | pulumi.Output<string>;
     public caPem!: string | pulumi.Output<string>;
     public configurationDirectory?: string | pulumi.Output<string>;
@@ -499,7 +499,7 @@ export abstract class KubernetesControlPlaneConfiguration<TData = any> extends (
         super("kubernetes-the-hard-way:remote:KubernetesControlPlaneConfiguration", name, opts.urn ? { caKey: undefined, caPem: undefined, configurationDirectory: undefined, connection: undefined, encryptionConfig: undefined, kubeApiServerKey: undefined, kubeApiServerPath: undefined, kubeApiServerPem: undefined, kubeControllerManagerKubeconfig: undefined, kubeControllerManagerPath: undefined, kubeSchedulerConfig: undefined, kubeSchedulerKubeconfig: undefined, kubeSchedulerPath: undefined, kubectlPath: undefined, serviceAccountsKey: undefined, serviceAccountsPem: undefined } : { name, args, opts }, opts);
     }
 }
-export interface KubernetesControlPlaneConfigurationArgs {
+export interface KubeApiServerConfigurationArgs {
     readonly caKey: pulumi.Input<string>;
     readonly caPem: pulumi.Input<string>;
     readonly configurationDirectory?: pulumi.Input<string>;
