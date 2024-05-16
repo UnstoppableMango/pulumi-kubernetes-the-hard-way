@@ -8,6 +8,7 @@ import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
 from .. import _utilities
+from .file import File
 import pulumi_command
 
 __all__ = ['CniLoopbackPluginConfigurationArgs', 'CniLoopbackPluginConfiguration']
@@ -18,12 +19,14 @@ class CniLoopbackPluginConfigurationArgs:
                  connection: pulumi.Input['pulumi_command.remote.ConnectionArgs'],
                  cni_version: Optional[pulumi.Input[str]] = None,
                  name: Optional[pulumi.Input[str]] = None,
+                 path: Optional[pulumi.Input[str]] = None,
                  type: Optional[pulumi.Input[str]] = None):
         """
         The set of arguments for constructing a CniLoopbackPluginConfiguration resource.
         :param pulumi.Input['pulumi_command.remote.ConnectionArgs'] connection: The parameters with which to connect to the remote host.
         :param pulumi.Input[str] cni_version: CNI version.
         :param pulumi.Input[str] name: CNI plugin name.
+        :param pulumi.Input[str] path: Path to put the configuration file on the remote system
         :param pulumi.Input[str] type: CNI plugin type.
         """
         pulumi.set(__self__, "connection", connection)
@@ -31,6 +34,8 @@ class CniLoopbackPluginConfigurationArgs:
             pulumi.set(__self__, "cni_version", cni_version)
         if name is not None:
             pulumi.set(__self__, "name", name)
+        if path is not None:
+            pulumi.set(__self__, "path", path)
         if type is not None:
             pulumi.set(__self__, "type", type)
 
@@ -72,6 +77,18 @@ class CniLoopbackPluginConfigurationArgs:
 
     @property
     @pulumi.getter
+    def path(self) -> Optional[pulumi.Input[str]]:
+        """
+        Path to put the configuration file on the remote system
+        """
+        return pulumi.get(self, "path")
+
+    @path.setter
+    def path(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "path", value)
+
+    @property
+    @pulumi.getter
     def type(self) -> Optional[pulumi.Input[str]]:
         """
         CNI plugin type.
@@ -91,6 +108,7 @@ class CniLoopbackPluginConfiguration(pulumi.CustomResource):
                  cni_version: Optional[pulumi.Input[str]] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
                  name: Optional[pulumi.Input[str]] = None,
+                 path: Optional[pulumi.Input[str]] = None,
                  type: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         """
@@ -101,6 +119,7 @@ class CniLoopbackPluginConfiguration(pulumi.CustomResource):
         :param pulumi.Input[str] cni_version: CNI version.
         :param pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']] connection: The parameters with which to connect to the remote host.
         :param pulumi.Input[str] name: CNI plugin name.
+        :param pulumi.Input[str] path: Path to put the configuration file on the remote system
         :param pulumi.Input[str] type: CNI plugin type.
         """
         ...
@@ -130,6 +149,7 @@ class CniLoopbackPluginConfiguration(pulumi.CustomResource):
                  cni_version: Optional[pulumi.Input[str]] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
                  name: Optional[pulumi.Input[str]] = None,
+                 path: Optional[pulumi.Input[str]] = None,
                  type: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
@@ -145,7 +165,9 @@ class CniLoopbackPluginConfiguration(pulumi.CustomResource):
                 raise TypeError("Missing required property 'connection'")
             __props__.__dict__["connection"] = connection
             __props__.__dict__["name"] = name
+            __props__.__dict__["path"] = path
             __props__.__dict__["type"] = type
+            __props__.__dict__["file"] = None
         super(CniLoopbackPluginConfiguration, __self__).__init__(
             'kubernetes-the-hard-way:remote:CniLoopbackPluginConfiguration',
             resource_name,
@@ -170,7 +192,9 @@ class CniLoopbackPluginConfiguration(pulumi.CustomResource):
 
         __props__.__dict__["cni_version"] = None
         __props__.__dict__["connection"] = None
+        __props__.__dict__["file"] = None
         __props__.__dict__["name"] = None
+        __props__.__dict__["path"] = None
         __props__.__dict__["type"] = None
         return CniLoopbackPluginConfiguration(resource_name, opts=opts, __props__=__props__)
 
@@ -192,11 +216,27 @@ class CniLoopbackPluginConfiguration(pulumi.CustomResource):
 
     @property
     @pulumi.getter
+    def file(self) -> pulumi.Output[Optional['File']]:
+        """
+        The file on the remote system.
+        """
+        return pulumi.get(self, "file")
+
+    @property
+    @pulumi.getter
     def name(self) -> pulumi.Output[str]:
         """
         CNI plugin name.
         """
         return pulumi.get(self, "name")
+
+    @property
+    @pulumi.getter
+    def path(self) -> pulumi.Output[str]:
+        """
+        Path to put the configuration file on the remote system
+        """
+        return pulumi.get(self, "path")
 
     @property
     @pulumi.getter

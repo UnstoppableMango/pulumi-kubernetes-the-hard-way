@@ -35,6 +35,12 @@ namespace UnMango.KubernetesTheHardWay.Remote
         public Output<Pulumi.Command.Remote.Outputs.Connection> Connection { get; private set; } = null!;
 
         /// <summary>
+        /// The file on the remote system.
+        /// </summary>
+        [Output("file")]
+        public Output<UnMango.KubernetesTheHardWay.Remote.File?> File { get; private set; } = null!;
+
+        /// <summary>
         /// IP masq.
         /// </summary>
         [Output("ipMasq")]
@@ -57,6 +63,18 @@ namespace UnMango.KubernetesTheHardWay.Remote
         /// </summary>
         [Output("name")]
         public Output<string> Name { get; private set; } = null!;
+
+        /// <summary>
+        /// Path to put the configuration file on the remote system
+        /// </summary>
+        [Output("path")]
+        public Output<string> Path { get; private set; } = null!;
+
+        /// <summary>
+        /// The subnet to use.
+        /// </summary>
+        [Output("subnet")]
+        public Output<string?> Subnet { get; private set; } = null!;
 
         /// <summary>
         /// CNI plugin type.
@@ -155,6 +173,18 @@ namespace UnMango.KubernetesTheHardWay.Remote
         /// </summary>
         [Input("name")]
         public Input<string>? Name { get; set; }
+
+        /// <summary>
+        /// Path to put the configuration file on the remote system
+        /// </summary>
+        [Input("path")]
+        public Input<string>? Path { get; set; }
+
+        /// <summary>
+        /// The subnet to use.
+        /// </summary>
+        [Input("subnet")]
+        public Input<string>? Subnet { get; set; }
 
         /// <summary>
         /// CNI plugin type.

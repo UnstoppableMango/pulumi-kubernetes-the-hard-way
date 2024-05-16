@@ -21,8 +21,12 @@ type CniLoopbackPluginConfiguration struct {
 	CniVersion pulumi.StringOutput `pulumi:"cniVersion"`
 	// The parameters with which to connect to the remote host.
 	Connection pulumiCommand.ConnectionOutput `pulumi:"connection"`
+	// The file on the remote system.
+	File FileOutput `pulumi:"file"`
 	// CNI plugin name.
 	Name pulumi.StringOutput `pulumi:"name"`
+	// Path to put the configuration file on the remote system
+	Path pulumi.StringOutput `pulumi:"path"`
 	// CNI plugin type.
 	Type pulumi.StringOutput `pulumi:"type"`
 }
@@ -77,6 +81,8 @@ type cniLoopbackPluginConfigurationArgs struct {
 	Connection pulumiCommand.Connection `pulumi:"connection"`
 	// CNI plugin name.
 	Name *string `pulumi:"name"`
+	// Path to put the configuration file on the remote system
+	Path *string `pulumi:"path"`
 	// CNI plugin type.
 	Type *string `pulumi:"type"`
 }
@@ -89,6 +95,8 @@ type CniLoopbackPluginConfigurationArgs struct {
 	Connection pulumiCommand.ConnectionInput
 	// CNI plugin name.
 	Name pulumi.StringPtrInput
+	// Path to put the configuration file on the remote system
+	Path pulumi.StringPtrInput
 	// CNI plugin type.
 	Type pulumi.StringPtrInput
 }
@@ -190,9 +198,19 @@ func (o CniLoopbackPluginConfigurationOutput) Connection() pulumiCommand.Connect
 	return o.ApplyT(func(v *CniLoopbackPluginConfiguration) pulumiCommand.ConnectionOutput { return v.Connection }).(pulumiCommand.ConnectionOutput)
 }
 
+// The file on the remote system.
+func (o CniLoopbackPluginConfigurationOutput) File() FileOutput {
+	return o.ApplyT(func(v *CniLoopbackPluginConfiguration) FileOutput { return v.File }).(FileOutput)
+}
+
 // CNI plugin name.
 func (o CniLoopbackPluginConfigurationOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v *CniLoopbackPluginConfiguration) pulumi.StringOutput { return v.Name }).(pulumi.StringOutput)
+}
+
+// Path to put the configuration file on the remote system
+func (o CniLoopbackPluginConfigurationOutput) Path() pulumi.StringOutput {
+	return o.ApplyT(func(v *CniLoopbackPluginConfiguration) pulumi.StringOutput { return v.Path }).(pulumi.StringOutput)
 }
 
 // CNI plugin type.

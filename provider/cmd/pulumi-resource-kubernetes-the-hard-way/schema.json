@@ -1916,6 +1916,10 @@
                     "$ref": "/command/v0.10.0/schema.json#/types/command:remote:Connection",
                     "description": "The parameters with which to connect to the remote host."
                 },
+                "file": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:remote:File",
+                    "description": "The file on the remote system."
+                },
                 "ipMasq": {
                     "type": "boolean",
                     "description": "IP masq."
@@ -1932,6 +1936,14 @@
                     "type": "string",
                     "description": "CNI plugin name."
                 },
+                "path": {
+                    "type": "string",
+                    "description": "Path to put the configuration file on the remote system"
+                },
+                "subnet": {
+                    "type": "string",
+                    "description": "The subnet to use."
+                },
                 "type": {
                     "type": "string",
                     "description": "CNI plugin type."
@@ -1945,6 +1957,7 @@
                 "ipMasq",
                 "ipam",
                 "name",
+                "path",
                 "type"
             ],
             "inputProperties": {
@@ -1976,6 +1989,14 @@
                     "type": "string",
                     "description": "CNI plugin name."
                 },
+                "path": {
+                    "type": "string",
+                    "description": "Path to put the configuration file on the remote system"
+                },
+                "subnet": {
+                    "type": "string",
+                    "description": "The subnet to use."
+                },
                 "type": {
                     "type": "string",
                     "description": "CNI plugin type."
@@ -1996,9 +2017,17 @@
                     "$ref": "/command/v0.10.0/schema.json#/types/command:remote:Connection",
                     "description": "The parameters with which to connect to the remote host."
                 },
+                "file": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:remote:File",
+                    "description": "The file on the remote system."
+                },
                 "name": {
                     "type": "string",
                     "description": "CNI plugin name."
+                },
+                "path": {
+                    "type": "string",
+                    "description": "Path to put the configuration file on the remote system"
                 },
                 "type": {
                     "type": "string",
@@ -2009,6 +2038,7 @@
                 "connection",
                 "cniVersion",
                 "name",
+                "path",
                 "type"
             ],
             "inputProperties": {
@@ -2023,6 +2053,10 @@
                 "name": {
                     "type": "string",
                     "description": "CNI plugin name."
+                },
+                "path": {
+                    "type": "string",
+                    "description": "Path to put the configuration file on the remote system"
                 },
                 "type": {
                     "type": "string",

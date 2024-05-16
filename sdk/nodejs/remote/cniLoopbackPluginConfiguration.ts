@@ -6,6 +6,8 @@ import * as utilities from "../utilities";
 
 import * as pulumiCommand from "@pulumi/command";
 
+import {File} from "./index";
+
 /**
  * The CNI loopback plugin configuration.
  */
@@ -45,9 +47,17 @@ export class CniLoopbackPluginConfiguration extends pulumi.CustomResource {
      */
     public readonly connection!: pulumi.Output<pulumiCommand.types.output.remote.Connection>;
     /**
+     * The file on the remote system.
+     */
+    public /*out*/ readonly file!: pulumi.Output<File | undefined>;
+    /**
      * CNI plugin name.
      */
     public readonly name!: pulumi.Output<string>;
+    /**
+     * Path to put the configuration file on the remote system
+     */
+    public readonly path!: pulumi.Output<string>;
     /**
      * CNI plugin type.
      */
@@ -70,11 +80,15 @@ export class CniLoopbackPluginConfiguration extends pulumi.CustomResource {
             resourceInputs["cniVersion"] = args ? args.cniVersion : undefined;
             resourceInputs["connection"] = args ? (args.connection ? pulumi.output(args.connection).apply(pulumiCommand.types.input.remote.connectionArgsProvideDefaults) : undefined) : undefined;
             resourceInputs["name"] = args ? args.name : undefined;
+            resourceInputs["path"] = args ? args.path : undefined;
             resourceInputs["type"] = args ? args.type : undefined;
+            resourceInputs["file"] = undefined /*out*/;
         } else {
             resourceInputs["cniVersion"] = undefined /*out*/;
             resourceInputs["connection"] = undefined /*out*/;
+            resourceInputs["file"] = undefined /*out*/;
             resourceInputs["name"] = undefined /*out*/;
+            resourceInputs["path"] = undefined /*out*/;
             resourceInputs["type"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
@@ -98,6 +112,10 @@ export interface CniLoopbackPluginConfigurationArgs {
      * CNI plugin name.
      */
     name?: pulumi.Input<string>;
+    /**
+     * Path to put the configuration file on the remote system
+     */
+    path?: pulumi.Input<string>;
     /**
      * CNI plugin type.
      */

@@ -125,6 +125,36 @@ public final class CniBridgePluginConfigurationArgs extends com.pulumi.resources
     }
 
     /**
+     * Path to put the configuration file on the remote system
+     * 
+     */
+    @Import(name="path")
+    private @Nullable Output<String> path;
+
+    /**
+     * @return Path to put the configuration file on the remote system
+     * 
+     */
+    public Optional<Output<String>> path() {
+        return Optional.ofNullable(this.path);
+    }
+
+    /**
+     * The subnet to use.
+     * 
+     */
+    @Import(name="subnet")
+    private @Nullable Output<String> subnet;
+
+    /**
+     * @return The subnet to use.
+     * 
+     */
+    public Optional<Output<String>> subnet() {
+        return Optional.ofNullable(this.subnet);
+    }
+
+    /**
      * CNI plugin type.
      * 
      */
@@ -149,6 +179,8 @@ public final class CniBridgePluginConfigurationArgs extends com.pulumi.resources
         this.ipam = $.ipam;
         this.isGateway = $.isGateway;
         this.name = $.name;
+        this.path = $.path;
+        this.subnet = $.subnet;
         this.type = $.type;
     }
 
@@ -315,6 +347,48 @@ public final class CniBridgePluginConfigurationArgs extends com.pulumi.resources
          */
         public Builder name(String name) {
             return name(Output.of(name));
+        }
+
+        /**
+         * @param path Path to put the configuration file on the remote system
+         * 
+         * @return builder
+         * 
+         */
+        public Builder path(@Nullable Output<String> path) {
+            $.path = path;
+            return this;
+        }
+
+        /**
+         * @param path Path to put the configuration file on the remote system
+         * 
+         * @return builder
+         * 
+         */
+        public Builder path(String path) {
+            return path(Output.of(path));
+        }
+
+        /**
+         * @param subnet The subnet to use.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder subnet(@Nullable Output<String> subnet) {
+            $.subnet = subnet;
+            return this;
+        }
+
+        /**
+         * @param subnet The subnet to use.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder subnet(String subnet) {
+            return subnet(Output.of(subnet));
         }
 
         /**

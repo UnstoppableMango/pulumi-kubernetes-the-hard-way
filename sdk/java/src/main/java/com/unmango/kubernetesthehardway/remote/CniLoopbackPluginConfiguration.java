@@ -10,7 +10,9 @@ import com.pulumi.core.annotations.ResourceType;
 import com.pulumi.core.internal.Codegen;
 import com.unmango.kubernetesthehardway.Utilities;
 import com.unmango.kubernetesthehardway.remote.CniLoopbackPluginConfigurationArgs;
+import com.unmango.kubernetesthehardway.remote.File;
 import java.lang.String;
+import java.util.Optional;
 import javax.annotation.Nullable;
 
 /**
@@ -48,6 +50,20 @@ public class CniLoopbackPluginConfiguration extends com.pulumi.resources.CustomR
         return this.connection;
     }
     /**
+     * The file on the remote system.
+     * 
+     */
+    @Export(name="file", refs={File.class}, tree="[0]")
+    private Output</* @Nullable */ File> file;
+
+    /**
+     * @return The file on the remote system.
+     * 
+     */
+    public Output<Optional<File>> file() {
+        return Codegen.optional(this.file);
+    }
+    /**
      * CNI plugin name.
      * 
      */
@@ -60,6 +76,20 @@ public class CniLoopbackPluginConfiguration extends com.pulumi.resources.CustomR
      */
     public Output<String> name() {
         return this.name;
+    }
+    /**
+     * Path to put the configuration file on the remote system
+     * 
+     */
+    @Export(name="path", refs={String.class}, tree="[0]")
+    private Output<String> path;
+
+    /**
+     * @return Path to put the configuration file on the remote system
+     * 
+     */
+    public Output<String> path() {
+        return this.path;
     }
     /**
      * CNI plugin type.

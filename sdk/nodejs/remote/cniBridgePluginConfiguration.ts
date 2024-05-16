@@ -9,6 +9,8 @@ import * as utilities from "../utilities";
 
 import * as pulumiCommand from "@pulumi/command";
 
+import {File} from "./index";
+
 /**
  * The CNI bridge plugin configuration.
  */
@@ -52,6 +54,10 @@ export class CniBridgePluginConfiguration extends pulumi.CustomResource {
      */
     public readonly connection!: pulumi.Output<pulumiCommand.types.output.remote.Connection>;
     /**
+     * The file on the remote system.
+     */
+    public /*out*/ readonly file!: pulumi.Output<File | undefined>;
+    /**
      * IP masq.
      */
     public readonly ipMasq!: pulumi.Output<boolean>;
@@ -67,6 +73,14 @@ export class CniBridgePluginConfiguration extends pulumi.CustomResource {
      * CNI plugin name.
      */
     public readonly name!: pulumi.Output<string>;
+    /**
+     * Path to put the configuration file on the remote system
+     */
+    public readonly path!: pulumi.Output<string>;
+    /**
+     * The subnet to use.
+     */
+    public readonly subnet!: pulumi.Output<string | undefined>;
     /**
      * CNI plugin type.
      */
@@ -93,15 +107,21 @@ export class CniBridgePluginConfiguration extends pulumi.CustomResource {
             resourceInputs["ipam"] = args ? args.ipam : undefined;
             resourceInputs["isGateway"] = args ? args.isGateway : undefined;
             resourceInputs["name"] = args ? args.name : undefined;
+            resourceInputs["path"] = args ? args.path : undefined;
+            resourceInputs["subnet"] = args ? args.subnet : undefined;
             resourceInputs["type"] = args ? args.type : undefined;
+            resourceInputs["file"] = undefined /*out*/;
         } else {
             resourceInputs["bridge"] = undefined /*out*/;
             resourceInputs["cniVersion"] = undefined /*out*/;
             resourceInputs["connection"] = undefined /*out*/;
+            resourceInputs["file"] = undefined /*out*/;
             resourceInputs["ipMasq"] = undefined /*out*/;
             resourceInputs["ipam"] = undefined /*out*/;
             resourceInputs["isGateway"] = undefined /*out*/;
             resourceInputs["name"] = undefined /*out*/;
+            resourceInputs["path"] = undefined /*out*/;
+            resourceInputs["subnet"] = undefined /*out*/;
             resourceInputs["type"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
@@ -141,6 +161,14 @@ export interface CniBridgePluginConfigurationArgs {
      * CNI plugin name.
      */
     name?: pulumi.Input<string>;
+    /**
+     * Path to put the configuration file on the remote system
+     */
+    path?: pulumi.Input<string>;
+    /**
+     * The subnet to use.
+     */
+    subnet?: pulumi.Input<string>;
     /**
      * CNI plugin type.
      */

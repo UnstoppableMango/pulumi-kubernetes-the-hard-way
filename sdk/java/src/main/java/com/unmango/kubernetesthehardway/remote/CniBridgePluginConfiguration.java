@@ -10,9 +10,11 @@ import com.pulumi.core.annotations.ResourceType;
 import com.pulumi.core.internal.Codegen;
 import com.unmango.kubernetesthehardway.Utilities;
 import com.unmango.kubernetesthehardway.remote.CniBridgePluginConfigurationArgs;
+import com.unmango.kubernetesthehardway.remote.File;
 import com.unmango.kubernetesthehardway.remote.outputs.CniBridgeIpam;
 import java.lang.Boolean;
 import java.lang.String;
+import java.util.Optional;
 import javax.annotation.Nullable;
 
 /**
@@ -62,6 +64,20 @@ public class CniBridgePluginConfiguration extends com.pulumi.resources.CustomRes
      */
     public Output<Connection> connection() {
         return this.connection;
+    }
+    /**
+     * The file on the remote system.
+     * 
+     */
+    @Export(name="file", refs={File.class}, tree="[0]")
+    private Output</* @Nullable */ File> file;
+
+    /**
+     * @return The file on the remote system.
+     * 
+     */
+    public Output<Optional<File>> file() {
+        return Codegen.optional(this.file);
     }
     /**
      * IP masq.
@@ -118,6 +134,34 @@ public class CniBridgePluginConfiguration extends com.pulumi.resources.CustomRes
      */
     public Output<String> name() {
         return this.name;
+    }
+    /**
+     * Path to put the configuration file on the remote system
+     * 
+     */
+    @Export(name="path", refs={String.class}, tree="[0]")
+    private Output<String> path;
+
+    /**
+     * @return Path to put the configuration file on the remote system
+     * 
+     */
+    public Output<String> path() {
+        return this.path;
+    }
+    /**
+     * The subnet to use.
+     * 
+     */
+    @Export(name="subnet", refs={String.class}, tree="[0]")
+    private Output</* @Nullable */ String> subnet;
+
+    /**
+     * @return The subnet to use.
+     * 
+     */
+    public Output<Optional<String>> subnet() {
+        return Codegen.optional(this.subnet);
     }
     /**
      * CNI plugin type.

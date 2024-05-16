@@ -23,6 +23,8 @@ type CniBridgePluginConfiguration struct {
 	CniVersion pulumi.StringOutput `pulumi:"cniVersion"`
 	// The parameters with which to connect to the remote host.
 	Connection pulumiCommand.ConnectionOutput `pulumi:"connection"`
+	// The file on the remote system.
+	File FileOutput `pulumi:"file"`
 	// IP masq.
 	IpMasq pulumi.BoolOutput `pulumi:"ipMasq"`
 	// IPAM
@@ -31,6 +33,10 @@ type CniBridgePluginConfiguration struct {
 	IsGateway pulumi.BoolOutput `pulumi:"isGateway"`
 	// CNI plugin name.
 	Name pulumi.StringOutput `pulumi:"name"`
+	// Path to put the configuration file on the remote system
+	Path pulumi.StringOutput `pulumi:"path"`
+	// The subnet to use.
+	Subnet pulumi.StringPtrOutput `pulumi:"subnet"`
 	// CNI plugin type.
 	Type pulumi.StringOutput `pulumi:"type"`
 }
@@ -93,6 +99,10 @@ type cniBridgePluginConfigurationArgs struct {
 	IsGateway *bool `pulumi:"isGateway"`
 	// CNI plugin name.
 	Name *string `pulumi:"name"`
+	// Path to put the configuration file on the remote system
+	Path *string `pulumi:"path"`
+	// The subnet to use.
+	Subnet *string `pulumi:"subnet"`
 	// CNI plugin type.
 	Type *string `pulumi:"type"`
 }
@@ -113,6 +123,10 @@ type CniBridgePluginConfigurationArgs struct {
 	IsGateway pulumi.BoolPtrInput
 	// CNI plugin name.
 	Name pulumi.StringPtrInput
+	// Path to put the configuration file on the remote system
+	Path pulumi.StringPtrInput
+	// The subnet to use.
+	Subnet pulumi.StringPtrInput
 	// CNI plugin type.
 	Type pulumi.StringPtrInput
 }
@@ -219,6 +233,11 @@ func (o CniBridgePluginConfigurationOutput) Connection() pulumiCommand.Connectio
 	return o.ApplyT(func(v *CniBridgePluginConfiguration) pulumiCommand.ConnectionOutput { return v.Connection }).(pulumiCommand.ConnectionOutput)
 }
 
+// The file on the remote system.
+func (o CniBridgePluginConfigurationOutput) File() FileOutput {
+	return o.ApplyT(func(v *CniBridgePluginConfiguration) FileOutput { return v.File }).(FileOutput)
+}
+
 // IP masq.
 func (o CniBridgePluginConfigurationOutput) IpMasq() pulumi.BoolOutput {
 	return o.ApplyT(func(v *CniBridgePluginConfiguration) pulumi.BoolOutput { return v.IpMasq }).(pulumi.BoolOutput)
@@ -237,6 +256,16 @@ func (o CniBridgePluginConfigurationOutput) IsGateway() pulumi.BoolOutput {
 // CNI plugin name.
 func (o CniBridgePluginConfigurationOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v *CniBridgePluginConfiguration) pulumi.StringOutput { return v.Name }).(pulumi.StringOutput)
+}
+
+// Path to put the configuration file on the remote system
+func (o CniBridgePluginConfigurationOutput) Path() pulumi.StringOutput {
+	return o.ApplyT(func(v *CniBridgePluginConfiguration) pulumi.StringOutput { return v.Path }).(pulumi.StringOutput)
+}
+
+// The subnet to use.
+func (o CniBridgePluginConfigurationOutput) Subnet() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *CniBridgePluginConfiguration) pulumi.StringPtrOutput { return v.Subnet }).(pulumi.StringPtrOutput)
 }
 
 // CNI plugin type.

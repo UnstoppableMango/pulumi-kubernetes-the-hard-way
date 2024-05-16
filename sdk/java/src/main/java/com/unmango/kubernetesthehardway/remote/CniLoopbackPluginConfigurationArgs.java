@@ -63,6 +63,21 @@ public final class CniLoopbackPluginConfigurationArgs extends com.pulumi.resourc
     }
 
     /**
+     * Path to put the configuration file on the remote system
+     * 
+     */
+    @Import(name="path")
+    private @Nullable Output<String> path;
+
+    /**
+     * @return Path to put the configuration file on the remote system
+     * 
+     */
+    public Optional<Output<String>> path() {
+        return Optional.ofNullable(this.path);
+    }
+
+    /**
      * CNI plugin type.
      * 
      */
@@ -83,6 +98,7 @@ public final class CniLoopbackPluginConfigurationArgs extends com.pulumi.resourc
         this.cniVersion = $.cniVersion;
         this.connection = $.connection;
         this.name = $.name;
+        this.path = $.path;
         this.type = $.type;
     }
 
@@ -165,6 +181,27 @@ public final class CniLoopbackPluginConfigurationArgs extends com.pulumi.resourc
          */
         public Builder name(String name) {
             return name(Output.of(name));
+        }
+
+        /**
+         * @param path Path to put the configuration file on the remote system
+         * 
+         * @return builder
+         * 
+         */
+        public Builder path(@Nullable Output<String> path) {
+            $.path = path;
+            return this;
+        }
+
+        /**
+         * @param path Path to put the configuration file on the remote system
+         * 
+         * @return builder
+         * 
+         */
+        public Builder path(String path) {
+            return path(Output.of(path));
         }
 
         /**

@@ -10,6 +10,7 @@ from typing import Any, Mapping, Optional, Sequence, Union, overload
 from .. import _utilities
 from . import outputs
 from ._inputs import *
+from .file import File
 import pulumi_command
 
 __all__ = ['CniBridgePluginConfigurationArgs', 'CniBridgePluginConfiguration']
@@ -24,6 +25,8 @@ class CniBridgePluginConfigurationArgs:
                  ipam: Optional[pulumi.Input['CniBridgeIpamArgs']] = None,
                  is_gateway: Optional[pulumi.Input[bool]] = None,
                  name: Optional[pulumi.Input[str]] = None,
+                 path: Optional[pulumi.Input[str]] = None,
+                 subnet: Optional[pulumi.Input[str]] = None,
                  type: Optional[pulumi.Input[str]] = None):
         """
         The set of arguments for constructing a CniBridgePluginConfiguration resource.
@@ -34,6 +37,8 @@ class CniBridgePluginConfigurationArgs:
         :param pulumi.Input['CniBridgeIpamArgs'] ipam: IPAM
         :param pulumi.Input[bool] is_gateway: Is gateway.
         :param pulumi.Input[str] name: CNI plugin name.
+        :param pulumi.Input[str] path: Path to put the configuration file on the remote system
+        :param pulumi.Input[str] subnet: The subnet to use.
         :param pulumi.Input[str] type: CNI plugin type.
         """
         pulumi.set(__self__, "connection", connection)
@@ -49,6 +54,10 @@ class CniBridgePluginConfigurationArgs:
             pulumi.set(__self__, "is_gateway", is_gateway)
         if name is not None:
             pulumi.set(__self__, "name", name)
+        if path is not None:
+            pulumi.set(__self__, "path", path)
+        if subnet is not None:
+            pulumi.set(__self__, "subnet", subnet)
         if type is not None:
             pulumi.set(__self__, "type", type)
 
@@ -138,6 +147,30 @@ class CniBridgePluginConfigurationArgs:
 
     @property
     @pulumi.getter
+    def path(self) -> Optional[pulumi.Input[str]]:
+        """
+        Path to put the configuration file on the remote system
+        """
+        return pulumi.get(self, "path")
+
+    @path.setter
+    def path(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "path", value)
+
+    @property
+    @pulumi.getter
+    def subnet(self) -> Optional[pulumi.Input[str]]:
+        """
+        The subnet to use.
+        """
+        return pulumi.get(self, "subnet")
+
+    @subnet.setter
+    def subnet(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "subnet", value)
+
+    @property
+    @pulumi.getter
     def type(self) -> Optional[pulumi.Input[str]]:
         """
         CNI plugin type.
@@ -161,6 +194,8 @@ class CniBridgePluginConfiguration(pulumi.CustomResource):
                  ipam: Optional[pulumi.Input[pulumi.InputType['CniBridgeIpamArgs']]] = None,
                  is_gateway: Optional[pulumi.Input[bool]] = None,
                  name: Optional[pulumi.Input[str]] = None,
+                 path: Optional[pulumi.Input[str]] = None,
+                 subnet: Optional[pulumi.Input[str]] = None,
                  type: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         """
@@ -175,6 +210,8 @@ class CniBridgePluginConfiguration(pulumi.CustomResource):
         :param pulumi.Input[pulumi.InputType['CniBridgeIpamArgs']] ipam: IPAM
         :param pulumi.Input[bool] is_gateway: Is gateway.
         :param pulumi.Input[str] name: CNI plugin name.
+        :param pulumi.Input[str] path: Path to put the configuration file on the remote system
+        :param pulumi.Input[str] subnet: The subnet to use.
         :param pulumi.Input[str] type: CNI plugin type.
         """
         ...
@@ -208,6 +245,8 @@ class CniBridgePluginConfiguration(pulumi.CustomResource):
                  ipam: Optional[pulumi.Input[pulumi.InputType['CniBridgeIpamArgs']]] = None,
                  is_gateway: Optional[pulumi.Input[bool]] = None,
                  name: Optional[pulumi.Input[str]] = None,
+                 path: Optional[pulumi.Input[str]] = None,
+                 subnet: Optional[pulumi.Input[str]] = None,
                  type: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
@@ -227,7 +266,10 @@ class CniBridgePluginConfiguration(pulumi.CustomResource):
             __props__.__dict__["ipam"] = ipam
             __props__.__dict__["is_gateway"] = is_gateway
             __props__.__dict__["name"] = name
+            __props__.__dict__["path"] = path
+            __props__.__dict__["subnet"] = subnet
             __props__.__dict__["type"] = type
+            __props__.__dict__["file"] = None
         super(CniBridgePluginConfiguration, __self__).__init__(
             'kubernetes-the-hard-way:remote:CniBridgePluginConfiguration',
             resource_name,
@@ -253,10 +295,13 @@ class CniBridgePluginConfiguration(pulumi.CustomResource):
         __props__.__dict__["bridge"] = None
         __props__.__dict__["cni_version"] = None
         __props__.__dict__["connection"] = None
+        __props__.__dict__["file"] = None
         __props__.__dict__["ip_masq"] = None
         __props__.__dict__["ipam"] = None
         __props__.__dict__["is_gateway"] = None
         __props__.__dict__["name"] = None
+        __props__.__dict__["path"] = None
+        __props__.__dict__["subnet"] = None
         __props__.__dict__["type"] = None
         return CniBridgePluginConfiguration(resource_name, opts=opts, __props__=__props__)
 
@@ -283,6 +328,14 @@ class CniBridgePluginConfiguration(pulumi.CustomResource):
         The parameters with which to connect to the remote host.
         """
         return pulumi.get(self, "connection")
+
+    @property
+    @pulumi.getter
+    def file(self) -> pulumi.Output[Optional['File']]:
+        """
+        The file on the remote system.
+        """
+        return pulumi.get(self, "file")
 
     @property
     @pulumi.getter(name="ipMasq")
@@ -315,6 +368,22 @@ class CniBridgePluginConfiguration(pulumi.CustomResource):
         CNI plugin name.
         """
         return pulumi.get(self, "name")
+
+    @property
+    @pulumi.getter
+    def path(self) -> pulumi.Output[str]:
+        """
+        Path to put the configuration file on the remote system
+        """
+        return pulumi.get(self, "path")
+
+    @property
+    @pulumi.getter
+    def subnet(self) -> pulumi.Output[Optional[str]]:
+        """
+        The subnet to use.
+        """
+        return pulumi.get(self, "subnet")
 
     @property
     @pulumi.getter
