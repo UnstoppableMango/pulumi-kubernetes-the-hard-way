@@ -8,16 +8,247 @@ import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
 from .. import _utilities
+from . import outputs
 from ._enums import *
 import pulumi_command
 
 __all__ = [
+    'CniBridgeIpam',
+    'CniBridgePluginConfiguration',
+    'CniLoopbackPluginConfiguration',
     'EtcdConfigurationProps',
     'EtcdNode',
     'SystemdInstallSection',
     'SystemdServiceSection',
     'SystemdUnitSection',
 ]
+
+@pulumi.output_type
+class CniBridgeIpam(dict):
+    """
+    The CNI plugins IPAM
+    """
+    def __init__(__self__, *,
+                 ranges: Optional[Sequence[Mapping[str, str]]] = None,
+                 routes: Optional[Sequence[Mapping[str, str]]] = None,
+                 type: Optional[str] = None):
+        """
+        The CNI plugins IPAM
+        :param Sequence[Mapping[str, str]] ranges: IPAM ranges.
+        :param Sequence[Mapping[str, str]] routes: IPAM routes.
+        :param str type: CNI bridge IPAM type
+        """
+        if ranges is not None:
+            pulumi.set(__self__, "ranges", ranges)
+        if routes is not None:
+            pulumi.set(__self__, "routes", routes)
+        if type is not None:
+            pulumi.set(__self__, "type", type)
+
+    @property
+    @pulumi.getter
+    def ranges(self) -> Optional[Sequence[Mapping[str, str]]]:
+        """
+        IPAM ranges.
+        """
+        return pulumi.get(self, "ranges")
+
+    @property
+    @pulumi.getter
+    def routes(self) -> Optional[Sequence[Mapping[str, str]]]:
+        """
+        IPAM routes.
+        """
+        return pulumi.get(self, "routes")
+
+    @property
+    @pulumi.getter
+    def type(self) -> Optional[str]:
+        """
+        CNI bridge IPAM type
+        """
+        return pulumi.get(self, "type")
+
+
+@pulumi.output_type
+class CniBridgePluginConfiguration(dict):
+    """
+    The CNI bridge plugin configuration.
+    """
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "cniVersion":
+            suggest = "cni_version"
+        elif key == "ipMasq":
+            suggest = "ip_masq"
+        elif key == "isGateway":
+            suggest = "is_gateway"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in CniBridgePluginConfiguration. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        CniBridgePluginConfiguration.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        CniBridgePluginConfiguration.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 bridge: Optional[str] = None,
+                 cni_version: Optional[str] = None,
+                 ip_masq: Optional[bool] = None,
+                 ipam: Optional['outputs.CniBridgeIpam'] = None,
+                 is_gateway: Optional[bool] = None,
+                 name: Optional[str] = None,
+                 type: Optional[str] = None):
+        """
+        The CNI bridge plugin configuration.
+        :param str bridge: Bridge name.
+        :param str cni_version: CNI version.
+        :param bool ip_masq: IP masq.
+        :param 'CniBridgeIpam' ipam: IPAM
+        :param bool is_gateway: Is gateway.
+        :param str name: CNI plugin name.
+        :param str type: CNI plugin type.
+        """
+        if bridge is not None:
+            pulumi.set(__self__, "bridge", bridge)
+        if cni_version is not None:
+            pulumi.set(__self__, "cni_version", cni_version)
+        if ip_masq is not None:
+            pulumi.set(__self__, "ip_masq", ip_masq)
+        if ipam is not None:
+            pulumi.set(__self__, "ipam", ipam)
+        if is_gateway is not None:
+            pulumi.set(__self__, "is_gateway", is_gateway)
+        if name is not None:
+            pulumi.set(__self__, "name", name)
+        if type is not None:
+            pulumi.set(__self__, "type", type)
+
+    @property
+    @pulumi.getter
+    def bridge(self) -> Optional[str]:
+        """
+        Bridge name.
+        """
+        return pulumi.get(self, "bridge")
+
+    @property
+    @pulumi.getter(name="cniVersion")
+    def cni_version(self) -> Optional[str]:
+        """
+        CNI version.
+        """
+        return pulumi.get(self, "cni_version")
+
+    @property
+    @pulumi.getter(name="ipMasq")
+    def ip_masq(self) -> Optional[bool]:
+        """
+        IP masq.
+        """
+        return pulumi.get(self, "ip_masq")
+
+    @property
+    @pulumi.getter
+    def ipam(self) -> Optional['outputs.CniBridgeIpam']:
+        """
+        IPAM
+        """
+        return pulumi.get(self, "ipam")
+
+    @property
+    @pulumi.getter(name="isGateway")
+    def is_gateway(self) -> Optional[bool]:
+        """
+        Is gateway.
+        """
+        return pulumi.get(self, "is_gateway")
+
+    @property
+    @pulumi.getter
+    def name(self) -> Optional[str]:
+        """
+        CNI plugin name.
+        """
+        return pulumi.get(self, "name")
+
+    @property
+    @pulumi.getter
+    def type(self) -> Optional[str]:
+        """
+        CNI plugin type.
+        """
+        return pulumi.get(self, "type")
+
+
+@pulumi.output_type
+class CniLoopbackPluginConfiguration(dict):
+    """
+    The CNI loopback plugin configuration.
+    """
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "cniVersion":
+            suggest = "cni_version"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in CniLoopbackPluginConfiguration. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        CniLoopbackPluginConfiguration.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        CniLoopbackPluginConfiguration.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 cni_version: Optional[str] = None,
+                 name: Optional[str] = None,
+                 type: Optional[str] = None):
+        """
+        The CNI loopback plugin configuration.
+        :param str cni_version: CNI version.
+        :param str name: CNI plugin name.
+        :param str type: CNI plugin type.
+        """
+        if cni_version is not None:
+            pulumi.set(__self__, "cni_version", cni_version)
+        if name is not None:
+            pulumi.set(__self__, "name", name)
+        if type is not None:
+            pulumi.set(__self__, "type", type)
+
+    @property
+    @pulumi.getter(name="cniVersion")
+    def cni_version(self) -> Optional[str]:
+        """
+        CNI version.
+        """
+        return pulumi.get(self, "cni_version")
+
+    @property
+    @pulumi.getter
+    def name(self) -> Optional[str]:
+        """
+        CNI plugin name.
+        """
+        return pulumi.get(self, "name")
+
+    @property
+    @pulumi.getter
+    def type(self) -> Optional[str]:
+        """
+        CNI plugin type.
+        """
+        return pulumi.get(self, "type")
+
 
 @pulumi.output_type
 class EtcdConfigurationProps(dict):

@@ -7,6 +7,7 @@ import * as pulumi from "@pulumi/pulumi";
 export type ConstructComponent<T extends pulumi.ComponentResource = pulumi.ComponentResource> = (name: string, inputs: any, options: pulumi.ComponentResourceOptions) => T;
 export type ResourceConstructor = {
     readonly "kubernetes-the-hard-way:config:KubeVipManifest": ConstructComponent<KubeVipManifest>;
+    readonly "kubernetes-the-hard-way:remote:CniPluginConfiguration": ConstructComponent<CniPluginConfiguration>;
     readonly "kubernetes-the-hard-way:remote:CniPluginsInstall": ConstructComponent<CniPluginsInstall>;
     readonly "kubernetes-the-hard-way:remote:ContainerdInstall": ConstructComponent<ContainerdInstall>;
     readonly "kubernetes-the-hard-way:remote:CrictlInstall": ConstructComponent<CrictlInstall>;
@@ -27,6 +28,7 @@ export type ResourceConstructor = {
     readonly "kubernetes-the-hard-way:remote:StartEtcd": ConstructComponent<StartEtcd>;
     readonly "kubernetes-the-hard-way:remote:StaticPod": ConstructComponent<StaticPod>;
     readonly "kubernetes-the-hard-way:remote:SystemdService": ConstructComponent<SystemdService>;
+    readonly "kubernetes-the-hard-way:remote:WorkerConfiguration": ConstructComponent<WorkerConfiguration>;
     readonly "kubernetes-the-hard-way:tls:Certificate": ConstructComponent<Certificate>;
     readonly "kubernetes-the-hard-way:tls:ClusterPki": ConstructComponent<ClusterPki>;
     readonly "kubernetes-the-hard-way:tls:EncryptionKey": ConstructComponent<EncryptionKey>;
@@ -87,6 +89,19 @@ export interface KubeVipManifestArgs {
     readonly vipLeaseDuration?: pulumi.Input<number>;
     readonly vipRenewDeadline?: pulumi.Input<number>;
     readonly vipRetryPeriod?: pulumi.Input<number>;
+}
+export abstract class CniPluginConfiguration<TData = any> extends (pulumi.ComponentResource)<TData> {
+    public bridge!: CniBridgePluginConfigurationOutputs | pulumi.Output<CniBridgePluginConfigurationOutputs>;
+    public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
+    public loopback!: CniLoopbackPluginConfigurationOutputs | pulumi.Output<CniLoopbackPluginConfigurationOutputs>;
+    constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
+        super("kubernetes-the-hard-way:remote:CniPluginConfiguration", name, opts.urn ? { bridge: undefined, connection: undefined, loopback: undefined } : { name, args, opts }, opts);
+    }
+}
+export interface CniPluginConfigurationArgs {
+    readonly bridge?: pulumi.Input<CniBridgePluginConfigurationInputs>;
+    readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
+    readonly loopback?: pulumi.Input<CniLoopbackPluginConfigurationInputs>;
 }
 export abstract class CniPluginsInstall<TData = any> extends (pulumi.ComponentResource)<TData> {
     public architecture!: ArchitectureOutputs | pulumi.Output<ArchitectureOutputs>;
@@ -574,6 +589,15 @@ export interface SystemdServiceArgs {
     readonly service: pulumi.Input<SystemdServiceSectionInputs>;
     readonly unit?: pulumi.Input<SystemdUnitSectionInputs>;
     readonly unitName?: pulumi.Input<string>;
+}
+export abstract class WorkerConfiguration<TData = any> extends (pulumi.ComponentResource)<TData> {
+    public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
+    constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
+        super("kubernetes-the-hard-way:remote:WorkerConfiguration", name, opts.urn ? { connection: undefined } : { name, args, opts }, opts);
+    }
+}
+export interface WorkerConfigurationArgs {
+    readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
 }
 export abstract class Certificate<TData = any> extends (pulumi.ComponentResource)<TData> {
     public algorithm!: AlgorithmOutputs | pulumi.Output<AlgorithmOutputs>;
@@ -1168,6 +1192,44 @@ export interface UserOutputs {
 }
 export type ArchitectureInputs = "amd64" | "arm64";
 export type ArchitectureOutputs = "amd64" | "arm64";
+export interface CniBridgeIpamInputs {
+    readonly ranges?: pulumi.Input<pulumi.Input<Record<string, pulumi.Input<string>>>[]>;
+    readonly routes?: pulumi.Input<pulumi.Input<Record<string, pulumi.Input<string>>>[]>;
+    readonly type?: pulumi.Input<string>;
+}
+export interface CniBridgeIpamOutputs {
+    readonly ranges?: pulumi.Output<Record<string, string>[]>;
+    readonly routes?: pulumi.Output<Record<string, string>[]>;
+    readonly type?: pulumi.Output<string>;
+}
+export interface CniBridgePluginConfigurationInputs {
+    readonly bridge?: pulumi.Input<string>;
+    readonly cniVersion?: pulumi.Input<string>;
+    readonly ipMasq?: pulumi.Input<boolean>;
+    readonly ipam?: pulumi.Input<CniBridgeIpamInputs>;
+    readonly isGateway?: pulumi.Input<boolean>;
+    readonly name?: pulumi.Input<string>;
+    readonly type?: pulumi.Input<string>;
+}
+export interface CniBridgePluginConfigurationOutputs {
+    readonly bridge?: pulumi.Output<string>;
+    readonly cniVersion?: pulumi.Output<string>;
+    readonly ipMasq?: pulumi.Output<boolean>;
+    readonly ipam?: pulumi.Output<CniBridgeIpamOutputs>;
+    readonly isGateway?: pulumi.Output<boolean>;
+    readonly name?: pulumi.Output<string>;
+    readonly type?: pulumi.Output<string>;
+}
+export interface CniLoopbackPluginConfigurationInputs {
+    readonly cniVersion?: pulumi.Input<string>;
+    readonly name?: pulumi.Input<string>;
+    readonly type?: pulumi.Input<string>;
+}
+export interface CniLoopbackPluginConfigurationOutputs {
+    readonly cniVersion?: pulumi.Output<string>;
+    readonly name?: pulumi.Output<string>;
+    readonly type?: pulumi.Output<string>;
+}
 export interface EtcdConfigurationPropsInputs {
     readonly caFilePath: pulumi.Input<string>;
     readonly certFilePath: pulumi.Input<string>;

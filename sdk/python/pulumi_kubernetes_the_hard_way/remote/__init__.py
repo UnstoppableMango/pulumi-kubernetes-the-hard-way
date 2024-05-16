@@ -6,6 +6,7 @@ from .. import _utilities
 import typing
 # Export this package's modules as members:
 from ._enums import *
+from .cni_plugin_configuration import *
 from .cni_plugins_install import *
 from .containerd_install import *
 from .crictl_install import *
@@ -26,5 +27,6 @@ from .runc_install import *
 from .start_etcd import *
 from .static_pod import *
 from .systemd_service import *
+from .worker_configuration import *
 from ._inputs import *
 from . import outputs

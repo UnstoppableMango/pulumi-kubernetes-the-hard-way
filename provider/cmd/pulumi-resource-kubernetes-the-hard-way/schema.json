@@ -344,6 +344,88 @@
                 }
             ]
         },
+        "kubernetes-the-hard-way:remote:CniBridgeIpam": {
+            "description": "The CNI plugins IPAM",
+            "properties": {
+                "ranges": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        }
+                    },
+                    "description": "IPAM ranges."
+                },
+                "routes": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        }
+                    },
+                    "description": "IPAM routes."
+                },
+                "type": {
+                    "type": "string",
+                    "description": "CNI bridge IPAM type"
+                }
+            },
+            "type": "object"
+        },
+        "kubernetes-the-hard-way:remote:CniBridgePluginConfiguration": {
+            "description": "The CNI bridge plugin configuration.",
+            "properties": {
+                "bridge": {
+                    "type": "string",
+                    "description": "Bridge name."
+                },
+                "cniVersion": {
+                    "type": "string",
+                    "description": "CNI version."
+                },
+                "ipMasq": {
+                    "type": "boolean",
+                    "description": "IP masq."
+                },
+                "ipam": {
+                    "$ref": "#/types/kubernetes-the-hard-way:remote:CniBridgeIpam",
+                    "description": "IPAM"
+                },
+                "isGateway": {
+                    "type": "boolean",
+                    "description": "Is gateway."
+                },
+                "name": {
+                    "type": "string",
+                    "description": "CNI plugin name."
+                },
+                "type": {
+                    "type": "string",
+                    "description": "CNI plugin type."
+                }
+            },
+            "type": "object"
+        },
+        "kubernetes-the-hard-way:remote:CniLoopbackPluginConfiguration": {
+            "description": "The CNI loopback plugin configuration.",
+            "properties": {
+                "cniVersion": {
+                    "type": "string",
+                    "description": "CNI version."
+                },
+                "name": {
+                    "type": "string",
+                    "description": "CNI plugin name."
+                },
+                "type": {
+                    "type": "string",
+                    "description": "CNI plugin type."
+                }
+            },
+            "type": "object"
+        },
         "kubernetes-the-hard-way:remote:EtcdConfigurationProps": {
             "description": "Props for resources that consume etcd configuration.",
             "properties": {
@@ -1870,6 +1952,45 @@
                 "vipCidr"
             ],
             "isComponent": true
+        },
+        "kubernetes-the-hard-way:remote:CniPluginConfiguration": {
+            "description": "CNI plugin configuration.",
+            "properties": {
+                "bridge": {
+                    "$ref": "#/types/kubernetes-the-hard-way:remote:CniBridgePluginConfiguration",
+                    "description": "The CNI bridge configuration."
+                },
+                "connection": {
+                    "$ref": "/command/v0.10.0/schema.json#/types/command:remote:Connection",
+                    "description": "The parameters with which to connect to the remote host."
+                },
+                "loopback": {
+                    "$ref": "#/types/kubernetes-the-hard-way:remote:CniLoopbackPluginConfiguration",
+                    "description": "The CNI loopback configuration."
+                }
+            },
+            "required": [
+                "connection",
+                "bridge",
+                "loopback"
+            ],
+            "inputProperties": {
+                "bridge": {
+                    "$ref": "#/types/kubernetes-the-hard-way:remote:CniBridgePluginConfiguration",
+                    "description": "The CNI bridge configuration."
+                },
+                "connection": {
+                    "$ref": "/command/v0.10.0/schema.json#/types/command:remote:Connection",
+                    "description": "The parameters with which to connect to the remote host."
+                },
+                "loopback": {
+                    "$ref": "#/types/kubernetes-the-hard-way:remote:CniLoopbackPluginConfiguration",
+                    "description": "The CNI loopback configuration."
+                }
+            },
+            "requiredInputs": [
+                "connection"
+            ]
         },
         "kubernetes-the-hard-way:remote:CniPluginsInstall": {
             "description": "Installs cni-plugins on a remote system",
@@ -3813,6 +3934,27 @@
                 "service"
             ],
             "isComponent": true
+        },
+        "kubernetes-the-hard-way:remote:WorkerConfiguration": {
+            "description": "Kubernetes worker node configuration.",
+            "properties": {
+                "connection": {
+                    "$ref": "/command/v0.10.0/schema.json#/types/command:remote:Connection",
+                    "description": "The parameters with which to connect to the remote host."
+                }
+            },
+            "required": [
+                "connection"
+            ],
+            "inputProperties": {
+                "connection": {
+                    "$ref": "/command/v0.10.0/schema.json#/types/command:remote:Connection",
+                    "description": "The parameters with which to connect to the remote host."
+                }
+            },
+            "requiredInputs": [
+                "connection"
+            ]
         },
         "kubernetes-the-hard-way:tls:Certificate": {
             "description": "A certificate key pair.",

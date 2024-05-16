@@ -434,6 +434,76 @@ export namespace config {
 
 export namespace remote {
     /**
+     * The CNI plugins IPAM
+     */
+    export interface CniBridgeIpamArgs {
+        /**
+         * IPAM ranges.
+         */
+        ranges?: pulumi.Input<pulumi.Input<{[key: string]: pulumi.Input<string>}>[]>;
+        /**
+         * IPAM routes.
+         */
+        routes?: pulumi.Input<pulumi.Input<{[key: string]: pulumi.Input<string>}>[]>;
+        /**
+         * CNI bridge IPAM type
+         */
+        type?: pulumi.Input<string>;
+    }
+
+    /**
+     * The CNI bridge plugin configuration.
+     */
+    export interface CniBridgePluginConfigurationArgs {
+        /**
+         * Bridge name.
+         */
+        bridge?: pulumi.Input<string>;
+        /**
+         * CNI version.
+         */
+        cniVersion?: pulumi.Input<string>;
+        /**
+         * IP masq.
+         */
+        ipMasq?: pulumi.Input<boolean>;
+        /**
+         * IPAM
+         */
+        ipam?: pulumi.Input<inputs.remote.CniBridgeIpamArgs>;
+        /**
+         * Is gateway.
+         */
+        isGateway?: pulumi.Input<boolean>;
+        /**
+         * CNI plugin name.
+         */
+        name?: pulumi.Input<string>;
+        /**
+         * CNI plugin type.
+         */
+        type?: pulumi.Input<string>;
+    }
+
+    /**
+     * The CNI loopback plugin configuration.
+     */
+    export interface CniLoopbackPluginConfigurationArgs {
+        /**
+         * CNI version.
+         */
+        cniVersion?: pulumi.Input<string>;
+        /**
+         * CNI plugin name.
+         */
+        name?: pulumi.Input<string>;
+        /**
+         * CNI plugin type.
+         */
+        type?: pulumi.Input<string>;
+    }
+
+    /**
      * Props for resources that consume etcd configuration.
      */
     export interface EtcdConfigurationPropsArgs {

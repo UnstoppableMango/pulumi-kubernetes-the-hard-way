@@ -14,6 +14,616 @@ import (
 
 var _ = internal.GetEnvOrDefault
 
+// The CNI plugins IPAM
+type CniBridgeIpam struct {
+	// IPAM ranges.
+	Ranges []map[string]string `pulumi:"ranges"`
+	// IPAM routes.
+	Routes []map[string]string `pulumi:"routes"`
+	// CNI bridge IPAM type
+	Type *string `pulumi:"type"`
+}
+
+// CniBridgeIpamInput is an input type that accepts CniBridgeIpamArgs and CniBridgeIpamOutput values.
+// You can construct a concrete instance of `CniBridgeIpamInput` via:
+//
+//	CniBridgeIpamArgs{...}
+type CniBridgeIpamInput interface {
+	pulumi.Input
+
+	ToCniBridgeIpamOutput() CniBridgeIpamOutput
+	ToCniBridgeIpamOutputWithContext(context.Context) CniBridgeIpamOutput
+}
+
+// The CNI plugins IPAM
+type CniBridgeIpamArgs struct {
+	// IPAM ranges.
+	Ranges pulumi.StringMapArrayInput `pulumi:"ranges"`
+	// IPAM routes.
+	Routes pulumi.StringMapArrayInput `pulumi:"routes"`
+	// CNI bridge IPAM type
+	Type pulumi.StringPtrInput `pulumi:"type"`
+}
+
+func (CniBridgeIpamArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*CniBridgeIpam)(nil)).Elem()
+}
+
+func (i CniBridgeIpamArgs) ToCniBridgeIpamOutput() CniBridgeIpamOutput {
+	return i.ToCniBridgeIpamOutputWithContext(context.Background())
+}
+
+func (i CniBridgeIpamArgs) ToCniBridgeIpamOutputWithContext(ctx context.Context) CniBridgeIpamOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CniBridgeIpamOutput)
+}
+
+func (i CniBridgeIpamArgs) ToCniBridgeIpamPtrOutput() CniBridgeIpamPtrOutput {
+	return i.ToCniBridgeIpamPtrOutputWithContext(context.Background())
+}
+
+func (i CniBridgeIpamArgs) ToCniBridgeIpamPtrOutputWithContext(ctx context.Context) CniBridgeIpamPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CniBridgeIpamOutput).ToCniBridgeIpamPtrOutputWithContext(ctx)
+}
+
+// CniBridgeIpamPtrInput is an input type that accepts CniBridgeIpamArgs, CniBridgeIpamPtr and CniBridgeIpamPtrOutput values.
+// You can construct a concrete instance of `CniBridgeIpamPtrInput` via:
+//
+//	        CniBridgeIpamArgs{...}
+//
+//	or:
+//
+//	        nil
+type CniBridgeIpamPtrInput interface {
+	pulumi.Input
+
+	ToCniBridgeIpamPtrOutput() CniBridgeIpamPtrOutput
+	ToCniBridgeIpamPtrOutputWithContext(context.Context) CniBridgeIpamPtrOutput
+}
+
+type cniBridgeIpamPtrType CniBridgeIpamArgs
+
+func CniBridgeIpamPtr(v *CniBridgeIpamArgs) CniBridgeIpamPtrInput {
+	return (*cniBridgeIpamPtrType)(v)
+}
+
+func (*cniBridgeIpamPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**CniBridgeIpam)(nil)).Elem()
+}
+
+func (i *cniBridgeIpamPtrType) ToCniBridgeIpamPtrOutput() CniBridgeIpamPtrOutput {
+	return i.ToCniBridgeIpamPtrOutputWithContext(context.Background())
+}
+
+func (i *cniBridgeIpamPtrType) ToCniBridgeIpamPtrOutputWithContext(ctx context.Context) CniBridgeIpamPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CniBridgeIpamPtrOutput)
+}
+
+// The CNI plugins IPAM
+type CniBridgeIpamOutput struct{ *pulumi.OutputState }
+
+func (CniBridgeIpamOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*CniBridgeIpam)(nil)).Elem()
+}
+
+func (o CniBridgeIpamOutput) ToCniBridgeIpamOutput() CniBridgeIpamOutput {
+	return o
+}
+
+func (o CniBridgeIpamOutput) ToCniBridgeIpamOutputWithContext(ctx context.Context) CniBridgeIpamOutput {
+	return o
+}
+
+func (o CniBridgeIpamOutput) ToCniBridgeIpamPtrOutput() CniBridgeIpamPtrOutput {
+	return o.ToCniBridgeIpamPtrOutputWithContext(context.Background())
+}
+
+func (o CniBridgeIpamOutput) ToCniBridgeIpamPtrOutputWithContext(ctx context.Context) CniBridgeIpamPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v CniBridgeIpam) *CniBridgeIpam {
+		return &v
+	}).(CniBridgeIpamPtrOutput)
+}
+
+// IPAM ranges.
+func (o CniBridgeIpamOutput) Ranges() pulumi.StringMapArrayOutput {
+	return o.ApplyT(func(v CniBridgeIpam) []map[string]string { return v.Ranges }).(pulumi.StringMapArrayOutput)
+}
+
+// IPAM routes.
+func (o CniBridgeIpamOutput) Routes() pulumi.StringMapArrayOutput {
+	return o.ApplyT(func(v CniBridgeIpam) []map[string]string { return v.Routes }).(pulumi.StringMapArrayOutput)
+}
+
+// CNI bridge IPAM type
+func (o CniBridgeIpamOutput) Type() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v CniBridgeIpam) *string { return v.Type }).(pulumi.StringPtrOutput)
+}
+
+type CniBridgeIpamPtrOutput struct{ *pulumi.OutputState }
+
+func (CniBridgeIpamPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**CniBridgeIpam)(nil)).Elem()
+}
+
+func (o CniBridgeIpamPtrOutput) ToCniBridgeIpamPtrOutput() CniBridgeIpamPtrOutput {
+	return o
+}
+
+func (o CniBridgeIpamPtrOutput) ToCniBridgeIpamPtrOutputWithContext(ctx context.Context) CniBridgeIpamPtrOutput {
+	return o
+}
+
+func (o CniBridgeIpamPtrOutput) Elem() CniBridgeIpamOutput {
+	return o.ApplyT(func(v *CniBridgeIpam) CniBridgeIpam {
+		if v != nil {
+			return *v
+		}
+		var ret CniBridgeIpam
+		return ret
+	}).(CniBridgeIpamOutput)
+}
+
+// IPAM ranges.
+func (o CniBridgeIpamPtrOutput) Ranges() pulumi.StringMapArrayOutput {
+	return o.ApplyT(func(v *CniBridgeIpam) []map[string]string {
+		if v == nil {
+			return nil
+		}
+		return v.Ranges
+	}).(pulumi.StringMapArrayOutput)
+}
+
+// IPAM routes.
+func (o CniBridgeIpamPtrOutput) Routes() pulumi.StringMapArrayOutput {
+	return o.ApplyT(func(v *CniBridgeIpam) []map[string]string {
+		if v == nil {
+			return nil
+		}
+		return v.Routes
+	}).(pulumi.StringMapArrayOutput)
+}
+
+// CNI bridge IPAM type
+func (o CniBridgeIpamPtrOutput) Type() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *CniBridgeIpam) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Type
+	}).(pulumi.StringPtrOutput)
+}
+
+// The CNI bridge plugin configuration.
+type CniBridgePluginConfiguration struct {
+	// Bridge name.
+	Bridge *string `pulumi:"bridge"`
+	// CNI version.
+	CniVersion *string `pulumi:"cniVersion"`
+	// IP masq.
+	IpMasq *bool `pulumi:"ipMasq"`
+	// IPAM
+	Ipam *CniBridgeIpam `pulumi:"ipam"`
+	// Is gateway.
+	IsGateway *bool `pulumi:"isGateway"`
+	// CNI plugin name.
+	Name *string `pulumi:"name"`
+	// CNI plugin type.
+	Type *string `pulumi:"type"`
+}
+
+// CniBridgePluginConfigurationInput is an input type that accepts CniBridgePluginConfigurationArgs and CniBridgePluginConfigurationOutput values.
+// You can construct a concrete instance of `CniBridgePluginConfigurationInput` via:
+//
+//	CniBridgePluginConfigurationArgs{...}
+type CniBridgePluginConfigurationInput interface {
+	pulumi.Input
+
+	ToCniBridgePluginConfigurationOutput() CniBridgePluginConfigurationOutput
+	ToCniBridgePluginConfigurationOutputWithContext(context.Context) CniBridgePluginConfigurationOutput
+}
+
+// The CNI bridge plugin configuration.
+type CniBridgePluginConfigurationArgs struct {
+	// Bridge name.
+	Bridge pulumi.StringPtrInput `pulumi:"bridge"`
+	// CNI version.
+	CniVersion pulumi.StringPtrInput `pulumi:"cniVersion"`
+	// IP masq.
+	IpMasq pulumi.BoolPtrInput `pulumi:"ipMasq"`
+	// IPAM
+	Ipam CniBridgeIpamPtrInput `pulumi:"ipam"`
+	// Is gateway.
+	IsGateway pulumi.BoolPtrInput `pulumi:"isGateway"`
+	// CNI plugin name.
+	Name pulumi.StringPtrInput `pulumi:"name"`
+	// CNI plugin type.
+	Type pulumi.StringPtrInput `pulumi:"type"`
+}
+
+func (CniBridgePluginConfigurationArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*CniBridgePluginConfiguration)(nil)).Elem()
+}
+
+func (i CniBridgePluginConfigurationArgs) ToCniBridgePluginConfigurationOutput() CniBridgePluginConfigurationOutput {
+	return i.ToCniBridgePluginConfigurationOutputWithContext(context.Background())
+}
+
+func (i CniBridgePluginConfigurationArgs) ToCniBridgePluginConfigurationOutputWithContext(ctx context.Context) CniBridgePluginConfigurationOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CniBridgePluginConfigurationOutput)
+}
+
+func (i CniBridgePluginConfigurationArgs) ToCniBridgePluginConfigurationPtrOutput() CniBridgePluginConfigurationPtrOutput {
+	return i.ToCniBridgePluginConfigurationPtrOutputWithContext(context.Background())
+}
+
+func (i CniBridgePluginConfigurationArgs) ToCniBridgePluginConfigurationPtrOutputWithContext(ctx context.Context) CniBridgePluginConfigurationPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CniBridgePluginConfigurationOutput).ToCniBridgePluginConfigurationPtrOutputWithContext(ctx)
+}
+
+// CniBridgePluginConfigurationPtrInput is an input type that accepts CniBridgePluginConfigurationArgs, CniBridgePluginConfigurationPtr and CniBridgePluginConfigurationPtrOutput values.
+// You can construct a concrete instance of `CniBridgePluginConfigurationPtrInput` via:
+//
+//	        CniBridgePluginConfigurationArgs{...}
+//
+//	or:
+//
+//	        nil
+type CniBridgePluginConfigurationPtrInput interface {
+	pulumi.Input
+
+	ToCniBridgePluginConfigurationPtrOutput() CniBridgePluginConfigurationPtrOutput
+	ToCniBridgePluginConfigurationPtrOutputWithContext(context.Context) CniBridgePluginConfigurationPtrOutput
+}
+
+type cniBridgePluginConfigurationPtrType CniBridgePluginConfigurationArgs
+
+func CniBridgePluginConfigurationPtr(v *CniBridgePluginConfigurationArgs) CniBridgePluginConfigurationPtrInput {
+	return (*cniBridgePluginConfigurationPtrType)(v)
+}
+
+func (*cniBridgePluginConfigurationPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**CniBridgePluginConfiguration)(nil)).Elem()
+}
+
+func (i *cniBridgePluginConfigurationPtrType) ToCniBridgePluginConfigurationPtrOutput() CniBridgePluginConfigurationPtrOutput {
+	return i.ToCniBridgePluginConfigurationPtrOutputWithContext(context.Background())
+}
+
+func (i *cniBridgePluginConfigurationPtrType) ToCniBridgePluginConfigurationPtrOutputWithContext(ctx context.Context) CniBridgePluginConfigurationPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CniBridgePluginConfigurationPtrOutput)
+}
+
+// The CNI bridge plugin configuration.
+type CniBridgePluginConfigurationOutput struct{ *pulumi.OutputState }
+
+func (CniBridgePluginConfigurationOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*CniBridgePluginConfiguration)(nil)).Elem()
+}
+
+func (o CniBridgePluginConfigurationOutput) ToCniBridgePluginConfigurationOutput() CniBridgePluginConfigurationOutput {
+	return o
+}
+
+func (o CniBridgePluginConfigurationOutput) ToCniBridgePluginConfigurationOutputWithContext(ctx context.Context) CniBridgePluginConfigurationOutput {
+	return o
+}
+
+func (o CniBridgePluginConfigurationOutput) ToCniBridgePluginConfigurationPtrOutput() CniBridgePluginConfigurationPtrOutput {
+	return o.ToCniBridgePluginConfigurationPtrOutputWithContext(context.Background())
+}
+
+func (o CniBridgePluginConfigurationOutput) ToCniBridgePluginConfigurationPtrOutputWithContext(ctx context.Context) CniBridgePluginConfigurationPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v CniBridgePluginConfiguration) *CniBridgePluginConfiguration {
+		return &v
+	}).(CniBridgePluginConfigurationPtrOutput)
+}
+
+// Bridge name.
+func (o CniBridgePluginConfigurationOutput) Bridge() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v CniBridgePluginConfiguration) *string { return v.Bridge }).(pulumi.StringPtrOutput)
+}
+
+// CNI version.
+func (o CniBridgePluginConfigurationOutput) CniVersion() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v CniBridgePluginConfiguration) *string { return v.CniVersion }).(pulumi.StringPtrOutput)
+}
+
+// IP masq.
+func (o CniBridgePluginConfigurationOutput) IpMasq() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v CniBridgePluginConfiguration) *bool { return v.IpMasq }).(pulumi.BoolPtrOutput)
+}
+
+// IPAM
+func (o CniBridgePluginConfigurationOutput) Ipam() CniBridgeIpamPtrOutput {
+	return o.ApplyT(func(v CniBridgePluginConfiguration) *CniBridgeIpam { return v.Ipam }).(CniBridgeIpamPtrOutput)
+}
+
+// Is gateway.
+func (o CniBridgePluginConfigurationOutput) IsGateway() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v CniBridgePluginConfiguration) *bool { return v.IsGateway }).(pulumi.BoolPtrOutput)
+}
+
+// CNI plugin name.
+func (o CniBridgePluginConfigurationOutput) Name() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v CniBridgePluginConfiguration) *string { return v.Name }).(pulumi.StringPtrOutput)
+}
+
+// CNI plugin type.
+func (o CniBridgePluginConfigurationOutput) Type() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v CniBridgePluginConfiguration) *string { return v.Type }).(pulumi.StringPtrOutput)
+}
+
+type CniBridgePluginConfigurationPtrOutput struct{ *pulumi.OutputState }
+
+func (CniBridgePluginConfigurationPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**CniBridgePluginConfiguration)(nil)).Elem()
+}
+
+func (o CniBridgePluginConfigurationPtrOutput) ToCniBridgePluginConfigurationPtrOutput() CniBridgePluginConfigurationPtrOutput {
+	return o
+}
+
+func (o CniBridgePluginConfigurationPtrOutput) ToCniBridgePluginConfigurationPtrOutputWithContext(ctx context.Context) CniBridgePluginConfigurationPtrOutput {
+	return o
+}
+
+func (o CniBridgePluginConfigurationPtrOutput) Elem() CniBridgePluginConfigurationOutput {
+	return o.ApplyT(func(v *CniBridgePluginConfiguration) CniBridgePluginConfiguration {
+		if v != nil {
+			return *v
+		}
+		var ret CniBridgePluginConfiguration
+		return ret
+	}).(CniBridgePluginConfigurationOutput)
+}
+
+// Bridge name.
+func (o CniBridgePluginConfigurationPtrOutput) Bridge() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *CniBridgePluginConfiguration) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Bridge
+	}).(pulumi.StringPtrOutput)
+}
+
+// CNI version.
+func (o CniBridgePluginConfigurationPtrOutput) CniVersion() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *CniBridgePluginConfiguration) *string {
+		if v == nil {
+			return nil
+		}
+		return v.CniVersion
+	}).(pulumi.StringPtrOutput)
+}
+
+// IP masq.
+func (o CniBridgePluginConfigurationPtrOutput) IpMasq() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *CniBridgePluginConfiguration) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.IpMasq
+	}).(pulumi.BoolPtrOutput)
+}
+
+// IPAM
+func (o CniBridgePluginConfigurationPtrOutput) Ipam() CniBridgeIpamPtrOutput {
+	return o.ApplyT(func(v *CniBridgePluginConfiguration) *CniBridgeIpam {
+		if v == nil {
+			return nil
+		}
+		return v.Ipam
+	}).(CniBridgeIpamPtrOutput)
+}
+
+// Is gateway.
+func (o CniBridgePluginConfigurationPtrOutput) IsGateway() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *CniBridgePluginConfiguration) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.IsGateway
+	}).(pulumi.BoolPtrOutput)
+}
+
+// CNI plugin name.
+func (o CniBridgePluginConfigurationPtrOutput) Name() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *CniBridgePluginConfiguration) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Name
+	}).(pulumi.StringPtrOutput)
+}
+
+// CNI plugin type.
+func (o CniBridgePluginConfigurationPtrOutput) Type() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *CniBridgePluginConfiguration) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Type
+	}).(pulumi.StringPtrOutput)
+}
+
+// The CNI loopback plugin configuration.
+type CniLoopbackPluginConfiguration struct {
+	// CNI version.
+	CniVersion *string `pulumi:"cniVersion"`
+	// CNI plugin name.
+	Name *string `pulumi:"name"`
+	// CNI plugin type.
+	Type *string `pulumi:"type"`
+}
+
+// CniLoopbackPluginConfigurationInput is an input type that accepts CniLoopbackPluginConfigurationArgs and CniLoopbackPluginConfigurationOutput values.
+// You can construct a concrete instance of `CniLoopbackPluginConfigurationInput` via:
+//
+//	CniLoopbackPluginConfigurationArgs{...}
+type CniLoopbackPluginConfigurationInput interface {
+	pulumi.Input
+
+	ToCniLoopbackPluginConfigurationOutput() CniLoopbackPluginConfigurationOutput
+	ToCniLoopbackPluginConfigurationOutputWithContext(context.Context) CniLoopbackPluginConfigurationOutput
+}
+
+// The CNI loopback plugin configuration.
+type CniLoopbackPluginConfigurationArgs struct {
+	// CNI version.
+	CniVersion pulumi.StringPtrInput `pulumi:"cniVersion"`
+	// CNI plugin name.
+	Name pulumi.StringPtrInput `pulumi:"name"`
+	// CNI plugin type.
+	Type pulumi.StringPtrInput `pulumi:"type"`
+}
+
+func (CniLoopbackPluginConfigurationArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*CniLoopbackPluginConfiguration)(nil)).Elem()
+}
+
+func (i CniLoopbackPluginConfigurationArgs) ToCniLoopbackPluginConfigurationOutput() CniLoopbackPluginConfigurationOutput {
+	return i.ToCniLoopbackPluginConfigurationOutputWithContext(context.Background())
+}
+
+func (i CniLoopbackPluginConfigurationArgs) ToCniLoopbackPluginConfigurationOutputWithContext(ctx context.Context) CniLoopbackPluginConfigurationOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CniLoopbackPluginConfigurationOutput)
+}
+
+func (i CniLoopbackPluginConfigurationArgs) ToCniLoopbackPluginConfigurationPtrOutput() CniLoopbackPluginConfigurationPtrOutput {
+	return i.ToCniLoopbackPluginConfigurationPtrOutputWithContext(context.Background())
+}
+
+func (i CniLoopbackPluginConfigurationArgs) ToCniLoopbackPluginConfigurationPtrOutputWithContext(ctx context.Context) CniLoopbackPluginConfigurationPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CniLoopbackPluginConfigurationOutput).ToCniLoopbackPluginConfigurationPtrOutputWithContext(ctx)
+}
+
+// CniLoopbackPluginConfigurationPtrInput is an input type that accepts CniLoopbackPluginConfigurationArgs, CniLoopbackPluginConfigurationPtr and CniLoopbackPluginConfigurationPtrOutput values.
+// You can construct a concrete instance of `CniLoopbackPluginConfigurationPtrInput` via:
+//
+//	        CniLoopbackPluginConfigurationArgs{...}
+//
+//	or:
+//
+//	        nil
+type CniLoopbackPluginConfigurationPtrInput interface {
+	pulumi.Input
+
+	ToCniLoopbackPluginConfigurationPtrOutput() CniLoopbackPluginConfigurationPtrOutput
+	ToCniLoopbackPluginConfigurationPtrOutputWithContext(context.Context) CniLoopbackPluginConfigurationPtrOutput
+}
+
+type cniLoopbackPluginConfigurationPtrType CniLoopbackPluginConfigurationArgs
+
+func CniLoopbackPluginConfigurationPtr(v *CniLoopbackPluginConfigurationArgs) CniLoopbackPluginConfigurationPtrInput {
+	return (*cniLoopbackPluginConfigurationPtrType)(v)
+}
+
+func (*cniLoopbackPluginConfigurationPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**CniLoopbackPluginConfiguration)(nil)).Elem()
+}
+
+func (i *cniLoopbackPluginConfigurationPtrType) ToCniLoopbackPluginConfigurationPtrOutput() CniLoopbackPluginConfigurationPtrOutput {
+	return i.ToCniLoopbackPluginConfigurationPtrOutputWithContext(context.Background())
+}
+
+func (i *cniLoopbackPluginConfigurationPtrType) ToCniLoopbackPluginConfigurationPtrOutputWithContext(ctx context.Context) CniLoopbackPluginConfigurationPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CniLoopbackPluginConfigurationPtrOutput)
+}
+
+// The CNI loopback plugin configuration.
+type CniLoopbackPluginConfigurationOutput struct{ *pulumi.OutputState }
+
+func (CniLoopbackPluginConfigurationOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*CniLoopbackPluginConfiguration)(nil)).Elem()
+}
+
+func (o CniLoopbackPluginConfigurationOutput) ToCniLoopbackPluginConfigurationOutput() CniLoopbackPluginConfigurationOutput {
+	return o
+}
+
+func (o CniLoopbackPluginConfigurationOutput) ToCniLoopbackPluginConfigurationOutputWithContext(ctx context.Context) CniLoopbackPluginConfigurationOutput {
+	return o
+}
+
+func (o CniLoopbackPluginConfigurationOutput) ToCniLoopbackPluginConfigurationPtrOutput() CniLoopbackPluginConfigurationPtrOutput {
+	return o.ToCniLoopbackPluginConfigurationPtrOutputWithContext(context.Background())
+}
+
+func (o CniLoopbackPluginConfigurationOutput) ToCniLoopbackPluginConfigurationPtrOutputWithContext(ctx context.Context) CniLoopbackPluginConfigurationPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v CniLoopbackPluginConfiguration) *CniLoopbackPluginConfiguration {
+		return &v
+	}).(CniLoopbackPluginConfigurationPtrOutput)
+}
+
+// CNI version.
+func (o CniLoopbackPluginConfigurationOutput) CniVersion() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v CniLoopbackPluginConfiguration) *string { return v.CniVersion }).(pulumi.StringPtrOutput)
+}
+
+// CNI plugin name.
+func (o CniLoopbackPluginConfigurationOutput) Name() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v CniLoopbackPluginConfiguration) *string { return v.Name }).(pulumi.StringPtrOutput)
+}
+
+// CNI plugin type.
+func (o CniLoopbackPluginConfigurationOutput) Type() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v CniLoopbackPluginConfiguration) *string { return v.Type }).(pulumi.StringPtrOutput)
+}
+
+type CniLoopbackPluginConfigurationPtrOutput struct{ *pulumi.OutputState }
+
+func (CniLoopbackPluginConfigurationPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**CniLoopbackPluginConfiguration)(nil)).Elem()
+}
+
+func (o CniLoopbackPluginConfigurationPtrOutput) ToCniLoopbackPluginConfigurationPtrOutput() CniLoopbackPluginConfigurationPtrOutput {
+	return o
+}
+
+func (o CniLoopbackPluginConfigurationPtrOutput) ToCniLoopbackPluginConfigurationPtrOutputWithContext(ctx context.Context) CniLoopbackPluginConfigurationPtrOutput {
+	return o
+}
+
+func (o CniLoopbackPluginConfigurationPtrOutput) Elem() CniLoopbackPluginConfigurationOutput {
+	return o.ApplyT(func(v *CniLoopbackPluginConfiguration) CniLoopbackPluginConfiguration {
+		if v != nil {
+			return *v
+		}
+		var ret CniLoopbackPluginConfiguration
+		return ret
+	}).(CniLoopbackPluginConfigurationOutput)
+}
+
+// CNI version.
+func (o CniLoopbackPluginConfigurationPtrOutput) CniVersion() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *CniLoopbackPluginConfiguration) *string {
+		if v == nil {
+			return nil
+		}
+		return v.CniVersion
+	}).(pulumi.StringPtrOutput)
+}
+
+// CNI plugin name.
+func (o CniLoopbackPluginConfigurationPtrOutput) Name() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *CniLoopbackPluginConfiguration) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Name
+	}).(pulumi.StringPtrOutput)
+}
+
+// CNI plugin type.
+func (o CniLoopbackPluginConfigurationPtrOutput) Type() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *CniLoopbackPluginConfiguration) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Type
+	}).(pulumi.StringPtrOutput)
+}
+
 // Props for resources that consume etcd configuration.
 type EtcdConfigurationProps struct {
 	// Path to the certificate authority file on the remote system.
@@ -748,6 +1358,12 @@ func (o SystemdUnitSectionPtrOutput) Wants() pulumi.StringArrayOutput {
 }
 
 func init() {
+	pulumi.RegisterInputType(reflect.TypeOf((*CniBridgeIpamInput)(nil)).Elem(), CniBridgeIpamArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*CniBridgeIpamPtrInput)(nil)).Elem(), CniBridgeIpamArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*CniBridgePluginConfigurationInput)(nil)).Elem(), CniBridgePluginConfigurationArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*CniBridgePluginConfigurationPtrInput)(nil)).Elem(), CniBridgePluginConfigurationArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*CniLoopbackPluginConfigurationInput)(nil)).Elem(), CniLoopbackPluginConfigurationArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*CniLoopbackPluginConfigurationPtrInput)(nil)).Elem(), CniLoopbackPluginConfigurationArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*EtcdConfigurationPropsInput)(nil)).Elem(), EtcdConfigurationPropsArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*EtcdConfigurationPropsArrayInput)(nil)).Elem(), EtcdConfigurationPropsArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*EtcdNodeInput)(nil)).Elem(), EtcdNodeArgs{})
@@ -756,6 +1372,12 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*SystemdServiceSectionInput)(nil)).Elem(), SystemdServiceSectionArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*SystemdUnitSectionInput)(nil)).Elem(), SystemdUnitSectionArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*SystemdUnitSectionPtrInput)(nil)).Elem(), SystemdUnitSectionArgs{})
+	pulumi.RegisterOutputType(CniBridgeIpamOutput{})
+	pulumi.RegisterOutputType(CniBridgeIpamPtrOutput{})
+	pulumi.RegisterOutputType(CniBridgePluginConfigurationOutput{})
+	pulumi.RegisterOutputType(CniBridgePluginConfigurationPtrOutput{})
+	pulumi.RegisterOutputType(CniLoopbackPluginConfigurationOutput{})
+	pulumi.RegisterOutputType(CniLoopbackPluginConfigurationPtrOutput{})
 	pulumi.RegisterOutputType(EtcdConfigurationPropsOutput{})
 	pulumi.RegisterOutputType(EtcdConfigurationPropsArrayOutput{})
 	pulumi.RegisterOutputType(EtcdNodeOutput{})

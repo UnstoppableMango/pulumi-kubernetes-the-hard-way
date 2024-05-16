@@ -39,6 +39,7 @@ _utilities.register(
   "mod": "remote",
   "fqn": "pulumi_kubernetes_the_hard_way.remote",
   "classes": {
+   "kubernetes-the-hard-way:remote:CniPluginConfiguration": "CniPluginConfiguration",
    "kubernetes-the-hard-way:remote:CniPluginsInstall": "CniPluginsInstall",
    "kubernetes-the-hard-way:remote:ContainerdInstall": "ContainerdInstall",
    "kubernetes-the-hard-way:remote:CrictlInstall": "CrictlInstall",
@@ -58,7 +59,8 @@ _utilities.register(
    "kubernetes-the-hard-way:remote:RuncInstall": "RuncInstall",
    "kubernetes-the-hard-way:remote:StartEtcd": "StartEtcd",
    "kubernetes-the-hard-way:remote:StaticPod": "StaticPod",
-   "kubernetes-the-hard-way:remote:SystemdService": "SystemdService"
+   "kubernetes-the-hard-way:remote:SystemdService": "SystemdService",
+   "kubernetes-the-hard-way:remote:WorkerConfiguration": "WorkerConfiguration"
   }
  },
  {

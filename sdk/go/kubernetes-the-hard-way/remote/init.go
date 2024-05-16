@@ -21,6 +21,8 @@ func (m *module) Version() semver.Version {
 
 func (m *module) Construct(ctx *pulumi.Context, name, typ, urn string) (r pulumi.Resource, err error) {
 	switch typ {
+	case "kubernetes-the-hard-way:remote:CniPluginConfiguration":
+		r = &CniPluginConfiguration{}
 	case "kubernetes-the-hard-way:remote:CniPluginsInstall":
 		r = &CniPluginsInstall{}
 	case "kubernetes-the-hard-way:remote:ContainerdInstall":
@@ -61,6 +63,8 @@ func (m *module) Construct(ctx *pulumi.Context, name, typ, urn string) (r pulumi
 		r = &StaticPod{}
 	case "kubernetes-the-hard-way:remote:SystemdService":
 		r = &SystemdService{}
+	case "kubernetes-the-hard-way:remote:WorkerConfiguration":
+		r = &WorkerConfiguration{}
 	default:
 		return nil, fmt.Errorf("unknown resource type: %s", typ)
 	}

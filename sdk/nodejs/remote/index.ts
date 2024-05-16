@@ -5,6 +5,11 @@ import * as pulumi from "@pulumi/pulumi";
 import * as utilities from "../utilities";
 
 // Export members:
+export { CniPluginConfigurationArgs } from "./cniPluginConfiguration";
+export type CniPluginConfiguration = import("./cniPluginConfiguration").CniPluginConfiguration;
+export const CniPluginConfiguration: typeof import("./cniPluginConfiguration").CniPluginConfiguration = null as any;
+utilities.lazyLoad(exports, ["CniPluginConfiguration"], () => require("./cniPluginConfiguration"));
+
 export { CniPluginsInstallArgs } from "./cniPluginsInstall";
 export type CniPluginsInstall = import("./cniPluginsInstall").CniPluginsInstall;
 export const CniPluginsInstall: typeof import("./cniPluginsInstall").CniPluginsInstall = null as any;
@@ -105,6 +110,11 @@ export type SystemdService = import("./systemdService").SystemdService;
 export const SystemdService: typeof import("./systemdService").SystemdService = null as any;
 utilities.lazyLoad(exports, ["SystemdService"], () => require("./systemdService"));
 
+export { WorkerConfigurationArgs } from "./workerConfiguration";
+export type WorkerConfiguration = import("./workerConfiguration").WorkerConfiguration;
+export const WorkerConfiguration: typeof import("./workerConfiguration").WorkerConfiguration = null as any;
+utilities.lazyLoad(exports, ["WorkerConfiguration"], () => require("./workerConfiguration"));
+
 
 // Export enums:
 export * from "../types/enums/remote";
@@ -113,6 +123,8 @@ const _module = {
     version: utilities.getVersion(),
     construct: (name: string, type: string, urn: string): pulumi.Resource => {
         switch (type) {
+            case "kubernetes-the-hard-way:remote:CniPluginConfiguration":
+                return new CniPluginConfiguration(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:remote:CniPluginsInstall":
                 return new CniPluginsInstall(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:remote:ContainerdInstall":
@@ -153,6 +165,8 @@ const _module = {
                 return new StaticPod(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:remote:SystemdService":
                 return new SystemdService(name, <any>undefined, { urn })
+            case "kubernetes-the-hard-way:remote:WorkerConfiguration":
+                return new WorkerConfiguration(name, <any>undefined, { urn })
             default:
                 throw new Error(`unknown resource type ${type}`);
         }
