@@ -27,6 +27,7 @@
     "remote/cniPluginConfiguration.ts",
     "remote/cniPlugins.ts",
     "remote/containerd.ts",
+    "remote/containerdConfiguration.ts",
     "remote/crictl.ts",
     "remote/download.ts",
     "remote/etcdCluster.ts",
