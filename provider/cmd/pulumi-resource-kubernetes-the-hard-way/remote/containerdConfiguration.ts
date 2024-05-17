@@ -9,17 +9,25 @@ export class ContainerdConfiguration extends schema.ContainerdConfiguration {
 
     const connection = output(args.connection);
     const cri = criDefaults(args.cri);
-    const path = output(args.path ?? '/etc/containerd');
+    const path = output(args.path ?? '/etc/containerd/containerd-config.toml');
 
     const file = new File(name, {
       connection,
       content: formatAsToml(cri),
       path,
-    })
+    }, { parent: this });
 
     this.connection = connection;;
     this.cri = cri;
     this.file = file;
+    this.path = path;
+
+    this.registerOutputs({
+      connection,
+      cri,
+      file,
+      path,
+    });
   }
 }
 
