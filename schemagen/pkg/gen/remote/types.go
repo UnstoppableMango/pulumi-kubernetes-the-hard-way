@@ -77,6 +77,13 @@ func generateTypes(commandSpec schema.PackageSpec) map[string]schema.ComplexType
 				Properties: map[string]schema.PropertySpec{
 					"defaultRuntimeName": props.String("default_runtime_name"),
 					"snapshotter":        props.String("snapshotter"),
+					"runtimes": { // TODO: This doesn't correspond 1:1 with the TOML file
+						Description: "The containerd runtime configuration.",
+						TypeSpec: schema.TypeSpec{
+							Plain: true,
+							Ref:   types.LocalTypeRef("ContainerdCriPluginConfigurationContainerdRunc", "remote"),
+						},
+					},
 				},
 			},
 		},
@@ -102,7 +109,7 @@ func generateTypes(commandSpec schema.PackageSpec) map[string]schema.ComplexType
 				Description: "containerd cri runc plugin configuration.",
 				Type:        "object",
 				Properties: map[string]schema.PropertySpec{
-					"systemdCgroup": props.String("SystemdCgroup"),
+					"systemdCgroup": props.Boolean("SystemdCgroup"),
 				},
 			},
 		},
