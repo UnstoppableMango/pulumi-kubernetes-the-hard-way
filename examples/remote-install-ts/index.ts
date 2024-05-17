@@ -26,11 +26,10 @@ const etcd = new EtcdInstall('remote', {
   directory: path.join(basePath, 'etcd'),
 });
 
-// Still a little bit more work needed here
-// const cniPlugins = new CniPluginsInstall('remote', {
-//   connection: { host, port, user, password },
-//   directory: path.join(basePath, 'cni-plugins'),
-// });
+const cniPlugins = new CniPluginsInstall('remote', {
+  connection: { host, port, user, password },
+  directory: path.join(basePath, 'cni-plugins'),
+});
 
 const containerd = new ContainerdInstall('remote', {
   connection: { host, port, user, password },
