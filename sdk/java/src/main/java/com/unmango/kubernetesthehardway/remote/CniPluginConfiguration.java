@@ -12,7 +12,6 @@ import com.unmango.kubernetesthehardway.Utilities;
 import com.unmango.kubernetesthehardway.remote.CniBridgePluginConfiguration;
 import com.unmango.kubernetesthehardway.remote.CniLoopbackPluginConfiguration;
 import com.unmango.kubernetesthehardway.remote.CniPluginConfigurationArgs;
-import com.unmango.kubernetesthehardway.remote.File;
 import com.unmango.kubernetesthehardway.tools.Mkdir;
 import java.lang.String;
 import javax.annotation.Nullable;
@@ -52,32 +51,18 @@ public class CniPluginConfiguration extends com.pulumi.resources.ComponentResour
         return this.connection;
     }
     /**
-     * The /etc/cni/net.d mkdir operation.
+     * The plugin configuration directory.
      * 
      */
-    @Export(name="etcCniMkdir", refs={Mkdir.class}, tree="[0]")
-    private Output<Mkdir> etcCniMkdir;
+    @Export(name="directory", refs={String.class}, tree="[0]")
+    private Output<String> directory;
 
     /**
-     * @return The /etc/cni/net.d mkdir operation.
+     * @return The plugin configuration directory.
      * 
      */
-    public Output<Mkdir> etcCniMkdir() {
-        return this.etcCniMkdir;
-    }
-    /**
-     * The file on the remote system.
-     * 
-     */
-    @Export(name="file", refs={File.class}, tree="[0]")
-    private Output<File> file;
-
-    /**
-     * @return The file on the remote system.
-     * 
-     */
-    public Output<File> file() {
-        return this.file;
+    public Output<String> directory() {
+        return this.directory;
     }
     /**
      * The loopback plugin configuration.
@@ -92,6 +77,20 @@ public class CniPluginConfiguration extends com.pulumi.resources.ComponentResour
      */
     public Output<CniLoopbackPluginConfiguration> loopback() {
         return this.loopback;
+    }
+    /**
+     * The `directory` mkdir operation.
+     * 
+     */
+    @Export(name="mkdir", refs={Mkdir.class}, tree="[0]")
+    private Output<Mkdir> mkdir;
+
+    /**
+     * @return The `directory` mkdir operation.
+     * 
+     */
+    public Output<Mkdir> mkdir() {
+        return this.mkdir;
     }
     /**
      * The subnet to use for the CNI bridge plugin configuration.

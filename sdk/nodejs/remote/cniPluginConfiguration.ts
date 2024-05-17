@@ -7,7 +7,7 @@ import * as utilities from "../utilities";
 import * as pulumiCommand from "@pulumi/command";
 
 import {Mkdir} from "../tools";
-import {CniBridgePluginConfiguration, CniLoopbackPluginConfiguration, File} from "./index";
+import {CniBridgePluginConfiguration, CniLoopbackPluginConfiguration} from "./index";
 
 /**
  * The CNI plugin configuration.
@@ -36,17 +36,17 @@ export class CniPluginConfiguration extends pulumi.ComponentResource {
      */
     public readonly connection!: pulumi.Output<pulumiCommand.types.output.remote.Connection>;
     /**
-     * The /etc/cni/net.d mkdir operation.
+     * The plugin configuration directory.
      */
-    public /*out*/ readonly etcCniMkdir!: pulumi.Output<Mkdir>;
-    /**
-     * The file on the remote system.
-     */
-    public /*out*/ readonly file!: pulumi.Output<File>;
+    public readonly directory!: pulumi.Output<string>;
     /**
      * The loopback plugin configuration.
      */
     public /*out*/ readonly loopback!: pulumi.Output<CniLoopbackPluginConfiguration>;
+    /**
+     * The `directory` mkdir operation.
+     */
+    public /*out*/ readonly mkdir!: pulumi.Output<Mkdir>;
     /**
      * The subnet to use for the CNI bridge plugin configuration.
      */
@@ -70,17 +70,17 @@ export class CniPluginConfiguration extends pulumi.ComponentResource {
                 throw new Error("Missing required property 'subnet'");
             }
             resourceInputs["connection"] = args ? (args.connection ? pulumi.output(args.connection).apply(pulumiCommand.types.input.remote.connectionArgsProvideDefaults) : undefined) : undefined;
+            resourceInputs["directory"] = args ? args.directory : undefined;
             resourceInputs["subnet"] = args ? args.subnet : undefined;
             resourceInputs["bridge"] = undefined /*out*/;
-            resourceInputs["etcCniMkdir"] = undefined /*out*/;
-            resourceInputs["file"] = undefined /*out*/;
             resourceInputs["loopback"] = undefined /*out*/;
+            resourceInputs["mkdir"] = undefined /*out*/;
         } else {
             resourceInputs["bridge"] = undefined /*out*/;
             resourceInputs["connection"] = undefined /*out*/;
-            resourceInputs["etcCniMkdir"] = undefined /*out*/;
-            resourceInputs["file"] = undefined /*out*/;
+            resourceInputs["directory"] = undefined /*out*/;
             resourceInputs["loopback"] = undefined /*out*/;
+            resourceInputs["mkdir"] = undefined /*out*/;
             resourceInputs["subnet"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
@@ -96,6 +96,10 @@ export interface CniPluginConfigurationArgs {
      * The parameters with which to connect to the remote host.
      */
     connection: pulumi.Input<pulumiCommand.types.input.remote.ConnectionArgs>;
+    /**
+     * The plugin configuration directory.
+     */
+    directory?: pulumi.Input<string>;
     /**
      * The subnet to use for the CNI bridge plugin configuration.
      */

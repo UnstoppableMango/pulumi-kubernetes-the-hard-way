@@ -29,22 +29,22 @@ namespace UnMango.KubernetesTheHardWay.Remote
         public Output<Pulumi.Command.Remote.Outputs.Connection> Connection { get; private set; } = null!;
 
         /// <summary>
-        /// The /etc/cni/net.d mkdir operation.
+        /// The plugin configuration directory.
         /// </summary>
-        [Output("etcCniMkdir")]
-        public Output<UnMango.KubernetesTheHardWay.Tools.Mkdir> EtcCniMkdir { get; private set; } = null!;
-
-        /// <summary>
-        /// The file on the remote system.
-        /// </summary>
-        [Output("file")]
-        public Output<UnMango.KubernetesTheHardWay.Remote.File> File { get; private set; } = null!;
+        [Output("directory")]
+        public Output<string> Directory { get; private set; } = null!;
 
         /// <summary>
         /// The loopback plugin configuration.
         /// </summary>
         [Output("loopback")]
         public Output<UnMango.KubernetesTheHardWay.Remote.CniLoopbackPluginConfiguration> Loopback { get; private set; } = null!;
+
+        /// <summary>
+        /// The `directory` mkdir operation.
+        /// </summary>
+        [Output("mkdir")]
+        public Output<UnMango.KubernetesTheHardWay.Tools.Mkdir> Mkdir { get; private set; } = null!;
 
         /// <summary>
         /// The subnet to use for the CNI bridge plugin configuration.
@@ -86,6 +86,12 @@ namespace UnMango.KubernetesTheHardWay.Remote
         /// </summary>
         [Input("connection", required: true)]
         public Input<Pulumi.Command.Remote.Inputs.ConnectionArgs> Connection { get; set; } = null!;
+
+        /// <summary>
+        /// The plugin configuration directory.
+        /// </summary>
+        [Input("directory")]
+        public Input<string>? Directory { get; set; }
 
         /// <summary>
         /// The subnet to use for the CNI bridge plugin configuration.

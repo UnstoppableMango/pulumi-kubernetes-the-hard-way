@@ -22,12 +22,12 @@ type CniPluginConfiguration struct {
 	Bridge CniBridgePluginConfigurationOutput `pulumi:"bridge"`
 	// The parameters with which to connect to the remote host.
 	Connection pulumiCommand.ConnectionOutput `pulumi:"connection"`
-	// The /etc/cni/net.d mkdir operation.
-	EtcCniMkdir tools.MkdirOutput `pulumi:"etcCniMkdir"`
-	// The file on the remote system.
-	File FileOutput `pulumi:"file"`
+	// The plugin configuration directory.
+	Directory pulumi.StringOutput `pulumi:"directory"`
 	// The loopback plugin configuration.
 	Loopback CniLoopbackPluginConfigurationOutput `pulumi:"loopback"`
+	// The `directory` mkdir operation.
+	Mkdir tools.MkdirOutput `pulumi:"mkdir"`
 	// The subnet to use for the CNI bridge plugin configuration.
 	Subnet pulumi.StringOutput `pulumi:"subnet"`
 }
@@ -58,6 +58,8 @@ func NewCniPluginConfiguration(ctx *pulumi.Context,
 type cniPluginConfigurationArgs struct {
 	// The parameters with which to connect to the remote host.
 	Connection pulumiCommand.Connection `pulumi:"connection"`
+	// The plugin configuration directory.
+	Directory *string `pulumi:"directory"`
 	// The subnet to use for the CNI bridge plugin configuration.
 	Subnet string `pulumi:"subnet"`
 }
@@ -66,6 +68,8 @@ type cniPluginConfigurationArgs struct {
 type CniPluginConfigurationArgs struct {
 	// The parameters with which to connect to the remote host.
 	Connection pulumiCommand.ConnectionInput
+	// The plugin configuration directory.
+	Directory pulumi.StringPtrInput
 	// The subnet to use for the CNI bridge plugin configuration.
 	Subnet pulumi.StringInput
 }
@@ -167,19 +171,19 @@ func (o CniPluginConfigurationOutput) Connection() pulumiCommand.ConnectionOutpu
 	return o.ApplyT(func(v *CniPluginConfiguration) pulumiCommand.ConnectionOutput { return v.Connection }).(pulumiCommand.ConnectionOutput)
 }
 
-// The /etc/cni/net.d mkdir operation.
-func (o CniPluginConfigurationOutput) EtcCniMkdir() tools.MkdirOutput {
-	return o.ApplyT(func(v *CniPluginConfiguration) tools.MkdirOutput { return v.EtcCniMkdir }).(tools.MkdirOutput)
-}
-
-// The file on the remote system.
-func (o CniPluginConfigurationOutput) File() FileOutput {
-	return o.ApplyT(func(v *CniPluginConfiguration) FileOutput { return v.File }).(FileOutput)
+// The plugin configuration directory.
+func (o CniPluginConfigurationOutput) Directory() pulumi.StringOutput {
+	return o.ApplyT(func(v *CniPluginConfiguration) pulumi.StringOutput { return v.Directory }).(pulumi.StringOutput)
 }
 
 // The loopback plugin configuration.
 func (o CniPluginConfigurationOutput) Loopback() CniLoopbackPluginConfigurationOutput {
 	return o.ApplyT(func(v *CniPluginConfiguration) CniLoopbackPluginConfigurationOutput { return v.Loopback }).(CniLoopbackPluginConfigurationOutput)
+}
+
+// The `directory` mkdir operation.
+func (o CniPluginConfigurationOutput) Mkdir() tools.MkdirOutput {
+	return o.ApplyT(func(v *CniPluginConfiguration) tools.MkdirOutput { return v.Mkdir }).(tools.MkdirOutput)
 }
 
 // The subnet to use for the CNI bridge plugin configuration.

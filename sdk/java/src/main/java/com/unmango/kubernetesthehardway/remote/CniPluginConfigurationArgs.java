@@ -9,6 +9,8 @@ import com.pulumi.core.annotations.Import;
 import com.pulumi.exceptions.MissingRequiredPropertyException;
 import java.lang.String;
 import java.util.Objects;
+import java.util.Optional;
+import javax.annotation.Nullable;
 
 
 public final class CniPluginConfigurationArgs extends com.pulumi.resources.ResourceArgs {
@@ -31,6 +33,21 @@ public final class CniPluginConfigurationArgs extends com.pulumi.resources.Resou
     }
 
     /**
+     * The plugin configuration directory.
+     * 
+     */
+    @Import(name="directory")
+    private @Nullable Output<String> directory;
+
+    /**
+     * @return The plugin configuration directory.
+     * 
+     */
+    public Optional<Output<String>> directory() {
+        return Optional.ofNullable(this.directory);
+    }
+
+    /**
      * The subnet to use for the CNI bridge plugin configuration.
      * 
      */
@@ -49,6 +66,7 @@ public final class CniPluginConfigurationArgs extends com.pulumi.resources.Resou
 
     private CniPluginConfigurationArgs(CniPluginConfigurationArgs $) {
         this.connection = $.connection;
+        this.directory = $.directory;
         this.subnet = $.subnet;
     }
 
@@ -89,6 +107,27 @@ public final class CniPluginConfigurationArgs extends com.pulumi.resources.Resou
          */
         public Builder connection(ConnectionArgs connection) {
             return connection(Output.of(connection));
+        }
+
+        /**
+         * @param directory The plugin configuration directory.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder directory(@Nullable Output<String> directory) {
+            $.directory = directory;
+            return this;
+        }
+
+        /**
+         * @param directory The plugin configuration directory.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder directory(String directory) {
+            return directory(Output.of(directory));
         }
 
         /**

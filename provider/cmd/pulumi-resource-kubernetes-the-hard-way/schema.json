@@ -2080,17 +2080,17 @@
                     "$ref": "/command/v0.10.0/schema.json#/types/command:remote:Connection",
                     "description": "The parameters with which to connect to the remote host."
                 },
-                "etcCniMkdir": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mkdir",
-                    "description": "The /etc/cni/net.d mkdir operation."
-                },
-                "file": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:remote:File",
-                    "description": "The file on the remote system."
+                "directory": {
+                    "type": "string",
+                    "description": "The plugin configuration directory."
                 },
                 "loopback": {
                     "$ref": "#/resources/kubernetes-the-hard-way:remote:CniLoopbackPluginConfiguration",
                     "description": "The loopback plugin configuration."
+                },
+                "mkdir": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mkdir",
+                    "description": "The `directory` mkdir operation."
                 },
                 "subnet": {
                     "type": "string",
@@ -2101,14 +2101,18 @@
                 "connection",
                 "subnet",
                 "bridge",
-                "etcCniMkdir",
-                "file",
+                "directory",
+                "mkdir",
                 "loopback"
             ],
             "inputProperties": {
                 "connection": {
                     "$ref": "/command/v0.10.0/schema.json#/types/command:remote:Connection",
                     "description": "The parameters with which to connect to the remote host."
+                },
+                "directory": {
+                    "type": "string",
+                    "description": "The plugin configuration directory."
                 },
                 "subnet": {
                     "type": "string",

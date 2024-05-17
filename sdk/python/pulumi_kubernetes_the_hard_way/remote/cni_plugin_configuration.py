@@ -11,7 +11,6 @@ from .. import _utilities
 from .. import tools as _tools
 from .cni_bridge_plugin_configuration import CniBridgePluginConfiguration
 from .cni_loopback_plugin_configuration import CniLoopbackPluginConfiguration
-from .file import File
 import pulumi_command
 
 __all__ = ['CniPluginConfigurationArgs', 'CniPluginConfiguration']
@@ -20,14 +19,18 @@ __all__ = ['CniPluginConfigurationArgs', 'CniPluginConfiguration']
 class CniPluginConfigurationArgs:
     def __init__(__self__, *,
                  connection: pulumi.Input['pulumi_command.remote.ConnectionArgs'],
-                 subnet: pulumi.Input[str]):
+                 subnet: pulumi.Input[str],
+                 directory: Optional[pulumi.Input[str]] = None):
         """
         The set of arguments for constructing a CniPluginConfiguration resource.
         :param pulumi.Input['pulumi_command.remote.ConnectionArgs'] connection: The parameters with which to connect to the remote host.
         :param pulumi.Input[str] subnet: The subnet to use for the CNI bridge plugin configuration.
+        :param pulumi.Input[str] directory: The plugin configuration directory.
         """
         pulumi.set(__self__, "connection", connection)
         pulumi.set(__self__, "subnet", subnet)
+        if directory is not None:
+            pulumi.set(__self__, "directory", directory)
 
     @property
     @pulumi.getter
@@ -53,6 +56,18 @@ class CniPluginConfigurationArgs:
     def subnet(self, value: pulumi.Input[str]):
         pulumi.set(self, "subnet", value)
 
+    @property
+    @pulumi.getter
+    def directory(self) -> Optional[pulumi.Input[str]]:
+        """
+        The plugin configuration directory.
+        """
+        return pulumi.get(self, "directory")
+
+    @directory.setter
+    def directory(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "directory", value)
+
 
 class CniPluginConfiguration(pulumi.ComponentResource):
     @overload
@@ -60,6 +75,7 @@ class CniPluginConfiguration(pulumi.ComponentResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
+                 directory: Optional[pulumi.Input[str]] = None,
                  subnet: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         """
@@ -68,6 +84,7 @@ class CniPluginConfiguration(pulumi.ComponentResource):
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']] connection: The parameters with which to connect to the remote host.
+        :param pulumi.Input[str] directory: The plugin configuration directory.
         :param pulumi.Input[str] subnet: The subnet to use for the CNI bridge plugin configuration.
         """
         ...
@@ -95,6 +112,7 @@ class CniPluginConfiguration(pulumi.ComponentResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
+                 directory: Optional[pulumi.Input[str]] = None,
                  subnet: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
@@ -110,13 +128,13 @@ class CniPluginConfiguration(pulumi.ComponentResource):
             if connection is None and not opts.urn:
                 raise TypeError("Missing required property 'connection'")
             __props__.__dict__["connection"] = connection
+            __props__.__dict__["directory"] = directory
             if subnet is None and not opts.urn:
                 raise TypeError("Missing required property 'subnet'")
             __props__.__dict__["subnet"] = subnet
             __props__.__dict__["bridge"] = None
-            __props__.__dict__["etc_cni_mkdir"] = None
-            __props__.__dict__["file"] = None
             __props__.__dict__["loopback"] = None
+            __props__.__dict__["mkdir"] = None
         super(CniPluginConfiguration, __self__).__init__(
             'kubernetes-the-hard-way:remote:CniPluginConfiguration',
             resource_name,
@@ -141,20 +159,12 @@ class CniPluginConfiguration(pulumi.ComponentResource):
         return pulumi.get(self, "connection")
 
     @property
-    @pulumi.getter(name="etcCniMkdir")
-    def etc_cni_mkdir(self) -> pulumi.Output['_tools.Mkdir']:
-        """
-        The /etc/cni/net.d mkdir operation.
-        """
-        return pulumi.get(self, "etc_cni_mkdir")
-
-    @property
     @pulumi.getter
-    def file(self) -> pulumi.Output['File']:
+    def directory(self) -> pulumi.Output[str]:
         """
-        The file on the remote system.
+        The plugin configuration directory.
         """
-        return pulumi.get(self, "file")
+        return pulumi.get(self, "directory")
 
     @property
     @pulumi.getter
@@ -163,6 +173,14 @@ class CniPluginConfiguration(pulumi.ComponentResource):
         The loopback plugin configuration.
         """
         return pulumi.get(self, "loopback")
+
+    @property
+    @pulumi.getter
+    def mkdir(self) -> pulumi.Output['_tools.Mkdir']:
+        """
+        The `directory` mkdir operation.
+        """
+        return pulumi.get(self, "mkdir")
 
     @property
     @pulumi.getter
