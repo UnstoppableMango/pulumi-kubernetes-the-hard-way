@@ -47,6 +47,66 @@ func generateTypes(commandSpec schema.PackageSpec) map[string]schema.ComplexType
 				},
 			},
 		},
+		name("ContainerdCriPluginConfiguration"): {
+			ObjectTypeSpec: schema.ObjectTypeSpec{
+				Description: "containerd cri plugin configuration.",
+				Type:        "object",
+				Properties: map[string]schema.PropertySpec{
+					"containerd": {
+						Description: "containerd configuration.",
+						TypeSpec:    types.LocalType("ContainerdCriPluginCConfigurationContainerd", "remote"),
+					},
+					"cni": {
+						Description: "cni configuration.",
+						TypeSpec:    types.LocalType("ContainerdCriPluginConfigurationCni", "remote"),
+					},
+				},
+				Required: []string{"containerd", "cni"},
+			},
+		},
+		name("ContainerdCriPluginCConfigurationContainerd"): {
+			ObjectTypeSpec: schema.ObjectTypeSpec{
+				Description: "containerd cri plugin configuration.",
+				Type:        "object",
+				Properties: map[string]schema.PropertySpec{
+					"defaultRuntimeName": props.String("default_runtime_name"),
+					"snapshotter":        props.String("snapshotter"),
+				},
+			},
+		},
+		name("ContainerdCriPluginCConfigurationContainerdRunc"): {
+			ObjectTypeSpec: schema.ObjectTypeSpec{
+				Description: "containerd cri runc plugin configuration.",
+				Type:        "object",
+				Properties: map[string]schema.PropertySpec{
+					"runtimeType": props.String("runtime_type"),
+					"options": {
+						Description: "runc options.",
+						TypeSpec:    types.LocalType("ContainerdCriPluginCConfigurationContainerdRuncOptions", "remote"),
+					},
+				},
+				Required: []string{"options"},
+			},
+		},
+		name("ContainerdCriPluginCConfigurationContainerdRuncOptions"): {
+			ObjectTypeSpec: schema.ObjectTypeSpec{
+				Description: "containerd cri runc plugin configuration.",
+				Type:        "object",
+				Properties: map[string]schema.PropertySpec{
+					"systemdCgroup": props.String("SystemdCgroup"),
+				},
+			},
+		},
+		name("ContainerdCriPluginConfigurationCni"): {
+			ObjectTypeSpec: schema.ObjectTypeSpec{
+				Description: "containerd cri plugin configuration.",
+				Type:        "object",
+				Properties: map[string]schema.PropertySpec{
+					"binDir":  props.String("bin_dir"),
+					"confDir": props.String("conf_dir"),
+				},
+			},
+		},
 		name("EtcdConfigurationProps"): { // TODO: This name kinda sucks
 			ObjectTypeSpec: schema.ObjectTypeSpec{
 				Description: "Props for resources that consume etcd configuration.",

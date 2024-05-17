@@ -12,6 +12,7 @@ func Generate(commandSpec schema.PackageSpec) schema.PackageSpec {
 			"bandwidth", "bridge", "dhcp", "dummy", "firewall", "hostDevice",
 			"hostLocal", "ipvlan", "loopback", "macvlan", "portmap", "ptp", "sbr",
 			"static", "tap", "tuning", "vlan", "vrf"),
+		name("ContainerdConfiguration"):        generateContainerdConfiguration(commandSpec),
 		name("ContainerdInstall"):              generateArchiveInstall(commandSpec, "Installs containerd on a remote system", "containerd"),
 		name("CniBridgePluginConfiguration"):   generateCniBridgePluginConfiguration(commandSpec),
 		name("CniLoopbackPluginConfiguration"): generateCniLoopbackPluginConfiguration(commandSpec),
