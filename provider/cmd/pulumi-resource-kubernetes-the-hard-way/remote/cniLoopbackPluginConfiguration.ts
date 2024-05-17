@@ -9,7 +9,7 @@ export class CniLoopbackPluginConfiguration extends schema.CniLoopbackPluginConf
 
     const cniVersion = output(args.cniVersion ?? '1.1.0');
     const connection = output(args.connection);
-    const loopbackName = output(args.name ?? 'bridge');
+    const loopbackName = output(args.name ?? 'lo');
     const path = output(args.path ?? '/var/lib/kubernetes');
     const type = output(args.type ?? 'loopback');
 
@@ -27,13 +27,15 @@ export class CniLoopbackPluginConfiguration extends schema.CniLoopbackPluginConf
     this.connection = connection;
     this.file = file;
     this.name = loopbackName;
+    this.path = path;
     this.type = type;
 
     this.registerOutputs({
       cniVersion,
       connection,
       file,
-      loopbackName,
+      name: loopbackName,
+      path,
       type,
     });
   }

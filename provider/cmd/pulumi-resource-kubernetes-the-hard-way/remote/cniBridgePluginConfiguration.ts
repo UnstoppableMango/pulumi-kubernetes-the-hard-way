@@ -1,4 +1,4 @@
-import { ComponentResourceOptions, Output, all, jsonStringify, output } from '@pulumi/pulumi';
+import { ComponentResourceOptions, Output, all, jsonStringify, log, output } from '@pulumi/pulumi';
 import * as schema from '../schema-types';
 import { File } from './file';
 
@@ -53,7 +53,7 @@ export class CniBridgePluginConfiguration extends schema.CniBridgePluginConfigur
       ipMasq,
       ipam,
       isGateway,
-      name,
+      name: bridgeName,
       path,
       subnet,
       type,

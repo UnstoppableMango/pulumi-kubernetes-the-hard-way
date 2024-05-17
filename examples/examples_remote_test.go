@@ -24,46 +24,65 @@ func TestCniPluginsTs(t *testing.T) {
 		WithSshPassword(password),
 	)
 
-	validateSimple := func(t *testing.T, res apitype.ResourceV3) {
+	validateBridge := func(t *testing.T, res apitype.ResourceV3) {
 		assert.NotEmpty(t, res.Outputs)
 
-		// arch, ok := res.Outputs["architecture"]
-		// assert.True(t, ok, "Output `architecture` was not set")
-		// assert.Equal(t, "amd64", arch)
+		bridge, ok := res.Outputs["bridge"]
+		assert.True(t, ok, "Output `bridge` was not set")
+		assert.Equal(t, "cni0", bridge)
 
-		// archiveName, ok := res.Outputs["archiveName"]
-		// assert.True(t, ok, "Output `archiveName` was not set")
-		// assert.Equal(t, "etcd-v3.4.15-linux-amd64.tar.gz", archiveName)
+		name, ok := res.Outputs["name"]
+		assert.True(t, ok, "Output `name` was not set")
+		assert.Equal(t, "bridge", name)
 
-		// directory, ok := res.Outputs["directory"]
-		// assert.True(t, ok, "Output `directory` was not set")
-		// assert.Equal(t, "/usr/local/bin", directory)
+		typ, ok := res.Outputs["type"]
+		assert.True(t, ok, "Output `type` was not set")
+		assert.Equal(t, "bridge", typ)
 
-		// etcdPath, ok := res.Outputs["etcdPath"]
-		// assert.True(t, ok, "Output `etcdPath` was not set")
-		// assert.Equal(t, "/usr/local/bin/etcd", etcdPath)
+		cniVersion, ok := res.Outputs["cniVersion"]
+		assert.True(t, ok, "Output `cniVersion` was not set")
+		assert.Equal(t, "1.0.0", cniVersion)
 
-		// etcdctlPath, ok := res.Outputs["etcdctlPath"]
-		// assert.True(t, ok, "Output `etcdctlPath` was not set")
-		// assert.Equal(t, "/usr/local/bin/etcdctl", etcdctlPath)
+		path, ok := res.Outputs["path"]
+		assert.True(t, ok, "Output `path` was not set")
+		assert.Equal(t, "/var/lib/kubernetes", path)
 
-		// name, ok := res.Outputs["name"]
-		// assert.True(t, ok, "Output `name` was not set")
-		// assert.Equal(t, "simple", name)
+		subnet, ok := res.Outputs["subnet"]
+		assert.True(t, ok, "Output `subnet` was not set")
+		assert.Equal(t, "10.0.69.0/24", subnet)
 
-		// url, ok := res.Outputs["url"]
-		// assert.True(t, ok, "Output `url` was not set")
-		// assert.Equal(t, "https://github.com/etcd-io/etcd/releases/download/v3.4.15/etcd-v3.4.15-linux-amd64.tar.gz", url)
+		isGateway, ok := res.Outputs["isGateway"]
+		assert.True(t, ok, "Output `isGateway` was not set")
+		assert.Equal(t, true, isGateway)
 
-		// version, ok := res.Outputs["version"]
-		// assert.True(t, ok, "Output `version` was not set")
-		// assert.Equal(t, "3.4.15", version)
+		ipMasq, ok := res.Outputs["ipMasq"]
+		assert.True(t, ok, "Output `ipMasq` was not set")
+		assert.Equal(t, true, ipMasq)
 
-		// assert.Contains(t, res.Outputs, "download")
-		// assert.Contains(t, res.Outputs, "mkdir")
-		// assert.Contains(t, res.Outputs, "mvEtcd")
-		// assert.Contains(t, res.Outputs, "mvEtcdctl")
-		// assert.Contains(t, res.Outputs, "tar")
+		assert.Contains(t, res.Outputs, "file")
+		assert.Contains(t, res.Outputs, "ipam")
+	}
+
+	validateLoopback := func(t *testing.T, res apitype.ResourceV3) {
+		assert.NotEmpty(t, res.Outputs)
+
+		cniVersion, ok := res.Outputs["cniVersion"]
+		assert.True(t, ok, "Output `cniVersion` was not set")
+		assert.Equal(t, "1.1.0", cniVersion)
+
+		name, ok := res.Outputs["name"]
+		assert.True(t, ok, "Output `name` was not set")
+		assert.Equal(t, "lo", name)
+
+		path, ok := res.Outputs["path"]
+		assert.True(t, ok, "Output `path` was not set")
+		assert.Equal(t, "/var/lib/kubernetes", path)
+
+		typ, ok := res.Outputs["type"]
+		assert.True(t, ok, "Output `type` was not set")
+		assert.Equal(t, "loopback", typ)
+
+		assert.Contains(t, res.Outputs, "file")
 	}
 
 	test := getJSBaseOptions(t).
@@ -82,13 +101,13 @@ func TestCniPluginsTs(t *testing.T) {
 					case "kubernetes-the-hard-way:remote:CniBridgePluginConfiguration":
 						switch res.URN.Name() {
 						case "simple":
-							validateSimple(t, res) // TODO
+							validateBridge(t, res)
 							validatedResources = append(validatedResources, "simple")
 						}
 					case "kubernetes-the-hard-way:remote:CniLoopbackPluginConfiguration":
 						switch res.URN.Name() {
 						case "simple":
-							validateSimple(t, res) // TODO
+							validateLoopback(t, res)
 							validatedResources = append(validatedResources, "simple")
 						}
 					}
