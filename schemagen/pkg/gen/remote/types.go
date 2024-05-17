@@ -54,7 +54,7 @@ func generateTypes(commandSpec schema.PackageSpec) map[string]schema.ComplexType
 				Properties: map[string]schema.PropertySpec{
 					"containerd": {
 						Description: "containerd configuration.",
-						TypeSpec:    types.LocalType("ContainerdCriPluginCConfigurationContainerd", "remote"),
+						TypeSpec:    types.LocalType("ContainerdCriPluginConfigurationContainerd", "remote"),
 					},
 					"cni": {
 						Description: "cni configuration.",
@@ -64,7 +64,7 @@ func generateTypes(commandSpec schema.PackageSpec) map[string]schema.ComplexType
 				Required: []string{"containerd", "cni"},
 			},
 		},
-		name("ContainerdCriPluginCConfigurationContainerd"): {
+		name("ContainerdCriPluginConfigurationContainerd"): {
 			ObjectTypeSpec: schema.ObjectTypeSpec{
 				Description: "containerd cri plugin configuration.",
 				Type:        "object",
@@ -74,7 +74,7 @@ func generateTypes(commandSpec schema.PackageSpec) map[string]schema.ComplexType
 				},
 			},
 		},
-		name("ContainerdCriPluginCConfigurationContainerdRunc"): {
+		name("ContainerdCriPluginConfigurationContainerdRunc"): {
 			ObjectTypeSpec: schema.ObjectTypeSpec{
 				Description: "containerd cri runc plugin configuration.",
 				Type:        "object",
@@ -82,13 +82,13 @@ func generateTypes(commandSpec schema.PackageSpec) map[string]schema.ComplexType
 					"runtimeType": props.String("runtime_type"),
 					"options": {
 						Description: "runc options.",
-						TypeSpec:    types.LocalType("ContainerdCriPluginCConfigurationContainerdRuncOptions", "remote"),
+						TypeSpec:    types.LocalType("ContainerdCriPluginConfigurationContainerdRuncOptions", "remote"),
 					},
 				},
 				Required: []string{"options"},
 			},
 		},
-		name("ContainerdCriPluginCConfigurationContainerdRuncOptions"): {
+		name("ContainerdCriPluginConfigurationContainerdRuncOptions"): {
 			ObjectTypeSpec: schema.ObjectTypeSpec{
 				Description: "containerd cri runc plugin configuration.",
 				Type:        "object",
