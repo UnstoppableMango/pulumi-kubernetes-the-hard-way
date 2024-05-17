@@ -182,7 +182,7 @@ class CniBridgePluginConfigurationArgs:
         pulumi.set(self, "type", value)
 
 
-class CniBridgePluginConfiguration(pulumi.CustomResource):
+class CniBridgePluginConfiguration(pulumi.ComponentResource):
     @overload
     def __init__(__self__,
                  resource_name: str,
@@ -252,7 +252,9 @@ class CniBridgePluginConfiguration(pulumi.CustomResource):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):
             raise TypeError('Expected resource options to be a ResourceOptions instance')
-        if opts.id is None:
+        if opts.id is not None:
+            raise ValueError('ComponentResource classes do not support opts.id')
+        else:
             if __props__ is not None:
                 raise TypeError('__props__ is only valid when passed in combination with a valid opts.id to get an existing resource')
             __props__ = CniBridgePluginConfigurationArgs.__new__(CniBridgePluginConfigurationArgs)
@@ -274,36 +276,8 @@ class CniBridgePluginConfiguration(pulumi.CustomResource):
             'kubernetes-the-hard-way:remote:CniBridgePluginConfiguration',
             resource_name,
             __props__,
-            opts)
-
-    @staticmethod
-    def get(resource_name: str,
-            id: pulumi.Input[str],
-            opts: Optional[pulumi.ResourceOptions] = None) -> 'CniBridgePluginConfiguration':
-        """
-        Get an existing CniBridgePluginConfiguration resource's state with the given name, id, and optional extra
-        properties used to qualify the lookup.
-
-        :param str resource_name: The unique name of the resulting resource.
-        :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
-        :param pulumi.ResourceOptions opts: Options for the resource.
-        """
-        opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
-
-        __props__ = CniBridgePluginConfigurationArgs.__new__(CniBridgePluginConfigurationArgs)
-
-        __props__.__dict__["bridge"] = None
-        __props__.__dict__["cni_version"] = None
-        __props__.__dict__["connection"] = None
-        __props__.__dict__["file"] = None
-        __props__.__dict__["ip_masq"] = None
-        __props__.__dict__["ipam"] = None
-        __props__.__dict__["is_gateway"] = None
-        __props__.__dict__["name"] = None
-        __props__.__dict__["path"] = None
-        __props__.__dict__["subnet"] = None
-        __props__.__dict__["type"] = None
-        return CniBridgePluginConfiguration(resource_name, opts=opts, __props__=__props__)
+            opts,
+            remote=True)
 
     @property
     @pulumi.getter
