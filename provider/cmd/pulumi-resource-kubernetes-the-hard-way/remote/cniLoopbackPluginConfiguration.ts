@@ -10,7 +10,7 @@ export class CniLoopbackPluginConfiguration extends schema.CniLoopbackPluginConf
     const cniVersion = output(args.cniVersion ?? '1.1.0');
     const connection = output(args.connection);
     const loopbackName = output(args.name ?? 'lo');
-    const path = output(args.path ?? '/var/lib/kubernetes/99-loopback.conf');
+    const path = output(args.path ?? '/etc/cni/net.d/99-loopback.conf');
     const type = output(args.type ?? 'loopback');
 
     const file = new File(name, {

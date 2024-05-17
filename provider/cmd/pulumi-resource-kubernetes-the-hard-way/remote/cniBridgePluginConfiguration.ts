@@ -14,7 +14,7 @@ export class CniBridgePluginConfiguration extends schema.CniBridgePluginConfigur
     const ipMasq = output(args.ipMasq ?? true);
     const ipam = all([args.ipam, args.subnet]).apply(x => ipamDefaults(...x));
     const isGateway = output(args.isGateway ?? true);
-    const path = output(args.path ?? '/var/lib/kubernetes/10-bridge.conf');
+    const path = output(args.path ?? '/etc/cni/net.d/10-bridge.conf');
     const subnet = output(args.subnet);
     const type = output(args.type ?? 'bridge');
 
