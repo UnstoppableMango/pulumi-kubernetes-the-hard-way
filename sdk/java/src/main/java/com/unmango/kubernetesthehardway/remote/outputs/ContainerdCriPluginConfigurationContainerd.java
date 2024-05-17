@@ -4,6 +4,7 @@
 package com.unmango.kubernetesthehardway.remote.outputs;
 
 import com.pulumi.core.annotations.CustomType;
+import com.unmango.kubernetesthehardway.remote.outputs.ContainerdCriPluginConfigurationContainerdRunc;
 import java.lang.String;
 import java.util.Objects;
 import java.util.Optional;
@@ -17,6 +18,11 @@ public final class ContainerdCriPluginConfigurationContainerd {
      */
     private @Nullable String defaultRuntimeName;
     /**
+     * @return The containerd runtime configuration.
+     * 
+     */
+    private @Nullable ContainerdCriPluginConfigurationContainerdRunc runtimes;
+    /**
      * @return snapshotter
      * 
      */
@@ -29,6 +35,13 @@ public final class ContainerdCriPluginConfigurationContainerd {
      */
     public Optional<String> defaultRuntimeName() {
         return Optional.ofNullable(this.defaultRuntimeName);
+    }
+    /**
+     * @return The containerd runtime configuration.
+     * 
+     */
+    public Optional<ContainerdCriPluginConfigurationContainerdRunc> runtimes() {
+        return Optional.ofNullable(this.runtimes);
     }
     /**
      * @return snapshotter
@@ -48,11 +61,13 @@ public final class ContainerdCriPluginConfigurationContainerd {
     @CustomType.Builder
     public static final class Builder {
         private @Nullable String defaultRuntimeName;
+        private @Nullable ContainerdCriPluginConfigurationContainerdRunc runtimes;
         private @Nullable String snapshotter;
         public Builder() {}
         public Builder(ContainerdCriPluginConfigurationContainerd defaults) {
     	      Objects.requireNonNull(defaults);
     	      this.defaultRuntimeName = defaults.defaultRuntimeName;
+    	      this.runtimes = defaults.runtimes;
     	      this.snapshotter = defaults.snapshotter;
         }
 
@@ -60,6 +75,12 @@ public final class ContainerdCriPluginConfigurationContainerd {
         public Builder defaultRuntimeName(@Nullable String defaultRuntimeName) {
 
             this.defaultRuntimeName = defaultRuntimeName;
+            return this;
+        }
+        @CustomType.Setter
+        public Builder runtimes(@Nullable ContainerdCriPluginConfigurationContainerdRunc runtimes) {
+
+            this.runtimes = runtimes;
             return this;
         }
         @CustomType.Setter
@@ -71,6 +92,7 @@ public final class ContainerdCriPluginConfigurationContainerd {
         public ContainerdCriPluginConfigurationContainerd build() {
             final var _resultValue = new ContainerdCriPluginConfigurationContainerd();
             _resultValue.defaultRuntimeName = defaultRuntimeName;
+            _resultValue.runtimes = runtimes;
             _resultValue.snapshotter = snapshotter;
             return _resultValue;
         }

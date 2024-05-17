@@ -415,6 +415,11 @@
                     "type": "string",
                     "description": "default_runtime_name"
                 },
+                "runtimes": {
+                    "$ref": "#/types/kubernetes-the-hard-way:remote:ContainerdCriPluginConfigurationContainerdRunc",
+                    "plain": true,
+                    "description": "The containerd runtime configuration."
+                },
                 "snapshotter": {
                     "type": "string",
                     "description": "snapshotter"
@@ -444,7 +449,7 @@
             "description": "containerd cri runc plugin configuration.",
             "properties": {
                 "systemdCgroup": {
-                    "type": "string",
+                    "type": "boolean",
                     "description": "SystemdCgroup"
                 }
             },

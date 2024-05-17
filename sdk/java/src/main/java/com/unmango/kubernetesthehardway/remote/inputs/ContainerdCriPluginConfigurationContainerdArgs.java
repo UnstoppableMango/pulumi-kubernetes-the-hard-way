@@ -5,6 +5,7 @@ package com.unmango.kubernetesthehardway.remote.inputs;
 
 import com.pulumi.core.Output;
 import com.pulumi.core.annotations.Import;
+import com.unmango.kubernetesthehardway.remote.inputs.ContainerdCriPluginConfigurationContainerdRuncArgs;
 import java.lang.String;
 import java.util.Objects;
 import java.util.Optional;
@@ -35,6 +36,21 @@ public final class ContainerdCriPluginConfigurationContainerdArgs extends com.pu
     }
 
     /**
+     * The containerd runtime configuration.
+     * 
+     */
+    @Import(name="runtimes")
+    private @Nullable ContainerdCriPluginConfigurationContainerdRuncArgs runtimes;
+
+    /**
+     * @return The containerd runtime configuration.
+     * 
+     */
+    public Optional<ContainerdCriPluginConfigurationContainerdRuncArgs> runtimes() {
+        return Optional.ofNullable(this.runtimes);
+    }
+
+    /**
      * snapshotter
      * 
      */
@@ -53,6 +69,7 @@ public final class ContainerdCriPluginConfigurationContainerdArgs extends com.pu
 
     private ContainerdCriPluginConfigurationContainerdArgs(ContainerdCriPluginConfigurationContainerdArgs $) {
         this.defaultRuntimeName = $.defaultRuntimeName;
+        this.runtimes = $.runtimes;
         this.snapshotter = $.snapshotter;
     }
 
@@ -93,6 +110,17 @@ public final class ContainerdCriPluginConfigurationContainerdArgs extends com.pu
          */
         public Builder defaultRuntimeName(String defaultRuntimeName) {
             return defaultRuntimeName(Output.of(defaultRuntimeName));
+        }
+
+        /**
+         * @param runtimes The containerd runtime configuration.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder runtimes(@Nullable ContainerdCriPluginConfigurationContainerdRuncArgs runtimes) {
+            $.runtimes = runtimes;
+            return this;
         }
 
         /**

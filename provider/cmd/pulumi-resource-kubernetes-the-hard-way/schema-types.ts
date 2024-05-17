@@ -1276,10 +1276,12 @@ export interface ContainerdCriPluginConfigurationCniOutputs {
 }
 export interface ContainerdCriPluginConfigurationContainerdInputs {
     readonly defaultRuntimeName?: pulumi.Input<string>;
+    readonly runtimes?: ContainerdCriPluginConfigurationContainerdRuncInputs;
     readonly snapshotter?: pulumi.Input<string>;
 }
 export interface ContainerdCriPluginConfigurationContainerdOutputs {
     readonly defaultRuntimeName?: pulumi.Output<string>;
+    readonly runtimes?: ContainerdCriPluginConfigurationContainerdRuncOutputs;
     readonly snapshotter?: pulumi.Output<string>;
 }
 export interface ContainerdCriPluginConfigurationContainerdRuncInputs {
@@ -1291,10 +1293,10 @@ export interface ContainerdCriPluginConfigurationContainerdRuncOutputs {
     readonly runtimeType?: pulumi.Output<string>;
 }
 export interface ContainerdCriPluginConfigurationContainerdRuncOptionsInputs {
-    readonly systemdCgroup?: pulumi.Input<string>;
+    readonly systemdCgroup?: pulumi.Input<boolean>;
 }
 export interface ContainerdCriPluginConfigurationContainerdRuncOptionsOutputs {
-    readonly systemdCgroup?: pulumi.Output<string>;
+    readonly systemdCgroup?: pulumi.Output<boolean>;
 }
 export interface EtcdConfigurationPropsInputs {
     readonly caFilePath: pulumi.Input<string>;

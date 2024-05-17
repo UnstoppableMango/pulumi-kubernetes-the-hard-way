@@ -14,6 +14,8 @@ import pulumi_command
 __all__ = [
     'CniBridgeIpamArgs',
     'ContainerdCriPluginConfigurationCniArgs',
+    'ContainerdCriPluginConfigurationContainerdRuncOptionsArgs',
+    'ContainerdCriPluginConfigurationContainerdRuncArgs',
     'ContainerdCriPluginConfigurationContainerdArgs',
     'ContainerdCriPluginConfigurationArgs',
     'EtcdConfigurationPropsArgs',
@@ -120,17 +122,84 @@ class ContainerdCriPluginConfigurationCniArgs:
 
 
 @pulumi.input_type
+class ContainerdCriPluginConfigurationContainerdRuncOptionsArgs:
+    def __init__(__self__, *,
+                 systemd_cgroup: Optional[pulumi.Input[bool]] = None):
+        """
+        containerd cri runc plugin configuration.
+        :param pulumi.Input[bool] systemd_cgroup: SystemdCgroup
+        """
+        if systemd_cgroup is not None:
+            pulumi.set(__self__, "systemd_cgroup", systemd_cgroup)
+
+    @property
+    @pulumi.getter(name="systemdCgroup")
+    def systemd_cgroup(self) -> Optional[pulumi.Input[bool]]:
+        """
+        SystemdCgroup
+        """
+        return pulumi.get(self, "systemd_cgroup")
+
+    @systemd_cgroup.setter
+    def systemd_cgroup(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "systemd_cgroup", value)
+
+
+@pulumi.input_type
+class ContainerdCriPluginConfigurationContainerdRuncArgs:
+    def __init__(__self__, *,
+                 options: 'ContainerdCriPluginConfigurationContainerdRuncOptionsArgs',
+                 runtime_type: Optional[pulumi.Input[str]] = None):
+        """
+        containerd cri runc plugin configuration.
+        :param 'ContainerdCriPluginConfigurationContainerdRuncOptionsArgs' options: runc options.
+        :param pulumi.Input[str] runtime_type: runtime_type
+        """
+        pulumi.set(__self__, "options", options)
+        if runtime_type is not None:
+            pulumi.set(__self__, "runtime_type", runtime_type)
+
+    @property
+    @pulumi.getter
+    def options(self) -> 'ContainerdCriPluginConfigurationContainerdRuncOptionsArgs':
+        """
+        runc options.
+        """
+        return pulumi.get(self, "options")
+
+    @options.setter
+    def options(self, value: 'ContainerdCriPluginConfigurationContainerdRuncOptionsArgs'):
+        pulumi.set(self, "options", value)
+
+    @property
+    @pulumi.getter(name="runtimeType")
+    def runtime_type(self) -> Optional[pulumi.Input[str]]:
+        """
+        runtime_type
+        """
+        return pulumi.get(self, "runtime_type")
+
+    @runtime_type.setter
+    def runtime_type(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "runtime_type", value)
+
+
+@pulumi.input_type
 class ContainerdCriPluginConfigurationContainerdArgs:
     def __init__(__self__, *,
                  default_runtime_name: Optional[pulumi.Input[str]] = None,
+                 runtimes: Optional['ContainerdCriPluginConfigurationContainerdRuncArgs'] = None,
                  snapshotter: Optional[pulumi.Input[str]] = None):
         """
         containerd cri plugin configuration.
         :param pulumi.Input[str] default_runtime_name: default_runtime_name
+        :param 'ContainerdCriPluginConfigurationContainerdRuncArgs' runtimes: The containerd runtime configuration.
         :param pulumi.Input[str] snapshotter: snapshotter
         """
         if default_runtime_name is not None:
             pulumi.set(__self__, "default_runtime_name", default_runtime_name)
+        if runtimes is not None:
+            pulumi.set(__self__, "runtimes", runtimes)
         if snapshotter is not None:
             pulumi.set(__self__, "snapshotter", snapshotter)
 
@@ -145,6 +214,18 @@ class ContainerdCriPluginConfigurationContainerdArgs:
     @default_runtime_name.setter
     def default_runtime_name(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "default_runtime_name", value)
+
+    @property
+    @pulumi.getter
+    def runtimes(self) -> Optional['ContainerdCriPluginConfigurationContainerdRuncArgs']:
+        """
+        The containerd runtime configuration.
+        """
+        return pulumi.get(self, "runtimes")
+
+    @runtimes.setter
+    def runtimes(self, value: Optional['ContainerdCriPluginConfigurationContainerdRuncArgs']):
+        pulumi.set(self, "runtimes", value)
 
     @property
     @pulumi.getter

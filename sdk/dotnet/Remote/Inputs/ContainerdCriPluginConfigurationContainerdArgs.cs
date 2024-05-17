@@ -23,6 +23,12 @@ namespace UnMango.KubernetesTheHardWay.Remote.Inputs
         public Input<string>? DefaultRuntimeName { get; set; }
 
         /// <summary>
+        /// The containerd runtime configuration.
+        /// </summary>
+        [Input("runtimes")]
+        public Inputs.ContainerdCriPluginConfigurationContainerdRuncArgs? Runtimes { get; set; }
+
+        /// <summary>
         /// snapshotter
         /// </summary>
         [Input("snapshotter")]

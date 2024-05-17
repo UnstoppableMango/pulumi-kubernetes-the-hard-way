@@ -488,9 +488,37 @@ export namespace remote {
          */
         defaultRuntimeName?: pulumi.Input<string>;
         /**
+         * The containerd runtime configuration.
+         */
+        runtimes?: inputs.remote.ContainerdCriPluginConfigurationContainerdRuncArgs;
+        /**
          * snapshotter
          */
         snapshotter?: pulumi.Input<string>;
+    }
+
+    /**
+     * containerd cri runc plugin configuration.
+     */
+    export interface ContainerdCriPluginConfigurationContainerdRuncArgs {
+        /**
+         * runc options.
+         */
+        options: inputs.remote.ContainerdCriPluginConfigurationContainerdRuncOptionsArgs;
+        /**
+         * runtime_type
+         */
+        runtimeType?: pulumi.Input<string>;
+    }
+
+    /**
+     * containerd cri runc plugin configuration.
+     */
+    export interface ContainerdCriPluginConfigurationContainerdRuncOptionsArgs {
+        /**
+         * SystemdCgroup
+         */
+        systemdCgroup?: pulumi.Input<boolean>;
     }
 
     /**

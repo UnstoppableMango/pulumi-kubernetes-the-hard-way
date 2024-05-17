@@ -22,6 +22,10 @@ namespace UnMango.KubernetesTheHardWay.Remote.Outputs
         /// </summary>
         public readonly string? DefaultRuntimeName;
         /// <summary>
+        /// The containerd runtime configuration.
+        /// </summary>
+        public readonly Outputs.ContainerdCriPluginConfigurationContainerdRunc? Runtimes;
+        /// <summary>
         /// snapshotter
         /// </summary>
         public readonly string? Snapshotter;
@@ -30,9 +34,12 @@ namespace UnMango.KubernetesTheHardWay.Remote.Outputs
         private ContainerdCriPluginConfigurationContainerd(
             string? defaultRuntimeName,
 
+            Outputs.ContainerdCriPluginConfigurationContainerdRunc? runtimes,
+
             string? snapshotter)
         {
             DefaultRuntimeName = defaultRuntimeName;
+            Runtimes = runtimes;
             Snapshotter = snapshotter;
         }
     }

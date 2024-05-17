@@ -457,9 +457,37 @@ export namespace remote {
          */
         defaultRuntimeName?: string;
         /**
+         * The containerd runtime configuration.
+         */
+        runtimes?: outputs.remote.ContainerdCriPluginConfigurationContainerdRunc;
+        /**
          * snapshotter
          */
         snapshotter?: string;
+    }
+
+    /**
+     * containerd cri runc plugin configuration.
+     */
+    export interface ContainerdCriPluginConfigurationContainerdRunc {
+        /**
+         * runc options.
+         */
+        options: outputs.remote.ContainerdCriPluginConfigurationContainerdRuncOptions;
+        /**
+         * runtime_type
+         */
+        runtimeType?: string;
+    }
+
+    /**
+     * containerd cri runc plugin configuration.
+     */
+    export interface ContainerdCriPluginConfigurationContainerdRuncOptions {
+        /**
+         * SystemdCgroup
+         */
+        systemdCgroup?: boolean;
     }
 
     /**

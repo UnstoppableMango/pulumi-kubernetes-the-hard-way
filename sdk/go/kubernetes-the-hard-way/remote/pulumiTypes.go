@@ -516,6 +516,8 @@ func (o ContainerdCriPluginConfigurationCniPtrOutput) ConfDir() pulumi.StringPtr
 type ContainerdCriPluginConfigurationContainerd struct {
 	// default_runtime_name
 	DefaultRuntimeName *string `pulumi:"defaultRuntimeName"`
+	// The containerd runtime configuration.
+	Runtimes *ContainerdCriPluginConfigurationContainerdRunc `pulumi:"runtimes"`
 	// snapshotter
 	Snapshotter *string `pulumi:"snapshotter"`
 }
@@ -535,6 +537,8 @@ type ContainerdCriPluginConfigurationContainerdInput interface {
 type ContainerdCriPluginConfigurationContainerdArgs struct {
 	// default_runtime_name
 	DefaultRuntimeName pulumi.StringPtrInput `pulumi:"defaultRuntimeName"`
+	// The containerd runtime configuration.
+	Runtimes *ContainerdCriPluginConfigurationContainerdRuncArgs `pulumi:"runtimes"`
 	// snapshotter
 	Snapshotter pulumi.StringPtrInput `pulumi:"snapshotter"`
 }
@@ -622,6 +626,13 @@ func (o ContainerdCriPluginConfigurationContainerdOutput) DefaultRuntimeName() p
 	return o.ApplyT(func(v ContainerdCriPluginConfigurationContainerd) *string { return v.DefaultRuntimeName }).(pulumi.StringPtrOutput)
 }
 
+// The containerd runtime configuration.
+func (o ContainerdCriPluginConfigurationContainerdOutput) Runtimes() ContainerdCriPluginConfigurationContainerdRuncPtrOutput {
+	return o.ApplyT(func(v ContainerdCriPluginConfigurationContainerd) *ContainerdCriPluginConfigurationContainerdRunc {
+		return v.Runtimes
+	}).(ContainerdCriPluginConfigurationContainerdRuncPtrOutput)
+}
+
 // snapshotter
 func (o ContainerdCriPluginConfigurationContainerdOutput) Snapshotter() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v ContainerdCriPluginConfigurationContainerd) *string { return v.Snapshotter }).(pulumi.StringPtrOutput)
@@ -661,6 +672,16 @@ func (o ContainerdCriPluginConfigurationContainerdPtrOutput) DefaultRuntimeName(
 	}).(pulumi.StringPtrOutput)
 }
 
+// The containerd runtime configuration.
+func (o ContainerdCriPluginConfigurationContainerdPtrOutput) Runtimes() ContainerdCriPluginConfigurationContainerdRuncPtrOutput {
+	return o.ApplyT(func(v *ContainerdCriPluginConfigurationContainerd) *ContainerdCriPluginConfigurationContainerdRunc {
+		if v == nil {
+			return nil
+		}
+		return v.Runtimes
+	}).(ContainerdCriPluginConfigurationContainerdRuncPtrOutput)
+}
+
 // snapshotter
 func (o ContainerdCriPluginConfigurationContainerdPtrOutput) Snapshotter() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *ContainerdCriPluginConfigurationContainerd) *string {
@@ -679,10 +700,163 @@ type ContainerdCriPluginConfigurationContainerdRunc struct {
 	RuntimeType *string `pulumi:"runtimeType"`
 }
 
+// ContainerdCriPluginConfigurationContainerdRuncInput is an input type that accepts ContainerdCriPluginConfigurationContainerdRuncArgs and ContainerdCriPluginConfigurationContainerdRuncOutput values.
+// You can construct a concrete instance of `ContainerdCriPluginConfigurationContainerdRuncInput` via:
+//
+//	ContainerdCriPluginConfigurationContainerdRuncArgs{...}
+type ContainerdCriPluginConfigurationContainerdRuncInput interface {
+	pulumi.Input
+
+	ToContainerdCriPluginConfigurationContainerdRuncOutput() ContainerdCriPluginConfigurationContainerdRuncOutput
+	ToContainerdCriPluginConfigurationContainerdRuncOutputWithContext(context.Context) ContainerdCriPluginConfigurationContainerdRuncOutput
+}
+
+// containerd cri runc plugin configuration.
+type ContainerdCriPluginConfigurationContainerdRuncArgs struct {
+	// runc options.
+	Options ContainerdCriPluginConfigurationContainerdRuncOptionsArgs `pulumi:"options"`
+	// runtime_type
+	RuntimeType pulumi.StringPtrInput `pulumi:"runtimeType"`
+}
+
+func (ContainerdCriPluginConfigurationContainerdRuncArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*ContainerdCriPluginConfigurationContainerdRunc)(nil)).Elem()
+}
+
+func (i ContainerdCriPluginConfigurationContainerdRuncArgs) ToContainerdCriPluginConfigurationContainerdRuncOutput() ContainerdCriPluginConfigurationContainerdRuncOutput {
+	return i.ToContainerdCriPluginConfigurationContainerdRuncOutputWithContext(context.Background())
+}
+
+func (i ContainerdCriPluginConfigurationContainerdRuncArgs) ToContainerdCriPluginConfigurationContainerdRuncOutputWithContext(ctx context.Context) ContainerdCriPluginConfigurationContainerdRuncOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(ContainerdCriPluginConfigurationContainerdRuncOutput)
+}
+
+func (i ContainerdCriPluginConfigurationContainerdRuncArgs) ToContainerdCriPluginConfigurationContainerdRuncPtrOutput() ContainerdCriPluginConfigurationContainerdRuncPtrOutput {
+	return i.ToContainerdCriPluginConfigurationContainerdRuncPtrOutputWithContext(context.Background())
+}
+
+func (i ContainerdCriPluginConfigurationContainerdRuncArgs) ToContainerdCriPluginConfigurationContainerdRuncPtrOutputWithContext(ctx context.Context) ContainerdCriPluginConfigurationContainerdRuncPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(ContainerdCriPluginConfigurationContainerdRuncOutput).ToContainerdCriPluginConfigurationContainerdRuncPtrOutputWithContext(ctx)
+}
+
+// ContainerdCriPluginConfigurationContainerdRuncPtrInput is an input type that accepts ContainerdCriPluginConfigurationContainerdRuncArgs, ContainerdCriPluginConfigurationContainerdRuncPtr and ContainerdCriPluginConfigurationContainerdRuncPtrOutput values.
+// You can construct a concrete instance of `ContainerdCriPluginConfigurationContainerdRuncPtrInput` via:
+//
+//	        ContainerdCriPluginConfigurationContainerdRuncArgs{...}
+//
+//	or:
+//
+//	        nil
+type ContainerdCriPluginConfigurationContainerdRuncPtrInput interface {
+	pulumi.Input
+
+	ToContainerdCriPluginConfigurationContainerdRuncPtrOutput() ContainerdCriPluginConfigurationContainerdRuncPtrOutput
+	ToContainerdCriPluginConfigurationContainerdRuncPtrOutputWithContext(context.Context) ContainerdCriPluginConfigurationContainerdRuncPtrOutput
+}
+
+type containerdCriPluginConfigurationContainerdRuncPtrType ContainerdCriPluginConfigurationContainerdRuncArgs
+
+func ContainerdCriPluginConfigurationContainerdRuncPtr(v *ContainerdCriPluginConfigurationContainerdRuncArgs) ContainerdCriPluginConfigurationContainerdRuncPtrInput {
+	return (*containerdCriPluginConfigurationContainerdRuncPtrType)(v)
+}
+
+func (*containerdCriPluginConfigurationContainerdRuncPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**ContainerdCriPluginConfigurationContainerdRunc)(nil)).Elem()
+}
+
+func (i *containerdCriPluginConfigurationContainerdRuncPtrType) ToContainerdCriPluginConfigurationContainerdRuncPtrOutput() ContainerdCriPluginConfigurationContainerdRuncPtrOutput {
+	return i.ToContainerdCriPluginConfigurationContainerdRuncPtrOutputWithContext(context.Background())
+}
+
+func (i *containerdCriPluginConfigurationContainerdRuncPtrType) ToContainerdCriPluginConfigurationContainerdRuncPtrOutputWithContext(ctx context.Context) ContainerdCriPluginConfigurationContainerdRuncPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(ContainerdCriPluginConfigurationContainerdRuncPtrOutput)
+}
+
+// containerd cri runc plugin configuration.
+type ContainerdCriPluginConfigurationContainerdRuncOutput struct{ *pulumi.OutputState }
+
+func (ContainerdCriPluginConfigurationContainerdRuncOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*ContainerdCriPluginConfigurationContainerdRunc)(nil)).Elem()
+}
+
+func (o ContainerdCriPluginConfigurationContainerdRuncOutput) ToContainerdCriPluginConfigurationContainerdRuncOutput() ContainerdCriPluginConfigurationContainerdRuncOutput {
+	return o
+}
+
+func (o ContainerdCriPluginConfigurationContainerdRuncOutput) ToContainerdCriPluginConfigurationContainerdRuncOutputWithContext(ctx context.Context) ContainerdCriPluginConfigurationContainerdRuncOutput {
+	return o
+}
+
+func (o ContainerdCriPluginConfigurationContainerdRuncOutput) ToContainerdCriPluginConfigurationContainerdRuncPtrOutput() ContainerdCriPluginConfigurationContainerdRuncPtrOutput {
+	return o.ToContainerdCriPluginConfigurationContainerdRuncPtrOutputWithContext(context.Background())
+}
+
+func (o ContainerdCriPluginConfigurationContainerdRuncOutput) ToContainerdCriPluginConfigurationContainerdRuncPtrOutputWithContext(ctx context.Context) ContainerdCriPluginConfigurationContainerdRuncPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v ContainerdCriPluginConfigurationContainerdRunc) *ContainerdCriPluginConfigurationContainerdRunc {
+		return &v
+	}).(ContainerdCriPluginConfigurationContainerdRuncPtrOutput)
+}
+
+// runc options.
+func (o ContainerdCriPluginConfigurationContainerdRuncOutput) Options() ContainerdCriPluginConfigurationContainerdRuncOptionsOutput {
+	return o.ApplyT(func(v ContainerdCriPluginConfigurationContainerdRunc) ContainerdCriPluginConfigurationContainerdRuncOptions {
+		return v.Options
+	}).(ContainerdCriPluginConfigurationContainerdRuncOptionsOutput)
+}
+
+// runtime_type
+func (o ContainerdCriPluginConfigurationContainerdRuncOutput) RuntimeType() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v ContainerdCriPluginConfigurationContainerdRunc) *string { return v.RuntimeType }).(pulumi.StringPtrOutput)
+}
+
+type ContainerdCriPluginConfigurationContainerdRuncPtrOutput struct{ *pulumi.OutputState }
+
+func (ContainerdCriPluginConfigurationContainerdRuncPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**ContainerdCriPluginConfigurationContainerdRunc)(nil)).Elem()
+}
+
+func (o ContainerdCriPluginConfigurationContainerdRuncPtrOutput) ToContainerdCriPluginConfigurationContainerdRuncPtrOutput() ContainerdCriPluginConfigurationContainerdRuncPtrOutput {
+	return o
+}
+
+func (o ContainerdCriPluginConfigurationContainerdRuncPtrOutput) ToContainerdCriPluginConfigurationContainerdRuncPtrOutputWithContext(ctx context.Context) ContainerdCriPluginConfigurationContainerdRuncPtrOutput {
+	return o
+}
+
+func (o ContainerdCriPluginConfigurationContainerdRuncPtrOutput) Elem() ContainerdCriPluginConfigurationContainerdRuncOutput {
+	return o.ApplyT(func(v *ContainerdCriPluginConfigurationContainerdRunc) ContainerdCriPluginConfigurationContainerdRunc {
+		if v != nil {
+			return *v
+		}
+		var ret ContainerdCriPluginConfigurationContainerdRunc
+		return ret
+	}).(ContainerdCriPluginConfigurationContainerdRuncOutput)
+}
+
+// runc options.
+func (o ContainerdCriPluginConfigurationContainerdRuncPtrOutput) Options() ContainerdCriPluginConfigurationContainerdRuncOptionsPtrOutput {
+	return o.ApplyT(func(v *ContainerdCriPluginConfigurationContainerdRunc) *ContainerdCriPluginConfigurationContainerdRuncOptions {
+		if v == nil {
+			return nil
+		}
+		return &v.Options
+	}).(ContainerdCriPluginConfigurationContainerdRuncOptionsPtrOutput)
+}
+
+// runtime_type
+func (o ContainerdCriPluginConfigurationContainerdRuncPtrOutput) RuntimeType() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *ContainerdCriPluginConfigurationContainerdRunc) *string {
+		if v == nil {
+			return nil
+		}
+		return v.RuntimeType
+	}).(pulumi.StringPtrOutput)
+}
+
 // containerd cri runc plugin configuration.
 type ContainerdCriPluginConfigurationContainerdRuncOptions struct {
 	// SystemdCgroup
-	SystemdCgroup *string `pulumi:"systemdCgroup"`
+	SystemdCgroup *bool `pulumi:"systemdCgroup"`
 }
 
 // ContainerdCriPluginConfigurationContainerdRuncOptionsInput is an input type that accepts ContainerdCriPluginConfigurationContainerdRuncOptionsArgs and ContainerdCriPluginConfigurationContainerdRuncOptionsOutput values.
@@ -699,7 +873,7 @@ type ContainerdCriPluginConfigurationContainerdRuncOptionsInput interface {
 // containerd cri runc plugin configuration.
 type ContainerdCriPluginConfigurationContainerdRuncOptionsArgs struct {
 	// SystemdCgroup
-	SystemdCgroup pulumi.StringPtrInput `pulumi:"systemdCgroup"`
+	SystemdCgroup pulumi.BoolPtrInput `pulumi:"systemdCgroup"`
 }
 
 func (ContainerdCriPluginConfigurationContainerdRuncOptionsArgs) ElementType() reflect.Type {
@@ -712,6 +886,47 @@ func (i ContainerdCriPluginConfigurationContainerdRuncOptionsArgs) ToContainerdC
 
 func (i ContainerdCriPluginConfigurationContainerdRuncOptionsArgs) ToContainerdCriPluginConfigurationContainerdRuncOptionsOutputWithContext(ctx context.Context) ContainerdCriPluginConfigurationContainerdRuncOptionsOutput {
 	return pulumi.ToOutputWithContext(ctx, i).(ContainerdCriPluginConfigurationContainerdRuncOptionsOutput)
+}
+
+func (i ContainerdCriPluginConfigurationContainerdRuncOptionsArgs) ToContainerdCriPluginConfigurationContainerdRuncOptionsPtrOutput() ContainerdCriPluginConfigurationContainerdRuncOptionsPtrOutput {
+	return i.ToContainerdCriPluginConfigurationContainerdRuncOptionsPtrOutputWithContext(context.Background())
+}
+
+func (i ContainerdCriPluginConfigurationContainerdRuncOptionsArgs) ToContainerdCriPluginConfigurationContainerdRuncOptionsPtrOutputWithContext(ctx context.Context) ContainerdCriPluginConfigurationContainerdRuncOptionsPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(ContainerdCriPluginConfigurationContainerdRuncOptionsOutput).ToContainerdCriPluginConfigurationContainerdRuncOptionsPtrOutputWithContext(ctx)
+}
+
+// ContainerdCriPluginConfigurationContainerdRuncOptionsPtrInput is an input type that accepts ContainerdCriPluginConfigurationContainerdRuncOptionsArgs, ContainerdCriPluginConfigurationContainerdRuncOptionsPtr and ContainerdCriPluginConfigurationContainerdRuncOptionsPtrOutput values.
+// You can construct a concrete instance of `ContainerdCriPluginConfigurationContainerdRuncOptionsPtrInput` via:
+//
+//	        ContainerdCriPluginConfigurationContainerdRuncOptionsArgs{...}
+//
+//	or:
+//
+//	        nil
+type ContainerdCriPluginConfigurationContainerdRuncOptionsPtrInput interface {
+	pulumi.Input
+
+	ToContainerdCriPluginConfigurationContainerdRuncOptionsPtrOutput() ContainerdCriPluginConfigurationContainerdRuncOptionsPtrOutput
+	ToContainerdCriPluginConfigurationContainerdRuncOptionsPtrOutputWithContext(context.Context) ContainerdCriPluginConfigurationContainerdRuncOptionsPtrOutput
+}
+
+type containerdCriPluginConfigurationContainerdRuncOptionsPtrType ContainerdCriPluginConfigurationContainerdRuncOptionsArgs
+
+func ContainerdCriPluginConfigurationContainerdRuncOptionsPtr(v *ContainerdCriPluginConfigurationContainerdRuncOptionsArgs) ContainerdCriPluginConfigurationContainerdRuncOptionsPtrInput {
+	return (*containerdCriPluginConfigurationContainerdRuncOptionsPtrType)(v)
+}
+
+func (*containerdCriPluginConfigurationContainerdRuncOptionsPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**ContainerdCriPluginConfigurationContainerdRuncOptions)(nil)).Elem()
+}
+
+func (i *containerdCriPluginConfigurationContainerdRuncOptionsPtrType) ToContainerdCriPluginConfigurationContainerdRuncOptionsPtrOutput() ContainerdCriPluginConfigurationContainerdRuncOptionsPtrOutput {
+	return i.ToContainerdCriPluginConfigurationContainerdRuncOptionsPtrOutputWithContext(context.Background())
+}
+
+func (i *containerdCriPluginConfigurationContainerdRuncOptionsPtrType) ToContainerdCriPluginConfigurationContainerdRuncOptionsPtrOutputWithContext(ctx context.Context) ContainerdCriPluginConfigurationContainerdRuncOptionsPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(ContainerdCriPluginConfigurationContainerdRuncOptionsPtrOutput)
 }
 
 // containerd cri runc plugin configuration.
@@ -729,9 +944,53 @@ func (o ContainerdCriPluginConfigurationContainerdRuncOptionsOutput) ToContainer
 	return o
 }
 
+func (o ContainerdCriPluginConfigurationContainerdRuncOptionsOutput) ToContainerdCriPluginConfigurationContainerdRuncOptionsPtrOutput() ContainerdCriPluginConfigurationContainerdRuncOptionsPtrOutput {
+	return o.ToContainerdCriPluginConfigurationContainerdRuncOptionsPtrOutputWithContext(context.Background())
+}
+
+func (o ContainerdCriPluginConfigurationContainerdRuncOptionsOutput) ToContainerdCriPluginConfigurationContainerdRuncOptionsPtrOutputWithContext(ctx context.Context) ContainerdCriPluginConfigurationContainerdRuncOptionsPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v ContainerdCriPluginConfigurationContainerdRuncOptions) *ContainerdCriPluginConfigurationContainerdRuncOptions {
+		return &v
+	}).(ContainerdCriPluginConfigurationContainerdRuncOptionsPtrOutput)
+}
+
 // SystemdCgroup
-func (o ContainerdCriPluginConfigurationContainerdRuncOptionsOutput) SystemdCgroup() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v ContainerdCriPluginConfigurationContainerdRuncOptions) *string { return v.SystemdCgroup }).(pulumi.StringPtrOutput)
+func (o ContainerdCriPluginConfigurationContainerdRuncOptionsOutput) SystemdCgroup() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v ContainerdCriPluginConfigurationContainerdRuncOptions) *bool { return v.SystemdCgroup }).(pulumi.BoolPtrOutput)
+}
+
+type ContainerdCriPluginConfigurationContainerdRuncOptionsPtrOutput struct{ *pulumi.OutputState }
+
+func (ContainerdCriPluginConfigurationContainerdRuncOptionsPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**ContainerdCriPluginConfigurationContainerdRuncOptions)(nil)).Elem()
+}
+
+func (o ContainerdCriPluginConfigurationContainerdRuncOptionsPtrOutput) ToContainerdCriPluginConfigurationContainerdRuncOptionsPtrOutput() ContainerdCriPluginConfigurationContainerdRuncOptionsPtrOutput {
+	return o
+}
+
+func (o ContainerdCriPluginConfigurationContainerdRuncOptionsPtrOutput) ToContainerdCriPluginConfigurationContainerdRuncOptionsPtrOutputWithContext(ctx context.Context) ContainerdCriPluginConfigurationContainerdRuncOptionsPtrOutput {
+	return o
+}
+
+func (o ContainerdCriPluginConfigurationContainerdRuncOptionsPtrOutput) Elem() ContainerdCriPluginConfigurationContainerdRuncOptionsOutput {
+	return o.ApplyT(func(v *ContainerdCriPluginConfigurationContainerdRuncOptions) ContainerdCriPluginConfigurationContainerdRuncOptions {
+		if v != nil {
+			return *v
+		}
+		var ret ContainerdCriPluginConfigurationContainerdRuncOptions
+		return ret
+	}).(ContainerdCriPluginConfigurationContainerdRuncOptionsOutput)
+}
+
+// SystemdCgroup
+func (o ContainerdCriPluginConfigurationContainerdRuncOptionsPtrOutput) SystemdCgroup() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *ContainerdCriPluginConfigurationContainerdRuncOptions) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.SystemdCgroup
+	}).(pulumi.BoolPtrOutput)
 }
 
 // Props for resources that consume etcd configuration.
@@ -1476,7 +1735,10 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*ContainerdCriPluginConfigurationCniPtrInput)(nil)).Elem(), ContainerdCriPluginConfigurationCniArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*ContainerdCriPluginConfigurationContainerdInput)(nil)).Elem(), ContainerdCriPluginConfigurationContainerdArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*ContainerdCriPluginConfigurationContainerdPtrInput)(nil)).Elem(), ContainerdCriPluginConfigurationContainerdArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*ContainerdCriPluginConfigurationContainerdRuncInput)(nil)).Elem(), ContainerdCriPluginConfigurationContainerdRuncArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*ContainerdCriPluginConfigurationContainerdRuncPtrInput)(nil)).Elem(), ContainerdCriPluginConfigurationContainerdRuncArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*ContainerdCriPluginConfigurationContainerdRuncOptionsInput)(nil)).Elem(), ContainerdCriPluginConfigurationContainerdRuncOptionsArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*ContainerdCriPluginConfigurationContainerdRuncOptionsPtrInput)(nil)).Elem(), ContainerdCriPluginConfigurationContainerdRuncOptionsArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*EtcdConfigurationPropsInput)(nil)).Elem(), EtcdConfigurationPropsArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*EtcdConfigurationPropsArrayInput)(nil)).Elem(), EtcdConfigurationPropsArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*EtcdNodeInput)(nil)).Elem(), EtcdNodeArgs{})
@@ -1493,7 +1755,10 @@ func init() {
 	pulumi.RegisterOutputType(ContainerdCriPluginConfigurationCniPtrOutput{})
 	pulumi.RegisterOutputType(ContainerdCriPluginConfigurationContainerdOutput{})
 	pulumi.RegisterOutputType(ContainerdCriPluginConfigurationContainerdPtrOutput{})
+	pulumi.RegisterOutputType(ContainerdCriPluginConfigurationContainerdRuncOutput{})
+	pulumi.RegisterOutputType(ContainerdCriPluginConfigurationContainerdRuncPtrOutput{})
 	pulumi.RegisterOutputType(ContainerdCriPluginConfigurationContainerdRuncOptionsOutput{})
+	pulumi.RegisterOutputType(ContainerdCriPluginConfigurationContainerdRuncOptionsPtrOutput{})
 	pulumi.RegisterOutputType(EtcdConfigurationPropsOutput{})
 	pulumi.RegisterOutputType(EtcdConfigurationPropsArrayOutput{})
 	pulumi.RegisterOutputType(EtcdNodeOutput{})
