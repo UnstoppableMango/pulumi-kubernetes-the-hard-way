@@ -15,7 +15,7 @@ namespace UnMango.KubernetesTheHardWay.Remote.Outputs
     /// containerd cri plugin configuration.
     /// </summary>
     [OutputType]
-    public sealed class ContainerdCriPluginCConfigurationContainerd
+    public sealed class ContainerdCriPluginConfigurationContainerd
     {
         /// <summary>
         /// default_runtime_name
@@ -27,7 +27,7 @@ namespace UnMango.KubernetesTheHardWay.Remote.Outputs
         public readonly string? Snapshotter;
 
         [OutputConstructor]
-        private ContainerdCriPluginCConfigurationContainerd(
+        private ContainerdCriPluginConfigurationContainerd(
             string? defaultRuntimeName,
 
             string? snapshotter)

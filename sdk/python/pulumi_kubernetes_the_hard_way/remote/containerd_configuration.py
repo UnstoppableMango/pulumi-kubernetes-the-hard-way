@@ -19,11 +19,11 @@ __all__ = ['ContainerdConfigurationArgs', 'ContainerdConfiguration']
 class ContainerdConfigurationArgs:
     def __init__(__self__, *,
                  connection: pulumi.Input['pulumi_command.remote.ConnectionArgs'],
-                 cri: Optional[pulumi.Input['ContainerdCriPluginConfigurationArgs']] = None):
+                 cri: Optional['ContainerdCriPluginConfigurationArgs'] = None):
         """
         The set of arguments for constructing a ContainerdConfiguration resource.
         :param pulumi.Input['pulumi_command.remote.ConnectionArgs'] connection: The parameters with which to connect to the remote host.
-        :param pulumi.Input['ContainerdCriPluginConfigurationArgs'] cri: The cri configuration.
+        :param 'ContainerdCriPluginConfigurationArgs' cri: The cri configuration.
         """
         pulumi.set(__self__, "connection", connection)
         if cri is not None:
@@ -43,14 +43,14 @@ class ContainerdConfigurationArgs:
 
     @property
     @pulumi.getter
-    def cri(self) -> Optional[pulumi.Input['ContainerdCriPluginConfigurationArgs']]:
+    def cri(self) -> Optional['ContainerdCriPluginConfigurationArgs']:
         """
         The cri configuration.
         """
         return pulumi.get(self, "cri")
 
     @cri.setter
-    def cri(self, value: Optional[pulumi.Input['ContainerdCriPluginConfigurationArgs']]):
+    def cri(self, value: Optional['ContainerdCriPluginConfigurationArgs']):
         pulumi.set(self, "cri", value)
 
 
@@ -60,7 +60,7 @@ class ContainerdConfiguration(pulumi.ComponentResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
-                 cri: Optional[pulumi.Input[pulumi.InputType['ContainerdCriPluginConfigurationArgs']]] = None,
+                 cri: Optional[pulumi.InputType['ContainerdCriPluginConfigurationArgs']] = None,
                  __props__=None):
         """
         The containerd configuration file.
@@ -68,7 +68,7 @@ class ContainerdConfiguration(pulumi.ComponentResource):
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']] connection: The parameters with which to connect to the remote host.
-        :param pulumi.Input[pulumi.InputType['ContainerdCriPluginConfigurationArgs']] cri: The cri configuration.
+        :param pulumi.InputType['ContainerdCriPluginConfigurationArgs'] cri: The cri configuration.
         """
         ...
     @overload
@@ -95,7 +95,7 @@ class ContainerdConfiguration(pulumi.ComponentResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
-                 cri: Optional[pulumi.Input[pulumi.InputType['ContainerdCriPluginConfigurationArgs']]] = None,
+                 cri: Optional[pulumi.InputType['ContainerdCriPluginConfigurationArgs']] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):

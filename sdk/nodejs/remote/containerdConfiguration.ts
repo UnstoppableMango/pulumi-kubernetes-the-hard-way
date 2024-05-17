@@ -80,5 +80,5 @@ export interface ContainerdConfigurationArgs {
     /**
      * The cri configuration.
      */
-    cri?: pulumi.Input<inputs.remote.ContainerdCriPluginConfigurationArgs>;
+    cri?: inputs.remote.ContainerdCriPluginConfigurationArgs;
 }

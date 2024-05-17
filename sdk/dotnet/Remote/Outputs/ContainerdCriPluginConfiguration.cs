@@ -24,13 +24,13 @@ namespace UnMango.KubernetesTheHardWay.Remote.Outputs
         /// <summary>
         /// containerd configuration.
         /// </summary>
-        public readonly Outputs.ContainerdCriPluginCConfigurationContainerd Containerd;
+        public readonly Outputs.ContainerdCriPluginConfigurationContainerd Containerd;
 
         [OutputConstructor]
         private ContainerdCriPluginConfiguration(
             Outputs.ContainerdCriPluginConfigurationCni cni,
 
-            Outputs.ContainerdCriPluginCConfigurationContainerd containerd)
+            Outputs.ContainerdCriPluginConfigurationContainerd containerd)
         {
             Cni = cni;
             Containerd = containerd;

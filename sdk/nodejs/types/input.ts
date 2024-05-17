@@ -454,29 +454,15 @@ export namespace remote {
     /**
      * containerd cri plugin configuration.
      */
-    export interface ContainerdCriPluginCConfigurationContainerdArgs {
-        /**
-         * default_runtime_name
-         */
-        defaultRuntimeName?: pulumi.Input<string>;
-        /**
-         * snapshotter
-         */
-        snapshotter?: pulumi.Input<string>;
-    }
-
-    /**
-     * containerd cri plugin configuration.
-     */
     export interface ContainerdCriPluginConfigurationArgs {
         /**
          * cni configuration.
          */
-        cni: pulumi.Input<inputs.remote.ContainerdCriPluginConfigurationCniArgs>;
+        cni: inputs.remote.ContainerdCriPluginConfigurationCniArgs;
         /**
          * containerd configuration.
          */
-        containerd: pulumi.Input<inputs.remote.ContainerdCriPluginCConfigurationContainerdArgs>;
+        containerd: inputs.remote.ContainerdCriPluginConfigurationContainerdArgs;
     }
 
     /**
@@ -491,6 +477,20 @@ export namespace remote {
          * conf_dir
          */
         confDir?: pulumi.Input<string>;
+    }
+
+    /**
+     * containerd cri plugin configuration.
+     */
+    export interface ContainerdCriPluginConfigurationContainerdArgs {
+        /**
+         * default_runtime_name
+         */
+        defaultRuntimeName?: pulumi.Input<string>;
+        /**
+         * snapshotter
+         */
+        snapshotter?: pulumi.Input<string>;
     }
 
     /**

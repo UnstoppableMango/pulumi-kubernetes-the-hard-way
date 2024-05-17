@@ -3,11 +3,10 @@
 
 package com.unmango.kubernetesthehardway.remote.inputs;
 
-import com.pulumi.core.Output;
 import com.pulumi.core.annotations.Import;
 import com.pulumi.exceptions.MissingRequiredPropertyException;
-import com.unmango.kubernetesthehardway.remote.inputs.ContainerdCriPluginCConfigurationContainerdArgs;
 import com.unmango.kubernetesthehardway.remote.inputs.ContainerdCriPluginConfigurationCniArgs;
+import com.unmango.kubernetesthehardway.remote.inputs.ContainerdCriPluginConfigurationContainerdArgs;
 import java.util.Objects;
 
 
@@ -24,13 +23,13 @@ public final class ContainerdCriPluginConfigurationArgs extends com.pulumi.resou
      * 
      */
     @Import(name="cni", required=true)
-    private Output<ContainerdCriPluginConfigurationCniArgs> cni;
+    private ContainerdCriPluginConfigurationCniArgs cni;
 
     /**
      * @return cni configuration.
      * 
      */
-    public Output<ContainerdCriPluginConfigurationCniArgs> cni() {
+    public ContainerdCriPluginConfigurationCniArgs cni() {
         return this.cni;
     }
 
@@ -39,13 +38,13 @@ public final class ContainerdCriPluginConfigurationArgs extends com.pulumi.resou
      * 
      */
     @Import(name="containerd", required=true)
-    private Output<ContainerdCriPluginCConfigurationContainerdArgs> containerd;
+    private ContainerdCriPluginConfigurationContainerdArgs containerd;
 
     /**
      * @return containerd configuration.
      * 
      */
-    public Output<ContainerdCriPluginCConfigurationContainerdArgs> containerd() {
+    public ContainerdCriPluginConfigurationContainerdArgs containerd() {
         return this.containerd;
     }
 
@@ -80,40 +79,20 @@ public final class ContainerdCriPluginConfigurationArgs extends com.pulumi.resou
          * @return builder
          * 
          */
-        public Builder cni(Output<ContainerdCriPluginConfigurationCniArgs> cni) {
+        public Builder cni(ContainerdCriPluginConfigurationCniArgs cni) {
             $.cni = cni;
             return this;
         }
 
         /**
-         * @param cni cni configuration.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder cni(ContainerdCriPluginConfigurationCniArgs cni) {
-            return cni(Output.of(cni));
-        }
-
-        /**
          * @param containerd containerd configuration.
          * 
          * @return builder
          * 
          */
-        public Builder containerd(Output<ContainerdCriPluginCConfigurationContainerdArgs> containerd) {
+        public Builder containerd(ContainerdCriPluginConfigurationContainerdArgs containerd) {
             $.containerd = containerd;
             return this;
-        }
-
-        /**
-         * @param containerd containerd configuration.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder containerd(ContainerdCriPluginCConfigurationContainerdArgs containerd) {
-            return containerd(Output.of(containerd));
         }
 
         public ContainerdCriPluginConfigurationArgs build() {

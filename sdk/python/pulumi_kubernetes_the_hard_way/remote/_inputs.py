@@ -13,8 +13,8 @@ import pulumi_command
 
 __all__ = [
     'CniBridgeIpamArgs',
-    'ContainerdCriPluginCConfigurationContainerdArgs',
     'ContainerdCriPluginConfigurationCniArgs',
+    'ContainerdCriPluginConfigurationContainerdArgs',
     'ContainerdCriPluginConfigurationArgs',
     'EtcdConfigurationPropsArgs',
     'EtcdNodeArgs',
@@ -80,46 +80,6 @@ class CniBridgeIpamArgs:
 
 
 @pulumi.input_type
-class ContainerdCriPluginCConfigurationContainerdArgs:
-    def __init__(__self__, *,
-                 default_runtime_name: Optional[pulumi.Input[str]] = None,
-                 snapshotter: Optional[pulumi.Input[str]] = None):
-        """
-        containerd cri plugin configuration.
-        :param pulumi.Input[str] default_runtime_name: default_runtime_name
-        :param pulumi.Input[str] snapshotter: snapshotter
-        """
-        if default_runtime_name is not None:
-            pulumi.set(__self__, "default_runtime_name", default_runtime_name)
-        if snapshotter is not None:
-            pulumi.set(__self__, "snapshotter", snapshotter)
-
-    @property
-    @pulumi.getter(name="defaultRuntimeName")
-    def default_runtime_name(self) -> Optional[pulumi.Input[str]]:
-        """
-        default_runtime_name
-        """
-        return pulumi.get(self, "default_runtime_name")
-
-    @default_runtime_name.setter
-    def default_runtime_name(self, value: Optional[pulumi.Input[str]]):
-        pulumi.set(self, "default_runtime_name", value)
-
-    @property
-    @pulumi.getter
-    def snapshotter(self) -> Optional[pulumi.Input[str]]:
-        """
-        snapshotter
-        """
-        return pulumi.get(self, "snapshotter")
-
-    @snapshotter.setter
-    def snapshotter(self, value: Optional[pulumi.Input[str]]):
-        pulumi.set(self, "snapshotter", value)
-
-
-@pulumi.input_type
 class ContainerdCriPluginConfigurationCniArgs:
     def __init__(__self__, *,
                  bin_dir: Optional[pulumi.Input[str]] = None,
@@ -160,40 +120,80 @@ class ContainerdCriPluginConfigurationCniArgs:
 
 
 @pulumi.input_type
-class ContainerdCriPluginConfigurationArgs:
+class ContainerdCriPluginConfigurationContainerdArgs:
     def __init__(__self__, *,
-                 cni: pulumi.Input['ContainerdCriPluginConfigurationCniArgs'],
-                 containerd: pulumi.Input['ContainerdCriPluginCConfigurationContainerdArgs']):
+                 default_runtime_name: Optional[pulumi.Input[str]] = None,
+                 snapshotter: Optional[pulumi.Input[str]] = None):
         """
         containerd cri plugin configuration.
-        :param pulumi.Input['ContainerdCriPluginConfigurationCniArgs'] cni: cni configuration.
-        :param pulumi.Input['ContainerdCriPluginCConfigurationContainerdArgs'] containerd: containerd configuration.
+        :param pulumi.Input[str] default_runtime_name: default_runtime_name
+        :param pulumi.Input[str] snapshotter: snapshotter
+        """
+        if default_runtime_name is not None:
+            pulumi.set(__self__, "default_runtime_name", default_runtime_name)
+        if snapshotter is not None:
+            pulumi.set(__self__, "snapshotter", snapshotter)
+
+    @property
+    @pulumi.getter(name="defaultRuntimeName")
+    def default_runtime_name(self) -> Optional[pulumi.Input[str]]:
+        """
+        default_runtime_name
+        """
+        return pulumi.get(self, "default_runtime_name")
+
+    @default_runtime_name.setter
+    def default_runtime_name(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "default_runtime_name", value)
+
+    @property
+    @pulumi.getter
+    def snapshotter(self) -> Optional[pulumi.Input[str]]:
+        """
+        snapshotter
+        """
+        return pulumi.get(self, "snapshotter")
+
+    @snapshotter.setter
+    def snapshotter(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "snapshotter", value)
+
+
+@pulumi.input_type
+class ContainerdCriPluginConfigurationArgs:
+    def __init__(__self__, *,
+                 cni: 'ContainerdCriPluginConfigurationCniArgs',
+                 containerd: 'ContainerdCriPluginConfigurationContainerdArgs'):
+        """
+        containerd cri plugin configuration.
+        :param 'ContainerdCriPluginConfigurationCniArgs' cni: cni configuration.
+        :param 'ContainerdCriPluginConfigurationContainerdArgs' containerd: containerd configuration.
         """
         pulumi.set(__self__, "cni", cni)
         pulumi.set(__self__, "containerd", containerd)
 
     @property
     @pulumi.getter
-    def cni(self) -> pulumi.Input['ContainerdCriPluginConfigurationCniArgs']:
+    def cni(self) -> 'ContainerdCriPluginConfigurationCniArgs':
         """
         cni configuration.
         """
         return pulumi.get(self, "cni")
 
     @cni.setter
-    def cni(self, value: pulumi.Input['ContainerdCriPluginConfigurationCniArgs']):
+    def cni(self, value: 'ContainerdCriPluginConfigurationCniArgs'):
         pulumi.set(self, "cni", value)
 
     @property
     @pulumi.getter
-    def containerd(self) -> pulumi.Input['ContainerdCriPluginCConfigurationContainerdArgs']:
+    def containerd(self) -> 'ContainerdCriPluginConfigurationContainerdArgs':
         """
         containerd configuration.
         """
         return pulumi.get(self, "containerd")
 
     @containerd.setter
-    def containerd(self, value: pulumi.Input['ContainerdCriPluginCConfigurationContainerdArgs']):
+    def containerd(self, value: 'ContainerdCriPluginConfigurationContainerdArgs'):
         pulumi.set(self, "containerd", value)
 
 

@@ -73,7 +73,7 @@ namespace UnMango.KubernetesTheHardWay.Remote
         /// The cri configuration.
         /// </summary>
         [Input("cri")]
-        public Input<Inputs.ContainerdCriPluginConfigurationArgs>? Cri { get; set; }
+        public Inputs.ContainerdCriPluginConfigurationArgs? Cri { get; set; }
 
         public ContainerdConfigurationArgs()
         {

@@ -14,9 +14,9 @@ import pulumi_command
 
 __all__ = [
     'CniBridgeIpam',
-    'ContainerdCriPluginCConfigurationContainerd',
     'ContainerdCriPluginConfiguration',
     'ContainerdCriPluginConfigurationCni',
+    'ContainerdCriPluginConfigurationContainerd',
     'EtcdConfigurationProps',
     'EtcdNode',
     'SystemdInstallSection',
@@ -72,69 +72,17 @@ class CniBridgeIpam(dict):
 
 
 @pulumi.output_type
-class ContainerdCriPluginCConfigurationContainerd(dict):
-    """
-    containerd cri plugin configuration.
-    """
-    @staticmethod
-    def __key_warning(key: str):
-        suggest = None
-        if key == "defaultRuntimeName":
-            suggest = "default_runtime_name"
-
-        if suggest:
-            pulumi.log.warn(f"Key '{key}' not found in ContainerdCriPluginCConfigurationContainerd. Access the value via the '{suggest}' property getter instead.")
-
-    def __getitem__(self, key: str) -> Any:
-        ContainerdCriPluginCConfigurationContainerd.__key_warning(key)
-        return super().__getitem__(key)
-
-    def get(self, key: str, default = None) -> Any:
-        ContainerdCriPluginCConfigurationContainerd.__key_warning(key)
-        return super().get(key, default)
-
-    def __init__(__self__, *,
-                 default_runtime_name: Optional[str] = None,
-                 snapshotter: Optional[str] = None):
-        """
-        containerd cri plugin configuration.
-        :param str default_runtime_name: default_runtime_name
-        :param str snapshotter: snapshotter
-        """
-        if default_runtime_name is not None:
-            pulumi.set(__self__, "default_runtime_name", default_runtime_name)
-        if snapshotter is not None:
-            pulumi.set(__self__, "snapshotter", snapshotter)
-
-    @property
-    @pulumi.getter(name="defaultRuntimeName")
-    def default_runtime_name(self) -> Optional[str]:
-        """
-        default_runtime_name
-        """
-        return pulumi.get(self, "default_runtime_name")
-
-    @property
-    @pulumi.getter
-    def snapshotter(self) -> Optional[str]:
-        """
-        snapshotter
-        """
-        return pulumi.get(self, "snapshotter")
-
-
-@pulumi.output_type
 class ContainerdCriPluginConfiguration(dict):
     """
     containerd cri plugin configuration.
     """
     def __init__(__self__, *,
                  cni: 'outputs.ContainerdCriPluginConfigurationCni',
-                 containerd: 'outputs.ContainerdCriPluginCConfigurationContainerd'):
+                 containerd: 'outputs.ContainerdCriPluginConfigurationContainerd'):
         """
         containerd cri plugin configuration.
         :param 'ContainerdCriPluginConfigurationCni' cni: cni configuration.
-        :param 'ContainerdCriPluginCConfigurationContainerd' containerd: containerd configuration.
+        :param 'ContainerdCriPluginConfigurationContainerd' containerd: containerd configuration.
         """
         pulumi.set(__self__, "cni", cni)
         pulumi.set(__self__, "containerd", containerd)
@@ -149,7 +97,7 @@ class ContainerdCriPluginConfiguration(dict):
 
     @property
     @pulumi.getter
-    def containerd(self) -> 'outputs.ContainerdCriPluginCConfigurationContainerd':
+    def containerd(self) -> 'outputs.ContainerdCriPluginConfigurationContainerd':
         """
         containerd configuration.
         """
@@ -208,6 +156,58 @@ class ContainerdCriPluginConfigurationCni(dict):
         conf_dir
         """
         return pulumi.get(self, "conf_dir")
+
+
+@pulumi.output_type
+class ContainerdCriPluginConfigurationContainerd(dict):
+    """
+    containerd cri plugin configuration.
+    """
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "defaultRuntimeName":
+            suggest = "default_runtime_name"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in ContainerdCriPluginConfigurationContainerd. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        ContainerdCriPluginConfigurationContainerd.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        ContainerdCriPluginConfigurationContainerd.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 default_runtime_name: Optional[str] = None,
+                 snapshotter: Optional[str] = None):
+        """
+        containerd cri plugin configuration.
+        :param str default_runtime_name: default_runtime_name
+        :param str snapshotter: snapshotter
+        """
+        if default_runtime_name is not None:
+            pulumi.set(__self__, "default_runtime_name", default_runtime_name)
+        if snapshotter is not None:
+            pulumi.set(__self__, "snapshotter", snapshotter)
+
+    @property
+    @pulumi.getter(name="defaultRuntimeName")
+    def default_runtime_name(self) -> Optional[str]:
+        """
+        default_runtime_name
+        """
+        return pulumi.get(self, "default_runtime_name")
+
+    @property
+    @pulumi.getter
+    def snapshotter(self) -> Optional[str]:
+        """
+        snapshotter
+        """
+        return pulumi.get(self, "snapshotter")
 
 
 @pulumi.output_type

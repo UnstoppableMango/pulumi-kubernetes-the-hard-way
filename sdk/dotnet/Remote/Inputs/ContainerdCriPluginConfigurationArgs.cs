@@ -20,13 +20,13 @@ namespace UnMango.KubernetesTheHardWay.Remote.Inputs
         /// cni configuration.
         /// </summary>
         [Input("cni", required: true)]
-        public Input<Inputs.ContainerdCriPluginConfigurationCniArgs> Cni { get; set; } = null!;
+        public Inputs.ContainerdCriPluginConfigurationCniArgs Cni { get; set; } = null!;
 
         /// <summary>
         /// containerd configuration.
         /// </summary>
         [Input("containerd", required: true)]
-        public Input<Inputs.ContainerdCriPluginCConfigurationContainerdArgs> Containerd { get; set; } = null!;
+        public Inputs.ContainerdCriPluginConfigurationContainerdArgs Containerd { get; set; } = null!;
 
         public ContainerdCriPluginConfigurationArgs()
         {

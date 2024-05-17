@@ -5,8 +5,8 @@ package com.unmango.kubernetesthehardway.remote.outputs;
 
 import com.pulumi.core.annotations.CustomType;
 import com.pulumi.exceptions.MissingRequiredPropertyException;
-import com.unmango.kubernetesthehardway.remote.outputs.ContainerdCriPluginCConfigurationContainerd;
 import com.unmango.kubernetesthehardway.remote.outputs.ContainerdCriPluginConfigurationCni;
+import com.unmango.kubernetesthehardway.remote.outputs.ContainerdCriPluginConfigurationContainerd;
 import java.util.Objects;
 
 @CustomType
@@ -20,7 +20,7 @@ public final class ContainerdCriPluginConfiguration {
      * @return containerd configuration.
      * 
      */
-    private ContainerdCriPluginCConfigurationContainerd containerd;
+    private ContainerdCriPluginConfigurationContainerd containerd;
 
     private ContainerdCriPluginConfiguration() {}
     /**
@@ -34,7 +34,7 @@ public final class ContainerdCriPluginConfiguration {
      * @return containerd configuration.
      * 
      */
-    public ContainerdCriPluginCConfigurationContainerd containerd() {
+    public ContainerdCriPluginConfigurationContainerd containerd() {
         return this.containerd;
     }
 
@@ -48,7 +48,7 @@ public final class ContainerdCriPluginConfiguration {
     @CustomType.Builder
     public static final class Builder {
         private ContainerdCriPluginConfigurationCni cni;
-        private ContainerdCriPluginCConfigurationContainerd containerd;
+        private ContainerdCriPluginConfigurationContainerd containerd;
         public Builder() {}
         public Builder(ContainerdCriPluginConfiguration defaults) {
     	      Objects.requireNonNull(defaults);
@@ -65,7 +65,7 @@ public final class ContainerdCriPluginConfiguration {
             return this;
         }
         @CustomType.Setter
-        public Builder containerd(ContainerdCriPluginCConfigurationContainerd containerd) {
+        public Builder containerd(ContainerdCriPluginConfigurationContainerd containerd) {
             if (containerd == null) {
               throw new MissingRequiredPropertyException("ContainerdCriPluginConfiguration", "containerd");
             }

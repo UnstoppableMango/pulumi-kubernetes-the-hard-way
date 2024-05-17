@@ -57,7 +57,7 @@ type ContainerdConfigurationArgs struct {
 	// The parameters with which to connect to the remote host.
 	Connection pulumiCommand.ConnectionInput
 	// The cri configuration.
-	Cri ContainerdCriPluginConfigurationPtrInput
+	Cri *ContainerdCriPluginConfigurationArgs
 }
 
 func (ContainerdConfigurationArgs) ElementType() reflect.Type {

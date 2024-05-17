@@ -37,13 +37,13 @@ public final class ContainerdConfigurationArgs extends com.pulumi.resources.Reso
      * 
      */
     @Import(name="cri")
-    private @Nullable Output<ContainerdCriPluginConfigurationArgs> cri;
+    private @Nullable ContainerdCriPluginConfigurationArgs cri;
 
     /**
      * @return The cri configuration.
      * 
      */
-    public Optional<Output<ContainerdCriPluginConfigurationArgs>> cri() {
+    public Optional<ContainerdCriPluginConfigurationArgs> cri() {
         return Optional.ofNullable(this.cri);
     }
 
@@ -99,19 +99,9 @@ public final class ContainerdConfigurationArgs extends com.pulumi.resources.Reso
          * @return builder
          * 
          */
-        public Builder cri(@Nullable Output<ContainerdCriPluginConfigurationArgs> cri) {
+        public Builder cri(@Nullable ContainerdCriPluginConfigurationArgs cri) {
             $.cri = cri;
             return this;
-        }
-
-        /**
-         * @param cri The cri configuration.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder cri(ContainerdCriPluginConfigurationArgs cri) {
-            return cri(Output.of(cri));
         }
 
         public ContainerdConfigurationArgs build() {

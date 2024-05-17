@@ -423,20 +423,6 @@ export namespace remote {
     /**
      * containerd cri plugin configuration.
      */
-    export interface ContainerdCriPluginCConfigurationContainerd {
-        /**
-         * default_runtime_name
-         */
-        defaultRuntimeName?: string;
-        /**
-         * snapshotter
-         */
-        snapshotter?: string;
-    }
-
-    /**
-     * containerd cri plugin configuration.
-     */
     export interface ContainerdCriPluginConfiguration {
         /**
          * cni configuration.
@@ -445,7 +431,7 @@ export namespace remote {
         /**
          * containerd configuration.
          */
-        containerd: outputs.remote.ContainerdCriPluginCConfigurationContainerd;
+        containerd: outputs.remote.ContainerdCriPluginConfigurationContainerd;
     }
 
     /**
@@ -460,6 +446,20 @@ export namespace remote {
          * conf_dir
          */
         confDir?: string;
+    }
+
+    /**
+     * containerd cri plugin configuration.
+     */
+    export interface ContainerdCriPluginConfigurationContainerd {
+        /**
+         * default_runtime_name
+         */
+        defaultRuntimeName?: string;
+        /**
+         * snapshotter
+         */
+        snapshotter?: string;
     }
 
     /**

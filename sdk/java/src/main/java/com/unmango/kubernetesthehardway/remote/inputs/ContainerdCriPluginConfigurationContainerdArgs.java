@@ -15,9 +15,9 @@ import javax.annotation.Nullable;
  * containerd cri plugin configuration.
  * 
  */
-public final class ContainerdCriPluginCConfigurationContainerdArgs extends com.pulumi.resources.ResourceArgs {
+public final class ContainerdCriPluginConfigurationContainerdArgs extends com.pulumi.resources.ResourceArgs {
 
-    public static final ContainerdCriPluginCConfigurationContainerdArgs Empty = new ContainerdCriPluginCConfigurationContainerdArgs();
+    public static final ContainerdCriPluginConfigurationContainerdArgs Empty = new ContainerdCriPluginConfigurationContainerdArgs();
 
     /**
      * default_runtime_name
@@ -49,9 +49,9 @@ public final class ContainerdCriPluginCConfigurationContainerdArgs extends com.p
         return Optional.ofNullable(this.snapshotter);
     }
 
-    private ContainerdCriPluginCConfigurationContainerdArgs() {}
+    private ContainerdCriPluginConfigurationContainerdArgs() {}
 
-    private ContainerdCriPluginCConfigurationContainerdArgs(ContainerdCriPluginCConfigurationContainerdArgs $) {
+    private ContainerdCriPluginConfigurationContainerdArgs(ContainerdCriPluginConfigurationContainerdArgs $) {
         this.defaultRuntimeName = $.defaultRuntimeName;
         this.snapshotter = $.snapshotter;
     }
@@ -59,19 +59,19 @@ public final class ContainerdCriPluginCConfigurationContainerdArgs extends com.p
     public static Builder builder() {
         return new Builder();
     }
-    public static Builder builder(ContainerdCriPluginCConfigurationContainerdArgs defaults) {
+    public static Builder builder(ContainerdCriPluginConfigurationContainerdArgs defaults) {
         return new Builder(defaults);
     }
 
     public static final class Builder {
-        private ContainerdCriPluginCConfigurationContainerdArgs $;
+        private ContainerdCriPluginConfigurationContainerdArgs $;
 
         public Builder() {
-            $ = new ContainerdCriPluginCConfigurationContainerdArgs();
+            $ = new ContainerdCriPluginConfigurationContainerdArgs();
         }
 
-        public Builder(ContainerdCriPluginCConfigurationContainerdArgs defaults) {
-            $ = new ContainerdCriPluginCConfigurationContainerdArgs(Objects.requireNonNull(defaults));
+        public Builder(ContainerdCriPluginConfigurationContainerdArgs defaults) {
+            $ = new ContainerdCriPluginConfigurationContainerdArgs(Objects.requireNonNull(defaults));
         }
 
         /**
@@ -116,7 +116,7 @@ public final class ContainerdCriPluginCConfigurationContainerdArgs extends com.p
             return snapshotter(Output.of(snapshotter));
         }
 
-        public ContainerdCriPluginCConfigurationContainerdArgs build() {
+        public ContainerdCriPluginConfigurationContainerdArgs build() {
             return $;
         }
     }

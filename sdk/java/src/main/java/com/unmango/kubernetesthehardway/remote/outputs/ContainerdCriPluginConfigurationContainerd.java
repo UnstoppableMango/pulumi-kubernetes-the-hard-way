@@ -10,7 +10,7 @@ import java.util.Optional;
 import javax.annotation.Nullable;
 
 @CustomType
-public final class ContainerdCriPluginCConfigurationContainerd {
+public final class ContainerdCriPluginConfigurationContainerd {
     /**
      * @return default_runtime_name
      * 
@@ -22,7 +22,7 @@ public final class ContainerdCriPluginCConfigurationContainerd {
      */
     private @Nullable String snapshotter;
 
-    private ContainerdCriPluginCConfigurationContainerd() {}
+    private ContainerdCriPluginConfigurationContainerd() {}
     /**
      * @return default_runtime_name
      * 
@@ -42,7 +42,7 @@ public final class ContainerdCriPluginCConfigurationContainerd {
         return new Builder();
     }
 
-    public static Builder builder(ContainerdCriPluginCConfigurationContainerd defaults) {
+    public static Builder builder(ContainerdCriPluginConfigurationContainerd defaults) {
         return new Builder(defaults);
     }
     @CustomType.Builder
@@ -50,7 +50,7 @@ public final class ContainerdCriPluginCConfigurationContainerd {
         private @Nullable String defaultRuntimeName;
         private @Nullable String snapshotter;
         public Builder() {}
-        public Builder(ContainerdCriPluginCConfigurationContainerd defaults) {
+        public Builder(ContainerdCriPluginConfigurationContainerd defaults) {
     	      Objects.requireNonNull(defaults);
     	      this.defaultRuntimeName = defaults.defaultRuntimeName;
     	      this.snapshotter = defaults.snapshotter;
@@ -68,8 +68,8 @@ public final class ContainerdCriPluginCConfigurationContainerd {
             this.snapshotter = snapshotter;
             return this;
         }
-        public ContainerdCriPluginCConfigurationContainerd build() {
-            final var _resultValue = new ContainerdCriPluginCConfigurationContainerd();
+        public ContainerdCriPluginConfigurationContainerd build() {
+            final var _resultValue = new ContainerdCriPluginConfigurationContainerd();
             _resultValue.defaultRuntimeName = defaultRuntimeName;
             _resultValue.snapshotter = snapshotter;
             return _resultValue;

@@ -215,7 +215,7 @@ export interface CniPluginsInstallArgs {
 }
 export abstract class ContainerdConfiguration<TData = any> extends (pulumi.ComponentResource)<TData> {
     public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
-    public cri!: ContainerdCriPluginConfigurationOutputs | pulumi.Output<ContainerdCriPluginConfigurationOutputs>;
+    public cri!: ContainerdCriPluginConfigurationOutputs;
     public file!: File | pulumi.Output<File>;
     constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
         super("kubernetes-the-hard-way:remote:ContainerdConfiguration", name, opts.urn ? { connection: undefined, cri: undefined, file: undefined } : { name, args, opts }, opts);
@@ -223,7 +223,7 @@ export abstract class ContainerdConfiguration<TData = any> extends (pulumi.Compo
 }
 export interface ContainerdConfigurationArgs {
     readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
-    readonly cri?: pulumi.Input<ContainerdCriPluginConfigurationInputs>;
+    readonly cri?: ContainerdCriPluginConfigurationInputs;
 }
 export abstract class ContainerdInstall<TData = any> extends (pulumi.ComponentResource)<TData> {
     public architecture!: ArchitectureOutputs | pulumi.Output<ArchitectureOutputs>;
@@ -1256,35 +1256,13 @@ export interface CniBridgeIpamOutputs {
     readonly routes?: pulumi.Output<Record<string, string>[]>;
     readonly type?: pulumi.Output<string>;
 }
-export interface ContainerdCriPluginCConfigurationContainerdInputs {
-    readonly defaultRuntimeName?: pulumi.Input<string>;
-    readonly snapshotter?: pulumi.Input<string>;
-}
-export interface ContainerdCriPluginCConfigurationContainerdOutputs {
-    readonly defaultRuntimeName?: pulumi.Output<string>;
-    readonly snapshotter?: pulumi.Output<string>;
-}
-export interface ContainerdCriPluginCConfigurationContainerdRuncInputs {
-    readonly options: pulumi.Input<ContainerdCriPluginCConfigurationContainerdRuncOptionsInputs>;
-    readonly runtimeType?: pulumi.Input<string>;
-}
-export interface ContainerdCriPluginCConfigurationContainerdRuncOutputs {
-    readonly options: pulumi.Output<ContainerdCriPluginCConfigurationContainerdRuncOptionsOutputs>;
-    readonly runtimeType?: pulumi.Output<string>;
-}
-export interface ContainerdCriPluginCConfigurationContainerdRuncOptionsInputs {
-    readonly systemdCgroup?: pulumi.Input<string>;
-}
-export interface ContainerdCriPluginCConfigurationContainerdRuncOptionsOutputs {
-    readonly systemdCgroup?: pulumi.Output<string>;
-}
 export interface ContainerdCriPluginConfigurationInputs {
-    readonly cni: pulumi.Input<ContainerdCriPluginConfigurationCniInputs>;
-    readonly containerd: pulumi.Input<ContainerdCriPluginCConfigurationContainerdInputs>;
+    readonly cni: ContainerdCriPluginConfigurationCniInputs;
+    readonly containerd: ContainerdCriPluginConfigurationContainerdInputs;
 }
 export interface ContainerdCriPluginConfigurationOutputs {
-    readonly cni: pulumi.Output<ContainerdCriPluginConfigurationCniOutputs>;
-    readonly containerd: pulumi.Output<ContainerdCriPluginCConfigurationContainerdOutputs>;
+    readonly cni: ContainerdCriPluginConfigurationCniOutputs;
+    readonly containerd: ContainerdCriPluginConfigurationContainerdOutputs;
 }
 export interface ContainerdCriPluginConfigurationCniInputs {
     readonly binDir?: pulumi.Input<string>;
@@ -1293,6 +1271,28 @@ export interface ContainerdCriPluginConfigurationCniInputs {
 export interface ContainerdCriPluginConfigurationCniOutputs {
     readonly binDir?: pulumi.Output<string>;
     readonly confDir?: pulumi.Output<string>;
+}
+export interface ContainerdCriPluginConfigurationContainerdInputs {
+    readonly defaultRuntimeName?: pulumi.Input<string>;
+    readonly snapshotter?: pulumi.Input<string>;
+}
+export interface ContainerdCriPluginConfigurationContainerdOutputs {
+    readonly defaultRuntimeName?: pulumi.Output<string>;
+    readonly snapshotter?: pulumi.Output<string>;
+}
+export interface ContainerdCriPluginConfigurationContainerdRuncInputs {
+    readonly options: ContainerdCriPluginConfigurationContainerdRuncOptionsInputs;
+    readonly runtimeType?: pulumi.Input<string>;
+}
+export interface ContainerdCriPluginConfigurationContainerdRuncOutputs {
+    readonly options: ContainerdCriPluginConfigurationContainerdRuncOptionsOutputs;
+    readonly runtimeType?: pulumi.Output<string>;
+}
+export interface ContainerdCriPluginConfigurationContainerdRuncOptionsInputs {
+    readonly systemdCgroup?: pulumi.Input<string>;
+}
+export interface ContainerdCriPluginConfigurationContainerdRuncOptionsOutputs {
+    readonly systemdCgroup?: pulumi.Output<string>;
 }
 export interface EtcdConfigurationPropsInputs {
     readonly caFilePath: pulumi.Input<string>;

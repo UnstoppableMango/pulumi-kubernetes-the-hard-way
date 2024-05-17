@@ -374,56 +374,17 @@
             },
             "type": "object"
         },
-        "kubernetes-the-hard-way:remote:ContainerdCriPluginCConfigurationContainerd": {
-            "description": "containerd cri plugin configuration.",
-            "properties": {
-                "defaultRuntimeName": {
-                    "type": "string",
-                    "description": "default_runtime_name"
-                },
-                "snapshotter": {
-                    "type": "string",
-                    "description": "snapshotter"
-                }
-            },
-            "type": "object"
-        },
-        "kubernetes-the-hard-way:remote:ContainerdCriPluginCConfigurationContainerdRunc": {
-            "description": "containerd cri runc plugin configuration.",
-            "properties": {
-                "options": {
-                    "$ref": "#/types/kubernetes-the-hard-way:remote:ContainerdCriPluginCConfigurationContainerdRuncOptions",
-                    "description": "runc options."
-                },
-                "runtimeType": {
-                    "type": "string",
-                    "description": "runtime_type"
-                }
-            },
-            "type": "object",
-            "required": [
-                "options"
-            ]
-        },
-        "kubernetes-the-hard-way:remote:ContainerdCriPluginCConfigurationContainerdRuncOptions": {
-            "description": "containerd cri runc plugin configuration.",
-            "properties": {
-                "systemdCgroup": {
-                    "type": "string",
-                    "description": "SystemdCgroup"
-                }
-            },
-            "type": "object"
-        },
         "kubernetes-the-hard-way:remote:ContainerdCriPluginConfiguration": {
             "description": "containerd cri plugin configuration.",
             "properties": {
                 "cni": {
                     "$ref": "#/types/kubernetes-the-hard-way:remote:ContainerdCriPluginConfigurationCni",
+                    "plain": true,
                     "description": "cni configuration."
                 },
                 "containerd": {
-                    "$ref": "#/types/kubernetes-the-hard-way:remote:ContainerdCriPluginCConfigurationContainerd",
+                    "$ref": "#/types/kubernetes-the-hard-way:remote:ContainerdCriPluginConfigurationContainerd",
+                    "plain": true,
                     "description": "containerd configuration."
                 }
             },
@@ -443,6 +404,48 @@
                 "confDir": {
                     "type": "string",
                     "description": "conf_dir"
+                }
+            },
+            "type": "object"
+        },
+        "kubernetes-the-hard-way:remote:ContainerdCriPluginConfigurationContainerd": {
+            "description": "containerd cri plugin configuration.",
+            "properties": {
+                "defaultRuntimeName": {
+                    "type": "string",
+                    "description": "default_runtime_name"
+                },
+                "snapshotter": {
+                    "type": "string",
+                    "description": "snapshotter"
+                }
+            },
+            "type": "object"
+        },
+        "kubernetes-the-hard-way:remote:ContainerdCriPluginConfigurationContainerdRunc": {
+            "description": "containerd cri runc plugin configuration.",
+            "properties": {
+                "options": {
+                    "$ref": "#/types/kubernetes-the-hard-way:remote:ContainerdCriPluginConfigurationContainerdRuncOptions",
+                    "plain": true,
+                    "description": "runc options."
+                },
+                "runtimeType": {
+                    "type": "string",
+                    "description": "runtime_type"
+                }
+            },
+            "type": "object",
+            "required": [
+                "options"
+            ]
+        },
+        "kubernetes-the-hard-way:remote:ContainerdCriPluginConfigurationContainerdRuncOptions": {
+            "description": "containerd cri runc plugin configuration.",
+            "properties": {
+                "systemdCgroup": {
+                    "type": "string",
+                    "description": "SystemdCgroup"
                 }
             },
             "type": "object"
@@ -2477,6 +2480,7 @@
                 },
                 "cri": {
                     "$ref": "#/types/kubernetes-the-hard-way:remote:ContainerdCriPluginConfiguration",
+                    "plain": true,
                     "description": "The cri configuration."
                 },
                 "file": {
@@ -2496,6 +2500,7 @@
                 },
                 "cri": {
                     "$ref": "#/types/kubernetes-the-hard-way:remote:ContainerdCriPluginConfiguration",
+                    "plain": true,
                     "description": "The cri configuration."
                 }
             },

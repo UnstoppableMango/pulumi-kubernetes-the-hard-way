@@ -14,7 +14,7 @@ namespace UnMango.KubernetesTheHardWay.Remote.Inputs
     /// <summary>
     /// containerd cri plugin configuration.
     /// </summary>
-    public sealed class ContainerdCriPluginCConfigurationContainerdArgs : global::Pulumi.ResourceArgs
+    public sealed class ContainerdCriPluginConfigurationContainerdArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
         /// default_runtime_name
@@ -28,9 +28,9 @@ namespace UnMango.KubernetesTheHardWay.Remote.Inputs
         [Input("snapshotter")]
         public Input<string>? Snapshotter { get; set; }
 
-        public ContainerdCriPluginCConfigurationContainerdArgs()
+        public ContainerdCriPluginConfigurationContainerdArgs()
         {
         }
-        public static new ContainerdCriPluginCConfigurationContainerdArgs Empty => new ContainerdCriPluginCConfigurationContainerdArgs();
+        public static new ContainerdCriPluginConfigurationContainerdArgs Empty => new ContainerdCriPluginConfigurationContainerdArgs();
     }
 }
