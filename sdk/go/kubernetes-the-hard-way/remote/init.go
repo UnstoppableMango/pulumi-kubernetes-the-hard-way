@@ -25,6 +25,8 @@ func (m *module) Construct(ctx *pulumi.Context, name, typ, urn string) (r pulumi
 		r = &CniBridgePluginConfiguration{}
 	case "kubernetes-the-hard-way:remote:CniLoopbackPluginConfiguration":
 		r = &CniLoopbackPluginConfiguration{}
+	case "kubernetes-the-hard-way:remote:CniPluginConfiguration":
+		r = &CniPluginConfiguration{}
 	case "kubernetes-the-hard-way:remote:CniPluginsInstall":
 		r = &CniPluginsInstall{}
 	case "kubernetes-the-hard-way:remote:ContainerdInstall":

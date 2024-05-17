@@ -9,6 +9,7 @@ export type ResourceConstructor = {
     readonly "kubernetes-the-hard-way:config:KubeVipManifest": ConstructComponent<KubeVipManifest>;
     readonly "kubernetes-the-hard-way:remote:CniBridgePluginConfiguration": ConstructComponent<CniBridgePluginConfiguration>;
     readonly "kubernetes-the-hard-way:remote:CniLoopbackPluginConfiguration": ConstructComponent<CniLoopbackPluginConfiguration>;
+    readonly "kubernetes-the-hard-way:remote:CniPluginConfiguration": ConstructComponent<CniPluginConfiguration>;
     readonly "kubernetes-the-hard-way:remote:CniPluginsInstall": ConstructComponent<CniPluginsInstall>;
     readonly "kubernetes-the-hard-way:remote:ContainerdInstall": ConstructComponent<ContainerdInstall>;
     readonly "kubernetes-the-hard-way:remote:CrictlInstall": ConstructComponent<CrictlInstall>;
@@ -135,6 +136,21 @@ export interface CniLoopbackPluginConfigurationArgs {
     readonly name?: pulumi.Input<string>;
     readonly path?: pulumi.Input<string>;
     readonly type?: pulumi.Input<string>;
+}
+export abstract class CniPluginConfiguration<TData = any> extends (pulumi.ComponentResource)<TData> {
+    public bridge!: CniBridgePluginConfiguration | pulumi.Output<CniBridgePluginConfiguration>;
+    public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
+    public etcCniMkdir!: Mkdir | pulumi.Output<Mkdir>;
+    public file!: File | pulumi.Output<File>;
+    public loopback!: CniLoopbackPluginConfiguration | pulumi.Output<CniLoopbackPluginConfiguration>;
+    public subnet!: string | pulumi.Output<string>;
+    constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
+        super("kubernetes-the-hard-way:remote:CniPluginConfiguration", name, opts.urn ? { bridge: undefined, connection: undefined, etcCniMkdir: undefined, file: undefined, loopback: undefined, subnet: undefined } : { name, args, opts }, opts);
+    }
+}
+export interface CniPluginConfigurationArgs {
+    readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
+    readonly subnet: pulumi.Input<string>;
 }
 export abstract class CniPluginsInstall<TData = any> extends (pulumi.ComponentResource)<TData> {
     public architecture!: ArchitectureOutputs | pulumi.Output<ArchitectureOutputs>;

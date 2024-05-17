@@ -21,6 +21,7 @@
         "provider.ts",
         "remote/cniBridgePluginConfiguration.ts",
         "remote/cniLoopbackPluginConfiguration.ts",
+        "remote/cniPluginConfiguration.ts",
         "remote/cniPluginsInstall.ts",
         "remote/containerdInstall.ts",
         "remote/crictlInstall.ts",
