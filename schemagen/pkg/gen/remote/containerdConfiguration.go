@@ -4,6 +4,7 @@ import (
 	"maps"
 	"slices"
 
+	"github.com/UnstoppableMango/pulumi-kubernetes-the-hard-way/schemagen/pkg/gen/props"
 	"github.com/UnstoppableMango/pulumi-kubernetes-the-hard-way/schemagen/pkg/gen/types"
 	"github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 )
@@ -21,6 +22,7 @@ func generateContainerdConfiguration(commandSpec schema.PackageSpec) schema.Reso
 				Ref:   types.LocalTypeRef("ContainerdCriPluginConfiguration", "remote"),
 			},
 		},
+		"path": props.String("The path to put the configuration file."),
 	}
 
 	requiredInputs := []string{"connection"}
