@@ -10,10 +10,11 @@ export class CniPluginsInstall extends schema.CniPluginsInstall {
     const architecture = output(args.architecture ?? 'amd64');
     const connection = output(args.connection);
     const directory = output(args.directory ?? '/opt/cni/bin/');
-    const version = output(args.version ?? '0.9.1'); // TODO: Stateful versioning?
+    const version = output(args.version ?? '1.3.0'); // TODO: Stateful versioning?
     const archiveName = interpolate`cni-plugins-linux-${architecture}-v${version}.tgz`;
     const url = interpolate`https://github.com/containernetworking/plugins/releases/download/v${version}/${archiveName}`;
 
+    // General ideas for `install` type resources.
     // TODO: Permission checks?
     // TODO: Caching? Put archive/bins into ~/.kthw/cache so i.e. directory changes, tarball doesn't need to be re-downloaded.
     // TODO: General update logic
