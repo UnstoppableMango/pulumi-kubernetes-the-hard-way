@@ -16,7 +16,10 @@ func generateContainerdConfiguration(commandSpec schema.PackageSpec) schema.Reso
 		},
 		"cri": {
 			Description: "The cri configuration.",
-			TypeSpec:    types.LocalType("ContainerdCriPluginConfiguration", "remote"),
+			TypeSpec: schema.TypeSpec{
+				Plain: true,
+				Ref:   types.LocalTypeRef("ContainerdCriPluginConfiguration", "remote"),
+			},
 		},
 	}
 
