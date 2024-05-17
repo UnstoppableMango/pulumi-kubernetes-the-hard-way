@@ -434,6 +434,24 @@ export namespace config {
 
 export namespace remote {
     /**
+     * The CNI plugins IPAM
+     */
+    export interface CniBridgeIpamArgs {
+        /**
+         * IPAM ranges.
+         */
+        ranges?: pulumi.Input<pulumi.Input<{[key: string]: pulumi.Input<string>}>[]>;
+        /**
+         * IPAM routes.
+         */
+        routes?: pulumi.Input<pulumi.Input<{[key: string]: pulumi.Input<string>}>[]>;
+        /**
+         * CNI bridge IPAM type
+         */
+        type?: pulumi.Input<string>;
+    }
+
+    /**
      * Props for resources that consume etcd configuration.
      */
     export interface EtcdConfigurationPropsArgs {

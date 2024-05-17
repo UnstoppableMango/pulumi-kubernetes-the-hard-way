@@ -19,6 +19,8 @@
         "config/kubeVipManifest.ts",
         "index.ts",
         "provider.ts",
+        "remote/cniBridgePluginConfiguration.ts",
+        "remote/cniLoopbackPluginConfiguration.ts",
         "remote/cniPluginsInstall.ts",
         "remote/containerdInstall.ts",
         "remote/crictlInstall.ts",

@@ -14,6 +14,184 @@ import (
 
 var _ = internal.GetEnvOrDefault
 
+// The CNI plugins IPAM
+type CniBridgeIpam struct {
+	// IPAM ranges.
+	Ranges []map[string]string `pulumi:"ranges"`
+	// IPAM routes.
+	Routes []map[string]string `pulumi:"routes"`
+	// CNI bridge IPAM type
+	Type *string `pulumi:"type"`
+}
+
+// CniBridgeIpamInput is an input type that accepts CniBridgeIpamArgs and CniBridgeIpamOutput values.
+// You can construct a concrete instance of `CniBridgeIpamInput` via:
+//
+//	CniBridgeIpamArgs{...}
+type CniBridgeIpamInput interface {
+	pulumi.Input
+
+	ToCniBridgeIpamOutput() CniBridgeIpamOutput
+	ToCniBridgeIpamOutputWithContext(context.Context) CniBridgeIpamOutput
+}
+
+// The CNI plugins IPAM
+type CniBridgeIpamArgs struct {
+	// IPAM ranges.
+	Ranges pulumi.StringMapArrayInput `pulumi:"ranges"`
+	// IPAM routes.
+	Routes pulumi.StringMapArrayInput `pulumi:"routes"`
+	// CNI bridge IPAM type
+	Type pulumi.StringPtrInput `pulumi:"type"`
+}
+
+func (CniBridgeIpamArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*CniBridgeIpam)(nil)).Elem()
+}
+
+func (i CniBridgeIpamArgs) ToCniBridgeIpamOutput() CniBridgeIpamOutput {
+	return i.ToCniBridgeIpamOutputWithContext(context.Background())
+}
+
+func (i CniBridgeIpamArgs) ToCniBridgeIpamOutputWithContext(ctx context.Context) CniBridgeIpamOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CniBridgeIpamOutput)
+}
+
+func (i CniBridgeIpamArgs) ToCniBridgeIpamPtrOutput() CniBridgeIpamPtrOutput {
+	return i.ToCniBridgeIpamPtrOutputWithContext(context.Background())
+}
+
+func (i CniBridgeIpamArgs) ToCniBridgeIpamPtrOutputWithContext(ctx context.Context) CniBridgeIpamPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CniBridgeIpamOutput).ToCniBridgeIpamPtrOutputWithContext(ctx)
+}
+
+// CniBridgeIpamPtrInput is an input type that accepts CniBridgeIpamArgs, CniBridgeIpamPtr and CniBridgeIpamPtrOutput values.
+// You can construct a concrete instance of `CniBridgeIpamPtrInput` via:
+//
+//	        CniBridgeIpamArgs{...}
+//
+//	or:
+//
+//	        nil
+type CniBridgeIpamPtrInput interface {
+	pulumi.Input
+
+	ToCniBridgeIpamPtrOutput() CniBridgeIpamPtrOutput
+	ToCniBridgeIpamPtrOutputWithContext(context.Context) CniBridgeIpamPtrOutput
+}
+
+type cniBridgeIpamPtrType CniBridgeIpamArgs
+
+func CniBridgeIpamPtr(v *CniBridgeIpamArgs) CniBridgeIpamPtrInput {
+	return (*cniBridgeIpamPtrType)(v)
+}
+
+func (*cniBridgeIpamPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**CniBridgeIpam)(nil)).Elem()
+}
+
+func (i *cniBridgeIpamPtrType) ToCniBridgeIpamPtrOutput() CniBridgeIpamPtrOutput {
+	return i.ToCniBridgeIpamPtrOutputWithContext(context.Background())
+}
+
+func (i *cniBridgeIpamPtrType) ToCniBridgeIpamPtrOutputWithContext(ctx context.Context) CniBridgeIpamPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CniBridgeIpamPtrOutput)
+}
+
+// The CNI plugins IPAM
+type CniBridgeIpamOutput struct{ *pulumi.OutputState }
+
+func (CniBridgeIpamOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*CniBridgeIpam)(nil)).Elem()
+}
+
+func (o CniBridgeIpamOutput) ToCniBridgeIpamOutput() CniBridgeIpamOutput {
+	return o
+}
+
+func (o CniBridgeIpamOutput) ToCniBridgeIpamOutputWithContext(ctx context.Context) CniBridgeIpamOutput {
+	return o
+}
+
+func (o CniBridgeIpamOutput) ToCniBridgeIpamPtrOutput() CniBridgeIpamPtrOutput {
+	return o.ToCniBridgeIpamPtrOutputWithContext(context.Background())
+}
+
+func (o CniBridgeIpamOutput) ToCniBridgeIpamPtrOutputWithContext(ctx context.Context) CniBridgeIpamPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v CniBridgeIpam) *CniBridgeIpam {
+		return &v
+	}).(CniBridgeIpamPtrOutput)
+}
+
+// IPAM ranges.
+func (o CniBridgeIpamOutput) Ranges() pulumi.StringMapArrayOutput {
+	return o.ApplyT(func(v CniBridgeIpam) []map[string]string { return v.Ranges }).(pulumi.StringMapArrayOutput)
+}
+
+// IPAM routes.
+func (o CniBridgeIpamOutput) Routes() pulumi.StringMapArrayOutput {
+	return o.ApplyT(func(v CniBridgeIpam) []map[string]string { return v.Routes }).(pulumi.StringMapArrayOutput)
+}
+
+// CNI bridge IPAM type
+func (o CniBridgeIpamOutput) Type() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v CniBridgeIpam) *string { return v.Type }).(pulumi.StringPtrOutput)
+}
+
+type CniBridgeIpamPtrOutput struct{ *pulumi.OutputState }
+
+func (CniBridgeIpamPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**CniBridgeIpam)(nil)).Elem()
+}
+
+func (o CniBridgeIpamPtrOutput) ToCniBridgeIpamPtrOutput() CniBridgeIpamPtrOutput {
+	return o
+}
+
+func (o CniBridgeIpamPtrOutput) ToCniBridgeIpamPtrOutputWithContext(ctx context.Context) CniBridgeIpamPtrOutput {
+	return o
+}
+
+func (o CniBridgeIpamPtrOutput) Elem() CniBridgeIpamOutput {
+	return o.ApplyT(func(v *CniBridgeIpam) CniBridgeIpam {
+		if v != nil {
+			return *v
+		}
+		var ret CniBridgeIpam
+		return ret
+	}).(CniBridgeIpamOutput)
+}
+
+// IPAM ranges.
+func (o CniBridgeIpamPtrOutput) Ranges() pulumi.StringMapArrayOutput {
+	return o.ApplyT(func(v *CniBridgeIpam) []map[string]string {
+		if v == nil {
+			return nil
+		}
+		return v.Ranges
+	}).(pulumi.StringMapArrayOutput)
+}
+
+// IPAM routes.
+func (o CniBridgeIpamPtrOutput) Routes() pulumi.StringMapArrayOutput {
+	return o.ApplyT(func(v *CniBridgeIpam) []map[string]string {
+		if v == nil {
+			return nil
+		}
+		return v.Routes
+	}).(pulumi.StringMapArrayOutput)
+}
+
+// CNI bridge IPAM type
+func (o CniBridgeIpamPtrOutput) Type() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *CniBridgeIpam) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Type
+	}).(pulumi.StringPtrOutput)
+}
+
 // Props for resources that consume etcd configuration.
 type EtcdConfigurationProps struct {
 	// Path to the certificate authority file on the remote system.
@@ -748,6 +926,8 @@ func (o SystemdUnitSectionPtrOutput) Wants() pulumi.StringArrayOutput {
 }
 
 func init() {
+	pulumi.RegisterInputType(reflect.TypeOf((*CniBridgeIpamInput)(nil)).Elem(), CniBridgeIpamArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*CniBridgeIpamPtrInput)(nil)).Elem(), CniBridgeIpamArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*EtcdConfigurationPropsInput)(nil)).Elem(), EtcdConfigurationPropsArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*EtcdConfigurationPropsArrayInput)(nil)).Elem(), EtcdConfigurationPropsArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*EtcdNodeInput)(nil)).Elem(), EtcdNodeArgs{})
@@ -756,6 +936,8 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*SystemdServiceSectionInput)(nil)).Elem(), SystemdServiceSectionArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*SystemdUnitSectionInput)(nil)).Elem(), SystemdUnitSectionArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*SystemdUnitSectionPtrInput)(nil)).Elem(), SystemdUnitSectionArgs{})
+	pulumi.RegisterOutputType(CniBridgeIpamOutput{})
+	pulumi.RegisterOutputType(CniBridgeIpamPtrOutput{})
 	pulumi.RegisterOutputType(EtcdConfigurationPropsOutput{})
 	pulumi.RegisterOutputType(EtcdConfigurationPropsArrayOutput{})
 	pulumi.RegisterOutputType(EtcdNodeOutput{})

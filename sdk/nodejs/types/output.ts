@@ -403,6 +403,24 @@ export namespace config {
 
 export namespace remote {
     /**
+     * The CNI plugins IPAM
+     */
+    export interface CniBridgeIpam {
+        /**
+         * IPAM ranges.
+         */
+        ranges?: {[key: string]: string}[];
+        /**
+         * IPAM routes.
+         */
+        routes?: {[key: string]: string}[];
+        /**
+         * CNI bridge IPAM type
+         */
+        type?: string;
+    }
+
+    /**
      * Props for resources that consume etcd configuration.
      */
     export interface EtcdConfigurationProps {

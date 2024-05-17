@@ -11,6 +11,118 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+func TestCniPluginsTs(t *testing.T) {
+	skipIfShort(t)
+
+	const (
+		username = "root"
+		password = "root"
+	)
+
+	node := newNode(t,
+		WithSshUsername(username),
+		WithSshPassword(password),
+	)
+
+	validateBridge := func(t *testing.T, res apitype.ResourceV3) {
+		assert.NotEmpty(t, res.Outputs)
+
+		bridge, ok := res.Outputs["bridge"]
+		assert.True(t, ok, "Output `bridge` was not set")
+		assert.Equal(t, "cni0", bridge)
+
+		name, ok := res.Outputs["name"]
+		assert.True(t, ok, "Output `name` was not set")
+		assert.Equal(t, "bridge", name)
+
+		typ, ok := res.Outputs["type"]
+		assert.True(t, ok, "Output `type` was not set")
+		assert.Equal(t, "bridge", typ)
+
+		cniVersion, ok := res.Outputs["cniVersion"]
+		assert.True(t, ok, "Output `cniVersion` was not set")
+		assert.Equal(t, "1.0.0", cniVersion)
+
+		path, ok := res.Outputs["path"]
+		assert.True(t, ok, "Output `path` was not set")
+		assert.Equal(t, "/var/lib/kubernetes/10-bridge.conf", path)
+
+		subnet, ok := res.Outputs["subnet"]
+		assert.True(t, ok, "Output `subnet` was not set")
+		assert.Equal(t, "10.0.69.0/24", subnet)
+
+		isGateway, ok := res.Outputs["isGateway"]
+		assert.True(t, ok, "Output `isGateway` was not set")
+		assert.Equal(t, true, isGateway)
+
+		ipMasq, ok := res.Outputs["ipMasq"]
+		assert.True(t, ok, "Output `ipMasq` was not set")
+		assert.Equal(t, true, ipMasq)
+
+		assert.Contains(t, res.Outputs, "file")
+		assert.Contains(t, res.Outputs, "ipam")
+	}
+
+	validateLoopback := func(t *testing.T, res apitype.ResourceV3) {
+		assert.NotEmpty(t, res.Outputs)
+
+		cniVersion, ok := res.Outputs["cniVersion"]
+		assert.True(t, ok, "Output `cniVersion` was not set")
+		assert.Equal(t, "1.1.0", cniVersion)
+
+		name, ok := res.Outputs["name"]
+		assert.True(t, ok, "Output `name` was not set")
+		assert.Equal(t, "lo", name)
+
+		path, ok := res.Outputs["path"]
+		assert.True(t, ok, "Output `path` was not set")
+		assert.Equal(t, "/var/lib/kubernetes/99-loopback.conf", path)
+
+		typ, ok := res.Outputs["type"]
+		assert.True(t, ok, "Output `type` was not set")
+		assert.Equal(t, "loopback", typ)
+
+		assert.Contains(t, res.Outputs, "file")
+	}
+
+	test := getJSBaseOptions(t).
+		With(integration.ProgramTestOptions{
+			Dir: path.Join(getCwd(t), "remote", "cni-plugins-ts"),
+			Config: map[string]string{
+				"host":     "localhost",
+				"port":     node.Port,
+				"user":     username,
+				"password": password,
+			},
+			ExtraRuntimeValidation: func(t *testing.T, stack integration.RuntimeValidationStackInfo) {
+				validatedResources := []string{}
+				for _, res := range stack.Deployment.Resources {
+					switch res.Type {
+					case "kubernetes-the-hard-way:remote:CniBridgePluginConfiguration":
+						switch res.URN.Name() {
+						case "simple":
+							validateBridge(t, res)
+							validatedResources = append(validatedResources, "simple")
+						}
+					case "kubernetes-the-hard-way:remote:CniLoopbackPluginConfiguration":
+						switch res.URN.Name() {
+						case "simple":
+							validateLoopback(t, res)
+							validatedResources = append(validatedResources, "simple")
+						}
+					}
+				}
+
+				assert.Equal(t, []string{
+					"simple",
+					"simple",
+				}, validatedResources, "Not all resources were validated")
+			},
+		})
+
+	integration.ProgramTest(t, &test)
+}
+
 func TestRemoteEtcdClusterMultiTs(t *testing.T) {
 	skipIfShort(t)
 

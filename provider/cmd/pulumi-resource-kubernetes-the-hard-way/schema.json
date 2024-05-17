@@ -344,6 +344,36 @@
                 }
             ]
         },
+        "kubernetes-the-hard-way:remote:CniBridgeIpam": {
+            "description": "The CNI plugins IPAM",
+            "properties": {
+                "ranges": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        }
+                    },
+                    "description": "IPAM ranges."
+                },
+                "routes": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        }
+                    },
+                    "description": "IPAM routes."
+                },
+                "type": {
+                    "type": "string",
+                    "description": "CNI bridge IPAM type"
+                }
+            },
+            "type": "object"
+        },
         "kubernetes-the-hard-way:remote:EtcdConfigurationProps": {
             "description": "Props for resources that consume etcd configuration.",
             "properties": {
@@ -1868,6 +1898,174 @@
                 "address",
                 "kubeconfigPath",
                 "vipCidr"
+            ],
+            "isComponent": true
+        },
+        "kubernetes-the-hard-way:remote:CniBridgePluginConfiguration": {
+            "description": "The CNI bridge plugin configuration.",
+            "properties": {
+                "bridge": {
+                    "type": "string",
+                    "description": "Bridge name."
+                },
+                "cniVersion": {
+                    "type": "string",
+                    "description": "CNI version."
+                },
+                "connection": {
+                    "$ref": "/command/v0.10.0/schema.json#/types/command:remote:Connection",
+                    "description": "The parameters with which to connect to the remote host."
+                },
+                "file": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:remote:File",
+                    "description": "The file on the remote system."
+                },
+                "ipMasq": {
+                    "type": "boolean",
+                    "description": "IP masq."
+                },
+                "ipam": {
+                    "$ref": "#/types/kubernetes-the-hard-way:remote:CniBridgeIpam",
+                    "description": "IPAM"
+                },
+                "isGateway": {
+                    "type": "boolean",
+                    "description": "Is gateway."
+                },
+                "name": {
+                    "type": "string",
+                    "description": "CNI plugin name."
+                },
+                "path": {
+                    "type": "string",
+                    "description": "Path to put the configuration file on the remote system"
+                },
+                "subnet": {
+                    "type": "string",
+                    "description": "The subnet to use."
+                },
+                "type": {
+                    "type": "string",
+                    "description": "CNI plugin type."
+                }
+            },
+            "required": [
+                "connection",
+                "bridge",
+                "cniVersion",
+                "isGateway",
+                "ipMasq",
+                "ipam",
+                "name",
+                "path",
+                "type"
+            ],
+            "inputProperties": {
+                "bridge": {
+                    "type": "string",
+                    "description": "Bridge name."
+                },
+                "cniVersion": {
+                    "type": "string",
+                    "description": "CNI version."
+                },
+                "connection": {
+                    "$ref": "/command/v0.10.0/schema.json#/types/command:remote:Connection",
+                    "description": "The parameters with which to connect to the remote host."
+                },
+                "ipMasq": {
+                    "type": "boolean",
+                    "description": "IP masq."
+                },
+                "ipam": {
+                    "$ref": "#/types/kubernetes-the-hard-way:remote:CniBridgeIpam",
+                    "description": "IPAM"
+                },
+                "isGateway": {
+                    "type": "boolean",
+                    "description": "Is gateway."
+                },
+                "name": {
+                    "type": "string",
+                    "description": "CNI plugin name."
+                },
+                "path": {
+                    "type": "string",
+                    "description": "Path to put the configuration file on the remote system"
+                },
+                "subnet": {
+                    "type": "string",
+                    "description": "The subnet to use."
+                },
+                "type": {
+                    "type": "string",
+                    "description": "CNI plugin type."
+                }
+            },
+            "requiredInputs": [
+                "connection"
+            ],
+            "isComponent": true
+        },
+        "kubernetes-the-hard-way:remote:CniLoopbackPluginConfiguration": {
+            "description": "The CNI loopback plugin configuration.",
+            "properties": {
+                "cniVersion": {
+                    "type": "string",
+                    "description": "CNI version."
+                },
+                "connection": {
+                    "$ref": "/command/v0.10.0/schema.json#/types/command:remote:Connection",
+                    "description": "The parameters with which to connect to the remote host."
+                },
+                "file": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:remote:File",
+                    "description": "The file on the remote system."
+                },
+                "name": {
+                    "type": "string",
+                    "description": "CNI plugin name."
+                },
+                "path": {
+                    "type": "string",
+                    "description": "Path to put the configuration file on the remote system"
+                },
+                "type": {
+                    "type": "string",
+                    "description": "CNI plugin type."
+                }
+            },
+            "required": [
+                "connection",
+                "cniVersion",
+                "name",
+                "path",
+                "type"
+            ],
+            "inputProperties": {
+                "cniVersion": {
+                    "type": "string",
+                    "description": "CNI version."
+                },
+                "connection": {
+                    "$ref": "/command/v0.10.0/schema.json#/types/command:remote:Connection",
+                    "description": "The parameters with which to connect to the remote host."
+                },
+                "name": {
+                    "type": "string",
+                    "description": "CNI plugin name."
+                },
+                "path": {
+                    "type": "string",
+                    "description": "Path to put the configuration file on the remote system"
+                },
+                "type": {
+                    "type": "string",
+                    "description": "CNI plugin type."
+                }
+            },
+            "requiredInputs": [
+                "connection"
             ],
             "isComponent": true
         },
