@@ -45,11 +45,11 @@ var StringMap = schema.TypeSpec{
 
 func LocalResource(name string, modules ...string) schema.TypeSpec {
 	return schema.TypeSpec{
-		Ref: localResource(name, modules...),
+		Ref: LocalResourceRef(name, modules...),
 	}
 }
 
-func localResource(name string, modules ...string) string {
+func LocalResourceRef(name string, modules ...string) string {
 	return fmt.Sprintf("#/resources/kubernetes-the-hard-way:%s:%s",
 		strings.Join(modules, "/"),
 		name,
@@ -58,11 +58,11 @@ func localResource(name string, modules ...string) string {
 
 func LocalType(name string, modules ...string) schema.TypeSpec {
 	return schema.TypeSpec{
-		Ref: localType(name, modules...),
+		Ref: LocalTypeRef(name, modules...),
 	}
 }
 
-func localType(name string, modules ...string) string {
+func LocalTypeRef(name string, modules ...string) string {
 	return fmt.Sprintf("#/types/kubernetes-the-hard-way:%s:%s",
 		strings.Join(modules, "/"),
 		name,
