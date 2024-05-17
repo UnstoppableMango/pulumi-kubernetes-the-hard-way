@@ -45,7 +45,7 @@ func TestCniPluginsTs(t *testing.T) {
 
 		path, ok := res.Outputs["path"]
 		assert.True(t, ok, "Output `path` was not set")
-		assert.Equal(t, "/var/lib/kubernetes", path)
+		assert.Equal(t, "/var/lib/kubernetes/10-bridge.conf", path)
 
 		subnet, ok := res.Outputs["subnet"]
 		assert.True(t, ok, "Output `subnet` was not set")
@@ -76,7 +76,7 @@ func TestCniPluginsTs(t *testing.T) {
 
 		path, ok := res.Outputs["path"]
 		assert.True(t, ok, "Output `path` was not set")
-		assert.Equal(t, "/var/lib/kubernetes", path)
+		assert.Equal(t, "/var/lib/kubernetes/99-loopback.conf", path)
 
 		typ, ok := res.Outputs["type"]
 		assert.True(t, ok, "Output `type` was not set")
