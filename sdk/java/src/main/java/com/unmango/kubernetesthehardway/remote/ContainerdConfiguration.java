@@ -12,6 +12,8 @@ import com.unmango.kubernetesthehardway.Utilities;
 import com.unmango.kubernetesthehardway.remote.ContainerdConfigurationArgs;
 import com.unmango.kubernetesthehardway.remote.File;
 import com.unmango.kubernetesthehardway.remote.outputs.ContainerdCriPluginConfiguration;
+import java.lang.String;
+import java.util.Optional;
 import javax.annotation.Nullable;
 
 /**
@@ -61,6 +63,20 @@ public class ContainerdConfiguration extends com.pulumi.resources.ComponentResou
      */
     public Output<File> file() {
         return this.file;
+    }
+    /**
+     * The path to put the configuration file.
+     * 
+     */
+    @Export(name="path", refs={String.class}, tree="[0]")
+    private Output</* @Nullable */ String> path;
+
+    /**
+     * @return The path to put the configuration file.
+     * 
+     */
+    public Output<Optional<String>> path() {
+        return Codegen.optional(this.path);
     }
 
     /**

@@ -23,6 +23,8 @@ type ContainerdConfiguration struct {
 	Cri ContainerdCriPluginConfigurationOutput `pulumi:"cri"`
 	// The remote configuration file.
 	File FileOutput `pulumi:"file"`
+	// The path to put the configuration file.
+	Path pulumi.StringPtrOutput `pulumi:"path"`
 }
 
 // NewContainerdConfiguration registers a new resource with the given unique name, arguments, and options.
@@ -50,6 +52,8 @@ type containerdConfigurationArgs struct {
 	Connection pulumiCommand.Connection `pulumi:"connection"`
 	// The cri configuration.
 	Cri *ContainerdCriPluginConfiguration `pulumi:"cri"`
+	// The path to put the configuration file.
+	Path *string `pulumi:"path"`
 }
 
 // The set of arguments for constructing a ContainerdConfiguration resource.
@@ -58,6 +62,8 @@ type ContainerdConfigurationArgs struct {
 	Connection pulumiCommand.ConnectionInput
 	// The cri configuration.
 	Cri *ContainerdCriPluginConfigurationArgs
+	// The path to put the configuration file.
+	Path pulumi.StringPtrInput
 }
 
 func (ContainerdConfigurationArgs) ElementType() reflect.Type {
@@ -160,6 +166,11 @@ func (o ContainerdConfigurationOutput) Cri() ContainerdCriPluginConfigurationOut
 // The remote configuration file.
 func (o ContainerdConfigurationOutput) File() FileOutput {
 	return o.ApplyT(func(v *ContainerdConfiguration) FileOutput { return v.File }).(FileOutput)
+}
+
+// The path to put the configuration file.
+func (o ContainerdConfigurationOutput) Path() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *ContainerdConfiguration) pulumi.StringPtrOutput { return v.Path }).(pulumi.StringPtrOutput)
 }
 
 type ContainerdConfigurationArrayOutput struct{ *pulumi.OutputState }

@@ -34,6 +34,12 @@ namespace UnMango.KubernetesTheHardWay.Remote
         [Output("file")]
         public Output<UnMango.KubernetesTheHardWay.Remote.File> File { get; private set; } = null!;
 
+        /// <summary>
+        /// The path to put the configuration file.
+        /// </summary>
+        [Output("path")]
+        public Output<string?> Path { get; private set; } = null!;
+
 
         /// <summary>
         /// Create a ContainerdConfiguration resource with the given unique name, arguments, and options.
@@ -74,6 +80,12 @@ namespace UnMango.KubernetesTheHardWay.Remote
         /// </summary>
         [Input("cri")]
         public Inputs.ContainerdCriPluginConfigurationArgs? Cri { get; set; }
+
+        /// <summary>
+        /// The path to put the configuration file.
+        /// </summary>
+        [Input("path")]
+        public Input<string>? Path { get; set; }
 
         public ContainerdConfigurationArgs()
         {

@@ -41,6 +41,10 @@ export class ContainerdConfiguration extends pulumi.ComponentResource {
      * The remote configuration file.
      */
     public /*out*/ readonly file!: pulumi.Output<File>;
+    /**
+     * The path to put the configuration file.
+     */
+    public readonly path!: pulumi.Output<string | undefined>;
 
     /**
      * Create a ContainerdConfiguration resource with the given unique name, arguments, and options.
@@ -58,11 +62,13 @@ export class ContainerdConfiguration extends pulumi.ComponentResource {
             }
             resourceInputs["connection"] = args ? (args.connection ? pulumi.output(args.connection).apply(pulumiCommand.types.input.remote.connectionArgsProvideDefaults) : undefined) : undefined;
             resourceInputs["cri"] = args ? args.cri : undefined;
+            resourceInputs["path"] = args ? args.path : undefined;
             resourceInputs["file"] = undefined /*out*/;
         } else {
             resourceInputs["connection"] = undefined /*out*/;
             resourceInputs["cri"] = undefined /*out*/;
             resourceInputs["file"] = undefined /*out*/;
+            resourceInputs["path"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         super(ContainerdConfiguration.__pulumiType, name, resourceInputs, opts, true /*remote*/);
@@ -81,4 +87,8 @@ export interface ContainerdConfigurationArgs {
      * The cri configuration.
      */
     cri?: inputs.remote.ContainerdCriPluginConfigurationArgs;
+    /**
+     * The path to put the configuration file.
+     */
+    path?: pulumi.Input<string>;
 }

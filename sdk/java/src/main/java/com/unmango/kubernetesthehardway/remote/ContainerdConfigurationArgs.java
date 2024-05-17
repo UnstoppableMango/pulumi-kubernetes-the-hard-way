@@ -8,6 +8,7 @@ import com.pulumi.core.Output;
 import com.pulumi.core.annotations.Import;
 import com.pulumi.exceptions.MissingRequiredPropertyException;
 import com.unmango.kubernetesthehardway.remote.inputs.ContainerdCriPluginConfigurationArgs;
+import java.lang.String;
 import java.util.Objects;
 import java.util.Optional;
 import javax.annotation.Nullable;
@@ -47,11 +48,27 @@ public final class ContainerdConfigurationArgs extends com.pulumi.resources.Reso
         return Optional.ofNullable(this.cri);
     }
 
+    /**
+     * The path to put the configuration file.
+     * 
+     */
+    @Import(name="path")
+    private @Nullable Output<String> path;
+
+    /**
+     * @return The path to put the configuration file.
+     * 
+     */
+    public Optional<Output<String>> path() {
+        return Optional.ofNullable(this.path);
+    }
+
     private ContainerdConfigurationArgs() {}
 
     private ContainerdConfigurationArgs(ContainerdConfigurationArgs $) {
         this.connection = $.connection;
         this.cri = $.cri;
+        this.path = $.path;
     }
 
     public static Builder builder() {
@@ -102,6 +119,27 @@ public final class ContainerdConfigurationArgs extends com.pulumi.resources.Reso
         public Builder cri(@Nullable ContainerdCriPluginConfigurationArgs cri) {
             $.cri = cri;
             return this;
+        }
+
+        /**
+         * @param path The path to put the configuration file.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder path(@Nullable Output<String> path) {
+            $.path = path;
+            return this;
+        }
+
+        /**
+         * @param path The path to put the configuration file.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder path(String path) {
+            return path(Output.of(path));
         }
 
         public ContainerdConfigurationArgs build() {

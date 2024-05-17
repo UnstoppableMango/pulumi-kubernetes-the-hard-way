@@ -19,15 +19,19 @@ __all__ = ['ContainerdConfigurationArgs', 'ContainerdConfiguration']
 class ContainerdConfigurationArgs:
     def __init__(__self__, *,
                  connection: pulumi.Input['pulumi_command.remote.ConnectionArgs'],
-                 cri: Optional['ContainerdCriPluginConfigurationArgs'] = None):
+                 cri: Optional['ContainerdCriPluginConfigurationArgs'] = None,
+                 path: Optional[pulumi.Input[str]] = None):
         """
         The set of arguments for constructing a ContainerdConfiguration resource.
         :param pulumi.Input['pulumi_command.remote.ConnectionArgs'] connection: The parameters with which to connect to the remote host.
         :param 'ContainerdCriPluginConfigurationArgs' cri: The cri configuration.
+        :param pulumi.Input[str] path: The path to put the configuration file.
         """
         pulumi.set(__self__, "connection", connection)
         if cri is not None:
             pulumi.set(__self__, "cri", cri)
+        if path is not None:
+            pulumi.set(__self__, "path", path)
 
     @property
     @pulumi.getter
@@ -53,6 +57,18 @@ class ContainerdConfigurationArgs:
     def cri(self, value: Optional['ContainerdCriPluginConfigurationArgs']):
         pulumi.set(self, "cri", value)
 
+    @property
+    @pulumi.getter
+    def path(self) -> Optional[pulumi.Input[str]]:
+        """
+        The path to put the configuration file.
+        """
+        return pulumi.get(self, "path")
+
+    @path.setter
+    def path(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "path", value)
+
 
 class ContainerdConfiguration(pulumi.ComponentResource):
     @overload
@@ -61,6 +77,7 @@ class ContainerdConfiguration(pulumi.ComponentResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
                  cri: Optional[pulumi.InputType['ContainerdCriPluginConfigurationArgs']] = None,
+                 path: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         """
         The containerd configuration file.
@@ -69,6 +86,7 @@ class ContainerdConfiguration(pulumi.ComponentResource):
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']] connection: The parameters with which to connect to the remote host.
         :param pulumi.InputType['ContainerdCriPluginConfigurationArgs'] cri: The cri configuration.
+        :param pulumi.Input[str] path: The path to put the configuration file.
         """
         ...
     @overload
@@ -96,6 +114,7 @@ class ContainerdConfiguration(pulumi.ComponentResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
                  cri: Optional[pulumi.InputType['ContainerdCriPluginConfigurationArgs']] = None,
+                 path: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):
@@ -111,6 +130,7 @@ class ContainerdConfiguration(pulumi.ComponentResource):
                 raise TypeError("Missing required property 'connection'")
             __props__.__dict__["connection"] = connection
             __props__.__dict__["cri"] = cri
+            __props__.__dict__["path"] = path
             __props__.__dict__["file"] = None
         super(ContainerdConfiguration, __self__).__init__(
             'kubernetes-the-hard-way:remote:ContainerdConfiguration',
@@ -142,4 +162,12 @@ class ContainerdConfiguration(pulumi.ComponentResource):
         The remote configuration file.
         """
         return pulumi.get(self, "file")
+
+    @property
+    @pulumi.getter
+    def path(self) -> pulumi.Output[Optional[str]]:
+        """
+        The path to put the configuration file.
+        """
+        return pulumi.get(self, "path")
 

@@ -217,13 +217,15 @@ export abstract class ContainerdConfiguration<TData = any> extends (pulumi.Compo
     public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
     public cri!: ContainerdCriPluginConfigurationOutputs;
     public file!: File | pulumi.Output<File>;
+    public path?: string | pulumi.Output<string>;
     constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
-        super("kubernetes-the-hard-way:remote:ContainerdConfiguration", name, opts.urn ? { connection: undefined, cri: undefined, file: undefined } : { name, args, opts }, opts);
+        super("kubernetes-the-hard-way:remote:ContainerdConfiguration", name, opts.urn ? { connection: undefined, cri: undefined, file: undefined, path: undefined } : { name, args, opts }, opts);
     }
 }
 export interface ContainerdConfigurationArgs {
     readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
     readonly cri?: ContainerdCriPluginConfigurationInputs;
+    readonly path?: pulumi.Input<string>;
 }
 export abstract class ContainerdInstall<TData = any> extends (pulumi.ComponentResource)<TData> {
     public architecture!: ArchitectureOutputs | pulumi.Output<ArchitectureOutputs>;
