@@ -15,6 +15,7 @@ func Generate(commandSpec schema.PackageSpec) schema.PackageSpec {
 		name("ContainerdInstall"):              generateArchiveInstall(commandSpec, "Installs containerd on a remote system", "containerd"),
 		name("CniBridgePluginConfiguration"):   generateCniBridgePluginConfiguration(commandSpec),
 		name("CniLoopbackPluginConfiguration"): generateCniLoopbackPluginConfiguration(commandSpec),
+		name("CniPluginConfiguration"):         generateCniPluginConfiguration(commandSpec),
 		name("CrictlInstall"):                  generateArchiveInstall(commandSpec, "Installs crictl on a remote system", "crictl"),
 		name("Download"):                       generateDownload(commandSpec),
 		name("EtcdCluster"):                    generateEtcdCluster(),
