@@ -11,6 +11,7 @@ export type ResourceConstructor = {
     readonly "kubernetes-the-hard-way:remote:CniLoopbackPluginConfiguration": ConstructComponent<CniLoopbackPluginConfiguration>;
     readonly "kubernetes-the-hard-way:remote:CniPluginConfiguration": ConstructComponent<CniPluginConfiguration>;
     readonly "kubernetes-the-hard-way:remote:CniPluginsInstall": ConstructComponent<CniPluginsInstall>;
+    readonly "kubernetes-the-hard-way:remote:ContainerdConfiguration": ConstructComponent<ContainerdConfiguration>;
     readonly "kubernetes-the-hard-way:remote:ContainerdInstall": ConstructComponent<ContainerdInstall>;
     readonly "kubernetes-the-hard-way:remote:CrictlInstall": ConstructComponent<CrictlInstall>;
     readonly "kubernetes-the-hard-way:remote:Download": ConstructComponent<Download>;
@@ -211,6 +212,18 @@ export interface CniPluginsInstallArgs {
     readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
     readonly directory?: pulumi.Input<string>;
     readonly version?: pulumi.Input<string>;
+}
+export abstract class ContainerdConfiguration<TData = any> extends (pulumi.ComponentResource)<TData> {
+    public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
+    public cri!: ContainerdCriPluginConfigurationOutputs | pulumi.Output<ContainerdCriPluginConfigurationOutputs>;
+    public file!: File | pulumi.Output<File>;
+    constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
+        super("kubernetes-the-hard-way:remote:ContainerdConfiguration", name, opts.urn ? { connection: undefined, cri: undefined, file: undefined } : { name, args, opts }, opts);
+    }
+}
+export interface ContainerdConfigurationArgs {
+    readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
+    readonly cri?: pulumi.Input<ContainerdCriPluginConfigurationInputs>;
 }
 export abstract class ContainerdInstall<TData = any> extends (pulumi.ComponentResource)<TData> {
     public architecture!: ArchitectureOutputs | pulumi.Output<ArchitectureOutputs>;
@@ -1242,6 +1255,44 @@ export interface CniBridgeIpamOutputs {
     readonly ranges?: pulumi.Output<Record<string, string>[]>;
     readonly routes?: pulumi.Output<Record<string, string>[]>;
     readonly type?: pulumi.Output<string>;
+}
+export interface ContainerdCriPluginCConfigurationContainerdInputs {
+    readonly defaultRuntimeName?: pulumi.Input<string>;
+    readonly snapshotter?: pulumi.Input<string>;
+}
+export interface ContainerdCriPluginCConfigurationContainerdOutputs {
+    readonly defaultRuntimeName?: pulumi.Output<string>;
+    readonly snapshotter?: pulumi.Output<string>;
+}
+export interface ContainerdCriPluginCConfigurationContainerdRuncInputs {
+    readonly options: pulumi.Input<ContainerdCriPluginCConfigurationContainerdRuncOptionsInputs>;
+    readonly runtimeType?: pulumi.Input<string>;
+}
+export interface ContainerdCriPluginCConfigurationContainerdRuncOutputs {
+    readonly options: pulumi.Output<ContainerdCriPluginCConfigurationContainerdRuncOptionsOutputs>;
+    readonly runtimeType?: pulumi.Output<string>;
+}
+export interface ContainerdCriPluginCConfigurationContainerdRuncOptionsInputs {
+    readonly systemdCgroup?: pulumi.Input<string>;
+}
+export interface ContainerdCriPluginCConfigurationContainerdRuncOptionsOutputs {
+    readonly systemdCgroup?: pulumi.Output<string>;
+}
+export interface ContainerdCriPluginConfigurationInputs {
+    readonly cni: pulumi.Input<ContainerdCriPluginConfigurationCniInputs>;
+    readonly containerd: pulumi.Input<ContainerdCriPluginCConfigurationContainerdInputs>;
+}
+export interface ContainerdCriPluginConfigurationOutputs {
+    readonly cni: pulumi.Output<ContainerdCriPluginConfigurationCniOutputs>;
+    readonly containerd: pulumi.Output<ContainerdCriPluginCConfigurationContainerdOutputs>;
+}
+export interface ContainerdCriPluginConfigurationCniInputs {
+    readonly binDir?: pulumi.Input<string>;
+    readonly confDir?: pulumi.Input<string>;
+}
+export interface ContainerdCriPluginConfigurationCniOutputs {
+    readonly binDir?: pulumi.Output<string>;
+    readonly confDir?: pulumi.Output<string>;
 }
 export interface EtcdConfigurationPropsInputs {
     readonly caFilePath: pulumi.Input<string>;

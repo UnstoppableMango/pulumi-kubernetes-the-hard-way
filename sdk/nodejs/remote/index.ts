@@ -25,6 +25,11 @@ export type CniPluginsInstall = import("./cniPluginsInstall").CniPluginsInstall;
 export const CniPluginsInstall: typeof import("./cniPluginsInstall").CniPluginsInstall = null as any;
 utilities.lazyLoad(exports, ["CniPluginsInstall"], () => require("./cniPluginsInstall"));
 
+export { ContainerdConfigurationArgs } from "./containerdConfiguration";
+export type ContainerdConfiguration = import("./containerdConfiguration").ContainerdConfiguration;
+export const ContainerdConfiguration: typeof import("./containerdConfiguration").ContainerdConfiguration = null as any;
+utilities.lazyLoad(exports, ["ContainerdConfiguration"], () => require("./containerdConfiguration"));
+
 export { ContainerdInstallArgs } from "./containerdInstall";
 export type ContainerdInstall = import("./containerdInstall").ContainerdInstall;
 export const ContainerdInstall: typeof import("./containerdInstall").ContainerdInstall = null as any;
@@ -136,6 +141,8 @@ const _module = {
                 return new CniPluginConfiguration(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:remote:CniPluginsInstall":
                 return new CniPluginsInstall(name, <any>undefined, { urn })
+            case "kubernetes-the-hard-way:remote:ContainerdConfiguration":
+                return new ContainerdConfiguration(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:remote:ContainerdInstall":
                 return new ContainerdInstall(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:remote:CrictlInstall":

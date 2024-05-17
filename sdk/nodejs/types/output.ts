@@ -421,6 +421,48 @@ export namespace remote {
     }
 
     /**
+     * containerd cri plugin configuration.
+     */
+    export interface ContainerdCriPluginCConfigurationContainerd {
+        /**
+         * default_runtime_name
+         */
+        defaultRuntimeName?: string;
+        /**
+         * snapshotter
+         */
+        snapshotter?: string;
+    }
+
+    /**
+     * containerd cri plugin configuration.
+     */
+    export interface ContainerdCriPluginConfiguration {
+        /**
+         * cni configuration.
+         */
+        cni: outputs.remote.ContainerdCriPluginConfigurationCni;
+        /**
+         * containerd configuration.
+         */
+        containerd: outputs.remote.ContainerdCriPluginCConfigurationContainerd;
+    }
+
+    /**
+     * containerd cri plugin configuration.
+     */
+    export interface ContainerdCriPluginConfigurationCni {
+        /**
+         * bin_dir
+         */
+        binDir?: string;
+        /**
+         * conf_dir
+         */
+        confDir?: string;
+    }
+
+    /**
      * Props for resources that consume etcd configuration.
      */
     export interface EtcdConfigurationProps {
