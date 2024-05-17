@@ -15,7 +15,8 @@ func generateCniPluginConfiguration(commandSpec schema.PackageSpec) schema.Resou
 			Description: "The parameters with which to connect to the remote host.",
 			TypeSpec:    types.ExtType(commandSpec, "Connection", "remote"),
 		},
-		"subnet": props.String("The subnet to use for the CNI bridge plugin configuration."),
+		"directory": props.String("The plugin configuration directory."),
+		"subnet":    props.String("The subnet to use for the CNI bridge plugin configuration."),
 	}
 
 	requiredInputs := []string{"connection", "subnet"}
@@ -25,8 +26,8 @@ func generateCniPluginConfiguration(commandSpec schema.PackageSpec) schema.Resou
 			Description: "The bridge plugin configuration.",
 			TypeSpec:    types.LocalResource("CniBridgePluginConfiguration", "remote"),
 		},
-		"etcCniMkdir": {
-			Description: "The /etc/cni/net.d mkdir operation.",
+		"mkdir": {
+			Description: "The `directory` mkdir operation.",
 			TypeSpec:    types.LocalResource("Mkdir", "tools"),
 		},
 		"loopback": {
@@ -38,7 +39,8 @@ func generateCniPluginConfiguration(commandSpec schema.PackageSpec) schema.Resou
 
 	requiredOutputs := slices.Concat(requiredInputs, []string{
 		"bridge",
-		"etcCniMkdir",
+		"directory",
+		"mkdir",
 		"loopback",
 	})
 
