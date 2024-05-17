@@ -3,6 +3,7 @@ import * as schema from './schema-types';
 import {
   CniBridgePluginConfiguration,
   CniLoopbackPluginConfiguration,
+  CniPluginConfiguration,
   CniPluginsInstall,
   ContainerdInstall,
   CrictlInstall,
@@ -32,6 +33,7 @@ const resources: schema.ResourceConstructor = {
   'kubernetes-the-hard-way:config:KubeVipManifest': (...args) => new KubeVipManifest(...args),
   'kubernetes-the-hard-way:remote:CniBridgePluginConfiguration': (...args) => new CniBridgePluginConfiguration(...args),
   'kubernetes-the-hard-way:remote:CniLoopbackPluginConfiguration': (...args) => new CniLoopbackPluginConfiguration(...args),
+  'kubernetes-the-hard-way:remote:CniPluginConfiguration': (...args) => new CniPluginConfiguration(...args),
   'kubernetes-the-hard-way:remote:Download': (...args) => new Download(...args),
   'kubernetes-the-hard-way:remote:EtcdCluster': (...args) => new EtcdCluster(...args),
   'kubernetes-the-hard-way:remote:EtcdConfiguration': (...args) => new EtcdConfiguration(...args),

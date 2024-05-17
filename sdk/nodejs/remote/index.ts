@@ -15,6 +15,11 @@ export type CniLoopbackPluginConfiguration = import("./cniLoopbackPluginConfigur
 export const CniLoopbackPluginConfiguration: typeof import("./cniLoopbackPluginConfiguration").CniLoopbackPluginConfiguration = null as any;
 utilities.lazyLoad(exports, ["CniLoopbackPluginConfiguration"], () => require("./cniLoopbackPluginConfiguration"));
 
+export { CniPluginConfigurationArgs } from "./cniPluginConfiguration";
+export type CniPluginConfiguration = import("./cniPluginConfiguration").CniPluginConfiguration;
+export const CniPluginConfiguration: typeof import("./cniPluginConfiguration").CniPluginConfiguration = null as any;
+utilities.lazyLoad(exports, ["CniPluginConfiguration"], () => require("./cniPluginConfiguration"));
+
 export { CniPluginsInstallArgs } from "./cniPluginsInstall";
 export type CniPluginsInstall = import("./cniPluginsInstall").CniPluginsInstall;
 export const CniPluginsInstall: typeof import("./cniPluginsInstall").CniPluginsInstall = null as any;
@@ -127,6 +132,8 @@ const _module = {
                 return new CniBridgePluginConfiguration(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:remote:CniLoopbackPluginConfiguration":
                 return new CniLoopbackPluginConfiguration(name, <any>undefined, { urn })
+            case "kubernetes-the-hard-way:remote:CniPluginConfiguration":
+                return new CniPluginConfiguration(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:remote:CniPluginsInstall":
                 return new CniPluginsInstall(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:remote:ContainerdInstall":

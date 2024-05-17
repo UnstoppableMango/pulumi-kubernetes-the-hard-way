@@ -8,6 +8,7 @@ import typing
 from ._enums import *
 from .cni_bridge_plugin_configuration import *
 from .cni_loopback_plugin_configuration import *
+from .cni_plugin_configuration import *
 from .cni_plugins_install import *
 from .containerd_install import *
 from .crictl_install import *

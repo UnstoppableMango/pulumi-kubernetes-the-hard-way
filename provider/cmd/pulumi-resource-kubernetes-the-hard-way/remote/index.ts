@@ -1,6 +1,7 @@
 export * from './cniPlugins';
 export * from './cniBridgePluginConfiguration';
 export * from './cniLoopbackPluginConfiguration';
+export * from './cniPluginConfiguration';
 export * from './containerd';
 export * from './crictl';
 export * from './download';

@@ -11,16 +11,16 @@ using Pulumi;
 namespace UnMango.KubernetesTheHardWay.Remote
 {
     /// <summary>
-    /// The CNI loopback plugin configuration.
+    /// The CNI plugin configuration.
     /// </summary>
-    [KubernetesTheHardWayResourceType("kubernetes-the-hard-way:remote:CniLoopbackPluginConfiguration")]
-    public partial class CniLoopbackPluginConfiguration : global::Pulumi.ComponentResource
+    [KubernetesTheHardWayResourceType("kubernetes-the-hard-way:remote:CniPluginConfiguration")]
+    public partial class CniPluginConfiguration : global::Pulumi.ComponentResource
     {
         /// <summary>
-        /// CNI version.
+        /// The bridge plugin configuration.
         /// </summary>
-        [Output("cniVersion")]
-        public Output<string> CniVersion { get; private set; } = null!;
+        [Output("bridge")]
+        public Output<UnMango.KubernetesTheHardWay.Remote.CniBridgePluginConfiguration> Bridge { get; private set; } = null!;
 
         /// <summary>
         /// The parameters with which to connect to the remote host.
@@ -29,39 +29,39 @@ namespace UnMango.KubernetesTheHardWay.Remote
         public Output<Pulumi.Command.Remote.Outputs.Connection> Connection { get; private set; } = null!;
 
         /// <summary>
-        /// The file on the remote system.
+        /// The plugin configuration directory.
         /// </summary>
-        [Output("file")]
-        public Output<UnMango.KubernetesTheHardWay.Remote.File?> File { get; private set; } = null!;
+        [Output("directory")]
+        public Output<string> Directory { get; private set; } = null!;
 
         /// <summary>
-        /// CNI plugin name.
+        /// The loopback plugin configuration.
         /// </summary>
-        [Output("name")]
-        public Output<string> Name { get; private set; } = null!;
+        [Output("loopback")]
+        public Output<UnMango.KubernetesTheHardWay.Remote.CniLoopbackPluginConfiguration> Loopback { get; private set; } = null!;
 
         /// <summary>
-        /// Path to put the configuration file on the remote system
+        /// The `directory` mkdir operation.
         /// </summary>
-        [Output("path")]
-        public Output<string> Path { get; private set; } = null!;
+        [Output("mkdir")]
+        public Output<UnMango.KubernetesTheHardWay.Tools.Mkdir> Mkdir { get; private set; } = null!;
 
         /// <summary>
-        /// CNI plugin type.
+        /// The subnet to use for the CNI bridge plugin configuration.
         /// </summary>
-        [Output("type")]
-        public Output<string> Type { get; private set; } = null!;
+        [Output("subnet")]
+        public Output<string> Subnet { get; private set; } = null!;
 
 
         /// <summary>
-        /// Create a CniLoopbackPluginConfiguration resource with the given unique name, arguments, and options.
+        /// Create a CniPluginConfiguration resource with the given unique name, arguments, and options.
         /// </summary>
         ///
         /// <param name="name">The unique name of the resource</param>
         /// <param name="args">The arguments used to populate this resource's properties</param>
         /// <param name="options">A bag of options that control this resource's behavior</param>
-        public CniLoopbackPluginConfiguration(string name, CniLoopbackPluginConfigurationArgs args, ComponentResourceOptions? options = null)
-            : base("kubernetes-the-hard-way:remote:CniLoopbackPluginConfiguration", name, args ?? new CniLoopbackPluginConfigurationArgs(), MakeResourceOptions(options, ""), remote: true)
+        public CniPluginConfiguration(string name, CniPluginConfigurationArgs args, ComponentResourceOptions? options = null)
+            : base("kubernetes-the-hard-way:remote:CniPluginConfiguration", name, args ?? new CniPluginConfigurationArgs(), MakeResourceOptions(options, ""), remote: true)
         {
         }
 
@@ -79,14 +79,8 @@ namespace UnMango.KubernetesTheHardWay.Remote
         }
     }
 
-    public sealed class CniLoopbackPluginConfigurationArgs : global::Pulumi.ResourceArgs
+    public sealed class CniPluginConfigurationArgs : global::Pulumi.ResourceArgs
     {
-        /// <summary>
-        /// CNI version.
-        /// </summary>
-        [Input("cniVersion")]
-        public Input<string>? CniVersion { get; set; }
-
         /// <summary>
         /// The parameters with which to connect to the remote host.
         /// </summary>
@@ -94,26 +88,20 @@ namespace UnMango.KubernetesTheHardWay.Remote
         public Input<Pulumi.Command.Remote.Inputs.ConnectionArgs> Connection { get; set; } = null!;
 
         /// <summary>
-        /// CNI plugin name.
+        /// The plugin configuration directory.
         /// </summary>
-        [Input("name")]
-        public Input<string>? Name { get; set; }
+        [Input("directory")]
+        public Input<string>? Directory { get; set; }
 
         /// <summary>
-        /// Path to put the configuration file on the remote system
+        /// The subnet to use for the CNI bridge plugin configuration.
         /// </summary>
-        [Input("path")]
-        public Input<string>? Path { get; set; }
+        [Input("subnet", required: true)]
+        public Input<string> Subnet { get; set; } = null!;
 
-        /// <summary>
-        /// CNI plugin type.
-        /// </summary>
-        [Input("type")]
-        public Input<string>? Type { get; set; }
-
-        public CniLoopbackPluginConfigurationArgs()
+        public CniPluginConfigurationArgs()
         {
         }
-        public static new CniLoopbackPluginConfigurationArgs Empty => new CniLoopbackPluginConfigurationArgs();
+        public static new CniPluginConfigurationArgs Empty => new CniPluginConfigurationArgs();
     }
 }

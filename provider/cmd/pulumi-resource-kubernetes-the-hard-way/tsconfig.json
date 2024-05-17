@@ -24,6 +24,7 @@
     "remote/binaryInstall.ts",
     "remote/cniBridgePluginConfiguration.ts",
     "remote/cniLoopbackPluginConfiguration.ts",
+    "remote/cniPluginConfiguration.ts",
     "remote/cniPlugins.ts",
     "remote/containerd.ts",
     "remote/crictl.ts",

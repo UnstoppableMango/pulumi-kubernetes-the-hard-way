@@ -15,7 +15,7 @@ import (
 
 // The CNI loopback plugin configuration.
 type CniLoopbackPluginConfiguration struct {
-	pulumi.CustomResourceState
+	pulumi.ResourceState
 
 	// CNI version.
 	CniVersion pulumi.StringOutput `pulumi:"cniVersion"`
@@ -44,34 +44,11 @@ func NewCniLoopbackPluginConfiguration(ctx *pulumi.Context,
 	args.Connection = args.Connection.ToConnectionOutput().ApplyT(func(v pulumiCommand.Connection) pulumiCommand.Connection { return *v.Defaults() }).(pulumiCommand.ConnectionOutput)
 	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource CniLoopbackPluginConfiguration
-	err := ctx.RegisterResource("kubernetes-the-hard-way:remote:CniLoopbackPluginConfiguration", name, args, &resource, opts...)
+	err := ctx.RegisterRemoteComponentResource("kubernetes-the-hard-way:remote:CniLoopbackPluginConfiguration", name, args, &resource, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return &resource, nil
-}
-
-// GetCniLoopbackPluginConfiguration gets an existing CniLoopbackPluginConfiguration resource's state with the given name, ID, and optional
-// state properties that are used to uniquely qualify the lookup (nil if not required).
-func GetCniLoopbackPluginConfiguration(ctx *pulumi.Context,
-	name string, id pulumi.IDInput, state *CniLoopbackPluginConfigurationState, opts ...pulumi.ResourceOption) (*CniLoopbackPluginConfiguration, error) {
-	var resource CniLoopbackPluginConfiguration
-	err := ctx.ReadResource("kubernetes-the-hard-way:remote:CniLoopbackPluginConfiguration", name, id, state, &resource, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return &resource, nil
-}
-
-// Input properties used for looking up and filtering CniLoopbackPluginConfiguration resources.
-type cniLoopbackPluginConfigurationState struct {
-}
-
-type CniLoopbackPluginConfigurationState struct {
-}
-
-func (CniLoopbackPluginConfigurationState) ElementType() reflect.Type {
-	return reflect.TypeOf((*cniLoopbackPluginConfigurationState)(nil)).Elem()
 }
 
 type cniLoopbackPluginConfigurationArgs struct {

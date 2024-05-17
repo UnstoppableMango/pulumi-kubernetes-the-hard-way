@@ -15,7 +15,7 @@ import (
 
 // The CNI bridge plugin configuration.
 type CniBridgePluginConfiguration struct {
-	pulumi.CustomResourceState
+	pulumi.ResourceState
 
 	// Bridge name.
 	Bridge pulumi.StringOutput `pulumi:"bridge"`
@@ -54,34 +54,11 @@ func NewCniBridgePluginConfiguration(ctx *pulumi.Context,
 	args.Connection = args.Connection.ToConnectionOutput().ApplyT(func(v pulumiCommand.Connection) pulumiCommand.Connection { return *v.Defaults() }).(pulumiCommand.ConnectionOutput)
 	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource CniBridgePluginConfiguration
-	err := ctx.RegisterResource("kubernetes-the-hard-way:remote:CniBridgePluginConfiguration", name, args, &resource, opts...)
+	err := ctx.RegisterRemoteComponentResource("kubernetes-the-hard-way:remote:CniBridgePluginConfiguration", name, args, &resource, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return &resource, nil
-}
-
-// GetCniBridgePluginConfiguration gets an existing CniBridgePluginConfiguration resource's state with the given name, ID, and optional
-// state properties that are used to uniquely qualify the lookup (nil if not required).
-func GetCniBridgePluginConfiguration(ctx *pulumi.Context,
-	name string, id pulumi.IDInput, state *CniBridgePluginConfigurationState, opts ...pulumi.ResourceOption) (*CniBridgePluginConfiguration, error) {
-	var resource CniBridgePluginConfiguration
-	err := ctx.ReadResource("kubernetes-the-hard-way:remote:CniBridgePluginConfiguration", name, id, state, &resource, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return &resource, nil
-}
-
-// Input properties used for looking up and filtering CniBridgePluginConfiguration resources.
-type cniBridgePluginConfigurationState struct {
-}
-
-type CniBridgePluginConfigurationState struct {
-}
-
-func (CniBridgePluginConfigurationState) ElementType() reflect.Type {
-	return reflect.TypeOf((*cniBridgePluginConfigurationState)(nil)).Elem()
 }
 
 type cniBridgePluginConfigurationArgs struct {

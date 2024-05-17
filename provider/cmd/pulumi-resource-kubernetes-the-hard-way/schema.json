@@ -2069,6 +2069,62 @@
             ],
             "isComponent": true
         },
+        "kubernetes-the-hard-way:remote:CniPluginConfiguration": {
+            "description": "The CNI plugin configuration.",
+            "properties": {
+                "bridge": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:remote:CniBridgePluginConfiguration",
+                    "description": "The bridge plugin configuration."
+                },
+                "connection": {
+                    "$ref": "/command/v0.10.0/schema.json#/types/command:remote:Connection",
+                    "description": "The parameters with which to connect to the remote host."
+                },
+                "directory": {
+                    "type": "string",
+                    "description": "The plugin configuration directory."
+                },
+                "loopback": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:remote:CniLoopbackPluginConfiguration",
+                    "description": "The loopback plugin configuration."
+                },
+                "mkdir": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mkdir",
+                    "description": "The `directory` mkdir operation."
+                },
+                "subnet": {
+                    "type": "string",
+                    "description": "The subnet to use for the CNI bridge plugin configuration."
+                }
+            },
+            "required": [
+                "connection",
+                "subnet",
+                "bridge",
+                "directory",
+                "mkdir",
+                "loopback"
+            ],
+            "inputProperties": {
+                "connection": {
+                    "$ref": "/command/v0.10.0/schema.json#/types/command:remote:Connection",
+                    "description": "The parameters with which to connect to the remote host."
+                },
+                "directory": {
+                    "type": "string",
+                    "description": "The plugin configuration directory."
+                },
+                "subnet": {
+                    "type": "string",
+                    "description": "The subnet to use for the CNI bridge plugin configuration."
+                }
+            },
+            "requiredInputs": [
+                "connection",
+                "subnet"
+            ],
+            "isComponent": true
+        },
         "kubernetes-the-hard-way:remote:CniPluginsInstall": {
             "description": "Installs cni-plugins on a remote system",
             "properties": {
