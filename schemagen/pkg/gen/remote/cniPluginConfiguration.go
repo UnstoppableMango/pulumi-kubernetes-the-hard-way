@@ -29,10 +29,6 @@ func generateCniPluginConfiguration(commandSpec schema.PackageSpec) schema.Resou
 			Description: "The /etc/cni/net.d mkdir operation.",
 			TypeSpec:    types.LocalResource("Mkdir", "tools"),
 		},
-		"file": {
-			Description: "The file on the remote system.",
-			TypeSpec:    types.LocalResource("File", "remote"),
-		},
 		"loopback": {
 			Description: "The loopback plugin configuration.",
 			TypeSpec:    types.LocalResource("CniLoopbackPluginConfiguration", "remote"),
@@ -43,7 +39,6 @@ func generateCniPluginConfiguration(commandSpec schema.PackageSpec) schema.Resou
 	requiredOutputs := slices.Concat(requiredInputs, []string{
 		"bridge",
 		"etcCniMkdir",
-		"file",
 		"loopback",
 	})
 
