@@ -45,7 +45,7 @@ func TestCniPluginsTs(t *testing.T) {
 
 		path, ok := res.Outputs["path"]
 		assert.True(t, ok, "Output `path` was not set")
-		assert.Equal(t, "/var/lib/kubernetes/10-bridge.conf", path)
+		assert.Equal(t, "/etc/cni/net.d/10-bridge.conf", path)
 
 		subnet, ok := res.Outputs["subnet"]
 		assert.True(t, ok, "Output `subnet` was not set")
@@ -76,13 +76,30 @@ func TestCniPluginsTs(t *testing.T) {
 
 		path, ok := res.Outputs["path"]
 		assert.True(t, ok, "Output `path` was not set")
-		assert.Equal(t, "/var/lib/kubernetes/99-loopback.conf", path)
+		assert.Equal(t, "/etc/cni/net.d/99-loopback.conf", path)
 
 		typ, ok := res.Outputs["type"]
 		assert.True(t, ok, "Output `type` was not set")
 		assert.Equal(t, "loopback", typ)
 
 		assert.Contains(t, res.Outputs, "file")
+	}
+
+	validatePlugins := func(t *testing.T, res apitype.ResourceV3) {
+		assert.NotEmpty(t, res.Outputs)
+
+		subnet, ok := res.Outputs["subnet"]
+		assert.True(t, ok, "Output `subnet` was not set")
+		assert.Equal(t, "10.0.69.0/24", subnet)
+
+		directory, ok := res.Outputs["directory"]
+		assert.True(t, ok, "Output `directory` was not set")
+		assert.Equal(t, "/etc/cni2/net.d", directory)
+
+		assert.Contains(t, res.Outputs, "bridge")
+		assert.Contains(t, res.Outputs, "connection")
+		assert.Contains(t, res.Outputs, "loopback")
+		assert.Contains(t, res.Outputs, "mkdir")
 	}
 
 	test := getJSBaseOptions(t).
@@ -110,12 +127,19 @@ func TestCniPluginsTs(t *testing.T) {
 							validateLoopback(t, res)
 							validatedResources = append(validatedResources, "simple")
 						}
+					case "kubernetes-the-hard-way:remote:CniPluginConfiguration":
+						switch res.URN.Name() {
+						case "all":
+							validatePlugins(t, res)
+							validatedResources = append(validatedResources, "all")
+						}
 					}
 				}
 
-				assert.Equal(t, []string{
+				assert.ElementsMatch(t, []string{
 					"simple",
 					"simple",
+					"all",
 				}, validatedResources, "Not all resources were validated")
 			},
 		})
