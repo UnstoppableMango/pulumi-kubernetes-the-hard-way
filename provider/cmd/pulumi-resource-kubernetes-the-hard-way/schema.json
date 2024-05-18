@@ -42,7 +42,7 @@
             "dependencies": {
                 "com.google.code.findbugs:jsr305": "3.0.2",
                 "com.google.code.gson:gson": "2.8.9",
-                "com.pulumi:command": "0.11.0",
+                "com.pulumi:command": "0.11.1",
                 "com.pulumi:kubernetes": "4.11.0",
                 "com.pulumi:pulumi": "0.9.9",
                 "com.pulumi:random": "4.16.1",
@@ -53,7 +53,7 @@
         },
         "nodejs": {
             "dependencies": {
-                "@pulumi/command": "^0.11.0",
+                "@pulumi/command": "^0.11.1",
                 "@pulumi/kubernetes": "^4.11.0",
                 "@pulumi/pulumi": "^3.0.0",
                 "@pulumi/random": "^4.16.1",
@@ -73,7 +73,7 @@
             },
             "requires": {
                 "pulumi": "\u003e=3.91.1,\u003c4.0.0",
-                "pulumi-command": "\u003e=0.11.0,\u003c1.0.0",
+                "pulumi-command": "\u003e=0.11.1,\u003c1.0.0",
                 "pulumi-kubernetes": "\u003e=4.11.0,\u003c5.0.0",
                 "pulumi-random": "\u003e=4.16.1,\u003c5.0.0",
                 "pulumi-tls": "\u003e=5.0.2,\u003c6.0.0"
@@ -425,7 +425,7 @@
                     "description": "The CPU architecture of the node."
                 },
                 "connection": {
-                    "$ref": "/command/v0.11.0/schema.json#/types/command:remote:Connection",
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
                     "description": "The parameters with which to connect to the remote host."
                 },
                 "internalIp": {
@@ -1913,7 +1913,7 @@
                     "description": "CNI version."
                 },
                 "connection": {
-                    "$ref": "/command/v0.11.0/schema.json#/types/command:remote:Connection",
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
                     "description": "The parameters with which to connect to the remote host."
                 },
                 "file": {
@@ -1970,7 +1970,7 @@
                     "description": "CNI version."
                 },
                 "connection": {
-                    "$ref": "/command/v0.11.0/schema.json#/types/command:remote:Connection",
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
                     "description": "The parameters with which to connect to the remote host."
                 },
                 "ipMasq": {
@@ -2015,7 +2015,7 @@
                     "description": "CNI version."
                 },
                 "connection": {
-                    "$ref": "/command/v0.11.0/schema.json#/types/command:remote:Connection",
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
                     "description": "The parameters with which to connect to the remote host."
                 },
                 "file": {
@@ -2048,7 +2048,7 @@
                     "description": "CNI version."
                 },
                 "connection": {
-                    "$ref": "/command/v0.11.0/schema.json#/types/command:remote:Connection",
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
                     "description": "The parameters with which to connect to the remote host."
                 },
                 "name": {
@@ -2077,7 +2077,7 @@
                     "description": "The bridge plugin configuration."
                 },
                 "connection": {
-                    "$ref": "/command/v0.11.0/schema.json#/types/command:remote:Connection",
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
                     "description": "The parameters with which to connect to the remote host."
                 },
                 "directory": {
@@ -2107,7 +2107,7 @@
             ],
             "inputProperties": {
                 "connection": {
-                    "$ref": "/command/v0.11.0/schema.json#/types/command:remote:Connection",
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
                     "description": "The parameters with which to connect to the remote host."
                 },
                 "directory": {
@@ -2153,7 +2153,7 @@
                     "description": "The bridge path on the remote system"
                 },
                 "connection": {
-                    "$ref": "/command/v0.11.0/schema.json#/types/command:remote:Connection",
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
                     "description": "The parameters with which to connect to the remote host."
                 },
                 "dhcpMv": {
@@ -2377,7 +2377,7 @@
                     "description": "The CPU architecture to install."
                 },
                 "connection": {
-                    "$ref": "/command/v0.11.0/schema.json#/types/command:remote:Connection",
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
                     "description": "The parameters with which to connect to the remote host."
                 },
                 "directory": {
@@ -2407,7 +2407,7 @@
                     "description": "The name of the downloaded archive."
                 },
                 "connection": {
-                    "$ref": "/command/v0.11.0/schema.json#/types/command:remote:Connection",
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
                     "description": "The parameters with which to connect to the remote host."
                 },
                 "containerdMv": {
@@ -2477,7 +2477,7 @@
                     "description": "The CPU architecture to install."
                 },
                 "connection": {
-                    "$ref": "/command/v0.11.0/schema.json#/types/command:remote:Connection",
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
                     "description": "The parameters with which to connect to the remote host."
                 },
                 "directory": {
@@ -2507,7 +2507,7 @@
                     "description": "The name of the downloaded archive."
                 },
                 "connection": {
-                    "$ref": "/command/v0.11.0/schema.json#/types/command:remote:Connection",
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
                     "description": "The parameters with which to connect to the remote host."
                 },
                 "crictlMv": {
@@ -2577,7 +2577,7 @@
                     "description": "The CPU architecture to install."
                 },
                 "connection": {
-                    "$ref": "/command/v0.11.0/schema.json#/types/command:remote:Connection",
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
                     "description": "The parameters with which to connect to the remote host."
                 },
                 "directory": {
@@ -2599,7 +2599,7 @@
             "description": "Downloads the file specified by `url` onto a remote system.",
             "properties": {
                 "connection": {
-                    "$ref": "/command/v0.11.0/schema.json#/types/command:remote:Connection",
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
                     "description": "The parameters with which to connect to the remote host."
                 },
                 "destination": {
@@ -2634,7 +2634,7 @@
             ],
             "inputProperties": {
                 "connection": {
-                    "$ref": "/command/v0.11.0/schema.json#/types/command:remote:Connection",
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
                     "description": "The parameters with which to connect to the remote host."
                 },
                 "destination": {
@@ -2805,7 +2805,7 @@
                     "description": "The configuration mkdir operation."
                 },
                 "connection": {
-                    "$ref": "/command/v0.11.0/schema.json#/types/command:remote:Connection",
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
                     "description": "The parameters with which to connect to the remote host."
                 },
                 "dataDirectory": {
@@ -2869,7 +2869,7 @@
                     "default": "/etc/etcd"
                 },
                 "connection": {
-                    "$ref": "/command/v0.11.0/schema.json#/types/command:remote:Connection",
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
                     "description": "The parameters with which to connect to the remote host."
                 },
                 "dataDirectory": {
@@ -2912,7 +2912,7 @@
                     "description": "The name of the downloaded archive."
                 },
                 "connection": {
-                    "$ref": "/command/v0.11.0/schema.json#/types/command:remote:Connection",
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
                     "description": "The parameters with which to connect to the remote host."
                 },
                 "directory": {
@@ -2992,7 +2992,7 @@
                     "description": "The CPU architecture to install."
                 },
                 "connection": {
-                    "$ref": "/command/v0.11.0/schema.json#/types/command:remote:Connection",
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
                     "description": "The parameters with which to connect to the remote host."
                 },
                 "directory": {
@@ -3018,7 +3018,7 @@
                     "description": "Etcd configuration."
                 },
                 "connection": {
-                    "$ref": "/command/v0.11.0/schema.json#/types/command:remote:Connection",
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
                     "description": "The parameters with which to connect to the remote host."
                 },
                 "description": {
@@ -3069,7 +3069,7 @@
                     "description": "Etcd configuration."
                 },
                 "connection": {
-                    "$ref": "/command/v0.11.0/schema.json#/types/command:remote:Connection",
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
                     "description": "The parameters with which to connect to the remote host."
                 },
                 "description": {
@@ -3113,11 +3113,11 @@
         "kubernetes-the-hard-way:remote:File": {
             "properties": {
                 "command": {
-                    "$ref": "/command/v0.11.0/schema.json#/resources/command:remote:Command",
+                    "$ref": "/command/v0.11.1/schema.json#/resources/command:remote:Command",
                     "description": "The executed command."
                 },
                 "connection": {
-                    "$ref": "/command/v0.11.0/schema.json#/types/command:remote:Connection",
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
                     "description": "The parameters with which to connect to the remote host."
                 },
                 "content": {
@@ -3152,7 +3152,7 @@
             ],
             "inputProperties": {
                 "connection": {
-                    "$ref": "/command/v0.11.0/schema.json#/types/command:remote:Connection",
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
                     "description": "The parameters with which to connect to the remote host."
                 },
                 "content": {
@@ -3183,7 +3183,7 @@
                     "description": "The name of the installed binary."
                 },
                 "connection": {
-                    "$ref": "/command/v0.11.0/schema.json#/types/command:remote:Connection",
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
                     "description": "The parameters with which to connect to the remote host."
                 },
                 "directory": {
@@ -3243,7 +3243,7 @@
                     "description": "The CPU architecture to install."
                 },
                 "connection": {
-                    "$ref": "/command/v0.11.0/schema.json#/types/command:remote:Connection",
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
                     "description": "The parameters with which to connect to the remote host."
                 },
                 "directory": {
@@ -3273,7 +3273,7 @@
                     "description": "The name of the installed binary."
                 },
                 "connection": {
-                    "$ref": "/command/v0.11.0/schema.json#/types/command:remote:Connection",
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
                     "description": "The parameters with which to connect to the remote host."
                 },
                 "directory": {
@@ -3333,7 +3333,7 @@
                     "description": "The CPU architecture to install."
                 },
                 "connection": {
-                    "$ref": "/command/v0.11.0/schema.json#/types/command:remote:Connection",
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
                     "description": "The parameters with which to connect to the remote host."
                 },
                 "directory": {
@@ -3363,7 +3363,7 @@
                     "description": "The name of the installed binary."
                 },
                 "connection": {
-                    "$ref": "/command/v0.11.0/schema.json#/types/command:remote:Connection",
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
                     "description": "The parameters with which to connect to the remote host."
                 },
                 "directory": {
@@ -3423,7 +3423,7 @@
                     "description": "The CPU architecture to install."
                 },
                 "connection": {
-                    "$ref": "/command/v0.11.0/schema.json#/types/command:remote:Connection",
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
                     "description": "The parameters with which to connect to the remote host."
                 },
                 "directory": {
@@ -3453,7 +3453,7 @@
                     "description": "The name of the installed binary."
                 },
                 "connection": {
-                    "$ref": "/command/v0.11.0/schema.json#/types/command:remote:Connection",
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
                     "description": "The parameters with which to connect to the remote host."
                 },
                 "directory": {
@@ -3513,7 +3513,7 @@
                     "description": "The CPU architecture to install."
                 },
                 "connection": {
-                    "$ref": "/command/v0.11.0/schema.json#/types/command:remote:Connection",
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
                     "description": "The parameters with which to connect to the remote host."
                 },
                 "directory": {
@@ -3543,7 +3543,7 @@
                     "description": "The name of the installed binary."
                 },
                 "connection": {
-                    "$ref": "/command/v0.11.0/schema.json#/types/command:remote:Connection",
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
                     "description": "The parameters with which to connect to the remote host."
                 },
                 "directory": {
@@ -3603,7 +3603,7 @@
                     "description": "The CPU architecture to install."
                 },
                 "connection": {
-                    "$ref": "/command/v0.11.0/schema.json#/types/command:remote:Connection",
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
                     "description": "The parameters with which to connect to the remote host."
                 },
                 "directory": {
@@ -3633,7 +3633,7 @@
                     "description": "The name of the installed binary."
                 },
                 "connection": {
-                    "$ref": "/command/v0.11.0/schema.json#/types/command:remote:Connection",
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
                     "description": "The parameters with which to connect to the remote host."
                 },
                 "directory": {
@@ -3693,7 +3693,7 @@
                     "description": "The CPU architecture to install."
                 },
                 "connection": {
-                    "$ref": "/command/v0.11.0/schema.json#/types/command:remote:Connection",
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
                     "description": "The parameters with which to connect to the remote host."
                 },
                 "directory": {
@@ -3735,7 +3735,7 @@
                     "description": "The directory to use for etcd configuration."
                 },
                 "connection": {
-                    "$ref": "/command/v0.11.0/schema.json#/types/command:remote:Connection",
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
                     "description": "The parameters with which to connect to the remote host."
                 },
                 "dataDirectory": {
@@ -3790,7 +3790,7 @@
                     "description": "The directory to use for etcd configuration."
                 },
                 "connection": {
-                    "$ref": "/command/v0.11.0/schema.json#/types/command:remote:Connection",
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
                     "description": "The parameters with which to connect to the remote host."
                 },
                 "dataDirectory": {
@@ -3825,7 +3825,7 @@
                     "description": "The name of the installed binary."
                 },
                 "connection": {
-                    "$ref": "/command/v0.11.0/schema.json#/types/command:remote:Connection",
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
                     "description": "The parameters with which to connect to the remote host."
                 },
                 "directory": {
@@ -3885,7 +3885,7 @@
                     "description": "The CPU architecture to install."
                 },
                 "connection": {
-                    "$ref": "/command/v0.11.0/schema.json#/types/command:remote:Connection",
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
                     "description": "The parameters with which to connect to the remote host."
                 },
                 "directory": {
@@ -3907,7 +3907,7 @@
             "description": "Starts etcd on a remote system.",
             "properties": {
                 "connection": {
-                    "$ref": "/command/v0.11.0/schema.json#/types/command:remote:Connection",
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
                     "description": "The parameters with which to connect to the remote host."
                 },
                 "daemonReload": {
@@ -3931,7 +3931,7 @@
             ],
             "inputProperties": {
                 "connection": {
-                    "$ref": "/command/v0.11.0/schema.json#/types/command:remote:Connection",
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
                     "description": "The parameters with which to connect to the remote host."
                 }
             },
@@ -3944,7 +3944,7 @@
             "description": "Create a static pod manifest on a remote system.",
             "properties": {
                 "connection": {
-                    "$ref": "/command/v0.11.0/schema.json#/types/command:remote:Connection",
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
                     "description": "The parameters with which to connect to the remote host."
                 },
                 "file": {
@@ -3978,7 +3978,7 @@
             ],
             "inputProperties": {
                 "connection": {
-                    "$ref": "/command/v0.11.0/schema.json#/types/command:remote:Connection",
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
                     "description": "The parameters with which to connect to the remote host."
                 },
                 "fileName": {
@@ -4000,7 +4000,7 @@
             "description": "A systemd service on a remote system.",
             "properties": {
                 "connection": {
-                    "$ref": "/command/v0.11.0/schema.json#/types/command:remote:Connection",
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
                     "description": "The parameters with which to connect to the remote host."
                 },
                 "directory": {
@@ -4037,7 +4037,7 @@
             ],
             "inputProperties": {
                 "connection": {
-                    "$ref": "/command/v0.11.0/schema.json#/types/command:remote:Connection",
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
                     "description": "The parameters with which to connect to the remote host."
                 },
                 "directory": {
@@ -4703,11 +4703,11 @@
                     "description": "Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH"
                 },
                 "command": {
-                    "$ref": "/command/v0.11.0/schema.json#/resources/command:remote:Command",
+                    "$ref": "/command/v0.11.1/schema.json#/resources/command:remote:Command",
                     "description": "The underlying command"
                 },
                 "connection": {
-                    "$ref": "/command/v0.11.0/schema.json#/types/command:remote:Connection",
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
                     "description": "Connection details for the remote system"
                 },
                 "create": {
@@ -4791,7 +4791,7 @@
                     "description": "Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH"
                 },
                 "connection": {
-                    "$ref": "/command/v0.11.0/schema.json#/types/command:remote:Connection",
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
                     "description": "Connection details for the remote system"
                 },
                 "create": {
@@ -4865,11 +4865,11 @@
                     "description": "Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH"
                 },
                 "command": {
-                    "$ref": "/command/v0.11.0/schema.json#/resources/command:remote:Command",
+                    "$ref": "/command/v0.11.1/schema.json#/resources/command:remote:Command",
                     "description": "The underlying command"
                 },
                 "connection": {
-                    "$ref": "/command/v0.11.0/schema.json#/types/command:remote:Connection",
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
                     "description": "Connection details for the remote system"
                 },
                 "create": {
@@ -4953,7 +4953,7 @@
                     "description": "Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH"
                 },
                 "connection": {
-                    "$ref": "/command/v0.11.0/schema.json#/types/command:remote:Connection",
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
                     "description": "Connection details for the remote system"
                 },
                 "create": {
@@ -5027,11 +5027,11 @@
                     "description": "Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH"
                 },
                 "command": {
-                    "$ref": "/command/v0.11.0/schema.json#/resources/command:remote:Command",
+                    "$ref": "/command/v0.11.1/schema.json#/resources/command:remote:Command",
                     "description": "The underlying command"
                 },
                 "connection": {
-                    "$ref": "/command/v0.11.0/schema.json#/types/command:remote:Connection",
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
                     "description": "Connection details for the remote system"
                 },
                 "create": {
@@ -5115,7 +5115,7 @@
                     "description": "Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH"
                 },
                 "connection": {
-                    "$ref": "/command/v0.11.0/schema.json#/types/command:remote:Connection",
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
                     "description": "Connection details for the remote system"
                 },
                 "create": {
@@ -5189,11 +5189,11 @@
                     "description": "Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH"
                 },
                 "command": {
-                    "$ref": "/command/v0.11.0/schema.json#/resources/command:remote:Command",
+                    "$ref": "/command/v0.11.1/schema.json#/resources/command:remote:Command",
                     "description": "The underlying command"
                 },
                 "connection": {
-                    "$ref": "/command/v0.11.0/schema.json#/types/command:remote:Connection",
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
                     "description": "Connection details for the remote system"
                 },
                 "create": {
@@ -5277,7 +5277,7 @@
                     "description": "Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH"
                 },
                 "connection": {
-                    "$ref": "/command/v0.11.0/schema.json#/types/command:remote:Connection",
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
                     "description": "Connection details for the remote system"
                 },
                 "create": {
@@ -5351,11 +5351,11 @@
                     "description": "Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH"
                 },
                 "command": {
-                    "$ref": "/command/v0.11.0/schema.json#/resources/command:remote:Command",
+                    "$ref": "/command/v0.11.1/schema.json#/resources/command:remote:Command",
                     "description": "The underlying command"
                 },
                 "connection": {
-                    "$ref": "/command/v0.11.0/schema.json#/types/command:remote:Connection",
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
                     "description": "Connection details for the remote system"
                 },
                 "create": {
@@ -5439,7 +5439,7 @@
                     "description": "Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH"
                 },
                 "connection": {
-                    "$ref": "/command/v0.11.0/schema.json#/types/command:remote:Connection",
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
                     "description": "Connection details for the remote system"
                 },
                 "create": {
@@ -5513,11 +5513,11 @@
                     "description": "Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH"
                 },
                 "command": {
-                    "$ref": "/command/v0.11.0/schema.json#/resources/command:remote:Command",
+                    "$ref": "/command/v0.11.1/schema.json#/resources/command:remote:Command",
                     "description": "The underlying command"
                 },
                 "connection": {
-                    "$ref": "/command/v0.11.0/schema.json#/types/command:remote:Connection",
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
                     "description": "Connection details for the remote system"
                 },
                 "create": {
@@ -5601,7 +5601,7 @@
                     "description": "Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH"
                 },
                 "connection": {
-                    "$ref": "/command/v0.11.0/schema.json#/types/command:remote:Connection",
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
                     "description": "Connection details for the remote system"
                 },
                 "create": {
@@ -5675,11 +5675,11 @@
                     "description": "Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH"
                 },
                 "command": {
-                    "$ref": "/command/v0.11.0/schema.json#/resources/command:remote:Command",
+                    "$ref": "/command/v0.11.1/schema.json#/resources/command:remote:Command",
                     "description": "The underlying command"
                 },
                 "connection": {
-                    "$ref": "/command/v0.11.0/schema.json#/types/command:remote:Connection",
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
                     "description": "Connection details for the remote system"
                 },
                 "create": {
@@ -5763,7 +5763,7 @@
                     "description": "Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH"
                 },
                 "connection": {
-                    "$ref": "/command/v0.11.0/schema.json#/types/command:remote:Connection",
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
                     "description": "Connection details for the remote system"
                 },
                 "create": {
@@ -5837,11 +5837,11 @@
                     "description": "Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH"
                 },
                 "command": {
-                    "$ref": "/command/v0.11.0/schema.json#/resources/command:remote:Command",
+                    "$ref": "/command/v0.11.1/schema.json#/resources/command:remote:Command",
                     "description": "The underlying command"
                 },
                 "connection": {
-                    "$ref": "/command/v0.11.0/schema.json#/types/command:remote:Connection",
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
                     "description": "Connection details for the remote system"
                 },
                 "create": {
@@ -5925,7 +5925,7 @@
                     "description": "Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH"
                 },
                 "connection": {
-                    "$ref": "/command/v0.11.0/schema.json#/types/command:remote:Connection",
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
                     "description": "Connection details for the remote system"
                 },
                 "create": {
@@ -5999,11 +5999,11 @@
                     "description": "Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH"
                 },
                 "command": {
-                    "$ref": "/command/v0.11.0/schema.json#/resources/command:remote:Command",
+                    "$ref": "/command/v0.11.1/schema.json#/resources/command:remote:Command",
                     "description": "The underlying command"
                 },
                 "connection": {
-                    "$ref": "/command/v0.11.0/schema.json#/types/command:remote:Connection",
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
                     "description": "Connection details for the remote system"
                 },
                 "create": {
@@ -6087,7 +6087,7 @@
                     "description": "Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH"
                 },
                 "connection": {
-                    "$ref": "/command/v0.11.0/schema.json#/types/command:remote:Connection",
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
                     "description": "Connection details for the remote system"
                 },
                 "create": {
@@ -6161,11 +6161,11 @@
                     "description": "Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH"
                 },
                 "command": {
-                    "$ref": "/command/v0.11.0/schema.json#/resources/command:remote:Command",
+                    "$ref": "/command/v0.11.1/schema.json#/resources/command:remote:Command",
                     "description": "The underlying command"
                 },
                 "connection": {
-                    "$ref": "/command/v0.11.0/schema.json#/types/command:remote:Connection",
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
                     "description": "Connection details for the remote system"
                 },
                 "create": {
@@ -6249,7 +6249,7 @@
                     "description": "Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH"
                 },
                 "connection": {
-                    "$ref": "/command/v0.11.0/schema.json#/types/command:remote:Connection",
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
                     "description": "Connection details for the remote system"
                 },
                 "create": {
@@ -6323,11 +6323,11 @@
                     "description": "Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH"
                 },
                 "command": {
-                    "$ref": "/command/v0.11.0/schema.json#/resources/command:remote:Command",
+                    "$ref": "/command/v0.11.1/schema.json#/resources/command:remote:Command",
                     "description": "The underlying command"
                 },
                 "connection": {
-                    "$ref": "/command/v0.11.0/schema.json#/types/command:remote:Connection",
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
                     "description": "Connection details for the remote system"
                 },
                 "create": {
@@ -6411,7 +6411,7 @@
                     "description": "Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH"
                 },
                 "connection": {
-                    "$ref": "/command/v0.11.0/schema.json#/types/command:remote:Connection",
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
                     "description": "Connection details for the remote system"
                 },
                 "create": {
@@ -6485,11 +6485,11 @@
                     "description": "Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH"
                 },
                 "command": {
-                    "$ref": "/command/v0.11.0/schema.json#/resources/command:remote:Command",
+                    "$ref": "/command/v0.11.1/schema.json#/resources/command:remote:Command",
                     "description": "The underlying command"
                 },
                 "connection": {
-                    "$ref": "/command/v0.11.0/schema.json#/types/command:remote:Connection",
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
                     "description": "Connection details for the remote system"
                 },
                 "create": {
@@ -6573,7 +6573,7 @@
                     "description": "Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH"
                 },
                 "connection": {
-                    "$ref": "/command/v0.11.0/schema.json#/types/command:remote:Connection",
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
                     "description": "Connection details for the remote system"
                 },
                 "create": {
@@ -6647,11 +6647,11 @@
                     "description": "Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH"
                 },
                 "command": {
-                    "$ref": "/command/v0.11.0/schema.json#/resources/command:remote:Command",
+                    "$ref": "/command/v0.11.1/schema.json#/resources/command:remote:Command",
                     "description": "The underlying command"
                 },
                 "connection": {
-                    "$ref": "/command/v0.11.0/schema.json#/types/command:remote:Connection",
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
                     "description": "Connection details for the remote system"
                 },
                 "create": {
@@ -6735,7 +6735,7 @@
                     "description": "Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH"
                 },
                 "connection": {
-                    "$ref": "/command/v0.11.0/schema.json#/types/command:remote:Connection",
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
                     "description": "Connection details for the remote system"
                 },
                 "create": {
