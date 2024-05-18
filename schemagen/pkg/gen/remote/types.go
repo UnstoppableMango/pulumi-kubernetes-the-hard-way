@@ -47,6 +47,82 @@ func generateTypes(commandSpec schema.PackageSpec) map[string]schema.ComplexType
 				},
 			},
 		},
+		name("ContainerdCriPluginConfiguration"): {
+			ObjectTypeSpec: schema.ObjectTypeSpec{
+				Description: "containerd cri plugin configuration.",
+				Type:        "object",
+				Properties: map[string]schema.PropertySpec{
+					"containerd": {
+						Description: "containerd configuration.",
+						TypeSpec: schema.TypeSpec{
+							Plain: true,
+							Ref:   types.LocalTypeRef("ContainerdCriPluginConfigurationContainerd", "remote"),
+						},
+					},
+					"cni": {
+						Description: "cni configuration.",
+						TypeSpec: schema.TypeSpec{
+							Plain: true,
+							Ref:   types.LocalTypeRef("ContainerdCriPluginConfigurationCni", "remote"),
+						},
+					},
+				},
+				Required: []string{"containerd", "cni"},
+			},
+		},
+		name("ContainerdCriPluginConfigurationContainerd"): {
+			ObjectTypeSpec: schema.ObjectTypeSpec{
+				Description: "containerd cri plugin configuration.",
+				Type:        "object",
+				Properties: map[string]schema.PropertySpec{
+					"defaultRuntimeName": props.String("default_runtime_name"),
+					"snapshotter":        props.String("snapshotter"),
+					"runtimes": { // TODO: This doesn't correspond 1:1 with the TOML file
+						Description: "The containerd runtime configuration.",
+						TypeSpec: schema.TypeSpec{
+							Plain: true,
+							Ref:   types.LocalTypeRef("ContainerdCriPluginConfigurationContainerdRunc", "remote"),
+						},
+					},
+				},
+			},
+		},
+		name("ContainerdCriPluginConfigurationContainerdRunc"): {
+			ObjectTypeSpec: schema.ObjectTypeSpec{
+				Description: "containerd cri runc plugin configuration.",
+				Type:        "object",
+				Properties: map[string]schema.PropertySpec{
+					"runtimeType": props.String("runtime_type"),
+					"options": {
+						Description: "runc options.",
+						TypeSpec: schema.TypeSpec{
+							Plain: true,
+							Ref:   types.LocalTypeRef("ContainerdCriPluginConfigurationContainerdRuncOptions", "remote"),
+						},
+					},
+				},
+				Required: []string{"options"},
+			},
+		},
+		name("ContainerdCriPluginConfigurationContainerdRuncOptions"): {
+			ObjectTypeSpec: schema.ObjectTypeSpec{
+				Description: "containerd cri runc plugin configuration.",
+				Type:        "object",
+				Properties: map[string]schema.PropertySpec{
+					"systemdCgroup": props.Boolean("SystemdCgroup"),
+				},
+			},
+		},
+		name("ContainerdCriPluginConfigurationCni"): {
+			ObjectTypeSpec: schema.ObjectTypeSpec{
+				Description: "containerd cri plugin configuration.",
+				Type:        "object",
+				Properties: map[string]schema.PropertySpec{
+					"binDir":  props.String("bin_dir"),
+					"confDir": props.String("conf_dir"),
+				},
+			},
+		},
 		name("EtcdConfigurationProps"): { // TODO: This name kinda sucks
 			ObjectTypeSpec: schema.ObjectTypeSpec{
 				Description: "Props for resources that consume etcd configuration.",

@@ -8,11 +8,17 @@ import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
 from .. import _utilities
+from . import outputs
 from ._enums import *
 import pulumi_command
 
 __all__ = [
     'CniBridgeIpam',
+    'ContainerdCriPluginConfiguration',
+    'ContainerdCriPluginConfigurationCni',
+    'ContainerdCriPluginConfigurationContainerd',
+    'ContainerdCriPluginConfigurationContainerdRunc',
+    'ContainerdCriPluginConfigurationContainerdRuncOptions',
     'EtcdConfigurationProps',
     'EtcdNode',
     'SystemdInstallSection',
@@ -65,6 +71,248 @@ class CniBridgeIpam(dict):
         CNI bridge IPAM type
         """
         return pulumi.get(self, "type")
+
+
+@pulumi.output_type
+class ContainerdCriPluginConfiguration(dict):
+    """
+    containerd cri plugin configuration.
+    """
+    def __init__(__self__, *,
+                 cni: 'outputs.ContainerdCriPluginConfigurationCni',
+                 containerd: 'outputs.ContainerdCriPluginConfigurationContainerd'):
+        """
+        containerd cri plugin configuration.
+        :param 'ContainerdCriPluginConfigurationCni' cni: cni configuration.
+        :param 'ContainerdCriPluginConfigurationContainerd' containerd: containerd configuration.
+        """
+        pulumi.set(__self__, "cni", cni)
+        pulumi.set(__self__, "containerd", containerd)
+
+    @property
+    @pulumi.getter
+    def cni(self) -> 'outputs.ContainerdCriPluginConfigurationCni':
+        """
+        cni configuration.
+        """
+        return pulumi.get(self, "cni")
+
+    @property
+    @pulumi.getter
+    def containerd(self) -> 'outputs.ContainerdCriPluginConfigurationContainerd':
+        """
+        containerd configuration.
+        """
+        return pulumi.get(self, "containerd")
+
+
+@pulumi.output_type
+class ContainerdCriPluginConfigurationCni(dict):
+    """
+    containerd cri plugin configuration.
+    """
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "binDir":
+            suggest = "bin_dir"
+        elif key == "confDir":
+            suggest = "conf_dir"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in ContainerdCriPluginConfigurationCni. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        ContainerdCriPluginConfigurationCni.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        ContainerdCriPluginConfigurationCni.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 bin_dir: Optional[str] = None,
+                 conf_dir: Optional[str] = None):
+        """
+        containerd cri plugin configuration.
+        :param str bin_dir: bin_dir
+        :param str conf_dir: conf_dir
+        """
+        if bin_dir is not None:
+            pulumi.set(__self__, "bin_dir", bin_dir)
+        if conf_dir is not None:
+            pulumi.set(__self__, "conf_dir", conf_dir)
+
+    @property
+    @pulumi.getter(name="binDir")
+    def bin_dir(self) -> Optional[str]:
+        """
+        bin_dir
+        """
+        return pulumi.get(self, "bin_dir")
+
+    @property
+    @pulumi.getter(name="confDir")
+    def conf_dir(self) -> Optional[str]:
+        """
+        conf_dir
+        """
+        return pulumi.get(self, "conf_dir")
+
+
+@pulumi.output_type
+class ContainerdCriPluginConfigurationContainerd(dict):
+    """
+    containerd cri plugin configuration.
+    """
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "defaultRuntimeName":
+            suggest = "default_runtime_name"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in ContainerdCriPluginConfigurationContainerd. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        ContainerdCriPluginConfigurationContainerd.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        ContainerdCriPluginConfigurationContainerd.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 default_runtime_name: Optional[str] = None,
+                 runtimes: Optional['outputs.ContainerdCriPluginConfigurationContainerdRunc'] = None,
+                 snapshotter: Optional[str] = None):
+        """
+        containerd cri plugin configuration.
+        :param str default_runtime_name: default_runtime_name
+        :param 'ContainerdCriPluginConfigurationContainerdRunc' runtimes: The containerd runtime configuration.
+        :param str snapshotter: snapshotter
+        """
+        if default_runtime_name is not None:
+            pulumi.set(__self__, "default_runtime_name", default_runtime_name)
+        if runtimes is not None:
+            pulumi.set(__self__, "runtimes", runtimes)
+        if snapshotter is not None:
+            pulumi.set(__self__, "snapshotter", snapshotter)
+
+    @property
+    @pulumi.getter(name="defaultRuntimeName")
+    def default_runtime_name(self) -> Optional[str]:
+        """
+        default_runtime_name
+        """
+        return pulumi.get(self, "default_runtime_name")
+
+    @property
+    @pulumi.getter
+    def runtimes(self) -> Optional['outputs.ContainerdCriPluginConfigurationContainerdRunc']:
+        """
+        The containerd runtime configuration.
+        """
+        return pulumi.get(self, "runtimes")
+
+    @property
+    @pulumi.getter
+    def snapshotter(self) -> Optional[str]:
+        """
+        snapshotter
+        """
+        return pulumi.get(self, "snapshotter")
+
+
+@pulumi.output_type
+class ContainerdCriPluginConfigurationContainerdRunc(dict):
+    """
+    containerd cri runc plugin configuration.
+    """
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "runtimeType":
+            suggest = "runtime_type"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in ContainerdCriPluginConfigurationContainerdRunc. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        ContainerdCriPluginConfigurationContainerdRunc.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        ContainerdCriPluginConfigurationContainerdRunc.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 options: 'outputs.ContainerdCriPluginConfigurationContainerdRuncOptions',
+                 runtime_type: Optional[str] = None):
+        """
+        containerd cri runc plugin configuration.
+        :param 'ContainerdCriPluginConfigurationContainerdRuncOptions' options: runc options.
+        :param str runtime_type: runtime_type
+        """
+        pulumi.set(__self__, "options", options)
+        if runtime_type is not None:
+            pulumi.set(__self__, "runtime_type", runtime_type)
+
+    @property
+    @pulumi.getter
+    def options(self) -> 'outputs.ContainerdCriPluginConfigurationContainerdRuncOptions':
+        """
+        runc options.
+        """
+        return pulumi.get(self, "options")
+
+    @property
+    @pulumi.getter(name="runtimeType")
+    def runtime_type(self) -> Optional[str]:
+        """
+        runtime_type
+        """
+        return pulumi.get(self, "runtime_type")
+
+
+@pulumi.output_type
+class ContainerdCriPluginConfigurationContainerdRuncOptions(dict):
+    """
+    containerd cri runc plugin configuration.
+    """
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "systemdCgroup":
+            suggest = "systemd_cgroup"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in ContainerdCriPluginConfigurationContainerdRuncOptions. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        ContainerdCriPluginConfigurationContainerdRuncOptions.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        ContainerdCriPluginConfigurationContainerdRuncOptions.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 systemd_cgroup: Optional[bool] = None):
+        """
+        containerd cri runc plugin configuration.
+        :param bool systemd_cgroup: SystemdCgroup
+        """
+        if systemd_cgroup is not None:
+            pulumi.set(__self__, "systemd_cgroup", systemd_cgroup)
+
+    @property
+    @pulumi.getter(name="systemdCgroup")
+    def systemd_cgroup(self) -> Optional[bool]:
+        """
+        SystemdCgroup
+        """
+        return pulumi.get(self, "systemd_cgroup")
 
 
 @pulumi.output_type

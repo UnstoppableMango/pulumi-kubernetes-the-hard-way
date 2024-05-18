@@ -202,3 +202,17 @@ func TestRemoteEtcdInstallTs(t *testing.T) {
 		})
 	})
 }
+
+func TestRemoteWorkerTs(t *testing.T) {
+	ResourceTest(t, "remote/worker-ts", getJSBaseOptions(t), func(ctx *ResourceContext) {
+		Validate(ctx, "kubernetes-the-hard-way:remote:ContainerdConfiguration", "simple", func(t *testing.T, res apitype.ResourceV3) {
+			assert.NotEmpty(t, res.Outputs)
+
+			assert.Contains(t, res.Outputs, "connection")
+			assert.Contains(t, res.Outputs, "cri")
+			assert.Contains(t, res.Outputs, "file")
+
+			expectOutput(t, res, "path", "/etc/containerd/containerd-config.toml")
+		})
+	})
+}

@@ -452,6 +452,76 @@ export namespace remote {
     }
 
     /**
+     * containerd cri plugin configuration.
+     */
+    export interface ContainerdCriPluginConfigurationArgs {
+        /**
+         * cni configuration.
+         */
+        cni: inputs.remote.ContainerdCriPluginConfigurationCniArgs;
+        /**
+         * containerd configuration.
+         */
+        containerd: inputs.remote.ContainerdCriPluginConfigurationContainerdArgs;
+    }
+
+    /**
+     * containerd cri plugin configuration.
+     */
+    export interface ContainerdCriPluginConfigurationCniArgs {
+        /**
+         * bin_dir
+         */
+        binDir?: pulumi.Input<string>;
+        /**
+         * conf_dir
+         */
+        confDir?: pulumi.Input<string>;
+    }
+
+    /**
+     * containerd cri plugin configuration.
+     */
+    export interface ContainerdCriPluginConfigurationContainerdArgs {
+        /**
+         * default_runtime_name
+         */
+        defaultRuntimeName?: pulumi.Input<string>;
+        /**
+         * The containerd runtime configuration.
+         */
+        runtimes?: inputs.remote.ContainerdCriPluginConfigurationContainerdRuncArgs;
+        /**
+         * snapshotter
+         */
+        snapshotter?: pulumi.Input<string>;
+    }
+
+    /**
+     * containerd cri runc plugin configuration.
+     */
+    export interface ContainerdCriPluginConfigurationContainerdRuncArgs {
+        /**
+         * runc options.
+         */
+        options: inputs.remote.ContainerdCriPluginConfigurationContainerdRuncOptionsArgs;
+        /**
+         * runtime_type
+         */
+        runtimeType?: pulumi.Input<string>;
+    }
+
+    /**
+     * containerd cri runc plugin configuration.
+     */
+    export interface ContainerdCriPluginConfigurationContainerdRuncOptionsArgs {
+        /**
+         * SystemdCgroup
+         */
+        systemdCgroup?: pulumi.Input<boolean>;
+    }
+
+    /**
      * Props for resources that consume etcd configuration.
      */
     export interface EtcdConfigurationPropsArgs {
