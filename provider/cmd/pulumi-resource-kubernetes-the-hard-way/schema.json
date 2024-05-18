@@ -2480,7 +2480,7 @@
             "description": "The containerd configuration file.",
             "properties": {
                 "connection": {
-                    "$ref": "/command/v0.11.0/schema.json#/types/command:remote:Connection",
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
                     "description": "The parameters with which to connect to the remote host."
                 },
                 "cri": {
@@ -2504,7 +2504,7 @@
             ],
             "inputProperties": {
                 "connection": {
-                    "$ref": "/command/v0.11.0/schema.json#/types/command:remote:Connection",
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
                     "description": "The parameters with which to connect to the remote host."
                 },
                 "cri": {
