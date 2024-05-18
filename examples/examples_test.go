@@ -7,6 +7,8 @@ import (
 	"testing"
 
 	"github.com/pulumi/pulumi/pkg/v3/testing/integration"
+	"github.com/pulumi/pulumi/sdk/v3/go/common/apitype"
+	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"github.com/testcontainers/testcontainers-go/network"
 	"golang.org/x/exp/maps"
@@ -90,4 +92,14 @@ func newCluster(t *testing.T, config map[string][]SshServerOption) map[string]no
 	}
 
 	return nodes
+}
+
+func expectKey[T comparable, V any](t *testing.T, m map[T]V, key T, value V) {
+	actual, ok := m[key]
+	assert.Truef(t, ok, "Key `%s` was not set", actual)
+	assert.Equal(t, value, actual)
+}
+
+func expectOutput(t *testing.T, res apitype.ResourceV3, key string, value interface{}) {
+	expectKey(t, res.Outputs, key, value)
 }
