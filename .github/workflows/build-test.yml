@@ -57,6 +57,7 @@ jobs:
             sdk/go/*/internal/pulumiUtilities.go
             sdk/nodejs/package.json
             sdk/python/pyproject.toml
+            sdk/java/build.gradle
       - run: git status --porcelain
 
   build_sdks:
@@ -104,6 +105,7 @@ jobs:
             sdk/go/*/internal/pulumiUtilities.go
             sdk/nodejs/package.json
             sdk/python/pyproject.toml
+            sdk/java/build.gradle
       - run: git status --porcelain
 
       - name: Tar SDK folder
