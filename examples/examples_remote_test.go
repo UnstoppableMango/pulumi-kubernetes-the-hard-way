@@ -236,68 +236,33 @@ func TestRemoteEtcdClusterMultiTs(t *testing.T) {
 }
 
 func TestRemoteEtcdClusterSingleTs(t *testing.T) {
-	skipIfShort(t)
+	ResourceTest(t, "remote/etcd-cluster-single-ts", getJSBaseOptions(t), func(ctx *ResourceContext) {
+		Validate(ctx, "kubernetes-the-hard-way:remote:EtcdCluster", "simple", func(t *testing.T, res apitype.ResourceV3) {
+			assert.NotEmpty(t, res.Outputs)
 
-	const (
-		username = "root"
-		password = "root"
-	)
+			install, ok := res.Outputs["install"]
+			assert.True(t, ok, "Output `install` was not set")
+			assert.Contains(t, install, "node0")
 
-	node := newNode(t, WithSshUsername(username), WithSshPassword(password))
+			configuration, ok := res.Outputs["configuration"]
+			assert.True(t, ok, "Output `configuration` was not set")
+			assert.Contains(t, configuration, "node0")
 
-	validateSimple := func(t *testing.T, res apitype.ResourceV3) {
-		assert.NotEmpty(t, res.Outputs)
+			nodes, ok := res.Outputs["nodes"]
+			assert.True(t, ok, "Output `nodes` was not set")
+			assert.Contains(t, nodes, "node0")
 
-		install, ok := res.Outputs["install"]
-		assert.True(t, ok, "Output `install` was not set")
-		assert.Contains(t, install, "node0")
+			service, ok := res.Outputs["service"]
+			assert.True(t, ok, "Output `service` was not set")
+			assert.Contains(t, service, "node0")
 
-		configuration, ok := res.Outputs["configuration"]
-		assert.True(t, ok, "Output `configuration` was not set")
-		assert.Contains(t, configuration, "node0")
+			start, ok := res.Outputs["start"]
+			assert.True(t, ok, "Output `start` was not set")
+			assert.Contains(t, start, "node0")
 
-		nodes, ok := res.Outputs["nodes"]
-		assert.True(t, ok, "Output `nodes` was not set")
-		assert.Contains(t, nodes, "node0")
-
-		service, ok := res.Outputs["service"]
-		assert.True(t, ok, "Output `service` was not set")
-		assert.Contains(t, service, "node0")
-
-		start, ok := res.Outputs["start"]
-		assert.True(t, ok, "Output `start` was not set")
-		assert.Contains(t, start, "node0")
-
-		assert.Contains(t, res.Outputs, "bundle")
-	}
-
-	test := getJSBaseOptions(t).
-		With(integration.ProgramTestOptions{
-			Dir: path.Join(getCwd(t), "remote", "etcd-cluster-single-ts"),
-			Config: map[string]string{
-				"host":     "localhost",
-				"port":     node.Port,
-				"user":     username,
-				"password": password,
-			},
-			ExtraRuntimeValidation: func(t *testing.T, stack integration.RuntimeValidationStackInfo) {
-				validatedResources := []string{}
-				for _, res := range stack.Deployment.Resources {
-					if res.Type != "kubernetes-the-hard-way:remote:EtcdCluster" {
-						continue
-					}
-					switch res.URN.Name() {
-					case "simple":
-						validateSimple(t, res)
-						validatedResources = append(validatedResources, "simple")
-					}
-				}
-
-				assert.Equal(t, []string{"simple"}, validatedResources, "Not all resources were validated")
-			},
+			assert.Contains(t, res.Outputs, "bundle")
 		})
-
-	integration.ProgramTest(t, &test)
+	})
 }
 
 func TestRemoteEtcdInstallTs(t *testing.T) {
