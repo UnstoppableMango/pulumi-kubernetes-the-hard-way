@@ -34,6 +34,7 @@ func TestSimpleTs(t *testing.T) {
 
 func TestRemoteInstallTs(t *testing.T) {
 	skipIfShort(t)
+	skipIfCi(t)
 
 	const (
 		username = "root"

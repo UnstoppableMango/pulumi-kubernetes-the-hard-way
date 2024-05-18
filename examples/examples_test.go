@@ -39,6 +39,12 @@ func skipIfShort(t *testing.T) {
 	}
 }
 
+func skipIfCi(t *testing.T) {
+	if x, ok := os.LookupEnv("CI"); ok && x == "true" {
+		t.Skip("skipping resource-intensive test in CI")
+	}
+}
+
 type node struct {
 	Server SshServer
 	Port   string
