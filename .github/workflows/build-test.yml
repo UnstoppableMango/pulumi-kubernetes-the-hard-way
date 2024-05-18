@@ -53,7 +53,7 @@ jobs:
         with:
           allowed-changes: |-
             sdk/**/pulumi-plugin.json
-            sdk/dotnet/Pulumi.*.csproj
+            sdk/dotnet/*.csproj
             sdk/go/*/internal/pulumiUtilities.go
             sdk/nodejs/package.json
             sdk/python/pyproject.toml
@@ -100,7 +100,7 @@ jobs:
         with:
           allowed-changes: |-
             sdk/**/pulumi-plugin.json
-            sdk/dotnet/Pulumi.*.csproj
+            sdk/dotnet/*.csproj
             sdk/go/*/internal/pulumiUtilities.go
             sdk/nodejs/package.json
             sdk/python/pyproject.toml
