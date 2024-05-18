@@ -56,7 +56,7 @@ func ResourceTest(t *testing.T, project string, baseOptions integration.ProgramT
 			validated := []validatorKey{}
 			for _, res := range stack.Deployment.Resources {
 				key := validatorKey{Type: res.Type, Name: res.URN.Name()}
-				testName := fmt.Sprintf("%s%s", res.Type, res.URN.Name())
+				testName := fmt.Sprintf("%s::%s", res.Type, res.URN.Name())
 				if validator, ok := lookup[key]; ok && t.Run(testName, func(t *testing.T) {
 					validator(t, res)
 				}) {
