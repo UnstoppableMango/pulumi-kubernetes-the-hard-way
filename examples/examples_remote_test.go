@@ -12,139 +12,44 @@ import (
 )
 
 func TestCniPluginsTs(t *testing.T) {
-	skipIfShort(t)
+	ResourceTest(t, "remote/cni-plugins-ts", getJSBaseOptions(t), func(ctx *ResourceContext) {
+		Validate(ctx, "kubernetes-the-hard-way:remote:CniBridgePluginConfiguration", "simple", func(t *testing.T, res apitype.ResourceV3) {
+			assert.NotEmpty(t, res.Outputs)
 
-	const (
-		username = "root"
-		password = "root"
-	)
+			expectOutput(t, res, "bridge", "cni0")
+			expectOutput(t, res, "name", "bridge")
+			expectOutput(t, res, "type", "bridge")
+			expectOutput(t, res, "cniVersion", "1.0.0")
+			expectOutput(t, res, "path", "/etc/cni/net.d/10-bridge.conf")
+			expectOutput(t, res, "subnet", "10.0.69.0/24")
+			expectOutput(t, res, "isGateway", true)
+			expectOutput(t, res, "ipMasq", true)
 
-	node := newNode(t,
-		WithSshUsername(username),
-		WithSshPassword(password),
-	)
-
-	validateBridge := func(t *testing.T, res apitype.ResourceV3) {
-		assert.NotEmpty(t, res.Outputs)
-
-		bridge, ok := res.Outputs["bridge"]
-		assert.True(t, ok, "Output `bridge` was not set")
-		assert.Equal(t, "cni0", bridge)
-
-		name, ok := res.Outputs["name"]
-		assert.True(t, ok, "Output `name` was not set")
-		assert.Equal(t, "bridge", name)
-
-		typ, ok := res.Outputs["type"]
-		assert.True(t, ok, "Output `type` was not set")
-		assert.Equal(t, "bridge", typ)
-
-		cniVersion, ok := res.Outputs["cniVersion"]
-		assert.True(t, ok, "Output `cniVersion` was not set")
-		assert.Equal(t, "1.0.0", cniVersion)
-
-		path, ok := res.Outputs["path"]
-		assert.True(t, ok, "Output `path` was not set")
-		assert.Equal(t, "/etc/cni/net.d/10-bridge.conf", path)
-
-		subnet, ok := res.Outputs["subnet"]
-		assert.True(t, ok, "Output `subnet` was not set")
-		assert.Equal(t, "10.0.69.0/24", subnet)
-
-		isGateway, ok := res.Outputs["isGateway"]
-		assert.True(t, ok, "Output `isGateway` was not set")
-		assert.Equal(t, true, isGateway)
-
-		ipMasq, ok := res.Outputs["ipMasq"]
-		assert.True(t, ok, "Output `ipMasq` was not set")
-		assert.Equal(t, true, ipMasq)
-
-		assert.Contains(t, res.Outputs, "file")
-		assert.Contains(t, res.Outputs, "ipam")
-	}
-
-	validateLoopback := func(t *testing.T, res apitype.ResourceV3) {
-		assert.NotEmpty(t, res.Outputs)
-
-		cniVersion, ok := res.Outputs["cniVersion"]
-		assert.True(t, ok, "Output `cniVersion` was not set")
-		assert.Equal(t, "1.1.0", cniVersion)
-
-		name, ok := res.Outputs["name"]
-		assert.True(t, ok, "Output `name` was not set")
-		assert.Equal(t, "lo", name)
-
-		path, ok := res.Outputs["path"]
-		assert.True(t, ok, "Output `path` was not set")
-		assert.Equal(t, "/etc/cni/net.d/99-loopback.conf", path)
-
-		typ, ok := res.Outputs["type"]
-		assert.True(t, ok, "Output `type` was not set")
-		assert.Equal(t, "loopback", typ)
-
-		assert.Contains(t, res.Outputs, "file")
-	}
-
-	validatePlugins := func(t *testing.T, res apitype.ResourceV3) {
-		assert.NotEmpty(t, res.Outputs)
-
-		subnet, ok := res.Outputs["subnet"]
-		assert.True(t, ok, "Output `subnet` was not set")
-		assert.Equal(t, "10.0.69.0/24", subnet)
-
-		directory, ok := res.Outputs["directory"]
-		assert.True(t, ok, "Output `directory` was not set")
-		assert.Equal(t, "/etc/cni2/net.d", directory)
-
-		assert.Contains(t, res.Outputs, "bridge")
-		assert.Contains(t, res.Outputs, "connection")
-		assert.Contains(t, res.Outputs, "loopback")
-		assert.Contains(t, res.Outputs, "mkdir")
-	}
-
-	test := getJSBaseOptions(t).
-		With(integration.ProgramTestOptions{
-			Dir: path.Join(getCwd(t), "remote", "cni-plugins-ts"),
-			Config: map[string]string{
-				"host":     "localhost",
-				"port":     node.Port,
-				"user":     username,
-				"password": password,
-			},
-			ExtraRuntimeValidation: func(t *testing.T, stack integration.RuntimeValidationStackInfo) {
-				validatedResources := []string{}
-				for _, res := range stack.Deployment.Resources {
-					switch res.Type {
-					case "kubernetes-the-hard-way:remote:CniBridgePluginConfiguration":
-						switch res.URN.Name() {
-						case "simple":
-							validateBridge(t, res)
-							validatedResources = append(validatedResources, "simple")
-						}
-					case "kubernetes-the-hard-way:remote:CniLoopbackPluginConfiguration":
-						switch res.URN.Name() {
-						case "simple":
-							validateLoopback(t, res)
-							validatedResources = append(validatedResources, "simple")
-						}
-					case "kubernetes-the-hard-way:remote:CniPluginConfiguration":
-						switch res.URN.Name() {
-						case "all":
-							validatePlugins(t, res)
-							validatedResources = append(validatedResources, "all")
-						}
-					}
-				}
-
-				assert.ElementsMatch(t, []string{
-					"simple",
-					"simple",
-					"all",
-				}, validatedResources, "Not all resources were validated")
-			},
+			assert.Contains(t, res.Outputs, "file")
+			assert.Contains(t, res.Outputs, "ipam")
 		})
+		Validate(ctx, "kubernetes-the-hard-way:remote:CniLoopbackPluginConfiguration", "simple", func(t *testing.T, res apitype.ResourceV3) {
+			assert.NotEmpty(t, res.Outputs)
 
-	integration.ProgramTest(t, &test)
+			expectOutput(t, res, "name", "lo")
+			expectOutput(t, res, "type", "loopback")
+			expectOutput(t, res, "cniVersion", "1.1.0")
+			expectOutput(t, res, "path", "/etc/cni/net.d/99-loopback.conf")
+
+			assert.Contains(t, res.Outputs, "file")
+		})
+		Validate(ctx, "kubernetes-the-hard-way:remote:CniPluginConfiguration", "all", func(t *testing.T, res apitype.ResourceV3) {
+			assert.NotEmpty(t, res.Outputs)
+
+			expectOutput(t, res, "subnet", "10.0.69.0/24")
+			expectOutput(t, res, "directory", "/etc/cni2/net.d")
+
+			assert.Contains(t, res.Outputs, "bridge")
+			assert.Contains(t, res.Outputs, "connection")
+			assert.Contains(t, res.Outputs, "loopback")
+			assert.Contains(t, res.Outputs, "mkdir")
+		})
+	})
 }
 
 func TestRemoteEtcdClusterMultiTs(t *testing.T) {
@@ -236,156 +141,64 @@ func TestRemoteEtcdClusterMultiTs(t *testing.T) {
 }
 
 func TestRemoteEtcdClusterSingleTs(t *testing.T) {
-	skipIfShort(t)
+	ResourceTest(t, "remote/etcd-cluster-single-ts", getJSBaseOptions(t), func(ctx *ResourceContext) {
+		Validate(ctx, "kubernetes-the-hard-way:remote:EtcdCluster", "simple", func(t *testing.T, res apitype.ResourceV3) {
+			assert.NotEmpty(t, res.Outputs)
 
-	const (
-		username = "root"
-		password = "root"
-	)
+			install, ok := res.Outputs["install"]
+			assert.True(t, ok, "Output `install` was not set")
+			assert.Contains(t, install, "node0")
 
-	node := newNode(t, WithSshUsername(username), WithSshPassword(password))
+			configuration, ok := res.Outputs["configuration"]
+			assert.True(t, ok, "Output `configuration` was not set")
+			assert.Contains(t, configuration, "node0")
 
-	validateSimple := func(t *testing.T, res apitype.ResourceV3) {
-		assert.NotEmpty(t, res.Outputs)
+			nodes, ok := res.Outputs["nodes"]
+			assert.True(t, ok, "Output `nodes` was not set")
+			assert.Contains(t, nodes, "node0")
 
-		install, ok := res.Outputs["install"]
-		assert.True(t, ok, "Output `install` was not set")
-		assert.Contains(t, install, "node0")
+			service, ok := res.Outputs["service"]
+			assert.True(t, ok, "Output `service` was not set")
+			assert.Contains(t, service, "node0")
 
-		configuration, ok := res.Outputs["configuration"]
-		assert.True(t, ok, "Output `configuration` was not set")
-		assert.Contains(t, configuration, "node0")
+			start, ok := res.Outputs["start"]
+			assert.True(t, ok, "Output `start` was not set")
+			assert.Contains(t, start, "node0")
 
-		nodes, ok := res.Outputs["nodes"]
-		assert.True(t, ok, "Output `nodes` was not set")
-		assert.Contains(t, nodes, "node0")
-
-		service, ok := res.Outputs["service"]
-		assert.True(t, ok, "Output `service` was not set")
-		assert.Contains(t, service, "node0")
-
-		start, ok := res.Outputs["start"]
-		assert.True(t, ok, "Output `start` was not set")
-		assert.Contains(t, start, "node0")
-
-		assert.Contains(t, res.Outputs, "bundle")
-	}
-
-	test := getJSBaseOptions(t).
-		With(integration.ProgramTestOptions{
-			Dir: path.Join(getCwd(t), "remote", "etcd-cluster-single-ts"),
-			Config: map[string]string{
-				"host":     "localhost",
-				"port":     node.Port,
-				"user":     username,
-				"password": password,
-			},
-			ExtraRuntimeValidation: func(t *testing.T, stack integration.RuntimeValidationStackInfo) {
-				validatedResources := []string{}
-				for _, res := range stack.Deployment.Resources {
-					if res.Type != "kubernetes-the-hard-way:remote:EtcdCluster" {
-						continue
-					}
-					switch res.URN.Name() {
-					case "simple":
-						validateSimple(t, res)
-						validatedResources = append(validatedResources, "simple")
-					}
-				}
-
-				assert.Equal(t, []string{"simple"}, validatedResources, "Not all resources were validated")
-			},
+			assert.Contains(t, res.Outputs, "bundle")
 		})
-
-	integration.ProgramTest(t, &test)
+	})
 }
 
 func TestRemoteEtcdInstallTs(t *testing.T) {
-	skipIfShort(t)
+	options := getJSBaseOptions(t).With(integration.ProgramTestOptions{
+		SkipPreview:   true,
+		RunUpdateTest: false,
+		ExtraRuntimeValidation: func(t *testing.T, stack integration.RuntimeValidationStackInfo) {
+			etcdctlVersion, ok := stack.Outputs["etcdctlVersion"]
+			assert.True(t, ok, "Output `etcdctlVersion` was not set")
+			assert.Equal(t, "etcdctl version: 3.4.15\nAPI version: 3.4", etcdctlVersion) // TODO: No hardcoded versions
+		},
+	})
 
-	const (
-		username = "root"
-		password = "root"
-	)
+	ResourceTest(t, "remote/etcd-install-ts", options, func(ctx *ResourceContext) {
+		Validate(ctx, "kubernetes-the-hard-way:remote:EtcdInstall", "simple", func(t *testing.T, res apitype.ResourceV3) {
+			assert.NotEmpty(t, res.Outputs)
 
-	node := newNode(t,
-		WithSshUsername(username),
-		WithSshPassword(password),
-	)
+			expectOutput(t, res, "architecture", "amd64")
+			expectOutput(t, res, "archiveName", "etcd-v3.4.15-linux-amd64.tar.gz")
+			expectOutput(t, res, "directory", "/usr/local/bin")
+			expectOutput(t, res, "etcdPath", "/usr/local/bin/etcd")
+			expectOutput(t, res, "etcdctlPath", "/usr/local/bin/etcdctl")
+			expectOutput(t, res, "name", "simple")
+			expectOutput(t, res, "url", "https://github.com/etcd-io/etcd/releases/download/v3.4.15/etcd-v3.4.15-linux-amd64.tar.gz")
+			expectOutput(t, res, "version", "3.4.15")
 
-	validateSimple := func(t *testing.T, res apitype.ResourceV3) {
-		assert.NotEmpty(t, res.Outputs)
-
-		arch, ok := res.Outputs["architecture"]
-		assert.True(t, ok, "Output `architecture` was not set")
-		assert.Equal(t, "amd64", arch)
-
-		archiveName, ok := res.Outputs["archiveName"]
-		assert.True(t, ok, "Output `archiveName` was not set")
-		assert.Equal(t, "etcd-v3.4.15-linux-amd64.tar.gz", archiveName)
-
-		directory, ok := res.Outputs["directory"]
-		assert.True(t, ok, "Output `directory` was not set")
-		assert.Equal(t, "/usr/local/bin", directory)
-
-		etcdPath, ok := res.Outputs["etcdPath"]
-		assert.True(t, ok, "Output `etcdPath` was not set")
-		assert.Equal(t, "/usr/local/bin/etcd", etcdPath)
-
-		etcdctlPath, ok := res.Outputs["etcdctlPath"]
-		assert.True(t, ok, "Output `etcdctlPath` was not set")
-		assert.Equal(t, "/usr/local/bin/etcdctl", etcdctlPath)
-
-		name, ok := res.Outputs["name"]
-		assert.True(t, ok, "Output `name` was not set")
-		assert.Equal(t, "simple", name)
-
-		url, ok := res.Outputs["url"]
-		assert.True(t, ok, "Output `url` was not set")
-		assert.Equal(t, "https://github.com/etcd-io/etcd/releases/download/v3.4.15/etcd-v3.4.15-linux-amd64.tar.gz", url)
-
-		version, ok := res.Outputs["version"]
-		assert.True(t, ok, "Output `version` was not set")
-		assert.Equal(t, "3.4.15", version)
-
-		assert.Contains(t, res.Outputs, "download")
-		assert.Contains(t, res.Outputs, "mkdir")
-		assert.Contains(t, res.Outputs, "mvEtcd")
-		assert.Contains(t, res.Outputs, "mvEtcdctl")
-		assert.Contains(t, res.Outputs, "tar")
-	}
-
-	test := getJSBaseOptions(t).
-		With(integration.ProgramTestOptions{
-			Dir:           path.Join(getCwd(t), "remote", "etcd-install-ts"),
-			SkipPreview:   true,  // TODO: There is some bug surrounding this
-			RunUpdateTest: false, // TODO: Enable
-			Config: map[string]string{
-				"host":     "localhost",
-				"port":     node.Port,
-				"user":     username,
-				"password": password,
-			},
-			ExtraRuntimeValidation: func(t *testing.T, stack integration.RuntimeValidationStackInfo) {
-				etcdctlVersion, ok := stack.Outputs["etcdctlVersion"]
-				assert.True(t, ok, "Output `etcdctlVersion` was not set")
-				assert.Equal(t, "etcdctl version: 3.4.15\nAPI version: 3.4", etcdctlVersion) // TODO: No hardcoded versions
-
-				validatedResources := []string{}
-				for _, res := range stack.Deployment.Resources {
-					if res.Type != "kubernetes-the-hard-way:remote:EtcdInstall" {
-						continue
-					}
-					switch res.URN.Name() {
-					case "simple":
-						validateSimple(t, res)
-						validatedResources = append(validatedResources, "simple")
-					}
-				}
-
-				assert.Equal(t, []string{"simple"}, validatedResources, "Not all resources were validated")
-			},
+			assert.Contains(t, res.Outputs, "download")
+			assert.Contains(t, res.Outputs, "mkdir")
+			assert.Contains(t, res.Outputs, "mvEtcd")
+			assert.Contains(t, res.Outputs, "mvEtcdctl")
+			assert.Contains(t, res.Outputs, "tar")
 		})
-
-	integration.ProgramTest(t, &test)
+	})
 }
