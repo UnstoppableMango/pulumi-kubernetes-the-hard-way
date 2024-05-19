@@ -10,13 +10,29 @@ import java.util.Objects;
 
 @CustomType
 public final class User {
+    /**
+     * @return TODO
+     * 
+     */
     private String clientCertificateData;
+    /**
+     * @return TODO
+     * 
+     */
     private String clientKeyData;
 
     private User() {}
+    /**
+     * @return TODO
+     * 
+     */
     public String clientCertificateData() {
         return this.clientCertificateData;
     }
+    /**
+     * @return TODO
+     * 
+     */
     public String clientKeyData() {
         return this.clientKeyData;
     }

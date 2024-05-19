@@ -16,16 +16,32 @@ public final class KubeconfigWorkerOptions extends com.pulumi.resources.InvokeAr
 
     public static final KubeconfigWorkerOptions Empty = new KubeconfigWorkerOptions();
 
+    /**
+     * TODO
+     * 
+     */
     @Import(name="name", required=true)
     private String name;
 
+    /**
+     * @return TODO
+     * 
+     */
     public String name() {
         return this.name;
     }
 
+    /**
+     * TODO
+     * 
+     */
     @Import(name="publicIp", required=true)
     private String publicIp;
 
+    /**
+     * @return TODO
+     * 
+     */
     public String publicIp() {
         return this.publicIp;
     }
@@ -63,11 +79,23 @@ public final class KubeconfigWorkerOptions extends com.pulumi.resources.InvokeAr
             $ = new KubeconfigWorkerOptions(Objects.requireNonNull(defaults));
         }
 
+        /**
+         * @param name TODO
+         * 
+         * @return builder
+         * 
+         */
         public Builder name(String name) {
             $.name = name;
             return this;
         }
 
+        /**
+         * @param publicIp TODO
+         * 
+         * @return builder
+         * 
+         */
         public Builder publicIp(String publicIp) {
             $.publicIp = publicIp;
             return this;

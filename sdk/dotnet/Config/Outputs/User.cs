@@ -14,7 +14,13 @@ namespace UnMango.KubernetesTheHardWay.Config.Outputs
     [OutputType]
     public sealed class User
     {
+        /// <summary>
+        /// TODO
+        /// </summary>
         public readonly string ClientCertificateData;
+        /// <summary>
+        /// TODO
+        /// </summary>
         public readonly string ClientKeyData;
 
         [OutputConstructor]

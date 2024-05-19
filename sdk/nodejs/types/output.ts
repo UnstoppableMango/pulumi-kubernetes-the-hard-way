@@ -13,12 +13,24 @@ import * as utilities from "../utilities";
 
 export namespace config {
     export interface Cluster {
+        /**
+         * TODO
+         */
         certificateAuthorityData: string;
+        /**
+         * TODO
+         */
         server: string;
     }
 
     export interface Context {
+        /**
+         * TODO
+         */
         cluster: string;
+        /**
+         * TODO
+         */
         user: string;
     }
 
@@ -395,7 +407,13 @@ export namespace config {
     }
 
     export interface User {
+        /**
+         * TODO
+         */
         clientCertificateData: string;
+        /**
+         * TODO
+         */
         clientKeyData: string;
     }
 

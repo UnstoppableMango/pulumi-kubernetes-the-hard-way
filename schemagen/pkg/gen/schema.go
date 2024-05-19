@@ -11,6 +11,7 @@ import (
 
 	"os"
 
+	"github.com/UnstoppableMango/pulumi-kubernetes-the-hard-way/schemagen/pkg/gen/config"
 	"github.com/UnstoppableMango/pulumi-kubernetes-the-hard-way/schemagen/pkg/gen/internal"
 	"github.com/UnstoppableMango/pulumi-kubernetes-the-hard-way/schemagen/pkg/gen/remote"
 	"github.com/UnstoppableMango/pulumi-kubernetes-the-hard-way/schemagen/pkg/gen/tools"
@@ -106,7 +107,7 @@ func GenerateSchema(packageDir string) schema.PackageSpec {
 	}
 
 	return internal.ExtendSchemas(packageSpec,
-		generateConfig(kubernetesSpec),
+		config.GenerateConfig(kubernetesSpec),
 		remote.Generate(commandSpec),
 		generateTls(randomSpec, tlsSpec),
 		tools.Generate(commandSpec),

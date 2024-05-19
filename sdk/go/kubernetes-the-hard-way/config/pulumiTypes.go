@@ -16,8 +16,10 @@ import (
 var _ = internal.GetEnvOrDefault
 
 type Cluster struct {
+	// TODO
 	CertificateAuthorityData string `pulumi:"certificateAuthorityData"`
-	Server                   string `pulumi:"server"`
+	// TODO
+	Server string `pulumi:"server"`
 }
 
 type ClusterOutput struct{ *pulumi.OutputState }
@@ -34,10 +36,12 @@ func (o ClusterOutput) ToClusterOutputWithContext(ctx context.Context) ClusterOu
 	return o
 }
 
+// TODO
 func (o ClusterOutput) CertificateAuthorityData() pulumi.StringOutput {
 	return o.ApplyT(func(v Cluster) string { return v.CertificateAuthorityData }).(pulumi.StringOutput)
 }
 
+// TODO
 func (o ClusterOutput) Server() pulumi.StringOutput {
 	return o.ApplyT(func(v Cluster) string { return v.Server }).(pulumi.StringOutput)
 }
@@ -63,8 +67,10 @@ func (o ClusterArrayOutput) Index(i pulumi.IntInput) ClusterOutput {
 }
 
 type Context struct {
+	// TODO
 	Cluster string `pulumi:"cluster"`
-	User    string `pulumi:"user"`
+	// TODO
+	User string `pulumi:"user"`
 }
 
 type ContextOutput struct{ *pulumi.OutputState }
@@ -81,10 +87,12 @@ func (o ContextOutput) ToContextOutputWithContext(ctx context.Context) ContextOu
 	return o
 }
 
+// TODO
 func (o ContextOutput) Cluster() pulumi.StringOutput {
 	return o.ApplyT(func(v Context) string { return v.Cluster }).(pulumi.StringOutput)
 }
 
+// TODO
 func (o ContextOutput) User() pulumi.StringOutput {
 	return o.ApplyT(func(v Context) string { return v.User }).(pulumi.StringOutput)
 }
@@ -142,6 +150,7 @@ func (o KubeconfigOutput) Users() UserArrayOutput {
 }
 
 type KubeconfigAdminOptions struct {
+	// TODO
 	PublicIp *string `pulumi:"publicIp"`
 	Type     string  `pulumi:"type"`
 }
@@ -158,6 +167,7 @@ type KubeconfigAdminOptionsInput interface {
 }
 
 type KubeconfigAdminOptionsArgs struct {
+	// TODO
 	PublicIp pulumi.StringPtrInput `pulumi:"publicIp"`
 	Type     string                `pulumi:"type"`
 }
@@ -188,6 +198,7 @@ func (o KubeconfigAdminOptionsOutput) ToKubeconfigAdminOptionsOutputWithContext(
 	return o
 }
 
+// TODO
 func (o KubeconfigAdminOptionsOutput) PublicIp() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v KubeconfigAdminOptions) *string { return v.PublicIp }).(pulumi.StringPtrOutput)
 }
@@ -198,15 +209,18 @@ func (o KubeconfigAdminOptionsOutput) Type() pulumi.StringOutput {
 
 type KubeconfigCluster struct {
 	Cluster Cluster `pulumi:"cluster"`
-	Name    string  `pulumi:"name"`
+	// TODO
+	Name string `pulumi:"name"`
 }
 
 type KubeconfigContext struct {
 	Context Context `pulumi:"context"`
-	Name    string  `pulumi:"name"`
+	// TODO
+	Name string `pulumi:"name"`
 }
 
 type KubeconfigKubeControllerManagerOptions struct {
+	// TODO
 	PublicIp *string `pulumi:"publicIp"`
 	Type     string  `pulumi:"type"`
 }
@@ -223,6 +237,7 @@ type KubeconfigKubeControllerManagerOptionsInput interface {
 }
 
 type KubeconfigKubeControllerManagerOptionsArgs struct {
+	// TODO
 	PublicIp pulumi.StringPtrInput `pulumi:"publicIp"`
 	Type     string                `pulumi:"type"`
 }
@@ -253,6 +268,7 @@ func (o KubeconfigKubeControllerManagerOptionsOutput) ToKubeconfigKubeController
 	return o
 }
 
+// TODO
 func (o KubeconfigKubeControllerManagerOptionsOutput) PublicIp() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v KubeconfigKubeControllerManagerOptions) *string { return v.PublicIp }).(pulumi.StringPtrOutput)
 }
@@ -262,6 +278,7 @@ func (o KubeconfigKubeControllerManagerOptionsOutput) Type() pulumi.StringOutput
 }
 
 type KubeconfigKubeProxyOptions struct {
+	// TODO
 	PublicIp *string `pulumi:"publicIp"`
 	Type     string  `pulumi:"type"`
 }
@@ -278,6 +295,7 @@ type KubeconfigKubeProxyOptionsInput interface {
 }
 
 type KubeconfigKubeProxyOptionsArgs struct {
+	// TODO
 	PublicIp pulumi.StringPtrInput `pulumi:"publicIp"`
 	Type     string                `pulumi:"type"`
 }
@@ -308,6 +326,7 @@ func (o KubeconfigKubeProxyOptionsOutput) ToKubeconfigKubeProxyOptionsOutputWith
 	return o
 }
 
+// TODO
 func (o KubeconfigKubeProxyOptionsOutput) PublicIp() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v KubeconfigKubeProxyOptions) *string { return v.PublicIp }).(pulumi.StringPtrOutput)
 }
@@ -317,6 +336,7 @@ func (o KubeconfigKubeProxyOptionsOutput) Type() pulumi.StringOutput {
 }
 
 type KubeconfigKubeSchedulerOptions struct {
+	// TODO
 	PublicIp *string `pulumi:"publicIp"`
 	Type     string  `pulumi:"type"`
 }
@@ -333,6 +353,7 @@ type KubeconfigKubeSchedulerOptionsInput interface {
 }
 
 type KubeconfigKubeSchedulerOptionsArgs struct {
+	// TODO
 	PublicIp pulumi.StringPtrInput `pulumi:"publicIp"`
 	Type     string                `pulumi:"type"`
 }
@@ -363,6 +384,7 @@ func (o KubeconfigKubeSchedulerOptionsOutput) ToKubeconfigKubeSchedulerOptionsOu
 	return o
 }
 
+// TODO
 func (o KubeconfigKubeSchedulerOptionsOutput) PublicIp() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v KubeconfigKubeSchedulerOptions) *string { return v.PublicIp }).(pulumi.StringPtrOutput)
 }
@@ -372,12 +394,15 @@ func (o KubeconfigKubeSchedulerOptionsOutput) Type() pulumi.StringOutput {
 }
 
 type KubeconfigUser struct {
+	// TODO
 	Name string `pulumi:"name"`
 	User User   `pulumi:"user"`
 }
 
 type KubeconfigWorkerOptions struct {
-	Name     string  `pulumi:"name"`
+	// TODO
+	Name string `pulumi:"name"`
+	// TODO
 	PublicIp string  `pulumi:"publicIp"`
 	Type     *string `pulumi:"type"`
 }
@@ -394,7 +419,9 @@ type KubeconfigWorkerOptionsInput interface {
 }
 
 type KubeconfigWorkerOptionsArgs struct {
-	Name     pulumi.StringInput `pulumi:"name"`
+	// TODO
+	Name pulumi.StringInput `pulumi:"name"`
+	// TODO
 	PublicIp pulumi.StringInput `pulumi:"publicIp"`
 	Type     *string            `pulumi:"type"`
 }
@@ -425,10 +452,12 @@ func (o KubeconfigWorkerOptionsOutput) ToKubeconfigWorkerOptionsOutputWithContex
 	return o
 }
 
+// TODO
 func (o KubeconfigWorkerOptionsOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v KubeconfigWorkerOptions) string { return v.Name }).(pulumi.StringOutput)
 }
 
+// TODO
 func (o KubeconfigWorkerOptionsOutput) PublicIp() pulumi.StringOutput {
 	return o.ApplyT(func(v KubeconfigWorkerOptions) string { return v.PublicIp }).(pulumi.StringOutput)
 }
@@ -808,8 +837,10 @@ func (o PodManifestOutput) Status() corev1.PodStatusPtrOutput {
 }
 
 type User struct {
+	// TODO
 	ClientCertificateData string `pulumi:"clientCertificateData"`
-	ClientKeyData         string `pulumi:"clientKeyData"`
+	// TODO
+	ClientKeyData string `pulumi:"clientKeyData"`
 }
 
 type UserOutput struct{ *pulumi.OutputState }
@@ -826,10 +857,12 @@ func (o UserOutput) ToUserOutputWithContext(ctx context.Context) UserOutput {
 	return o
 }
 
+// TODO
 func (o UserOutput) ClientCertificateData() pulumi.StringOutput {
 	return o.ApplyT(func(v User) string { return v.ClientCertificateData }).(pulumi.StringOutput)
 }
 
+// TODO
 func (o UserOutput) ClientKeyData() pulumi.StringOutput {
 	return o.ApplyT(func(v User) string { return v.ClientKeyData }).(pulumi.StringOutput)
 }

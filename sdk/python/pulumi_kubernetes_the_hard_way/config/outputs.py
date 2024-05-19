@@ -25,17 +25,27 @@ class Cluster(dict):
     def __init__(__self__, *,
                  certificate_authority_data: str,
                  server: str):
+        """
+        :param str certificate_authority_data: TODO
+        :param str server: TODO
+        """
         pulumi.set(__self__, "certificate_authority_data", certificate_authority_data)
         pulumi.set(__self__, "server", server)
 
     @property
     @pulumi.getter(name="certificateAuthorityData")
     def certificate_authority_data(self) -> str:
+        """
+        TODO
+        """
         return pulumi.get(self, "certificate_authority_data")
 
     @property
     @pulumi.getter
     def server(self) -> str:
+        """
+        TODO
+        """
         return pulumi.get(self, "server")
 
 
@@ -44,17 +54,27 @@ class Context(dict):
     def __init__(__self__, *,
                  cluster: str,
                  user: str):
+        """
+        :param str cluster: TODO
+        :param str user: TODO
+        """
         pulumi.set(__self__, "cluster", cluster)
         pulumi.set(__self__, "user", user)
 
     @property
     @pulumi.getter
     def cluster(self) -> str:
+        """
+        TODO
+        """
         return pulumi.get(self, "cluster")
 
     @property
     @pulumi.getter
     def user(self) -> str:
+        """
+        TODO
+        """
         return pulumi.get(self, "user")
 
 
@@ -858,17 +878,27 @@ class User(dict):
     def __init__(__self__, *,
                  client_certificate_data: str,
                  client_key_data: str):
+        """
+        :param str client_certificate_data: TODO
+        :param str client_key_data: TODO
+        """
         pulumi.set(__self__, "client_certificate_data", client_certificate_data)
         pulumi.set(__self__, "client_key_data", client_key_data)
 
     @property
     @pulumi.getter(name="clientCertificateData")
     def client_certificate_data(self) -> str:
+        """
+        TODO
+        """
         return pulumi.get(self, "client_certificate_data")
 
     @property
     @pulumi.getter(name="clientKeyData")
     def client_key_data(self) -> str:
+        """
+        TODO
+        """
         return pulumi.get(self, "client_key_data")
 
 
