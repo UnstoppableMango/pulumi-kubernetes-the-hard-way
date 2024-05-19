@@ -165,6 +165,26 @@ func generateTypes(commandSpec schema.PackageSpec) map[string]schema.ComplexType
 				},
 			},
 		},
+		name("KubeletConfigurationProps"): {
+			ObjectTypeSpec: schema.ObjectTypeSpec{
+				Description: "Props for resources that consume kubelet configuration.",
+				Type:        "object",
+				Properties: map[string]schema.PropertySpec{
+					"configurationFilePath": props.String("Path to the kubelet configuration."),
+					"kubeconfigPath":        props.String("Path to the kubeconfig the kubelet will use"),
+					"kubeletPath":           props.String("Path to the kubelet binary."),
+					"registerNode":          props.Boolean("Whether to register the node. Defaults to `true`."),
+					"v":                     props.Integer("Verbosity. Defaults to `2`."),
+				},
+				Required: []string{
+					"configurationFilePath",
+					"kubeconfigPath",
+					"kubeletPath",
+					"registerNode",
+					"v",
+				},
+			},
+		},
 		name("SystemdInstallSection"): {
 			ObjectTypeSpec: schema.ObjectTypeSpec{
 				Description: "https://www.freedesktop.org/software/systemd/man/latest/systemd.unit.html#%5BInstall%5D%20Section%20Options",
@@ -235,10 +255,7 @@ func generateTypes(commandSpec schema.PackageSpec) map[string]schema.ComplexType
 						Description: "Configures whether the service shall be restarted when the service process exits, is killed, or a timeout is reached.",
 						TypeSpec:    types.LocalType("SystemdServiceRestart", "remote"),
 					},
-					"restartSec": {
-						Description: "Configures the time to sleep before restarting a service (as configured with Restart=).",
-						TypeSpec:    types.String,
-					},
+					"restartSec": props.String("Configures the time to sleep before restarting a service (as configured with Restart=)."),
 					"type": {
 						Description: "Configures the mechanism via which the service notifies the manager that the service start-up has finished.",
 						TypeSpec:    types.LocalType("SystemdServiceType", "remote"),
@@ -251,30 +268,14 @@ func generateTypes(commandSpec schema.PackageSpec) map[string]schema.ComplexType
 				Description: "https://www.freedesktop.org/software/systemd/man/latest/systemd.unit.html#",
 				Type:        "object",
 				Properties: map[string]schema.PropertySpec{
-					"bindsTo": {
-						Description: "Configures requirement dependencies, very similar in style to Requires=.",
-						TypeSpec:    types.ArrayOfStrings,
-					},
-					"description": {
-						Description: "A short human readable title of the unit.",
-						TypeSpec:    types.String,
-					},
-					"documentation": {
-						Description: "A space-separated list of URIs referencing documentation for this unit or its configuration.",
-						TypeSpec:    types.ArrayOfStrings,
-					},
-					"requires": {
-						Description: "Similar to Wants=, but declares a stronger requirement dependency.",
-						TypeSpec:    types.ArrayOfStrings,
-					},
-					"requisite": {
-						Description: "Similar to Requires=. However, if the units listed here are not started already, they will not be started and the starting of this unit will fail immediately.",
-						TypeSpec:    types.ArrayOfStrings,
-					},
-					"wants": {
-						Description: "Configures (weak) requirement dependencies on other units.",
-						TypeSpec:    types.ArrayOfStrings,
-					},
+					"after":         props.ArrayOf("string", "Those two settings configure ordering dependencies between units."),
+					"before":        props.ArrayOf("string", "Those two settings configure ordering dependencies between units."),
+					"bindsTo":       props.ArrayOf("string", "Configures requirement dependencies, very similar in style to Requires=."),
+					"description":   props.String("A short human readable title of the unit."),
+					"documentation": props.ArrayOf("string", "A space-separated list of URIs referencing documentation for this unit or its configuration."),
+					"requires":      props.ArrayOf("string", "Similar to Wants=, but declares a stronger requirement dependency."),
+					"requisite":     props.ArrayOf("string", "Similar to Requires=. However, if the units listed here are not started already, they will not be started and the starting of this unit will fail immediately."),
+					"wants":         props.ArrayOf("string", "Configures (weak) requirement dependencies on other units."),
 				},
 			},
 		},

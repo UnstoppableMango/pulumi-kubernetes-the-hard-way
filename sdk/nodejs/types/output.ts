@@ -644,6 +644,32 @@ export namespace remote {
     }
 
     /**
+     * Props for resources that consume kubelet configuration.
+     */
+    export interface KubeletConfigurationProps {
+        /**
+         * Path to the kubelet configuration.
+         */
+        configurationFilePath: string;
+        /**
+         * Path to the kubeconfig the kubelet will use
+         */
+        kubeconfigPath: string;
+        /**
+         * Path to the kubelet binary.
+         */
+        kubeletPath: string;
+        /**
+         * Whether to register the node. Defaults to `true`.
+         */
+        registerNode: boolean;
+        /**
+         * Verbosity. Defaults to `2`.
+         */
+        v: number;
+    }
+
+    /**
      * https://www.freedesktop.org/software/systemd/man/latest/systemd.unit.html#%5BInstall%5D%20Section%20Options
      */
     export interface SystemdInstallSection {
@@ -683,6 +709,14 @@ export namespace remote {
      * https://www.freedesktop.org/software/systemd/man/latest/systemd.unit.html#
      */
     export interface SystemdUnitSection {
+        /**
+         * Those two settings configure ordering dependencies between units.
+         */
+        after?: string[];
+        /**
+         * Those two settings configure ordering dependencies between units.
+         */
+        before?: string[];
         /**
          * Configures requirement dependencies, very similar in style to Requires=.
          */

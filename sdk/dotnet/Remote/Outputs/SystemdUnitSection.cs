@@ -18,6 +18,14 @@ namespace UnMango.KubernetesTheHardWay.Remote.Outputs
     public sealed class SystemdUnitSection
     {
         /// <summary>
+        /// Those two settings configure ordering dependencies between units.
+        /// </summary>
+        public readonly ImmutableArray<string> After;
+        /// <summary>
+        /// Those two settings configure ordering dependencies between units.
+        /// </summary>
+        public readonly ImmutableArray<string> Before;
+        /// <summary>
         /// Configures requirement dependencies, very similar in style to Requires=.
         /// </summary>
         public readonly ImmutableArray<string> BindsTo;
@@ -44,6 +52,10 @@ namespace UnMango.KubernetesTheHardWay.Remote.Outputs
 
         [OutputConstructor]
         private SystemdUnitSection(
+            ImmutableArray<string> after,
+
+            ImmutableArray<string> before,
+
             ImmutableArray<string> bindsTo,
 
             string? description,
@@ -56,6 +68,8 @@ namespace UnMango.KubernetesTheHardWay.Remote.Outputs
 
             ImmutableArray<string> wants)
         {
+            After = after;
+            Before = before;
             BindsTo = bindsTo;
             Description = description;
             Documentation = documentation;

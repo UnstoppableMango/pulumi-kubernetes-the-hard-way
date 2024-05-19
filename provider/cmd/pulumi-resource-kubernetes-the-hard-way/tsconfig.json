@@ -42,6 +42,7 @@
     "remote/kubeControllerManagerInstall.ts",
     "remote/kubectl.ts",
     "remote/kubelet.ts",
+    "remote/kubeletService.ts",
     "remote/kubeProxy.ts",
     "remote/kubeSchedulerInstall.ts",
     "remote/provisionEtcd.ts",

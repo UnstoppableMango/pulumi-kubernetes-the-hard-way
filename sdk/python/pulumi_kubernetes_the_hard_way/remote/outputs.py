@@ -21,6 +21,7 @@ __all__ = [
     'ContainerdCriPluginConfigurationContainerdRuncOptions',
     'EtcdConfigurationProps',
     'EtcdNode',
+    'KubeletConfigurationProps',
     'SystemdInstallSection',
     'SystemdServiceSection',
     'SystemdUnitSection',
@@ -493,6 +494,95 @@ class EtcdNode(dict):
 
 
 @pulumi.output_type
+class KubeletConfigurationProps(dict):
+    """
+    Props for resources that consume kubelet configuration.
+    """
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "configurationFilePath":
+            suggest = "configuration_file_path"
+        elif key == "kubeconfigPath":
+            suggest = "kubeconfig_path"
+        elif key == "kubeletPath":
+            suggest = "kubelet_path"
+        elif key == "registerNode":
+            suggest = "register_node"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in KubeletConfigurationProps. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        KubeletConfigurationProps.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        KubeletConfigurationProps.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 configuration_file_path: str,
+                 kubeconfig_path: str,
+                 kubelet_path: str,
+                 register_node: bool,
+                 v: int):
+        """
+        Props for resources that consume kubelet configuration.
+        :param str configuration_file_path: Path to the kubelet configuration.
+        :param str kubeconfig_path: Path to the kubeconfig the kubelet will use
+        :param str kubelet_path: Path to the kubelet binary.
+        :param bool register_node: Whether to register the node. Defaults to `true`.
+        :param int v: Verbosity. Defaults to `2`.
+        """
+        pulumi.set(__self__, "configuration_file_path", configuration_file_path)
+        pulumi.set(__self__, "kubeconfig_path", kubeconfig_path)
+        pulumi.set(__self__, "kubelet_path", kubelet_path)
+        pulumi.set(__self__, "register_node", register_node)
+        pulumi.set(__self__, "v", v)
+
+    @property
+    @pulumi.getter(name="configurationFilePath")
+    def configuration_file_path(self) -> str:
+        """
+        Path to the kubelet configuration.
+        """
+        return pulumi.get(self, "configuration_file_path")
+
+    @property
+    @pulumi.getter(name="kubeconfigPath")
+    def kubeconfig_path(self) -> str:
+        """
+        Path to the kubeconfig the kubelet will use
+        """
+        return pulumi.get(self, "kubeconfig_path")
+
+    @property
+    @pulumi.getter(name="kubeletPath")
+    def kubelet_path(self) -> str:
+        """
+        Path to the kubelet binary.
+        """
+        return pulumi.get(self, "kubelet_path")
+
+    @property
+    @pulumi.getter(name="registerNode")
+    def register_node(self) -> bool:
+        """
+        Whether to register the node. Defaults to `true`.
+        """
+        return pulumi.get(self, "register_node")
+
+    @property
+    @pulumi.getter
+    def v(self) -> int:
+        """
+        Verbosity. Defaults to `2`.
+        """
+        return pulumi.get(self, "v")
+
+
+@pulumi.output_type
 class SystemdInstallSection(dict):
     """
     https://www.freedesktop.org/software/systemd/man/latest/systemd.unit.html#%5BInstall%5D%20Section%20Options
@@ -647,6 +737,8 @@ class SystemdUnitSection(dict):
         return super().get(key, default)
 
     def __init__(__self__, *,
+                 after: Optional[Sequence[str]] = None,
+                 before: Optional[Sequence[str]] = None,
                  binds_to: Optional[Sequence[str]] = None,
                  description: Optional[str] = None,
                  documentation: Optional[Sequence[str]] = None,
@@ -655,6 +747,8 @@ class SystemdUnitSection(dict):
                  wants: Optional[Sequence[str]] = None):
         """
         https://www.freedesktop.org/software/systemd/man/latest/systemd.unit.html#
+        :param Sequence[str] after: Those two settings configure ordering dependencies between units.
+        :param Sequence[str] before: Those two settings configure ordering dependencies between units.
         :param Sequence[str] binds_to: Configures requirement dependencies, very similar in style to Requires=.
         :param str description: A short human readable title of the unit.
         :param Sequence[str] documentation: A space-separated list of URIs referencing documentation for this unit or its configuration.
@@ -662,6 +756,10 @@ class SystemdUnitSection(dict):
         :param Sequence[str] requisite: Similar to Requires=. However, if the units listed here are not started already, they will not be started and the starting of this unit will fail immediately.
         :param Sequence[str] wants: Configures (weak) requirement dependencies on other units.
         """
+        if after is not None:
+            pulumi.set(__self__, "after", after)
+        if before is not None:
+            pulumi.set(__self__, "before", before)
         if binds_to is not None:
             pulumi.set(__self__, "binds_to", binds_to)
         if description is not None:
@@ -674,6 +772,22 @@ class SystemdUnitSection(dict):
             pulumi.set(__self__, "requisite", requisite)
         if wants is not None:
             pulumi.set(__self__, "wants", wants)
+
+    @property
+    @pulumi.getter
+    def after(self) -> Optional[Sequence[str]]:
+        """
+        Those two settings configure ordering dependencies between units.
+        """
+        return pulumi.get(self, "after")
+
+    @property
+    @pulumi.getter
+    def before(self) -> Optional[Sequence[str]]:
+        """
+        Those two settings configure ordering dependencies between units.
+        """
+        return pulumi.get(self, "before")
 
     @property
     @pulumi.getter(name="bindsTo")

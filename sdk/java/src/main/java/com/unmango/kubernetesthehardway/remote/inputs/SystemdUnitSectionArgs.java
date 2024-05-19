@@ -21,6 +21,36 @@ public final class SystemdUnitSectionArgs extends com.pulumi.resources.ResourceA
     public static final SystemdUnitSectionArgs Empty = new SystemdUnitSectionArgs();
 
     /**
+     * Those two settings configure ordering dependencies between units.
+     * 
+     */
+    @Import(name="after")
+    private @Nullable Output<List<String>> after;
+
+    /**
+     * @return Those two settings configure ordering dependencies between units.
+     * 
+     */
+    public Optional<Output<List<String>>> after() {
+        return Optional.ofNullable(this.after);
+    }
+
+    /**
+     * Those two settings configure ordering dependencies between units.
+     * 
+     */
+    @Import(name="before")
+    private @Nullable Output<List<String>> before;
+
+    /**
+     * @return Those two settings configure ordering dependencies between units.
+     * 
+     */
+    public Optional<Output<List<String>>> before() {
+        return Optional.ofNullable(this.before);
+    }
+
+    /**
      * Configures requirement dependencies, very similar in style to Requires=.
      * 
      */
@@ -113,6 +143,8 @@ public final class SystemdUnitSectionArgs extends com.pulumi.resources.ResourceA
     private SystemdUnitSectionArgs() {}
 
     private SystemdUnitSectionArgs(SystemdUnitSectionArgs $) {
+        this.after = $.after;
+        this.before = $.before;
         this.bindsTo = $.bindsTo;
         this.description = $.description;
         this.documentation = $.documentation;
@@ -137,6 +169,68 @@ public final class SystemdUnitSectionArgs extends com.pulumi.resources.ResourceA
 
         public Builder(SystemdUnitSectionArgs defaults) {
             $ = new SystemdUnitSectionArgs(Objects.requireNonNull(defaults));
+        }
+
+        /**
+         * @param after Those two settings configure ordering dependencies between units.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder after(@Nullable Output<List<String>> after) {
+            $.after = after;
+            return this;
+        }
+
+        /**
+         * @param after Those two settings configure ordering dependencies between units.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder after(List<String> after) {
+            return after(Output.of(after));
+        }
+
+        /**
+         * @param after Those two settings configure ordering dependencies between units.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder after(String... after) {
+            return after(List.of(after));
+        }
+
+        /**
+         * @param before Those two settings configure ordering dependencies between units.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder before(@Nullable Output<List<String>> before) {
+            $.before = before;
+            return this;
+        }
+
+        /**
+         * @param before Those two settings configure ordering dependencies between units.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder before(List<String> before) {
+            return before(Output.of(before));
+        }
+
+        /**
+         * @param before Those two settings configure ordering dependencies between units.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder before(String... before) {
+            return before(List.of(before));
         }
 
         /**

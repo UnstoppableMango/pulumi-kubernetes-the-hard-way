@@ -25,6 +25,7 @@ from .kube_proxy_install import *
 from .kube_scheduler_install import *
 from .kubectl_install import *
 from .kubelet_install import *
+from .kubelet_service import *
 from .provision_etcd import *
 from .runc_install import *
 from .start_etcd import *

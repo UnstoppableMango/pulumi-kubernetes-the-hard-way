@@ -27,6 +27,7 @@ export type ResourceConstructor = {
     readonly "kubernetes-the-hard-way:remote:KubeSchedulerInstall": ConstructComponent<KubeSchedulerInstall>;
     readonly "kubernetes-the-hard-way:remote:KubectlInstall": ConstructComponent<KubectlInstall>;
     readonly "kubernetes-the-hard-way:remote:KubeletInstall": ConstructComponent<KubeletInstall>;
+    readonly "kubernetes-the-hard-way:remote:KubeletService": ConstructComponent<KubeletService>;
     readonly "kubernetes-the-hard-way:remote:ProvisionEtcd": ConstructComponent<ProvisionEtcd>;
     readonly "kubernetes-the-hard-way:remote:RuncInstall": ConstructComponent<RuncInstall>;
     readonly "kubernetes-the-hard-way:remote:StartEtcd": ConstructComponent<StartEtcd>;
@@ -580,6 +581,34 @@ export interface KubeletInstallArgs {
     readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
     readonly directory?: pulumi.Input<string>;
     readonly version?: pulumi.Input<string>;
+}
+export abstract class KubeletService<TData = any> extends (pulumi.ComponentResource)<TData> {
+    public after!: string[] | pulumi.Output<string[]>;
+    public configuration!: KubeletConfigurationPropsOutputs | pulumi.Output<KubeletConfigurationPropsOutputs>;
+    public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
+    public description?: string | pulumi.Output<string>;
+    public directory?: string | pulumi.Output<string>;
+    public documentation?: string | pulumi.Output<string>;
+    public requires!: string[] | pulumi.Output<string[]>;
+    public restart?: SystemdServiceRestartOutputs | pulumi.Output<SystemdServiceRestartOutputs>;
+    public restartSec?: string | pulumi.Output<string>;
+    public service!: SystemdService | pulumi.Output<SystemdService>;
+    public wantedBy?: string | pulumi.Output<string>;
+    constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
+        super("kubernetes-the-hard-way:remote:KubeletService", name, opts.urn ? { after: undefined, configuration: undefined, connection: undefined, description: undefined, directory: undefined, documentation: undefined, requires: undefined, restart: undefined, restartSec: undefined, service: undefined, wantedBy: undefined } : { name, args, opts }, opts);
+    }
+}
+export interface KubeletServiceArgs {
+    readonly after: pulumi.Input<pulumi.Input<string>[]>;
+    readonly configuration: pulumi.Input<KubeletConfigurationPropsInputs>;
+    readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
+    readonly description?: pulumi.Input<string>;
+    readonly directory?: pulumi.Input<string>;
+    readonly documentation?: pulumi.Input<string>;
+    readonly requires: pulumi.Input<pulumi.Input<string>[]>;
+    readonly restart?: pulumi.Input<SystemdServiceRestartInputs>;
+    readonly restartSec?: pulumi.Input<string>;
+    readonly wantedBy?: pulumi.Input<string>;
 }
 export abstract class ProvisionEtcd<TData = any> extends (pulumi.ComponentResource)<TData> {
     public architecture?: ArchitectureOutputs | pulumi.Output<ArchitectureOutputs>;
@@ -1414,6 +1443,20 @@ export interface EtcdNodeOutputs {
     readonly connection: pulumi.Output<command.types.output.remote.Connection>;
     readonly internalIp: pulumi.Output<string>;
 }
+export interface KubeletConfigurationPropsInputs {
+    readonly configurationFilePath: pulumi.Input<string>;
+    readonly kubeconfigPath: pulumi.Input<string>;
+    readonly kubeletPath: pulumi.Input<string>;
+    readonly registerNode: pulumi.Input<boolean>;
+    readonly v: pulumi.Input<number>;
+}
+export interface KubeletConfigurationPropsOutputs {
+    readonly configurationFilePath: pulumi.Output<string>;
+    readonly kubeconfigPath: pulumi.Output<string>;
+    readonly kubeletPath: pulumi.Output<string>;
+    readonly registerNode: pulumi.Output<boolean>;
+    readonly v: pulumi.Output<number>;
+}
 export interface SystemdInstallSectionInputs {
     readonly wantedBy?: pulumi.Input<pulumi.Input<string>[]>;
 }
@@ -1441,6 +1484,8 @@ export interface SystemdServiceSectionOutputs {
 export type SystemdServiceTypeInputs = "simple" | "exec" | "forking" | "oneshot" | "dbus" | "notify" | "notify-reload" | "idle";
 export type SystemdServiceTypeOutputs = "simple" | "exec" | "forking" | "oneshot" | "dbus" | "notify" | "notify-reload" | "idle";
 export interface SystemdUnitSectionInputs {
+    readonly after?: pulumi.Input<pulumi.Input<string>[]>;
+    readonly before?: pulumi.Input<pulumi.Input<string>[]>;
     readonly bindsTo?: pulumi.Input<pulumi.Input<string>[]>;
     readonly description?: pulumi.Input<string>;
     readonly documentation?: pulumi.Input<pulumi.Input<string>[]>;
@@ -1449,6 +1494,8 @@ export interface SystemdUnitSectionInputs {
     readonly wants?: pulumi.Input<pulumi.Input<string>[]>;
 }
 export interface SystemdUnitSectionOutputs {
+    readonly after?: pulumi.Output<string[]>;
+    readonly before?: pulumi.Output<string[]>;
     readonly bindsTo?: pulumi.Output<string[]>;
     readonly description?: pulumi.Output<string>;
     readonly documentation?: pulumi.Output<string[]>;

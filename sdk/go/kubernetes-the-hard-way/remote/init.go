@@ -59,6 +59,8 @@ func (m *module) Construct(ctx *pulumi.Context, name, typ, urn string) (r pulumi
 		r = &KubectlInstall{}
 	case "kubernetes-the-hard-way:remote:KubeletInstall":
 		r = &KubeletInstall{}
+	case "kubernetes-the-hard-way:remote:KubeletService":
+		r = &KubeletService{}
 	case "kubernetes-the-hard-way:remote:ProvisionEtcd":
 		r = &ProvisionEtcd{}
 	case "kubernetes-the-hard-way:remote:RuncInstall":
