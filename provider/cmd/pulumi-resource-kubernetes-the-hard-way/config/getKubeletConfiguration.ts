@@ -1,4 +1,4 @@
-import { Output, output } from '@pulumi/pulumi';
+import { Output } from '@pulumi/pulumi';
 import * as schema from '../schema-types';
 
 export async function getKubeletConfiguration(inputs: schema.getKubeletConfigurationInputs): Promise<schema.getKubeletConfigurationOutputs> {
@@ -30,7 +30,5 @@ export async function getKubeletConfiguration(inputs: schema.getKubeletConfigura
     tlsPrivateKeyFile: inputs.tlsPrivateKeyFile ?? '/var/lib/kubelet/kubelet.key',
   };
 
-  const test: Output<schema.KubeletConfigurationOutputs> = {};
-
-  return { result: test };
+  return { result: result as Output<schema.KubeletConfigurationOutputs> };
 }
