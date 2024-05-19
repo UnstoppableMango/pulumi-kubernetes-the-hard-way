@@ -291,6 +291,36 @@ func generateTypes(kubernetesSpec schema.PackageSpec) map[string]schema.ComplexT
 				},
 			},
 		},
+		name("KubeProxyConfigurationClientConnection"): {
+			ObjectTypeSpec: schema.ObjectTypeSpec{
+				Type: "object",
+				Properties: map[string]schema.PropertySpec{
+					"kubeconfig": props.String("Path to the kubeconfig."),
+				},
+				Required: []string{"kubeconfig"},
+			},
+		},
+		name("KubeProxyConfiguration"): {
+			ObjectTypeSpec: schema.ObjectTypeSpec{
+				Type: "object",
+				Properties: map[string]schema.PropertySpec{
+					"kind": {
+						TypeSpec: types.String,
+						Const:    "KubeProxyConfiguration",
+					},
+					"apiVersion": {
+						TypeSpec: types.String,
+						Const:    "kubeproxy.config.k8s.io/v1alpha1",
+					},
+					"clientConnection": {
+						TypeSpec: types.LocalType("KubeProxyConfigurationClientConnection", "config"),
+					},
+					"mode":        props.String("TODO"),
+					"clusterCIDR": props.String("TODO"),
+				},
+				Required: []string{"clusterCIDR"},
+			},
+		},
 		name("PodManifest"): generatePodManifest(kubernetesSpec),
 		name("User"): {
 			ObjectTypeSpec: schema.ObjectTypeSpec{

@@ -185,6 +185,17 @@ func generateTypes(commandSpec schema.PackageSpec) map[string]schema.ComplexType
 				},
 			},
 		},
+		name("KubeProxyConfigurationProps"): {
+			ObjectTypeSpec: schema.ObjectTypeSpec{
+				Description: "Props for resources that consume kube-proxy configuration.",
+				Type:        "object",
+				Properties: map[string]schema.PropertySpec{
+					"kubeProxyPath":         props.String("Path to the kube-proxy binary."),
+					"configurationFilePath": props.String("Path to the kube proxy configuration file"),
+				},
+				Required: []string{"configurationFilePath", "kubeProxyPath"},
+			},
+		},
 		name("SystemdInstallSection"): {
 			ObjectTypeSpec: schema.ObjectTypeSpec{
 				Description: "https://www.freedesktop.org/software/systemd/man/latest/systemd.unit.html#%5BInstall%5D%20Section%20Options",
