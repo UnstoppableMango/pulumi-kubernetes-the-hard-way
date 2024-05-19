@@ -12,11 +12,12 @@ import (
 	"github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/sdk/go/kubernetes-the-hard-way/internal"
 )
 
+// Get the kubelet configuration.
 type KubeletConfiguration struct {
 	pulumi.ResourceState
 
 	Result KubeletConfigurationTypeOutput `pulumi:"result"`
-	// The yaml representation of the manifest
+	// The yaml representation of the manifest.
 	Yaml pulumi.StringOutput `pulumi:"yaml"`
 }
 
@@ -163,7 +164,7 @@ func (o KubeletConfigurationOutput) Result() KubeletConfigurationTypeOutput {
 	return o.ApplyT(func(v *KubeletConfiguration) KubeletConfigurationTypeOutput { return v.Result }).(KubeletConfigurationTypeOutput)
 }
 
-// The yaml representation of the manifest
+// The yaml representation of the manifest.
 func (o KubeletConfigurationOutput) Yaml() pulumi.StringOutput {
 	return o.ApplyT(func(v *KubeletConfiguration) pulumi.StringOutput { return v.Yaml }).(pulumi.StringOutput)
 }

@@ -96,6 +96,7 @@ func (val *GetKubeVipManifestArgs) Defaults() *GetKubeVipManifestArgs {
 	return &tmp
 }
 
+// Gets the static pod manifests for KubeVip.
 type GetKubeVipManifestResult struct {
 	Result PodManifest `pulumi:"result"`
 }
@@ -170,6 +171,7 @@ func (GetKubeVipManifestOutputArgs) ElementType() reflect.Type {
 	return reflect.TypeOf((*GetKubeVipManifestArgs)(nil)).Elem()
 }
 
+// Gets the static pod manifests for KubeVip.
 type GetKubeVipManifestResultOutput struct{ *pulumi.OutputState }
 
 func (GetKubeVipManifestResultOutput) ElementType() reflect.Type {

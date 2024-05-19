@@ -38,6 +38,7 @@ type GetKubeletConfigurationArgs struct {
 	Webhook                  *bool    `pulumi:"webhook"`
 }
 
+// Get the kubelet configuration.
 type GetKubeletConfigurationResult struct {
 	Result KubeletConfigurationType `pulumi:"result"`
 }
@@ -75,6 +76,7 @@ func (GetKubeletConfigurationOutputArgs) ElementType() reflect.Type {
 	return reflect.TypeOf((*GetKubeletConfigurationArgs)(nil)).Elem()
 }
 
+// Get the kubelet configuration.
 type GetKubeletConfigurationResultOutput struct{ *pulumi.OutputState }
 
 func (GetKubeletConfigurationResultOutput) ElementType() reflect.Type {

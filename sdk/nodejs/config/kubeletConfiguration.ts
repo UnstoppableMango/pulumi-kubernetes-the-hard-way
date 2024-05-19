@@ -7,6 +7,9 @@ import * as outputs from "../types/output";
 import * as enums from "../types/enums";
 import * as utilities from "../utilities";
 
+/**
+ * Get the kubelet configuration.
+ */
 export class KubeletConfiguration extends pulumi.ComponentResource {
     /** @internal */
     public static readonly __pulumiType = 'kubernetes-the-hard-way:config:KubeletConfiguration';
@@ -24,7 +27,7 @@ export class KubeletConfiguration extends pulumi.ComponentResource {
 
     public /*out*/ readonly result!: pulumi.Output<outputs.config.KubeletConfiguration>;
     /**
-     * The yaml representation of the manifest
+     * The yaml representation of the manifest.
      */
     public /*out*/ readonly yaml!: pulumi.Output<string>;
 

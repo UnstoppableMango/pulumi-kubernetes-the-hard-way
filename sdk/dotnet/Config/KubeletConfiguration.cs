@@ -10,6 +10,9 @@ using Pulumi;
 
 namespace UnMango.KubernetesTheHardWay.Config
 {
+    /// <summary>
+    /// Get the kubelet configuration.
+    /// </summary>
     [KubernetesTheHardWayResourceType("kubernetes-the-hard-way:config:KubeletConfiguration")]
     public partial class KubeletConfiguration : global::Pulumi.ComponentResource
     {
@@ -17,7 +20,7 @@ namespace UnMango.KubernetesTheHardWay.Config
         public Output<Outputs.KubeletConfiguration> Result { get; private set; } = null!;
 
         /// <summary>
-        /// The yaml representation of the manifest
+        /// The yaml representation of the manifest.
         /// </summary>
         [Output("yaml")]
         public Output<string> Yaml { get; private set; } = null!;

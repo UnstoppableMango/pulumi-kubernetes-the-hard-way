@@ -46,6 +46,9 @@ export interface GetKubeletConfigurationArgs {
     webhook?: boolean;
 }
 
+/**
+ * Get the kubelet configuration.
+ */
 export interface GetKubeletConfigurationResult {
     readonly result: outputs.config.KubeletConfiguration;
 }

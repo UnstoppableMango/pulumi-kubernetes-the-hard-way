@@ -195,7 +195,8 @@ class KubeletConfiguration(pulumi.ComponentResource):
                  webhook: Optional[pulumi.Input[bool]] = None,
                  __props__=None):
         """
-        Create a KubeletConfiguration resource with the given unique name, props, and options.
+        Get the kubelet configuration.
+
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
         """
@@ -206,7 +207,8 @@ class KubeletConfiguration(pulumi.ComponentResource):
                  args: KubeletConfigurationArgs,
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
-        Create a KubeletConfiguration resource with the given unique name, props, and options.
+        Get the kubelet configuration.
+
         :param str resource_name: The name of the resource.
         :param KubeletConfigurationArgs args: The arguments to use to populate this resource's properties.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -279,7 +281,7 @@ class KubeletConfiguration(pulumi.ComponentResource):
     @pulumi.getter
     def yaml(self) -> pulumi.Output[str]:
         """
-        The yaml representation of the manifest
+        The yaml representation of the manifest.
         """
         return pulumi.get(self, "yaml")
 

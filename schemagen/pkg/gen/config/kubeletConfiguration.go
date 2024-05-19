@@ -1,28 +1,35 @@
 package config
 
 import (
-	"maps"
-
 	"github.com/UnstoppableMango/pulumi-kubernetes-the-hard-way/schemagen/pkg/gen/props"
+	"github.com/UnstoppableMango/pulumi-kubernetes-the-hard-way/schemagen/pkg/gen/types"
 	"github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 )
 
-func generateKubeletConfiguration(getKubeletConfiguration schema.FunctionSpec) schema.ResourceSpec {
-	outputs := maps.Clone(getKubeletConfiguration.Outputs.Properties)
-	outputs["yaml"] = props.String("The yaml representation of the manifest")
-
-	requiredOutputs := append(
-		getKubeletConfiguration.Outputs.Required,
-		"yaml",
-	)
-
-	return schema.ResourceSpec{
-		IsComponent: true,
-		ObjectTypeSpec: schema.ObjectTypeSpec{
-			Properties: outputs,
-			Required:   requiredOutputs,
+func generateGetKubeletConfiguration() pseudoFunction {
+	return generatePseudoFunction(
+		"Get the kubelet configuration.",
+		schema.ObjectTypeSpec{
+			Properties: map[string]schema.PropertySpec{
+				"anonymous":                props.Boolean(""),
+				"webhook":                  props.Boolean(""),
+				"clientCAFile":             props.String(""),
+				"authorizationMode":        props.String(""),
+				"clusterDomain":            props.String(""),
+				"clusterDNS":               props.ArrayOf("string", ""),
+				"cgroupDriver":             props.String(""),
+				"containerRuntimeEndpoint": props.String(""),
+				"podCIDR":                  props.String(""),
+				"resolvConf":               props.String(""),
+				"runtimeRequestTimeout":    props.String(""),
+				"tlsCertFile":              props.String(""),
+				"tlsPrivateKeyFile":        props.String(""),
+			},
+			Required: []string{"podCIDR"},
 		},
-		InputProperties: getKubeletConfiguration.Inputs.Properties,
-		RequiredInputs:  getKubeletConfiguration.Inputs.Required,
-	}
+		schema.PropertySpec{
+			TypeSpec: types.LocalType("KubeletConfiguration", "config"),
+		},
+		"yaml", props.String("The yaml representation of the manifest."),
+	)
 }

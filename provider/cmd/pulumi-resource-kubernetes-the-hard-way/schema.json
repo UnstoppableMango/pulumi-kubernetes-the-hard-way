@@ -2057,14 +2057,14 @@
     "provider": {},
     "resources": {
         "kubernetes-the-hard-way:config:KubeVipManifest": {
-            "description": "Pseudo resource for generating the kube-vip manifest.",
+            "description": "Gets the static pod manifests for KubeVip.",
             "properties": {
                 "result": {
                     "$ref": "#/types/kubernetes-the-hard-way:config:PodManifest"
                 },
                 "yaml": {
                     "type": "string",
-                    "description": "The yaml representation of the manifest"
+                    "description": "The yaml representation of the manifest."
                 }
             },
             "required": [
@@ -2184,13 +2184,14 @@
             "isComponent": true
         },
         "kubernetes-the-hard-way:config:KubeletConfiguration": {
+            "description": "Get the kubelet configuration.",
             "properties": {
                 "result": {
                     "$ref": "#/types/kubernetes-the-hard-way:config:KubeletConfiguration"
                 },
                 "yaml": {
                     "type": "string",
-                    "description": "The yaml representation of the manifest"
+                    "description": "The yaml representation of the manifest."
                 }
             },
             "required": [
@@ -7426,6 +7427,7 @@
                 ]
             },
             "outputs": {
+                "description": "Gets the static pod manifests for KubeVip.",
                 "properties": {
                     "result": {
                         "$ref": "#/types/kubernetes-the-hard-way:config:PodManifest"
@@ -7543,6 +7545,7 @@
                 ]
             },
             "outputs": {
+                "description": "Get the kubelet configuration.",
                 "properties": {
                     "result": {
                         "$ref": "#/types/kubernetes-the-hard-way:config:KubeletConfiguration"

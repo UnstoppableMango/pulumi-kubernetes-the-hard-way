@@ -456,7 +456,7 @@ class KubeVipManifest(pulumi.ComponentResource):
                  vip_retry_period: Optional[pulumi.Input[int]] = None,
                  __props__=None):
         """
-        Pseudo resource for generating the kube-vip manifest.
+        Gets the static pod manifests for KubeVip.
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -493,7 +493,7 @@ class KubeVipManifest(pulumi.ComponentResource):
                  args: KubeVipManifestArgs,
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
-        Pseudo resource for generating the kube-vip manifest.
+        Gets the static pod manifests for KubeVip.
 
         :param str resource_name: The name of the resource.
         :param KubeVipManifestArgs args: The arguments to use to populate this resource's properties.
@@ -601,7 +601,7 @@ class KubeVipManifest(pulumi.ComponentResource):
     @pulumi.getter
     def yaml(self) -> pulumi.Output[str]:
         """
-        The yaml representation of the manifest
+        The yaml representation of the manifest.
         """
         return pulumi.get(self, "yaml")
 

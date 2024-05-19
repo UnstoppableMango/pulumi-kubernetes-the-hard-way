@@ -12,6 +12,10 @@ import com.unmango.kubernetesthehardway.config.KubeletConfigurationArgs;
 import java.lang.String;
 import javax.annotation.Nullable;
 
+/**
+ * Get the kubelet configuration.
+ * 
+ */
 @ResourceType(type="kubernetes-the-hard-way:config:KubeletConfiguration")
 public class KubeletConfiguration extends com.pulumi.resources.ComponentResource {
     @Export(name="result", refs={com.unmango.kubernetesthehardway.config.outputs.KubeletConfiguration.class}, tree="[0]")
@@ -21,14 +25,14 @@ public class KubeletConfiguration extends com.pulumi.resources.ComponentResource
         return this.result;
     }
     /**
-     * The yaml representation of the manifest
+     * The yaml representation of the manifest.
      * 
      */
     @Export(name="yaml", refs={String.class}, tree="[0]")
     private Output<String> yaml;
 
     /**
-     * @return The yaml representation of the manifest
+     * @return The yaml representation of the manifest.
      * 
      */
     public Output<String> yaml() {
