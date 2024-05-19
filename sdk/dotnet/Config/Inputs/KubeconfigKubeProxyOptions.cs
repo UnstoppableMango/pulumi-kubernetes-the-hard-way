@@ -13,6 +13,9 @@ namespace UnMango.KubernetesTheHardWay.Config.Inputs
 
     public sealed class KubeconfigKubeProxyOptions : global::Pulumi.InvokeArgs
     {
+        /// <summary>
+        /// TODO
+        /// </summary>
         [Input("publicIp")]
         public string? PublicIp { get; set; }
 

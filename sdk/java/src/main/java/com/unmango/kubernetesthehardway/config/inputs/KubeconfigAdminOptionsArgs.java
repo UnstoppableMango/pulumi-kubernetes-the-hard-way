@@ -17,9 +17,17 @@ public final class KubeconfigAdminOptionsArgs extends com.pulumi.resources.Resou
 
     public static final KubeconfigAdminOptionsArgs Empty = new KubeconfigAdminOptionsArgs();
 
+    /**
+     * TODO
+     * 
+     */
     @Import(name="publicIp")
     private @Nullable Output<String> publicIp;
 
+    /**
+     * @return TODO
+     * 
+     */
     public Optional<Output<String>> publicIp() {
         return Optional.ofNullable(this.publicIp);
     }
@@ -56,11 +64,23 @@ public final class KubeconfigAdminOptionsArgs extends com.pulumi.resources.Resou
             $ = new KubeconfigAdminOptionsArgs(Objects.requireNonNull(defaults));
         }
 
+        /**
+         * @param publicIp TODO
+         * 
+         * @return builder
+         * 
+         */
         public Builder publicIp(@Nullable Output<String> publicIp) {
             $.publicIp = publicIp;
             return this;
         }
 
+        /**
+         * @param publicIp TODO
+         * 
+         * @return builder
+         * 
+         */
         public Builder publicIp(String publicIp) {
             return publicIp(Output.of(publicIp));
         }

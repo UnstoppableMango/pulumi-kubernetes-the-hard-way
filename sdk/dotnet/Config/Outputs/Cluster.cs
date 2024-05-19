@@ -14,7 +14,13 @@ namespace UnMango.KubernetesTheHardWay.Config.Outputs
     [OutputType]
     public sealed class Cluster
     {
+        /// <summary>
+        /// TODO
+        /// </summary>
         public readonly string CertificateAuthorityData;
+        /// <summary>
+        /// TODO
+        /// </summary>
         public readonly string Server;
 
         [OutputConstructor]

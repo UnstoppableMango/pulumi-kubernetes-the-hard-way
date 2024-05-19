@@ -10,13 +10,29 @@ import java.util.Objects;
 
 @CustomType
 public final class Context {
+    /**
+     * @return TODO
+     * 
+     */
     private String cluster;
+    /**
+     * @return TODO
+     * 
+     */
     private String user;
 
     private Context() {}
+    /**
+     * @return TODO
+     * 
+     */
     public String cluster() {
         return this.cluster;
     }
+    /**
+     * @return TODO
+     * 
+     */
     public String user() {
         return this.user;
     }

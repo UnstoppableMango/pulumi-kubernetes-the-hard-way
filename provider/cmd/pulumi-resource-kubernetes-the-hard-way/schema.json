@@ -85,10 +85,12 @@
         "kubernetes-the-hard-way:config:Cluster": {
             "properties": {
                 "certificateAuthorityData": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "TODO"
                 },
                 "server": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "TODO"
                 }
             },
             "type": "object",
@@ -100,10 +102,12 @@
         "kubernetes-the-hard-way:config:Context": {
             "properties": {
                 "cluster": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "TODO"
                 },
                 "user": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "TODO"
                 }
             },
             "type": "object",
@@ -143,7 +147,8 @@
         "kubernetes-the-hard-way:config:KubeconfigAdminOptions": {
             "properties": {
                 "publicIp": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "TODO"
                 },
                 "type": {
                     "type": "string",
@@ -162,7 +167,8 @@
                     "$ref": "#/types/kubernetes-the-hard-way:config:Cluster"
                 },
                 "name": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "TODO"
                 }
             },
             "type": "object",
@@ -177,7 +183,8 @@
                     "$ref": "#/types/kubernetes-the-hard-way:config:Context"
                 },
                 "name": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "TODO"
                 }
             },
             "type": "object",
@@ -189,7 +196,8 @@
         "kubernetes-the-hard-way:config:KubeconfigKubeControllerManagerOptions": {
             "properties": {
                 "publicIp": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "TODO"
                 },
                 "type": {
                     "type": "string",
@@ -205,7 +213,8 @@
         "kubernetes-the-hard-way:config:KubeconfigKubeProxyOptions": {
             "properties": {
                 "publicIp": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "TODO"
                 },
                 "type": {
                     "type": "string",
@@ -221,7 +230,8 @@
         "kubernetes-the-hard-way:config:KubeconfigKubeSchedulerOptions": {
             "properties": {
                 "publicIp": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "TODO"
                 },
                 "type": {
                     "type": "string",
@@ -257,7 +267,8 @@
         "kubernetes-the-hard-way:config:KubeconfigUser": {
             "properties": {
                 "name": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "TODO"
                 },
                 "user": {
                     "$ref": "#/types/kubernetes-the-hard-way:config:User"
@@ -272,10 +283,12 @@
         "kubernetes-the-hard-way:config:KubeconfigWorkerOptions": {
             "properties": {
                 "name": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "TODO"
                 },
                 "publicIp": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "TODO"
                 },
                 "type": {
                     "type": "string",
@@ -320,10 +333,12 @@
         "kubernetes-the-hard-way:config:User": {
             "properties": {
                 "clientCertificateData": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "TODO"
                 },
                 "clientKeyData": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "TODO"
                 }
             },
             "type": "object",

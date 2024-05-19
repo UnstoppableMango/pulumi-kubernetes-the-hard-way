@@ -10,13 +10,29 @@ import java.util.Objects;
 
 @CustomType
 public final class Cluster {
+    /**
+     * @return TODO
+     * 
+     */
     private String certificateAuthorityData;
+    /**
+     * @return TODO
+     * 
+     */
     private String server;
 
     private Cluster() {}
+    /**
+     * @return TODO
+     * 
+     */
     public String certificateAuthorityData() {
         return this.certificateAuthorityData;
     }
+    /**
+     * @return TODO
+     * 
+     */
     public String server() {
         return this.server;
     }

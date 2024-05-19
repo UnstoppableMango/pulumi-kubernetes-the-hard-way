@@ -13,6 +13,9 @@ namespace UnMango.KubernetesTheHardWay.Config.Inputs
 
     public sealed class KubeconfigAdminOptionsArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// TODO
+        /// </summary>
         [Input("publicIp")]
         public Input<string>? PublicIp { get; set; }
 

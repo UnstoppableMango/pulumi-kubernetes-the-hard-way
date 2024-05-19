@@ -17,9 +17,17 @@ public final class KubeconfigKubeControllerManagerOptionsArgs extends com.pulumi
 
     public static final KubeconfigKubeControllerManagerOptionsArgs Empty = new KubeconfigKubeControllerManagerOptionsArgs();
 
+    /**
+     * TODO
+     * 
+     */
     @Import(name="publicIp")
     private @Nullable Output<String> publicIp;
 
+    /**
+     * @return TODO
+     * 
+     */
     public Optional<Output<String>> publicIp() {
         return Optional.ofNullable(this.publicIp);
     }
@@ -56,11 +64,23 @@ public final class KubeconfigKubeControllerManagerOptionsArgs extends com.pulumi
             $ = new KubeconfigKubeControllerManagerOptionsArgs(Objects.requireNonNull(defaults));
         }
 
+        /**
+         * @param publicIp TODO
+         * 
+         * @return builder
+         * 
+         */
         public Builder publicIp(@Nullable Output<String> publicIp) {
             $.publicIp = publicIp;
             return this;
         }
 
+        /**
+         * @param publicIp TODO
+         * 
+         * @return builder
+         * 
+         */
         public Builder publicIp(String publicIp) {
             return publicIp(Output.of(publicIp));
         }

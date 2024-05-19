@@ -14,7 +14,13 @@ namespace UnMango.KubernetesTheHardWay.Config.Outputs
     [OutputType]
     public sealed class Context
     {
+        /// <summary>
+        /// TODO
+        /// </summary>
         public readonly string Cluster;
+        /// <summary>
+        /// TODO
+        /// </summary>
         public readonly string User;
 
         [OutputConstructor]

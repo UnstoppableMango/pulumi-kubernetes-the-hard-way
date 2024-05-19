@@ -16,9 +16,17 @@ public final class KubeconfigKubeProxyOptions extends com.pulumi.resources.Invok
 
     public static final KubeconfigKubeProxyOptions Empty = new KubeconfigKubeProxyOptions();
 
+    /**
+     * TODO
+     * 
+     */
     @Import(name="publicIp")
     private @Nullable String publicIp;
 
+    /**
+     * @return TODO
+     * 
+     */
     public Optional<String> publicIp() {
         return Optional.ofNullable(this.publicIp);
     }
@@ -55,6 +63,12 @@ public final class KubeconfigKubeProxyOptions extends com.pulumi.resources.Invok
             $ = new KubeconfigKubeProxyOptions(Objects.requireNonNull(defaults));
         }
 
+        /**
+         * @param publicIp TODO
+         * 
+         * @return builder
+         * 
+         */
         public Builder publicIp(@Nullable String publicIp) {
             $.publicIp = publicIp;
             return this;

@@ -13,9 +13,15 @@ namespace UnMango.KubernetesTheHardWay.Config.Inputs
 
     public sealed class KubeconfigWorkerOptions : global::Pulumi.InvokeArgs
     {
+        /// <summary>
+        /// TODO
+        /// </summary>
         [Input("name", required: true)]
         public string Name { get; set; } = null!;
 
+        /// <summary>
+        /// TODO
+        /// </summary>
         [Input("publicIp", required: true)]
         public string PublicIp { get; set; } = null!;
 

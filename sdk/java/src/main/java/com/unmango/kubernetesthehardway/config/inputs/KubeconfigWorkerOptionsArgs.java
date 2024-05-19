@@ -17,16 +17,32 @@ public final class KubeconfigWorkerOptionsArgs extends com.pulumi.resources.Reso
 
     public static final KubeconfigWorkerOptionsArgs Empty = new KubeconfigWorkerOptionsArgs();
 
+    /**
+     * TODO
+     * 
+     */
     @Import(name="name", required=true)
     private Output<String> name;
 
+    /**
+     * @return TODO
+     * 
+     */
     public Output<String> name() {
         return this.name;
     }
 
+    /**
+     * TODO
+     * 
+     */
     @Import(name="publicIp", required=true)
     private Output<String> publicIp;
 
+    /**
+     * @return TODO
+     * 
+     */
     public Output<String> publicIp() {
         return this.publicIp;
     }
@@ -64,20 +80,44 @@ public final class KubeconfigWorkerOptionsArgs extends com.pulumi.resources.Reso
             $ = new KubeconfigWorkerOptionsArgs(Objects.requireNonNull(defaults));
         }
 
+        /**
+         * @param name TODO
+         * 
+         * @return builder
+         * 
+         */
         public Builder name(Output<String> name) {
             $.name = name;
             return this;
         }
 
+        /**
+         * @param name TODO
+         * 
+         * @return builder
+         * 
+         */
         public Builder name(String name) {
             return name(Output.of(name));
         }
 
+        /**
+         * @param publicIp TODO
+         * 
+         * @return builder
+         * 
+         */
         public Builder publicIp(Output<String> publicIp) {
             $.publicIp = publicIp;
             return this;
         }
 
+        /**
+         * @param publicIp TODO
+         * 
+         * @return builder
+         * 
+         */
         public Builder publicIp(String publicIp) {
             return publicIp(Output.of(publicIp));
         }
