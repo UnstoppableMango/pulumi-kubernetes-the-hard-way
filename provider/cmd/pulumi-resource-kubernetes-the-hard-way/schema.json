@@ -2057,14 +2057,14 @@
     "provider": {},
     "resources": {
         "kubernetes-the-hard-way:config:KubeVipManifest": {
-            "description": "Pseudo resource for generating the kube-vip manifest.",
+            "description": "Gets the static pod manifests for KubeVip.",
             "properties": {
                 "result": {
                     "$ref": "#/types/kubernetes-the-hard-way:config:PodManifest"
                 },
                 "yaml": {
                     "type": "string",
-                    "description": "The yaml representation of the manifest"
+                    "description": "The yaml representation of the manifest."
                 }
             },
             "required": [
@@ -2183,14 +2183,73 @@
             ],
             "isComponent": true
         },
+        "kubernetes-the-hard-way:config:Kubeconfig": {
+            "description": "TODO",
+            "properties": {
+                "result": {
+                    "$ref": "#/types/kubernetes-the-hard-way:config:Kubeconfig"
+                },
+                "yaml": {
+                    "type": "string",
+                    "description": "The yaml representation of the manifest."
+                }
+            },
+            "required": [
+                "result",
+                "yaml"
+            ],
+            "inputProperties": {
+                "caPem": {
+                    "type": "string",
+                    "description": "Certificate authority data."
+                },
+                "options": {
+                    "oneOf": [
+                        {
+                            "$ref": "#/types/kubernetes-the-hard-way:config:KubeconfigAdminOptions"
+                        },
+                        {
+                            "$ref": "#/types/kubernetes-the-hard-way:config:KubeconfigKubeControllerManagerOptions"
+                        },
+                        {
+                            "$ref": "#/types/kubernetes-the-hard-way:config:KubeconfigKubeProxyOptions"
+                        },
+                        {
+                            "$ref": "#/types/kubernetes-the-hard-way:config:KubeconfigKubeSchedulerOptions"
+                        },
+                        {
+                            "$ref": "#/types/kubernetes-the-hard-way:config:KubeconfigWorkerOptions"
+                        }
+                    ],
+                    "discriminator": {
+                        "propertyName": "type",
+                        "mapping": {
+                            "admin": "#/types/kubernetes-the-hard-way:config:KubeconfigAdminOptions",
+                            "kube-controller-manager": "#/types/kubernetes-the-hard-way:config:KubeconfigKubeControllerManagerOptions",
+                            "kube-proxy": "#/types/kubernetes-the-hard-way:config:KubeconfigKubeProxyOptions",
+                            "kube-scheduler": "#/types/kubernetes-the-hard-way:config:KubeconfigKubeSchedulerOptions",
+                            "worker": "#/types/kubernetes-the-hard-way:config:KubeconfigWorkerOptions"
+                        }
+                    },
+                    "plain": true,
+                    "description": "Options for creating the kubeconfig."
+                }
+            },
+            "requiredInputs": [
+                "caPem",
+                "options"
+            ],
+            "isComponent": true
+        },
         "kubernetes-the-hard-way:config:KubeletConfiguration": {
+            "description": "Get the kubelet configuration.",
             "properties": {
                 "result": {
                     "$ref": "#/types/kubernetes-the-hard-way:config:KubeletConfiguration"
                 },
                 "yaml": {
                     "type": "string",
-                    "description": "The yaml representation of the manifest"
+                    "description": "The yaml representation of the manifest."
                 }
             },
             "required": [
@@ -7426,6 +7485,7 @@
                 ]
             },
             "outputs": {
+                "description": "Gets the static pod manifests for KubeVip.",
                 "properties": {
                     "result": {
                         "$ref": "#/types/kubernetes-the-hard-way:config:PodManifest"
@@ -7437,6 +7497,7 @@
             }
         },
         "kubernetes-the-hard-way:config:getKubeconfig": {
+            "description": "TODO",
             "inputs": {
                 "properties": {
                     "caPem": {
@@ -7481,6 +7542,7 @@
                 ]
             },
             "outputs": {
+                "description": "TODO",
                 "properties": {
                     "result": {
                         "$ref": "#/types/kubernetes-the-hard-way:config:Kubeconfig"
@@ -7543,6 +7605,7 @@
                 ]
             },
             "outputs": {
+                "description": "Get the kubelet configuration.",
                 "properties": {
                     "result": {
                         "$ref": "#/types/kubernetes-the-hard-way:config:KubeletConfiguration"

@@ -11,7 +11,7 @@ using Pulumi;
 namespace UnMango.KubernetesTheHardWay.Config
 {
     /// <summary>
-    /// Pseudo resource for generating the kube-vip manifest.
+    /// Gets the static pod manifests for KubeVip.
     /// </summary>
     [KubernetesTheHardWayResourceType("kubernetes-the-hard-way:config:KubeVipManifest")]
     public partial class KubeVipManifest : global::Pulumi.ComponentResource
@@ -20,7 +20,7 @@ namespace UnMango.KubernetesTheHardWay.Config
         public Output<Outputs.PodManifest> Result { get; private set; } = null!;
 
         /// <summary>
-        /// The yaml representation of the manifest
+        /// The yaml representation of the manifest.
         /// </summary>
         [Output("yaml")]
         public Output<string> Yaml { get; private set; } = null!;

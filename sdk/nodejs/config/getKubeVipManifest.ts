@@ -147,6 +147,9 @@ export interface GetKubeVipManifestArgs {
     vipRetryPeriod?: number;
 }
 
+/**
+ * Gets the static pod manifests for KubeVip.
+ */
 export interface GetKubeVipManifestResult {
     readonly result: outputs.config.PodManifest;
 }

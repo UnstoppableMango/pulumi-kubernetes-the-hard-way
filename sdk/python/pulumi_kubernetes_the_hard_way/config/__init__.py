@@ -10,6 +10,7 @@ from .get_kube_vip_manifest import *
 from .get_kubeconfig import *
 from .get_kubelet_configuration import *
 from .kube_vip_manifest import *
+from .kubeconfig import *
 from .kubelet_configuration import *
 from ._inputs import *
 from . import outputs

@@ -25,6 +25,11 @@ export type KubeVipManifest = import("./kubeVipManifest").KubeVipManifest;
 export const KubeVipManifest: typeof import("./kubeVipManifest").KubeVipManifest = null as any;
 utilities.lazyLoad(exports, ["KubeVipManifest"], () => require("./kubeVipManifest"));
 
+export { KubeconfigArgs } from "./kubeconfig";
+export type Kubeconfig = import("./kubeconfig").Kubeconfig;
+export const Kubeconfig: typeof import("./kubeconfig").Kubeconfig = null as any;
+utilities.lazyLoad(exports, ["Kubeconfig"], () => require("./kubeconfig"));
+
 export { KubeletConfigurationArgs } from "./kubeletConfiguration";
 export type KubeletConfiguration = import("./kubeletConfiguration").KubeletConfiguration;
 export const KubeletConfiguration: typeof import("./kubeletConfiguration").KubeletConfiguration = null as any;
@@ -40,6 +45,8 @@ const _module = {
         switch (type) {
             case "kubernetes-the-hard-way:config:KubeVipManifest":
                 return new KubeVipManifest(name, <any>undefined, { urn })
+            case "kubernetes-the-hard-way:config:Kubeconfig":
+                return new Kubeconfig(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:config:KubeletConfiguration":
                 return new KubeletConfiguration(name, <any>undefined, { urn })
             default:

@@ -117,36 +117,36 @@ func (o ContextArrayOutput) Index(i pulumi.IntInput) ContextOutput {
 	}).(ContextOutput)
 }
 
-type Kubeconfig struct {
+type KubeconfigType struct {
 	Clusters []Cluster `pulumi:"clusters"`
 	Contexts []Context `pulumi:"contexts"`
 	Users    []User    `pulumi:"users"`
 }
 
-type KubeconfigOutput struct{ *pulumi.OutputState }
+type KubeconfigTypeOutput struct{ *pulumi.OutputState }
 
-func (KubeconfigOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*Kubeconfig)(nil)).Elem()
+func (KubeconfigTypeOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*KubeconfigType)(nil)).Elem()
 }
 
-func (o KubeconfigOutput) ToKubeconfigOutput() KubeconfigOutput {
+func (o KubeconfigTypeOutput) ToKubeconfigTypeOutput() KubeconfigTypeOutput {
 	return o
 }
 
-func (o KubeconfigOutput) ToKubeconfigOutputWithContext(ctx context.Context) KubeconfigOutput {
+func (o KubeconfigTypeOutput) ToKubeconfigTypeOutputWithContext(ctx context.Context) KubeconfigTypeOutput {
 	return o
 }
 
-func (o KubeconfigOutput) Clusters() ClusterArrayOutput {
-	return o.ApplyT(func(v Kubeconfig) []Cluster { return v.Clusters }).(ClusterArrayOutput)
+func (o KubeconfigTypeOutput) Clusters() ClusterArrayOutput {
+	return o.ApplyT(func(v KubeconfigType) []Cluster { return v.Clusters }).(ClusterArrayOutput)
 }
 
-func (o KubeconfigOutput) Contexts() ContextArrayOutput {
-	return o.ApplyT(func(v Kubeconfig) []Context { return v.Contexts }).(ContextArrayOutput)
+func (o KubeconfigTypeOutput) Contexts() ContextArrayOutput {
+	return o.ApplyT(func(v KubeconfigType) []Context { return v.Contexts }).(ContextArrayOutput)
 }
 
-func (o KubeconfigOutput) Users() UserArrayOutput {
-	return o.ApplyT(func(v Kubeconfig) []User { return v.Users }).(UserArrayOutput)
+func (o KubeconfigTypeOutput) Users() UserArrayOutput {
+	return o.ApplyT(func(v KubeconfigType) []User { return v.Users }).(UserArrayOutput)
 }
 
 type KubeconfigAdminOptions struct {
@@ -1126,7 +1126,7 @@ func init() {
 	pulumi.RegisterOutputType(ClusterArrayOutput{})
 	pulumi.RegisterOutputType(ContextOutput{})
 	pulumi.RegisterOutputType(ContextArrayOutput{})
-	pulumi.RegisterOutputType(KubeconfigOutput{})
+	pulumi.RegisterOutputType(KubeconfigTypeOutput{})
 	pulumi.RegisterOutputType(KubeconfigAdminOptionsOutput{})
 	pulumi.RegisterOutputType(KubeconfigKubeControllerManagerOptionsOutput{})
 	pulumi.RegisterOutputType(KubeconfigKubeProxyOptionsOutput{})

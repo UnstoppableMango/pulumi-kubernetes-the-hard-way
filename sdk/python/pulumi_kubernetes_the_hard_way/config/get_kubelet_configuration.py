@@ -19,6 +19,9 @@ __all__ = [
 
 @pulumi.output_type
 class GetKubeletConfigurationResult:
+    """
+    Get the kubelet configuration.
+    """
     def __init__(__self__, result=None):
         if result and not isinstance(result, dict):
             raise TypeError("Expected argument 'result' to be a dict")

@@ -10,7 +10,7 @@ import * as utilities from "../utilities";
 import * as pulumiKubernetes from "@pulumi/kubernetes";
 
 /**
- * Pseudo resource for generating the kube-vip manifest.
+ * Gets the static pod manifests for KubeVip.
  */
 export class KubeVipManifest extends pulumi.ComponentResource {
     /** @internal */
@@ -29,7 +29,7 @@ export class KubeVipManifest extends pulumi.ComponentResource {
 
     public /*out*/ readonly result!: pulumi.Output<outputs.config.PodManifest>;
     /**
-     * The yaml representation of the manifest
+     * The yaml representation of the manifest.
      */
     public /*out*/ readonly yaml!: pulumi.Output<string>;
 

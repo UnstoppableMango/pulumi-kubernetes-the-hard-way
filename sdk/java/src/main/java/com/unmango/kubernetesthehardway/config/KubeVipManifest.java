@@ -14,7 +14,7 @@ import java.lang.String;
 import javax.annotation.Nullable;
 
 /**
- * Pseudo resource for generating the kube-vip manifest.
+ * Gets the static pod manifests for KubeVip.
  * 
  */
 @ResourceType(type="kubernetes-the-hard-way:config:KubeVipManifest")
@@ -26,14 +26,14 @@ public class KubeVipManifest extends com.pulumi.resources.ComponentResource {
         return this.result;
     }
     /**
-     * The yaml representation of the manifest
+     * The yaml representation of the manifest.
      * 
      */
     @Export(name="yaml", refs={String.class}, tree="[0]")
     private Output<String> yaml;
 
     /**
-     * @return The yaml representation of the manifest
+     * @return The yaml representation of the manifest.
      * 
      */
     public Output<String> yaml() {

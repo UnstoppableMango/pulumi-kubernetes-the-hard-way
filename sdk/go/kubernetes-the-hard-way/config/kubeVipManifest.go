@@ -12,12 +12,12 @@ import (
 	"github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/sdk/go/kubernetes-the-hard-way/internal"
 )
 
-// Pseudo resource for generating the kube-vip manifest.
+// Gets the static pod manifests for KubeVip.
 type KubeVipManifest struct {
 	pulumi.ResourceState
 
 	Result PodManifestOutput `pulumi:"result"`
-	// The yaml representation of the manifest
+	// The yaml representation of the manifest.
 	Yaml pulumi.StringOutput `pulumi:"yaml"`
 }
 
@@ -253,7 +253,7 @@ func (o KubeVipManifestOutput) Result() PodManifestOutput {
 	return o.ApplyT(func(v *KubeVipManifest) PodManifestOutput { return v.Result }).(PodManifestOutput)
 }
 
-// The yaml representation of the manifest
+// The yaml representation of the manifest.
 func (o KubeVipManifestOutput) Yaml() pulumi.StringOutput {
 	return o.ApplyT(func(v *KubeVipManifest) pulumi.StringOutput { return v.Yaml }).(pulumi.StringOutput)
 }
