@@ -36,6 +36,7 @@ _utilities.register(
    "kubernetes-the-hard-way:config:ContainerdConfiguration": "ContainerdConfiguration",
    "kubernetes-the-hard-way:config:KubeProxyConfiguration": "KubeProxyConfiguration",
    "kubernetes-the-hard-way:config:KubeVipManifest": "KubeVipManifest",
+   "kubernetes-the-hard-way:config:Kubeconfig": "Kubeconfig",
    "kubernetes-the-hard-way:config:KubeletConfiguration": "KubeletConfiguration"
   }
  },

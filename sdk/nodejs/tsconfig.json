@@ -26,6 +26,7 @@
         "config/index.ts",
         "config/kubeProxyConfiguration.ts",
         "config/kubeVipManifest.ts",
+        "config/kubeconfig.ts",
         "config/kubeletConfiguration.ts",
         "index.ts",
         "provider.ts",

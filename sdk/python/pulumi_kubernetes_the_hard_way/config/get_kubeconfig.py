@@ -20,6 +20,9 @@ __all__ = [
 
 @pulumi.output_type
 class GetKubeconfigResult:
+    """
+    TODO
+    """
     def __init__(__self__, result=None):
         if result and not isinstance(result, dict):
             raise TypeError("Expected argument 'result' to be a dict")
@@ -44,7 +47,8 @@ def get_kubeconfig(ca_pem: Optional[str] = None,
                    options: Optional[Union[pulumi.InputType['KubeconfigAdminOptions'], pulumi.InputType['KubeconfigKubeControllerManagerOptions'], pulumi.InputType['KubeconfigKubeProxyOptions'], pulumi.InputType['KubeconfigKubeSchedulerOptions'], pulumi.InputType['KubeconfigWorkerOptions']]] = None,
                    opts: Optional[pulumi.InvokeOptions] = None) -> AwaitableGetKubeconfigResult:
     """
-    Use this data source to access information about an existing resource.
+    TODO
+
 
     :param str ca_pem: Certificate authority data.
     :param Union[pulumi.InputType['KubeconfigAdminOptions'], pulumi.InputType['KubeconfigKubeControllerManagerOptions'], pulumi.InputType['KubeconfigKubeProxyOptions'], pulumi.InputType['KubeconfigKubeSchedulerOptions'], pulumi.InputType['KubeconfigWorkerOptions']] options: Options for creating the kubeconfig.
@@ -64,7 +68,8 @@ def get_kubeconfig_output(ca_pem: Optional[pulumi.Input[str]] = None,
                           options: Optional[pulumi.Input[Union[pulumi.InputType['KubeconfigAdminOptions'], pulumi.InputType['KubeconfigKubeControllerManagerOptions'], pulumi.InputType['KubeconfigKubeProxyOptions'], pulumi.InputType['KubeconfigKubeSchedulerOptions'], pulumi.InputType['KubeconfigWorkerOptions']]]] = None,
                           opts: Optional[pulumi.InvokeOptions] = None) -> pulumi.Output[GetKubeconfigResult]:
     """
-    Use this data source to access information about an existing resource.
+    TODO
+
 
     :param str ca_pem: Certificate authority data.
     :param Union[pulumi.InputType['KubeconfigAdminOptions'], pulumi.InputType['KubeconfigKubeControllerManagerOptions'], pulumi.InputType['KubeconfigKubeProxyOptions'], pulumi.InputType['KubeconfigKubeSchedulerOptions'], pulumi.InputType['KubeconfigWorkerOptions']] options: Options for creating the kubeconfig.

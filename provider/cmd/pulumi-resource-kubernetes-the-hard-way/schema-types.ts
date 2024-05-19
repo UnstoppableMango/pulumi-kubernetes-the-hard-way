@@ -11,6 +11,7 @@ export type ResourceConstructor = {
     readonly "kubernetes-the-hard-way:config:ContainerdConfiguration": ConstructComponent<ContainerdConfiguration>;
     readonly "kubernetes-the-hard-way:config:KubeProxyConfiguration": ConstructComponent<KubeProxyConfiguration>;
     readonly "kubernetes-the-hard-way:config:KubeVipManifest": ConstructComponent<KubeVipManifest>;
+    readonly "kubernetes-the-hard-way:config:Kubeconfig": ConstructComponent<Kubeconfig>;
     readonly "kubernetes-the-hard-way:config:KubeletConfiguration": ConstructComponent<KubeletConfiguration>;
     readonly "kubernetes-the-hard-way:remote:CniPluginsInstall": ConstructComponent<CniPluginsInstall>;
     readonly "kubernetes-the-hard-way:remote:ContainerdInstall": ConstructComponent<ContainerdInstall>;
@@ -156,6 +157,17 @@ export interface KubeVipManifestArgs {
     readonly vipLeaseDuration?: pulumi.Input<number>;
     readonly vipRenewDeadline?: pulumi.Input<number>;
     readonly vipRetryPeriod?: pulumi.Input<number>;
+}
+export abstract class Kubeconfig<TData = any> extends (pulumi.ComponentResource)<TData> {
+    public result!: KubeconfigOutputs | pulumi.Output<KubeconfigOutputs>;
+    public yaml!: string | pulumi.Output<string>;
+    constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
+        super("kubernetes-the-hard-way:config:Kubeconfig", name, opts.urn ? { result: undefined, yaml: undefined } : { name, args, opts }, opts);
+    }
+}
+export interface KubeconfigArgs {
+    readonly caPem: pulumi.Input<string>;
+    readonly options: pulumi.Input<KubeconfigAdminOptionsInputs> | pulumi.Input<KubeconfigKubeControllerManagerOptionsInputs> | pulumi.Input<KubeconfigKubeProxyOptionsInputs> | pulumi.Input<KubeconfigKubeSchedulerOptionsInputs> | pulumi.Input<KubeconfigWorkerOptionsInputs>;
 }
 export abstract class KubeletConfiguration<TData = any> extends (pulumi.ComponentResource)<TData> {
     public result!: KubeletConfigurationOutputs | pulumi.Output<KubeletConfigurationOutputs>;

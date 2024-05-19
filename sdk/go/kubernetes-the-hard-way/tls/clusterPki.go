@@ -123,10 +123,10 @@ func (ClusterPkiArgs) ElementType() reflect.Type {
 }
 
 // Get a kubeconfig configured from this PKI.
-func (r *ClusterPki) GetKubeconfig(ctx *pulumi.Context, args *ClusterPkiGetKubeconfigArgs) (config.KubeconfigOutput, error) {
+func (r *ClusterPki) GetKubeconfig(ctx *pulumi.Context, args *ClusterPkiGetKubeconfigArgs) (config.KubeconfigTypeOutput, error) {
 	out, err := ctx.Call("kubernetes-the-hard-way:tls:ClusterPki/getKubeconfig", args, clusterPkiGetKubeconfigResultOutput{}, r)
 	if err != nil {
-		return config.KubeconfigOutput{}, err
+		return config.KubeconfigTypeOutput{}, err
 	}
 	return out.(clusterPkiGetKubeconfigResultOutput).Result(), nil
 }
@@ -147,7 +147,7 @@ func (ClusterPkiGetKubeconfigArgs) ElementType() reflect.Type {
 }
 
 type clusterPkiGetKubeconfigResult struct {
-	Result config.Kubeconfig `pulumi:"result"`
+	Result config.KubeconfigType `pulumi:"result"`
 }
 
 type clusterPkiGetKubeconfigResultOutput struct{ *pulumi.OutputState }
@@ -156,8 +156,8 @@ func (clusterPkiGetKubeconfigResultOutput) ElementType() reflect.Type {
 	return reflect.TypeOf((*clusterPkiGetKubeconfigResult)(nil)).Elem()
 }
 
-func (o clusterPkiGetKubeconfigResultOutput) Result() config.KubeconfigOutput {
-	return o.ApplyT(func(v clusterPkiGetKubeconfigResult) config.Kubeconfig { return v.Result }).(config.KubeconfigOutput)
+func (o clusterPkiGetKubeconfigResultOutput) Result() config.KubeconfigTypeOutput {
+	return o.ApplyT(func(v clusterPkiGetKubeconfigResult) config.KubeconfigType { return v.Result }).(config.KubeconfigTypeOutput)
 }
 
 type ClusterPkiInput interface {

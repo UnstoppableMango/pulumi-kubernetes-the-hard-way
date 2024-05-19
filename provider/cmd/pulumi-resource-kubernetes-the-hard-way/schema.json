@@ -2251,6 +2251,64 @@
             ],
             "isComponent": true
         },
+        "kubernetes-the-hard-way:config:Kubeconfig": {
+            "description": "TODO",
+            "properties": {
+                "result": {
+                    "$ref": "#/types/kubernetes-the-hard-way:config:Kubeconfig"
+                },
+                "yaml": {
+                    "type": "string",
+                    "description": "The yaml representation of the manifest."
+                }
+            },
+            "required": [
+                "result",
+                "yaml"
+            ],
+            "inputProperties": {
+                "caPem": {
+                    "type": "string",
+                    "description": "Certificate authority data."
+                },
+                "options": {
+                    "oneOf": [
+                        {
+                            "$ref": "#/types/kubernetes-the-hard-way:config:KubeconfigAdminOptions"
+                        },
+                        {
+                            "$ref": "#/types/kubernetes-the-hard-way:config:KubeconfigKubeControllerManagerOptions"
+                        },
+                        {
+                            "$ref": "#/types/kubernetes-the-hard-way:config:KubeconfigKubeProxyOptions"
+                        },
+                        {
+                            "$ref": "#/types/kubernetes-the-hard-way:config:KubeconfigKubeSchedulerOptions"
+                        },
+                        {
+                            "$ref": "#/types/kubernetes-the-hard-way:config:KubeconfigWorkerOptions"
+                        }
+                    ],
+                    "discriminator": {
+                        "propertyName": "type",
+                        "mapping": {
+                            "admin": "#/types/kubernetes-the-hard-way:config:KubeconfigAdminOptions",
+                            "kube-controller-manager": "#/types/kubernetes-the-hard-way:config:KubeconfigKubeControllerManagerOptions",
+                            "kube-proxy": "#/types/kubernetes-the-hard-way:config:KubeconfigKubeProxyOptions",
+                            "kube-scheduler": "#/types/kubernetes-the-hard-way:config:KubeconfigKubeSchedulerOptions",
+                            "worker": "#/types/kubernetes-the-hard-way:config:KubeconfigWorkerOptions"
+                        }
+                    },
+                    "plain": true,
+                    "description": "Options for creating the kubeconfig."
+                }
+            },
+            "requiredInputs": [
+                "caPem",
+                "options"
+            ],
+            "isComponent": true
+        },
         "kubernetes-the-hard-way:config:KubeletConfiguration": {
             "description": "Get the kubelet configuration.",
             "properties": {
@@ -8163,6 +8221,7 @@
             }
         },
         "kubernetes-the-hard-way:config:getKubeconfig": {
+            "description": "TODO",
             "inputs": {
                 "properties": {
                     "caPem": {
@@ -8207,6 +8266,7 @@
                 ]
             },
             "outputs": {
+                "description": "TODO",
                 "properties": {
                     "result": {
                         "$ref": "#/types/kubernetes-the-hard-way:config:Kubeconfig"

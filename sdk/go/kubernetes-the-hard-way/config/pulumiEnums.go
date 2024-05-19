@@ -3,14 +3,14 @@
 
 package config
 
-type KubeconfigType string
+type KubeconfigTypeEnum string
 
 const (
-	KubeconfigTypeWorker                   = KubeconfigType("worker")
-	KubeconfigType_Kube_Proxy              = KubeconfigType("kube-proxy")
-	KubeconfigType_Kube_Controller_Manager = KubeconfigType("kube-controller-manager")
-	KubeconfigType_Kube_Scheduler          = KubeconfigType("kube-scheduler")
-	KubeconfigTypeAdmin                    = KubeconfigType("admin")
+	KubeconfigTypeEnumWorker                   = KubeconfigTypeEnum("worker")
+	KubeconfigTypeEnum_Kube_Proxy              = KubeconfigTypeEnum("kube-proxy")
+	KubeconfigTypeEnum_Kube_Controller_Manager = KubeconfigTypeEnum("kube-controller-manager")
+	KubeconfigTypeEnum_Kube_Scheduler          = KubeconfigTypeEnum("kube-scheduler")
+	KubeconfigTypeEnumAdmin                    = KubeconfigTypeEnum("admin")
 )
 
 func init() {

@@ -11,6 +11,7 @@ import (
 	"github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/sdk/go/kubernetes-the-hard-way/internal"
 )
 
+// TODO
 func GetKubeconfig(ctx *pulumi.Context, args *GetKubeconfigArgs, opts ...pulumi.InvokeOption) (*GetKubeconfigResult, error) {
 	opts = internal.PkgInvokeDefaultOpts(opts)
 	var rv GetKubeconfigResult
@@ -28,8 +29,9 @@ type GetKubeconfigArgs struct {
 	Options interface{} `pulumi:"options"`
 }
 
+// TODO
 type GetKubeconfigResult struct {
-	Result Kubeconfig `pulumi:"result"`
+	Result KubeconfigType `pulumi:"result"`
 }
 
 func GetKubeconfigOutput(ctx *pulumi.Context, args GetKubeconfigOutputArgs, opts ...pulumi.InvokeOption) GetKubeconfigResultOutput {
@@ -56,6 +58,7 @@ func (GetKubeconfigOutputArgs) ElementType() reflect.Type {
 	return reflect.TypeOf((*GetKubeconfigArgs)(nil)).Elem()
 }
 
+// TODO
 type GetKubeconfigResultOutput struct{ *pulumi.OutputState }
 
 func (GetKubeconfigResultOutput) ElementType() reflect.Type {
@@ -70,8 +73,8 @@ func (o GetKubeconfigResultOutput) ToGetKubeconfigResultOutputWithContext(ctx co
 	return o
 }
 
-func (o GetKubeconfigResultOutput) Result() KubeconfigOutput {
-	return o.ApplyT(func(v GetKubeconfigResult) Kubeconfig { return v.Result }).(KubeconfigOutput)
+func (o GetKubeconfigResultOutput) Result() KubeconfigTypeOutput {
+	return o.ApplyT(func(v GetKubeconfigResult) KubeconfigType { return v.Result }).(KubeconfigTypeOutput)
 }
 
 func init() {
