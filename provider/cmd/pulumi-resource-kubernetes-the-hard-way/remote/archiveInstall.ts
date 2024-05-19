@@ -1,6 +1,6 @@
 import { Input, Resource, interpolate } from '@pulumi/pulumi';
 import { remote } from '@pulumi/command/types/input';
-import { Mkdir, Mktemp, Mv, Rm, Tar } from '../tools';
+import { Mkdir, Mktemp, Mv, Rm, Tar } from '@unmango/pulumi-commandx/remote';
 import { Download } from './download';
 
 type Maps<T extends ReadonlyArray<string>, V> = {

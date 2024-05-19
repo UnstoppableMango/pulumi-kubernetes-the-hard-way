@@ -8,7 +8,7 @@ import (
 	"github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 )
 
-func generateStaticPod(commandSpec schema.PackageSpec) schema.PackageSpec {
+func generateStaticPod(commandSpec, commandxSpec schema.PackageSpec) schema.ResourceSpec {
 	inputs := map[string]schema.PropertySpec{
 		"connection": props.Connection(commandSpec),
 		"fileName":   props.String("The name of the file on the remote system."),
@@ -25,7 +25,7 @@ func generateStaticPod(commandSpec schema.PackageSpec) schema.PackageSpec {
 		},
 		"mkdir": {
 			Description: "The mkdir operation to ensure /etc/kubernetes/manifests exists.",
-			TypeSpec:    types.LocalResource("Mkdir", "tools"),
+			TypeSpec:    types.ExtResource(commandxSpec, "Mkdir", "remote"),
 		},
 		"path": props.String("The path to the manifest on the remote system."),
 	}

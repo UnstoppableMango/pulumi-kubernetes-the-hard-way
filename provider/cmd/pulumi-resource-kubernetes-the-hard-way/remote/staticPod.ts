@@ -1,7 +1,7 @@
 import * as YAML from 'yaml';
 import { ComponentResourceOptions, interpolate, output } from '@pulumi/pulumi';
+import { Mkdir } from '@unmango/pulumi-commandx/remote';
 import * as schema from '../schema-types';
-import { Mkdir } from '../tools';
 import { File } from './file';
 
 export class StaticPod extends schema.StaticPod {

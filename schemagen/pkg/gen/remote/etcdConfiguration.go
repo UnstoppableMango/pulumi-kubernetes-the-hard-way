@@ -9,7 +9,7 @@ import (
 	"github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 )
 
-func generateEtcdConfiguration(commandSpec schema.PackageSpec) schema.PackageSpec {
+func generateEtcdConfiguration(commandSpec, commandxSpec schema.PackageSpec) schema.ResourceSpec {
 	inputs := map[string]schema.PropertySpec{
 		"caPem":   props.String("The PEM encoded certificate authority data."),
 		"certPem": props.String("The PEM encoded certificate data."),
@@ -49,15 +49,15 @@ func generateEtcdConfiguration(commandSpec schema.PackageSpec) schema.PackageSpe
 		},
 		"configurationChmod": {
 			Description: "The configuration chmod operation.",
-			TypeSpec:    types.LocalResource("Chmod", "tools"),
+			TypeSpec:    types.ExtResource(commandxSpec, "Chmod", "remote"),
 		},
 		"configurationMkdir": {
 			Description: "The configuration mkdir operation.",
-			TypeSpec:    types.LocalResource("Mkdir", "tools"),
+			TypeSpec:    types.ExtResource(commandxSpec, "Mkdir", "remote"),
 		},
 		"dataMkdir": {
 			Description: "The data mkdir operation.",
-			TypeSpec:    types.LocalResource("Mkdir", "tools"),
+			TypeSpec:    types.ExtResource(commandxSpec, "Mkdir", "remote"),
 		},
 		"keyFile": {
 			Description: "The remote key file.",

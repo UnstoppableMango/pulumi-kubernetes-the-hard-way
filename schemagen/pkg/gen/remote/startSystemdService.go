@@ -19,15 +19,15 @@ func generateStartSystemdService(commandSpec schema.PackageSpec, t, n string) sc
 	outputs := map[string]schema.PropertySpec{
 		"daemonReload": {
 			Description: "The daemon-reload command.",
-			TypeSpec:    types.LocalResource("Systemctl", "tools"),
+			TypeSpec:    types.ExtResource(commandxSpec, "Systemctl", "remote"),
 		},
 		"enable": {
 			Description: "The enable command.",
-			TypeSpec:    types.LocalResource("Systemctl", "tools"),
+			TypeSpec:    types.ExtResource(commandxSpec, "Systemctl", "remote"),
 		},
 		"start": {
 			Description: "The start command.",
-			TypeSpec:    types.LocalResource("Systemctl", "tools"),
+			TypeSpec:    types.ExtResource(commandxSpec, "Systemctl", "remote"),
 		},
 	}
 	maps.Copy(outputs, inputs)
