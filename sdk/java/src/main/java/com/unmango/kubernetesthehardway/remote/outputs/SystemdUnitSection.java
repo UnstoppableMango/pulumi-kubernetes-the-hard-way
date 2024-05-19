@@ -13,6 +13,16 @@ import javax.annotation.Nullable;
 @CustomType
 public final class SystemdUnitSection {
     /**
+     * @return Those two settings configure ordering dependencies between units.
+     * 
+     */
+    private @Nullable List<String> after;
+    /**
+     * @return Those two settings configure ordering dependencies between units.
+     * 
+     */
+    private @Nullable List<String> before;
+    /**
      * @return Configures requirement dependencies, very similar in style to Requires=.
      * 
      */
@@ -44,6 +54,20 @@ public final class SystemdUnitSection {
     private @Nullable List<String> wants;
 
     private SystemdUnitSection() {}
+    /**
+     * @return Those two settings configure ordering dependencies between units.
+     * 
+     */
+    public List<String> after() {
+        return this.after == null ? List.of() : this.after;
+    }
+    /**
+     * @return Those two settings configure ordering dependencies between units.
+     * 
+     */
+    public List<String> before() {
+        return this.before == null ? List.of() : this.before;
+    }
     /**
      * @return Configures requirement dependencies, very similar in style to Requires=.
      * 
@@ -96,6 +120,8 @@ public final class SystemdUnitSection {
     }
     @CustomType.Builder
     public static final class Builder {
+        private @Nullable List<String> after;
+        private @Nullable List<String> before;
         private @Nullable List<String> bindsTo;
         private @Nullable String description;
         private @Nullable List<String> documentation;
@@ -105,6 +131,8 @@ public final class SystemdUnitSection {
         public Builder() {}
         public Builder(SystemdUnitSection defaults) {
     	      Objects.requireNonNull(defaults);
+    	      this.after = defaults.after;
+    	      this.before = defaults.before;
     	      this.bindsTo = defaults.bindsTo;
     	      this.description = defaults.description;
     	      this.documentation = defaults.documentation;
@@ -113,6 +141,24 @@ public final class SystemdUnitSection {
     	      this.wants = defaults.wants;
         }
 
+        @CustomType.Setter
+        public Builder after(@Nullable List<String> after) {
+
+            this.after = after;
+            return this;
+        }
+        public Builder after(String... after) {
+            return after(List.of(after));
+        }
+        @CustomType.Setter
+        public Builder before(@Nullable List<String> before) {
+
+            this.before = before;
+            return this;
+        }
+        public Builder before(String... before) {
+            return before(List.of(before));
+        }
         @CustomType.Setter
         public Builder bindsTo(@Nullable List<String> bindsTo) {
 
@@ -166,6 +212,8 @@ public final class SystemdUnitSection {
         }
         public SystemdUnitSection build() {
             final var _resultValue = new SystemdUnitSection();
+            _resultValue.after = after;
+            _resultValue.before = before;
             _resultValue.bindsTo = bindsTo;
             _resultValue.description = description;
             _resultValue.documentation = documentation;

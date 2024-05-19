@@ -20,6 +20,7 @@ __all__ = [
     'ContainerdCriPluginConfigurationArgs',
     'EtcdConfigurationPropsArgs',
     'EtcdNodeArgs',
+    'KubeletConfigurationPropsArgs',
     'SystemdInstallSectionArgs',
     'SystemdServiceSectionArgs',
     'SystemdUnitSectionArgs',
@@ -446,6 +447,89 @@ class EtcdNodeArgs:
 
 
 @pulumi.input_type
+class KubeletConfigurationPropsArgs:
+    def __init__(__self__, *,
+                 configuration_file_path: pulumi.Input[str],
+                 kubeconfig_path: pulumi.Input[str],
+                 kubelet_path: pulumi.Input[str],
+                 register_node: pulumi.Input[bool],
+                 v: pulumi.Input[int]):
+        """
+        Props for resources that consume kubelet configuration.
+        :param pulumi.Input[str] configuration_file_path: Path to the kubelet configuration.
+        :param pulumi.Input[str] kubeconfig_path: Path to the kubeconfig the kubelet will use
+        :param pulumi.Input[str] kubelet_path: Path to the kubelet binary.
+        :param pulumi.Input[bool] register_node: Whether to register the node. Defaults to `true`.
+        :param pulumi.Input[int] v: Verbosity. Defaults to `2`.
+        """
+        pulumi.set(__self__, "configuration_file_path", configuration_file_path)
+        pulumi.set(__self__, "kubeconfig_path", kubeconfig_path)
+        pulumi.set(__self__, "kubelet_path", kubelet_path)
+        pulumi.set(__self__, "register_node", register_node)
+        pulumi.set(__self__, "v", v)
+
+    @property
+    @pulumi.getter(name="configurationFilePath")
+    def configuration_file_path(self) -> pulumi.Input[str]:
+        """
+        Path to the kubelet configuration.
+        """
+        return pulumi.get(self, "configuration_file_path")
+
+    @configuration_file_path.setter
+    def configuration_file_path(self, value: pulumi.Input[str]):
+        pulumi.set(self, "configuration_file_path", value)
+
+    @property
+    @pulumi.getter(name="kubeconfigPath")
+    def kubeconfig_path(self) -> pulumi.Input[str]:
+        """
+        Path to the kubeconfig the kubelet will use
+        """
+        return pulumi.get(self, "kubeconfig_path")
+
+    @kubeconfig_path.setter
+    def kubeconfig_path(self, value: pulumi.Input[str]):
+        pulumi.set(self, "kubeconfig_path", value)
+
+    @property
+    @pulumi.getter(name="kubeletPath")
+    def kubelet_path(self) -> pulumi.Input[str]:
+        """
+        Path to the kubelet binary.
+        """
+        return pulumi.get(self, "kubelet_path")
+
+    @kubelet_path.setter
+    def kubelet_path(self, value: pulumi.Input[str]):
+        pulumi.set(self, "kubelet_path", value)
+
+    @property
+    @pulumi.getter(name="registerNode")
+    def register_node(self) -> pulumi.Input[bool]:
+        """
+        Whether to register the node. Defaults to `true`.
+        """
+        return pulumi.get(self, "register_node")
+
+    @register_node.setter
+    def register_node(self, value: pulumi.Input[bool]):
+        pulumi.set(self, "register_node", value)
+
+    @property
+    @pulumi.getter
+    def v(self) -> pulumi.Input[int]:
+        """
+        Verbosity. Defaults to `2`.
+        """
+        return pulumi.get(self, "v")
+
+    @v.setter
+    def v(self, value: pulumi.Input[int]):
+        pulumi.set(self, "v", value)
+
+
+@pulumi.input_type
 class SystemdInstallSectionArgs:
     def __init__(__self__, *,
                  wanted_by: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None):
@@ -560,6 +644,8 @@ class SystemdServiceSectionArgs:
 @pulumi.input_type
 class SystemdUnitSectionArgs:
     def __init__(__self__, *,
+                 after: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
+                 before: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  binds_to: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  description: Optional[pulumi.Input[str]] = None,
                  documentation: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
@@ -568,6 +654,8 @@ class SystemdUnitSectionArgs:
                  wants: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None):
         """
         https://www.freedesktop.org/software/systemd/man/latest/systemd.unit.html#
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] after: Those two settings configure ordering dependencies between units.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] before: Those two settings configure ordering dependencies between units.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] binds_to: Configures requirement dependencies, very similar in style to Requires=.
         :param pulumi.Input[str] description: A short human readable title of the unit.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] documentation: A space-separated list of URIs referencing documentation for this unit or its configuration.
@@ -575,6 +663,10 @@ class SystemdUnitSectionArgs:
         :param pulumi.Input[Sequence[pulumi.Input[str]]] requisite: Similar to Requires=. However, if the units listed here are not started already, they will not be started and the starting of this unit will fail immediately.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] wants: Configures (weak) requirement dependencies on other units.
         """
+        if after is not None:
+            pulumi.set(__self__, "after", after)
+        if before is not None:
+            pulumi.set(__self__, "before", before)
         if binds_to is not None:
             pulumi.set(__self__, "binds_to", binds_to)
         if description is not None:
@@ -587,6 +679,30 @@ class SystemdUnitSectionArgs:
             pulumi.set(__self__, "requisite", requisite)
         if wants is not None:
             pulumi.set(__self__, "wants", wants)
+
+    @property
+    @pulumi.getter
+    def after(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        """
+        Those two settings configure ordering dependencies between units.
+        """
+        return pulumi.get(self, "after")
+
+    @after.setter
+    def after(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
+        pulumi.set(self, "after", value)
+
+    @property
+    @pulumi.getter
+    def before(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        """
+        Those two settings configure ordering dependencies between units.
+        """
+        return pulumi.get(self, "before")
+
+    @before.setter
+    def before(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
+        pulumi.set(self, "before", value)
 
     @property
     @pulumi.getter(name="bindsTo")

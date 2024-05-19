@@ -619,6 +619,32 @@ export namespace remote {
     }
 
     /**
+     * Props for resources that consume kubelet configuration.
+     */
+    export interface KubeletConfigurationPropsArgs {
+        /**
+         * Path to the kubelet configuration.
+         */
+        configurationFilePath: pulumi.Input<string>;
+        /**
+         * Path to the kubeconfig the kubelet will use
+         */
+        kubeconfigPath: pulumi.Input<string>;
+        /**
+         * Path to the kubelet binary.
+         */
+        kubeletPath: pulumi.Input<string>;
+        /**
+         * Whether to register the node. Defaults to `true`.
+         */
+        registerNode: pulumi.Input<boolean>;
+        /**
+         * Verbosity. Defaults to `2`.
+         */
+        v: pulumi.Input<number>;
+    }
+
+    /**
      * https://www.freedesktop.org/software/systemd/man/latest/systemd.unit.html#%5BInstall%5D%20Section%20Options
      */
     export interface SystemdInstallSectionArgs {
@@ -658,6 +684,14 @@ export namespace remote {
      * https://www.freedesktop.org/software/systemd/man/latest/systemd.unit.html#
      */
     export interface SystemdUnitSectionArgs {
+        /**
+         * Those two settings configure ordering dependencies between units.
+         */
+        after?: pulumi.Input<pulumi.Input<string>[]>;
+        /**
+         * Those two settings configure ordering dependencies between units.
+         */
+        before?: pulumi.Input<pulumi.Input<string>[]>;
         /**
          * Configures requirement dependencies, very similar in style to Requires=.
          */

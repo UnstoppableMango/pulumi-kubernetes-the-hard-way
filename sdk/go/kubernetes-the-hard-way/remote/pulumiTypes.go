@@ -1260,6 +1260,97 @@ func (o EtcdNodeMapOutput) MapIndex(k pulumi.StringInput) EtcdNodeOutput {
 	}).(EtcdNodeOutput)
 }
 
+// Props for resources that consume kubelet configuration.
+type KubeletConfigurationProps struct {
+	// Path to the kubelet configuration.
+	ConfigurationFilePath string `pulumi:"configurationFilePath"`
+	// Path to the kubeconfig the kubelet will use
+	KubeconfigPath string `pulumi:"kubeconfigPath"`
+	// Path to the kubelet binary.
+	KubeletPath string `pulumi:"kubeletPath"`
+	// Whether to register the node. Defaults to `true`.
+	RegisterNode bool `pulumi:"registerNode"`
+	// Verbosity. Defaults to `2`.
+	V int `pulumi:"v"`
+}
+
+// KubeletConfigurationPropsInput is an input type that accepts KubeletConfigurationPropsArgs and KubeletConfigurationPropsOutput values.
+// You can construct a concrete instance of `KubeletConfigurationPropsInput` via:
+//
+//	KubeletConfigurationPropsArgs{...}
+type KubeletConfigurationPropsInput interface {
+	pulumi.Input
+
+	ToKubeletConfigurationPropsOutput() KubeletConfigurationPropsOutput
+	ToKubeletConfigurationPropsOutputWithContext(context.Context) KubeletConfigurationPropsOutput
+}
+
+// Props for resources that consume kubelet configuration.
+type KubeletConfigurationPropsArgs struct {
+	// Path to the kubelet configuration.
+	ConfigurationFilePath pulumi.StringInput `pulumi:"configurationFilePath"`
+	// Path to the kubeconfig the kubelet will use
+	KubeconfigPath pulumi.StringInput `pulumi:"kubeconfigPath"`
+	// Path to the kubelet binary.
+	KubeletPath pulumi.StringInput `pulumi:"kubeletPath"`
+	// Whether to register the node. Defaults to `true`.
+	RegisterNode pulumi.BoolInput `pulumi:"registerNode"`
+	// Verbosity. Defaults to `2`.
+	V pulumi.IntInput `pulumi:"v"`
+}
+
+func (KubeletConfigurationPropsArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*KubeletConfigurationProps)(nil)).Elem()
+}
+
+func (i KubeletConfigurationPropsArgs) ToKubeletConfigurationPropsOutput() KubeletConfigurationPropsOutput {
+	return i.ToKubeletConfigurationPropsOutputWithContext(context.Background())
+}
+
+func (i KubeletConfigurationPropsArgs) ToKubeletConfigurationPropsOutputWithContext(ctx context.Context) KubeletConfigurationPropsOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(KubeletConfigurationPropsOutput)
+}
+
+// Props for resources that consume kubelet configuration.
+type KubeletConfigurationPropsOutput struct{ *pulumi.OutputState }
+
+func (KubeletConfigurationPropsOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*KubeletConfigurationProps)(nil)).Elem()
+}
+
+func (o KubeletConfigurationPropsOutput) ToKubeletConfigurationPropsOutput() KubeletConfigurationPropsOutput {
+	return o
+}
+
+func (o KubeletConfigurationPropsOutput) ToKubeletConfigurationPropsOutputWithContext(ctx context.Context) KubeletConfigurationPropsOutput {
+	return o
+}
+
+// Path to the kubelet configuration.
+func (o KubeletConfigurationPropsOutput) ConfigurationFilePath() pulumi.StringOutput {
+	return o.ApplyT(func(v KubeletConfigurationProps) string { return v.ConfigurationFilePath }).(pulumi.StringOutput)
+}
+
+// Path to the kubeconfig the kubelet will use
+func (o KubeletConfigurationPropsOutput) KubeconfigPath() pulumi.StringOutput {
+	return o.ApplyT(func(v KubeletConfigurationProps) string { return v.KubeconfigPath }).(pulumi.StringOutput)
+}
+
+// Path to the kubelet binary.
+func (o KubeletConfigurationPropsOutput) KubeletPath() pulumi.StringOutput {
+	return o.ApplyT(func(v KubeletConfigurationProps) string { return v.KubeletPath }).(pulumi.StringOutput)
+}
+
+// Whether to register the node. Defaults to `true`.
+func (o KubeletConfigurationPropsOutput) RegisterNode() pulumi.BoolOutput {
+	return o.ApplyT(func(v KubeletConfigurationProps) bool { return v.RegisterNode }).(pulumi.BoolOutput)
+}
+
+// Verbosity. Defaults to `2`.
+func (o KubeletConfigurationPropsOutput) V() pulumi.IntOutput {
+	return o.ApplyT(func(v KubeletConfigurationProps) int { return v.V }).(pulumi.IntOutput)
+}
+
 // https://www.freedesktop.org/software/systemd/man/latest/systemd.unit.html#%5BInstall%5D%20Section%20Options
 type SystemdInstallSection struct {
 	// A symbolic link is created in the .wants/, .requires/, or .upholds/ directory of each of the listed units when this unit is installed by systemctl enable.
@@ -1493,6 +1584,10 @@ func (o SystemdServiceSectionOutput) Type() SystemdServiceTypePtrOutput {
 
 // https://www.freedesktop.org/software/systemd/man/latest/systemd.unit.html#
 type SystemdUnitSection struct {
+	// Those two settings configure ordering dependencies between units.
+	After []string `pulumi:"after"`
+	// Those two settings configure ordering dependencies between units.
+	Before []string `pulumi:"before"`
 	// Configures requirement dependencies, very similar in style to Requires=.
 	BindsTo []string `pulumi:"bindsTo"`
 	// A short human readable title of the unit.
@@ -1520,6 +1615,10 @@ type SystemdUnitSectionInput interface {
 
 // https://www.freedesktop.org/software/systemd/man/latest/systemd.unit.html#
 type SystemdUnitSectionArgs struct {
+	// Those two settings configure ordering dependencies between units.
+	After pulumi.StringArrayInput `pulumi:"after"`
+	// Those two settings configure ordering dependencies between units.
+	Before pulumi.StringArrayInput `pulumi:"before"`
 	// Configures requirement dependencies, very similar in style to Requires=.
 	BindsTo pulumi.StringArrayInput `pulumi:"bindsTo"`
 	// A short human readable title of the unit.
@@ -1612,6 +1711,16 @@ func (o SystemdUnitSectionOutput) ToSystemdUnitSectionPtrOutputWithContext(ctx c
 	}).(SystemdUnitSectionPtrOutput)
 }
 
+// Those two settings configure ordering dependencies between units.
+func (o SystemdUnitSectionOutput) After() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v SystemdUnitSection) []string { return v.After }).(pulumi.StringArrayOutput)
+}
+
+// Those two settings configure ordering dependencies between units.
+func (o SystemdUnitSectionOutput) Before() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v SystemdUnitSection) []string { return v.Before }).(pulumi.StringArrayOutput)
+}
+
 // Configures requirement dependencies, very similar in style to Requires=.
 func (o SystemdUnitSectionOutput) BindsTo() pulumi.StringArrayOutput {
 	return o.ApplyT(func(v SystemdUnitSection) []string { return v.BindsTo }).(pulumi.StringArrayOutput)
@@ -1664,6 +1773,26 @@ func (o SystemdUnitSectionPtrOutput) Elem() SystemdUnitSectionOutput {
 		var ret SystemdUnitSection
 		return ret
 	}).(SystemdUnitSectionOutput)
+}
+
+// Those two settings configure ordering dependencies between units.
+func (o SystemdUnitSectionPtrOutput) After() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v *SystemdUnitSection) []string {
+		if v == nil {
+			return nil
+		}
+		return v.After
+	}).(pulumi.StringArrayOutput)
+}
+
+// Those two settings configure ordering dependencies between units.
+func (o SystemdUnitSectionPtrOutput) Before() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v *SystemdUnitSection) []string {
+		if v == nil {
+			return nil
+		}
+		return v.Before
+	}).(pulumi.StringArrayOutput)
 }
 
 // Configures requirement dependencies, very similar in style to Requires=.
@@ -1742,6 +1871,7 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*EtcdConfigurationPropsInput)(nil)).Elem(), EtcdConfigurationPropsArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*EtcdConfigurationPropsArrayInput)(nil)).Elem(), EtcdConfigurationPropsArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*EtcdNodeInput)(nil)).Elem(), EtcdNodeArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*KubeletConfigurationPropsInput)(nil)).Elem(), KubeletConfigurationPropsArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*SystemdInstallSectionInput)(nil)).Elem(), SystemdInstallSectionArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*SystemdInstallSectionPtrInput)(nil)).Elem(), SystemdInstallSectionArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*SystemdServiceSectionInput)(nil)).Elem(), SystemdServiceSectionArgs{})
@@ -1763,6 +1893,7 @@ func init() {
 	pulumi.RegisterOutputType(EtcdConfigurationPropsArrayOutput{})
 	pulumi.RegisterOutputType(EtcdNodeOutput{})
 	pulumi.RegisterOutputType(EtcdNodeMapOutput{})
+	pulumi.RegisterOutputType(KubeletConfigurationPropsOutput{})
 	pulumi.RegisterOutputType(SystemdInstallSectionOutput{})
 	pulumi.RegisterOutputType(SystemdInstallSectionPtrOutput{})
 	pulumi.RegisterOutputType(SystemdServiceSectionOutput{})

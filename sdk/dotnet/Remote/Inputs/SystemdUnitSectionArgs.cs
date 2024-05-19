@@ -16,6 +16,30 @@ namespace UnMango.KubernetesTheHardWay.Remote.Inputs
     /// </summary>
     public sealed class SystemdUnitSectionArgs : global::Pulumi.ResourceArgs
     {
+        [Input("after")]
+        private InputList<string>? _after;
+
+        /// <summary>
+        /// Those two settings configure ordering dependencies between units.
+        /// </summary>
+        public InputList<string> After
+        {
+            get => _after ?? (_after = new InputList<string>());
+            set => _after = value;
+        }
+
+        [Input("before")]
+        private InputList<string>? _before;
+
+        /// <summary>
+        /// Those two settings configure ordering dependencies between units.
+        /// </summary>
+        public InputList<string> Before
+        {
+            get => _before ?? (_before = new InputList<string>());
+            set => _before = value;
+        }
+
         [Input("bindsTo")]
         private InputList<string>? _bindsTo;
 

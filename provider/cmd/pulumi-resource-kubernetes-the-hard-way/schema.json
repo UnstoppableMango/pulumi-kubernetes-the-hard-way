@@ -674,6 +674,39 @@
                 "internalIp"
             ]
         },
+        "kubernetes-the-hard-way:remote:KubeletConfigurationProps": {
+            "description": "Props for resources that consume kubelet configuration.",
+            "properties": {
+                "configurationFilePath": {
+                    "type": "string",
+                    "description": "Path to the kubelet configuration."
+                },
+                "kubeconfigPath": {
+                    "type": "string",
+                    "description": "Path to the kubeconfig the kubelet will use"
+                },
+                "kubeletPath": {
+                    "type": "string",
+                    "description": "Path to the kubelet binary."
+                },
+                "registerNode": {
+                    "type": "boolean",
+                    "description": "Whether to register the node. Defaults to `true`."
+                },
+                "v": {
+                    "type": "integer",
+                    "description": "Verbosity. Defaults to `2`."
+                }
+            },
+            "type": "object",
+            "required": [
+                "configurationFilePath",
+                "kubeconfigPath",
+                "kubeletPath",
+                "registerNode",
+                "v"
+            ]
+        },
         "kubernetes-the-hard-way:remote:SystemdInstallSection": {
             "description": "https://www.freedesktop.org/software/systemd/man/latest/systemd.unit.html#%5BInstall%5D%20Section%20Options",
             "properties": {
@@ -785,6 +818,20 @@
         "kubernetes-the-hard-way:remote:SystemdUnitSection": {
             "description": "https://www.freedesktop.org/software/systemd/man/latest/systemd.unit.html#",
             "properties": {
+                "after": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "Those two settings configure ordering dependencies between units."
+                },
+                "before": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "Those two settings configure ordering dependencies between units."
+                },
                 "bindsTo": {
                     "type": "array",
                     "items": {
@@ -4052,6 +4099,123 @@
             },
             "requiredInputs": [
                 "connection"
+            ],
+            "isComponent": true
+        },
+        "kubernetes-the-hard-way:remote:KubeletService": {
+            "description": "Kubelet systemd service file. Will likely get replaced with a static function when https://github.com/pulumi/pulumi/issues/7583 gets resolved.",
+            "properties": {
+                "after": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "Waits for any units defined here."
+                },
+                "configuration": {
+                    "$ref": "#/types/kubernetes-the-hard-way:remote:KubeletConfigurationProps",
+                    "description": "Kubelet configuration."
+                },
+                "connection": {
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
+                    "description": "The parameters with which to connect to the remote host."
+                },
+                "description": {
+                    "type": "string",
+                    "description": "Optional systemd unit description."
+                },
+                "directory": {
+                    "type": "string",
+                    "description": "The location to create the service file."
+                },
+                "documentation": {
+                    "type": "string",
+                    "description": "Optional systemd unit documentation"
+                },
+                "requires": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "Requires any units defined here."
+                },
+                "restart": {
+                    "$ref": "#/types/kubernetes-the-hard-way:remote:SystemdServiceRestart",
+                    "description": "Optionally override the systemd service restart behaviour. Defaults to `on-failure`."
+                },
+                "restartSec": {
+                    "type": "string",
+                    "description": "Optionally override the systemd service RestartSec. Defaults to `5`."
+                },
+                "service": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:remote:SystemdService",
+                    "description": "The remote systemd service."
+                },
+                "wantedBy": {
+                    "type": "string",
+                    "description": "Optionally override the systemd service wanted-by. Defaults to `multi-user.target`."
+                }
+            },
+            "required": [
+                "after",
+                "configuration",
+                "connection",
+                "requires",
+                "service"
+            ],
+            "inputProperties": {
+                "after": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "Waits for any units defined here."
+                },
+                "configuration": {
+                    "$ref": "#/types/kubernetes-the-hard-way:remote:KubeletConfigurationProps",
+                    "description": "Kubelet configuration."
+                },
+                "connection": {
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
+                    "description": "The parameters with which to connect to the remote host."
+                },
+                "description": {
+                    "type": "string",
+                    "description": "Optional systemd unit description."
+                },
+                "directory": {
+                    "type": "string",
+                    "description": "The location to create the service file."
+                },
+                "documentation": {
+                    "type": "string",
+                    "description": "Optional systemd unit documentation"
+                },
+                "requires": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "Requires any units defined here."
+                },
+                "restart": {
+                    "$ref": "#/types/kubernetes-the-hard-way:remote:SystemdServiceRestart",
+                    "description": "Optionally override the systemd service restart behaviour. Defaults to `on-failure`."
+                },
+                "restartSec": {
+                    "type": "string",
+                    "description": "Optionally override the systemd service RestartSec. Defaults to `5`."
+                },
+                "wantedBy": {
+                    "type": "string",
+                    "description": "Optionally override the systemd service wanted-by. Defaults to `multi-user.target`."
+                }
+            },
+            "requiredInputs": [
+                "after",
+                "configuration",
+                "connection",
+                "requires"
             ],
             "isComponent": true
         },
