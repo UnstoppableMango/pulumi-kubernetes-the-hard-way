@@ -165,6 +165,26 @@ func generateTypes(commandSpec schema.PackageSpec) map[string]schema.ComplexType
 				},
 			},
 		},
+		name("KubeletConfigurationProps"): {
+			ObjectTypeSpec: schema.ObjectTypeSpec{
+				Description: "Props for resources that consume kubelet configuration.",
+				Type:        "object",
+				Properties: map[string]schema.PropertySpec{
+					"configurationFilePath": props.String("Path to the kubelet configuration."),
+					"kubeconfigPath":        props.String("Path to the kubeconfig the kubelet will use"),
+					"kubeletPath":           props.String("Path to the kubelet binary."),
+					"registerNode":          props.Boolean("Whether to register the node. Defaults to `true`."),
+					"v":                     props.Integer("Verbosity. Defaults to `2`."),
+				},
+				Required: []string{
+					"configurationFilePath",
+					"kubeconfigPath",
+					"kubeletPath",
+					"registerNode",
+					"v",
+				},
+			},
+		},
 		name("SystemdInstallSection"): {
 			ObjectTypeSpec: schema.ObjectTypeSpec{
 				Description: "https://www.freedesktop.org/software/systemd/man/latest/systemd.unit.html#%5BInstall%5D%20Section%20Options",
