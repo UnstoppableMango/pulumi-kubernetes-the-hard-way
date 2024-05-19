@@ -15,7 +15,7 @@ func generateGetKubeProxyConfiguration() pseudoFunction {
 				"mode":        props.String("TODO"),
 				"clusterCIDR": props.String("Cluster CIDR."),
 			},
-			Required: []string{"kubeconfig"},
+			Required: []string{"kubeconfig", "clusterCIDR"},
 		},
 		schema.PropertySpec{
 			TypeSpec: types.LocalType("KubeProxyConfiguration", "config"),
