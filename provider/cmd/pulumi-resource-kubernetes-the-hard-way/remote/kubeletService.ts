@@ -20,6 +20,7 @@ export class KubeletService extends schema.KubeletService {
 
     const service = new SystemdService(name, {
       connection,
+      directory: args.directory,
       unit: {
         description,
         documentation: [documentation],
@@ -45,6 +46,7 @@ export class KubeletService extends schema.KubeletService {
     this.after = after;
     this.connection = connection;
     this.description = description;
+    this.directory = service.directory;
     this.documentation = documentation;
     this.requires = requires;
     this.restart = restart;
@@ -56,6 +58,7 @@ export class KubeletService extends schema.KubeletService {
       after,
       connection,
       description,
+      directory: service.directory,
       documentation,
       requires,
       restart,

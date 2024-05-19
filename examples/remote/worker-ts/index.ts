@@ -1,5 +1,5 @@
 import { Config } from '@pulumi/pulumi';
-import { ContainerdConfiguration } from '@unmango/pulumi-kubernetes-the-hard-way/remote';
+import { ContainerdConfiguration, KubeletService } from '@unmango/pulumi-kubernetes-the-hard-way/remote';
 import { Mkdir } from '@unmango/pulumi-kubernetes-the-hard-way/tools';
 
 const config = new Config();
@@ -21,3 +21,16 @@ const dir = new Mkdir('config', {
 const containerdConfiguration = new ContainerdConfiguration('simple', {
   connection,
 }, { dependsOn: dir });
+
+const kubeletService = new KubeletService('simple', {
+  connection,
+  after: ['containerd.service'],
+  requires: ['containerd.service'],
+  configuration: {
+    kubeletPath: '/usr/local/bin/kubelet',
+    configurationFilePath: '/var/lib/kubelet/kubelet-config.yaml',
+    kubeconfigPath: '/var/lib/kubelet/kubeconfig',
+    registerNode: true,
+    v: 69,
+  },
+});
