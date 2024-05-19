@@ -4,13 +4,11 @@ import (
 	"github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 )
 
-const configMod = "kubernetes-the-hard-way:config:"
-
 func GenerateConfig(kubernetesSpec schema.PackageSpec) schema.PackageSpec {
 	functions := generateFunctions()
 
 	resources := map[string]schema.ResourceSpec{
-		configMod + "KubeVipManifest": generateKubeVipManifest(functions[configMod+"getKubeVipManifest"]),
+		name("KubeVipManifest"): generateKubeVipManifest(functions[name("getKubeVipManifest")]),
 	}
 
 	return schema.PackageSpec{

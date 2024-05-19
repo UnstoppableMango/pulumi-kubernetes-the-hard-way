@@ -9,7 +9,7 @@ import (
 
 func generateTypes(kubernetesSpec schema.PackageSpec) map[string]schema.ComplexTypeSpec {
 	types := map[string]schema.ComplexTypeSpec{
-		configMod + "Cluster": {
+		name("Cluster"): {
 			ObjectTypeSpec: schema.ObjectTypeSpec{
 				Type: "object",
 				Properties: map[string]schema.PropertySpec{
@@ -22,7 +22,7 @@ func generateTypes(kubernetesSpec schema.PackageSpec) map[string]schema.ComplexT
 				},
 			},
 		},
-		configMod + "Context": {
+		name("Context"): {
 			ObjectTypeSpec: schema.ObjectTypeSpec{
 				Type: "object",
 				Properties: map[string]schema.PropertySpec{
@@ -32,7 +32,7 @@ func generateTypes(kubernetesSpec schema.PackageSpec) map[string]schema.ComplexT
 				Required: []string{"cluster", "user"},
 			},
 		},
-		configMod + "Kubeconfig": {
+		name("Kubeconfig"): {
 			ObjectTypeSpec: schema.ObjectTypeSpec{
 				Type: "object",
 				Properties: map[string]schema.PropertySpec{
@@ -64,7 +64,7 @@ func generateTypes(kubernetesSpec schema.PackageSpec) map[string]schema.ComplexT
 				Required: []string{"clusters", "contexts", "users"},
 			},
 		},
-		configMod + "KubeconfigAdminOptions": {
+		name("KubeconfigAdminOptions"): {
 			ObjectTypeSpec: schema.ObjectTypeSpec{
 				Type: "object",
 				Properties: map[string]schema.PropertySpec{
@@ -80,7 +80,7 @@ func generateTypes(kubernetesSpec schema.PackageSpec) map[string]schema.ComplexT
 				Required: []string{"type"}, // TODO: Why is public ip not required again?
 			},
 		},
-		configMod + "KubeconfigCluster": {
+		name("KubeconfigCluster"): {
 			ObjectTypeSpec: schema.ObjectTypeSpec{
 				Type: "object",
 				Properties: map[string]schema.PropertySpec{
@@ -92,7 +92,7 @@ func generateTypes(kubernetesSpec schema.PackageSpec) map[string]schema.ComplexT
 				Required: []string{"cluster", "name"},
 			},
 		},
-		configMod + "KubeconfigContext": {
+		name("KubeconfigContext"): {
 			ObjectTypeSpec: schema.ObjectTypeSpec{
 				Type: "object",
 				Properties: map[string]schema.PropertySpec{
@@ -104,7 +104,7 @@ func generateTypes(kubernetesSpec schema.PackageSpec) map[string]schema.ComplexT
 				Required: []string{"context", "name"},
 			},
 		},
-		configMod + "KubeconfigKubeControllerManagerOptions": {
+		name("KubeconfigKubeControllerManagerOptions"): {
 			ObjectTypeSpec: schema.ObjectTypeSpec{
 				Type: "object",
 				Properties: map[string]schema.PropertySpec{
@@ -120,7 +120,7 @@ func generateTypes(kubernetesSpec schema.PackageSpec) map[string]schema.ComplexT
 				Required: []string{"type"}, // TODO: Why is public ip not required again?
 			},
 		},
-		configMod + "KubeconfigKubeProxyOptions": {
+		name("KubeconfigKubeProxyOptions"): {
 			ObjectTypeSpec: schema.ObjectTypeSpec{
 				Type: "object",
 				Properties: map[string]schema.PropertySpec{
@@ -136,7 +136,7 @@ func generateTypes(kubernetesSpec schema.PackageSpec) map[string]schema.ComplexT
 				Required: []string{"type"}, // TODO: Why is public ip not required again?
 			},
 		},
-		configMod + "KubeconfigKubeSchedulerOptions": {
+		name("KubeconfigKubeSchedulerOptions"): {
 			ObjectTypeSpec: schema.ObjectTypeSpec{
 				Type: "object",
 				Properties: map[string]schema.PropertySpec{
@@ -152,7 +152,7 @@ func generateTypes(kubernetesSpec schema.PackageSpec) map[string]schema.ComplexT
 				Required: []string{"type"}, // TODO: Why is public ip not required again?
 			},
 		},
-		configMod + "KubeconfigType": {
+		name("KubeconfigType"): {
 			ObjectTypeSpec: schema.ObjectTypeSpec{
 				Type: "string",
 			},
@@ -164,7 +164,7 @@ func generateTypes(kubernetesSpec schema.PackageSpec) map[string]schema.ComplexT
 				{Value: "admin"},
 			},
 		},
-		configMod + "KubeconfigUser": {
+		name("KubeconfigUser"): {
 			ObjectTypeSpec: schema.ObjectTypeSpec{
 				Type: "object",
 				Properties: map[string]schema.PropertySpec{
@@ -176,7 +176,7 @@ func generateTypes(kubernetesSpec schema.PackageSpec) map[string]schema.ComplexT
 				Required: []string{"name", "user"},
 			},
 		},
-		configMod + "KubeconfigWorkerOptions": {
+		name("KubeconfigWorkerOptions"): {
 			ObjectTypeSpec: schema.ObjectTypeSpec{
 				Type: "object",
 				Properties: map[string]schema.PropertySpec{
@@ -193,8 +193,8 @@ func generateTypes(kubernetesSpec schema.PackageSpec) map[string]schema.ComplexT
 				Required: []string{"name", "publicIp"}, // TODO: Why is public ip not required again?
 			},
 		},
-		configMod + "PodManifest": generatePodManifest(kubernetesSpec),
-		configMod + "User": {
+		name("PodManifest"): generatePodManifest(kubernetesSpec),
+		name("User"): {
 			ObjectTypeSpec: schema.ObjectTypeSpec{
 				Type: "object",
 				Properties: map[string]schema.PropertySpec{

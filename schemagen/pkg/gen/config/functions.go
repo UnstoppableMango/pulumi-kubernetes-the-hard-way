@@ -8,7 +8,7 @@ import (
 
 func generateFunctions() map[string]schema.FunctionSpec {
 	functions := map[string]schema.FunctionSpec{
-		configMod + "getKubeconfig": { // TODO: Need more pems
+		name("getKubeconfig"): { // TODO: Need more pems
 			Inputs: &schema.ObjectTypeSpec{
 				Properties: map[string]schema.PropertySpec{
 					"caPem": props.String("Certificate authority data."),
@@ -47,7 +47,7 @@ func generateFunctions() map[string]schema.FunctionSpec {
 				Required: []string{"result"},
 			},
 		},
-		configMod + "getKubeVipManifest": generateGetKubeVipManifest(),
+		name("getKubeVipManifest"): generateGetKubeVipManifest(),
 	}
 
 	return functions
