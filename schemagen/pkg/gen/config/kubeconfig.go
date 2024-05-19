@@ -6,10 +6,9 @@ import (
 	"github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 )
 
-func generateGetKubeconfig() pseudoFunction {
-	return generatePseudoFunction(
-		"TODO",
-		schema.ObjectTypeSpec{
+func generateGetKubeconfig() schema.FunctionSpec {
+	return schema.FunctionSpec{ // TODO: Need more pems
+		Inputs: &schema.ObjectTypeSpec{
 			Properties: map[string]schema.PropertySpec{
 				"caPem": props.String("Certificate authority data."),
 				"options": {
@@ -38,9 +37,13 @@ func generateGetKubeconfig() pseudoFunction {
 			},
 			Required: []string{"caPem", "options"},
 		},
-		schema.PropertySpec{
-			TypeSpec: types.LocalType("Kubeconfig", "config"),
+		Outputs: &schema.ObjectTypeSpec{
+			Properties: map[string]schema.PropertySpec{
+				"result": {
+					TypeSpec: types.LocalType("Kubeconfig", "config"),
+				},
+			},
+			Required: []string{"result"},
 		},
-		"yaml", props.String("The yaml representation of the manifest."),
-	)
+	}
 }
