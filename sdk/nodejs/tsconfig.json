@@ -15,8 +15,10 @@
     "files": [
         "config/getKubeVipManifest.ts",
         "config/getKubeconfig.ts",
+        "config/getKubeletConfiguration.ts",
         "config/index.ts",
         "config/kubeVipManifest.ts",
+        "config/kubeletConfiguration.ts",
         "index.ts",
         "provider.ts",
         "remote/cniBridgePluginConfiguration.ts",

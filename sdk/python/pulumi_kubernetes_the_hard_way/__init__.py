@@ -31,7 +31,8 @@ _utilities.register(
   "mod": "config",
   "fqn": "pulumi_kubernetes_the_hard_way.config",
   "classes": {
-   "kubernetes-the-hard-way:config:KubeVipManifest": "KubeVipManifest"
+   "kubernetes-the-hard-way:config:KubeVipManifest": "KubeVipManifest",
+   "kubernetes-the-hard-way:config:KubeletConfiguration": "KubeletConfiguration"
   }
  },
  {

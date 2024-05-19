@@ -15,10 +15,20 @@ export const getKubeconfig: typeof import("./getKubeconfig").getKubeconfig = nul
 export const getKubeconfigOutput: typeof import("./getKubeconfig").getKubeconfigOutput = null as any;
 utilities.lazyLoad(exports, ["getKubeconfig","getKubeconfigOutput"], () => require("./getKubeconfig"));
 
+export { GetKubeletConfigurationArgs, GetKubeletConfigurationResult, GetKubeletConfigurationOutputArgs } from "./getKubeletConfiguration";
+export const getKubeletConfiguration: typeof import("./getKubeletConfiguration").getKubeletConfiguration = null as any;
+export const getKubeletConfigurationOutput: typeof import("./getKubeletConfiguration").getKubeletConfigurationOutput = null as any;
+utilities.lazyLoad(exports, ["getKubeletConfiguration","getKubeletConfigurationOutput"], () => require("./getKubeletConfiguration"));
+
 export { KubeVipManifestArgs } from "./kubeVipManifest";
 export type KubeVipManifest = import("./kubeVipManifest").KubeVipManifest;
 export const KubeVipManifest: typeof import("./kubeVipManifest").KubeVipManifest = null as any;
 utilities.lazyLoad(exports, ["KubeVipManifest"], () => require("./kubeVipManifest"));
+
+export { KubeletConfigurationArgs } from "./kubeletConfiguration";
+export type KubeletConfiguration = import("./kubeletConfiguration").KubeletConfiguration;
+export const KubeletConfiguration: typeof import("./kubeletConfiguration").KubeletConfiguration = null as any;
+utilities.lazyLoad(exports, ["KubeletConfiguration"], () => require("./kubeletConfiguration"));
 
 
 // Export enums:
@@ -30,6 +40,8 @@ const _module = {
         switch (type) {
             case "kubernetes-the-hard-way:config:KubeVipManifest":
                 return new KubeVipManifest(name, <any>undefined, { urn })
+            case "kubernetes-the-hard-way:config:KubeletConfiguration":
+                return new KubeletConfiguration(name, <any>undefined, { urn })
             default:
                 throw new Error(`unknown resource type ${type}`);
         }

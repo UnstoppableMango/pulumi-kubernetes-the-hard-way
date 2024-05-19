@@ -12,8 +12,11 @@ import com.unmango.kubernetesthehardway.config.inputs.GetKubeVipManifestArgs;
 import com.unmango.kubernetesthehardway.config.inputs.GetKubeVipManifestPlainArgs;
 import com.unmango.kubernetesthehardway.config.inputs.GetKubeconfigArgs;
 import com.unmango.kubernetesthehardway.config.inputs.GetKubeconfigPlainArgs;
+import com.unmango.kubernetesthehardway.config.inputs.GetKubeletConfigurationArgs;
+import com.unmango.kubernetesthehardway.config.inputs.GetKubeletConfigurationPlainArgs;
 import com.unmango.kubernetesthehardway.config.outputs.GetKubeVipManifestResult;
 import com.unmango.kubernetesthehardway.config.outputs.GetKubeconfigResult;
+import com.unmango.kubernetesthehardway.config.outputs.GetKubeletConfigurationResult;
 import java.util.concurrent.CompletableFuture;
 
 public final class ConfigFunctions {
@@ -56,5 +59,33 @@ public final class ConfigFunctions {
     }
     public static CompletableFuture<GetKubeconfigResult> getKubeconfigPlain(GetKubeconfigPlainArgs args, InvokeOptions options) {
         return Deployment.getInstance().invokeAsync("kubernetes-the-hard-way:config:getKubeconfig", TypeShape.of(GetKubeconfigResult.class), args, Utilities.withVersion(options));
+    }
+    /**
+     * Get the kubelet configuration.
+     * 
+     */
+    public static Output<GetKubeletConfigurationResult> getKubeletConfiguration(GetKubeletConfigurationArgs args) {
+        return getKubeletConfiguration(args, InvokeOptions.Empty);
+    }
+    /**
+     * Get the kubelet configuration.
+     * 
+     */
+    public static CompletableFuture<GetKubeletConfigurationResult> getKubeletConfigurationPlain(GetKubeletConfigurationPlainArgs args) {
+        return getKubeletConfigurationPlain(args, InvokeOptions.Empty);
+    }
+    /**
+     * Get the kubelet configuration.
+     * 
+     */
+    public static Output<GetKubeletConfigurationResult> getKubeletConfiguration(GetKubeletConfigurationArgs args, InvokeOptions options) {
+        return Deployment.getInstance().invoke("kubernetes-the-hard-way:config:getKubeletConfiguration", TypeShape.of(GetKubeletConfigurationResult.class), args, Utilities.withVersion(options));
+    }
+    /**
+     * Get the kubelet configuration.
+     * 
+     */
+    public static CompletableFuture<GetKubeletConfigurationResult> getKubeletConfigurationPlain(GetKubeletConfigurationPlainArgs args, InvokeOptions options) {
+        return Deployment.getInstance().invokeAsync("kubernetes-the-hard-way:config:getKubeletConfiguration", TypeShape.of(GetKubeletConfigurationResult.class), args, Utilities.withVersion(options));
     }
 }

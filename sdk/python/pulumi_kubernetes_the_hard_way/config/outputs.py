@@ -16,6 +16,12 @@ __all__ = [
     'Cluster',
     'Context',
     'Kubeconfig',
+    'KubeletConfiguration',
+    'KubeletConfigurationAuthentication',
+    'KubeletConfigurationAuthenticationAnonymous',
+    'KubeletConfigurationAuthenticationWebhook',
+    'KubeletConfigurationAuthenticationx509',
+    'KubeletConfigurationAuthorization',
     'PodManifest',
     'User',
 ]
@@ -102,6 +108,284 @@ class Kubeconfig(dict):
     @pulumi.getter
     def users(self) -> Sequence['outputs.User']:
         return pulumi.get(self, "users")
+
+
+@pulumi.output_type
+class KubeletConfiguration(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "apiVersion":
+            suggest = "api_version"
+        elif key == "cgroupDriver":
+            suggest = "cgroup_driver"
+        elif key == "clusterDNS":
+            suggest = "cluster_dns"
+        elif key == "clusterDomain":
+            suggest = "cluster_domain"
+        elif key == "containerRuntimeEndpoint":
+            suggest = "container_runtime_endpoint"
+        elif key == "podCIDR":
+            suggest = "pod_cidr"
+        elif key == "resolvConf":
+            suggest = "resolv_conf"
+        elif key == "runtimeRequestTimeout":
+            suggest = "runtime_request_timeout"
+        elif key == "tlsCertFile":
+            suggest = "tls_cert_file"
+        elif key == "tlsPrivateKeyFile":
+            suggest = "tls_private_key_file"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in KubeletConfiguration. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        KubeletConfiguration.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        KubeletConfiguration.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 api_version: str,
+                 authentication: 'outputs.KubeletConfigurationAuthentication',
+                 authorization: 'outputs.KubeletConfigurationAuthorization',
+                 cgroup_driver: str,
+                 cluster_dns: Sequence[str],
+                 cluster_domain: str,
+                 container_runtime_endpoint: str,
+                 kind: str,
+                 pod_cidr: str,
+                 resolv_conf: str,
+                 runtime_request_timeout: str,
+                 tls_cert_file: str,
+                 tls_private_key_file: str):
+        """
+        :param str cgroup_driver: TODO
+        :param Sequence[str] cluster_dns: TODO
+        :param str cluster_domain: TODO
+        :param str container_runtime_endpoint: TODO
+        :param str pod_cidr: TODO
+        :param str resolv_conf: TODO
+        :param str runtime_request_timeout: TODO
+        :param str tls_cert_file: TODO
+        :param str tls_private_key_file: TODO
+        """
+        pulumi.set(__self__, "api_version", 'kubelet.config.k8s.io/v1beta1')
+        pulumi.set(__self__, "authentication", authentication)
+        pulumi.set(__self__, "authorization", authorization)
+        pulumi.set(__self__, "cgroup_driver", cgroup_driver)
+        pulumi.set(__self__, "cluster_dns", cluster_dns)
+        pulumi.set(__self__, "cluster_domain", cluster_domain)
+        pulumi.set(__self__, "container_runtime_endpoint", container_runtime_endpoint)
+        pulumi.set(__self__, "kind", 'KubeletConfiguration')
+        pulumi.set(__self__, "pod_cidr", pod_cidr)
+        pulumi.set(__self__, "resolv_conf", resolv_conf)
+        pulumi.set(__self__, "runtime_request_timeout", runtime_request_timeout)
+        pulumi.set(__self__, "tls_cert_file", tls_cert_file)
+        pulumi.set(__self__, "tls_private_key_file", tls_private_key_file)
+
+    @property
+    @pulumi.getter(name="apiVersion")
+    def api_version(self) -> str:
+        return pulumi.get(self, "api_version")
+
+    @property
+    @pulumi.getter
+    def authentication(self) -> 'outputs.KubeletConfigurationAuthentication':
+        return pulumi.get(self, "authentication")
+
+    @property
+    @pulumi.getter
+    def authorization(self) -> 'outputs.KubeletConfigurationAuthorization':
+        return pulumi.get(self, "authorization")
+
+    @property
+    @pulumi.getter(name="cgroupDriver")
+    def cgroup_driver(self) -> str:
+        """
+        TODO
+        """
+        return pulumi.get(self, "cgroup_driver")
+
+    @property
+    @pulumi.getter(name="clusterDNS")
+    def cluster_dns(self) -> Sequence[str]:
+        """
+        TODO
+        """
+        return pulumi.get(self, "cluster_dns")
+
+    @property
+    @pulumi.getter(name="clusterDomain")
+    def cluster_domain(self) -> str:
+        """
+        TODO
+        """
+        return pulumi.get(self, "cluster_domain")
+
+    @property
+    @pulumi.getter(name="containerRuntimeEndpoint")
+    def container_runtime_endpoint(self) -> str:
+        """
+        TODO
+        """
+        return pulumi.get(self, "container_runtime_endpoint")
+
+    @property
+    @pulumi.getter
+    def kind(self) -> str:
+        return pulumi.get(self, "kind")
+
+    @property
+    @pulumi.getter(name="podCIDR")
+    def pod_cidr(self) -> str:
+        """
+        TODO
+        """
+        return pulumi.get(self, "pod_cidr")
+
+    @property
+    @pulumi.getter(name="resolvConf")
+    def resolv_conf(self) -> str:
+        """
+        TODO
+        """
+        return pulumi.get(self, "resolv_conf")
+
+    @property
+    @pulumi.getter(name="runtimeRequestTimeout")
+    def runtime_request_timeout(self) -> str:
+        """
+        TODO
+        """
+        return pulumi.get(self, "runtime_request_timeout")
+
+    @property
+    @pulumi.getter(name="tlsCertFile")
+    def tls_cert_file(self) -> str:
+        """
+        TODO
+        """
+        return pulumi.get(self, "tls_cert_file")
+
+    @property
+    @pulumi.getter(name="tlsPrivateKeyFile")
+    def tls_private_key_file(self) -> str:
+        """
+        TODO
+        """
+        return pulumi.get(self, "tls_private_key_file")
+
+
+@pulumi.output_type
+class KubeletConfigurationAuthentication(dict):
+    def __init__(__self__, *,
+                 anonymous: 'outputs.KubeletConfigurationAuthenticationAnonymous',
+                 webhook: 'outputs.KubeletConfigurationAuthenticationWebhook',
+                 x509: 'outputs.KubeletConfigurationAuthenticationx509'):
+        pulumi.set(__self__, "anonymous", anonymous)
+        pulumi.set(__self__, "webhook", webhook)
+        pulumi.set(__self__, "x509", x509)
+
+    @property
+    @pulumi.getter
+    def anonymous(self) -> 'outputs.KubeletConfigurationAuthenticationAnonymous':
+        return pulumi.get(self, "anonymous")
+
+    @property
+    @pulumi.getter
+    def webhook(self) -> 'outputs.KubeletConfigurationAuthenticationWebhook':
+        return pulumi.get(self, "webhook")
+
+    @property
+    @pulumi.getter
+    def x509(self) -> 'outputs.KubeletConfigurationAuthenticationx509':
+        return pulumi.get(self, "x509")
+
+
+@pulumi.output_type
+class KubeletConfigurationAuthenticationAnonymous(dict):
+    def __init__(__self__, *,
+                 enabled: bool):
+        """
+        :param bool enabled: TODO
+        """
+        pulumi.set(__self__, "enabled", enabled)
+
+    @property
+    @pulumi.getter
+    def enabled(self) -> bool:
+        """
+        TODO
+        """
+        return pulumi.get(self, "enabled")
+
+
+@pulumi.output_type
+class KubeletConfigurationAuthenticationWebhook(dict):
+    def __init__(__self__, *,
+                 enabled: bool):
+        """
+        :param bool enabled: TODO
+        """
+        pulumi.set(__self__, "enabled", enabled)
+
+    @property
+    @pulumi.getter
+    def enabled(self) -> bool:
+        """
+        TODO
+        """
+        return pulumi.get(self, "enabled")
+
+
+@pulumi.output_type
+class KubeletConfigurationAuthenticationx509(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "clientCAFile":
+            suggest = "client_ca_file"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in KubeletConfigurationAuthenticationx509. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        KubeletConfigurationAuthenticationx509.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        KubeletConfigurationAuthenticationx509.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 client_ca_file: str):
+        """
+        :param str client_ca_file: TODO
+        """
+        pulumi.set(__self__, "client_ca_file", client_ca_file)
+
+    @property
+    @pulumi.getter(name="clientCAFile")
+    def client_ca_file(self) -> str:
+        """
+        TODO
+        """
+        return pulumi.get(self, "client_ca_file")
+
+
+@pulumi.output_type
+class KubeletConfigurationAuthorization(dict):
+    def __init__(__self__, *,
+                 mode: str):
+        pulumi.set(__self__, "mode", mode)
+
+    @property
+    @pulumi.getter
+    def mode(self) -> str:
+        return pulumi.get(self, "mode")
 
 
 @pulumi.output_type

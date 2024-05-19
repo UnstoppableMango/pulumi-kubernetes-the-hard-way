@@ -40,6 +40,80 @@ export namespace config {
         users: outputs.config.User[];
     }
 
+    export interface KubeletConfiguration {
+        apiVersion: "kubelet.config.k8s.io/v1beta1";
+        authentication: outputs.config.KubeletConfigurationAuthentication;
+        authorization: outputs.config.KubeletConfigurationAuthorization;
+        /**
+         * TODO
+         */
+        cgroupDriver: string;
+        /**
+         * TODO
+         */
+        clusterDNS: string[];
+        /**
+         * TODO
+         */
+        clusterDomain: string;
+        /**
+         * TODO
+         */
+        containerRuntimeEndpoint: string;
+        kind: "KubeletConfiguration";
+        /**
+         * TODO
+         */
+        podCIDR: string;
+        /**
+         * TODO
+         */
+        resolvConf: string;
+        /**
+         * TODO
+         */
+        runtimeRequestTimeout: string;
+        /**
+         * TODO
+         */
+        tlsCertFile: string;
+        /**
+         * TODO
+         */
+        tlsPrivateKeyFile: string;
+    }
+
+    export interface KubeletConfigurationAuthentication {
+        anonymous: outputs.config.KubeletConfigurationAuthenticationAnonymous;
+        webhook: outputs.config.KubeletConfigurationAuthenticationWebhook;
+        x509: outputs.config.KubeletConfigurationAuthenticationx509;
+    }
+
+    export interface KubeletConfigurationAuthenticationAnonymous {
+        /**
+         * TODO
+         */
+        enabled: boolean;
+    }
+
+    export interface KubeletConfigurationAuthenticationWebhook {
+        /**
+         * TODO
+         */
+        enabled: boolean;
+    }
+
+    export interface KubeletConfigurationAuthenticationx509 {
+        /**
+         * TODO
+         */
+        clientCAFile: string;
+    }
+
+    export interface KubeletConfigurationAuthorization {
+        mode: string;
+    }
+
     /**
      * Pod is a collection of containers that can run on a host. This resource is created by clients and scheduled onto hosts.
      *
