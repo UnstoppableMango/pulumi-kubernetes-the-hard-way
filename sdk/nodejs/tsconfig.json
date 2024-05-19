@@ -18,7 +18,6 @@
         "config/getKubeletConfiguration.ts",
         "config/index.ts",
         "config/kubeVipManifest.ts",
-        "config/kubeconfig.ts",
         "config/kubeletConfiguration.ts",
         "index.ts",
         "provider.ts",

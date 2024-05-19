@@ -7,9 +7,6 @@ import * as outputs from "../types/output";
 import * as enums from "../types/enums";
 import * as utilities from "../utilities";
 
-/**
- * TODO
- */
 export function getKubeconfig(args: GetKubeconfigArgs, opts?: pulumi.InvokeOptions): Promise<GetKubeconfigResult> {
 
     opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
@@ -30,15 +27,9 @@ export interface GetKubeconfigArgs {
     options: inputs.config.KubeconfigAdminOptions | inputs.config.KubeconfigKubeControllerManagerOptions | inputs.config.KubeconfigKubeProxyOptions | inputs.config.KubeconfigKubeSchedulerOptions | inputs.config.KubeconfigWorkerOptions;
 }
 
-/**
- * TODO
- */
 export interface GetKubeconfigResult {
     readonly result: outputs.config.Kubeconfig;
 }
-/**
- * TODO
- */
 export function getKubeconfigOutput(args: GetKubeconfigOutputArgs, opts?: pulumi.InvokeOptions): pulumi.Output<GetKubeconfigResult> {
     return pulumi.output(args).apply((a: any) => getKubeconfig(a, opts))
 }

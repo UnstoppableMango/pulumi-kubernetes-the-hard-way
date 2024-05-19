@@ -28,23 +28,6 @@ __all__ = [
 
 @pulumi.output_type
 class Cluster(dict):
-    @staticmethod
-    def __key_warning(key: str):
-        suggest = None
-        if key == "certificateAuthorityData":
-            suggest = "certificate_authority_data"
-
-        if suggest:
-            pulumi.log.warn(f"Key '{key}' not found in Cluster. Access the value via the '{suggest}' property getter instead.")
-
-    def __getitem__(self, key: str) -> Any:
-        Cluster.__key_warning(key)
-        return super().__getitem__(key)
-
-    def get(self, key: str, default = None) -> Any:
-        Cluster.__key_warning(key)
-        return super().get(key, default)
-
     def __init__(__self__, *,
                  certificate_authority_data: str,
                  server: str):
@@ -1176,25 +1159,6 @@ class PodManifest(dict):
 
 @pulumi.output_type
 class User(dict):
-    @staticmethod
-    def __key_warning(key: str):
-        suggest = None
-        if key == "clientCertificateData":
-            suggest = "client_certificate_data"
-        elif key == "clientKeyData":
-            suggest = "client_key_data"
-
-        if suggest:
-            pulumi.log.warn(f"Key '{key}' not found in User. Access the value via the '{suggest}' property getter instead.")
-
-    def __getitem__(self, key: str) -> Any:
-        User.__key_warning(key)
-        return super().__getitem__(key)
-
-    def get(self, key: str, default = None) -> Any:
-        User.__key_warning(key)
-        return super().get(key, default)
-
     def __init__(__self__, *,
                  client_certificate_data: str,
                  client_key_data: str):
