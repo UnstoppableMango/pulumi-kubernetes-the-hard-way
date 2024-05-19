@@ -15,6 +15,7 @@ export * from './kubeApiServerInstall';
 export * from './kubeControllerManagerInstall';
 export * from './kubectl';
 export * from './kubelet';
+export * from './kubeletService';
 export * from './kubeProxy';
 export * from './kubeSchedulerInstall';
 export * from './runc';
