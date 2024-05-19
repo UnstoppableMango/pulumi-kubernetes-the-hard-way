@@ -15,6 +15,8 @@ import pulumi_kubernetes
 __all__ = [
     'Cluster',
     'Context',
+    'KubeProxyConfiguration',
+    'KubeProxyConfigurationClientConnection',
     'Kubeconfig',
     'KubeletConfiguration',
     'KubeletConfigurationAuthentication',
@@ -82,6 +84,99 @@ class Context(dict):
         TODO
         """
         return pulumi.get(self, "user")
+
+
+@pulumi.output_type
+class KubeProxyConfiguration(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "clusterCIDR":
+            suggest = "cluster_cidr"
+        elif key == "apiVersion":
+            suggest = "api_version"
+        elif key == "clientConnection":
+            suggest = "client_connection"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in KubeProxyConfiguration. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        KubeProxyConfiguration.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        KubeProxyConfiguration.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 cluster_cidr: str,
+                 api_version: Optional[str] = None,
+                 client_connection: Optional['outputs.KubeProxyConfigurationClientConnection'] = None,
+                 kind: Optional[str] = None,
+                 mode: Optional[str] = None):
+        """
+        :param str cluster_cidr: TODO
+        :param str mode: TODO
+        """
+        pulumi.set(__self__, "cluster_cidr", cluster_cidr)
+        if api_version is not None:
+            pulumi.set(__self__, "api_version", 'kubeproxy.config.k8s.io/v1alpha1')
+        if client_connection is not None:
+            pulumi.set(__self__, "client_connection", client_connection)
+        if kind is not None:
+            pulumi.set(__self__, "kind", 'KubeProxyConfiguration')
+        if mode is not None:
+            pulumi.set(__self__, "mode", mode)
+
+    @property
+    @pulumi.getter(name="clusterCIDR")
+    def cluster_cidr(self) -> str:
+        """
+        TODO
+        """
+        return pulumi.get(self, "cluster_cidr")
+
+    @property
+    @pulumi.getter(name="apiVersion")
+    def api_version(self) -> Optional[str]:
+        return pulumi.get(self, "api_version")
+
+    @property
+    @pulumi.getter(name="clientConnection")
+    def client_connection(self) -> Optional['outputs.KubeProxyConfigurationClientConnection']:
+        return pulumi.get(self, "client_connection")
+
+    @property
+    @pulumi.getter
+    def kind(self) -> Optional[str]:
+        return pulumi.get(self, "kind")
+
+    @property
+    @pulumi.getter
+    def mode(self) -> Optional[str]:
+        """
+        TODO
+        """
+        return pulumi.get(self, "mode")
+
+
+@pulumi.output_type
+class KubeProxyConfigurationClientConnection(dict):
+    def __init__(__self__, *,
+                 kubeconfig: str):
+        """
+        :param str kubeconfig: Path to the kubeconfig.
+        """
+        pulumi.set(__self__, "kubeconfig", kubeconfig)
+
+    @property
+    @pulumi.getter
+    def kubeconfig(self) -> str:
+        """
+        Path to the kubeconfig.
+        """
+        return pulumi.get(self, "kubeconfig")
 
 
 @pulumi.output_type

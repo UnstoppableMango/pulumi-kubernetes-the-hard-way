@@ -21,6 +21,7 @@ __all__ = [
     'ContainerdCriPluginConfigurationContainerdRuncOptions',
     'EtcdConfigurationProps',
     'EtcdNode',
+    'KubeProxyConfigurationProps',
     'KubeletConfigurationProps',
     'SystemdInstallSection',
     'SystemdServiceSection',
@@ -491,6 +492,58 @@ class EtcdNode(dict):
         The CPU architecture of the node.
         """
         return pulumi.get(self, "architecture")
+
+
+@pulumi.output_type
+class KubeProxyConfigurationProps(dict):
+    """
+    Props for resources that consume kube-proxy configuration.
+    """
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "configurationFilePath":
+            suggest = "configuration_file_path"
+        elif key == "kubeProxyPath":
+            suggest = "kube_proxy_path"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in KubeProxyConfigurationProps. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        KubeProxyConfigurationProps.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        KubeProxyConfigurationProps.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 configuration_file_path: str,
+                 kube_proxy_path: str):
+        """
+        Props for resources that consume kube-proxy configuration.
+        :param str configuration_file_path: Path to the kube proxy configuration file
+        :param str kube_proxy_path: Path to the kube-proxy binary.
+        """
+        pulumi.set(__self__, "configuration_file_path", configuration_file_path)
+        pulumi.set(__self__, "kube_proxy_path", kube_proxy_path)
+
+    @property
+    @pulumi.getter(name="configurationFilePath")
+    def configuration_file_path(self) -> str:
+        """
+        Path to the kube proxy configuration file
+        """
+        return pulumi.get(self, "configuration_file_path")
+
+    @property
+    @pulumi.getter(name="kubeProxyPath")
+    def kube_proxy_path(self) -> str:
+        """
+        Path to the kube-proxy binary.
+        """
+        return pulumi.get(self, "kube_proxy_path")
 
 
 @pulumi.output_type

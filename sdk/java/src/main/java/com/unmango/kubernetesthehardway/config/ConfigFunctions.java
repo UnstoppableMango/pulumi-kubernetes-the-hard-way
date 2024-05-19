@@ -8,18 +8,49 @@ import com.pulumi.core.TypeShape;
 import com.pulumi.deployment.Deployment;
 import com.pulumi.deployment.InvokeOptions;
 import com.unmango.kubernetesthehardway.Utilities;
+import com.unmango.kubernetesthehardway.config.inputs.GetKubeProxyConfigurationArgs;
+import com.unmango.kubernetesthehardway.config.inputs.GetKubeProxyConfigurationPlainArgs;
 import com.unmango.kubernetesthehardway.config.inputs.GetKubeVipManifestArgs;
 import com.unmango.kubernetesthehardway.config.inputs.GetKubeVipManifestPlainArgs;
 import com.unmango.kubernetesthehardway.config.inputs.GetKubeconfigArgs;
 import com.unmango.kubernetesthehardway.config.inputs.GetKubeconfigPlainArgs;
 import com.unmango.kubernetesthehardway.config.inputs.GetKubeletConfigurationArgs;
 import com.unmango.kubernetesthehardway.config.inputs.GetKubeletConfigurationPlainArgs;
+import com.unmango.kubernetesthehardway.config.outputs.GetKubeProxyConfigurationResult;
 import com.unmango.kubernetesthehardway.config.outputs.GetKubeVipManifestResult;
 import com.unmango.kubernetesthehardway.config.outputs.GetKubeconfigResult;
 import com.unmango.kubernetesthehardway.config.outputs.GetKubeletConfigurationResult;
 import java.util.concurrent.CompletableFuture;
 
 public final class ConfigFunctions {
+    /**
+     * kube-proxy configuration.
+     * 
+     */
+    public static Output<GetKubeProxyConfigurationResult> getKubeProxyConfiguration(GetKubeProxyConfigurationArgs args) {
+        return getKubeProxyConfiguration(args, InvokeOptions.Empty);
+    }
+    /**
+     * kube-proxy configuration.
+     * 
+     */
+    public static CompletableFuture<GetKubeProxyConfigurationResult> getKubeProxyConfigurationPlain(GetKubeProxyConfigurationPlainArgs args) {
+        return getKubeProxyConfigurationPlain(args, InvokeOptions.Empty);
+    }
+    /**
+     * kube-proxy configuration.
+     * 
+     */
+    public static Output<GetKubeProxyConfigurationResult> getKubeProxyConfiguration(GetKubeProxyConfigurationArgs args, InvokeOptions options) {
+        return Deployment.getInstance().invoke("kubernetes-the-hard-way:config:getKubeProxyConfiguration", TypeShape.of(GetKubeProxyConfigurationResult.class), args, Utilities.withVersion(options));
+    }
+    /**
+     * kube-proxy configuration.
+     * 
+     */
+    public static CompletableFuture<GetKubeProxyConfigurationResult> getKubeProxyConfigurationPlain(GetKubeProxyConfigurationPlainArgs args, InvokeOptions options) {
+        return Deployment.getInstance().invokeAsync("kubernetes-the-hard-way:config:getKubeProxyConfiguration", TypeShape.of(GetKubeProxyConfigurationResult.class), args, Utilities.withVersion(options));
+    }
     /**
      * Gets the static pod manifests for KubeVip.
      * 

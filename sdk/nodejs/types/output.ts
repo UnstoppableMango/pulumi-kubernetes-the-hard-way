@@ -34,6 +34,27 @@ export namespace config {
         user: string;
     }
 
+    export interface KubeProxyConfiguration {
+        apiVersion?: "kubeproxy.config.k8s.io/v1alpha1";
+        clientConnection?: outputs.config.KubeProxyConfigurationClientConnection;
+        /**
+         * TODO
+         */
+        clusterCIDR: string;
+        kind?: "KubeProxyConfiguration";
+        /**
+         * TODO
+         */
+        mode?: string;
+    }
+
+    export interface KubeProxyConfigurationClientConnection {
+        /**
+         * Path to the kubeconfig.
+         */
+        kubeconfig: string;
+    }
+
     export interface Kubeconfig {
         clusters: outputs.config.Cluster[];
         contexts: outputs.config.Context[];
@@ -641,6 +662,20 @@ export namespace remote {
             ...val,
             connection: pulumiCommand.types.output.remote.connectionProvideDefaults(val.connection),
         };
+    }
+
+    /**
+     * Props for resources that consume kube-proxy configuration.
+     */
+    export interface KubeProxyConfigurationProps {
+        /**
+         * Path to the kube proxy configuration file
+         */
+        configurationFilePath: string;
+        /**
+         * Path to the kube-proxy binary.
+         */
+        kubeProxyPath: string;
     }
 
     /**

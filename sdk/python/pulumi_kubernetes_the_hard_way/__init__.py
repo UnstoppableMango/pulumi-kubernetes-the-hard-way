@@ -31,6 +31,7 @@ _utilities.register(
   "mod": "config",
   "fqn": "pulumi_kubernetes_the_hard_way.config",
   "classes": {
+   "kubernetes-the-hard-way:config:KubeProxyConfiguration": "KubeProxyConfiguration",
    "kubernetes-the-hard-way:config:KubeVipManifest": "KubeVipManifest",
    "kubernetes-the-hard-way:config:KubeletConfiguration": "KubeletConfiguration"
   }
@@ -56,6 +57,7 @@ _utilities.register(
    "kubernetes-the-hard-way:remote:KubeApiServerInstall": "KubeApiServerInstall",
    "kubernetes-the-hard-way:remote:KubeControllerManagerInstall": "KubeControllerManagerInstall",
    "kubernetes-the-hard-way:remote:KubeProxyInstall": "KubeProxyInstall",
+   "kubernetes-the-hard-way:remote:KubeProxyService": "KubeProxyService",
    "kubernetes-the-hard-way:remote:KubeSchedulerInstall": "KubeSchedulerInstall",
    "kubernetes-the-hard-way:remote:KubectlInstall": "KubectlInstall",
    "kubernetes-the-hard-way:remote:KubeletInstall": "KubeletInstall",
