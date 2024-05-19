@@ -7,6 +7,7 @@ import * as pulumi from "@pulumi/pulumi";
 export type ConstructComponent<T extends pulumi.ComponentResource = pulumi.ComponentResource> = (name: string, inputs: any, options: pulumi.ComponentResourceOptions) => T;
 export type ResourceConstructor = {
     readonly "kubernetes-the-hard-way:config:KubeVipManifest": ConstructComponent<KubeVipManifest>;
+    readonly "kubernetes-the-hard-way:config:KubeletConfiguration": ConstructComponent<KubeletConfiguration>;
     readonly "kubernetes-the-hard-way:remote:CniBridgePluginConfiguration": ConstructComponent<CniBridgePluginConfiguration>;
     readonly "kubernetes-the-hard-way:remote:CniLoopbackPluginConfiguration": ConstructComponent<CniLoopbackPluginConfiguration>;
     readonly "kubernetes-the-hard-way:remote:CniPluginConfiguration": ConstructComponent<CniPluginConfiguration>;
@@ -52,6 +53,7 @@ export type ResourceConstructor = {
 export type Functions = {
     "kubernetes-the-hard-way:config:getKubeVipManifest": (inputs: getKubeVipManifestInputs) => Promise<getKubeVipManifestOutputs>;
     "kubernetes-the-hard-way:config:getKubeconfig": (inputs: getKubeconfigInputs) => Promise<getKubeconfigOutputs>;
+    "kubernetes-the-hard-way:config:getKubeletConfiguration": (inputs: getKubeletConfigurationInputs) => Promise<getKubeletConfigurationOutputs>;
     "kubernetes-the-hard-way:tls:ClusterPki/getKubeconfig": (inputs: ClusterPki_getKubeconfigInputs) => Promise<ClusterPki_getKubeconfigOutputs>;
 };
 import * as command from "@pulumi/command";
@@ -91,6 +93,28 @@ export interface KubeVipManifestArgs {
     readonly vipLeaseDuration?: pulumi.Input<number>;
     readonly vipRenewDeadline?: pulumi.Input<number>;
     readonly vipRetryPeriod?: pulumi.Input<number>;
+}
+export abstract class KubeletConfiguration<TData = any> extends (pulumi.ComponentResource)<TData> {
+    public result!: KubeletConfigurationOutputs | pulumi.Output<KubeletConfigurationOutputs>;
+    public yaml!: string | pulumi.Output<string>;
+    constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
+        super("kubernetes-the-hard-way:config:KubeletConfiguration", name, opts.urn ? { result: undefined, yaml: undefined } : { name, args, opts }, opts);
+    }
+}
+export interface KubeletConfigurationArgs {
+    readonly anonymous?: pulumi.Input<boolean>;
+    readonly authorizationMode?: pulumi.Input<string>;
+    readonly cgroupDriver?: pulumi.Input<string>;
+    readonly clientCAFile?: pulumi.Input<string>;
+    readonly clusterDNS?: pulumi.Input<pulumi.Input<string>[]>;
+    readonly clusterDomain?: pulumi.Input<string>;
+    readonly containerRuntimeEndpoint?: pulumi.Input<string>;
+    readonly podCIDR: pulumi.Input<string>;
+    readonly resolvConf?: pulumi.Input<string>;
+    readonly runtimeRequestTimeout?: pulumi.Input<string>;
+    readonly tlsCertFile?: pulumi.Input<string>;
+    readonly tlsPrivateKeyFile?: pulumi.Input<string>;
+    readonly webhook?: pulumi.Input<boolean>;
 }
 export abstract class CniBridgePluginConfiguration<TData = any> extends (pulumi.ComponentResource)<TData> {
     public bridge!: string | pulumi.Output<string>;
@@ -1224,6 +1248,70 @@ export interface KubeconfigWorkerOptionsOutputs {
     readonly publicIp: pulumi.Output<string>;
     readonly type?: string;
 }
+export interface KubeletConfigurationInputs {
+    readonly apiVersion: pulumi.Input<string>;
+    readonly authentication: pulumi.Input<KubeletConfigurationAuthenticationInputs>;
+    readonly authorization: pulumi.Input<KubeletConfigurationAuthorizationInputs>;
+    readonly cgroupDriver: pulumi.Input<string>;
+    readonly clusterDNS: pulumi.Input<pulumi.Input<string>[]>;
+    readonly clusterDomain: pulumi.Input<string>;
+    readonly containerRuntimeEndpoint: pulumi.Input<string>;
+    readonly kind: pulumi.Input<string>;
+    readonly podCIDR: pulumi.Input<string>;
+    readonly resolvConf: pulumi.Input<string>;
+    readonly runtimeRequestTimeout: pulumi.Input<string>;
+    readonly tlsCertFile: pulumi.Input<string>;
+    readonly tlsPrivateKeyFile: pulumi.Input<string>;
+}
+export interface KubeletConfigurationOutputs {
+    readonly apiVersion: pulumi.Output<string>;
+    readonly authentication: pulumi.Output<KubeletConfigurationAuthenticationOutputs>;
+    readonly authorization: pulumi.Output<KubeletConfigurationAuthorizationOutputs>;
+    readonly cgroupDriver: pulumi.Output<string>;
+    readonly clusterDNS: pulumi.Output<string[]>;
+    readonly clusterDomain: pulumi.Output<string>;
+    readonly containerRuntimeEndpoint: pulumi.Output<string>;
+    readonly kind: pulumi.Output<string>;
+    readonly podCIDR: pulumi.Output<string>;
+    readonly resolvConf: pulumi.Output<string>;
+    readonly runtimeRequestTimeout: pulumi.Output<string>;
+    readonly tlsCertFile: pulumi.Output<string>;
+    readonly tlsPrivateKeyFile: pulumi.Output<string>;
+}
+export interface KubeletConfigurationAuthenticationInputs {
+    readonly anonymous: pulumi.Input<KubeletConfigurationAuthenticationAnonymousInputs>;
+    readonly webhook: pulumi.Input<KubeletConfigurationAuthenticationWebhookInputs>;
+    readonly x509: pulumi.Input<KubeletConfigurationAuthenticationx509Inputs>;
+}
+export interface KubeletConfigurationAuthenticationOutputs {
+    readonly anonymous: pulumi.Output<KubeletConfigurationAuthenticationAnonymousOutputs>;
+    readonly webhook: pulumi.Output<KubeletConfigurationAuthenticationWebhookOutputs>;
+    readonly x509: pulumi.Output<KubeletConfigurationAuthenticationx509Outputs>;
+}
+export interface KubeletConfigurationAuthenticationAnonymousInputs {
+    readonly enabled: pulumi.Input<boolean>;
+}
+export interface KubeletConfigurationAuthenticationAnonymousOutputs {
+    readonly enabled: pulumi.Output<boolean>;
+}
+export interface KubeletConfigurationAuthenticationWebhookInputs {
+    readonly enabled: pulumi.Input<boolean>;
+}
+export interface KubeletConfigurationAuthenticationWebhookOutputs {
+    readonly enabled: pulumi.Output<boolean>;
+}
+export interface KubeletConfigurationAuthenticationx509Inputs {
+    readonly clientCAFile: pulumi.Input<string>;
+}
+export interface KubeletConfigurationAuthenticationx509Outputs {
+    readonly clientCAFile: pulumi.Output<string>;
+}
+export interface KubeletConfigurationAuthorizationInputs {
+    readonly mode: pulumi.Input<string>;
+}
+export interface KubeletConfigurationAuthorizationOutputs {
+    readonly mode: pulumi.Output<string>;
+}
 export interface PodManifestInputs {
     readonly apiVersion?: pulumi.Input<string>;
     readonly kind?: pulumi.Input<string>;
@@ -1840,6 +1928,24 @@ export interface getKubeconfigInputs {
 }
 export interface getKubeconfigOutputs {
     readonly result: pulumi.Output<KubeconfigOutputs>;
+}
+export interface getKubeletConfigurationInputs {
+    readonly anonymous?: pulumi.Input<boolean>;
+    readonly authorizationMode?: pulumi.Input<string>;
+    readonly cgroupDriver?: pulumi.Input<string>;
+    readonly clientCAFile?: pulumi.Input<string>;
+    readonly clusterDNS?: pulumi.Input<pulumi.Input<string>[]>;
+    readonly clusterDomain?: pulumi.Input<string>;
+    readonly containerRuntimeEndpoint?: pulumi.Input<string>;
+    readonly podCIDR: pulumi.Input<string>;
+    readonly resolvConf?: pulumi.Input<string>;
+    readonly runtimeRequestTimeout?: pulumi.Input<string>;
+    readonly tlsCertFile?: pulumi.Input<string>;
+    readonly tlsPrivateKeyFile?: pulumi.Input<string>;
+    readonly webhook?: pulumi.Input<boolean>;
+}
+export interface getKubeletConfigurationOutputs {
+    readonly result: pulumi.Output<KubeletConfigurationOutputs>;
 }
 export interface ClusterPki_getKubeconfigInputs {
     readonly __self__: pulumi.Input<ClusterPki>;

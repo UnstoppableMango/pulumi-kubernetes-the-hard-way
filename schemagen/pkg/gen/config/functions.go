@@ -47,7 +47,8 @@ func generateFunctions() map[string]schema.FunctionSpec {
 				Required: []string{"result"},
 			},
 		},
-		name("getKubeVipManifest"): generateGetKubeVipManifest(),
+		name("getKubeletConfiguration"): generateGetKubeletConfiguration(),
+		name("getKubeVipManifest"):      generateGetKubeVipManifest(),
 	}
 
 	return functions
@@ -102,6 +103,38 @@ func generateGetKubeVipManifest() schema.FunctionSpec {
 			Properties: map[string]schema.PropertySpec{
 				"result": {
 					TypeSpec: types.LocalType("PodManifest", "config"),
+				},
+			},
+			Required: []string{"result"},
+		},
+	}
+}
+
+func generateGetKubeletConfiguration() schema.FunctionSpec {
+	return schema.FunctionSpec{
+		Description: "Get the kubelet configuration.",
+		Inputs: &schema.ObjectTypeSpec{
+			Properties: map[string]schema.PropertySpec{
+				"anonymous":                props.Boolean(""),
+				"webhook":                  props.Boolean(""),
+				"clientCAFile":             props.String(""),
+				"authorizationMode":        props.String(""),
+				"clusterDomain":            props.String(""),
+				"clusterDNS":               props.ArrayOf("string", ""),
+				"cgroupDriver":             props.String(""),
+				"containerRuntimeEndpoint": props.String(""),
+				"podCIDR":                  props.String(""),
+				"resolvConf":               props.String(""),
+				"runtimeRequestTimeout":    props.String(""),
+				"tlsCertFile":              props.String(""),
+				"tlsPrivateKeyFile":        props.String(""),
+			},
+			Required: []string{"podCIDR"},
+		},
+		Outputs: &schema.ObjectTypeSpec{
+			Properties: map[string]schema.PropertySpec{
+				"result": {
+					TypeSpec: types.LocalType("KubeletConfiguration", "config"),
 				},
 			},
 			Required: []string{"result"},

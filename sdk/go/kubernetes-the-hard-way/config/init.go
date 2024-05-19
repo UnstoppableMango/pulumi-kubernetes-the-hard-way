@@ -23,6 +23,8 @@ func (m *module) Construct(ctx *pulumi.Context, name, typ, urn string) (r pulumi
 	switch typ {
 	case "kubernetes-the-hard-way:config:KubeVipManifest":
 		r = &KubeVipManifest{}
+	case "kubernetes-the-hard-way:config:KubeletConfiguration":
+		r = &KubeletConfiguration{}
 	default:
 		return nil, fmt.Errorf("unknown resource type: %s", typ)
 	}

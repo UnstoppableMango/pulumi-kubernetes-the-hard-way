@@ -466,6 +466,234 @@ func (o KubeconfigWorkerOptionsOutput) Type() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v KubeconfigWorkerOptions) *string { return v.Type }).(pulumi.StringPtrOutput)
 }
 
+type KubeletConfigurationType struct {
+	ApiVersion     string                             `pulumi:"apiVersion"`
+	Authentication KubeletConfigurationAuthentication `pulumi:"authentication"`
+	Authorization  KubeletConfigurationAuthorization  `pulumi:"authorization"`
+	// TODO
+	CgroupDriver string `pulumi:"cgroupDriver"`
+	// TODO
+	ClusterDNS []string `pulumi:"clusterDNS"`
+	// TODO
+	ClusterDomain string `pulumi:"clusterDomain"`
+	// TODO
+	ContainerRuntimeEndpoint string `pulumi:"containerRuntimeEndpoint"`
+	Kind                     string `pulumi:"kind"`
+	// TODO
+	PodCIDR string `pulumi:"podCIDR"`
+	// TODO
+	ResolvConf string `pulumi:"resolvConf"`
+	// TODO
+	RuntimeRequestTimeout string `pulumi:"runtimeRequestTimeout"`
+	// TODO
+	TlsCertFile string `pulumi:"tlsCertFile"`
+	// TODO
+	TlsPrivateKeyFile string `pulumi:"tlsPrivateKeyFile"`
+}
+
+type KubeletConfigurationTypeOutput struct{ *pulumi.OutputState }
+
+func (KubeletConfigurationTypeOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*KubeletConfigurationType)(nil)).Elem()
+}
+
+func (o KubeletConfigurationTypeOutput) ToKubeletConfigurationTypeOutput() KubeletConfigurationTypeOutput {
+	return o
+}
+
+func (o KubeletConfigurationTypeOutput) ToKubeletConfigurationTypeOutputWithContext(ctx context.Context) KubeletConfigurationTypeOutput {
+	return o
+}
+
+func (o KubeletConfigurationTypeOutput) ApiVersion() pulumi.StringOutput {
+	return o.ApplyT(func(v KubeletConfigurationType) string { return v.ApiVersion }).(pulumi.StringOutput)
+}
+
+func (o KubeletConfigurationTypeOutput) Authentication() KubeletConfigurationAuthenticationOutput {
+	return o.ApplyT(func(v KubeletConfigurationType) KubeletConfigurationAuthentication { return v.Authentication }).(KubeletConfigurationAuthenticationOutput)
+}
+
+func (o KubeletConfigurationTypeOutput) Authorization() KubeletConfigurationAuthorizationOutput {
+	return o.ApplyT(func(v KubeletConfigurationType) KubeletConfigurationAuthorization { return v.Authorization }).(KubeletConfigurationAuthorizationOutput)
+}
+
+// TODO
+func (o KubeletConfigurationTypeOutput) CgroupDriver() pulumi.StringOutput {
+	return o.ApplyT(func(v KubeletConfigurationType) string { return v.CgroupDriver }).(pulumi.StringOutput)
+}
+
+// TODO
+func (o KubeletConfigurationTypeOutput) ClusterDNS() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v KubeletConfigurationType) []string { return v.ClusterDNS }).(pulumi.StringArrayOutput)
+}
+
+// TODO
+func (o KubeletConfigurationTypeOutput) ClusterDomain() pulumi.StringOutput {
+	return o.ApplyT(func(v KubeletConfigurationType) string { return v.ClusterDomain }).(pulumi.StringOutput)
+}
+
+// TODO
+func (o KubeletConfigurationTypeOutput) ContainerRuntimeEndpoint() pulumi.StringOutput {
+	return o.ApplyT(func(v KubeletConfigurationType) string { return v.ContainerRuntimeEndpoint }).(pulumi.StringOutput)
+}
+
+func (o KubeletConfigurationTypeOutput) Kind() pulumi.StringOutput {
+	return o.ApplyT(func(v KubeletConfigurationType) string { return v.Kind }).(pulumi.StringOutput)
+}
+
+// TODO
+func (o KubeletConfigurationTypeOutput) PodCIDR() pulumi.StringOutput {
+	return o.ApplyT(func(v KubeletConfigurationType) string { return v.PodCIDR }).(pulumi.StringOutput)
+}
+
+// TODO
+func (o KubeletConfigurationTypeOutput) ResolvConf() pulumi.StringOutput {
+	return o.ApplyT(func(v KubeletConfigurationType) string { return v.ResolvConf }).(pulumi.StringOutput)
+}
+
+// TODO
+func (o KubeletConfigurationTypeOutput) RuntimeRequestTimeout() pulumi.StringOutput {
+	return o.ApplyT(func(v KubeletConfigurationType) string { return v.RuntimeRequestTimeout }).(pulumi.StringOutput)
+}
+
+// TODO
+func (o KubeletConfigurationTypeOutput) TlsCertFile() pulumi.StringOutput {
+	return o.ApplyT(func(v KubeletConfigurationType) string { return v.TlsCertFile }).(pulumi.StringOutput)
+}
+
+// TODO
+func (o KubeletConfigurationTypeOutput) TlsPrivateKeyFile() pulumi.StringOutput {
+	return o.ApplyT(func(v KubeletConfigurationType) string { return v.TlsPrivateKeyFile }).(pulumi.StringOutput)
+}
+
+type KubeletConfigurationAuthentication struct {
+	Anonymous KubeletConfigurationAuthenticationAnonymous `pulumi:"anonymous"`
+	Webhook   KubeletConfigurationAuthenticationWebhook   `pulumi:"webhook"`
+	X509      KubeletConfigurationAuthenticationx509      `pulumi:"x509"`
+}
+
+type KubeletConfigurationAuthenticationOutput struct{ *pulumi.OutputState }
+
+func (KubeletConfigurationAuthenticationOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*KubeletConfigurationAuthentication)(nil)).Elem()
+}
+
+func (o KubeletConfigurationAuthenticationOutput) ToKubeletConfigurationAuthenticationOutput() KubeletConfigurationAuthenticationOutput {
+	return o
+}
+
+func (o KubeletConfigurationAuthenticationOutput) ToKubeletConfigurationAuthenticationOutputWithContext(ctx context.Context) KubeletConfigurationAuthenticationOutput {
+	return o
+}
+
+func (o KubeletConfigurationAuthenticationOutput) Anonymous() KubeletConfigurationAuthenticationAnonymousOutput {
+	return o.ApplyT(func(v KubeletConfigurationAuthentication) KubeletConfigurationAuthenticationAnonymous {
+		return v.Anonymous
+	}).(KubeletConfigurationAuthenticationAnonymousOutput)
+}
+
+func (o KubeletConfigurationAuthenticationOutput) Webhook() KubeletConfigurationAuthenticationWebhookOutput {
+	return o.ApplyT(func(v KubeletConfigurationAuthentication) KubeletConfigurationAuthenticationWebhook { return v.Webhook }).(KubeletConfigurationAuthenticationWebhookOutput)
+}
+
+func (o KubeletConfigurationAuthenticationOutput) X509() KubeletConfigurationAuthenticationx509Output {
+	return o.ApplyT(func(v KubeletConfigurationAuthentication) KubeletConfigurationAuthenticationx509 { return v.X509 }).(KubeletConfigurationAuthenticationx509Output)
+}
+
+type KubeletConfigurationAuthenticationAnonymous struct {
+	// TODO
+	Enabled bool `pulumi:"enabled"`
+}
+
+type KubeletConfigurationAuthenticationAnonymousOutput struct{ *pulumi.OutputState }
+
+func (KubeletConfigurationAuthenticationAnonymousOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*KubeletConfigurationAuthenticationAnonymous)(nil)).Elem()
+}
+
+func (o KubeletConfigurationAuthenticationAnonymousOutput) ToKubeletConfigurationAuthenticationAnonymousOutput() KubeletConfigurationAuthenticationAnonymousOutput {
+	return o
+}
+
+func (o KubeletConfigurationAuthenticationAnonymousOutput) ToKubeletConfigurationAuthenticationAnonymousOutputWithContext(ctx context.Context) KubeletConfigurationAuthenticationAnonymousOutput {
+	return o
+}
+
+// TODO
+func (o KubeletConfigurationAuthenticationAnonymousOutput) Enabled() pulumi.BoolOutput {
+	return o.ApplyT(func(v KubeletConfigurationAuthenticationAnonymous) bool { return v.Enabled }).(pulumi.BoolOutput)
+}
+
+type KubeletConfigurationAuthenticationWebhook struct {
+	// TODO
+	Enabled bool `pulumi:"enabled"`
+}
+
+type KubeletConfigurationAuthenticationWebhookOutput struct{ *pulumi.OutputState }
+
+func (KubeletConfigurationAuthenticationWebhookOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*KubeletConfigurationAuthenticationWebhook)(nil)).Elem()
+}
+
+func (o KubeletConfigurationAuthenticationWebhookOutput) ToKubeletConfigurationAuthenticationWebhookOutput() KubeletConfigurationAuthenticationWebhookOutput {
+	return o
+}
+
+func (o KubeletConfigurationAuthenticationWebhookOutput) ToKubeletConfigurationAuthenticationWebhookOutputWithContext(ctx context.Context) KubeletConfigurationAuthenticationWebhookOutput {
+	return o
+}
+
+// TODO
+func (o KubeletConfigurationAuthenticationWebhookOutput) Enabled() pulumi.BoolOutput {
+	return o.ApplyT(func(v KubeletConfigurationAuthenticationWebhook) bool { return v.Enabled }).(pulumi.BoolOutput)
+}
+
+type KubeletConfigurationAuthenticationx509 struct {
+	// TODO
+	ClientCAFile string `pulumi:"clientCAFile"`
+}
+
+type KubeletConfigurationAuthenticationx509Output struct{ *pulumi.OutputState }
+
+func (KubeletConfigurationAuthenticationx509Output) ElementType() reflect.Type {
+	return reflect.TypeOf((*KubeletConfigurationAuthenticationx509)(nil)).Elem()
+}
+
+func (o KubeletConfigurationAuthenticationx509Output) ToKubeletConfigurationAuthenticationx509Output() KubeletConfigurationAuthenticationx509Output {
+	return o
+}
+
+func (o KubeletConfigurationAuthenticationx509Output) ToKubeletConfigurationAuthenticationx509OutputWithContext(ctx context.Context) KubeletConfigurationAuthenticationx509Output {
+	return o
+}
+
+// TODO
+func (o KubeletConfigurationAuthenticationx509Output) ClientCAFile() pulumi.StringOutput {
+	return o.ApplyT(func(v KubeletConfigurationAuthenticationx509) string { return v.ClientCAFile }).(pulumi.StringOutput)
+}
+
+type KubeletConfigurationAuthorization struct {
+	Mode string `pulumi:"mode"`
+}
+
+type KubeletConfigurationAuthorizationOutput struct{ *pulumi.OutputState }
+
+func (KubeletConfigurationAuthorizationOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*KubeletConfigurationAuthorization)(nil)).Elem()
+}
+
+func (o KubeletConfigurationAuthorizationOutput) ToKubeletConfigurationAuthorizationOutput() KubeletConfigurationAuthorizationOutput {
+	return o
+}
+
+func (o KubeletConfigurationAuthorizationOutput) ToKubeletConfigurationAuthorizationOutputWithContext(ctx context.Context) KubeletConfigurationAuthorizationOutput {
+	return o
+}
+
+func (o KubeletConfigurationAuthorizationOutput) Mode() pulumi.StringOutput {
+	return o.ApplyT(func(v KubeletConfigurationAuthorization) string { return v.Mode }).(pulumi.StringOutput)
+}
+
 // Pod is a collection of containers that can run on a host. This resource is created by clients and scheduled onto hosts.
 //
 // This resource waits until its status is ready before registering success
@@ -904,6 +1132,12 @@ func init() {
 	pulumi.RegisterOutputType(KubeconfigKubeProxyOptionsOutput{})
 	pulumi.RegisterOutputType(KubeconfigKubeSchedulerOptionsOutput{})
 	pulumi.RegisterOutputType(KubeconfigWorkerOptionsOutput{})
+	pulumi.RegisterOutputType(KubeletConfigurationTypeOutput{})
+	pulumi.RegisterOutputType(KubeletConfigurationAuthenticationOutput{})
+	pulumi.RegisterOutputType(KubeletConfigurationAuthenticationAnonymousOutput{})
+	pulumi.RegisterOutputType(KubeletConfigurationAuthenticationWebhookOutput{})
+	pulumi.RegisterOutputType(KubeletConfigurationAuthenticationx509Output{})
+	pulumi.RegisterOutputType(KubeletConfigurationAuthorizationOutput{})
 	pulumi.RegisterOutputType(PodManifestOutput{})
 	pulumi.RegisterOutputType(UserOutput{})
 	pulumi.RegisterOutputType(UserArrayOutput{})

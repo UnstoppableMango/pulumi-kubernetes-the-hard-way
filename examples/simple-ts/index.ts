@@ -1,4 +1,4 @@
-import { KubeVipManifest, getKubeVipManifestOutput } from '@unmango/pulumi-kubernetes-the-hard-way/config';
+import { KubeletConfiguration, KubeVipManifest } from '@unmango/pulumi-kubernetes-the-hard-way/config';
 import { AllowedUsage, Certificate, ClusterPki, RootCa } from '@unmango/pulumi-kubernetes-the-hard-way/tls';
 
 const ca = new RootCa('simple', {
@@ -45,6 +45,10 @@ const kubeVip = new KubeVipManifest('simple', {
   address: '123.0.0.45',
   kubeconfigPath: '/some/path',
   vipCidr: 69,
+});
+
+const kubelet = new KubeletConfiguration('simple', {
+  podCIDR: '10.0.69.0/24',
 });
 
 export const caAllowedUses = ca.allowedUses;

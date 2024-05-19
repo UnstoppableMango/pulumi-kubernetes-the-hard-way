@@ -6,9 +6,12 @@ import (
 
 func GenerateConfig(kubernetesSpec schema.PackageSpec) schema.PackageSpec {
 	functions := generateFunctions()
+	getKubeletConfiguration := functions[name("getKubeletConfiguration")]
+	getKubeVipManifest := functions[name("getKubeVipManifest")]
 
 	resources := map[string]schema.ResourceSpec{
-		name("KubeVipManifest"): generateKubeVipManifest(functions[name("getKubeVipManifest")]),
+		name("KubeletConfiguration"): generateKubeletConfiguration(getKubeletConfiguration),
+		name("KubeVipManifest"):      generateKubeVipManifest(getKubeVipManifest),
 	}
 
 	return schema.PackageSpec{
