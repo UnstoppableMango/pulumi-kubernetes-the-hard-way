@@ -11,7 +11,10 @@ func generateKubeVipManifest(getKubeVipManifest schema.FunctionSpec) schema.Reso
 	outputs := maps.Clone(getKubeVipManifest.Outputs.Properties)
 	outputs["yaml"] = props.String("The yaml representation of the manifest")
 
-	requiredOutputs := append(getKubeVipManifest.Outputs.Required, "yaml")
+	requiredOutputs := append(
+		getKubeVipManifest.Outputs.Required,
+		"yaml",
+	)
 
 	return schema.ResourceSpec{
 		IsComponent: true,
