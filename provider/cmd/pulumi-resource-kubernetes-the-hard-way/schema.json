@@ -23,7 +23,8 @@
                 "Pulumi.Command": "0.9.*",
                 "Pulumi.Kubernetes": "4.*",
                 "Pulumi.Random": "4.*",
-                "Pulumi.Tls": "5.*"
+                "Pulumi.Tls": "5.*",
+                "UnMango.Pulumi.Commandx": "0.1.*"
             },
             "rootNamespace": "UnMango"
         },
@@ -47,6 +48,7 @@
                 "com.pulumi:pulumi": "0.9.9",
                 "com.pulumi:random": "4.16.2",
                 "com.pulumi:tls": "5.0.2"
+                "com.unmango.pulumi:commandx": "0.1.2"
             },
             "gradleNexusPublishPluginVersion": "1.1.0",
             "liftSingleValueMethodReturns": true
@@ -58,6 +60,7 @@
                 "@pulumi/pulumi": "^3.0.0",
                 "@pulumi/random": "^4.16.2",
                 "@pulumi/tls": "^5.0.2"
+                "@unmango/pulumi-commandx": "^0.1.2"
             },
             "devDependencies": {
                 "@types/node": "^18",
@@ -77,6 +80,7 @@
                 "pulumi-kubernetes": "\u003e=4.14.0,\u003c5.0.0",
                 "pulumi-random": "\u003e=4.16.2,\u003c5.0.0",
                 "pulumi-tls": "\u003e=5.0.2,\u003c6.0.0"
+                "unmango-pulumi-commandx": "\u003e=0.1.2,\u003c1.0.0"
             }
         }
     },
@@ -1260,726 +1264,6 @@
                     "value": "worker"
                 }
             ]
-        },
-        "kubernetes-the-hard-way:tools:ChmodOpts": {
-            "description": "Abstraction over the `chmod` utility on a remote system.",
-            "properties": {
-                "changes": {
-                    "type": "boolean",
-                    "description": "Like verbose but report only when a change is made."
-                },
-                "files": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    },
-                    "description": "Corresponds to the [FILE] argument."
-                },
-                "help": {
-                    "type": "boolean",
-                    "description": "Display help and exit."
-                },
-                "mode": {
-                    "type": "string",
-                    "description": "Modes may be absolute or symbolic. An absolute mode is an octal number..."
-                },
-                "noPreserveRoot": {
-                    "type": "boolean",
-                    "description": "Do not treat '/' specially (the default)."
-                },
-                "preserveRoot": {
-                    "type": "boolean",
-                    "description": "Fail to operate recursively on '/'."
-                },
-                "quiet": {
-                    "type": "boolean",
-                    "description": "Suppress most error messages. Same as `silent`."
-                },
-                "recursive": {
-                    "type": "boolean",
-                    "description": "Change files and directories recursively."
-                },
-                "reference": {
-                    "type": "string",
-                    "description": "Use RFILE's mode instead of specifying MODE values. RFILE is always dereferenced if a symbolic link."
-                },
-                "silent": {
-                    "type": "boolean",
-                    "description": "Suppress most error messages. Same as `quiet`."
-                },
-                "version": {
-                    "type": "boolean",
-                    "description": "Output version information and exit."
-                }
-            },
-            "type": "object",
-            "required": [
-                "files",
-                "mode"
-            ]
-        },
-        "kubernetes-the-hard-way:tools:CommandLifecycle": {
-            "type": "string",
-            "enum": [
-                {
-                    "value": "create"
-                },
-                {
-                    "value": "update"
-                },
-                {
-                    "value": "delete"
-                }
-            ]
-        },
-        "kubernetes-the-hard-way:tools:EtcdctlCommand": {
-            "type": "string",
-            "enum": [
-                {
-                    "value": "member"
-                },
-                {
-                    "value": "list"
-                },
-                {
-                    "value": "version"
-                }
-            ]
-        },
-        "kubernetes-the-hard-way:tools:EtcdctlOpts": {
-            "description": "Abstraction over the `etcdctl` utility on a remote system.",
-            "properties": {
-                "caCert": {
-                    "type": "string",
-                    "description": "TODO"
-                },
-                "cert": {
-                    "type": "string",
-                    "description": "TODO"
-                },
-                "commands": {
-                    "$ref": "#/types/kubernetes-the-hard-way:tools:EtcdctlCommand",
-                    "description": "TODO"
-                },
-                "endpoints": {
-                    "type": "string",
-                    "description": "TODO"
-                },
-                "key": {
-                    "type": "string",
-                    "description": "TODO"
-                }
-            },
-            "type": "object",
-            "required": [
-                "commands"
-            ]
-        },
-        "kubernetes-the-hard-way:tools:HostnamectlCommand": {
-            "type": "string",
-            "enum": [
-                {
-                    "description": "Show system hostname and related information. If no command is specified, this is the implied default.",
-                    "value": "status"
-                },
-                {
-                    "description": "If no argument is given, print the system hostname. If an optional argument NAME is provided then the command changes the system hostname to NAME.",
-                    "value": "hostname"
-                },
-                {
-                    "description": "If no argument is given, print the icon name of the system. If an optional argument NAME is provided then the command changes the icon name to NAME.",
-                    "value": "icon-name"
-                },
-                {
-                    "description": "If no argument is given, print the chassis type. If an optional argument TYPE is provided then the command changes the chassis type to TYPE.",
-                    "value": "chassis"
-                },
-                {
-                    "description": "If no argument is given, print the deployment environment. If an optional argument ENVIRONMENT is provided then the command changes the deployment environment to ENVIRONMENT.",
-                    "value": "deployment"
-                },
-                {
-                    "description": "If no argument is given, print the location string for the system. If an optional argument LOCATION is provided then the command changes the location string for the system to LOCATION.",
-                    "value": "location"
-                }
-            ]
-        },
-        "kubernetes-the-hard-way:tools:HostnamectlJsonMode": {
-            "type": "string",
-            "enum": [
-                {
-                    "value": "short"
-                },
-                {
-                    "value": "pretty"
-                },
-                {
-                    "value": "off"
-                }
-            ]
-        },
-        "kubernetes-the-hard-way:tools:HostnamectlOpts": {
-            "description": "Abstraction over the `hostnamectl` utility on a remote system.",
-            "properties": {
-                "arg": {
-                    "type": "string",
-                    "description": "The argument for the specified `command`."
-                },
-                "command": {
-                    "$ref": "#/types/kubernetes-the-hard-way:tools:HostnamectlCommand",
-                    "description": "Corresponds to the {COMMAND} argument."
-                },
-                "help": {
-                    "type": "boolean",
-                    "description": "Print a short help text and exit."
-                },
-                "host": {
-                    "type": "string",
-                    "description": "Execute the operation remotely. Specify a hostname, or a username and hostname separated by '@', to connect to."
-                },
-                "json": {
-                    "$ref": "#/types/kubernetes-the-hard-way:tools:HostnamectlJsonMode",
-                    "description": "Shows output formatted as JSON."
-                },
-                "machine": {
-                    "type": "string",
-                    "description": "Execute operation on a local container. Specify a container name to connect to, optionally prefixed by a user name to connect as and a separating '@' character."
-                },
-                "noAskPassword": {
-                    "type": "boolean",
-                    "description": "Do not query the user for authentication for privileged operations."
-                },
-                "pretty": {
-                    "type": "boolean",
-                    "description": "If status is invoked (or no explicit command is given) and one of these switches is specified, hostnamectl will print out just this selected hostname. Same as `static` and `transient`."
-                },
-                "static": {
-                    "type": "boolean",
-                    "description": "If status is invoked (or no explicit command is given) and one of these switches is specified, hostnamectl will print out just this selected hostname. Same as `transient` and `pretty`."
-                },
-                "transient": {
-                    "type": "boolean",
-                    "description": "If status is invoked (or no explicit command is given) and one of these switches is specified, hostnamectl will print out just this selected hostname. Same as `static` and `pretty`."
-                },
-                "version": {
-                    "type": "boolean",
-                    "description": "Print a short version string and exit."
-                }
-            },
-            "type": "object",
-            "required": [
-                "command"
-            ]
-        },
-        "kubernetes-the-hard-way:tools:MkdirOpts": {
-            "description": "Abstraction over the `mkdir` utility on a remote system.",
-            "properties": {
-                "directory": {
-                    "type": "string",
-                    "description": "The fully qualified path of the directory on the remote system."
-                },
-                "parents": {
-                    "type": "boolean",
-                    "description": "Corresponds to the `--parents` option."
-                },
-                "removeOnDelete": {
-                    "type": "boolean",
-                    "description": "Remove the created directory when the `Mkdir` resource is deleted or updated."
-                }
-            },
-            "type": "object",
-            "required": [
-                "directory"
-            ]
-        },
-        "kubernetes-the-hard-way:tools:MktempOpts": {
-            "description": "Abstraction over the `mktemp` utility on a remote system.",
-            "properties": {
-                "directory": {
-                    "type": "boolean",
-                    "description": "Corresponds to the `--directory` option."
-                },
-                "dryRun": {
-                    "type": "boolean",
-                    "description": "Corresponds to the `--dry-run` option."
-                },
-                "quiet": {
-                    "type": "boolean",
-                    "description": "Corresponds to the `--quiet` option."
-                },
-                "suffix": {
-                    "type": "string",
-                    "description": "Corresponds to the `--suffix` option."
-                },
-                "template": {
-                    "type": "string",
-                    "description": "Corresponds to the [TEMPLATE] argument."
-                },
-                "tmpdir": {
-                    "type": "string",
-                    "description": "Corresponds to the `--tmpdir` option."
-                }
-            },
-            "type": "object"
-        },
-        "kubernetes-the-hard-way:tools:MvOpts": {
-            "description": "Abstraction over the `mv` utility on a remote system.",
-            "properties": {
-                "backup": {
-                    "type": "boolean",
-                    "plain": true,
-                    "description": "Corresponds to the `-b` and `--backup` options depending on whether [CONTROL] is supplied."
-                },
-                "context": {
-                    "type": "boolean",
-                    "description": "Corresponds to the `--context` option."
-                },
-                "control": {
-                    "type": "boolean",
-                    "description": "Corresponds to the [CONTROL] argument for the `--backup` option."
-                },
-                "dest": {
-                    "type": "string",
-                    "description": "Corresponds to the [DEST] argument."
-                },
-                "directory": {
-                    "type": "string",
-                    "description": "Corresponds to the [DIRECTORY] argument."
-                },
-                "force": {
-                    "type": "boolean",
-                    "description": "Corresponds to the `--force` option."
-                },
-                "noClobber": {
-                    "type": "boolean",
-                    "description": "Corresponds to the `--no-clobber` option."
-                },
-                "noTargetDirectory": {
-                    "type": "boolean",
-                    "description": "Corresponds to the `--no-target-directory` option."
-                },
-                "source": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    },
-                    "description": "Corresponds to the [SOURCE] argument."
-                },
-                "stripTrailingSlashes": {
-                    "type": "boolean",
-                    "description": "Corresponds to the `--strip-trailing-slashes` option."
-                },
-                "suffix": {
-                    "type": "string",
-                    "description": "Corresponds to the `--suffix` option."
-                },
-                "targetDirectory": {
-                    "type": "boolean",
-                    "description": "Corresponds to the `--target-directory` option."
-                },
-                "update": {
-                    "type": "boolean",
-                    "description": "Corresponds to the `--update` option."
-                },
-                "verbose": {
-                    "type": "boolean",
-                    "description": "Corresponds to the `--verbose` option."
-                }
-            },
-            "type": "object",
-            "required": [
-                "source"
-            ]
-        },
-        "kubernetes-the-hard-way:tools:RmOpts": {
-            "description": "Abstraction over the `rm` utility on a remote system.",
-            "properties": {
-                "dir": {
-                    "type": "boolean",
-                    "description": "Corresponds to the `--dir` option."
-                },
-                "files": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    },
-                    "description": "Corresponds to the [FILE] argument."
-                },
-                "force": {
-                    "type": "boolean",
-                    "description": "Corresponds to the `--force` option."
-                },
-                "onDelete": {
-                    "type": "boolean",
-                    "description": "Whether rm should be run when the resource is created or deleted."
-                },
-                "recursive": {
-                    "type": "boolean",
-                    "description": "Corresponds to the `--recursive` option."
-                },
-                "verbose": {
-                    "type": "boolean",
-                    "description": "Corresponds to the `--verbose` option."
-                }
-            },
-            "type": "object",
-            "required": [
-                "files"
-            ]
-        },
-        "kubernetes-the-hard-way:tools:SedOpts": {
-            "description": "Abstraction over the `sed` utility on a remote system.",
-            "properties": {
-                "debug": {
-                    "type": "boolean",
-                    "description": "annotate program execution."
-                },
-                "expressions": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    },
-                    "description": "add the script to the commands to be executed."
-                },
-                "files": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    },
-                    "description": "add the contents of script-file to the commands to be executed."
-                },
-                "followSymlinks": {
-                    "type": "boolean",
-                    "description": "follow symlinks when processing in place"
-                },
-                "help": {
-                    "type": "boolean",
-                    "description": "display this help and exit."
-                },
-                "inPlace": {
-                    "type": "string",
-                    "description": "edit files in place (makes backup if SUFFIX supplied)"
-                },
-                "inputFiles": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    },
-                    "description": "corresponds to the [input-file]... argument(s)."
-                },
-                "lineLength": {
-                    "type": "integer",
-                    "description": "specify the desired line-wrap length for the `l' command"
-                },
-                "nullData": {
-                    "type": "boolean",
-                    "description": "separate lines by NUL characters"
-                },
-                "posix": {
-                    "type": "boolean",
-                    "description": "disable all GNU extensions."
-                },
-                "quiet": {
-                    "type": "boolean",
-                    "description": "suppress automatic printing of pattern space. Same as `silent`."
-                },
-                "regexpExtended": {
-                    "type": "boolean",
-                    "description": "use extended regular expressions in the script (for portability use POSIX -E)."
-                },
-                "sandbox": {
-                    "type": "boolean",
-                    "description": "operate in sandbox mode (disable e/r/w commands)."
-                },
-                "script": {
-                    "type": "string",
-                    "description": "script only if no other script."
-                },
-                "separate": {
-                    "type": "boolean",
-                    "description": "consider files as separate rather than as a single, continuous long stream."
-                },
-                "silent": {
-                    "type": "boolean",
-                    "description": "suppress automatic printing of pattern space. Same as `quiet`."
-                },
-                "unbuffered": {
-                    "type": "boolean",
-                    "description": "load minimal amounts of data from the input files and flush the output buffers more often."
-                },
-                "version": {
-                    "type": "boolean",
-                    "description": "output version information and exit."
-                }
-            },
-            "type": "object"
-        },
-        "kubernetes-the-hard-way:tools:SystemctlCommand": {
-            "type": "string",
-            "enum": [
-                {
-                    "value": "bind"
-                },
-                {
-                    "value": "cat"
-                },
-                {
-                    "value": "clean"
-                },
-                {
-                    "value": "daemon-reload"
-                },
-                {
-                    "value": "disable"
-                },
-                {
-                    "value": "enable"
-                },
-                {
-                    "value": "freeze"
-                },
-                {
-                    "value": "is-active"
-                },
-                {
-                    "value": "is-enabled"
-                },
-                {
-                    "value": "is-failed"
-                },
-                {
-                    "value": "isolate"
-                },
-                {
-                    "value": "kill"
-                },
-                {
-                    "value": "list-automounts"
-                },
-                {
-                    "value": "list-dependencies"
-                },
-                {
-                    "value": "list-paths"
-                },
-                {
-                    "value": "list-sockets"
-                },
-                {
-                    "value": "list-timers"
-                },
-                {
-                    "value": "list-units"
-                },
-                {
-                    "value": "mask"
-                },
-                {
-                    "value": "mount-image"
-                },
-                {
-                    "value": "reenable"
-                },
-                {
-                    "value": "reload"
-                },
-                {
-                    "value": "reload-or-restart"
-                },
-                {
-                    "value": "restart"
-                },
-                {
-                    "value": "set-property"
-                },
-                {
-                    "value": "show"
-                },
-                {
-                    "value": "start"
-                },
-                {
-                    "value": "status"
-                },
-                {
-                    "value": "stop"
-                },
-                {
-                    "value": "thaw"
-                },
-                {
-                    "value": "try-reload-or-restart"
-                },
-                {
-                    "value": "try-restart"
-                },
-                {
-                    "value": "unmask"
-                }
-            ]
-        },
-        "kubernetes-the-hard-way:tools:SystemctlOpts": {
-            "description": "Abstraction over the `systemctl` utility on a remote system.",
-            "properties": {
-                "command": {
-                    "$ref": "#/types/kubernetes-the-hard-way:tools:SystemctlCommand",
-                    "plain": true,
-                    "description": "Corresponds to the COMMAND argument."
-                },
-                "now": {
-                    "type": "boolean",
-                    "description": "Corresponds to the `--now` option."
-                },
-                "pattern": {
-                    "type": "string",
-                    "description": "Corresponds to the [PATTERN] argument"
-                },
-                "unit": {
-                    "type": "string",
-                    "description": "Corresponds to the [UNIT...] argument."
-                }
-            },
-            "type": "object",
-            "required": [
-                "command"
-            ]
-        },
-        "kubernetes-the-hard-way:tools:TarOpts": {
-            "description": "Abstraction over the `tar` utility on a remote system.",
-            "properties": {
-                "archive": {
-                    "type": "string",
-                    "description": "Corresponds to the [ARCHIVE] argument."
-                },
-                "directory": {
-                    "type": "string",
-                    "description": "Corresponds to the `--directory` option."
-                },
-                "extract": {
-                    "type": "boolean",
-                    "description": "Corresponds to the `--extract` option."
-                },
-                "files": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    },
-                    "description": "Corresponds to the [FILE] argument."
-                },
-                "gzip": {
-                    "type": "boolean",
-                    "description": "Corresponds to the `--gzip` option."
-                },
-                "onDelete": {
-                    "type": "boolean",
-                    "description": "Whether rm should be run when the resource is created or deleted."
-                },
-                "recursive": {
-                    "type": "boolean",
-                    "description": "Corresponds to the `--recursive` option."
-                },
-                "stripComponents": {
-                    "type": "integer",
-                    "description": "Corresponds to the `--strip-components` option."
-                }
-            },
-            "type": "object",
-            "required": [
-                "archive"
-            ]
-        },
-        "kubernetes-the-hard-way:tools:TeeMode": {
-            "type": "string",
-            "enum": [
-                {
-                    "value": "warn"
-                },
-                {
-                    "value": "warn-nopipe"
-                },
-                {
-                    "value": "exit"
-                },
-                {
-                    "value": "exit-nopipe"
-                }
-            ]
-        },
-        "kubernetes-the-hard-way:tools:TeeOpts": {
-            "description": "Abstraction over the `rm` utility on a remote system.",
-            "properties": {
-                "append": {
-                    "type": "boolean",
-                    "description": "Append to the given FILEs, do not overwrite"
-                },
-                "files": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    },
-                    "description": "Corresponds to the [FILE] argument."
-                },
-                "ignoreInterrupts": {
-                    "type": "boolean",
-                    "description": "Ignore interrupt signals."
-                },
-                "outputError": {
-                    "$ref": "#/types/kubernetes-the-hard-way:tools:TeeMode",
-                    "description": "Set behavior on write error."
-                },
-                "pipe": {
-                    "type": "boolean",
-                    "description": "Operate in a more appropriate MODE with pipes."
-                },
-                "version": {
-                    "type": "boolean",
-                    "description": "Output version information and exit."
-                }
-            },
-            "type": "object",
-            "required": [
-                "files"
-            ]
-        },
-        "kubernetes-the-hard-way:tools:WgetOpts": {
-            "description": "Abstraction over the `wget` utility on a remote system.",
-            "properties": {
-                "directoryPrefix": {
-                    "type": "string",
-                    "description": "The  directory prefix is the directory where all other files and subdirectories will be saved to, i.e. the top of the retrieval tree.  The default is . (the current directory)."
-                },
-                "httpsOnly": {
-                    "type": "boolean",
-                    "description": "When in recursive mode, only HTTPS links are followed."
-                },
-                "noVerbose": {
-                    "type": "boolean",
-                    "description": "Turn off verbose without being completely quiet (use -q for that), which means that error messages and basic information still get printed."
-                },
-                "outputDocument": {
-                    "type": "string",
-                    "description": "The  documents  will  not  be  written  to the appropriate files, but all will be concatenated together and written to file."
-                },
-                "quiet": {
-                    "type": "boolean",
-                    "description": "Turn off Wget's output."
-                },
-                "timestamping": {
-                    "type": "boolean",
-                    "description": "Turn on time-stamping."
-                },
-                "url": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    },
-                    "description": "Corresponds to the [URL...] argument."
-                }
-            },
-            "type": "object",
-            "required": [
-                "url"
-            ]
         }
     },
     "provider": {},
@@ -2319,6 +1603,230 @@
             ],
             "isComponent": true
         },
+        "kubernetes-the-hard-way:remote:CniBridgePluginConfiguration": {
+            "description": "The CNI bridge plugin configuration.",
+            "properties": {
+                "bridge": {
+                    "type": "string",
+                    "description": "Bridge name."
+                },
+                "cniVersion": {
+                    "type": "string",
+                    "description": "CNI version."
+                },
+                "connection": {
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
+                    "description": "The parameters with which to connect to the remote host."
+                },
+                "file": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:remote:File",
+                    "description": "The file on the remote system."
+                },
+                "ipMasq": {
+                    "type": "boolean",
+                    "description": "IP masq."
+                },
+                "ipam": {
+                    "$ref": "#/types/kubernetes-the-hard-way:remote:CniBridgeIpam",
+                    "description": "IPAM"
+                },
+                "isGateway": {
+                    "type": "boolean",
+                    "description": "Is gateway."
+                },
+                "name": {
+                    "type": "string",
+                    "description": "CNI plugin name."
+                },
+                "path": {
+                    "type": "string",
+                    "description": "Path to put the configuration file on the remote system"
+                },
+                "subnet": {
+                    "type": "string",
+                    "description": "The subnet to use."
+                },
+                "type": {
+                    "type": "string",
+                    "description": "CNI plugin type."
+                }
+            },
+            "required": [
+                "connection",
+                "bridge",
+                "cniVersion",
+                "isGateway",
+                "ipMasq",
+                "ipam",
+                "name",
+                "path",
+                "type"
+            ],
+            "inputProperties": {
+                "bridge": {
+                    "type": "string",
+                    "description": "Bridge name."
+                },
+                "cniVersion": {
+                    "type": "string",
+                    "description": "CNI version."
+                },
+                "connection": {
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
+                    "description": "The parameters with which to connect to the remote host."
+                },
+                "ipMasq": {
+                    "type": "boolean",
+                    "description": "IP masq."
+                },
+                "ipam": {
+                    "$ref": "#/types/kubernetes-the-hard-way:remote:CniBridgeIpam",
+                    "description": "IPAM"
+                },
+                "isGateway": {
+                    "type": "boolean",
+                    "description": "Is gateway."
+                },
+                "name": {
+                    "type": "string",
+                    "description": "CNI plugin name."
+                },
+                "path": {
+                    "type": "string",
+                    "description": "Path to put the configuration file on the remote system"
+                },
+                "subnet": {
+                    "type": "string",
+                    "description": "The subnet to use."
+                },
+                "type": {
+                    "type": "string",
+                    "description": "CNI plugin type."
+                }
+            },
+            "requiredInputs": [
+                "connection"
+            ],
+            "isComponent": true
+        },
+        "kubernetes-the-hard-way:remote:CniLoopbackPluginConfiguration": {
+            "description": "The CNI loopback plugin configuration.",
+            "properties": {
+                "cniVersion": {
+                    "type": "string",
+                    "description": "CNI version."
+                },
+                "connection": {
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
+                    "description": "The parameters with which to connect to the remote host."
+                },
+                "file": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:remote:File",
+                    "description": "The file on the remote system."
+                },
+                "name": {
+                    "type": "string",
+                    "description": "CNI plugin name."
+                },
+                "path": {
+                    "type": "string",
+                    "description": "Path to put the configuration file on the remote system"
+                },
+                "type": {
+                    "type": "string",
+                    "description": "CNI plugin type."
+                }
+            },
+            "required": [
+                "connection",
+                "cniVersion",
+                "name",
+                "path",
+                "type"
+            ],
+            "inputProperties": {
+                "cniVersion": {
+                    "type": "string",
+                    "description": "CNI version."
+                },
+                "connection": {
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
+                    "description": "The parameters with which to connect to the remote host."
+                },
+                "name": {
+                    "type": "string",
+                    "description": "CNI plugin name."
+                },
+                "path": {
+                    "type": "string",
+                    "description": "Path to put the configuration file on the remote system"
+                },
+                "type": {
+                    "type": "string",
+                    "description": "CNI plugin type."
+                }
+            },
+            "requiredInputs": [
+                "connection"
+            ],
+            "isComponent": true
+        },
+        "kubernetes-the-hard-way:remote:CniPluginConfiguration": {
+            "description": "The CNI plugin configuration.",
+            "properties": {
+                "bridge": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:remote:CniBridgePluginConfiguration",
+                    "description": "The bridge plugin configuration."
+                },
+                "connection": {
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
+                    "description": "The parameters with which to connect to the remote host."
+                },
+                "directory": {
+                    "type": "string",
+                    "description": "The plugin configuration directory."
+                },
+                "loopback": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:remote:CniLoopbackPluginConfiguration",
+                    "description": "The loopback plugin configuration."
+                },
+                "mkdir": {
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Mkdir",
+                    "description": "The `directory` mkdir operation."
+                },
+                "subnet": {
+                    "type": "string",
+                    "description": "The subnet to use for the CNI bridge plugin configuration."
+                }
+            },
+            "required": [
+                "connection",
+                "subnet",
+                "bridge",
+                "directory",
+                "mkdir",
+                "loopback"
+            ],
+            "inputProperties": {
+                "connection": {
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
+                    "description": "The parameters with which to connect to the remote host."
+                },
+                "directory": {
+                    "type": "string",
+                    "description": "The plugin configuration directory."
+                },
+                "subnet": {
+                    "type": "string",
+                    "description": "The subnet to use for the CNI bridge plugin configuration."
+                }
+            },
+            "requiredInputs": [
+                "connection",
+                "subnet"
+            ],
+            "isComponent": true
+        },
         "kubernetes-the-hard-way:remote:CniPluginsInstall": {
             "description": "Installs cni-plugins on a remote system",
             "properties": {
@@ -2331,7 +1839,7 @@
                     "description": "The name of the downloaded archive."
                 },
                 "bandwidthMv": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mv",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Mv",
                     "description": "The bandwidth mv operation."
                 },
                 "bandwidthPath": {
@@ -2339,7 +1847,7 @@
                     "description": "The bandwidth path on the remote system"
                 },
                 "bridgeMv": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mv",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Mv",
                     "description": "The bridge mv operation."
                 },
                 "bridgePath": {
@@ -2351,7 +1859,7 @@
                     "description": "The parameters with which to connect to the remote host."
                 },
                 "dhcpMv": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mv",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Mv",
                     "description": "The dhcp mv operation."
                 },
                 "dhcpPath": {
@@ -2368,7 +1876,7 @@
                     "description": "The download operation."
                 },
                 "dummyMv": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mv",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Mv",
                     "description": "The dummy mv operation."
                 },
                 "dummyPath": {
@@ -2376,7 +1884,7 @@
                     "description": "The dummy path on the remote system"
                 },
                 "firewallMv": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mv",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Mv",
                     "description": "The firewall mv operation."
                 },
                 "firewallPath": {
@@ -2384,7 +1892,7 @@
                     "description": "The firewall path on the remote system"
                 },
                 "hostDeviceMv": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mv",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Mv",
                     "description": "The hostDevice mv operation."
                 },
                 "hostDevicePath": {
@@ -2392,7 +1900,7 @@
                     "description": "The hostDevice path on the remote system"
                 },
                 "hostLocalMv": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mv",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Mv",
                     "description": "The hostLocal mv operation."
                 },
                 "hostLocalPath": {
@@ -2400,7 +1908,7 @@
                     "description": "The hostLocal path on the remote system"
                 },
                 "ipvlanMv": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mv",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Mv",
                     "description": "The ipvlan mv operation."
                 },
                 "ipvlanPath": {
@@ -2408,7 +1916,7 @@
                     "description": "The ipvlan path on the remote system"
                 },
                 "loopbackMv": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mv",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Mv",
                     "description": "The loopback mv operation."
                 },
                 "loopbackPath": {
@@ -2416,7 +1924,7 @@
                     "description": "The loopback path on the remote system"
                 },
                 "macvlanMv": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mv",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Mv",
                     "description": "The macvlan mv operation."
                 },
                 "macvlanPath": {
@@ -2424,11 +1932,11 @@
                     "description": "The macvlan path on the remote system"
                 },
                 "mkdir": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mkdir",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Mkdir",
                     "description": "The mkdir operation."
                 },
                 "mktemp": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mktemp",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Mktemp",
                     "description": "The mktemp operation."
                 },
                 "path": {
@@ -2436,7 +1944,7 @@
                     "description": "The path to the installed binary."
                 },
                 "portmapMv": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mv",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Mv",
                     "description": "The portmap mv operation."
                 },
                 "portmapPath": {
@@ -2444,7 +1952,7 @@
                     "description": "The portmap path on the remote system"
                 },
                 "ptpMv": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mv",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Mv",
                     "description": "The ptp mv operation."
                 },
                 "ptpPath": {
@@ -2452,11 +1960,11 @@
                     "description": "The ptp path on the remote system"
                 },
                 "rm": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Rm",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Rm",
                     "description": "The rm operation."
                 },
                 "sbrMv": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mv",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Mv",
                     "description": "The sbr mv operation."
                 },
                 "sbrPath": {
@@ -2464,7 +1972,7 @@
                     "description": "The sbr path on the remote system"
                 },
                 "staticMv": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mv",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Mv",
                     "description": "The static mv operation."
                 },
                 "staticPath": {
@@ -2472,7 +1980,7 @@
                     "description": "The static path on the remote system"
                 },
                 "tapMv": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mv",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Mv",
                     "description": "The tap mv operation."
                 },
                 "tapPath": {
@@ -2480,11 +1988,11 @@
                     "description": "The tap path on the remote system"
                 },
                 "tar": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Tar",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Tar",
                     "description": "The tar operation."
                 },
                 "tuningMv": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mv",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Mv",
                     "description": "The tuning mv operation."
                 },
                 "tuningPath": {
@@ -2500,7 +2008,7 @@
                     "description": "The version to install."
                 },
                 "vlanMv": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mv",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Mv",
                     "description": "The vlan mv operation."
                 },
                 "vlanPath": {
@@ -2508,7 +2016,7 @@
                     "description": "The vlan path on the remote system"
                 },
                 "vrfMv": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mv",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Mv",
                     "description": "The vrf mv operation."
                 },
                 "vrfPath": {
@@ -2605,7 +2113,7 @@
                     "description": "The parameters with which to connect to the remote host."
                 },
                 "containerdMv": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mv",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Mv",
                     "description": "The containerd mv operation."
                 },
                 "containerdPath": {
@@ -2622,11 +2130,11 @@
                     "description": "The download operation."
                 },
                 "mkdir": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mkdir",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Mkdir",
                     "description": "The mkdir operation."
                 },
                 "mktemp": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mktemp",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Mktemp",
                     "description": "The mktemp operation."
                 },
                 "path": {
@@ -2634,11 +2142,11 @@
                     "description": "The path to the installed binary."
                 },
                 "rm": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Rm",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Rm",
                     "description": "The rm operation."
                 },
                 "tar": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Tar",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Tar",
                     "description": "The tar operation."
                 },
                 "url": {
@@ -3066,7 +2574,7 @@
                     "description": "The parameters with which to connect to the remote host."
                 },
                 "crictlMv": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mv",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Mv",
                     "description": "The crictl mv operation."
                 },
                 "crictlPath": {
@@ -3083,11 +2591,11 @@
                     "description": "The download operation."
                 },
                 "mkdir": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mkdir",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Mkdir",
                     "description": "The mkdir operation."
                 },
                 "mktemp": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mktemp",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Mktemp",
                     "description": "The mktemp operation."
                 },
                 "path": {
@@ -3095,11 +2603,11 @@
                     "description": "The path to the installed binary."
                 },
                 "rm": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Rm",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Rm",
                     "description": "The rm operation."
                 },
                 "tar": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Tar",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Tar",
                     "description": "The tar operation."
                 },
                 "url": {
@@ -3162,7 +2670,7 @@
                     "description": "The fully qualified path on the remote system where the file should be downloaded to."
                 },
                 "mkdir": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mkdir",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Mkdir",
                     "description": "The mkdir operation."
                 },
                 "removeOnDelete": {
@@ -3175,7 +2683,7 @@
                     "description": "The URL of the file to be downloaded."
                 },
                 "wget": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Wget",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Wget",
                     "description": "The wget operation."
                 }
             },
@@ -3347,7 +2855,7 @@
                     "description": "The PEM encoded certificate data."
                 },
                 "configurationChmod": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Chmod",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Chmod",
                     "description": "The configuration chmod operation."
                 },
                 "configurationDirectory": {
@@ -3356,7 +2864,7 @@
                     "default": "/etc/etcd"
                 },
                 "configurationMkdir": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mkdir",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Mkdir",
                     "description": "The configuration mkdir operation."
                 },
                 "connection": {
@@ -3369,7 +2877,7 @@
                     "default": "/var/lib/etcd"
                 },
                 "dataMkdir": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mkdir",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Mkdir",
                     "description": "The data mkdir operation."
                 },
                 "etcdPath": {
@@ -3480,7 +2988,7 @@
                     "description": "The download operation."
                 },
                 "etcdMv": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mv",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Mv",
                     "description": "The etcd mv operation."
                 },
                 "etcdPath": {
@@ -3488,7 +2996,7 @@
                     "description": "The etcd path on the remote system"
                 },
                 "etcdctlMv": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mv",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Mv",
                     "description": "The etcdctl mv operation."
                 },
                 "etcdctlPath": {
@@ -3496,11 +3004,11 @@
                     "description": "The etcdctl path on the remote system"
                 },
                 "mkdir": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mkdir",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Mkdir",
                     "description": "The mkdir operation."
                 },
                 "mktemp": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mktemp",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Mktemp",
                     "description": "The mktemp operation."
                 },
                 "path": {
@@ -3508,11 +3016,11 @@
                     "description": "The path to the installed binary."
                 },
                 "rm": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Rm",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Rm",
                     "description": "The rm operation."
                 },
                 "tar": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Tar",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Tar",
                     "description": "The tar operation."
                 },
                 "url": {
@@ -3751,15 +3259,15 @@
                     "description": "The download operation."
                 },
                 "mkdir": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mkdir",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Mkdir",
                     "description": "The mkdir operation."
                 },
                 "mktemp": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mktemp",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Mktemp",
                     "description": "The mktemp operation."
                 },
                 "mv": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mv",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Mv",
                     "description": "The mv operation."
                 },
                 "path": {
@@ -3767,7 +3275,7 @@
                     "description": "The path to the installed binary."
                 },
                 "rm": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Rm",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Rm",
                     "description": "The rm operation."
                 },
                 "url": {
@@ -3841,15 +3349,15 @@
                     "description": "The download operation."
                 },
                 "mkdir": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mkdir",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Mkdir",
                     "description": "The mkdir operation."
                 },
                 "mktemp": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mktemp",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Mktemp",
                     "description": "The mktemp operation."
                 },
                 "mv": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mv",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Mv",
                     "description": "The mv operation."
                 },
                 "path": {
@@ -3857,7 +3365,7 @@
                     "description": "The path to the installed binary."
                 },
                 "rm": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Rm",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Rm",
                     "description": "The rm operation."
                 },
                 "url": {
@@ -3931,15 +3439,15 @@
                     "description": "The download operation."
                 },
                 "mkdir": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mkdir",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Mkdir",
                     "description": "The mkdir operation."
                 },
                 "mktemp": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mktemp",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Mktemp",
                     "description": "The mktemp operation."
                 },
                 "mv": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mv",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Mv",
                     "description": "The mv operation."
                 },
                 "path": {
@@ -3947,7 +3455,7 @@
                     "description": "The path to the installed binary."
                 },
                 "rm": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Rm",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Rm",
                     "description": "The rm operation."
                 },
                 "url": {
@@ -4106,15 +3614,15 @@
                     "description": "The download operation."
                 },
                 "mkdir": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mkdir",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Mkdir",
                     "description": "The mkdir operation."
                 },
                 "mktemp": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mktemp",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Mktemp",
                     "description": "The mktemp operation."
                 },
                 "mv": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mv",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Mv",
                     "description": "The mv operation."
                 },
                 "path": {
@@ -4122,7 +3630,7 @@
                     "description": "The path to the installed binary."
                 },
                 "rm": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Rm",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Rm",
                     "description": "The rm operation."
                 },
                 "url": {
@@ -4286,15 +3794,15 @@
                     "description": "The download operation."
                 },
                 "mkdir": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mkdir",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Mkdir",
                     "description": "The mkdir operation."
                 },
                 "mktemp": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mktemp",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Mktemp",
                     "description": "The mktemp operation."
                 },
                 "mv": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mv",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Mv",
                     "description": "The mv operation."
                 },
                 "path": {
@@ -4302,7 +3810,7 @@
                     "description": "The path to the installed binary."
                 },
                 "rm": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Rm",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Rm",
                     "description": "The rm operation."
                 },
                 "url": {
@@ -4376,15 +3884,15 @@
                     "description": "The download operation."
                 },
                 "mkdir": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mkdir",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Mkdir",
                     "description": "The mkdir operation."
                 },
                 "mktemp": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mktemp",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Mktemp",
                     "description": "The mktemp operation."
                 },
                 "mv": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mv",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Mv",
                     "description": "The mv operation."
                 },
                 "path": {
@@ -4392,7 +3900,7 @@
                     "description": "The path to the installed binary."
                 },
                 "rm": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Rm",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Rm",
                     "description": "The rm operation."
                 },
                 "url": {
@@ -4685,15 +4193,15 @@
                     "description": "The download operation."
                 },
                 "mkdir": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mkdir",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Mkdir",
                     "description": "The mkdir operation."
                 },
                 "mktemp": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mktemp",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Mktemp",
                     "description": "The mktemp operation."
                 },
                 "mv": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mv",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Mv",
                     "description": "The mv operation."
                 },
                 "path": {
@@ -4701,7 +4209,7 @@
                     "description": "The path to the installed binary."
                 },
                 "rm": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Rm",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Rm",
                     "description": "The rm operation."
                 },
                 "url": {
@@ -4869,15 +4377,15 @@
                     "description": "The parameters with which to connect to the remote host."
                 },
                 "daemonReload": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Systemctl",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Systemctl",
                     "description": "The daemon-reload command."
                 },
                 "enable": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Systemctl",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Systemctl",
                     "description": "The enable command."
                 },
                 "start": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Systemctl",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Systemctl",
                     "description": "The start command."
                 }
             },
@@ -4914,7 +4422,7 @@
                     "description": "The name of the file on the remote system."
                 },
                 "mkdir": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mkdir",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Mkdir",
                     "description": "The mkdir operation to ensure /etc/kubernetes/manifests exists."
                 },
                 "path": {
@@ -6041,1950 +5549,6 @@
             },
             "requiredInputs": [
                 "validityPeriodHours"
-            ],
-            "isComponent": true
-        },
-        "kubernetes-the-hard-way:tools:Chmod": {
-            "description": "Abstraction over the `chmod` utility on a remote system.",
-            "properties": {
-                "binaryPath": {
-                    "type": "string",
-                    "description": "Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH"
-                },
-                "command": {
-                    "$ref": "/command/v1.0.0/schema.json#/resources/command:remote:Command",
-                    "description": "The underlying command"
-                },
-                "connection": {
-                    "$ref": "/command/v1.0.0/schema.json#/types/command:remote:Connection",
-                    "description": "Connection details for the remote system"
-                },
-                "create": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "$ref": "#/types/kubernetes-the-hard-way:tools:ChmodOpts",
-                            "plain": true
-                        }
-                    ],
-                    "plain": true,
-                    "description": "The command to run on create."
-                },
-                "delete": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "$ref": "#/types/kubernetes-the-hard-way:tools:ChmodOpts",
-                            "plain": true
-                        }
-                    ],
-                    "plain": true,
-                    "description": "The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT\nand PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the\nCommand resource from previous create or update steps."
-                },
-                "environment": {
-                    "type": "object",
-                    "additionalProperties": {
-                        "type": "string"
-                    },
-                    "description": "Environment variables"
-                },
-                "stderr": {
-                    "type": "string",
-                    "description": "TODO"
-                },
-                "stdin": {
-                    "type": "string",
-                    "description": "TODO"
-                },
-                "stdout": {
-                    "type": "string",
-                    "description": "TODO"
-                },
-                "triggers": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "pulumi.json#/Any"
-                    },
-                    "description": "Trigger replacements on changes to this input."
-                },
-                "update": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "$ref": "#/types/kubernetes-the-hard-way:tools:ChmodOpts",
-                            "plain": true
-                        }
-                    ],
-                    "plain": true,
-                    "description": "The command to run on update, if empty, create will \nrun again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR \nare set to the stdout and stderr properties of the Command resource from previous \ncreate or update steps."
-                }
-            },
-            "required": [
-                "binaryPath",
-                "command",
-                "connection",
-                "environment",
-                "stderr",
-                "stdout",
-                "triggers"
-            ],
-            "inputProperties": {
-                "binaryPath": {
-                    "type": "string",
-                    "description": "Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH"
-                },
-                "connection": {
-                    "$ref": "/command/v1.0.0/schema.json#/types/command:remote:Connection",
-                    "description": "Connection details for the remote system"
-                },
-                "create": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "$ref": "#/types/kubernetes-the-hard-way:tools:ChmodOpts",
-                            "plain": true
-                        }
-                    ],
-                    "plain": true,
-                    "description": "The command to run on create."
-                },
-                "delete": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "$ref": "#/types/kubernetes-the-hard-way:tools:ChmodOpts",
-                            "plain": true
-                        }
-                    ],
-                    "plain": true,
-                    "description": "The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT\nand PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the\nCommand resource from previous create or update steps."
-                },
-                "environment": {
-                    "type": "object",
-                    "additionalProperties": {
-                        "type": "string"
-                    },
-                    "description": "Environment variables"
-                },
-                "stdin": {
-                    "type": "string",
-                    "description": "TODO"
-                },
-                "triggers": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "pulumi.json#/Any"
-                    },
-                    "description": "Trigger replacements on changes to this input."
-                },
-                "update": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "$ref": "#/types/kubernetes-the-hard-way:tools:ChmodOpts",
-                            "plain": true
-                        }
-                    ],
-                    "plain": true,
-                    "description": "The command to run on update, if empty, create will \nrun again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR \nare set to the stdout and stderr properties of the Command resource from previous \ncreate or update steps."
-                }
-            },
-            "requiredInputs": [
-                "connection"
-            ],
-            "isComponent": true
-        },
-        "kubernetes-the-hard-way:tools:Etcdctl": {
-            "description": "Abstraction over the `etcdctl` utility on a remote system.",
-            "properties": {
-                "binaryPath": {
-                    "type": "string",
-                    "description": "Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH"
-                },
-                "command": {
-                    "$ref": "/command/v1.0.0/schema.json#/resources/command:remote:Command",
-                    "description": "The underlying command"
-                },
-                "connection": {
-                    "$ref": "/command/v1.0.0/schema.json#/types/command:remote:Connection",
-                    "description": "Connection details for the remote system"
-                },
-                "create": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "$ref": "#/types/kubernetes-the-hard-way:tools:EtcdctlOpts",
-                            "plain": true
-                        }
-                    ],
-                    "plain": true,
-                    "description": "The command to run on create."
-                },
-                "delete": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "$ref": "#/types/kubernetes-the-hard-way:tools:EtcdctlOpts",
-                            "plain": true
-                        }
-                    ],
-                    "plain": true,
-                    "description": "The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT\nand PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the\nCommand resource from previous create or update steps."
-                },
-                "environment": {
-                    "type": "object",
-                    "additionalProperties": {
-                        "type": "string"
-                    },
-                    "description": "Environment variables"
-                },
-                "stderr": {
-                    "type": "string",
-                    "description": "TODO"
-                },
-                "stdin": {
-                    "type": "string",
-                    "description": "TODO"
-                },
-                "stdout": {
-                    "type": "string",
-                    "description": "TODO"
-                },
-                "triggers": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "pulumi.json#/Any"
-                    },
-                    "description": "Trigger replacements on changes to this input."
-                },
-                "update": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "$ref": "#/types/kubernetes-the-hard-way:tools:EtcdctlOpts",
-                            "plain": true
-                        }
-                    ],
-                    "plain": true,
-                    "description": "The command to run on update, if empty, create will \nrun again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR \nare set to the stdout and stderr properties of the Command resource from previous \ncreate or update steps."
-                }
-            },
-            "required": [
-                "binaryPath",
-                "command",
-                "connection",
-                "environment",
-                "stderr",
-                "stdout",
-                "triggers"
-            ],
-            "inputProperties": {
-                "binaryPath": {
-                    "type": "string",
-                    "description": "Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH"
-                },
-                "connection": {
-                    "$ref": "/command/v1.0.0/schema.json#/types/command:remote:Connection",
-                    "description": "Connection details for the remote system"
-                },
-                "create": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "$ref": "#/types/kubernetes-the-hard-way:tools:EtcdctlOpts",
-                            "plain": true
-                        }
-                    ],
-                    "plain": true,
-                    "description": "The command to run on create."
-                },
-                "delete": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "$ref": "#/types/kubernetes-the-hard-way:tools:EtcdctlOpts",
-                            "plain": true
-                        }
-                    ],
-                    "plain": true,
-                    "description": "The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT\nand PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the\nCommand resource from previous create or update steps."
-                },
-                "environment": {
-                    "type": "object",
-                    "additionalProperties": {
-                        "type": "string"
-                    },
-                    "description": "Environment variables"
-                },
-                "stdin": {
-                    "type": "string",
-                    "description": "TODO"
-                },
-                "triggers": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "pulumi.json#/Any"
-                    },
-                    "description": "Trigger replacements on changes to this input."
-                },
-                "update": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "$ref": "#/types/kubernetes-the-hard-way:tools:EtcdctlOpts",
-                            "plain": true
-                        }
-                    ],
-                    "plain": true,
-                    "description": "The command to run on update, if empty, create will \nrun again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR \nare set to the stdout and stderr properties of the Command resource from previous \ncreate or update steps."
-                }
-            },
-            "requiredInputs": [
-                "connection"
-            ],
-            "isComponent": true
-        },
-        "kubernetes-the-hard-way:tools:Hostnamectl": {
-            "description": "Abstraction over the `hostnamectl` utility on a remote system.",
-            "properties": {
-                "binaryPath": {
-                    "type": "string",
-                    "description": "Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH"
-                },
-                "command": {
-                    "$ref": "/command/v1.0.0/schema.json#/resources/command:remote:Command",
-                    "description": "The underlying command"
-                },
-                "connection": {
-                    "$ref": "/command/v1.0.0/schema.json#/types/command:remote:Connection",
-                    "description": "Connection details for the remote system"
-                },
-                "create": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "$ref": "#/types/kubernetes-the-hard-way:tools:HostnamectlOpts",
-                            "plain": true
-                        }
-                    ],
-                    "plain": true,
-                    "description": "The command to run on create."
-                },
-                "delete": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "$ref": "#/types/kubernetes-the-hard-way:tools:HostnamectlOpts",
-                            "plain": true
-                        }
-                    ],
-                    "plain": true,
-                    "description": "The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT\nand PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the\nCommand resource from previous create or update steps."
-                },
-                "environment": {
-                    "type": "object",
-                    "additionalProperties": {
-                        "type": "string"
-                    },
-                    "description": "Environment variables"
-                },
-                "stderr": {
-                    "type": "string",
-                    "description": "TODO"
-                },
-                "stdin": {
-                    "type": "string",
-                    "description": "TODO"
-                },
-                "stdout": {
-                    "type": "string",
-                    "description": "TODO"
-                },
-                "triggers": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "pulumi.json#/Any"
-                    },
-                    "description": "Trigger replacements on changes to this input."
-                },
-                "update": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "$ref": "#/types/kubernetes-the-hard-way:tools:HostnamectlOpts",
-                            "plain": true
-                        }
-                    ],
-                    "plain": true,
-                    "description": "The command to run on update, if empty, create will \nrun again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR \nare set to the stdout and stderr properties of the Command resource from previous \ncreate or update steps."
-                }
-            },
-            "required": [
-                "binaryPath",
-                "command",
-                "connection",
-                "environment",
-                "stderr",
-                "stdout",
-                "triggers"
-            ],
-            "inputProperties": {
-                "binaryPath": {
-                    "type": "string",
-                    "description": "Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH"
-                },
-                "connection": {
-                    "$ref": "/command/v1.0.0/schema.json#/types/command:remote:Connection",
-                    "description": "Connection details for the remote system"
-                },
-                "create": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "$ref": "#/types/kubernetes-the-hard-way:tools:HostnamectlOpts",
-                            "plain": true
-                        }
-                    ],
-                    "plain": true,
-                    "description": "The command to run on create."
-                },
-                "delete": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "$ref": "#/types/kubernetes-the-hard-way:tools:HostnamectlOpts",
-                            "plain": true
-                        }
-                    ],
-                    "plain": true,
-                    "description": "The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT\nand PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the\nCommand resource from previous create or update steps."
-                },
-                "environment": {
-                    "type": "object",
-                    "additionalProperties": {
-                        "type": "string"
-                    },
-                    "description": "Environment variables"
-                },
-                "stdin": {
-                    "type": "string",
-                    "description": "TODO"
-                },
-                "triggers": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "pulumi.json#/Any"
-                    },
-                    "description": "Trigger replacements on changes to this input."
-                },
-                "update": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "$ref": "#/types/kubernetes-the-hard-way:tools:HostnamectlOpts",
-                            "plain": true
-                        }
-                    ],
-                    "plain": true,
-                    "description": "The command to run on update, if empty, create will \nrun again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR \nare set to the stdout and stderr properties of the Command resource from previous \ncreate or update steps."
-                }
-            },
-            "requiredInputs": [
-                "connection"
-            ],
-            "isComponent": true
-        },
-        "kubernetes-the-hard-way:tools:Mkdir": {
-            "description": "Abstraction over the `mkdir` utility on a remote system.",
-            "properties": {
-                "binaryPath": {
-                    "type": "string",
-                    "description": "Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH"
-                },
-                "command": {
-                    "$ref": "/command/v1.0.0/schema.json#/resources/command:remote:Command",
-                    "description": "The underlying command"
-                },
-                "connection": {
-                    "$ref": "/command/v1.0.0/schema.json#/types/command:remote:Connection",
-                    "description": "Connection details for the remote system"
-                },
-                "create": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "$ref": "#/types/kubernetes-the-hard-way:tools:MkdirOpts",
-                            "plain": true
-                        }
-                    ],
-                    "plain": true,
-                    "description": "The command to run on create."
-                },
-                "delete": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "$ref": "#/types/kubernetes-the-hard-way:tools:MkdirOpts",
-                            "plain": true
-                        }
-                    ],
-                    "plain": true,
-                    "description": "The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT\nand PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the\nCommand resource from previous create or update steps."
-                },
-                "environment": {
-                    "type": "object",
-                    "additionalProperties": {
-                        "type": "string"
-                    },
-                    "description": "Environment variables"
-                },
-                "stderr": {
-                    "type": "string",
-                    "description": "TODO"
-                },
-                "stdin": {
-                    "type": "string",
-                    "description": "TODO"
-                },
-                "stdout": {
-                    "type": "string",
-                    "description": "TODO"
-                },
-                "triggers": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "pulumi.json#/Any"
-                    },
-                    "description": "Trigger replacements on changes to this input."
-                },
-                "update": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "$ref": "#/types/kubernetes-the-hard-way:tools:MkdirOpts",
-                            "plain": true
-                        }
-                    ],
-                    "plain": true,
-                    "description": "The command to run on update, if empty, create will \nrun again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR \nare set to the stdout and stderr properties of the Command resource from previous \ncreate or update steps."
-                }
-            },
-            "required": [
-                "binaryPath",
-                "command",
-                "connection",
-                "environment",
-                "stderr",
-                "stdout",
-                "triggers"
-            ],
-            "inputProperties": {
-                "binaryPath": {
-                    "type": "string",
-                    "description": "Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH"
-                },
-                "connection": {
-                    "$ref": "/command/v1.0.0/schema.json#/types/command:remote:Connection",
-                    "description": "Connection details for the remote system"
-                },
-                "create": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "$ref": "#/types/kubernetes-the-hard-way:tools:MkdirOpts",
-                            "plain": true
-                        }
-                    ],
-                    "plain": true,
-                    "description": "The command to run on create."
-                },
-                "delete": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "$ref": "#/types/kubernetes-the-hard-way:tools:MkdirOpts",
-                            "plain": true
-                        }
-                    ],
-                    "plain": true,
-                    "description": "The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT\nand PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the\nCommand resource from previous create or update steps."
-                },
-                "environment": {
-                    "type": "object",
-                    "additionalProperties": {
-                        "type": "string"
-                    },
-                    "description": "Environment variables"
-                },
-                "stdin": {
-                    "type": "string",
-                    "description": "TODO"
-                },
-                "triggers": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "pulumi.json#/Any"
-                    },
-                    "description": "Trigger replacements on changes to this input."
-                },
-                "update": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "$ref": "#/types/kubernetes-the-hard-way:tools:MkdirOpts",
-                            "plain": true
-                        }
-                    ],
-                    "plain": true,
-                    "description": "The command to run on update, if empty, create will \nrun again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR \nare set to the stdout and stderr properties of the Command resource from previous \ncreate or update steps."
-                }
-            },
-            "requiredInputs": [
-                "connection"
-            ],
-            "isComponent": true
-        },
-        "kubernetes-the-hard-way:tools:Mktemp": {
-            "description": "Abstraction over the `mktemp` utility on a remote system.",
-            "properties": {
-                "binaryPath": {
-                    "type": "string",
-                    "description": "Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH"
-                },
-                "command": {
-                    "$ref": "/command/v1.0.0/schema.json#/resources/command:remote:Command",
-                    "description": "The underlying command"
-                },
-                "connection": {
-                    "$ref": "/command/v1.0.0/schema.json#/types/command:remote:Connection",
-                    "description": "Connection details for the remote system"
-                },
-                "create": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "$ref": "#/types/kubernetes-the-hard-way:tools:MktempOpts",
-                            "plain": true
-                        }
-                    ],
-                    "plain": true,
-                    "description": "The command to run on create."
-                },
-                "delete": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "$ref": "#/types/kubernetes-the-hard-way:tools:MktempOpts",
-                            "plain": true
-                        }
-                    ],
-                    "plain": true,
-                    "description": "The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT\nand PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the\nCommand resource from previous create or update steps."
-                },
-                "environment": {
-                    "type": "object",
-                    "additionalProperties": {
-                        "type": "string"
-                    },
-                    "description": "Environment variables"
-                },
-                "stderr": {
-                    "type": "string",
-                    "description": "TODO"
-                },
-                "stdin": {
-                    "type": "string",
-                    "description": "TODO"
-                },
-                "stdout": {
-                    "type": "string",
-                    "description": "TODO"
-                },
-                "triggers": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "pulumi.json#/Any"
-                    },
-                    "description": "Trigger replacements on changes to this input."
-                },
-                "update": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "$ref": "#/types/kubernetes-the-hard-way:tools:MktempOpts",
-                            "plain": true
-                        }
-                    ],
-                    "plain": true,
-                    "description": "The command to run on update, if empty, create will \nrun again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR \nare set to the stdout and stderr properties of the Command resource from previous \ncreate or update steps."
-                }
-            },
-            "required": [
-                "binaryPath",
-                "command",
-                "connection",
-                "environment",
-                "stderr",
-                "stdout",
-                "triggers"
-            ],
-            "inputProperties": {
-                "binaryPath": {
-                    "type": "string",
-                    "description": "Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH"
-                },
-                "connection": {
-                    "$ref": "/command/v1.0.0/schema.json#/types/command:remote:Connection",
-                    "description": "Connection details for the remote system"
-                },
-                "create": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "$ref": "#/types/kubernetes-the-hard-way:tools:MktempOpts",
-                            "plain": true
-                        }
-                    ],
-                    "plain": true,
-                    "description": "The command to run on create."
-                },
-                "delete": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "$ref": "#/types/kubernetes-the-hard-way:tools:MktempOpts",
-                            "plain": true
-                        }
-                    ],
-                    "plain": true,
-                    "description": "The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT\nand PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the\nCommand resource from previous create or update steps."
-                },
-                "environment": {
-                    "type": "object",
-                    "additionalProperties": {
-                        "type": "string"
-                    },
-                    "description": "Environment variables"
-                },
-                "stdin": {
-                    "type": "string",
-                    "description": "TODO"
-                },
-                "triggers": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "pulumi.json#/Any"
-                    },
-                    "description": "Trigger replacements on changes to this input."
-                },
-                "update": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "$ref": "#/types/kubernetes-the-hard-way:tools:MktempOpts",
-                            "plain": true
-                        }
-                    ],
-                    "plain": true,
-                    "description": "The command to run on update, if empty, create will \nrun again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR \nare set to the stdout and stderr properties of the Command resource from previous \ncreate or update steps."
-                }
-            },
-            "requiredInputs": [
-                "connection"
-            ],
-            "isComponent": true
-        },
-        "kubernetes-the-hard-way:tools:Mv": {
-            "description": "Abstraction over the `mv` utility on a remote system.",
-            "properties": {
-                "binaryPath": {
-                    "type": "string",
-                    "description": "Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH"
-                },
-                "command": {
-                    "$ref": "/command/v1.0.0/schema.json#/resources/command:remote:Command",
-                    "description": "The underlying command"
-                },
-                "connection": {
-                    "$ref": "/command/v1.0.0/schema.json#/types/command:remote:Connection",
-                    "description": "Connection details for the remote system"
-                },
-                "create": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "$ref": "#/types/kubernetes-the-hard-way:tools:MvOpts",
-                            "plain": true
-                        }
-                    ],
-                    "plain": true,
-                    "description": "The command to run on create."
-                },
-                "delete": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "$ref": "#/types/kubernetes-the-hard-way:tools:MvOpts",
-                            "plain": true
-                        }
-                    ],
-                    "plain": true,
-                    "description": "The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT\nand PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the\nCommand resource from previous create or update steps."
-                },
-                "environment": {
-                    "type": "object",
-                    "additionalProperties": {
-                        "type": "string"
-                    },
-                    "description": "Environment variables"
-                },
-                "stderr": {
-                    "type": "string",
-                    "description": "TODO"
-                },
-                "stdin": {
-                    "type": "string",
-                    "description": "TODO"
-                },
-                "stdout": {
-                    "type": "string",
-                    "description": "TODO"
-                },
-                "triggers": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "pulumi.json#/Any"
-                    },
-                    "description": "Trigger replacements on changes to this input."
-                },
-                "update": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "$ref": "#/types/kubernetes-the-hard-way:tools:MvOpts",
-                            "plain": true
-                        }
-                    ],
-                    "plain": true,
-                    "description": "The command to run on update, if empty, create will \nrun again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR \nare set to the stdout and stderr properties of the Command resource from previous \ncreate or update steps."
-                }
-            },
-            "required": [
-                "binaryPath",
-                "command",
-                "connection",
-                "environment",
-                "stderr",
-                "stdout",
-                "triggers"
-            ],
-            "inputProperties": {
-                "binaryPath": {
-                    "type": "string",
-                    "description": "Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH"
-                },
-                "connection": {
-                    "$ref": "/command/v1.0.0/schema.json#/types/command:remote:Connection",
-                    "description": "Connection details for the remote system"
-                },
-                "create": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "$ref": "#/types/kubernetes-the-hard-way:tools:MvOpts",
-                            "plain": true
-                        }
-                    ],
-                    "plain": true,
-                    "description": "The command to run on create."
-                },
-                "delete": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "$ref": "#/types/kubernetes-the-hard-way:tools:MvOpts",
-                            "plain": true
-                        }
-                    ],
-                    "plain": true,
-                    "description": "The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT\nand PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the\nCommand resource from previous create or update steps."
-                },
-                "environment": {
-                    "type": "object",
-                    "additionalProperties": {
-                        "type": "string"
-                    },
-                    "description": "Environment variables"
-                },
-                "stdin": {
-                    "type": "string",
-                    "description": "TODO"
-                },
-                "triggers": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "pulumi.json#/Any"
-                    },
-                    "description": "Trigger replacements on changes to this input."
-                },
-                "update": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "$ref": "#/types/kubernetes-the-hard-way:tools:MvOpts",
-                            "plain": true
-                        }
-                    ],
-                    "plain": true,
-                    "description": "The command to run on update, if empty, create will \nrun again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR \nare set to the stdout and stderr properties of the Command resource from previous \ncreate or update steps."
-                }
-            },
-            "requiredInputs": [
-                "connection"
-            ],
-            "isComponent": true
-        },
-        "kubernetes-the-hard-way:tools:Rm": {
-            "description": "Abstraction over the `rm` utility on a remote system.",
-            "properties": {
-                "binaryPath": {
-                    "type": "string",
-                    "description": "Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH"
-                },
-                "command": {
-                    "$ref": "/command/v1.0.0/schema.json#/resources/command:remote:Command",
-                    "description": "The underlying command"
-                },
-                "connection": {
-                    "$ref": "/command/v1.0.0/schema.json#/types/command:remote:Connection",
-                    "description": "Connection details for the remote system"
-                },
-                "create": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "$ref": "#/types/kubernetes-the-hard-way:tools:RmOpts",
-                            "plain": true
-                        }
-                    ],
-                    "plain": true,
-                    "description": "The command to run on create."
-                },
-                "delete": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "$ref": "#/types/kubernetes-the-hard-way:tools:RmOpts",
-                            "plain": true
-                        }
-                    ],
-                    "plain": true,
-                    "description": "The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT\nand PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the\nCommand resource from previous create or update steps."
-                },
-                "environment": {
-                    "type": "object",
-                    "additionalProperties": {
-                        "type": "string"
-                    },
-                    "description": "Environment variables"
-                },
-                "stderr": {
-                    "type": "string",
-                    "description": "TODO"
-                },
-                "stdin": {
-                    "type": "string",
-                    "description": "TODO"
-                },
-                "stdout": {
-                    "type": "string",
-                    "description": "TODO"
-                },
-                "triggers": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "pulumi.json#/Any"
-                    },
-                    "description": "Trigger replacements on changes to this input."
-                },
-                "update": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "$ref": "#/types/kubernetes-the-hard-way:tools:RmOpts",
-                            "plain": true
-                        }
-                    ],
-                    "plain": true,
-                    "description": "The command to run on update, if empty, create will \nrun again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR \nare set to the stdout and stderr properties of the Command resource from previous \ncreate or update steps."
-                }
-            },
-            "required": [
-                "binaryPath",
-                "command",
-                "connection",
-                "environment",
-                "stderr",
-                "stdout",
-                "triggers"
-            ],
-            "inputProperties": {
-                "binaryPath": {
-                    "type": "string",
-                    "description": "Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH"
-                },
-                "connection": {
-                    "$ref": "/command/v1.0.0/schema.json#/types/command:remote:Connection",
-                    "description": "Connection details for the remote system"
-                },
-                "create": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "$ref": "#/types/kubernetes-the-hard-way:tools:RmOpts",
-                            "plain": true
-                        }
-                    ],
-                    "plain": true,
-                    "description": "The command to run on create."
-                },
-                "delete": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "$ref": "#/types/kubernetes-the-hard-way:tools:RmOpts",
-                            "plain": true
-                        }
-                    ],
-                    "plain": true,
-                    "description": "The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT\nand PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the\nCommand resource from previous create or update steps."
-                },
-                "environment": {
-                    "type": "object",
-                    "additionalProperties": {
-                        "type": "string"
-                    },
-                    "description": "Environment variables"
-                },
-                "stdin": {
-                    "type": "string",
-                    "description": "TODO"
-                },
-                "triggers": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "pulumi.json#/Any"
-                    },
-                    "description": "Trigger replacements on changes to this input."
-                },
-                "update": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "$ref": "#/types/kubernetes-the-hard-way:tools:RmOpts",
-                            "plain": true
-                        }
-                    ],
-                    "plain": true,
-                    "description": "The command to run on update, if empty, create will \nrun again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR \nare set to the stdout and stderr properties of the Command resource from previous \ncreate or update steps."
-                }
-            },
-            "requiredInputs": [
-                "connection"
-            ],
-            "isComponent": true
-        },
-        "kubernetes-the-hard-way:tools:Sed": {
-            "description": "Abstraction over the `sed` utility on a remote system.",
-            "properties": {
-                "binaryPath": {
-                    "type": "string",
-                    "description": "Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH"
-                },
-                "command": {
-                    "$ref": "/command/v1.0.0/schema.json#/resources/command:remote:Command",
-                    "description": "The underlying command"
-                },
-                "connection": {
-                    "$ref": "/command/v1.0.0/schema.json#/types/command:remote:Connection",
-                    "description": "Connection details for the remote system"
-                },
-                "create": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "$ref": "#/types/kubernetes-the-hard-way:tools:SedOpts",
-                            "plain": true
-                        }
-                    ],
-                    "plain": true,
-                    "description": "The command to run on create."
-                },
-                "delete": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "$ref": "#/types/kubernetes-the-hard-way:tools:SedOpts",
-                            "plain": true
-                        }
-                    ],
-                    "plain": true,
-                    "description": "The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT\nand PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the\nCommand resource from previous create or update steps."
-                },
-                "environment": {
-                    "type": "object",
-                    "additionalProperties": {
-                        "type": "string"
-                    },
-                    "description": "Environment variables"
-                },
-                "stderr": {
-                    "type": "string",
-                    "description": "TODO"
-                },
-                "stdin": {
-                    "type": "string",
-                    "description": "TODO"
-                },
-                "stdout": {
-                    "type": "string",
-                    "description": "TODO"
-                },
-                "triggers": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "pulumi.json#/Any"
-                    },
-                    "description": "Trigger replacements on changes to this input."
-                },
-                "update": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "$ref": "#/types/kubernetes-the-hard-way:tools:SedOpts",
-                            "plain": true
-                        }
-                    ],
-                    "plain": true,
-                    "description": "The command to run on update, if empty, create will \nrun again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR \nare set to the stdout and stderr properties of the Command resource from previous \ncreate or update steps."
-                }
-            },
-            "required": [
-                "binaryPath",
-                "command",
-                "connection",
-                "environment",
-                "stderr",
-                "stdout",
-                "triggers"
-            ],
-            "inputProperties": {
-                "binaryPath": {
-                    "type": "string",
-                    "description": "Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH"
-                },
-                "connection": {
-                    "$ref": "/command/v1.0.0/schema.json#/types/command:remote:Connection",
-                    "description": "Connection details for the remote system"
-                },
-                "create": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "$ref": "#/types/kubernetes-the-hard-way:tools:SedOpts",
-                            "plain": true
-                        }
-                    ],
-                    "plain": true,
-                    "description": "The command to run on create."
-                },
-                "delete": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "$ref": "#/types/kubernetes-the-hard-way:tools:SedOpts",
-                            "plain": true
-                        }
-                    ],
-                    "plain": true,
-                    "description": "The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT\nand PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the\nCommand resource from previous create or update steps."
-                },
-                "environment": {
-                    "type": "object",
-                    "additionalProperties": {
-                        "type": "string"
-                    },
-                    "description": "Environment variables"
-                },
-                "stdin": {
-                    "type": "string",
-                    "description": "TODO"
-                },
-                "triggers": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "pulumi.json#/Any"
-                    },
-                    "description": "Trigger replacements on changes to this input."
-                },
-                "update": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "$ref": "#/types/kubernetes-the-hard-way:tools:SedOpts",
-                            "plain": true
-                        }
-                    ],
-                    "plain": true,
-                    "description": "The command to run on update, if empty, create will \nrun again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR \nare set to the stdout and stderr properties of the Command resource from previous \ncreate or update steps."
-                }
-            },
-            "requiredInputs": [
-                "connection"
-            ],
-            "isComponent": true
-        },
-        "kubernetes-the-hard-way:tools:Systemctl": {
-            "description": "Abstraction over the `systemctl` utility on a remote system.",
-            "properties": {
-                "binaryPath": {
-                    "type": "string",
-                    "description": "Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH"
-                },
-                "command": {
-                    "$ref": "/command/v1.0.0/schema.json#/resources/command:remote:Command",
-                    "description": "The underlying command"
-                },
-                "connection": {
-                    "$ref": "/command/v1.0.0/schema.json#/types/command:remote:Connection",
-                    "description": "Connection details for the remote system"
-                },
-                "create": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "$ref": "#/types/kubernetes-the-hard-way:tools:SystemctlOpts",
-                            "plain": true
-                        }
-                    ],
-                    "plain": true,
-                    "description": "The command to run on create."
-                },
-                "delete": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "$ref": "#/types/kubernetes-the-hard-way:tools:SystemctlOpts",
-                            "plain": true
-                        }
-                    ],
-                    "plain": true,
-                    "description": "The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT\nand PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the\nCommand resource from previous create or update steps."
-                },
-                "environment": {
-                    "type": "object",
-                    "additionalProperties": {
-                        "type": "string"
-                    },
-                    "description": "Environment variables"
-                },
-                "stderr": {
-                    "type": "string",
-                    "description": "TODO"
-                },
-                "stdin": {
-                    "type": "string",
-                    "description": "TODO"
-                },
-                "stdout": {
-                    "type": "string",
-                    "description": "TODO"
-                },
-                "triggers": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "pulumi.json#/Any"
-                    },
-                    "description": "Trigger replacements on changes to this input."
-                },
-                "update": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "$ref": "#/types/kubernetes-the-hard-way:tools:SystemctlOpts",
-                            "plain": true
-                        }
-                    ],
-                    "plain": true,
-                    "description": "The command to run on update, if empty, create will \nrun again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR \nare set to the stdout and stderr properties of the Command resource from previous \ncreate or update steps."
-                }
-            },
-            "required": [
-                "binaryPath",
-                "command",
-                "connection",
-                "environment",
-                "stderr",
-                "stdout",
-                "triggers"
-            ],
-            "inputProperties": {
-                "binaryPath": {
-                    "type": "string",
-                    "description": "Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH"
-                },
-                "connection": {
-                    "$ref": "/command/v1.0.0/schema.json#/types/command:remote:Connection",
-                    "description": "Connection details for the remote system"
-                },
-                "create": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "$ref": "#/types/kubernetes-the-hard-way:tools:SystemctlOpts",
-                            "plain": true
-                        }
-                    ],
-                    "plain": true,
-                    "description": "The command to run on create."
-                },
-                "delete": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "$ref": "#/types/kubernetes-the-hard-way:tools:SystemctlOpts",
-                            "plain": true
-                        }
-                    ],
-                    "plain": true,
-                    "description": "The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT\nand PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the\nCommand resource from previous create or update steps."
-                },
-                "environment": {
-                    "type": "object",
-                    "additionalProperties": {
-                        "type": "string"
-                    },
-                    "description": "Environment variables"
-                },
-                "stdin": {
-                    "type": "string",
-                    "description": "TODO"
-                },
-                "triggers": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "pulumi.json#/Any"
-                    },
-                    "description": "Trigger replacements on changes to this input."
-                },
-                "update": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "$ref": "#/types/kubernetes-the-hard-way:tools:SystemctlOpts",
-                            "plain": true
-                        }
-                    ],
-                    "plain": true,
-                    "description": "The command to run on update, if empty, create will \nrun again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR \nare set to the stdout and stderr properties of the Command resource from previous \ncreate or update steps."
-                }
-            },
-            "requiredInputs": [
-                "connection"
-            ],
-            "isComponent": true
-        },
-        "kubernetes-the-hard-way:tools:Tar": {
-            "description": "Abstraction over the `tar` utility on a remote system.",
-            "properties": {
-                "binaryPath": {
-                    "type": "string",
-                    "description": "Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH"
-                },
-                "command": {
-                    "$ref": "/command/v1.0.0/schema.json#/resources/command:remote:Command",
-                    "description": "The underlying command"
-                },
-                "connection": {
-                    "$ref": "/command/v1.0.0/schema.json#/types/command:remote:Connection",
-                    "description": "Connection details for the remote system"
-                },
-                "create": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "$ref": "#/types/kubernetes-the-hard-way:tools:TarOpts",
-                            "plain": true
-                        }
-                    ],
-                    "plain": true,
-                    "description": "The command to run on create."
-                },
-                "delete": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "$ref": "#/types/kubernetes-the-hard-way:tools:TarOpts",
-                            "plain": true
-                        }
-                    ],
-                    "plain": true,
-                    "description": "The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT\nand PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the\nCommand resource from previous create or update steps."
-                },
-                "environment": {
-                    "type": "object",
-                    "additionalProperties": {
-                        "type": "string"
-                    },
-                    "description": "Environment variables"
-                },
-                "stderr": {
-                    "type": "string",
-                    "description": "TODO"
-                },
-                "stdin": {
-                    "type": "string",
-                    "description": "TODO"
-                },
-                "stdout": {
-                    "type": "string",
-                    "description": "TODO"
-                },
-                "triggers": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "pulumi.json#/Any"
-                    },
-                    "description": "Trigger replacements on changes to this input."
-                },
-                "update": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "$ref": "#/types/kubernetes-the-hard-way:tools:TarOpts",
-                            "plain": true
-                        }
-                    ],
-                    "plain": true,
-                    "description": "The command to run on update, if empty, create will \nrun again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR \nare set to the stdout and stderr properties of the Command resource from previous \ncreate or update steps."
-                }
-            },
-            "required": [
-                "binaryPath",
-                "command",
-                "connection",
-                "environment",
-                "stderr",
-                "stdout",
-                "triggers"
-            ],
-            "inputProperties": {
-                "binaryPath": {
-                    "type": "string",
-                    "description": "Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH"
-                },
-                "connection": {
-                    "$ref": "/command/v1.0.0/schema.json#/types/command:remote:Connection",
-                    "description": "Connection details for the remote system"
-                },
-                "create": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "$ref": "#/types/kubernetes-the-hard-way:tools:TarOpts",
-                            "plain": true
-                        }
-                    ],
-                    "plain": true,
-                    "description": "The command to run on create."
-                },
-                "delete": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "$ref": "#/types/kubernetes-the-hard-way:tools:TarOpts",
-                            "plain": true
-                        }
-                    ],
-                    "plain": true,
-                    "description": "The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT\nand PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the\nCommand resource from previous create or update steps."
-                },
-                "environment": {
-                    "type": "object",
-                    "additionalProperties": {
-                        "type": "string"
-                    },
-                    "description": "Environment variables"
-                },
-                "stdin": {
-                    "type": "string",
-                    "description": "TODO"
-                },
-                "triggers": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "pulumi.json#/Any"
-                    },
-                    "description": "Trigger replacements on changes to this input."
-                },
-                "update": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "$ref": "#/types/kubernetes-the-hard-way:tools:TarOpts",
-                            "plain": true
-                        }
-                    ],
-                    "plain": true,
-                    "description": "The command to run on update, if empty, create will \nrun again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR \nare set to the stdout and stderr properties of the Command resource from previous \ncreate or update steps."
-                }
-            },
-            "requiredInputs": [
-                "connection"
-            ],
-            "isComponent": true
-        },
-        "kubernetes-the-hard-way:tools:Tee": {
-            "description": "Abstraction over the `rm` utility on a remote system.",
-            "properties": {
-                "binaryPath": {
-                    "type": "string",
-                    "description": "Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH"
-                },
-                "command": {
-                    "$ref": "/command/v1.0.0/schema.json#/resources/command:remote:Command",
-                    "description": "The underlying command"
-                },
-                "connection": {
-                    "$ref": "/command/v1.0.0/schema.json#/types/command:remote:Connection",
-                    "description": "Connection details for the remote system"
-                },
-                "create": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "$ref": "#/types/kubernetes-the-hard-way:tools:TeeOpts",
-                            "plain": true
-                        }
-                    ],
-                    "plain": true,
-                    "description": "The command to run on create."
-                },
-                "delete": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "$ref": "#/types/kubernetes-the-hard-way:tools:TeeOpts",
-                            "plain": true
-                        }
-                    ],
-                    "plain": true,
-                    "description": "The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT\nand PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the\nCommand resource from previous create or update steps."
-                },
-                "environment": {
-                    "type": "object",
-                    "additionalProperties": {
-                        "type": "string"
-                    },
-                    "description": "Environment variables"
-                },
-                "stderr": {
-                    "type": "string",
-                    "description": "TODO"
-                },
-                "stdin": {
-                    "type": "string",
-                    "description": "TODO"
-                },
-                "stdout": {
-                    "type": "string",
-                    "description": "TODO"
-                },
-                "triggers": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "pulumi.json#/Any"
-                    },
-                    "description": "Trigger replacements on changes to this input."
-                },
-                "update": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "$ref": "#/types/kubernetes-the-hard-way:tools:TeeOpts",
-                            "plain": true
-                        }
-                    ],
-                    "plain": true,
-                    "description": "The command to run on update, if empty, create will \nrun again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR \nare set to the stdout and stderr properties of the Command resource from previous \ncreate or update steps."
-                }
-            },
-            "required": [
-                "binaryPath",
-                "command",
-                "connection",
-                "environment",
-                "stderr",
-                "stdout",
-                "triggers"
-            ],
-            "inputProperties": {
-                "binaryPath": {
-                    "type": "string",
-                    "description": "Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH"
-                },
-                "connection": {
-                    "$ref": "/command/v1.0.0/schema.json#/types/command:remote:Connection",
-                    "description": "Connection details for the remote system"
-                },
-                "create": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "$ref": "#/types/kubernetes-the-hard-way:tools:TeeOpts",
-                            "plain": true
-                        }
-                    ],
-                    "plain": true,
-                    "description": "The command to run on create."
-                },
-                "delete": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "$ref": "#/types/kubernetes-the-hard-way:tools:TeeOpts",
-                            "plain": true
-                        }
-                    ],
-                    "plain": true,
-                    "description": "The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT\nand PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the\nCommand resource from previous create or update steps."
-                },
-                "environment": {
-                    "type": "object",
-                    "additionalProperties": {
-                        "type": "string"
-                    },
-                    "description": "Environment variables"
-                },
-                "stdin": {
-                    "type": "string",
-                    "description": "TODO"
-                },
-                "triggers": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "pulumi.json#/Any"
-                    },
-                    "description": "Trigger replacements on changes to this input."
-                },
-                "update": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "$ref": "#/types/kubernetes-the-hard-way:tools:TeeOpts",
-                            "plain": true
-                        }
-                    ],
-                    "plain": true,
-                    "description": "The command to run on update, if empty, create will \nrun again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR \nare set to the stdout and stderr properties of the Command resource from previous \ncreate or update steps."
-                }
-            },
-            "requiredInputs": [
-                "connection"
-            ],
-            "isComponent": true
-        },
-        "kubernetes-the-hard-way:tools:Wget": {
-            "description": "Abstraction over the `wget` utility on a remote system.",
-            "properties": {
-                "binaryPath": {
-                    "type": "string",
-                    "description": "Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH"
-                },
-                "command": {
-                    "$ref": "/command/v1.0.0/schema.json#/resources/command:remote:Command",
-                    "description": "The underlying command"
-                },
-                "connection": {
-                    "$ref": "/command/v1.0.0/schema.json#/types/command:remote:Connection",
-                    "description": "Connection details for the remote system"
-                },
-                "create": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "$ref": "#/types/kubernetes-the-hard-way:tools:WgetOpts",
-                            "plain": true
-                        }
-                    ],
-                    "plain": true,
-                    "description": "The command to run on create."
-                },
-                "delete": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "$ref": "#/types/kubernetes-the-hard-way:tools:WgetOpts",
-                            "plain": true
-                        }
-                    ],
-                    "plain": true,
-                    "description": "The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT\nand PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the\nCommand resource from previous create or update steps."
-                },
-                "environment": {
-                    "type": "object",
-                    "additionalProperties": {
-                        "type": "string"
-                    },
-                    "description": "Environment variables"
-                },
-                "stderr": {
-                    "type": "string",
-                    "description": "TODO"
-                },
-                "stdin": {
-                    "type": "string",
-                    "description": "TODO"
-                },
-                "stdout": {
-                    "type": "string",
-                    "description": "TODO"
-                },
-                "triggers": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "pulumi.json#/Any"
-                    },
-                    "description": "Trigger replacements on changes to this input."
-                },
-                "update": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "$ref": "#/types/kubernetes-the-hard-way:tools:WgetOpts",
-                            "plain": true
-                        }
-                    ],
-                    "plain": true,
-                    "description": "The command to run on update, if empty, create will \nrun again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR \nare set to the stdout and stderr properties of the Command resource from previous \ncreate or update steps."
-                }
-            },
-            "required": [
-                "binaryPath",
-                "command",
-                "connection",
-                "environment",
-                "stderr",
-                "stdout",
-                "triggers"
-            ],
-            "inputProperties": {
-                "binaryPath": {
-                    "type": "string",
-                    "description": "Path to the binary on the remote system. If omitted, the tool is assumed to be on $PATH"
-                },
-                "connection": {
-                    "$ref": "/command/v1.0.0/schema.json#/types/command:remote:Connection",
-                    "description": "Connection details for the remote system"
-                },
-                "create": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "$ref": "#/types/kubernetes-the-hard-way:tools:WgetOpts",
-                            "plain": true
-                        }
-                    ],
-                    "plain": true,
-                    "description": "The command to run on create."
-                },
-                "delete": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "$ref": "#/types/kubernetes-the-hard-way:tools:WgetOpts",
-                            "plain": true
-                        }
-                    ],
-                    "plain": true,
-                    "description": "The command to run on delete. The environment variables PULUMI_COMMAND_STDOUT\nand PULUMI_COMMAND_STDERR are set to the stdout and stderr properties of the\nCommand resource from previous create or update steps."
-                },
-                "environment": {
-                    "type": "object",
-                    "additionalProperties": {
-                        "type": "string"
-                    },
-                    "description": "Environment variables"
-                },
-                "stdin": {
-                    "type": "string",
-                    "description": "TODO"
-                },
-                "triggers": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "pulumi.json#/Any"
-                    },
-                    "description": "Trigger replacements on changes to this input."
-                },
-                "update": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "$ref": "#/types/kubernetes-the-hard-way:tools:WgetOpts",
-                            "plain": true
-                        }
-                    ],
-                    "plain": true,
-                    "description": "The command to run on update, if empty, create will \nrun again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR \nare set to the stdout and stderr properties of the Command resource from previous \ncreate or update steps."
-                }
-            },
-            "requiredInputs": [
-                "connection"
             ],
             "isComponent": true
         }

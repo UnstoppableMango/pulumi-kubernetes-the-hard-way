@@ -25,18 +25,19 @@ const externalRefs = (() => {
   const packageJson = JSON.parse(fs.readFileSync(path.join(projectDir, "package.json"), "utf-8"));
 
   const externalRefs: Record<string, ExternalRef> = {};
-  const addRef = (name: string) => {
-    const importName = "@pulumi/" + name;
+  const addRef = (org: string, name: string) => {
+    const importName = org + "/" + name;
     const version = packageJson.dependencies[importName];
     externalRefs[`/${name}/v${version}/schema.json`] = {
       import: importName,
       name,
     };
   };
-  addRef("command");
-  addRef("kubernetes");
-  addRef("random");
-  addRef("tls");
+  addRef("@pulumi", "command");
+  addRef("@pulumi", "kubernetes");
+  addRef("@pulumi", "random");
+  addRef("@pulumi", "tls");
+  addRef("@unmango", "pulumi-commandx");
   return externalRefs;
 })();
 
@@ -62,7 +63,7 @@ const resolveRef = (ref: unknown, direction: Direction): ts.TypeNode => {
     return ts.factory.createTypeReferenceNode([...path, resourceName].join("."));
   }
   const externalName = ref.split("#")[0];
-  const externalRef = externalRefs[externalName];
+  const externalRef = externalRefs[externalName.replace('commandx', 'pulumi-commandx')];
   if (externalRef !== undefined) {
     const relativeRef = ref.substring(externalName.length);
     if (relativeRef.startsWith(typesPrefix)) {
@@ -72,7 +73,7 @@ const resolveRef = (ref: unknown, direction: Direction): ts.TypeNode => {
       const path = decodeURIComponent(typeParts[1]).split("/");
       return ts.factory.createTypeReferenceNode(
         [
-          externalRef.name,
+          externalRef.name.replace('pulumi-', ''),
           "types",
           direction.toLowerCase(),
           ...path.filter(x => !['index', resourceName].includes(x)),
@@ -87,7 +88,7 @@ const resolveRef = (ref: unknown, direction: Direction): ts.TypeNode => {
       const path = decodeURIComponent(typeParts[1]).split("/");
       return ts.factory.createTypeReferenceNode(
         [
-          externalRef.name,
+          externalRef.name.replace('pulumi-', ''),
           ...path.filter(x => ![
             'index',
             resourceName.toLowerCase(),
@@ -551,7 +552,7 @@ export function generateProviderTypes(args: { schema: string; out: string }) {
         undefined,
         ts.factory.createImportClause(
           false,
-          ts.factory.createIdentifier("* as " + externalRef.name),
+          ts.factory.createIdentifier("* as " + externalRef.name.replace('pulumi-', '')),
           undefined,
         ),
         ts.factory.createStringLiteral(externalRef.import),

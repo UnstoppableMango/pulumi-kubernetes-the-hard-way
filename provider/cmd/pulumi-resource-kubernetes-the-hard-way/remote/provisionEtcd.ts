@@ -1,4 +1,4 @@
-import { ComponentResourceOptions, Output, output } from '@pulumi/pulumi';
+import { ComponentResourceOptions, output } from '@pulumi/pulumi';
 import * as schema from '../schema-types';
 import { EtcdInstall } from './etcdInstall';
 import { EtcdConfiguration } from './etcdConfiguration';

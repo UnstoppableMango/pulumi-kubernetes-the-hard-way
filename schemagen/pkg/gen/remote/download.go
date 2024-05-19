@@ -8,7 +8,7 @@ import (
 	"github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 )
 
-func generateDownload(commandSpec schema.PackageSpec) schema.PackageSpec {
+func generateDownload(commandSpec, commandxSpec schema.PackageSpec) schema.ResourceSpec {
 	inputs := map[string]schema.PropertySpec{
 		"connection": {
 			Description: "The parameters with which to connect to the remote host.",
@@ -31,11 +31,11 @@ func generateDownload(commandSpec schema.PackageSpec) schema.PackageSpec {
 	outputs := map[string]schema.PropertySpec{
 		"mkdir": {
 			Description: "The mkdir operation.",
-			TypeSpec:    types.LocalResource("Mkdir", "tools"),
+			TypeSpec:    types.ExtResource(commandxSpec, "Mkdir", "remote"),
 		},
 		"wget": {
 			Description: "The wget operation.",
-			TypeSpec:    types.LocalResource("Wget", "tools"),
+			TypeSpec:    types.ExtResource(commandxSpec, "Wget", "remote"),
 		},
 	}
 	maps.Copy(outputs, inputs)

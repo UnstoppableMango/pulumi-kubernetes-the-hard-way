@@ -1,6 +1,6 @@
-import { ComponentResourceOptions, Input, Output, interpolate, output } from '@pulumi/pulumi';
+import { ComponentResourceOptions, interpolate, output } from '@pulumi/pulumi';
 import * as schema from '../schema-types';
-import { Chmod, Mkdir } from '../tools';
+import { Chmod, Mkdir } from '@unmango/pulumi-commandx/remote';
 import { File } from './file';
 
 export class EtcdConfiguration extends schema.EtcdConfiguration {

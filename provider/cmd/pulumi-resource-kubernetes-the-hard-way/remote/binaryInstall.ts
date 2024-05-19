@@ -1,6 +1,6 @@
 import { Input, Output, Resource, interpolate, output } from '@pulumi/pulumi';
 import { remote } from '@pulumi/command/types/input';
-import { Mkdir, Mktemp, Mv, Rm } from '../tools';
+import { Mkdir, Mktemp, Mv, Rm } from '@unmango/pulumi-commandx/remote';
 import { Download } from './download';
 
 interface BinaryInstallArgs {

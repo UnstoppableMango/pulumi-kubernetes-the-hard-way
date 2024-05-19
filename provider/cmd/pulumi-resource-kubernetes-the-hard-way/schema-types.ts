@@ -46,18 +46,6 @@ export type ResourceConstructor = {
     readonly "kubernetes-the-hard-way:tls:ClusterPki": ConstructComponent<ClusterPki>;
     readonly "kubernetes-the-hard-way:tls:EncryptionKey": ConstructComponent<EncryptionKey>;
     readonly "kubernetes-the-hard-way:tls:RootCa": ConstructComponent<RootCa>;
-    readonly "kubernetes-the-hard-way:tools:Chmod": ConstructComponent<Chmod>;
-    readonly "kubernetes-the-hard-way:tools:Etcdctl": ConstructComponent<Etcdctl>;
-    readonly "kubernetes-the-hard-way:tools:Hostnamectl": ConstructComponent<Hostnamectl>;
-    readonly "kubernetes-the-hard-way:tools:Mkdir": ConstructComponent<Mkdir>;
-    readonly "kubernetes-the-hard-way:tools:Mktemp": ConstructComponent<Mktemp>;
-    readonly "kubernetes-the-hard-way:tools:Mv": ConstructComponent<Mv>;
-    readonly "kubernetes-the-hard-way:tools:Rm": ConstructComponent<Rm>;
-    readonly "kubernetes-the-hard-way:tools:Sed": ConstructComponent<Sed>;
-    readonly "kubernetes-the-hard-way:tools:Systemctl": ConstructComponent<Systemctl>;
-    readonly "kubernetes-the-hard-way:tools:Tar": ConstructComponent<Tar>;
-    readonly "kubernetes-the-hard-way:tools:Tee": ConstructComponent<Tee>;
-    readonly "kubernetes-the-hard-way:tools:Wget": ConstructComponent<Wget>;
 };
 export type Functions = {
     "kubernetes-the-hard-way:config:getCniBridgePluginConfiguration": (inputs: getCniBridgePluginConfigurationInputs) => Promise<getCniBridgePluginConfigurationOutputs>;
@@ -73,6 +61,7 @@ import * as command from "@pulumi/command";
 import * as kubernetes from "@pulumi/kubernetes";
 import * as random from "@pulumi/random";
 import * as tls from "@pulumi/tls";
+import * as commandx from "@unmango/pulumi-commandx";
 export abstract class CniBridgePluginConfiguration<TData = any> extends (pulumi.ComponentResource)<TData> {
     public result!: CniBridgePluginConfigurationOutputs | pulumi.Output<CniBridgePluginConfigurationOutputs>;
     public yaml!: string | pulumi.Output<string>;
@@ -180,54 +169,116 @@ export interface KubeletConfigurationArgs {
     readonly tlsPrivateKeyFile?: pulumi.Input<string>;
     readonly webhook?: pulumi.Input<boolean>;
 }
+export abstract class CniBridgePluginConfiguration<TData = any> extends (pulumi.ComponentResource)<TData> {
+    public bridge!: string | pulumi.Output<string>;
+    public cniVersion!: string | pulumi.Output<string>;
+    public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
+    public file?: File | pulumi.Output<File>;
+    public ipMasq!: boolean | pulumi.Output<boolean>;
+    public ipam!: CniBridgeIpamOutputs | pulumi.Output<CniBridgeIpamOutputs>;
+    public isGateway!: boolean | pulumi.Output<boolean>;
+    public name!: string | pulumi.Output<string>;
+    public path!: string | pulumi.Output<string>;
+    public subnet?: string | pulumi.Output<string>;
+    public type!: string | pulumi.Output<string>;
+    constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
+        super("kubernetes-the-hard-way:remote:CniBridgePluginConfiguration", name, opts.urn ? { bridge: undefined, cniVersion: undefined, connection: undefined, file: undefined, ipMasq: undefined, ipam: undefined, isGateway: undefined, name: undefined, path: undefined, subnet: undefined, type: undefined } : { name, args, opts }, opts);
+    }
+}
+export interface CniBridgePluginConfigurationArgs {
+    readonly bridge?: pulumi.Input<string>;
+    readonly cniVersion?: pulumi.Input<string>;
+    readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
+    readonly ipMasq?: pulumi.Input<boolean>;
+    readonly ipam?: pulumi.Input<CniBridgeIpamInputs>;
+    readonly isGateway?: pulumi.Input<boolean>;
+    readonly name?: pulumi.Input<string>;
+    readonly path?: pulumi.Input<string>;
+    readonly subnet?: pulumi.Input<string>;
+    readonly type?: pulumi.Input<string>;
+}
+export abstract class CniLoopbackPluginConfiguration<TData = any> extends (pulumi.ComponentResource)<TData> {
+    public cniVersion!: string | pulumi.Output<string>;
+    public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
+    public file?: File | pulumi.Output<File>;
+    public name!: string | pulumi.Output<string>;
+    public path!: string | pulumi.Output<string>;
+    public type!: string | pulumi.Output<string>;
+    constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
+        super("kubernetes-the-hard-way:remote:CniLoopbackPluginConfiguration", name, opts.urn ? { cniVersion: undefined, connection: undefined, file: undefined, name: undefined, path: undefined, type: undefined } : { name, args, opts }, opts);
+    }
+}
+export interface CniLoopbackPluginConfigurationArgs {
+    readonly cniVersion?: pulumi.Input<string>;
+    readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
+    readonly name?: pulumi.Input<string>;
+    readonly path?: pulumi.Input<string>;
+    readonly type?: pulumi.Input<string>;
+}
+export abstract class CniPluginConfiguration<TData = any> extends (pulumi.ComponentResource)<TData> {
+    public bridge!: CniBridgePluginConfiguration | pulumi.Output<CniBridgePluginConfiguration>;
+    public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
+    public directory!: string | pulumi.Output<string>;
+    public loopback!: CniLoopbackPluginConfiguration | pulumi.Output<CniLoopbackPluginConfiguration>;
+    public mkdir!: commandx.remote.Mkdir | pulumi.Output<commandx.remote.Mkdir>;
+    public subnet!: string | pulumi.Output<string>;
+    constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
+        super("kubernetes-the-hard-way:remote:CniPluginConfiguration", name, opts.urn ? { bridge: undefined, connection: undefined, directory: undefined, loopback: undefined, mkdir: undefined, subnet: undefined } : { name, args, opts }, opts);
+    }
+}
+export interface CniPluginConfigurationArgs {
+    readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
+    readonly directory?: pulumi.Input<string>;
+    readonly subnet: pulumi.Input<string>;
+}
 export abstract class CniPluginsInstall<TData = any> extends (pulumi.ComponentResource)<TData> {
     public architecture!: ArchitectureOutputs | pulumi.Output<ArchitectureOutputs>;
     public archiveName!: string | pulumi.Output<string>;
-    public bandwidthMv!: Mv | pulumi.Output<Mv>;
+    public bandwidthMv!: commandx.remote.Mv | pulumi.Output<commandx.remote.Mv>;
     public bandwidthPath!: string | pulumi.Output<string>;
-    public bridgeMv!: Mv | pulumi.Output<Mv>;
+    public bridgeMv!: commandx.remote.Mv | pulumi.Output<commandx.remote.Mv>;
     public bridgePath!: string | pulumi.Output<string>;
     public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
-    public dhcpMv!: Mv | pulumi.Output<Mv>;
+    public dhcpMv!: commandx.remote.Mv | pulumi.Output<commandx.remote.Mv>;
     public dhcpPath!: string | pulumi.Output<string>;
     public directory!: string | pulumi.Output<string>;
     public download!: Download | pulumi.Output<Download>;
-    public dummyMv!: Mv | pulumi.Output<Mv>;
+    public dummyMv!: commandx.remote.Mv | pulumi.Output<commandx.remote.Mv>;
     public dummyPath!: string | pulumi.Output<string>;
-    public firewallMv!: Mv | pulumi.Output<Mv>;
+    public firewallMv!: commandx.remote.Mv | pulumi.Output<commandx.remote.Mv>;
     public firewallPath!: string | pulumi.Output<string>;
-    public hostDeviceMv!: Mv | pulumi.Output<Mv>;
+    public hostDeviceMv!: commandx.remote.Mv | pulumi.Output<commandx.remote.Mv>;
     public hostDevicePath!: string | pulumi.Output<string>;
-    public hostLocalMv!: Mv | pulumi.Output<Mv>;
+    public hostLocalMv!: commandx.remote.Mv | pulumi.Output<commandx.remote.Mv>;
     public hostLocalPath!: string | pulumi.Output<string>;
-    public ipvlanMv!: Mv | pulumi.Output<Mv>;
+    public ipvlanMv!: commandx.remote.Mv | pulumi.Output<commandx.remote.Mv>;
     public ipvlanPath!: string | pulumi.Output<string>;
-    public loopbackMv!: Mv | pulumi.Output<Mv>;
+    public loopbackMv!: commandx.remote.Mv | pulumi.Output<commandx.remote.Mv>;
     public loopbackPath!: string | pulumi.Output<string>;
-    public macvlanMv!: Mv | pulumi.Output<Mv>;
+    public macvlanMv!: commandx.remote.Mv | pulumi.Output<commandx.remote.Mv>;
     public macvlanPath!: string | pulumi.Output<string>;
-    public mkdir!: Mkdir | pulumi.Output<Mkdir>;
-    public mktemp!: Mktemp | pulumi.Output<Mktemp>;
+    public mkdir!: commandx.remote.Mkdir | pulumi.Output<commandx.remote.Mkdir>;
+    public mktemp!: commandx.remote.Mktemp | pulumi.Output<commandx.remote.Mktemp>;
     public path?: string | pulumi.Output<string>;
-    public portmapMv!: Mv | pulumi.Output<Mv>;
+    public portmapMv!: commandx.remote.Mv | pulumi.Output<commandx.remote.Mv>;
     public portmapPath!: string | pulumi.Output<string>;
-    public ptpMv!: Mv | pulumi.Output<Mv>;
+    public ptpMv!: commandx.remote.Mv | pulumi.Output<commandx.remote.Mv>;
     public ptpPath!: string | pulumi.Output<string>;
-    public rm!: Rm | pulumi.Output<Rm>;
-    public sbrMv!: Mv | pulumi.Output<Mv>;
+    public rm!: commandx.remote.Rm | pulumi.Output<commandx.remote.Rm>;
+    public sbrMv!: commandx.remote.Mv | pulumi.Output<commandx.remote.Mv>;
     public sbrPath!: string | pulumi.Output<string>;
-    public staticMv!: Mv | pulumi.Output<Mv>;
+    public staticMv!: commandx.remote.Mv | pulumi.Output<commandx.remote.Mv>;
     public staticPath!: string | pulumi.Output<string>;
-    public tapMv!: Mv | pulumi.Output<Mv>;
+    public tapMv!: commandx.remote.Mv | pulumi.Output<commandx.remote.Mv>;
     public tapPath!: string | pulumi.Output<string>;
-    public tar!: Tar | pulumi.Output<Tar>;
-    public tuningMv!: Mv | pulumi.Output<Mv>;
+    public tar!: commandx.remote.Tar | pulumi.Output<commandx.remote.Tar>;
+    public tuningMv!: commandx.remote.Mv | pulumi.Output<commandx.remote.Mv>;
     public tuningPath!: string | pulumi.Output<string>;
     public url!: string | pulumi.Output<string>;
     public version!: string | pulumi.Output<string>;
-    public vlanMv!: Mv | pulumi.Output<Mv>;
+    public vlanMv!: commandx.remote.Mv | pulumi.Output<commandx.remote.Mv>;
     public vlanPath!: string | pulumi.Output<string>;
-    public vrfMv!: Mv | pulumi.Output<Mv>;
+    public vrfMv!: commandx.remote.Mv | pulumi.Output<commandx.remote.Mv>;
     public vrfPath!: string | pulumi.Output<string>;
     constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
         super("kubernetes-the-hard-way:remote:CniPluginsInstall", name, opts.urn ? { architecture: undefined, archiveName: undefined, bandwidthMv: undefined, bandwidthPath: undefined, bridgeMv: undefined, bridgePath: undefined, connection: undefined, dhcpMv: undefined, dhcpPath: undefined, directory: undefined, download: undefined, dummyMv: undefined, dummyPath: undefined, firewallMv: undefined, firewallPath: undefined, hostDeviceMv: undefined, hostDevicePath: undefined, hostLocalMv: undefined, hostLocalPath: undefined, ipvlanMv: undefined, ipvlanPath: undefined, loopbackMv: undefined, loopbackPath: undefined, macvlanMv: undefined, macvlanPath: undefined, mkdir: undefined, mktemp: undefined, path: undefined, portmapMv: undefined, portmapPath: undefined, ptpMv: undefined, ptpPath: undefined, rm: undefined, sbrMv: undefined, sbrPath: undefined, staticMv: undefined, staticPath: undefined, tapMv: undefined, tapPath: undefined, tar: undefined, tuningMv: undefined, tuningPath: undefined, url: undefined, version: undefined, vlanMv: undefined, vlanPath: undefined, vrfMv: undefined, vrfPath: undefined } : { name, args, opts }, opts);
@@ -243,15 +294,15 @@ export abstract class ContainerdInstall<TData = any> extends (pulumi.ComponentRe
     public architecture!: ArchitectureOutputs | pulumi.Output<ArchitectureOutputs>;
     public archiveName!: string | pulumi.Output<string>;
     public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
-    public containerdMv!: Mv | pulumi.Output<Mv>;
+    public containerdMv!: commandx.remote.Mv | pulumi.Output<commandx.remote.Mv>;
     public containerdPath!: string | pulumi.Output<string>;
     public directory!: string | pulumi.Output<string>;
     public download!: Download | pulumi.Output<Download>;
-    public mkdir!: Mkdir | pulumi.Output<Mkdir>;
-    public mktemp!: Mktemp | pulumi.Output<Mktemp>;
+    public mkdir!: commandx.remote.Mkdir | pulumi.Output<commandx.remote.Mkdir>;
+    public mktemp!: commandx.remote.Mktemp | pulumi.Output<commandx.remote.Mktemp>;
     public path?: string | pulumi.Output<string>;
-    public rm!: Rm | pulumi.Output<Rm>;
-    public tar!: Tar | pulumi.Output<Tar>;
+    public rm!: commandx.remote.Rm | pulumi.Output<commandx.remote.Rm>;
+    public tar!: commandx.remote.Tar | pulumi.Output<commandx.remote.Tar>;
     public url!: string | pulumi.Output<string>;
     public version!: string | pulumi.Output<string>;
     constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
@@ -357,15 +408,15 @@ export abstract class CrictlInstall<TData = any> extends (pulumi.ComponentResour
     public architecture!: ArchitectureOutputs | pulumi.Output<ArchitectureOutputs>;
     public archiveName!: string | pulumi.Output<string>;
     public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
-    public crictlMv!: Mv | pulumi.Output<Mv>;
+    public crictlMv!: commandx.remote.Mv | pulumi.Output<commandx.remote.Mv>;
     public crictlPath!: string | pulumi.Output<string>;
     public directory!: string | pulumi.Output<string>;
     public download!: Download | pulumi.Output<Download>;
-    public mkdir!: Mkdir | pulumi.Output<Mkdir>;
-    public mktemp!: Mktemp | pulumi.Output<Mktemp>;
+    public mkdir!: commandx.remote.Mkdir | pulumi.Output<commandx.remote.Mkdir>;
+    public mktemp!: commandx.remote.Mktemp | pulumi.Output<commandx.remote.Mktemp>;
     public path?: string | pulumi.Output<string>;
-    public rm!: Rm | pulumi.Output<Rm>;
-    public tar!: Tar | pulumi.Output<Tar>;
+    public rm!: commandx.remote.Rm | pulumi.Output<commandx.remote.Rm>;
+    public tar!: commandx.remote.Tar | pulumi.Output<commandx.remote.Tar>;
     public url!: string | pulumi.Output<string>;
     public version!: string | pulumi.Output<string>;
     constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
@@ -381,10 +432,10 @@ export interface CrictlInstallArgs {
 export abstract class Download<TData = any> extends (pulumi.ComponentResource)<TData> {
     public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
     public destination!: string | pulumi.Output<string>;
-    public mkdir!: Mkdir | pulumi.Output<Mkdir>;
+    public mkdir!: commandx.remote.Mkdir | pulumi.Output<commandx.remote.Mkdir>;
     public removeOnDelete!: boolean;
     public url!: string | pulumi.Output<string>;
-    public wget!: Wget | pulumi.Output<Wget>;
+    public wget!: commandx.remote.Wget | pulumi.Output<commandx.remote.Wget>;
     constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
         super("kubernetes-the-hard-way:remote:Download", name, opts.urn ? { connection: undefined, destination: undefined, mkdir: undefined, removeOnDelete: undefined, url: undefined, wget: undefined } : { name, args, opts }, opts);
     }
@@ -425,12 +476,12 @@ export abstract class EtcdConfiguration<TData = any> extends (pulumi.ComponentRe
     public caPem!: string | pulumi.Output<string>;
     public certFile!: File | pulumi.Output<File>;
     public certPem!: string | pulumi.Output<string>;
-    public configurationChmod?: Chmod | pulumi.Output<Chmod>;
+    public configurationChmod?: commandx.remote.Chmod | pulumi.Output<commandx.remote.Chmod>;
     public configurationDirectory!: string | pulumi.Output<string>;
-    public configurationMkdir!: Mkdir | pulumi.Output<Mkdir>;
+    public configurationMkdir!: commandx.remote.Mkdir | pulumi.Output<commandx.remote.Mkdir>;
     public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
     public dataDirectory!: string | pulumi.Output<string>;
-    public dataMkdir!: Mkdir | pulumi.Output<Mkdir>;
+    public dataMkdir!: commandx.remote.Mkdir | pulumi.Output<commandx.remote.Mkdir>;
     public etcdPath!: string | pulumi.Output<string>;
     public internalIp!: string | pulumi.Output<string>;
     public keyFile!: File | pulumi.Output<File>;
@@ -456,15 +507,15 @@ export abstract class EtcdInstall<TData = any> extends (pulumi.ComponentResource
     public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
     public directory!: string | pulumi.Output<string>;
     public download!: Download | pulumi.Output<Download>;
-    public etcdMv!: Mv | pulumi.Output<Mv>;
+    public etcdMv!: commandx.remote.Mv | pulumi.Output<commandx.remote.Mv>;
     public etcdPath!: string | pulumi.Output<string>;
-    public etcdctlMv!: Mv | pulumi.Output<Mv>;
+    public etcdctlMv!: commandx.remote.Mv | pulumi.Output<commandx.remote.Mv>;
     public etcdctlPath!: string | pulumi.Output<string>;
-    public mkdir!: Mkdir | pulumi.Output<Mkdir>;
-    public mktemp!: Mktemp | pulumi.Output<Mktemp>;
+    public mkdir!: commandx.remote.Mkdir | pulumi.Output<commandx.remote.Mkdir>;
+    public mktemp!: commandx.remote.Mktemp | pulumi.Output<commandx.remote.Mktemp>;
     public path?: string | pulumi.Output<string>;
-    public rm!: Rm | pulumi.Output<Rm>;
-    public tar!: Tar | pulumi.Output<Tar>;
+    public rm!: commandx.remote.Rm | pulumi.Output<commandx.remote.Rm>;
+    public tar!: commandx.remote.Tar | pulumi.Output<commandx.remote.Tar>;
     public url!: string | pulumi.Output<string>;
     public version!: string | pulumi.Output<string>;
     constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
@@ -526,11 +577,11 @@ export abstract class KubeApiServerInstall<TData = any> extends (pulumi.Componen
     public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
     public directory!: string | pulumi.Output<string>;
     public download!: Download | pulumi.Output<Download>;
-    public mkdir!: Mkdir | pulumi.Output<Mkdir>;
-    public mktemp!: Mktemp | pulumi.Output<Mktemp>;
-    public mv!: Mv | pulumi.Output<Mv>;
+    public mkdir!: commandx.remote.Mkdir | pulumi.Output<commandx.remote.Mkdir>;
+    public mktemp!: commandx.remote.Mktemp | pulumi.Output<commandx.remote.Mktemp>;
+    public mv!: commandx.remote.Mv | pulumi.Output<commandx.remote.Mv>;
     public path!: string | pulumi.Output<string>;
-    public rm!: Rm | pulumi.Output<Rm>;
+    public rm!: commandx.remote.Rm | pulumi.Output<commandx.remote.Rm>;
     public url!: string | pulumi.Output<string>;
     public version!: string | pulumi.Output<string>;
     constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
@@ -549,11 +600,11 @@ export abstract class KubeControllerManagerInstall<TData = any> extends (pulumi.
     public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
     public directory!: string | pulumi.Output<string>;
     public download!: Download | pulumi.Output<Download>;
-    public mkdir!: Mkdir | pulumi.Output<Mkdir>;
-    public mktemp!: Mktemp | pulumi.Output<Mktemp>;
-    public mv!: Mv | pulumi.Output<Mv>;
+    public mkdir!: commandx.remote.Mkdir | pulumi.Output<commandx.remote.Mkdir>;
+    public mktemp!: commandx.remote.Mktemp | pulumi.Output<commandx.remote.Mktemp>;
+    public mv!: commandx.remote.Mv | pulumi.Output<commandx.remote.Mv>;
     public path!: string | pulumi.Output<string>;
-    public rm!: Rm | pulumi.Output<Rm>;
+    public rm!: commandx.remote.Rm | pulumi.Output<commandx.remote.Rm>;
     public url!: string | pulumi.Output<string>;
     public version!: string | pulumi.Output<string>;
     constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
@@ -572,11 +623,11 @@ export abstract class KubeProxyInstall<TData = any> extends (pulumi.ComponentRes
     public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
     public directory!: string | pulumi.Output<string>;
     public download!: Download | pulumi.Output<Download>;
-    public mkdir!: Mkdir | pulumi.Output<Mkdir>;
-    public mktemp!: Mktemp | pulumi.Output<Mktemp>;
-    public mv!: Mv | pulumi.Output<Mv>;
+    public mkdir!: commandx.remote.Mkdir | pulumi.Output<commandx.remote.Mkdir>;
+    public mktemp!: commandx.remote.Mktemp | pulumi.Output<commandx.remote.Mktemp>;
+    public mv!: commandx.remote.Mv | pulumi.Output<commandx.remote.Mv>;
     public path!: string | pulumi.Output<string>;
-    public rm!: Rm | pulumi.Output<Rm>;
+    public rm!: commandx.remote.Rm | pulumi.Output<commandx.remote.Rm>;
     public url!: string | pulumi.Output<string>;
     public version!: string | pulumi.Output<string>;
     constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
@@ -619,11 +670,11 @@ export abstract class KubeSchedulerInstall<TData = any> extends (pulumi.Componen
     public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
     public directory!: string | pulumi.Output<string>;
     public download!: Download | pulumi.Output<Download>;
-    public mkdir!: Mkdir | pulumi.Output<Mkdir>;
-    public mktemp!: Mktemp | pulumi.Output<Mktemp>;
-    public mv!: Mv | pulumi.Output<Mv>;
+    public mkdir!: commandx.remote.Mkdir | pulumi.Output<commandx.remote.Mkdir>;
+    public mktemp!: commandx.remote.Mktemp | pulumi.Output<commandx.remote.Mktemp>;
+    public mv!: commandx.remote.Mv | pulumi.Output<commandx.remote.Mv>;
     public path!: string | pulumi.Output<string>;
-    public rm!: Rm | pulumi.Output<Rm>;
+    public rm!: commandx.remote.Rm | pulumi.Output<commandx.remote.Rm>;
     public url!: string | pulumi.Output<string>;
     public version!: string | pulumi.Output<string>;
     constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
@@ -665,11 +716,11 @@ export abstract class KubectlInstall<TData = any> extends (pulumi.ComponentResou
     public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
     public directory!: string | pulumi.Output<string>;
     public download!: Download | pulumi.Output<Download>;
-    public mkdir!: Mkdir | pulumi.Output<Mkdir>;
-    public mktemp!: Mktemp | pulumi.Output<Mktemp>;
-    public mv!: Mv | pulumi.Output<Mv>;
+    public mkdir!: commandx.remote.Mkdir | pulumi.Output<commandx.remote.Mkdir>;
+    public mktemp!: commandx.remote.Mktemp | pulumi.Output<commandx.remote.Mktemp>;
+    public mv!: commandx.remote.Mv | pulumi.Output<commandx.remote.Mv>;
     public path!: string | pulumi.Output<string>;
-    public rm!: Rm | pulumi.Output<Rm>;
+    public rm!: commandx.remote.Rm | pulumi.Output<commandx.remote.Rm>;
     public url!: string | pulumi.Output<string>;
     public version!: string | pulumi.Output<string>;
     constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
@@ -688,11 +739,11 @@ export abstract class KubeletInstall<TData = any> extends (pulumi.ComponentResou
     public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
     public directory!: string | pulumi.Output<string>;
     public download!: Download | pulumi.Output<Download>;
-    public mkdir!: Mkdir | pulumi.Output<Mkdir>;
-    public mktemp!: Mktemp | pulumi.Output<Mktemp>;
-    public mv!: Mv | pulumi.Output<Mv>;
+    public mkdir!: commandx.remote.Mkdir | pulumi.Output<commandx.remote.Mkdir>;
+    public mktemp!: commandx.remote.Mktemp | pulumi.Output<commandx.remote.Mktemp>;
+    public mv!: commandx.remote.Mv | pulumi.Output<commandx.remote.Mv>;
     public path!: string | pulumi.Output<string>;
-    public rm!: Rm | pulumi.Output<Rm>;
+    public rm!: commandx.remote.Rm | pulumi.Output<commandx.remote.Rm>;
     public url!: string | pulumi.Output<string>;
     public version!: string | pulumi.Output<string>;
     constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
@@ -766,11 +817,11 @@ export abstract class RuncInstall<TData = any> extends (pulumi.ComponentResource
     public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
     public directory!: string | pulumi.Output<string>;
     public download!: Download | pulumi.Output<Download>;
-    public mkdir!: Mkdir | pulumi.Output<Mkdir>;
-    public mktemp!: Mktemp | pulumi.Output<Mktemp>;
-    public mv!: Mv | pulumi.Output<Mv>;
+    public mkdir!: commandx.remote.Mkdir | pulumi.Output<commandx.remote.Mkdir>;
+    public mktemp!: commandx.remote.Mktemp | pulumi.Output<commandx.remote.Mktemp>;
+    public mv!: commandx.remote.Mv | pulumi.Output<commandx.remote.Mv>;
     public path!: string | pulumi.Output<string>;
-    public rm!: Rm | pulumi.Output<Rm>;
+    public rm!: commandx.remote.Rm | pulumi.Output<commandx.remote.Rm>;
     public url!: string | pulumi.Output<string>;
     public version!: string | pulumi.Output<string>;
     constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
@@ -797,9 +848,9 @@ export interface StartContainerdArgs {
 }
 export abstract class StartEtcd<TData = any> extends (pulumi.ComponentResource)<TData> {
     public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
-    public daemonReload!: Systemctl | pulumi.Output<Systemctl>;
-    public enable!: Systemctl | pulumi.Output<Systemctl>;
-    public start!: Systemctl | pulumi.Output<Systemctl>;
+    public daemonReload!: commandx.remote.Systemctl | pulumi.Output<commandx.remote.Systemctl>;
+    public enable!: commandx.remote.Systemctl | pulumi.Output<commandx.remote.Systemctl>;
+    public start!: commandx.remote.Systemctl | pulumi.Output<commandx.remote.Systemctl>;
     constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
         super("kubernetes-the-hard-way:remote:StartEtcd", name, opts.urn ? { connection: undefined, daemonReload: undefined, enable: undefined, start: undefined } : { name, args, opts }, opts);
     }
@@ -835,7 +886,7 @@ export abstract class StaticPod<TData = any> extends (pulumi.ComponentResource)<
     public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
     public file!: File | pulumi.Output<File>;
     public fileName!: string | pulumi.Output<string>;
-    public mkdir!: Mkdir | pulumi.Output<Mkdir>;
+    public mkdir!: commandx.remote.Mkdir | pulumi.Output<commandx.remote.Mkdir>;
     public path!: string | pulumi.Output<string>;
     public pod!: PodManifestOutputs | pulumi.Output<PodManifestOutputs>;
     constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
@@ -1097,318 +1148,6 @@ export interface RootCaArgs {
     readonly subject?: pulumi.Input<tls.types.input.SelfSignedCertSubject>;
     readonly uris?: pulumi.Input<pulumi.Input<string>[]>;
     readonly validityPeriodHours: pulumi.Input<number>;
-}
-export abstract class Chmod<TData = any> extends (pulumi.ComponentResource)<TData> {
-    public binaryPath!: string | pulumi.Output<string>;
-    public command!: command.remote.Command | pulumi.Output<command.remote.Command>;
-    public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
-    public create?: (pulumi.Output<string> | ChmodOptsOutputs);
-    public delete?: (pulumi.Output<string> | ChmodOptsOutputs);
-    public environment!: Record<string, string> | pulumi.Output<Record<string, string>>;
-    public stderr!: string | pulumi.Output<string>;
-    public stdin?: string | pulumi.Output<string>;
-    public stdout!: string | pulumi.Output<string>;
-    public triggers!: any[] | pulumi.Output<any[]>;
-    public update?: (pulumi.Output<string> | ChmodOptsOutputs);
-    constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
-        super("kubernetes-the-hard-way:tools:Chmod", name, opts.urn ? { binaryPath: undefined, command: undefined, connection: undefined, create: undefined, delete: undefined, environment: undefined, stderr: undefined, stdin: undefined, stdout: undefined, triggers: undefined, update: undefined } : { name, args, opts }, opts);
-    }
-}
-export interface ChmodArgs {
-    readonly binaryPath?: pulumi.Input<string>;
-    readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
-    readonly create?: pulumi.Input<string> | ChmodOptsInputs;
-    readonly delete?: pulumi.Input<string> | ChmodOptsInputs;
-    readonly environment?: pulumi.Input<Record<string, pulumi.Input<string>>>;
-    readonly stdin?: pulumi.Input<string>;
-    readonly triggers?: pulumi.Input<pulumi.Input<any>[]>;
-    readonly update?: pulumi.Input<string> | ChmodOptsInputs;
-}
-export abstract class Etcdctl<TData = any> extends (pulumi.ComponentResource)<TData> {
-    public binaryPath!: string | pulumi.Output<string>;
-    public command!: command.remote.Command | pulumi.Output<command.remote.Command>;
-    public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
-    public create?: (pulumi.Output<string> | EtcdctlOptsOutputs);
-    public delete?: (pulumi.Output<string> | EtcdctlOptsOutputs);
-    public environment!: Record<string, string> | pulumi.Output<Record<string, string>>;
-    public stderr!: string | pulumi.Output<string>;
-    public stdin?: string | pulumi.Output<string>;
-    public stdout!: string | pulumi.Output<string>;
-    public triggers!: any[] | pulumi.Output<any[]>;
-    public update?: (pulumi.Output<string> | EtcdctlOptsOutputs);
-    constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
-        super("kubernetes-the-hard-way:tools:Etcdctl", name, opts.urn ? { binaryPath: undefined, command: undefined, connection: undefined, create: undefined, delete: undefined, environment: undefined, stderr: undefined, stdin: undefined, stdout: undefined, triggers: undefined, update: undefined } : { name, args, opts }, opts);
-    }
-}
-export interface EtcdctlArgs {
-    readonly binaryPath?: pulumi.Input<string>;
-    readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
-    readonly create?: pulumi.Input<string> | EtcdctlOptsInputs;
-    readonly delete?: pulumi.Input<string> | EtcdctlOptsInputs;
-    readonly environment?: pulumi.Input<Record<string, pulumi.Input<string>>>;
-    readonly stdin?: pulumi.Input<string>;
-    readonly triggers?: pulumi.Input<pulumi.Input<any>[]>;
-    readonly update?: pulumi.Input<string> | EtcdctlOptsInputs;
-}
-export abstract class Hostnamectl<TData = any> extends (pulumi.ComponentResource)<TData> {
-    public binaryPath!: string | pulumi.Output<string>;
-    public command!: command.remote.Command | pulumi.Output<command.remote.Command>;
-    public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
-    public create?: (pulumi.Output<string> | HostnamectlOptsOutputs);
-    public delete?: (pulumi.Output<string> | HostnamectlOptsOutputs);
-    public environment!: Record<string, string> | pulumi.Output<Record<string, string>>;
-    public stderr!: string | pulumi.Output<string>;
-    public stdin?: string | pulumi.Output<string>;
-    public stdout!: string | pulumi.Output<string>;
-    public triggers!: any[] | pulumi.Output<any[]>;
-    public update?: (pulumi.Output<string> | HostnamectlOptsOutputs);
-    constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
-        super("kubernetes-the-hard-way:tools:Hostnamectl", name, opts.urn ? { binaryPath: undefined, command: undefined, connection: undefined, create: undefined, delete: undefined, environment: undefined, stderr: undefined, stdin: undefined, stdout: undefined, triggers: undefined, update: undefined } : { name, args, opts }, opts);
-    }
-}
-export interface HostnamectlArgs {
-    readonly binaryPath?: pulumi.Input<string>;
-    readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
-    readonly create?: pulumi.Input<string> | HostnamectlOptsInputs;
-    readonly delete?: pulumi.Input<string> | HostnamectlOptsInputs;
-    readonly environment?: pulumi.Input<Record<string, pulumi.Input<string>>>;
-    readonly stdin?: pulumi.Input<string>;
-    readonly triggers?: pulumi.Input<pulumi.Input<any>[]>;
-    readonly update?: pulumi.Input<string> | HostnamectlOptsInputs;
-}
-export abstract class Mkdir<TData = any> extends (pulumi.ComponentResource)<TData> {
-    public binaryPath!: string | pulumi.Output<string>;
-    public command!: command.remote.Command | pulumi.Output<command.remote.Command>;
-    public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
-    public create?: (pulumi.Output<string> | MkdirOptsOutputs);
-    public delete?: (pulumi.Output<string> | MkdirOptsOutputs);
-    public environment!: Record<string, string> | pulumi.Output<Record<string, string>>;
-    public stderr!: string | pulumi.Output<string>;
-    public stdin?: string | pulumi.Output<string>;
-    public stdout!: string | pulumi.Output<string>;
-    public triggers!: any[] | pulumi.Output<any[]>;
-    public update?: (pulumi.Output<string> | MkdirOptsOutputs);
-    constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
-        super("kubernetes-the-hard-way:tools:Mkdir", name, opts.urn ? { binaryPath: undefined, command: undefined, connection: undefined, create: undefined, delete: undefined, environment: undefined, stderr: undefined, stdin: undefined, stdout: undefined, triggers: undefined, update: undefined } : { name, args, opts }, opts);
-    }
-}
-export interface MkdirArgs {
-    readonly binaryPath?: pulumi.Input<string>;
-    readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
-    readonly create?: pulumi.Input<string> | MkdirOptsInputs;
-    readonly delete?: pulumi.Input<string> | MkdirOptsInputs;
-    readonly environment?: pulumi.Input<Record<string, pulumi.Input<string>>>;
-    readonly stdin?: pulumi.Input<string>;
-    readonly triggers?: pulumi.Input<pulumi.Input<any>[]>;
-    readonly update?: pulumi.Input<string> | MkdirOptsInputs;
-}
-export abstract class Mktemp<TData = any> extends (pulumi.ComponentResource)<TData> {
-    public binaryPath!: string | pulumi.Output<string>;
-    public command!: command.remote.Command | pulumi.Output<command.remote.Command>;
-    public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
-    public create?: (pulumi.Output<string> | MktempOptsOutputs);
-    public delete?: (pulumi.Output<string> | MktempOptsOutputs);
-    public environment!: Record<string, string> | pulumi.Output<Record<string, string>>;
-    public stderr!: string | pulumi.Output<string>;
-    public stdin?: string | pulumi.Output<string>;
-    public stdout!: string | pulumi.Output<string>;
-    public triggers!: any[] | pulumi.Output<any[]>;
-    public update?: (pulumi.Output<string> | MktempOptsOutputs);
-    constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
-        super("kubernetes-the-hard-way:tools:Mktemp", name, opts.urn ? { binaryPath: undefined, command: undefined, connection: undefined, create: undefined, delete: undefined, environment: undefined, stderr: undefined, stdin: undefined, stdout: undefined, triggers: undefined, update: undefined } : { name, args, opts }, opts);
-    }
-}
-export interface MktempArgs {
-    readonly binaryPath?: pulumi.Input<string>;
-    readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
-    readonly create?: pulumi.Input<string> | MktempOptsInputs;
-    readonly delete?: pulumi.Input<string> | MktempOptsInputs;
-    readonly environment?: pulumi.Input<Record<string, pulumi.Input<string>>>;
-    readonly stdin?: pulumi.Input<string>;
-    readonly triggers?: pulumi.Input<pulumi.Input<any>[]>;
-    readonly update?: pulumi.Input<string> | MktempOptsInputs;
-}
-export abstract class Mv<TData = any> extends (pulumi.ComponentResource)<TData> {
-    public binaryPath!: string | pulumi.Output<string>;
-    public command!: command.remote.Command | pulumi.Output<command.remote.Command>;
-    public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
-    public create?: (pulumi.Output<string> | MvOptsOutputs);
-    public delete?: (pulumi.Output<string> | MvOptsOutputs);
-    public environment!: Record<string, string> | pulumi.Output<Record<string, string>>;
-    public stderr!: string | pulumi.Output<string>;
-    public stdin?: string | pulumi.Output<string>;
-    public stdout!: string | pulumi.Output<string>;
-    public triggers!: any[] | pulumi.Output<any[]>;
-    public update?: (pulumi.Output<string> | MvOptsOutputs);
-    constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
-        super("kubernetes-the-hard-way:tools:Mv", name, opts.urn ? { binaryPath: undefined, command: undefined, connection: undefined, create: undefined, delete: undefined, environment: undefined, stderr: undefined, stdin: undefined, stdout: undefined, triggers: undefined, update: undefined } : { name, args, opts }, opts);
-    }
-}
-export interface MvArgs {
-    readonly binaryPath?: pulumi.Input<string>;
-    readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
-    readonly create?: pulumi.Input<string> | MvOptsInputs;
-    readonly delete?: pulumi.Input<string> | MvOptsInputs;
-    readonly environment?: pulumi.Input<Record<string, pulumi.Input<string>>>;
-    readonly stdin?: pulumi.Input<string>;
-    readonly triggers?: pulumi.Input<pulumi.Input<any>[]>;
-    readonly update?: pulumi.Input<string> | MvOptsInputs;
-}
-export abstract class Rm<TData = any> extends (pulumi.ComponentResource)<TData> {
-    public binaryPath!: string | pulumi.Output<string>;
-    public command!: command.remote.Command | pulumi.Output<command.remote.Command>;
-    public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
-    public create?: (pulumi.Output<string> | RmOptsOutputs);
-    public delete?: (pulumi.Output<string> | RmOptsOutputs);
-    public environment!: Record<string, string> | pulumi.Output<Record<string, string>>;
-    public stderr!: string | pulumi.Output<string>;
-    public stdin?: string | pulumi.Output<string>;
-    public stdout!: string | pulumi.Output<string>;
-    public triggers!: any[] | pulumi.Output<any[]>;
-    public update?: (pulumi.Output<string> | RmOptsOutputs);
-    constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
-        super("kubernetes-the-hard-way:tools:Rm", name, opts.urn ? { binaryPath: undefined, command: undefined, connection: undefined, create: undefined, delete: undefined, environment: undefined, stderr: undefined, stdin: undefined, stdout: undefined, triggers: undefined, update: undefined } : { name, args, opts }, opts);
-    }
-}
-export interface RmArgs {
-    readonly binaryPath?: pulumi.Input<string>;
-    readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
-    readonly create?: pulumi.Input<string> | RmOptsInputs;
-    readonly delete?: pulumi.Input<string> | RmOptsInputs;
-    readonly environment?: pulumi.Input<Record<string, pulumi.Input<string>>>;
-    readonly stdin?: pulumi.Input<string>;
-    readonly triggers?: pulumi.Input<pulumi.Input<any>[]>;
-    readonly update?: pulumi.Input<string> | RmOptsInputs;
-}
-export abstract class Sed<TData = any> extends (pulumi.ComponentResource)<TData> {
-    public binaryPath!: string | pulumi.Output<string>;
-    public command!: command.remote.Command | pulumi.Output<command.remote.Command>;
-    public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
-    public create?: (pulumi.Output<string> | SedOptsOutputs);
-    public delete?: (pulumi.Output<string> | SedOptsOutputs);
-    public environment!: Record<string, string> | pulumi.Output<Record<string, string>>;
-    public stderr!: string | pulumi.Output<string>;
-    public stdin?: string | pulumi.Output<string>;
-    public stdout!: string | pulumi.Output<string>;
-    public triggers!: any[] | pulumi.Output<any[]>;
-    public update?: (pulumi.Output<string> | SedOptsOutputs);
-    constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
-        super("kubernetes-the-hard-way:tools:Sed", name, opts.urn ? { binaryPath: undefined, command: undefined, connection: undefined, create: undefined, delete: undefined, environment: undefined, stderr: undefined, stdin: undefined, stdout: undefined, triggers: undefined, update: undefined } : { name, args, opts }, opts);
-    }
-}
-export interface SedArgs {
-    readonly binaryPath?: pulumi.Input<string>;
-    readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
-    readonly create?: pulumi.Input<string> | SedOptsInputs;
-    readonly delete?: pulumi.Input<string> | SedOptsInputs;
-    readonly environment?: pulumi.Input<Record<string, pulumi.Input<string>>>;
-    readonly stdin?: pulumi.Input<string>;
-    readonly triggers?: pulumi.Input<pulumi.Input<any>[]>;
-    readonly update?: pulumi.Input<string> | SedOptsInputs;
-}
-export abstract class Systemctl<TData = any> extends (pulumi.ComponentResource)<TData> {
-    public binaryPath!: string | pulumi.Output<string>;
-    public command!: command.remote.Command | pulumi.Output<command.remote.Command>;
-    public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
-    public create?: (pulumi.Output<string> | SystemctlOptsOutputs);
-    public delete?: (pulumi.Output<string> | SystemctlOptsOutputs);
-    public environment!: Record<string, string> | pulumi.Output<Record<string, string>>;
-    public stderr!: string | pulumi.Output<string>;
-    public stdin?: string | pulumi.Output<string>;
-    public stdout!: string | pulumi.Output<string>;
-    public triggers!: any[] | pulumi.Output<any[]>;
-    public update?: (pulumi.Output<string> | SystemctlOptsOutputs);
-    constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
-        super("kubernetes-the-hard-way:tools:Systemctl", name, opts.urn ? { binaryPath: undefined, command: undefined, connection: undefined, create: undefined, delete: undefined, environment: undefined, stderr: undefined, stdin: undefined, stdout: undefined, triggers: undefined, update: undefined } : { name, args, opts }, opts);
-    }
-}
-export interface SystemctlArgs {
-    readonly binaryPath?: pulumi.Input<string>;
-    readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
-    readonly create?: pulumi.Input<string> | SystemctlOptsInputs;
-    readonly delete?: pulumi.Input<string> | SystemctlOptsInputs;
-    readonly environment?: pulumi.Input<Record<string, pulumi.Input<string>>>;
-    readonly stdin?: pulumi.Input<string>;
-    readonly triggers?: pulumi.Input<pulumi.Input<any>[]>;
-    readonly update?: pulumi.Input<string> | SystemctlOptsInputs;
-}
-export abstract class Tar<TData = any> extends (pulumi.ComponentResource)<TData> {
-    public binaryPath!: string | pulumi.Output<string>;
-    public command!: command.remote.Command | pulumi.Output<command.remote.Command>;
-    public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
-    public create?: (pulumi.Output<string> | TarOptsOutputs);
-    public delete?: (pulumi.Output<string> | TarOptsOutputs);
-    public environment!: Record<string, string> | pulumi.Output<Record<string, string>>;
-    public stderr!: string | pulumi.Output<string>;
-    public stdin?: string | pulumi.Output<string>;
-    public stdout!: string | pulumi.Output<string>;
-    public triggers!: any[] | pulumi.Output<any[]>;
-    public update?: (pulumi.Output<string> | TarOptsOutputs);
-    constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
-        super("kubernetes-the-hard-way:tools:Tar", name, opts.urn ? { binaryPath: undefined, command: undefined, connection: undefined, create: undefined, delete: undefined, environment: undefined, stderr: undefined, stdin: undefined, stdout: undefined, triggers: undefined, update: undefined } : { name, args, opts }, opts);
-    }
-}
-export interface TarArgs {
-    readonly binaryPath?: pulumi.Input<string>;
-    readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
-    readonly create?: pulumi.Input<string> | TarOptsInputs;
-    readonly delete?: pulumi.Input<string> | TarOptsInputs;
-    readonly environment?: pulumi.Input<Record<string, pulumi.Input<string>>>;
-    readonly stdin?: pulumi.Input<string>;
-    readonly triggers?: pulumi.Input<pulumi.Input<any>[]>;
-    readonly update?: pulumi.Input<string> | TarOptsInputs;
-}
-export abstract class Tee<TData = any> extends (pulumi.ComponentResource)<TData> {
-    public binaryPath!: string | pulumi.Output<string>;
-    public command!: command.remote.Command | pulumi.Output<command.remote.Command>;
-    public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
-    public create?: (pulumi.Output<string> | TeeOptsOutputs);
-    public delete?: (pulumi.Output<string> | TeeOptsOutputs);
-    public environment!: Record<string, string> | pulumi.Output<Record<string, string>>;
-    public stderr!: string | pulumi.Output<string>;
-    public stdin?: string | pulumi.Output<string>;
-    public stdout!: string | pulumi.Output<string>;
-    public triggers!: any[] | pulumi.Output<any[]>;
-    public update?: (pulumi.Output<string> | TeeOptsOutputs);
-    constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
-        super("kubernetes-the-hard-way:tools:Tee", name, opts.urn ? { binaryPath: undefined, command: undefined, connection: undefined, create: undefined, delete: undefined, environment: undefined, stderr: undefined, stdin: undefined, stdout: undefined, triggers: undefined, update: undefined } : { name, args, opts }, opts);
-    }
-}
-export interface TeeArgs {
-    readonly binaryPath?: pulumi.Input<string>;
-    readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
-    readonly create?: pulumi.Input<string> | TeeOptsInputs;
-    readonly delete?: pulumi.Input<string> | TeeOptsInputs;
-    readonly environment?: pulumi.Input<Record<string, pulumi.Input<string>>>;
-    readonly stdin?: pulumi.Input<string>;
-    readonly triggers?: pulumi.Input<pulumi.Input<any>[]>;
-    readonly update?: pulumi.Input<string> | TeeOptsInputs;
-}
-export abstract class Wget<TData = any> extends (pulumi.ComponentResource)<TData> {
-    public binaryPath!: string | pulumi.Output<string>;
-    public command!: command.remote.Command | pulumi.Output<command.remote.Command>;
-    public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
-    public create?: (pulumi.Output<string> | WgetOptsOutputs);
-    public delete?: (pulumi.Output<string> | WgetOptsOutputs);
-    public environment!: Record<string, string> | pulumi.Output<Record<string, string>>;
-    public stderr!: string | pulumi.Output<string>;
-    public stdin?: string | pulumi.Output<string>;
-    public stdout!: string | pulumi.Output<string>;
-    public triggers!: any[] | pulumi.Output<any[]>;
-    public update?: (pulumi.Output<string> | WgetOptsOutputs);
-    constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
-        super("kubernetes-the-hard-way:tools:Wget", name, opts.urn ? { binaryPath: undefined, command: undefined, connection: undefined, create: undefined, delete: undefined, environment: undefined, stderr: undefined, stdin: undefined, stdout: undefined, triggers: undefined, update: undefined } : { name, args, opts }, opts);
-    }
-}
-export interface WgetArgs {
-    readonly binaryPath?: pulumi.Input<string>;
-    readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
-    readonly create?: pulumi.Input<string> | WgetOptsInputs;
-    readonly delete?: pulumi.Input<string> | WgetOptsInputs;
-    readonly environment?: pulumi.Input<Record<string, pulumi.Input<string>>>;
-    readonly stdin?: pulumi.Input<string>;
-    readonly triggers?: pulumi.Input<pulumi.Input<any>[]>;
-    readonly update?: pulumi.Input<string> | WgetOptsInputs;
 }
 export interface ClusterInputs {
     readonly certificateAuthorityData: pulumi.Input<string>;
@@ -1854,299 +1593,6 @@ export interface KeyPairOutputs {
 }
 export type NodeRoleInputs = "controlplane" | "worker";
 export type NodeRoleOutputs = "controlplane" | "worker";
-export interface ChmodOptsInputs {
-    readonly changes?: pulumi.Input<boolean>;
-    readonly files: pulumi.Input<pulumi.Input<string>[]>;
-    readonly help?: pulumi.Input<boolean>;
-    readonly mode: pulumi.Input<string>;
-    readonly noPreserveRoot?: pulumi.Input<boolean>;
-    readonly preserveRoot?: pulumi.Input<boolean>;
-    readonly quiet?: pulumi.Input<boolean>;
-    readonly recursive?: pulumi.Input<boolean>;
-    readonly reference?: pulumi.Input<string>;
-    readonly silent?: pulumi.Input<boolean>;
-    readonly version?: pulumi.Input<boolean>;
-}
-export interface ChmodOptsOutputs {
-    readonly changes?: pulumi.Output<boolean>;
-    readonly files: pulumi.Output<string[]>;
-    readonly help?: pulumi.Output<boolean>;
-    readonly mode: pulumi.Output<string>;
-    readonly noPreserveRoot?: pulumi.Output<boolean>;
-    readonly preserveRoot?: pulumi.Output<boolean>;
-    readonly quiet?: pulumi.Output<boolean>;
-    readonly recursive?: pulumi.Output<boolean>;
-    readonly reference?: pulumi.Output<string>;
-    readonly silent?: pulumi.Output<boolean>;
-    readonly version?: pulumi.Output<boolean>;
-}
-export type CommandLifecycleInputs = "create" | "update" | "delete";
-export type CommandLifecycleOutputs = "create" | "update" | "delete";
-export type EtcdctlCommandInputs = "member" | "list" | "version";
-export type EtcdctlCommandOutputs = "member" | "list" | "version";
-export interface EtcdctlOptsInputs {
-    readonly caCert?: pulumi.Input<string>;
-    readonly cert?: pulumi.Input<string>;
-    readonly commands: pulumi.Input<EtcdctlCommandInputs>;
-    readonly endpoints?: pulumi.Input<string>;
-    readonly key?: pulumi.Input<string>;
-}
-export interface EtcdctlOptsOutputs {
-    readonly caCert?: pulumi.Output<string>;
-    readonly cert?: pulumi.Output<string>;
-    readonly commands: pulumi.Output<EtcdctlCommandOutputs>;
-    readonly endpoints?: pulumi.Output<string>;
-    readonly key?: pulumi.Output<string>;
-}
-export type HostnamectlCommandInputs = "status" | "hostname" | "icon-name" | "chassis" | "deployment" | "location";
-export type HostnamectlCommandOutputs = "status" | "hostname" | "icon-name" | "chassis" | "deployment" | "location";
-export type HostnamectlJsonModeInputs = "short" | "pretty" | "off";
-export type HostnamectlJsonModeOutputs = "short" | "pretty" | "off";
-export interface HostnamectlOptsInputs {
-    readonly arg?: pulumi.Input<string>;
-    readonly command: pulumi.Input<HostnamectlCommandInputs>;
-    readonly help?: pulumi.Input<boolean>;
-    readonly host?: pulumi.Input<string>;
-    readonly json?: pulumi.Input<HostnamectlJsonModeInputs>;
-    readonly machine?: pulumi.Input<string>;
-    readonly noAskPassword?: pulumi.Input<boolean>;
-    readonly pretty?: pulumi.Input<boolean>;
-    readonly static?: pulumi.Input<boolean>;
-    readonly transient?: pulumi.Input<boolean>;
-    readonly version?: pulumi.Input<boolean>;
-}
-export interface HostnamectlOptsOutputs {
-    readonly arg?: pulumi.Output<string>;
-    readonly command: pulumi.Output<HostnamectlCommandOutputs>;
-    readonly help?: pulumi.Output<boolean>;
-    readonly host?: pulumi.Output<string>;
-    readonly json?: pulumi.Output<HostnamectlJsonModeOutputs>;
-    readonly machine?: pulumi.Output<string>;
-    readonly noAskPassword?: pulumi.Output<boolean>;
-    readonly pretty?: pulumi.Output<boolean>;
-    readonly static?: pulumi.Output<boolean>;
-    readonly transient?: pulumi.Output<boolean>;
-    readonly version?: pulumi.Output<boolean>;
-}
-export interface MkdirOptsInputs {
-    readonly directory: pulumi.Input<string>;
-    readonly parents?: pulumi.Input<boolean>;
-    readonly removeOnDelete?: pulumi.Input<boolean>;
-}
-export interface MkdirOptsOutputs {
-    readonly directory: pulumi.Output<string>;
-    readonly parents?: pulumi.Output<boolean>;
-    readonly removeOnDelete?: pulumi.Output<boolean>;
-}
-export interface MktempOptsInputs {
-    readonly directory?: pulumi.Input<boolean>;
-    readonly dryRun?: pulumi.Input<boolean>;
-    readonly quiet?: pulumi.Input<boolean>;
-    readonly suffix?: pulumi.Input<string>;
-    readonly template?: pulumi.Input<string>;
-    readonly tmpdir?: pulumi.Input<string>;
-}
-export interface MktempOptsOutputs {
-    readonly directory?: pulumi.Output<boolean>;
-    readonly dryRun?: pulumi.Output<boolean>;
-    readonly quiet?: pulumi.Output<boolean>;
-    readonly suffix?: pulumi.Output<string>;
-    readonly template?: pulumi.Output<string>;
-    readonly tmpdir?: pulumi.Output<string>;
-}
-export interface MvOptsInputs {
-    readonly backup?: boolean;
-    readonly context?: pulumi.Input<boolean>;
-    readonly control?: pulumi.Input<boolean>;
-    readonly dest?: pulumi.Input<string>;
-    readonly directory?: pulumi.Input<string>;
-    readonly force?: pulumi.Input<boolean>;
-    readonly noClobber?: pulumi.Input<boolean>;
-    readonly noTargetDirectory?: pulumi.Input<boolean>;
-    readonly source: pulumi.Input<pulumi.Input<string>[]>;
-    readonly stripTrailingSlashes?: pulumi.Input<boolean>;
-    readonly suffix?: pulumi.Input<string>;
-    readonly targetDirectory?: pulumi.Input<boolean>;
-    readonly update?: pulumi.Input<boolean>;
-    readonly verbose?: pulumi.Input<boolean>;
-}
-export interface MvOptsOutputs {
-    readonly backup?: boolean;
-    readonly context?: pulumi.Output<boolean>;
-    readonly control?: pulumi.Output<boolean>;
-    readonly dest?: pulumi.Output<string>;
-    readonly directory?: pulumi.Output<string>;
-    readonly force?: pulumi.Output<boolean>;
-    readonly noClobber?: pulumi.Output<boolean>;
-    readonly noTargetDirectory?: pulumi.Output<boolean>;
-    readonly source: pulumi.Output<string[]>;
-    readonly stripTrailingSlashes?: pulumi.Output<boolean>;
-    readonly suffix?: pulumi.Output<string>;
-    readonly targetDirectory?: pulumi.Output<boolean>;
-    readonly update?: pulumi.Output<boolean>;
-    readonly verbose?: pulumi.Output<boolean>;
-}
-export interface RmOptsInputs {
-    readonly dir?: pulumi.Input<boolean>;
-    readonly files: pulumi.Input<pulumi.Input<string>[]>;
-    readonly force?: pulumi.Input<boolean>;
-    readonly onDelete?: pulumi.Input<boolean>;
-    readonly recursive?: pulumi.Input<boolean>;
-    readonly verbose?: pulumi.Input<boolean>;
-}
-export interface RmOptsOutputs {
-    readonly dir?: pulumi.Output<boolean>;
-    readonly files: pulumi.Output<string[]>;
-    readonly force?: pulumi.Output<boolean>;
-    readonly onDelete?: pulumi.Output<boolean>;
-    readonly recursive?: pulumi.Output<boolean>;
-    readonly verbose?: pulumi.Output<boolean>;
-}
-export interface SedOptsInputs {
-    readonly debug?: pulumi.Input<boolean>;
-    readonly expressions?: pulumi.Input<pulumi.Input<string>[]>;
-    readonly files?: pulumi.Input<pulumi.Input<string>[]>;
-    readonly followSymlinks?: pulumi.Input<boolean>;
-    readonly help?: pulumi.Input<boolean>;
-    readonly inPlace?: pulumi.Input<string>;
-    readonly inputFiles?: pulumi.Input<pulumi.Input<string>[]>;
-    readonly lineLength?: pulumi.Input<number>;
-    readonly nullData?: pulumi.Input<boolean>;
-    readonly posix?: pulumi.Input<boolean>;
-    readonly quiet?: pulumi.Input<boolean>;
-    readonly regexpExtended?: pulumi.Input<boolean>;
-    readonly sandbox?: pulumi.Input<boolean>;
-    readonly script?: pulumi.Input<string>;
-    readonly separate?: pulumi.Input<boolean>;
-    readonly silent?: pulumi.Input<boolean>;
-    readonly unbuffered?: pulumi.Input<boolean>;
-    readonly version?: pulumi.Input<boolean>;
-}
-export interface SedOptsOutputs {
-    readonly debug?: pulumi.Output<boolean>;
-    readonly expressions?: pulumi.Output<string[]>;
-    readonly files?: pulumi.Output<string[]>;
-    readonly followSymlinks?: pulumi.Output<boolean>;
-    readonly help?: pulumi.Output<boolean>;
-    readonly inPlace?: pulumi.Output<string>;
-    readonly inputFiles?: pulumi.Output<string[]>;
-    readonly lineLength?: pulumi.Output<number>;
-    readonly nullData?: pulumi.Output<boolean>;
-    readonly posix?: pulumi.Output<boolean>;
-    readonly quiet?: pulumi.Output<boolean>;
-    readonly regexpExtended?: pulumi.Output<boolean>;
-    readonly sandbox?: pulumi.Output<boolean>;
-    readonly script?: pulumi.Output<string>;
-    readonly separate?: pulumi.Output<boolean>;
-    readonly silent?: pulumi.Output<boolean>;
-    readonly unbuffered?: pulumi.Output<boolean>;
-    readonly version?: pulumi.Output<boolean>;
-}
-export type SystemctlCommandInputs = "bind" | "cat" | "clean" | "daemon-reload" | "disable" | "enable" | "freeze" | "is-active" | "is-enabled" | "is-failed" | "isolate" | "kill" | "list-automounts" | "list-dependencies" | "list-paths" | "list-sockets" | "list-timers" | "list-units" | "mask" | "mount-image" | "reenable" | "reload" | "reload-or-restart" | "restart" | "set-property" | "show" | "start" | "status" | "stop" | "thaw" | "try-reload-or-restart" | "try-restart" | "unmask";
-export type SystemctlCommandOutputs = "bind" | "cat" | "clean" | "daemon-reload" | "disable" | "enable" | "freeze" | "is-active" | "is-enabled" | "is-failed" | "isolate" | "kill" | "list-automounts" | "list-dependencies" | "list-paths" | "list-sockets" | "list-timers" | "list-units" | "mask" | "mount-image" | "reenable" | "reload" | "reload-or-restart" | "restart" | "set-property" | "show" | "start" | "status" | "stop" | "thaw" | "try-reload-or-restart" | "try-restart" | "unmask";
-export interface SystemctlOptsInputs {
-    readonly command: SystemctlCommandInputs;
-    readonly now?: pulumi.Input<boolean>;
-    readonly pattern?: pulumi.Input<string>;
-    readonly unit?: pulumi.Input<string>;
-}
-export interface SystemctlOptsOutputs {
-    readonly command: SystemctlCommandOutputs;
-    readonly now?: pulumi.Output<boolean>;
-    readonly pattern?: pulumi.Output<string>;
-    readonly unit?: pulumi.Output<string>;
-}
-export interface TarOptsInputs {
-    readonly archive: pulumi.Input<string>;
-    readonly directory?: pulumi.Input<string>;
-    readonly extract?: pulumi.Input<boolean>;
-    readonly files?: pulumi.Input<pulumi.Input<string>[]>;
-    readonly gzip?: pulumi.Input<boolean>;
-    readonly onDelete?: pulumi.Input<boolean>;
-    readonly recursive?: pulumi.Input<boolean>;
-    readonly stripComponents?: pulumi.Input<number>;
-}
-export interface TarOptsOutputs {
-    readonly archive: pulumi.Output<string>;
-    readonly directory?: pulumi.Output<string>;
-    readonly extract?: pulumi.Output<boolean>;
-    readonly files?: pulumi.Output<string[]>;
-    readonly gzip?: pulumi.Output<boolean>;
-    readonly onDelete?: pulumi.Output<boolean>;
-    readonly recursive?: pulumi.Output<boolean>;
-    readonly stripComponents?: pulumi.Output<number>;
-}
-export type TeeModeInputs = "warn" | "warn-nopipe" | "exit" | "exit-nopipe";
-export type TeeModeOutputs = "warn" | "warn-nopipe" | "exit" | "exit-nopipe";
-export interface TeeOptsInputs {
-    readonly append?: pulumi.Input<boolean>;
-    readonly files: pulumi.Input<pulumi.Input<string>[]>;
-    readonly ignoreInterrupts?: pulumi.Input<boolean>;
-    readonly outputError?: pulumi.Input<TeeModeInputs>;
-    readonly pipe?: pulumi.Input<boolean>;
-    readonly version?: pulumi.Input<boolean>;
-}
-export interface TeeOptsOutputs {
-    readonly append?: pulumi.Output<boolean>;
-    readonly files: pulumi.Output<string[]>;
-    readonly ignoreInterrupts?: pulumi.Output<boolean>;
-    readonly outputError?: pulumi.Output<TeeModeOutputs>;
-    readonly pipe?: pulumi.Output<boolean>;
-    readonly version?: pulumi.Output<boolean>;
-}
-export interface WgetOptsInputs {
-    readonly directoryPrefix?: pulumi.Input<string>;
-    readonly httpsOnly?: pulumi.Input<boolean>;
-    readonly noVerbose?: pulumi.Input<boolean>;
-    readonly outputDocument?: pulumi.Input<string>;
-    readonly quiet?: pulumi.Input<boolean>;
-    readonly timestamping?: pulumi.Input<boolean>;
-    readonly url: pulumi.Input<pulumi.Input<string>[]>;
-}
-export interface WgetOptsOutputs {
-    readonly directoryPrefix?: pulumi.Output<string>;
-    readonly httpsOnly?: pulumi.Output<boolean>;
-    readonly noVerbose?: pulumi.Output<boolean>;
-    readonly outputDocument?: pulumi.Output<string>;
-    readonly quiet?: pulumi.Output<boolean>;
-    readonly timestamping?: pulumi.Output<boolean>;
-    readonly url: pulumi.Output<string[]>;
-}
-export interface getCniBridgePluginConfigurationInputs {
-    readonly bridge?: pulumi.Input<string>;
-    readonly cniVersion?: pulumi.Input<string>;
-    readonly ipMasq?: pulumi.Input<boolean>;
-    readonly ipam?: pulumi.Input<CniBridgeIpamInputs>;
-    readonly isGateway?: pulumi.Input<boolean>;
-    readonly name?: pulumi.Input<string>;
-    readonly subnet: pulumi.Input<string>;
-    readonly type?: pulumi.Input<string>;
-}
-export interface getCniBridgePluginConfigurationOutputs {
-    readonly result: pulumi.Output<CniBridgePluginConfigurationOutputs>;
-}
-export interface getCniLoopbackPluginConfigurationInputs {
-    readonly cniVersion?: pulumi.Input<string>;
-    readonly name?: pulumi.Input<string>;
-    readonly type?: pulumi.Input<string>;
-}
-export interface getCniLoopbackPluginConfigurationOutputs {
-    readonly result: pulumi.Output<CniLoopbackPluginConfigurationOutputs>;
-}
-export interface getContainerdConfigurationInputs {
-    readonly cri?: ContainerdCriPluginConfigurationInputs;
-}
-export interface getContainerdConfigurationOutputs {
-    readonly result: pulumi.Output<ContainerdConfigurationOutputs>;
-}
-export interface getKubeProxyConfigurationInputs {
-    readonly clusterCIDR: pulumi.Input<string>;
-    readonly kubeconfig: pulumi.Input<string>;
-    readonly mode?: pulumi.Input<string>;
-}
-export interface getKubeProxyConfigurationOutputs {
-    readonly result: pulumi.Output<KubeProxyConfigurationOutputs>;
-}
 export interface getKubeVipManifestInputs {
     readonly address: pulumi.Input<string>;
     readonly bgpAs?: pulumi.Input<number>;

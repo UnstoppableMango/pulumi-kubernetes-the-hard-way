@@ -1,5 +1,5 @@
 import { ComponentResourceOptions, interpolate, output } from '@pulumi/pulumi';
-import { Mkdir, Rm, Wget } from '../tools';
+import { Mkdir, Rm, Wget } from '@unmango/pulumi-commandx/remote';
 import * as types from '../schema-types';
 import path = require('node:path');
 
