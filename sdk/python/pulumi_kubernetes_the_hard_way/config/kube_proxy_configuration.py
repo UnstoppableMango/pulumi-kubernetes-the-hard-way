@@ -15,20 +15,31 @@ __all__ = ['KubeProxyConfigurationArgs', 'KubeProxyConfiguration']
 @pulumi.input_type
 class KubeProxyConfigurationArgs:
     def __init__(__self__, *,
+                 cluster_cidr: pulumi.Input[str],
                  kubeconfig: pulumi.Input[str],
-                 cluster_cidr: Optional[pulumi.Input[str]] = None,
                  mode: Optional[pulumi.Input[str]] = None):
         """
         The set of arguments for constructing a KubeProxyConfiguration resource.
-        :param pulumi.Input[str] kubeconfig: Path to the kubeconfig.
         :param pulumi.Input[str] cluster_cidr: Cluster CIDR.
+        :param pulumi.Input[str] kubeconfig: Path to the kubeconfig.
         :param pulumi.Input[str] mode: TODO
         """
+        pulumi.set(__self__, "cluster_cidr", cluster_cidr)
         pulumi.set(__self__, "kubeconfig", kubeconfig)
-        if cluster_cidr is not None:
-            pulumi.set(__self__, "cluster_cidr", cluster_cidr)
         if mode is not None:
             pulumi.set(__self__, "mode", mode)
+
+    @property
+    @pulumi.getter(name="clusterCIDR")
+    def cluster_cidr(self) -> pulumi.Input[str]:
+        """
+        Cluster CIDR.
+        """
+        return pulumi.get(self, "cluster_cidr")
+
+    @cluster_cidr.setter
+    def cluster_cidr(self, value: pulumi.Input[str]):
+        pulumi.set(self, "cluster_cidr", value)
 
     @property
     @pulumi.getter
@@ -41,18 +52,6 @@ class KubeProxyConfigurationArgs:
     @kubeconfig.setter
     def kubeconfig(self, value: pulumi.Input[str]):
         pulumi.set(self, "kubeconfig", value)
-
-    @property
-    @pulumi.getter(name="clusterCIDR")
-    def cluster_cidr(self) -> Optional[pulumi.Input[str]]:
-        """
-        Cluster CIDR.
-        """
-        return pulumi.get(self, "cluster_cidr")
-
-    @cluster_cidr.setter
-    def cluster_cidr(self, value: Optional[pulumi.Input[str]]):
-        pulumi.set(self, "cluster_cidr", value)
 
     @property
     @pulumi.getter
@@ -123,6 +122,8 @@ class KubeProxyConfiguration(pulumi.ComponentResource):
                 raise TypeError('__props__ is only valid when passed in combination with a valid opts.id to get an existing resource')
             __props__ = KubeProxyConfigurationArgs.__new__(KubeProxyConfigurationArgs)
 
+            if cluster_cidr is None and not opts.urn:
+                raise TypeError("Missing required property 'cluster_cidr'")
             __props__.__dict__["cluster_cidr"] = cluster_cidr
             if kubeconfig is None and not opts.urn:
                 raise TypeError("Missing required property 'kubeconfig'")

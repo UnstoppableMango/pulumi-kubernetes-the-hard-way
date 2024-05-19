@@ -24,7 +24,7 @@ export interface GetKubeProxyConfigurationArgs {
     /**
      * Cluster CIDR.
      */
-    clusterCIDR?: string;
+    clusterCIDR: string;
     /**
      * Path to the kubeconfig.
      */
@@ -52,7 +52,7 @@ export interface GetKubeProxyConfigurationOutputArgs {
     /**
      * Cluster CIDR.
      */
-    clusterCIDR?: pulumi.Input<string>;
+    clusterCIDR: pulumi.Input<string>;
     /**
      * Path to the kubeconfig.
      */

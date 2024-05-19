@@ -42,6 +42,9 @@ export class KubeProxyConfiguration extends pulumi.ComponentResource {
         let resourceInputs: pulumi.Inputs = {};
         opts = opts || {};
         if (!opts.id) {
+            if ((!args || args.clusterCIDR === undefined) && !opts.urn) {
+                throw new Error("Missing required property 'clusterCIDR'");
+            }
             if ((!args || args.kubeconfig === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'kubeconfig'");
             }
@@ -66,7 +69,7 @@ export interface KubeProxyConfigurationArgs {
     /**
      * Cluster CIDR.
      */
-    clusterCIDR?: pulumi.Input<string>;
+    clusterCIDR: pulumi.Input<string>;
     /**
      * Path to the kubeconfig.
      */

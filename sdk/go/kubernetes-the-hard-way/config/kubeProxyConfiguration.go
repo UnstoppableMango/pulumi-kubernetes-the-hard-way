@@ -28,6 +28,9 @@ func NewKubeProxyConfiguration(ctx *pulumi.Context,
 		return nil, errors.New("missing one or more required arguments")
 	}
 
+	if args.ClusterCIDR == nil {
+		return nil, errors.New("invalid value for required argument 'ClusterCIDR'")
+	}
 	if args.Kubeconfig == nil {
 		return nil, errors.New("invalid value for required argument 'Kubeconfig'")
 	}
@@ -42,7 +45,7 @@ func NewKubeProxyConfiguration(ctx *pulumi.Context,
 
 type kubeProxyConfigurationArgs struct {
 	// Cluster CIDR.
-	ClusterCIDR *string `pulumi:"clusterCIDR"`
+	ClusterCIDR string `pulumi:"clusterCIDR"`
 	// Path to the kubeconfig.
 	Kubeconfig string `pulumi:"kubeconfig"`
 	// TODO
@@ -52,7 +55,7 @@ type kubeProxyConfigurationArgs struct {
 // The set of arguments for constructing a KubeProxyConfiguration resource.
 type KubeProxyConfigurationArgs struct {
 	// Cluster CIDR.
-	ClusterCIDR pulumi.StringPtrInput
+	ClusterCIDR pulumi.StringInput
 	// Path to the kubeconfig.
 	Kubeconfig pulumi.StringInput
 	// TODO

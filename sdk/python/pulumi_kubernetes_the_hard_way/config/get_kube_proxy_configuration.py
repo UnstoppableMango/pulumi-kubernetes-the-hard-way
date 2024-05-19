@@ -66,7 +66,7 @@ def get_kube_proxy_configuration(cluster_cidr: Optional[str] = None,
 
 
 @_utilities.lift_output_func(get_kube_proxy_configuration)
-def get_kube_proxy_configuration_output(cluster_cidr: Optional[pulumi.Input[Optional[str]]] = None,
+def get_kube_proxy_configuration_output(cluster_cidr: Optional[pulumi.Input[str]] = None,
                                         kubeconfig: Optional[pulumi.Input[str]] = None,
                                         mode: Optional[pulumi.Input[Optional[str]]] = None,
                                         opts: Optional[pulumi.InvokeOptions] = None) -> pulumi.Output[GetKubeProxyConfigurationResult]:

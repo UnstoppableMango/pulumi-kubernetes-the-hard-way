@@ -72,7 +72,7 @@ export abstract class KubeProxyConfiguration<TData = any> extends (pulumi.Compon
     }
 }
 export interface KubeProxyConfigurationArgs {
-    readonly clusterCIDR?: pulumi.Input<string>;
+    readonly clusterCIDR: pulumi.Input<string>;
     readonly kubeconfig: pulumi.Input<string>;
     readonly mode?: pulumi.Input<string>;
 }
@@ -2007,7 +2007,7 @@ export interface WgetOptsOutputs {
     readonly url: pulumi.Output<string[]>;
 }
 export interface getKubeProxyConfigurationInputs {
-    readonly clusterCIDR?: pulumi.Input<string>;
+    readonly clusterCIDR: pulumi.Input<string>;
     readonly kubeconfig: pulumi.Input<string>;
     readonly mode?: pulumi.Input<string>;
 }

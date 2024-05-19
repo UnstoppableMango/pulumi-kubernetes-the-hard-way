@@ -24,7 +24,7 @@ func GetKubeProxyConfiguration(ctx *pulumi.Context, args *GetKubeProxyConfigurat
 
 type GetKubeProxyConfigurationArgs struct {
 	// Cluster CIDR.
-	ClusterCIDR *string `pulumi:"clusterCIDR"`
+	ClusterCIDR string `pulumi:"clusterCIDR"`
 	// Path to the kubeconfig.
 	Kubeconfig string `pulumi:"kubeconfig"`
 	// TODO
@@ -51,7 +51,7 @@ func GetKubeProxyConfigurationOutput(ctx *pulumi.Context, args GetKubeProxyConfi
 
 type GetKubeProxyConfigurationOutputArgs struct {
 	// Cluster CIDR.
-	ClusterCIDR pulumi.StringPtrInput `pulumi:"clusterCIDR"`
+	ClusterCIDR pulumi.StringInput `pulumi:"clusterCIDR"`
 	// Path to the kubeconfig.
 	Kubeconfig pulumi.StringInput `pulumi:"kubeconfig"`
 	// TODO

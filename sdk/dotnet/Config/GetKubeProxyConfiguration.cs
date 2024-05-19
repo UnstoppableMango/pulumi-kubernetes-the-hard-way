@@ -31,8 +31,8 @@ namespace UnMango.KubernetesTheHardWay.Config
         /// <summary>
         /// Cluster CIDR.
         /// </summary>
-        [Input("clusterCIDR")]
-        public string? ClusterCIDR { get; set; }
+        [Input("clusterCIDR", required: true)]
+        public string ClusterCIDR { get; set; } = null!;
 
         /// <summary>
         /// Path to the kubeconfig.
@@ -57,8 +57,8 @@ namespace UnMango.KubernetesTheHardWay.Config
         /// <summary>
         /// Cluster CIDR.
         /// </summary>
-        [Input("clusterCIDR")]
-        public Input<string>? ClusterCIDR { get; set; }
+        [Input("clusterCIDR", required: true)]
+        public Input<string> ClusterCIDR { get; set; } = null!;
 
         /// <summary>
         /// Path to the kubeconfig.

@@ -19,15 +19,15 @@ public final class GetKubeProxyConfigurationPlainArgs extends com.pulumi.resourc
      * Cluster CIDR.
      * 
      */
-    @Import(name="clusterCIDR")
-    private @Nullable String clusterCIDR;
+    @Import(name="clusterCIDR", required=true)
+    private String clusterCIDR;
 
     /**
      * @return Cluster CIDR.
      * 
      */
-    public Optional<String> clusterCIDR() {
-        return Optional.ofNullable(this.clusterCIDR);
+    public String clusterCIDR() {
+        return this.clusterCIDR;
     }
 
     /**
@@ -92,7 +92,7 @@ public final class GetKubeProxyConfigurationPlainArgs extends com.pulumi.resourc
          * @return builder
          * 
          */
-        public Builder clusterCIDR(@Nullable String clusterCIDR) {
+        public Builder clusterCIDR(String clusterCIDR) {
             $.clusterCIDR = clusterCIDR;
             return this;
         }
@@ -120,6 +120,9 @@ public final class GetKubeProxyConfigurationPlainArgs extends com.pulumi.resourc
         }
 
         public GetKubeProxyConfigurationPlainArgs build() {
+            if ($.clusterCIDR == null) {
+                throw new MissingRequiredPropertyException("GetKubeProxyConfigurationPlainArgs", "clusterCIDR");
+            }
             if ($.kubeconfig == null) {
                 throw new MissingRequiredPropertyException("GetKubeProxyConfigurationPlainArgs", "kubeconfig");
             }
