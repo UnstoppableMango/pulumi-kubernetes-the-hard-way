@@ -5,26 +5,6 @@ import * as pulumi from "@pulumi/pulumi";
 import * as utilities from "../utilities";
 
 // Export members:
-export { CniBridgePluginConfigurationArgs } from "./cniBridgePluginConfiguration";
-export type CniBridgePluginConfiguration = import("./cniBridgePluginConfiguration").CniBridgePluginConfiguration;
-export const CniBridgePluginConfiguration: typeof import("./cniBridgePluginConfiguration").CniBridgePluginConfiguration = null as any;
-utilities.lazyLoad(exports, ["CniBridgePluginConfiguration"], () => require("./cniBridgePluginConfiguration"));
-
-export { CniLoopbackPluginConfigurationArgs } from "./cniLoopbackPluginConfiguration";
-export type CniLoopbackPluginConfiguration = import("./cniLoopbackPluginConfiguration").CniLoopbackPluginConfiguration;
-export const CniLoopbackPluginConfiguration: typeof import("./cniLoopbackPluginConfiguration").CniLoopbackPluginConfiguration = null as any;
-utilities.lazyLoad(exports, ["CniLoopbackPluginConfiguration"], () => require("./cniLoopbackPluginConfiguration"));
-
-export { GetCniBridgePluginConfigurationArgs, GetCniBridgePluginConfigurationResult, GetCniBridgePluginConfigurationOutputArgs } from "./getCniBridgePluginConfiguration";
-export const getCniBridgePluginConfiguration: typeof import("./getCniBridgePluginConfiguration").getCniBridgePluginConfiguration = null as any;
-export const getCniBridgePluginConfigurationOutput: typeof import("./getCniBridgePluginConfiguration").getCniBridgePluginConfigurationOutput = null as any;
-utilities.lazyLoad(exports, ["getCniBridgePluginConfiguration","getCniBridgePluginConfigurationOutput"], () => require("./getCniBridgePluginConfiguration"));
-
-export { GetCniLoopbackPluginConfigurationArgs, GetCniLoopbackPluginConfigurationResult, GetCniLoopbackPluginConfigurationOutputArgs } from "./getCniLoopbackPluginConfiguration";
-export const getCniLoopbackPluginConfiguration: typeof import("./getCniLoopbackPluginConfiguration").getCniLoopbackPluginConfiguration = null as any;
-export const getCniLoopbackPluginConfigurationOutput: typeof import("./getCniLoopbackPluginConfiguration").getCniLoopbackPluginConfigurationOutput = null as any;
-utilities.lazyLoad(exports, ["getCniLoopbackPluginConfiguration","getCniLoopbackPluginConfigurationOutput"], () => require("./getCniLoopbackPluginConfiguration"));
-
 export { GetKubeProxyConfigurationArgs, GetKubeProxyConfigurationResult, GetKubeProxyConfigurationOutputArgs } from "./getKubeProxyConfiguration";
 export const getKubeProxyConfiguration: typeof import("./getKubeProxyConfiguration").getKubeProxyConfiguration = null as any;
 export const getKubeProxyConfigurationOutput: typeof import("./getKubeProxyConfiguration").getKubeProxyConfigurationOutput = null as any;
@@ -68,10 +48,6 @@ const _module = {
     version: utilities.getVersion(),
     construct: (name: string, type: string, urn: string): pulumi.Resource => {
         switch (type) {
-            case "kubernetes-the-hard-way:config:CniBridgePluginConfiguration":
-                return new CniBridgePluginConfiguration(name, <any>undefined, { urn })
-            case "kubernetes-the-hard-way:config:CniLoopbackPluginConfiguration":
-                return new CniLoopbackPluginConfiguration(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:config:KubeProxyConfiguration":
                 return new KubeProxyConfiguration(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:config:KubeVipManifest":

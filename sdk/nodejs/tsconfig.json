@@ -13,10 +13,6 @@
         "strict": true
     },
     "files": [
-        "config/cniBridgePluginConfiguration.ts",
-        "config/cniLoopbackPluginConfiguration.ts",
-        "config/getCniBridgePluginConfiguration.ts",
-        "config/getCniLoopbackPluginConfiguration.ts",
         "config/getKubeProxyConfiguration.ts",
         "config/getKubeVipManifest.ts",
         "config/getKubeconfig.ts",

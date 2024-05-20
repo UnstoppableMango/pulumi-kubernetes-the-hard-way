@@ -12,7 +12,6 @@ from ._enums import *
 import pulumi_command
 
 __all__ = [
-    'CniBridgeIpam',
     'CniBridgeIpamArgs',
     'ContainerdCriPluginConfigurationCniArgs',
     'ContainerdCriPluginConfigurationContainerdRuncOptionsArgs',
@@ -27,62 +26,6 @@ __all__ = [
     'SystemdServiceSectionArgs',
     'SystemdUnitSectionArgs',
 ]
-
-@pulumi.input_type
-class CniBridgeIpam:
-    def __init__(__self__, *,
-                 ranges: Optional[Sequence[Mapping[str, str]]] = None,
-                 routes: Optional[Sequence[Mapping[str, str]]] = None,
-                 type: Optional[str] = None):
-        """
-        The CNI plugins IPAM
-        :param Sequence[Mapping[str, str]] ranges: IPAM ranges.
-        :param Sequence[Mapping[str, str]] routes: IPAM routes.
-        :param str type: CNI bridge IPAM type
-        """
-        if ranges is not None:
-            pulumi.set(__self__, "ranges", ranges)
-        if routes is not None:
-            pulumi.set(__self__, "routes", routes)
-        if type is not None:
-            pulumi.set(__self__, "type", type)
-
-    @property
-    @pulumi.getter
-    def ranges(self) -> Optional[Sequence[Mapping[str, str]]]:
-        """
-        IPAM ranges.
-        """
-        return pulumi.get(self, "ranges")
-
-    @ranges.setter
-    def ranges(self, value: Optional[Sequence[Mapping[str, str]]]):
-        pulumi.set(self, "ranges", value)
-
-    @property
-    @pulumi.getter
-    def routes(self) -> Optional[Sequence[Mapping[str, str]]]:
-        """
-        IPAM routes.
-        """
-        return pulumi.get(self, "routes")
-
-    @routes.setter
-    def routes(self, value: Optional[Sequence[Mapping[str, str]]]):
-        pulumi.set(self, "routes", value)
-
-    @property
-    @pulumi.getter
-    def type(self) -> Optional[str]:
-        """
-        CNI bridge IPAM type
-        """
-        return pulumi.get(self, "type")
-
-    @type.setter
-    def type(self, value: Optional[str]):
-        pulumi.set(self, "type", value)
-
 
 @pulumi.input_type
 class CniBridgeIpamArgs:
