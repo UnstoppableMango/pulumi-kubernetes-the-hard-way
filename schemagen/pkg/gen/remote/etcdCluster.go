@@ -8,7 +8,7 @@ import (
 	"github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 )
 
-func generateEtcdCluster() schema.ResourceSpec {
+func generateEtcdCluster(commandSpec schema.PackageSpec) schema.PackageSpec {
 	etcdNode := types.LocalType("EtcdNode", "remote")
 
 	inputs := map[string]schema.PropertySpec{
@@ -79,19 +79,44 @@ func generateEtcdCluster() schema.ResourceSpec {
 	}
 	maps.Copy(outputs, inputs)
 
-	return schema.ResourceSpec{
-		IsComponent: true,
-		ObjectTypeSpec: schema.ObjectTypeSpec{
-			Description: "Creates an etcd cluster from one or more remote systems.",
-			Properties:  outputs,
-			Required: append(requiredInputs,
-				"configuration",
-				"install",
-				"service",
-				"start",
-			),
+	return schema.PackageSpec{
+		Types: map[string]schema.ComplexTypeSpec{
+			name("EtcdNode"): {
+				ObjectTypeSpec: schema.ObjectTypeSpec{
+					Description: "Etcd node description.",
+					Type:        "object",
+					Properties: map[string]schema.PropertySpec{
+						"architecture": {
+							Description: "The CPU architecture of the node.",
+							TypeSpec:    types.LocalType("Architecture", "remote"),
+						},
+						"connection": props.Connection(commandSpec),
+						"internalIp": props.String("The internal IP of the node."),
+					},
+					Required: []string{
+						"connection",
+						"internalIp",
+					},
+				},
+			},
 		},
-		InputProperties: inputs,
-		RequiredInputs:  requiredInputs,
+		Functions: map[string]schema.FunctionSpec{},
+		Resources: map[string]schema.ResourceSpec{
+			name("EtcdCluster"): {
+				IsComponent: true,
+				ObjectTypeSpec: schema.ObjectTypeSpec{
+					Description: "Creates an etcd cluster from one or more remote systems.",
+					Properties:  outputs,
+					Required: append(requiredInputs,
+						"configuration",
+						"install",
+						"service",
+						"start",
+					),
+				},
+				InputProperties: inputs,
+				RequiredInputs:  requiredInputs,
+			},
+		},
 	}
 }

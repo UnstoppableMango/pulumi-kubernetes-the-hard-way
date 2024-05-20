@@ -8,7 +8,7 @@ import (
 	"github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 )
 
-func generateKubeletService(commandSpec schema.PackageSpec) schema.ResourceSpec {
+func generateKubeletService(commandSpec schema.PackageSpec) schema.PackageSpec {
 	inputs := map[string]schema.PropertySpec{
 		"after": props.ArrayOf("string", "Waits for any units defined here."),
 		"configuration": {
@@ -38,14 +38,41 @@ func generateKubeletService(commandSpec schema.PackageSpec) schema.ResourceSpec 
 	}
 	maps.Copy(outputs, inputs)
 
-	return schema.ResourceSpec{
-		IsComponent: true,
-		ObjectTypeSpec: schema.ObjectTypeSpec{
-			Description: "Kubelet systemd service file. Will likely get replaced with a static function when https://github.com/pulumi/pulumi/issues/7583 gets resolved.",
-			Properties:  outputs,
-			Required:    append(requiredInputs, "service"),
+	return schema.PackageSpec{
+		Types: map[string]schema.ComplexTypeSpec{
+			name("KubeletConfigurationProps"): {
+				ObjectTypeSpec: schema.ObjectTypeSpec{
+					Description: "Props for resources that consume kubelet configuration.",
+					Type:        "object",
+					Properties: map[string]schema.PropertySpec{
+						"configurationFilePath": props.String("Path to the kubelet configuration."),
+						"kubeconfigPath":        props.String("Path to the kubeconfig the kubelet will use"),
+						"kubeletPath":           props.String("Path to the kubelet binary."),
+						"registerNode":          props.Boolean("Whether to register the node. Defaults to `true`."),
+						"v":                     props.Integer("Verbosity. Defaults to `2`."),
+					},
+					Required: []string{
+						"configurationFilePath",
+						"kubeconfigPath",
+						"kubeletPath",
+						"registerNode",
+						"v",
+					},
+				},
+			},
 		},
-		InputProperties: inputs,
-		RequiredInputs:  requiredInputs,
+		Functions: map[string]schema.FunctionSpec{},
+		Resources: map[string]schema.ResourceSpec{
+			name("KubeletService"): {
+				IsComponent: true,
+				ObjectTypeSpec: schema.ObjectTypeSpec{
+					Description: "Kubelet systemd service file. Will likely get replaced with a static function when https://github.com/pulumi/pulumi/issues/7583 gets resolved.",
+					Properties:  outputs,
+					Required:    append(requiredInputs, "service"),
+				},
+				InputProperties: inputs,
+				RequiredInputs:  requiredInputs,
+			},
+		},
 	}
 }

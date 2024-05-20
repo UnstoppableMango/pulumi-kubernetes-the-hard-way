@@ -10,7 +10,7 @@ import (
 	"github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 )
 
-func generateStartSystemdService(commandSpec schema.PackageSpec, name string) schema.ResourceSpec {
+func generateStartSystemdService(commandSpec schema.PackageSpec, t, n string) schema.PackageSpec {
 	inputs := map[string]schema.PropertySpec{
 		"connection": props.Connection(commandSpec),
 	}
@@ -41,14 +41,20 @@ func generateStartSystemdService(commandSpec schema.PackageSpec, name string) sc
 		},
 	)
 
-	return schema.ResourceSpec{
-		IsComponent: true,
-		ObjectTypeSpec: schema.ObjectTypeSpec{
-			Description: fmt.Sprintf("Starts `%s` on a remote system", name),
-			Properties:  outputs,
-			Required:    requiredOutputs,
+	return schema.PackageSpec{
+		Types:     map[string]schema.ComplexTypeSpec{},
+		Functions: map[string]schema.FunctionSpec{},
+		Resources: map[string]schema.ResourceSpec{
+			name(t): {
+				IsComponent: true,
+				ObjectTypeSpec: schema.ObjectTypeSpec{
+					Description: fmt.Sprintf("Starts `%s` on a remote system", n),
+					Properties:  outputs,
+					Required:    requiredOutputs,
+				},
+				InputProperties: inputs,
+				RequiredInputs:  requiredInputs,
+			},
 		},
-		InputProperties: inputs,
-		RequiredInputs:  requiredInputs,
 	}
 }

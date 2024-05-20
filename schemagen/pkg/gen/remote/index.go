@@ -1,6 +1,7 @@
 package remote
 
 import (
+	"github.com/UnstoppableMango/pulumi-kubernetes-the-hard-way/schemagen/pkg/gen/internal"
 	"github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 )
 
@@ -18,33 +19,36 @@ func Generate(commandSpec schema.PackageSpec) schema.PackageSpec {
 		name("CniLoopbackPluginConfiguration"): generateCniLoopbackPluginConfiguration(commandSpec),
 		name("CniPluginConfiguration"):         generateCniPluginConfiguration(commandSpec),
 		name("CrictlInstall"):                  generateArchiveInstall(commandSpec, "Installs crictl on a remote system", "crictl"),
-		name("Download"):                       generateDownload(commandSpec),
-		name("EtcdCluster"):                    generateEtcdCluster(),
-		name("EtcdConfiguration"):              generateEtcdConfiguration(commandSpec),
 		name("EtcdInstall"):                    generateArchiveInstall(commandSpec, "Installs etcd on a remote system", "etcd", "etcdctl"),
-		name("EtcdService"):                    generateEtcdService(commandSpec),
-		name("File"):                           generateFile(commandSpec),
 		name("KubeApiServerInstall"):           generateBinaryInstall(commandSpec, "Installs kube-apiserver on a remote system."),
 		name("KubeControllerManagerInstall"):   generateBinaryInstall(commandSpec, "Installs kube-controller-manager on a remote system."),
 		name("KubectlInstall"):                 generateBinaryInstall(commandSpec, "Installs kubectl on a remote system."),
 		name("KubeletInstall"):                 generateBinaryInstall(commandSpec, "Installs kubelet on a remote system."),
-		name("KubeletService"):                 generateKubeletService(commandSpec),
 		name("KubeProxyInstall"):               generateBinaryInstall(commandSpec, "Installs kube-proxy on a remote system."),
-		name("KubeProxyService"):               generateKubeProxyService(commandSpec),
 		name("KubeSchedulerInstall"):           generateBinaryInstall(commandSpec, "Installs kube-scheduler on a remote system."),
 		name("RuncInstall"):                    generateBinaryInstall(commandSpec, "Installs runc on a remote system."),
-		name("ProvisionEtcd"):                  generateProvisionEtcd(commandSpec),
-		name("StartContainerd"):                generateStartSystemdService(commandSpec, "containerd"),
-		name("StartEtcd"):                      generateStartSystemdService(commandSpec, "etcd"),
-		name("StartKubelet"):                   generateStartSystemdService(commandSpec, "kubelet"),
-		name("StartKubeProxy"):                 generateStartSystemdService(commandSpec, "kube-proxy"),
 		name("StaticPod"):                      generateStaticPod(commandSpec),
 		name("SystemdService"):                 generateSystemdService(commandSpec),
 	}
 
-	return schema.PackageSpec{
+	base := schema.PackageSpec{
 		Functions: functions,
 		Resources: resources,
-		Types:     generateTypes(commandSpec),
+		Types:     generateTypes(),
 	}
+
+	return internal.ExtendSchemas(base,
+		generateDownload(commandSpec),
+		generateEtcdCluster(commandSpec),
+		generateEtcdConfiguration(commandSpec),
+		generateEtcdService(commandSpec),
+		generateFile(commandSpec),
+		generateKubeletService(commandSpec),
+		generateKubeProxyService(commandSpec),
+		generateProvisionEtcd(commandSpec),
+		generateStartSystemdService(commandSpec, "StartContainerd", "containerd"),
+		generateStartSystemdService(commandSpec, "StartEtcd", "etcd"),
+		generateStartSystemdService(commandSpec, "StartKubelet", "kubelet"),
+		generateStartSystemdService(commandSpec, "StartKubeProxy", "kube-proxy"),
+	)
 }

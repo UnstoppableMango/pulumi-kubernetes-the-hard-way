@@ -6,7 +6,7 @@ import (
 	"github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 )
 
-func generateTypes(commandSpec schema.PackageSpec) map[string]schema.ComplexTypeSpec {
+func generateTypes() map[string]schema.ComplexTypeSpec {
 	return map[string]schema.ComplexTypeSpec{
 		name("Architecture"): {
 			ObjectTypeSpec: schema.ObjectTypeSpec{
@@ -121,79 +121,6 @@ func generateTypes(commandSpec schema.PackageSpec) map[string]schema.ComplexType
 					"binDir":  props.String("bin_dir"),
 					"confDir": props.String("conf_dir"),
 				},
-			},
-		},
-		name("EtcdConfigurationProps"): { // TODO: This name kinda sucks
-			ObjectTypeSpec: schema.ObjectTypeSpec{
-				Description: "Props for resources that consume etcd configuration.",
-				Type:        "object",
-				Properties: map[string]schema.PropertySpec{
-					"caFilePath":    props.String("Path to the certificate authority file on the remote system."),
-					"certFilePath":  props.String("Path to the certificate file on the remote system."),
-					"dataDirectory": props.String("Etcd's data directory."),
-					"etcdPath":      props.String("Path to the etcd binary."),
-					"internalIp":    props.String("Internal IP of the etcd node."),
-					"keyFilePath":   props.String("Path to the private key file on the remote system."),
-					"name":          props.String("Name of the etcd node."),
-				},
-				Required: []string{
-					"caFilePath",
-					"certFilePath",
-					"dataDirectory",
-					"etcdPath",
-					"internalIp",
-					"keyFilePath",
-					"name",
-				},
-			},
-		},
-		name("EtcdNode"): {
-			ObjectTypeSpec: schema.ObjectTypeSpec{
-				Description: "Etcd node description.",
-				Type:        "object",
-				Properties: map[string]schema.PropertySpec{
-					"architecture": {
-						Description: "The CPU architecture of the node.",
-						TypeSpec:    types.LocalType("Architecture", "remote"),
-					},
-					"connection": props.Connection(commandSpec),
-					"internalIp": props.String("The internal IP of the node."),
-				},
-				Required: []string{
-					"connection",
-					"internalIp",
-				},
-			},
-		},
-		name("KubeletConfigurationProps"): {
-			ObjectTypeSpec: schema.ObjectTypeSpec{
-				Description: "Props for resources that consume kubelet configuration.",
-				Type:        "object",
-				Properties: map[string]schema.PropertySpec{
-					"configurationFilePath": props.String("Path to the kubelet configuration."),
-					"kubeconfigPath":        props.String("Path to the kubeconfig the kubelet will use"),
-					"kubeletPath":           props.String("Path to the kubelet binary."),
-					"registerNode":          props.Boolean("Whether to register the node. Defaults to `true`."),
-					"v":                     props.Integer("Verbosity. Defaults to `2`."),
-				},
-				Required: []string{
-					"configurationFilePath",
-					"kubeconfigPath",
-					"kubeletPath",
-					"registerNode",
-					"v",
-				},
-			},
-		},
-		name("KubeProxyConfigurationProps"): {
-			ObjectTypeSpec: schema.ObjectTypeSpec{
-				Description: "Props for resources that consume kube-proxy configuration.",
-				Type:        "object",
-				Properties: map[string]schema.PropertySpec{
-					"kubeProxyPath":         props.String("Path to the kube-proxy binary."),
-					"configurationFilePath": props.String("Path to the kube proxy configuration file"),
-				},
-				Required: []string{"configurationFilePath", "kubeProxyPath"},
 			},
 		},
 		name("SystemdInstallSection"): {

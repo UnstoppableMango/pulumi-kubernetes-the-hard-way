@@ -8,7 +8,7 @@ import (
 	"github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 )
 
-func generateKubeProxyService(commandSpec schema.PackageSpec) schema.ResourceSpec {
+func generateKubeProxyService(commandSpec schema.PackageSpec) schema.PackageSpec {
 	inputs := map[string]schema.PropertySpec{
 		"configuration": {
 			Description: "Kubelet configuration.",
@@ -36,14 +36,32 @@ func generateKubeProxyService(commandSpec schema.PackageSpec) schema.ResourceSpe
 	}
 	maps.Copy(outputs, inputs)
 
-	return schema.ResourceSpec{
-		IsComponent: true,
-		ObjectTypeSpec: schema.ObjectTypeSpec{
-			Description: "Kubelet systemd service file. Will likely get replaced with a static function when https://github.com/pulumi/pulumi/issues/7583 gets resolved.",
-			Properties:  outputs,
-			Required:    append(requiredInputs, "service"),
+	return schema.PackageSpec{
+		Types: map[string]schema.ComplexTypeSpec{
+			name("KubeProxyConfigurationProps"): {
+				ObjectTypeSpec: schema.ObjectTypeSpec{
+					Description: "Props for resources that consume kube-proxy configuration.",
+					Type:        "object",
+					Properties: map[string]schema.PropertySpec{
+						"kubeProxyPath":         props.String("Path to the kube-proxy binary."),
+						"configurationFilePath": props.String("Path to the kube proxy configuration file"),
+					},
+					Required: []string{"configurationFilePath", "kubeProxyPath"},
+				},
+			},
 		},
-		InputProperties: inputs,
-		RequiredInputs:  requiredInputs,
+		Functions: map[string]schema.FunctionSpec{},
+		Resources: map[string]schema.ResourceSpec{
+			name("KubeProxyService"): {
+				IsComponent: true,
+				ObjectTypeSpec: schema.ObjectTypeSpec{
+					Description: "Kubelet systemd service file. Will likely get replaced with a static function when https://github.com/pulumi/pulumi/issues/7583 gets resolved.",
+					Properties:  outputs,
+					Required:    append(requiredInputs, "service"),
+				},
+				InputProperties: inputs,
+				RequiredInputs:  requiredInputs,
+			},
+		},
 	}
 }

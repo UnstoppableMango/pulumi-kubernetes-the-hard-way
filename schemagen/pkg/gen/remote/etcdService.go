@@ -8,7 +8,7 @@ import (
 	"github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 )
 
-func generateEtcdService(commandSpec schema.PackageSpec) schema.ResourceSpec {
+func generateEtcdService(commandSpec schema.PackageSpec) schema.PackageSpec {
 	peerItems := types.LocalType("EtcdConfigurationProps", "remote")
 
 	inputs := map[string]schema.PropertySpec{
@@ -45,14 +45,20 @@ func generateEtcdService(commandSpec schema.PackageSpec) schema.ResourceSpec {
 	}
 	maps.Copy(outputs, inputs)
 
-	return schema.ResourceSpec{
-		IsComponent: true,
-		ObjectTypeSpec: schema.ObjectTypeSpec{
-			Description: "Etcd systemd service file. Will likely get replaced with a static function when https://github.com/pulumi/pulumi/issues/7583 gets resolved.",
-			Properties:  outputs,
-			Required:    append(requiredInputs, "peers", "service"),
+	return schema.PackageSpec{
+		Types:     map[string]schema.ComplexTypeSpec{},
+		Functions: map[string]schema.FunctionSpec{},
+		Resources: map[string]schema.ResourceSpec{
+			name("EtcdService"): {
+				IsComponent: true,
+				ObjectTypeSpec: schema.ObjectTypeSpec{
+					Description: "Etcd systemd service file. Will likely get replaced with a static function when https://github.com/pulumi/pulumi/issues/7583 gets resolved.",
+					Properties:  outputs,
+					Required:    append(requiredInputs, "peers", "service"),
+				},
+				InputProperties: inputs,
+				RequiredInputs:  requiredInputs,
+			},
 		},
-		InputProperties: inputs,
-		RequiredInputs:  requiredInputs,
 	}
 }
