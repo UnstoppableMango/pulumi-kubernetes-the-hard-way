@@ -43,9 +43,6 @@ _utilities.register(
   "mod": "remote",
   "fqn": "pulumi_kubernetes_the_hard_way.remote",
   "classes": {
-   "kubernetes-the-hard-way:remote:CniBridgePluginConfiguration": "CniBridgePluginConfiguration",
-   "kubernetes-the-hard-way:remote:CniLoopbackPluginConfiguration": "CniLoopbackPluginConfiguration",
-   "kubernetes-the-hard-way:remote:CniPluginConfiguration": "CniPluginConfiguration",
    "kubernetes-the-hard-way:remote:CniPluginsInstall": "CniPluginsInstall",
    "kubernetes-the-hard-way:remote:ContainerdConfiguration": "ContainerdConfiguration",
    "kubernetes-the-hard-way:remote:ContainerdInstall": "ContainerdInstall",

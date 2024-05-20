@@ -11,9 +11,6 @@ export type ResourceConstructor = {
     readonly "kubernetes-the-hard-way:config:KubeProxyConfiguration": ConstructComponent<KubeProxyConfiguration>;
     readonly "kubernetes-the-hard-way:config:KubeVipManifest": ConstructComponent<KubeVipManifest>;
     readonly "kubernetes-the-hard-way:config:KubeletConfiguration": ConstructComponent<KubeletConfiguration>;
-    readonly "kubernetes-the-hard-way:remote:CniBridgePluginConfiguration": ConstructComponent<CniBridgePluginConfiguration>;
-    readonly "kubernetes-the-hard-way:remote:CniLoopbackPluginConfiguration": ConstructComponent<CniLoopbackPluginConfiguration>;
-    readonly "kubernetes-the-hard-way:remote:CniPluginConfiguration": ConstructComponent<CniPluginConfiguration>;
     readonly "kubernetes-the-hard-way:remote:CniPluginsInstall": ConstructComponent<CniPluginsInstall>;
     readonly "kubernetes-the-hard-way:remote:ContainerdConfiguration": ConstructComponent<ContainerdConfiguration>;
     readonly "kubernetes-the-hard-way:remote:ContainerdInstall": ConstructComponent<ContainerdInstall>;
@@ -168,68 +165,6 @@ export interface KubeletConfigurationArgs {
     readonly tlsCertFile?: pulumi.Input<string>;
     readonly tlsPrivateKeyFile?: pulumi.Input<string>;
     readonly webhook?: pulumi.Input<boolean>;
-}
-export abstract class CniBridgePluginConfiguration<TData = any> extends (pulumi.ComponentResource)<TData> {
-    public bridge!: string | pulumi.Output<string>;
-    public cniVersion!: string | pulumi.Output<string>;
-    public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
-    public file?: File | pulumi.Output<File>;
-    public ipMasq!: boolean | pulumi.Output<boolean>;
-    public ipam!: CniBridgeIpamOutputs | pulumi.Output<CniBridgeIpamOutputs>;
-    public isGateway!: boolean | pulumi.Output<boolean>;
-    public name!: string | pulumi.Output<string>;
-    public path!: string | pulumi.Output<string>;
-    public subnet?: string | pulumi.Output<string>;
-    public type!: string | pulumi.Output<string>;
-    constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
-        super("kubernetes-the-hard-way:remote:CniBridgePluginConfiguration", name, opts.urn ? { bridge: undefined, cniVersion: undefined, connection: undefined, file: undefined, ipMasq: undefined, ipam: undefined, isGateway: undefined, name: undefined, path: undefined, subnet: undefined, type: undefined } : { name, args, opts }, opts);
-    }
-}
-export interface CniBridgePluginConfigurationArgs {
-    readonly bridge?: pulumi.Input<string>;
-    readonly cniVersion?: pulumi.Input<string>;
-    readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
-    readonly ipMasq?: pulumi.Input<boolean>;
-    readonly ipam?: pulumi.Input<CniBridgeIpamInputs>;
-    readonly isGateway?: pulumi.Input<boolean>;
-    readonly name?: pulumi.Input<string>;
-    readonly path?: pulumi.Input<string>;
-    readonly subnet?: pulumi.Input<string>;
-    readonly type?: pulumi.Input<string>;
-}
-export abstract class CniLoopbackPluginConfiguration<TData = any> extends (pulumi.ComponentResource)<TData> {
-    public cniVersion!: string | pulumi.Output<string>;
-    public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
-    public file?: File | pulumi.Output<File>;
-    public name!: string | pulumi.Output<string>;
-    public path!: string | pulumi.Output<string>;
-    public type!: string | pulumi.Output<string>;
-    constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
-        super("kubernetes-the-hard-way:remote:CniLoopbackPluginConfiguration", name, opts.urn ? { cniVersion: undefined, connection: undefined, file: undefined, name: undefined, path: undefined, type: undefined } : { name, args, opts }, opts);
-    }
-}
-export interface CniLoopbackPluginConfigurationArgs {
-    readonly cniVersion?: pulumi.Input<string>;
-    readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
-    readonly name?: pulumi.Input<string>;
-    readonly path?: pulumi.Input<string>;
-    readonly type?: pulumi.Input<string>;
-}
-export abstract class CniPluginConfiguration<TData = any> extends (pulumi.ComponentResource)<TData> {
-    public bridge!: CniBridgePluginConfiguration | pulumi.Output<CniBridgePluginConfiguration>;
-    public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
-    public directory!: string | pulumi.Output<string>;
-    public loopback!: CniLoopbackPluginConfiguration | pulumi.Output<CniLoopbackPluginConfiguration>;
-    public mkdir!: Mkdir | pulumi.Output<Mkdir>;
-    public subnet!: string | pulumi.Output<string>;
-    constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
-        super("kubernetes-the-hard-way:remote:CniPluginConfiguration", name, opts.urn ? { bridge: undefined, connection: undefined, directory: undefined, loopback: undefined, mkdir: undefined, subnet: undefined } : { name, args, opts }, opts);
-    }
-}
-export interface CniPluginConfigurationArgs {
-    readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
-    readonly directory?: pulumi.Input<string>;
-    readonly subnet: pulumi.Input<string>;
 }
 export abstract class CniPluginsInstall<TData = any> extends (pulumi.ComponentResource)<TData> {
     public architecture!: ArchitectureOutputs | pulumi.Output<ArchitectureOutputs>;
