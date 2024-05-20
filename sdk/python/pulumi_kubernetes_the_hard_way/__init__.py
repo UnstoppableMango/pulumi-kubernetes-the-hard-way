@@ -31,8 +31,6 @@ _utilities.register(
   "mod": "config",
   "fqn": "pulumi_kubernetes_the_hard_way.config",
   "classes": {
-   "kubernetes-the-hard-way:config:CniBridgePluginConfiguration": "CniBridgePluginConfiguration",
-   "kubernetes-the-hard-way:config:CniLoopbackPluginConfiguration": "CniLoopbackPluginConfiguration",
    "kubernetes-the-hard-way:config:KubeProxyConfiguration": "KubeProxyConfiguration",
    "kubernetes-the-hard-way:config:KubeVipManifest": "KubeVipManifest",
    "kubernetes-the-hard-way:config:KubeletConfiguration": "KubeletConfiguration"

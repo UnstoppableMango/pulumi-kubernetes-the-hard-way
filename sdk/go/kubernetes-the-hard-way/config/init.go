@@ -21,10 +21,6 @@ func (m *module) Version() semver.Version {
 
 func (m *module) Construct(ctx *pulumi.Context, name, typ, urn string) (r pulumi.Resource, err error) {
 	switch typ {
-	case "kubernetes-the-hard-way:config:CniBridgePluginConfiguration":
-		r = &CniBridgePluginConfiguration{}
-	case "kubernetes-the-hard-way:config:CniLoopbackPluginConfiguration":
-		r = &CniLoopbackPluginConfiguration{}
 	case "kubernetes-the-hard-way:config:KubeProxyConfiguration":
 		r = &KubeProxyConfiguration{}
 	case "kubernetes-the-hard-way:config:KubeVipManifest":
