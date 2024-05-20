@@ -472,6 +472,24 @@ export namespace remote {
     /**
      * The CNI plugins IPAM
      */
+    export interface CniBridgeIpam {
+        /**
+         * IPAM ranges.
+         */
+        ranges?: {[key: string]: string}[];
+        /**
+         * IPAM routes.
+         */
+        routes?: {[key: string]: string}[];
+        /**
+         * CNI bridge IPAM type
+         */
+        type?: string;
+    }
+
+    /**
+     * The CNI plugins IPAM
+     */
     export interface CniBridgeIpamArgs {
         /**
          * IPAM ranges.
