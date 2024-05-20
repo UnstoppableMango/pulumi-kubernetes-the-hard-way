@@ -17,7 +17,6 @@ type tool struct {
 func Generate(commandSpec schema.PackageSpec) schema.PackageSpec {
 	tools := map[string]tool{
 		"Chmod":       generateChmod(),
-		"Curl":        generateCurl(),
 		"Etcdctl":     generateEtcdctl(),
 		"Hostnamectl": generateHostnamectl(),
 		"Mkdir":       generateMkdir(),

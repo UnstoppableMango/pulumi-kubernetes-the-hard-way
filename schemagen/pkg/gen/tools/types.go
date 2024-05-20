@@ -14,27 +14,6 @@ func generateTypes() map[string]schema.ComplexTypeSpec {
 				{Value: "delete"},
 			},
 		},
-		qualifyName("CurlCertType"): {
-			ObjectTypeSpec: schema.ObjectTypeSpec{
-				Type: "string",
-			},
-			Enum: []schema.EnumValueSpec{
-				{Value: "PEM"},
-				{Value: "DER"},
-				{Value: "ENG"},
-				{Value: "P12"},
-			},
-		},
-		qualifyName("CurlDelegationLevel"): {
-			ObjectTypeSpec: schema.ObjectTypeSpec{
-				Type: "string",
-			},
-			Enum: []schema.EnumValueSpec{
-				{Value: "none"},
-				{Value: "policy"},
-				{Value: "always"},
-			},
-		},
 		qualifyName("EtcdctlCommand"): {
 			ObjectTypeSpec: schema.ObjectTypeSpec{
 				Type: "string",
