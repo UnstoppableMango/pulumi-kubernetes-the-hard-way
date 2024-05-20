@@ -7,7 +7,9 @@ import (
 
 func GenerateConfig(kubernetesSpec schema.PackageSpec) schema.PackageSpec {
 	base := schema.PackageSpec{
-		Types:     generateTypes(kubernetesSpec),
+		Types: map[string]schema.ComplexTypeSpec{
+			name("PodManifest"): generatePodManifest(kubernetesSpec),
+		},
 		Resources: map[string]schema.ResourceSpec{},
 		Functions: map[string]schema.FunctionSpec{},
 	}
@@ -15,9 +17,22 @@ func GenerateConfig(kubernetesSpec schema.PackageSpec) schema.PackageSpec {
 	return internal.ExtendSchemas(base,
 		generateGetCniBridgePluginConfiguration(),
 		generateGetCniLoopbackPluginConfiguration(),
+		generateContainerdConfiguration(),
 		generateGetKubeconfig(),
 		generateGetKubeletConfiguration(),
 		generateGetKubeProxyConfiguration(),
 		generateGetKubeVipManifest(),
 	)
+}
+
+func generatePodManifest(kubernetesSpec schema.PackageSpec) schema.ComplexTypeSpec {
+	pod := kubernetesSpec.Resources["kubernetes:core/v1:Pod"]
+
+	return schema.ComplexTypeSpec{
+		ObjectTypeSpec: schema.ObjectTypeSpec{
+			Description: pod.Description,
+			Type:        "object",
+			Properties:  internal.MakeExternal(pod.Properties, kubernetesSpec),
+		},
+	}
 }

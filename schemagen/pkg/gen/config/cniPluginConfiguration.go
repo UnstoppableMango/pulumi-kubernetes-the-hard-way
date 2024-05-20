@@ -20,14 +20,44 @@ func generateGetCniBridgePluginConfiguration() schema.PackageSpec {
 			"ipMasq":    props.Boolean("IP masq."),
 			"ipam": {
 				Description: "IPAM",
-				TypeSpec:    types.LocalType("CniBridgeIpam", "remote"),
+				TypeSpec:    types.LocalType("CniBridgeIpam", "config"),
 			},
 		},
 		[]string{"subnet"},
 	)
 
 	return schema.PackageSpec{
-		Types: map[string]schema.ComplexTypeSpec{},
+		Types: map[string]schema.ComplexTypeSpec{
+			name("CniBridgeIpam"): {
+				ObjectTypeSpec: schema.ObjectTypeSpec{
+					Description: "The CNI plugins IPAM",
+					Type:        "object",
+					Properties: map[string]schema.PropertySpec{
+						"type": props.String("CNI bridge IPAM type"),
+						"ranges": {
+							Description: "IPAM ranges.",
+							TypeSpec: schema.TypeSpec{
+								Type: "array",
+								Items: &schema.TypeSpec{
+									Type:                 "object",
+									AdditionalProperties: &types.String,
+								},
+							},
+						},
+						"routes": {
+							Description: "IPAM routes.",
+							TypeSpec: schema.TypeSpec{
+								Type: "array",
+								Items: &schema.TypeSpec{
+									Type:                 "object",
+									AdditionalProperties: &types.String,
+								},
+							},
+						},
+					},
+				},
+			},
+		},
 		Functions: map[string]schema.FunctionSpec{
 			name("getCniBridgePluginConfiguration"): function,
 		},
