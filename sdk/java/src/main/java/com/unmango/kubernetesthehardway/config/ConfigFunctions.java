@@ -8,6 +8,10 @@ import com.pulumi.core.TypeShape;
 import com.pulumi.deployment.Deployment;
 import com.pulumi.deployment.InvokeOptions;
 import com.unmango.kubernetesthehardway.Utilities;
+import com.unmango.kubernetesthehardway.config.inputs.GetCniBridgePluginConfigurationArgs;
+import com.unmango.kubernetesthehardway.config.inputs.GetCniBridgePluginConfigurationPlainArgs;
+import com.unmango.kubernetesthehardway.config.inputs.GetCniLoopbackPluginConfigurationArgs;
+import com.unmango.kubernetesthehardway.config.inputs.GetCniLoopbackPluginConfigurationPlainArgs;
 import com.unmango.kubernetesthehardway.config.inputs.GetKubeProxyConfigurationArgs;
 import com.unmango.kubernetesthehardway.config.inputs.GetKubeProxyConfigurationPlainArgs;
 import com.unmango.kubernetesthehardway.config.inputs.GetKubeVipManifestArgs;
@@ -16,6 +20,8 @@ import com.unmango.kubernetesthehardway.config.inputs.GetKubeconfigArgs;
 import com.unmango.kubernetesthehardway.config.inputs.GetKubeconfigPlainArgs;
 import com.unmango.kubernetesthehardway.config.inputs.GetKubeletConfigurationArgs;
 import com.unmango.kubernetesthehardway.config.inputs.GetKubeletConfigurationPlainArgs;
+import com.unmango.kubernetesthehardway.config.outputs.GetCniBridgePluginConfigurationResult;
+import com.unmango.kubernetesthehardway.config.outputs.GetCniLoopbackPluginConfigurationResult;
 import com.unmango.kubernetesthehardway.config.outputs.GetKubeProxyConfigurationResult;
 import com.unmango.kubernetesthehardway.config.outputs.GetKubeVipManifestResult;
 import com.unmango.kubernetesthehardway.config.outputs.GetKubeconfigResult;
@@ -23,6 +29,76 @@ import com.unmango.kubernetesthehardway.config.outputs.GetKubeletConfigurationRe
 import java.util.concurrent.CompletableFuture;
 
 public final class ConfigFunctions {
+    /**
+     * Get the `bridge` configuration.
+     * 
+     */
+    public static Output<GetCniBridgePluginConfigurationResult> getCniBridgePluginConfiguration(GetCniBridgePluginConfigurationArgs args) {
+        return getCniBridgePluginConfiguration(args, InvokeOptions.Empty);
+    }
+    /**
+     * Get the `bridge` configuration.
+     * 
+     */
+    public static CompletableFuture<GetCniBridgePluginConfigurationResult> getCniBridgePluginConfigurationPlain(GetCniBridgePluginConfigurationPlainArgs args) {
+        return getCniBridgePluginConfigurationPlain(args, InvokeOptions.Empty);
+    }
+    /**
+     * Get the `bridge` configuration.
+     * 
+     */
+    public static Output<GetCniBridgePluginConfigurationResult> getCniBridgePluginConfiguration(GetCniBridgePluginConfigurationArgs args, InvokeOptions options) {
+        return Deployment.getInstance().invoke("kubernetes-the-hard-way:config:getCniBridgePluginConfiguration", TypeShape.of(GetCniBridgePluginConfigurationResult.class), args, Utilities.withVersion(options));
+    }
+    /**
+     * Get the `bridge` configuration.
+     * 
+     */
+    public static CompletableFuture<GetCniBridgePluginConfigurationResult> getCniBridgePluginConfigurationPlain(GetCniBridgePluginConfigurationPlainArgs args, InvokeOptions options) {
+        return Deployment.getInstance().invokeAsync("kubernetes-the-hard-way:config:getCniBridgePluginConfiguration", TypeShape.of(GetCniBridgePluginConfigurationResult.class), args, Utilities.withVersion(options));
+    }
+    /**
+     * Get the `loopback` configuration.
+     * 
+     */
+    public static Output<GetCniLoopbackPluginConfigurationResult> getCniLoopbackPluginConfiguration() {
+        return getCniLoopbackPluginConfiguration(GetCniLoopbackPluginConfigurationArgs.Empty, InvokeOptions.Empty);
+    }
+    /**
+     * Get the `loopback` configuration.
+     * 
+     */
+    public static CompletableFuture<GetCniLoopbackPluginConfigurationResult> getCniLoopbackPluginConfigurationPlain() {
+        return getCniLoopbackPluginConfigurationPlain(GetCniLoopbackPluginConfigurationPlainArgs.Empty, InvokeOptions.Empty);
+    }
+    /**
+     * Get the `loopback` configuration.
+     * 
+     */
+    public static Output<GetCniLoopbackPluginConfigurationResult> getCniLoopbackPluginConfiguration(GetCniLoopbackPluginConfigurationArgs args) {
+        return getCniLoopbackPluginConfiguration(args, InvokeOptions.Empty);
+    }
+    /**
+     * Get the `loopback` configuration.
+     * 
+     */
+    public static CompletableFuture<GetCniLoopbackPluginConfigurationResult> getCniLoopbackPluginConfigurationPlain(GetCniLoopbackPluginConfigurationPlainArgs args) {
+        return getCniLoopbackPluginConfigurationPlain(args, InvokeOptions.Empty);
+    }
+    /**
+     * Get the `loopback` configuration.
+     * 
+     */
+    public static Output<GetCniLoopbackPluginConfigurationResult> getCniLoopbackPluginConfiguration(GetCniLoopbackPluginConfigurationArgs args, InvokeOptions options) {
+        return Deployment.getInstance().invoke("kubernetes-the-hard-way:config:getCniLoopbackPluginConfiguration", TypeShape.of(GetCniLoopbackPluginConfigurationResult.class), args, Utilities.withVersion(options));
+    }
+    /**
+     * Get the `loopback` configuration.
+     * 
+     */
+    public static CompletableFuture<GetCniLoopbackPluginConfigurationResult> getCniLoopbackPluginConfigurationPlain(GetCniLoopbackPluginConfigurationPlainArgs args, InvokeOptions options) {
+        return Deployment.getInstance().invokeAsync("kubernetes-the-hard-way:config:getCniLoopbackPluginConfiguration", TypeShape.of(GetCniLoopbackPluginConfigurationResult.class), args, Utilities.withVersion(options));
+    }
     /**
      * kube-proxy configuration.
      * 
