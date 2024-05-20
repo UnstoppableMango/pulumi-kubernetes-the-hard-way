@@ -1,26 +1,24 @@
 package config
 
 import (
+	"github.com/UnstoppableMango/pulumi-kubernetes-the-hard-way/schemagen/pkg/gen/internal"
 	"github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 )
 
 func GenerateConfig(kubernetesSpec schema.PackageSpec) schema.PackageSpec {
-	getKubeletConfiguration := generateGetKubeletConfiguration()
-	getKubeProxyConfiguration := generateGetKubeProxyConfiguration()
-	getKubeVipManifest := generateGetKubeVipManifest()
-
-	return schema.PackageSpec{
+	base := schema.PackageSpec{
+		Types:     generateTypes(kubernetesSpec),
+		Resources: map[string]schema.ResourceSpec{},
 		Functions: map[string]schema.FunctionSpec{
-			name("getKubeconfig"):             generateGetKubeconfig(),
-			name("getKubeletConfiguration"):   getKubeletConfiguration.Function,
-			name("getKubeProxyConfiguration"): getKubeProxyConfiguration.Function,
-			name("getKubeVipManifest"):        getKubeVipManifest.Function,
+			name("getKubeconfig"): generateGetKubeconfig(),
 		},
-		Resources: map[string]schema.ResourceSpec{
-			name("KubeletConfiguration"):   getKubeletConfiguration.Resource,
-			name("KubeProxyConfiguration"): getKubeProxyConfiguration.Resource,
-			name("KubeVipManifest"):        getKubeVipManifest.Resource,
-		},
-		Types: generateTypes(kubernetesSpec),
 	}
+
+	return internal.ExtendSchemas(base,
+		generateGetCniBridgePluginConfiguration(),
+		generateGetCniLoopbackPluginConfiguration(),
+		generateGetKubeletConfiguration(),
+		generateGetKubeProxyConfiguration(),
+		generateGetKubeVipManifest(),
+	)
 }

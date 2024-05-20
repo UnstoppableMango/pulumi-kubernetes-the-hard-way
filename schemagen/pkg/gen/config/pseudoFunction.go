@@ -9,17 +9,12 @@ import (
 
 // Generates "pseudo functions" to work around https://github.com/pulumi/pulumi/issues/7583
 
-type pseudoFunction struct {
-	Function schema.FunctionSpec
-	Resource schema.ResourceSpec
-}
-
 func generatePseudoFunction(
 	description string,
 	spec schema.ObjectTypeSpec,
 	result schema.PropertySpec,
 	extraOutputs ...interface{},
-) pseudoFunction {
+) (schema.FunctionSpec, schema.ResourceSpec) {
 	function := schema.FunctionSpec{
 		Description: description,
 		Inputs:      &spec,
@@ -63,8 +58,5 @@ func generatePseudoFunction(
 		RequiredInputs:  function.Inputs.Required,
 	}
 
-	return pseudoFunction{
-		Function: function,
-		Resource: resource,
-	}
+	return function, resource
 }
