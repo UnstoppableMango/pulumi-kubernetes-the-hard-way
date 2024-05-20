@@ -6,8 +6,8 @@ import (
 	"github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 )
 
-func generateGetKubeProxyConfiguration() pseudoFunction {
-	return generatePseudoFunction(
+func generateGetKubeProxyConfiguration() schema.PackageSpec {
+	function, resource := generatePseudoFunction(
 		"kube-proxy configuration.",
 		schema.ObjectTypeSpec{
 			Properties: map[string]schema.PropertySpec{
@@ -22,4 +22,14 @@ func generateGetKubeProxyConfiguration() pseudoFunction {
 		},
 		"yaml", props.String("The yaml representation of the manifest."),
 	)
+
+	return schema.PackageSpec{
+		Types: map[string]schema.ComplexTypeSpec{},
+		Functions: map[string]schema.FunctionSpec{
+			name("getKubeProxyConfiguration"): function,
+		},
+		Resources: map[string]schema.ResourceSpec{
+			name("KubeProxyConfiguration"): resource,
+		},
+	}
 }

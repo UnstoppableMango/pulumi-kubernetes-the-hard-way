@@ -6,8 +6,8 @@ import (
 	"github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 )
 
-func generateGetKubeletConfiguration() pseudoFunction {
-	return generatePseudoFunction(
+func generateGetKubeletConfiguration() schema.PackageSpec {
+	function, resource := generatePseudoFunction(
 		"Get the kubelet configuration.",
 		schema.ObjectTypeSpec{
 			Properties: map[string]schema.PropertySpec{
@@ -32,4 +32,14 @@ func generateGetKubeletConfiguration() pseudoFunction {
 		},
 		"yaml", props.String("The yaml representation of the manifest."),
 	)
+
+	return schema.PackageSpec{
+		Types: map[string]schema.ComplexTypeSpec{},
+		Functions: map[string]schema.FunctionSpec{
+			name("getKubeletConfiguration"): function,
+		},
+		Resources: map[string]schema.ResourceSpec{
+			name("KubeletConfiguration"): resource,
+		},
+	}
 }
