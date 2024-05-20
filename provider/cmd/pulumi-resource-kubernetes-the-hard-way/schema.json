@@ -116,6 +116,45 @@
                 "user"
             ]
         },
+        "kubernetes-the-hard-way:config:KubeProxyConfiguration": {
+            "properties": {
+                "apiVersion": {
+                    "type": "string",
+                    "const": "kubeproxy.config.k8s.io/v1alpha1"
+                },
+                "clientConnection": {
+                    "$ref": "#/types/kubernetes-the-hard-way:config:KubeProxyConfigurationClientConnection"
+                },
+                "clusterCIDR": {
+                    "type": "string",
+                    "description": "TODO"
+                },
+                "kind": {
+                    "type": "string",
+                    "const": "KubeProxyConfiguration"
+                },
+                "mode": {
+                    "type": "string",
+                    "description": "TODO"
+                }
+            },
+            "type": "object",
+            "required": [
+                "clusterCIDR"
+            ]
+        },
+        "kubernetes-the-hard-way:config:KubeProxyConfigurationClientConnection": {
+            "properties": {
+                "kubeconfig": {
+                    "type": "string",
+                    "description": "Path to the kubeconfig."
+                }
+            },
+            "type": "object",
+            "required": [
+                "kubeconfig"
+            ]
+        },
         "kubernetes-the-hard-way:config:Kubeconfig": {
             "properties": {
                 "clusters": {
@@ -672,6 +711,24 @@
             "required": [
                 "connection",
                 "internalIp"
+            ]
+        },
+        "kubernetes-the-hard-way:remote:KubeProxyConfigurationProps": {
+            "description": "Props for resources that consume kube-proxy configuration.",
+            "properties": {
+                "configurationFilePath": {
+                    "type": "string",
+                    "description": "Path to the kube proxy configuration file"
+                },
+                "kubeProxyPath": {
+                    "type": "string",
+                    "description": "Path to the kube-proxy binary."
+                }
+            },
+            "type": "object",
+            "required": [
+                "configurationFilePath",
+                "kubeProxyPath"
             ]
         },
         "kubernetes-the-hard-way:remote:KubeletConfigurationProps": {
@@ -2056,6 +2113,41 @@
     },
     "provider": {},
     "resources": {
+        "kubernetes-the-hard-way:config:KubeProxyConfiguration": {
+            "description": "kube-proxy configuration.",
+            "properties": {
+                "result": {
+                    "$ref": "#/types/kubernetes-the-hard-way:config:KubeProxyConfiguration"
+                },
+                "yaml": {
+                    "type": "string",
+                    "description": "The yaml representation of the manifest."
+                }
+            },
+            "required": [
+                "result",
+                "yaml"
+            ],
+            "inputProperties": {
+                "clusterCIDR": {
+                    "type": "string",
+                    "description": "Cluster CIDR."
+                },
+                "kubeconfig": {
+                    "type": "string",
+                    "description": "Path to the kubeconfig."
+                },
+                "mode": {
+                    "type": "string",
+                    "description": "TODO"
+                }
+            },
+            "requiredInputs": [
+                "kubeconfig",
+                "clusterCIDR"
+            ],
+            "isComponent": true
+        },
         "kubernetes-the-hard-way:config:KubeVipManifest": {
             "description": "Gets the static pod manifests for KubeVip.",
             "properties": {
@@ -3829,6 +3921,91 @@
                 }
             },
             "requiredInputs": [
+                "connection"
+            ],
+            "isComponent": true
+        },
+        "kubernetes-the-hard-way:remote:KubeProxyService": {
+            "description": "Kubelet systemd service file. Will likely get replaced with a static function when https://github.com/pulumi/pulumi/issues/7583 gets resolved.",
+            "properties": {
+                "configuration": {
+                    "$ref": "#/types/kubernetes-the-hard-way:remote:KubeProxyConfigurationProps",
+                    "description": "Kubelet configuration."
+                },
+                "connection": {
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
+                    "description": "The parameters with which to connect to the remote host."
+                },
+                "description": {
+                    "type": "string",
+                    "description": "Optional systemd unit description."
+                },
+                "directory": {
+                    "type": "string",
+                    "description": "The location to create the service file."
+                },
+                "documentation": {
+                    "type": "string",
+                    "description": "Optional systemd unit documentation"
+                },
+                "restart": {
+                    "$ref": "#/types/kubernetes-the-hard-way:remote:SystemdServiceRestart",
+                    "description": "Optionally override the systemd service restart behaviour. Defaults to `on-failure`."
+                },
+                "restartSec": {
+                    "type": "string",
+                    "description": "Optionally override the systemd service RestartSec. Defaults to `5`."
+                },
+                "service": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:remote:SystemdService",
+                    "description": "The remote systemd service."
+                },
+                "wantedBy": {
+                    "type": "string",
+                    "description": "Optionally override the systemd service wanted-by. Defaults to `multi-user.target`."
+                }
+            },
+            "required": [
+                "configuration",
+                "connection",
+                "service"
+            ],
+            "inputProperties": {
+                "configuration": {
+                    "$ref": "#/types/kubernetes-the-hard-way:remote:KubeProxyConfigurationProps",
+                    "description": "Kubelet configuration."
+                },
+                "connection": {
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
+                    "description": "The parameters with which to connect to the remote host."
+                },
+                "description": {
+                    "type": "string",
+                    "description": "Optional systemd unit description."
+                },
+                "directory": {
+                    "type": "string",
+                    "description": "The location to create the service file."
+                },
+                "documentation": {
+                    "type": "string",
+                    "description": "Optional systemd unit documentation"
+                },
+                "restart": {
+                    "$ref": "#/types/kubernetes-the-hard-way:remote:SystemdServiceRestart",
+                    "description": "Optionally override the systemd service restart behaviour. Defaults to `on-failure`."
+                },
+                "restartSec": {
+                    "type": "string",
+                    "description": "Optionally override the systemd service RestartSec. Defaults to `5`."
+                },
+                "wantedBy": {
+                    "type": "string",
+                    "description": "Optionally override the systemd service wanted-by. Defaults to `multi-user.target`."
+                }
+            },
+            "requiredInputs": [
+                "configuration",
                 "connection"
             ],
             "isComponent": true
@@ -7312,6 +7489,40 @@
         }
     },
     "functions": {
+        "kubernetes-the-hard-way:config:getKubeProxyConfiguration": {
+            "description": "kube-proxy configuration.",
+            "inputs": {
+                "properties": {
+                    "clusterCIDR": {
+                        "type": "string",
+                        "description": "Cluster CIDR."
+                    },
+                    "kubeconfig": {
+                        "type": "string",
+                        "description": "Path to the kubeconfig."
+                    },
+                    "mode": {
+                        "type": "string",
+                        "description": "TODO"
+                    }
+                },
+                "required": [
+                    "kubeconfig",
+                    "clusterCIDR"
+                ]
+            },
+            "outputs": {
+                "description": "kube-proxy configuration.",
+                "properties": {
+                    "result": {
+                        "$ref": "#/types/kubernetes-the-hard-way:config:KubeProxyConfiguration"
+                    }
+                },
+                "required": [
+                    "result"
+                ]
+            }
+        },
         "kubernetes-the-hard-way:config:getKubeVipManifest": {
             "description": "Gets the static pod manifests for KubeVip.",
             "inputs": {

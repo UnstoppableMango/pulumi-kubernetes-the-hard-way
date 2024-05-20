@@ -53,6 +53,8 @@ func (m *module) Construct(ctx *pulumi.Context, name, typ, urn string) (r pulumi
 		r = &KubeControllerManagerInstall{}
 	case "kubernetes-the-hard-way:remote:KubeProxyInstall":
 		r = &KubeProxyInstall{}
+	case "kubernetes-the-hard-way:remote:KubeProxyService":
+		r = &KubeProxyService{}
 	case "kubernetes-the-hard-way:remote:KubeSchedulerInstall":
 		r = &KubeSchedulerInstall{}
 	case "kubernetes-the-hard-way:remote:KubectlInstall":

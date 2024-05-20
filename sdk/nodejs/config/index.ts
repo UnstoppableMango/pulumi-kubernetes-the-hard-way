@@ -5,6 +5,11 @@ import * as pulumi from "@pulumi/pulumi";
 import * as utilities from "../utilities";
 
 // Export members:
+export { GetKubeProxyConfigurationArgs, GetKubeProxyConfigurationResult, GetKubeProxyConfigurationOutputArgs } from "./getKubeProxyConfiguration";
+export const getKubeProxyConfiguration: typeof import("./getKubeProxyConfiguration").getKubeProxyConfiguration = null as any;
+export const getKubeProxyConfigurationOutput: typeof import("./getKubeProxyConfiguration").getKubeProxyConfigurationOutput = null as any;
+utilities.lazyLoad(exports, ["getKubeProxyConfiguration","getKubeProxyConfigurationOutput"], () => require("./getKubeProxyConfiguration"));
+
 export { GetKubeVipManifestArgs, GetKubeVipManifestResult, GetKubeVipManifestOutputArgs } from "./getKubeVipManifest";
 export const getKubeVipManifest: typeof import("./getKubeVipManifest").getKubeVipManifest = null as any;
 export const getKubeVipManifestOutput: typeof import("./getKubeVipManifest").getKubeVipManifestOutput = null as any;
@@ -19,6 +24,11 @@ export { GetKubeletConfigurationArgs, GetKubeletConfigurationResult, GetKubeletC
 export const getKubeletConfiguration: typeof import("./getKubeletConfiguration").getKubeletConfiguration = null as any;
 export const getKubeletConfigurationOutput: typeof import("./getKubeletConfiguration").getKubeletConfigurationOutput = null as any;
 utilities.lazyLoad(exports, ["getKubeletConfiguration","getKubeletConfigurationOutput"], () => require("./getKubeletConfiguration"));
+
+export { KubeProxyConfigurationArgs } from "./kubeProxyConfiguration";
+export type KubeProxyConfiguration = import("./kubeProxyConfiguration").KubeProxyConfiguration;
+export const KubeProxyConfiguration: typeof import("./kubeProxyConfiguration").KubeProxyConfiguration = null as any;
+utilities.lazyLoad(exports, ["KubeProxyConfiguration"], () => require("./kubeProxyConfiguration"));
 
 export { KubeVipManifestArgs } from "./kubeVipManifest";
 export type KubeVipManifest = import("./kubeVipManifest").KubeVipManifest;
@@ -38,6 +48,8 @@ const _module = {
     version: utilities.getVersion(),
     construct: (name: string, type: string, urn: string): pulumi.Resource => {
         switch (type) {
+            case "kubernetes-the-hard-way:config:KubeProxyConfiguration":
+                return new KubeProxyConfiguration(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:config:KubeVipManifest":
                 return new KubeVipManifest(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:config:KubeletConfiguration":

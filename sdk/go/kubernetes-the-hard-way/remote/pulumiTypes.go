@@ -1260,6 +1260,70 @@ func (o EtcdNodeMapOutput) MapIndex(k pulumi.StringInput) EtcdNodeOutput {
 	}).(EtcdNodeOutput)
 }
 
+// Props for resources that consume kube-proxy configuration.
+type KubeProxyConfigurationProps struct {
+	// Path to the kube proxy configuration file
+	ConfigurationFilePath string `pulumi:"configurationFilePath"`
+	// Path to the kube-proxy binary.
+	KubeProxyPath string `pulumi:"kubeProxyPath"`
+}
+
+// KubeProxyConfigurationPropsInput is an input type that accepts KubeProxyConfigurationPropsArgs and KubeProxyConfigurationPropsOutput values.
+// You can construct a concrete instance of `KubeProxyConfigurationPropsInput` via:
+//
+//	KubeProxyConfigurationPropsArgs{...}
+type KubeProxyConfigurationPropsInput interface {
+	pulumi.Input
+
+	ToKubeProxyConfigurationPropsOutput() KubeProxyConfigurationPropsOutput
+	ToKubeProxyConfigurationPropsOutputWithContext(context.Context) KubeProxyConfigurationPropsOutput
+}
+
+// Props for resources that consume kube-proxy configuration.
+type KubeProxyConfigurationPropsArgs struct {
+	// Path to the kube proxy configuration file
+	ConfigurationFilePath pulumi.StringInput `pulumi:"configurationFilePath"`
+	// Path to the kube-proxy binary.
+	KubeProxyPath pulumi.StringInput `pulumi:"kubeProxyPath"`
+}
+
+func (KubeProxyConfigurationPropsArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*KubeProxyConfigurationProps)(nil)).Elem()
+}
+
+func (i KubeProxyConfigurationPropsArgs) ToKubeProxyConfigurationPropsOutput() KubeProxyConfigurationPropsOutput {
+	return i.ToKubeProxyConfigurationPropsOutputWithContext(context.Background())
+}
+
+func (i KubeProxyConfigurationPropsArgs) ToKubeProxyConfigurationPropsOutputWithContext(ctx context.Context) KubeProxyConfigurationPropsOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(KubeProxyConfigurationPropsOutput)
+}
+
+// Props for resources that consume kube-proxy configuration.
+type KubeProxyConfigurationPropsOutput struct{ *pulumi.OutputState }
+
+func (KubeProxyConfigurationPropsOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*KubeProxyConfigurationProps)(nil)).Elem()
+}
+
+func (o KubeProxyConfigurationPropsOutput) ToKubeProxyConfigurationPropsOutput() KubeProxyConfigurationPropsOutput {
+	return o
+}
+
+func (o KubeProxyConfigurationPropsOutput) ToKubeProxyConfigurationPropsOutputWithContext(ctx context.Context) KubeProxyConfigurationPropsOutput {
+	return o
+}
+
+// Path to the kube proxy configuration file
+func (o KubeProxyConfigurationPropsOutput) ConfigurationFilePath() pulumi.StringOutput {
+	return o.ApplyT(func(v KubeProxyConfigurationProps) string { return v.ConfigurationFilePath }).(pulumi.StringOutput)
+}
+
+// Path to the kube-proxy binary.
+func (o KubeProxyConfigurationPropsOutput) KubeProxyPath() pulumi.StringOutput {
+	return o.ApplyT(func(v KubeProxyConfigurationProps) string { return v.KubeProxyPath }).(pulumi.StringOutput)
+}
+
 // Props for resources that consume kubelet configuration.
 type KubeletConfigurationProps struct {
 	// Path to the kubelet configuration.
@@ -1871,6 +1935,7 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*EtcdConfigurationPropsInput)(nil)).Elem(), EtcdConfigurationPropsArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*EtcdConfigurationPropsArrayInput)(nil)).Elem(), EtcdConfigurationPropsArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*EtcdNodeInput)(nil)).Elem(), EtcdNodeArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*KubeProxyConfigurationPropsInput)(nil)).Elem(), KubeProxyConfigurationPropsArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*KubeletConfigurationPropsInput)(nil)).Elem(), KubeletConfigurationPropsArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*SystemdInstallSectionInput)(nil)).Elem(), SystemdInstallSectionArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*SystemdInstallSectionPtrInput)(nil)).Elem(), SystemdInstallSectionArgs{})
@@ -1893,6 +1958,7 @@ func init() {
 	pulumi.RegisterOutputType(EtcdConfigurationPropsArrayOutput{})
 	pulumi.RegisterOutputType(EtcdNodeOutput{})
 	pulumi.RegisterOutputType(EtcdNodeMapOutput{})
+	pulumi.RegisterOutputType(KubeProxyConfigurationPropsOutput{})
 	pulumi.RegisterOutputType(KubeletConfigurationPropsOutput{})
 	pulumi.RegisterOutputType(SystemdInstallSectionOutput{})
 	pulumi.RegisterOutputType(SystemdInstallSectionPtrOutput{})

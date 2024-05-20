@@ -117,6 +117,110 @@ func (o ContextArrayOutput) Index(i pulumi.IntInput) ContextOutput {
 	}).(ContextOutput)
 }
 
+type KubeProxyConfigurationType struct {
+	ApiVersion       *string                                 `pulumi:"apiVersion"`
+	ClientConnection *KubeProxyConfigurationClientConnection `pulumi:"clientConnection"`
+	// TODO
+	ClusterCIDR string  `pulumi:"clusterCIDR"`
+	Kind        *string `pulumi:"kind"`
+	// TODO
+	Mode *string `pulumi:"mode"`
+}
+
+type KubeProxyConfigurationTypeOutput struct{ *pulumi.OutputState }
+
+func (KubeProxyConfigurationTypeOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*KubeProxyConfigurationType)(nil)).Elem()
+}
+
+func (o KubeProxyConfigurationTypeOutput) ToKubeProxyConfigurationTypeOutput() KubeProxyConfigurationTypeOutput {
+	return o
+}
+
+func (o KubeProxyConfigurationTypeOutput) ToKubeProxyConfigurationTypeOutputWithContext(ctx context.Context) KubeProxyConfigurationTypeOutput {
+	return o
+}
+
+func (o KubeProxyConfigurationTypeOutput) ApiVersion() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v KubeProxyConfigurationType) *string { return v.ApiVersion }).(pulumi.StringPtrOutput)
+}
+
+func (o KubeProxyConfigurationTypeOutput) ClientConnection() KubeProxyConfigurationClientConnectionPtrOutput {
+	return o.ApplyT(func(v KubeProxyConfigurationType) *KubeProxyConfigurationClientConnection { return v.ClientConnection }).(KubeProxyConfigurationClientConnectionPtrOutput)
+}
+
+// TODO
+func (o KubeProxyConfigurationTypeOutput) ClusterCIDR() pulumi.StringOutput {
+	return o.ApplyT(func(v KubeProxyConfigurationType) string { return v.ClusterCIDR }).(pulumi.StringOutput)
+}
+
+func (o KubeProxyConfigurationTypeOutput) Kind() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v KubeProxyConfigurationType) *string { return v.Kind }).(pulumi.StringPtrOutput)
+}
+
+// TODO
+func (o KubeProxyConfigurationTypeOutput) Mode() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v KubeProxyConfigurationType) *string { return v.Mode }).(pulumi.StringPtrOutput)
+}
+
+type KubeProxyConfigurationClientConnection struct {
+	// Path to the kubeconfig.
+	Kubeconfig string `pulumi:"kubeconfig"`
+}
+
+type KubeProxyConfigurationClientConnectionOutput struct{ *pulumi.OutputState }
+
+func (KubeProxyConfigurationClientConnectionOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*KubeProxyConfigurationClientConnection)(nil)).Elem()
+}
+
+func (o KubeProxyConfigurationClientConnectionOutput) ToKubeProxyConfigurationClientConnectionOutput() KubeProxyConfigurationClientConnectionOutput {
+	return o
+}
+
+func (o KubeProxyConfigurationClientConnectionOutput) ToKubeProxyConfigurationClientConnectionOutputWithContext(ctx context.Context) KubeProxyConfigurationClientConnectionOutput {
+	return o
+}
+
+// Path to the kubeconfig.
+func (o KubeProxyConfigurationClientConnectionOutput) Kubeconfig() pulumi.StringOutput {
+	return o.ApplyT(func(v KubeProxyConfigurationClientConnection) string { return v.Kubeconfig }).(pulumi.StringOutput)
+}
+
+type KubeProxyConfigurationClientConnectionPtrOutput struct{ *pulumi.OutputState }
+
+func (KubeProxyConfigurationClientConnectionPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**KubeProxyConfigurationClientConnection)(nil)).Elem()
+}
+
+func (o KubeProxyConfigurationClientConnectionPtrOutput) ToKubeProxyConfigurationClientConnectionPtrOutput() KubeProxyConfigurationClientConnectionPtrOutput {
+	return o
+}
+
+func (o KubeProxyConfigurationClientConnectionPtrOutput) ToKubeProxyConfigurationClientConnectionPtrOutputWithContext(ctx context.Context) KubeProxyConfigurationClientConnectionPtrOutput {
+	return o
+}
+
+func (o KubeProxyConfigurationClientConnectionPtrOutput) Elem() KubeProxyConfigurationClientConnectionOutput {
+	return o.ApplyT(func(v *KubeProxyConfigurationClientConnection) KubeProxyConfigurationClientConnection {
+		if v != nil {
+			return *v
+		}
+		var ret KubeProxyConfigurationClientConnection
+		return ret
+	}).(KubeProxyConfigurationClientConnectionOutput)
+}
+
+// Path to the kubeconfig.
+func (o KubeProxyConfigurationClientConnectionPtrOutput) Kubeconfig() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *KubeProxyConfigurationClientConnection) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.Kubeconfig
+	}).(pulumi.StringPtrOutput)
+}
+
 type Kubeconfig struct {
 	Clusters []Cluster `pulumi:"clusters"`
 	Contexts []Context `pulumi:"contexts"`
@@ -1126,6 +1230,9 @@ func init() {
 	pulumi.RegisterOutputType(ClusterArrayOutput{})
 	pulumi.RegisterOutputType(ContextOutput{})
 	pulumi.RegisterOutputType(ContextArrayOutput{})
+	pulumi.RegisterOutputType(KubeProxyConfigurationTypeOutput{})
+	pulumi.RegisterOutputType(KubeProxyConfigurationClientConnectionOutput{})
+	pulumi.RegisterOutputType(KubeProxyConfigurationClientConnectionPtrOutput{})
 	pulumi.RegisterOutputType(KubeconfigOutput{})
 	pulumi.RegisterOutputType(KubeconfigAdminOptionsOutput{})
 	pulumi.RegisterOutputType(KubeconfigKubeControllerManagerOptionsOutput{})

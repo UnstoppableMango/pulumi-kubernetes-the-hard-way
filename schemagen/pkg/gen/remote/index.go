@@ -30,6 +30,7 @@ func Generate(commandSpec schema.PackageSpec) schema.PackageSpec {
 		name("KubeletInstall"):                 generateBinaryInstall(commandSpec, "Installs kubelet on a remote system."),
 		name("KubeletService"):                 generateKubeletService(commandSpec),
 		name("KubeProxyInstall"):               generateBinaryInstall(commandSpec, "Installs kube-proxy on a remote system."),
+		name("KubeProxyService"):               generateKubeProxyService(commandSpec),
 		name("KubeSchedulerInstall"):           generateBinaryInstall(commandSpec, "Installs kube-scheduler on a remote system."),
 		name("RuncInstall"):                    generateBinaryInstall(commandSpec, "Installs runc on a remote system."),
 		name("ProvisionEtcd"):                  generateProvisionEtcd(commandSpec),

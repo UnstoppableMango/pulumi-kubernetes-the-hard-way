@@ -6,6 +6,7 @@
 import * as pulumi from "@pulumi/pulumi";
 export type ConstructComponent<T extends pulumi.ComponentResource = pulumi.ComponentResource> = (name: string, inputs: any, options: pulumi.ComponentResourceOptions) => T;
 export type ResourceConstructor = {
+    readonly "kubernetes-the-hard-way:config:KubeProxyConfiguration": ConstructComponent<KubeProxyConfiguration>;
     readonly "kubernetes-the-hard-way:config:KubeVipManifest": ConstructComponent<KubeVipManifest>;
     readonly "kubernetes-the-hard-way:config:KubeletConfiguration": ConstructComponent<KubeletConfiguration>;
     readonly "kubernetes-the-hard-way:remote:CniBridgePluginConfiguration": ConstructComponent<CniBridgePluginConfiguration>;
@@ -24,6 +25,7 @@ export type ResourceConstructor = {
     readonly "kubernetes-the-hard-way:remote:KubeApiServerInstall": ConstructComponent<KubeApiServerInstall>;
     readonly "kubernetes-the-hard-way:remote:KubeControllerManagerInstall": ConstructComponent<KubeControllerManagerInstall>;
     readonly "kubernetes-the-hard-way:remote:KubeProxyInstall": ConstructComponent<KubeProxyInstall>;
+    readonly "kubernetes-the-hard-way:remote:KubeProxyService": ConstructComponent<KubeProxyService>;
     readonly "kubernetes-the-hard-way:remote:KubeSchedulerInstall": ConstructComponent<KubeSchedulerInstall>;
     readonly "kubernetes-the-hard-way:remote:KubectlInstall": ConstructComponent<KubectlInstall>;
     readonly "kubernetes-the-hard-way:remote:KubeletInstall": ConstructComponent<KubeletInstall>;
@@ -52,6 +54,7 @@ export type ResourceConstructor = {
     readonly "kubernetes-the-hard-way:tools:Wget": ConstructComponent<Wget>;
 };
 export type Functions = {
+    "kubernetes-the-hard-way:config:getKubeProxyConfiguration": (inputs: getKubeProxyConfigurationInputs) => Promise<getKubeProxyConfigurationOutputs>;
     "kubernetes-the-hard-way:config:getKubeVipManifest": (inputs: getKubeVipManifestInputs) => Promise<getKubeVipManifestOutputs>;
     "kubernetes-the-hard-way:config:getKubeconfig": (inputs: getKubeconfigInputs) => Promise<getKubeconfigOutputs>;
     "kubernetes-the-hard-way:config:getKubeletConfiguration": (inputs: getKubeletConfigurationInputs) => Promise<getKubeletConfigurationOutputs>;
@@ -61,6 +64,18 @@ import * as command from "@pulumi/command";
 import * as kubernetes from "@pulumi/kubernetes";
 import * as random from "@pulumi/random";
 import * as tls from "@pulumi/tls";
+export abstract class KubeProxyConfiguration<TData = any> extends (pulumi.ComponentResource)<TData> {
+    public result!: KubeProxyConfigurationOutputs | pulumi.Output<KubeProxyConfigurationOutputs>;
+    public yaml!: string | pulumi.Output<string>;
+    constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
+        super("kubernetes-the-hard-way:config:KubeProxyConfiguration", name, opts.urn ? { result: undefined, yaml: undefined } : { name, args, opts }, opts);
+    }
+}
+export interface KubeProxyConfigurationArgs {
+    readonly clusterCIDR: pulumi.Input<string>;
+    readonly kubeconfig: pulumi.Input<string>;
+    readonly mode?: pulumi.Input<string>;
+}
 export abstract class KubeVipManifest<TData = any> extends (pulumi.ComponentResource)<TData> {
     public result!: PodManifestOutputs | pulumi.Output<PodManifestOutputs>;
     public yaml!: string | pulumi.Output<string>;
@@ -512,6 +527,30 @@ export interface KubeProxyInstallArgs {
     readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
     readonly directory?: pulumi.Input<string>;
     readonly version?: pulumi.Input<string>;
+}
+export abstract class KubeProxyService<TData = any> extends (pulumi.ComponentResource)<TData> {
+    public configuration!: KubeProxyConfigurationPropsOutputs | pulumi.Output<KubeProxyConfigurationPropsOutputs>;
+    public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
+    public description?: string | pulumi.Output<string>;
+    public directory?: string | pulumi.Output<string>;
+    public documentation?: string | pulumi.Output<string>;
+    public restart?: SystemdServiceRestartOutputs | pulumi.Output<SystemdServiceRestartOutputs>;
+    public restartSec?: string | pulumi.Output<string>;
+    public service!: SystemdService | pulumi.Output<SystemdService>;
+    public wantedBy?: string | pulumi.Output<string>;
+    constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
+        super("kubernetes-the-hard-way:remote:KubeProxyService", name, opts.urn ? { configuration: undefined, connection: undefined, description: undefined, directory: undefined, documentation: undefined, restart: undefined, restartSec: undefined, service: undefined, wantedBy: undefined } : { name, args, opts }, opts);
+    }
+}
+export interface KubeProxyServiceArgs {
+    readonly configuration: pulumi.Input<KubeProxyConfigurationPropsInputs>;
+    readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
+    readonly description?: pulumi.Input<string>;
+    readonly directory?: pulumi.Input<string>;
+    readonly documentation?: pulumi.Input<string>;
+    readonly restart?: pulumi.Input<SystemdServiceRestartInputs>;
+    readonly restartSec?: pulumi.Input<string>;
+    readonly wantedBy?: pulumi.Input<string>;
 }
 export abstract class KubeSchedulerInstall<TData = any> extends (pulumi.ComponentResource)<TData> {
     public architecture!: ArchitectureOutputs | pulumi.Output<ArchitectureOutputs>;
@@ -1199,6 +1238,26 @@ export interface ContextOutputs {
     readonly cluster: pulumi.Output<string>;
     readonly user: pulumi.Output<string>;
 }
+export interface KubeProxyConfigurationInputs {
+    readonly apiVersion?: pulumi.Input<string>;
+    readonly clientConnection?: pulumi.Input<KubeProxyConfigurationClientConnectionInputs>;
+    readonly clusterCIDR: pulumi.Input<string>;
+    readonly kind?: pulumi.Input<string>;
+    readonly mode?: pulumi.Input<string>;
+}
+export interface KubeProxyConfigurationOutputs {
+    readonly apiVersion?: pulumi.Output<string>;
+    readonly clientConnection?: pulumi.Output<KubeProxyConfigurationClientConnectionOutputs>;
+    readonly clusterCIDR: pulumi.Output<string>;
+    readonly kind?: pulumi.Output<string>;
+    readonly mode?: pulumi.Output<string>;
+}
+export interface KubeProxyConfigurationClientConnectionInputs {
+    readonly kubeconfig: pulumi.Input<string>;
+}
+export interface KubeProxyConfigurationClientConnectionOutputs {
+    readonly kubeconfig: pulumi.Output<string>;
+}
 export interface KubeconfigInputs {
     readonly clusters: pulumi.Input<pulumi.Input<ClusterInputs>[]>;
     readonly contexts: pulumi.Input<pulumi.Input<ContextInputs>[]>;
@@ -1442,6 +1501,14 @@ export interface EtcdNodeOutputs {
     readonly architecture?: pulumi.Output<ArchitectureOutputs>;
     readonly connection: pulumi.Output<command.types.output.remote.Connection>;
     readonly internalIp: pulumi.Output<string>;
+}
+export interface KubeProxyConfigurationPropsInputs {
+    readonly configurationFilePath: pulumi.Input<string>;
+    readonly kubeProxyPath: pulumi.Input<string>;
+}
+export interface KubeProxyConfigurationPropsOutputs {
+    readonly configurationFilePath: pulumi.Output<string>;
+    readonly kubeProxyPath: pulumi.Output<string>;
 }
 export interface KubeletConfigurationPropsInputs {
     readonly configurationFilePath: pulumi.Input<string>;
@@ -1938,6 +2005,14 @@ export interface WgetOptsOutputs {
     readonly quiet?: pulumi.Output<boolean>;
     readonly timestamping?: pulumi.Output<boolean>;
     readonly url: pulumi.Output<string[]>;
+}
+export interface getKubeProxyConfigurationInputs {
+    readonly clusterCIDR: pulumi.Input<string>;
+    readonly kubeconfig: pulumi.Input<string>;
+    readonly mode?: pulumi.Input<string>;
+}
+export interface getKubeProxyConfigurationOutputs {
+    readonly result: pulumi.Output<KubeProxyConfigurationOutputs>;
 }
 export interface getKubeVipManifestInputs {
     readonly address: pulumi.Input<string>;

@@ -20,6 +20,7 @@ __all__ = [
     'ContainerdCriPluginConfigurationArgs',
     'EtcdConfigurationPropsArgs',
     'EtcdNodeArgs',
+    'KubeProxyConfigurationPropsArgs',
     'KubeletConfigurationPropsArgs',
     'SystemdInstallSectionArgs',
     'SystemdServiceSectionArgs',
@@ -444,6 +445,44 @@ class EtcdNodeArgs:
     @architecture.setter
     def architecture(self, value: Optional[pulumi.Input['Architecture']]):
         pulumi.set(self, "architecture", value)
+
+
+@pulumi.input_type
+class KubeProxyConfigurationPropsArgs:
+    def __init__(__self__, *,
+                 configuration_file_path: pulumi.Input[str],
+                 kube_proxy_path: pulumi.Input[str]):
+        """
+        Props for resources that consume kube-proxy configuration.
+        :param pulumi.Input[str] configuration_file_path: Path to the kube proxy configuration file
+        :param pulumi.Input[str] kube_proxy_path: Path to the kube-proxy binary.
+        """
+        pulumi.set(__self__, "configuration_file_path", configuration_file_path)
+        pulumi.set(__self__, "kube_proxy_path", kube_proxy_path)
+
+    @property
+    @pulumi.getter(name="configurationFilePath")
+    def configuration_file_path(self) -> pulumi.Input[str]:
+        """
+        Path to the kube proxy configuration file
+        """
+        return pulumi.get(self, "configuration_file_path")
+
+    @configuration_file_path.setter
+    def configuration_file_path(self, value: pulumi.Input[str]):
+        pulumi.set(self, "configuration_file_path", value)
+
+    @property
+    @pulumi.getter(name="kubeProxyPath")
+    def kube_proxy_path(self) -> pulumi.Input[str]:
+        """
+        Path to the kube-proxy binary.
+        """
+        return pulumi.get(self, "kube_proxy_path")
+
+    @kube_proxy_path.setter
+    def kube_proxy_path(self, value: pulumi.Input[str]):
+        pulumi.set(self, "kube_proxy_path", value)
 
 
 @pulumi.input_type

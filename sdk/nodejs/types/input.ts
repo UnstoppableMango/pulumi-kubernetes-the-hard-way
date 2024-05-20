@@ -619,6 +619,20 @@ export namespace remote {
     }
 
     /**
+     * Props for resources that consume kube-proxy configuration.
+     */
+    export interface KubeProxyConfigurationPropsArgs {
+        /**
+         * Path to the kube proxy configuration file
+         */
+        configurationFilePath: pulumi.Input<string>;
+        /**
+         * Path to the kube-proxy binary.
+         */
+        kubeProxyPath: pulumi.Input<string>;
+    }
+
+    /**
      * Props for resources that consume kubelet configuration.
      */
     export interface KubeletConfigurationPropsArgs {

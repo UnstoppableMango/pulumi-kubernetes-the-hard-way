@@ -14,6 +14,7 @@
   },
   "files": [
     "config/getKubeletConfiguration.ts",
+    "config/getKubeProxyConfiguration.ts",
     "config/getKubeVipManifest.ts",
     "config/index.ts",
     "config/kubeconfig.ts",
@@ -44,6 +45,7 @@
     "remote/kubelet.ts",
     "remote/kubeletService.ts",
     "remote/kubeProxy.ts",
+    "remote/kubeProxyService.ts",
     "remote/kubeSchedulerInstall.ts",
     "remote/provisionEtcd.ts",
     "remote/runc.ts",

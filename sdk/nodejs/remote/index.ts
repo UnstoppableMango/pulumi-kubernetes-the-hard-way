@@ -85,6 +85,11 @@ export type KubeProxyInstall = import("./kubeProxyInstall").KubeProxyInstall;
 export const KubeProxyInstall: typeof import("./kubeProxyInstall").KubeProxyInstall = null as any;
 utilities.lazyLoad(exports, ["KubeProxyInstall"], () => require("./kubeProxyInstall"));
 
+export { KubeProxyServiceArgs } from "./kubeProxyService";
+export type KubeProxyService = import("./kubeProxyService").KubeProxyService;
+export const KubeProxyService: typeof import("./kubeProxyService").KubeProxyService = null as any;
+utilities.lazyLoad(exports, ["KubeProxyService"], () => require("./kubeProxyService"));
+
 export { KubeSchedulerInstallArgs } from "./kubeSchedulerInstall";
 export type KubeSchedulerInstall = import("./kubeSchedulerInstall").KubeSchedulerInstall;
 export const KubeSchedulerInstall: typeof import("./kubeSchedulerInstall").KubeSchedulerInstall = null as any;
@@ -170,6 +175,8 @@ const _module = {
                 return new KubeControllerManagerInstall(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:remote:KubeProxyInstall":
                 return new KubeProxyInstall(name, <any>undefined, { urn })
+            case "kubernetes-the-hard-way:remote:KubeProxyService":
+                return new KubeProxyService(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:remote:KubeSchedulerInstall":
                 return new KubeSchedulerInstall(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:remote:KubectlInstall":

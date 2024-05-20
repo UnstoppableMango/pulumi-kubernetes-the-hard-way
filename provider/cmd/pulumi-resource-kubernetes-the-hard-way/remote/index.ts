@@ -17,6 +17,7 @@ export * from './kubectl';
 export * from './kubelet';
 export * from './kubeletService';
 export * from './kubeProxy';
+export * from './kubeProxyService';
 export * from './kubeSchedulerInstall';
 export * from './runc';
 export * from './startEtcd';
