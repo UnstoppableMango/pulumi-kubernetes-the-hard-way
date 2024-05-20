@@ -10,11 +10,6 @@ export type Chmod = import("./chmod").Chmod;
 export const Chmod: typeof import("./chmod").Chmod = null as any;
 utilities.lazyLoad(exports, ["Chmod"], () => require("./chmod"));
 
-export { CurlArgs } from "./curl";
-export type Curl = import("./curl").Curl;
-export const Curl: typeof import("./curl").Curl = null as any;
-utilities.lazyLoad(exports, ["Curl"], () => require("./curl"));
-
 export { EtcdctlArgs } from "./etcdctl";
 export type Etcdctl = import("./etcdctl").Etcdctl;
 export const Etcdctl: typeof import("./etcdctl").Etcdctl = null as any;
@@ -80,8 +75,6 @@ const _module = {
         switch (type) {
             case "kubernetes-the-hard-way:tools:Chmod":
                 return new Chmod(name, <any>undefined, { urn })
-            case "kubernetes-the-hard-way:tools:Curl":
-                return new Curl(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:tools:Etcdctl":
                 return new Etcdctl(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:tools:Hostnamectl":

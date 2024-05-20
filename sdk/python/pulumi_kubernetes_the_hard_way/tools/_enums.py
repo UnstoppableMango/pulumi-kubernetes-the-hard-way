@@ -6,8 +6,6 @@ from enum import Enum
 
 __all__ = [
     'CommandLifecycle',
-    'CurlCertType',
-    'CurlDelegationLevel',
     'EtcdctlCommand',
     'HostnamectlCommand',
     'HostnamectlJsonMode',
@@ -20,19 +18,6 @@ class CommandLifecycle(str, Enum):
     CREATE = "create"
     UPDATE = "update"
     DELETE = "delete"
-
-
-class CurlCertType(str, Enum):
-    PEM = "PEM"
-    DER = "DER"
-    ENG = "ENG"
-    P12 = "P12"
-
-
-class CurlDelegationLevel(str, Enum):
-    NONE = "none"
-    POLICY = "policy"
-    ALWAYS = "always"
 
 
 class EtcdctlCommand(str, Enum):

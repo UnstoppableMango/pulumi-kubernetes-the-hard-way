@@ -73,7 +73,6 @@ const resources: schema.ResourceConstructor = {
   'kubernetes-the-hard-way:tls:EncryptionKey': (...args) => new EncryptionKey(...args),
   'kubernetes-the-hard-way:tls:RootCa': (...args) => new RootCa(...args),
   'kubernetes-the-hard-way:tools:Chmod': (...args) => new Chmod(...args),
-  'kubernetes-the-hard-way:tools:Curl': (...args) => { throw new Error('TODO') },
   'kubernetes-the-hard-way:tools:Etcdctl': (...args) => new Etcdctl(...args),
   'kubernetes-the-hard-way:tools:Hostnamectl': (...args) => new Hostnamectl(...args),
   'kubernetes-the-hard-way:tools:Mkdir': (...args) => new Mkdir(...args),
