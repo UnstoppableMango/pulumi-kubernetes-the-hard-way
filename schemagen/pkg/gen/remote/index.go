@@ -6,19 +6,15 @@ import (
 )
 
 func Generate(commandSpec schema.PackageSpec) schema.PackageSpec {
-	functions := map[string]schema.FunctionSpec{}
-
-	resources := map[string]schema.ResourceSpec{
-		name("ContainerdConfiguration"):        generateContainerdConfiguration(commandSpec),
-		name("CniBridgePluginConfiguration"):   generateCniBridgePluginConfiguration(commandSpec),
-		name("CniLoopbackPluginConfiguration"): generateCniLoopbackPluginConfiguration(commandSpec),
-		name("CniPluginConfiguration"):         generateCniPluginConfiguration(commandSpec),
-	}
-
 	base := schema.PackageSpec{
-		Functions: functions,
-		Resources: resources,
-		Types:     generateTypes(),
+		Functions: map[string]schema.FunctionSpec{},
+		Resources: map[string]schema.ResourceSpec{
+			name("ContainerdConfiguration"):        generateContainerdConfiguration(commandSpec),
+			name("CniBridgePluginConfiguration"):   generateCniBridgePluginConfiguration(commandSpec),
+			name("CniLoopbackPluginConfiguration"): generateCniLoopbackPluginConfiguration(commandSpec),
+			name("CniPluginConfiguration"):         generateCniPluginConfiguration(commandSpec),
+		},
+		Types: generateTypes(),
 	}
 
 	return internal.ExtendSchemas(base,
