@@ -1,33 +1,29 @@
 import { ComponentResourceOptions, Output, interpolate, output } from '@pulumi/pulumi';
 import * as schema from '../schema-types';
-import { File } from './file';
+
+export async function getContainerdConfiguration(
+  inputs: schema.getContainerdConfigurationInputs,
+): Promise<schema.getContainerdConfigurationOutputs> {
+  const cri = criDefaults(inputs.cri);
+
+  // TODO: Why is this like this?
+  const result: schema.ContainerdConfigurationInputs = {};
+
+  return { result: result as Output<schema.ContainerdConfigurationOutputs> };
+}
 
 export class ContainerdConfiguration extends schema.ContainerdConfiguration {
   constructor(name: string, args: schema.ContainerdConfigurationArgs, opts?: ComponentResourceOptions) {
     super(name, args, opts);
     if (opts?.urn) return;
 
-    const connection = output(args.connection);
-    const cri = criDefaults(args.cri);
-    const path = output(args.path ?? '/etc/containerd/containerd-config.toml');
+    const { result } = output(getContainerdConfiguration(args));
+    const toml = result.apply(formatAsToml);
 
-    const file = new File(name, {
-      connection,
-      content: formatAsToml(cri),
-      path,
-    }, { parent: this });
+    this.result = result as unknown as Output<schema.CniBridgePluginConfigurationOutputs>;
+    this.toml = toml;
 
-    this.connection = connection;;
-    this.cri = cri;
-    this.file = file;
-    this.path = path;
-
-    this.registerOutputs({
-      connection,
-      cri,
-      file,
-      path,
-    });
+    this.registerOutputs({ result, toml });
   }
 }
 
@@ -63,7 +59,8 @@ function runcDefaults(runtimes?: schema.ContainerdCriPluginConfigurationContaine
 }
 
 // https://github.com/kelseyhightower/kubernetes-the-hard-way/blob/master/configs/containerd-config.toml
-function formatAsToml(cri: schema.ContainerdCriPluginConfigurationOutputs): Output<string> {
+function formatAsToml(input: schema.ContainerdConfigurationOutputs): Output<string> {
+  const cri: schema.ContainerdCriPluginConfigurationOutputs = {} as unknown as schema.ContainerdCriPluginConfigurationOutputs; // TODO: Fix
   return interpolate`# DO NOT MODIFY - Managed by Pulumi
 version = 2
 

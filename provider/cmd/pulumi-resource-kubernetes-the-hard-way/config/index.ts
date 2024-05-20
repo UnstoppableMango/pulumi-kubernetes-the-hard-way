@@ -1,3 +1,6 @@
+export * from './cniBridgePluginConfiguration';
+export * from './cniLoopbackPluginConfiguration';
+export * from './containerdConfiguration';
 export * from './getKubeletConfiguration';
 export * from './getKubeProxyConfiguration';
 export * from './getKubeVipManifest';

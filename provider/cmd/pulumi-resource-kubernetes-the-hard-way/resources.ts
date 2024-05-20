@@ -1,11 +1,7 @@
 import { ComponentResource, ComponentResourceOptions, Inputs } from '@pulumi/pulumi';
 import * as schema from './schema-types';
 import {
-  CniBridgePluginConfiguration,
-  CniLoopbackPluginConfiguration,
-  CniPluginConfiguration,
   CniPluginsInstall,
-  ContainerdConfiguration,
   ContainerdInstall,
   CrictlInstall,
   Download,
@@ -33,15 +29,22 @@ import {
 import { ProvisionEtcd } from './remote/provisionEtcd';
 import { Certificate, ClusterPki, EncryptionKey, RootCa } from './tls';
 import { Chmod, Etcdctl, Hostnamectl, Mkdir, Mktemp, Mv, Rm, Sed, Systemctl, Tar, Tee, Wget } from './tools';
-import { KubeProxyConfiguration, KubeVipManifest, KubeletConfiguration } from './config';
+import {
+  CniBridgePluginConfiguration,
+  CniLoopbackPluginConfiguration,
+  ContainerdConfiguration,
+  KubeProxyConfiguration,
+  KubeVipManifest,
+  KubeletConfiguration,
+} from './config';
 
 const resources: schema.ResourceConstructor = {
+  'kubernetes-the-hard-way:config:CniBridgePluginConfiguration': (...args) => new CniBridgePluginConfiguration(...args),
+  'kubernetes-the-hard-way:config:CniLoopbackPluginConfiguration': (...args) => new CniLoopbackPluginConfiguration(...args),
+  'kubernetes-the-hard-way:config:ContainerdConfiguration': (...args) => new ContainerdConfiguration(...args),
   'kubernetes-the-hard-way:config:KubeletConfiguration': (...args) => new KubeletConfiguration(...args),
   'kubernetes-the-hard-way:config:KubeProxyConfiguration': (...args) => new KubeProxyConfiguration(...args),
   'kubernetes-the-hard-way:config:KubeVipManifest': (...args) => new KubeVipManifest(...args),
-  'kubernetes-the-hard-way:remote:CniBridgePluginConfiguration': (...args) => new CniBridgePluginConfiguration(...args),
-  'kubernetes-the-hard-way:remote:CniLoopbackPluginConfiguration': (...args) => new CniLoopbackPluginConfiguration(...args),
-  'kubernetes-the-hard-way:remote:CniPluginConfiguration': (...args) => new CniPluginConfiguration(...args),
   'kubernetes-the-hard-way:remote:Download': (...args) => new Download(...args),
   'kubernetes-the-hard-way:remote:EtcdCluster': (...args) => new EtcdCluster(...args),
   'kubernetes-the-hard-way:remote:EtcdConfiguration': (...args) => new EtcdConfiguration(...args),
@@ -52,7 +55,6 @@ const resources: schema.ResourceConstructor = {
   'kubernetes-the-hard-way:remote:KubeControllerManagerInstall': (...args) => new KubeControllerManagerInstall(...args),
   'kubernetes-the-hard-way:remote:KubeSchedulerInstall': (...args) => new KubeSchedulerInstall(...args),
   'kubernetes-the-hard-way:remote:CniPluginsInstall': (...args) => new CniPluginsInstall(...args),
-  'kubernetes-the-hard-way:remote:ContainerdConfiguration': (...args) => new ContainerdConfiguration(...args),
   'kubernetes-the-hard-way:remote:ContainerdInstall': (...args) => new ContainerdInstall(...args),
   'kubernetes-the-hard-way:remote:CrictlInstall': (...args) => new CrictlInstall(...args),
   'kubernetes-the-hard-way:remote:KubectlInstall': (...args) => new KubectlInstall(...args),
