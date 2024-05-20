@@ -9,7 +9,7 @@ import (
 	"github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 )
 
-func generateEtcdConfiguration(commandSpec schema.PackageSpec) schema.ResourceSpec {
+func generateEtcdConfiguration(commandSpec schema.PackageSpec) schema.PackageSpec {
 	inputs := map[string]schema.PropertySpec{
 		"caPem":   props.String("The PEM encoded certificate authority data."),
 		"certPem": props.String("The PEM encoded certificate data."),
@@ -18,10 +18,7 @@ func generateEtcdConfiguration(commandSpec schema.PackageSpec) schema.ResourceSp
 			TypeSpec:    types.String,
 			Default:     "/etc/etcd",
 		},
-		"connection": {
-			Description: "The parameters with which to connect to the remote host.",
-			TypeSpec:    types.ExtType(commandSpec, "Connection", "remote"),
-		},
+		"connection": props.Connection(commandSpec),
 		"dataDirectory": {
 			Description: "The directory etcd will store its data.",
 			TypeSpec:    types.String,
@@ -29,10 +26,7 @@ func generateEtcdConfiguration(commandSpec schema.PackageSpec) schema.ResourceSp
 		},
 		"etcdPath":   props.String("The path to the `etcd` binary."),
 		"internalIp": props.String("The IP used to serve client requests and communicate with etcd peers."),
-		"keyPem": { // TODO: Secret I'm pretty sure
-			Description: "The PEM encoded key data.",
-			TypeSpec:    types.String,
-		},
+		"keyPem":     props.String("The PEM encoded key data."), // Secret I'm pretty sure
 	}
 
 	requiredInputs := []string{
@@ -76,28 +70,56 @@ func generateEtcdConfiguration(commandSpec schema.PackageSpec) schema.ResourceSp
 	}
 	maps.Copy(outputs, inputs)
 
-	requiredOutputs := slices.Concat(
-		requiredInputs,
-		[]string{
-			"caFile",
-			"certFile",
-			"configurationDirectory",
-			"configurationMkdir",
-			"dataDirectory",
-			"dataMkdir",
-			"keyFile",
-			"value",
-		},
-	)
+	requiredOutputs := slices.Concat(requiredInputs, []string{
+		"caFile",
+		"certFile",
+		"configurationDirectory",
+		"configurationMkdir",
+		"dataDirectory",
+		"dataMkdir",
+		"keyFile",
+		"value",
+	})
 
-	return schema.ResourceSpec{
-		IsComponent: true,
-		ObjectTypeSpec: schema.ObjectTypeSpec{
-			Description: "Configures etcd on a remote system.",
-			Properties:  outputs,
-			Required:    requiredOutputs,
+	return schema.PackageSpec{
+		Types: map[string]schema.ComplexTypeSpec{
+			name("EtcdConfigurationProps"): { // TODO: This name kinda sucks
+				ObjectTypeSpec: schema.ObjectTypeSpec{
+					Description: "Props for resources that consume etcd configuration.",
+					Type:        "object",
+					Properties: map[string]schema.PropertySpec{
+						"caFilePath":    props.String("Path to the certificate authority file on the remote system."),
+						"certFilePath":  props.String("Path to the certificate file on the remote system."),
+						"dataDirectory": props.String("Etcd's data directory."),
+						"etcdPath":      props.String("Path to the etcd binary."),
+						"internalIp":    props.String("Internal IP of the etcd node."),
+						"keyFilePath":   props.String("Path to the private key file on the remote system."),
+						"name":          props.String("Name of the etcd node."),
+					},
+					Required: []string{
+						"caFilePath",
+						"certFilePath",
+						"dataDirectory",
+						"etcdPath",
+						"internalIp",
+						"keyFilePath",
+						"name",
+					},
+				},
+			},
 		},
-		InputProperties: inputs,
-		RequiredInputs:  requiredInputs,
+		Functions: map[string]schema.FunctionSpec{},
+		Resources: map[string]schema.ResourceSpec{
+			name("EtcdConfiguration"): {
+				IsComponent: true,
+				ObjectTypeSpec: schema.ObjectTypeSpec{
+					Description: "Configures etcd on a remote system.",
+					Properties:  outputs,
+					Required:    requiredOutputs,
+				},
+				InputProperties: inputs,
+				RequiredInputs:  requiredInputs,
+			},
+		},
 	}
 }

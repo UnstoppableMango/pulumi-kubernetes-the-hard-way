@@ -7,7 +7,7 @@ import (
 	"github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 )
 
-func generateFile(commandSpec schema.PackageSpec) schema.ResourceSpec {
+func generateFile(commandSpec schema.PackageSpec) schema.PackageSpec {
 	command := commandSpec.Resources["command:remote:Command"]
 
 	inputs := map[string]schema.PropertySpec{
@@ -52,14 +52,20 @@ func generateFile(commandSpec schema.PackageSpec) schema.ResourceSpec {
 		"stdout",
 	}
 
-	return schema.ResourceSpec{
-		IsComponent: true,
-		ObjectTypeSpec: schema.ObjectTypeSpec{
-			Description: "",
-			Properties:  outputs,
-			Required:    requiredOutputs,
+	return schema.PackageSpec{
+		Types:     map[string]schema.ComplexTypeSpec{},
+		Functions: map[string]schema.FunctionSpec{},
+		Resources: map[string]schema.ResourceSpec{
+			name("File"): {
+				IsComponent: true,
+				ObjectTypeSpec: schema.ObjectTypeSpec{
+					Description: "",
+					Properties:  outputs,
+					Required:    requiredOutputs,
+				},
+				InputProperties: inputs,
+				RequiredInputs:  requiredInputs,
+			},
 		},
-		InputProperties: inputs,
-		RequiredInputs:  requiredInputs,
 	}
 }

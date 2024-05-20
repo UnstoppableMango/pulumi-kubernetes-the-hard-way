@@ -9,7 +9,7 @@ import (
 	"github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 )
 
-func generateProvisionEtcd(commandSpec schema.PackageSpec) schema.ResourceSpec {
+func generateProvisionEtcd(commandSpec schema.PackageSpec) schema.PackageSpec {
 	inputs := map[string]schema.PropertySpec{
 		"architecture": {
 			Description: "TODO",
@@ -58,14 +58,20 @@ func generateProvisionEtcd(commandSpec schema.PackageSpec) schema.ResourceSpec {
 		},
 	)
 
-	return schema.ResourceSpec{
-		IsComponent: true,
-		ObjectTypeSpec: schema.ObjectTypeSpec{
-			Description: "Starts etcd on a remote system.",
-			Properties:  outputs,
-			Required:    requiredOutputs,
+	return schema.PackageSpec{
+		Types:     map[string]schema.ComplexTypeSpec{},
+		Functions: map[string]schema.FunctionSpec{},
+		Resources: map[string]schema.ResourceSpec{
+			name("ProvisionEtcd"): {
+				IsComponent: true,
+				ObjectTypeSpec: schema.ObjectTypeSpec{
+					Description: "Starts etcd on a remote system.",
+					Properties:  outputs,
+					Required:    requiredOutputs,
+				},
+				InputProperties: inputs,
+				RequiredInputs:  requiredInputs,
+			},
 		},
-		InputProperties: inputs,
-		RequiredInputs:  requiredInputs,
 	}
 }
