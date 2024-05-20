@@ -11,10 +11,10 @@ using Pulumi;
 namespace UnMango.KubernetesTheHardWay.Remote
 {
     /// <summary>
-    /// Starts `etcd` on a remote system
+    /// Starts `kube-proxy` on a remote system
     /// </summary>
-    [KubernetesTheHardWayResourceType("kubernetes-the-hard-way:remote:StartEtcd")]
-    public partial class StartEtcd : global::Pulumi.ComponentResource
+    [KubernetesTheHardWayResourceType("kubernetes-the-hard-way:remote:StartKubeProxy")]
+    public partial class StartKubeProxy : global::Pulumi.ComponentResource
     {
         /// <summary>
         /// The parameters with which to connect to the remote host.
@@ -42,14 +42,14 @@ namespace UnMango.KubernetesTheHardWay.Remote
 
 
         /// <summary>
-        /// Create a StartEtcd resource with the given unique name, arguments, and options.
+        /// Create a StartKubeProxy resource with the given unique name, arguments, and options.
         /// </summary>
         ///
         /// <param name="name">The unique name of the resource</param>
         /// <param name="args">The arguments used to populate this resource's properties</param>
         /// <param name="options">A bag of options that control this resource's behavior</param>
-        public StartEtcd(string name, StartEtcdArgs args, ComponentResourceOptions? options = null)
-            : base("kubernetes-the-hard-way:remote:StartEtcd", name, args ?? new StartEtcdArgs(), MakeResourceOptions(options, ""), remote: true)
+        public StartKubeProxy(string name, StartKubeProxyArgs args, ComponentResourceOptions? options = null)
+            : base("kubernetes-the-hard-way:remote:StartKubeProxy", name, args ?? new StartKubeProxyArgs(), MakeResourceOptions(options, ""), remote: true)
         {
         }
 
@@ -67,7 +67,7 @@ namespace UnMango.KubernetesTheHardWay.Remote
         }
     }
 
-    public sealed class StartEtcdArgs : global::Pulumi.ResourceArgs
+    public sealed class StartKubeProxyArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
         /// The parameters with which to connect to the remote host.
@@ -75,9 +75,9 @@ namespace UnMango.KubernetesTheHardWay.Remote
         [Input("connection", required: true)]
         public Input<Pulumi.Command.Remote.Inputs.ConnectionArgs> Connection { get; set; } = null!;
 
-        public StartEtcdArgs()
+        public StartKubeProxyArgs()
         {
         }
-        public static new StartEtcdArgs Empty => new StartEtcdArgs();
+        public static new StartKubeProxyArgs Empty => new StartKubeProxyArgs();
     }
 }

@@ -1,6 +1,7 @@
 package remote
 
 import (
+	"fmt"
 	"maps"
 	"slices"
 
@@ -9,7 +10,7 @@ import (
 	"github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 )
 
-func generateStartEtcd(commandSpec schema.PackageSpec) schema.ResourceSpec {
+func generateStartSystemdService(commandSpec schema.PackageSpec, name string) schema.ResourceSpec {
 	inputs := map[string]schema.PropertySpec{
 		"connection": props.Connection(commandSpec),
 	}
@@ -43,7 +44,7 @@ func generateStartEtcd(commandSpec schema.PackageSpec) schema.ResourceSpec {
 	return schema.ResourceSpec{
 		IsComponent: true,
 		ObjectTypeSpec: schema.ObjectTypeSpec{
-			Description: "Starts etcd on a remote system.",
+			Description: fmt.Sprintf("Starts `%s` on a remote system", name),
 			Properties:  outputs,
 			Required:    requiredOutputs,
 		},

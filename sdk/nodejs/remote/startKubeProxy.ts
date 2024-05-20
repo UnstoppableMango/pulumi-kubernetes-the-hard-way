@@ -9,21 +9,21 @@ import * as pulumiCommand from "@pulumi/command";
 import {Systemctl} from "../tools";
 
 /**
- * Starts `etcd` on a remote system
+ * Starts `kube-proxy` on a remote system
  */
-export class StartEtcd extends pulumi.ComponentResource {
+export class StartKubeProxy extends pulumi.ComponentResource {
     /** @internal */
-    public static readonly __pulumiType = 'kubernetes-the-hard-way:remote:StartEtcd';
+    public static readonly __pulumiType = 'kubernetes-the-hard-way:remote:StartKubeProxy';
 
     /**
-     * Returns true if the given object is an instance of StartEtcd.  This is designed to work even
+     * Returns true if the given object is an instance of StartKubeProxy.  This is designed to work even
      * when multiple copies of the Pulumi SDK have been loaded into the same process.
      */
-    public static isInstance(obj: any): obj is StartEtcd {
+    public static isInstance(obj: any): obj is StartKubeProxy {
         if (obj === undefined || obj === null) {
             return false;
         }
-        return obj['__pulumiType'] === StartEtcd.__pulumiType;
+        return obj['__pulumiType'] === StartKubeProxy.__pulumiType;
     }
 
     /**
@@ -44,13 +44,13 @@ export class StartEtcd extends pulumi.ComponentResource {
     public /*out*/ readonly start!: pulumi.Output<Systemctl>;
 
     /**
-     * Create a StartEtcd resource with the given unique name, arguments, and options.
+     * Create a StartKubeProxy resource with the given unique name, arguments, and options.
      *
      * @param name The _unique_ name of the resource.
      * @param args The arguments to use to populate this resource's properties.
      * @param opts A bag of options that control this resource's behavior.
      */
-    constructor(name: string, args: StartEtcdArgs, opts?: pulumi.ComponentResourceOptions) {
+    constructor(name: string, args: StartKubeProxyArgs, opts?: pulumi.ComponentResourceOptions) {
         let resourceInputs: pulumi.Inputs = {};
         opts = opts || {};
         if (!opts.id) {
@@ -68,14 +68,14 @@ export class StartEtcd extends pulumi.ComponentResource {
             resourceInputs["start"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
-        super(StartEtcd.__pulumiType, name, resourceInputs, opts, true /*remote*/);
+        super(StartKubeProxy.__pulumiType, name, resourceInputs, opts, true /*remote*/);
     }
 }
 
 /**
- * The set of arguments for constructing a StartEtcd resource.
+ * The set of arguments for constructing a StartKubeProxy resource.
  */
-export interface StartEtcdArgs {
+export interface StartKubeProxyArgs {
     /**
      * The parameters with which to connect to the remote host.
      */

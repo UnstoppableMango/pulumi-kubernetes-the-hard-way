@@ -2,13 +2,13 @@ import { ComponentResourceOptions } from '@pulumi/pulumi';
 import * as schema from '../schema-types';
 import { startSystemdService } from './startSystemdService';
 
-export class StartEtcd extends schema.StartEtcd{
-  constructor(name: string, args: schema.StartEtcdArgs, opts?: ComponentResourceOptions) {
+export class StartContainerd extends schema.StartContainerd {
+  constructor(name: string, args: schema.StartContainerdArgs, opts?: ComponentResourceOptions) {
     super(name, args, opts);
     if (opts?.urn) return;
 
     const { connection, daemonReload, enable, start } = startSystemdService(name, {
-      unit: 'etcd',
+      unit: 'containerd',
       connection: args.connection,
     }, this);
 

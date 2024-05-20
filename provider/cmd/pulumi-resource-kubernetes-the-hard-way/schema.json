@@ -4589,8 +4589,119 @@
             ],
             "isComponent": true
         },
+        "kubernetes-the-hard-way:remote:StartContainerd": {
+            "description": "Starts `containerd` on a remote system",
+            "properties": {
+                "connection": {
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
+                    "description": "The parameters with which to connect to the remote host."
+                },
+                "daemonReload": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Systemctl",
+                    "description": "The daemon-reload command."
+                },
+                "enable": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Systemctl",
+                    "description": "The enable command."
+                },
+                "start": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Systemctl",
+                    "description": "The start command."
+                }
+            },
+            "required": [
+                "connection",
+                "daemonReload",
+                "enable",
+                "start"
+            ],
+            "inputProperties": {
+                "connection": {
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
+                    "description": "The parameters with which to connect to the remote host."
+                }
+            },
+            "requiredInputs": [
+                "connection"
+            ],
+            "isComponent": true
+        },
         "kubernetes-the-hard-way:remote:StartEtcd": {
-            "description": "Starts etcd on a remote system.",
+            "description": "Starts `etcd` on a remote system",
+            "properties": {
+                "connection": {
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
+                    "description": "The parameters with which to connect to the remote host."
+                },
+                "daemonReload": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Systemctl",
+                    "description": "The daemon-reload command."
+                },
+                "enable": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Systemctl",
+                    "description": "The enable command."
+                },
+                "start": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Systemctl",
+                    "description": "The start command."
+                }
+            },
+            "required": [
+                "connection",
+                "daemonReload",
+                "enable",
+                "start"
+            ],
+            "inputProperties": {
+                "connection": {
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
+                    "description": "The parameters with which to connect to the remote host."
+                }
+            },
+            "requiredInputs": [
+                "connection"
+            ],
+            "isComponent": true
+        },
+        "kubernetes-the-hard-way:remote:StartKubeProxy": {
+            "description": "Starts `kube-proxy` on a remote system",
+            "properties": {
+                "connection": {
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
+                    "description": "The parameters with which to connect to the remote host."
+                },
+                "daemonReload": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Systemctl",
+                    "description": "The daemon-reload command."
+                },
+                "enable": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Systemctl",
+                    "description": "The enable command."
+                },
+                "start": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Systemctl",
+                    "description": "The start command."
+                }
+            },
+            "required": [
+                "connection",
+                "daemonReload",
+                "enable",
+                "start"
+            ],
+            "inputProperties": {
+                "connection": {
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
+                    "description": "The parameters with which to connect to the remote host."
+                }
+            },
+            "requiredInputs": [
+                "connection"
+            ],
+            "isComponent": true
+        },
+        "kubernetes-the-hard-way:remote:StartKubelet": {
+            "description": "Starts `kubelet` on a remote system",
             "properties": {
                 "connection": {
                     "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",

@@ -32,7 +32,10 @@ export type ResourceConstructor = {
     readonly "kubernetes-the-hard-way:remote:KubeletService": ConstructComponent<KubeletService>;
     readonly "kubernetes-the-hard-way:remote:ProvisionEtcd": ConstructComponent<ProvisionEtcd>;
     readonly "kubernetes-the-hard-way:remote:RuncInstall": ConstructComponent<RuncInstall>;
+    readonly "kubernetes-the-hard-way:remote:StartContainerd": ConstructComponent<StartContainerd>;
     readonly "kubernetes-the-hard-way:remote:StartEtcd": ConstructComponent<StartEtcd>;
+    readonly "kubernetes-the-hard-way:remote:StartKubeProxy": ConstructComponent<StartKubeProxy>;
+    readonly "kubernetes-the-hard-way:remote:StartKubelet": ConstructComponent<StartKubelet>;
     readonly "kubernetes-the-hard-way:remote:StaticPod": ConstructComponent<StaticPod>;
     readonly "kubernetes-the-hard-way:remote:SystemdService": ConstructComponent<SystemdService>;
     readonly "kubernetes-the-hard-way:tls:Certificate": ConstructComponent<Certificate>;
@@ -699,6 +702,18 @@ export interface RuncInstallArgs {
     readonly directory?: pulumi.Input<string>;
     readonly version?: pulumi.Input<string>;
 }
+export abstract class StartContainerd<TData = any> extends (pulumi.ComponentResource)<TData> {
+    public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
+    public daemonReload!: Systemctl | pulumi.Output<Systemctl>;
+    public enable!: Systemctl | pulumi.Output<Systemctl>;
+    public start!: Systemctl | pulumi.Output<Systemctl>;
+    constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
+        super("kubernetes-the-hard-way:remote:StartContainerd", name, opts.urn ? { connection: undefined, daemonReload: undefined, enable: undefined, start: undefined } : { name, args, opts }, opts);
+    }
+}
+export interface StartContainerdArgs {
+    readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
+}
 export abstract class StartEtcd<TData = any> extends (pulumi.ComponentResource)<TData> {
     public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
     public daemonReload!: Systemctl | pulumi.Output<Systemctl>;
@@ -709,6 +724,30 @@ export abstract class StartEtcd<TData = any> extends (pulumi.ComponentResource)<
     }
 }
 export interface StartEtcdArgs {
+    readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
+}
+export abstract class StartKubeProxy<TData = any> extends (pulumi.ComponentResource)<TData> {
+    public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
+    public daemonReload!: Systemctl | pulumi.Output<Systemctl>;
+    public enable!: Systemctl | pulumi.Output<Systemctl>;
+    public start!: Systemctl | pulumi.Output<Systemctl>;
+    constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
+        super("kubernetes-the-hard-way:remote:StartKubeProxy", name, opts.urn ? { connection: undefined, daemonReload: undefined, enable: undefined, start: undefined } : { name, args, opts }, opts);
+    }
+}
+export interface StartKubeProxyArgs {
+    readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
+}
+export abstract class StartKubelet<TData = any> extends (pulumi.ComponentResource)<TData> {
+    public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
+    public daemonReload!: Systemctl | pulumi.Output<Systemctl>;
+    public enable!: Systemctl | pulumi.Output<Systemctl>;
+    public start!: Systemctl | pulumi.Output<Systemctl>;
+    constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
+        super("kubernetes-the-hard-way:remote:StartKubelet", name, opts.urn ? { connection: undefined, daemonReload: undefined, enable: undefined, start: undefined } : { name, args, opts }, opts);
+    }
+}
+export interface StartKubeletArgs {
     readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
 }
 export abstract class StaticPod<TData = any> extends (pulumi.ComponentResource)<TData> {

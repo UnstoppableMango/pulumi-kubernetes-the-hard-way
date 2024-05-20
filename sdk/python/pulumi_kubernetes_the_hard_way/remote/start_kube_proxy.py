@@ -11,14 +11,14 @@ from .. import _utilities
 from .. import tools as _tools
 import pulumi_command
 
-__all__ = ['StartEtcdArgs', 'StartEtcd']
+__all__ = ['StartKubeProxyArgs', 'StartKubeProxy']
 
 @pulumi.input_type
-class StartEtcdArgs:
+class StartKubeProxyArgs:
     def __init__(__self__, *,
                  connection: pulumi.Input['pulumi_command.remote.ConnectionArgs']):
         """
-        The set of arguments for constructing a StartEtcd resource.
+        The set of arguments for constructing a StartKubeProxy resource.
         :param pulumi.Input['pulumi_command.remote.ConnectionArgs'] connection: The parameters with which to connect to the remote host.
         """
         pulumi.set(__self__, "connection", connection)
@@ -36,7 +36,7 @@ class StartEtcdArgs:
         pulumi.set(self, "connection", value)
 
 
-class StartEtcd(pulumi.ComponentResource):
+class StartKubeProxy(pulumi.ComponentResource):
     @overload
     def __init__(__self__,
                  resource_name: str,
@@ -44,7 +44,7 @@ class StartEtcd(pulumi.ComponentResource):
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
                  __props__=None):
         """
-        Starts `etcd` on a remote system
+        Starts `kube-proxy` on a remote system
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -54,18 +54,18 @@ class StartEtcd(pulumi.ComponentResource):
     @overload
     def __init__(__self__,
                  resource_name: str,
-                 args: StartEtcdArgs,
+                 args: StartKubeProxyArgs,
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
-        Starts `etcd` on a remote system
+        Starts `kube-proxy` on a remote system
 
         :param str resource_name: The name of the resource.
-        :param StartEtcdArgs args: The arguments to use to populate this resource's properties.
+        :param StartKubeProxyArgs args: The arguments to use to populate this resource's properties.
         :param pulumi.ResourceOptions opts: Options for the resource.
         """
         ...
     def __init__(__self__, resource_name: str, *args, **kwargs):
-        resource_args, opts = _utilities.get_resource_args_opts(StartEtcdArgs, pulumi.ResourceOptions, *args, **kwargs)
+        resource_args, opts = _utilities.get_resource_args_opts(StartKubeProxyArgs, pulumi.ResourceOptions, *args, **kwargs)
         if resource_args is not None:
             __self__._internal_init(resource_name, opts, **resource_args.__dict__)
         else:
@@ -84,7 +84,7 @@ class StartEtcd(pulumi.ComponentResource):
         else:
             if __props__ is not None:
                 raise TypeError('__props__ is only valid when passed in combination with a valid opts.id to get an existing resource')
-            __props__ = StartEtcdArgs.__new__(StartEtcdArgs)
+            __props__ = StartKubeProxyArgs.__new__(StartKubeProxyArgs)
 
             if connection is None and not opts.urn:
                 raise TypeError("Missing required property 'connection'")
@@ -92,8 +92,8 @@ class StartEtcd(pulumi.ComponentResource):
             __props__.__dict__["daemon_reload"] = None
             __props__.__dict__["enable"] = None
             __props__.__dict__["start"] = None
-        super(StartEtcd, __self__).__init__(
-            'kubernetes-the-hard-way:remote:StartEtcd',
+        super(StartKubeProxy, __self__).__init__(
+            'kubernetes-the-hard-way:remote:StartKubeProxy',
             resource_name,
             __props__,
             opts,

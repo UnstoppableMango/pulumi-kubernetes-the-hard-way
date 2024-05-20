@@ -14,7 +14,7 @@ import (
 	"github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/sdk/go/kubernetes-the-hard-way/tools"
 )
 
-// Starts etcd on a remote system.
+// Starts `etcd` on a remote system
 type StartEtcd struct {
 	pulumi.ResourceState
 

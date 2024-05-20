@@ -67,8 +67,14 @@ func (m *module) Construct(ctx *pulumi.Context, name, typ, urn string) (r pulumi
 		r = &ProvisionEtcd{}
 	case "kubernetes-the-hard-way:remote:RuncInstall":
 		r = &RuncInstall{}
+	case "kubernetes-the-hard-way:remote:StartContainerd":
+		r = &StartContainerd{}
 	case "kubernetes-the-hard-way:remote:StartEtcd":
 		r = &StartEtcd{}
+	case "kubernetes-the-hard-way:remote:StartKubeProxy":
+		r = &StartKubeProxy{}
+	case "kubernetes-the-hard-way:remote:StartKubelet":
+		r = &StartKubelet{}
 	case "kubernetes-the-hard-way:remote:StaticPod":
 		r = &StaticPod{}
 	case "kubernetes-the-hard-way:remote:SystemdService":
