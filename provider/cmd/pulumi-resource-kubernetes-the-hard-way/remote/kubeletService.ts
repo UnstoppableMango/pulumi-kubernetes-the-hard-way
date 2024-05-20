@@ -42,7 +42,7 @@ export class KubeletService extends schema.KubeletService {
       install: {
         wantedBy: [wantedBy],
       },
-    });
+    }, { parent: this });
 
     this.after = after;
     this.connection = connection;

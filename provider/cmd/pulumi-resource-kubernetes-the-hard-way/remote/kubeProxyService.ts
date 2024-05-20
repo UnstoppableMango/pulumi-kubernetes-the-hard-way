@@ -35,7 +35,7 @@ export class KubeProxyService extends schema.KubeProxyService {
       install: {
         wantedBy: [wantedBy],
       },
-    });
+    }, { parent: this });
 
     this.connection = connection;
     this.description = description;
