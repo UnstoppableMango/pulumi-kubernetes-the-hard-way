@@ -193,6 +193,16 @@ func generateGetKubeconfig() schema.PackageSpec {
 					Required: []string{"name", "publicIp"}, // TODO: Why is public ip not required again?
 				},
 			},
+			name("User"): {
+				ObjectTypeSpec: schema.ObjectTypeSpec{
+					Type: "object",
+					Properties: map[string]schema.PropertySpec{
+						"clientCertificateData": props.String("TODO"),
+						"clientKeyData":         props.String("TODO"),
+					},
+					Required: []string{"clientCertificateData", "clientKeyData"},
+				},
+			},
 		},
 		Functions: map[string]schema.FunctionSpec{
 			name("getKubeconfig"): { // TODO: Need more pems
