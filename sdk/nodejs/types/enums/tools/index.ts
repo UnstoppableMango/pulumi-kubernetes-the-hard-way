@@ -10,23 +10,6 @@ export const CommandLifecycle = {
 
 export type CommandLifecycle = (typeof CommandLifecycle)[keyof typeof CommandLifecycle];
 
-export const CurlCertType = {
-    PEM: "PEM",
-    DER: "DER",
-    ENG: "ENG",
-    P12: "P12",
-} as const;
-
-export type CurlCertType = (typeof CurlCertType)[keyof typeof CurlCertType];
-
-export const CurlDelegationLevel = {
-    None: "none",
-    Policy: "policy",
-    Always: "always",
-} as const;
-
-export type CurlDelegationLevel = (typeof CurlDelegationLevel)[keyof typeof CurlDelegationLevel];
-
 export const EtcdctlCommand = {
     Member: "member",
     List: "list",

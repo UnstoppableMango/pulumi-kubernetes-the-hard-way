@@ -89,7 +89,6 @@ _utilities.register(
   "fqn": "pulumi_kubernetes_the_hard_way.tools",
   "classes": {
    "kubernetes-the-hard-way:tools:Chmod": "Chmod",
-   "kubernetes-the-hard-way:tools:Curl": "Curl",
    "kubernetes-the-hard-way:tools:Etcdctl": "Etcdctl",
    "kubernetes-the-hard-way:tools:Hostnamectl": "Hostnamectl",
    "kubernetes-the-hard-way:tools:Mkdir": "Mkdir",

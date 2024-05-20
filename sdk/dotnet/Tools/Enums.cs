@@ -37,65 +37,6 @@ namespace UnMango.KubernetesTheHardWay.Tools
     }
 
     [EnumType]
-    public readonly struct CurlCertType : IEquatable<CurlCertType>
-    {
-        private readonly string _value;
-
-        private CurlCertType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
-        public static CurlCertType PEM { get; } = new CurlCertType("PEM");
-        public static CurlCertType DER { get; } = new CurlCertType("DER");
-        public static CurlCertType ENG { get; } = new CurlCertType("ENG");
-        public static CurlCertType P12 { get; } = new CurlCertType("P12");
-
-        public static bool operator ==(CurlCertType left, CurlCertType right) => left.Equals(right);
-        public static bool operator !=(CurlCertType left, CurlCertType right) => !left.Equals(right);
-
-        public static explicit operator string(CurlCertType value) => value._value;
-
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object? obj) => obj is CurlCertType other && Equals(other);
-        public bool Equals(CurlCertType other) => string.Equals(_value, other._value, StringComparison.Ordinal);
-
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
-
-        public override string ToString() => _value;
-    }
-
-    [EnumType]
-    public readonly struct CurlDelegationLevel : IEquatable<CurlDelegationLevel>
-    {
-        private readonly string _value;
-
-        private CurlDelegationLevel(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
-        public static CurlDelegationLevel None { get; } = new CurlDelegationLevel("none");
-        public static CurlDelegationLevel Policy { get; } = new CurlDelegationLevel("policy");
-        public static CurlDelegationLevel Always { get; } = new CurlDelegationLevel("always");
-
-        public static bool operator ==(CurlDelegationLevel left, CurlDelegationLevel right) => left.Equals(right);
-        public static bool operator !=(CurlDelegationLevel left, CurlDelegationLevel right) => !left.Equals(right);
-
-        public static explicit operator string(CurlDelegationLevel value) => value._value;
-
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object? obj) => obj is CurlDelegationLevel other && Equals(other);
-        public bool Equals(CurlDelegationLevel other) => string.Equals(_value, other._value, StringComparison.Ordinal);
-
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
-
-        public override string ToString() => _value;
-    }
-
-    [EnumType]
     public readonly struct EtcdctlCommand : IEquatable<EtcdctlCommand>
     {
         private readonly string _value;

@@ -7,7 +7,6 @@ import typing
 # Export this package's modules as members:
 from ._enums import *
 from .chmod import *
-from .curl import *
 from .etcdctl import *
 from .hostnamectl import *
 from .mkdir import *

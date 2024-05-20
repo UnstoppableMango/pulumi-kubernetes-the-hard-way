@@ -59,7 +59,6 @@
         "tls/index.ts",
         "tls/rootCa.ts",
         "tools/chmod.ts",
-        "tools/curl.ts",
         "tools/etcdctl.ts",
         "tools/hostnamectl.ts",
         "tools/index.ts",
