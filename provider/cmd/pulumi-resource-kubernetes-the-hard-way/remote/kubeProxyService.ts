@@ -19,6 +19,7 @@ export class KubeProxyService extends schema.KubeProxyService {
     const service = new SystemdService(name, {
       connection,
       directory: args.directory,
+      unitName: 'kube-proxy',
       unit: {
         description,
         documentation: [documentation],

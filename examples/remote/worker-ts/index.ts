@@ -1,5 +1,5 @@
 import { Config } from '@pulumi/pulumi';
-import { ContainerdConfiguration, KubeletService } from '@unmango/pulumi-kubernetes-the-hard-way/remote';
+import { ContainerdConfiguration, KubeletService, KubeProxyService } from '@unmango/pulumi-kubernetes-the-hard-way/remote';
 import { Mkdir } from '@unmango/pulumi-kubernetes-the-hard-way/tools';
 
 const config = new Config();
@@ -32,5 +32,13 @@ const kubeletService = new KubeletService('simple', {
     kubeconfigPath: '/var/lib/kubelet/kubeconfig',
     registerNode: true,
     v: 69,
+  },
+});
+
+const kubeProxyService = new KubeProxyService('simple', {
+  connection,
+  configuration: {
+    kubeProxyPath: '/usr/local/bin/kube-proxy',
+    configurationFilePath: '/var/lib/kube-proxy/kube-proxy-config.yaml',
   },
 });

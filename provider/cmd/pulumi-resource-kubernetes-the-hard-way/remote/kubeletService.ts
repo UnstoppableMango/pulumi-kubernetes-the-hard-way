@@ -21,6 +21,7 @@ export class KubeletService extends schema.KubeletService {
     const service = new SystemdService(name, {
       connection,
       directory: args.directory,
+      unitName: 'kubelet',
       unit: {
         description,
         documentation: [documentation],
