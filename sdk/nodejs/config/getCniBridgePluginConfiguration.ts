@@ -44,7 +44,7 @@ export interface GetCniBridgePluginConfigurationArgs {
     /**
      * IPAM
      */
-    ipam?: inputs.remote.CniBridgeIpam;
+    ipam?: inputs.config.CniBridgeIpam;
     /**
      * Is gateway.
      */
@@ -96,7 +96,7 @@ export interface GetCniBridgePluginConfigurationOutputArgs {
     /**
      * IPAM
      */
-    ipam?: pulumi.Input<inputs.remote.CniBridgeIpamArgs>;
+    ipam?: pulumi.Input<inputs.config.CniBridgeIpamArgs>;
     /**
      * Is gateway.
      */

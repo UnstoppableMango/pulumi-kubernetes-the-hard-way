@@ -12,6 +12,182 @@ import * as pulumiTls from "@pulumi/tls";
 import * as utilities from "../utilities";
 
 export namespace config {
+    /**
+     * The CNI plugins IPAM
+     */
+    export interface CniBridgeIpam {
+        /**
+         * IPAM ranges.
+         */
+        ranges?: {[key: string]: string}[];
+        /**
+         * IPAM routes.
+         */
+        routes?: {[key: string]: string}[];
+        /**
+         * CNI bridge IPAM type
+         */
+        type?: string;
+    }
+
+    /**
+     * The CNI plugins IPAM
+     */
+    export interface CniBridgeIpamArgs {
+        /**
+         * IPAM ranges.
+         */
+        ranges?: pulumi.Input<pulumi.Input<{[key: string]: pulumi.Input<string>}>[]>;
+        /**
+         * IPAM routes.
+         */
+        routes?: pulumi.Input<pulumi.Input<{[key: string]: pulumi.Input<string>}>[]>;
+        /**
+         * CNI bridge IPAM type
+         */
+        type?: pulumi.Input<string>;
+    }
+
+    /**
+     * containerd cri plugin configuration.
+     */
+    export interface ContainerdCriPluginConfiguration {
+        /**
+         * cni configuration.
+         */
+        cni: inputs.config.ContainerdCriPluginConfigurationCni;
+        /**
+         * containerd configuration.
+         */
+        containerd: inputs.config.ContainerdCriPluginConfigurationContainerd;
+    }
+
+    /**
+     * containerd cri plugin configuration.
+     */
+    export interface ContainerdCriPluginConfigurationArgs {
+        /**
+         * cni configuration.
+         */
+        cni: inputs.config.ContainerdCriPluginConfigurationCniArgs;
+        /**
+         * containerd configuration.
+         */
+        containerd: inputs.config.ContainerdCriPluginConfigurationContainerdArgs;
+    }
+
+    /**
+     * containerd cri plugin configuration.
+     */
+    export interface ContainerdCriPluginConfigurationCni {
+        /**
+         * bin_dir
+         */
+        binDir?: string;
+        /**
+         * conf_dir
+         */
+        confDir?: string;
+    }
+
+    /**
+     * containerd cri plugin configuration.
+     */
+    export interface ContainerdCriPluginConfigurationCniArgs {
+        /**
+         * bin_dir
+         */
+        binDir?: pulumi.Input<string>;
+        /**
+         * conf_dir
+         */
+        confDir?: pulumi.Input<string>;
+    }
+
+    /**
+     * containerd cri plugin configuration.
+     */
+    export interface ContainerdCriPluginConfigurationContainerd {
+        /**
+         * default_runtime_name
+         */
+        defaultRuntimeName?: string;
+        /**
+         * The containerd runtime configuration.
+         */
+        runtimes?: inputs.config.ContainerdCriPluginConfigurationContainerdRunc;
+        /**
+         * snapshotter
+         */
+        snapshotter?: string;
+    }
+
+    /**
+     * containerd cri plugin configuration.
+     */
+    export interface ContainerdCriPluginConfigurationContainerdArgs {
+        /**
+         * default_runtime_name
+         */
+        defaultRuntimeName?: pulumi.Input<string>;
+        /**
+         * The containerd runtime configuration.
+         */
+        runtimes?: inputs.config.ContainerdCriPluginConfigurationContainerdRuncArgs;
+        /**
+         * snapshotter
+         */
+        snapshotter?: pulumi.Input<string>;
+    }
+
+    /**
+     * containerd cri runc plugin configuration.
+     */
+    export interface ContainerdCriPluginConfigurationContainerdRunc {
+        /**
+         * runc options.
+         */
+        options: inputs.config.ContainerdCriPluginConfigurationContainerdRuncOptions;
+        /**
+         * runtime_type
+         */
+        runtimeType?: string;
+    }
+
+    /**
+     * containerd cri runc plugin configuration.
+     */
+    export interface ContainerdCriPluginConfigurationContainerdRuncArgs {
+        /**
+         * runc options.
+         */
+        options: inputs.config.ContainerdCriPluginConfigurationContainerdRuncOptionsArgs;
+        /**
+         * runtime_type
+         */
+        runtimeType?: pulumi.Input<string>;
+    }
+
+    /**
+     * containerd cri runc plugin configuration.
+     */
+    export interface ContainerdCriPluginConfigurationContainerdRuncOptions {
+        /**
+         * SystemdCgroup
+         */
+        systemdCgroup?: boolean;
+    }
+
+    /**
+     * containerd cri runc plugin configuration.
+     */
+    export interface ContainerdCriPluginConfigurationContainerdRuncOptionsArgs {
+        /**
+         * SystemdCgroup
+         */
+        systemdCgroup?: pulumi.Input<boolean>;
+    }
+
     export interface KubeconfigAdminOptions {
         /**
          * TODO
@@ -469,112 +645,6 @@ export namespace config {
 }
 
 export namespace remote {
-    /**
-     * The CNI plugins IPAM
-     */
-    export interface CniBridgeIpam {
-        /**
-         * IPAM ranges.
-         */
-        ranges?: {[key: string]: string}[];
-        /**
-         * IPAM routes.
-         */
-        routes?: {[key: string]: string}[];
-        /**
-         * CNI bridge IPAM type
-         */
-        type?: string;
-    }
-
-    /**
-     * The CNI plugins IPAM
-     */
-    export interface CniBridgeIpamArgs {
-        /**
-         * IPAM ranges.
-         */
-        ranges?: pulumi.Input<pulumi.Input<{[key: string]: pulumi.Input<string>}>[]>;
-        /**
-         * IPAM routes.
-         */
-        routes?: pulumi.Input<pulumi.Input<{[key: string]: pulumi.Input<string>}>[]>;
-        /**
-         * CNI bridge IPAM type
-         */
-        type?: pulumi.Input<string>;
-    }
-
-    /**
-     * containerd cri plugin configuration.
-     */
-    export interface ContainerdCriPluginConfigurationArgs {
-        /**
-         * cni configuration.
-         */
-        cni: inputs.remote.ContainerdCriPluginConfigurationCniArgs;
-        /**
-         * containerd configuration.
-         */
-        containerd: inputs.remote.ContainerdCriPluginConfigurationContainerdArgs;
-    }
-
-    /**
-     * containerd cri plugin configuration.
-     */
-    export interface ContainerdCriPluginConfigurationCniArgs {
-        /**
-         * bin_dir
-         */
-        binDir?: pulumi.Input<string>;
-        /**
-         * conf_dir
-         */
-        confDir?: pulumi.Input<string>;
-    }
-
-    /**
-     * containerd cri plugin configuration.
-     */
-    export interface ContainerdCriPluginConfigurationContainerdArgs {
-        /**
-         * default_runtime_name
-         */
-        defaultRuntimeName?: pulumi.Input<string>;
-        /**
-         * The containerd runtime configuration.
-         */
-        runtimes?: inputs.remote.ContainerdCriPluginConfigurationContainerdRuncArgs;
-        /**
-         * snapshotter
-         */
-        snapshotter?: pulumi.Input<string>;
-    }
-
-    /**
-     * containerd cri runc plugin configuration.
-     */
-    export interface ContainerdCriPluginConfigurationContainerdRuncArgs {
-        /**
-         * runc options.
-         */
-        options: inputs.remote.ContainerdCriPluginConfigurationContainerdRuncOptionsArgs;
-        /**
-         * runtime_type
-         */
-        runtimeType?: pulumi.Input<string>;
-    }
-
-    /**
-     * containerd cri runc plugin configuration.
-     */
-    export interface ContainerdCriPluginConfigurationContainerdRuncOptionsArgs {
-        /**
-         * SystemdCgroup
-         */
-        systemdCgroup?: pulumi.Input<boolean>;
-    }
-
     /**
      * Props for resources that consume etcd configuration.
      */

@@ -10,7 +10,6 @@ import (
 	"errors"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 	"github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/sdk/go/kubernetes-the-hard-way/internal"
-	"github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/sdk/go/kubernetes-the-hard-way/remote"
 )
 
 // Get the `bridge` configuration.
@@ -49,7 +48,7 @@ type cniBridgePluginConfigurationArgs struct {
 	// IP masq.
 	IpMasq *bool `pulumi:"ipMasq"`
 	// IPAM
-	Ipam *remote.CniBridgeIpam `pulumi:"ipam"`
+	Ipam *CniBridgeIpam `pulumi:"ipam"`
 	// Is gateway.
 	IsGateway *bool `pulumi:"isGateway"`
 	// CNI plugin name.
@@ -71,7 +70,7 @@ type CniBridgePluginConfigurationArgs struct {
 	// IP masq.
 	IpMasq pulumi.BoolPtrInput
 	// IPAM
-	Ipam remote.CniBridgeIpamPtrInput
+	Ipam CniBridgeIpamPtrInput
 	// Is gateway.
 	IsGateway pulumi.BoolPtrInput
 	// CNI plugin name.

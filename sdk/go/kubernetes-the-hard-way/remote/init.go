@@ -23,8 +23,6 @@ func (m *module) Construct(ctx *pulumi.Context, name, typ, urn string) (r pulumi
 	switch typ {
 	case "kubernetes-the-hard-way:remote:CniPluginsInstall":
 		r = &CniPluginsInstall{}
-	case "kubernetes-the-hard-way:remote:ContainerdConfiguration":
-		r = &ContainerdConfiguration{}
 	case "kubernetes-the-hard-way:remote:ContainerdInstall":
 		r = &ContainerdInstall{}
 	case "kubernetes-the-hard-way:remote:CrictlInstall":

@@ -76,7 +76,7 @@ namespace UnMango.KubernetesTheHardWay.Config
         /// IPAM
         /// </summary>
         [Input("ipam")]
-        public Input<UnMango.KubernetesTheHardWay.Remote.Inputs.CniBridgeIpamArgs>? Ipam { get; set; }
+        public Input<Inputs.CniBridgeIpamArgs>? Ipam { get; set; }
 
         /// <summary>
         /// Is gateway.

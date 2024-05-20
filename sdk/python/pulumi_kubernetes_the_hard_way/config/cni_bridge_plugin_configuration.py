@@ -8,7 +8,7 @@ import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
 from .. import _utilities
-from .. import remote as _remote
+from ._inputs import *
 
 __all__ = ['CniBridgePluginConfigurationArgs', 'CniBridgePluginConfiguration']
 
@@ -19,7 +19,7 @@ class CniBridgePluginConfigurationArgs:
                  bridge: Optional[pulumi.Input[str]] = None,
                  cni_version: Optional[pulumi.Input[str]] = None,
                  ip_masq: Optional[pulumi.Input[bool]] = None,
-                 ipam: Optional[pulumi.Input['_remote.CniBridgeIpamArgs']] = None,
+                 ipam: Optional[pulumi.Input['CniBridgeIpamArgs']] = None,
                  is_gateway: Optional[pulumi.Input[bool]] = None,
                  name: Optional[pulumi.Input[str]] = None,
                  path: Optional[pulumi.Input[str]] = None,
@@ -30,7 +30,7 @@ class CniBridgePluginConfigurationArgs:
         :param pulumi.Input[str] bridge: Bridge name.
         :param pulumi.Input[str] cni_version: CNI version.
         :param pulumi.Input[bool] ip_masq: IP masq.
-        :param pulumi.Input['_remote.CniBridgeIpamArgs'] ipam: IPAM
+        :param pulumi.Input['CniBridgeIpamArgs'] ipam: IPAM
         :param pulumi.Input[bool] is_gateway: Is gateway.
         :param pulumi.Input[str] name: CNI plugin name.
         :param pulumi.Input[str] path: Path to put the configuration file on the remote system
@@ -104,14 +104,14 @@ class CniBridgePluginConfigurationArgs:
 
     @property
     @pulumi.getter
-    def ipam(self) -> Optional[pulumi.Input['_remote.CniBridgeIpamArgs']]:
+    def ipam(self) -> Optional[pulumi.Input['CniBridgeIpamArgs']]:
         """
         IPAM
         """
         return pulumi.get(self, "ipam")
 
     @ipam.setter
-    def ipam(self, value: Optional[pulumi.Input['_remote.CniBridgeIpamArgs']]):
+    def ipam(self, value: Optional[pulumi.Input['CniBridgeIpamArgs']]):
         pulumi.set(self, "ipam", value)
 
     @property
@@ -171,7 +171,7 @@ class CniBridgePluginConfiguration(pulumi.ComponentResource):
                  bridge: Optional[pulumi.Input[str]] = None,
                  cni_version: Optional[pulumi.Input[str]] = None,
                  ip_masq: Optional[pulumi.Input[bool]] = None,
-                 ipam: Optional[pulumi.Input[pulumi.InputType['_remote.CniBridgeIpamArgs']]] = None,
+                 ipam: Optional[pulumi.Input[pulumi.InputType['CniBridgeIpamArgs']]] = None,
                  is_gateway: Optional[pulumi.Input[bool]] = None,
                  name: Optional[pulumi.Input[str]] = None,
                  path: Optional[pulumi.Input[str]] = None,
@@ -186,7 +186,7 @@ class CniBridgePluginConfiguration(pulumi.ComponentResource):
         :param pulumi.Input[str] bridge: Bridge name.
         :param pulumi.Input[str] cni_version: CNI version.
         :param pulumi.Input[bool] ip_masq: IP masq.
-        :param pulumi.Input[pulumi.InputType['_remote.CniBridgeIpamArgs']] ipam: IPAM
+        :param pulumi.Input[pulumi.InputType['CniBridgeIpamArgs']] ipam: IPAM
         :param pulumi.Input[bool] is_gateway: Is gateway.
         :param pulumi.Input[str] name: CNI plugin name.
         :param pulumi.Input[str] path: Path to put the configuration file on the remote system
@@ -220,7 +220,7 @@ class CniBridgePluginConfiguration(pulumi.ComponentResource):
                  bridge: Optional[pulumi.Input[str]] = None,
                  cni_version: Optional[pulumi.Input[str]] = None,
                  ip_masq: Optional[pulumi.Input[bool]] = None,
-                 ipam: Optional[pulumi.Input[pulumi.InputType['_remote.CniBridgeIpamArgs']]] = None,
+                 ipam: Optional[pulumi.Input[pulumi.InputType['CniBridgeIpamArgs']]] = None,
                  is_gateway: Optional[pulumi.Input[bool]] = None,
                  name: Optional[pulumi.Input[str]] = None,
                  path: Optional[pulumi.Input[str]] = None,

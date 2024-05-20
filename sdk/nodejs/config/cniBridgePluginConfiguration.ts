@@ -86,7 +86,7 @@ export interface CniBridgePluginConfigurationArgs {
     /**
      * IPAM
      */
-    ipam?: pulumi.Input<inputs.remote.CniBridgeIpamArgs>;
+    ipam?: pulumi.Input<inputs.config.CniBridgeIpamArgs>;
     /**
      * Is gateway.
      */

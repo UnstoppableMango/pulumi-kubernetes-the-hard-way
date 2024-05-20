@@ -6,7 +6,7 @@ package com.unmango.kubernetesthehardway.config;
 import com.pulumi.core.Output;
 import com.pulumi.core.annotations.Import;
 import com.pulumi.exceptions.MissingRequiredPropertyException;
-import com.unmango.kubernetesthehardway.remote.inputs.CniBridgeIpamArgs;
+import com.unmango.kubernetesthehardway.config.inputs.CniBridgeIpamArgs;
 import java.lang.Boolean;
 import java.lang.String;
 import java.util.Objects;

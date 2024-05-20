@@ -99,6 +99,117 @@
                 "server"
             ]
         },
+        "kubernetes-the-hard-way:config:CniBridgeIpam": {
+            "description": "The CNI plugins IPAM",
+            "properties": {
+                "ranges": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        }
+                    },
+                    "description": "IPAM ranges."
+                },
+                "routes": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        }
+                    },
+                    "description": "IPAM routes."
+                },
+                "type": {
+                    "type": "string",
+                    "description": "CNI bridge IPAM type"
+                }
+            },
+            "type": "object"
+        },
+        "kubernetes-the-hard-way:config:ContainerdCriPluginConfiguration": {
+            "description": "containerd cri plugin configuration.",
+            "properties": {
+                "cni": {
+                    "$ref": "#/types/kubernetes-the-hard-way:config:ContainerdCriPluginConfigurationCni",
+                    "plain": true,
+                    "description": "cni configuration."
+                },
+                "containerd": {
+                    "$ref": "#/types/kubernetes-the-hard-way:config:ContainerdCriPluginConfigurationContainerd",
+                    "plain": true,
+                    "description": "containerd configuration."
+                }
+            },
+            "type": "object",
+            "required": [
+                "containerd",
+                "cni"
+            ]
+        },
+        "kubernetes-the-hard-way:config:ContainerdCriPluginConfigurationCni": {
+            "description": "containerd cri plugin configuration.",
+            "properties": {
+                "binDir": {
+                    "type": "string",
+                    "description": "bin_dir"
+                },
+                "confDir": {
+                    "type": "string",
+                    "description": "conf_dir"
+                }
+            },
+            "type": "object"
+        },
+        "kubernetes-the-hard-way:config:ContainerdCriPluginConfigurationContainerd": {
+            "description": "containerd cri plugin configuration.",
+            "properties": {
+                "defaultRuntimeName": {
+                    "type": "string",
+                    "description": "default_runtime_name"
+                },
+                "runtimes": {
+                    "$ref": "#/types/kubernetes-the-hard-way:config:ContainerdCriPluginConfigurationContainerdRunc",
+                    "plain": true,
+                    "description": "The containerd runtime configuration."
+                },
+                "snapshotter": {
+                    "type": "string",
+                    "description": "snapshotter"
+                }
+            },
+            "type": "object"
+        },
+        "kubernetes-the-hard-way:config:ContainerdCriPluginConfigurationContainerdRunc": {
+            "description": "containerd cri runc plugin configuration.",
+            "properties": {
+                "options": {
+                    "$ref": "#/types/kubernetes-the-hard-way:config:ContainerdCriPluginConfigurationContainerdRuncOptions",
+                    "plain": true,
+                    "description": "runc options."
+                },
+                "runtimeType": {
+                    "type": "string",
+                    "description": "runtime_type"
+                }
+            },
+            "type": "object",
+            "required": [
+                "options"
+            ]
+        },
+        "kubernetes-the-hard-way:config:ContainerdCriPluginConfigurationContainerdRuncOptions": {
+            "description": "containerd cri runc plugin configuration.",
+            "properties": {
+                "systemdCgroup": {
+                    "type": "boolean",
+                    "description": "SystemdCgroup"
+                }
+            },
+            "type": "object"
+        },
         "kubernetes-the-hard-way:config:Context": {
             "properties": {
                 "cluster": {
@@ -536,117 +647,6 @@
                     "value": "arm64"
                 }
             ]
-        },
-        "kubernetes-the-hard-way:remote:CniBridgeIpam": {
-            "description": "The CNI plugins IPAM",
-            "properties": {
-                "ranges": {
-                    "type": "array",
-                    "items": {
-                        "type": "object",
-                        "additionalProperties": {
-                            "type": "string"
-                        }
-                    },
-                    "description": "IPAM ranges."
-                },
-                "routes": {
-                    "type": "array",
-                    "items": {
-                        "type": "object",
-                        "additionalProperties": {
-                            "type": "string"
-                        }
-                    },
-                    "description": "IPAM routes."
-                },
-                "type": {
-                    "type": "string",
-                    "description": "CNI bridge IPAM type"
-                }
-            },
-            "type": "object"
-        },
-        "kubernetes-the-hard-way:remote:ContainerdCriPluginConfiguration": {
-            "description": "containerd cri plugin configuration.",
-            "properties": {
-                "cni": {
-                    "$ref": "#/types/kubernetes-the-hard-way:remote:ContainerdCriPluginConfigurationCni",
-                    "plain": true,
-                    "description": "cni configuration."
-                },
-                "containerd": {
-                    "$ref": "#/types/kubernetes-the-hard-way:remote:ContainerdCriPluginConfigurationContainerd",
-                    "plain": true,
-                    "description": "containerd configuration."
-                }
-            },
-            "type": "object",
-            "required": [
-                "containerd",
-                "cni"
-            ]
-        },
-        "kubernetes-the-hard-way:remote:ContainerdCriPluginConfigurationCni": {
-            "description": "containerd cri plugin configuration.",
-            "properties": {
-                "binDir": {
-                    "type": "string",
-                    "description": "bin_dir"
-                },
-                "confDir": {
-                    "type": "string",
-                    "description": "conf_dir"
-                }
-            },
-            "type": "object"
-        },
-        "kubernetes-the-hard-way:remote:ContainerdCriPluginConfigurationContainerd": {
-            "description": "containerd cri plugin configuration.",
-            "properties": {
-                "defaultRuntimeName": {
-                    "type": "string",
-                    "description": "default_runtime_name"
-                },
-                "runtimes": {
-                    "$ref": "#/types/kubernetes-the-hard-way:remote:ContainerdCriPluginConfigurationContainerdRunc",
-                    "plain": true,
-                    "description": "The containerd runtime configuration."
-                },
-                "snapshotter": {
-                    "type": "string",
-                    "description": "snapshotter"
-                }
-            },
-            "type": "object"
-        },
-        "kubernetes-the-hard-way:remote:ContainerdCriPluginConfigurationContainerdRunc": {
-            "description": "containerd cri runc plugin configuration.",
-            "properties": {
-                "options": {
-                    "$ref": "#/types/kubernetes-the-hard-way:remote:ContainerdCriPluginConfigurationContainerdRuncOptions",
-                    "plain": true,
-                    "description": "runc options."
-                },
-                "runtimeType": {
-                    "type": "string",
-                    "description": "runtime_type"
-                }
-            },
-            "type": "object",
-            "required": [
-                "options"
-            ]
-        },
-        "kubernetes-the-hard-way:remote:ContainerdCriPluginConfigurationContainerdRuncOptions": {
-            "description": "containerd cri runc plugin configuration.",
-            "properties": {
-                "systemdCgroup": {
-                    "type": "boolean",
-                    "description": "SystemdCgroup"
-                }
-            },
-            "type": "object"
         },
         "kubernetes-the-hard-way:remote:EtcdConfigurationProps": {
             "description": "Props for resources that consume etcd configuration.",
@@ -1835,7 +1835,7 @@
                     "description": "IP masq."
                 },
                 "ipam": {
-                    "$ref": "#/types/kubernetes-the-hard-way:remote:CniBridgeIpam",
+                    "$ref": "#/types/kubernetes-the-hard-way:config:CniBridgeIpam",
                     "description": "IPAM"
                 },
                 "isGateway": {
@@ -1895,6 +1895,30 @@
                 "type": {
                     "type": "string",
                     "description": "CNI plugin type."
+                }
+            },
+            "isComponent": true
+        },
+        "kubernetes-the-hard-way:config:ContainerdConfiguration": {
+            "description": "Get the containerd configuration.",
+            "properties": {
+                "result": {
+                    "$ref": "#/types/kubernetes-the-hard-way:config:ContainerdConfiguration"
+                },
+                "toml": {
+                    "type": "string",
+                    "description": "The toml representation of the configuration."
+                }
+            },
+            "required": [
+                "result",
+                "toml"
+            ],
+            "inputProperties": {
+                "cri": {
+                    "$ref": "#/types/kubernetes-the-hard-way:config:ContainerdCriPluginConfiguration",
+                    "plain": true,
+                    "description": "The cri configuration."
                 }
             },
             "isComponent": true
@@ -2388,52 +2412,6 @@
                 "version": {
                     "type": "string",
                     "description": "The version to install."
-                }
-            },
-            "requiredInputs": [
-                "connection"
-            ],
-            "isComponent": true
-        },
-        "kubernetes-the-hard-way:remote:ContainerdConfiguration": {
-            "description": "The containerd configuration file.",
-            "properties": {
-                "connection": {
-                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
-                    "description": "The parameters with which to connect to the remote host."
-                },
-                "cri": {
-                    "$ref": "#/types/kubernetes-the-hard-way:remote:ContainerdCriPluginConfiguration",
-                    "plain": true,
-                    "description": "The cri configuration."
-                },
-                "file": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:remote:File",
-                    "description": "The remote configuration file."
-                },
-                "path": {
-                    "type": "string",
-                    "description": "The path to put the configuration file."
-                }
-            },
-            "required": [
-                "connection",
-                "file",
-                "cri"
-            ],
-            "inputProperties": {
-                "connection": {
-                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
-                    "description": "The parameters with which to connect to the remote host."
-                },
-                "cri": {
-                    "$ref": "#/types/kubernetes-the-hard-way:remote:ContainerdCriPluginConfiguration",
-                    "plain": true,
-                    "description": "The cri configuration."
-                },
-                "path": {
-                    "type": "string",
-                    "description": "The path to put the configuration file."
                 }
             },
             "requiredInputs": [
@@ -7017,7 +6995,7 @@
                         "description": "IP masq."
                     },
                     "ipam": {
-                        "$ref": "#/types/kubernetes-the-hard-way:remote:CniBridgeIpam",
+                        "$ref": "#/types/kubernetes-the-hard-way:config:CniBridgeIpam",
                         "description": "IPAM"
                     },
                     "isGateway": {
@@ -7084,6 +7062,29 @@
                 "properties": {
                     "result": {
                         "$ref": "#/types/kubernetes-the-hard-way:config:CniLoopbackPluginConfiguration"
+                    }
+                },
+                "required": [
+                    "result"
+                ]
+            }
+        },
+        "kubernetes-the-hard-way:config:getContainerdConfiguration": {
+            "description": "Get the containerd configuration.",
+            "inputs": {
+                "properties": {
+                    "cri": {
+                        "$ref": "#/types/kubernetes-the-hard-way:config:ContainerdCriPluginConfiguration",
+                        "plain": true,
+                        "description": "The cri configuration."
+                    }
+                }
+            },
+            "outputs": {
+                "description": "Get the containerd configuration.",
+                "properties": {
+                    "result": {
+                        "$ref": "#/types/kubernetes-the-hard-way:config:ContainerdConfiguration"
                     }
                 },
                 "required": [

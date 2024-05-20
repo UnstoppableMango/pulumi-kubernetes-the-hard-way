@@ -12,6 +12,8 @@ import com.unmango.kubernetesthehardway.config.inputs.GetCniBridgePluginConfigur
 import com.unmango.kubernetesthehardway.config.inputs.GetCniBridgePluginConfigurationPlainArgs;
 import com.unmango.kubernetesthehardway.config.inputs.GetCniLoopbackPluginConfigurationArgs;
 import com.unmango.kubernetesthehardway.config.inputs.GetCniLoopbackPluginConfigurationPlainArgs;
+import com.unmango.kubernetesthehardway.config.inputs.GetContainerdConfigurationArgs;
+import com.unmango.kubernetesthehardway.config.inputs.GetContainerdConfigurationPlainArgs;
 import com.unmango.kubernetesthehardway.config.inputs.GetKubeProxyConfigurationArgs;
 import com.unmango.kubernetesthehardway.config.inputs.GetKubeProxyConfigurationPlainArgs;
 import com.unmango.kubernetesthehardway.config.inputs.GetKubeVipManifestArgs;
@@ -22,6 +24,7 @@ import com.unmango.kubernetesthehardway.config.inputs.GetKubeletConfigurationArg
 import com.unmango.kubernetesthehardway.config.inputs.GetKubeletConfigurationPlainArgs;
 import com.unmango.kubernetesthehardway.config.outputs.GetCniBridgePluginConfigurationResult;
 import com.unmango.kubernetesthehardway.config.outputs.GetCniLoopbackPluginConfigurationResult;
+import com.unmango.kubernetesthehardway.config.outputs.GetContainerdConfigurationResult;
 import com.unmango.kubernetesthehardway.config.outputs.GetKubeProxyConfigurationResult;
 import com.unmango.kubernetesthehardway.config.outputs.GetKubeVipManifestResult;
 import com.unmango.kubernetesthehardway.config.outputs.GetKubeconfigResult;
@@ -98,6 +101,48 @@ public final class ConfigFunctions {
      */
     public static CompletableFuture<GetCniLoopbackPluginConfigurationResult> getCniLoopbackPluginConfigurationPlain(GetCniLoopbackPluginConfigurationPlainArgs args, InvokeOptions options) {
         return Deployment.getInstance().invokeAsync("kubernetes-the-hard-way:config:getCniLoopbackPluginConfiguration", TypeShape.of(GetCniLoopbackPluginConfigurationResult.class), args, Utilities.withVersion(options));
+    }
+    /**
+     * Get the containerd configuration.
+     * 
+     */
+    public static Output<GetContainerdConfigurationResult> getContainerdConfiguration() {
+        return getContainerdConfiguration(GetContainerdConfigurationArgs.Empty, InvokeOptions.Empty);
+    }
+    /**
+     * Get the containerd configuration.
+     * 
+     */
+    public static CompletableFuture<GetContainerdConfigurationResult> getContainerdConfigurationPlain() {
+        return getContainerdConfigurationPlain(GetContainerdConfigurationPlainArgs.Empty, InvokeOptions.Empty);
+    }
+    /**
+     * Get the containerd configuration.
+     * 
+     */
+    public static Output<GetContainerdConfigurationResult> getContainerdConfiguration(GetContainerdConfigurationArgs args) {
+        return getContainerdConfiguration(args, InvokeOptions.Empty);
+    }
+    /**
+     * Get the containerd configuration.
+     * 
+     */
+    public static CompletableFuture<GetContainerdConfigurationResult> getContainerdConfigurationPlain(GetContainerdConfigurationPlainArgs args) {
+        return getContainerdConfigurationPlain(args, InvokeOptions.Empty);
+    }
+    /**
+     * Get the containerd configuration.
+     * 
+     */
+    public static Output<GetContainerdConfigurationResult> getContainerdConfiguration(GetContainerdConfigurationArgs args, InvokeOptions options) {
+        return Deployment.getInstance().invoke("kubernetes-the-hard-way:config:getContainerdConfiguration", TypeShape.of(GetContainerdConfigurationResult.class), args, Utilities.withVersion(options));
+    }
+    /**
+     * Get the containerd configuration.
+     * 
+     */
+    public static CompletableFuture<GetContainerdConfigurationResult> getContainerdConfigurationPlain(GetContainerdConfigurationPlainArgs args, InvokeOptions options) {
+        return Deployment.getInstance().invokeAsync("kubernetes-the-hard-way:config:getContainerdConfiguration", TypeShape.of(GetContainerdConfigurationResult.class), args, Utilities.withVersion(options));
     }
     /**
      * kube-proxy configuration.
