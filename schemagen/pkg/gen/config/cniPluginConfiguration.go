@@ -57,6 +57,23 @@ func generateGetCniBridgePluginConfiguration() schema.PackageSpec {
 					},
 				},
 			},
+			name("CniBridgePluginConfiguration"): {
+				ObjectTypeSpec: schema.ObjectTypeSpec{
+					Description: "TODO",
+					Type:        "object",
+					Properties: map[string]schema.PropertySpec{
+						"bridge":    props.String("Bridge name."),
+						"subnet":    props.String("The subnet to use."),
+						"isGateway": props.Boolean("Is gateway."),
+						"ipMasq":    props.Boolean("IP masq."),
+						"ipam": {
+							Description: "IPAM",
+							TypeSpec:    types.LocalType("CniBridgeIpam", "config"),
+						},
+					},
+					Required: []string{"bridge", "subnet", "isGateway", "ipMasq", "ipam"},
+				},
+			},
 		},
 		Functions: map[string]schema.FunctionSpec{
 			name("getCniBridgePluginConfiguration"): function,
@@ -76,7 +93,16 @@ func generateGetCniLoopbackPluginConfiguration() schema.PackageSpec {
 	)
 
 	return schema.PackageSpec{
-		Types: map[string]schema.ComplexTypeSpec{},
+		Types: map[string]schema.ComplexTypeSpec{
+			name("CniLoopbackPluginConfiguration"): {
+				ObjectTypeSpec: schema.ObjectTypeSpec{
+					Description: "TODO",
+					Type:        "object",
+					Properties:  map[string]schema.PropertySpec{},
+					Required:    []string{},
+				},
+			},
+		},
 		Functions: map[string]schema.FunctionSpec{
 			name("getCniLoopbackPluginConfiguration"): function,
 		},

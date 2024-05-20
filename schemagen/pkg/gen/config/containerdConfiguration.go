@@ -105,6 +105,14 @@ func generateContainerdConfiguration() schema.PackageSpec {
 					},
 				},
 			},
+			name("ContainerdConfiguration"): {
+				ObjectTypeSpec: schema.ObjectTypeSpec{
+					Description: "TODO",
+					Type:        "object",
+					Properties:  map[string]schema.PropertySpec{},
+					Required:    []string{},
+				},
+			},
 		},
 		Functions: map[string]schema.FunctionSpec{
 			name("getContainerdConfiguration"): function,
