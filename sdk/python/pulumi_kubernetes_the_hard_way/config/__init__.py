@@ -6,6 +6,10 @@ from .. import _utilities
 import typing
 # Export this package's modules as members:
 from ._enums import *
+from .cni_bridge_plugin_configuration import *
+from .cni_loopback_plugin_configuration import *
+from .get_cni_bridge_plugin_configuration import *
+from .get_cni_loopback_plugin_configuration import *
 from .get_kube_proxy_configuration import *
 from .get_kube_vip_manifest import *
 from .get_kubeconfig import *

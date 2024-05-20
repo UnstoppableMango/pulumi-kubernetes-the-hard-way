@@ -6,6 +6,8 @@
 import * as pulumi from "@pulumi/pulumi";
 export type ConstructComponent<T extends pulumi.ComponentResource = pulumi.ComponentResource> = (name: string, inputs: any, options: pulumi.ComponentResourceOptions) => T;
 export type ResourceConstructor = {
+    readonly "kubernetes-the-hard-way:config:CniBridgePluginConfiguration": ConstructComponent<CniBridgePluginConfiguration>;
+    readonly "kubernetes-the-hard-way:config:CniLoopbackPluginConfiguration": ConstructComponent<CniLoopbackPluginConfiguration>;
     readonly "kubernetes-the-hard-way:config:KubeProxyConfiguration": ConstructComponent<KubeProxyConfiguration>;
     readonly "kubernetes-the-hard-way:config:KubeVipManifest": ConstructComponent<KubeVipManifest>;
     readonly "kubernetes-the-hard-way:config:KubeletConfiguration": ConstructComponent<KubeletConfiguration>;
@@ -56,6 +58,8 @@ export type ResourceConstructor = {
     readonly "kubernetes-the-hard-way:tools:Wget": ConstructComponent<Wget>;
 };
 export type Functions = {
+    "kubernetes-the-hard-way:config:getCniBridgePluginConfiguration": (inputs: getCniBridgePluginConfigurationInputs) => Promise<getCniBridgePluginConfigurationOutputs>;
+    "kubernetes-the-hard-way:config:getCniLoopbackPluginConfiguration": (inputs: getCniLoopbackPluginConfigurationInputs) => Promise<getCniLoopbackPluginConfigurationOutputs>;
     "kubernetes-the-hard-way:config:getKubeProxyConfiguration": (inputs: getKubeProxyConfigurationInputs) => Promise<getKubeProxyConfigurationOutputs>;
     "kubernetes-the-hard-way:config:getKubeVipManifest": (inputs: getKubeVipManifestInputs) => Promise<getKubeVipManifestOutputs>;
     "kubernetes-the-hard-way:config:getKubeconfig": (inputs: getKubeconfigInputs) => Promise<getKubeconfigOutputs>;
@@ -66,6 +70,37 @@ import * as command from "@pulumi/command";
 import * as kubernetes from "@pulumi/kubernetes";
 import * as random from "@pulumi/random";
 import * as tls from "@pulumi/tls";
+export abstract class CniBridgePluginConfiguration<TData = any> extends (pulumi.ComponentResource)<TData> {
+    public result!: CniBridgePluginConfigurationOutputs | pulumi.Output<CniBridgePluginConfigurationOutputs>;
+    public yaml!: string | pulumi.Output<string>;
+    constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
+        super("kubernetes-the-hard-way:config:CniBridgePluginConfiguration", name, opts.urn ? { result: undefined, yaml: undefined } : { name, args, opts }, opts);
+    }
+}
+export interface CniBridgePluginConfigurationArgs {
+    readonly bridge?: pulumi.Input<string>;
+    readonly cniVersion?: pulumi.Input<string>;
+    readonly ipMasq?: pulumi.Input<boolean>;
+    readonly ipam?: pulumi.Input<CniBridgeIpamInputs>;
+    readonly isGateway?: pulumi.Input<boolean>;
+    readonly name?: pulumi.Input<string>;
+    readonly path?: pulumi.Input<string>;
+    readonly subnet: pulumi.Input<string>;
+    readonly type?: pulumi.Input<string>;
+}
+export abstract class CniLoopbackPluginConfiguration<TData = any> extends (pulumi.ComponentResource)<TData> {
+    public result!: CniLoopbackPluginConfigurationOutputs | pulumi.Output<CniLoopbackPluginConfigurationOutputs>;
+    public yaml!: string | pulumi.Output<string>;
+    constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
+        super("kubernetes-the-hard-way:config:CniLoopbackPluginConfiguration", name, opts.urn ? { result: undefined, yaml: undefined } : { name, args, opts }, opts);
+    }
+}
+export interface CniLoopbackPluginConfigurationArgs {
+    readonly cniVersion?: pulumi.Input<string>;
+    readonly name?: pulumi.Input<string>;
+    readonly path?: pulumi.Input<string>;
+    readonly type?: pulumi.Input<string>;
+}
 export abstract class KubeProxyConfiguration<TData = any> extends (pulumi.ComponentResource)<TData> {
     public result!: KubeProxyConfigurationOutputs | pulumi.Output<KubeProxyConfigurationOutputs>;
     public yaml!: string | pulumi.Output<string>;
@@ -1877,6 +1912,29 @@ export interface WgetOptsOutputs {
     readonly quiet?: pulumi.Output<boolean>;
     readonly timestamping?: pulumi.Output<boolean>;
     readonly url: pulumi.Output<string[]>;
+}
+export interface getCniBridgePluginConfigurationInputs {
+    readonly bridge?: pulumi.Input<string>;
+    readonly cniVersion?: pulumi.Input<string>;
+    readonly ipMasq?: pulumi.Input<boolean>;
+    readonly ipam?: pulumi.Input<CniBridgeIpamInputs>;
+    readonly isGateway?: pulumi.Input<boolean>;
+    readonly name?: pulumi.Input<string>;
+    readonly path?: pulumi.Input<string>;
+    readonly subnet: pulumi.Input<string>;
+    readonly type?: pulumi.Input<string>;
+}
+export interface getCniBridgePluginConfigurationOutputs {
+    readonly result: pulumi.Output<CniBridgePluginConfigurationOutputs>;
+}
+export interface getCniLoopbackPluginConfigurationInputs {
+    readonly cniVersion?: pulumi.Input<string>;
+    readonly name?: pulumi.Input<string>;
+    readonly path?: pulumi.Input<string>;
+    readonly type?: pulumi.Input<string>;
+}
+export interface getCniLoopbackPluginConfigurationOutputs {
+    readonly result: pulumi.Output<CniLoopbackPluginConfigurationOutputs>;
 }
 export interface getKubeProxyConfigurationInputs {
     readonly clusterCIDR: pulumi.Input<string>;
