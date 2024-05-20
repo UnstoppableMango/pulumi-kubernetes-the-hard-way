@@ -9,12 +9,11 @@ func GenerateConfig(kubernetesSpec schema.PackageSpec) schema.PackageSpec {
 	base := schema.PackageSpec{
 		Types:     generateTypes(kubernetesSpec),
 		Resources: map[string]schema.ResourceSpec{},
-		Functions: map[string]schema.FunctionSpec{
-			name("getKubeconfig"): generateGetKubeconfig(),
-		},
+		Functions: map[string]schema.FunctionSpec{},
 	}
 
 	return internal.ExtendSchemas(base,
+		generateGetKubeconfig(),
 		generateGetKubeletConfiguration(),
 		generateGetKubeProxyConfiguration(),
 		generateGetKubeVipManifest(),
