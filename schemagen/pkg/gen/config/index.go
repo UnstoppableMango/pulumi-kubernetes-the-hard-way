@@ -13,6 +13,8 @@ func GenerateConfig(kubernetesSpec schema.PackageSpec) schema.PackageSpec {
 	}
 
 	return internal.ExtendSchemas(base,
+		generateGetCniBridgePluginConfiguration(),
+		generateGetCniLoopbackPluginConfiguration(),
 		generateGetKubeconfig(),
 		generateGetKubeletConfiguration(),
 		generateGetKubeProxyConfiguration(),
