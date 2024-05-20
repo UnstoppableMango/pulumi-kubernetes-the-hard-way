@@ -9,16 +9,16 @@ import com.pulumi.core.annotations.Export;
 import com.pulumi.core.annotations.ResourceType;
 import com.pulumi.core.internal.Codegen;
 import com.unmango.kubernetesthehardway.Utilities;
-import com.unmango.kubernetesthehardway.remote.StartEtcdArgs;
+import com.unmango.kubernetesthehardway.remote.StartContainerdArgs;
 import com.unmango.kubernetesthehardway.tools.Systemctl;
 import javax.annotation.Nullable;
 
 /**
- * Starts `etcd` on a remote system
+ * Starts `containerd` on a remote system
  * 
  */
-@ResourceType(type="kubernetes-the-hard-way:remote:StartEtcd")
-public class StartEtcd extends com.pulumi.resources.ComponentResource {
+@ResourceType(type="kubernetes-the-hard-way:remote:StartContainerd")
+public class StartContainerd extends com.pulumi.resources.ComponentResource {
     /**
      * The parameters with which to connect to the remote host.
      * 
@@ -80,15 +80,15 @@ public class StartEtcd extends com.pulumi.resources.ComponentResource {
      *
      * @param name The _unique_ name of the resulting resource.
      */
-    public StartEtcd(String name) {
-        this(name, StartEtcdArgs.Empty);
+    public StartContainerd(String name) {
+        this(name, StartContainerdArgs.Empty);
     }
     /**
      *
      * @param name The _unique_ name of the resulting resource.
      * @param args The arguments to use to populate this resource's properties.
      */
-    public StartEtcd(String name, StartEtcdArgs args) {
+    public StartContainerd(String name, StartContainerdArgs args) {
         this(name, args, null);
     }
     /**
@@ -97,8 +97,8 @@ public class StartEtcd extends com.pulumi.resources.ComponentResource {
      * @param args The arguments to use to populate this resource's properties.
      * @param options A bag of options that control this resource's behavior.
      */
-    public StartEtcd(String name, StartEtcdArgs args, @Nullable com.pulumi.resources.ComponentResourceOptions options) {
-        super("kubernetes-the-hard-way:remote:StartEtcd", name, args == null ? StartEtcdArgs.Empty : args, makeResourceOptions(options, Codegen.empty()), true);
+    public StartContainerd(String name, StartContainerdArgs args, @Nullable com.pulumi.resources.ComponentResourceOptions options) {
+        super("kubernetes-the-hard-way:remote:StartContainerd", name, args == null ? StartContainerdArgs.Empty : args, makeResourceOptions(options, Codegen.empty()), true);
     }
 
     private static com.pulumi.resources.ComponentResourceOptions makeResourceOptions(@Nullable com.pulumi.resources.ComponentResourceOptions options, @Nullable Output<String> id) {

@@ -64,7 +64,10 @@ _utilities.register(
    "kubernetes-the-hard-way:remote:KubeletService": "KubeletService",
    "kubernetes-the-hard-way:remote:ProvisionEtcd": "ProvisionEtcd",
    "kubernetes-the-hard-way:remote:RuncInstall": "RuncInstall",
+   "kubernetes-the-hard-way:remote:StartContainerd": "StartContainerd",
    "kubernetes-the-hard-way:remote:StartEtcd": "StartEtcd",
+   "kubernetes-the-hard-way:remote:StartKubeProxy": "StartKubeProxy",
+   "kubernetes-the-hard-way:remote:StartKubelet": "StartKubelet",
    "kubernetes-the-hard-way:remote:StaticPod": "StaticPod",
    "kubernetes-the-hard-way:remote:SystemdService": "SystemdService"
   }

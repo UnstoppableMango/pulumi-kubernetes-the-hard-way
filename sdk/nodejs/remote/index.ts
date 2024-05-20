@@ -120,10 +120,25 @@ export type RuncInstall = import("./runcInstall").RuncInstall;
 export const RuncInstall: typeof import("./runcInstall").RuncInstall = null as any;
 utilities.lazyLoad(exports, ["RuncInstall"], () => require("./runcInstall"));
 
+export { StartContainerdArgs } from "./startContainerd";
+export type StartContainerd = import("./startContainerd").StartContainerd;
+export const StartContainerd: typeof import("./startContainerd").StartContainerd = null as any;
+utilities.lazyLoad(exports, ["StartContainerd"], () => require("./startContainerd"));
+
 export { StartEtcdArgs } from "./startEtcd";
 export type StartEtcd = import("./startEtcd").StartEtcd;
 export const StartEtcd: typeof import("./startEtcd").StartEtcd = null as any;
 utilities.lazyLoad(exports, ["StartEtcd"], () => require("./startEtcd"));
+
+export { StartKubeProxyArgs } from "./startKubeProxy";
+export type StartKubeProxy = import("./startKubeProxy").StartKubeProxy;
+export const StartKubeProxy: typeof import("./startKubeProxy").StartKubeProxy = null as any;
+utilities.lazyLoad(exports, ["StartKubeProxy"], () => require("./startKubeProxy"));
+
+export { StartKubeletArgs } from "./startKubelet";
+export type StartKubelet = import("./startKubelet").StartKubelet;
+export const StartKubelet: typeof import("./startKubelet").StartKubelet = null as any;
+utilities.lazyLoad(exports, ["StartKubelet"], () => require("./startKubelet"));
 
 export { StaticPodArgs } from "./staticPod";
 export type StaticPod = import("./staticPod").StaticPod;
@@ -189,8 +204,14 @@ const _module = {
                 return new ProvisionEtcd(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:remote:RuncInstall":
                 return new RuncInstall(name, <any>undefined, { urn })
+            case "kubernetes-the-hard-way:remote:StartContainerd":
+                return new StartContainerd(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:remote:StartEtcd":
                 return new StartEtcd(name, <any>undefined, { urn })
+            case "kubernetes-the-hard-way:remote:StartKubeProxy":
+                return new StartKubeProxy(name, <any>undefined, { urn })
+            case "kubernetes-the-hard-way:remote:StartKubelet":
+                return new StartKubelet(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:remote:StaticPod":
                 return new StaticPod(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:remote:SystemdService":

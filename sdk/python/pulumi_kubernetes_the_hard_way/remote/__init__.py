@@ -29,7 +29,10 @@ from .kubelet_install import *
 from .kubelet_service import *
 from .provision_etcd import *
 from .runc_install import *
+from .start_containerd import *
 from .start_etcd import *
+from .start_kube_proxy import *
+from .start_kubelet import *
 from .static_pod import *
 from .systemd_service import *
 from ._inputs import *
