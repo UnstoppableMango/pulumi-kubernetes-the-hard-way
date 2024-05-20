@@ -129,6 +129,47 @@
             },
             "type": "object"
         },
+        "kubernetes-the-hard-way:config:CniBridgePluginConfiguration": {
+            "description": "TODO",
+            "properties": {
+                "bridge": {
+                    "type": "string",
+                    "description": "Bridge name."
+                },
+                "ipMasq": {
+                    "type": "boolean",
+                    "description": "IP masq."
+                },
+                "ipam": {
+                    "$ref": "#/types/kubernetes-the-hard-way:config:CniBridgeIpam",
+                    "description": "IPAM"
+                },
+                "isGateway": {
+                    "type": "boolean",
+                    "description": "Is gateway."
+                },
+                "subnet": {
+                    "type": "string",
+                    "description": "The subnet to use."
+                }
+            },
+            "type": "object",
+            "required": [
+                "bridge",
+                "subnet",
+                "isGateway",
+                "ipMasq",
+                "ipam"
+            ]
+        },
+        "kubernetes-the-hard-way:config:CniLoopbackPluginConfiguration": {
+            "description": "TODO",
+            "type": "object"
+        },
+        "kubernetes-the-hard-way:config:ContainerdConfiguration": {
+            "description": "TODO",
+            "type": "object"
+        },
         "kubernetes-the-hard-way:config:ContainerdCriPluginConfiguration": {
             "description": "containerd cri plugin configuration.",
             "properties": {

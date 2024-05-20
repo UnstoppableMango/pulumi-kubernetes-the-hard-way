@@ -14,6 +14,10 @@ import pulumi_kubernetes
 
 __all__ = [
     'Cluster',
+    'CniBridgeIpam',
+    'CniBridgePluginConfiguration',
+    'CniLoopbackPluginConfiguration',
+    'ContainerdConfiguration',
     'Context',
     'KubeProxyConfiguration',
     'KubeProxyConfigurationClientConnection',
@@ -55,6 +59,162 @@ class Cluster(dict):
         TODO
         """
         return pulumi.get(self, "server")
+
+
+@pulumi.output_type
+class CniBridgeIpam(dict):
+    """
+    The CNI plugins IPAM
+    """
+    def __init__(__self__, *,
+                 ranges: Optional[Sequence[Mapping[str, str]]] = None,
+                 routes: Optional[Sequence[Mapping[str, str]]] = None,
+                 type: Optional[str] = None):
+        """
+        The CNI plugins IPAM
+        :param Sequence[Mapping[str, str]] ranges: IPAM ranges.
+        :param Sequence[Mapping[str, str]] routes: IPAM routes.
+        :param str type: CNI bridge IPAM type
+        """
+        if ranges is not None:
+            pulumi.set(__self__, "ranges", ranges)
+        if routes is not None:
+            pulumi.set(__self__, "routes", routes)
+        if type is not None:
+            pulumi.set(__self__, "type", type)
+
+    @property
+    @pulumi.getter
+    def ranges(self) -> Optional[Sequence[Mapping[str, str]]]:
+        """
+        IPAM ranges.
+        """
+        return pulumi.get(self, "ranges")
+
+    @property
+    @pulumi.getter
+    def routes(self) -> Optional[Sequence[Mapping[str, str]]]:
+        """
+        IPAM routes.
+        """
+        return pulumi.get(self, "routes")
+
+    @property
+    @pulumi.getter
+    def type(self) -> Optional[str]:
+        """
+        CNI bridge IPAM type
+        """
+        return pulumi.get(self, "type")
+
+
+@pulumi.output_type
+class CniBridgePluginConfiguration(dict):
+    """
+    TODO
+    """
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "ipMasq":
+            suggest = "ip_masq"
+        elif key == "isGateway":
+            suggest = "is_gateway"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in CniBridgePluginConfiguration. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        CniBridgePluginConfiguration.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        CniBridgePluginConfiguration.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 bridge: str,
+                 ip_masq: bool,
+                 ipam: 'outputs.CniBridgeIpam',
+                 is_gateway: bool,
+                 subnet: str):
+        """
+        TODO
+        :param str bridge: Bridge name.
+        :param bool ip_masq: IP masq.
+        :param 'CniBridgeIpam' ipam: IPAM
+        :param bool is_gateway: Is gateway.
+        :param str subnet: The subnet to use.
+        """
+        pulumi.set(__self__, "bridge", bridge)
+        pulumi.set(__self__, "ip_masq", ip_masq)
+        pulumi.set(__self__, "ipam", ipam)
+        pulumi.set(__self__, "is_gateway", is_gateway)
+        pulumi.set(__self__, "subnet", subnet)
+
+    @property
+    @pulumi.getter
+    def bridge(self) -> str:
+        """
+        Bridge name.
+        """
+        return pulumi.get(self, "bridge")
+
+    @property
+    @pulumi.getter(name="ipMasq")
+    def ip_masq(self) -> bool:
+        """
+        IP masq.
+        """
+        return pulumi.get(self, "ip_masq")
+
+    @property
+    @pulumi.getter
+    def ipam(self) -> 'outputs.CniBridgeIpam':
+        """
+        IPAM
+        """
+        return pulumi.get(self, "ipam")
+
+    @property
+    @pulumi.getter(name="isGateway")
+    def is_gateway(self) -> bool:
+        """
+        Is gateway.
+        """
+        return pulumi.get(self, "is_gateway")
+
+    @property
+    @pulumi.getter
+    def subnet(self) -> str:
+        """
+        The subnet to use.
+        """
+        return pulumi.get(self, "subnet")
+
+
+@pulumi.output_type
+class CniLoopbackPluginConfiguration(dict):
+    """
+    TODO
+    """
+    def __init__(__self__):
+        """
+        TODO
+        """
+        pass
+
+
+@pulumi.output_type
+class ContainerdConfiguration(dict):
+    """
+    TODO
+    """
+    def __init__(__self__):
+        """
+        TODO
+        """
+        pass
 
 
 @pulumi.output_type

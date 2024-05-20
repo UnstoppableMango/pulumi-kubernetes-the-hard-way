@@ -15,7 +15,7 @@ import (
 type CniLoopbackPluginConfiguration struct {
 	pulumi.ResourceState
 
-	Result CniLoopbackPluginConfigurationOutput `pulumi:"result"`
+	Result CniLoopbackPluginConfigurationTypeOutput `pulumi:"result"`
 	// The yaml representation of the manifest.
 	Yaml pulumi.StringOutput `pulumi:"yaml"`
 }
@@ -146,8 +146,8 @@ func (o CniLoopbackPluginConfigurationOutput) ToCniLoopbackPluginConfigurationOu
 	return o
 }
 
-func (o CniLoopbackPluginConfigurationOutput) Result() CniLoopbackPluginConfigurationOutput {
-	return o.ApplyT(func(v *CniLoopbackPluginConfiguration) CniLoopbackPluginConfigurationOutput { return v.Result }).(CniLoopbackPluginConfigurationOutput)
+func (o CniLoopbackPluginConfigurationOutput) Result() CniLoopbackPluginConfigurationTypeOutput {
+	return o.ApplyT(func(v *CniLoopbackPluginConfiguration) CniLoopbackPluginConfigurationTypeOutput { return v.Result }).(CniLoopbackPluginConfigurationTypeOutput)
 }
 
 // The yaml representation of the manifest.

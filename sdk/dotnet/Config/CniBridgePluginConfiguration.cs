@@ -17,7 +17,7 @@ namespace UnMango.KubernetesTheHardWay.Config
     public partial class CniBridgePluginConfiguration : global::Pulumi.ComponentResource
     {
         [Output("result")]
-        public Output<UnMango.KubernetesTheHardWay.Config.Outputs.CniBridgePluginConfiguration> Result { get; private set; } = null!;
+        public Output<Outputs.CniBridgePluginConfiguration> Result { get; private set; } = null!;
 
         /// <summary>
         /// The yaml representation of the manifest.

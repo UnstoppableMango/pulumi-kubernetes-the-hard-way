@@ -15,7 +15,7 @@ import (
 type ContainerdConfiguration struct {
 	pulumi.ResourceState
 
-	Result ContainerdConfigurationOutput `pulumi:"result"`
+	Result ContainerdConfigurationTypeOutput `pulumi:"result"`
 	// The toml representation of the configuration.
 	Toml pulumi.StringOutput `pulumi:"toml"`
 }
@@ -134,8 +134,8 @@ func (o ContainerdConfigurationOutput) ToContainerdConfigurationOutputWithContex
 	return o
 }
 
-func (o ContainerdConfigurationOutput) Result() ContainerdConfigurationOutput {
-	return o.ApplyT(func(v *ContainerdConfiguration) ContainerdConfigurationOutput { return v.Result }).(ContainerdConfigurationOutput)
+func (o ContainerdConfigurationOutput) Result() ContainerdConfigurationTypeOutput {
+	return o.ApplyT(func(v *ContainerdConfiguration) ContainerdConfigurationTypeOutput { return v.Result }).(ContainerdConfigurationTypeOutput)
 }
 
 // The toml representation of the configuration.

@@ -45,7 +45,7 @@ type GetCniBridgePluginConfigurationArgs struct {
 
 // Get the `bridge` configuration.
 type GetCniBridgePluginConfigurationResult struct {
-	Result CniBridgePluginConfiguration `pulumi:"result"`
+	Result CniBridgePluginConfigurationType `pulumi:"result"`
 }
 
 func GetCniBridgePluginConfigurationOutput(ctx *pulumi.Context, args GetCniBridgePluginConfigurationOutputArgs, opts ...pulumi.InvokeOption) GetCniBridgePluginConfigurationResultOutput {
@@ -101,8 +101,8 @@ func (o GetCniBridgePluginConfigurationResultOutput) ToGetCniBridgePluginConfigu
 	return o
 }
 
-func (o GetCniBridgePluginConfigurationResultOutput) Result() CniBridgePluginConfigurationOutput {
-	return o.ApplyT(func(v GetCniBridgePluginConfigurationResult) CniBridgePluginConfiguration { return v.Result }).(CniBridgePluginConfigurationOutput)
+func (o GetCniBridgePluginConfigurationResultOutput) Result() CniBridgePluginConfigurationTypeOutput {
+	return o.ApplyT(func(v GetCniBridgePluginConfigurationResult) CniBridgePluginConfigurationType { return v.Result }).(CniBridgePluginConfigurationTypeOutput)
 }
 
 func init() {

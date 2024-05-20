@@ -7,8 +7,6 @@ import * as outputs from "../types/output";
 import * as enums from "../types/enums";
 import * as utilities from "../utilities";
 
-import {ContainerdConfiguration} from "./index";
-
 /**
  * Get the containerd configuration.
  */
@@ -27,7 +25,7 @@ export class ContainerdConfiguration extends pulumi.ComponentResource {
         return obj['__pulumiType'] === ContainerdConfiguration.__pulumiType;
     }
 
-    public /*out*/ readonly result!: pulumi.Output<ContainerdConfiguration>;
+    public /*out*/ readonly result!: pulumi.Output<outputs.config.ContainerdConfiguration>;
     /**
      * The toml representation of the configuration.
      */

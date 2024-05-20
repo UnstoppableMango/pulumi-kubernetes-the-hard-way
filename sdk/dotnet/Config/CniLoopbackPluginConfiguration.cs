@@ -17,7 +17,7 @@ namespace UnMango.KubernetesTheHardWay.Config
     public partial class CniLoopbackPluginConfiguration : global::Pulumi.ComponentResource
     {
         [Output("result")]
-        public Output<UnMango.KubernetesTheHardWay.Config.Outputs.CniLoopbackPluginConfiguration> Result { get; private set; } = null!;
+        public Output<Outputs.CniLoopbackPluginConfiguration> Result { get; private set; } = null!;
 
         /// <summary>
         /// The yaml representation of the manifest.

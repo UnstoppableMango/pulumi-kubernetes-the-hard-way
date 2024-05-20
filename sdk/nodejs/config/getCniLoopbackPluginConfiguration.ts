@@ -2,9 +2,10 @@
 // *** Do not edit by hand unless you're certain you know what you are doing! ***
 
 import * as pulumi from "@pulumi/pulumi";
+import * as inputs from "../types/input";
+import * as outputs from "../types/output";
+import * as enums from "../types/enums";
 import * as utilities from "../utilities";
-
-import {CniLoopbackPluginConfiguration} from "./index";
 
 /**
  * Get the `loopback` configuration.
@@ -44,7 +45,7 @@ export interface GetCniLoopbackPluginConfigurationArgs {
  * Get the `loopback` configuration.
  */
 export interface GetCniLoopbackPluginConfigurationResult {
-    readonly result: CniLoopbackPluginConfiguration;
+    readonly result: outputs.config.CniLoopbackPluginConfiguration;
 }
 /**
  * Get the `loopback` configuration.

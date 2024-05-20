@@ -23,6 +23,62 @@ export namespace config {
         server: string;
     }
 
+    /**
+     * The CNI plugins IPAM
+     */
+    export interface CniBridgeIpam {
+        /**
+         * IPAM ranges.
+         */
+        ranges?: {[key: string]: string}[];
+        /**
+         * IPAM routes.
+         */
+        routes?: {[key: string]: string}[];
+        /**
+         * CNI bridge IPAM type
+         */
+        type?: string;
+    }
+
+    /**
+     * TODO
+     */
+    export interface CniBridgePluginConfiguration {
+        /**
+         * Bridge name.
+         */
+        bridge: string;
+        /**
+         * IP masq.
+         */
+        ipMasq: boolean;
+        /**
+         * IPAM
+         */
+        ipam: outputs.config.CniBridgeIpam;
+        /**
+         * Is gateway.
+         */
+        isGateway: boolean;
+        /**
+         * The subnet to use.
+         */
+        subnet: string;
+    }
+
+    /**
+     * TODO
+     */
+    export interface CniLoopbackPluginConfiguration {
+    }
+
+    /**
+     * TODO
+     */
+    export interface ContainerdConfiguration {
+    }
+
     export interface Context {
         /**
          * TODO

@@ -17,7 +17,7 @@ namespace UnMango.KubernetesTheHardWay.Config
     public partial class ContainerdConfiguration : global::Pulumi.ComponentResource
     {
         [Output("result")]
-        public Output<UnMango.KubernetesTheHardWay.Config.Outputs.ContainerdConfiguration> Result { get; private set; } = null!;
+        public Output<Outputs.ContainerdConfiguration> Result { get; private set; } = null!;
 
         /// <summary>
         /// The toml representation of the configuration.

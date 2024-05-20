@@ -154,10 +154,10 @@ namespace UnMango.KubernetesTheHardWay.Config
     [OutputType]
     public sealed class GetCniBridgePluginConfigurationResult
     {
-        public readonly UnMango.KubernetesTheHardWay.Config.Outputs.CniBridgePluginConfiguration Result;
+        public readonly Outputs.CniBridgePluginConfiguration Result;
 
         [OutputConstructor]
-        private GetCniBridgePluginConfigurationResult(UnMango.KubernetesTheHardWay.Config.Outputs.CniBridgePluginConfiguration result)
+        private GetCniBridgePluginConfigurationResult(Outputs.CniBridgePluginConfiguration result)
         {
             Result = result;
         }

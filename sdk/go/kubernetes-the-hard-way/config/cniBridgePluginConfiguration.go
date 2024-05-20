@@ -16,7 +16,7 @@ import (
 type CniBridgePluginConfiguration struct {
 	pulumi.ResourceState
 
-	Result CniBridgePluginConfigurationOutput `pulumi:"result"`
+	Result CniBridgePluginConfigurationTypeOutput `pulumi:"result"`
 	// The yaml representation of the manifest.
 	Yaml pulumi.StringOutput `pulumi:"yaml"`
 }
@@ -170,8 +170,8 @@ func (o CniBridgePluginConfigurationOutput) ToCniBridgePluginConfigurationOutput
 	return o
 }
 
-func (o CniBridgePluginConfigurationOutput) Result() CniBridgePluginConfigurationOutput {
-	return o.ApplyT(func(v *CniBridgePluginConfiguration) CniBridgePluginConfigurationOutput { return v.Result }).(CniBridgePluginConfigurationOutput)
+func (o CniBridgePluginConfigurationOutput) Result() CniBridgePluginConfigurationTypeOutput {
+	return o.ApplyT(func(v *CniBridgePluginConfiguration) CniBridgePluginConfigurationTypeOutput { return v.Result }).(CniBridgePluginConfigurationTypeOutput)
 }
 
 // The yaml representation of the manifest.

@@ -94,10 +94,10 @@ namespace UnMango.KubernetesTheHardWay.Config
     [OutputType]
     public sealed class GetCniLoopbackPluginConfigurationResult
     {
-        public readonly UnMango.KubernetesTheHardWay.Config.Outputs.CniLoopbackPluginConfiguration Result;
+        public readonly Outputs.CniLoopbackPluginConfiguration Result;
 
         [OutputConstructor]
-        private GetCniLoopbackPluginConfigurationResult(UnMango.KubernetesTheHardWay.Config.Outputs.CniLoopbackPluginConfiguration result)
+        private GetCniLoopbackPluginConfigurationResult(Outputs.CniLoopbackPluginConfiguration result)
         {
             Result = result;
         }

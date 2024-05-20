@@ -35,7 +35,7 @@ type GetCniLoopbackPluginConfigurationArgs struct {
 
 // Get the `loopback` configuration.
 type GetCniLoopbackPluginConfigurationResult struct {
-	Result CniLoopbackPluginConfiguration `pulumi:"result"`
+	Result CniLoopbackPluginConfigurationType `pulumi:"result"`
 }
 
 func GetCniLoopbackPluginConfigurationOutput(ctx *pulumi.Context, args GetCniLoopbackPluginConfigurationOutputArgs, opts ...pulumi.InvokeOption) GetCniLoopbackPluginConfigurationResultOutput {
@@ -81,8 +81,8 @@ func (o GetCniLoopbackPluginConfigurationResultOutput) ToGetCniLoopbackPluginCon
 	return o
 }
 
-func (o GetCniLoopbackPluginConfigurationResultOutput) Result() CniLoopbackPluginConfigurationOutput {
-	return o.ApplyT(func(v GetCniLoopbackPluginConfigurationResult) CniLoopbackPluginConfiguration { return v.Result }).(CniLoopbackPluginConfigurationOutput)
+func (o GetCniLoopbackPluginConfigurationResultOutput) Result() CniLoopbackPluginConfigurationTypeOutput {
+	return o.ApplyT(func(v GetCniLoopbackPluginConfigurationResult) CniLoopbackPluginConfigurationType { return v.Result }).(CniLoopbackPluginConfigurationTypeOutput)
 }
 
 func init() {

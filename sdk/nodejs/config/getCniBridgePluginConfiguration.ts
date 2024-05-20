@@ -7,8 +7,6 @@ import * as outputs from "../types/output";
 import * as enums from "../types/enums";
 import * as utilities from "../utilities";
 
-import {CniBridgePluginConfiguration} from "./index";
-
 /**
  * Get the `bridge` configuration.
  */
@@ -71,7 +69,7 @@ export interface GetCniBridgePluginConfigurationArgs {
  * Get the `bridge` configuration.
  */
 export interface GetCniBridgePluginConfigurationResult {
-    readonly result: CniBridgePluginConfiguration;
+    readonly result: outputs.config.CniBridgePluginConfiguration;
 }
 /**
  * Get the `bridge` configuration.

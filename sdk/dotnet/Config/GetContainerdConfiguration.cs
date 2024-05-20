@@ -58,10 +58,10 @@ namespace UnMango.KubernetesTheHardWay.Config
     [OutputType]
     public sealed class GetContainerdConfigurationResult
     {
-        public readonly UnMango.KubernetesTheHardWay.Config.Outputs.ContainerdConfiguration Result;
+        public readonly Outputs.ContainerdConfiguration Result;
 
         [OutputConstructor]
-        private GetContainerdConfigurationResult(UnMango.KubernetesTheHardWay.Config.Outputs.ContainerdConfiguration result)
+        private GetContainerdConfigurationResult(Outputs.ContainerdConfiguration result)
         {
             Result = result;
         }

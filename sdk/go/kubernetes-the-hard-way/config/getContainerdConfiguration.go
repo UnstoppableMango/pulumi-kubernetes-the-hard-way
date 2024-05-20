@@ -29,7 +29,7 @@ type GetContainerdConfigurationArgs struct {
 
 // Get the containerd configuration.
 type GetContainerdConfigurationResult struct {
-	Result ContainerdConfiguration `pulumi:"result"`
+	Result ContainerdConfigurationType `pulumi:"result"`
 }
 
 func GetContainerdConfigurationOutput(ctx *pulumi.Context, args GetContainerdConfigurationOutputArgs, opts ...pulumi.InvokeOption) GetContainerdConfigurationResultOutput {
@@ -69,8 +69,8 @@ func (o GetContainerdConfigurationResultOutput) ToGetContainerdConfigurationResu
 	return o
 }
 
-func (o GetContainerdConfigurationResultOutput) Result() ContainerdConfigurationOutput {
-	return o.ApplyT(func(v GetContainerdConfigurationResult) ContainerdConfiguration { return v.Result }).(ContainerdConfigurationOutput)
+func (o GetContainerdConfigurationResultOutput) Result() ContainerdConfigurationTypeOutput {
+	return o.ApplyT(func(v GetContainerdConfigurationResult) ContainerdConfigurationType { return v.Result }).(ContainerdConfigurationTypeOutput)
 }
 
 func init() {

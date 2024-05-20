@@ -8,6 +8,7 @@ import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
 from .. import _utilities
+from . import outputs
 from ._inputs import *
 
 __all__ = ['CniBridgePluginConfigurationArgs', 'CniBridgePluginConfiguration']
@@ -259,7 +260,7 @@ class CniBridgePluginConfiguration(pulumi.ComponentResource):
 
     @property
     @pulumi.getter
-    def result(self) -> pulumi.Output[Any]:
+    def result(self) -> pulumi.Output['outputs.CniBridgePluginConfiguration']:
         return pulumi.get(self, "result")
 
     @property

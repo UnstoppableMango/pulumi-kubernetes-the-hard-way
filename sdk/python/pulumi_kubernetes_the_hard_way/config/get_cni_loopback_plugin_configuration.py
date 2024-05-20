@@ -8,6 +8,7 @@ import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
 from .. import _utilities
+from . import outputs
 
 __all__ = [
     'GetCniLoopbackPluginConfigurationResult',
@@ -28,7 +29,7 @@ class GetCniLoopbackPluginConfigurationResult:
 
     @property
     @pulumi.getter
-    def result(self) -> Any:
+    def result(self) -> 'outputs.CniLoopbackPluginConfiguration':
         return pulumi.get(self, "result")
 
 

@@ -8,6 +8,7 @@ import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
 from .. import _utilities
+from . import outputs
 from ._inputs import *
 
 __all__ = [
@@ -29,7 +30,7 @@ class GetContainerdConfigurationResult:
 
     @property
     @pulumi.getter
-    def result(self) -> Any:
+    def result(self) -> 'outputs.ContainerdConfiguration':
         return pulumi.get(self, "result")
 
 

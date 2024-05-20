@@ -244,6 +244,98 @@ func (o CniBridgeIpamPtrOutput) Type() pulumi.StringPtrOutput {
 	}).(pulumi.StringPtrOutput)
 }
 
+// TODO
+type CniBridgePluginConfigurationType struct {
+	// Bridge name.
+	Bridge string `pulumi:"bridge"`
+	// IP masq.
+	IpMasq bool `pulumi:"ipMasq"`
+	// IPAM
+	Ipam CniBridgeIpam `pulumi:"ipam"`
+	// Is gateway.
+	IsGateway bool `pulumi:"isGateway"`
+	// The subnet to use.
+	Subnet string `pulumi:"subnet"`
+}
+
+// TODO
+type CniBridgePluginConfigurationTypeOutput struct{ *pulumi.OutputState }
+
+func (CniBridgePluginConfigurationTypeOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*CniBridgePluginConfigurationType)(nil)).Elem()
+}
+
+func (o CniBridgePluginConfigurationTypeOutput) ToCniBridgePluginConfigurationTypeOutput() CniBridgePluginConfigurationTypeOutput {
+	return o
+}
+
+func (o CniBridgePluginConfigurationTypeOutput) ToCniBridgePluginConfigurationTypeOutputWithContext(ctx context.Context) CniBridgePluginConfigurationTypeOutput {
+	return o
+}
+
+// Bridge name.
+func (o CniBridgePluginConfigurationTypeOutput) Bridge() pulumi.StringOutput {
+	return o.ApplyT(func(v CniBridgePluginConfigurationType) string { return v.Bridge }).(pulumi.StringOutput)
+}
+
+// IP masq.
+func (o CniBridgePluginConfigurationTypeOutput) IpMasq() pulumi.BoolOutput {
+	return o.ApplyT(func(v CniBridgePluginConfigurationType) bool { return v.IpMasq }).(pulumi.BoolOutput)
+}
+
+// IPAM
+func (o CniBridgePluginConfigurationTypeOutput) Ipam() CniBridgeIpamOutput {
+	return o.ApplyT(func(v CniBridgePluginConfigurationType) CniBridgeIpam { return v.Ipam }).(CniBridgeIpamOutput)
+}
+
+// Is gateway.
+func (o CniBridgePluginConfigurationTypeOutput) IsGateway() pulumi.BoolOutput {
+	return o.ApplyT(func(v CniBridgePluginConfigurationType) bool { return v.IsGateway }).(pulumi.BoolOutput)
+}
+
+// The subnet to use.
+func (o CniBridgePluginConfigurationTypeOutput) Subnet() pulumi.StringOutput {
+	return o.ApplyT(func(v CniBridgePluginConfigurationType) string { return v.Subnet }).(pulumi.StringOutput)
+}
+
+// TODO
+type CniLoopbackPluginConfigurationType struct {
+}
+
+// TODO
+type CniLoopbackPluginConfigurationTypeOutput struct{ *pulumi.OutputState }
+
+func (CniLoopbackPluginConfigurationTypeOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*CniLoopbackPluginConfigurationType)(nil)).Elem()
+}
+
+func (o CniLoopbackPluginConfigurationTypeOutput) ToCniLoopbackPluginConfigurationTypeOutput() CniLoopbackPluginConfigurationTypeOutput {
+	return o
+}
+
+func (o CniLoopbackPluginConfigurationTypeOutput) ToCniLoopbackPluginConfigurationTypeOutputWithContext(ctx context.Context) CniLoopbackPluginConfigurationTypeOutput {
+	return o
+}
+
+// TODO
+type ContainerdConfigurationType struct {
+}
+
+// TODO
+type ContainerdConfigurationTypeOutput struct{ *pulumi.OutputState }
+
+func (ContainerdConfigurationTypeOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*ContainerdConfigurationType)(nil)).Elem()
+}
+
+func (o ContainerdConfigurationTypeOutput) ToContainerdConfigurationTypeOutput() ContainerdConfigurationTypeOutput {
+	return o
+}
+
+func (o ContainerdConfigurationTypeOutput) ToContainerdConfigurationTypeOutputWithContext(ctx context.Context) ContainerdConfigurationTypeOutput {
+	return o
+}
+
 // containerd cri plugin configuration.
 type ContainerdCriPluginConfiguration struct {
 	// cni configuration.
@@ -2221,6 +2313,9 @@ func init() {
 	pulumi.RegisterOutputType(ClusterArrayOutput{})
 	pulumi.RegisterOutputType(CniBridgeIpamOutput{})
 	pulumi.RegisterOutputType(CniBridgeIpamPtrOutput{})
+	pulumi.RegisterOutputType(CniBridgePluginConfigurationTypeOutput{})
+	pulumi.RegisterOutputType(CniLoopbackPluginConfigurationTypeOutput{})
+	pulumi.RegisterOutputType(ContainerdConfigurationTypeOutput{})
 	pulumi.RegisterOutputType(ContainerdCriPluginConfigurationOutput{})
 	pulumi.RegisterOutputType(ContainerdCriPluginConfigurationPtrOutput{})
 	pulumi.RegisterOutputType(ContainerdCriPluginConfigurationCniOutput{})

@@ -7,8 +7,6 @@ import * as outputs from "../types/output";
 import * as enums from "../types/enums";
 import * as utilities from "../utilities";
 
-import {ContainerdConfiguration} from "./index";
-
 /**
  * Get the containerd configuration.
  */
@@ -32,7 +30,7 @@ export interface GetContainerdConfigurationArgs {
  * Get the containerd configuration.
  */
 export interface GetContainerdConfigurationResult {
-    readonly result: ContainerdConfiguration;
+    readonly result: outputs.config.ContainerdConfiguration;
 }
 /**
  * Get the containerd configuration.

@@ -7,8 +7,6 @@ import * as outputs from "../types/output";
 import * as enums from "../types/enums";
 import * as utilities from "../utilities";
 
-import {CniBridgePluginConfiguration} from "./index";
-
 /**
  * Get the `bridge` configuration.
  */
@@ -27,7 +25,7 @@ export class CniBridgePluginConfiguration extends pulumi.ComponentResource {
         return obj['__pulumiType'] === CniBridgePluginConfiguration.__pulumiType;
     }
 
-    public /*out*/ readonly result!: pulumi.Output<CniBridgePluginConfiguration>;
+    public /*out*/ readonly result!: pulumi.Output<outputs.config.CniBridgePluginConfiguration>;
     /**
      * The yaml representation of the manifest.
      */
