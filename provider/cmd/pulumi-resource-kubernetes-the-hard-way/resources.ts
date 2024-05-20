@@ -29,10 +29,11 @@ import {
 import { ProvisionEtcd } from './remote/provisionEtcd';
 import { Certificate, ClusterPki, EncryptionKey, RootCa } from './tls';
 import { Chmod, Etcdctl, Hostnamectl, Mkdir, Mktemp, Mv, Rm, Sed, Systemctl, Tar, Tee, Wget } from './tools';
-import { KubeVipManifest, KubeletConfiguration } from './config';
+import { KubeProxyConfiguration, KubeVipManifest, KubeletConfiguration } from './config';
 
 const resources: schema.ResourceConstructor = {
   'kubernetes-the-hard-way:config:KubeletConfiguration': (...args) => new KubeletConfiguration(...args),
+  'kubernetes-the-hard-way:config:KubeProxyConfiguration': (...args) => new KubeProxyConfiguration(...args),
   'kubernetes-the-hard-way:config:KubeVipManifest': (...args) => new KubeVipManifest(...args),
   'kubernetes-the-hard-way:remote:CniBridgePluginConfiguration': (...args) => new CniBridgePluginConfiguration(...args),
   'kubernetes-the-hard-way:remote:CniLoopbackPluginConfiguration': (...args) => new CniLoopbackPluginConfiguration(...args),
