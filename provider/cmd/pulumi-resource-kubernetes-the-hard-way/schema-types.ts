@@ -1221,6 +1221,7 @@ export interface CniBridgeIpamOutputs {
 }
 export interface CniBridgePluginConfigurationInputs {
     readonly bridge: pulumi.Input<string>;
+    readonly cniVersion?: pulumi.Input<string>;
     readonly ipMasq: pulumi.Input<boolean>;
     readonly ipam: pulumi.Input<CniBridgeIpamInputs>;
     readonly isGateway: pulumi.Input<boolean>;
@@ -1228,14 +1229,21 @@ export interface CniBridgePluginConfigurationInputs {
 }
 export interface CniBridgePluginConfigurationOutputs {
     readonly bridge: pulumi.Output<string>;
+    readonly cniVersion?: pulumi.Output<string>;
     readonly ipMasq: pulumi.Output<boolean>;
     readonly ipam: pulumi.Output<CniBridgeIpamOutputs>;
     readonly isGateway: pulumi.Output<boolean>;
     readonly subnet: pulumi.Output<string>;
 }
 export interface CniLoopbackPluginConfigurationInputs {
+    readonly cniVersion: pulumi.Input<string>;
+    readonly name: pulumi.Input<string>;
+    readonly type: pulumi.Input<string>;
 }
 export interface CniLoopbackPluginConfigurationOutputs {
+    readonly cniVersion: pulumi.Output<string>;
+    readonly name: pulumi.Output<string>;
+    readonly type: pulumi.Output<string>;
 }
 export interface ContainerdConfigurationInputs {
 }

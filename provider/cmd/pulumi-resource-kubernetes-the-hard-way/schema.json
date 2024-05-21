@@ -136,13 +136,17 @@
                     "type": "string",
                     "description": "Bridge name."
                 },
+                "cniVersion": {
+                    "type": "string",
+                    "description": "The version of the bridge plugin."
+                },
                 "ipMasq": {
                     "type": "boolean",
                     "description": "IP masq."
                 },
                 "ipam": {
                     "$ref": "#/types/kubernetes-the-hard-way:config:CniBridgeIpam",
-                    "description": "IPAM"
+                    "description": "IPAM."
                 },
                 "isGateway": {
                     "type": "boolean",
@@ -163,8 +167,27 @@
             ]
         },
         "kubernetes-the-hard-way:config:CniLoopbackPluginConfiguration": {
-            "description": "TODO",
-            "type": "object"
+            "description": "CNI loopback plugin configuration.",
+            "properties": {
+                "cniVersion": {
+                    "type": "string",
+                    "description": "The plugin CNI version."
+                },
+                "name": {
+                    "type": "string",
+                    "description": "The name of the plugin."
+                },
+                "type": {
+                    "type": "string",
+                    "description": "The type of the plugin."
+                }
+            },
+            "type": "object",
+            "required": [
+                "cniVersion",
+                "name",
+                "type"
+            ]
         },
         "kubernetes-the-hard-way:config:ContainerdConfiguration": {
             "description": "TODO",
