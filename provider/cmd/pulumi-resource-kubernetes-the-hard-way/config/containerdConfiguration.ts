@@ -4,10 +4,9 @@ import * as schema from '../schema-types';
 export async function getContainerdConfiguration(
   inputs: schema.getContainerdConfigurationInputs,
 ): Promise<schema.getContainerdConfigurationOutputs> {
-  const cri = criDefaults(inputs.cri);
-
-  // TODO: Why is this like this?
-  const result: schema.ContainerdConfigurationInputs = {};
+  const result: schema.ContainerdConfigurationInputs = {
+    cri: criDefaults(inputs.cri),
+  };
 
   return { result: result as Output<schema.ContainerdConfigurationOutputs> };
 }
