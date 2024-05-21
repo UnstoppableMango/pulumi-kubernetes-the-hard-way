@@ -17,7 +17,7 @@ export class ContainerdConfiguration extends schema.ContainerdConfiguration {
     if (opts?.urn) return;
 
     const { result } = output(getContainerdConfiguration(args));
-    const toml = result.apply(formatAsToml);
+    const toml = result.apply(x => formatAsToml(x.cri));
 
     this.result = result as unknown as Output<schema.CniBridgePluginConfigurationOutputs>;
     this.toml = toml;
@@ -58,8 +58,7 @@ function runcDefaults(runtimes?: schema.ContainerdCriPluginConfigurationContaine
 }
 
 // https://github.com/kelseyhightower/kubernetes-the-hard-way/blob/master/configs/containerd-config.toml
-function formatAsToml(input: schema.ContainerdConfigurationOutputs): Output<string> {
-  const cri: schema.ContainerdCriPluginConfigurationOutputs = {} as unknown as schema.ContainerdCriPluginConfigurationOutputs; // TODO: Fix
+function formatAsToml(cri: schema.ContainerdCriPluginConfigurationOutputs): Output<string> {
   return interpolate`# DO NOT MODIFY - Managed by Pulumi
 version = 2
 

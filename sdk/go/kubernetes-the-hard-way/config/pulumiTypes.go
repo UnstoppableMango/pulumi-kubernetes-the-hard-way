@@ -345,11 +345,13 @@ func (o CniLoopbackPluginConfigurationTypeOutput) Type() pulumi.StringOutput {
 	return o.ApplyT(func(v CniLoopbackPluginConfigurationType) string { return v.Type }).(pulumi.StringOutput)
 }
 
-// TODO
+// The containerd configuration.
 type ContainerdConfigurationType struct {
+	// The cri configuration.
+	Cri *ContainerdCriPluginConfiguration `pulumi:"cri"`
 }
 
-// TODO
+// The containerd configuration.
 type ContainerdConfigurationTypeOutput struct{ *pulumi.OutputState }
 
 func (ContainerdConfigurationTypeOutput) ElementType() reflect.Type {
@@ -362,6 +364,11 @@ func (o ContainerdConfigurationTypeOutput) ToContainerdConfigurationTypeOutput()
 
 func (o ContainerdConfigurationTypeOutput) ToContainerdConfigurationTypeOutputWithContext(ctx context.Context) ContainerdConfigurationTypeOutput {
 	return o
+}
+
+// The cri configuration.
+func (o ContainerdConfigurationTypeOutput) Cri() ContainerdCriPluginConfigurationPtrOutput {
+	return o.ApplyT(func(v ContainerdConfigurationType) *ContainerdCriPluginConfiguration { return v.Cri }).(ContainerdCriPluginConfigurationPtrOutput)
 }
 
 // containerd cri plugin configuration.

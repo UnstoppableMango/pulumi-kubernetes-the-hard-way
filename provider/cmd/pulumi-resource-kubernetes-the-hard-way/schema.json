@@ -190,7 +190,13 @@
             ]
         },
         "kubernetes-the-hard-way:config:ContainerdConfiguration": {
-            "description": "TODO",
+            "description": "The containerd configuration.",
+            "properties": {
+                "cri": {
+                    "$ref": "#/types/kubernetes-the-hard-way:config:ContainerdCriPluginConfiguration",
+                    "description": "The cri configuration."
+                }
+            },
             "type": "object"
         },
         "kubernetes-the-hard-way:config:ContainerdCriPluginConfiguration": {

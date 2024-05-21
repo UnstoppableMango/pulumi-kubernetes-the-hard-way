@@ -12,20 +12,20 @@ namespace UnMango.KubernetesTheHardWay.Config.Outputs
 {
 
     /// <summary>
-    /// The containerd configuration.
+    /// containerd cri runc plugin configuration.
     /// </summary>
     [OutputType]
-    public sealed class ContainerdConfiguration
+    public sealed class ContainerdCriPluginConfigurationContainerdRuncOptions
     {
         /// <summary>
-        /// The cri configuration.
+        /// SystemdCgroup
         /// </summary>
-        public readonly Outputs.ContainerdCriPluginConfiguration? Cri;
+        public readonly bool? SystemdCgroup;
 
         [OutputConstructor]
-        private ContainerdConfiguration(Outputs.ContainerdCriPluginConfiguration? cri)
+        private ContainerdCriPluginConfigurationContainerdRuncOptions(bool? systemdCgroup)
         {
-            Cri = cri;
+            SystemdCgroup = systemdCgroup;
         }
     }
 }

@@ -90,9 +90,83 @@ export namespace config {
     }
 
     /**
-     * TODO
+     * The containerd configuration.
      */
     export interface ContainerdConfiguration {
+        /**
+         * The cri configuration.
+         */
+        cri?: outputs.config.ContainerdCriPluginConfiguration;
+    }
+
+    /**
+     * containerd cri plugin configuration.
+     */
+    export interface ContainerdCriPluginConfiguration {
+        /**
+         * cni configuration.
+         */
+        cni: outputs.config.ContainerdCriPluginConfigurationCni;
+        /**
+         * containerd configuration.
+         */
+        containerd: outputs.config.ContainerdCriPluginConfigurationContainerd;
+    }
+
+    /**
+     * containerd cri plugin configuration.
+     */
+    export interface ContainerdCriPluginConfigurationCni {
+        /**
+         * bin_dir
+         */
+        binDir?: string;
+        /**
+         * conf_dir
+         */
+        confDir?: string;
+    }
+
+    /**
+     * containerd cri plugin configuration.
+     */
+    export interface ContainerdCriPluginConfigurationContainerd {
+        /**
+         * default_runtime_name
+         */
+        defaultRuntimeName?: string;
+        /**
+         * The containerd runtime configuration.
+         */
+        runtimes?: outputs.config.ContainerdCriPluginConfigurationContainerdRunc;
+        /**
+         * snapshotter
+         */
+        snapshotter?: string;
+    }
+
+    /**
+     * containerd cri runc plugin configuration.
+     */
+    export interface ContainerdCriPluginConfigurationContainerdRunc {
+        /**
+         * runc options.
+         */
+        options: outputs.config.ContainerdCriPluginConfigurationContainerdRuncOptions;
+        /**
+         * runtime_type
+         */
+        runtimeType?: string;
+    }
+
+    /**
+     * containerd cri runc plugin configuration.
+     */
+    export interface ContainerdCriPluginConfigurationContainerdRuncOptions {
+        /**
+         * SystemdCgroup
+         */
+        systemdCgroup?: boolean;
     }
 
     export interface Context {

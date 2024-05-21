@@ -12,20 +12,28 @@ namespace UnMango.KubernetesTheHardWay.Config.Outputs
 {
 
     /// <summary>
-    /// The containerd configuration.
+    /// containerd cri plugin configuration.
     /// </summary>
     [OutputType]
-    public sealed class ContainerdConfiguration
+    public sealed class ContainerdCriPluginConfigurationCni
     {
         /// <summary>
-        /// The cri configuration.
+        /// bin_dir
         /// </summary>
-        public readonly Outputs.ContainerdCriPluginConfiguration? Cri;
+        public readonly string? BinDir;
+        /// <summary>
+        /// conf_dir
+        /// </summary>
+        public readonly string? ConfDir;
 
         [OutputConstructor]
-        private ContainerdConfiguration(Outputs.ContainerdCriPluginConfiguration? cri)
+        private ContainerdCriPluginConfigurationCni(
+            string? binDir,
+
+            string? confDir)
         {
-            Cri = cri;
+            BinDir = binDir;
+            ConfDir = confDir;
         }
     }
 }

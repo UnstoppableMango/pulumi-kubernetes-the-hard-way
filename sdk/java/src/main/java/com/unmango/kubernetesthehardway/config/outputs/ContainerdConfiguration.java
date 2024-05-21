@@ -4,11 +4,27 @@
 package com.unmango.kubernetesthehardway.config.outputs;
 
 import com.pulumi.core.annotations.CustomType;
+import com.unmango.kubernetesthehardway.config.outputs.ContainerdCriPluginConfiguration;
 import java.util.Objects;
+import java.util.Optional;
+import javax.annotation.Nullable;
 
 @CustomType
 public final class ContainerdConfiguration {
+    /**
+     * @return The cri configuration.
+     * 
+     */
+    private @Nullable ContainerdCriPluginConfiguration cri;
+
     private ContainerdConfiguration() {}
+    /**
+     * @return The cri configuration.
+     * 
+     */
+    public Optional<ContainerdCriPluginConfiguration> cri() {
+        return Optional.ofNullable(this.cri);
+    }
 
     public static Builder builder() {
         return new Builder();
@@ -19,13 +35,22 @@ public final class ContainerdConfiguration {
     }
     @CustomType.Builder
     public static final class Builder {
+        private @Nullable ContainerdCriPluginConfiguration cri;
         public Builder() {}
         public Builder(ContainerdConfiguration defaults) {
     	      Objects.requireNonNull(defaults);
+    	      this.cri = defaults.cri;
         }
 
+        @CustomType.Setter
+        public Builder cri(@Nullable ContainerdCriPluginConfiguration cri) {
+
+            this.cri = cri;
+            return this;
+        }
         public ContainerdConfiguration build() {
             final var _resultValue = new ContainerdConfiguration();
+            _resultValue.cri = cri;
             return _resultValue;
         }
     }

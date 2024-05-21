@@ -1246,8 +1246,10 @@ export interface CniLoopbackPluginConfigurationOutputs {
     readonly type: pulumi.Output<string>;
 }
 export interface ContainerdConfigurationInputs {
+    readonly cri?: pulumi.Input<ContainerdCriPluginConfigurationInputs>;
 }
 export interface ContainerdConfigurationOutputs {
+    readonly cri?: pulumi.Output<ContainerdCriPluginConfigurationOutputs>;
 }
 export interface ContainerdCriPluginConfigurationInputs {
     readonly cni: ContainerdCriPluginConfigurationCniInputs;

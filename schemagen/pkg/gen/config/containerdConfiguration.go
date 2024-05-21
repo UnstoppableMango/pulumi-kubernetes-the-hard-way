@@ -107,10 +107,15 @@ func generateContainerdConfiguration() schema.PackageSpec {
 			},
 			name("ContainerdConfiguration"): {
 				ObjectTypeSpec: schema.ObjectTypeSpec{
-					Description: "TODO",
+					Description: "The containerd configuration.",
 					Type:        "object",
-					Properties:  map[string]schema.PropertySpec{},
-					Required:    []string{},
+					Properties: map[string]schema.PropertySpec{
+						"cri": {
+							Description: "The cri configuration.",
+							TypeSpec:    types.LocalType("ContainerdCriPluginConfiguration", "config"),
+						},
+					},
+					Required: []string{},
 				},
 			},
 		},
