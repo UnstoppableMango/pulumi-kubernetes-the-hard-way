@@ -3,7 +3,7 @@ import {
   CniBridgePluginConfiguration,
   CniLoopbackPluginConfiguration,
   CniPluginConfiguration,
-} from '@unmango/pulumi-kubernetes-the-hard-way/remote';
+} from '@unmango/pulumi-kubernetes-the-hard-way/config';
 import { Mkdir } from '@unmango/pulumi-kubernetes-the-hard-way/tools';
 
 const config = new Config();
