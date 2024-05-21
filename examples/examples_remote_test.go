@@ -13,7 +13,7 @@ import (
 
 func TestCniPluginsTs(t *testing.T) {
 	ResourceTest(t, "remote/cni-plugins-ts", getJSBaseOptions(t), func(ctx *ResourceContext) {
-		Validate(ctx, "kubernetes-the-hard-way:remote:CniBridgePluginConfiguration", "simple", func(t *testing.T, res apitype.ResourceV3) {
+		Validate(ctx, "kubernetes-the-hard-way:config:CniBridgePluginConfiguration", "simple", func(t *testing.T, res apitype.ResourceV3) {
 			assert.NotEmpty(t, res.Outputs)
 
 			expectOutput(t, res, "bridge", "cni0")
@@ -28,7 +28,7 @@ func TestCniPluginsTs(t *testing.T) {
 			assert.Contains(t, res.Outputs, "file")
 			assert.Contains(t, res.Outputs, "ipam")
 		})
-		Validate(ctx, "kubernetes-the-hard-way:remote:CniLoopbackPluginConfiguration", "simple", func(t *testing.T, res apitype.ResourceV3) {
+		Validate(ctx, "kubernetes-the-hard-way:config:CniLoopbackPluginConfiguration", "simple", func(t *testing.T, res apitype.ResourceV3) {
 			assert.NotEmpty(t, res.Outputs)
 
 			expectOutput(t, res, "name", "lo")
@@ -38,7 +38,7 @@ func TestCniPluginsTs(t *testing.T) {
 
 			assert.Contains(t, res.Outputs, "file")
 		})
-		Validate(ctx, "kubernetes-the-hard-way:remote:CniPluginConfiguration", "all", func(t *testing.T, res apitype.ResourceV3) {
+		Validate(ctx, "kubernetes-the-hard-way:config:CniPluginConfiguration", "all", func(t *testing.T, res apitype.ResourceV3) {
 			assert.NotEmpty(t, res.Outputs)
 
 			expectOutput(t, res, "subnet", "10.0.69.0/24")
@@ -205,7 +205,7 @@ func TestRemoteEtcdInstallTs(t *testing.T) {
 
 func TestRemoteWorkerTs(t *testing.T) {
 	ResourceTest(t, "remote/worker-ts", getJSBaseOptions(t), func(ctx *ResourceContext) {
-		Validate(ctx, "kubernetes-the-hard-way:remote:ContainerdConfiguration", "simple", func(t *testing.T, res apitype.ResourceV3) {
+		Validate(ctx, "kubernetes-the-hard-way:config:ContainerdConfiguration", "simple", func(t *testing.T, res apitype.ResourceV3) {
 			assert.NotEmpty(t, res.Outputs)
 
 			assert.Contains(t, res.Outputs, "connection")
