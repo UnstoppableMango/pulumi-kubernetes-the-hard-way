@@ -248,9 +248,11 @@ func (o CniBridgeIpamPtrOutput) Type() pulumi.StringPtrOutput {
 type CniBridgePluginConfigurationType struct {
 	// Bridge name.
 	Bridge string `pulumi:"bridge"`
+	// The version of the bridge plugin.
+	CniVersion *string `pulumi:"cniVersion"`
 	// IP masq.
 	IpMasq bool `pulumi:"ipMasq"`
-	// IPAM
+	// IPAM.
 	Ipam CniBridgeIpam `pulumi:"ipam"`
 	// Is gateway.
 	IsGateway bool `pulumi:"isGateway"`
@@ -278,12 +280,17 @@ func (o CniBridgePluginConfigurationTypeOutput) Bridge() pulumi.StringOutput {
 	return o.ApplyT(func(v CniBridgePluginConfigurationType) string { return v.Bridge }).(pulumi.StringOutput)
 }
 
+// The version of the bridge plugin.
+func (o CniBridgePluginConfigurationTypeOutput) CniVersion() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v CniBridgePluginConfigurationType) *string { return v.CniVersion }).(pulumi.StringPtrOutput)
+}
+
 // IP masq.
 func (o CniBridgePluginConfigurationTypeOutput) IpMasq() pulumi.BoolOutput {
 	return o.ApplyT(func(v CniBridgePluginConfigurationType) bool { return v.IpMasq }).(pulumi.BoolOutput)
 }
 
-// IPAM
+// IPAM.
 func (o CniBridgePluginConfigurationTypeOutput) Ipam() CniBridgeIpamOutput {
 	return o.ApplyT(func(v CniBridgePluginConfigurationType) CniBridgeIpam { return v.Ipam }).(CniBridgeIpamOutput)
 }
@@ -298,11 +305,17 @@ func (o CniBridgePluginConfigurationTypeOutput) Subnet() pulumi.StringOutput {
 	return o.ApplyT(func(v CniBridgePluginConfigurationType) string { return v.Subnet }).(pulumi.StringOutput)
 }
 
-// TODO
+// CNI loopback plugin configuration.
 type CniLoopbackPluginConfigurationType struct {
+	// The plugin CNI version.
+	CniVersion string `pulumi:"cniVersion"`
+	// The name of the plugin.
+	Name string `pulumi:"name"`
+	// The type of the plugin.
+	Type string `pulumi:"type"`
 }
 
-// TODO
+// CNI loopback plugin configuration.
 type CniLoopbackPluginConfigurationTypeOutput struct{ *pulumi.OutputState }
 
 func (CniLoopbackPluginConfigurationTypeOutput) ElementType() reflect.Type {
@@ -315,6 +328,21 @@ func (o CniLoopbackPluginConfigurationTypeOutput) ToCniLoopbackPluginConfigurati
 
 func (o CniLoopbackPluginConfigurationTypeOutput) ToCniLoopbackPluginConfigurationTypeOutputWithContext(ctx context.Context) CniLoopbackPluginConfigurationTypeOutput {
 	return o
+}
+
+// The plugin CNI version.
+func (o CniLoopbackPluginConfigurationTypeOutput) CniVersion() pulumi.StringOutput {
+	return o.ApplyT(func(v CniLoopbackPluginConfigurationType) string { return v.CniVersion }).(pulumi.StringOutput)
+}
+
+// The name of the plugin.
+func (o CniLoopbackPluginConfigurationTypeOutput) Name() pulumi.StringOutput {
+	return o.ApplyT(func(v CniLoopbackPluginConfigurationType) string { return v.Name }).(pulumi.StringOutput)
+}
+
+// The type of the plugin.
+func (o CniLoopbackPluginConfigurationTypeOutput) Type() pulumi.StringOutput {
+	return o.ApplyT(func(v CniLoopbackPluginConfigurationType) string { return v.Type }).(pulumi.StringOutput)
 }
 
 // TODO

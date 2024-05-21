@@ -50,11 +50,15 @@ export namespace config {
          */
         bridge: string;
         /**
+         * The version of the bridge plugin.
+         */
+        cniVersion?: string;
+        /**
          * IP masq.
          */
         ipMasq: boolean;
         /**
-         * IPAM
+         * IPAM.
          */
         ipam: outputs.config.CniBridgeIpam;
         /**
@@ -68,9 +72,21 @@ export namespace config {
     }
 
     /**
-     * TODO
+     * CNI loopback plugin configuration.
      */
     export interface CniLoopbackPluginConfiguration {
+        /**
+         * The plugin CNI version.
+         */
+        cniVersion: string;
+        /**
+         * The name of the plugin.
+         */
+        name: string;
+        /**
+         * The type of the plugin.
+         */
+        type: string;
     }
 
     /**

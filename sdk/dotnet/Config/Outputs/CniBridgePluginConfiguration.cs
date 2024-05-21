@@ -22,11 +22,15 @@ namespace UnMango.KubernetesTheHardWay.Config.Outputs
         /// </summary>
         public readonly string Bridge;
         /// <summary>
+        /// The version of the bridge plugin.
+        /// </summary>
+        public readonly string? CniVersion;
+        /// <summary>
         /// IP masq.
         /// </summary>
         public readonly bool IpMasq;
         /// <summary>
-        /// IPAM
+        /// IPAM.
         /// </summary>
         public readonly Outputs.CniBridgeIpam Ipam;
         /// <summary>
@@ -42,6 +46,8 @@ namespace UnMango.KubernetesTheHardWay.Config.Outputs
         private CniBridgePluginConfiguration(
             string bridge,
 
+            string? cniVersion,
+
             bool ipMasq,
 
             Outputs.CniBridgeIpam ipam,
@@ -51,6 +57,7 @@ namespace UnMango.KubernetesTheHardWay.Config.Outputs
             string subnet)
         {
             Bridge = bridge;
+            CniVersion = cniVersion;
             IpMasq = ipMasq;
             Ipam = ipam;
             IsGateway = isGateway;

@@ -12,14 +12,35 @@ namespace UnMango.KubernetesTheHardWay.Config.Outputs
 {
 
     /// <summary>
-    /// TODO
+    /// CNI loopback plugin configuration.
     /// </summary>
     [OutputType]
     public sealed class CniLoopbackPluginConfiguration
     {
+        /// <summary>
+        /// The plugin CNI version.
+        /// </summary>
+        public readonly string CniVersion;
+        /// <summary>
+        /// The name of the plugin.
+        /// </summary>
+        public readonly string Name;
+        /// <summary>
+        /// The type of the plugin.
+        /// </summary>
+        public readonly string Type;
+
         [OutputConstructor]
-        private CniLoopbackPluginConfiguration()
+        private CniLoopbackPluginConfiguration(
+            string cniVersion,
+
+            string name,
+
+            string type)
         {
+            CniVersion = cniVersion;
+            Name = name;
+            Type = type;
         }
     }
 }

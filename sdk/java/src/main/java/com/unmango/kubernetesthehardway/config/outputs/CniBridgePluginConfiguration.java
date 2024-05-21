@@ -9,6 +9,8 @@ import com.unmango.kubernetesthehardway.config.outputs.CniBridgeIpam;
 import java.lang.Boolean;
 import java.lang.String;
 import java.util.Objects;
+import java.util.Optional;
+import javax.annotation.Nullable;
 
 @CustomType
 public final class CniBridgePluginConfiguration {
@@ -18,12 +20,17 @@ public final class CniBridgePluginConfiguration {
      */
     private String bridge;
     /**
+     * @return The version of the bridge plugin.
+     * 
+     */
+    private @Nullable String cniVersion;
+    /**
      * @return IP masq.
      * 
      */
     private Boolean ipMasq;
     /**
-     * @return IPAM
+     * @return IPAM.
      * 
      */
     private CniBridgeIpam ipam;
@@ -47,6 +54,13 @@ public final class CniBridgePluginConfiguration {
         return this.bridge;
     }
     /**
+     * @return The version of the bridge plugin.
+     * 
+     */
+    public Optional<String> cniVersion() {
+        return Optional.ofNullable(this.cniVersion);
+    }
+    /**
      * @return IP masq.
      * 
      */
@@ -54,7 +68,7 @@ public final class CniBridgePluginConfiguration {
         return this.ipMasq;
     }
     /**
-     * @return IPAM
+     * @return IPAM.
      * 
      */
     public CniBridgeIpam ipam() {
@@ -85,6 +99,7 @@ public final class CniBridgePluginConfiguration {
     @CustomType.Builder
     public static final class Builder {
         private String bridge;
+        private @Nullable String cniVersion;
         private Boolean ipMasq;
         private CniBridgeIpam ipam;
         private Boolean isGateway;
@@ -93,6 +108,7 @@ public final class CniBridgePluginConfiguration {
         public Builder(CniBridgePluginConfiguration defaults) {
     	      Objects.requireNonNull(defaults);
     	      this.bridge = defaults.bridge;
+    	      this.cniVersion = defaults.cniVersion;
     	      this.ipMasq = defaults.ipMasq;
     	      this.ipam = defaults.ipam;
     	      this.isGateway = defaults.isGateway;
@@ -105,6 +121,12 @@ public final class CniBridgePluginConfiguration {
               throw new MissingRequiredPropertyException("CniBridgePluginConfiguration", "bridge");
             }
             this.bridge = bridge;
+            return this;
+        }
+        @CustomType.Setter
+        public Builder cniVersion(@Nullable String cniVersion) {
+
+            this.cniVersion = cniVersion;
             return this;
         }
         @CustomType.Setter
@@ -142,6 +164,7 @@ public final class CniBridgePluginConfiguration {
         public CniBridgePluginConfiguration build() {
             final var _resultValue = new CniBridgePluginConfiguration();
             _resultValue.bridge = bridge;
+            _resultValue.cniVersion = cniVersion;
             _resultValue.ipMasq = ipMasq;
             _resultValue.ipam = ipam;
             _resultValue.isGateway = isGateway;
