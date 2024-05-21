@@ -20,7 +20,6 @@ const dir = new Mkdir('config', {
 });
 
 const containerdConfiguration = new ContainerdConfiguration('simple', {
-  connection,
 }, { dependsOn: dir });
 
 const kubeletService = new KubeletService('simple', {
