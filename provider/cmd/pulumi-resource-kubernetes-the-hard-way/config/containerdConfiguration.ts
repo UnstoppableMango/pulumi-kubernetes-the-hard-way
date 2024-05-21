@@ -17,9 +17,10 @@ export class ContainerdConfiguration extends schema.ContainerdConfiguration {
     if (opts?.urn) return;
 
     const { result } = output(getContainerdConfiguration(args));
-    const toml = result.apply(x => formatAsToml(x.cri));
+    // Everything about this is gross
+    const toml = result.apply(x => formatAsToml(x.cri as schema.ContainerdCriPluginConfigurationOutputs));
 
-    this.result = result as unknown as Output<schema.CniBridgePluginConfigurationOutputs>;
+    this.result = result as unknown as Output<schema.ContainerdConfigurationOutputs>;
     this.toml = toml;
 
     this.registerOutputs({ result, toml });
