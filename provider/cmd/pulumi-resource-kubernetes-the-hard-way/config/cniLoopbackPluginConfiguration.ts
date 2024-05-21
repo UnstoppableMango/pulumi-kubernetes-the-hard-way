@@ -5,13 +5,11 @@ import * as schema from '../schema-types';
 export async function getCniLoopabckPluginConfiguration(
   inputs: schema.getCniLoopbackPluginConfigurationInputs,
 ): Promise<schema.getCniLoopbackPluginConfigurationOutputs> {
-  const cniVersion = output(inputs.cniVersion ?? '1.1.0');
-  const loopbackName = output(inputs.name ?? 'lo');
-  const path = output(inputs.path ?? '/etc/cni/net.d/99-loopback.conf');
-  const type = output(inputs.type ?? 'loopback');
-
-  // TODO: Why is this like this?
-  const result: schema.CniLoopbackPluginConfigurationInputs = {};
+  const result: schema.CniLoopbackPluginConfigurationInputs = {
+    cniVersion: inputs.cniVersion ?? '1.1.0',
+    name: inputs.name ?? 'lo',
+    type: inputs.type ?? 'loopback',
+  };
 
   return { result: result as Output<schema.CniLoopbackPluginConfigurationOutputs> };
 }
@@ -24,7 +22,7 @@ export class CniLoopbackPluginConfiguration extends schema.CniLoopbackPluginConf
     const { result } = output(getCniLoopabckPluginConfiguration(args));
     const yaml = result.apply(YAML.stringify);
 
-    this.result = result as unknown as Output<schema.CniBridgePluginConfigurationOutputs>;
+    this.result = result as unknown as Output<schema.CniLoopbackPluginConfigurationOutputs>;
     this.yaml = yaml;
 
     this.registerOutputs({ result, yaml });
