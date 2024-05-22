@@ -99,6 +99,197 @@
                 "server"
             ]
         },
+        "kubernetes-the-hard-way:config:CniBridgeIpam": {
+            "description": "The CNI plugins IPAM",
+            "properties": {
+                "ranges": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        }
+                    },
+                    "description": "IPAM ranges."
+                },
+                "routes": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        }
+                    },
+                    "description": "IPAM routes."
+                },
+                "type": {
+                    "type": "string",
+                    "description": "CNI bridge IPAM type"
+                }
+            },
+            "type": "object"
+        },
+        "kubernetes-the-hard-way:config:CniBridgePluginConfiguration": {
+            "description": "TODO",
+            "properties": {
+                "bridge": {
+                    "type": "string",
+                    "description": "Bridge name."
+                },
+                "cniVersion": {
+                    "type": "string",
+                    "description": "The version of the bridge plugin."
+                },
+                "ipMasq": {
+                    "type": "boolean",
+                    "description": "IP masq."
+                },
+                "ipam": {
+                    "$ref": "#/types/kubernetes-the-hard-way:config:CniBridgeIpam",
+                    "description": "IPAM."
+                },
+                "isGateway": {
+                    "type": "boolean",
+                    "description": "Is gateway."
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Plugin name."
+                },
+                "subnet": {
+                    "type": "string",
+                    "description": "The subnet to use."
+                },
+                "type": {
+                    "type": "string",
+                    "description": "Plugin type."
+                }
+            },
+            "type": "object",
+            "required": [
+                "name",
+                "type",
+                "bridge",
+                "subnet",
+                "isGateway",
+                "ipMasq",
+                "ipam"
+            ]
+        },
+        "kubernetes-the-hard-way:config:CniLoopbackPluginConfiguration": {
+            "description": "CNI loopback plugin configuration.",
+            "properties": {
+                "cniVersion": {
+                    "type": "string",
+                    "description": "The plugin CNI version."
+                },
+                "name": {
+                    "type": "string",
+                    "description": "The name of the plugin."
+                },
+                "type": {
+                    "type": "string",
+                    "description": "The type of the plugin."
+                }
+            },
+            "type": "object",
+            "required": [
+                "cniVersion",
+                "name",
+                "type"
+            ]
+        },
+        "kubernetes-the-hard-way:config:ContainerdConfiguration": {
+            "description": "The containerd configuration.",
+            "properties": {
+                "cri": {
+                    "$ref": "#/types/kubernetes-the-hard-way:config:ContainerdCriPluginConfiguration",
+                    "description": "The cri configuration."
+                }
+            },
+            "type": "object"
+        },
+        "kubernetes-the-hard-way:config:ContainerdCriPluginConfiguration": {
+            "description": "containerd cri plugin configuration.",
+            "properties": {
+                "cni": {
+                    "$ref": "#/types/kubernetes-the-hard-way:config:ContainerdCriPluginConfigurationCni",
+                    "plain": true,
+                    "description": "cni configuration."
+                },
+                "containerd": {
+                    "$ref": "#/types/kubernetes-the-hard-way:config:ContainerdCriPluginConfigurationContainerd",
+                    "plain": true,
+                    "description": "containerd configuration."
+                }
+            },
+            "type": "object",
+            "required": [
+                "containerd",
+                "cni"
+            ]
+        },
+        "kubernetes-the-hard-way:config:ContainerdCriPluginConfigurationCni": {
+            "description": "containerd cri plugin configuration.",
+            "properties": {
+                "binDir": {
+                    "type": "string",
+                    "description": "bin_dir"
+                },
+                "confDir": {
+                    "type": "string",
+                    "description": "conf_dir"
+                }
+            },
+            "type": "object"
+        },
+        "kubernetes-the-hard-way:config:ContainerdCriPluginConfigurationContainerd": {
+            "description": "containerd cri plugin configuration.",
+            "properties": {
+                "defaultRuntimeName": {
+                    "type": "string",
+                    "description": "default_runtime_name"
+                },
+                "runtimes": {
+                    "$ref": "#/types/kubernetes-the-hard-way:config:ContainerdCriPluginConfigurationContainerdRunc",
+                    "plain": true,
+                    "description": "The containerd runtime configuration."
+                },
+                "snapshotter": {
+                    "type": "string",
+                    "description": "snapshotter"
+                }
+            },
+            "type": "object"
+        },
+        "kubernetes-the-hard-way:config:ContainerdCriPluginConfigurationContainerdRunc": {
+            "description": "containerd cri runc plugin configuration.",
+            "properties": {
+                "options": {
+                    "$ref": "#/types/kubernetes-the-hard-way:config:ContainerdCriPluginConfigurationContainerdRuncOptions",
+                    "plain": true,
+                    "description": "runc options."
+                },
+                "runtimeType": {
+                    "type": "string",
+                    "description": "runtime_type"
+                }
+            },
+            "type": "object",
+            "required": [
+                "options"
+            ]
+        },
+        "kubernetes-the-hard-way:config:ContainerdCriPluginConfigurationContainerdRuncOptions": {
+            "description": "containerd cri runc plugin configuration.",
+            "properties": {
+                "systemdCgroup": {
+                    "type": "boolean",
+                    "description": "SystemdCgroup"
+                }
+            },
+            "type": "object"
+        },
         "kubernetes-the-hard-way:config:Context": {
             "properties": {
                 "cluster": {
@@ -536,117 +727,6 @@
                     "value": "arm64"
                 }
             ]
-        },
-        "kubernetes-the-hard-way:remote:CniBridgeIpam": {
-            "description": "The CNI plugins IPAM",
-            "properties": {
-                "ranges": {
-                    "type": "array",
-                    "items": {
-                        "type": "object",
-                        "additionalProperties": {
-                            "type": "string"
-                        }
-                    },
-                    "description": "IPAM ranges."
-                },
-                "routes": {
-                    "type": "array",
-                    "items": {
-                        "type": "object",
-                        "additionalProperties": {
-                            "type": "string"
-                        }
-                    },
-                    "description": "IPAM routes."
-                },
-                "type": {
-                    "type": "string",
-                    "description": "CNI bridge IPAM type"
-                }
-            },
-            "type": "object"
-        },
-        "kubernetes-the-hard-way:remote:ContainerdCriPluginConfiguration": {
-            "description": "containerd cri plugin configuration.",
-            "properties": {
-                "cni": {
-                    "$ref": "#/types/kubernetes-the-hard-way:remote:ContainerdCriPluginConfigurationCni",
-                    "plain": true,
-                    "description": "cni configuration."
-                },
-                "containerd": {
-                    "$ref": "#/types/kubernetes-the-hard-way:remote:ContainerdCriPluginConfigurationContainerd",
-                    "plain": true,
-                    "description": "containerd configuration."
-                }
-            },
-            "type": "object",
-            "required": [
-                "containerd",
-                "cni"
-            ]
-        },
-        "kubernetes-the-hard-way:remote:ContainerdCriPluginConfigurationCni": {
-            "description": "containerd cri plugin configuration.",
-            "properties": {
-                "binDir": {
-                    "type": "string",
-                    "description": "bin_dir"
-                },
-                "confDir": {
-                    "type": "string",
-                    "description": "conf_dir"
-                }
-            },
-            "type": "object"
-        },
-        "kubernetes-the-hard-way:remote:ContainerdCriPluginConfigurationContainerd": {
-            "description": "containerd cri plugin configuration.",
-            "properties": {
-                "defaultRuntimeName": {
-                    "type": "string",
-                    "description": "default_runtime_name"
-                },
-                "runtimes": {
-                    "$ref": "#/types/kubernetes-the-hard-way:remote:ContainerdCriPluginConfigurationContainerdRunc",
-                    "plain": true,
-                    "description": "The containerd runtime configuration."
-                },
-                "snapshotter": {
-                    "type": "string",
-                    "description": "snapshotter"
-                }
-            },
-            "type": "object"
-        },
-        "kubernetes-the-hard-way:remote:ContainerdCriPluginConfigurationContainerdRunc": {
-            "description": "containerd cri runc plugin configuration.",
-            "properties": {
-                "options": {
-                    "$ref": "#/types/kubernetes-the-hard-way:remote:ContainerdCriPluginConfigurationContainerdRuncOptions",
-                    "plain": true,
-                    "description": "runc options."
-                },
-                "runtimeType": {
-                    "type": "string",
-                    "description": "runtime_type"
-                }
-            },
-            "type": "object",
-            "required": [
-                "options"
-            ]
-        },
-        "kubernetes-the-hard-way:remote:ContainerdCriPluginConfigurationContainerdRuncOptions": {
-            "description": "containerd cri runc plugin configuration.",
-            "properties": {
-                "systemdCgroup": {
-                    "type": "boolean",
-                    "description": "SystemdCgroup"
-                }
-            },
-            "type": "object"
         },
         "kubernetes-the-hard-way:remote:EtcdConfigurationProps": {
             "description": "Props for resources that consume etcd configuration.",
@@ -1806,6 +1886,123 @@
     },
     "provider": {},
     "resources": {
+        "kubernetes-the-hard-way:config:CniBridgePluginConfiguration": {
+            "description": "Get the `bridge` configuration.",
+            "properties": {
+                "result": {
+                    "$ref": "#/types/kubernetes-the-hard-way:config:CniBridgePluginConfiguration"
+                },
+                "yaml": {
+                    "type": "string",
+                    "description": "The yaml representation of the manifest."
+                }
+            },
+            "required": [
+                "result",
+                "yaml"
+            ],
+            "inputProperties": {
+                "bridge": {
+                    "type": "string",
+                    "description": "Bridge name."
+                },
+                "cniVersion": {
+                    "type": "string",
+                    "description": "CNI version."
+                },
+                "ipMasq": {
+                    "type": "boolean",
+                    "description": "IP masq."
+                },
+                "ipam": {
+                    "$ref": "#/types/kubernetes-the-hard-way:config:CniBridgeIpam",
+                    "description": "IPAM"
+                },
+                "isGateway": {
+                    "type": "boolean",
+                    "description": "Is gateway."
+                },
+                "name": {
+                    "type": "string",
+                    "description": "CNI plugin name."
+                },
+                "path": {
+                    "type": "string",
+                    "description": "Path to put the configuration file on the remote system"
+                },
+                "subnet": {
+                    "type": "string",
+                    "description": "The subnet to use."
+                },
+                "type": {
+                    "type": "string",
+                    "description": "CNI plugin type."
+                }
+            },
+            "requiredInputs": [
+                "subnet"
+            ],
+            "isComponent": true
+        },
+        "kubernetes-the-hard-way:config:CniLoopbackPluginConfiguration": {
+            "description": "Get the `loopback` configuration.",
+            "properties": {
+                "result": {
+                    "$ref": "#/types/kubernetes-the-hard-way:config:CniLoopbackPluginConfiguration"
+                },
+                "yaml": {
+                    "type": "string",
+                    "description": "The yaml representation of the manifest."
+                }
+            },
+            "required": [
+                "result",
+                "yaml"
+            ],
+            "inputProperties": {
+                "cniVersion": {
+                    "type": "string",
+                    "description": "CNI version."
+                },
+                "name": {
+                    "type": "string",
+                    "description": "CNI plugin name."
+                },
+                "path": {
+                    "type": "string",
+                    "description": "Path to put the configuration file on the remote system"
+                },
+                "type": {
+                    "type": "string",
+                    "description": "CNI plugin type."
+                }
+            },
+            "isComponent": true
+        },
+        "kubernetes-the-hard-way:config:ContainerdConfiguration": {
+            "description": "Get the containerd configuration.",
+            "properties": {
+                "result": {
+                    "$ref": "#/types/kubernetes-the-hard-way:config:ContainerdConfiguration"
+                },
+                "toml": {
+                    "type": "string",
+                    "description": "The toml representation of the configuration."
+                }
+            },
+            "required": [
+                "result",
+                "toml"
+            ],
+            "inputProperties": {
+                "cri": {
+                    "$ref": "#/types/kubernetes-the-hard-way:config:ContainerdCriPluginConfiguration",
+                    "plain": true,
+                    "description": "The cri configuration."
+                }
+            },
+            "isComponent": true
+        },
         "kubernetes-the-hard-way:config:KubeProxyConfiguration": {
             "description": "kube-proxy configuration.",
             "properties": {
@@ -2029,230 +2226,6 @@
             },
             "requiredInputs": [
                 "podCIDR"
-            ],
-            "isComponent": true
-        },
-        "kubernetes-the-hard-way:remote:CniBridgePluginConfiguration": {
-            "description": "The CNI bridge plugin configuration.",
-            "properties": {
-                "bridge": {
-                    "type": "string",
-                    "description": "Bridge name."
-                },
-                "cniVersion": {
-                    "type": "string",
-                    "description": "CNI version."
-                },
-                "connection": {
-                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
-                    "description": "The parameters with which to connect to the remote host."
-                },
-                "file": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:remote:File",
-                    "description": "The file on the remote system."
-                },
-                "ipMasq": {
-                    "type": "boolean",
-                    "description": "IP masq."
-                },
-                "ipam": {
-                    "$ref": "#/types/kubernetes-the-hard-way:remote:CniBridgeIpam",
-                    "description": "IPAM"
-                },
-                "isGateway": {
-                    "type": "boolean",
-                    "description": "Is gateway."
-                },
-                "name": {
-                    "type": "string",
-                    "description": "CNI plugin name."
-                },
-                "path": {
-                    "type": "string",
-                    "description": "Path to put the configuration file on the remote system"
-                },
-                "subnet": {
-                    "type": "string",
-                    "description": "The subnet to use."
-                },
-                "type": {
-                    "type": "string",
-                    "description": "CNI plugin type."
-                }
-            },
-            "required": [
-                "connection",
-                "bridge",
-                "cniVersion",
-                "isGateway",
-                "ipMasq",
-                "ipam",
-                "name",
-                "path",
-                "type"
-            ],
-            "inputProperties": {
-                "bridge": {
-                    "type": "string",
-                    "description": "Bridge name."
-                },
-                "cniVersion": {
-                    "type": "string",
-                    "description": "CNI version."
-                },
-                "connection": {
-                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
-                    "description": "The parameters with which to connect to the remote host."
-                },
-                "ipMasq": {
-                    "type": "boolean",
-                    "description": "IP masq."
-                },
-                "ipam": {
-                    "$ref": "#/types/kubernetes-the-hard-way:remote:CniBridgeIpam",
-                    "description": "IPAM"
-                },
-                "isGateway": {
-                    "type": "boolean",
-                    "description": "Is gateway."
-                },
-                "name": {
-                    "type": "string",
-                    "description": "CNI plugin name."
-                },
-                "path": {
-                    "type": "string",
-                    "description": "Path to put the configuration file on the remote system"
-                },
-                "subnet": {
-                    "type": "string",
-                    "description": "The subnet to use."
-                },
-                "type": {
-                    "type": "string",
-                    "description": "CNI plugin type."
-                }
-            },
-            "requiredInputs": [
-                "connection"
-            ],
-            "isComponent": true
-        },
-        "kubernetes-the-hard-way:remote:CniLoopbackPluginConfiguration": {
-            "description": "The CNI loopback plugin configuration.",
-            "properties": {
-                "cniVersion": {
-                    "type": "string",
-                    "description": "CNI version."
-                },
-                "connection": {
-                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
-                    "description": "The parameters with which to connect to the remote host."
-                },
-                "file": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:remote:File",
-                    "description": "The file on the remote system."
-                },
-                "name": {
-                    "type": "string",
-                    "description": "CNI plugin name."
-                },
-                "path": {
-                    "type": "string",
-                    "description": "Path to put the configuration file on the remote system"
-                },
-                "type": {
-                    "type": "string",
-                    "description": "CNI plugin type."
-                }
-            },
-            "required": [
-                "connection",
-                "cniVersion",
-                "name",
-                "path",
-                "type"
-            ],
-            "inputProperties": {
-                "cniVersion": {
-                    "type": "string",
-                    "description": "CNI version."
-                },
-                "connection": {
-                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
-                    "description": "The parameters with which to connect to the remote host."
-                },
-                "name": {
-                    "type": "string",
-                    "description": "CNI plugin name."
-                },
-                "path": {
-                    "type": "string",
-                    "description": "Path to put the configuration file on the remote system"
-                },
-                "type": {
-                    "type": "string",
-                    "description": "CNI plugin type."
-                }
-            },
-            "requiredInputs": [
-                "connection"
-            ],
-            "isComponent": true
-        },
-        "kubernetes-the-hard-way:remote:CniPluginConfiguration": {
-            "description": "The CNI plugin configuration.",
-            "properties": {
-                "bridge": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:remote:CniBridgePluginConfiguration",
-                    "description": "The bridge plugin configuration."
-                },
-                "connection": {
-                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
-                    "description": "The parameters with which to connect to the remote host."
-                },
-                "directory": {
-                    "type": "string",
-                    "description": "The plugin configuration directory."
-                },
-                "loopback": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:remote:CniLoopbackPluginConfiguration",
-                    "description": "The loopback plugin configuration."
-                },
-                "mkdir": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mkdir",
-                    "description": "The `directory` mkdir operation."
-                },
-                "subnet": {
-                    "type": "string",
-                    "description": "The subnet to use for the CNI bridge plugin configuration."
-                }
-            },
-            "required": [
-                "connection",
-                "subnet",
-                "bridge",
-                "directory",
-                "mkdir",
-                "loopback"
-            ],
-            "inputProperties": {
-                "connection": {
-                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
-                    "description": "The parameters with which to connect to the remote host."
-                },
-                "directory": {
-                    "type": "string",
-                    "description": "The plugin configuration directory."
-                },
-                "subnet": {
-                    "type": "string",
-                    "description": "The subnet to use for the CNI bridge plugin configuration."
-                }
-            },
-            "requiredInputs": [
-                "connection",
-                "subnet"
             ],
             "isComponent": true
         },
@@ -2519,52 +2492,6 @@
                 "version": {
                     "type": "string",
                     "description": "The version to install."
-                }
-            },
-            "requiredInputs": [
-                "connection"
-            ],
-            "isComponent": true
-        },
-        "kubernetes-the-hard-way:remote:ContainerdConfiguration": {
-            "description": "The containerd configuration file.",
-            "properties": {
-                "connection": {
-                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
-                    "description": "The parameters with which to connect to the remote host."
-                },
-                "cri": {
-                    "$ref": "#/types/kubernetes-the-hard-way:remote:ContainerdCriPluginConfiguration",
-                    "plain": true,
-                    "description": "The cri configuration."
-                },
-                "file": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:remote:File",
-                    "description": "The remote configuration file."
-                },
-                "path": {
-                    "type": "string",
-                    "description": "The path to put the configuration file."
-                }
-            },
-            "required": [
-                "connection",
-                "file",
-                "cri"
-            ],
-            "inputProperties": {
-                "connection": {
-                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
-                    "description": "The parameters with which to connect to the remote host."
-                },
-                "cri": {
-                    "$ref": "#/types/kubernetes-the-hard-way:remote:ContainerdCriPluginConfiguration",
-                    "plain": true,
-                    "description": "The cri configuration."
-                },
-                "path": {
-                    "type": "string",
-                    "description": "The path to put the configuration file."
                 }
             },
             "requiredInputs": [
@@ -7131,6 +7058,120 @@
         }
     },
     "functions": {
+        "kubernetes-the-hard-way:config:getCniBridgePluginConfiguration": {
+            "description": "Get the `bridge` configuration.",
+            "inputs": {
+                "properties": {
+                    "bridge": {
+                        "type": "string",
+                        "description": "Bridge name."
+                    },
+                    "cniVersion": {
+                        "type": "string",
+                        "description": "CNI version."
+                    },
+                    "ipMasq": {
+                        "type": "boolean",
+                        "description": "IP masq."
+                    },
+                    "ipam": {
+                        "$ref": "#/types/kubernetes-the-hard-way:config:CniBridgeIpam",
+                        "description": "IPAM"
+                    },
+                    "isGateway": {
+                        "type": "boolean",
+                        "description": "Is gateway."
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "CNI plugin name."
+                    },
+                    "path": {
+                        "type": "string",
+                        "description": "Path to put the configuration file on the remote system"
+                    },
+                    "subnet": {
+                        "type": "string",
+                        "description": "The subnet to use."
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "CNI plugin type."
+                    }
+                },
+                "required": [
+                    "subnet"
+                ]
+            },
+            "outputs": {
+                "description": "Get the `bridge` configuration.",
+                "properties": {
+                    "result": {
+                        "$ref": "#/types/kubernetes-the-hard-way:config:CniBridgePluginConfiguration"
+                    }
+                },
+                "required": [
+                    "result"
+                ]
+            }
+        },
+        "kubernetes-the-hard-way:config:getCniLoopbackPluginConfiguration": {
+            "description": "Get the `loopback` configuration.",
+            "inputs": {
+                "properties": {
+                    "cniVersion": {
+                        "type": "string",
+                        "description": "CNI version."
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "CNI plugin name."
+                    },
+                    "path": {
+                        "type": "string",
+                        "description": "Path to put the configuration file on the remote system"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "CNI plugin type."
+                    }
+                }
+            },
+            "outputs": {
+                "description": "Get the `loopback` configuration.",
+                "properties": {
+                    "result": {
+                        "$ref": "#/types/kubernetes-the-hard-way:config:CniLoopbackPluginConfiguration"
+                    }
+                },
+                "required": [
+                    "result"
+                ]
+            }
+        },
+        "kubernetes-the-hard-way:config:getContainerdConfiguration": {
+            "description": "Get the containerd configuration.",
+            "inputs": {
+                "properties": {
+                    "cri": {
+                        "$ref": "#/types/kubernetes-the-hard-way:config:ContainerdCriPluginConfiguration",
+                        "plain": true,
+                        "description": "The cri configuration."
+                    }
+                }
+            },
+            "outputs": {
+                "description": "Get the containerd configuration.",
+                "properties": {
+                    "result": {
+                        "$ref": "#/types/kubernetes-the-hard-way:config:ContainerdConfiguration"
+                    }
+                },
+                "required": [
+                    "result"
+                ]
+            }
+        },
         "kubernetes-the-hard-way:config:getKubeProxyConfiguration": {
             "description": "kube-proxy configuration.",
             "inputs": {

@@ -13,41 +13,40 @@ import (
 
 func TestCniPluginsTs(t *testing.T) {
 	ResourceTest(t, "remote/cni-plugins-ts", getJSBaseOptions(t), func(ctx *ResourceContext) {
-		Validate(ctx, "kubernetes-the-hard-way:remote:CniBridgePluginConfiguration", "simple", func(t *testing.T, res apitype.ResourceV3) {
+		Validate(ctx, "kubernetes-the-hard-way:config:CniBridgePluginConfiguration", "simple", func(t *testing.T, res apitype.ResourceV3) {
 			assert.NotEmpty(t, res.Outputs)
 
-			expectOutput(t, res, "bridge", "cni0")
-			expectOutput(t, res, "name", "bridge")
-			expectOutput(t, res, "type", "bridge")
-			expectOutput(t, res, "cniVersion", "1.0.0")
-			expectOutput(t, res, "path", "/etc/cni/net.d/10-bridge.conf")
-			expectOutput(t, res, "subnet", "10.0.69.0/24")
-			expectOutput(t, res, "isGateway", true)
-			expectOutput(t, res, "ipMasq", true)
+			expectOutput(t, res, "result", map[string]interface{}{
+				"name":       "bridge",
+				"type":       "bridge",
+				"bridge":     "cni0",
+				"cniVersion": "1.0.0",
+				"isGateway":  true,
+				"ipMasq":     true,
+				"subnet":     "10.0.69.0/24",
+				"ipam": map[string]interface{}{
+					"type": "host-local",
+					"ranges": []interface{}{
+						map[string]interface{}{"subnet": "10.0.69.0/24"},
+					},
+					"routes": []interface{}{
+						map[string]interface{}{"dst": "0.0.0.0/0"},
+					},
+				},
+			})
 
-			assert.Contains(t, res.Outputs, "file")
-			assert.Contains(t, res.Outputs, "ipam")
+			assert.Contains(t, res.Outputs, "yaml")
 		})
-		Validate(ctx, "kubernetes-the-hard-way:remote:CniLoopbackPluginConfiguration", "simple", func(t *testing.T, res apitype.ResourceV3) {
+		Validate(ctx, "kubernetes-the-hard-way:config:CniLoopbackPluginConfiguration", "simple", func(t *testing.T, res apitype.ResourceV3) {
 			assert.NotEmpty(t, res.Outputs)
 
-			expectOutput(t, res, "name", "lo")
-			expectOutput(t, res, "type", "loopback")
-			expectOutput(t, res, "cniVersion", "1.1.0")
-			expectOutput(t, res, "path", "/etc/cni/net.d/99-loopback.conf")
+			expectOutput(t, res, "result", map[string]interface{}{
+				"name":       "lo",
+				"type":       "loopback",
+				"cniVersion": "1.1.0",
+			})
 
-			assert.Contains(t, res.Outputs, "file")
-		})
-		Validate(ctx, "kubernetes-the-hard-way:remote:CniPluginConfiguration", "all", func(t *testing.T, res apitype.ResourceV3) {
-			assert.NotEmpty(t, res.Outputs)
-
-			expectOutput(t, res, "subnet", "10.0.69.0/24")
-			expectOutput(t, res, "directory", "/etc/cni2/net.d")
-
-			assert.Contains(t, res.Outputs, "bridge")
-			assert.Contains(t, res.Outputs, "connection")
-			assert.Contains(t, res.Outputs, "loopback")
-			assert.Contains(t, res.Outputs, "mkdir")
+			assert.Contains(t, res.Outputs, "yaml")
 		})
 	})
 }
@@ -205,14 +204,11 @@ func TestRemoteEtcdInstallTs(t *testing.T) {
 
 func TestRemoteWorkerTs(t *testing.T) {
 	ResourceTest(t, "remote/worker-ts", getJSBaseOptions(t), func(ctx *ResourceContext) {
-		Validate(ctx, "kubernetes-the-hard-way:remote:ContainerdConfiguration", "simple", func(t *testing.T, res apitype.ResourceV3) {
+		Validate(ctx, "kubernetes-the-hard-way:config:ContainerdConfiguration", "simple", func(t *testing.T, res apitype.ResourceV3) {
 			assert.NotEmpty(t, res.Outputs)
 
-			assert.Contains(t, res.Outputs, "connection")
-			assert.Contains(t, res.Outputs, "cri")
-			assert.Contains(t, res.Outputs, "file")
-
-			expectOutput(t, res, "path", "/etc/containerd/containerd-config.toml")
+			assert.Contains(t, res.Outputs, "result")
+			assert.Contains(t, res.Outputs, "toml")
 		})
 	})
 }

@@ -13,6 +13,9 @@
     "forceConsistentCasingInFileNames": true
   },
   "files": [
+    "config/cniBridgePluginConfiguration.ts",
+    "config/cniLoopbackPluginConfiguration.ts",
+    "config/containerdConfiguration.ts",
     "config/getKubeletConfiguration.ts",
     "config/getKubeProxyConfiguration.ts",
     "config/getKubeVipManifest.ts",
@@ -25,12 +28,8 @@
     "provider.ts",
     "remote/archiveInstall.ts",
     "remote/binaryInstall.ts",
-    "remote/cniBridgePluginConfiguration.ts",
-    "remote/cniLoopbackPluginConfiguration.ts",
-    "remote/cniPluginConfiguration.ts",
     "remote/cniPlugins.ts",
     "remote/containerd.ts",
-    "remote/containerdConfiguration.ts",
     "remote/crictl.ts",
     "remote/download.ts",
     "remote/etcdCluster.ts",

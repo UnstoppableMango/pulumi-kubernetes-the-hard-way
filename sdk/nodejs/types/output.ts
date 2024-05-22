@@ -23,6 +23,160 @@ export namespace config {
         server: string;
     }
 
+    /**
+     * The CNI plugins IPAM
+     */
+    export interface CniBridgeIpam {
+        /**
+         * IPAM ranges.
+         */
+        ranges?: {[key: string]: string}[];
+        /**
+         * IPAM routes.
+         */
+        routes?: {[key: string]: string}[];
+        /**
+         * CNI bridge IPAM type
+         */
+        type?: string;
+    }
+
+    /**
+     * TODO
+     */
+    export interface CniBridgePluginConfiguration {
+        /**
+         * Bridge name.
+         */
+        bridge: string;
+        /**
+         * The version of the bridge plugin.
+         */
+        cniVersion?: string;
+        /**
+         * IP masq.
+         */
+        ipMasq: boolean;
+        /**
+         * IPAM.
+         */
+        ipam: outputs.config.CniBridgeIpam;
+        /**
+         * Is gateway.
+         */
+        isGateway: boolean;
+        /**
+         * Plugin name.
+         */
+        name: string;
+        /**
+         * The subnet to use.
+         */
+        subnet: string;
+        /**
+         * Plugin type.
+         */
+        type: string;
+    }
+
+    /**
+     * CNI loopback plugin configuration.
+     */
+    export interface CniLoopbackPluginConfiguration {
+        /**
+         * The plugin CNI version.
+         */
+        cniVersion: string;
+        /**
+         * The name of the plugin.
+         */
+        name: string;
+        /**
+         * The type of the plugin.
+         */
+        type: string;
+    }
+
+    /**
+     * The containerd configuration.
+     */
+    export interface ContainerdConfiguration {
+        /**
+         * The cri configuration.
+         */
+        cri?: outputs.config.ContainerdCriPluginConfiguration;
+    }
+
+    /**
+     * containerd cri plugin configuration.
+     */
+    export interface ContainerdCriPluginConfiguration {
+        /**
+         * cni configuration.
+         */
+        cni: outputs.config.ContainerdCriPluginConfigurationCni;
+        /**
+         * containerd configuration.
+         */
+        containerd: outputs.config.ContainerdCriPluginConfigurationContainerd;
+    }
+
+    /**
+     * containerd cri plugin configuration.
+     */
+    export interface ContainerdCriPluginConfigurationCni {
+        /**
+         * bin_dir
+         */
+        binDir?: string;
+        /**
+         * conf_dir
+         */
+        confDir?: string;
+    }
+
+    /**
+     * containerd cri plugin configuration.
+     */
+    export interface ContainerdCriPluginConfigurationContainerd {
+        /**
+         * default_runtime_name
+         */
+        defaultRuntimeName?: string;
+        /**
+         * The containerd runtime configuration.
+         */
+        runtimes?: outputs.config.ContainerdCriPluginConfigurationContainerdRunc;
+        /**
+         * snapshotter
+         */
+        snapshotter?: string;
+    }
+
+    /**
+     * containerd cri runc plugin configuration.
+     */
+    export interface ContainerdCriPluginConfigurationContainerdRunc {
+        /**
+         * runc options.
+         */
+        options: outputs.config.ContainerdCriPluginConfigurationContainerdRuncOptions;
+        /**
+         * runtime_type
+         */
+        runtimeType?: string;
+    }
+
+    /**
+     * containerd cri runc plugin configuration.
+     */
+    export interface ContainerdCriPluginConfigurationContainerdRuncOptions {
+        /**
+         * SystemdCgroup
+         */
+        systemdCgroup?: boolean;
+    }
+
     export interface Context {
         /**
          * TODO
@@ -515,94 +669,6 @@ export namespace config {
 }
 
 export namespace remote {
-    /**
-     * The CNI plugins IPAM
-     */
-    export interface CniBridgeIpam {
-        /**
-         * IPAM ranges.
-         */
-        ranges?: {[key: string]: string}[];
-        /**
-         * IPAM routes.
-         */
-        routes?: {[key: string]: string}[];
-        /**
-         * CNI bridge IPAM type
-         */
-        type?: string;
-    }
-
-    /**
-     * containerd cri plugin configuration.
-     */
-    export interface ContainerdCriPluginConfiguration {
-        /**
-         * cni configuration.
-         */
-        cni: outputs.remote.ContainerdCriPluginConfigurationCni;
-        /**
-         * containerd configuration.
-         */
-        containerd: outputs.remote.ContainerdCriPluginConfigurationContainerd;
-    }
-
-    /**
-     * containerd cri plugin configuration.
-     */
-    export interface ContainerdCriPluginConfigurationCni {
-        /**
-         * bin_dir
-         */
-        binDir?: string;
-        /**
-         * conf_dir
-         */
-        confDir?: string;
-    }
-
-    /**
-     * containerd cri plugin configuration.
-     */
-    export interface ContainerdCriPluginConfigurationContainerd {
-        /**
-         * default_runtime_name
-         */
-        defaultRuntimeName?: string;
-        /**
-         * The containerd runtime configuration.
-         */
-        runtimes?: outputs.remote.ContainerdCriPluginConfigurationContainerdRunc;
-        /**
-         * snapshotter
-         */
-        snapshotter?: string;
-    }
-
-    /**
-     * containerd cri runc plugin configuration.
-     */
-    export interface ContainerdCriPluginConfigurationContainerdRunc {
-        /**
-         * runc options.
-         */
-        options: outputs.remote.ContainerdCriPluginConfigurationContainerdRuncOptions;
-        /**
-         * runtime_type
-         */
-        runtimeType?: string;
-    }
-
-    /**
-     * containerd cri runc plugin configuration.
-     */
-    export interface ContainerdCriPluginConfigurationContainerdRuncOptions {
-        /**
-         * SystemdCgroup
-         */
-        systemdCgroup?: boolean;
-    }
-
     /**
      * Props for resources that consume etcd configuration.
      */

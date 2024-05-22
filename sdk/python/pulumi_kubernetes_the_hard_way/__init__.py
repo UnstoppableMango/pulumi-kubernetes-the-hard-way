@@ -31,6 +31,9 @@ _utilities.register(
   "mod": "config",
   "fqn": "pulumi_kubernetes_the_hard_way.config",
   "classes": {
+   "kubernetes-the-hard-way:config:CniBridgePluginConfiguration": "CniBridgePluginConfiguration",
+   "kubernetes-the-hard-way:config:CniLoopbackPluginConfiguration": "CniLoopbackPluginConfiguration",
+   "kubernetes-the-hard-way:config:ContainerdConfiguration": "ContainerdConfiguration",
    "kubernetes-the-hard-way:config:KubeProxyConfiguration": "KubeProxyConfiguration",
    "kubernetes-the-hard-way:config:KubeVipManifest": "KubeVipManifest",
    "kubernetes-the-hard-way:config:KubeletConfiguration": "KubeletConfiguration"
@@ -41,11 +44,7 @@ _utilities.register(
   "mod": "remote",
   "fqn": "pulumi_kubernetes_the_hard_way.remote",
   "classes": {
-   "kubernetes-the-hard-way:remote:CniBridgePluginConfiguration": "CniBridgePluginConfiguration",
-   "kubernetes-the-hard-way:remote:CniLoopbackPluginConfiguration": "CniLoopbackPluginConfiguration",
-   "kubernetes-the-hard-way:remote:CniPluginConfiguration": "CniPluginConfiguration",
    "kubernetes-the-hard-way:remote:CniPluginsInstall": "CniPluginsInstall",
-   "kubernetes-the-hard-way:remote:ContainerdConfiguration": "ContainerdConfiguration",
    "kubernetes-the-hard-way:remote:ContainerdInstall": "ContainerdInstall",
    "kubernetes-the-hard-way:remote:CrictlInstall": "CrictlInstall",
    "kubernetes-the-hard-way:remote:Download": "Download",

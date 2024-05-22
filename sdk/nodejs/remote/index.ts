@@ -5,30 +5,10 @@ import * as pulumi from "@pulumi/pulumi";
 import * as utilities from "../utilities";
 
 // Export members:
-export { CniBridgePluginConfigurationArgs } from "./cniBridgePluginConfiguration";
-export type CniBridgePluginConfiguration = import("./cniBridgePluginConfiguration").CniBridgePluginConfiguration;
-export const CniBridgePluginConfiguration: typeof import("./cniBridgePluginConfiguration").CniBridgePluginConfiguration = null as any;
-utilities.lazyLoad(exports, ["CniBridgePluginConfiguration"], () => require("./cniBridgePluginConfiguration"));
-
-export { CniLoopbackPluginConfigurationArgs } from "./cniLoopbackPluginConfiguration";
-export type CniLoopbackPluginConfiguration = import("./cniLoopbackPluginConfiguration").CniLoopbackPluginConfiguration;
-export const CniLoopbackPluginConfiguration: typeof import("./cniLoopbackPluginConfiguration").CniLoopbackPluginConfiguration = null as any;
-utilities.lazyLoad(exports, ["CniLoopbackPluginConfiguration"], () => require("./cniLoopbackPluginConfiguration"));
-
-export { CniPluginConfigurationArgs } from "./cniPluginConfiguration";
-export type CniPluginConfiguration = import("./cniPluginConfiguration").CniPluginConfiguration;
-export const CniPluginConfiguration: typeof import("./cniPluginConfiguration").CniPluginConfiguration = null as any;
-utilities.lazyLoad(exports, ["CniPluginConfiguration"], () => require("./cniPluginConfiguration"));
-
 export { CniPluginsInstallArgs } from "./cniPluginsInstall";
 export type CniPluginsInstall = import("./cniPluginsInstall").CniPluginsInstall;
 export const CniPluginsInstall: typeof import("./cniPluginsInstall").CniPluginsInstall = null as any;
 utilities.lazyLoad(exports, ["CniPluginsInstall"], () => require("./cniPluginsInstall"));
-
-export { ContainerdConfigurationArgs } from "./containerdConfiguration";
-export type ContainerdConfiguration = import("./containerdConfiguration").ContainerdConfiguration;
-export const ContainerdConfiguration: typeof import("./containerdConfiguration").ContainerdConfiguration = null as any;
-utilities.lazyLoad(exports, ["ContainerdConfiguration"], () => require("./containerdConfiguration"));
 
 export { ContainerdInstallArgs } from "./containerdInstall";
 export type ContainerdInstall = import("./containerdInstall").ContainerdInstall;
@@ -158,16 +138,8 @@ const _module = {
     version: utilities.getVersion(),
     construct: (name: string, type: string, urn: string): pulumi.Resource => {
         switch (type) {
-            case "kubernetes-the-hard-way:remote:CniBridgePluginConfiguration":
-                return new CniBridgePluginConfiguration(name, <any>undefined, { urn })
-            case "kubernetes-the-hard-way:remote:CniLoopbackPluginConfiguration":
-                return new CniLoopbackPluginConfiguration(name, <any>undefined, { urn })
-            case "kubernetes-the-hard-way:remote:CniPluginConfiguration":
-                return new CniPluginConfiguration(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:remote:CniPluginsInstall":
                 return new CniPluginsInstall(name, <any>undefined, { urn })
-            case "kubernetes-the-hard-way:remote:ContainerdConfiguration":
-                return new ContainerdConfiguration(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:remote:ContainerdInstall":
                 return new ContainerdInstall(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:remote:CrictlInstall":
