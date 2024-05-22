@@ -9,7 +9,8 @@ export async function getCniBridgePluginConfiguration(
   const subnet = output(inputs.subnet);
 
   const result: schema.CniBridgePluginConfigurationInputs = {
-    bridge: inputs.bridge ?? '',
+    cniVersion: '1.0.0',
+    bridge: inputs.bridge ?? 'cni0',
     ipam: all([ipam, subnet]).apply(x => ipamDefaults(...x)),
     ipMasq: inputs.ipMasq ?? true,
     isGateway: inputs.isGateway ?? true,
