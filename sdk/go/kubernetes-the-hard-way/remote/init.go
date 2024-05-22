@@ -25,6 +25,8 @@ func (m *module) Construct(ctx *pulumi.Context, name, typ, urn string) (r pulumi
 		r = &CniPluginsInstall{}
 	case "kubernetes-the-hard-way:remote:ContainerdInstall":
 		r = &ContainerdInstall{}
+	case "kubernetes-the-hard-way:remote:ContainerdService":
+		r = &ContainerdService{}
 	case "kubernetes-the-hard-way:remote:CrictlInstall":
 		r = &CrictlInstall{}
 	case "kubernetes-the-hard-way:remote:Download":

@@ -46,6 +46,7 @@ _utilities.register(
   "classes": {
    "kubernetes-the-hard-way:remote:CniPluginsInstall": "CniPluginsInstall",
    "kubernetes-the-hard-way:remote:ContainerdInstall": "ContainerdInstall",
+   "kubernetes-the-hard-way:remote:ContainerdService": "ContainerdService",
    "kubernetes-the-hard-way:remote:CrictlInstall": "CrictlInstall",
    "kubernetes-the-hard-way:remote:Download": "Download",
    "kubernetes-the-hard-way:remote:EtcdCluster": "EtcdCluster",

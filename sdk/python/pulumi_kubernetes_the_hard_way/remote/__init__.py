@@ -8,6 +8,7 @@ import typing
 from ._enums import *
 from .cni_plugins_install import *
 from .containerd_install import *
+from .containerd_service import *
 from .crictl_install import *
 from .download import *
 from .etcd_cluster import *
