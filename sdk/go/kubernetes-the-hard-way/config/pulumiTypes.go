@@ -256,8 +256,12 @@ type CniBridgePluginConfigurationType struct {
 	Ipam CniBridgeIpam `pulumi:"ipam"`
 	// Is gateway.
 	IsGateway bool `pulumi:"isGateway"`
+	// Plugin name.
+	Name string `pulumi:"name"`
 	// The subnet to use.
 	Subnet string `pulumi:"subnet"`
+	// Plugin type.
+	Type string `pulumi:"type"`
 }
 
 // TODO
@@ -300,9 +304,19 @@ func (o CniBridgePluginConfigurationTypeOutput) IsGateway() pulumi.BoolOutput {
 	return o.ApplyT(func(v CniBridgePluginConfigurationType) bool { return v.IsGateway }).(pulumi.BoolOutput)
 }
 
+// Plugin name.
+func (o CniBridgePluginConfigurationTypeOutput) Name() pulumi.StringOutput {
+	return o.ApplyT(func(v CniBridgePluginConfigurationType) string { return v.Name }).(pulumi.StringOutput)
+}
+
 // The subnet to use.
 func (o CniBridgePluginConfigurationTypeOutput) Subnet() pulumi.StringOutput {
 	return o.ApplyT(func(v CniBridgePluginConfigurationType) string { return v.Subnet }).(pulumi.StringOutput)
+}
+
+// Plugin type.
+func (o CniBridgePluginConfigurationTypeOutput) Type() pulumi.StringOutput {
+	return o.ApplyT(func(v CniBridgePluginConfigurationType) string { return v.Type }).(pulumi.StringOutput)
 }
 
 // CNI loopback plugin configuration.

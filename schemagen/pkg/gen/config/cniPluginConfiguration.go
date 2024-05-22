@@ -14,6 +14,7 @@ func generateGetCniBridgePluginConfiguration() schema.PackageSpec {
 		"CniBridgePluginConfiguration",
 		"bridge",
 		map[string]schema.PropertySpec{
+			"name":      props.String("Plugin name"),
 			"bridge":    props.String("Bridge name."),
 			"subnet":    props.String("The subnet to use."),
 			"isGateway": props.Boolean("Is gateway."),
@@ -62,6 +63,8 @@ func generateGetCniBridgePluginConfiguration() schema.PackageSpec {
 					Description: "TODO",
 					Type:        "object",
 					Properties: map[string]schema.PropertySpec{
+						"name":       props.String("Plugin name."),
+						"type":       props.String("Plugin type."),
 						"cniVersion": props.String("The version of the bridge plugin."),
 						"bridge":     props.String("Bridge name."),
 						"subnet":     props.String("The subnet to use."),
@@ -73,6 +76,8 @@ func generateGetCniBridgePluginConfiguration() schema.PackageSpec {
 						},
 					},
 					Required: []string{
+						"name",
+						"type",
 						"bridge",
 						"subnet",
 						"isGateway",

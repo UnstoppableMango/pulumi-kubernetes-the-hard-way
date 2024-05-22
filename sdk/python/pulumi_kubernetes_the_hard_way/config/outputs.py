@@ -144,7 +144,9 @@ class CniBridgePluginConfiguration(dict):
                  ip_masq: bool,
                  ipam: 'outputs.CniBridgeIpam',
                  is_gateway: bool,
+                 name: str,
                  subnet: str,
+                 type: str,
                  cni_version: Optional[str] = None):
         """
         TODO
@@ -152,14 +154,18 @@ class CniBridgePluginConfiguration(dict):
         :param bool ip_masq: IP masq.
         :param 'CniBridgeIpam' ipam: IPAM.
         :param bool is_gateway: Is gateway.
+        :param str name: Plugin name.
         :param str subnet: The subnet to use.
+        :param str type: Plugin type.
         :param str cni_version: The version of the bridge plugin.
         """
         pulumi.set(__self__, "bridge", bridge)
         pulumi.set(__self__, "ip_masq", ip_masq)
         pulumi.set(__self__, "ipam", ipam)
         pulumi.set(__self__, "is_gateway", is_gateway)
+        pulumi.set(__self__, "name", name)
         pulumi.set(__self__, "subnet", subnet)
+        pulumi.set(__self__, "type", type)
         if cni_version is not None:
             pulumi.set(__self__, "cni_version", cni_version)
 
@@ -197,11 +203,27 @@ class CniBridgePluginConfiguration(dict):
 
     @property
     @pulumi.getter
+    def name(self) -> str:
+        """
+        Plugin name.
+        """
+        return pulumi.get(self, "name")
+
+    @property
+    @pulumi.getter
     def subnet(self) -> str:
         """
         The subnet to use.
         """
         return pulumi.get(self, "subnet")
+
+    @property
+    @pulumi.getter
+    def type(self) -> str:
+        """
+        Plugin type.
+        """
+        return pulumi.get(self, "type")
 
     @property
     @pulumi.getter(name="cniVersion")

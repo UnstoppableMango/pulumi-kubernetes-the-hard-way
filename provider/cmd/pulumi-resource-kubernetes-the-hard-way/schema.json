@@ -152,13 +152,23 @@
                     "type": "boolean",
                     "description": "Is gateway."
                 },
+                "name": {
+                    "type": "string",
+                    "description": "Plugin name."
+                },
                 "subnet": {
                     "type": "string",
                     "description": "The subnet to use."
+                },
+                "type": {
+                    "type": "string",
+                    "description": "Plugin type."
                 }
             },
             "type": "object",
             "required": [
+                "name",
+                "type",
                 "bridge",
                 "subnet",
                 "isGateway",

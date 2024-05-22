@@ -40,10 +40,20 @@ public final class CniBridgePluginConfiguration {
      */
     private Boolean isGateway;
     /**
+     * @return Plugin name.
+     * 
+     */
+    private String name;
+    /**
      * @return The subnet to use.
      * 
      */
     private String subnet;
+    /**
+     * @return Plugin type.
+     * 
+     */
+    private String type;
 
     private CniBridgePluginConfiguration() {}
     /**
@@ -82,11 +92,25 @@ public final class CniBridgePluginConfiguration {
         return this.isGateway;
     }
     /**
+     * @return Plugin name.
+     * 
+     */
+    public String name() {
+        return this.name;
+    }
+    /**
      * @return The subnet to use.
      * 
      */
     public String subnet() {
         return this.subnet;
+    }
+    /**
+     * @return Plugin type.
+     * 
+     */
+    public String type() {
+        return this.type;
     }
 
     public static Builder builder() {
@@ -103,7 +127,9 @@ public final class CniBridgePluginConfiguration {
         private Boolean ipMasq;
         private CniBridgeIpam ipam;
         private Boolean isGateway;
+        private String name;
         private String subnet;
+        private String type;
         public Builder() {}
         public Builder(CniBridgePluginConfiguration defaults) {
     	      Objects.requireNonNull(defaults);
@@ -112,7 +138,9 @@ public final class CniBridgePluginConfiguration {
     	      this.ipMasq = defaults.ipMasq;
     	      this.ipam = defaults.ipam;
     	      this.isGateway = defaults.isGateway;
+    	      this.name = defaults.name;
     	      this.subnet = defaults.subnet;
+    	      this.type = defaults.type;
         }
 
         @CustomType.Setter
@@ -154,11 +182,27 @@ public final class CniBridgePluginConfiguration {
             return this;
         }
         @CustomType.Setter
+        public Builder name(String name) {
+            if (name == null) {
+              throw new MissingRequiredPropertyException("CniBridgePluginConfiguration", "name");
+            }
+            this.name = name;
+            return this;
+        }
+        @CustomType.Setter
         public Builder subnet(String subnet) {
             if (subnet == null) {
               throw new MissingRequiredPropertyException("CniBridgePluginConfiguration", "subnet");
             }
             this.subnet = subnet;
+            return this;
+        }
+        @CustomType.Setter
+        public Builder type(String type) {
+            if (type == null) {
+              throw new MissingRequiredPropertyException("CniBridgePluginConfiguration", "type");
+            }
+            this.type = type;
             return this;
         }
         public CniBridgePluginConfiguration build() {
@@ -168,7 +212,9 @@ public final class CniBridgePluginConfiguration {
             _resultValue.ipMasq = ipMasq;
             _resultValue.ipam = ipam;
             _resultValue.isGateway = isGateway;
+            _resultValue.name = name;
             _resultValue.subnet = subnet;
+            _resultValue.type = type;
             return _resultValue;
         }
     }

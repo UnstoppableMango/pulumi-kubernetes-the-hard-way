@@ -38,9 +38,17 @@ namespace UnMango.KubernetesTheHardWay.Config.Outputs
         /// </summary>
         public readonly bool IsGateway;
         /// <summary>
+        /// Plugin name.
+        /// </summary>
+        public readonly string Name;
+        /// <summary>
         /// The subnet to use.
         /// </summary>
         public readonly string Subnet;
+        /// <summary>
+        /// Plugin type.
+        /// </summary>
+        public readonly string Type;
 
         [OutputConstructor]
         private CniBridgePluginConfiguration(
@@ -54,14 +62,20 @@ namespace UnMango.KubernetesTheHardWay.Config.Outputs
 
             bool isGateway,
 
-            string subnet)
+            string name,
+
+            string subnet,
+
+            string type)
         {
             Bridge = bridge;
             CniVersion = cniVersion;
             IpMasq = ipMasq;
             Ipam = ipam;
             IsGateway = isGateway;
+            Name = name;
             Subnet = subnet;
+            Type = type;
         }
     }
 }

@@ -1225,7 +1225,9 @@ export interface CniBridgePluginConfigurationInputs {
     readonly ipMasq: pulumi.Input<boolean>;
     readonly ipam: pulumi.Input<CniBridgeIpamInputs>;
     readonly isGateway: pulumi.Input<boolean>;
+    readonly name: pulumi.Input<string>;
     readonly subnet: pulumi.Input<string>;
+    readonly type: pulumi.Input<string>;
 }
 export interface CniBridgePluginConfigurationOutputs {
     readonly bridge: pulumi.Output<string>;
@@ -1233,7 +1235,9 @@ export interface CniBridgePluginConfigurationOutputs {
     readonly ipMasq: pulumi.Output<boolean>;
     readonly ipam: pulumi.Output<CniBridgeIpamOutputs>;
     readonly isGateway: pulumi.Output<boolean>;
+    readonly name: pulumi.Output<string>;
     readonly subnet: pulumi.Output<string>;
+    readonly type: pulumi.Output<string>;
 }
 export interface CniLoopbackPluginConfigurationInputs {
     readonly cniVersion: pulumi.Input<string>;

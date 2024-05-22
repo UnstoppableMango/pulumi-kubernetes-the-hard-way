@@ -66,9 +66,17 @@ export namespace config {
          */
         isGateway: boolean;
         /**
+         * Plugin name.
+         */
+        name: string;
+        /**
          * The subnet to use.
          */
         subnet: string;
+        /**
+         * Plugin type.
+         */
+        type: string;
     }
 
     /**

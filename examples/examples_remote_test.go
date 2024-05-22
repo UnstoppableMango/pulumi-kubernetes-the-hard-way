@@ -17,6 +17,8 @@ func TestCniPluginsTs(t *testing.T) {
 			assert.NotEmpty(t, res.Outputs)
 
 			expectOutput(t, res, "result", map[string]interface{}{
+				"name":       "bridge",
+				"type":       "bridge",
 				"bridge":     "cni0",
 				"cniVersion": "1.0.0",
 				"isGateway":  true,
@@ -33,16 +35,17 @@ func TestCniPluginsTs(t *testing.T) {
 				},
 			})
 
-			assert.Contains(t, res.Outputs, "result")
 			assert.Contains(t, res.Outputs, "yaml")
 		})
 		Validate(ctx, "kubernetes-the-hard-way:config:CniLoopbackPluginConfiguration", "simple", func(t *testing.T, res apitype.ResourceV3) {
 			assert.NotEmpty(t, res.Outputs)
 
-			// expectOutput(t, res, "name", "lo")
-			// expectOutput(t, res, "type", "loopback")
-			// expectOutput(t, res, "cniVersion", "1.1.0")
-			assert.Contains(t, res.Outputs, "result")
+			expectOutput(t, res, "result", map[string]interface{}{
+				"name":       "lo",
+				"type":       "loopback",
+				"cniVersion": "1.1.0",
+			})
+
 			assert.Contains(t, res.Outputs, "yaml")
 		})
 	})
