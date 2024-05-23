@@ -263,7 +263,7 @@ export interface ContainerdInstallArgs {
     readonly version?: pulumi.Input<string>;
 }
 export abstract class ContainerdService<TData = any> extends (pulumi.ComponentResource)<TData> {
-    public configuration!: ContainerdConfigurationPropsOutputs | pulumi.Output<ContainerdConfigurationPropsOutputs>;
+    public configuration!: ContainerdConfigurationOutputs | pulumi.Output<ContainerdConfigurationOutputs>;
     public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
     public containerdPath?: string | pulumi.Output<string>;
     public description?: string | pulumi.Output<string>;
@@ -278,7 +278,7 @@ export abstract class ContainerdService<TData = any> extends (pulumi.ComponentRe
     }
 }
 export interface ContainerdServiceArgs {
-    readonly configuration: pulumi.Input<ContainerdConfigurationPropsInputs>;
+    readonly configuration: pulumi.Input<ContainerdConfigurationInputs>;
     readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
     readonly containerdPath?: pulumi.Input<string>;
     readonly description?: pulumi.Input<string>;
