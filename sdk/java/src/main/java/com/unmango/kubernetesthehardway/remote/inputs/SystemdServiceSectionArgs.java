@@ -5,9 +5,12 @@ package com.unmango.kubernetesthehardway.remote.inputs;
 
 import com.pulumi.core.Output;
 import com.pulumi.core.annotations.Import;
+import com.unmango.kubernetesthehardway.remote.enums.SystemdKillMode;
 import com.unmango.kubernetesthehardway.remote.enums.SystemdServiceExitType;
 import com.unmango.kubernetesthehardway.remote.enums.SystemdServiceRestart;
 import com.unmango.kubernetesthehardway.remote.enums.SystemdServiceType;
+import com.unmango.kubernetesthehardway.remote.inputs.SystemDelegate;
+import java.lang.Integer;
 import java.lang.String;
 import java.util.Objects;
 import java.util.Optional;
@@ -21,6 +24,21 @@ import javax.annotation.Nullable;
 public final class SystemdServiceSectionArgs extends com.pulumi.resources.ResourceArgs {
 
     public static final SystemdServiceSectionArgs Empty = new SystemdServiceSectionArgs();
+
+    /**
+     * Turns on delegation of further resource control partitioning to processes of the unit.
+     * 
+     */
+    @Import(name="delegate")
+    private @Nullable Output<SystemDelegate> delegate;
+
+    /**
+     * @return Turns on delegation of further resource control partitioning to processes of the unit.
+     * 
+     */
+    public Optional<Output<SystemDelegate>> delegate() {
+        return Optional.ofNullable(this.delegate);
+    }
 
     /**
      * Commands that are executed when this service is started.
@@ -38,6 +56,21 @@ public final class SystemdServiceSectionArgs extends com.pulumi.resources.Resour
     }
 
     /**
+     * Additional commands that are executed before the command in ExecStart=.
+     * 
+     */
+    @Import(name="execStartPre")
+    private @Nullable Output<String> execStartPre;
+
+    /**
+     * @return Additional commands that are executed before the command in ExecStart=.
+     * 
+     */
+    public Optional<Output<String>> execStartPre() {
+        return Optional.ofNullable(this.execStartPre);
+    }
+
+    /**
      * Specifies when the manager should consider the service to be finished.
      * 
      */
@@ -50,6 +83,81 @@ public final class SystemdServiceSectionArgs extends com.pulumi.resources.Resour
      */
     public Optional<Output<SystemdServiceExitType>> exitType() {
         return Optional.ofNullable(this.exitType);
+    }
+
+    /**
+     * Specifies how processes of this unit shall be killed.
+     * 
+     */
+    @Import(name="killMode")
+    private @Nullable Output<SystemdKillMode> killMode;
+
+    /**
+     * @return Specifies how processes of this unit shall be killed.
+     * 
+     */
+    public Optional<Output<SystemdKillMode>> killMode() {
+        return Optional.ofNullable(this.killMode);
+    }
+
+    /**
+     * https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#Process%20Properties
+     * 
+     */
+    @Import(name="limitCore")
+    private @Nullable Output<String> limitCore;
+
+    /**
+     * @return https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#Process%20Properties
+     * 
+     */
+    public Optional<Output<String>> limitCore() {
+        return Optional.ofNullable(this.limitCore);
+    }
+
+    /**
+     * https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#Process%20Properties
+     * 
+     */
+    @Import(name="limitNProc")
+    private @Nullable Output<String> limitNProc;
+
+    /**
+     * @return https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#Process%20Properties
+     * 
+     */
+    public Optional<Output<String>> limitNProc() {
+        return Optional.ofNullable(this.limitNProc);
+    }
+
+    /**
+     * https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#Process%20Properties
+     * 
+     */
+    @Import(name="limitNoFile")
+    private @Nullable Output<Integer> limitNoFile;
+
+    /**
+     * @return https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#Process%20Properties
+     * 
+     */
+    public Optional<Output<Integer>> limitNoFile() {
+        return Optional.ofNullable(this.limitNoFile);
+    }
+
+    /**
+     * https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#OOMScoreAdjust=
+     * 
+     */
+    @Import(name="oomScoreAdjust")
+    private @Nullable Output<Integer> oomScoreAdjust;
+
+    /**
+     * @return https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#OOMScoreAdjust=
+     * 
+     */
+    public Optional<Output<Integer>> oomScoreAdjust() {
+        return Optional.ofNullable(this.oomScoreAdjust);
     }
 
     /**
@@ -100,8 +208,15 @@ public final class SystemdServiceSectionArgs extends com.pulumi.resources.Resour
     private SystemdServiceSectionArgs() {}
 
     private SystemdServiceSectionArgs(SystemdServiceSectionArgs $) {
+        this.delegate = $.delegate;
         this.execStart = $.execStart;
+        this.execStartPre = $.execStartPre;
         this.exitType = $.exitType;
+        this.killMode = $.killMode;
+        this.limitCore = $.limitCore;
+        this.limitNProc = $.limitNProc;
+        this.limitNoFile = $.limitNoFile;
+        this.oomScoreAdjust = $.oomScoreAdjust;
         this.restart = $.restart;
         this.restartSec = $.restartSec;
         this.type = $.type;
@@ -126,6 +241,27 @@ public final class SystemdServiceSectionArgs extends com.pulumi.resources.Resour
         }
 
         /**
+         * @param delegate Turns on delegation of further resource control partitioning to processes of the unit.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder delegate(@Nullable Output<SystemDelegate> delegate) {
+            $.delegate = delegate;
+            return this;
+        }
+
+        /**
+         * @param delegate Turns on delegation of further resource control partitioning to processes of the unit.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder delegate(SystemDelegate delegate) {
+            return delegate(Output.of(delegate));
+        }
+
+        /**
          * @param execStart Commands that are executed when this service is started.
          * 
          * @return builder
@@ -147,6 +283,27 @@ public final class SystemdServiceSectionArgs extends com.pulumi.resources.Resour
         }
 
         /**
+         * @param execStartPre Additional commands that are executed before the command in ExecStart=.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder execStartPre(@Nullable Output<String> execStartPre) {
+            $.execStartPre = execStartPre;
+            return this;
+        }
+
+        /**
+         * @param execStartPre Additional commands that are executed before the command in ExecStart=.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder execStartPre(String execStartPre) {
+            return execStartPre(Output.of(execStartPre));
+        }
+
+        /**
          * @param exitType Specifies when the manager should consider the service to be finished.
          * 
          * @return builder
@@ -165,6 +322,111 @@ public final class SystemdServiceSectionArgs extends com.pulumi.resources.Resour
          */
         public Builder exitType(SystemdServiceExitType exitType) {
             return exitType(Output.of(exitType));
+        }
+
+        /**
+         * @param killMode Specifies how processes of this unit shall be killed.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder killMode(@Nullable Output<SystemdKillMode> killMode) {
+            $.killMode = killMode;
+            return this;
+        }
+
+        /**
+         * @param killMode Specifies how processes of this unit shall be killed.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder killMode(SystemdKillMode killMode) {
+            return killMode(Output.of(killMode));
+        }
+
+        /**
+         * @param limitCore https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#Process%20Properties
+         * 
+         * @return builder
+         * 
+         */
+        public Builder limitCore(@Nullable Output<String> limitCore) {
+            $.limitCore = limitCore;
+            return this;
+        }
+
+        /**
+         * @param limitCore https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#Process%20Properties
+         * 
+         * @return builder
+         * 
+         */
+        public Builder limitCore(String limitCore) {
+            return limitCore(Output.of(limitCore));
+        }
+
+        /**
+         * @param limitNProc https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#Process%20Properties
+         * 
+         * @return builder
+         * 
+         */
+        public Builder limitNProc(@Nullable Output<String> limitNProc) {
+            $.limitNProc = limitNProc;
+            return this;
+        }
+
+        /**
+         * @param limitNProc https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#Process%20Properties
+         * 
+         * @return builder
+         * 
+         */
+        public Builder limitNProc(String limitNProc) {
+            return limitNProc(Output.of(limitNProc));
+        }
+
+        /**
+         * @param limitNoFile https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#Process%20Properties
+         * 
+         * @return builder
+         * 
+         */
+        public Builder limitNoFile(@Nullable Output<Integer> limitNoFile) {
+            $.limitNoFile = limitNoFile;
+            return this;
+        }
+
+        /**
+         * @param limitNoFile https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#Process%20Properties
+         * 
+         * @return builder
+         * 
+         */
+        public Builder limitNoFile(Integer limitNoFile) {
+            return limitNoFile(Output.of(limitNoFile));
+        }
+
+        /**
+         * @param oomScoreAdjust https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#OOMScoreAdjust=
+         * 
+         * @return builder
+         * 
+         */
+        public Builder oomScoreAdjust(@Nullable Output<Integer> oomScoreAdjust) {
+            $.oomScoreAdjust = oomScoreAdjust;
+            return this;
+        }
+
+        /**
+         * @param oomScoreAdjust https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#OOMScoreAdjust=
+         * 
+         * @return builder
+         * 
+         */
+        public Builder oomScoreAdjust(Integer oomScoreAdjust) {
+            return oomScoreAdjust(Output.of(oomScoreAdjust));
         }
 
         /**

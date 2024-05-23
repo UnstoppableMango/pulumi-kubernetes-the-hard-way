@@ -12,6 +12,38 @@ export const Architecture = {
  */
 export type Architecture = (typeof Architecture)[keyof typeof Architecture];
 
+export const SystemdDelegate = {
+    Yes: "yes",
+    No: "no",
+    Cpu: "cpu",
+    Cpuacct: "cpuacct",
+    Cpuset: "cpuset",
+    Io: "io",
+    Blkio: "blkio",
+    Memory: "memory",
+    Devices: "devices",
+    Pids: "pids",
+    Bpf_firewall: "bpf-firewall",
+    Bpf_devices: "bpf-devices",
+} as const;
+
+/**
+ * https://www.man7.org/linux/man-pages/man5/systemd.resource-control.5.html
+ */
+export type SystemdDelegate = (typeof SystemdDelegate)[keyof typeof SystemdDelegate];
+
+export const SystemdKillMode = {
+    Control_group: "control-group",
+    Mixed: "mixed",
+    Process: "process",
+    None: "none",
+} as const;
+
+/**
+ * https://www.freedesktop.org/software/systemd/man/latest/systemd.kill.html#Description
+ */
+export type SystemdKillMode = (typeof SystemdKillMode)[keyof typeof SystemdKillMode];
+
 export const SystemdServiceExitType = {
     Main: "main",
     Cgroup: "cgroup",

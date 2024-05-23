@@ -1564,26 +1564,44 @@ export interface KubeletConfigurationPropsOutputs {
     readonly registerNode: pulumi.Output<boolean>;
     readonly v: pulumi.Output<number>;
 }
+export type SystemdDelegateInputs = "yes" | "no" | "cpu" | "cpuacct" | "cpuset" | "io" | "blkio" | "memory" | "devices" | "pids" | "bpf-firewall" | "bpf-devices";
+export type SystemdDelegateOutputs = "yes" | "no" | "cpu" | "cpuacct" | "cpuset" | "io" | "blkio" | "memory" | "devices" | "pids" | "bpf-firewall" | "bpf-devices";
 export interface SystemdInstallSectionInputs {
     readonly wantedBy?: pulumi.Input<pulumi.Input<string>[]>;
 }
 export interface SystemdInstallSectionOutputs {
     readonly wantedBy?: pulumi.Output<string[]>;
 }
+export type SystemdKillModeInputs = "control-group" | "mixed" | "process" | "none";
+export type SystemdKillModeOutputs = "control-group" | "mixed" | "process" | "none";
 export type SystemdServiceExitTypeInputs = "main" | "cgroup";
 export type SystemdServiceExitTypeOutputs = "main" | "cgroup";
 export type SystemdServiceRestartInputs = "no" | "on-success" | "on-failure" | "on-abnormal" | "on-watchdog" | "on-abort" | "always";
 export type SystemdServiceRestartOutputs = "no" | "on-success" | "on-failure" | "on-abnormal" | "on-watchdog" | "on-abort" | "always";
 export interface SystemdServiceSectionInputs {
+    readonly delegate?: pulumi.Input<SystemDelegateInputs>;
     readonly execStart?: pulumi.Input<string>;
+    readonly execStartPre?: pulumi.Input<string>;
     readonly exitType?: pulumi.Input<SystemdServiceExitTypeInputs>;
+    readonly killMode?: pulumi.Input<SystemdKillModeInputs>;
+    readonly limitCore?: pulumi.Input<string>;
+    readonly limitNProc?: pulumi.Input<string>;
+    readonly limitNoFile?: pulumi.Input<number>;
+    readonly oomScoreAdjust?: pulumi.Input<number>;
     readonly restart?: pulumi.Input<SystemdServiceRestartInputs>;
     readonly restartSec?: pulumi.Input<string>;
     readonly type?: pulumi.Input<SystemdServiceTypeInputs>;
 }
 export interface SystemdServiceSectionOutputs {
+    readonly delegate?: pulumi.Output<SystemDelegateOutputs>;
     readonly execStart?: pulumi.Output<string>;
+    readonly execStartPre?: pulumi.Output<string>;
     readonly exitType?: pulumi.Output<SystemdServiceExitTypeOutputs>;
+    readonly killMode?: pulumi.Output<SystemdKillModeOutputs>;
+    readonly limitCore?: pulumi.Output<string>;
+    readonly limitNProc?: pulumi.Output<string>;
+    readonly limitNoFile?: pulumi.Output<number>;
+    readonly oomScoreAdjust?: pulumi.Output<number>;
     readonly restart?: pulumi.Output<SystemdServiceRestartOutputs>;
     readonly restartSec?: pulumi.Output<string>;
     readonly type?: pulumi.Output<SystemdServiceTypeOutputs>;

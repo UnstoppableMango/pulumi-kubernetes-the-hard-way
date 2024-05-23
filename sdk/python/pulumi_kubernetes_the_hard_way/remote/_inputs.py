@@ -336,29 +336,69 @@ class SystemdInstallSectionArgs:
 @pulumi.input_type
 class SystemdServiceSectionArgs:
     def __init__(__self__, *,
+                 delegate: Optional[Any] = None,
                  exec_start: Optional[pulumi.Input[str]] = None,
+                 exec_start_pre: Optional[pulumi.Input[str]] = None,
                  exit_type: Optional[pulumi.Input['SystemdServiceExitType']] = None,
+                 kill_mode: Optional[pulumi.Input['SystemdKillMode']] = None,
+                 limit_core: Optional[pulumi.Input[str]] = None,
+                 limit_n_proc: Optional[pulumi.Input[str]] = None,
+                 limit_no_file: Optional[pulumi.Input[int]] = None,
+                 oom_score_adjust: Optional[pulumi.Input[int]] = None,
                  restart: Optional[pulumi.Input['SystemdServiceRestart']] = None,
                  restart_sec: Optional[pulumi.Input[str]] = None,
                  type: Optional[pulumi.Input['SystemdServiceType']] = None):
         """
         https://www.freedesktop.org/software/systemd/man/latest/systemd.service.html#
+        :param Any delegate: Turns on delegation of further resource control partitioning to processes of the unit.
         :param pulumi.Input[str] exec_start: Commands that are executed when this service is started.
+        :param pulumi.Input[str] exec_start_pre: Additional commands that are executed before the command in ExecStart=.
         :param pulumi.Input['SystemdServiceExitType'] exit_type: Specifies when the manager should consider the service to be finished.
+        :param pulumi.Input['SystemdKillMode'] kill_mode: Specifies how processes of this unit shall be killed.
+        :param pulumi.Input[str] limit_core: https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#Process%20Properties
+        :param pulumi.Input[str] limit_n_proc: https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#Process%20Properties
+        :param pulumi.Input[int] limit_no_file: https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#Process%20Properties
+        :param pulumi.Input[int] oom_score_adjust: https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#OOMScoreAdjust=
         :param pulumi.Input['SystemdServiceRestart'] restart: Configures whether the service shall be restarted when the service process exits, is killed, or a timeout is reached.
         :param pulumi.Input[str] restart_sec: Configures the time to sleep before restarting a service (as configured with Restart=).
         :param pulumi.Input['SystemdServiceType'] type: Configures the mechanism via which the service notifies the manager that the service start-up has finished.
         """
+        if delegate is not None:
+            pulumi.set(__self__, "delegate", delegate)
         if exec_start is not None:
             pulumi.set(__self__, "exec_start", exec_start)
+        if exec_start_pre is not None:
+            pulumi.set(__self__, "exec_start_pre", exec_start_pre)
         if exit_type is not None:
             pulumi.set(__self__, "exit_type", exit_type)
+        if kill_mode is not None:
+            pulumi.set(__self__, "kill_mode", kill_mode)
+        if limit_core is not None:
+            pulumi.set(__self__, "limit_core", limit_core)
+        if limit_n_proc is not None:
+            pulumi.set(__self__, "limit_n_proc", limit_n_proc)
+        if limit_no_file is not None:
+            pulumi.set(__self__, "limit_no_file", limit_no_file)
+        if oom_score_adjust is not None:
+            pulumi.set(__self__, "oom_score_adjust", oom_score_adjust)
         if restart is not None:
             pulumi.set(__self__, "restart", restart)
         if restart_sec is not None:
             pulumi.set(__self__, "restart_sec", restart_sec)
         if type is not None:
             pulumi.set(__self__, "type", type)
+
+    @property
+    @pulumi.getter
+    def delegate(self) -> Optional[Any]:
+        """
+        Turns on delegation of further resource control partitioning to processes of the unit.
+        """
+        return pulumi.get(self, "delegate")
+
+    @delegate.setter
+    def delegate(self, value: Optional[Any]):
+        pulumi.set(self, "delegate", value)
 
     @property
     @pulumi.getter(name="execStart")
@@ -373,6 +413,18 @@ class SystemdServiceSectionArgs:
         pulumi.set(self, "exec_start", value)
 
     @property
+    @pulumi.getter(name="execStartPre")
+    def exec_start_pre(self) -> Optional[pulumi.Input[str]]:
+        """
+        Additional commands that are executed before the command in ExecStart=.
+        """
+        return pulumi.get(self, "exec_start_pre")
+
+    @exec_start_pre.setter
+    def exec_start_pre(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "exec_start_pre", value)
+
+    @property
     @pulumi.getter(name="exitType")
     def exit_type(self) -> Optional[pulumi.Input['SystemdServiceExitType']]:
         """
@@ -383,6 +435,66 @@ class SystemdServiceSectionArgs:
     @exit_type.setter
     def exit_type(self, value: Optional[pulumi.Input['SystemdServiceExitType']]):
         pulumi.set(self, "exit_type", value)
+
+    @property
+    @pulumi.getter(name="killMode")
+    def kill_mode(self) -> Optional[pulumi.Input['SystemdKillMode']]:
+        """
+        Specifies how processes of this unit shall be killed.
+        """
+        return pulumi.get(self, "kill_mode")
+
+    @kill_mode.setter
+    def kill_mode(self, value: Optional[pulumi.Input['SystemdKillMode']]):
+        pulumi.set(self, "kill_mode", value)
+
+    @property
+    @pulumi.getter(name="limitCore")
+    def limit_core(self) -> Optional[pulumi.Input[str]]:
+        """
+        https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#Process%20Properties
+        """
+        return pulumi.get(self, "limit_core")
+
+    @limit_core.setter
+    def limit_core(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "limit_core", value)
+
+    @property
+    @pulumi.getter(name="limitNProc")
+    def limit_n_proc(self) -> Optional[pulumi.Input[str]]:
+        """
+        https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#Process%20Properties
+        """
+        return pulumi.get(self, "limit_n_proc")
+
+    @limit_n_proc.setter
+    def limit_n_proc(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "limit_n_proc", value)
+
+    @property
+    @pulumi.getter(name="limitNoFile")
+    def limit_no_file(self) -> Optional[pulumi.Input[int]]:
+        """
+        https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#Process%20Properties
+        """
+        return pulumi.get(self, "limit_no_file")
+
+    @limit_no_file.setter
+    def limit_no_file(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "limit_no_file", value)
+
+    @property
+    @pulumi.getter(name="oomScoreAdjust")
+    def oom_score_adjust(self) -> Optional[pulumi.Input[int]]:
+        """
+        https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#OOMScoreAdjust=
+        """
+        return pulumi.get(self, "oom_score_adjust")
+
+    @oom_score_adjust.setter
+    def oom_score_adjust(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "oom_score_adjust", value)
 
     @property
     @pulumi.getter

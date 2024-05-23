@@ -17,16 +17,58 @@ namespace UnMango.KubernetesTheHardWay.Remote.Inputs
     public sealed class SystemdServiceSectionArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
+        /// Turns on delegation of further resource control partitioning to processes of the unit.
+        /// </summary>
+        [Input("delegate")]
+        public Input<UnMango.KubernetesTheHardWay.Remote.Inputs.SystemDelegate>? Delegate { get; set; }
+
+        /// <summary>
         /// Commands that are executed when this service is started.
         /// </summary>
         [Input("execStart")]
         public Input<string>? ExecStart { get; set; }
 
         /// <summary>
+        /// Additional commands that are executed before the command in ExecStart=.
+        /// </summary>
+        [Input("execStartPre")]
+        public Input<string>? ExecStartPre { get; set; }
+
+        /// <summary>
         /// Specifies when the manager should consider the service to be finished.
         /// </summary>
         [Input("exitType")]
         public Input<UnMango.KubernetesTheHardWay.Remote.SystemdServiceExitType>? ExitType { get; set; }
+
+        /// <summary>
+        /// Specifies how processes of this unit shall be killed.
+        /// </summary>
+        [Input("killMode")]
+        public Input<UnMango.KubernetesTheHardWay.Remote.SystemdKillMode>? KillMode { get; set; }
+
+        /// <summary>
+        /// https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#Process%20Properties
+        /// </summary>
+        [Input("limitCore")]
+        public Input<string>? LimitCore { get; set; }
+
+        /// <summary>
+        /// https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#Process%20Properties
+        /// </summary>
+        [Input("limitNProc")]
+        public Input<string>? LimitNProc { get; set; }
+
+        /// <summary>
+        /// https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#Process%20Properties
+        /// </summary>
+        [Input("limitNoFile")]
+        public Input<int>? LimitNoFile { get; set; }
+
+        /// <summary>
+        /// https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#OOMScoreAdjust=
+        /// </summary>
+        [Input("oomScoreAdjust")]
+        public Input<int>? OomScoreAdjust { get; set; }
 
         /// <summary>
         /// Configures whether the service shall be restarted when the service process exits, is killed, or a timeout is reached.

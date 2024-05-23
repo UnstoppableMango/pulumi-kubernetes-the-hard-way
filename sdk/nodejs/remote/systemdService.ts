@@ -9,7 +9,7 @@ import * as utilities from "../utilities";
 
 import * as pulumiCommand from "@pulumi/command";
 
-import {File} from "./index";
+import {File, SystemDelegate} from "./index";
 
 /**
  * A systemd service on a remote system.

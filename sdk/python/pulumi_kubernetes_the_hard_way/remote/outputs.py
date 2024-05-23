@@ -389,8 +389,20 @@ class SystemdServiceSection(dict):
         suggest = None
         if key == "execStart":
             suggest = "exec_start"
+        elif key == "execStartPre":
+            suggest = "exec_start_pre"
         elif key == "exitType":
             suggest = "exit_type"
+        elif key == "killMode":
+            suggest = "kill_mode"
+        elif key == "limitCore":
+            suggest = "limit_core"
+        elif key == "limitNProc":
+            suggest = "limit_n_proc"
+        elif key == "limitNoFile":
+            suggest = "limit_no_file"
+        elif key == "oomScoreAdjust":
+            suggest = "oom_score_adjust"
         elif key == "restartSec":
             suggest = "restart_sec"
 
@@ -406,29 +418,65 @@ class SystemdServiceSection(dict):
         return super().get(key, default)
 
     def __init__(__self__, *,
+                 delegate: Optional[Any] = None,
                  exec_start: Optional[str] = None,
+                 exec_start_pre: Optional[str] = None,
                  exit_type: Optional['SystemdServiceExitType'] = None,
+                 kill_mode: Optional['SystemdKillMode'] = None,
+                 limit_core: Optional[str] = None,
+                 limit_n_proc: Optional[str] = None,
+                 limit_no_file: Optional[int] = None,
+                 oom_score_adjust: Optional[int] = None,
                  restart: Optional['SystemdServiceRestart'] = None,
                  restart_sec: Optional[str] = None,
                  type: Optional['SystemdServiceType'] = None):
         """
         https://www.freedesktop.org/software/systemd/man/latest/systemd.service.html#
+        :param Any delegate: Turns on delegation of further resource control partitioning to processes of the unit.
         :param str exec_start: Commands that are executed when this service is started.
+        :param str exec_start_pre: Additional commands that are executed before the command in ExecStart=.
         :param 'SystemdServiceExitType' exit_type: Specifies when the manager should consider the service to be finished.
+        :param 'SystemdKillMode' kill_mode: Specifies how processes of this unit shall be killed.
+        :param str limit_core: https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#Process%20Properties
+        :param str limit_n_proc: https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#Process%20Properties
+        :param int limit_no_file: https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#Process%20Properties
+        :param int oom_score_adjust: https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#OOMScoreAdjust=
         :param 'SystemdServiceRestart' restart: Configures whether the service shall be restarted when the service process exits, is killed, or a timeout is reached.
         :param str restart_sec: Configures the time to sleep before restarting a service (as configured with Restart=).
         :param 'SystemdServiceType' type: Configures the mechanism via which the service notifies the manager that the service start-up has finished.
         """
+        if delegate is not None:
+            pulumi.set(__self__, "delegate", delegate)
         if exec_start is not None:
             pulumi.set(__self__, "exec_start", exec_start)
+        if exec_start_pre is not None:
+            pulumi.set(__self__, "exec_start_pre", exec_start_pre)
         if exit_type is not None:
             pulumi.set(__self__, "exit_type", exit_type)
+        if kill_mode is not None:
+            pulumi.set(__self__, "kill_mode", kill_mode)
+        if limit_core is not None:
+            pulumi.set(__self__, "limit_core", limit_core)
+        if limit_n_proc is not None:
+            pulumi.set(__self__, "limit_n_proc", limit_n_proc)
+        if limit_no_file is not None:
+            pulumi.set(__self__, "limit_no_file", limit_no_file)
+        if oom_score_adjust is not None:
+            pulumi.set(__self__, "oom_score_adjust", oom_score_adjust)
         if restart is not None:
             pulumi.set(__self__, "restart", restart)
         if restart_sec is not None:
             pulumi.set(__self__, "restart_sec", restart_sec)
         if type is not None:
             pulumi.set(__self__, "type", type)
+
+    @property
+    @pulumi.getter
+    def delegate(self) -> Optional[Any]:
+        """
+        Turns on delegation of further resource control partitioning to processes of the unit.
+        """
+        return pulumi.get(self, "delegate")
 
     @property
     @pulumi.getter(name="execStart")
@@ -439,12 +487,60 @@ class SystemdServiceSection(dict):
         return pulumi.get(self, "exec_start")
 
     @property
+    @pulumi.getter(name="execStartPre")
+    def exec_start_pre(self) -> Optional[str]:
+        """
+        Additional commands that are executed before the command in ExecStart=.
+        """
+        return pulumi.get(self, "exec_start_pre")
+
+    @property
     @pulumi.getter(name="exitType")
     def exit_type(self) -> Optional['SystemdServiceExitType']:
         """
         Specifies when the manager should consider the service to be finished.
         """
         return pulumi.get(self, "exit_type")
+
+    @property
+    @pulumi.getter(name="killMode")
+    def kill_mode(self) -> Optional['SystemdKillMode']:
+        """
+        Specifies how processes of this unit shall be killed.
+        """
+        return pulumi.get(self, "kill_mode")
+
+    @property
+    @pulumi.getter(name="limitCore")
+    def limit_core(self) -> Optional[str]:
+        """
+        https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#Process%20Properties
+        """
+        return pulumi.get(self, "limit_core")
+
+    @property
+    @pulumi.getter(name="limitNProc")
+    def limit_n_proc(self) -> Optional[str]:
+        """
+        https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#Process%20Properties
+        """
+        return pulumi.get(self, "limit_n_proc")
+
+    @property
+    @pulumi.getter(name="limitNoFile")
+    def limit_no_file(self) -> Optional[int]:
+        """
+        https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#Process%20Properties
+        """
+        return pulumi.get(self, "limit_no_file")
+
+    @property
+    @pulumi.getter(name="oomScoreAdjust")
+    def oom_score_adjust(self) -> Optional[int]:
+        """
+        https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#OOMScoreAdjust=
+        """
+        return pulumi.get(self, "oom_score_adjust")
 
     @property
     @pulumi.getter

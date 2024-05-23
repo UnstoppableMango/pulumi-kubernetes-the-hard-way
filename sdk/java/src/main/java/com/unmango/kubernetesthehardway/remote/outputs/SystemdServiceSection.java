@@ -4,9 +4,12 @@
 package com.unmango.kubernetesthehardway.remote.outputs;
 
 import com.pulumi.core.annotations.CustomType;
+import com.unmango.kubernetesthehardway.remote.enums.SystemdKillMode;
 import com.unmango.kubernetesthehardway.remote.enums.SystemdServiceExitType;
 import com.unmango.kubernetesthehardway.remote.enums.SystemdServiceRestart;
 import com.unmango.kubernetesthehardway.remote.enums.SystemdServiceType;
+import com.unmango.kubernetesthehardway.remote.outputs.SystemDelegate;
+import java.lang.Integer;
 import java.lang.String;
 import java.util.Objects;
 import java.util.Optional;
@@ -15,15 +18,50 @@ import javax.annotation.Nullable;
 @CustomType
 public final class SystemdServiceSection {
     /**
+     * @return Turns on delegation of further resource control partitioning to processes of the unit.
+     * 
+     */
+    private @Nullable SystemDelegate delegate;
+    /**
      * @return Commands that are executed when this service is started.
      * 
      */
     private @Nullable String execStart;
     /**
+     * @return Additional commands that are executed before the command in ExecStart=.
+     * 
+     */
+    private @Nullable String execStartPre;
+    /**
      * @return Specifies when the manager should consider the service to be finished.
      * 
      */
     private @Nullable SystemdServiceExitType exitType;
+    /**
+     * @return Specifies how processes of this unit shall be killed.
+     * 
+     */
+    private @Nullable SystemdKillMode killMode;
+    /**
+     * @return https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#Process%20Properties
+     * 
+     */
+    private @Nullable String limitCore;
+    /**
+     * @return https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#Process%20Properties
+     * 
+     */
+    private @Nullable String limitNProc;
+    /**
+     * @return https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#Process%20Properties
+     * 
+     */
+    private @Nullable Integer limitNoFile;
+    /**
+     * @return https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#OOMScoreAdjust=
+     * 
+     */
+    private @Nullable Integer oomScoreAdjust;
     /**
      * @return Configures whether the service shall be restarted when the service process exits, is killed, or a timeout is reached.
      * 
@@ -42,6 +80,13 @@ public final class SystemdServiceSection {
 
     private SystemdServiceSection() {}
     /**
+     * @return Turns on delegation of further resource control partitioning to processes of the unit.
+     * 
+     */
+    public Optional<SystemDelegate> delegate() {
+        return Optional.ofNullable(this.delegate);
+    }
+    /**
      * @return Commands that are executed when this service is started.
      * 
      */
@@ -49,11 +94,53 @@ public final class SystemdServiceSection {
         return Optional.ofNullable(this.execStart);
     }
     /**
+     * @return Additional commands that are executed before the command in ExecStart=.
+     * 
+     */
+    public Optional<String> execStartPre() {
+        return Optional.ofNullable(this.execStartPre);
+    }
+    /**
      * @return Specifies when the manager should consider the service to be finished.
      * 
      */
     public Optional<SystemdServiceExitType> exitType() {
         return Optional.ofNullable(this.exitType);
+    }
+    /**
+     * @return Specifies how processes of this unit shall be killed.
+     * 
+     */
+    public Optional<SystemdKillMode> killMode() {
+        return Optional.ofNullable(this.killMode);
+    }
+    /**
+     * @return https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#Process%20Properties
+     * 
+     */
+    public Optional<String> limitCore() {
+        return Optional.ofNullable(this.limitCore);
+    }
+    /**
+     * @return https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#Process%20Properties
+     * 
+     */
+    public Optional<String> limitNProc() {
+        return Optional.ofNullable(this.limitNProc);
+    }
+    /**
+     * @return https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#Process%20Properties
+     * 
+     */
+    public Optional<Integer> limitNoFile() {
+        return Optional.ofNullable(this.limitNoFile);
+    }
+    /**
+     * @return https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#OOMScoreAdjust=
+     * 
+     */
+    public Optional<Integer> oomScoreAdjust() {
+        return Optional.ofNullable(this.oomScoreAdjust);
     }
     /**
      * @return Configures whether the service shall be restarted when the service process exits, is killed, or a timeout is reached.
@@ -86,21 +173,41 @@ public final class SystemdServiceSection {
     }
     @CustomType.Builder
     public static final class Builder {
+        private @Nullable SystemDelegate delegate;
         private @Nullable String execStart;
+        private @Nullable String execStartPre;
         private @Nullable SystemdServiceExitType exitType;
+        private @Nullable SystemdKillMode killMode;
+        private @Nullable String limitCore;
+        private @Nullable String limitNProc;
+        private @Nullable Integer limitNoFile;
+        private @Nullable Integer oomScoreAdjust;
         private @Nullable SystemdServiceRestart restart;
         private @Nullable String restartSec;
         private @Nullable SystemdServiceType type;
         public Builder() {}
         public Builder(SystemdServiceSection defaults) {
     	      Objects.requireNonNull(defaults);
+    	      this.delegate = defaults.delegate;
     	      this.execStart = defaults.execStart;
+    	      this.execStartPre = defaults.execStartPre;
     	      this.exitType = defaults.exitType;
+    	      this.killMode = defaults.killMode;
+    	      this.limitCore = defaults.limitCore;
+    	      this.limitNProc = defaults.limitNProc;
+    	      this.limitNoFile = defaults.limitNoFile;
+    	      this.oomScoreAdjust = defaults.oomScoreAdjust;
     	      this.restart = defaults.restart;
     	      this.restartSec = defaults.restartSec;
     	      this.type = defaults.type;
         }
 
+        @CustomType.Setter
+        public Builder delegate(@Nullable SystemDelegate delegate) {
+
+            this.delegate = delegate;
+            return this;
+        }
         @CustomType.Setter
         public Builder execStart(@Nullable String execStart) {
 
@@ -108,9 +215,45 @@ public final class SystemdServiceSection {
             return this;
         }
         @CustomType.Setter
+        public Builder execStartPre(@Nullable String execStartPre) {
+
+            this.execStartPre = execStartPre;
+            return this;
+        }
+        @CustomType.Setter
         public Builder exitType(@Nullable SystemdServiceExitType exitType) {
 
             this.exitType = exitType;
+            return this;
+        }
+        @CustomType.Setter
+        public Builder killMode(@Nullable SystemdKillMode killMode) {
+
+            this.killMode = killMode;
+            return this;
+        }
+        @CustomType.Setter
+        public Builder limitCore(@Nullable String limitCore) {
+
+            this.limitCore = limitCore;
+            return this;
+        }
+        @CustomType.Setter
+        public Builder limitNProc(@Nullable String limitNProc) {
+
+            this.limitNProc = limitNProc;
+            return this;
+        }
+        @CustomType.Setter
+        public Builder limitNoFile(@Nullable Integer limitNoFile) {
+
+            this.limitNoFile = limitNoFile;
+            return this;
+        }
+        @CustomType.Setter
+        public Builder oomScoreAdjust(@Nullable Integer oomScoreAdjust) {
+
+            this.oomScoreAdjust = oomScoreAdjust;
             return this;
         }
         @CustomType.Setter
@@ -133,8 +276,15 @@ public final class SystemdServiceSection {
         }
         public SystemdServiceSection build() {
             final var _resultValue = new SystemdServiceSection();
+            _resultValue.delegate = delegate;
             _resultValue.execStart = execStart;
+            _resultValue.execStartPre = execStartPre;
             _resultValue.exitType = exitType;
+            _resultValue.killMode = killMode;
+            _resultValue.limitCore = limitCore;
+            _resultValue.limitNProc = limitNProc;
+            _resultValue.limitNoFile = limitNoFile;
+            _resultValue.oomScoreAdjust = oomScoreAdjust;
             _resultValue.restart = restart;
             _resultValue.restartSec = restartSec;
             _resultValue.type = type;
