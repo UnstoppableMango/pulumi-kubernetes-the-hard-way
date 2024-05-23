@@ -8,7 +8,7 @@ import com.pulumi.core.Output;
 import com.pulumi.core.annotations.Import;
 import com.pulumi.exceptions.MissingRequiredPropertyException;
 import com.unmango.kubernetesthehardway.remote.enums.SystemdServiceRestart;
-import com.unmango.kubernetesthehardway.remote.inputs.ContainerdConfigurationProps;
+import com.unmango.kubernetesthehardway.remote.inputs.ContainerdConfiguration;
 import java.lang.String;
 import java.util.Objects;
 import java.util.Optional;
@@ -24,13 +24,13 @@ public final class ContainerdServiceArgs extends com.pulumi.resources.ResourceAr
      * 
      */
     @Import(name="configuration", required=true)
-    private Output<ContainerdConfigurationProps> configuration;
+    private Output<ContainerdConfiguration> configuration;
 
     /**
      * @return Containerd configuration.
      * 
      */
-    public Output<ContainerdConfigurationProps> configuration() {
+    public Output<ContainerdConfiguration> configuration() {
         return this.configuration;
     }
 
@@ -192,7 +192,7 @@ public final class ContainerdServiceArgs extends com.pulumi.resources.ResourceAr
          * @return builder
          * 
          */
-        public Builder configuration(Output<ContainerdConfigurationProps> configuration) {
+        public Builder configuration(Output<ContainerdConfiguration> configuration) {
             $.configuration = configuration;
             return this;
         }
@@ -203,7 +203,7 @@ public final class ContainerdServiceArgs extends com.pulumi.resources.ResourceAr
          * @return builder
          * 
          */
-        public Builder configuration(ContainerdConfigurationProps configuration) {
+        public Builder configuration(ContainerdConfiguration configuration) {
             return configuration(Output.of(configuration));
         }
 

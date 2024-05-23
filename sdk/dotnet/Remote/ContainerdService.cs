@@ -20,7 +20,7 @@ namespace UnMango.KubernetesTheHardWay.Remote
         /// Containerd configuration.
         /// </summary>
         [Output("configuration")]
-        public Output<UnMango.KubernetesTheHardWay.Remote.Outputs.ContainerdConfigurationProps> Configuration { get; private set; } = null!;
+        public Output<UnMango.KubernetesTheHardWay.Remote.Outputs.ContainerdConfiguration> Configuration { get; private set; } = null!;
 
         /// <summary>
         /// The parameters with which to connect to the remote host.
@@ -109,7 +109,7 @@ namespace UnMango.KubernetesTheHardWay.Remote
         /// Containerd configuration.
         /// </summary>
         [Input("configuration", required: true)]
-        public Input<UnMango.KubernetesTheHardWay.Remote.Inputs.ContainerdConfigurationProps> Configuration { get; set; } = null!;
+        public Input<UnMango.KubernetesTheHardWay.Remote.Inputs.ContainerdConfiguration> Configuration { get; set; } = null!;
 
         /// <summary>
         /// The parameters with which to connect to the remote host.

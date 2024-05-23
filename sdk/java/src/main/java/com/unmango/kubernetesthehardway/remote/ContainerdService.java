@@ -12,7 +12,7 @@ import com.unmango.kubernetesthehardway.Utilities;
 import com.unmango.kubernetesthehardway.remote.ContainerdServiceArgs;
 import com.unmango.kubernetesthehardway.remote.SystemdService;
 import com.unmango.kubernetesthehardway.remote.enums.SystemdServiceRestart;
-import com.unmango.kubernetesthehardway.remote.outputs.ContainerdConfigurationProps;
+import com.unmango.kubernetesthehardway.remote.outputs.ContainerdConfiguration;
 import java.lang.String;
 import java.util.Optional;
 import javax.annotation.Nullable;
@@ -27,14 +27,14 @@ public class ContainerdService extends com.pulumi.resources.ComponentResource {
      * Containerd configuration.
      * 
      */
-    @Export(name="configuration", refs={ContainerdConfigurationProps.class}, tree="[0]")
-    private Output<ContainerdConfigurationProps> configuration;
+    @Export(name="configuration", refs={ContainerdConfiguration.class}, tree="[0]")
+    private Output<ContainerdConfiguration> configuration;
 
     /**
      * @return Containerd configuration.
      * 
      */
-    public Output<ContainerdConfigurationProps> configuration() {
+    public Output<ContainerdConfiguration> configuration() {
         return this.configuration;
     }
     /**
