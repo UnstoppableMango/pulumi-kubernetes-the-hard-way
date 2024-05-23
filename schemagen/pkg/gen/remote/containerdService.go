@@ -12,7 +12,7 @@ func generateContainerdService(commandSpec schema.PackageSpec) schema.PackageSpe
 	inputs := map[string]schema.PropertySpec{
 		"configuration": {
 			Description: "Containerd configuration.",
-			TypeSpec:    types.LocalType("ContainerdConfigurationProps", "remote"),
+			TypeSpec:    types.LocalType("ContainerdConfiguration", "remote"),
 		},
 		"connection":     props.Connection(commandSpec),
 		"containerdPath": props.String("Path to the containerd binary"),
