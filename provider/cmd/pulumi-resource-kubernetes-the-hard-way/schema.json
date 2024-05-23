@@ -2698,6 +2698,10 @@
                     "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
                     "description": "The parameters with which to connect to the remote host."
                 },
+                "containerdPath": {
+                    "type": "string",
+                    "description": "Path to the containerd binary"
+                },
                 "description": {
                     "type": "string",
                     "description": "Optional systemd unit description."
@@ -2740,6 +2744,10 @@
                 "connection": {
                     "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
                     "description": "The parameters with which to connect to the remote host."
+                },
+                "containerdPath": {
+                    "type": "string",
+                    "description": "Path to the containerd binary"
                 },
                 "description": {
                     "type": "string",

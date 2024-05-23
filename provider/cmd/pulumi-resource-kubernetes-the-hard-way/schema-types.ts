@@ -265,6 +265,7 @@ export interface ContainerdInstallArgs {
 export abstract class ContainerdService<TData = any> extends (pulumi.ComponentResource)<TData> {
     public configuration!: ContainerdConfigurationPropsOutputs | pulumi.Output<ContainerdConfigurationPropsOutputs>;
     public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
+    public containerdPath?: string | pulumi.Output<string>;
     public description?: string | pulumi.Output<string>;
     public directory?: string | pulumi.Output<string>;
     public documentation?: string | pulumi.Output<string>;
@@ -273,12 +274,13 @@ export abstract class ContainerdService<TData = any> extends (pulumi.ComponentRe
     public service!: SystemdService | pulumi.Output<SystemdService>;
     public wantedBy?: string | pulumi.Output<string>;
     constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
-        super("kubernetes-the-hard-way:remote:ContainerdService", name, opts.urn ? { configuration: undefined, connection: undefined, description: undefined, directory: undefined, documentation: undefined, restart: undefined, restartSec: undefined, service: undefined, wantedBy: undefined } : { name, args, opts }, opts);
+        super("kubernetes-the-hard-way:remote:ContainerdService", name, opts.urn ? { configuration: undefined, connection: undefined, containerdPath: undefined, description: undefined, directory: undefined, documentation: undefined, restart: undefined, restartSec: undefined, service: undefined, wantedBy: undefined } : { name, args, opts }, opts);
     }
 }
 export interface ContainerdServiceArgs {
     readonly configuration: pulumi.Input<ContainerdConfigurationPropsInputs>;
     readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
+    readonly containerdPath?: pulumi.Input<string>;
     readonly description?: pulumi.Input<string>;
     readonly directory?: pulumi.Input<string>;
     readonly documentation?: pulumi.Input<string>;
