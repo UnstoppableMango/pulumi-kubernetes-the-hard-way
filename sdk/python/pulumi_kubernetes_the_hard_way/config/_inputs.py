@@ -14,6 +14,7 @@ import pulumi_kubernetes
 __all__ = [
     'CniBridgeIpam',
     'CniBridgeIpamArgs',
+    'ContainerdConfigurationArgs',
     'ContainerdCriPluginConfiguration',
     'ContainerdCriPluginConfigurationCni',
     'ContainerdCriPluginConfigurationCniArgs',
@@ -142,6 +143,30 @@ class CniBridgeIpamArgs:
     @type.setter
     def type(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "type", value)
+
+
+@pulumi.input_type
+class ContainerdConfigurationArgs:
+    def __init__(__self__, *,
+                 cri: Optional[pulumi.Input['ContainerdCriPluginConfigurationArgs']] = None):
+        """
+        The containerd configuration.
+        :param pulumi.Input['ContainerdCriPluginConfigurationArgs'] cri: The cri configuration.
+        """
+        if cri is not None:
+            pulumi.set(__self__, "cri", cri)
+
+    @property
+    @pulumi.getter
+    def cri(self) -> Optional[pulumi.Input['ContainerdCriPluginConfigurationArgs']]:
+        """
+        The cri configuration.
+        """
+        return pulumi.get(self, "cri")
+
+    @cri.setter
+    def cri(self, value: Optional[pulumi.Input['ContainerdCriPluginConfigurationArgs']]):
+        pulumi.set(self, "cri", value)
 
 
 @pulumi.input_type

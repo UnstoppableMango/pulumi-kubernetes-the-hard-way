@@ -785,13 +785,41 @@ export namespace remote {
      */
     export interface SystemdServiceSection {
         /**
+         * Turns on delegation of further resource control partitioning to processes of the unit.
+         */
+        delegate?: enums.remote.SystemdDelegate;
+        /**
          * Commands that are executed when this service is started.
          */
         execStart?: string;
         /**
+         * Additional commands that are executed before the command in ExecStart=.
+         */
+        execStartPre?: string;
+        /**
          * Specifies when the manager should consider the service to be finished.
          */
         exitType?: enums.remote.SystemdServiceExitType;
+        /**
+         * Specifies how processes of this unit shall be killed.
+         */
+        killMode?: enums.remote.SystemdKillMode;
+        /**
+         * https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#Process%20Properties
+         */
+        limitCore?: string;
+        /**
+         * https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#Process%20Properties
+         */
+        limitNProc?: string;
+        /**
+         * https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#Process%20Properties
+         */
+        limitNoFile?: number;
+        /**
+         * https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#OOMScoreAdjust=
+         */
+        oomScoreAdjust?: number;
         /**
          * Configures whether the service shall be restarted when the service process exits, is killed, or a timeout is reached.
          */

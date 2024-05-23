@@ -1,5 +1,4 @@
 import { ComponentResourceOptions, Inputs, Output, interpolate, output } from '@pulumi/pulumi';
-import * as ini from 'ini';
 import * as schema from '../schema-types';
 import { File } from './file';
 

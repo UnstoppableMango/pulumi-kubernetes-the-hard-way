@@ -6,6 +6,8 @@ from enum import Enum
 
 __all__ = [
     'Architecture',
+    'SystemdDelegate',
+    'SystemdKillMode',
     'SystemdServiceExitType',
     'SystemdServiceRestart',
     'SystemdServiceType',
@@ -18,6 +20,34 @@ class Architecture(str, Enum):
     """
     AMD64 = "amd64"
     ARM64 = "arm64"
+
+
+class SystemdDelegate(str, Enum):
+    """
+    https://www.man7.org/linux/man-pages/man5/systemd.resource-control.5.html
+    """
+    YES = "yes"
+    NO = "no"
+    CPU = "cpu"
+    CPUACCT = "cpuacct"
+    CPUSET = "cpuset"
+    IO = "io"
+    BLKIO = "blkio"
+    MEMORY = "memory"
+    DEVICES = "devices"
+    PIDS = "pids"
+    BPF_FIREWALL = "bpf-firewall"
+    BPF_DEVICES = "bpf-devices"
+
+
+class SystemdKillMode(str, Enum):
+    """
+    https://www.freedesktop.org/software/systemd/man/latest/systemd.kill.html#Description
+    """
+    CONTROL_GROUP = "control-group"
+    MIXED = "mixed"
+    PROCESS = "process"
+    NONE = "none"
 
 
 class SystemdServiceExitType(str, Enum):

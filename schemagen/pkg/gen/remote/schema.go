@@ -25,6 +25,7 @@ func Generate(commandSpec schema.PackageSpec) schema.PackageSpec {
 
 	return internal.ExtendSchemas(base,
 		generateDownload(commandSpec),
+		generateContainerdService(commandSpec),
 		generateEtcdCluster(commandSpec),
 		generateEtcdConfiguration(commandSpec),
 		generateEtcdService(commandSpec),

@@ -578,10 +578,24 @@ func (o SystemdInstallSectionPtrOutput) WantedBy() pulumi.StringArrayOutput {
 
 // https://www.freedesktop.org/software/systemd/man/latest/systemd.service.html#
 type SystemdServiceSection struct {
+	// Turns on delegation of further resource control partitioning to processes of the unit.
+	Delegate *SystemdDelegate `pulumi:"delegate"`
 	// Commands that are executed when this service is started.
 	ExecStart *string `pulumi:"execStart"`
+	// Additional commands that are executed before the command in ExecStart=.
+	ExecStartPre *string `pulumi:"execStartPre"`
 	// Specifies when the manager should consider the service to be finished.
 	ExitType *SystemdServiceExitType `pulumi:"exitType"`
+	// Specifies how processes of this unit shall be killed.
+	KillMode *SystemdKillMode `pulumi:"killMode"`
+	// https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#Process%20Properties
+	LimitCore *string `pulumi:"limitCore"`
+	// https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#Process%20Properties
+	LimitNProc *string `pulumi:"limitNProc"`
+	// https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#Process%20Properties
+	LimitNoFile *int `pulumi:"limitNoFile"`
+	// https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#OOMScoreAdjust=
+	OomScoreAdjust *int `pulumi:"oomScoreAdjust"`
 	// Configures whether the service shall be restarted when the service process exits, is killed, or a timeout is reached.
 	Restart *SystemdServiceRestart `pulumi:"restart"`
 	// Configures the time to sleep before restarting a service (as configured with Restart=).
@@ -603,10 +617,24 @@ type SystemdServiceSectionInput interface {
 
 // https://www.freedesktop.org/software/systemd/man/latest/systemd.service.html#
 type SystemdServiceSectionArgs struct {
+	// Turns on delegation of further resource control partitioning to processes of the unit.
+	Delegate SystemdDelegatePtrInput `pulumi:"delegate"`
 	// Commands that are executed when this service is started.
 	ExecStart pulumi.StringPtrInput `pulumi:"execStart"`
+	// Additional commands that are executed before the command in ExecStart=.
+	ExecStartPre pulumi.StringPtrInput `pulumi:"execStartPre"`
 	// Specifies when the manager should consider the service to be finished.
 	ExitType SystemdServiceExitTypePtrInput `pulumi:"exitType"`
+	// Specifies how processes of this unit shall be killed.
+	KillMode SystemdKillModePtrInput `pulumi:"killMode"`
+	// https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#Process%20Properties
+	LimitCore pulumi.StringPtrInput `pulumi:"limitCore"`
+	// https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#Process%20Properties
+	LimitNProc pulumi.StringPtrInput `pulumi:"limitNProc"`
+	// https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#Process%20Properties
+	LimitNoFile pulumi.IntPtrInput `pulumi:"limitNoFile"`
+	// https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#OOMScoreAdjust=
+	OomScoreAdjust pulumi.IntPtrInput `pulumi:"oomScoreAdjust"`
 	// Configures whether the service shall be restarted when the service process exits, is killed, or a timeout is reached.
 	Restart SystemdServiceRestartPtrInput `pulumi:"restart"`
 	// Configures the time to sleep before restarting a service (as configured with Restart=).
@@ -642,14 +670,49 @@ func (o SystemdServiceSectionOutput) ToSystemdServiceSectionOutputWithContext(ct
 	return o
 }
 
+// Turns on delegation of further resource control partitioning to processes of the unit.
+func (o SystemdServiceSectionOutput) Delegate() SystemdDelegatePtrOutput {
+	return o.ApplyT(func(v SystemdServiceSection) *SystemdDelegate { return v.Delegate }).(SystemdDelegatePtrOutput)
+}
+
 // Commands that are executed when this service is started.
 func (o SystemdServiceSectionOutput) ExecStart() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v SystemdServiceSection) *string { return v.ExecStart }).(pulumi.StringPtrOutput)
 }
 
+// Additional commands that are executed before the command in ExecStart=.
+func (o SystemdServiceSectionOutput) ExecStartPre() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v SystemdServiceSection) *string { return v.ExecStartPre }).(pulumi.StringPtrOutput)
+}
+
 // Specifies when the manager should consider the service to be finished.
 func (o SystemdServiceSectionOutput) ExitType() SystemdServiceExitTypePtrOutput {
 	return o.ApplyT(func(v SystemdServiceSection) *SystemdServiceExitType { return v.ExitType }).(SystemdServiceExitTypePtrOutput)
+}
+
+// Specifies how processes of this unit shall be killed.
+func (o SystemdServiceSectionOutput) KillMode() SystemdKillModePtrOutput {
+	return o.ApplyT(func(v SystemdServiceSection) *SystemdKillMode { return v.KillMode }).(SystemdKillModePtrOutput)
+}
+
+// https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#Process%20Properties
+func (o SystemdServiceSectionOutput) LimitCore() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v SystemdServiceSection) *string { return v.LimitCore }).(pulumi.StringPtrOutput)
+}
+
+// https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#Process%20Properties
+func (o SystemdServiceSectionOutput) LimitNProc() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v SystemdServiceSection) *string { return v.LimitNProc }).(pulumi.StringPtrOutput)
+}
+
+// https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#Process%20Properties
+func (o SystemdServiceSectionOutput) LimitNoFile() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v SystemdServiceSection) *int { return v.LimitNoFile }).(pulumi.IntPtrOutput)
+}
+
+// https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#OOMScoreAdjust=
+func (o SystemdServiceSectionOutput) OomScoreAdjust() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v SystemdServiceSection) *int { return v.OomScoreAdjust }).(pulumi.IntPtrOutput)
 }
 
 // Configures whether the service shall be restarted when the service process exits, is killed, or a timeout is reached.

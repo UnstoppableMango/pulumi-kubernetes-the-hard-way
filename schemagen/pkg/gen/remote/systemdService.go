@@ -56,6 +56,26 @@ func generateSystemdService(commandSpec schema.PackageSpec) schema.PackageSpec {
 
 	return schema.PackageSpec{
 		Types: map[string]schema.ComplexTypeSpec{
+			name("SystemdDelegate"): {
+				ObjectTypeSpec: schema.ObjectTypeSpec{
+					Description: "https://www.man7.org/linux/man-pages/man5/systemd.resource-control.5.html",
+					Type:        "string",
+				},
+				Enum: []schema.EnumValueSpec{
+					{Value: "yes"},
+					{Value: "no"},
+					{Value: "cpu"},
+					{Value: "cpuacct"},
+					{Value: "cpuset"},
+					{Value: "io"},
+					{Value: "blkio"},
+					{Value: "memory"},
+					{Value: "devices"},
+					{Value: "pids"},
+					{Value: "bpf-firewall"},
+					{Value: "bpf-devices"},
+				},
+			},
 			name("SystemdInstallSection"): {
 				ObjectTypeSpec: schema.ObjectTypeSpec{
 					Description: "https://www.freedesktop.org/software/systemd/man/latest/systemd.unit.html#%5BInstall%5D%20Section%20Options",
@@ -66,6 +86,18 @@ func generateSystemdService(commandSpec schema.PackageSpec) schema.PackageSpec {
 							TypeSpec:    types.ArrayOfStrings,
 						},
 					},
+				},
+			},
+			name("SystemdKillMode"): {
+				ObjectTypeSpec: schema.ObjectTypeSpec{
+					Description: "https://www.freedesktop.org/software/systemd/man/latest/systemd.kill.html#Description",
+					Type:        "string",
+				},
+				Enum: []schema.EnumValueSpec{
+					{Value: "control-group"},
+					{Value: "mixed"},
+					{Value: "process"},
+					{Value: "none"},
 				},
 			},
 			name("SystemdServiceExitType"): {
@@ -114,14 +146,24 @@ func generateSystemdService(commandSpec schema.PackageSpec) schema.PackageSpec {
 					Description: "https://www.freedesktop.org/software/systemd/man/latest/systemd.service.html#",
 					Type:        "object",
 					Properties: map[string]schema.PropertySpec{
-						"execStart": {
-							Description: "Commands that are executed when this service is started.",
-							TypeSpec:    types.String, // This can technically be an array when type is oneshot
+						"delegate": {
+							Description: "Turns on delegation of further resource control partitioning to processes of the unit.",
+							TypeSpec:    types.LocalType("SystemdDelegate", "remote"),
 						},
+						"execStart":    props.String("Commands that are executed when this service is started."), // This can technically be an array when type is oneshot
+						"execStartPre": props.String("Additional commands that are executed before the command in ExecStart=."),
 						"exitType": {
 							Description: "Specifies when the manager should consider the service to be finished.",
 							TypeSpec:    types.LocalType("SystemdServiceExitType", "remote"),
 						},
+						"killMode": {
+							Description: "Specifies how processes of this unit shall be killed.",
+							TypeSpec:    types.LocalType("SystemdKillMode", "remote"),
+						},
+						"limitNoFile":    props.Integer("https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#Process%20Properties"),
+						"limitNProc":     props.String("https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#Process%20Properties"),
+						"limitCore":      props.String("https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#Process%20Properties"),
+						"oomScoreAdjust": props.Integer("https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#OOMScoreAdjust="),
 						"restart": {
 							Description: "Configures whether the service shall be restarted when the service process exits, is killed, or a timeout is reached.",
 							TypeSpec:    types.LocalType("SystemdServiceRestart", "remote"),

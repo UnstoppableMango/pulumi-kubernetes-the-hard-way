@@ -365,6 +365,35 @@ type ContainerdConfigurationType struct {
 	Cri *ContainerdCriPluginConfiguration `pulumi:"cri"`
 }
 
+// ContainerdConfigurationTypeInput is an input type that accepts ContainerdConfigurationTypeArgs and ContainerdConfigurationTypeOutput values.
+// You can construct a concrete instance of `ContainerdConfigurationTypeInput` via:
+//
+//	ContainerdConfigurationTypeArgs{...}
+type ContainerdConfigurationTypeInput interface {
+	pulumi.Input
+
+	ToContainerdConfigurationTypeOutput() ContainerdConfigurationTypeOutput
+	ToContainerdConfigurationTypeOutputWithContext(context.Context) ContainerdConfigurationTypeOutput
+}
+
+// The containerd configuration.
+type ContainerdConfigurationTypeArgs struct {
+	// The cri configuration.
+	Cri ContainerdCriPluginConfigurationPtrInput `pulumi:"cri"`
+}
+
+func (ContainerdConfigurationTypeArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*ContainerdConfigurationType)(nil)).Elem()
+}
+
+func (i ContainerdConfigurationTypeArgs) ToContainerdConfigurationTypeOutput() ContainerdConfigurationTypeOutput {
+	return i.ToContainerdConfigurationTypeOutputWithContext(context.Background())
+}
+
+func (i ContainerdConfigurationTypeArgs) ToContainerdConfigurationTypeOutputWithContext(ctx context.Context) ContainerdConfigurationTypeOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(ContainerdConfigurationTypeOutput)
+}
+
 // The containerd configuration.
 type ContainerdConfigurationTypeOutput struct{ *pulumi.OutputState }
 
@@ -2342,6 +2371,7 @@ func (o UserArrayOutput) Index(i pulumi.IntInput) UserOutput {
 func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*CniBridgeIpamInput)(nil)).Elem(), CniBridgeIpamArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*CniBridgeIpamPtrInput)(nil)).Elem(), CniBridgeIpamArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*ContainerdConfigurationTypeInput)(nil)).Elem(), ContainerdConfigurationTypeArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*ContainerdCriPluginConfigurationInput)(nil)).Elem(), ContainerdCriPluginConfigurationArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*ContainerdCriPluginConfigurationPtrInput)(nil)).Elem(), ContainerdCriPluginConfigurationArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*ContainerdCriPluginConfigurationCniInput)(nil)).Elem(), ContainerdCriPluginConfigurationCniArgs{})

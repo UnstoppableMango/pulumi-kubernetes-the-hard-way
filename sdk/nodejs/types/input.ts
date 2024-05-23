@@ -49,6 +49,16 @@ export namespace config {
     }
 
     /**
+     * The containerd configuration.
+     */
+    export interface ContainerdConfigurationArgs {
+        /**
+         * The cri configuration.
+         */
+        cri?: pulumi.Input<inputs.config.ContainerdCriPluginConfigurationArgs>;
+    }
+
+    /**
      * containerd cri plugin configuration.
      */
     export interface ContainerdCriPluginConfiguration {
@@ -761,13 +771,41 @@ export namespace remote {
      */
     export interface SystemdServiceSectionArgs {
         /**
+         * Turns on delegation of further resource control partitioning to processes of the unit.
+         */
+        delegate?: pulumi.Input<enums.remote.SystemdDelegate>;
+        /**
          * Commands that are executed when this service is started.
          */
         execStart?: pulumi.Input<string>;
         /**
+         * Additional commands that are executed before the command in ExecStart=.
+         */
+        execStartPre?: pulumi.Input<string>;
+        /**
          * Specifies when the manager should consider the service to be finished.
          */
         exitType?: pulumi.Input<enums.remote.SystemdServiceExitType>;
+        /**
+         * Specifies how processes of this unit shall be killed.
+         */
+        killMode?: pulumi.Input<enums.remote.SystemdKillMode>;
+        /**
+         * https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#Process%20Properties
+         */
+        limitCore?: pulumi.Input<string>;
+        /**
+         * https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#Process%20Properties
+         */
+        limitNProc?: pulumi.Input<string>;
+        /**
+         * https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#Process%20Properties
+         */
+        limitNoFile?: pulumi.Input<number>;
+        /**
+         * https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#OOMScoreAdjust=
+         */
+        oomScoreAdjust?: pulumi.Input<number>;
         /**
          * Configures whether the service shall be restarted when the service process exits, is killed, or a timeout is reached.
          */

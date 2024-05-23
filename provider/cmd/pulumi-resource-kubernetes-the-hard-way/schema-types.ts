@@ -14,6 +14,7 @@ export type ResourceConstructor = {
     readonly "kubernetes-the-hard-way:config:KubeletConfiguration": ConstructComponent<KubeletConfiguration>;
     readonly "kubernetes-the-hard-way:remote:CniPluginsInstall": ConstructComponent<CniPluginsInstall>;
     readonly "kubernetes-the-hard-way:remote:ContainerdInstall": ConstructComponent<ContainerdInstall>;
+    readonly "kubernetes-the-hard-way:remote:ContainerdService": ConstructComponent<ContainerdService>;
     readonly "kubernetes-the-hard-way:remote:CrictlInstall": ConstructComponent<CrictlInstall>;
     readonly "kubernetes-the-hard-way:remote:Download": ConstructComponent<Download>;
     readonly "kubernetes-the-hard-way:remote:EtcdCluster": ConstructComponent<EtcdCluster>;
@@ -260,6 +261,32 @@ export interface ContainerdInstallArgs {
     readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
     readonly directory?: pulumi.Input<string>;
     readonly version?: pulumi.Input<string>;
+}
+export abstract class ContainerdService<TData = any> extends (pulumi.ComponentResource)<TData> {
+    public configuration!: ContainerdConfigurationOutputs | pulumi.Output<ContainerdConfigurationOutputs>;
+    public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
+    public containerdPath?: string | pulumi.Output<string>;
+    public description?: string | pulumi.Output<string>;
+    public directory?: string | pulumi.Output<string>;
+    public documentation?: string | pulumi.Output<string>;
+    public restart?: SystemdServiceRestartOutputs | pulumi.Output<SystemdServiceRestartOutputs>;
+    public restartSec?: string | pulumi.Output<string>;
+    public service!: SystemdService | pulumi.Output<SystemdService>;
+    public wantedBy?: string | pulumi.Output<string>;
+    constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
+        super("kubernetes-the-hard-way:remote:ContainerdService", name, opts.urn ? { configuration: undefined, connection: undefined, containerdPath: undefined, description: undefined, directory: undefined, documentation: undefined, restart: undefined, restartSec: undefined, service: undefined, wantedBy: undefined } : { name, args, opts }, opts);
+    }
+}
+export interface ContainerdServiceArgs {
+    readonly configuration: pulumi.Input<ContainerdConfigurationInputs>;
+    readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
+    readonly containerdPath?: pulumi.Input<string>;
+    readonly description?: pulumi.Input<string>;
+    readonly directory?: pulumi.Input<string>;
+    readonly documentation?: pulumi.Input<string>;
+    readonly restart?: pulumi.Input<SystemdServiceRestartInputs>;
+    readonly restartSec?: pulumi.Input<string>;
+    readonly wantedBy?: pulumi.Input<string>;
 }
 export abstract class CrictlInstall<TData = any> extends (pulumi.ComponentResource)<TData> {
     public architecture!: ArchitectureOutputs | pulumi.Output<ArchitectureOutputs>;
@@ -1539,26 +1566,44 @@ export interface KubeletConfigurationPropsOutputs {
     readonly registerNode: pulumi.Output<boolean>;
     readonly v: pulumi.Output<number>;
 }
+export type SystemdDelegateInputs = "yes" | "no" | "cpu" | "cpuacct" | "cpuset" | "io" | "blkio" | "memory" | "devices" | "pids" | "bpf-firewall" | "bpf-devices";
+export type SystemdDelegateOutputs = "yes" | "no" | "cpu" | "cpuacct" | "cpuset" | "io" | "blkio" | "memory" | "devices" | "pids" | "bpf-firewall" | "bpf-devices";
 export interface SystemdInstallSectionInputs {
     readonly wantedBy?: pulumi.Input<pulumi.Input<string>[]>;
 }
 export interface SystemdInstallSectionOutputs {
     readonly wantedBy?: pulumi.Output<string[]>;
 }
+export type SystemdKillModeInputs = "control-group" | "mixed" | "process" | "none";
+export type SystemdKillModeOutputs = "control-group" | "mixed" | "process" | "none";
 export type SystemdServiceExitTypeInputs = "main" | "cgroup";
 export type SystemdServiceExitTypeOutputs = "main" | "cgroup";
 export type SystemdServiceRestartInputs = "no" | "on-success" | "on-failure" | "on-abnormal" | "on-watchdog" | "on-abort" | "always";
 export type SystemdServiceRestartOutputs = "no" | "on-success" | "on-failure" | "on-abnormal" | "on-watchdog" | "on-abort" | "always";
 export interface SystemdServiceSectionInputs {
+    readonly delegate?: pulumi.Input<SystemdDelegateInputs>;
     readonly execStart?: pulumi.Input<string>;
+    readonly execStartPre?: pulumi.Input<string>;
     readonly exitType?: pulumi.Input<SystemdServiceExitTypeInputs>;
+    readonly killMode?: pulumi.Input<SystemdKillModeInputs>;
+    readonly limitCore?: pulumi.Input<string>;
+    readonly limitNProc?: pulumi.Input<string>;
+    readonly limitNoFile?: pulumi.Input<number>;
+    readonly oomScoreAdjust?: pulumi.Input<number>;
     readonly restart?: pulumi.Input<SystemdServiceRestartInputs>;
     readonly restartSec?: pulumi.Input<string>;
     readonly type?: pulumi.Input<SystemdServiceTypeInputs>;
 }
 export interface SystemdServiceSectionOutputs {
+    readonly delegate?: pulumi.Output<SystemdDelegateOutputs>;
     readonly execStart?: pulumi.Output<string>;
+    readonly execStartPre?: pulumi.Output<string>;
     readonly exitType?: pulumi.Output<SystemdServiceExitTypeOutputs>;
+    readonly killMode?: pulumi.Output<SystemdKillModeOutputs>;
+    readonly limitCore?: pulumi.Output<string>;
+    readonly limitNProc?: pulumi.Output<string>;
+    readonly limitNoFile?: pulumi.Output<number>;
+    readonly oomScoreAdjust?: pulumi.Output<number>;
     readonly restart?: pulumi.Output<SystemdServiceRestartOutputs>;
     readonly restartSec?: pulumi.Output<string>;
     readonly type?: pulumi.Output<SystemdServiceTypeOutputs>;

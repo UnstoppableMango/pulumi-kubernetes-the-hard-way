@@ -844,6 +844,48 @@
                 "v"
             ]
         },
+        "kubernetes-the-hard-way:remote:SystemdDelegate": {
+            "description": "https://www.man7.org/linux/man-pages/man5/systemd.resource-control.5.html",
+            "type": "string",
+            "enum": [
+                {
+                    "value": "yes"
+                },
+                {
+                    "value": "no"
+                },
+                {
+                    "value": "cpu"
+                },
+                {
+                    "value": "cpuacct"
+                },
+                {
+                    "value": "cpuset"
+                },
+                {
+                    "value": "io"
+                },
+                {
+                    "value": "blkio"
+                },
+                {
+                    "value": "memory"
+                },
+                {
+                    "value": "devices"
+                },
+                {
+                    "value": "pids"
+                },
+                {
+                    "value": "bpf-firewall"
+                },
+                {
+                    "value": "bpf-devices"
+                }
+            ]
+        },
         "kubernetes-the-hard-way:remote:SystemdInstallSection": {
             "description": "https://www.freedesktop.org/software/systemd/man/latest/systemd.unit.html#%5BInstall%5D%20Section%20Options",
             "properties": {
@@ -856,6 +898,24 @@
                 }
             },
             "type": "object"
+        },
+        "kubernetes-the-hard-way:remote:SystemdKillMode": {
+            "description": "https://www.freedesktop.org/software/systemd/man/latest/systemd.kill.html#Description",
+            "type": "string",
+            "enum": [
+                {
+                    "value": "control-group"
+                },
+                {
+                    "value": "mixed"
+                },
+                {
+                    "value": "process"
+                },
+                {
+                    "value": "none"
+                }
+            ]
         },
         "kubernetes-the-hard-way:remote:SystemdServiceExitType": {
             "description": "Systemd service exit type.",
@@ -899,13 +959,41 @@
         "kubernetes-the-hard-way:remote:SystemdServiceSection": {
             "description": "https://www.freedesktop.org/software/systemd/man/latest/systemd.service.html#",
             "properties": {
+                "delegate": {
+                    "$ref": "#/types/kubernetes-the-hard-way:remote:SystemdDelegate",
+                    "description": "Turns on delegation of further resource control partitioning to processes of the unit."
+                },
                 "execStart": {
                     "type": "string",
                     "description": "Commands that are executed when this service is started."
                 },
+                "execStartPre": {
+                    "type": "string",
+                    "description": "Additional commands that are executed before the command in ExecStart=."
+                },
                 "exitType": {
                     "$ref": "#/types/kubernetes-the-hard-way:remote:SystemdServiceExitType",
                     "description": "Specifies when the manager should consider the service to be finished."
+                },
+                "killMode": {
+                    "$ref": "#/types/kubernetes-the-hard-way:remote:SystemdKillMode",
+                    "description": "Specifies how processes of this unit shall be killed."
+                },
+                "limitCore": {
+                    "type": "string",
+                    "description": "https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#Process%20Properties"
+                },
+                "limitNProc": {
+                    "type": "string",
+                    "description": "https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#Process%20Properties"
+                },
+                "limitNoFile": {
+                    "type": "integer",
+                    "description": "https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#Process%20Properties"
+                },
+                "oomScoreAdjust": {
+                    "type": "integer",
+                    "description": "https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#OOMScoreAdjust="
                 },
                 "restart": {
                     "$ref": "#/types/kubernetes-the-hard-way:remote:SystemdServiceRestart",
@@ -2595,6 +2683,99 @@
                 }
             },
             "requiredInputs": [
+                "connection"
+            ],
+            "isComponent": true
+        },
+        "kubernetes-the-hard-way:remote:ContainerdService": {
+            "description": "Containerd systemd service file. Will likely get replaced with a static function when https://github.com/pulumi/pulumi/issues/7583 gets resolved.",
+            "properties": {
+                "configuration": {
+                    "$ref": "#/types/kubernetes-the-hard-way:config:ContainerdConfiguration",
+                    "description": "Containerd configuration."
+                },
+                "connection": {
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
+                    "description": "The parameters with which to connect to the remote host."
+                },
+                "containerdPath": {
+                    "type": "string",
+                    "description": "Path to the containerd binary"
+                },
+                "description": {
+                    "type": "string",
+                    "description": "Optional systemd unit description."
+                },
+                "directory": {
+                    "type": "string",
+                    "description": "The location to create the service file."
+                },
+                "documentation": {
+                    "type": "string",
+                    "description": "Optional systemd unit documentation"
+                },
+                "restart": {
+                    "$ref": "#/types/kubernetes-the-hard-way:remote:SystemdServiceRestart",
+                    "description": "Optionally override the systemd service restart behaviour. Defaults to `on-failure`."
+                },
+                "restartSec": {
+                    "type": "string",
+                    "description": "Optionally override the systemd service RestartSec. Defaults to `5`."
+                },
+                "service": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:remote:SystemdService",
+                    "description": "The remote systemd service."
+                },
+                "wantedBy": {
+                    "type": "string",
+                    "description": "Optionally override the systemd service wanted-by. Defaults to `multi-user.target`."
+                }
+            },
+            "required": [
+                "configuration",
+                "connection",
+                "service"
+            ],
+            "inputProperties": {
+                "configuration": {
+                    "$ref": "#/types/kubernetes-the-hard-way:config:ContainerdConfiguration",
+                    "description": "Containerd configuration."
+                },
+                "connection": {
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
+                    "description": "The parameters with which to connect to the remote host."
+                },
+                "containerdPath": {
+                    "type": "string",
+                    "description": "Path to the containerd binary"
+                },
+                "description": {
+                    "type": "string",
+                    "description": "Optional systemd unit description."
+                },
+                "directory": {
+                    "type": "string",
+                    "description": "The location to create the service file."
+                },
+                "documentation": {
+                    "type": "string",
+                    "description": "Optional systemd unit documentation"
+                },
+                "restart": {
+                    "$ref": "#/types/kubernetes-the-hard-way:remote:SystemdServiceRestart",
+                    "description": "Optionally override the systemd service restart behaviour. Defaults to `on-failure`."
+                },
+                "restartSec": {
+                    "type": "string",
+                    "description": "Optionally override the systemd service RestartSec. Defaults to `5`."
+                },
+                "wantedBy": {
+                    "type": "string",
+                    "description": "Optionally override the systemd service wanted-by. Defaults to `multi-user.target`."
+                }
+            },
+            "requiredInputs": [
+                "configuration",
                 "connection"
             ],
             "isComponent": true

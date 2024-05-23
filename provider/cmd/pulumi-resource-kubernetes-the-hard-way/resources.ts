@@ -3,6 +3,7 @@ import * as schema from './schema-types';
 import {
   CniPluginsInstall,
   ContainerdInstall,
+  ContainerdService,
   CrictlInstall,
   Download,
   EtcdCluster,
@@ -45,6 +46,7 @@ const resources: schema.ResourceConstructor = {
   'kubernetes-the-hard-way:config:KubeletConfiguration': (...args) => new KubeletConfiguration(...args),
   'kubernetes-the-hard-way:config:KubeProxyConfiguration': (...args) => new KubeProxyConfiguration(...args),
   'kubernetes-the-hard-way:config:KubeVipManifest': (...args) => new KubeVipManifest(...args),
+  'kubernetes-the-hard-way:remote:ContainerdService': (...args) => new ContainerdService(...args),
   'kubernetes-the-hard-way:remote:Download': (...args) => new Download(...args),
   'kubernetes-the-hard-way:remote:EtcdCluster': (...args) => new EtcdCluster(...args),
   'kubernetes-the-hard-way:remote:EtcdConfiguration': (...args) => new EtcdConfiguration(...args),

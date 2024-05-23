@@ -31,6 +31,7 @@
         "provider.ts",
         "remote/cniPluginsInstall.ts",
         "remote/containerdInstall.ts",
+        "remote/containerdService.ts",
         "remote/crictlInstall.ts",
         "remote/download.ts",
         "remote/etcdCluster.ts",

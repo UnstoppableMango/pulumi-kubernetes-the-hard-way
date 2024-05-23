@@ -18,13 +18,41 @@ namespace UnMango.KubernetesTheHardWay.Remote.Outputs
     public sealed class SystemdServiceSection
     {
         /// <summary>
+        /// Turns on delegation of further resource control partitioning to processes of the unit.
+        /// </summary>
+        public readonly UnMango.KubernetesTheHardWay.Remote.SystemdDelegate? Delegate;
+        /// <summary>
         /// Commands that are executed when this service is started.
         /// </summary>
         public readonly string? ExecStart;
         /// <summary>
+        /// Additional commands that are executed before the command in ExecStart=.
+        /// </summary>
+        public readonly string? ExecStartPre;
+        /// <summary>
         /// Specifies when the manager should consider the service to be finished.
         /// </summary>
         public readonly UnMango.KubernetesTheHardWay.Remote.SystemdServiceExitType? ExitType;
+        /// <summary>
+        /// Specifies how processes of this unit shall be killed.
+        /// </summary>
+        public readonly UnMango.KubernetesTheHardWay.Remote.SystemdKillMode? KillMode;
+        /// <summary>
+        /// https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#Process%20Properties
+        /// </summary>
+        public readonly string? LimitCore;
+        /// <summary>
+        /// https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#Process%20Properties
+        /// </summary>
+        public readonly string? LimitNProc;
+        /// <summary>
+        /// https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#Process%20Properties
+        /// </summary>
+        public readonly int? LimitNoFile;
+        /// <summary>
+        /// https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#OOMScoreAdjust=
+        /// </summary>
+        public readonly int? OomScoreAdjust;
         /// <summary>
         /// Configures whether the service shall be restarted when the service process exits, is killed, or a timeout is reached.
         /// </summary>
@@ -40,9 +68,23 @@ namespace UnMango.KubernetesTheHardWay.Remote.Outputs
 
         [OutputConstructor]
         private SystemdServiceSection(
+            UnMango.KubernetesTheHardWay.Remote.SystemdDelegate? @delegate,
+
             string? execStart,
 
+            string? execStartPre,
+
             UnMango.KubernetesTheHardWay.Remote.SystemdServiceExitType? exitType,
+
+            UnMango.KubernetesTheHardWay.Remote.SystemdKillMode? killMode,
+
+            string? limitCore,
+
+            string? limitNProc,
+
+            int? limitNoFile,
+
+            int? oomScoreAdjust,
 
             UnMango.KubernetesTheHardWay.Remote.SystemdServiceRestart? restart,
 
@@ -50,8 +92,15 @@ namespace UnMango.KubernetesTheHardWay.Remote.Outputs
 
             UnMango.KubernetesTheHardWay.Remote.SystemdServiceType? type)
         {
+            Delegate = @delegate;
             ExecStart = execStart;
+            ExecStartPre = execStartPre;
             ExitType = exitType;
+            KillMode = killMode;
+            LimitCore = limitCore;
+            LimitNProc = limitNProc;
+            LimitNoFile = limitNoFile;
+            OomScoreAdjust = oomScoreAdjust;
             Restart = restart;
             RestartSec = restartSec;
             Type = type;

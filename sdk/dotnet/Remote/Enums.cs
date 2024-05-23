@@ -39,6 +39,80 @@ namespace UnMango.KubernetesTheHardWay.Remote
     }
 
     /// <summary>
+    /// https://www.man7.org/linux/man-pages/man5/systemd.resource-control.5.html
+    /// </summary>
+    [EnumType]
+    public readonly struct SystemdDelegate : IEquatable<SystemdDelegate>
+    {
+        private readonly string _value;
+
+        private SystemdDelegate(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
+        public static SystemdDelegate Yes { get; } = new SystemdDelegate("yes");
+        public static SystemdDelegate No { get; } = new SystemdDelegate("no");
+        public static SystemdDelegate Cpu { get; } = new SystemdDelegate("cpu");
+        public static SystemdDelegate Cpuacct { get; } = new SystemdDelegate("cpuacct");
+        public static SystemdDelegate Cpuset { get; } = new SystemdDelegate("cpuset");
+        public static SystemdDelegate Io { get; } = new SystemdDelegate("io");
+        public static SystemdDelegate Blkio { get; } = new SystemdDelegate("blkio");
+        public static SystemdDelegate Memory { get; } = new SystemdDelegate("memory");
+        public static SystemdDelegate Devices { get; } = new SystemdDelegate("devices");
+        public static SystemdDelegate Pids { get; } = new SystemdDelegate("pids");
+        public static SystemdDelegate Bpf_firewall { get; } = new SystemdDelegate("bpf-firewall");
+        public static SystemdDelegate Bpf_devices { get; } = new SystemdDelegate("bpf-devices");
+
+        public static bool operator ==(SystemdDelegate left, SystemdDelegate right) => left.Equals(right);
+        public static bool operator !=(SystemdDelegate left, SystemdDelegate right) => !left.Equals(right);
+
+        public static explicit operator string(SystemdDelegate value) => value._value;
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object? obj) => obj is SystemdDelegate other && Equals(other);
+        public bool Equals(SystemdDelegate other) => string.Equals(_value, other._value, StringComparison.Ordinal);
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+
+        public override string ToString() => _value;
+    }
+
+    /// <summary>
+    /// https://www.freedesktop.org/software/systemd/man/latest/systemd.kill.html#Description
+    /// </summary>
+    [EnumType]
+    public readonly struct SystemdKillMode : IEquatable<SystemdKillMode>
+    {
+        private readonly string _value;
+
+        private SystemdKillMode(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
+        public static SystemdKillMode Control_group { get; } = new SystemdKillMode("control-group");
+        public static SystemdKillMode Mixed { get; } = new SystemdKillMode("mixed");
+        public static SystemdKillMode Process { get; } = new SystemdKillMode("process");
+        public static SystemdKillMode None { get; } = new SystemdKillMode("none");
+
+        public static bool operator ==(SystemdKillMode left, SystemdKillMode right) => left.Equals(right);
+        public static bool operator !=(SystemdKillMode left, SystemdKillMode right) => !left.Equals(right);
+
+        public static explicit operator string(SystemdKillMode value) => value._value;
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object? obj) => obj is SystemdKillMode other && Equals(other);
+        public bool Equals(SystemdKillMode other) => string.Equals(_value, other._value, StringComparison.Ordinal);
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+
+        public override string ToString() => _value;
+    }
+
+    /// <summary>
     /// Systemd service exit type.
     /// </summary>
     [EnumType]
