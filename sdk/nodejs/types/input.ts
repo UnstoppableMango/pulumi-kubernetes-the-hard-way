@@ -11,8 +11,6 @@ import * as pulumiKubernetes from "@pulumi/kubernetes";
 import * as pulumiTls from "@pulumi/tls";
 import * as utilities from "../utilities";
 
-import {SystemDelegate} from "../remote";
-
 export namespace config {
     /**
      * The CNI plugins IPAM
@@ -765,7 +763,7 @@ export namespace remote {
         /**
          * Turns on delegation of further resource control partitioning to processes of the unit.
          */
-        delegate?: pulumi.Input<SystemDelegate>;
+        delegate?: pulumi.Input<enums.remote.SystemdDelegate>;
         /**
          * Commands that are executed when this service is started.
          */

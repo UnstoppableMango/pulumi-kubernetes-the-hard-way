@@ -20,7 +20,7 @@ namespace UnMango.KubernetesTheHardWay.Remote.Inputs
         /// Turns on delegation of further resource control partitioning to processes of the unit.
         /// </summary>
         [Input("delegate")]
-        public Input<UnMango.KubernetesTheHardWay.Remote.Inputs.SystemDelegate>? Delegate { get; set; }
+        public Input<UnMango.KubernetesTheHardWay.Remote.SystemdDelegate>? Delegate { get; set; }
 
         /// <summary>
         /// Commands that are executed when this service is started.

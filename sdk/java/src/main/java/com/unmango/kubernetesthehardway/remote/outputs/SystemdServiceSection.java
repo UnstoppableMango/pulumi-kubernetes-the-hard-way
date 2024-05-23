@@ -4,11 +4,11 @@
 package com.unmango.kubernetesthehardway.remote.outputs;
 
 import com.pulumi.core.annotations.CustomType;
+import com.unmango.kubernetesthehardway.remote.enums.SystemdDelegate;
 import com.unmango.kubernetesthehardway.remote.enums.SystemdKillMode;
 import com.unmango.kubernetesthehardway.remote.enums.SystemdServiceExitType;
 import com.unmango.kubernetesthehardway.remote.enums.SystemdServiceRestart;
 import com.unmango.kubernetesthehardway.remote.enums.SystemdServiceType;
-import com.unmango.kubernetesthehardway.remote.outputs.SystemDelegate;
 import java.lang.Integer;
 import java.lang.String;
 import java.util.Objects;
@@ -21,7 +21,7 @@ public final class SystemdServiceSection {
      * @return Turns on delegation of further resource control partitioning to processes of the unit.
      * 
      */
-    private @Nullable SystemDelegate delegate;
+    private @Nullable SystemdDelegate delegate;
     /**
      * @return Commands that are executed when this service is started.
      * 
@@ -83,7 +83,7 @@ public final class SystemdServiceSection {
      * @return Turns on delegation of further resource control partitioning to processes of the unit.
      * 
      */
-    public Optional<SystemDelegate> delegate() {
+    public Optional<SystemdDelegate> delegate() {
         return Optional.ofNullable(this.delegate);
     }
     /**
@@ -173,7 +173,7 @@ public final class SystemdServiceSection {
     }
     @CustomType.Builder
     public static final class Builder {
-        private @Nullable SystemDelegate delegate;
+        private @Nullable SystemdDelegate delegate;
         private @Nullable String execStart;
         private @Nullable String execStartPre;
         private @Nullable SystemdServiceExitType exitType;
@@ -203,7 +203,7 @@ public final class SystemdServiceSection {
         }
 
         @CustomType.Setter
-        public Builder delegate(@Nullable SystemDelegate delegate) {
+        public Builder delegate(@Nullable SystemdDelegate delegate) {
 
             this.delegate = delegate;
             return this;

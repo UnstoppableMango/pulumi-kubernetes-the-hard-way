@@ -336,7 +336,7 @@ class SystemdInstallSectionArgs:
 @pulumi.input_type
 class SystemdServiceSectionArgs:
     def __init__(__self__, *,
-                 delegate: Optional[Any] = None,
+                 delegate: Optional[pulumi.Input['SystemdDelegate']] = None,
                  exec_start: Optional[pulumi.Input[str]] = None,
                  exec_start_pre: Optional[pulumi.Input[str]] = None,
                  exit_type: Optional[pulumi.Input['SystemdServiceExitType']] = None,
@@ -350,7 +350,7 @@ class SystemdServiceSectionArgs:
                  type: Optional[pulumi.Input['SystemdServiceType']] = None):
         """
         https://www.freedesktop.org/software/systemd/man/latest/systemd.service.html#
-        :param Any delegate: Turns on delegation of further resource control partitioning to processes of the unit.
+        :param pulumi.Input['SystemdDelegate'] delegate: Turns on delegation of further resource control partitioning to processes of the unit.
         :param pulumi.Input[str] exec_start: Commands that are executed when this service is started.
         :param pulumi.Input[str] exec_start_pre: Additional commands that are executed before the command in ExecStart=.
         :param pulumi.Input['SystemdServiceExitType'] exit_type: Specifies when the manager should consider the service to be finished.
@@ -390,14 +390,14 @@ class SystemdServiceSectionArgs:
 
     @property
     @pulumi.getter
-    def delegate(self) -> Optional[Any]:
+    def delegate(self) -> Optional[pulumi.Input['SystemdDelegate']]:
         """
         Turns on delegation of further resource control partitioning to processes of the unit.
         """
         return pulumi.get(self, "delegate")
 
     @delegate.setter
-    def delegate(self, value: Optional[Any]):
+    def delegate(self, value: Optional[pulumi.Input['SystemdDelegate']]):
         pulumi.set(self, "delegate", value)
 
     @property

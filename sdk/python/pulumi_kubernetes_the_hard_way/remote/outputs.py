@@ -418,7 +418,7 @@ class SystemdServiceSection(dict):
         return super().get(key, default)
 
     def __init__(__self__, *,
-                 delegate: Optional[Any] = None,
+                 delegate: Optional['SystemdDelegate'] = None,
                  exec_start: Optional[str] = None,
                  exec_start_pre: Optional[str] = None,
                  exit_type: Optional['SystemdServiceExitType'] = None,
@@ -432,7 +432,7 @@ class SystemdServiceSection(dict):
                  type: Optional['SystemdServiceType'] = None):
         """
         https://www.freedesktop.org/software/systemd/man/latest/systemd.service.html#
-        :param Any delegate: Turns on delegation of further resource control partitioning to processes of the unit.
+        :param 'SystemdDelegate' delegate: Turns on delegation of further resource control partitioning to processes of the unit.
         :param str exec_start: Commands that are executed when this service is started.
         :param str exec_start_pre: Additional commands that are executed before the command in ExecStart=.
         :param 'SystemdServiceExitType' exit_type: Specifies when the manager should consider the service to be finished.
@@ -472,7 +472,7 @@ class SystemdServiceSection(dict):
 
     @property
     @pulumi.getter
-    def delegate(self) -> Optional[Any]:
+    def delegate(self) -> Optional['SystemdDelegate']:
         """
         Turns on delegation of further resource control partitioning to processes of the unit.
         """

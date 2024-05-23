@@ -5,11 +5,11 @@ package com.unmango.kubernetesthehardway.remote.inputs;
 
 import com.pulumi.core.Output;
 import com.pulumi.core.annotations.Import;
+import com.unmango.kubernetesthehardway.remote.enums.SystemdDelegate;
 import com.unmango.kubernetesthehardway.remote.enums.SystemdKillMode;
 import com.unmango.kubernetesthehardway.remote.enums.SystemdServiceExitType;
 import com.unmango.kubernetesthehardway.remote.enums.SystemdServiceRestart;
 import com.unmango.kubernetesthehardway.remote.enums.SystemdServiceType;
-import com.unmango.kubernetesthehardway.remote.inputs.SystemDelegate;
 import java.lang.Integer;
 import java.lang.String;
 import java.util.Objects;
@@ -30,13 +30,13 @@ public final class SystemdServiceSectionArgs extends com.pulumi.resources.Resour
      * 
      */
     @Import(name="delegate")
-    private @Nullable Output<SystemDelegate> delegate;
+    private @Nullable Output<SystemdDelegate> delegate;
 
     /**
      * @return Turns on delegation of further resource control partitioning to processes of the unit.
      * 
      */
-    public Optional<Output<SystemDelegate>> delegate() {
+    public Optional<Output<SystemdDelegate>> delegate() {
         return Optional.ofNullable(this.delegate);
     }
 
@@ -246,7 +246,7 @@ public final class SystemdServiceSectionArgs extends com.pulumi.resources.Resour
          * @return builder
          * 
          */
-        public Builder delegate(@Nullable Output<SystemDelegate> delegate) {
+        public Builder delegate(@Nullable Output<SystemdDelegate> delegate) {
             $.delegate = delegate;
             return this;
         }
@@ -257,7 +257,7 @@ public final class SystemdServiceSectionArgs extends com.pulumi.resources.Resour
          * @return builder
          * 
          */
-        public Builder delegate(SystemDelegate delegate) {
+        public Builder delegate(SystemdDelegate delegate) {
             return delegate(Output.of(delegate));
         }
 

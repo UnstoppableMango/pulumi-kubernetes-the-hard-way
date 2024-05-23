@@ -20,7 +20,7 @@ namespace UnMango.KubernetesTheHardWay.Remote.Outputs
         /// <summary>
         /// Turns on delegation of further resource control partitioning to processes of the unit.
         /// </summary>
-        public readonly UnMango.KubernetesTheHardWay.Remote.Outputs.SystemDelegate? Delegate;
+        public readonly UnMango.KubernetesTheHardWay.Remote.SystemdDelegate? Delegate;
         /// <summary>
         /// Commands that are executed when this service is started.
         /// </summary>
@@ -68,7 +68,7 @@ namespace UnMango.KubernetesTheHardWay.Remote.Outputs
 
         [OutputConstructor]
         private SystemdServiceSection(
-            UnMango.KubernetesTheHardWay.Remote.Outputs.SystemDelegate? @delegate,
+            UnMango.KubernetesTheHardWay.Remote.SystemdDelegate? @delegate,
 
             string? execStart,
 

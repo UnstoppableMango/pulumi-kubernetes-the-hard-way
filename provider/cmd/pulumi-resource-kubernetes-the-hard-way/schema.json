@@ -960,7 +960,7 @@
             "description": "https://www.freedesktop.org/software/systemd/man/latest/systemd.service.html#",
             "properties": {
                 "delegate": {
-                    "$ref": "#/types/kubernetes-the-hard-way:remote:SystemDelegate",
+                    "$ref": "#/types/kubernetes-the-hard-way:remote:SystemdDelegate",
                     "description": "Turns on delegation of further resource control partitioning to processes of the unit."
                 },
                 "execStart": {

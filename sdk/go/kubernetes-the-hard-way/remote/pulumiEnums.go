@@ -194,6 +194,174 @@ const (
 	SystemdDelegate_Bpf_Devices  = SystemdDelegate("bpf-devices")
 )
 
+func (SystemdDelegate) ElementType() reflect.Type {
+	return reflect.TypeOf((*SystemdDelegate)(nil)).Elem()
+}
+
+func (e SystemdDelegate) ToSystemdDelegateOutput() SystemdDelegateOutput {
+	return pulumi.ToOutput(e).(SystemdDelegateOutput)
+}
+
+func (e SystemdDelegate) ToSystemdDelegateOutputWithContext(ctx context.Context) SystemdDelegateOutput {
+	return pulumi.ToOutputWithContext(ctx, e).(SystemdDelegateOutput)
+}
+
+func (e SystemdDelegate) ToSystemdDelegatePtrOutput() SystemdDelegatePtrOutput {
+	return e.ToSystemdDelegatePtrOutputWithContext(context.Background())
+}
+
+func (e SystemdDelegate) ToSystemdDelegatePtrOutputWithContext(ctx context.Context) SystemdDelegatePtrOutput {
+	return SystemdDelegate(e).ToSystemdDelegateOutputWithContext(ctx).ToSystemdDelegatePtrOutputWithContext(ctx)
+}
+
+func (e SystemdDelegate) ToStringOutput() pulumi.StringOutput {
+	return pulumi.ToOutput(pulumi.String(e)).(pulumi.StringOutput)
+}
+
+func (e SystemdDelegate) ToStringOutputWithContext(ctx context.Context) pulumi.StringOutput {
+	return pulumi.ToOutputWithContext(ctx, pulumi.String(e)).(pulumi.StringOutput)
+}
+
+func (e SystemdDelegate) ToStringPtrOutput() pulumi.StringPtrOutput {
+	return pulumi.String(e).ToStringPtrOutputWithContext(context.Background())
+}
+
+func (e SystemdDelegate) ToStringPtrOutputWithContext(ctx context.Context) pulumi.StringPtrOutput {
+	return pulumi.String(e).ToStringOutputWithContext(ctx).ToStringPtrOutputWithContext(ctx)
+}
+
+type SystemdDelegateOutput struct{ *pulumi.OutputState }
+
+func (SystemdDelegateOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*SystemdDelegate)(nil)).Elem()
+}
+
+func (o SystemdDelegateOutput) ToSystemdDelegateOutput() SystemdDelegateOutput {
+	return o
+}
+
+func (o SystemdDelegateOutput) ToSystemdDelegateOutputWithContext(ctx context.Context) SystemdDelegateOutput {
+	return o
+}
+
+func (o SystemdDelegateOutput) ToSystemdDelegatePtrOutput() SystemdDelegatePtrOutput {
+	return o.ToSystemdDelegatePtrOutputWithContext(context.Background())
+}
+
+func (o SystemdDelegateOutput) ToSystemdDelegatePtrOutputWithContext(ctx context.Context) SystemdDelegatePtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v SystemdDelegate) *SystemdDelegate {
+		return &v
+	}).(SystemdDelegatePtrOutput)
+}
+
+func (o SystemdDelegateOutput) ToStringOutput() pulumi.StringOutput {
+	return o.ToStringOutputWithContext(context.Background())
+}
+
+func (o SystemdDelegateOutput) ToStringOutputWithContext(ctx context.Context) pulumi.StringOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, e SystemdDelegate) string {
+		return string(e)
+	}).(pulumi.StringOutput)
+}
+
+func (o SystemdDelegateOutput) ToStringPtrOutput() pulumi.StringPtrOutput {
+	return o.ToStringPtrOutputWithContext(context.Background())
+}
+
+func (o SystemdDelegateOutput) ToStringPtrOutputWithContext(ctx context.Context) pulumi.StringPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, e SystemdDelegate) *string {
+		v := string(e)
+		return &v
+	}).(pulumi.StringPtrOutput)
+}
+
+type SystemdDelegatePtrOutput struct{ *pulumi.OutputState }
+
+func (SystemdDelegatePtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**SystemdDelegate)(nil)).Elem()
+}
+
+func (o SystemdDelegatePtrOutput) ToSystemdDelegatePtrOutput() SystemdDelegatePtrOutput {
+	return o
+}
+
+func (o SystemdDelegatePtrOutput) ToSystemdDelegatePtrOutputWithContext(ctx context.Context) SystemdDelegatePtrOutput {
+	return o
+}
+
+func (o SystemdDelegatePtrOutput) Elem() SystemdDelegateOutput {
+	return o.ApplyT(func(v *SystemdDelegate) SystemdDelegate {
+		if v != nil {
+			return *v
+		}
+		var ret SystemdDelegate
+		return ret
+	}).(SystemdDelegateOutput)
+}
+
+func (o SystemdDelegatePtrOutput) ToStringPtrOutput() pulumi.StringPtrOutput {
+	return o.ToStringPtrOutputWithContext(context.Background())
+}
+
+func (o SystemdDelegatePtrOutput) ToStringPtrOutputWithContext(ctx context.Context) pulumi.StringPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, e *SystemdDelegate) *string {
+		if e == nil {
+			return nil
+		}
+		v := string(*e)
+		return &v
+	}).(pulumi.StringPtrOutput)
+}
+
+// SystemdDelegateInput is an input type that accepts values of the SystemdDelegate enum
+// A concrete instance of `SystemdDelegateInput` can be one of the following:
+//
+//	SystemdDelegateYes
+//	SystemdDelegateNo
+//	SystemdDelegateCpu
+//	SystemdDelegateCpuacct
+//	SystemdDelegateCpuset
+//	SystemdDelegateIo
+//	SystemdDelegateBlkio
+//	SystemdDelegateMemory
+//	SystemdDelegateDevices
+//	SystemdDelegatePids
+//	SystemdDelegate_Bpf_Firewall
+//	SystemdDelegate_Bpf_Devices
+type SystemdDelegateInput interface {
+	pulumi.Input
+
+	ToSystemdDelegateOutput() SystemdDelegateOutput
+	ToSystemdDelegateOutputWithContext(context.Context) SystemdDelegateOutput
+}
+
+var systemdDelegatePtrType = reflect.TypeOf((**SystemdDelegate)(nil)).Elem()
+
+type SystemdDelegatePtrInput interface {
+	pulumi.Input
+
+	ToSystemdDelegatePtrOutput() SystemdDelegatePtrOutput
+	ToSystemdDelegatePtrOutputWithContext(context.Context) SystemdDelegatePtrOutput
+}
+
+type systemdDelegatePtr string
+
+func SystemdDelegatePtr(v string) SystemdDelegatePtrInput {
+	return (*systemdDelegatePtr)(&v)
+}
+
+func (*systemdDelegatePtr) ElementType() reflect.Type {
+	return systemdDelegatePtrType
+}
+
+func (in *systemdDelegatePtr) ToSystemdDelegatePtrOutput() SystemdDelegatePtrOutput {
+	return pulumi.ToOutput(in).(SystemdDelegatePtrOutput)
+}
+
+func (in *systemdDelegatePtr) ToSystemdDelegatePtrOutputWithContext(ctx context.Context) SystemdDelegatePtrOutput {
+	return pulumi.ToOutputWithContext(ctx, in).(SystemdDelegatePtrOutput)
+}
+
 // https://www.freedesktop.org/software/systemd/man/latest/systemd.kill.html#Description
 type SystemdKillMode string
 
@@ -887,6 +1055,8 @@ func (in *systemdServiceTypePtr) ToSystemdServiceTypePtrOutputWithContext(ctx co
 func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*ArchitectureInput)(nil)).Elem(), Architecture("amd64"))
 	pulumi.RegisterInputType(reflect.TypeOf((*ArchitecturePtrInput)(nil)).Elem(), Architecture("amd64"))
+	pulumi.RegisterInputType(reflect.TypeOf((*SystemdDelegateInput)(nil)).Elem(), SystemdDelegate("yes"))
+	pulumi.RegisterInputType(reflect.TypeOf((*SystemdDelegatePtrInput)(nil)).Elem(), SystemdDelegate("yes"))
 	pulumi.RegisterInputType(reflect.TypeOf((*SystemdKillModeInput)(nil)).Elem(), SystemdKillMode("control-group"))
 	pulumi.RegisterInputType(reflect.TypeOf((*SystemdKillModePtrInput)(nil)).Elem(), SystemdKillMode("control-group"))
 	pulumi.RegisterInputType(reflect.TypeOf((*SystemdServiceExitTypeInput)(nil)).Elem(), SystemdServiceExitType("main"))
@@ -897,6 +1067,8 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*SystemdServiceTypePtrInput)(nil)).Elem(), SystemdServiceType("simple"))
 	pulumi.RegisterOutputType(ArchitectureOutput{})
 	pulumi.RegisterOutputType(ArchitecturePtrOutput{})
+	pulumi.RegisterOutputType(SystemdDelegateOutput{})
+	pulumi.RegisterOutputType(SystemdDelegatePtrOutput{})
 	pulumi.RegisterOutputType(SystemdKillModeOutput{})
 	pulumi.RegisterOutputType(SystemdKillModePtrOutput{})
 	pulumi.RegisterOutputType(SystemdServiceExitTypeOutput{})
