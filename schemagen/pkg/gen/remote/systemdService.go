@@ -148,7 +148,7 @@ func generateSystemdService(commandSpec schema.PackageSpec) schema.PackageSpec {
 					Properties: map[string]schema.PropertySpec{
 						"delegate": {
 							Description: "Turns on delegation of further resource control partitioning to processes of the unit.",
-							TypeSpec:    types.LocalType("SystemDelegate", "remote"),
+							TypeSpec:    types.LocalType("SystemdDelegate", "remote"),
 						},
 						"execStart":    props.String("Commands that are executed when this service is started."), // This can technically be an array when type is oneshot
 						"execStartPre": props.String("Additional commands that are executed before the command in ExecStart=."),
