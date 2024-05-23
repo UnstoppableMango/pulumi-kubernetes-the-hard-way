@@ -1,5 +1,6 @@
 export * from './cniPlugins';
 export * from './containerd';
+export * from './containerdService';
 export * from './crictl';
 export * from './download';
 export * from './etcdCluster';
