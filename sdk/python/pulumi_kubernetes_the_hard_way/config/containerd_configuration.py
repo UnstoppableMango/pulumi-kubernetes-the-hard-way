@@ -11,10 +11,10 @@ from .. import _utilities
 from . import outputs
 from ._inputs import *
 
-__all__ = ['ContainerdConfigurationArgs', 'ContainerdConfiguration']
+__all__ = ['ContainerdConfigurationInitArgs', 'ContainerdConfiguration']
 
 @pulumi.input_type
-class ContainerdConfigurationArgs:
+class ContainerdConfigurationInitArgs:
     def __init__(__self__, *,
                  cri: Optional['ContainerdCriPluginConfigurationArgs'] = None):
         """
@@ -55,18 +55,18 @@ class ContainerdConfiguration(pulumi.ComponentResource):
     @overload
     def __init__(__self__,
                  resource_name: str,
-                 args: Optional[ContainerdConfigurationArgs] = None,
+                 args: Optional[ContainerdConfigurationInitArgs] = None,
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
         Get the containerd configuration.
 
         :param str resource_name: The name of the resource.
-        :param ContainerdConfigurationArgs args: The arguments to use to populate this resource's properties.
+        :param ContainerdConfigurationInitArgs args: The arguments to use to populate this resource's properties.
         :param pulumi.ResourceOptions opts: Options for the resource.
         """
         ...
     def __init__(__self__, resource_name: str, *args, **kwargs):
-        resource_args, opts = _utilities.get_resource_args_opts(ContainerdConfigurationArgs, pulumi.ResourceOptions, *args, **kwargs)
+        resource_args, opts = _utilities.get_resource_args_opts(ContainerdConfigurationInitArgs, pulumi.ResourceOptions, *args, **kwargs)
         if resource_args is not None:
             __self__._internal_init(resource_name, opts, **resource_args.__dict__)
         else:
@@ -85,7 +85,7 @@ class ContainerdConfiguration(pulumi.ComponentResource):
         else:
             if __props__ is not None:
                 raise TypeError('__props__ is only valid when passed in combination with a valid opts.id to get an existing resource')
-            __props__ = ContainerdConfigurationArgs.__new__(ContainerdConfigurationArgs)
+            __props__ = ContainerdConfigurationInitArgs.__new__(ContainerdConfigurationInitArgs)
 
             __props__.__dict__["cri"] = cri
             __props__.__dict__["result"] = None

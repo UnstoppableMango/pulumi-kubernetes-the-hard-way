@@ -8,6 +8,7 @@ import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
 from .. import _utilities
+from .. import config as _config
 from ._enums import *
 from .systemd_service import SystemdService
 import pulumi_command
@@ -17,7 +18,7 @@ __all__ = ['ContainerdServiceArgs', 'ContainerdService']
 @pulumi.input_type
 class ContainerdServiceArgs:
     def __init__(__self__, *,
-                 configuration: Any,
+                 configuration: pulumi.Input['_config.ContainerdConfigurationArgs'],
                  connection: pulumi.Input['pulumi_command.remote.ConnectionArgs'],
                  containerd_path: Optional[pulumi.Input[str]] = None,
                  description: Optional[pulumi.Input[str]] = None,
@@ -28,7 +29,7 @@ class ContainerdServiceArgs:
                  wanted_by: Optional[pulumi.Input[str]] = None):
         """
         The set of arguments for constructing a ContainerdService resource.
-        :param Any configuration: Containerd configuration.
+        :param pulumi.Input['_config.ContainerdConfigurationArgs'] configuration: Containerd configuration.
         :param pulumi.Input['pulumi_command.remote.ConnectionArgs'] connection: The parameters with which to connect to the remote host.
         :param pulumi.Input[str] containerd_path: Path to the containerd binary
         :param pulumi.Input[str] description: Optional systemd unit description.
@@ -57,14 +58,14 @@ class ContainerdServiceArgs:
 
     @property
     @pulumi.getter
-    def configuration(self) -> Any:
+    def configuration(self) -> pulumi.Input['_config.ContainerdConfigurationArgs']:
         """
         Containerd configuration.
         """
         return pulumi.get(self, "configuration")
 
     @configuration.setter
-    def configuration(self, value: Any):
+    def configuration(self, value: pulumi.Input['_config.ContainerdConfigurationArgs']):
         pulumi.set(self, "configuration", value)
 
     @property
@@ -169,7 +170,7 @@ class ContainerdService(pulumi.ComponentResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 configuration: Optional[Any] = None,
+                 configuration: Optional[pulumi.Input[pulumi.InputType['_config.ContainerdConfigurationArgs']]] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
                  containerd_path: Optional[pulumi.Input[str]] = None,
                  description: Optional[pulumi.Input[str]] = None,
@@ -184,7 +185,7 @@ class ContainerdService(pulumi.ComponentResource):
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param Any configuration: Containerd configuration.
+        :param pulumi.Input[pulumi.InputType['_config.ContainerdConfigurationArgs']] configuration: Containerd configuration.
         :param pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']] connection: The parameters with which to connect to the remote host.
         :param pulumi.Input[str] containerd_path: Path to the containerd binary
         :param pulumi.Input[str] description: Optional systemd unit description.
@@ -218,7 +219,7 @@ class ContainerdService(pulumi.ComponentResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 configuration: Optional[Any] = None,
+                 configuration: Optional[pulumi.Input[pulumi.InputType['_config.ContainerdConfigurationArgs']]] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
                  containerd_path: Optional[pulumi.Input[str]] = None,
                  description: Optional[pulumi.Input[str]] = None,
@@ -261,7 +262,7 @@ class ContainerdService(pulumi.ComponentResource):
 
     @property
     @pulumi.getter
-    def configuration(self) -> pulumi.Output[Any]:
+    def configuration(self) -> pulumi.Output['_config.outputs.ContainerdConfiguration']:
         """
         Containerd configuration.
         """

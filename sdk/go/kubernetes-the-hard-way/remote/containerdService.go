@@ -10,6 +10,7 @@ import (
 	"errors"
 	pulumiCommand "github.com/pulumi/pulumi-command/sdk/go/command/remote"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/sdk/go/kubernetes-the-hard-way/config"
 	"github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/sdk/go/kubernetes-the-hard-way/internal"
 )
 
@@ -18,7 +19,7 @@ type ContainerdService struct {
 	pulumi.ResourceState
 
 	// Containerd configuration.
-	Configuration ContainerdConfigurationOutput `pulumi:"configuration"`
+	Configuration config.ContainerdConfigurationTypeOutput `pulumi:"configuration"`
 	// The parameters with which to connect to the remote host.
 	Connection pulumiCommand.ConnectionOutput `pulumi:"connection"`
 	// Path to the containerd binary
@@ -64,7 +65,7 @@ func NewContainerdService(ctx *pulumi.Context,
 
 type containerdServiceArgs struct {
 	// Containerd configuration.
-	Configuration ContainerdConfiguration `pulumi:"configuration"`
+	Configuration config.ContainerdConfigurationType `pulumi:"configuration"`
 	// The parameters with which to connect to the remote host.
 	Connection pulumiCommand.Connection `pulumi:"connection"`
 	// Path to the containerd binary
@@ -86,7 +87,7 @@ type containerdServiceArgs struct {
 // The set of arguments for constructing a ContainerdService resource.
 type ContainerdServiceArgs struct {
 	// Containerd configuration.
-	Configuration ContainerdConfigurationInput
+	Configuration config.ContainerdConfigurationTypeInput
 	// The parameters with which to connect to the remote host.
 	Connection pulumiCommand.ConnectionInput
 	// Path to the containerd binary
@@ -193,8 +194,8 @@ func (o ContainerdServiceOutput) ToContainerdServiceOutputWithContext(ctx contex
 }
 
 // Containerd configuration.
-func (o ContainerdServiceOutput) Configuration() ContainerdConfigurationOutput {
-	return o.ApplyT(func(v *ContainerdService) ContainerdConfigurationOutput { return v.Configuration }).(ContainerdConfigurationOutput)
+func (o ContainerdServiceOutput) Configuration() config.ContainerdConfigurationTypeOutput {
+	return o.ApplyT(func(v *ContainerdService) config.ContainerdConfigurationTypeOutput { return v.Configuration }).(config.ContainerdConfigurationTypeOutput)
 }
 
 // The parameters with which to connect to the remote host.

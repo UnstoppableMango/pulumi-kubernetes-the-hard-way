@@ -2691,7 +2691,7 @@
             "description": "Containerd systemd service file. Will likely get replaced with a static function when https://github.com/pulumi/pulumi/issues/7583 gets resolved.",
             "properties": {
                 "configuration": {
-                    "$ref": "#/types/kubernetes-the-hard-way:remote:ContainerdConfiguration",
+                    "$ref": "#/types/kubernetes-the-hard-way:config:ContainerdConfiguration",
                     "description": "Containerd configuration."
                 },
                 "connection": {
@@ -2738,7 +2738,7 @@
             ],
             "inputProperties": {
                 "configuration": {
-                    "$ref": "#/types/kubernetes-the-hard-way:remote:ContainerdConfiguration",
+                    "$ref": "#/types/kubernetes-the-hard-way:config:ContainerdConfiguration",
                     "description": "Containerd configuration."
                 },
                 "connection": {

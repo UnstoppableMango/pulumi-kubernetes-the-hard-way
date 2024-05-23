@@ -49,6 +49,16 @@ export namespace config {
     }
 
     /**
+     * The containerd configuration.
+     */
+    export interface ContainerdConfigurationArgs {
+        /**
+         * The cri configuration.
+         */
+        cri?: pulumi.Input<inputs.config.ContainerdCriPluginConfigurationArgs>;
+    }
+
+    /**
      * containerd cri plugin configuration.
      */
     export interface ContainerdCriPluginConfiguration {

@@ -9,7 +9,7 @@ import * as utilities from "../utilities";
 
 import * as pulumiCommand from "@pulumi/command";
 
-import {ContainerdConfiguration, SystemdService} from "./index";
+import {SystemdService} from "./index";
 
 /**
  * Containerd systemd service file. Will likely get replaced with a static function when https://github.com/pulumi/pulumi/issues/7583 gets resolved.
@@ -32,7 +32,7 @@ export class ContainerdService extends pulumi.ComponentResource {
     /**
      * Containerd configuration.
      */
-    public readonly configuration!: pulumi.Output<ContainerdConfiguration>;
+    public readonly configuration!: pulumi.Output<outputs.config.ContainerdConfiguration>;
     /**
      * The parameters with which to connect to the remote host.
      */
@@ -121,7 +121,7 @@ export interface ContainerdServiceArgs {
     /**
      * Containerd configuration.
      */
-    configuration: pulumi.Input<ContainerdConfiguration>;
+    configuration: pulumi.Input<inputs.config.ContainerdConfigurationArgs>;
     /**
      * The parameters with which to connect to the remote host.
      */
