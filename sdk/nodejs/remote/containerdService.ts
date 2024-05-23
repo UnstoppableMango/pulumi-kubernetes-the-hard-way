@@ -38,6 +38,10 @@ export class ContainerdService extends pulumi.ComponentResource {
      */
     public readonly connection!: pulumi.Output<pulumiCommand.types.output.remote.Connection>;
     /**
+     * Path to the containerd binary
+     */
+    public readonly containerdPath!: pulumi.Output<string | undefined>;
+    /**
      * Optional systemd unit description.
      */
     public readonly description!: pulumi.Output<string | undefined>;
@@ -85,6 +89,7 @@ export class ContainerdService extends pulumi.ComponentResource {
             }
             resourceInputs["configuration"] = args ? args.configuration : undefined;
             resourceInputs["connection"] = args ? (args.connection ? pulumi.output(args.connection).apply(pulumiCommand.types.input.remote.connectionArgsProvideDefaults) : undefined) : undefined;
+            resourceInputs["containerdPath"] = args ? args.containerdPath : undefined;
             resourceInputs["description"] = args ? args.description : undefined;
             resourceInputs["directory"] = args ? args.directory : undefined;
             resourceInputs["documentation"] = args ? args.documentation : undefined;
@@ -95,6 +100,7 @@ export class ContainerdService extends pulumi.ComponentResource {
         } else {
             resourceInputs["configuration"] = undefined /*out*/;
             resourceInputs["connection"] = undefined /*out*/;
+            resourceInputs["containerdPath"] = undefined /*out*/;
             resourceInputs["description"] = undefined /*out*/;
             resourceInputs["directory"] = undefined /*out*/;
             resourceInputs["documentation"] = undefined /*out*/;
@@ -120,6 +126,10 @@ export interface ContainerdServiceArgs {
      * The parameters with which to connect to the remote host.
      */
     connection: pulumi.Input<pulumiCommand.types.input.remote.ConnectionArgs>;
+    /**
+     * Path to the containerd binary
+     */
+    containerdPath?: pulumi.Input<string>;
     /**
      * Optional systemd unit description.
      */

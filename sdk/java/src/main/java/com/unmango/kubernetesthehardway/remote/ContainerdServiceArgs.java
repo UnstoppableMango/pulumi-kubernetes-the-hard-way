@@ -50,6 +50,21 @@ public final class ContainerdServiceArgs extends com.pulumi.resources.ResourceAr
     }
 
     /**
+     * Path to the containerd binary
+     * 
+     */
+    @Import(name="containerdPath")
+    private @Nullable Output<String> containerdPath;
+
+    /**
+     * @return Path to the containerd binary
+     * 
+     */
+    public Optional<Output<String>> containerdPath() {
+        return Optional.ofNullable(this.containerdPath);
+    }
+
+    /**
      * Optional systemd unit description.
      * 
      */
@@ -144,6 +159,7 @@ public final class ContainerdServiceArgs extends com.pulumi.resources.ResourceAr
     private ContainerdServiceArgs(ContainerdServiceArgs $) {
         this.configuration = $.configuration;
         this.connection = $.connection;
+        this.containerdPath = $.containerdPath;
         this.description = $.description;
         this.directory = $.directory;
         this.documentation = $.documentation;
@@ -210,6 +226,27 @@ public final class ContainerdServiceArgs extends com.pulumi.resources.ResourceAr
          */
         public Builder connection(ConnectionArgs connection) {
             return connection(Output.of(connection));
+        }
+
+        /**
+         * @param containerdPath Path to the containerd binary
+         * 
+         * @return builder
+         * 
+         */
+        public Builder containerdPath(@Nullable Output<String> containerdPath) {
+            $.containerdPath = containerdPath;
+            return this;
+        }
+
+        /**
+         * @param containerdPath Path to the containerd binary
+         * 
+         * @return builder
+         * 
+         */
+        public Builder containerdPath(String containerdPath) {
+            return containerdPath(Output.of(containerdPath));
         }
 
         /**

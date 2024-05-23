@@ -29,6 +29,12 @@ namespace UnMango.KubernetesTheHardWay.Remote
         public Output<Pulumi.Command.Remote.Outputs.Connection> Connection { get; private set; } = null!;
 
         /// <summary>
+        /// Path to the containerd binary
+        /// </summary>
+        [Output("containerdPath")]
+        public Output<string?> ContainerdPath { get; private set; } = null!;
+
+        /// <summary>
         /// Optional systemd unit description.
         /// </summary>
         [Output("description")]
@@ -110,6 +116,12 @@ namespace UnMango.KubernetesTheHardWay.Remote
         /// </summary>
         [Input("connection", required: true)]
         public Input<Pulumi.Command.Remote.Inputs.ConnectionArgs> Connection { get; set; } = null!;
+
+        /// <summary>
+        /// Path to the containerd binary
+        /// </summary>
+        [Input("containerdPath")]
+        public Input<string>? ContainerdPath { get; set; }
 
         /// <summary>
         /// Optional systemd unit description.

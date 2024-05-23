@@ -19,6 +19,7 @@ class ContainerdServiceArgs:
     def __init__(__self__, *,
                  configuration: Any,
                  connection: pulumi.Input['pulumi_command.remote.ConnectionArgs'],
+                 containerd_path: Optional[pulumi.Input[str]] = None,
                  description: Optional[pulumi.Input[str]] = None,
                  directory: Optional[pulumi.Input[str]] = None,
                  documentation: Optional[pulumi.Input[str]] = None,
@@ -29,6 +30,7 @@ class ContainerdServiceArgs:
         The set of arguments for constructing a ContainerdService resource.
         :param Any configuration: Containerd configuration.
         :param pulumi.Input['pulumi_command.remote.ConnectionArgs'] connection: The parameters with which to connect to the remote host.
+        :param pulumi.Input[str] containerd_path: Path to the containerd binary
         :param pulumi.Input[str] description: Optional systemd unit description.
         :param pulumi.Input[str] directory: The location to create the service file.
         :param pulumi.Input[str] documentation: Optional systemd unit documentation
@@ -38,6 +40,8 @@ class ContainerdServiceArgs:
         """
         pulumi.set(__self__, "configuration", configuration)
         pulumi.set(__self__, "connection", connection)
+        if containerd_path is not None:
+            pulumi.set(__self__, "containerd_path", containerd_path)
         if description is not None:
             pulumi.set(__self__, "description", description)
         if directory is not None:
@@ -74,6 +78,18 @@ class ContainerdServiceArgs:
     @connection.setter
     def connection(self, value: pulumi.Input['pulumi_command.remote.ConnectionArgs']):
         pulumi.set(self, "connection", value)
+
+    @property
+    @pulumi.getter(name="containerdPath")
+    def containerd_path(self) -> Optional[pulumi.Input[str]]:
+        """
+        Path to the containerd binary
+        """
+        return pulumi.get(self, "containerd_path")
+
+    @containerd_path.setter
+    def containerd_path(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "containerd_path", value)
 
     @property
     @pulumi.getter
@@ -155,6 +171,7 @@ class ContainerdService(pulumi.ComponentResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  configuration: Optional[Any] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
+                 containerd_path: Optional[pulumi.Input[str]] = None,
                  description: Optional[pulumi.Input[str]] = None,
                  directory: Optional[pulumi.Input[str]] = None,
                  documentation: Optional[pulumi.Input[str]] = None,
@@ -169,6 +186,7 @@ class ContainerdService(pulumi.ComponentResource):
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param Any configuration: Containerd configuration.
         :param pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']] connection: The parameters with which to connect to the remote host.
+        :param pulumi.Input[str] containerd_path: Path to the containerd binary
         :param pulumi.Input[str] description: Optional systemd unit description.
         :param pulumi.Input[str] directory: The location to create the service file.
         :param pulumi.Input[str] documentation: Optional systemd unit documentation
@@ -202,6 +220,7 @@ class ContainerdService(pulumi.ComponentResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  configuration: Optional[Any] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
+                 containerd_path: Optional[pulumi.Input[str]] = None,
                  description: Optional[pulumi.Input[str]] = None,
                  directory: Optional[pulumi.Input[str]] = None,
                  documentation: Optional[pulumi.Input[str]] = None,
@@ -225,6 +244,7 @@ class ContainerdService(pulumi.ComponentResource):
             if connection is None and not opts.urn:
                 raise TypeError("Missing required property 'connection'")
             __props__.__dict__["connection"] = connection
+            __props__.__dict__["containerd_path"] = containerd_path
             __props__.__dict__["description"] = description
             __props__.__dict__["directory"] = directory
             __props__.__dict__["documentation"] = documentation
@@ -254,6 +274,14 @@ class ContainerdService(pulumi.ComponentResource):
         The parameters with which to connect to the remote host.
         """
         return pulumi.get(self, "connection")
+
+    @property
+    @pulumi.getter(name="containerdPath")
+    def containerd_path(self) -> pulumi.Output[Optional[str]]:
+        """
+        Path to the containerd binary
+        """
+        return pulumi.get(self, "containerd_path")
 
     @property
     @pulumi.getter

@@ -21,6 +21,8 @@ type ContainerdService struct {
 	Configuration ContainerdConfigurationPropsOutput `pulumi:"configuration"`
 	// The parameters with which to connect to the remote host.
 	Connection pulumiCommand.ConnectionOutput `pulumi:"connection"`
+	// Path to the containerd binary
+	ContainerdPath pulumi.StringPtrOutput `pulumi:"containerdPath"`
 	// Optional systemd unit description.
 	Description pulumi.StringPtrOutput `pulumi:"description"`
 	// The location to create the service file.
@@ -65,6 +67,8 @@ type containerdServiceArgs struct {
 	Configuration ContainerdConfigurationProps `pulumi:"configuration"`
 	// The parameters with which to connect to the remote host.
 	Connection pulumiCommand.Connection `pulumi:"connection"`
+	// Path to the containerd binary
+	ContainerdPath *string `pulumi:"containerdPath"`
 	// Optional systemd unit description.
 	Description *string `pulumi:"description"`
 	// The location to create the service file.
@@ -85,6 +89,8 @@ type ContainerdServiceArgs struct {
 	Configuration ContainerdConfigurationPropsInput
 	// The parameters with which to connect to the remote host.
 	Connection pulumiCommand.ConnectionInput
+	// Path to the containerd binary
+	ContainerdPath pulumi.StringPtrInput
 	// Optional systemd unit description.
 	Description pulumi.StringPtrInput
 	// The location to create the service file.
@@ -194,6 +200,11 @@ func (o ContainerdServiceOutput) Configuration() ContainerdConfigurationPropsOut
 // The parameters with which to connect to the remote host.
 func (o ContainerdServiceOutput) Connection() pulumiCommand.ConnectionOutput {
 	return o.ApplyT(func(v *ContainerdService) pulumiCommand.ConnectionOutput { return v.Connection }).(pulumiCommand.ConnectionOutput)
+}
+
+// Path to the containerd binary
+func (o ContainerdServiceOutput) ContainerdPath() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *ContainerdService) pulumi.StringPtrOutput { return v.ContainerdPath }).(pulumi.StringPtrOutput)
 }
 
 // Optional systemd unit description.

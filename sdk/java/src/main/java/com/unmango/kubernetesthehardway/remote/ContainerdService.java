@@ -52,6 +52,20 @@ public class ContainerdService extends com.pulumi.resources.ComponentResource {
         return this.connection;
     }
     /**
+     * Path to the containerd binary
+     * 
+     */
+    @Export(name="containerdPath", refs={String.class}, tree="[0]")
+    private Output</* @Nullable */ String> containerdPath;
+
+    /**
+     * @return Path to the containerd binary
+     * 
+     */
+    public Output<Optional<String>> containerdPath() {
+        return Codegen.optional(this.containerdPath);
+    }
+    /**
      * Optional systemd unit description.
      * 
      */
