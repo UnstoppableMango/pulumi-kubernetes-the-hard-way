@@ -18,6 +18,7 @@ import { KubeletInstall } from './kubeletInstall';
 import { KubeletService } from './kubeletService';
 import { KubeProxyService } from './kubeProxyService';
 import { KubeProxyInstall } from './kubeProxyInstall';
+import { yamlStringify } from '../util';
 
 export class WorkerNode extends schema.WorkerNode {
   constructor(name: string, args: schema.WorkerNodeArgs, opts?: ComponentResourceOptions) {
@@ -27,15 +28,21 @@ export class WorkerNode extends schema.WorkerNode {
     const architecture = output(args.architecture);
     const caPath = output(args.caPath);
     const clusterCIDR = output(args.clusterCIDR ?? '10.200.0.0/16');
+    const cniBridge = output(args.cniBridge);
+    const cniLoopback = output(args.cniLoopback);
     const connection = output(args.connection);
+    const containerd = output(args.containerd)
     const cniConfigurationDirectory = output(args.cniConfigurationDirectory ?? '/etc/cni/net.d');
     const containerdConfigurationDirectory = output(args.containerdConfigurationDirectory ?? '/etc/containerd');
+    const kubelet = output(args.kubelet);
     const kubeletCertificatePath = output(args.kubeletCertificatePath);
     const kubeletConfigurationDirectory = output(args.kubeletConfigurationDirectory ?? '/var/lib/kubelet');
-    const kubeletKubeconfigPath = output(args.kubeletKubeconfigPath ?? interpolate`${kubeletConfigurationDirectory}/kubeconfig`);
+    // const kubeletKubeconfigPath = output(args.kubeletKubeconfigPath ?? '/var/lib/kubelet/kubeconfig');
+    const kubeProxy = output(args.kubeProxy).apply(kubeProxyDefauls);
     const kubeletPrivateKeyPath = output(args.kubeletPrivateKeyPath);
     const kubeProxyConfigurationDirectory = output(args.kubeProxyConfigurationDirectory ?? '/var/lib/kube-proxy');
-    const kubeProxyKubeconfigPath = output(args.kubeProxyKubeconfigPath ?? interpolate`${kubeProxyConfigurationDirectory}/kubeconfig`);
+    // const kubeProxyKubeconfigPath = output(args.kubeProxyKubeconfigPath ?? '/var/lib/kube-proxy/kubeconfig');
+    const kubernetesVersion = output(args.kubernetesVersion ?? '1.30.1');
     const kubernetesVersion = output(args.kubernetesVersion ?? '1.30.0');
     const subnet = output(args.subnet);
 
@@ -196,15 +203,9 @@ export class WorkerNode extends schema.WorkerNode {
       requires: ['containerd.service'],
     }, { parent: this });
 
-    const kubeProxyConfiguration = new KubeProxyConfiguration(name, {
-      clusterCIDR,
-      kubeconfig: kubeProxyKubeconfigPath,
-      mode: undefined, // TODO
-    }, { parent: this });
-
     const kubeProxyConfigurationFile = new File(`${name}-kube-proxy`, {
       connection,
-      content: kubeProxyConfiguration.yaml,
+      content: yamlStringify(kubeProxy),
       path: interpolate`${kubeProxyConfigurationDirectory}/kube-proxy-config.yaml`,
     }, { parent: this, dependsOn: kubeProxyMkdir });
 
@@ -320,4 +321,8 @@ export class WorkerNode extends schema.WorkerNode {
       varRunKubernetesMkdir,
     });
   }
+}
+
+function kubeProxyDefauls(input?: schema.KubeProxyConfigurationInputs): schema.KubeProxyConfigurationOutputs {
+  return {};
 }
