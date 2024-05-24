@@ -30,9 +30,9 @@ export class WorkerNode extends schema.WorkerNode {
     const cniConfigurationDirectory = output(args.cniConfigurationDirectory ?? '/etc/cni/net.d');
     const containerdConfigurationDirectory = output(args.containerdConfigurationDirectory ?? '/etc/containerd');
     const kubeletConfigurationDirectory = output(args.kubeletConfigurationDirectory ?? '/var/lib/kubelet');
-    const kubeletKubeconfigPath = output(args.kubeletKubeconfigPath ?? 'TODO');
+    const kubeletKubeconfigPath = output(args.kubeletKubeconfigPath ?? '/var/lib/kubelet/kubeconfig');
     const kubeProxyConfigurationDirectory = output(args.kubeProxyConfigurationDirectory ?? '/var/lib/kube-proxy');
-    const kubeProxyKubeconfigPath = output(args.kubeProxyKubeconfigPath ?? 'TODO');
+    const kubeProxyKubeconfigPath = output(args.kubeProxyKubeconfigPath ?? '/var/lib/kube-proxy/kubeconfig');
     const kubernetesVersion = output(args.kubernetesVersion ?? '1.29.2');
     const podCIDR = output(args.podCIDR);
     const subnet = output(args.subnet);
