@@ -2,7 +2,13 @@ import { ComponentResourceOptions, interpolate, output } from '@pulumi/pulumi';
 import * as schema from '../schema-types';
 import { CniPluginsInstall } from './cniPlugins';
 import { Mkdir } from '../tools';
-import { CniBridgePluginConfiguration, CniLoopbackPluginConfiguration, ContainerdConfiguration, KubeletConfiguration } from '../config';
+import {
+  CniBridgePluginConfiguration,
+  CniLoopbackPluginConfiguration,
+  ContainerdConfiguration,
+  KubeProxyConfiguration,
+  KubeletConfiguration,
+} from '../config';
 import { File } from './file';
 import { ContainerdInstall } from './containerd';
 import { ContainerdService } from './containerdService';
@@ -10,6 +16,7 @@ import { CrictlInstall } from './crictl';
 import { KubectlInstall } from './kubectl';
 import { KubeletInstall } from './kubelet';
 import { KubeletService } from './kubeletService';
+import { KubeProxyService } from './kubeProxyService';
 
 export class WorkerNode extends schema.WorkerNode {
   constructor(name: string, args: schema.WorkerNodeArgs, opts?: ComponentResourceOptions) {
@@ -150,6 +157,25 @@ export class WorkerNode extends schema.WorkerNode {
       requires: [], // TODO
     }, { parent: this });
 
+    const kubeProxyConfiguration = new KubeProxyConfiguration(name, {
+      clusterCIDR: '',
+      kubeconfig: '',
+    }, { parent: this });
+
+    const kubeProxyConfigurationFile = new File(`${name}-kube-proxy`, {
+      connection,
+      content: kubeProxyConfiguration.yaml,
+      path: interpolate`/var/lib/kube-proxy/kube-proxy-config.yaml`,
+    }, { parent: this, dependsOn: kubeProxyMkdir });
+
+    const kubeProxyService = new KubeProxyService(name, {
+      connection,
+      configuration: {
+        configurationFilePath: '',
+        kubeProxyPath: '',
+      },
+    }, { parent: this });
+
     this.cniMkdir = cniMkdir;
     this.cniBridgeConfiguration = cniBridgeConfiguration;
     this.cniBridgeConfigurationFile = cniBridgeConfigurationFile;
@@ -158,6 +184,7 @@ export class WorkerNode extends schema.WorkerNode {
     this.connection = connection;
     this.containerdConfiguration = containerdConfiguration;
     this.containerdConfigurationFile = containerdConfigurationFile;
+    this.containerdMkdir = containerdMkdir;
     this.containerdInstall = containerdInstall;
     this.containerdService = containerdService;
     this.crictlInstall = crictlInstall;
@@ -167,7 +194,10 @@ export class WorkerNode extends schema.WorkerNode {
     this.kubeletInstall = kubeletInstall;
     this.kubeletMkdir = kubeletMkdir;
     this.kubeletService = kubeletService;
+    this.kubeProxyConfiguration = kubeProxyConfiguration;
+    this.kubeProxyConfigurationFile = kubeProxyConfigurationFile;
     this.kubeProxyMkdir = kubeProxyMkdir;
+    this.kubeProxyService = kubeProxyService;
     this.varLibKubernetesMkdir = varLibKubernetesMkdir;
     this.varRunKubernetesMkdir = varRunKubernetesMkdir;
 
@@ -178,8 +208,17 @@ export class WorkerNode extends schema.WorkerNode {
       cniLoopbackConfiguration,
       cniLoopbackConfigurationFile,
       connection,
+      containerdConfiguration,
+      containerdConfigurationFile,
+      containerdInstall,
+      containerdMkdir,
+      crictlInstall,
       kubeletMkdir,
+      kubeletService,
+      kubeProxyConfiguration,
+      kubeProxyConfigurationFile,
       kubeProxyMkdir,
+      kubeProxyService,
       varLibKubernetesMkdir,
       varRunKubernetesMkdir,
     });
