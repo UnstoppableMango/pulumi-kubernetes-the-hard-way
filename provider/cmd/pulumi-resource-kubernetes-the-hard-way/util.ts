@@ -1,6 +1,11 @@
-import { ComponentResource } from '@pulumi/pulumi';
-import { AllowedUsage } from './types';
+import * as YAML from 'yaml';
+import { ComponentResource, Inputs, Output, output } from '@pulumi/pulumi';
 import { ConstructResult } from '@pulumi/pulumi/provider';
+import { AllowedUsage } from './types';
+
+export function yamlStringify(input: Inputs): Output<string> {
+  return output(input).apply(YAML.stringify);
+}
 
 export function isAllowedUsage(value: string): value is AllowedUsage {
   return Object.values(AllowedUsage).some(x => x === value);
