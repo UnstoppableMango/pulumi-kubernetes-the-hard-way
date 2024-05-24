@@ -23,10 +23,22 @@ namespace UnMango.KubernetesTheHardWay.Remote
         public Output<UnMango.KubernetesTheHardWay.Remote.Architecture> Architecture { get; private set; } = null!;
 
         /// <summary>
+        /// The path to the cluster certificate authority file.
+        /// </summary>
+        [Output("caPath")]
+        public Output<string> CaPath { get; private set; } = null!;
+
+        /// <summary>
         /// The CIDR to use for the cluster.
         /// </summary>
         [Output("clusterCIDR")]
         public Output<string?> ClusterCIDR { get; private set; } = null!;
+
+        /// <summary>
+        /// The domain for the cluster to use. Defaults to cluster.local.
+        /// </summary>
+        [Output("clusterDomain")]
+        public Output<string?> ClusterDomain { get; private set; } = null!;
 
         /// <summary>
         /// The CNI bridge plugin configuration.
@@ -209,6 +221,12 @@ namespace UnMango.KubernetesTheHardWay.Remote
         public Output<string?> KubectlInstallDirectory { get; private set; } = null!;
 
         /// <summary>
+        /// The path to the kubelet certificate.
+        /// </summary>
+        [Output("kubeletCertificatePath")]
+        public Output<string> KubeletCertificatePath { get; private set; } = null!;
+
+        /// <summary>
         /// The kubelet configuration
         /// </summary>
         [Output("kubeletConfiguration")]
@@ -251,6 +269,12 @@ namespace UnMango.KubernetesTheHardWay.Remote
         public Output<UnMango.KubernetesTheHardWay.Tools.Mkdir> KubeletMkdir { get; private set; } = null!;
 
         /// <summary>
+        /// The path to the kubelet private key file.
+        /// </summary>
+        [Output("kubeletPrivateKeyPath")]
+        public Output<string> KubeletPrivateKeyPath { get; private set; } = null!;
+
+        /// <summary>
         /// The kubelet systemd service.
         /// </summary>
         [Output("kubeletService")]
@@ -263,19 +287,13 @@ namespace UnMango.KubernetesTheHardWay.Remote
         public Output<string?> KubernetesVersion { get; private set; } = null!;
 
         /// <summary>
-        /// The pod CIDR to use.
-        /// </summary>
-        [Output("podCIDR")]
-        public Output<string> PodCIDR { get; private set; } = null!;
-
-        /// <summary>
         /// The runc install.
         /// </summary>
         [Output("runcInstall")]
         public Output<UnMango.KubernetesTheHardWay.Remote.RuncInstall?> RuncInstall { get; private set; } = null!;
 
         /// <summary>
-        /// The subnet for the CNI.
+        /// The subnet for the cluster.
         /// </summary>
         [Output("subnet")]
         public Output<string> Subnet { get; private set; } = null!;
@@ -349,10 +367,22 @@ namespace UnMango.KubernetesTheHardWay.Remote
         public Input<UnMango.KubernetesTheHardWay.Remote.Architecture> Architecture { get; set; } = null!;
 
         /// <summary>
+        /// The path to the cluster certificate authority file.
+        /// </summary>
+        [Input("caPath", required: true)]
+        public Input<string> CaPath { get; set; } = null!;
+
+        /// <summary>
         /// The CIDR to use for the cluster.
         /// </summary>
         [Input("clusterCIDR")]
         public Input<string>? ClusterCIDR { get; set; }
+
+        /// <summary>
+        /// The domain for the cluster to use. Defaults to cluster.local.
+        /// </summary>
+        [Input("clusterDomain")]
+        public Input<string>? ClusterDomain { get; set; }
 
         /// <summary>
         /// The directory to store CNI plugin configuration files. Defaults to /etc/cni/net.d.
@@ -427,6 +457,12 @@ namespace UnMango.KubernetesTheHardWay.Remote
         public Input<string>? KubectlInstallDirectory { get; set; }
 
         /// <summary>
+        /// The path to the kubelet certificate.
+        /// </summary>
+        [Input("kubeletCertificatePath", required: true)]
+        public Input<string> KubeletCertificatePath { get; set; } = null!;
+
+        /// <summary>
         /// The directory to store kubelet configuration files. Defaults to /var/lib/kubelet.
         /// </summary>
         [Input("kubeletConfigurationDirectory")]
@@ -445,19 +481,19 @@ namespace UnMango.KubernetesTheHardWay.Remote
         public Input<string>? KubeletKubeconfigPath { get; set; }
 
         /// <summary>
+        /// The path to the kubelet private key file.
+        /// </summary>
+        [Input("kubeletPrivateKeyPath", required: true)]
+        public Input<string> KubeletPrivateKeyPath { get; set; } = null!;
+
+        /// <summary>
         /// The kubernetes version to use.
         /// </summary>
         [Input("kubernetesVersion")]
         public Input<string>? KubernetesVersion { get; set; }
 
         /// <summary>
-        /// The pod CIDR to use.
-        /// </summary>
-        [Input("podCIDR", required: true)]
-        public Input<string> PodCIDR { get; set; } = null!;
-
-        /// <summary>
-        /// The subnet for the CNI.
+        /// The subnet for the cluster.
         /// </summary>
         [Input("subnet", required: true)]
         public Input<string> Subnet { get; set; } = null!;

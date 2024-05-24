@@ -48,9 +48,17 @@ export class WorkerNode extends pulumi.CustomResource {
      */
     public readonly architecture!: pulumi.Output<enums.remote.Architecture>;
     /**
+     * The path to the cluster certificate authority file.
+     */
+    public readonly caPath!: pulumi.Output<string>;
+    /**
      * The CIDR to use for the cluster.
      */
     public readonly clusterCIDR!: pulumi.Output<string | undefined>;
+    /**
+     * The domain for the cluster to use. Defaults to cluster.local.
+     */
+    public readonly clusterDomain!: pulumi.Output<string | undefined>;
     /**
      * The CNI bridge plugin configuration.
      */
@@ -172,6 +180,10 @@ export class WorkerNode extends pulumi.CustomResource {
      */
     public readonly kubectlInstallDirectory!: pulumi.Output<string | undefined>;
     /**
+     * The path to the kubelet certificate.
+     */
+    public readonly kubeletCertificatePath!: pulumi.Output<string>;
+    /**
      * The kubelet configuration
      */
     public /*out*/ readonly kubeletConfiguration!: pulumi.Output<KubeletConfiguration>;
@@ -200,6 +212,10 @@ export class WorkerNode extends pulumi.CustomResource {
      */
     public /*out*/ readonly kubeletMkdir!: pulumi.Output<Mkdir>;
     /**
+     * The path to the kubelet private key file.
+     */
+    public readonly kubeletPrivateKeyPath!: pulumi.Output<string>;
+    /**
      * The kubelet systemd service.
      */
     public /*out*/ readonly kubeletService!: pulumi.Output<KubeletService>;
@@ -208,15 +224,11 @@ export class WorkerNode extends pulumi.CustomResource {
      */
     public readonly kubernetesVersion!: pulumi.Output<string | undefined>;
     /**
-     * The pod CIDR to use.
-     */
-    public readonly podCIDR!: pulumi.Output<string>;
-    /**
      * The runc install.
      */
     public /*out*/ readonly runcInstall!: pulumi.Output<RuncInstall | undefined>;
     /**
-     * The subnet for the CNI.
+     * The subnet for the cluster.
      */
     public readonly subnet!: pulumi.Output<string>;
     /**
@@ -242,17 +254,25 @@ export class WorkerNode extends pulumi.CustomResource {
             if ((!args || args.architecture === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'architecture'");
             }
+            if ((!args || args.caPath === undefined) && !opts.urn) {
+                throw new Error("Missing required property 'caPath'");
+            }
             if ((!args || args.connection === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'connection'");
             }
-            if ((!args || args.podCIDR === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'podCIDR'");
+            if ((!args || args.kubeletCertificatePath === undefined) && !opts.urn) {
+                throw new Error("Missing required property 'kubeletCertificatePath'");
+            }
+            if ((!args || args.kubeletPrivateKeyPath === undefined) && !opts.urn) {
+                throw new Error("Missing required property 'kubeletPrivateKeyPath'");
             }
             if ((!args || args.subnet === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'subnet'");
             }
             resourceInputs["architecture"] = args ? args.architecture : undefined;
+            resourceInputs["caPath"] = args ? args.caPath : undefined;
             resourceInputs["clusterCIDR"] = args ? args.clusterCIDR : undefined;
+            resourceInputs["clusterDomain"] = args ? args.clusterDomain : undefined;
             resourceInputs["cniConfigurationDirectory"] = args ? args.cniConfigurationDirectory : undefined;
             resourceInputs["cniInstallDirectory"] = args ? args.cniInstallDirectory : undefined;
             resourceInputs["cniVersion"] = args ? args.cniVersion : undefined;
@@ -265,11 +285,12 @@ export class WorkerNode extends pulumi.CustomResource {
             resourceInputs["kubeProxyInstallDirectory"] = args ? args.kubeProxyInstallDirectory : undefined;
             resourceInputs["kubeProxyKubeconfigPath"] = args ? args.kubeProxyKubeconfigPath : undefined;
             resourceInputs["kubectlInstallDirectory"] = args ? args.kubectlInstallDirectory : undefined;
+            resourceInputs["kubeletCertificatePath"] = args ? args.kubeletCertificatePath : undefined;
             resourceInputs["kubeletConfigurationDirectory"] = args ? args.kubeletConfigurationDirectory : undefined;
             resourceInputs["kubeletInstallDirectory"] = args ? args.kubeletInstallDirectory : undefined;
             resourceInputs["kubeletKubeconfigPath"] = args ? args.kubeletKubeconfigPath : undefined;
+            resourceInputs["kubeletPrivateKeyPath"] = args ? args.kubeletPrivateKeyPath : undefined;
             resourceInputs["kubernetesVersion"] = args ? args.kubernetesVersion : undefined;
-            resourceInputs["podCIDR"] = args ? args.podCIDR : undefined;
             resourceInputs["subnet"] = args ? args.subnet : undefined;
             resourceInputs["cniBridgeConfiguration"] = undefined /*out*/;
             resourceInputs["cniBridgeConfigurationFile"] = undefined /*out*/;
@@ -299,7 +320,9 @@ export class WorkerNode extends pulumi.CustomResource {
             resourceInputs["varRunKubernetesMkdir"] = undefined /*out*/;
         } else {
             resourceInputs["architecture"] = undefined /*out*/;
+            resourceInputs["caPath"] = undefined /*out*/;
             resourceInputs["clusterCIDR"] = undefined /*out*/;
+            resourceInputs["clusterDomain"] = undefined /*out*/;
             resourceInputs["cniBridgeConfiguration"] = undefined /*out*/;
             resourceInputs["cniBridgeConfigurationFile"] = undefined /*out*/;
             resourceInputs["cniConfigurationDirectory"] = undefined /*out*/;
@@ -330,6 +353,7 @@ export class WorkerNode extends pulumi.CustomResource {
             resourceInputs["kubeProxyService"] = undefined /*out*/;
             resourceInputs["kubectlInstall"] = undefined /*out*/;
             resourceInputs["kubectlInstallDirectory"] = undefined /*out*/;
+            resourceInputs["kubeletCertificatePath"] = undefined /*out*/;
             resourceInputs["kubeletConfiguration"] = undefined /*out*/;
             resourceInputs["kubeletConfigurationDirectory"] = undefined /*out*/;
             resourceInputs["kubeletConfigurationFile"] = undefined /*out*/;
@@ -337,9 +361,9 @@ export class WorkerNode extends pulumi.CustomResource {
             resourceInputs["kubeletInstallDirectory"] = undefined /*out*/;
             resourceInputs["kubeletKubeconfigPath"] = undefined /*out*/;
             resourceInputs["kubeletMkdir"] = undefined /*out*/;
+            resourceInputs["kubeletPrivateKeyPath"] = undefined /*out*/;
             resourceInputs["kubeletService"] = undefined /*out*/;
             resourceInputs["kubernetesVersion"] = undefined /*out*/;
-            resourceInputs["podCIDR"] = undefined /*out*/;
             resourceInputs["runcInstall"] = undefined /*out*/;
             resourceInputs["subnet"] = undefined /*out*/;
             resourceInputs["varLibKubernetesMkdir"] = undefined /*out*/;
@@ -359,9 +383,17 @@ export interface WorkerNodeArgs {
      */
     architecture: pulumi.Input<enums.remote.Architecture>;
     /**
+     * The path to the cluster certificate authority file.
+     */
+    caPath: pulumi.Input<string>;
+    /**
      * The CIDR to use for the cluster.
      */
     clusterCIDR?: pulumi.Input<string>;
+    /**
+     * The domain for the cluster to use. Defaults to cluster.local.
+     */
+    clusterDomain?: pulumi.Input<string>;
     /**
      * The directory to store CNI plugin configuration files. Defaults to /etc/cni/net.d.
      */
@@ -411,6 +443,10 @@ export interface WorkerNodeArgs {
      */
     kubectlInstallDirectory?: pulumi.Input<string>;
     /**
+     * The path to the kubelet certificate.
+     */
+    kubeletCertificatePath: pulumi.Input<string>;
+    /**
      * The directory to store kubelet configuration files. Defaults to /var/lib/kubelet.
      */
     kubeletConfigurationDirectory?: pulumi.Input<string>;
@@ -423,15 +459,15 @@ export interface WorkerNodeArgs {
      */
     kubeletKubeconfigPath?: pulumi.Input<string>;
     /**
+     * The path to the kubelet private key file.
+     */
+    kubeletPrivateKeyPath: pulumi.Input<string>;
+    /**
      * The kubernetes version to use.
      */
     kubernetesVersion?: pulumi.Input<string>;
     /**
-     * The pod CIDR to use.
-     */
-    podCIDR: pulumi.Input<string>;
-    /**
-     * The subnet for the CNI.
+     * The subnet for the cluster.
      */
     subnet: pulumi.Input<string>;
 }

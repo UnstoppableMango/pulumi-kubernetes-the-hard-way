@@ -53,6 +53,20 @@ public class WorkerNode extends com.pulumi.resources.CustomResource {
         return this.architecture;
     }
     /**
+     * The path to the cluster certificate authority file.
+     * 
+     */
+    @Export(name="caPath", refs={String.class}, tree="[0]")
+    private Output<String> caPath;
+
+    /**
+     * @return The path to the cluster certificate authority file.
+     * 
+     */
+    public Output<String> caPath() {
+        return this.caPath;
+    }
+    /**
      * The CIDR to use for the cluster.
      * 
      */
@@ -65,6 +79,20 @@ public class WorkerNode extends com.pulumi.resources.CustomResource {
      */
     public Output<Optional<String>> clusterCIDR() {
         return Codegen.optional(this.clusterCIDR);
+    }
+    /**
+     * The domain for the cluster to use. Defaults to cluster.local.
+     * 
+     */
+    @Export(name="clusterDomain", refs={String.class}, tree="[0]")
+    private Output</* @Nullable */ String> clusterDomain;
+
+    /**
+     * @return The domain for the cluster to use. Defaults to cluster.local.
+     * 
+     */
+    public Output<Optional<String>> clusterDomain() {
+        return Codegen.optional(this.clusterDomain);
     }
     /**
      * The CNI bridge plugin configuration.
@@ -487,6 +515,20 @@ public class WorkerNode extends com.pulumi.resources.CustomResource {
         return Codegen.optional(this.kubectlInstallDirectory);
     }
     /**
+     * The path to the kubelet certificate.
+     * 
+     */
+    @Export(name="kubeletCertificatePath", refs={String.class}, tree="[0]")
+    private Output<String> kubeletCertificatePath;
+
+    /**
+     * @return The path to the kubelet certificate.
+     * 
+     */
+    public Output<String> kubeletCertificatePath() {
+        return this.kubeletCertificatePath;
+    }
+    /**
      * The kubelet configuration
      * 
      */
@@ -585,6 +627,20 @@ public class WorkerNode extends com.pulumi.resources.CustomResource {
         return this.kubeletMkdir;
     }
     /**
+     * The path to the kubelet private key file.
+     * 
+     */
+    @Export(name="kubeletPrivateKeyPath", refs={String.class}, tree="[0]")
+    private Output<String> kubeletPrivateKeyPath;
+
+    /**
+     * @return The path to the kubelet private key file.
+     * 
+     */
+    public Output<String> kubeletPrivateKeyPath() {
+        return this.kubeletPrivateKeyPath;
+    }
+    /**
      * The kubelet systemd service.
      * 
      */
@@ -613,20 +669,6 @@ public class WorkerNode extends com.pulumi.resources.CustomResource {
         return Codegen.optional(this.kubernetesVersion);
     }
     /**
-     * The pod CIDR to use.
-     * 
-     */
-    @Export(name="podCIDR", refs={String.class}, tree="[0]")
-    private Output<String> podCIDR;
-
-    /**
-     * @return The pod CIDR to use.
-     * 
-     */
-    public Output<String> podCIDR() {
-        return this.podCIDR;
-    }
-    /**
      * The runc install.
      * 
      */
@@ -641,14 +683,14 @@ public class WorkerNode extends com.pulumi.resources.CustomResource {
         return Codegen.optional(this.runcInstall);
     }
     /**
-     * The subnet for the CNI.
+     * The subnet for the cluster.
      * 
      */
     @Export(name="subnet", refs={String.class}, tree="[0]")
     private Output<String> subnet;
 
     /**
-     * @return The subnet for the CNI.
+     * @return The subnet for the cluster.
      * 
      */
     public Output<String> subnet() {

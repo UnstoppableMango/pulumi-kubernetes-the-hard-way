@@ -21,8 +21,12 @@ type WorkerNode struct {
 
 	// The CPU architecture of the node.
 	Architecture ArchitectureOutput `pulumi:"architecture"`
+	// The path to the cluster certificate authority file.
+	CaPath pulumi.StringOutput `pulumi:"caPath"`
 	// The CIDR to use for the cluster.
 	ClusterCIDR pulumi.StringPtrOutput `pulumi:"clusterCIDR"`
+	// The domain for the cluster to use. Defaults to cluster.local.
+	ClusterDomain pulumi.StringPtrOutput `pulumi:"clusterDomain"`
 	// The CNI bridge plugin configuration.
 	CniBridgeConfiguration config.CniBridgePluginConfigurationOutput `pulumi:"cniBridgeConfiguration"`
 	// The CNI bridge plugin configuration file.
@@ -83,6 +87,8 @@ type WorkerNode struct {
 	KubectlInstall KubectlInstallOutput `pulumi:"kubectlInstall"`
 	// The directory to store the kubectl binary. Defaults to /usr/local/bin.
 	KubectlInstallDirectory pulumi.StringPtrOutput `pulumi:"kubectlInstallDirectory"`
+	// The path to the kubelet certificate.
+	KubeletCertificatePath pulumi.StringOutput `pulumi:"kubeletCertificatePath"`
 	// The kubelet configuration
 	KubeletConfiguration config.KubeletConfigurationOutput `pulumi:"kubeletConfiguration"`
 	// The directory to store kubelet configuration files. Defaults to /var/lib/kubelet.
@@ -97,15 +103,15 @@ type WorkerNode struct {
 	KubeletKubeconfigPath pulumi.StringPtrOutput `pulumi:"kubeletKubeconfigPath"`
 	// The kubelet configuration mkdir operation.
 	KubeletMkdir tools.MkdirOutput `pulumi:"kubeletMkdir"`
+	// The path to the kubelet private key file.
+	KubeletPrivateKeyPath pulumi.StringOutput `pulumi:"kubeletPrivateKeyPath"`
 	// The kubelet systemd service.
 	KubeletService KubeletServiceOutput `pulumi:"kubeletService"`
 	// The kubernetes version to use.
 	KubernetesVersion pulumi.StringPtrOutput `pulumi:"kubernetesVersion"`
-	// The pod CIDR to use.
-	PodCIDR pulumi.StringOutput `pulumi:"podCIDR"`
 	// The runc install.
 	RuncInstall RuncInstallOutput `pulumi:"runcInstall"`
-	// The subnet for the CNI.
+	// The subnet for the cluster.
 	Subnet pulumi.StringOutput `pulumi:"subnet"`
 	// The /var/lib/kubernetes mkdir operation.
 	VarLibKubernetesMkdir tools.MkdirOutput `pulumi:"varLibKubernetesMkdir"`
@@ -123,11 +129,17 @@ func NewWorkerNode(ctx *pulumi.Context,
 	if args.Architecture == nil {
 		return nil, errors.New("invalid value for required argument 'Architecture'")
 	}
+	if args.CaPath == nil {
+		return nil, errors.New("invalid value for required argument 'CaPath'")
+	}
 	if args.Connection == nil {
 		return nil, errors.New("invalid value for required argument 'Connection'")
 	}
-	if args.PodCIDR == nil {
-		return nil, errors.New("invalid value for required argument 'PodCIDR'")
+	if args.KubeletCertificatePath == nil {
+		return nil, errors.New("invalid value for required argument 'KubeletCertificatePath'")
+	}
+	if args.KubeletPrivateKeyPath == nil {
+		return nil, errors.New("invalid value for required argument 'KubeletPrivateKeyPath'")
 	}
 	if args.Subnet == nil {
 		return nil, errors.New("invalid value for required argument 'Subnet'")
@@ -168,8 +180,12 @@ func (WorkerNodeState) ElementType() reflect.Type {
 type workerNodeArgs struct {
 	// The CPU architecture of the node.
 	Architecture Architecture `pulumi:"architecture"`
+	// The path to the cluster certificate authority file.
+	CaPath string `pulumi:"caPath"`
 	// The CIDR to use for the cluster.
 	ClusterCIDR *string `pulumi:"clusterCIDR"`
+	// The domain for the cluster to use. Defaults to cluster.local.
+	ClusterDomain *string `pulumi:"clusterDomain"`
 	// The directory to store CNI plugin configuration files. Defaults to /etc/cni/net.d.
 	CniConfigurationDirectory *string `pulumi:"cniConfigurationDirectory"`
 	// The directory to store CNI plugin binaries. Defaults to /opt/cni/bin.
@@ -194,17 +210,19 @@ type workerNodeArgs struct {
 	KubeProxyKubeconfigPath *string `pulumi:"kubeProxyKubeconfigPath"`
 	// The directory to store the kubectl binary. Defaults to /usr/local/bin.
 	KubectlInstallDirectory *string `pulumi:"kubectlInstallDirectory"`
+	// The path to the kubelet certificate.
+	KubeletCertificatePath string `pulumi:"kubeletCertificatePath"`
 	// The directory to store kubelet configuration files. Defaults to /var/lib/kubelet.
 	KubeletConfigurationDirectory *string `pulumi:"kubeletConfigurationDirectory"`
 	// The directory to store the kubelet binary. Defaults to /usr/local/bin.
 	KubeletInstallDirectory *string `pulumi:"kubeletInstallDirectory"`
 	// The path to the kubelet's kubeconfig file.
 	KubeletKubeconfigPath *string `pulumi:"kubeletKubeconfigPath"`
+	// The path to the kubelet private key file.
+	KubeletPrivateKeyPath string `pulumi:"kubeletPrivateKeyPath"`
 	// The kubernetes version to use.
 	KubernetesVersion *string `pulumi:"kubernetesVersion"`
-	// The pod CIDR to use.
-	PodCIDR string `pulumi:"podCIDR"`
-	// The subnet for the CNI.
+	// The subnet for the cluster.
 	Subnet string `pulumi:"subnet"`
 }
 
@@ -212,8 +230,12 @@ type workerNodeArgs struct {
 type WorkerNodeArgs struct {
 	// The CPU architecture of the node.
 	Architecture ArchitectureInput
+	// The path to the cluster certificate authority file.
+	CaPath pulumi.StringInput
 	// The CIDR to use for the cluster.
 	ClusterCIDR pulumi.StringPtrInput
+	// The domain for the cluster to use. Defaults to cluster.local.
+	ClusterDomain pulumi.StringPtrInput
 	// The directory to store CNI plugin configuration files. Defaults to /etc/cni/net.d.
 	CniConfigurationDirectory pulumi.StringPtrInput
 	// The directory to store CNI plugin binaries. Defaults to /opt/cni/bin.
@@ -238,17 +260,19 @@ type WorkerNodeArgs struct {
 	KubeProxyKubeconfigPath pulumi.StringPtrInput
 	// The directory to store the kubectl binary. Defaults to /usr/local/bin.
 	KubectlInstallDirectory pulumi.StringPtrInput
+	// The path to the kubelet certificate.
+	KubeletCertificatePath pulumi.StringInput
 	// The directory to store kubelet configuration files. Defaults to /var/lib/kubelet.
 	KubeletConfigurationDirectory pulumi.StringPtrInput
 	// The directory to store the kubelet binary. Defaults to /usr/local/bin.
 	KubeletInstallDirectory pulumi.StringPtrInput
 	// The path to the kubelet's kubeconfig file.
 	KubeletKubeconfigPath pulumi.StringPtrInput
+	// The path to the kubelet private key file.
+	KubeletPrivateKeyPath pulumi.StringInput
 	// The kubernetes version to use.
 	KubernetesVersion pulumi.StringPtrInput
-	// The pod CIDR to use.
-	PodCIDR pulumi.StringInput
-	// The subnet for the CNI.
+	// The subnet for the cluster.
 	Subnet pulumi.StringInput
 }
 
@@ -344,9 +368,19 @@ func (o WorkerNodeOutput) Architecture() ArchitectureOutput {
 	return o.ApplyT(func(v *WorkerNode) ArchitectureOutput { return v.Architecture }).(ArchitectureOutput)
 }
 
+// The path to the cluster certificate authority file.
+func (o WorkerNodeOutput) CaPath() pulumi.StringOutput {
+	return o.ApplyT(func(v *WorkerNode) pulumi.StringOutput { return v.CaPath }).(pulumi.StringOutput)
+}
+
 // The CIDR to use for the cluster.
 func (o WorkerNodeOutput) ClusterCIDR() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *WorkerNode) pulumi.StringPtrOutput { return v.ClusterCIDR }).(pulumi.StringPtrOutput)
+}
+
+// The domain for the cluster to use. Defaults to cluster.local.
+func (o WorkerNodeOutput) ClusterDomain() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *WorkerNode) pulumi.StringPtrOutput { return v.ClusterDomain }).(pulumi.StringPtrOutput)
 }
 
 // The CNI bridge plugin configuration.
@@ -499,6 +533,11 @@ func (o WorkerNodeOutput) KubectlInstallDirectory() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *WorkerNode) pulumi.StringPtrOutput { return v.KubectlInstallDirectory }).(pulumi.StringPtrOutput)
 }
 
+// The path to the kubelet certificate.
+func (o WorkerNodeOutput) KubeletCertificatePath() pulumi.StringOutput {
+	return o.ApplyT(func(v *WorkerNode) pulumi.StringOutput { return v.KubeletCertificatePath }).(pulumi.StringOutput)
+}
+
 // The kubelet configuration
 func (o WorkerNodeOutput) KubeletConfiguration() config.KubeletConfigurationOutput {
 	return o.ApplyT(func(v *WorkerNode) config.KubeletConfigurationOutput { return v.KubeletConfiguration }).(config.KubeletConfigurationOutput)
@@ -534,6 +573,11 @@ func (o WorkerNodeOutput) KubeletMkdir() tools.MkdirOutput {
 	return o.ApplyT(func(v *WorkerNode) tools.MkdirOutput { return v.KubeletMkdir }).(tools.MkdirOutput)
 }
 
+// The path to the kubelet private key file.
+func (o WorkerNodeOutput) KubeletPrivateKeyPath() pulumi.StringOutput {
+	return o.ApplyT(func(v *WorkerNode) pulumi.StringOutput { return v.KubeletPrivateKeyPath }).(pulumi.StringOutput)
+}
+
 // The kubelet systemd service.
 func (o WorkerNodeOutput) KubeletService() KubeletServiceOutput {
 	return o.ApplyT(func(v *WorkerNode) KubeletServiceOutput { return v.KubeletService }).(KubeletServiceOutput)
@@ -544,17 +588,12 @@ func (o WorkerNodeOutput) KubernetesVersion() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *WorkerNode) pulumi.StringPtrOutput { return v.KubernetesVersion }).(pulumi.StringPtrOutput)
 }
 
-// The pod CIDR to use.
-func (o WorkerNodeOutput) PodCIDR() pulumi.StringOutput {
-	return o.ApplyT(func(v *WorkerNode) pulumi.StringOutput { return v.PodCIDR }).(pulumi.StringOutput)
-}
-
 // The runc install.
 func (o WorkerNodeOutput) RuncInstall() RuncInstallOutput {
 	return o.ApplyT(func(v *WorkerNode) RuncInstallOutput { return v.RuncInstall }).(RuncInstallOutput)
 }
 
-// The subnet for the CNI.
+// The subnet for the cluster.
 func (o WorkerNodeOutput) Subnet() pulumi.StringOutput {
 	return o.ApplyT(func(v *WorkerNode) pulumi.StringOutput { return v.Subnet }).(pulumi.StringOutput)
 }

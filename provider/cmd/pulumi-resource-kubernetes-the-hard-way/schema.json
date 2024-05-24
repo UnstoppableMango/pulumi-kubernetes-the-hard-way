@@ -4665,9 +4665,17 @@
                     "$ref": "#/types/kubernetes-the-hard-way:remote:Architecture",
                     "description": "The CPU architecture of the node."
                 },
+                "caPath": {
+                    "type": "string",
+                    "description": "The path to the cluster certificate authority file."
+                },
                 "clusterCIDR": {
                     "type": "string",
                     "description": "The CIDR to use for the cluster."
+                },
+                "clusterDomain": {
+                    "type": "string",
+                    "description": "The domain for the cluster to use. Defaults to cluster.local."
                 },
                 "cniBridgeConfiguration": {
                     "$ref": "#/resources/kubernetes-the-hard-way:config:CniBridgePluginConfiguration",
@@ -4789,6 +4797,10 @@
                     "type": "string",
                     "description": "The directory to store the kubectl binary. Defaults to /usr/local/bin."
                 },
+                "kubeletCertificatePath": {
+                    "type": "string",
+                    "description": "The path to the kubelet certificate."
+                },
                 "kubeletConfiguration": {
                     "$ref": "#/resources/kubernetes-the-hard-way:config:KubeletConfiguration",
                     "description": "The kubelet configuration"
@@ -4817,6 +4829,10 @@
                     "$ref": "#/resources/kubernetes-the-hard-way:tools:Mkdir",
                     "description": "The kubelet configuration mkdir operation."
                 },
+                "kubeletPrivateKeyPath": {
+                    "type": "string",
+                    "description": "The path to the kubelet private key file."
+                },
                 "kubeletService": {
                     "$ref": "#/resources/kubernetes-the-hard-way:remote:KubeletService",
                     "description": "The kubelet systemd service."
@@ -4825,17 +4841,13 @@
                     "type": "string",
                     "description": "The kubernetes version to use."
                 },
-                "podCIDR": {
-                    "type": "string",
-                    "description": "The pod CIDR to use."
-                },
                 "runcInstall": {
                     "$ref": "#/resources/kubernetes-the-hard-way:remote:RuncInstall",
                     "description": "The runc install."
                 },
                 "subnet": {
                     "type": "string",
-                    "description": "The subnet for the CNI."
+                    "description": "The subnet for the cluster."
                 },
                 "varLibKubernetesMkdir": {
                     "$ref": "#/resources/kubernetes-the-hard-way:tools:Mkdir",
@@ -4848,8 +4860,10 @@
             },
             "required": [
                 "architecture",
+                "caPath",
                 "connection",
-                "podCIDR",
+                "kubeletCertificatePath",
+                "kubeletPrivateKeyPath",
                 "subnet",
                 "cniMkdir",
                 "cniBridgeConfiguration",
@@ -4880,9 +4894,17 @@
                     "$ref": "#/types/kubernetes-the-hard-way:remote:Architecture",
                     "description": "The CPU architecture of the node."
                 },
+                "caPath": {
+                    "type": "string",
+                    "description": "The path to the cluster certificate authority file."
+                },
                 "clusterCIDR": {
                     "type": "string",
                     "description": "The CIDR to use for the cluster."
+                },
+                "clusterDomain": {
+                    "type": "string",
+                    "description": "The domain for the cluster to use. Defaults to cluster.local."
                 },
                 "cniConfigurationDirectory": {
                     "type": "string",
@@ -4932,6 +4954,10 @@
                     "type": "string",
                     "description": "The directory to store the kubectl binary. Defaults to /usr/local/bin."
                 },
+                "kubeletCertificatePath": {
+                    "type": "string",
+                    "description": "The path to the kubelet certificate."
+                },
                 "kubeletConfigurationDirectory": {
                     "type": "string",
                     "description": "The directory to store kubelet configuration files. Defaults to /var/lib/kubelet."
@@ -4944,23 +4970,25 @@
                     "type": "string",
                     "description": "The path to the kubelet's kubeconfig file."
                 },
+                "kubeletPrivateKeyPath": {
+                    "type": "string",
+                    "description": "The path to the kubelet private key file."
+                },
                 "kubernetesVersion": {
                     "type": "string",
                     "description": "The kubernetes version to use."
                 },
-                "podCIDR": {
-                    "type": "string",
-                    "description": "The pod CIDR to use."
-                },
                 "subnet": {
                     "type": "string",
-                    "description": "The subnet for the CNI."
+                    "description": "The subnet for the cluster."
                 }
             },
             "requiredInputs": [
                 "architecture",
+                "caPath",
                 "connection",
-                "podCIDR",
+                "kubeletCertificatePath",
+                "kubeletPrivateKeyPath",
                 "subnet"
             ]
         },

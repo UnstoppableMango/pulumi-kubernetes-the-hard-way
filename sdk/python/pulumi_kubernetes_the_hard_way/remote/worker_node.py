@@ -30,10 +30,13 @@ __all__ = ['WorkerNodeArgs', 'WorkerNode']
 class WorkerNodeArgs:
     def __init__(__self__, *,
                  architecture: pulumi.Input['Architecture'],
+                 ca_path: pulumi.Input[str],
                  connection: pulumi.Input['pulumi_command.remote.ConnectionArgs'],
-                 pod_cidr: pulumi.Input[str],
+                 kubelet_certificate_path: pulumi.Input[str],
+                 kubelet_private_key_path: pulumi.Input[str],
                  subnet: pulumi.Input[str],
                  cluster_cidr: Optional[pulumi.Input[str]] = None,
+                 cluster_domain: Optional[pulumi.Input[str]] = None,
                  cni_configuration_directory: Optional[pulumi.Input[str]] = None,
                  cni_install_directory: Optional[pulumi.Input[str]] = None,
                  cni_version: Optional[pulumi.Input[str]] = None,
@@ -52,10 +55,13 @@ class WorkerNodeArgs:
         """
         The set of arguments for constructing a WorkerNode resource.
         :param pulumi.Input['Architecture'] architecture: The CPU architecture of the node.
+        :param pulumi.Input[str] ca_path: The path to the cluster certificate authority file.
         :param pulumi.Input['pulumi_command.remote.ConnectionArgs'] connection: The parameters with which to connect to the remote host.
-        :param pulumi.Input[str] pod_cidr: The pod CIDR to use.
-        :param pulumi.Input[str] subnet: The subnet for the CNI.
+        :param pulumi.Input[str] kubelet_certificate_path: The path to the kubelet certificate.
+        :param pulumi.Input[str] kubelet_private_key_path: The path to the kubelet private key file.
+        :param pulumi.Input[str] subnet: The subnet for the cluster.
         :param pulumi.Input[str] cluster_cidr: The CIDR to use for the cluster.
+        :param pulumi.Input[str] cluster_domain: The domain for the cluster to use. Defaults to cluster.local.
         :param pulumi.Input[str] cni_configuration_directory: The directory to store CNI plugin configuration files. Defaults to /etc/cni/net.d.
         :param pulumi.Input[str] cni_install_directory: The directory to store CNI plugin binaries. Defaults to /opt/cni/bin.
         :param pulumi.Input[str] cni_version: The CNI version to use.
@@ -73,11 +79,15 @@ class WorkerNodeArgs:
         :param pulumi.Input[str] kubernetes_version: The kubernetes version to use.
         """
         pulumi.set(__self__, "architecture", architecture)
+        pulumi.set(__self__, "ca_path", ca_path)
         pulumi.set(__self__, "connection", connection)
-        pulumi.set(__self__, "pod_cidr", pod_cidr)
+        pulumi.set(__self__, "kubelet_certificate_path", kubelet_certificate_path)
+        pulumi.set(__self__, "kubelet_private_key_path", kubelet_private_key_path)
         pulumi.set(__self__, "subnet", subnet)
         if cluster_cidr is not None:
             pulumi.set(__self__, "cluster_cidr", cluster_cidr)
+        if cluster_domain is not None:
+            pulumi.set(__self__, "cluster_domain", cluster_domain)
         if cni_configuration_directory is not None:
             pulumi.set(__self__, "cni_configuration_directory", cni_configuration_directory)
         if cni_install_directory is not None:
@@ -122,6 +132,18 @@ class WorkerNodeArgs:
         pulumi.set(self, "architecture", value)
 
     @property
+    @pulumi.getter(name="caPath")
+    def ca_path(self) -> pulumi.Input[str]:
+        """
+        The path to the cluster certificate authority file.
+        """
+        return pulumi.get(self, "ca_path")
+
+    @ca_path.setter
+    def ca_path(self, value: pulumi.Input[str]):
+        pulumi.set(self, "ca_path", value)
+
+    @property
     @pulumi.getter
     def connection(self) -> pulumi.Input['pulumi_command.remote.ConnectionArgs']:
         """
@@ -134,22 +156,34 @@ class WorkerNodeArgs:
         pulumi.set(self, "connection", value)
 
     @property
-    @pulumi.getter(name="podCIDR")
-    def pod_cidr(self) -> pulumi.Input[str]:
+    @pulumi.getter(name="kubeletCertificatePath")
+    def kubelet_certificate_path(self) -> pulumi.Input[str]:
         """
-        The pod CIDR to use.
+        The path to the kubelet certificate.
         """
-        return pulumi.get(self, "pod_cidr")
+        return pulumi.get(self, "kubelet_certificate_path")
 
-    @pod_cidr.setter
-    def pod_cidr(self, value: pulumi.Input[str]):
-        pulumi.set(self, "pod_cidr", value)
+    @kubelet_certificate_path.setter
+    def kubelet_certificate_path(self, value: pulumi.Input[str]):
+        pulumi.set(self, "kubelet_certificate_path", value)
+
+    @property
+    @pulumi.getter(name="kubeletPrivateKeyPath")
+    def kubelet_private_key_path(self) -> pulumi.Input[str]:
+        """
+        The path to the kubelet private key file.
+        """
+        return pulumi.get(self, "kubelet_private_key_path")
+
+    @kubelet_private_key_path.setter
+    def kubelet_private_key_path(self, value: pulumi.Input[str]):
+        pulumi.set(self, "kubelet_private_key_path", value)
 
     @property
     @pulumi.getter
     def subnet(self) -> pulumi.Input[str]:
         """
-        The subnet for the CNI.
+        The subnet for the cluster.
         """
         return pulumi.get(self, "subnet")
 
@@ -168,6 +202,18 @@ class WorkerNodeArgs:
     @cluster_cidr.setter
     def cluster_cidr(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "cluster_cidr", value)
+
+    @property
+    @pulumi.getter(name="clusterDomain")
+    def cluster_domain(self) -> Optional[pulumi.Input[str]]:
+        """
+        The domain for the cluster to use. Defaults to cluster.local.
+        """
+        return pulumi.get(self, "cluster_domain")
+
+    @cluster_domain.setter
+    def cluster_domain(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "cluster_domain", value)
 
     @property
     @pulumi.getter(name="cniConfigurationDirectory")
@@ -356,7 +402,9 @@ class WorkerNode(pulumi.CustomResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  architecture: Optional[pulumi.Input['Architecture']] = None,
+                 ca_path: Optional[pulumi.Input[str]] = None,
                  cluster_cidr: Optional[pulumi.Input[str]] = None,
+                 cluster_domain: Optional[pulumi.Input[str]] = None,
                  cni_configuration_directory: Optional[pulumi.Input[str]] = None,
                  cni_install_directory: Optional[pulumi.Input[str]] = None,
                  cni_version: Optional[pulumi.Input[str]] = None,
@@ -369,11 +417,12 @@ class WorkerNode(pulumi.CustomResource):
                  kube_proxy_install_directory: Optional[pulumi.Input[str]] = None,
                  kube_proxy_kubeconfig_path: Optional[pulumi.Input[str]] = None,
                  kubectl_install_directory: Optional[pulumi.Input[str]] = None,
+                 kubelet_certificate_path: Optional[pulumi.Input[str]] = None,
                  kubelet_configuration_directory: Optional[pulumi.Input[str]] = None,
                  kubelet_install_directory: Optional[pulumi.Input[str]] = None,
                  kubelet_kubeconfig_path: Optional[pulumi.Input[str]] = None,
+                 kubelet_private_key_path: Optional[pulumi.Input[str]] = None,
                  kubernetes_version: Optional[pulumi.Input[str]] = None,
-                 pod_cidr: Optional[pulumi.Input[str]] = None,
                  subnet: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         """
@@ -382,7 +431,9 @@ class WorkerNode(pulumi.CustomResource):
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input['Architecture'] architecture: The CPU architecture of the node.
+        :param pulumi.Input[str] ca_path: The path to the cluster certificate authority file.
         :param pulumi.Input[str] cluster_cidr: The CIDR to use for the cluster.
+        :param pulumi.Input[str] cluster_domain: The domain for the cluster to use. Defaults to cluster.local.
         :param pulumi.Input[str] cni_configuration_directory: The directory to store CNI plugin configuration files. Defaults to /etc/cni/net.d.
         :param pulumi.Input[str] cni_install_directory: The directory to store CNI plugin binaries. Defaults to /opt/cni/bin.
         :param pulumi.Input[str] cni_version: The CNI version to use.
@@ -395,12 +446,13 @@ class WorkerNode(pulumi.CustomResource):
         :param pulumi.Input[str] kube_proxy_install_directory: The directory to store the kube-proxy binary. Defaults to /usr/local/bin.
         :param pulumi.Input[str] kube_proxy_kubeconfig_path: The path to the kube-proxy's kubeconfig file.
         :param pulumi.Input[str] kubectl_install_directory: The directory to store the kubectl binary. Defaults to /usr/local/bin.
+        :param pulumi.Input[str] kubelet_certificate_path: The path to the kubelet certificate.
         :param pulumi.Input[str] kubelet_configuration_directory: The directory to store kubelet configuration files. Defaults to /var/lib/kubelet.
         :param pulumi.Input[str] kubelet_install_directory: The directory to store the kubelet binary. Defaults to /usr/local/bin.
         :param pulumi.Input[str] kubelet_kubeconfig_path: The path to the kubelet's kubeconfig file.
+        :param pulumi.Input[str] kubelet_private_key_path: The path to the kubelet private key file.
         :param pulumi.Input[str] kubernetes_version: The kubernetes version to use.
-        :param pulumi.Input[str] pod_cidr: The pod CIDR to use.
-        :param pulumi.Input[str] subnet: The subnet for the CNI.
+        :param pulumi.Input[str] subnet: The subnet for the cluster.
         """
         ...
     @overload
@@ -427,7 +479,9 @@ class WorkerNode(pulumi.CustomResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  architecture: Optional[pulumi.Input['Architecture']] = None,
+                 ca_path: Optional[pulumi.Input[str]] = None,
                  cluster_cidr: Optional[pulumi.Input[str]] = None,
+                 cluster_domain: Optional[pulumi.Input[str]] = None,
                  cni_configuration_directory: Optional[pulumi.Input[str]] = None,
                  cni_install_directory: Optional[pulumi.Input[str]] = None,
                  cni_version: Optional[pulumi.Input[str]] = None,
@@ -440,11 +494,12 @@ class WorkerNode(pulumi.CustomResource):
                  kube_proxy_install_directory: Optional[pulumi.Input[str]] = None,
                  kube_proxy_kubeconfig_path: Optional[pulumi.Input[str]] = None,
                  kubectl_install_directory: Optional[pulumi.Input[str]] = None,
+                 kubelet_certificate_path: Optional[pulumi.Input[str]] = None,
                  kubelet_configuration_directory: Optional[pulumi.Input[str]] = None,
                  kubelet_install_directory: Optional[pulumi.Input[str]] = None,
                  kubelet_kubeconfig_path: Optional[pulumi.Input[str]] = None,
+                 kubelet_private_key_path: Optional[pulumi.Input[str]] = None,
                  kubernetes_version: Optional[pulumi.Input[str]] = None,
-                 pod_cidr: Optional[pulumi.Input[str]] = None,
                  subnet: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
@@ -458,7 +513,11 @@ class WorkerNode(pulumi.CustomResource):
             if architecture is None and not opts.urn:
                 raise TypeError("Missing required property 'architecture'")
             __props__.__dict__["architecture"] = architecture
+            if ca_path is None and not opts.urn:
+                raise TypeError("Missing required property 'ca_path'")
+            __props__.__dict__["ca_path"] = ca_path
             __props__.__dict__["cluster_cidr"] = cluster_cidr
+            __props__.__dict__["cluster_domain"] = cluster_domain
             __props__.__dict__["cni_configuration_directory"] = cni_configuration_directory
             __props__.__dict__["cni_install_directory"] = cni_install_directory
             __props__.__dict__["cni_version"] = cni_version
@@ -473,13 +532,16 @@ class WorkerNode(pulumi.CustomResource):
             __props__.__dict__["kube_proxy_install_directory"] = kube_proxy_install_directory
             __props__.__dict__["kube_proxy_kubeconfig_path"] = kube_proxy_kubeconfig_path
             __props__.__dict__["kubectl_install_directory"] = kubectl_install_directory
+            if kubelet_certificate_path is None and not opts.urn:
+                raise TypeError("Missing required property 'kubelet_certificate_path'")
+            __props__.__dict__["kubelet_certificate_path"] = kubelet_certificate_path
             __props__.__dict__["kubelet_configuration_directory"] = kubelet_configuration_directory
             __props__.__dict__["kubelet_install_directory"] = kubelet_install_directory
             __props__.__dict__["kubelet_kubeconfig_path"] = kubelet_kubeconfig_path
+            if kubelet_private_key_path is None and not opts.urn:
+                raise TypeError("Missing required property 'kubelet_private_key_path'")
+            __props__.__dict__["kubelet_private_key_path"] = kubelet_private_key_path
             __props__.__dict__["kubernetes_version"] = kubernetes_version
-            if pod_cidr is None and not opts.urn:
-                raise TypeError("Missing required property 'pod_cidr'")
-            __props__.__dict__["pod_cidr"] = pod_cidr
             if subnet is None and not opts.urn:
                 raise TypeError("Missing required property 'subnet'")
             __props__.__dict__["subnet"] = subnet
@@ -532,7 +594,9 @@ class WorkerNode(pulumi.CustomResource):
         __props__ = WorkerNodeArgs.__new__(WorkerNodeArgs)
 
         __props__.__dict__["architecture"] = None
+        __props__.__dict__["ca_path"] = None
         __props__.__dict__["cluster_cidr"] = None
+        __props__.__dict__["cluster_domain"] = None
         __props__.__dict__["cni_bridge_configuration"] = None
         __props__.__dict__["cni_bridge_configuration_file"] = None
         __props__.__dict__["cni_configuration_directory"] = None
@@ -563,6 +627,7 @@ class WorkerNode(pulumi.CustomResource):
         __props__.__dict__["kube_proxy_service"] = None
         __props__.__dict__["kubectl_install"] = None
         __props__.__dict__["kubectl_install_directory"] = None
+        __props__.__dict__["kubelet_certificate_path"] = None
         __props__.__dict__["kubelet_configuration"] = None
         __props__.__dict__["kubelet_configuration_directory"] = None
         __props__.__dict__["kubelet_configuration_file"] = None
@@ -570,9 +635,9 @@ class WorkerNode(pulumi.CustomResource):
         __props__.__dict__["kubelet_install_directory"] = None
         __props__.__dict__["kubelet_kubeconfig_path"] = None
         __props__.__dict__["kubelet_mkdir"] = None
+        __props__.__dict__["kubelet_private_key_path"] = None
         __props__.__dict__["kubelet_service"] = None
         __props__.__dict__["kubernetes_version"] = None
-        __props__.__dict__["pod_cidr"] = None
         __props__.__dict__["runc_install"] = None
         __props__.__dict__["subnet"] = None
         __props__.__dict__["var_lib_kubernetes_mkdir"] = None
@@ -588,12 +653,28 @@ class WorkerNode(pulumi.CustomResource):
         return pulumi.get(self, "architecture")
 
     @property
+    @pulumi.getter(name="caPath")
+    def ca_path(self) -> pulumi.Output[str]:
+        """
+        The path to the cluster certificate authority file.
+        """
+        return pulumi.get(self, "ca_path")
+
+    @property
     @pulumi.getter(name="clusterCIDR")
     def cluster_cidr(self) -> pulumi.Output[Optional[str]]:
         """
         The CIDR to use for the cluster.
         """
         return pulumi.get(self, "cluster_cidr")
+
+    @property
+    @pulumi.getter(name="clusterDomain")
+    def cluster_domain(self) -> pulumi.Output[Optional[str]]:
+        """
+        The domain for the cluster to use. Defaults to cluster.local.
+        """
+        return pulumi.get(self, "cluster_domain")
 
     @property
     @pulumi.getter(name="cniBridgeConfiguration")
@@ -836,6 +917,14 @@ class WorkerNode(pulumi.CustomResource):
         return pulumi.get(self, "kubectl_install_directory")
 
     @property
+    @pulumi.getter(name="kubeletCertificatePath")
+    def kubelet_certificate_path(self) -> pulumi.Output[str]:
+        """
+        The path to the kubelet certificate.
+        """
+        return pulumi.get(self, "kubelet_certificate_path")
+
+    @property
     @pulumi.getter(name="kubeletConfiguration")
     def kubelet_configuration(self) -> pulumi.Output['_config.KubeletConfiguration']:
         """
@@ -892,6 +981,14 @@ class WorkerNode(pulumi.CustomResource):
         return pulumi.get(self, "kubelet_mkdir")
 
     @property
+    @pulumi.getter(name="kubeletPrivateKeyPath")
+    def kubelet_private_key_path(self) -> pulumi.Output[str]:
+        """
+        The path to the kubelet private key file.
+        """
+        return pulumi.get(self, "kubelet_private_key_path")
+
+    @property
     @pulumi.getter(name="kubeletService")
     def kubelet_service(self) -> pulumi.Output['KubeletService']:
         """
@@ -908,14 +1005,6 @@ class WorkerNode(pulumi.CustomResource):
         return pulumi.get(self, "kubernetes_version")
 
     @property
-    @pulumi.getter(name="podCIDR")
-    def pod_cidr(self) -> pulumi.Output[str]:
-        """
-        The pod CIDR to use.
-        """
-        return pulumi.get(self, "pod_cidr")
-
-    @property
     @pulumi.getter(name="runcInstall")
     def runc_install(self) -> pulumi.Output[Optional['RuncInstall']]:
         """
@@ -927,7 +1016,7 @@ class WorkerNode(pulumi.CustomResource):
     @pulumi.getter
     def subnet(self) -> pulumi.Output[str]:
         """
-        The subnet for the CNI.
+        The subnet for the cluster.
         """
         return pulumi.get(self, "subnet")
 

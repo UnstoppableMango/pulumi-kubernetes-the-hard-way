@@ -34,6 +34,21 @@ public final class WorkerNodeArgs extends com.pulumi.resources.ResourceArgs {
     }
 
     /**
+     * The path to the cluster certificate authority file.
+     * 
+     */
+    @Import(name="caPath", required=true)
+    private Output<String> caPath;
+
+    /**
+     * @return The path to the cluster certificate authority file.
+     * 
+     */
+    public Output<String> caPath() {
+        return this.caPath;
+    }
+
+    /**
      * The CIDR to use for the cluster.
      * 
      */
@@ -46,6 +61,21 @@ public final class WorkerNodeArgs extends com.pulumi.resources.ResourceArgs {
      */
     public Optional<Output<String>> clusterCIDR() {
         return Optional.ofNullable(this.clusterCIDR);
+    }
+
+    /**
+     * The domain for the cluster to use. Defaults to cluster.local.
+     * 
+     */
+    @Import(name="clusterDomain")
+    private @Nullable Output<String> clusterDomain;
+
+    /**
+     * @return The domain for the cluster to use. Defaults to cluster.local.
+     * 
+     */
+    public Optional<Output<String>> clusterDomain() {
+        return Optional.ofNullable(this.clusterDomain);
     }
 
     /**
@@ -229,6 +259,21 @@ public final class WorkerNodeArgs extends com.pulumi.resources.ResourceArgs {
     }
 
     /**
+     * The path to the kubelet certificate.
+     * 
+     */
+    @Import(name="kubeletCertificatePath", required=true)
+    private Output<String> kubeletCertificatePath;
+
+    /**
+     * @return The path to the kubelet certificate.
+     * 
+     */
+    public Output<String> kubeletCertificatePath() {
+        return this.kubeletCertificatePath;
+    }
+
+    /**
      * The directory to store kubelet configuration files. Defaults to /var/lib/kubelet.
      * 
      */
@@ -274,6 +319,21 @@ public final class WorkerNodeArgs extends com.pulumi.resources.ResourceArgs {
     }
 
     /**
+     * The path to the kubelet private key file.
+     * 
+     */
+    @Import(name="kubeletPrivateKeyPath", required=true)
+    private Output<String> kubeletPrivateKeyPath;
+
+    /**
+     * @return The path to the kubelet private key file.
+     * 
+     */
+    public Output<String> kubeletPrivateKeyPath() {
+        return this.kubeletPrivateKeyPath;
+    }
+
+    /**
      * The kubernetes version to use.
      * 
      */
@@ -289,29 +349,14 @@ public final class WorkerNodeArgs extends com.pulumi.resources.ResourceArgs {
     }
 
     /**
-     * The pod CIDR to use.
-     * 
-     */
-    @Import(name="podCIDR", required=true)
-    private Output<String> podCIDR;
-
-    /**
-     * @return The pod CIDR to use.
-     * 
-     */
-    public Output<String> podCIDR() {
-        return this.podCIDR;
-    }
-
-    /**
-     * The subnet for the CNI.
+     * The subnet for the cluster.
      * 
      */
     @Import(name="subnet", required=true)
     private Output<String> subnet;
 
     /**
-     * @return The subnet for the CNI.
+     * @return The subnet for the cluster.
      * 
      */
     public Output<String> subnet() {
@@ -322,7 +367,9 @@ public final class WorkerNodeArgs extends com.pulumi.resources.ResourceArgs {
 
     private WorkerNodeArgs(WorkerNodeArgs $) {
         this.architecture = $.architecture;
+        this.caPath = $.caPath;
         this.clusterCIDR = $.clusterCIDR;
+        this.clusterDomain = $.clusterDomain;
         this.cniConfigurationDirectory = $.cniConfigurationDirectory;
         this.cniInstallDirectory = $.cniInstallDirectory;
         this.cniVersion = $.cniVersion;
@@ -335,11 +382,12 @@ public final class WorkerNodeArgs extends com.pulumi.resources.ResourceArgs {
         this.kubeProxyInstallDirectory = $.kubeProxyInstallDirectory;
         this.kubeProxyKubeconfigPath = $.kubeProxyKubeconfigPath;
         this.kubectlInstallDirectory = $.kubectlInstallDirectory;
+        this.kubeletCertificatePath = $.kubeletCertificatePath;
         this.kubeletConfigurationDirectory = $.kubeletConfigurationDirectory;
         this.kubeletInstallDirectory = $.kubeletInstallDirectory;
         this.kubeletKubeconfigPath = $.kubeletKubeconfigPath;
+        this.kubeletPrivateKeyPath = $.kubeletPrivateKeyPath;
         this.kubernetesVersion = $.kubernetesVersion;
-        this.podCIDR = $.podCIDR;
         this.subnet = $.subnet;
     }
 
@@ -383,6 +431,27 @@ public final class WorkerNodeArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
+         * @param caPath The path to the cluster certificate authority file.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder caPath(Output<String> caPath) {
+            $.caPath = caPath;
+            return this;
+        }
+
+        /**
+         * @param caPath The path to the cluster certificate authority file.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder caPath(String caPath) {
+            return caPath(Output.of(caPath));
+        }
+
+        /**
          * @param clusterCIDR The CIDR to use for the cluster.
          * 
          * @return builder
@@ -401,6 +470,27 @@ public final class WorkerNodeArgs extends com.pulumi.resources.ResourceArgs {
          */
         public Builder clusterCIDR(String clusterCIDR) {
             return clusterCIDR(Output.of(clusterCIDR));
+        }
+
+        /**
+         * @param clusterDomain The domain for the cluster to use. Defaults to cluster.local.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder clusterDomain(@Nullable Output<String> clusterDomain) {
+            $.clusterDomain = clusterDomain;
+            return this;
+        }
+
+        /**
+         * @param clusterDomain The domain for the cluster to use. Defaults to cluster.local.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder clusterDomain(String clusterDomain) {
+            return clusterDomain(Output.of(clusterDomain));
         }
 
         /**
@@ -656,6 +746,27 @@ public final class WorkerNodeArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
+         * @param kubeletCertificatePath The path to the kubelet certificate.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder kubeletCertificatePath(Output<String> kubeletCertificatePath) {
+            $.kubeletCertificatePath = kubeletCertificatePath;
+            return this;
+        }
+
+        /**
+         * @param kubeletCertificatePath The path to the kubelet certificate.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder kubeletCertificatePath(String kubeletCertificatePath) {
+            return kubeletCertificatePath(Output.of(kubeletCertificatePath));
+        }
+
+        /**
          * @param kubeletConfigurationDirectory The directory to store kubelet configuration files. Defaults to /var/lib/kubelet.
          * 
          * @return builder
@@ -719,6 +830,27 @@ public final class WorkerNodeArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
+         * @param kubeletPrivateKeyPath The path to the kubelet private key file.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder kubeletPrivateKeyPath(Output<String> kubeletPrivateKeyPath) {
+            $.kubeletPrivateKeyPath = kubeletPrivateKeyPath;
+            return this;
+        }
+
+        /**
+         * @param kubeletPrivateKeyPath The path to the kubelet private key file.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder kubeletPrivateKeyPath(String kubeletPrivateKeyPath) {
+            return kubeletPrivateKeyPath(Output.of(kubeletPrivateKeyPath));
+        }
+
+        /**
          * @param kubernetesVersion The kubernetes version to use.
          * 
          * @return builder
@@ -740,28 +872,7 @@ public final class WorkerNodeArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param podCIDR The pod CIDR to use.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder podCIDR(Output<String> podCIDR) {
-            $.podCIDR = podCIDR;
-            return this;
-        }
-
-        /**
-         * @param podCIDR The pod CIDR to use.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder podCIDR(String podCIDR) {
-            return podCIDR(Output.of(podCIDR));
-        }
-
-        /**
-         * @param subnet The subnet for the CNI.
+         * @param subnet The subnet for the cluster.
          * 
          * @return builder
          * 
@@ -772,7 +883,7 @@ public final class WorkerNodeArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param subnet The subnet for the CNI.
+         * @param subnet The subnet for the cluster.
          * 
          * @return builder
          * 
@@ -785,11 +896,17 @@ public final class WorkerNodeArgs extends com.pulumi.resources.ResourceArgs {
             if ($.architecture == null) {
                 throw new MissingRequiredPropertyException("WorkerNodeArgs", "architecture");
             }
+            if ($.caPath == null) {
+                throw new MissingRequiredPropertyException("WorkerNodeArgs", "caPath");
+            }
             if ($.connection == null) {
                 throw new MissingRequiredPropertyException("WorkerNodeArgs", "connection");
             }
-            if ($.podCIDR == null) {
-                throw new MissingRequiredPropertyException("WorkerNodeArgs", "podCIDR");
+            if ($.kubeletCertificatePath == null) {
+                throw new MissingRequiredPropertyException("WorkerNodeArgs", "kubeletCertificatePath");
+            }
+            if ($.kubeletPrivateKeyPath == null) {
+                throw new MissingRequiredPropertyException("WorkerNodeArgs", "kubeletPrivateKeyPath");
             }
             if ($.subnet == null) {
                 throw new MissingRequiredPropertyException("WorkerNodeArgs", "subnet");
