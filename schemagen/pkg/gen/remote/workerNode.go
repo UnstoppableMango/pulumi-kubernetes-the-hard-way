@@ -15,7 +15,9 @@ func generateWorkerNode(commandSpec schema.PackageSpec) schema.PackageSpec {
 			Description: "The CPU architecture of the node.",
 			TypeSpec:    types.LocalType("Architecture", "remote"),
 		},
+		"caPath":                           props.String("The path to the cluster certificate authority file."),
 		"clusterCIDR":                      props.String("The CIDR to use for the cluster."),
+		"clusterDomain":                    props.String("The domain for the cluster to use. Defaults to cluster.local."),
 		"cniConfigurationDirectory":        props.String("The directory to store CNI plugin configuration files. Defaults to /etc/cni/net.d."),
 		"cniInstallDirectory":              props.String("The directory to store CNI plugin binaries. Defaults to /opt/cni/bin."),
 		"cniVersion":                       props.String("The CNI version to use."),
@@ -25,21 +27,24 @@ func generateWorkerNode(commandSpec schema.PackageSpec) schema.PackageSpec {
 		"containerdVersion":                props.String("The containerd version to use."),
 		"crictlInstallDirectory":           props.String("The directory to store the crictl binary. Defaults to /usr/local/bin."),
 		"kubectlInstallDirectory":          props.String("The directory to store the kubectl binary. Defaults to /usr/local/bin."),
+		"kubeletCertificatePath":           props.String("The path to the kubelet certificate."),
 		"kubeletConfigurationDirectory":    props.String("The directory to store kubelet configuration files. Defaults to /var/lib/kubelet."),
 		"kubeletInstallDirectory":          props.String("The directory to store the kubelet binary. Defaults to /usr/local/bin."),
 		"kubeletKubeconfigPath":            props.String("The path to the kubelet's kubeconfig file."),
+		"kubeletPrivateKeyPath":            props.String("The path to the kubelet private key file."),
 		"kubeProxyConfigurationDirectory":  props.String("The directory to store kube-proxy configuration files. Defaults to /var/lib/kube-proxy."),
 		"kubeProxyInstallDirectory":        props.String("The directory to store the kube-proxy binary. Defaults to /usr/local/bin."),
 		"kubeProxyKubeconfigPath":          props.String("The path to the kube-proxy's kubeconfig file."),
 		"kubernetesVersion":                props.String("The kubernetes version to use."),
-		"podCIDR":                          props.String("The pod CIDR to use."),
-		"subnet":                           props.String("The subnet for the CNI."),
+		"subnet":                           props.String("The subnet for the cluster."),
 	}
 
 	requiredInputs := []string{
 		"architecture",
+		"caPath",
 		"connection",
-		"podCIDR",
+		"kubeletCertificatePath",
+		"kubeletPrivateKeyPath",
 		"subnet",
 	}
 
