@@ -4951,6 +4951,10 @@
                     "type": "string",
                     "description": "The domain for the cluster to use. Defaults to cluster.local."
                 },
+                "cniBridge": {
+                    "$ref": "#/types/kubernetes-the-hard-way:config:CniBridgePluginConfiguration",
+                    "description": "The CNI bridge plugin configuration."
+                },
                 "cniBridgeConfiguration": {
                     "$ref": "#/resources/kubernetes-the-hard-way:config:CniBridgePluginConfiguration",
                     "description": "The CNI bridge plugin configuration."
@@ -4966,6 +4970,10 @@
                 "cniInstallDirectory": {
                     "type": "string",
                     "description": "The directory to store CNI plugin binaries. Defaults to /opt/cni/bin."
+                },
+                "cniLoopback": {
+                    "$ref": "#/types/kubernetes-the-hard-way:config:CniLoopbackPluginConfiguration",
+                    "description": "The CNI loopback plugin configuration."
                 },
                 "cniLoopbackConfiguration": {
                     "$ref": "#/resources/kubernetes-the-hard-way:config:CniLoopbackPluginConfiguration",
@@ -4990,6 +4998,10 @@
                 "connection": {
                     "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
                     "description": "The parameters with which to connect to the remote host."
+                },
+                "containerd": {
+                    "$ref": "#/types/kubernetes-the-hard-way:config:ContainerdConfiguration",
+                    "description": "The containerd configuration."
                 },
                 "containerdConfiguration": {
                     "$ref": "#/resources/kubernetes-the-hard-way:config:ContainerdConfiguration",
@@ -5031,6 +5043,10 @@
                     "type": "string",
                     "description": "The directory to store the crictl binary. Defaults to /usr/local/bin."
                 },
+                "kubeProxy": {
+                    "$ref": "#/types/kubernetes-the-hard-way:config:KubeProxyConfiguration",
+                    "description": "The kube-proxy configuration."
+                },
                 "kubeProxyConfiguration": {
                     "$ref": "#/resources/kubernetes-the-hard-way:config:KubeProxyConfiguration",
                     "description": "The kube-proxy configuration"
@@ -5051,10 +5067,6 @@
                     "type": "string",
                     "description": "The directory to store the kube-proxy binary. Defaults to /usr/local/bin."
                 },
-                "kubeProxyKubeconfigPath": {
-                    "type": "string",
-                    "description": "The path to the kube-proxy's kubeconfig file."
-                },
                 "kubeProxyMkdir": {
                     "$ref": "#/resources/kubernetes-the-hard-way:tools:Mkdir",
                     "description": "The kube-proxy configuration mkdir operation."
@@ -5070,6 +5082,10 @@
                 "kubectlInstallDirectory": {
                     "type": "string",
                     "description": "The directory to store the kubectl binary. Defaults to /usr/local/bin."
+                },
+                "kubelet": {
+                    "$ref": "#/types/kubernetes-the-hard-way:config:KubeletConfiguration",
+                    "description": "The kubelet configuration."
                 },
                 "kubeletCertificatePath": {
                     "type": "string",
@@ -5094,10 +5110,6 @@
                 "kubeletInstallDirectory": {
                     "type": "string",
                     "description": "The directory to store the kubelet binary. Defaults to /usr/local/bin."
-                },
-                "kubeletKubeconfigPath": {
-                    "type": "string",
-                    "description": "The path to the kubelet's kubeconfig file."
                 },
                 "kubeletMkdir": {
                     "$ref": "#/resources/kubernetes-the-hard-way:tools:Mkdir",
@@ -5180,6 +5192,10 @@
                     "type": "string",
                     "description": "The domain for the cluster to use. Defaults to cluster.local."
                 },
+                "cniBridge": {
+                    "$ref": "#/types/kubernetes-the-hard-way:config:CniBridgePluginConfiguration",
+                    "description": "The CNI bridge plugin configuration."
+                },
                 "cniConfigurationDirectory": {
                     "type": "string",
                     "description": "The directory to store CNI plugin configuration files. Defaults to /etc/cni/net.d."
@@ -5188,6 +5204,10 @@
                     "type": "string",
                     "description": "The directory to store CNI plugin binaries. Defaults to /opt/cni/bin."
                 },
+                "cniLoopback": {
+                    "$ref": "#/types/kubernetes-the-hard-way:config:CniLoopbackPluginConfiguration",
+                    "description": "The CNI loopback plugin configuration."
+                },
                 "cniVersion": {
                     "type": "string",
                     "description": "The CNI version to use."
@@ -5195,6 +5215,10 @@
                 "connection": {
                     "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
                     "description": "The parameters with which to connect to the remote host."
+                },
+                "containerd": {
+                    "$ref": "#/types/kubernetes-the-hard-way:config:ContainerdConfiguration",
+                    "description": "The containerd configuration."
                 },
                 "containerdConfigurationDirectory": {
                     "type": "string",
@@ -5212,6 +5236,10 @@
                     "type": "string",
                     "description": "The directory to store the crictl binary. Defaults to /usr/local/bin."
                 },
+                "kubeProxy": {
+                    "$ref": "#/types/kubernetes-the-hard-way:config:KubeProxyConfiguration",
+                    "description": "The kube-proxy configuration."
+                },
                 "kubeProxyConfigurationDirectory": {
                     "type": "string",
                     "description": "The directory to store kube-proxy configuration files. Defaults to /var/lib/kube-proxy."
@@ -5220,13 +5248,13 @@
                     "type": "string",
                     "description": "The directory to store the kube-proxy binary. Defaults to /usr/local/bin."
                 },
-                "kubeProxyKubeconfigPath": {
-                    "type": "string",
-                    "description": "The path to the kube-proxy's kubeconfig file."
-                },
                 "kubectlInstallDirectory": {
                     "type": "string",
                     "description": "The directory to store the kubectl binary. Defaults to /usr/local/bin."
+                },
+                "kubelet": {
+                    "$ref": "#/types/kubernetes-the-hard-way:config:KubeletConfiguration",
+                    "description": "The kubelet configuration."
                 },
                 "kubeletCertificatePath": {
                     "type": "string",
@@ -5239,10 +5267,6 @@
                 "kubeletInstallDirectory": {
                     "type": "string",
                     "description": "The directory to store the kubelet binary. Defaults to /usr/local/bin."
-                },
-                "kubeletKubeconfigPath": {
-                    "type": "string",
-                    "description": "The path to the kubelet's kubeconfig file."
                 },
                 "kubeletPrivateKeyPath": {
                     "type": "string",

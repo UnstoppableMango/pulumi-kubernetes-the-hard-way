@@ -43,6 +43,12 @@ namespace UnMango.KubernetesTheHardWay.Remote
         /// <summary>
         /// The CNI bridge plugin configuration.
         /// </summary>
+        [Output("cniBridge")]
+        public Output<UnMango.KubernetesTheHardWay.Config.Outputs.CniBridgePluginConfiguration?> CniBridge { get; private set; } = null!;
+
+        /// <summary>
+        /// The CNI bridge plugin configuration.
+        /// </summary>
         [Output("cniBridgeConfiguration")]
         public Output<UnMango.KubernetesTheHardWay.Config.CniBridgePluginConfiguration> CniBridgeConfiguration { get; private set; } = null!;
 
@@ -63,6 +69,12 @@ namespace UnMango.KubernetesTheHardWay.Remote
         /// </summary>
         [Output("cniInstallDirectory")]
         public Output<string?> CniInstallDirectory { get; private set; } = null!;
+
+        /// <summary>
+        /// The CNI loopback plugin configuration.
+        /// </summary>
+        [Output("cniLoopback")]
+        public Output<UnMango.KubernetesTheHardWay.Config.Outputs.CniLoopbackPluginConfiguration?> CniLoopback { get; private set; } = null!;
 
         /// <summary>
         /// The CNI loopback plugin configuration.
@@ -99,6 +111,12 @@ namespace UnMango.KubernetesTheHardWay.Remote
         /// </summary>
         [Output("connection")]
         public Output<Pulumi.Command.Remote.Outputs.Connection> Connection { get; private set; } = null!;
+
+        /// <summary>
+        /// The containerd configuration.
+        /// </summary>
+        [Output("containerd")]
+        public Output<UnMango.KubernetesTheHardWay.Config.Outputs.ContainerdConfiguration?> Containerd { get; private set; } = null!;
 
         /// <summary>
         /// The containerd configuration.
@@ -161,6 +179,12 @@ namespace UnMango.KubernetesTheHardWay.Remote
         public Output<string?> CrictlInstallDirectory { get; private set; } = null!;
 
         /// <summary>
+        /// The kube-proxy configuration.
+        /// </summary>
+        [Output("kubeProxy")]
+        public Output<UnMango.KubernetesTheHardWay.Config.Outputs.KubeProxyConfiguration?> KubeProxy { get; private set; } = null!;
+
+        /// <summary>
         /// The kube-proxy configuration
         /// </summary>
         [Output("kubeProxyConfiguration")]
@@ -191,12 +215,6 @@ namespace UnMango.KubernetesTheHardWay.Remote
         public Output<string?> KubeProxyInstallDirectory { get; private set; } = null!;
 
         /// <summary>
-        /// The path to the kube-proxy's kubeconfig file.
-        /// </summary>
-        [Output("kubeProxyKubeconfigPath")]
-        public Output<string?> KubeProxyKubeconfigPath { get; private set; } = null!;
-
-        /// <summary>
         /// The kube-proxy configuration mkdir operation.
         /// </summary>
         [Output("kubeProxyMkdir")]
@@ -219,6 +237,12 @@ namespace UnMango.KubernetesTheHardWay.Remote
         /// </summary>
         [Output("kubectlInstallDirectory")]
         public Output<string?> KubectlInstallDirectory { get; private set; } = null!;
+
+        /// <summary>
+        /// The kubelet configuration.
+        /// </summary>
+        [Output("kubelet")]
+        public Output<UnMango.KubernetesTheHardWay.Config.Outputs.KubeletConfiguration?> Kubelet { get; private set; } = null!;
 
         /// <summary>
         /// The path to the kubelet certificate.
@@ -255,12 +279,6 @@ namespace UnMango.KubernetesTheHardWay.Remote
         /// </summary>
         [Output("kubeletInstallDirectory")]
         public Output<string?> KubeletInstallDirectory { get; private set; } = null!;
-
-        /// <summary>
-        /// The path to the kubelet's kubeconfig file.
-        /// </summary>
-        [Output("kubeletKubeconfigPath")]
-        public Output<string?> KubeletKubeconfigPath { get; private set; } = null!;
 
         /// <summary>
         /// The kubelet configuration mkdir operation.
@@ -364,6 +382,12 @@ namespace UnMango.KubernetesTheHardWay.Remote
         public Input<string>? ClusterDomain { get; set; }
 
         /// <summary>
+        /// The CNI bridge plugin configuration.
+        /// </summary>
+        [Input("cniBridge")]
+        public Input<UnMango.KubernetesTheHardWay.Config.Inputs.CniBridgePluginConfigurationArgs>? CniBridge { get; set; }
+
+        /// <summary>
         /// The directory to store CNI plugin configuration files. Defaults to /etc/cni/net.d.
         /// </summary>
         [Input("cniConfigurationDirectory")]
@@ -376,6 +400,12 @@ namespace UnMango.KubernetesTheHardWay.Remote
         public Input<string>? CniInstallDirectory { get; set; }
 
         /// <summary>
+        /// The CNI loopback plugin configuration.
+        /// </summary>
+        [Input("cniLoopback")]
+        public Input<UnMango.KubernetesTheHardWay.Config.Inputs.CniLoopbackPluginConfigurationArgs>? CniLoopback { get; set; }
+
+        /// <summary>
         /// The CNI version to use.
         /// </summary>
         [Input("cniVersion")]
@@ -386,6 +416,12 @@ namespace UnMango.KubernetesTheHardWay.Remote
         /// </summary>
         [Input("connection", required: true)]
         public Input<Pulumi.Command.Remote.Inputs.ConnectionArgs> Connection { get; set; } = null!;
+
+        /// <summary>
+        /// The containerd configuration.
+        /// </summary>
+        [Input("containerd")]
+        public Input<UnMango.KubernetesTheHardWay.Config.Inputs.ContainerdConfigurationArgs>? Containerd { get; set; }
 
         /// <summary>
         /// The directory to store containerd configuration files. Defaults to /etc/containerd.
@@ -412,6 +448,12 @@ namespace UnMango.KubernetesTheHardWay.Remote
         public Input<string>? CrictlInstallDirectory { get; set; }
 
         /// <summary>
+        /// The kube-proxy configuration.
+        /// </summary>
+        [Input("kubeProxy")]
+        public Input<UnMango.KubernetesTheHardWay.Config.Inputs.KubeProxyConfigurationArgs>? KubeProxy { get; set; }
+
+        /// <summary>
         /// The directory to store kube-proxy configuration files. Defaults to /var/lib/kube-proxy.
         /// </summary>
         [Input("kubeProxyConfigurationDirectory")]
@@ -424,16 +466,16 @@ namespace UnMango.KubernetesTheHardWay.Remote
         public Input<string>? KubeProxyInstallDirectory { get; set; }
 
         /// <summary>
-        /// The path to the kube-proxy's kubeconfig file.
-        /// </summary>
-        [Input("kubeProxyKubeconfigPath")]
-        public Input<string>? KubeProxyKubeconfigPath { get; set; }
-
-        /// <summary>
         /// The directory to store the kubectl binary. Defaults to /usr/local/bin.
         /// </summary>
         [Input("kubectlInstallDirectory")]
         public Input<string>? KubectlInstallDirectory { get; set; }
+
+        /// <summary>
+        /// The kubelet configuration.
+        /// </summary>
+        [Input("kubelet")]
+        public Input<UnMango.KubernetesTheHardWay.Config.Inputs.KubeletConfigurationArgs>? Kubelet { get; set; }
 
         /// <summary>
         /// The path to the kubelet certificate.
@@ -452,12 +494,6 @@ namespace UnMango.KubernetesTheHardWay.Remote
         /// </summary>
         [Input("kubeletInstallDirectory")]
         public Input<string>? KubeletInstallDirectory { get; set; }
-
-        /// <summary>
-        /// The path to the kubelet's kubeconfig file.
-        /// </summary>
-        [Input("kubeletKubeconfigPath")]
-        public Input<string>? KubeletKubeconfigPath { get; set; }
 
         /// <summary>
         /// The path to the kubelet private key file.

@@ -50,6 +50,10 @@ export class WorkerNode extends pulumi.ComponentResource {
     /**
      * The CNI bridge plugin configuration.
      */
+    public readonly cniBridge!: pulumi.Output<outputs.config.CniBridgePluginConfiguration | undefined>;
+    /**
+     * The CNI bridge plugin configuration.
+     */
     public /*out*/ readonly cniBridgeConfiguration!: pulumi.Output<CniBridgePluginConfiguration>;
     /**
      * The CNI bridge plugin configuration file.
@@ -63,6 +67,10 @@ export class WorkerNode extends pulumi.ComponentResource {
      * The directory to store CNI plugin binaries. Defaults to /opt/cni/bin.
      */
     public readonly cniInstallDirectory!: pulumi.Output<string | undefined>;
+    /**
+     * The CNI loopback plugin configuration.
+     */
+    public readonly cniLoopback!: pulumi.Output<outputs.config.CniLoopbackPluginConfiguration | undefined>;
     /**
      * The CNI loopback plugin configuration.
      */
@@ -87,6 +95,10 @@ export class WorkerNode extends pulumi.ComponentResource {
      * The parameters with which to connect to the remote host.
      */
     public readonly connection!: pulumi.Output<pulumiCommand.types.output.remote.Connection>;
+    /**
+     * The containerd configuration.
+     */
+    public readonly containerd!: pulumi.Output<outputs.config.ContainerdConfiguration | undefined>;
     /**
      * The containerd configuration.
      */
@@ -128,6 +140,10 @@ export class WorkerNode extends pulumi.ComponentResource {
      */
     public readonly crictlInstallDirectory!: pulumi.Output<string | undefined>;
     /**
+     * The kube-proxy configuration.
+     */
+    public readonly kubeProxy!: pulumi.Output<outputs.config.KubeProxyConfiguration | undefined>;
+    /**
      * The kube-proxy configuration
      */
     public /*out*/ readonly kubeProxyConfiguration!: pulumi.Output<KubeProxyConfiguration>;
@@ -148,10 +164,6 @@ export class WorkerNode extends pulumi.ComponentResource {
      */
     public readonly kubeProxyInstallDirectory!: pulumi.Output<string | undefined>;
     /**
-     * The path to the kube-proxy's kubeconfig file.
-     */
-    public readonly kubeProxyKubeconfigPath!: pulumi.Output<string | undefined>;
-    /**
      * The kube-proxy configuration mkdir operation.
      */
     public /*out*/ readonly kubeProxyMkdir!: pulumi.Output<Mkdir>;
@@ -167,6 +179,10 @@ export class WorkerNode extends pulumi.ComponentResource {
      * The directory to store the kubectl binary. Defaults to /usr/local/bin.
      */
     public readonly kubectlInstallDirectory!: pulumi.Output<string | undefined>;
+    /**
+     * The kubelet configuration.
+     */
+    public readonly kubelet!: pulumi.Output<outputs.config.KubeletConfiguration | undefined>;
     /**
      * The path to the kubelet certificate.
      */
@@ -191,10 +207,6 @@ export class WorkerNode extends pulumi.ComponentResource {
      * The directory to store the kubelet binary. Defaults to /usr/local/bin.
      */
     public readonly kubeletInstallDirectory!: pulumi.Output<string | undefined>;
-    /**
-     * The path to the kubelet's kubeconfig file.
-     */
-    public readonly kubeletKubeconfigPath!: pulumi.Output<string | undefined>;
     /**
      * The kubelet configuration mkdir operation.
      */
@@ -261,22 +273,25 @@ export class WorkerNode extends pulumi.ComponentResource {
             resourceInputs["caPath"] = args ? args.caPath : undefined;
             resourceInputs["clusterCIDR"] = args ? args.clusterCIDR : undefined;
             resourceInputs["clusterDomain"] = args ? args.clusterDomain : undefined;
+            resourceInputs["cniBridge"] = args ? args.cniBridge : undefined;
             resourceInputs["cniConfigurationDirectory"] = args ? args.cniConfigurationDirectory : undefined;
             resourceInputs["cniInstallDirectory"] = args ? args.cniInstallDirectory : undefined;
+            resourceInputs["cniLoopback"] = args ? args.cniLoopback : undefined;
             resourceInputs["cniVersion"] = args ? args.cniVersion : undefined;
             resourceInputs["connection"] = args ? (args.connection ? pulumi.output(args.connection).apply(pulumiCommand.types.input.remote.connectionArgsProvideDefaults) : undefined) : undefined;
+            resourceInputs["containerd"] = args ? args.containerd : undefined;
             resourceInputs["containerdConfigurationDirectory"] = args ? args.containerdConfigurationDirectory : undefined;
             resourceInputs["containerdInstallDirectory"] = args ? args.containerdInstallDirectory : undefined;
             resourceInputs["containerdVersion"] = args ? args.containerdVersion : undefined;
             resourceInputs["crictlInstallDirectory"] = args ? args.crictlInstallDirectory : undefined;
+            resourceInputs["kubeProxy"] = args ? args.kubeProxy : undefined;
             resourceInputs["kubeProxyConfigurationDirectory"] = args ? args.kubeProxyConfigurationDirectory : undefined;
             resourceInputs["kubeProxyInstallDirectory"] = args ? args.kubeProxyInstallDirectory : undefined;
-            resourceInputs["kubeProxyKubeconfigPath"] = args ? args.kubeProxyKubeconfigPath : undefined;
             resourceInputs["kubectlInstallDirectory"] = args ? args.kubectlInstallDirectory : undefined;
+            resourceInputs["kubelet"] = args ? args.kubelet : undefined;
             resourceInputs["kubeletCertificatePath"] = args ? args.kubeletCertificatePath : undefined;
             resourceInputs["kubeletConfigurationDirectory"] = args ? args.kubeletConfigurationDirectory : undefined;
             resourceInputs["kubeletInstallDirectory"] = args ? args.kubeletInstallDirectory : undefined;
-            resourceInputs["kubeletKubeconfigPath"] = args ? args.kubeletKubeconfigPath : undefined;
             resourceInputs["kubeletPrivateKeyPath"] = args ? args.kubeletPrivateKeyPath : undefined;
             resourceInputs["kubernetesVersion"] = args ? args.kubernetesVersion : undefined;
             resourceInputs["subnet"] = args ? args.subnet : undefined;
@@ -311,16 +326,19 @@ export class WorkerNode extends pulumi.ComponentResource {
             resourceInputs["caPath"] = undefined /*out*/;
             resourceInputs["clusterCIDR"] = undefined /*out*/;
             resourceInputs["clusterDomain"] = undefined /*out*/;
+            resourceInputs["cniBridge"] = undefined /*out*/;
             resourceInputs["cniBridgeConfiguration"] = undefined /*out*/;
             resourceInputs["cniBridgeConfigurationFile"] = undefined /*out*/;
             resourceInputs["cniConfigurationDirectory"] = undefined /*out*/;
             resourceInputs["cniInstallDirectory"] = undefined /*out*/;
+            resourceInputs["cniLoopback"] = undefined /*out*/;
             resourceInputs["cniLoopbackConfiguration"] = undefined /*out*/;
             resourceInputs["cniLoopbackConfigurationFile"] = undefined /*out*/;
             resourceInputs["cniMkdir"] = undefined /*out*/;
             resourceInputs["cniPluginsInstall"] = undefined /*out*/;
             resourceInputs["cniVersion"] = undefined /*out*/;
             resourceInputs["connection"] = undefined /*out*/;
+            resourceInputs["containerd"] = undefined /*out*/;
             resourceInputs["containerdConfiguration"] = undefined /*out*/;
             resourceInputs["containerdConfigurationDirectory"] = undefined /*out*/;
             resourceInputs["containerdConfigurationFile"] = undefined /*out*/;
@@ -331,23 +349,23 @@ export class WorkerNode extends pulumi.ComponentResource {
             resourceInputs["containerdVersion"] = undefined /*out*/;
             resourceInputs["crictlInstall"] = undefined /*out*/;
             resourceInputs["crictlInstallDirectory"] = undefined /*out*/;
+            resourceInputs["kubeProxy"] = undefined /*out*/;
             resourceInputs["kubeProxyConfiguration"] = undefined /*out*/;
             resourceInputs["kubeProxyConfigurationDirectory"] = undefined /*out*/;
             resourceInputs["kubeProxyConfigurationFile"] = undefined /*out*/;
             resourceInputs["kubeProxyInstall"] = undefined /*out*/;
             resourceInputs["kubeProxyInstallDirectory"] = undefined /*out*/;
-            resourceInputs["kubeProxyKubeconfigPath"] = undefined /*out*/;
             resourceInputs["kubeProxyMkdir"] = undefined /*out*/;
             resourceInputs["kubeProxyService"] = undefined /*out*/;
             resourceInputs["kubectlInstall"] = undefined /*out*/;
             resourceInputs["kubectlInstallDirectory"] = undefined /*out*/;
+            resourceInputs["kubelet"] = undefined /*out*/;
             resourceInputs["kubeletCertificatePath"] = undefined /*out*/;
             resourceInputs["kubeletConfiguration"] = undefined /*out*/;
             resourceInputs["kubeletConfigurationDirectory"] = undefined /*out*/;
             resourceInputs["kubeletConfigurationFile"] = undefined /*out*/;
             resourceInputs["kubeletInstall"] = undefined /*out*/;
             resourceInputs["kubeletInstallDirectory"] = undefined /*out*/;
-            resourceInputs["kubeletKubeconfigPath"] = undefined /*out*/;
             resourceInputs["kubeletMkdir"] = undefined /*out*/;
             resourceInputs["kubeletPrivateKeyPath"] = undefined /*out*/;
             resourceInputs["kubeletService"] = undefined /*out*/;
@@ -383,6 +401,10 @@ export interface WorkerNodeArgs {
      */
     clusterDomain?: pulumi.Input<string>;
     /**
+     * The CNI bridge plugin configuration.
+     */
+    cniBridge?: pulumi.Input<inputs.config.CniBridgePluginConfigurationArgs>;
+    /**
      * The directory to store CNI plugin configuration files. Defaults to /etc/cni/net.d.
      */
     cniConfigurationDirectory?: pulumi.Input<string>;
@@ -391,6 +413,10 @@ export interface WorkerNodeArgs {
      */
     cniInstallDirectory?: pulumi.Input<string>;
     /**
+     * The CNI loopback plugin configuration.
+     */
+    cniLoopback?: pulumi.Input<inputs.config.CniLoopbackPluginConfigurationArgs>;
+    /**
      * The CNI version to use.
      */
     cniVersion?: pulumi.Input<string>;
@@ -398,6 +424,10 @@ export interface WorkerNodeArgs {
      * The parameters with which to connect to the remote host.
      */
     connection: pulumi.Input<pulumiCommand.types.input.remote.ConnectionArgs>;
+    /**
+     * The containerd configuration.
+     */
+    containerd?: pulumi.Input<inputs.config.ContainerdConfigurationArgs>;
     /**
      * The directory to store containerd configuration files. Defaults to /etc/containerd.
      */
@@ -415,6 +445,10 @@ export interface WorkerNodeArgs {
      */
     crictlInstallDirectory?: pulumi.Input<string>;
     /**
+     * The kube-proxy configuration.
+     */
+    kubeProxy?: pulumi.Input<inputs.config.KubeProxyConfigurationArgs>;
+    /**
      * The directory to store kube-proxy configuration files. Defaults to /var/lib/kube-proxy.
      */
     kubeProxyConfigurationDirectory?: pulumi.Input<string>;
@@ -423,13 +457,13 @@ export interface WorkerNodeArgs {
      */
     kubeProxyInstallDirectory?: pulumi.Input<string>;
     /**
-     * The path to the kube-proxy's kubeconfig file.
-     */
-    kubeProxyKubeconfigPath?: pulumi.Input<string>;
-    /**
      * The directory to store the kubectl binary. Defaults to /usr/local/bin.
      */
     kubectlInstallDirectory?: pulumi.Input<string>;
+    /**
+     * The kubelet configuration.
+     */
+    kubelet?: pulumi.Input<inputs.config.KubeletConfigurationArgs>;
     /**
      * The path to the kubelet certificate.
      */
@@ -442,10 +476,6 @@ export interface WorkerNodeArgs {
      * The directory to store the kubelet binary. Defaults to /usr/local/bin.
      */
     kubeletInstallDirectory?: pulumi.Input<string>;
-    /**
-     * The path to the kubelet's kubeconfig file.
-     */
-    kubeletKubeconfigPath?: pulumi.Input<string>;
     /**
      * The path to the kubelet private key file.
      */

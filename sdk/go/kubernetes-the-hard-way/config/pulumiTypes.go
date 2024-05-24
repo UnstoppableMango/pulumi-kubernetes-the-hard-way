@@ -264,6 +264,90 @@ type CniBridgePluginConfigurationType struct {
 	Type string `pulumi:"type"`
 }
 
+// CniBridgePluginConfigurationTypeInput is an input type that accepts CniBridgePluginConfigurationTypeArgs and CniBridgePluginConfigurationTypeOutput values.
+// You can construct a concrete instance of `CniBridgePluginConfigurationTypeInput` via:
+//
+//	CniBridgePluginConfigurationTypeArgs{...}
+type CniBridgePluginConfigurationTypeInput interface {
+	pulumi.Input
+
+	ToCniBridgePluginConfigurationTypeOutput() CniBridgePluginConfigurationTypeOutput
+	ToCniBridgePluginConfigurationTypeOutputWithContext(context.Context) CniBridgePluginConfigurationTypeOutput
+}
+
+// TODO
+type CniBridgePluginConfigurationTypeArgs struct {
+	// Bridge name.
+	Bridge pulumi.StringInput `pulumi:"bridge"`
+	// The version of the bridge plugin.
+	CniVersion pulumi.StringPtrInput `pulumi:"cniVersion"`
+	// IP masq.
+	IpMasq pulumi.BoolInput `pulumi:"ipMasq"`
+	// IPAM.
+	Ipam CniBridgeIpamInput `pulumi:"ipam"`
+	// Is gateway.
+	IsGateway pulumi.BoolInput `pulumi:"isGateway"`
+	// Plugin name.
+	Name pulumi.StringInput `pulumi:"name"`
+	// The subnet to use.
+	Subnet pulumi.StringInput `pulumi:"subnet"`
+	// Plugin type.
+	Type pulumi.StringInput `pulumi:"type"`
+}
+
+func (CniBridgePluginConfigurationTypeArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*CniBridgePluginConfigurationType)(nil)).Elem()
+}
+
+func (i CniBridgePluginConfigurationTypeArgs) ToCniBridgePluginConfigurationTypeOutput() CniBridgePluginConfigurationTypeOutput {
+	return i.ToCniBridgePluginConfigurationTypeOutputWithContext(context.Background())
+}
+
+func (i CniBridgePluginConfigurationTypeArgs) ToCniBridgePluginConfigurationTypeOutputWithContext(ctx context.Context) CniBridgePluginConfigurationTypeOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CniBridgePluginConfigurationTypeOutput)
+}
+
+func (i CniBridgePluginConfigurationTypeArgs) ToCniBridgePluginConfigurationTypePtrOutput() CniBridgePluginConfigurationTypePtrOutput {
+	return i.ToCniBridgePluginConfigurationTypePtrOutputWithContext(context.Background())
+}
+
+func (i CniBridgePluginConfigurationTypeArgs) ToCniBridgePluginConfigurationTypePtrOutputWithContext(ctx context.Context) CniBridgePluginConfigurationTypePtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CniBridgePluginConfigurationTypeOutput).ToCniBridgePluginConfigurationTypePtrOutputWithContext(ctx)
+}
+
+// CniBridgePluginConfigurationTypePtrInput is an input type that accepts CniBridgePluginConfigurationTypeArgs, CniBridgePluginConfigurationTypePtr and CniBridgePluginConfigurationTypePtrOutput values.
+// You can construct a concrete instance of `CniBridgePluginConfigurationTypePtrInput` via:
+//
+//	        CniBridgePluginConfigurationTypeArgs{...}
+//
+//	or:
+//
+//	        nil
+type CniBridgePluginConfigurationTypePtrInput interface {
+	pulumi.Input
+
+	ToCniBridgePluginConfigurationTypePtrOutput() CniBridgePluginConfigurationTypePtrOutput
+	ToCniBridgePluginConfigurationTypePtrOutputWithContext(context.Context) CniBridgePluginConfigurationTypePtrOutput
+}
+
+type cniBridgePluginConfigurationTypePtrType CniBridgePluginConfigurationTypeArgs
+
+func CniBridgePluginConfigurationTypePtr(v *CniBridgePluginConfigurationTypeArgs) CniBridgePluginConfigurationTypePtrInput {
+	return (*cniBridgePluginConfigurationTypePtrType)(v)
+}
+
+func (*cniBridgePluginConfigurationTypePtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**CniBridgePluginConfigurationType)(nil)).Elem()
+}
+
+func (i *cniBridgePluginConfigurationTypePtrType) ToCniBridgePluginConfigurationTypePtrOutput() CniBridgePluginConfigurationTypePtrOutput {
+	return i.ToCniBridgePluginConfigurationTypePtrOutputWithContext(context.Background())
+}
+
+func (i *cniBridgePluginConfigurationTypePtrType) ToCniBridgePluginConfigurationTypePtrOutputWithContext(ctx context.Context) CniBridgePluginConfigurationTypePtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CniBridgePluginConfigurationTypePtrOutput)
+}
+
 // TODO
 type CniBridgePluginConfigurationTypeOutput struct{ *pulumi.OutputState }
 
@@ -277,6 +361,16 @@ func (o CniBridgePluginConfigurationTypeOutput) ToCniBridgePluginConfigurationTy
 
 func (o CniBridgePluginConfigurationTypeOutput) ToCniBridgePluginConfigurationTypeOutputWithContext(ctx context.Context) CniBridgePluginConfigurationTypeOutput {
 	return o
+}
+
+func (o CniBridgePluginConfigurationTypeOutput) ToCniBridgePluginConfigurationTypePtrOutput() CniBridgePluginConfigurationTypePtrOutput {
+	return o.ToCniBridgePluginConfigurationTypePtrOutputWithContext(context.Background())
+}
+
+func (o CniBridgePluginConfigurationTypeOutput) ToCniBridgePluginConfigurationTypePtrOutputWithContext(ctx context.Context) CniBridgePluginConfigurationTypePtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v CniBridgePluginConfigurationType) *CniBridgePluginConfigurationType {
+		return &v
+	}).(CniBridgePluginConfigurationTypePtrOutput)
 }
 
 // Bridge name.
@@ -319,6 +413,110 @@ func (o CniBridgePluginConfigurationTypeOutput) Type() pulumi.StringOutput {
 	return o.ApplyT(func(v CniBridgePluginConfigurationType) string { return v.Type }).(pulumi.StringOutput)
 }
 
+type CniBridgePluginConfigurationTypePtrOutput struct{ *pulumi.OutputState }
+
+func (CniBridgePluginConfigurationTypePtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**CniBridgePluginConfigurationType)(nil)).Elem()
+}
+
+func (o CniBridgePluginConfigurationTypePtrOutput) ToCniBridgePluginConfigurationTypePtrOutput() CniBridgePluginConfigurationTypePtrOutput {
+	return o
+}
+
+func (o CniBridgePluginConfigurationTypePtrOutput) ToCniBridgePluginConfigurationTypePtrOutputWithContext(ctx context.Context) CniBridgePluginConfigurationTypePtrOutput {
+	return o
+}
+
+func (o CniBridgePluginConfigurationTypePtrOutput) Elem() CniBridgePluginConfigurationTypeOutput {
+	return o.ApplyT(func(v *CniBridgePluginConfigurationType) CniBridgePluginConfigurationType {
+		if v != nil {
+			return *v
+		}
+		var ret CniBridgePluginConfigurationType
+		return ret
+	}).(CniBridgePluginConfigurationTypeOutput)
+}
+
+// Bridge name.
+func (o CniBridgePluginConfigurationTypePtrOutput) Bridge() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *CniBridgePluginConfigurationType) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.Bridge
+	}).(pulumi.StringPtrOutput)
+}
+
+// The version of the bridge plugin.
+func (o CniBridgePluginConfigurationTypePtrOutput) CniVersion() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *CniBridgePluginConfigurationType) *string {
+		if v == nil {
+			return nil
+		}
+		return v.CniVersion
+	}).(pulumi.StringPtrOutput)
+}
+
+// IP masq.
+func (o CniBridgePluginConfigurationTypePtrOutput) IpMasq() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *CniBridgePluginConfigurationType) *bool {
+		if v == nil {
+			return nil
+		}
+		return &v.IpMasq
+	}).(pulumi.BoolPtrOutput)
+}
+
+// IPAM.
+func (o CniBridgePluginConfigurationTypePtrOutput) Ipam() CniBridgeIpamPtrOutput {
+	return o.ApplyT(func(v *CniBridgePluginConfigurationType) *CniBridgeIpam {
+		if v == nil {
+			return nil
+		}
+		return &v.Ipam
+	}).(CniBridgeIpamPtrOutput)
+}
+
+// Is gateway.
+func (o CniBridgePluginConfigurationTypePtrOutput) IsGateway() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *CniBridgePluginConfigurationType) *bool {
+		if v == nil {
+			return nil
+		}
+		return &v.IsGateway
+	}).(pulumi.BoolPtrOutput)
+}
+
+// Plugin name.
+func (o CniBridgePluginConfigurationTypePtrOutput) Name() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *CniBridgePluginConfigurationType) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.Name
+	}).(pulumi.StringPtrOutput)
+}
+
+// The subnet to use.
+func (o CniBridgePluginConfigurationTypePtrOutput) Subnet() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *CniBridgePluginConfigurationType) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.Subnet
+	}).(pulumi.StringPtrOutput)
+}
+
+// Plugin type.
+func (o CniBridgePluginConfigurationTypePtrOutput) Type() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *CniBridgePluginConfigurationType) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.Type
+	}).(pulumi.StringPtrOutput)
+}
+
 // CNI loopback plugin configuration.
 type CniLoopbackPluginConfigurationType struct {
 	// The plugin CNI version.
@@ -327,6 +525,80 @@ type CniLoopbackPluginConfigurationType struct {
 	Name string `pulumi:"name"`
 	// The type of the plugin.
 	Type string `pulumi:"type"`
+}
+
+// CniLoopbackPluginConfigurationTypeInput is an input type that accepts CniLoopbackPluginConfigurationTypeArgs and CniLoopbackPluginConfigurationTypeOutput values.
+// You can construct a concrete instance of `CniLoopbackPluginConfigurationTypeInput` via:
+//
+//	CniLoopbackPluginConfigurationTypeArgs{...}
+type CniLoopbackPluginConfigurationTypeInput interface {
+	pulumi.Input
+
+	ToCniLoopbackPluginConfigurationTypeOutput() CniLoopbackPluginConfigurationTypeOutput
+	ToCniLoopbackPluginConfigurationTypeOutputWithContext(context.Context) CniLoopbackPluginConfigurationTypeOutput
+}
+
+// CNI loopback plugin configuration.
+type CniLoopbackPluginConfigurationTypeArgs struct {
+	// The plugin CNI version.
+	CniVersion pulumi.StringInput `pulumi:"cniVersion"`
+	// The name of the plugin.
+	Name pulumi.StringInput `pulumi:"name"`
+	// The type of the plugin.
+	Type pulumi.StringInput `pulumi:"type"`
+}
+
+func (CniLoopbackPluginConfigurationTypeArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*CniLoopbackPluginConfigurationType)(nil)).Elem()
+}
+
+func (i CniLoopbackPluginConfigurationTypeArgs) ToCniLoopbackPluginConfigurationTypeOutput() CniLoopbackPluginConfigurationTypeOutput {
+	return i.ToCniLoopbackPluginConfigurationTypeOutputWithContext(context.Background())
+}
+
+func (i CniLoopbackPluginConfigurationTypeArgs) ToCniLoopbackPluginConfigurationTypeOutputWithContext(ctx context.Context) CniLoopbackPluginConfigurationTypeOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CniLoopbackPluginConfigurationTypeOutput)
+}
+
+func (i CniLoopbackPluginConfigurationTypeArgs) ToCniLoopbackPluginConfigurationTypePtrOutput() CniLoopbackPluginConfigurationTypePtrOutput {
+	return i.ToCniLoopbackPluginConfigurationTypePtrOutputWithContext(context.Background())
+}
+
+func (i CniLoopbackPluginConfigurationTypeArgs) ToCniLoopbackPluginConfigurationTypePtrOutputWithContext(ctx context.Context) CniLoopbackPluginConfigurationTypePtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CniLoopbackPluginConfigurationTypeOutput).ToCniLoopbackPluginConfigurationTypePtrOutputWithContext(ctx)
+}
+
+// CniLoopbackPluginConfigurationTypePtrInput is an input type that accepts CniLoopbackPluginConfigurationTypeArgs, CniLoopbackPluginConfigurationTypePtr and CniLoopbackPluginConfigurationTypePtrOutput values.
+// You can construct a concrete instance of `CniLoopbackPluginConfigurationTypePtrInput` via:
+//
+//	        CniLoopbackPluginConfigurationTypeArgs{...}
+//
+//	or:
+//
+//	        nil
+type CniLoopbackPluginConfigurationTypePtrInput interface {
+	pulumi.Input
+
+	ToCniLoopbackPluginConfigurationTypePtrOutput() CniLoopbackPluginConfigurationTypePtrOutput
+	ToCniLoopbackPluginConfigurationTypePtrOutputWithContext(context.Context) CniLoopbackPluginConfigurationTypePtrOutput
+}
+
+type cniLoopbackPluginConfigurationTypePtrType CniLoopbackPluginConfigurationTypeArgs
+
+func CniLoopbackPluginConfigurationTypePtr(v *CniLoopbackPluginConfigurationTypeArgs) CniLoopbackPluginConfigurationTypePtrInput {
+	return (*cniLoopbackPluginConfigurationTypePtrType)(v)
+}
+
+func (*cniLoopbackPluginConfigurationTypePtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**CniLoopbackPluginConfigurationType)(nil)).Elem()
+}
+
+func (i *cniLoopbackPluginConfigurationTypePtrType) ToCniLoopbackPluginConfigurationTypePtrOutput() CniLoopbackPluginConfigurationTypePtrOutput {
+	return i.ToCniLoopbackPluginConfigurationTypePtrOutputWithContext(context.Background())
+}
+
+func (i *cniLoopbackPluginConfigurationTypePtrType) ToCniLoopbackPluginConfigurationTypePtrOutputWithContext(ctx context.Context) CniLoopbackPluginConfigurationTypePtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CniLoopbackPluginConfigurationTypePtrOutput)
 }
 
 // CNI loopback plugin configuration.
@@ -344,6 +616,16 @@ func (o CniLoopbackPluginConfigurationTypeOutput) ToCniLoopbackPluginConfigurati
 	return o
 }
 
+func (o CniLoopbackPluginConfigurationTypeOutput) ToCniLoopbackPluginConfigurationTypePtrOutput() CniLoopbackPluginConfigurationTypePtrOutput {
+	return o.ToCniLoopbackPluginConfigurationTypePtrOutputWithContext(context.Background())
+}
+
+func (o CniLoopbackPluginConfigurationTypeOutput) ToCniLoopbackPluginConfigurationTypePtrOutputWithContext(ctx context.Context) CniLoopbackPluginConfigurationTypePtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v CniLoopbackPluginConfigurationType) *CniLoopbackPluginConfigurationType {
+		return &v
+	}).(CniLoopbackPluginConfigurationTypePtrOutput)
+}
+
 // The plugin CNI version.
 func (o CniLoopbackPluginConfigurationTypeOutput) CniVersion() pulumi.StringOutput {
 	return o.ApplyT(func(v CniLoopbackPluginConfigurationType) string { return v.CniVersion }).(pulumi.StringOutput)
@@ -357,6 +639,60 @@ func (o CniLoopbackPluginConfigurationTypeOutput) Name() pulumi.StringOutput {
 // The type of the plugin.
 func (o CniLoopbackPluginConfigurationTypeOutput) Type() pulumi.StringOutput {
 	return o.ApplyT(func(v CniLoopbackPluginConfigurationType) string { return v.Type }).(pulumi.StringOutput)
+}
+
+type CniLoopbackPluginConfigurationTypePtrOutput struct{ *pulumi.OutputState }
+
+func (CniLoopbackPluginConfigurationTypePtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**CniLoopbackPluginConfigurationType)(nil)).Elem()
+}
+
+func (o CniLoopbackPluginConfigurationTypePtrOutput) ToCniLoopbackPluginConfigurationTypePtrOutput() CniLoopbackPluginConfigurationTypePtrOutput {
+	return o
+}
+
+func (o CniLoopbackPluginConfigurationTypePtrOutput) ToCniLoopbackPluginConfigurationTypePtrOutputWithContext(ctx context.Context) CniLoopbackPluginConfigurationTypePtrOutput {
+	return o
+}
+
+func (o CniLoopbackPluginConfigurationTypePtrOutput) Elem() CniLoopbackPluginConfigurationTypeOutput {
+	return o.ApplyT(func(v *CniLoopbackPluginConfigurationType) CniLoopbackPluginConfigurationType {
+		if v != nil {
+			return *v
+		}
+		var ret CniLoopbackPluginConfigurationType
+		return ret
+	}).(CniLoopbackPluginConfigurationTypeOutput)
+}
+
+// The plugin CNI version.
+func (o CniLoopbackPluginConfigurationTypePtrOutput) CniVersion() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *CniLoopbackPluginConfigurationType) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.CniVersion
+	}).(pulumi.StringPtrOutput)
+}
+
+// The name of the plugin.
+func (o CniLoopbackPluginConfigurationTypePtrOutput) Name() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *CniLoopbackPluginConfigurationType) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.Name
+	}).(pulumi.StringPtrOutput)
+}
+
+// The type of the plugin.
+func (o CniLoopbackPluginConfigurationTypePtrOutput) Type() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *CniLoopbackPluginConfigurationType) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.Type
+	}).(pulumi.StringPtrOutput)
 }
 
 // The containerd configuration.
@@ -394,6 +730,47 @@ func (i ContainerdConfigurationTypeArgs) ToContainerdConfigurationTypeOutputWith
 	return pulumi.ToOutputWithContext(ctx, i).(ContainerdConfigurationTypeOutput)
 }
 
+func (i ContainerdConfigurationTypeArgs) ToContainerdConfigurationTypePtrOutput() ContainerdConfigurationTypePtrOutput {
+	return i.ToContainerdConfigurationTypePtrOutputWithContext(context.Background())
+}
+
+func (i ContainerdConfigurationTypeArgs) ToContainerdConfigurationTypePtrOutputWithContext(ctx context.Context) ContainerdConfigurationTypePtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(ContainerdConfigurationTypeOutput).ToContainerdConfigurationTypePtrOutputWithContext(ctx)
+}
+
+// ContainerdConfigurationTypePtrInput is an input type that accepts ContainerdConfigurationTypeArgs, ContainerdConfigurationTypePtr and ContainerdConfigurationTypePtrOutput values.
+// You can construct a concrete instance of `ContainerdConfigurationTypePtrInput` via:
+//
+//	        ContainerdConfigurationTypeArgs{...}
+//
+//	or:
+//
+//	        nil
+type ContainerdConfigurationTypePtrInput interface {
+	pulumi.Input
+
+	ToContainerdConfigurationTypePtrOutput() ContainerdConfigurationTypePtrOutput
+	ToContainerdConfigurationTypePtrOutputWithContext(context.Context) ContainerdConfigurationTypePtrOutput
+}
+
+type containerdConfigurationTypePtrType ContainerdConfigurationTypeArgs
+
+func ContainerdConfigurationTypePtr(v *ContainerdConfigurationTypeArgs) ContainerdConfigurationTypePtrInput {
+	return (*containerdConfigurationTypePtrType)(v)
+}
+
+func (*containerdConfigurationTypePtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**ContainerdConfigurationType)(nil)).Elem()
+}
+
+func (i *containerdConfigurationTypePtrType) ToContainerdConfigurationTypePtrOutput() ContainerdConfigurationTypePtrOutput {
+	return i.ToContainerdConfigurationTypePtrOutputWithContext(context.Background())
+}
+
+func (i *containerdConfigurationTypePtrType) ToContainerdConfigurationTypePtrOutputWithContext(ctx context.Context) ContainerdConfigurationTypePtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(ContainerdConfigurationTypePtrOutput)
+}
+
 // The containerd configuration.
 type ContainerdConfigurationTypeOutput struct{ *pulumi.OutputState }
 
@@ -409,9 +786,53 @@ func (o ContainerdConfigurationTypeOutput) ToContainerdConfigurationTypeOutputWi
 	return o
 }
 
+func (o ContainerdConfigurationTypeOutput) ToContainerdConfigurationTypePtrOutput() ContainerdConfigurationTypePtrOutput {
+	return o.ToContainerdConfigurationTypePtrOutputWithContext(context.Background())
+}
+
+func (o ContainerdConfigurationTypeOutput) ToContainerdConfigurationTypePtrOutputWithContext(ctx context.Context) ContainerdConfigurationTypePtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v ContainerdConfigurationType) *ContainerdConfigurationType {
+		return &v
+	}).(ContainerdConfigurationTypePtrOutput)
+}
+
 // The cri configuration.
 func (o ContainerdConfigurationTypeOutput) Cri() ContainerdCriPluginConfigurationPtrOutput {
 	return o.ApplyT(func(v ContainerdConfigurationType) *ContainerdCriPluginConfiguration { return v.Cri }).(ContainerdCriPluginConfigurationPtrOutput)
+}
+
+type ContainerdConfigurationTypePtrOutput struct{ *pulumi.OutputState }
+
+func (ContainerdConfigurationTypePtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**ContainerdConfigurationType)(nil)).Elem()
+}
+
+func (o ContainerdConfigurationTypePtrOutput) ToContainerdConfigurationTypePtrOutput() ContainerdConfigurationTypePtrOutput {
+	return o
+}
+
+func (o ContainerdConfigurationTypePtrOutput) ToContainerdConfigurationTypePtrOutputWithContext(ctx context.Context) ContainerdConfigurationTypePtrOutput {
+	return o
+}
+
+func (o ContainerdConfigurationTypePtrOutput) Elem() ContainerdConfigurationTypeOutput {
+	return o.ApplyT(func(v *ContainerdConfigurationType) ContainerdConfigurationType {
+		if v != nil {
+			return *v
+		}
+		var ret ContainerdConfigurationType
+		return ret
+	}).(ContainerdConfigurationTypeOutput)
+}
+
+// The cri configuration.
+func (o ContainerdConfigurationTypePtrOutput) Cri() ContainerdCriPluginConfigurationPtrOutput {
+	return o.ApplyT(func(v *ContainerdConfigurationType) *ContainerdCriPluginConfiguration {
+		if v == nil {
+			return nil
+		}
+		return v.Cri
+	}).(ContainerdCriPluginConfigurationPtrOutput)
 }
 
 // containerd cri plugin configuration.
@@ -1276,6 +1697,80 @@ type KubeProxyConfigurationType struct {
 	Mode *string `pulumi:"mode"`
 }
 
+// KubeProxyConfigurationTypeInput is an input type that accepts KubeProxyConfigurationTypeArgs and KubeProxyConfigurationTypeOutput values.
+// You can construct a concrete instance of `KubeProxyConfigurationTypeInput` via:
+//
+//	KubeProxyConfigurationTypeArgs{...}
+type KubeProxyConfigurationTypeInput interface {
+	pulumi.Input
+
+	ToKubeProxyConfigurationTypeOutput() KubeProxyConfigurationTypeOutput
+	ToKubeProxyConfigurationTypeOutputWithContext(context.Context) KubeProxyConfigurationTypeOutput
+}
+
+type KubeProxyConfigurationTypeArgs struct {
+	ApiVersion       pulumi.StringPtrInput                          `pulumi:"apiVersion"`
+	ClientConnection KubeProxyConfigurationClientConnectionPtrInput `pulumi:"clientConnection"`
+	// TODO
+	ClusterCIDR pulumi.StringInput    `pulumi:"clusterCIDR"`
+	Kind        pulumi.StringPtrInput `pulumi:"kind"`
+	// TODO
+	Mode pulumi.StringPtrInput `pulumi:"mode"`
+}
+
+func (KubeProxyConfigurationTypeArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*KubeProxyConfigurationType)(nil)).Elem()
+}
+
+func (i KubeProxyConfigurationTypeArgs) ToKubeProxyConfigurationTypeOutput() KubeProxyConfigurationTypeOutput {
+	return i.ToKubeProxyConfigurationTypeOutputWithContext(context.Background())
+}
+
+func (i KubeProxyConfigurationTypeArgs) ToKubeProxyConfigurationTypeOutputWithContext(ctx context.Context) KubeProxyConfigurationTypeOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(KubeProxyConfigurationTypeOutput)
+}
+
+func (i KubeProxyConfigurationTypeArgs) ToKubeProxyConfigurationTypePtrOutput() KubeProxyConfigurationTypePtrOutput {
+	return i.ToKubeProxyConfigurationTypePtrOutputWithContext(context.Background())
+}
+
+func (i KubeProxyConfigurationTypeArgs) ToKubeProxyConfigurationTypePtrOutputWithContext(ctx context.Context) KubeProxyConfigurationTypePtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(KubeProxyConfigurationTypeOutput).ToKubeProxyConfigurationTypePtrOutputWithContext(ctx)
+}
+
+// KubeProxyConfigurationTypePtrInput is an input type that accepts KubeProxyConfigurationTypeArgs, KubeProxyConfigurationTypePtr and KubeProxyConfigurationTypePtrOutput values.
+// You can construct a concrete instance of `KubeProxyConfigurationTypePtrInput` via:
+//
+//	        KubeProxyConfigurationTypeArgs{...}
+//
+//	or:
+//
+//	        nil
+type KubeProxyConfigurationTypePtrInput interface {
+	pulumi.Input
+
+	ToKubeProxyConfigurationTypePtrOutput() KubeProxyConfigurationTypePtrOutput
+	ToKubeProxyConfigurationTypePtrOutputWithContext(context.Context) KubeProxyConfigurationTypePtrOutput
+}
+
+type kubeProxyConfigurationTypePtrType KubeProxyConfigurationTypeArgs
+
+func KubeProxyConfigurationTypePtr(v *KubeProxyConfigurationTypeArgs) KubeProxyConfigurationTypePtrInput {
+	return (*kubeProxyConfigurationTypePtrType)(v)
+}
+
+func (*kubeProxyConfigurationTypePtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**KubeProxyConfigurationType)(nil)).Elem()
+}
+
+func (i *kubeProxyConfigurationTypePtrType) ToKubeProxyConfigurationTypePtrOutput() KubeProxyConfigurationTypePtrOutput {
+	return i.ToKubeProxyConfigurationTypePtrOutputWithContext(context.Background())
+}
+
+func (i *kubeProxyConfigurationTypePtrType) ToKubeProxyConfigurationTypePtrOutputWithContext(ctx context.Context) KubeProxyConfigurationTypePtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(KubeProxyConfigurationTypePtrOutput)
+}
+
 type KubeProxyConfigurationTypeOutput struct{ *pulumi.OutputState }
 
 func (KubeProxyConfigurationTypeOutput) ElementType() reflect.Type {
@@ -1288,6 +1783,16 @@ func (o KubeProxyConfigurationTypeOutput) ToKubeProxyConfigurationTypeOutput() K
 
 func (o KubeProxyConfigurationTypeOutput) ToKubeProxyConfigurationTypeOutputWithContext(ctx context.Context) KubeProxyConfigurationTypeOutput {
 	return o
+}
+
+func (o KubeProxyConfigurationTypeOutput) ToKubeProxyConfigurationTypePtrOutput() KubeProxyConfigurationTypePtrOutput {
+	return o.ToKubeProxyConfigurationTypePtrOutputWithContext(context.Background())
+}
+
+func (o KubeProxyConfigurationTypeOutput) ToKubeProxyConfigurationTypePtrOutputWithContext(ctx context.Context) KubeProxyConfigurationTypePtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v KubeProxyConfigurationType) *KubeProxyConfigurationType {
+		return &v
+	}).(KubeProxyConfigurationTypePtrOutput)
 }
 
 func (o KubeProxyConfigurationTypeOutput) ApiVersion() pulumi.StringPtrOutput {
@@ -1312,9 +1817,149 @@ func (o KubeProxyConfigurationTypeOutput) Mode() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v KubeProxyConfigurationType) *string { return v.Mode }).(pulumi.StringPtrOutput)
 }
 
+type KubeProxyConfigurationTypePtrOutput struct{ *pulumi.OutputState }
+
+func (KubeProxyConfigurationTypePtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**KubeProxyConfigurationType)(nil)).Elem()
+}
+
+func (o KubeProxyConfigurationTypePtrOutput) ToKubeProxyConfigurationTypePtrOutput() KubeProxyConfigurationTypePtrOutput {
+	return o
+}
+
+func (o KubeProxyConfigurationTypePtrOutput) ToKubeProxyConfigurationTypePtrOutputWithContext(ctx context.Context) KubeProxyConfigurationTypePtrOutput {
+	return o
+}
+
+func (o KubeProxyConfigurationTypePtrOutput) Elem() KubeProxyConfigurationTypeOutput {
+	return o.ApplyT(func(v *KubeProxyConfigurationType) KubeProxyConfigurationType {
+		if v != nil {
+			return *v
+		}
+		var ret KubeProxyConfigurationType
+		return ret
+	}).(KubeProxyConfigurationTypeOutput)
+}
+
+func (o KubeProxyConfigurationTypePtrOutput) ApiVersion() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *KubeProxyConfigurationType) *string {
+		if v == nil {
+			return nil
+		}
+		return v.ApiVersion
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o KubeProxyConfigurationTypePtrOutput) ClientConnection() KubeProxyConfigurationClientConnectionPtrOutput {
+	return o.ApplyT(func(v *KubeProxyConfigurationType) *KubeProxyConfigurationClientConnection {
+		if v == nil {
+			return nil
+		}
+		return v.ClientConnection
+	}).(KubeProxyConfigurationClientConnectionPtrOutput)
+}
+
+// TODO
+func (o KubeProxyConfigurationTypePtrOutput) ClusterCIDR() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *KubeProxyConfigurationType) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.ClusterCIDR
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o KubeProxyConfigurationTypePtrOutput) Kind() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *KubeProxyConfigurationType) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Kind
+	}).(pulumi.StringPtrOutput)
+}
+
+// TODO
+func (o KubeProxyConfigurationTypePtrOutput) Mode() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *KubeProxyConfigurationType) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Mode
+	}).(pulumi.StringPtrOutput)
+}
+
 type KubeProxyConfigurationClientConnection struct {
 	// Path to the kubeconfig.
 	Kubeconfig string `pulumi:"kubeconfig"`
+}
+
+// KubeProxyConfigurationClientConnectionInput is an input type that accepts KubeProxyConfigurationClientConnectionArgs and KubeProxyConfigurationClientConnectionOutput values.
+// You can construct a concrete instance of `KubeProxyConfigurationClientConnectionInput` via:
+//
+//	KubeProxyConfigurationClientConnectionArgs{...}
+type KubeProxyConfigurationClientConnectionInput interface {
+	pulumi.Input
+
+	ToKubeProxyConfigurationClientConnectionOutput() KubeProxyConfigurationClientConnectionOutput
+	ToKubeProxyConfigurationClientConnectionOutputWithContext(context.Context) KubeProxyConfigurationClientConnectionOutput
+}
+
+type KubeProxyConfigurationClientConnectionArgs struct {
+	// Path to the kubeconfig.
+	Kubeconfig pulumi.StringInput `pulumi:"kubeconfig"`
+}
+
+func (KubeProxyConfigurationClientConnectionArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*KubeProxyConfigurationClientConnection)(nil)).Elem()
+}
+
+func (i KubeProxyConfigurationClientConnectionArgs) ToKubeProxyConfigurationClientConnectionOutput() KubeProxyConfigurationClientConnectionOutput {
+	return i.ToKubeProxyConfigurationClientConnectionOutputWithContext(context.Background())
+}
+
+func (i KubeProxyConfigurationClientConnectionArgs) ToKubeProxyConfigurationClientConnectionOutputWithContext(ctx context.Context) KubeProxyConfigurationClientConnectionOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(KubeProxyConfigurationClientConnectionOutput)
+}
+
+func (i KubeProxyConfigurationClientConnectionArgs) ToKubeProxyConfigurationClientConnectionPtrOutput() KubeProxyConfigurationClientConnectionPtrOutput {
+	return i.ToKubeProxyConfigurationClientConnectionPtrOutputWithContext(context.Background())
+}
+
+func (i KubeProxyConfigurationClientConnectionArgs) ToKubeProxyConfigurationClientConnectionPtrOutputWithContext(ctx context.Context) KubeProxyConfigurationClientConnectionPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(KubeProxyConfigurationClientConnectionOutput).ToKubeProxyConfigurationClientConnectionPtrOutputWithContext(ctx)
+}
+
+// KubeProxyConfigurationClientConnectionPtrInput is an input type that accepts KubeProxyConfigurationClientConnectionArgs, KubeProxyConfigurationClientConnectionPtr and KubeProxyConfigurationClientConnectionPtrOutput values.
+// You can construct a concrete instance of `KubeProxyConfigurationClientConnectionPtrInput` via:
+//
+//	        KubeProxyConfigurationClientConnectionArgs{...}
+//
+//	or:
+//
+//	        nil
+type KubeProxyConfigurationClientConnectionPtrInput interface {
+	pulumi.Input
+
+	ToKubeProxyConfigurationClientConnectionPtrOutput() KubeProxyConfigurationClientConnectionPtrOutput
+	ToKubeProxyConfigurationClientConnectionPtrOutputWithContext(context.Context) KubeProxyConfigurationClientConnectionPtrOutput
+}
+
+type kubeProxyConfigurationClientConnectionPtrType KubeProxyConfigurationClientConnectionArgs
+
+func KubeProxyConfigurationClientConnectionPtr(v *KubeProxyConfigurationClientConnectionArgs) KubeProxyConfigurationClientConnectionPtrInput {
+	return (*kubeProxyConfigurationClientConnectionPtrType)(v)
+}
+
+func (*kubeProxyConfigurationClientConnectionPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**KubeProxyConfigurationClientConnection)(nil)).Elem()
+}
+
+func (i *kubeProxyConfigurationClientConnectionPtrType) ToKubeProxyConfigurationClientConnectionPtrOutput() KubeProxyConfigurationClientConnectionPtrOutput {
+	return i.ToKubeProxyConfigurationClientConnectionPtrOutputWithContext(context.Background())
+}
+
+func (i *kubeProxyConfigurationClientConnectionPtrType) ToKubeProxyConfigurationClientConnectionPtrOutputWithContext(ctx context.Context) KubeProxyConfigurationClientConnectionPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(KubeProxyConfigurationClientConnectionPtrOutput)
 }
 
 type KubeProxyConfigurationClientConnectionOutput struct{ *pulumi.OutputState }
@@ -1329,6 +1974,16 @@ func (o KubeProxyConfigurationClientConnectionOutput) ToKubeProxyConfigurationCl
 
 func (o KubeProxyConfigurationClientConnectionOutput) ToKubeProxyConfigurationClientConnectionOutputWithContext(ctx context.Context) KubeProxyConfigurationClientConnectionOutput {
 	return o
+}
+
+func (o KubeProxyConfigurationClientConnectionOutput) ToKubeProxyConfigurationClientConnectionPtrOutput() KubeProxyConfigurationClientConnectionPtrOutput {
+	return o.ToKubeProxyConfigurationClientConnectionPtrOutputWithContext(context.Background())
+}
+
+func (o KubeProxyConfigurationClientConnectionOutput) ToKubeProxyConfigurationClientConnectionPtrOutputWithContext(ctx context.Context) KubeProxyConfigurationClientConnectionPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v KubeProxyConfigurationClientConnection) *KubeProxyConfigurationClientConnection {
+		return &v
+	}).(KubeProxyConfigurationClientConnectionPtrOutput)
 }
 
 // Path to the kubeconfig.
@@ -1744,6 +2399,95 @@ type KubeletConfigurationType struct {
 	TlsPrivateKeyFile string `pulumi:"tlsPrivateKeyFile"`
 }
 
+// KubeletConfigurationTypeInput is an input type that accepts KubeletConfigurationTypeArgs and KubeletConfigurationTypeOutput values.
+// You can construct a concrete instance of `KubeletConfigurationTypeInput` via:
+//
+//	KubeletConfigurationTypeArgs{...}
+type KubeletConfigurationTypeInput interface {
+	pulumi.Input
+
+	ToKubeletConfigurationTypeOutput() KubeletConfigurationTypeOutput
+	ToKubeletConfigurationTypeOutputWithContext(context.Context) KubeletConfigurationTypeOutput
+}
+
+type KubeletConfigurationTypeArgs struct {
+	ApiVersion     pulumi.StringInput                      `pulumi:"apiVersion"`
+	Authentication KubeletConfigurationAuthenticationInput `pulumi:"authentication"`
+	Authorization  KubeletConfigurationAuthorizationInput  `pulumi:"authorization"`
+	// TODO
+	CgroupDriver pulumi.StringInput `pulumi:"cgroupDriver"`
+	// TODO
+	ClusterDNS pulumi.StringArrayInput `pulumi:"clusterDNS"`
+	// TODO
+	ClusterDomain pulumi.StringInput `pulumi:"clusterDomain"`
+	// TODO
+	ContainerRuntimeEndpoint pulumi.StringInput `pulumi:"containerRuntimeEndpoint"`
+	Kind                     pulumi.StringInput `pulumi:"kind"`
+	// TODO
+	PodCIDR pulumi.StringInput `pulumi:"podCIDR"`
+	// TODO
+	ResolvConf pulumi.StringInput `pulumi:"resolvConf"`
+	// TODO
+	RuntimeRequestTimeout pulumi.StringInput `pulumi:"runtimeRequestTimeout"`
+	// TODO
+	TlsCertFile pulumi.StringInput `pulumi:"tlsCertFile"`
+	// TODO
+	TlsPrivateKeyFile pulumi.StringInput `pulumi:"tlsPrivateKeyFile"`
+}
+
+func (KubeletConfigurationTypeArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*KubeletConfigurationType)(nil)).Elem()
+}
+
+func (i KubeletConfigurationTypeArgs) ToKubeletConfigurationTypeOutput() KubeletConfigurationTypeOutput {
+	return i.ToKubeletConfigurationTypeOutputWithContext(context.Background())
+}
+
+func (i KubeletConfigurationTypeArgs) ToKubeletConfigurationTypeOutputWithContext(ctx context.Context) KubeletConfigurationTypeOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(KubeletConfigurationTypeOutput)
+}
+
+func (i KubeletConfigurationTypeArgs) ToKubeletConfigurationTypePtrOutput() KubeletConfigurationTypePtrOutput {
+	return i.ToKubeletConfigurationTypePtrOutputWithContext(context.Background())
+}
+
+func (i KubeletConfigurationTypeArgs) ToKubeletConfigurationTypePtrOutputWithContext(ctx context.Context) KubeletConfigurationTypePtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(KubeletConfigurationTypeOutput).ToKubeletConfigurationTypePtrOutputWithContext(ctx)
+}
+
+// KubeletConfigurationTypePtrInput is an input type that accepts KubeletConfigurationTypeArgs, KubeletConfigurationTypePtr and KubeletConfigurationTypePtrOutput values.
+// You can construct a concrete instance of `KubeletConfigurationTypePtrInput` via:
+//
+//	        KubeletConfigurationTypeArgs{...}
+//
+//	or:
+//
+//	        nil
+type KubeletConfigurationTypePtrInput interface {
+	pulumi.Input
+
+	ToKubeletConfigurationTypePtrOutput() KubeletConfigurationTypePtrOutput
+	ToKubeletConfigurationTypePtrOutputWithContext(context.Context) KubeletConfigurationTypePtrOutput
+}
+
+type kubeletConfigurationTypePtrType KubeletConfigurationTypeArgs
+
+func KubeletConfigurationTypePtr(v *KubeletConfigurationTypeArgs) KubeletConfigurationTypePtrInput {
+	return (*kubeletConfigurationTypePtrType)(v)
+}
+
+func (*kubeletConfigurationTypePtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**KubeletConfigurationType)(nil)).Elem()
+}
+
+func (i *kubeletConfigurationTypePtrType) ToKubeletConfigurationTypePtrOutput() KubeletConfigurationTypePtrOutput {
+	return i.ToKubeletConfigurationTypePtrOutputWithContext(context.Background())
+}
+
+func (i *kubeletConfigurationTypePtrType) ToKubeletConfigurationTypePtrOutputWithContext(ctx context.Context) KubeletConfigurationTypePtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(KubeletConfigurationTypePtrOutput)
+}
+
 type KubeletConfigurationTypeOutput struct{ *pulumi.OutputState }
 
 func (KubeletConfigurationTypeOutput) ElementType() reflect.Type {
@@ -1756,6 +2500,16 @@ func (o KubeletConfigurationTypeOutput) ToKubeletConfigurationTypeOutput() Kubel
 
 func (o KubeletConfigurationTypeOutput) ToKubeletConfigurationTypeOutputWithContext(ctx context.Context) KubeletConfigurationTypeOutput {
 	return o
+}
+
+func (o KubeletConfigurationTypeOutput) ToKubeletConfigurationTypePtrOutput() KubeletConfigurationTypePtrOutput {
+	return o.ToKubeletConfigurationTypePtrOutputWithContext(context.Background())
+}
+
+func (o KubeletConfigurationTypeOutput) ToKubeletConfigurationTypePtrOutputWithContext(ctx context.Context) KubeletConfigurationTypePtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v KubeletConfigurationType) *KubeletConfigurationType {
+		return &v
+	}).(KubeletConfigurationTypePtrOutput)
 }
 
 func (o KubeletConfigurationTypeOutput) ApiVersion() pulumi.StringOutput {
@@ -1819,10 +2573,230 @@ func (o KubeletConfigurationTypeOutput) TlsPrivateKeyFile() pulumi.StringOutput 
 	return o.ApplyT(func(v KubeletConfigurationType) string { return v.TlsPrivateKeyFile }).(pulumi.StringOutput)
 }
 
+type KubeletConfigurationTypePtrOutput struct{ *pulumi.OutputState }
+
+func (KubeletConfigurationTypePtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**KubeletConfigurationType)(nil)).Elem()
+}
+
+func (o KubeletConfigurationTypePtrOutput) ToKubeletConfigurationTypePtrOutput() KubeletConfigurationTypePtrOutput {
+	return o
+}
+
+func (o KubeletConfigurationTypePtrOutput) ToKubeletConfigurationTypePtrOutputWithContext(ctx context.Context) KubeletConfigurationTypePtrOutput {
+	return o
+}
+
+func (o KubeletConfigurationTypePtrOutput) Elem() KubeletConfigurationTypeOutput {
+	return o.ApplyT(func(v *KubeletConfigurationType) KubeletConfigurationType {
+		if v != nil {
+			return *v
+		}
+		var ret KubeletConfigurationType
+		return ret
+	}).(KubeletConfigurationTypeOutput)
+}
+
+func (o KubeletConfigurationTypePtrOutput) ApiVersion() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *KubeletConfigurationType) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.ApiVersion
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o KubeletConfigurationTypePtrOutput) Authentication() KubeletConfigurationAuthenticationPtrOutput {
+	return o.ApplyT(func(v *KubeletConfigurationType) *KubeletConfigurationAuthentication {
+		if v == nil {
+			return nil
+		}
+		return &v.Authentication
+	}).(KubeletConfigurationAuthenticationPtrOutput)
+}
+
+func (o KubeletConfigurationTypePtrOutput) Authorization() KubeletConfigurationAuthorizationPtrOutput {
+	return o.ApplyT(func(v *KubeletConfigurationType) *KubeletConfigurationAuthorization {
+		if v == nil {
+			return nil
+		}
+		return &v.Authorization
+	}).(KubeletConfigurationAuthorizationPtrOutput)
+}
+
+// TODO
+func (o KubeletConfigurationTypePtrOutput) CgroupDriver() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *KubeletConfigurationType) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.CgroupDriver
+	}).(pulumi.StringPtrOutput)
+}
+
+// TODO
+func (o KubeletConfigurationTypePtrOutput) ClusterDNS() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v *KubeletConfigurationType) []string {
+		if v == nil {
+			return nil
+		}
+		return v.ClusterDNS
+	}).(pulumi.StringArrayOutput)
+}
+
+// TODO
+func (o KubeletConfigurationTypePtrOutput) ClusterDomain() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *KubeletConfigurationType) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.ClusterDomain
+	}).(pulumi.StringPtrOutput)
+}
+
+// TODO
+func (o KubeletConfigurationTypePtrOutput) ContainerRuntimeEndpoint() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *KubeletConfigurationType) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.ContainerRuntimeEndpoint
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o KubeletConfigurationTypePtrOutput) Kind() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *KubeletConfigurationType) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.Kind
+	}).(pulumi.StringPtrOutput)
+}
+
+// TODO
+func (o KubeletConfigurationTypePtrOutput) PodCIDR() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *KubeletConfigurationType) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.PodCIDR
+	}).(pulumi.StringPtrOutput)
+}
+
+// TODO
+func (o KubeletConfigurationTypePtrOutput) ResolvConf() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *KubeletConfigurationType) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.ResolvConf
+	}).(pulumi.StringPtrOutput)
+}
+
+// TODO
+func (o KubeletConfigurationTypePtrOutput) RuntimeRequestTimeout() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *KubeletConfigurationType) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.RuntimeRequestTimeout
+	}).(pulumi.StringPtrOutput)
+}
+
+// TODO
+func (o KubeletConfigurationTypePtrOutput) TlsCertFile() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *KubeletConfigurationType) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.TlsCertFile
+	}).(pulumi.StringPtrOutput)
+}
+
+// TODO
+func (o KubeletConfigurationTypePtrOutput) TlsPrivateKeyFile() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *KubeletConfigurationType) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.TlsPrivateKeyFile
+	}).(pulumi.StringPtrOutput)
+}
+
 type KubeletConfigurationAuthentication struct {
 	Anonymous KubeletConfigurationAuthenticationAnonymous `pulumi:"anonymous"`
 	Webhook   KubeletConfigurationAuthenticationWebhook   `pulumi:"webhook"`
 	X509      KubeletConfigurationAuthenticationx509      `pulumi:"x509"`
+}
+
+// KubeletConfigurationAuthenticationInput is an input type that accepts KubeletConfigurationAuthenticationArgs and KubeletConfigurationAuthenticationOutput values.
+// You can construct a concrete instance of `KubeletConfigurationAuthenticationInput` via:
+//
+//	KubeletConfigurationAuthenticationArgs{...}
+type KubeletConfigurationAuthenticationInput interface {
+	pulumi.Input
+
+	ToKubeletConfigurationAuthenticationOutput() KubeletConfigurationAuthenticationOutput
+	ToKubeletConfigurationAuthenticationOutputWithContext(context.Context) KubeletConfigurationAuthenticationOutput
+}
+
+type KubeletConfigurationAuthenticationArgs struct {
+	Anonymous KubeletConfigurationAuthenticationAnonymousInput `pulumi:"anonymous"`
+	Webhook   KubeletConfigurationAuthenticationWebhookInput   `pulumi:"webhook"`
+	X509      KubeletConfigurationAuthenticationx509Input      `pulumi:"x509"`
+}
+
+func (KubeletConfigurationAuthenticationArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*KubeletConfigurationAuthentication)(nil)).Elem()
+}
+
+func (i KubeletConfigurationAuthenticationArgs) ToKubeletConfigurationAuthenticationOutput() KubeletConfigurationAuthenticationOutput {
+	return i.ToKubeletConfigurationAuthenticationOutputWithContext(context.Background())
+}
+
+func (i KubeletConfigurationAuthenticationArgs) ToKubeletConfigurationAuthenticationOutputWithContext(ctx context.Context) KubeletConfigurationAuthenticationOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(KubeletConfigurationAuthenticationOutput)
+}
+
+func (i KubeletConfigurationAuthenticationArgs) ToKubeletConfigurationAuthenticationPtrOutput() KubeletConfigurationAuthenticationPtrOutput {
+	return i.ToKubeletConfigurationAuthenticationPtrOutputWithContext(context.Background())
+}
+
+func (i KubeletConfigurationAuthenticationArgs) ToKubeletConfigurationAuthenticationPtrOutputWithContext(ctx context.Context) KubeletConfigurationAuthenticationPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(KubeletConfigurationAuthenticationOutput).ToKubeletConfigurationAuthenticationPtrOutputWithContext(ctx)
+}
+
+// KubeletConfigurationAuthenticationPtrInput is an input type that accepts KubeletConfigurationAuthenticationArgs, KubeletConfigurationAuthenticationPtr and KubeletConfigurationAuthenticationPtrOutput values.
+// You can construct a concrete instance of `KubeletConfigurationAuthenticationPtrInput` via:
+//
+//	        KubeletConfigurationAuthenticationArgs{...}
+//
+//	or:
+//
+//	        nil
+type KubeletConfigurationAuthenticationPtrInput interface {
+	pulumi.Input
+
+	ToKubeletConfigurationAuthenticationPtrOutput() KubeletConfigurationAuthenticationPtrOutput
+	ToKubeletConfigurationAuthenticationPtrOutputWithContext(context.Context) KubeletConfigurationAuthenticationPtrOutput
+}
+
+type kubeletConfigurationAuthenticationPtrType KubeletConfigurationAuthenticationArgs
+
+func KubeletConfigurationAuthenticationPtr(v *KubeletConfigurationAuthenticationArgs) KubeletConfigurationAuthenticationPtrInput {
+	return (*kubeletConfigurationAuthenticationPtrType)(v)
+}
+
+func (*kubeletConfigurationAuthenticationPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**KubeletConfigurationAuthentication)(nil)).Elem()
+}
+
+func (i *kubeletConfigurationAuthenticationPtrType) ToKubeletConfigurationAuthenticationPtrOutput() KubeletConfigurationAuthenticationPtrOutput {
+	return i.ToKubeletConfigurationAuthenticationPtrOutputWithContext(context.Background())
+}
+
+func (i *kubeletConfigurationAuthenticationPtrType) ToKubeletConfigurationAuthenticationPtrOutputWithContext(ctx context.Context) KubeletConfigurationAuthenticationPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(KubeletConfigurationAuthenticationPtrOutput)
 }
 
 type KubeletConfigurationAuthenticationOutput struct{ *pulumi.OutputState }
@@ -1839,6 +2813,16 @@ func (o KubeletConfigurationAuthenticationOutput) ToKubeletConfigurationAuthenti
 	return o
 }
 
+func (o KubeletConfigurationAuthenticationOutput) ToKubeletConfigurationAuthenticationPtrOutput() KubeletConfigurationAuthenticationPtrOutput {
+	return o.ToKubeletConfigurationAuthenticationPtrOutputWithContext(context.Background())
+}
+
+func (o KubeletConfigurationAuthenticationOutput) ToKubeletConfigurationAuthenticationPtrOutputWithContext(ctx context.Context) KubeletConfigurationAuthenticationPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v KubeletConfigurationAuthentication) *KubeletConfigurationAuthentication {
+		return &v
+	}).(KubeletConfigurationAuthenticationPtrOutput)
+}
+
 func (o KubeletConfigurationAuthenticationOutput) Anonymous() KubeletConfigurationAuthenticationAnonymousOutput {
 	return o.ApplyT(func(v KubeletConfigurationAuthentication) KubeletConfigurationAuthenticationAnonymous {
 		return v.Anonymous
@@ -1853,9 +2837,129 @@ func (o KubeletConfigurationAuthenticationOutput) X509() KubeletConfigurationAut
 	return o.ApplyT(func(v KubeletConfigurationAuthentication) KubeletConfigurationAuthenticationx509 { return v.X509 }).(KubeletConfigurationAuthenticationx509Output)
 }
 
+type KubeletConfigurationAuthenticationPtrOutput struct{ *pulumi.OutputState }
+
+func (KubeletConfigurationAuthenticationPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**KubeletConfigurationAuthentication)(nil)).Elem()
+}
+
+func (o KubeletConfigurationAuthenticationPtrOutput) ToKubeletConfigurationAuthenticationPtrOutput() KubeletConfigurationAuthenticationPtrOutput {
+	return o
+}
+
+func (o KubeletConfigurationAuthenticationPtrOutput) ToKubeletConfigurationAuthenticationPtrOutputWithContext(ctx context.Context) KubeletConfigurationAuthenticationPtrOutput {
+	return o
+}
+
+func (o KubeletConfigurationAuthenticationPtrOutput) Elem() KubeletConfigurationAuthenticationOutput {
+	return o.ApplyT(func(v *KubeletConfigurationAuthentication) KubeletConfigurationAuthentication {
+		if v != nil {
+			return *v
+		}
+		var ret KubeletConfigurationAuthentication
+		return ret
+	}).(KubeletConfigurationAuthenticationOutput)
+}
+
+func (o KubeletConfigurationAuthenticationPtrOutput) Anonymous() KubeletConfigurationAuthenticationAnonymousPtrOutput {
+	return o.ApplyT(func(v *KubeletConfigurationAuthentication) *KubeletConfigurationAuthenticationAnonymous {
+		if v == nil {
+			return nil
+		}
+		return &v.Anonymous
+	}).(KubeletConfigurationAuthenticationAnonymousPtrOutput)
+}
+
+func (o KubeletConfigurationAuthenticationPtrOutput) Webhook() KubeletConfigurationAuthenticationWebhookPtrOutput {
+	return o.ApplyT(func(v *KubeletConfigurationAuthentication) *KubeletConfigurationAuthenticationWebhook {
+		if v == nil {
+			return nil
+		}
+		return &v.Webhook
+	}).(KubeletConfigurationAuthenticationWebhookPtrOutput)
+}
+
+func (o KubeletConfigurationAuthenticationPtrOutput) X509() KubeletConfigurationAuthenticationx509PtrOutput {
+	return o.ApplyT(func(v *KubeletConfigurationAuthentication) *KubeletConfigurationAuthenticationx509 {
+		if v == nil {
+			return nil
+		}
+		return &v.X509
+	}).(KubeletConfigurationAuthenticationx509PtrOutput)
+}
+
 type KubeletConfigurationAuthenticationAnonymous struct {
 	// TODO
 	Enabled bool `pulumi:"enabled"`
+}
+
+// KubeletConfigurationAuthenticationAnonymousInput is an input type that accepts KubeletConfigurationAuthenticationAnonymousArgs and KubeletConfigurationAuthenticationAnonymousOutput values.
+// You can construct a concrete instance of `KubeletConfigurationAuthenticationAnonymousInput` via:
+//
+//	KubeletConfigurationAuthenticationAnonymousArgs{...}
+type KubeletConfigurationAuthenticationAnonymousInput interface {
+	pulumi.Input
+
+	ToKubeletConfigurationAuthenticationAnonymousOutput() KubeletConfigurationAuthenticationAnonymousOutput
+	ToKubeletConfigurationAuthenticationAnonymousOutputWithContext(context.Context) KubeletConfigurationAuthenticationAnonymousOutput
+}
+
+type KubeletConfigurationAuthenticationAnonymousArgs struct {
+	// TODO
+	Enabled pulumi.BoolInput `pulumi:"enabled"`
+}
+
+func (KubeletConfigurationAuthenticationAnonymousArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*KubeletConfigurationAuthenticationAnonymous)(nil)).Elem()
+}
+
+func (i KubeletConfigurationAuthenticationAnonymousArgs) ToKubeletConfigurationAuthenticationAnonymousOutput() KubeletConfigurationAuthenticationAnonymousOutput {
+	return i.ToKubeletConfigurationAuthenticationAnonymousOutputWithContext(context.Background())
+}
+
+func (i KubeletConfigurationAuthenticationAnonymousArgs) ToKubeletConfigurationAuthenticationAnonymousOutputWithContext(ctx context.Context) KubeletConfigurationAuthenticationAnonymousOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(KubeletConfigurationAuthenticationAnonymousOutput)
+}
+
+func (i KubeletConfigurationAuthenticationAnonymousArgs) ToKubeletConfigurationAuthenticationAnonymousPtrOutput() KubeletConfigurationAuthenticationAnonymousPtrOutput {
+	return i.ToKubeletConfigurationAuthenticationAnonymousPtrOutputWithContext(context.Background())
+}
+
+func (i KubeletConfigurationAuthenticationAnonymousArgs) ToKubeletConfigurationAuthenticationAnonymousPtrOutputWithContext(ctx context.Context) KubeletConfigurationAuthenticationAnonymousPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(KubeletConfigurationAuthenticationAnonymousOutput).ToKubeletConfigurationAuthenticationAnonymousPtrOutputWithContext(ctx)
+}
+
+// KubeletConfigurationAuthenticationAnonymousPtrInput is an input type that accepts KubeletConfigurationAuthenticationAnonymousArgs, KubeletConfigurationAuthenticationAnonymousPtr and KubeletConfigurationAuthenticationAnonymousPtrOutput values.
+// You can construct a concrete instance of `KubeletConfigurationAuthenticationAnonymousPtrInput` via:
+//
+//	        KubeletConfigurationAuthenticationAnonymousArgs{...}
+//
+//	or:
+//
+//	        nil
+type KubeletConfigurationAuthenticationAnonymousPtrInput interface {
+	pulumi.Input
+
+	ToKubeletConfigurationAuthenticationAnonymousPtrOutput() KubeletConfigurationAuthenticationAnonymousPtrOutput
+	ToKubeletConfigurationAuthenticationAnonymousPtrOutputWithContext(context.Context) KubeletConfigurationAuthenticationAnonymousPtrOutput
+}
+
+type kubeletConfigurationAuthenticationAnonymousPtrType KubeletConfigurationAuthenticationAnonymousArgs
+
+func KubeletConfigurationAuthenticationAnonymousPtr(v *KubeletConfigurationAuthenticationAnonymousArgs) KubeletConfigurationAuthenticationAnonymousPtrInput {
+	return (*kubeletConfigurationAuthenticationAnonymousPtrType)(v)
+}
+
+func (*kubeletConfigurationAuthenticationAnonymousPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**KubeletConfigurationAuthenticationAnonymous)(nil)).Elem()
+}
+
+func (i *kubeletConfigurationAuthenticationAnonymousPtrType) ToKubeletConfigurationAuthenticationAnonymousPtrOutput() KubeletConfigurationAuthenticationAnonymousPtrOutput {
+	return i.ToKubeletConfigurationAuthenticationAnonymousPtrOutputWithContext(context.Background())
+}
+
+func (i *kubeletConfigurationAuthenticationAnonymousPtrType) ToKubeletConfigurationAuthenticationAnonymousPtrOutputWithContext(ctx context.Context) KubeletConfigurationAuthenticationAnonymousPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(KubeletConfigurationAuthenticationAnonymousPtrOutput)
 }
 
 type KubeletConfigurationAuthenticationAnonymousOutput struct{ *pulumi.OutputState }
@@ -1872,14 +2976,127 @@ func (o KubeletConfigurationAuthenticationAnonymousOutput) ToKubeletConfiguratio
 	return o
 }
 
+func (o KubeletConfigurationAuthenticationAnonymousOutput) ToKubeletConfigurationAuthenticationAnonymousPtrOutput() KubeletConfigurationAuthenticationAnonymousPtrOutput {
+	return o.ToKubeletConfigurationAuthenticationAnonymousPtrOutputWithContext(context.Background())
+}
+
+func (o KubeletConfigurationAuthenticationAnonymousOutput) ToKubeletConfigurationAuthenticationAnonymousPtrOutputWithContext(ctx context.Context) KubeletConfigurationAuthenticationAnonymousPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v KubeletConfigurationAuthenticationAnonymous) *KubeletConfigurationAuthenticationAnonymous {
+		return &v
+	}).(KubeletConfigurationAuthenticationAnonymousPtrOutput)
+}
+
 // TODO
 func (o KubeletConfigurationAuthenticationAnonymousOutput) Enabled() pulumi.BoolOutput {
 	return o.ApplyT(func(v KubeletConfigurationAuthenticationAnonymous) bool { return v.Enabled }).(pulumi.BoolOutput)
 }
 
+type KubeletConfigurationAuthenticationAnonymousPtrOutput struct{ *pulumi.OutputState }
+
+func (KubeletConfigurationAuthenticationAnonymousPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**KubeletConfigurationAuthenticationAnonymous)(nil)).Elem()
+}
+
+func (o KubeletConfigurationAuthenticationAnonymousPtrOutput) ToKubeletConfigurationAuthenticationAnonymousPtrOutput() KubeletConfigurationAuthenticationAnonymousPtrOutput {
+	return o
+}
+
+func (o KubeletConfigurationAuthenticationAnonymousPtrOutput) ToKubeletConfigurationAuthenticationAnonymousPtrOutputWithContext(ctx context.Context) KubeletConfigurationAuthenticationAnonymousPtrOutput {
+	return o
+}
+
+func (o KubeletConfigurationAuthenticationAnonymousPtrOutput) Elem() KubeletConfigurationAuthenticationAnonymousOutput {
+	return o.ApplyT(func(v *KubeletConfigurationAuthenticationAnonymous) KubeletConfigurationAuthenticationAnonymous {
+		if v != nil {
+			return *v
+		}
+		var ret KubeletConfigurationAuthenticationAnonymous
+		return ret
+	}).(KubeletConfigurationAuthenticationAnonymousOutput)
+}
+
+// TODO
+func (o KubeletConfigurationAuthenticationAnonymousPtrOutput) Enabled() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *KubeletConfigurationAuthenticationAnonymous) *bool {
+		if v == nil {
+			return nil
+		}
+		return &v.Enabled
+	}).(pulumi.BoolPtrOutput)
+}
+
 type KubeletConfigurationAuthenticationWebhook struct {
 	// TODO
 	Enabled bool `pulumi:"enabled"`
+}
+
+// KubeletConfigurationAuthenticationWebhookInput is an input type that accepts KubeletConfigurationAuthenticationWebhookArgs and KubeletConfigurationAuthenticationWebhookOutput values.
+// You can construct a concrete instance of `KubeletConfigurationAuthenticationWebhookInput` via:
+//
+//	KubeletConfigurationAuthenticationWebhookArgs{...}
+type KubeletConfigurationAuthenticationWebhookInput interface {
+	pulumi.Input
+
+	ToKubeletConfigurationAuthenticationWebhookOutput() KubeletConfigurationAuthenticationWebhookOutput
+	ToKubeletConfigurationAuthenticationWebhookOutputWithContext(context.Context) KubeletConfigurationAuthenticationWebhookOutput
+}
+
+type KubeletConfigurationAuthenticationWebhookArgs struct {
+	// TODO
+	Enabled pulumi.BoolInput `pulumi:"enabled"`
+}
+
+func (KubeletConfigurationAuthenticationWebhookArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*KubeletConfigurationAuthenticationWebhook)(nil)).Elem()
+}
+
+func (i KubeletConfigurationAuthenticationWebhookArgs) ToKubeletConfigurationAuthenticationWebhookOutput() KubeletConfigurationAuthenticationWebhookOutput {
+	return i.ToKubeletConfigurationAuthenticationWebhookOutputWithContext(context.Background())
+}
+
+func (i KubeletConfigurationAuthenticationWebhookArgs) ToKubeletConfigurationAuthenticationWebhookOutputWithContext(ctx context.Context) KubeletConfigurationAuthenticationWebhookOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(KubeletConfigurationAuthenticationWebhookOutput)
+}
+
+func (i KubeletConfigurationAuthenticationWebhookArgs) ToKubeletConfigurationAuthenticationWebhookPtrOutput() KubeletConfigurationAuthenticationWebhookPtrOutput {
+	return i.ToKubeletConfigurationAuthenticationWebhookPtrOutputWithContext(context.Background())
+}
+
+func (i KubeletConfigurationAuthenticationWebhookArgs) ToKubeletConfigurationAuthenticationWebhookPtrOutputWithContext(ctx context.Context) KubeletConfigurationAuthenticationWebhookPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(KubeletConfigurationAuthenticationWebhookOutput).ToKubeletConfigurationAuthenticationWebhookPtrOutputWithContext(ctx)
+}
+
+// KubeletConfigurationAuthenticationWebhookPtrInput is an input type that accepts KubeletConfigurationAuthenticationWebhookArgs, KubeletConfigurationAuthenticationWebhookPtr and KubeletConfigurationAuthenticationWebhookPtrOutput values.
+// You can construct a concrete instance of `KubeletConfigurationAuthenticationWebhookPtrInput` via:
+//
+//	        KubeletConfigurationAuthenticationWebhookArgs{...}
+//
+//	or:
+//
+//	        nil
+type KubeletConfigurationAuthenticationWebhookPtrInput interface {
+	pulumi.Input
+
+	ToKubeletConfigurationAuthenticationWebhookPtrOutput() KubeletConfigurationAuthenticationWebhookPtrOutput
+	ToKubeletConfigurationAuthenticationWebhookPtrOutputWithContext(context.Context) KubeletConfigurationAuthenticationWebhookPtrOutput
+}
+
+type kubeletConfigurationAuthenticationWebhookPtrType KubeletConfigurationAuthenticationWebhookArgs
+
+func KubeletConfigurationAuthenticationWebhookPtr(v *KubeletConfigurationAuthenticationWebhookArgs) KubeletConfigurationAuthenticationWebhookPtrInput {
+	return (*kubeletConfigurationAuthenticationWebhookPtrType)(v)
+}
+
+func (*kubeletConfigurationAuthenticationWebhookPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**KubeletConfigurationAuthenticationWebhook)(nil)).Elem()
+}
+
+func (i *kubeletConfigurationAuthenticationWebhookPtrType) ToKubeletConfigurationAuthenticationWebhookPtrOutput() KubeletConfigurationAuthenticationWebhookPtrOutput {
+	return i.ToKubeletConfigurationAuthenticationWebhookPtrOutputWithContext(context.Background())
+}
+
+func (i *kubeletConfigurationAuthenticationWebhookPtrType) ToKubeletConfigurationAuthenticationWebhookPtrOutputWithContext(ctx context.Context) KubeletConfigurationAuthenticationWebhookPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(KubeletConfigurationAuthenticationWebhookPtrOutput)
 }
 
 type KubeletConfigurationAuthenticationWebhookOutput struct{ *pulumi.OutputState }
@@ -1896,14 +3113,127 @@ func (o KubeletConfigurationAuthenticationWebhookOutput) ToKubeletConfigurationA
 	return o
 }
 
+func (o KubeletConfigurationAuthenticationWebhookOutput) ToKubeletConfigurationAuthenticationWebhookPtrOutput() KubeletConfigurationAuthenticationWebhookPtrOutput {
+	return o.ToKubeletConfigurationAuthenticationWebhookPtrOutputWithContext(context.Background())
+}
+
+func (o KubeletConfigurationAuthenticationWebhookOutput) ToKubeletConfigurationAuthenticationWebhookPtrOutputWithContext(ctx context.Context) KubeletConfigurationAuthenticationWebhookPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v KubeletConfigurationAuthenticationWebhook) *KubeletConfigurationAuthenticationWebhook {
+		return &v
+	}).(KubeletConfigurationAuthenticationWebhookPtrOutput)
+}
+
 // TODO
 func (o KubeletConfigurationAuthenticationWebhookOutput) Enabled() pulumi.BoolOutput {
 	return o.ApplyT(func(v KubeletConfigurationAuthenticationWebhook) bool { return v.Enabled }).(pulumi.BoolOutput)
 }
 
+type KubeletConfigurationAuthenticationWebhookPtrOutput struct{ *pulumi.OutputState }
+
+func (KubeletConfigurationAuthenticationWebhookPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**KubeletConfigurationAuthenticationWebhook)(nil)).Elem()
+}
+
+func (o KubeletConfigurationAuthenticationWebhookPtrOutput) ToKubeletConfigurationAuthenticationWebhookPtrOutput() KubeletConfigurationAuthenticationWebhookPtrOutput {
+	return o
+}
+
+func (o KubeletConfigurationAuthenticationWebhookPtrOutput) ToKubeletConfigurationAuthenticationWebhookPtrOutputWithContext(ctx context.Context) KubeletConfigurationAuthenticationWebhookPtrOutput {
+	return o
+}
+
+func (o KubeletConfigurationAuthenticationWebhookPtrOutput) Elem() KubeletConfigurationAuthenticationWebhookOutput {
+	return o.ApplyT(func(v *KubeletConfigurationAuthenticationWebhook) KubeletConfigurationAuthenticationWebhook {
+		if v != nil {
+			return *v
+		}
+		var ret KubeletConfigurationAuthenticationWebhook
+		return ret
+	}).(KubeletConfigurationAuthenticationWebhookOutput)
+}
+
+// TODO
+func (o KubeletConfigurationAuthenticationWebhookPtrOutput) Enabled() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *KubeletConfigurationAuthenticationWebhook) *bool {
+		if v == nil {
+			return nil
+		}
+		return &v.Enabled
+	}).(pulumi.BoolPtrOutput)
+}
+
 type KubeletConfigurationAuthenticationx509 struct {
 	// TODO
 	ClientCAFile string `pulumi:"clientCAFile"`
+}
+
+// KubeletConfigurationAuthenticationx509Input is an input type that accepts KubeletConfigurationAuthenticationx509Args and KubeletConfigurationAuthenticationx509Output values.
+// You can construct a concrete instance of `KubeletConfigurationAuthenticationx509Input` via:
+//
+//	KubeletConfigurationAuthenticationx509Args{...}
+type KubeletConfigurationAuthenticationx509Input interface {
+	pulumi.Input
+
+	ToKubeletConfigurationAuthenticationx509Output() KubeletConfigurationAuthenticationx509Output
+	ToKubeletConfigurationAuthenticationx509OutputWithContext(context.Context) KubeletConfigurationAuthenticationx509Output
+}
+
+type KubeletConfigurationAuthenticationx509Args struct {
+	// TODO
+	ClientCAFile pulumi.StringInput `pulumi:"clientCAFile"`
+}
+
+func (KubeletConfigurationAuthenticationx509Args) ElementType() reflect.Type {
+	return reflect.TypeOf((*KubeletConfigurationAuthenticationx509)(nil)).Elem()
+}
+
+func (i KubeletConfigurationAuthenticationx509Args) ToKubeletConfigurationAuthenticationx509Output() KubeletConfigurationAuthenticationx509Output {
+	return i.ToKubeletConfigurationAuthenticationx509OutputWithContext(context.Background())
+}
+
+func (i KubeletConfigurationAuthenticationx509Args) ToKubeletConfigurationAuthenticationx509OutputWithContext(ctx context.Context) KubeletConfigurationAuthenticationx509Output {
+	return pulumi.ToOutputWithContext(ctx, i).(KubeletConfigurationAuthenticationx509Output)
+}
+
+func (i KubeletConfigurationAuthenticationx509Args) ToKubeletConfigurationAuthenticationx509PtrOutput() KubeletConfigurationAuthenticationx509PtrOutput {
+	return i.ToKubeletConfigurationAuthenticationx509PtrOutputWithContext(context.Background())
+}
+
+func (i KubeletConfigurationAuthenticationx509Args) ToKubeletConfigurationAuthenticationx509PtrOutputWithContext(ctx context.Context) KubeletConfigurationAuthenticationx509PtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(KubeletConfigurationAuthenticationx509Output).ToKubeletConfigurationAuthenticationx509PtrOutputWithContext(ctx)
+}
+
+// KubeletConfigurationAuthenticationx509PtrInput is an input type that accepts KubeletConfigurationAuthenticationx509Args, KubeletConfigurationAuthenticationx509Ptr and KubeletConfigurationAuthenticationx509PtrOutput values.
+// You can construct a concrete instance of `KubeletConfigurationAuthenticationx509PtrInput` via:
+//
+//	        KubeletConfigurationAuthenticationx509Args{...}
+//
+//	or:
+//
+//	        nil
+type KubeletConfigurationAuthenticationx509PtrInput interface {
+	pulumi.Input
+
+	ToKubeletConfigurationAuthenticationx509PtrOutput() KubeletConfigurationAuthenticationx509PtrOutput
+	ToKubeletConfigurationAuthenticationx509PtrOutputWithContext(context.Context) KubeletConfigurationAuthenticationx509PtrOutput
+}
+
+type kubeletConfigurationAuthenticationx509PtrType KubeletConfigurationAuthenticationx509Args
+
+func KubeletConfigurationAuthenticationx509Ptr(v *KubeletConfigurationAuthenticationx509Args) KubeletConfigurationAuthenticationx509PtrInput {
+	return (*kubeletConfigurationAuthenticationx509PtrType)(v)
+}
+
+func (*kubeletConfigurationAuthenticationx509PtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**KubeletConfigurationAuthenticationx509)(nil)).Elem()
+}
+
+func (i *kubeletConfigurationAuthenticationx509PtrType) ToKubeletConfigurationAuthenticationx509PtrOutput() KubeletConfigurationAuthenticationx509PtrOutput {
+	return i.ToKubeletConfigurationAuthenticationx509PtrOutputWithContext(context.Background())
+}
+
+func (i *kubeletConfigurationAuthenticationx509PtrType) ToKubeletConfigurationAuthenticationx509PtrOutputWithContext(ctx context.Context) KubeletConfigurationAuthenticationx509PtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(KubeletConfigurationAuthenticationx509PtrOutput)
 }
 
 type KubeletConfigurationAuthenticationx509Output struct{ *pulumi.OutputState }
@@ -1920,13 +3250,125 @@ func (o KubeletConfigurationAuthenticationx509Output) ToKubeletConfigurationAuth
 	return o
 }
 
+func (o KubeletConfigurationAuthenticationx509Output) ToKubeletConfigurationAuthenticationx509PtrOutput() KubeletConfigurationAuthenticationx509PtrOutput {
+	return o.ToKubeletConfigurationAuthenticationx509PtrOutputWithContext(context.Background())
+}
+
+func (o KubeletConfigurationAuthenticationx509Output) ToKubeletConfigurationAuthenticationx509PtrOutputWithContext(ctx context.Context) KubeletConfigurationAuthenticationx509PtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v KubeletConfigurationAuthenticationx509) *KubeletConfigurationAuthenticationx509 {
+		return &v
+	}).(KubeletConfigurationAuthenticationx509PtrOutput)
+}
+
 // TODO
 func (o KubeletConfigurationAuthenticationx509Output) ClientCAFile() pulumi.StringOutput {
 	return o.ApplyT(func(v KubeletConfigurationAuthenticationx509) string { return v.ClientCAFile }).(pulumi.StringOutput)
 }
 
+type KubeletConfigurationAuthenticationx509PtrOutput struct{ *pulumi.OutputState }
+
+func (KubeletConfigurationAuthenticationx509PtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**KubeletConfigurationAuthenticationx509)(nil)).Elem()
+}
+
+func (o KubeletConfigurationAuthenticationx509PtrOutput) ToKubeletConfigurationAuthenticationx509PtrOutput() KubeletConfigurationAuthenticationx509PtrOutput {
+	return o
+}
+
+func (o KubeletConfigurationAuthenticationx509PtrOutput) ToKubeletConfigurationAuthenticationx509PtrOutputWithContext(ctx context.Context) KubeletConfigurationAuthenticationx509PtrOutput {
+	return o
+}
+
+func (o KubeletConfigurationAuthenticationx509PtrOutput) Elem() KubeletConfigurationAuthenticationx509Output {
+	return o.ApplyT(func(v *KubeletConfigurationAuthenticationx509) KubeletConfigurationAuthenticationx509 {
+		if v != nil {
+			return *v
+		}
+		var ret KubeletConfigurationAuthenticationx509
+		return ret
+	}).(KubeletConfigurationAuthenticationx509Output)
+}
+
+// TODO
+func (o KubeletConfigurationAuthenticationx509PtrOutput) ClientCAFile() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *KubeletConfigurationAuthenticationx509) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.ClientCAFile
+	}).(pulumi.StringPtrOutput)
+}
+
 type KubeletConfigurationAuthorization struct {
 	Mode string `pulumi:"mode"`
+}
+
+// KubeletConfigurationAuthorizationInput is an input type that accepts KubeletConfigurationAuthorizationArgs and KubeletConfigurationAuthorizationOutput values.
+// You can construct a concrete instance of `KubeletConfigurationAuthorizationInput` via:
+//
+//	KubeletConfigurationAuthorizationArgs{...}
+type KubeletConfigurationAuthorizationInput interface {
+	pulumi.Input
+
+	ToKubeletConfigurationAuthorizationOutput() KubeletConfigurationAuthorizationOutput
+	ToKubeletConfigurationAuthorizationOutputWithContext(context.Context) KubeletConfigurationAuthorizationOutput
+}
+
+type KubeletConfigurationAuthorizationArgs struct {
+	Mode pulumi.StringInput `pulumi:"mode"`
+}
+
+func (KubeletConfigurationAuthorizationArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*KubeletConfigurationAuthorization)(nil)).Elem()
+}
+
+func (i KubeletConfigurationAuthorizationArgs) ToKubeletConfigurationAuthorizationOutput() KubeletConfigurationAuthorizationOutput {
+	return i.ToKubeletConfigurationAuthorizationOutputWithContext(context.Background())
+}
+
+func (i KubeletConfigurationAuthorizationArgs) ToKubeletConfigurationAuthorizationOutputWithContext(ctx context.Context) KubeletConfigurationAuthorizationOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(KubeletConfigurationAuthorizationOutput)
+}
+
+func (i KubeletConfigurationAuthorizationArgs) ToKubeletConfigurationAuthorizationPtrOutput() KubeletConfigurationAuthorizationPtrOutput {
+	return i.ToKubeletConfigurationAuthorizationPtrOutputWithContext(context.Background())
+}
+
+func (i KubeletConfigurationAuthorizationArgs) ToKubeletConfigurationAuthorizationPtrOutputWithContext(ctx context.Context) KubeletConfigurationAuthorizationPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(KubeletConfigurationAuthorizationOutput).ToKubeletConfigurationAuthorizationPtrOutputWithContext(ctx)
+}
+
+// KubeletConfigurationAuthorizationPtrInput is an input type that accepts KubeletConfigurationAuthorizationArgs, KubeletConfigurationAuthorizationPtr and KubeletConfigurationAuthorizationPtrOutput values.
+// You can construct a concrete instance of `KubeletConfigurationAuthorizationPtrInput` via:
+//
+//	        KubeletConfigurationAuthorizationArgs{...}
+//
+//	or:
+//
+//	        nil
+type KubeletConfigurationAuthorizationPtrInput interface {
+	pulumi.Input
+
+	ToKubeletConfigurationAuthorizationPtrOutput() KubeletConfigurationAuthorizationPtrOutput
+	ToKubeletConfigurationAuthorizationPtrOutputWithContext(context.Context) KubeletConfigurationAuthorizationPtrOutput
+}
+
+type kubeletConfigurationAuthorizationPtrType KubeletConfigurationAuthorizationArgs
+
+func KubeletConfigurationAuthorizationPtr(v *KubeletConfigurationAuthorizationArgs) KubeletConfigurationAuthorizationPtrInput {
+	return (*kubeletConfigurationAuthorizationPtrType)(v)
+}
+
+func (*kubeletConfigurationAuthorizationPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**KubeletConfigurationAuthorization)(nil)).Elem()
+}
+
+func (i *kubeletConfigurationAuthorizationPtrType) ToKubeletConfigurationAuthorizationPtrOutput() KubeletConfigurationAuthorizationPtrOutput {
+	return i.ToKubeletConfigurationAuthorizationPtrOutputWithContext(context.Background())
+}
+
+func (i *kubeletConfigurationAuthorizationPtrType) ToKubeletConfigurationAuthorizationPtrOutputWithContext(ctx context.Context) KubeletConfigurationAuthorizationPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(KubeletConfigurationAuthorizationPtrOutput)
 }
 
 type KubeletConfigurationAuthorizationOutput struct{ *pulumi.OutputState }
@@ -1943,8 +3385,51 @@ func (o KubeletConfigurationAuthorizationOutput) ToKubeletConfigurationAuthoriza
 	return o
 }
 
+func (o KubeletConfigurationAuthorizationOutput) ToKubeletConfigurationAuthorizationPtrOutput() KubeletConfigurationAuthorizationPtrOutput {
+	return o.ToKubeletConfigurationAuthorizationPtrOutputWithContext(context.Background())
+}
+
+func (o KubeletConfigurationAuthorizationOutput) ToKubeletConfigurationAuthorizationPtrOutputWithContext(ctx context.Context) KubeletConfigurationAuthorizationPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v KubeletConfigurationAuthorization) *KubeletConfigurationAuthorization {
+		return &v
+	}).(KubeletConfigurationAuthorizationPtrOutput)
+}
+
 func (o KubeletConfigurationAuthorizationOutput) Mode() pulumi.StringOutput {
 	return o.ApplyT(func(v KubeletConfigurationAuthorization) string { return v.Mode }).(pulumi.StringOutput)
+}
+
+type KubeletConfigurationAuthorizationPtrOutput struct{ *pulumi.OutputState }
+
+func (KubeletConfigurationAuthorizationPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**KubeletConfigurationAuthorization)(nil)).Elem()
+}
+
+func (o KubeletConfigurationAuthorizationPtrOutput) ToKubeletConfigurationAuthorizationPtrOutput() KubeletConfigurationAuthorizationPtrOutput {
+	return o
+}
+
+func (o KubeletConfigurationAuthorizationPtrOutput) ToKubeletConfigurationAuthorizationPtrOutputWithContext(ctx context.Context) KubeletConfigurationAuthorizationPtrOutput {
+	return o
+}
+
+func (o KubeletConfigurationAuthorizationPtrOutput) Elem() KubeletConfigurationAuthorizationOutput {
+	return o.ApplyT(func(v *KubeletConfigurationAuthorization) KubeletConfigurationAuthorization {
+		if v != nil {
+			return *v
+		}
+		var ret KubeletConfigurationAuthorization
+		return ret
+	}).(KubeletConfigurationAuthorizationOutput)
+}
+
+func (o KubeletConfigurationAuthorizationPtrOutput) Mode() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *KubeletConfigurationAuthorization) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.Mode
+	}).(pulumi.StringPtrOutput)
 }
 
 // Pod is a collection of containers that can run on a host. This resource is created by clients and scheduled onto hosts.
@@ -2371,7 +3856,12 @@ func (o UserArrayOutput) Index(i pulumi.IntInput) UserOutput {
 func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*CniBridgeIpamInput)(nil)).Elem(), CniBridgeIpamArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*CniBridgeIpamPtrInput)(nil)).Elem(), CniBridgeIpamArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*CniBridgePluginConfigurationTypeInput)(nil)).Elem(), CniBridgePluginConfigurationTypeArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*CniBridgePluginConfigurationTypePtrInput)(nil)).Elem(), CniBridgePluginConfigurationTypeArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*CniLoopbackPluginConfigurationTypeInput)(nil)).Elem(), CniLoopbackPluginConfigurationTypeArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*CniLoopbackPluginConfigurationTypePtrInput)(nil)).Elem(), CniLoopbackPluginConfigurationTypeArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*ContainerdConfigurationTypeInput)(nil)).Elem(), ContainerdConfigurationTypeArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*ContainerdConfigurationTypePtrInput)(nil)).Elem(), ContainerdConfigurationTypeArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*ContainerdCriPluginConfigurationInput)(nil)).Elem(), ContainerdCriPluginConfigurationArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*ContainerdCriPluginConfigurationPtrInput)(nil)).Elem(), ContainerdCriPluginConfigurationArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*ContainerdCriPluginConfigurationCniInput)(nil)).Elem(), ContainerdCriPluginConfigurationCniArgs{})
@@ -2382,19 +3872,38 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*ContainerdCriPluginConfigurationContainerdRuncPtrInput)(nil)).Elem(), ContainerdCriPluginConfigurationContainerdRuncArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*ContainerdCriPluginConfigurationContainerdRuncOptionsInput)(nil)).Elem(), ContainerdCriPluginConfigurationContainerdRuncOptionsArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*ContainerdCriPluginConfigurationContainerdRuncOptionsPtrInput)(nil)).Elem(), ContainerdCriPluginConfigurationContainerdRuncOptionsArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*KubeProxyConfigurationTypeInput)(nil)).Elem(), KubeProxyConfigurationTypeArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*KubeProxyConfigurationTypePtrInput)(nil)).Elem(), KubeProxyConfigurationTypeArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*KubeProxyConfigurationClientConnectionInput)(nil)).Elem(), KubeProxyConfigurationClientConnectionArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*KubeProxyConfigurationClientConnectionPtrInput)(nil)).Elem(), KubeProxyConfigurationClientConnectionArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*KubeconfigAdminOptionsInput)(nil)).Elem(), KubeconfigAdminOptionsArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*KubeconfigKubeControllerManagerOptionsInput)(nil)).Elem(), KubeconfigKubeControllerManagerOptionsArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*KubeconfigKubeProxyOptionsInput)(nil)).Elem(), KubeconfigKubeProxyOptionsArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*KubeconfigKubeSchedulerOptionsInput)(nil)).Elem(), KubeconfigKubeSchedulerOptionsArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*KubeconfigWorkerOptionsInput)(nil)).Elem(), KubeconfigWorkerOptionsArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*KubeletConfigurationTypeInput)(nil)).Elem(), KubeletConfigurationTypeArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*KubeletConfigurationTypePtrInput)(nil)).Elem(), KubeletConfigurationTypeArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*KubeletConfigurationAuthenticationInput)(nil)).Elem(), KubeletConfigurationAuthenticationArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*KubeletConfigurationAuthenticationPtrInput)(nil)).Elem(), KubeletConfigurationAuthenticationArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*KubeletConfigurationAuthenticationAnonymousInput)(nil)).Elem(), KubeletConfigurationAuthenticationAnonymousArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*KubeletConfigurationAuthenticationAnonymousPtrInput)(nil)).Elem(), KubeletConfigurationAuthenticationAnonymousArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*KubeletConfigurationAuthenticationWebhookInput)(nil)).Elem(), KubeletConfigurationAuthenticationWebhookArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*KubeletConfigurationAuthenticationWebhookPtrInput)(nil)).Elem(), KubeletConfigurationAuthenticationWebhookArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*KubeletConfigurationAuthenticationx509Input)(nil)).Elem(), KubeletConfigurationAuthenticationx509Args{})
+	pulumi.RegisterInputType(reflect.TypeOf((*KubeletConfigurationAuthenticationx509PtrInput)(nil)).Elem(), KubeletConfigurationAuthenticationx509Args{})
+	pulumi.RegisterInputType(reflect.TypeOf((*KubeletConfigurationAuthorizationInput)(nil)).Elem(), KubeletConfigurationAuthorizationArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*KubeletConfigurationAuthorizationPtrInput)(nil)).Elem(), KubeletConfigurationAuthorizationArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*PodManifestInput)(nil)).Elem(), PodManifestArgs{})
 	pulumi.RegisterOutputType(ClusterOutput{})
 	pulumi.RegisterOutputType(ClusterArrayOutput{})
 	pulumi.RegisterOutputType(CniBridgeIpamOutput{})
 	pulumi.RegisterOutputType(CniBridgeIpamPtrOutput{})
 	pulumi.RegisterOutputType(CniBridgePluginConfigurationTypeOutput{})
+	pulumi.RegisterOutputType(CniBridgePluginConfigurationTypePtrOutput{})
 	pulumi.RegisterOutputType(CniLoopbackPluginConfigurationTypeOutput{})
+	pulumi.RegisterOutputType(CniLoopbackPluginConfigurationTypePtrOutput{})
 	pulumi.RegisterOutputType(ContainerdConfigurationTypeOutput{})
+	pulumi.RegisterOutputType(ContainerdConfigurationTypePtrOutput{})
 	pulumi.RegisterOutputType(ContainerdCriPluginConfigurationOutput{})
 	pulumi.RegisterOutputType(ContainerdCriPluginConfigurationPtrOutput{})
 	pulumi.RegisterOutputType(ContainerdCriPluginConfigurationCniOutput{})
@@ -2408,6 +3917,7 @@ func init() {
 	pulumi.RegisterOutputType(ContextOutput{})
 	pulumi.RegisterOutputType(ContextArrayOutput{})
 	pulumi.RegisterOutputType(KubeProxyConfigurationTypeOutput{})
+	pulumi.RegisterOutputType(KubeProxyConfigurationTypePtrOutput{})
 	pulumi.RegisterOutputType(KubeProxyConfigurationClientConnectionOutput{})
 	pulumi.RegisterOutputType(KubeProxyConfigurationClientConnectionPtrOutput{})
 	pulumi.RegisterOutputType(KubeconfigOutput{})
@@ -2417,11 +3927,17 @@ func init() {
 	pulumi.RegisterOutputType(KubeconfigKubeSchedulerOptionsOutput{})
 	pulumi.RegisterOutputType(KubeconfigWorkerOptionsOutput{})
 	pulumi.RegisterOutputType(KubeletConfigurationTypeOutput{})
+	pulumi.RegisterOutputType(KubeletConfigurationTypePtrOutput{})
 	pulumi.RegisterOutputType(KubeletConfigurationAuthenticationOutput{})
+	pulumi.RegisterOutputType(KubeletConfigurationAuthenticationPtrOutput{})
 	pulumi.RegisterOutputType(KubeletConfigurationAuthenticationAnonymousOutput{})
+	pulumi.RegisterOutputType(KubeletConfigurationAuthenticationAnonymousPtrOutput{})
 	pulumi.RegisterOutputType(KubeletConfigurationAuthenticationWebhookOutput{})
+	pulumi.RegisterOutputType(KubeletConfigurationAuthenticationWebhookPtrOutput{})
 	pulumi.RegisterOutputType(KubeletConfigurationAuthenticationx509Output{})
+	pulumi.RegisterOutputType(KubeletConfigurationAuthenticationx509PtrOutput{})
 	pulumi.RegisterOutputType(KubeletConfigurationAuthorizationOutput{})
+	pulumi.RegisterOutputType(KubeletConfigurationAuthorizationPtrOutput{})
 	pulumi.RegisterOutputType(PodManifestOutput{})
 	pulumi.RegisterOutputType(UserOutput{})
 	pulumi.RegisterOutputType(UserArrayOutput{})

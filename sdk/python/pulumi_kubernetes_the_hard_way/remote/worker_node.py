@@ -37,20 +37,23 @@ class WorkerNodeArgs:
                  subnet: pulumi.Input[str],
                  cluster_cidr: Optional[pulumi.Input[str]] = None,
                  cluster_domain: Optional[pulumi.Input[str]] = None,
+                 cni_bridge: Optional[pulumi.Input['_config.CniBridgePluginConfigurationArgs']] = None,
                  cni_configuration_directory: Optional[pulumi.Input[str]] = None,
                  cni_install_directory: Optional[pulumi.Input[str]] = None,
+                 cni_loopback: Optional[pulumi.Input['_config.CniLoopbackPluginConfigurationArgs']] = None,
                  cni_version: Optional[pulumi.Input[str]] = None,
+                 containerd: Optional[pulumi.Input['_config.ContainerdConfigurationArgs']] = None,
                  containerd_configuration_directory: Optional[pulumi.Input[str]] = None,
                  containerd_install_directory: Optional[pulumi.Input[str]] = None,
                  containerd_version: Optional[pulumi.Input[str]] = None,
                  crictl_install_directory: Optional[pulumi.Input[str]] = None,
+                 kube_proxy: Optional[pulumi.Input['_config.KubeProxyConfigurationArgs']] = None,
                  kube_proxy_configuration_directory: Optional[pulumi.Input[str]] = None,
                  kube_proxy_install_directory: Optional[pulumi.Input[str]] = None,
-                 kube_proxy_kubeconfig_path: Optional[pulumi.Input[str]] = None,
                  kubectl_install_directory: Optional[pulumi.Input[str]] = None,
+                 kubelet: Optional[pulumi.Input['_config.KubeletConfigurationArgs']] = None,
                  kubelet_configuration_directory: Optional[pulumi.Input[str]] = None,
                  kubelet_install_directory: Optional[pulumi.Input[str]] = None,
-                 kubelet_kubeconfig_path: Optional[pulumi.Input[str]] = None,
                  kubernetes_version: Optional[pulumi.Input[str]] = None):
         """
         The set of arguments for constructing a WorkerNode resource.
@@ -62,20 +65,23 @@ class WorkerNodeArgs:
         :param pulumi.Input[str] subnet: The subnet for the cluster.
         :param pulumi.Input[str] cluster_cidr: The CIDR to use for the cluster.
         :param pulumi.Input[str] cluster_domain: The domain for the cluster to use. Defaults to cluster.local.
+        :param pulumi.Input['_config.CniBridgePluginConfigurationArgs'] cni_bridge: The CNI bridge plugin configuration.
         :param pulumi.Input[str] cni_configuration_directory: The directory to store CNI plugin configuration files. Defaults to /etc/cni/net.d.
         :param pulumi.Input[str] cni_install_directory: The directory to store CNI plugin binaries. Defaults to /opt/cni/bin.
+        :param pulumi.Input['_config.CniLoopbackPluginConfigurationArgs'] cni_loopback: The CNI loopback plugin configuration.
         :param pulumi.Input[str] cni_version: The CNI version to use.
+        :param pulumi.Input['_config.ContainerdConfigurationArgs'] containerd: The containerd configuration.
         :param pulumi.Input[str] containerd_configuration_directory: The directory to store containerd configuration files. Defaults to /etc/containerd.
         :param pulumi.Input[str] containerd_install_directory: The directory to store the containerd binary. Defaults to /bin.
         :param pulumi.Input[str] containerd_version: The containerd version to use.
         :param pulumi.Input[str] crictl_install_directory: The directory to store the crictl binary. Defaults to /usr/local/bin.
+        :param pulumi.Input['_config.KubeProxyConfigurationArgs'] kube_proxy: The kube-proxy configuration.
         :param pulumi.Input[str] kube_proxy_configuration_directory: The directory to store kube-proxy configuration files. Defaults to /var/lib/kube-proxy.
         :param pulumi.Input[str] kube_proxy_install_directory: The directory to store the kube-proxy binary. Defaults to /usr/local/bin.
-        :param pulumi.Input[str] kube_proxy_kubeconfig_path: The path to the kube-proxy's kubeconfig file.
         :param pulumi.Input[str] kubectl_install_directory: The directory to store the kubectl binary. Defaults to /usr/local/bin.
+        :param pulumi.Input['_config.KubeletConfigurationArgs'] kubelet: The kubelet configuration.
         :param pulumi.Input[str] kubelet_configuration_directory: The directory to store kubelet configuration files. Defaults to /var/lib/kubelet.
         :param pulumi.Input[str] kubelet_install_directory: The directory to store the kubelet binary. Defaults to /usr/local/bin.
-        :param pulumi.Input[str] kubelet_kubeconfig_path: The path to the kubelet's kubeconfig file.
         :param pulumi.Input[str] kubernetes_version: The kubernetes version to use.
         """
         pulumi.set(__self__, "architecture", architecture)
@@ -88,12 +94,18 @@ class WorkerNodeArgs:
             pulumi.set(__self__, "cluster_cidr", cluster_cidr)
         if cluster_domain is not None:
             pulumi.set(__self__, "cluster_domain", cluster_domain)
+        if cni_bridge is not None:
+            pulumi.set(__self__, "cni_bridge", cni_bridge)
         if cni_configuration_directory is not None:
             pulumi.set(__self__, "cni_configuration_directory", cni_configuration_directory)
         if cni_install_directory is not None:
             pulumi.set(__self__, "cni_install_directory", cni_install_directory)
+        if cni_loopback is not None:
+            pulumi.set(__self__, "cni_loopback", cni_loopback)
         if cni_version is not None:
             pulumi.set(__self__, "cni_version", cni_version)
+        if containerd is not None:
+            pulumi.set(__self__, "containerd", containerd)
         if containerd_configuration_directory is not None:
             pulumi.set(__self__, "containerd_configuration_directory", containerd_configuration_directory)
         if containerd_install_directory is not None:
@@ -102,20 +114,20 @@ class WorkerNodeArgs:
             pulumi.set(__self__, "containerd_version", containerd_version)
         if crictl_install_directory is not None:
             pulumi.set(__self__, "crictl_install_directory", crictl_install_directory)
+        if kube_proxy is not None:
+            pulumi.set(__self__, "kube_proxy", kube_proxy)
         if kube_proxy_configuration_directory is not None:
             pulumi.set(__self__, "kube_proxy_configuration_directory", kube_proxy_configuration_directory)
         if kube_proxy_install_directory is not None:
             pulumi.set(__self__, "kube_proxy_install_directory", kube_proxy_install_directory)
-        if kube_proxy_kubeconfig_path is not None:
-            pulumi.set(__self__, "kube_proxy_kubeconfig_path", kube_proxy_kubeconfig_path)
         if kubectl_install_directory is not None:
             pulumi.set(__self__, "kubectl_install_directory", kubectl_install_directory)
+        if kubelet is not None:
+            pulumi.set(__self__, "kubelet", kubelet)
         if kubelet_configuration_directory is not None:
             pulumi.set(__self__, "kubelet_configuration_directory", kubelet_configuration_directory)
         if kubelet_install_directory is not None:
             pulumi.set(__self__, "kubelet_install_directory", kubelet_install_directory)
-        if kubelet_kubeconfig_path is not None:
-            pulumi.set(__self__, "kubelet_kubeconfig_path", kubelet_kubeconfig_path)
         if kubernetes_version is not None:
             pulumi.set(__self__, "kubernetes_version", kubernetes_version)
 
@@ -216,6 +228,18 @@ class WorkerNodeArgs:
         pulumi.set(self, "cluster_domain", value)
 
     @property
+    @pulumi.getter(name="cniBridge")
+    def cni_bridge(self) -> Optional[pulumi.Input['_config.CniBridgePluginConfigurationArgs']]:
+        """
+        The CNI bridge plugin configuration.
+        """
+        return pulumi.get(self, "cni_bridge")
+
+    @cni_bridge.setter
+    def cni_bridge(self, value: Optional[pulumi.Input['_config.CniBridgePluginConfigurationArgs']]):
+        pulumi.set(self, "cni_bridge", value)
+
+    @property
     @pulumi.getter(name="cniConfigurationDirectory")
     def cni_configuration_directory(self) -> Optional[pulumi.Input[str]]:
         """
@@ -240,6 +264,18 @@ class WorkerNodeArgs:
         pulumi.set(self, "cni_install_directory", value)
 
     @property
+    @pulumi.getter(name="cniLoopback")
+    def cni_loopback(self) -> Optional[pulumi.Input['_config.CniLoopbackPluginConfigurationArgs']]:
+        """
+        The CNI loopback plugin configuration.
+        """
+        return pulumi.get(self, "cni_loopback")
+
+    @cni_loopback.setter
+    def cni_loopback(self, value: Optional[pulumi.Input['_config.CniLoopbackPluginConfigurationArgs']]):
+        pulumi.set(self, "cni_loopback", value)
+
+    @property
     @pulumi.getter(name="cniVersion")
     def cni_version(self) -> Optional[pulumi.Input[str]]:
         """
@@ -250,6 +286,18 @@ class WorkerNodeArgs:
     @cni_version.setter
     def cni_version(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "cni_version", value)
+
+    @property
+    @pulumi.getter
+    def containerd(self) -> Optional[pulumi.Input['_config.ContainerdConfigurationArgs']]:
+        """
+        The containerd configuration.
+        """
+        return pulumi.get(self, "containerd")
+
+    @containerd.setter
+    def containerd(self, value: Optional[pulumi.Input['_config.ContainerdConfigurationArgs']]):
+        pulumi.set(self, "containerd", value)
 
     @property
     @pulumi.getter(name="containerdConfigurationDirectory")
@@ -300,6 +348,18 @@ class WorkerNodeArgs:
         pulumi.set(self, "crictl_install_directory", value)
 
     @property
+    @pulumi.getter(name="kubeProxy")
+    def kube_proxy(self) -> Optional[pulumi.Input['_config.KubeProxyConfigurationArgs']]:
+        """
+        The kube-proxy configuration.
+        """
+        return pulumi.get(self, "kube_proxy")
+
+    @kube_proxy.setter
+    def kube_proxy(self, value: Optional[pulumi.Input['_config.KubeProxyConfigurationArgs']]):
+        pulumi.set(self, "kube_proxy", value)
+
+    @property
     @pulumi.getter(name="kubeProxyConfigurationDirectory")
     def kube_proxy_configuration_directory(self) -> Optional[pulumi.Input[str]]:
         """
@@ -324,18 +384,6 @@ class WorkerNodeArgs:
         pulumi.set(self, "kube_proxy_install_directory", value)
 
     @property
-    @pulumi.getter(name="kubeProxyKubeconfigPath")
-    def kube_proxy_kubeconfig_path(self) -> Optional[pulumi.Input[str]]:
-        """
-        The path to the kube-proxy's kubeconfig file.
-        """
-        return pulumi.get(self, "kube_proxy_kubeconfig_path")
-
-    @kube_proxy_kubeconfig_path.setter
-    def kube_proxy_kubeconfig_path(self, value: Optional[pulumi.Input[str]]):
-        pulumi.set(self, "kube_proxy_kubeconfig_path", value)
-
-    @property
     @pulumi.getter(name="kubectlInstallDirectory")
     def kubectl_install_directory(self) -> Optional[pulumi.Input[str]]:
         """
@@ -346,6 +394,18 @@ class WorkerNodeArgs:
     @kubectl_install_directory.setter
     def kubectl_install_directory(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "kubectl_install_directory", value)
+
+    @property
+    @pulumi.getter
+    def kubelet(self) -> Optional[pulumi.Input['_config.KubeletConfigurationArgs']]:
+        """
+        The kubelet configuration.
+        """
+        return pulumi.get(self, "kubelet")
+
+    @kubelet.setter
+    def kubelet(self, value: Optional[pulumi.Input['_config.KubeletConfigurationArgs']]):
+        pulumi.set(self, "kubelet", value)
 
     @property
     @pulumi.getter(name="kubeletConfigurationDirectory")
@@ -372,18 +432,6 @@ class WorkerNodeArgs:
         pulumi.set(self, "kubelet_install_directory", value)
 
     @property
-    @pulumi.getter(name="kubeletKubeconfigPath")
-    def kubelet_kubeconfig_path(self) -> Optional[pulumi.Input[str]]:
-        """
-        The path to the kubelet's kubeconfig file.
-        """
-        return pulumi.get(self, "kubelet_kubeconfig_path")
-
-    @kubelet_kubeconfig_path.setter
-    def kubelet_kubeconfig_path(self, value: Optional[pulumi.Input[str]]):
-        pulumi.set(self, "kubelet_kubeconfig_path", value)
-
-    @property
     @pulumi.getter(name="kubernetesVersion")
     def kubernetes_version(self) -> Optional[pulumi.Input[str]]:
         """
@@ -405,22 +453,25 @@ class WorkerNode(pulumi.ComponentResource):
                  ca_path: Optional[pulumi.Input[str]] = None,
                  cluster_cidr: Optional[pulumi.Input[str]] = None,
                  cluster_domain: Optional[pulumi.Input[str]] = None,
+                 cni_bridge: Optional[pulumi.Input[pulumi.InputType['_config.CniBridgePluginConfigurationArgs']]] = None,
                  cni_configuration_directory: Optional[pulumi.Input[str]] = None,
                  cni_install_directory: Optional[pulumi.Input[str]] = None,
+                 cni_loopback: Optional[pulumi.Input[pulumi.InputType['_config.CniLoopbackPluginConfigurationArgs']]] = None,
                  cni_version: Optional[pulumi.Input[str]] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
+                 containerd: Optional[pulumi.Input[pulumi.InputType['_config.ContainerdConfigurationArgs']]] = None,
                  containerd_configuration_directory: Optional[pulumi.Input[str]] = None,
                  containerd_install_directory: Optional[pulumi.Input[str]] = None,
                  containerd_version: Optional[pulumi.Input[str]] = None,
                  crictl_install_directory: Optional[pulumi.Input[str]] = None,
+                 kube_proxy: Optional[pulumi.Input[pulumi.InputType['_config.KubeProxyConfigurationArgs']]] = None,
                  kube_proxy_configuration_directory: Optional[pulumi.Input[str]] = None,
                  kube_proxy_install_directory: Optional[pulumi.Input[str]] = None,
-                 kube_proxy_kubeconfig_path: Optional[pulumi.Input[str]] = None,
                  kubectl_install_directory: Optional[pulumi.Input[str]] = None,
+                 kubelet: Optional[pulumi.Input[pulumi.InputType['_config.KubeletConfigurationArgs']]] = None,
                  kubelet_certificate_path: Optional[pulumi.Input[str]] = None,
                  kubelet_configuration_directory: Optional[pulumi.Input[str]] = None,
                  kubelet_install_directory: Optional[pulumi.Input[str]] = None,
-                 kubelet_kubeconfig_path: Optional[pulumi.Input[str]] = None,
                  kubelet_private_key_path: Optional[pulumi.Input[str]] = None,
                  kubernetes_version: Optional[pulumi.Input[str]] = None,
                  subnet: Optional[pulumi.Input[str]] = None,
@@ -434,22 +485,25 @@ class WorkerNode(pulumi.ComponentResource):
         :param pulumi.Input[str] ca_path: The path to the cluster certificate authority file.
         :param pulumi.Input[str] cluster_cidr: The CIDR to use for the cluster.
         :param pulumi.Input[str] cluster_domain: The domain for the cluster to use. Defaults to cluster.local.
+        :param pulumi.Input[pulumi.InputType['_config.CniBridgePluginConfigurationArgs']] cni_bridge: The CNI bridge plugin configuration.
         :param pulumi.Input[str] cni_configuration_directory: The directory to store CNI plugin configuration files. Defaults to /etc/cni/net.d.
         :param pulumi.Input[str] cni_install_directory: The directory to store CNI plugin binaries. Defaults to /opt/cni/bin.
+        :param pulumi.Input[pulumi.InputType['_config.CniLoopbackPluginConfigurationArgs']] cni_loopback: The CNI loopback plugin configuration.
         :param pulumi.Input[str] cni_version: The CNI version to use.
         :param pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']] connection: The parameters with which to connect to the remote host.
+        :param pulumi.Input[pulumi.InputType['_config.ContainerdConfigurationArgs']] containerd: The containerd configuration.
         :param pulumi.Input[str] containerd_configuration_directory: The directory to store containerd configuration files. Defaults to /etc/containerd.
         :param pulumi.Input[str] containerd_install_directory: The directory to store the containerd binary. Defaults to /bin.
         :param pulumi.Input[str] containerd_version: The containerd version to use.
         :param pulumi.Input[str] crictl_install_directory: The directory to store the crictl binary. Defaults to /usr/local/bin.
+        :param pulumi.Input[pulumi.InputType['_config.KubeProxyConfigurationArgs']] kube_proxy: The kube-proxy configuration.
         :param pulumi.Input[str] kube_proxy_configuration_directory: The directory to store kube-proxy configuration files. Defaults to /var/lib/kube-proxy.
         :param pulumi.Input[str] kube_proxy_install_directory: The directory to store the kube-proxy binary. Defaults to /usr/local/bin.
-        :param pulumi.Input[str] kube_proxy_kubeconfig_path: The path to the kube-proxy's kubeconfig file.
         :param pulumi.Input[str] kubectl_install_directory: The directory to store the kubectl binary. Defaults to /usr/local/bin.
+        :param pulumi.Input[pulumi.InputType['_config.KubeletConfigurationArgs']] kubelet: The kubelet configuration.
         :param pulumi.Input[str] kubelet_certificate_path: The path to the kubelet certificate.
         :param pulumi.Input[str] kubelet_configuration_directory: The directory to store kubelet configuration files. Defaults to /var/lib/kubelet.
         :param pulumi.Input[str] kubelet_install_directory: The directory to store the kubelet binary. Defaults to /usr/local/bin.
-        :param pulumi.Input[str] kubelet_kubeconfig_path: The path to the kubelet's kubeconfig file.
         :param pulumi.Input[str] kubelet_private_key_path: The path to the kubelet private key file.
         :param pulumi.Input[str] kubernetes_version: The kubernetes version to use.
         :param pulumi.Input[str] subnet: The subnet for the cluster.
@@ -482,22 +536,25 @@ class WorkerNode(pulumi.ComponentResource):
                  ca_path: Optional[pulumi.Input[str]] = None,
                  cluster_cidr: Optional[pulumi.Input[str]] = None,
                  cluster_domain: Optional[pulumi.Input[str]] = None,
+                 cni_bridge: Optional[pulumi.Input[pulumi.InputType['_config.CniBridgePluginConfigurationArgs']]] = None,
                  cni_configuration_directory: Optional[pulumi.Input[str]] = None,
                  cni_install_directory: Optional[pulumi.Input[str]] = None,
+                 cni_loopback: Optional[pulumi.Input[pulumi.InputType['_config.CniLoopbackPluginConfigurationArgs']]] = None,
                  cni_version: Optional[pulumi.Input[str]] = None,
                  connection: Optional[pulumi.Input[pulumi.InputType['pulumi_command.remote.ConnectionArgs']]] = None,
+                 containerd: Optional[pulumi.Input[pulumi.InputType['_config.ContainerdConfigurationArgs']]] = None,
                  containerd_configuration_directory: Optional[pulumi.Input[str]] = None,
                  containerd_install_directory: Optional[pulumi.Input[str]] = None,
                  containerd_version: Optional[pulumi.Input[str]] = None,
                  crictl_install_directory: Optional[pulumi.Input[str]] = None,
+                 kube_proxy: Optional[pulumi.Input[pulumi.InputType['_config.KubeProxyConfigurationArgs']]] = None,
                  kube_proxy_configuration_directory: Optional[pulumi.Input[str]] = None,
                  kube_proxy_install_directory: Optional[pulumi.Input[str]] = None,
-                 kube_proxy_kubeconfig_path: Optional[pulumi.Input[str]] = None,
                  kubectl_install_directory: Optional[pulumi.Input[str]] = None,
+                 kubelet: Optional[pulumi.Input[pulumi.InputType['_config.KubeletConfigurationArgs']]] = None,
                  kubelet_certificate_path: Optional[pulumi.Input[str]] = None,
                  kubelet_configuration_directory: Optional[pulumi.Input[str]] = None,
                  kubelet_install_directory: Optional[pulumi.Input[str]] = None,
-                 kubelet_kubeconfig_path: Optional[pulumi.Input[str]] = None,
                  kubelet_private_key_path: Optional[pulumi.Input[str]] = None,
                  kubernetes_version: Optional[pulumi.Input[str]] = None,
                  subnet: Optional[pulumi.Input[str]] = None,
@@ -520,26 +577,29 @@ class WorkerNode(pulumi.ComponentResource):
             __props__.__dict__["ca_path"] = ca_path
             __props__.__dict__["cluster_cidr"] = cluster_cidr
             __props__.__dict__["cluster_domain"] = cluster_domain
+            __props__.__dict__["cni_bridge"] = cni_bridge
             __props__.__dict__["cni_configuration_directory"] = cni_configuration_directory
             __props__.__dict__["cni_install_directory"] = cni_install_directory
+            __props__.__dict__["cni_loopback"] = cni_loopback
             __props__.__dict__["cni_version"] = cni_version
             if connection is None and not opts.urn:
                 raise TypeError("Missing required property 'connection'")
             __props__.__dict__["connection"] = connection
+            __props__.__dict__["containerd"] = containerd
             __props__.__dict__["containerd_configuration_directory"] = containerd_configuration_directory
             __props__.__dict__["containerd_install_directory"] = containerd_install_directory
             __props__.__dict__["containerd_version"] = containerd_version
             __props__.__dict__["crictl_install_directory"] = crictl_install_directory
+            __props__.__dict__["kube_proxy"] = kube_proxy
             __props__.__dict__["kube_proxy_configuration_directory"] = kube_proxy_configuration_directory
             __props__.__dict__["kube_proxy_install_directory"] = kube_proxy_install_directory
-            __props__.__dict__["kube_proxy_kubeconfig_path"] = kube_proxy_kubeconfig_path
             __props__.__dict__["kubectl_install_directory"] = kubectl_install_directory
+            __props__.__dict__["kubelet"] = kubelet
             if kubelet_certificate_path is None and not opts.urn:
                 raise TypeError("Missing required property 'kubelet_certificate_path'")
             __props__.__dict__["kubelet_certificate_path"] = kubelet_certificate_path
             __props__.__dict__["kubelet_configuration_directory"] = kubelet_configuration_directory
             __props__.__dict__["kubelet_install_directory"] = kubelet_install_directory
-            __props__.__dict__["kubelet_kubeconfig_path"] = kubelet_kubeconfig_path
             if kubelet_private_key_path is None and not opts.urn:
                 raise TypeError("Missing required property 'kubelet_private_key_path'")
             __props__.__dict__["kubelet_private_key_path"] = kubelet_private_key_path
@@ -580,6 +640,76 @@ class WorkerNode(pulumi.ComponentResource):
             opts,
             remote=True)
 
+    @staticmethod
+    def get(resource_name: str,
+            id: pulumi.Input[str],
+            opts: Optional[pulumi.ResourceOptions] = None) -> 'WorkerNode':
+        """
+        Get an existing WorkerNode resource's state with the given name, id, and optional extra
+        properties used to qualify the lookup.
+
+        :param str resource_name: The unique name of the resulting resource.
+        :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
+        :param pulumi.ResourceOptions opts: Options for the resource.
+        """
+        opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
+
+        __props__ = WorkerNodeArgs.__new__(WorkerNodeArgs)
+
+        __props__.__dict__["architecture"] = None
+        __props__.__dict__["ca_path"] = None
+        __props__.__dict__["cluster_cidr"] = None
+        __props__.__dict__["cluster_domain"] = None
+        __props__.__dict__["cni_bridge"] = None
+        __props__.__dict__["cni_bridge_configuration"] = None
+        __props__.__dict__["cni_bridge_configuration_file"] = None
+        __props__.__dict__["cni_configuration_directory"] = None
+        __props__.__dict__["cni_install_directory"] = None
+        __props__.__dict__["cni_loopback"] = None
+        __props__.__dict__["cni_loopback_configuration"] = None
+        __props__.__dict__["cni_loopback_configuration_file"] = None
+        __props__.__dict__["cni_mkdir"] = None
+        __props__.__dict__["cni_plugins_install"] = None
+        __props__.__dict__["cni_version"] = None
+        __props__.__dict__["connection"] = None
+        __props__.__dict__["containerd"] = None
+        __props__.__dict__["containerd_configuration"] = None
+        __props__.__dict__["containerd_configuration_directory"] = None
+        __props__.__dict__["containerd_configuration_file"] = None
+        __props__.__dict__["containerd_install"] = None
+        __props__.__dict__["containerd_install_directory"] = None
+        __props__.__dict__["containerd_mkdir"] = None
+        __props__.__dict__["containerd_service"] = None
+        __props__.__dict__["containerd_version"] = None
+        __props__.__dict__["crictl_install"] = None
+        __props__.__dict__["crictl_install_directory"] = None
+        __props__.__dict__["kube_proxy"] = None
+        __props__.__dict__["kube_proxy_configuration"] = None
+        __props__.__dict__["kube_proxy_configuration_directory"] = None
+        __props__.__dict__["kube_proxy_configuration_file"] = None
+        __props__.__dict__["kube_proxy_install"] = None
+        __props__.__dict__["kube_proxy_install_directory"] = None
+        __props__.__dict__["kube_proxy_mkdir"] = None
+        __props__.__dict__["kube_proxy_service"] = None
+        __props__.__dict__["kubectl_install"] = None
+        __props__.__dict__["kubectl_install_directory"] = None
+        __props__.__dict__["kubelet"] = None
+        __props__.__dict__["kubelet_certificate_path"] = None
+        __props__.__dict__["kubelet_configuration"] = None
+        __props__.__dict__["kubelet_configuration_directory"] = None
+        __props__.__dict__["kubelet_configuration_file"] = None
+        __props__.__dict__["kubelet_install"] = None
+        __props__.__dict__["kubelet_install_directory"] = None
+        __props__.__dict__["kubelet_mkdir"] = None
+        __props__.__dict__["kubelet_private_key_path"] = None
+        __props__.__dict__["kubelet_service"] = None
+        __props__.__dict__["kubernetes_version"] = None
+        __props__.__dict__["runc_install"] = None
+        __props__.__dict__["subnet"] = None
+        __props__.__dict__["var_lib_kubernetes_mkdir"] = None
+        __props__.__dict__["var_run_kubernetes_mkdir"] = None
+        return WorkerNode(resource_name, opts=opts, __props__=__props__)
+
     @property
     @pulumi.getter
     def architecture(self) -> pulumi.Output['Architecture']:
@@ -613,6 +743,14 @@ class WorkerNode(pulumi.ComponentResource):
         return pulumi.get(self, "cluster_domain")
 
     @property
+    @pulumi.getter(name="cniBridge")
+    def cni_bridge(self) -> pulumi.Output[Optional['_config.outputs.CniBridgePluginConfiguration']]:
+        """
+        The CNI bridge plugin configuration.
+        """
+        return pulumi.get(self, "cni_bridge")
+
+    @property
     @pulumi.getter(name="cniBridgeConfiguration")
     def cni_bridge_configuration(self) -> pulumi.Output['_config.CniBridgePluginConfiguration']:
         """
@@ -643,6 +781,14 @@ class WorkerNode(pulumi.ComponentResource):
         The directory to store CNI plugin binaries. Defaults to /opt/cni/bin.
         """
         return pulumi.get(self, "cni_install_directory")
+
+    @property
+    @pulumi.getter(name="cniLoopback")
+    def cni_loopback(self) -> pulumi.Output[Optional['_config.outputs.CniLoopbackPluginConfiguration']]:
+        """
+        The CNI loopback plugin configuration.
+        """
+        return pulumi.get(self, "cni_loopback")
 
     @property
     @pulumi.getter(name="cniLoopbackConfiguration")
@@ -691,6 +837,14 @@ class WorkerNode(pulumi.ComponentResource):
         The parameters with which to connect to the remote host.
         """
         return pulumi.get(self, "connection")
+
+    @property
+    @pulumi.getter
+    def containerd(self) -> pulumi.Output[Optional['_config.outputs.ContainerdConfiguration']]:
+        """
+        The containerd configuration.
+        """
+        return pulumi.get(self, "containerd")
 
     @property
     @pulumi.getter(name="containerdConfiguration")
@@ -773,6 +927,14 @@ class WorkerNode(pulumi.ComponentResource):
         return pulumi.get(self, "crictl_install_directory")
 
     @property
+    @pulumi.getter(name="kubeProxy")
+    def kube_proxy(self) -> pulumi.Output[Optional['_config.outputs.KubeProxyConfiguration']]:
+        """
+        The kube-proxy configuration.
+        """
+        return pulumi.get(self, "kube_proxy")
+
+    @property
     @pulumi.getter(name="kubeProxyConfiguration")
     def kube_proxy_configuration(self) -> pulumi.Output['_config.KubeProxyConfiguration']:
         """
@@ -813,14 +975,6 @@ class WorkerNode(pulumi.ComponentResource):
         return pulumi.get(self, "kube_proxy_install_directory")
 
     @property
-    @pulumi.getter(name="kubeProxyKubeconfigPath")
-    def kube_proxy_kubeconfig_path(self) -> pulumi.Output[Optional[str]]:
-        """
-        The path to the kube-proxy's kubeconfig file.
-        """
-        return pulumi.get(self, "kube_proxy_kubeconfig_path")
-
-    @property
     @pulumi.getter(name="kubeProxyMkdir")
     def kube_proxy_mkdir(self) -> pulumi.Output['_tools.Mkdir']:
         """
@@ -851,6 +1005,14 @@ class WorkerNode(pulumi.ComponentResource):
         The directory to store the kubectl binary. Defaults to /usr/local/bin.
         """
         return pulumi.get(self, "kubectl_install_directory")
+
+    @property
+    @pulumi.getter
+    def kubelet(self) -> pulumi.Output[Optional['_config.outputs.KubeletConfiguration']]:
+        """
+        The kubelet configuration.
+        """
+        return pulumi.get(self, "kubelet")
 
     @property
     @pulumi.getter(name="kubeletCertificatePath")
@@ -899,14 +1061,6 @@ class WorkerNode(pulumi.ComponentResource):
         The directory to store the kubelet binary. Defaults to /usr/local/bin.
         """
         return pulumi.get(self, "kubelet_install_directory")
-
-    @property
-    @pulumi.getter(name="kubeletKubeconfigPath")
-    def kubelet_kubeconfig_path(self) -> pulumi.Output[Optional[str]]:
-        """
-        The path to the kubelet's kubeconfig file.
-        """
-        return pulumi.get(self, "kubelet_kubeconfig_path")
 
     @property
     @pulumi.getter(name="kubeletMkdir")

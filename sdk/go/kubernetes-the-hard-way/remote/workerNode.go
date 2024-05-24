@@ -28,6 +28,8 @@ type WorkerNode struct {
 	// The domain for the cluster to use. Defaults to cluster.local.
 	ClusterDomain pulumi.StringPtrOutput `pulumi:"clusterDomain"`
 	// The CNI bridge plugin configuration.
+	CniBridge config.CniBridgePluginConfigurationTypePtrOutput `pulumi:"cniBridge"`
+	// The CNI bridge plugin configuration.
 	CniBridgeConfiguration config.CniBridgePluginConfigurationOutput `pulumi:"cniBridgeConfiguration"`
 	// The CNI bridge plugin configuration file.
 	CniBridgeConfigurationFile FileOutput `pulumi:"cniBridgeConfigurationFile"`
@@ -35,6 +37,8 @@ type WorkerNode struct {
 	CniConfigurationDirectory pulumi.StringPtrOutput `pulumi:"cniConfigurationDirectory"`
 	// The directory to store CNI plugin binaries. Defaults to /opt/cni/bin.
 	CniInstallDirectory pulumi.StringPtrOutput `pulumi:"cniInstallDirectory"`
+	// The CNI loopback plugin configuration.
+	CniLoopback config.CniLoopbackPluginConfigurationTypePtrOutput `pulumi:"cniLoopback"`
 	// The CNI loopback plugin configuration.
 	CniLoopbackConfiguration config.CniLoopbackPluginConfigurationOutput `pulumi:"cniLoopbackConfiguration"`
 	// The CNI loopback plugin configuration file.
@@ -47,6 +51,8 @@ type WorkerNode struct {
 	CniVersion pulumi.StringPtrOutput `pulumi:"cniVersion"`
 	// The parameters with which to connect to the remote host.
 	Connection pulumiCommand.ConnectionOutput `pulumi:"connection"`
+	// The containerd configuration.
+	Containerd config.ContainerdConfigurationTypePtrOutput `pulumi:"containerd"`
 	// The containerd configuration.
 	ContainerdConfiguration config.ContainerdConfigurationOutput `pulumi:"containerdConfiguration"`
 	// The directory to store containerd configuration files. Defaults to /etc/containerd.
@@ -67,6 +73,8 @@ type WorkerNode struct {
 	CrictlInstall CrictlInstallOutput `pulumi:"crictlInstall"`
 	// The directory to store the crictl binary. Defaults to /usr/local/bin.
 	CrictlInstallDirectory pulumi.StringPtrOutput `pulumi:"crictlInstallDirectory"`
+	// The kube-proxy configuration.
+	KubeProxy config.KubeProxyConfigurationTypePtrOutput `pulumi:"kubeProxy"`
 	// The kube-proxy configuration
 	KubeProxyConfiguration config.KubeProxyConfigurationOutput `pulumi:"kubeProxyConfiguration"`
 	// The directory to store kube-proxy configuration files. Defaults to /var/lib/kube-proxy.
@@ -77,8 +85,6 @@ type WorkerNode struct {
 	KubeProxyInstall KubeProxyInstallOutput `pulumi:"kubeProxyInstall"`
 	// The directory to store the kube-proxy binary. Defaults to /usr/local/bin.
 	KubeProxyInstallDirectory pulumi.StringPtrOutput `pulumi:"kubeProxyInstallDirectory"`
-	// The path to the kube-proxy's kubeconfig file.
-	KubeProxyKubeconfigPath pulumi.StringPtrOutput `pulumi:"kubeProxyKubeconfigPath"`
 	// The kube-proxy configuration mkdir operation.
 	KubeProxyMkdir tools.MkdirOutput `pulumi:"kubeProxyMkdir"`
 	// The kubelet systemd service.
@@ -87,6 +93,8 @@ type WorkerNode struct {
 	KubectlInstall KubectlInstallOutput `pulumi:"kubectlInstall"`
 	// The directory to store the kubectl binary. Defaults to /usr/local/bin.
 	KubectlInstallDirectory pulumi.StringPtrOutput `pulumi:"kubectlInstallDirectory"`
+	// The kubelet configuration.
+	Kubelet config.KubeletConfigurationTypePtrOutput `pulumi:"kubelet"`
 	// The path to the kubelet certificate.
 	KubeletCertificatePath pulumi.StringOutput `pulumi:"kubeletCertificatePath"`
 	// The kubelet configuration
@@ -99,8 +107,6 @@ type WorkerNode struct {
 	KubeletInstall KubeletInstallOutput `pulumi:"kubeletInstall"`
 	// The directory to store the kubelet binary. Defaults to /usr/local/bin.
 	KubeletInstallDirectory pulumi.StringPtrOutput `pulumi:"kubeletInstallDirectory"`
-	// The path to the kubelet's kubeconfig file.
-	KubeletKubeconfigPath pulumi.StringPtrOutput `pulumi:"kubeletKubeconfigPath"`
 	// The kubelet configuration mkdir operation.
 	KubeletMkdir tools.MkdirOutput `pulumi:"kubeletMkdir"`
 	// The path to the kubelet private key file.
@@ -163,14 +169,20 @@ type workerNodeArgs struct {
 	ClusterCIDR *string `pulumi:"clusterCIDR"`
 	// The domain for the cluster to use. Defaults to cluster.local.
 	ClusterDomain *string `pulumi:"clusterDomain"`
+	// The CNI bridge plugin configuration.
+	CniBridge *config.CniBridgePluginConfigurationType `pulumi:"cniBridge"`
 	// The directory to store CNI plugin configuration files. Defaults to /etc/cni/net.d.
 	CniConfigurationDirectory *string `pulumi:"cniConfigurationDirectory"`
 	// The directory to store CNI plugin binaries. Defaults to /opt/cni/bin.
 	CniInstallDirectory *string `pulumi:"cniInstallDirectory"`
+	// The CNI loopback plugin configuration.
+	CniLoopback *config.CniLoopbackPluginConfigurationType `pulumi:"cniLoopback"`
 	// The CNI version to use.
 	CniVersion *string `pulumi:"cniVersion"`
 	// The parameters with which to connect to the remote host.
 	Connection pulumiCommand.Connection `pulumi:"connection"`
+	// The containerd configuration.
+	Containerd *config.ContainerdConfigurationType `pulumi:"containerd"`
 	// The directory to store containerd configuration files. Defaults to /etc/containerd.
 	ContainerdConfigurationDirectory *string `pulumi:"containerdConfigurationDirectory"`
 	// The directory to store the containerd binary. Defaults to /bin.
@@ -179,22 +191,22 @@ type workerNodeArgs struct {
 	ContainerdVersion *string `pulumi:"containerdVersion"`
 	// The directory to store the crictl binary. Defaults to /usr/local/bin.
 	CrictlInstallDirectory *string `pulumi:"crictlInstallDirectory"`
+	// The kube-proxy configuration.
+	KubeProxy *config.KubeProxyConfigurationType `pulumi:"kubeProxy"`
 	// The directory to store kube-proxy configuration files. Defaults to /var/lib/kube-proxy.
 	KubeProxyConfigurationDirectory *string `pulumi:"kubeProxyConfigurationDirectory"`
 	// The directory to store the kube-proxy binary. Defaults to /usr/local/bin.
 	KubeProxyInstallDirectory *string `pulumi:"kubeProxyInstallDirectory"`
-	// The path to the kube-proxy's kubeconfig file.
-	KubeProxyKubeconfigPath *string `pulumi:"kubeProxyKubeconfigPath"`
 	// The directory to store the kubectl binary. Defaults to /usr/local/bin.
 	KubectlInstallDirectory *string `pulumi:"kubectlInstallDirectory"`
+	// The kubelet configuration.
+	Kubelet *config.KubeletConfigurationType `pulumi:"kubelet"`
 	// The path to the kubelet certificate.
 	KubeletCertificatePath string `pulumi:"kubeletCertificatePath"`
 	// The directory to store kubelet configuration files. Defaults to /var/lib/kubelet.
 	KubeletConfigurationDirectory *string `pulumi:"kubeletConfigurationDirectory"`
 	// The directory to store the kubelet binary. Defaults to /usr/local/bin.
 	KubeletInstallDirectory *string `pulumi:"kubeletInstallDirectory"`
-	// The path to the kubelet's kubeconfig file.
-	KubeletKubeconfigPath *string `pulumi:"kubeletKubeconfigPath"`
 	// The path to the kubelet private key file.
 	KubeletPrivateKeyPath string `pulumi:"kubeletPrivateKeyPath"`
 	// The kubernetes version to use.
@@ -213,14 +225,20 @@ type WorkerNodeArgs struct {
 	ClusterCIDR pulumi.StringPtrInput
 	// The domain for the cluster to use. Defaults to cluster.local.
 	ClusterDomain pulumi.StringPtrInput
+	// The CNI bridge plugin configuration.
+	CniBridge config.CniBridgePluginConfigurationTypePtrInput
 	// The directory to store CNI plugin configuration files. Defaults to /etc/cni/net.d.
 	CniConfigurationDirectory pulumi.StringPtrInput
 	// The directory to store CNI plugin binaries. Defaults to /opt/cni/bin.
 	CniInstallDirectory pulumi.StringPtrInput
+	// The CNI loopback plugin configuration.
+	CniLoopback config.CniLoopbackPluginConfigurationTypePtrInput
 	// The CNI version to use.
 	CniVersion pulumi.StringPtrInput
 	// The parameters with which to connect to the remote host.
 	Connection pulumiCommand.ConnectionInput
+	// The containerd configuration.
+	Containerd config.ContainerdConfigurationTypePtrInput
 	// The directory to store containerd configuration files. Defaults to /etc/containerd.
 	ContainerdConfigurationDirectory pulumi.StringPtrInput
 	// The directory to store the containerd binary. Defaults to /bin.
@@ -229,22 +247,22 @@ type WorkerNodeArgs struct {
 	ContainerdVersion pulumi.StringPtrInput
 	// The directory to store the crictl binary. Defaults to /usr/local/bin.
 	CrictlInstallDirectory pulumi.StringPtrInput
+	// The kube-proxy configuration.
+	KubeProxy config.KubeProxyConfigurationTypePtrInput
 	// The directory to store kube-proxy configuration files. Defaults to /var/lib/kube-proxy.
 	KubeProxyConfigurationDirectory pulumi.StringPtrInput
 	// The directory to store the kube-proxy binary. Defaults to /usr/local/bin.
 	KubeProxyInstallDirectory pulumi.StringPtrInput
-	// The path to the kube-proxy's kubeconfig file.
-	KubeProxyKubeconfigPath pulumi.StringPtrInput
 	// The directory to store the kubectl binary. Defaults to /usr/local/bin.
 	KubectlInstallDirectory pulumi.StringPtrInput
+	// The kubelet configuration.
+	Kubelet config.KubeletConfigurationTypePtrInput
 	// The path to the kubelet certificate.
 	KubeletCertificatePath pulumi.StringInput
 	// The directory to store kubelet configuration files. Defaults to /var/lib/kubelet.
 	KubeletConfigurationDirectory pulumi.StringPtrInput
 	// The directory to store the kubelet binary. Defaults to /usr/local/bin.
 	KubeletInstallDirectory pulumi.StringPtrInput
-	// The path to the kubelet's kubeconfig file.
-	KubeletKubeconfigPath pulumi.StringPtrInput
 	// The path to the kubelet private key file.
 	KubeletPrivateKeyPath pulumi.StringInput
 	// The kubernetes version to use.
@@ -361,6 +379,11 @@ func (o WorkerNodeOutput) ClusterDomain() pulumi.StringPtrOutput {
 }
 
 // The CNI bridge plugin configuration.
+func (o WorkerNodeOutput) CniBridge() config.CniBridgePluginConfigurationTypePtrOutput {
+	return o.ApplyT(func(v *WorkerNode) config.CniBridgePluginConfigurationTypePtrOutput { return v.CniBridge }).(config.CniBridgePluginConfigurationTypePtrOutput)
+}
+
+// The CNI bridge plugin configuration.
 func (o WorkerNodeOutput) CniBridgeConfiguration() config.CniBridgePluginConfigurationOutput {
 	return o.ApplyT(func(v *WorkerNode) config.CniBridgePluginConfigurationOutput { return v.CniBridgeConfiguration }).(config.CniBridgePluginConfigurationOutput)
 }
@@ -378,6 +401,11 @@ func (o WorkerNodeOutput) CniConfigurationDirectory() pulumi.StringPtrOutput {
 // The directory to store CNI plugin binaries. Defaults to /opt/cni/bin.
 func (o WorkerNodeOutput) CniInstallDirectory() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *WorkerNode) pulumi.StringPtrOutput { return v.CniInstallDirectory }).(pulumi.StringPtrOutput)
+}
+
+// The CNI loopback plugin configuration.
+func (o WorkerNodeOutput) CniLoopback() config.CniLoopbackPluginConfigurationTypePtrOutput {
+	return o.ApplyT(func(v *WorkerNode) config.CniLoopbackPluginConfigurationTypePtrOutput { return v.CniLoopback }).(config.CniLoopbackPluginConfigurationTypePtrOutput)
 }
 
 // The CNI loopback plugin configuration.
@@ -408,6 +436,11 @@ func (o WorkerNodeOutput) CniVersion() pulumi.StringPtrOutput {
 // The parameters with which to connect to the remote host.
 func (o WorkerNodeOutput) Connection() pulumiCommand.ConnectionOutput {
 	return o.ApplyT(func(v *WorkerNode) pulumiCommand.ConnectionOutput { return v.Connection }).(pulumiCommand.ConnectionOutput)
+}
+
+// The containerd configuration.
+func (o WorkerNodeOutput) Containerd() config.ContainerdConfigurationTypePtrOutput {
+	return o.ApplyT(func(v *WorkerNode) config.ContainerdConfigurationTypePtrOutput { return v.Containerd }).(config.ContainerdConfigurationTypePtrOutput)
 }
 
 // The containerd configuration.
@@ -460,6 +493,11 @@ func (o WorkerNodeOutput) CrictlInstallDirectory() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *WorkerNode) pulumi.StringPtrOutput { return v.CrictlInstallDirectory }).(pulumi.StringPtrOutput)
 }
 
+// The kube-proxy configuration.
+func (o WorkerNodeOutput) KubeProxy() config.KubeProxyConfigurationTypePtrOutput {
+	return o.ApplyT(func(v *WorkerNode) config.KubeProxyConfigurationTypePtrOutput { return v.KubeProxy }).(config.KubeProxyConfigurationTypePtrOutput)
+}
+
 // The kube-proxy configuration
 func (o WorkerNodeOutput) KubeProxyConfiguration() config.KubeProxyConfigurationOutput {
 	return o.ApplyT(func(v *WorkerNode) config.KubeProxyConfigurationOutput { return v.KubeProxyConfiguration }).(config.KubeProxyConfigurationOutput)
@@ -485,11 +523,6 @@ func (o WorkerNodeOutput) KubeProxyInstallDirectory() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *WorkerNode) pulumi.StringPtrOutput { return v.KubeProxyInstallDirectory }).(pulumi.StringPtrOutput)
 }
 
-// The path to the kube-proxy's kubeconfig file.
-func (o WorkerNodeOutput) KubeProxyKubeconfigPath() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *WorkerNode) pulumi.StringPtrOutput { return v.KubeProxyKubeconfigPath }).(pulumi.StringPtrOutput)
-}
-
 // The kube-proxy configuration mkdir operation.
 func (o WorkerNodeOutput) KubeProxyMkdir() tools.MkdirOutput {
 	return o.ApplyT(func(v *WorkerNode) tools.MkdirOutput { return v.KubeProxyMkdir }).(tools.MkdirOutput)
@@ -508,6 +541,11 @@ func (o WorkerNodeOutput) KubectlInstall() KubectlInstallOutput {
 // The directory to store the kubectl binary. Defaults to /usr/local/bin.
 func (o WorkerNodeOutput) KubectlInstallDirectory() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *WorkerNode) pulumi.StringPtrOutput { return v.KubectlInstallDirectory }).(pulumi.StringPtrOutput)
+}
+
+// The kubelet configuration.
+func (o WorkerNodeOutput) Kubelet() config.KubeletConfigurationTypePtrOutput {
+	return o.ApplyT(func(v *WorkerNode) config.KubeletConfigurationTypePtrOutput { return v.Kubelet }).(config.KubeletConfigurationTypePtrOutput)
 }
 
 // The path to the kubelet certificate.
@@ -538,11 +576,6 @@ func (o WorkerNodeOutput) KubeletInstall() KubeletInstallOutput {
 // The directory to store the kubelet binary. Defaults to /usr/local/bin.
 func (o WorkerNodeOutput) KubeletInstallDirectory() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *WorkerNode) pulumi.StringPtrOutput { return v.KubeletInstallDirectory }).(pulumi.StringPtrOutput)
-}
-
-// The path to the kubelet's kubeconfig file.
-func (o WorkerNodeOutput) KubeletKubeconfigPath() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *WorkerNode) pulumi.StringPtrOutput { return v.KubeletKubeconfigPath }).(pulumi.StringPtrOutput)
 }
 
 // The kubelet configuration mkdir operation.

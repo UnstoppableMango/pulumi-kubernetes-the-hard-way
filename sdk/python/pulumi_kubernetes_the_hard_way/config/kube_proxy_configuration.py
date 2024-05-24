@@ -10,10 +10,10 @@ from typing import Any, Mapping, Optional, Sequence, Union, overload
 from .. import _utilities
 from . import outputs
 
-__all__ = ['KubeProxyConfigurationArgs', 'KubeProxyConfiguration']
+__all__ = ['KubeProxyConfigurationInitArgs', 'KubeProxyConfiguration']
 
 @pulumi.input_type
-class KubeProxyConfigurationArgs:
+class KubeProxyConfigurationInitArgs:
     def __init__(__self__, *,
                  cluster_cidr: pulumi.Input[str],
                  kubeconfig: pulumi.Input[str],
@@ -88,18 +88,18 @@ class KubeProxyConfiguration(pulumi.ComponentResource):
     @overload
     def __init__(__self__,
                  resource_name: str,
-                 args: KubeProxyConfigurationArgs,
+                 args: KubeProxyConfigurationInitArgs,
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
         kube-proxy configuration.
 
         :param str resource_name: The name of the resource.
-        :param KubeProxyConfigurationArgs args: The arguments to use to populate this resource's properties.
+        :param KubeProxyConfigurationInitArgs args: The arguments to use to populate this resource's properties.
         :param pulumi.ResourceOptions opts: Options for the resource.
         """
         ...
     def __init__(__self__, resource_name: str, *args, **kwargs):
-        resource_args, opts = _utilities.get_resource_args_opts(KubeProxyConfigurationArgs, pulumi.ResourceOptions, *args, **kwargs)
+        resource_args, opts = _utilities.get_resource_args_opts(KubeProxyConfigurationInitArgs, pulumi.ResourceOptions, *args, **kwargs)
         if resource_args is not None:
             __self__._internal_init(resource_name, opts, **resource_args.__dict__)
         else:
@@ -120,7 +120,7 @@ class KubeProxyConfiguration(pulumi.ComponentResource):
         else:
             if __props__ is not None:
                 raise TypeError('__props__ is only valid when passed in combination with a valid opts.id to get an existing resource')
-            __props__ = KubeProxyConfigurationArgs.__new__(KubeProxyConfigurationArgs)
+            __props__ = KubeProxyConfigurationInitArgs.__new__(KubeProxyConfigurationInitArgs)
 
             if cluster_cidr is None and not opts.urn:
                 raise TypeError("Missing required property 'cluster_cidr'")

@@ -14,6 +14,8 @@ import pulumi_kubernetes
 __all__ = [
     'CniBridgeIpam',
     'CniBridgeIpamArgs',
+    'CniBridgePluginConfigurationArgs',
+    'CniLoopbackPluginConfigurationArgs',
     'ContainerdConfigurationArgs',
     'ContainerdCriPluginConfiguration',
     'ContainerdCriPluginConfigurationCni',
@@ -25,11 +27,19 @@ __all__ = [
     'ContainerdCriPluginConfigurationContainerdRuncArgs',
     'ContainerdCriPluginConfigurationContainerdArgs',
     'ContainerdCriPluginConfigurationArgs',
+    'KubeProxyConfigurationClientConnectionArgs',
+    'KubeProxyConfigurationArgs',
     'KubeconfigAdminOptions',
     'KubeconfigKubeControllerManagerOptions',
     'KubeconfigKubeProxyOptions',
     'KubeconfigKubeSchedulerOptions',
     'KubeconfigWorkerOptions',
+    'KubeletConfigurationAuthenticationAnonymousArgs',
+    'KubeletConfigurationAuthenticationWebhookArgs',
+    'KubeletConfigurationAuthenticationx509Args',
+    'KubeletConfigurationAuthenticationArgs',
+    'KubeletConfigurationAuthorizationArgs',
+    'KubeletConfigurationArgs',
     'PodManifestArgs',
 ]
 
@@ -142,6 +152,188 @@ class CniBridgeIpamArgs:
 
     @type.setter
     def type(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "type", value)
+
+
+@pulumi.input_type
+class CniBridgePluginConfigurationArgs:
+    def __init__(__self__, *,
+                 bridge: pulumi.Input[str],
+                 ip_masq: pulumi.Input[bool],
+                 ipam: pulumi.Input['CniBridgeIpamArgs'],
+                 is_gateway: pulumi.Input[bool],
+                 name: pulumi.Input[str],
+                 subnet: pulumi.Input[str],
+                 type: pulumi.Input[str],
+                 cni_version: Optional[pulumi.Input[str]] = None):
+        """
+        TODO
+        :param pulumi.Input[str] bridge: Bridge name.
+        :param pulumi.Input[bool] ip_masq: IP masq.
+        :param pulumi.Input['CniBridgeIpamArgs'] ipam: IPAM.
+        :param pulumi.Input[bool] is_gateway: Is gateway.
+        :param pulumi.Input[str] name: Plugin name.
+        :param pulumi.Input[str] subnet: The subnet to use.
+        :param pulumi.Input[str] type: Plugin type.
+        :param pulumi.Input[str] cni_version: The version of the bridge plugin.
+        """
+        pulumi.set(__self__, "bridge", bridge)
+        pulumi.set(__self__, "ip_masq", ip_masq)
+        pulumi.set(__self__, "ipam", ipam)
+        pulumi.set(__self__, "is_gateway", is_gateway)
+        pulumi.set(__self__, "name", name)
+        pulumi.set(__self__, "subnet", subnet)
+        pulumi.set(__self__, "type", type)
+        if cni_version is not None:
+            pulumi.set(__self__, "cni_version", cni_version)
+
+    @property
+    @pulumi.getter
+    def bridge(self) -> pulumi.Input[str]:
+        """
+        Bridge name.
+        """
+        return pulumi.get(self, "bridge")
+
+    @bridge.setter
+    def bridge(self, value: pulumi.Input[str]):
+        pulumi.set(self, "bridge", value)
+
+    @property
+    @pulumi.getter(name="ipMasq")
+    def ip_masq(self) -> pulumi.Input[bool]:
+        """
+        IP masq.
+        """
+        return pulumi.get(self, "ip_masq")
+
+    @ip_masq.setter
+    def ip_masq(self, value: pulumi.Input[bool]):
+        pulumi.set(self, "ip_masq", value)
+
+    @property
+    @pulumi.getter
+    def ipam(self) -> pulumi.Input['CniBridgeIpamArgs']:
+        """
+        IPAM.
+        """
+        return pulumi.get(self, "ipam")
+
+    @ipam.setter
+    def ipam(self, value: pulumi.Input['CniBridgeIpamArgs']):
+        pulumi.set(self, "ipam", value)
+
+    @property
+    @pulumi.getter(name="isGateway")
+    def is_gateway(self) -> pulumi.Input[bool]:
+        """
+        Is gateway.
+        """
+        return pulumi.get(self, "is_gateway")
+
+    @is_gateway.setter
+    def is_gateway(self, value: pulumi.Input[bool]):
+        pulumi.set(self, "is_gateway", value)
+
+    @property
+    @pulumi.getter
+    def name(self) -> pulumi.Input[str]:
+        """
+        Plugin name.
+        """
+        return pulumi.get(self, "name")
+
+    @name.setter
+    def name(self, value: pulumi.Input[str]):
+        pulumi.set(self, "name", value)
+
+    @property
+    @pulumi.getter
+    def subnet(self) -> pulumi.Input[str]:
+        """
+        The subnet to use.
+        """
+        return pulumi.get(self, "subnet")
+
+    @subnet.setter
+    def subnet(self, value: pulumi.Input[str]):
+        pulumi.set(self, "subnet", value)
+
+    @property
+    @pulumi.getter
+    def type(self) -> pulumi.Input[str]:
+        """
+        Plugin type.
+        """
+        return pulumi.get(self, "type")
+
+    @type.setter
+    def type(self, value: pulumi.Input[str]):
+        pulumi.set(self, "type", value)
+
+    @property
+    @pulumi.getter(name="cniVersion")
+    def cni_version(self) -> Optional[pulumi.Input[str]]:
+        """
+        The version of the bridge plugin.
+        """
+        return pulumi.get(self, "cni_version")
+
+    @cni_version.setter
+    def cni_version(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "cni_version", value)
+
+
+@pulumi.input_type
+class CniLoopbackPluginConfigurationArgs:
+    def __init__(__self__, *,
+                 cni_version: pulumi.Input[str],
+                 name: pulumi.Input[str],
+                 type: pulumi.Input[str]):
+        """
+        CNI loopback plugin configuration.
+        :param pulumi.Input[str] cni_version: The plugin CNI version.
+        :param pulumi.Input[str] name: The name of the plugin.
+        :param pulumi.Input[str] type: The type of the plugin.
+        """
+        pulumi.set(__self__, "cni_version", cni_version)
+        pulumi.set(__self__, "name", name)
+        pulumi.set(__self__, "type", type)
+
+    @property
+    @pulumi.getter(name="cniVersion")
+    def cni_version(self) -> pulumi.Input[str]:
+        """
+        The plugin CNI version.
+        """
+        return pulumi.get(self, "cni_version")
+
+    @cni_version.setter
+    def cni_version(self, value: pulumi.Input[str]):
+        pulumi.set(self, "cni_version", value)
+
+    @property
+    @pulumi.getter
+    def name(self) -> pulumi.Input[str]:
+        """
+        The name of the plugin.
+        """
+        return pulumi.get(self, "name")
+
+    @name.setter
+    def name(self, value: pulumi.Input[str]):
+        pulumi.set(self, "name", value)
+
+    @property
+    @pulumi.getter
+    def type(self) -> pulumi.Input[str]:
+        """
+        The type of the plugin.
+        """
+        return pulumi.get(self, "type")
+
+    @type.setter
+    def type(self, value: pulumi.Input[str]):
         pulumi.set(self, "type", value)
 
 
@@ -564,6 +756,102 @@ class ContainerdCriPluginConfigurationArgs:
 
 
 @pulumi.input_type
+class KubeProxyConfigurationClientConnectionArgs:
+    def __init__(__self__, *,
+                 kubeconfig: pulumi.Input[str]):
+        """
+        :param pulumi.Input[str] kubeconfig: Path to the kubeconfig.
+        """
+        pulumi.set(__self__, "kubeconfig", kubeconfig)
+
+    @property
+    @pulumi.getter
+    def kubeconfig(self) -> pulumi.Input[str]:
+        """
+        Path to the kubeconfig.
+        """
+        return pulumi.get(self, "kubeconfig")
+
+    @kubeconfig.setter
+    def kubeconfig(self, value: pulumi.Input[str]):
+        pulumi.set(self, "kubeconfig", value)
+
+
+@pulumi.input_type
+class KubeProxyConfigurationArgs:
+    def __init__(__self__, *,
+                 cluster_cidr: pulumi.Input[str],
+                 api_version: Optional[pulumi.Input[str]] = None,
+                 client_connection: Optional[pulumi.Input['KubeProxyConfigurationClientConnectionArgs']] = None,
+                 kind: Optional[pulumi.Input[str]] = None,
+                 mode: Optional[pulumi.Input[str]] = None):
+        """
+        :param pulumi.Input[str] cluster_cidr: TODO
+        :param pulumi.Input[str] mode: TODO
+        """
+        pulumi.set(__self__, "cluster_cidr", cluster_cidr)
+        if api_version is not None:
+            pulumi.set(__self__, "api_version", 'kubeproxy.config.k8s.io/v1alpha1')
+        if client_connection is not None:
+            pulumi.set(__self__, "client_connection", client_connection)
+        if kind is not None:
+            pulumi.set(__self__, "kind", 'KubeProxyConfiguration')
+        if mode is not None:
+            pulumi.set(__self__, "mode", mode)
+
+    @property
+    @pulumi.getter(name="clusterCIDR")
+    def cluster_cidr(self) -> pulumi.Input[str]:
+        """
+        TODO
+        """
+        return pulumi.get(self, "cluster_cidr")
+
+    @cluster_cidr.setter
+    def cluster_cidr(self, value: pulumi.Input[str]):
+        pulumi.set(self, "cluster_cidr", value)
+
+    @property
+    @pulumi.getter(name="apiVersion")
+    def api_version(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "api_version")
+
+    @api_version.setter
+    def api_version(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "api_version", value)
+
+    @property
+    @pulumi.getter(name="clientConnection")
+    def client_connection(self) -> Optional[pulumi.Input['KubeProxyConfigurationClientConnectionArgs']]:
+        return pulumi.get(self, "client_connection")
+
+    @client_connection.setter
+    def client_connection(self, value: Optional[pulumi.Input['KubeProxyConfigurationClientConnectionArgs']]):
+        pulumi.set(self, "client_connection", value)
+
+    @property
+    @pulumi.getter
+    def kind(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "kind")
+
+    @kind.setter
+    def kind(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "kind", value)
+
+    @property
+    @pulumi.getter
+    def mode(self) -> Optional[pulumi.Input[str]]:
+        """
+        TODO
+        """
+        return pulumi.get(self, "mode")
+
+    @mode.setter
+    def mode(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "mode", value)
+
+
+@pulumi.input_type
 class KubeconfigAdminOptions:
     def __init__(__self__, *,
                  type: str,
@@ -746,6 +1034,312 @@ class KubeconfigWorkerOptions:
     @type.setter
     def type(self, value: Optional[str]):
         pulumi.set(self, "type", value)
+
+
+@pulumi.input_type
+class KubeletConfigurationAuthenticationAnonymousArgs:
+    def __init__(__self__, *,
+                 enabled: pulumi.Input[bool]):
+        """
+        :param pulumi.Input[bool] enabled: TODO
+        """
+        pulumi.set(__self__, "enabled", enabled)
+
+    @property
+    @pulumi.getter
+    def enabled(self) -> pulumi.Input[bool]:
+        """
+        TODO
+        """
+        return pulumi.get(self, "enabled")
+
+    @enabled.setter
+    def enabled(self, value: pulumi.Input[bool]):
+        pulumi.set(self, "enabled", value)
+
+
+@pulumi.input_type
+class KubeletConfigurationAuthenticationWebhookArgs:
+    def __init__(__self__, *,
+                 enabled: pulumi.Input[bool]):
+        """
+        :param pulumi.Input[bool] enabled: TODO
+        """
+        pulumi.set(__self__, "enabled", enabled)
+
+    @property
+    @pulumi.getter
+    def enabled(self) -> pulumi.Input[bool]:
+        """
+        TODO
+        """
+        return pulumi.get(self, "enabled")
+
+    @enabled.setter
+    def enabled(self, value: pulumi.Input[bool]):
+        pulumi.set(self, "enabled", value)
+
+
+@pulumi.input_type
+class KubeletConfigurationAuthenticationx509Args:
+    def __init__(__self__, *,
+                 client_ca_file: pulumi.Input[str]):
+        """
+        :param pulumi.Input[str] client_ca_file: TODO
+        """
+        pulumi.set(__self__, "client_ca_file", client_ca_file)
+
+    @property
+    @pulumi.getter(name="clientCAFile")
+    def client_ca_file(self) -> pulumi.Input[str]:
+        """
+        TODO
+        """
+        return pulumi.get(self, "client_ca_file")
+
+    @client_ca_file.setter
+    def client_ca_file(self, value: pulumi.Input[str]):
+        pulumi.set(self, "client_ca_file", value)
+
+
+@pulumi.input_type
+class KubeletConfigurationAuthenticationArgs:
+    def __init__(__self__, *,
+                 anonymous: pulumi.Input['KubeletConfigurationAuthenticationAnonymousArgs'],
+                 webhook: pulumi.Input['KubeletConfigurationAuthenticationWebhookArgs'],
+                 x509: pulumi.Input['KubeletConfigurationAuthenticationx509Args']):
+        pulumi.set(__self__, "anonymous", anonymous)
+        pulumi.set(__self__, "webhook", webhook)
+        pulumi.set(__self__, "x509", x509)
+
+    @property
+    @pulumi.getter
+    def anonymous(self) -> pulumi.Input['KubeletConfigurationAuthenticationAnonymousArgs']:
+        return pulumi.get(self, "anonymous")
+
+    @anonymous.setter
+    def anonymous(self, value: pulumi.Input['KubeletConfigurationAuthenticationAnonymousArgs']):
+        pulumi.set(self, "anonymous", value)
+
+    @property
+    @pulumi.getter
+    def webhook(self) -> pulumi.Input['KubeletConfigurationAuthenticationWebhookArgs']:
+        return pulumi.get(self, "webhook")
+
+    @webhook.setter
+    def webhook(self, value: pulumi.Input['KubeletConfigurationAuthenticationWebhookArgs']):
+        pulumi.set(self, "webhook", value)
+
+    @property
+    @pulumi.getter
+    def x509(self) -> pulumi.Input['KubeletConfigurationAuthenticationx509Args']:
+        return pulumi.get(self, "x509")
+
+    @x509.setter
+    def x509(self, value: pulumi.Input['KubeletConfigurationAuthenticationx509Args']):
+        pulumi.set(self, "x509", value)
+
+
+@pulumi.input_type
+class KubeletConfigurationAuthorizationArgs:
+    def __init__(__self__, *,
+                 mode: pulumi.Input[str]):
+        pulumi.set(__self__, "mode", mode)
+
+    @property
+    @pulumi.getter
+    def mode(self) -> pulumi.Input[str]:
+        return pulumi.get(self, "mode")
+
+    @mode.setter
+    def mode(self, value: pulumi.Input[str]):
+        pulumi.set(self, "mode", value)
+
+
+@pulumi.input_type
+class KubeletConfigurationArgs:
+    def __init__(__self__, *,
+                 api_version: pulumi.Input[str],
+                 authentication: pulumi.Input['KubeletConfigurationAuthenticationArgs'],
+                 authorization: pulumi.Input['KubeletConfigurationAuthorizationArgs'],
+                 cgroup_driver: pulumi.Input[str],
+                 cluster_dns: pulumi.Input[Sequence[pulumi.Input[str]]],
+                 cluster_domain: pulumi.Input[str],
+                 container_runtime_endpoint: pulumi.Input[str],
+                 kind: pulumi.Input[str],
+                 pod_cidr: pulumi.Input[str],
+                 resolv_conf: pulumi.Input[str],
+                 runtime_request_timeout: pulumi.Input[str],
+                 tls_cert_file: pulumi.Input[str],
+                 tls_private_key_file: pulumi.Input[str]):
+        """
+        :param pulumi.Input[str] cgroup_driver: TODO
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] cluster_dns: TODO
+        :param pulumi.Input[str] cluster_domain: TODO
+        :param pulumi.Input[str] container_runtime_endpoint: TODO
+        :param pulumi.Input[str] pod_cidr: TODO
+        :param pulumi.Input[str] resolv_conf: TODO
+        :param pulumi.Input[str] runtime_request_timeout: TODO
+        :param pulumi.Input[str] tls_cert_file: TODO
+        :param pulumi.Input[str] tls_private_key_file: TODO
+        """
+        pulumi.set(__self__, "api_version", 'kubelet.config.k8s.io/v1beta1')
+        pulumi.set(__self__, "authentication", authentication)
+        pulumi.set(__self__, "authorization", authorization)
+        pulumi.set(__self__, "cgroup_driver", cgroup_driver)
+        pulumi.set(__self__, "cluster_dns", cluster_dns)
+        pulumi.set(__self__, "cluster_domain", cluster_domain)
+        pulumi.set(__self__, "container_runtime_endpoint", container_runtime_endpoint)
+        pulumi.set(__self__, "kind", 'KubeletConfiguration')
+        pulumi.set(__self__, "pod_cidr", pod_cidr)
+        pulumi.set(__self__, "resolv_conf", resolv_conf)
+        pulumi.set(__self__, "runtime_request_timeout", runtime_request_timeout)
+        pulumi.set(__self__, "tls_cert_file", tls_cert_file)
+        pulumi.set(__self__, "tls_private_key_file", tls_private_key_file)
+
+    @property
+    @pulumi.getter(name="apiVersion")
+    def api_version(self) -> pulumi.Input[str]:
+        return pulumi.get(self, "api_version")
+
+    @api_version.setter
+    def api_version(self, value: pulumi.Input[str]):
+        pulumi.set(self, "api_version", value)
+
+    @property
+    @pulumi.getter
+    def authentication(self) -> pulumi.Input['KubeletConfigurationAuthenticationArgs']:
+        return pulumi.get(self, "authentication")
+
+    @authentication.setter
+    def authentication(self, value: pulumi.Input['KubeletConfigurationAuthenticationArgs']):
+        pulumi.set(self, "authentication", value)
+
+    @property
+    @pulumi.getter
+    def authorization(self) -> pulumi.Input['KubeletConfigurationAuthorizationArgs']:
+        return pulumi.get(self, "authorization")
+
+    @authorization.setter
+    def authorization(self, value: pulumi.Input['KubeletConfigurationAuthorizationArgs']):
+        pulumi.set(self, "authorization", value)
+
+    @property
+    @pulumi.getter(name="cgroupDriver")
+    def cgroup_driver(self) -> pulumi.Input[str]:
+        """
+        TODO
+        """
+        return pulumi.get(self, "cgroup_driver")
+
+    @cgroup_driver.setter
+    def cgroup_driver(self, value: pulumi.Input[str]):
+        pulumi.set(self, "cgroup_driver", value)
+
+    @property
+    @pulumi.getter(name="clusterDNS")
+    def cluster_dns(self) -> pulumi.Input[Sequence[pulumi.Input[str]]]:
+        """
+        TODO
+        """
+        return pulumi.get(self, "cluster_dns")
+
+    @cluster_dns.setter
+    def cluster_dns(self, value: pulumi.Input[Sequence[pulumi.Input[str]]]):
+        pulumi.set(self, "cluster_dns", value)
+
+    @property
+    @pulumi.getter(name="clusterDomain")
+    def cluster_domain(self) -> pulumi.Input[str]:
+        """
+        TODO
+        """
+        return pulumi.get(self, "cluster_domain")
+
+    @cluster_domain.setter
+    def cluster_domain(self, value: pulumi.Input[str]):
+        pulumi.set(self, "cluster_domain", value)
+
+    @property
+    @pulumi.getter(name="containerRuntimeEndpoint")
+    def container_runtime_endpoint(self) -> pulumi.Input[str]:
+        """
+        TODO
+        """
+        return pulumi.get(self, "container_runtime_endpoint")
+
+    @container_runtime_endpoint.setter
+    def container_runtime_endpoint(self, value: pulumi.Input[str]):
+        pulumi.set(self, "container_runtime_endpoint", value)
+
+    @property
+    @pulumi.getter
+    def kind(self) -> pulumi.Input[str]:
+        return pulumi.get(self, "kind")
+
+    @kind.setter
+    def kind(self, value: pulumi.Input[str]):
+        pulumi.set(self, "kind", value)
+
+    @property
+    @pulumi.getter(name="podCIDR")
+    def pod_cidr(self) -> pulumi.Input[str]:
+        """
+        TODO
+        """
+        return pulumi.get(self, "pod_cidr")
+
+    @pod_cidr.setter
+    def pod_cidr(self, value: pulumi.Input[str]):
+        pulumi.set(self, "pod_cidr", value)
+
+    @property
+    @pulumi.getter(name="resolvConf")
+    def resolv_conf(self) -> pulumi.Input[str]:
+        """
+        TODO
+        """
+        return pulumi.get(self, "resolv_conf")
+
+    @resolv_conf.setter
+    def resolv_conf(self, value: pulumi.Input[str]):
+        pulumi.set(self, "resolv_conf", value)
+
+    @property
+    @pulumi.getter(name="runtimeRequestTimeout")
+    def runtime_request_timeout(self) -> pulumi.Input[str]:
+        """
+        TODO
+        """
+        return pulumi.get(self, "runtime_request_timeout")
+
+    @runtime_request_timeout.setter
+    def runtime_request_timeout(self, value: pulumi.Input[str]):
+        pulumi.set(self, "runtime_request_timeout", value)
+
+    @property
+    @pulumi.getter(name="tlsCertFile")
+    def tls_cert_file(self) -> pulumi.Input[str]:
+        """
+        TODO
+        """
+        return pulumi.get(self, "tls_cert_file")
+
+    @tls_cert_file.setter
+    def tls_cert_file(self, value: pulumi.Input[str]):
+        pulumi.set(self, "tls_cert_file", value)
+
+    @property
+    @pulumi.getter(name="tlsPrivateKeyFile")
+    def tls_private_key_file(self) -> pulumi.Input[str]:
+        """
+        TODO
+        """
+        return pulumi.get(self, "tls_private_key_file")
+
+    @tls_private_key_file.setter
+    def tls_private_key_file(self, value: pulumi.Input[str]):
+        pulumi.set(self, "tls_private_key_file", value)
 
 
 @pulumi.input_type
