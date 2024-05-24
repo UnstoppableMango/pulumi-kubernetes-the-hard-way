@@ -49,6 +49,62 @@ export namespace config {
     }
 
     /**
+     * TODO
+     */
+    export interface CniBridgePluginConfigurationArgs {
+        /**
+         * Bridge name.
+         */
+        bridge: pulumi.Input<string>;
+        /**
+         * The version of the bridge plugin.
+         */
+        cniVersion?: pulumi.Input<string>;
+        /**
+         * IP masq.
+         */
+        ipMasq: pulumi.Input<boolean>;
+        /**
+         * IPAM.
+         */
+        ipam: pulumi.Input<inputs.config.CniBridgeIpamArgs>;
+        /**
+         * Is gateway.
+         */
+        isGateway: pulumi.Input<boolean>;
+        /**
+         * Plugin name.
+         */
+        name: pulumi.Input<string>;
+        /**
+         * The subnet to use.
+         */
+        subnet: pulumi.Input<string>;
+        /**
+         * Plugin type.
+         */
+        type: pulumi.Input<string>;
+    }
+
+    /**
+     * CNI loopback plugin configuration.
+     */
+    export interface CniLoopbackPluginConfigurationArgs {
+        /**
+         * The plugin CNI version.
+         */
+        cniVersion: pulumi.Input<string>;
+        /**
+         * The name of the plugin.
+         */
+        name: pulumi.Input<string>;
+        /**
+         * The type of the plugin.
+         */
+        type: pulumi.Input<string>;
+    }
+
+    /**
      * The containerd configuration.
      */
     export interface ContainerdConfigurationArgs {
@@ -198,6 +254,27 @@ export namespace config {
         systemdCgroup?: pulumi.Input<boolean>;
     }
 
+    export interface KubeProxyConfigurationArgs {
+        apiVersion?: pulumi.Input<"kubeproxy.config.k8s.io/v1alpha1">;
+        clientConnection?: pulumi.Input<inputs.config.KubeProxyConfigurationClientConnectionArgs>;
+        /**
+         * TODO
+         */
+        clusterCIDR: pulumi.Input<string>;
+        kind?: pulumi.Input<"KubeProxyConfiguration">;
+        /**
+         * TODO
+         */
+        mode?: pulumi.Input<string>;
+    }
+
+    export interface KubeProxyConfigurationClientConnectionArgs {
+        /**
+         * Path to the kubeconfig.
+         */
+        kubeconfig: pulumi.Input<string>;
+    }
+
     export interface KubeconfigAdminOptions {
         /**
          * TODO
@@ -284,6 +361,80 @@ export namespace config {
          */
         publicIp: pulumi.Input<string>;
         type?: "worker";
+    }
+
+    export interface KubeletConfigurationArgs {
+        apiVersion: pulumi.Input<"kubelet.config.k8s.io/v1beta1">;
+        authentication: pulumi.Input<inputs.config.KubeletConfigurationAuthenticationArgs>;
+        authorization: pulumi.Input<inputs.config.KubeletConfigurationAuthorizationArgs>;
+        /**
+         * TODO
+         */
+        cgroupDriver: pulumi.Input<string>;
+        /**
+         * TODO
+         */
+        clusterDNS: pulumi.Input<pulumi.Input<string>[]>;
+        /**
+         * TODO
+         */
+        clusterDomain: pulumi.Input<string>;
+        /**
+         * TODO
+         */
+        containerRuntimeEndpoint: pulumi.Input<string>;
+        kind: pulumi.Input<"KubeletConfiguration">;
+        /**
+         * TODO
+         */
+        podCIDR: pulumi.Input<string>;
+        /**
+         * TODO
+         */
+        resolvConf: pulumi.Input<string>;
+        /**
+         * TODO
+         */
+        runtimeRequestTimeout: pulumi.Input<string>;
+        /**
+         * TODO
+         */
+        tlsCertFile: pulumi.Input<string>;
+        /**
+         * TODO
+         */
+        tlsPrivateKeyFile: pulumi.Input<string>;
+    }
+
+    export interface KubeletConfigurationAuthenticationArgs {
+        anonymous: pulumi.Input<inputs.config.KubeletConfigurationAuthenticationAnonymousArgs>;
+        webhook: pulumi.Input<inputs.config.KubeletConfigurationAuthenticationWebhookArgs>;
+        x509: pulumi.Input<inputs.config.KubeletConfigurationAuthenticationx509Args>;
+    }
+
+    export interface KubeletConfigurationAuthenticationAnonymousArgs {
+        /**
+         * TODO
+         */
+        enabled: pulumi.Input<boolean>;
+    }
+
+    export interface KubeletConfigurationAuthenticationWebhookArgs {
+        /**
+         * TODO
+         */
+        enabled: pulumi.Input<boolean>;
+    }
+
+    export interface KubeletConfigurationAuthenticationx509Args {
+        /**
+         * TODO
+         */
+        clientCAFile: pulumi.Input<string>;
+    }
+
+    export interface KubeletConfigurationAuthorizationArgs {
+        mode: pulumi.Input<string>;
     }
 
     /**

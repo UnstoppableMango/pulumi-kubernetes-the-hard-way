@@ -872,16 +872,19 @@ export abstract class WorkerNode<TData = any> extends (pulumi.ComponentResource)
     public caPath!: string | pulumi.Output<string>;
     public clusterCIDR?: string | pulumi.Output<string>;
     public clusterDomain?: string | pulumi.Output<string>;
+    public cniBridge?: CniBridgePluginConfigurationOutputs | pulumi.Output<CniBridgePluginConfigurationOutputs>;
     public cniBridgeConfiguration!: CniBridgePluginConfiguration | pulumi.Output<CniBridgePluginConfiguration>;
     public cniBridgeConfigurationFile!: File | pulumi.Output<File>;
     public cniConfigurationDirectory?: string | pulumi.Output<string>;
     public cniInstallDirectory?: string | pulumi.Output<string>;
+    public cniLoopback?: CniLoopbackPluginConfigurationOutputs | pulumi.Output<CniLoopbackPluginConfigurationOutputs>;
     public cniLoopbackConfiguration!: CniLoopbackPluginConfiguration | pulumi.Output<CniLoopbackPluginConfiguration>;
     public cniLoopbackConfigurationFile!: File | pulumi.Output<File>;
     public cniMkdir!: Mkdir | pulumi.Output<Mkdir>;
     public cniPluginsInstall?: CniPluginsInstall | pulumi.Output<CniPluginsInstall>;
     public cniVersion?: string | pulumi.Output<string>;
     public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
+    public containerd?: ContainerdConfigurationOutputs | pulumi.Output<ContainerdConfigurationOutputs>;
     public containerdConfiguration!: ContainerdConfiguration | pulumi.Output<ContainerdConfiguration>;
     public containerdConfigurationDirectory?: string | pulumi.Output<string>;
     public containerdConfigurationFile!: File | pulumi.Output<File>;
@@ -892,23 +895,23 @@ export abstract class WorkerNode<TData = any> extends (pulumi.ComponentResource)
     public containerdVersion?: string | pulumi.Output<string>;
     public crictlInstall!: CrictlInstall | pulumi.Output<CrictlInstall>;
     public crictlInstallDirectory?: string | pulumi.Output<string>;
+    public kubeProxy?: KubeProxyConfigurationOutputs | pulumi.Output<KubeProxyConfigurationOutputs>;
     public kubeProxyConfiguration!: KubeProxyConfiguration | pulumi.Output<KubeProxyConfiguration>;
     public kubeProxyConfigurationDirectory?: string | pulumi.Output<string>;
     public kubeProxyConfigurationFile!: File | pulumi.Output<File>;
     public kubeProxyInstall?: KubeProxyInstall | pulumi.Output<KubeProxyInstall>;
     public kubeProxyInstallDirectory?: string | pulumi.Output<string>;
-    public kubeProxyKubeconfigPath?: string | pulumi.Output<string>;
     public kubeProxyMkdir!: Mkdir | pulumi.Output<Mkdir>;
     public kubeProxyService!: KubeProxyService | pulumi.Output<KubeProxyService>;
     public kubectlInstall!: KubectlInstall | pulumi.Output<KubectlInstall>;
     public kubectlInstallDirectory?: string | pulumi.Output<string>;
+    public kubelet?: KubeletConfigurationOutputs | pulumi.Output<KubeletConfigurationOutputs>;
     public kubeletCertificatePath!: string | pulumi.Output<string>;
     public kubeletConfiguration!: KubeletConfiguration | pulumi.Output<KubeletConfiguration>;
     public kubeletConfigurationDirectory?: string | pulumi.Output<string>;
     public kubeletConfigurationFile!: File | pulumi.Output<File>;
     public kubeletInstall!: KubeletInstall | pulumi.Output<KubeletInstall>;
     public kubeletInstallDirectory?: string | pulumi.Output<string>;
-    public kubeletKubeconfigPath?: string | pulumi.Output<string>;
     public kubeletMkdir!: Mkdir | pulumi.Output<Mkdir>;
     public kubeletPrivateKeyPath!: string | pulumi.Output<string>;
     public kubeletService!: KubeletService | pulumi.Output<KubeletService>;
@@ -918,7 +921,7 @@ export abstract class WorkerNode<TData = any> extends (pulumi.ComponentResource)
     public varLibKubernetesMkdir!: Mkdir | pulumi.Output<Mkdir>;
     public varRunKubernetesMkdir!: Mkdir | pulumi.Output<Mkdir>;
     constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
-        super("kubernetes-the-hard-way:remote:WorkerNode", name, opts.urn ? { architecture: undefined, caPath: undefined, clusterCIDR: undefined, clusterDomain: undefined, cniBridgeConfiguration: undefined, cniBridgeConfigurationFile: undefined, cniConfigurationDirectory: undefined, cniInstallDirectory: undefined, cniLoopbackConfiguration: undefined, cniLoopbackConfigurationFile: undefined, cniMkdir: undefined, cniPluginsInstall: undefined, cniVersion: undefined, connection: undefined, containerdConfiguration: undefined, containerdConfigurationDirectory: undefined, containerdConfigurationFile: undefined, containerdInstall: undefined, containerdInstallDirectory: undefined, containerdMkdir: undefined, containerdService: undefined, containerdVersion: undefined, crictlInstall: undefined, crictlInstallDirectory: undefined, kubeProxyConfiguration: undefined, kubeProxyConfigurationDirectory: undefined, kubeProxyConfigurationFile: undefined, kubeProxyInstall: undefined, kubeProxyInstallDirectory: undefined, kubeProxyKubeconfigPath: undefined, kubeProxyMkdir: undefined, kubeProxyService: undefined, kubectlInstall: undefined, kubectlInstallDirectory: undefined, kubeletCertificatePath: undefined, kubeletConfiguration: undefined, kubeletConfigurationDirectory: undefined, kubeletConfigurationFile: undefined, kubeletInstall: undefined, kubeletInstallDirectory: undefined, kubeletKubeconfigPath: undefined, kubeletMkdir: undefined, kubeletPrivateKeyPath: undefined, kubeletService: undefined, kubernetesVersion: undefined, runcInstall: undefined, subnet: undefined, varLibKubernetesMkdir: undefined, varRunKubernetesMkdir: undefined } : { name, args, opts }, opts);
+        super("kubernetes-the-hard-way:remote:WorkerNode", name, opts.urn ? { architecture: undefined, caPath: undefined, clusterCIDR: undefined, clusterDomain: undefined, cniBridge: undefined, cniBridgeConfiguration: undefined, cniBridgeConfigurationFile: undefined, cniConfigurationDirectory: undefined, cniInstallDirectory: undefined, cniLoopback: undefined, cniLoopbackConfiguration: undefined, cniLoopbackConfigurationFile: undefined, cniMkdir: undefined, cniPluginsInstall: undefined, cniVersion: undefined, connection: undefined, containerd: undefined, containerdConfiguration: undefined, containerdConfigurationDirectory: undefined, containerdConfigurationFile: undefined, containerdInstall: undefined, containerdInstallDirectory: undefined, containerdMkdir: undefined, containerdService: undefined, containerdVersion: undefined, crictlInstall: undefined, crictlInstallDirectory: undefined, kubeProxy: undefined, kubeProxyConfiguration: undefined, kubeProxyConfigurationDirectory: undefined, kubeProxyConfigurationFile: undefined, kubeProxyInstall: undefined, kubeProxyInstallDirectory: undefined, kubeProxyMkdir: undefined, kubeProxyService: undefined, kubectlInstall: undefined, kubectlInstallDirectory: undefined, kubelet: undefined, kubeletCertificatePath: undefined, kubeletConfiguration: undefined, kubeletConfigurationDirectory: undefined, kubeletConfigurationFile: undefined, kubeletInstall: undefined, kubeletInstallDirectory: undefined, kubeletMkdir: undefined, kubeletPrivateKeyPath: undefined, kubeletService: undefined, kubernetesVersion: undefined, runcInstall: undefined, subnet: undefined, varLibKubernetesMkdir: undefined, varRunKubernetesMkdir: undefined } : { name, args, opts }, opts);
     }
 }
 export interface WorkerNodeArgs {
@@ -926,22 +929,25 @@ export interface WorkerNodeArgs {
     readonly caPath: pulumi.Input<string>;
     readonly clusterCIDR?: pulumi.Input<string>;
     readonly clusterDomain?: pulumi.Input<string>;
+    readonly cniBridge?: pulumi.Input<CniBridgePluginConfigurationInputs>;
     readonly cniConfigurationDirectory?: pulumi.Input<string>;
     readonly cniInstallDirectory?: pulumi.Input<string>;
+    readonly cniLoopback?: pulumi.Input<CniLoopbackPluginConfigurationInputs>;
     readonly cniVersion?: pulumi.Input<string>;
     readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
+    readonly containerd?: pulumi.Input<ContainerdConfigurationInputs>;
     readonly containerdConfigurationDirectory?: pulumi.Input<string>;
     readonly containerdInstallDirectory?: pulumi.Input<string>;
     readonly containerdVersion?: pulumi.Input<string>;
     readonly crictlInstallDirectory?: pulumi.Input<string>;
+    readonly kubeProxy?: pulumi.Input<KubeProxyConfigurationInputs>;
     readonly kubeProxyConfigurationDirectory?: pulumi.Input<string>;
     readonly kubeProxyInstallDirectory?: pulumi.Input<string>;
-    readonly kubeProxyKubeconfigPath?: pulumi.Input<string>;
     readonly kubectlInstallDirectory?: pulumi.Input<string>;
+    readonly kubelet?: pulumi.Input<KubeletConfigurationInputs>;
     readonly kubeletCertificatePath: pulumi.Input<string>;
     readonly kubeletConfigurationDirectory?: pulumi.Input<string>;
     readonly kubeletInstallDirectory?: pulumi.Input<string>;
-    readonly kubeletKubeconfigPath?: pulumi.Input<string>;
     readonly kubeletPrivateKeyPath: pulumi.Input<string>;
     readonly kubernetesVersion?: pulumi.Input<string>;
     readonly subnet: pulumi.Input<string>;

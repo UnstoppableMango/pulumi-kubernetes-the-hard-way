@@ -11,10 +11,10 @@ from .. import _utilities
 from . import outputs
 from ._inputs import *
 
-__all__ = ['CniBridgePluginConfigurationArgs', 'CniBridgePluginConfiguration']
+__all__ = ['CniBridgePluginConfigurationInitArgs', 'CniBridgePluginConfiguration']
 
 @pulumi.input_type
-class CniBridgePluginConfigurationArgs:
+class CniBridgePluginConfigurationInitArgs:
     def __init__(__self__, *,
                  subnet: pulumi.Input[str],
                  bridge: Optional[pulumi.Input[str]] = None,
@@ -180,18 +180,18 @@ class CniBridgePluginConfiguration(pulumi.ComponentResource):
     @overload
     def __init__(__self__,
                  resource_name: str,
-                 args: CniBridgePluginConfigurationArgs,
+                 args: CniBridgePluginConfigurationInitArgs,
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
         Get the `bridge` configuration.
 
         :param str resource_name: The name of the resource.
-        :param CniBridgePluginConfigurationArgs args: The arguments to use to populate this resource's properties.
+        :param CniBridgePluginConfigurationInitArgs args: The arguments to use to populate this resource's properties.
         :param pulumi.ResourceOptions opts: Options for the resource.
         """
         ...
     def __init__(__self__, resource_name: str, *args, **kwargs):
-        resource_args, opts = _utilities.get_resource_args_opts(CniBridgePluginConfigurationArgs, pulumi.ResourceOptions, *args, **kwargs)
+        resource_args, opts = _utilities.get_resource_args_opts(CniBridgePluginConfigurationInitArgs, pulumi.ResourceOptions, *args, **kwargs)
         if resource_args is not None:
             __self__._internal_init(resource_name, opts, **resource_args.__dict__)
         else:
@@ -217,7 +217,7 @@ class CniBridgePluginConfiguration(pulumi.ComponentResource):
         else:
             if __props__ is not None:
                 raise TypeError('__props__ is only valid when passed in combination with a valid opts.id to get an existing resource')
-            __props__ = CniBridgePluginConfigurationArgs.__new__(CniBridgePluginConfigurationArgs)
+            __props__ = CniBridgePluginConfigurationInitArgs.__new__(CniBridgePluginConfigurationInitArgs)
 
             __props__.__dict__["bridge"] = bridge
             __props__.__dict__["cni_version"] = cni_version

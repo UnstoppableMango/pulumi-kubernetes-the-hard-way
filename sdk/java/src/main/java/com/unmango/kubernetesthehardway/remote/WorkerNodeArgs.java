@@ -7,6 +7,11 @@ import com.pulumi.command.remote.inputs.ConnectionArgs;
 import com.pulumi.core.Output;
 import com.pulumi.core.annotations.Import;
 import com.pulumi.exceptions.MissingRequiredPropertyException;
+import com.unmango.kubernetesthehardway.config.inputs.CniBridgePluginConfigurationArgs;
+import com.unmango.kubernetesthehardway.config.inputs.CniLoopbackPluginConfigurationArgs;
+import com.unmango.kubernetesthehardway.config.inputs.ContainerdConfigurationArgs;
+import com.unmango.kubernetesthehardway.config.inputs.KubeProxyConfigurationArgs;
+import com.unmango.kubernetesthehardway.config.inputs.KubeletConfigurationArgs;
 import com.unmango.kubernetesthehardway.remote.enums.Architecture;
 import java.lang.String;
 import java.util.Objects;
@@ -79,6 +84,21 @@ public final class WorkerNodeArgs extends com.pulumi.resources.ResourceArgs {
     }
 
     /**
+     * The CNI bridge plugin configuration.
+     * 
+     */
+    @Import(name="cniBridge")
+    private @Nullable Output<CniBridgePluginConfigurationArgs> cniBridge;
+
+    /**
+     * @return The CNI bridge plugin configuration.
+     * 
+     */
+    public Optional<Output<CniBridgePluginConfigurationArgs>> cniBridge() {
+        return Optional.ofNullable(this.cniBridge);
+    }
+
+    /**
      * The directory to store CNI plugin configuration files. Defaults to /etc/cni/net.d.
      * 
      */
@@ -109,6 +129,21 @@ public final class WorkerNodeArgs extends com.pulumi.resources.ResourceArgs {
     }
 
     /**
+     * The CNI loopback plugin configuration.
+     * 
+     */
+    @Import(name="cniLoopback")
+    private @Nullable Output<CniLoopbackPluginConfigurationArgs> cniLoopback;
+
+    /**
+     * @return The CNI loopback plugin configuration.
+     * 
+     */
+    public Optional<Output<CniLoopbackPluginConfigurationArgs>> cniLoopback() {
+        return Optional.ofNullable(this.cniLoopback);
+    }
+
+    /**
      * The CNI version to use.
      * 
      */
@@ -136,6 +171,21 @@ public final class WorkerNodeArgs extends com.pulumi.resources.ResourceArgs {
      */
     public Output<ConnectionArgs> connection() {
         return this.connection;
+    }
+
+    /**
+     * The containerd configuration.
+     * 
+     */
+    @Import(name="containerd")
+    private @Nullable Output<ContainerdConfigurationArgs> containerd;
+
+    /**
+     * @return The containerd configuration.
+     * 
+     */
+    public Optional<Output<ContainerdConfigurationArgs>> containerd() {
+        return Optional.ofNullable(this.containerd);
     }
 
     /**
@@ -199,6 +249,21 @@ public final class WorkerNodeArgs extends com.pulumi.resources.ResourceArgs {
     }
 
     /**
+     * The kube-proxy configuration.
+     * 
+     */
+    @Import(name="kubeProxy")
+    private @Nullable Output<KubeProxyConfigurationArgs> kubeProxy;
+
+    /**
+     * @return The kube-proxy configuration.
+     * 
+     */
+    public Optional<Output<KubeProxyConfigurationArgs>> kubeProxy() {
+        return Optional.ofNullable(this.kubeProxy);
+    }
+
+    /**
      * The directory to store kube-proxy configuration files. Defaults to /var/lib/kube-proxy.
      * 
      */
@@ -229,21 +294,6 @@ public final class WorkerNodeArgs extends com.pulumi.resources.ResourceArgs {
     }
 
     /**
-     * The path to the kube-proxy&#39;s kubeconfig file.
-     * 
-     */
-    @Import(name="kubeProxyKubeconfigPath")
-    private @Nullable Output<String> kubeProxyKubeconfigPath;
-
-    /**
-     * @return The path to the kube-proxy&#39;s kubeconfig file.
-     * 
-     */
-    public Optional<Output<String>> kubeProxyKubeconfigPath() {
-        return Optional.ofNullable(this.kubeProxyKubeconfigPath);
-    }
-
-    /**
      * The directory to store the kubectl binary. Defaults to /usr/local/bin.
      * 
      */
@@ -256,6 +306,21 @@ public final class WorkerNodeArgs extends com.pulumi.resources.ResourceArgs {
      */
     public Optional<Output<String>> kubectlInstallDirectory() {
         return Optional.ofNullable(this.kubectlInstallDirectory);
+    }
+
+    /**
+     * The kubelet configuration.
+     * 
+     */
+    @Import(name="kubelet")
+    private @Nullable Output<KubeletConfigurationArgs> kubelet;
+
+    /**
+     * @return The kubelet configuration.
+     * 
+     */
+    public Optional<Output<KubeletConfigurationArgs>> kubelet() {
+        return Optional.ofNullable(this.kubelet);
     }
 
     /**
@@ -301,21 +366,6 @@ public final class WorkerNodeArgs extends com.pulumi.resources.ResourceArgs {
      */
     public Optional<Output<String>> kubeletInstallDirectory() {
         return Optional.ofNullable(this.kubeletInstallDirectory);
-    }
-
-    /**
-     * The path to the kubelet&#39;s kubeconfig file.
-     * 
-     */
-    @Import(name="kubeletKubeconfigPath")
-    private @Nullable Output<String> kubeletKubeconfigPath;
-
-    /**
-     * @return The path to the kubelet&#39;s kubeconfig file.
-     * 
-     */
-    public Optional<Output<String>> kubeletKubeconfigPath() {
-        return Optional.ofNullable(this.kubeletKubeconfigPath);
     }
 
     /**
@@ -370,22 +420,25 @@ public final class WorkerNodeArgs extends com.pulumi.resources.ResourceArgs {
         this.caPath = $.caPath;
         this.clusterCIDR = $.clusterCIDR;
         this.clusterDomain = $.clusterDomain;
+        this.cniBridge = $.cniBridge;
         this.cniConfigurationDirectory = $.cniConfigurationDirectory;
         this.cniInstallDirectory = $.cniInstallDirectory;
+        this.cniLoopback = $.cniLoopback;
         this.cniVersion = $.cniVersion;
         this.connection = $.connection;
+        this.containerd = $.containerd;
         this.containerdConfigurationDirectory = $.containerdConfigurationDirectory;
         this.containerdInstallDirectory = $.containerdInstallDirectory;
         this.containerdVersion = $.containerdVersion;
         this.crictlInstallDirectory = $.crictlInstallDirectory;
+        this.kubeProxy = $.kubeProxy;
         this.kubeProxyConfigurationDirectory = $.kubeProxyConfigurationDirectory;
         this.kubeProxyInstallDirectory = $.kubeProxyInstallDirectory;
-        this.kubeProxyKubeconfigPath = $.kubeProxyKubeconfigPath;
         this.kubectlInstallDirectory = $.kubectlInstallDirectory;
+        this.kubelet = $.kubelet;
         this.kubeletCertificatePath = $.kubeletCertificatePath;
         this.kubeletConfigurationDirectory = $.kubeletConfigurationDirectory;
         this.kubeletInstallDirectory = $.kubeletInstallDirectory;
-        this.kubeletKubeconfigPath = $.kubeletKubeconfigPath;
         this.kubeletPrivateKeyPath = $.kubeletPrivateKeyPath;
         this.kubernetesVersion = $.kubernetesVersion;
         this.subnet = $.subnet;
@@ -494,6 +547,27 @@ public final class WorkerNodeArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
+         * @param cniBridge The CNI bridge plugin configuration.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder cniBridge(@Nullable Output<CniBridgePluginConfigurationArgs> cniBridge) {
+            $.cniBridge = cniBridge;
+            return this;
+        }
+
+        /**
+         * @param cniBridge The CNI bridge plugin configuration.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder cniBridge(CniBridgePluginConfigurationArgs cniBridge) {
+            return cniBridge(Output.of(cniBridge));
+        }
+
+        /**
          * @param cniConfigurationDirectory The directory to store CNI plugin configuration files. Defaults to /etc/cni/net.d.
          * 
          * @return builder
@@ -536,6 +610,27 @@ public final class WorkerNodeArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
+         * @param cniLoopback The CNI loopback plugin configuration.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder cniLoopback(@Nullable Output<CniLoopbackPluginConfigurationArgs> cniLoopback) {
+            $.cniLoopback = cniLoopback;
+            return this;
+        }
+
+        /**
+         * @param cniLoopback The CNI loopback plugin configuration.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder cniLoopback(CniLoopbackPluginConfigurationArgs cniLoopback) {
+            return cniLoopback(Output.of(cniLoopback));
+        }
+
+        /**
          * @param cniVersion The CNI version to use.
          * 
          * @return builder
@@ -575,6 +670,27 @@ public final class WorkerNodeArgs extends com.pulumi.resources.ResourceArgs {
          */
         public Builder connection(ConnectionArgs connection) {
             return connection(Output.of(connection));
+        }
+
+        /**
+         * @param containerd The containerd configuration.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder containerd(@Nullable Output<ContainerdConfigurationArgs> containerd) {
+            $.containerd = containerd;
+            return this;
+        }
+
+        /**
+         * @param containerd The containerd configuration.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder containerd(ContainerdConfigurationArgs containerd) {
+            return containerd(Output.of(containerd));
         }
 
         /**
@@ -662,6 +778,27 @@ public final class WorkerNodeArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
+         * @param kubeProxy The kube-proxy configuration.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder kubeProxy(@Nullable Output<KubeProxyConfigurationArgs> kubeProxy) {
+            $.kubeProxy = kubeProxy;
+            return this;
+        }
+
+        /**
+         * @param kubeProxy The kube-proxy configuration.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder kubeProxy(KubeProxyConfigurationArgs kubeProxy) {
+            return kubeProxy(Output.of(kubeProxy));
+        }
+
+        /**
          * @param kubeProxyConfigurationDirectory The directory to store kube-proxy configuration files. Defaults to /var/lib/kube-proxy.
          * 
          * @return builder
@@ -704,27 +841,6 @@ public final class WorkerNodeArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param kubeProxyKubeconfigPath The path to the kube-proxy&#39;s kubeconfig file.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder kubeProxyKubeconfigPath(@Nullable Output<String> kubeProxyKubeconfigPath) {
-            $.kubeProxyKubeconfigPath = kubeProxyKubeconfigPath;
-            return this;
-        }
-
-        /**
-         * @param kubeProxyKubeconfigPath The path to the kube-proxy&#39;s kubeconfig file.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder kubeProxyKubeconfigPath(String kubeProxyKubeconfigPath) {
-            return kubeProxyKubeconfigPath(Output.of(kubeProxyKubeconfigPath));
-        }
-
-        /**
          * @param kubectlInstallDirectory The directory to store the kubectl binary. Defaults to /usr/local/bin.
          * 
          * @return builder
@@ -743,6 +859,27 @@ public final class WorkerNodeArgs extends com.pulumi.resources.ResourceArgs {
          */
         public Builder kubectlInstallDirectory(String kubectlInstallDirectory) {
             return kubectlInstallDirectory(Output.of(kubectlInstallDirectory));
+        }
+
+        /**
+         * @param kubelet The kubelet configuration.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder kubelet(@Nullable Output<KubeletConfigurationArgs> kubelet) {
+            $.kubelet = kubelet;
+            return this;
+        }
+
+        /**
+         * @param kubelet The kubelet configuration.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder kubelet(KubeletConfigurationArgs kubelet) {
+            return kubelet(Output.of(kubelet));
         }
 
         /**
@@ -806,27 +943,6 @@ public final class WorkerNodeArgs extends com.pulumi.resources.ResourceArgs {
          */
         public Builder kubeletInstallDirectory(String kubeletInstallDirectory) {
             return kubeletInstallDirectory(Output.of(kubeletInstallDirectory));
-        }
-
-        /**
-         * @param kubeletKubeconfigPath The path to the kubelet&#39;s kubeconfig file.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder kubeletKubeconfigPath(@Nullable Output<String> kubeletKubeconfigPath) {
-            $.kubeletKubeconfigPath = kubeletKubeconfigPath;
-            return this;
-        }
-
-        /**
-         * @param kubeletKubeconfigPath The path to the kubelet&#39;s kubeconfig file.
-         * 
-         * @return builder
-         * 
-         */
-        public Builder kubeletKubeconfigPath(String kubeletKubeconfigPath) {
-            return kubeletKubeconfigPath(Output.of(kubeletKubeconfigPath));
         }
 
         /**

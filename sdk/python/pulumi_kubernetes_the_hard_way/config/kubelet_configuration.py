@@ -10,10 +10,10 @@ from typing import Any, Mapping, Optional, Sequence, Union, overload
 from .. import _utilities
 from . import outputs
 
-__all__ = ['KubeletConfigurationArgs', 'KubeletConfiguration']
+__all__ = ['KubeletConfigurationInitArgs', 'KubeletConfiguration']
 
 @pulumi.input_type
-class KubeletConfigurationArgs:
+class KubeletConfigurationInitArgs:
     def __init__(__self__, *,
                  pod_cidr: pulumi.Input[str],
                  anonymous: Optional[pulumi.Input[bool]] = None,
@@ -204,18 +204,18 @@ class KubeletConfiguration(pulumi.ComponentResource):
     @overload
     def __init__(__self__,
                  resource_name: str,
-                 args: KubeletConfigurationArgs,
+                 args: KubeletConfigurationInitArgs,
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
         Get the kubelet configuration.
 
         :param str resource_name: The name of the resource.
-        :param KubeletConfigurationArgs args: The arguments to use to populate this resource's properties.
+        :param KubeletConfigurationInitArgs args: The arguments to use to populate this resource's properties.
         :param pulumi.ResourceOptions opts: Options for the resource.
         """
         ...
     def __init__(__self__, resource_name: str, *args, **kwargs):
-        resource_args, opts = _utilities.get_resource_args_opts(KubeletConfigurationArgs, pulumi.ResourceOptions, *args, **kwargs)
+        resource_args, opts = _utilities.get_resource_args_opts(KubeletConfigurationInitArgs, pulumi.ResourceOptions, *args, **kwargs)
         if resource_args is not None:
             __self__._internal_init(resource_name, opts, **resource_args.__dict__)
         else:
@@ -246,7 +246,7 @@ class KubeletConfiguration(pulumi.ComponentResource):
         else:
             if __props__ is not None:
                 raise TypeError('__props__ is only valid when passed in combination with a valid opts.id to get an existing resource')
-            __props__ = KubeletConfigurationArgs.__new__(KubeletConfigurationArgs)
+            __props__ = KubeletConfigurationInitArgs.__new__(KubeletConfigurationInitArgs)
 
             __props__.__dict__["anonymous"] = anonymous
             __props__.__dict__["authorization_mode"] = authorization_mode

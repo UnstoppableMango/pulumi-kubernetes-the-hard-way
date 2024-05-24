@@ -9,11 +9,11 @@ import com.pulumi.core.annotations.Export;
 import com.pulumi.core.annotations.ResourceType;
 import com.pulumi.core.internal.Codegen;
 import com.unmango.kubernetesthehardway.Utilities;
-import com.unmango.kubernetesthehardway.config.CniBridgePluginConfiguration;
-import com.unmango.kubernetesthehardway.config.CniLoopbackPluginConfiguration;
-import com.unmango.kubernetesthehardway.config.ContainerdConfiguration;
-import com.unmango.kubernetesthehardway.config.KubeProxyConfiguration;
-import com.unmango.kubernetesthehardway.config.KubeletConfiguration;
+import com.unmango.kubernetesthehardway.config.outputs.CniBridgePluginConfiguration;
+import com.unmango.kubernetesthehardway.config.outputs.CniLoopbackPluginConfiguration;
+import com.unmango.kubernetesthehardway.config.outputs.ContainerdConfiguration;
+import com.unmango.kubernetesthehardway.config.outputs.KubeProxyConfiguration;
+import com.unmango.kubernetesthehardway.config.outputs.KubeletConfiguration;
 import com.unmango.kubernetesthehardway.remote.CniPluginsInstall;
 import com.unmango.kubernetesthehardway.remote.ContainerdInstall;
 import com.unmango.kubernetesthehardway.remote.ContainerdService;
@@ -98,14 +98,28 @@ public class WorkerNode extends com.pulumi.resources.ComponentResource {
      * The CNI bridge plugin configuration.
      * 
      */
-    @Export(name="cniBridgeConfiguration", refs={CniBridgePluginConfiguration.class}, tree="[0]")
-    private Output<CniBridgePluginConfiguration> cniBridgeConfiguration;
+    @Export(name="cniBridge", refs={CniBridgePluginConfiguration.class}, tree="[0]")
+    private Output</* @Nullable */ CniBridgePluginConfiguration> cniBridge;
 
     /**
      * @return The CNI bridge plugin configuration.
      * 
      */
-    public Output<CniBridgePluginConfiguration> cniBridgeConfiguration() {
+    public Output<Optional<CniBridgePluginConfiguration>> cniBridge() {
+        return Codegen.optional(this.cniBridge);
+    }
+    /**
+     * The CNI bridge plugin configuration.
+     * 
+     */
+    @Export(name="cniBridgeConfiguration", refs={com.unmango.kubernetesthehardway.config.CniBridgePluginConfiguration.class}, tree="[0]")
+    private Output<com.unmango.kubernetesthehardway.config.CniBridgePluginConfiguration> cniBridgeConfiguration;
+
+    /**
+     * @return The CNI bridge plugin configuration.
+     * 
+     */
+    public Output<com.unmango.kubernetesthehardway.config.CniBridgePluginConfiguration> cniBridgeConfiguration() {
         return this.cniBridgeConfiguration;
     }
     /**
@@ -154,14 +168,28 @@ public class WorkerNode extends com.pulumi.resources.ComponentResource {
      * The CNI loopback plugin configuration.
      * 
      */
-    @Export(name="cniLoopbackConfiguration", refs={CniLoopbackPluginConfiguration.class}, tree="[0]")
-    private Output<CniLoopbackPluginConfiguration> cniLoopbackConfiguration;
+    @Export(name="cniLoopback", refs={CniLoopbackPluginConfiguration.class}, tree="[0]")
+    private Output</* @Nullable */ CniLoopbackPluginConfiguration> cniLoopback;
 
     /**
      * @return The CNI loopback plugin configuration.
      * 
      */
-    public Output<CniLoopbackPluginConfiguration> cniLoopbackConfiguration() {
+    public Output<Optional<CniLoopbackPluginConfiguration>> cniLoopback() {
+        return Codegen.optional(this.cniLoopback);
+    }
+    /**
+     * The CNI loopback plugin configuration.
+     * 
+     */
+    @Export(name="cniLoopbackConfiguration", refs={com.unmango.kubernetesthehardway.config.CniLoopbackPluginConfiguration.class}, tree="[0]")
+    private Output<com.unmango.kubernetesthehardway.config.CniLoopbackPluginConfiguration> cniLoopbackConfiguration;
+
+    /**
+     * @return The CNI loopback plugin configuration.
+     * 
+     */
+    public Output<com.unmango.kubernetesthehardway.config.CniLoopbackPluginConfiguration> cniLoopbackConfiguration() {
         return this.cniLoopbackConfiguration;
     }
     /**
@@ -238,14 +266,28 @@ public class WorkerNode extends com.pulumi.resources.ComponentResource {
      * The containerd configuration.
      * 
      */
-    @Export(name="containerdConfiguration", refs={ContainerdConfiguration.class}, tree="[0]")
-    private Output<ContainerdConfiguration> containerdConfiguration;
+    @Export(name="containerd", refs={ContainerdConfiguration.class}, tree="[0]")
+    private Output</* @Nullable */ ContainerdConfiguration> containerd;
 
     /**
      * @return The containerd configuration.
      * 
      */
-    public Output<ContainerdConfiguration> containerdConfiguration() {
+    public Output<Optional<ContainerdConfiguration>> containerd() {
+        return Codegen.optional(this.containerd);
+    }
+    /**
+     * The containerd configuration.
+     * 
+     */
+    @Export(name="containerdConfiguration", refs={com.unmango.kubernetesthehardway.config.ContainerdConfiguration.class}, tree="[0]")
+    private Output<com.unmango.kubernetesthehardway.config.ContainerdConfiguration> containerdConfiguration;
+
+    /**
+     * @return The containerd configuration.
+     * 
+     */
+    public Output<com.unmango.kubernetesthehardway.config.ContainerdConfiguration> containerdConfiguration() {
         return this.containerdConfiguration;
     }
     /**
@@ -375,17 +417,31 @@ public class WorkerNode extends com.pulumi.resources.ComponentResource {
         return Codegen.optional(this.crictlInstallDirectory);
     }
     /**
+     * The kube-proxy configuration.
+     * 
+     */
+    @Export(name="kubeProxy", refs={KubeProxyConfiguration.class}, tree="[0]")
+    private Output</* @Nullable */ KubeProxyConfiguration> kubeProxy;
+
+    /**
+     * @return The kube-proxy configuration.
+     * 
+     */
+    public Output<Optional<KubeProxyConfiguration>> kubeProxy() {
+        return Codegen.optional(this.kubeProxy);
+    }
+    /**
      * The kube-proxy configuration
      * 
      */
-    @Export(name="kubeProxyConfiguration", refs={KubeProxyConfiguration.class}, tree="[0]")
-    private Output<KubeProxyConfiguration> kubeProxyConfiguration;
+    @Export(name="kubeProxyConfiguration", refs={com.unmango.kubernetesthehardway.config.KubeProxyConfiguration.class}, tree="[0]")
+    private Output<com.unmango.kubernetesthehardway.config.KubeProxyConfiguration> kubeProxyConfiguration;
 
     /**
      * @return The kube-proxy configuration
      * 
      */
-    public Output<KubeProxyConfiguration> kubeProxyConfiguration() {
+    public Output<com.unmango.kubernetesthehardway.config.KubeProxyConfiguration> kubeProxyConfiguration() {
         return this.kubeProxyConfiguration;
     }
     /**
@@ -445,20 +501,6 @@ public class WorkerNode extends com.pulumi.resources.ComponentResource {
         return Codegen.optional(this.kubeProxyInstallDirectory);
     }
     /**
-     * The path to the kube-proxy&#39;s kubeconfig file.
-     * 
-     */
-    @Export(name="kubeProxyKubeconfigPath", refs={String.class}, tree="[0]")
-    private Output</* @Nullable */ String> kubeProxyKubeconfigPath;
-
-    /**
-     * @return The path to the kube-proxy&#39;s kubeconfig file.
-     * 
-     */
-    public Output<Optional<String>> kubeProxyKubeconfigPath() {
-        return Codegen.optional(this.kubeProxyKubeconfigPath);
-    }
-    /**
      * The kube-proxy configuration mkdir operation.
      * 
      */
@@ -515,6 +557,20 @@ public class WorkerNode extends com.pulumi.resources.ComponentResource {
         return Codegen.optional(this.kubectlInstallDirectory);
     }
     /**
+     * The kubelet configuration.
+     * 
+     */
+    @Export(name="kubelet", refs={KubeletConfiguration.class}, tree="[0]")
+    private Output</* @Nullable */ KubeletConfiguration> kubelet;
+
+    /**
+     * @return The kubelet configuration.
+     * 
+     */
+    public Output<Optional<KubeletConfiguration>> kubelet() {
+        return Codegen.optional(this.kubelet);
+    }
+    /**
      * The path to the kubelet certificate.
      * 
      */
@@ -532,14 +588,14 @@ public class WorkerNode extends com.pulumi.resources.ComponentResource {
      * The kubelet configuration
      * 
      */
-    @Export(name="kubeletConfiguration", refs={KubeletConfiguration.class}, tree="[0]")
-    private Output<KubeletConfiguration> kubeletConfiguration;
+    @Export(name="kubeletConfiguration", refs={com.unmango.kubernetesthehardway.config.KubeletConfiguration.class}, tree="[0]")
+    private Output<com.unmango.kubernetesthehardway.config.KubeletConfiguration> kubeletConfiguration;
 
     /**
      * @return The kubelet configuration
      * 
      */
-    public Output<KubeletConfiguration> kubeletConfiguration() {
+    public Output<com.unmango.kubernetesthehardway.config.KubeletConfiguration> kubeletConfiguration() {
         return this.kubeletConfiguration;
     }
     /**
@@ -597,20 +653,6 @@ public class WorkerNode extends com.pulumi.resources.ComponentResource {
      */
     public Output<Optional<String>> kubeletInstallDirectory() {
         return Codegen.optional(this.kubeletInstallDirectory);
-    }
-    /**
-     * The path to the kubelet&#39;s kubeconfig file.
-     * 
-     */
-    @Export(name="kubeletKubeconfigPath", refs={String.class}, tree="[0]")
-    private Output</* @Nullable */ String> kubeletKubeconfigPath;
-
-    /**
-     * @return The path to the kubelet&#39;s kubeconfig file.
-     * 
-     */
-    public Output<Optional<String>> kubeletKubeconfigPath() {
-        return Codegen.optional(this.kubeletKubeconfigPath);
     }
     /**
      * The kubelet configuration mkdir operation.
