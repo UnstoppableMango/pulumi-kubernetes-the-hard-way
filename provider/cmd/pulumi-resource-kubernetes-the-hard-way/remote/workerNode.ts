@@ -73,10 +73,10 @@ export class WorkerNode extends schema.WorkerNode {
     const varRunKubernetesMkdir = new Mkdir(`${name}-var-run-k8s`, {
       connection,
       create: {
-        directory: `/var/lib/kubernetes`,
+        directory: `/var/run/kubernetes`,
         parents: true,
       },
-      delete: `rm -rf /var/lib/kubernetes`,
+      delete: `rm -rf /var/run/kubernetes`,
     }, { parent: this });
 
     const cniPluginsInstall = new CniPluginsInstall(name, {
@@ -104,6 +104,13 @@ export class WorkerNode extends schema.WorkerNode {
     }, { parent: this, dependsOn: cniMkdir });
 
     const containerdConfiguration = new ContainerdConfiguration(name, {
+      cri: {
+        cni: {
+          binDir: '',
+          confDir: '',
+        },
+        containerd: {},
+      },
     }, { parent: this });
 
     const containerdConfigurationFile = new File(`${name}-containerd`, {
@@ -118,7 +125,7 @@ export class WorkerNode extends schema.WorkerNode {
 
     const containerdService = new ContainerdService(name, {
       connection,
-      configuration: {},
+      configuration: output(containerdConfiguration.result),
       containerdPath: containerdInstall.path,
     }, { parent: this });
 
