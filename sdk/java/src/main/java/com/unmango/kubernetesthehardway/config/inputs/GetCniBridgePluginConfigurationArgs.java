@@ -109,21 +109,6 @@ public final class GetCniBridgePluginConfigurationArgs extends com.pulumi.resour
     }
 
     /**
-     * Path to put the configuration file on the remote system
-     * 
-     */
-    @Import(name="path")
-    private @Nullable Output<String> path;
-
-    /**
-     * @return Path to put the configuration file on the remote system
-     * 
-     */
-    public Optional<Output<String>> path() {
-        return Optional.ofNullable(this.path);
-    }
-
-    /**
      * The subnet to use.
      * 
      */
@@ -162,7 +147,6 @@ public final class GetCniBridgePluginConfigurationArgs extends com.pulumi.resour
         this.ipam = $.ipam;
         this.isGateway = $.isGateway;
         this.name = $.name;
-        this.path = $.path;
         this.subnet = $.subnet;
         this.type = $.type;
     }
@@ -309,27 +293,6 @@ public final class GetCniBridgePluginConfigurationArgs extends com.pulumi.resour
          */
         public Builder name(String name) {
             return name(Output.of(name));
-        }
-
-        /**
-         * @param path Path to put the configuration file on the remote system
-         * 
-         * @return builder
-         * 
-         */
-        public Builder path(@Nullable Output<String> path) {
-            $.path = path;
-            return this;
-        }
-
-        /**
-         * @param path Path to put the configuration file on the remote system
-         * 
-         * @return builder
-         * 
-         */
-        public Builder path(String path) {
-            return path(Output.of(path));
         }
 
         /**

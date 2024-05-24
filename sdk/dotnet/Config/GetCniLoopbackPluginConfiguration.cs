@@ -41,12 +41,6 @@ namespace UnMango.KubernetesTheHardWay.Config
         public string? Name { get; set; }
 
         /// <summary>
-        /// Path to put the configuration file on the remote system
-        /// </summary>
-        [Input("path")]
-        public string? Path { get; set; }
-
-        /// <summary>
         /// CNI plugin type.
         /// </summary>
         [Input("type")]
@@ -71,12 +65,6 @@ namespace UnMango.KubernetesTheHardWay.Config
         /// </summary>
         [Input("name")]
         public Input<string>? Name { get; set; }
-
-        /// <summary>
-        /// Path to put the configuration file on the remote system
-        /// </summary>
-        [Input("path")]
-        public Input<string>? Path { get; set; }
 
         /// <summary>
         /// CNI plugin type.

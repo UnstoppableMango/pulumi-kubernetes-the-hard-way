@@ -27,8 +27,6 @@ type GetCniLoopbackPluginConfigurationArgs struct {
 	CniVersion *string `pulumi:"cniVersion"`
 	// CNI plugin name.
 	Name *string `pulumi:"name"`
-	// Path to put the configuration file on the remote system
-	Path *string `pulumi:"path"`
 	// CNI plugin type.
 	Type *string `pulumi:"type"`
 }
@@ -56,8 +54,6 @@ type GetCniLoopbackPluginConfigurationOutputArgs struct {
 	CniVersion pulumi.StringPtrInput `pulumi:"cniVersion"`
 	// CNI plugin name.
 	Name pulumi.StringPtrInput `pulumi:"name"`
-	// Path to put the configuration file on the remote system
-	Path pulumi.StringPtrInput `pulumi:"path"`
 	// CNI plugin type.
 	Type pulumi.StringPtrInput `pulumi:"type"`
 }

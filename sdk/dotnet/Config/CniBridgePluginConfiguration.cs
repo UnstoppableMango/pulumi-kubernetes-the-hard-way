@@ -91,12 +91,6 @@ namespace UnMango.KubernetesTheHardWay.Config
         public Input<string>? Name { get; set; }
 
         /// <summary>
-        /// Path to put the configuration file on the remote system
-        /// </summary>
-        [Input("path")]
-        public Input<string>? Path { get; set; }
-
-        /// <summary>
         /// The subnet to use.
         /// </summary>
         [Input("subnet", required: true)]

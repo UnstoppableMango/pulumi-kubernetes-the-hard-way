@@ -23,7 +23,6 @@ class CniBridgePluginConfigurationArgs:
                  ipam: Optional[pulumi.Input['CniBridgeIpamArgs']] = None,
                  is_gateway: Optional[pulumi.Input[bool]] = None,
                  name: Optional[pulumi.Input[str]] = None,
-                 path: Optional[pulumi.Input[str]] = None,
                  type: Optional[pulumi.Input[str]] = None):
         """
         The set of arguments for constructing a CniBridgePluginConfiguration resource.
@@ -34,7 +33,6 @@ class CniBridgePluginConfigurationArgs:
         :param pulumi.Input['CniBridgeIpamArgs'] ipam: IPAM
         :param pulumi.Input[bool] is_gateway: Is gateway.
         :param pulumi.Input[str] name: CNI plugin name.
-        :param pulumi.Input[str] path: Path to put the configuration file on the remote system
         :param pulumi.Input[str] type: CNI plugin type.
         """
         pulumi.set(__self__, "subnet", subnet)
@@ -50,8 +48,6 @@ class CniBridgePluginConfigurationArgs:
             pulumi.set(__self__, "is_gateway", is_gateway)
         if name is not None:
             pulumi.set(__self__, "name", name)
-        if path is not None:
-            pulumi.set(__self__, "path", path)
         if type is not None:
             pulumi.set(__self__, "type", type)
 
@@ -141,18 +137,6 @@ class CniBridgePluginConfigurationArgs:
 
     @property
     @pulumi.getter
-    def path(self) -> Optional[pulumi.Input[str]]:
-        """
-        Path to put the configuration file on the remote system
-        """
-        return pulumi.get(self, "path")
-
-    @path.setter
-    def path(self, value: Optional[pulumi.Input[str]]):
-        pulumi.set(self, "path", value)
-
-    @property
-    @pulumi.getter
     def type(self) -> Optional[pulumi.Input[str]]:
         """
         CNI plugin type.
@@ -175,7 +159,6 @@ class CniBridgePluginConfiguration(pulumi.ComponentResource):
                  ipam: Optional[pulumi.Input[pulumi.InputType['CniBridgeIpamArgs']]] = None,
                  is_gateway: Optional[pulumi.Input[bool]] = None,
                  name: Optional[pulumi.Input[str]] = None,
-                 path: Optional[pulumi.Input[str]] = None,
                  subnet: Optional[pulumi.Input[str]] = None,
                  type: Optional[pulumi.Input[str]] = None,
                  __props__=None):
@@ -190,7 +173,6 @@ class CniBridgePluginConfiguration(pulumi.ComponentResource):
         :param pulumi.Input[pulumi.InputType['CniBridgeIpamArgs']] ipam: IPAM
         :param pulumi.Input[bool] is_gateway: Is gateway.
         :param pulumi.Input[str] name: CNI plugin name.
-        :param pulumi.Input[str] path: Path to put the configuration file on the remote system
         :param pulumi.Input[str] subnet: The subnet to use.
         :param pulumi.Input[str] type: CNI plugin type.
         """
@@ -224,7 +206,6 @@ class CniBridgePluginConfiguration(pulumi.ComponentResource):
                  ipam: Optional[pulumi.Input[pulumi.InputType['CniBridgeIpamArgs']]] = None,
                  is_gateway: Optional[pulumi.Input[bool]] = None,
                  name: Optional[pulumi.Input[str]] = None,
-                 path: Optional[pulumi.Input[str]] = None,
                  subnet: Optional[pulumi.Input[str]] = None,
                  type: Optional[pulumi.Input[str]] = None,
                  __props__=None):
@@ -244,7 +225,6 @@ class CniBridgePluginConfiguration(pulumi.ComponentResource):
             __props__.__dict__["ipam"] = ipam
             __props__.__dict__["is_gateway"] = is_gateway
             __props__.__dict__["name"] = name
-            __props__.__dict__["path"] = path
             if subnet is None and not opts.urn:
                 raise TypeError("Missing required property 'subnet'")
             __props__.__dict__["subnet"] = subnet

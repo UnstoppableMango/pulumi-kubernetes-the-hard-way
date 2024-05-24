@@ -51,7 +51,6 @@ export class CniBridgePluginConfiguration extends pulumi.ComponentResource {
             resourceInputs["ipam"] = args ? args.ipam : undefined;
             resourceInputs["isGateway"] = args ? args.isGateway : undefined;
             resourceInputs["name"] = args ? args.name : undefined;
-            resourceInputs["path"] = args ? args.path : undefined;
             resourceInputs["subnet"] = args ? args.subnet : undefined;
             resourceInputs["type"] = args ? args.type : undefined;
             resourceInputs["result"] = undefined /*out*/;
@@ -93,10 +92,6 @@ export interface CniBridgePluginConfigurationArgs {
      * CNI plugin name.
      */
     name?: pulumi.Input<string>;
-    /**
-     * Path to put the configuration file on the remote system
-     */
-    path?: pulumi.Input<string>;
     /**
      * The subnet to use.
      */

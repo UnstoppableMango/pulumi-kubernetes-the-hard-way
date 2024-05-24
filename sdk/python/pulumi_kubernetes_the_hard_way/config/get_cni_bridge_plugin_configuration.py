@@ -49,7 +49,6 @@ def get_cni_bridge_plugin_configuration(bridge: Optional[str] = None,
                                         ipam: Optional[pulumi.InputType['CniBridgeIpam']] = None,
                                         is_gateway: Optional[bool] = None,
                                         name: Optional[str] = None,
-                                        path: Optional[str] = None,
                                         subnet: Optional[str] = None,
                                         type: Optional[str] = None,
                                         opts: Optional[pulumi.InvokeOptions] = None) -> AwaitableGetCniBridgePluginConfigurationResult:
@@ -63,7 +62,6 @@ def get_cni_bridge_plugin_configuration(bridge: Optional[str] = None,
     :param pulumi.InputType['CniBridgeIpam'] ipam: IPAM
     :param bool is_gateway: Is gateway.
     :param str name: CNI plugin name.
-    :param str path: Path to put the configuration file on the remote system
     :param str subnet: The subnet to use.
     :param str type: CNI plugin type.
     """
@@ -74,7 +72,6 @@ def get_cni_bridge_plugin_configuration(bridge: Optional[str] = None,
     __args__['ipam'] = ipam
     __args__['isGateway'] = is_gateway
     __args__['name'] = name
-    __args__['path'] = path
     __args__['subnet'] = subnet
     __args__['type'] = type
     opts = pulumi.InvokeOptions.merge(_utilities.get_invoke_opts_defaults(), opts)
@@ -91,7 +88,6 @@ def get_cni_bridge_plugin_configuration_output(bridge: Optional[pulumi.Input[Opt
                                                ipam: Optional[pulumi.Input[Optional[pulumi.InputType['CniBridgeIpam']]]] = None,
                                                is_gateway: Optional[pulumi.Input[Optional[bool]]] = None,
                                                name: Optional[pulumi.Input[Optional[str]]] = None,
-                                               path: Optional[pulumi.Input[Optional[str]]] = None,
                                                subnet: Optional[pulumi.Input[str]] = None,
                                                type: Optional[pulumi.Input[Optional[str]]] = None,
                                                opts: Optional[pulumi.InvokeOptions] = None) -> pulumi.Output[GetCniBridgePluginConfigurationResult]:
@@ -105,7 +101,6 @@ def get_cni_bridge_plugin_configuration_output(bridge: Optional[pulumi.Input[Opt
     :param pulumi.InputType['CniBridgeIpam'] ipam: IPAM
     :param bool is_gateway: Is gateway.
     :param str name: CNI plugin name.
-    :param str path: Path to put the configuration file on the remote system
     :param str subnet: The subnet to use.
     :param str type: CNI plugin type.
     """
