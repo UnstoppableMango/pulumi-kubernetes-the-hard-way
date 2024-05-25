@@ -17,7 +17,7 @@ import (
 
 // A Kubernetes worker node.
 type WorkerNode struct {
-	pulumi.CustomResourceState
+	pulumi.ResourceState
 
 	// The CPU architecture of the node.
 	Architecture ArchitectureOutput `pulumi:"architecture"`
@@ -147,34 +147,11 @@ func NewWorkerNode(ctx *pulumi.Context,
 	args.Connection = args.Connection.ToConnectionOutput().ApplyT(func(v pulumiCommand.Connection) pulumiCommand.Connection { return *v.Defaults() }).(pulumiCommand.ConnectionOutput)
 	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource WorkerNode
-	err := ctx.RegisterResource("kubernetes-the-hard-way:remote:WorkerNode", name, args, &resource, opts...)
+	err := ctx.RegisterRemoteComponentResource("kubernetes-the-hard-way:remote:WorkerNode", name, args, &resource, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return &resource, nil
-}
-
-// GetWorkerNode gets an existing WorkerNode resource's state with the given name, ID, and optional
-// state properties that are used to uniquely qualify the lookup (nil if not required).
-func GetWorkerNode(ctx *pulumi.Context,
-	name string, id pulumi.IDInput, state *WorkerNodeState, opts ...pulumi.ResourceOption) (*WorkerNode, error) {
-	var resource WorkerNode
-	err := ctx.ReadResource("kubernetes-the-hard-way:remote:WorkerNode", name, id, state, &resource, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return &resource, nil
-}
-
-// Input properties used for looking up and filtering WorkerNode resources.
-type workerNodeState struct {
-}
-
-type WorkerNodeState struct {
-}
-
-func (WorkerNodeState) ElementType() reflect.Type {
-	return reflect.TypeOf((*workerNodeState)(nil)).Elem()
 }
 
 type workerNodeArgs struct {

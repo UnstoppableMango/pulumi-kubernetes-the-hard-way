@@ -187,6 +187,7 @@ func generateWorkerNode(commandSpec schema.PackageSpec) schema.PackageSpec {
 		Functions: map[string]schema.FunctionSpec{},
 		Resources: map[string]schema.ResourceSpec{
 			name("WorkerNode"): {
+				IsComponent: true,
 				ObjectTypeSpec: schema.ObjectTypeSpec{
 					Description: "A Kubernetes worker node.",
 					Properties:  outputs,

@@ -4990,7 +4990,8 @@
                 "kubeletCertificatePath",
                 "kubeletPrivateKeyPath",
                 "subnet"
-            ]
+            ],
+            "isComponent": true
         },
         "kubernetes-the-hard-way:tls:Certificate": {
             "description": "A certificate key pair.",
