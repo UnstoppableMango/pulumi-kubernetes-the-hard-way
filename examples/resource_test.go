@@ -53,18 +53,23 @@ func ResourceTest(t *testing.T, project string, baseOptions integration.ProgramT
 			validation(&ctx)
 			lookup := ctx.tokens
 
-			validated := []validatorKey{}
+			validated := []string{}
 			for _, res := range stack.Deployment.Resources {
 				key := validatorKey{Type: res.Type, Name: res.URN.Name()}
 				testName := fmt.Sprintf("%s::%s", res.Type, res.URN.Name())
 				if validator, ok := lookup[key]; ok && t.Run(testName, func(t *testing.T) {
 					validator(t, res)
 				}) {
-					validated = append(validated, key)
+					validated = append(validated, fmt.Sprintf("%s:%s", key.Name, key.Type))
 				}
 			}
 
-			assert.ElementsMatch(t, maps.Keys(lookup), validated)
+			expected := []string{}
+			for _, key := range maps.Keys(lookup) {
+				expected = append(expected, fmt.Sprintf("%s:%s", key.Name, key.Type))
+			}
+
+			assert.ElementsMatch(t, expected, validated)
 		},
 	})
 
