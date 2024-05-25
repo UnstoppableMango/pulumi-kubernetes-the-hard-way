@@ -1,6 +1,6 @@
 import { Config } from '@pulumi/pulumi';
 import { ContainerdConfiguration } from '@unmango/pulumi-kubernetes-the-hard-way/config';
-import { ContainerdService, KubeletService, KubeProxyService } from '@unmango/pulumi-kubernetes-the-hard-way/remote';
+import { ContainerdService, KubeletService, KubeProxyService, WorkerNode } from '@unmango/pulumi-kubernetes-the-hard-way/remote';
 import { Mkdir } from '@unmango/pulumi-kubernetes-the-hard-way/tools';
 
 const config = new Config();
@@ -18,9 +18,6 @@ const dir = new Mkdir('config', {
     directory: '/etc/containerd',
   },
 });
-
-const containerdConfiguration = new ContainerdConfiguration('simple', {
-}, { dependsOn: dir });
 
 const containerdService = new ContainerdService('simple', {
   connection,
@@ -46,4 +43,13 @@ const kubeProxyService = new KubeProxyService('simple', {
     kubeProxyPath: '/usr/local/bin/kube-proxy',
     configurationFilePath: '/var/lib/kube-proxy/kube-proxy-config.yaml',
   },
+});
+
+const worker = new WorkerNode('simple', {
+  connection,
+  subnet: '0.0.0.0/24',
+  architecture: 'amd64',
+  caPath: 'TODO',
+  kubeletCertificatePath: 'TODO',
+  kubeletPrivateKeyPath: 'TODO',
 });

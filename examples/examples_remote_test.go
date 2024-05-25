@@ -210,5 +210,8 @@ func TestRemoteWorkerTs(t *testing.T) {
 			assert.Contains(t, res.Outputs, "result")
 			assert.Contains(t, res.Outputs, "toml")
 		})
+		Validate(ctx, "kubernetes-the-hard-way:remote:WorkerNode", "simple", func(t *testing.T, res apitype.ResourceV3) {
+			assert.NotEmpty(t, res.Outputs)
+		})
 	})
 }
