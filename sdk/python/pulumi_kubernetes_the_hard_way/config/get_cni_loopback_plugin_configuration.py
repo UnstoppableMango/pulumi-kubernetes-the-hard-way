@@ -44,7 +44,6 @@ class AwaitableGetCniLoopbackPluginConfigurationResult(GetCniLoopbackPluginConfi
 
 def get_cni_loopback_plugin_configuration(cni_version: Optional[str] = None,
                                           name: Optional[str] = None,
-                                          path: Optional[str] = None,
                                           type: Optional[str] = None,
                                           opts: Optional[pulumi.InvokeOptions] = None) -> AwaitableGetCniLoopbackPluginConfigurationResult:
     """
@@ -53,13 +52,11 @@ def get_cni_loopback_plugin_configuration(cni_version: Optional[str] = None,
 
     :param str cni_version: CNI version.
     :param str name: CNI plugin name.
-    :param str path: Path to put the configuration file on the remote system
     :param str type: CNI plugin type.
     """
     __args__ = dict()
     __args__['cniVersion'] = cni_version
     __args__['name'] = name
-    __args__['path'] = path
     __args__['type'] = type
     opts = pulumi.InvokeOptions.merge(_utilities.get_invoke_opts_defaults(), opts)
     __ret__ = pulumi.runtime.invoke('kubernetes-the-hard-way:config:getCniLoopbackPluginConfiguration', __args__, opts=opts, typ=GetCniLoopbackPluginConfigurationResult).value
@@ -71,7 +68,6 @@ def get_cni_loopback_plugin_configuration(cni_version: Optional[str] = None,
 @_utilities.lift_output_func(get_cni_loopback_plugin_configuration)
 def get_cni_loopback_plugin_configuration_output(cni_version: Optional[pulumi.Input[Optional[str]]] = None,
                                                  name: Optional[pulumi.Input[Optional[str]]] = None,
-                                                 path: Optional[pulumi.Input[Optional[str]]] = None,
                                                  type: Optional[pulumi.Input[Optional[str]]] = None,
                                                  opts: Optional[pulumi.InvokeOptions] = None) -> pulumi.Output[GetCniLoopbackPluginConfigurationResult]:
     """
@@ -80,7 +76,6 @@ def get_cni_loopback_plugin_configuration_output(cni_version: Optional[pulumi.In
 
     :param str cni_version: CNI version.
     :param str name: CNI plugin name.
-    :param str path: Path to put the configuration file on the remote system
     :param str type: CNI plugin type.
     """
     ...

@@ -138,7 +138,6 @@ func generateCniPluginConfiguration(
 	maps.Copy(properties, map[string]schema.PropertySpec{
 		"cniVersion": props.String("CNI version."),
 		"name":       props.String("CNI plugin name."),
-		"path":       props.String("Path to put the configuration file on the remote system"),
 		"type":       props.String("CNI plugin type."),
 	})
 

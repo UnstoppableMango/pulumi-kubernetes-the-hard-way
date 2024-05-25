@@ -17,21 +17,17 @@ class CniLoopbackPluginConfigurationArgs:
     def __init__(__self__, *,
                  cni_version: Optional[pulumi.Input[str]] = None,
                  name: Optional[pulumi.Input[str]] = None,
-                 path: Optional[pulumi.Input[str]] = None,
                  type: Optional[pulumi.Input[str]] = None):
         """
         The set of arguments for constructing a CniLoopbackPluginConfiguration resource.
         :param pulumi.Input[str] cni_version: CNI version.
         :param pulumi.Input[str] name: CNI plugin name.
-        :param pulumi.Input[str] path: Path to put the configuration file on the remote system
         :param pulumi.Input[str] type: CNI plugin type.
         """
         if cni_version is not None:
             pulumi.set(__self__, "cni_version", cni_version)
         if name is not None:
             pulumi.set(__self__, "name", name)
-        if path is not None:
-            pulumi.set(__self__, "path", path)
         if type is not None:
             pulumi.set(__self__, "type", type)
 
@@ -61,18 +57,6 @@ class CniLoopbackPluginConfigurationArgs:
 
     @property
     @pulumi.getter
-    def path(self) -> Optional[pulumi.Input[str]]:
-        """
-        Path to put the configuration file on the remote system
-        """
-        return pulumi.get(self, "path")
-
-    @path.setter
-    def path(self, value: Optional[pulumi.Input[str]]):
-        pulumi.set(self, "path", value)
-
-    @property
-    @pulumi.getter
     def type(self) -> Optional[pulumi.Input[str]]:
         """
         CNI plugin type.
@@ -91,7 +75,6 @@ class CniLoopbackPluginConfiguration(pulumi.ComponentResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  cni_version: Optional[pulumi.Input[str]] = None,
                  name: Optional[pulumi.Input[str]] = None,
-                 path: Optional[pulumi.Input[str]] = None,
                  type: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         """
@@ -101,7 +84,6 @@ class CniLoopbackPluginConfiguration(pulumi.ComponentResource):
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[str] cni_version: CNI version.
         :param pulumi.Input[str] name: CNI plugin name.
-        :param pulumi.Input[str] path: Path to put the configuration file on the remote system
         :param pulumi.Input[str] type: CNI plugin type.
         """
         ...
@@ -130,7 +112,6 @@ class CniLoopbackPluginConfiguration(pulumi.ComponentResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  cni_version: Optional[pulumi.Input[str]] = None,
                  name: Optional[pulumi.Input[str]] = None,
-                 path: Optional[pulumi.Input[str]] = None,
                  type: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
@@ -145,7 +126,6 @@ class CniLoopbackPluginConfiguration(pulumi.ComponentResource):
 
             __props__.__dict__["cni_version"] = cni_version
             __props__.__dict__["name"] = name
-            __props__.__dict__["path"] = path
             __props__.__dict__["type"] = type
             __props__.__dict__["result"] = None
             __props__.__dict__["yaml"] = None

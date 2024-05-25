@@ -20,7 +20,6 @@ export function getCniBridgePluginConfiguration(args: GetCniBridgePluginConfigur
         "ipam": args.ipam,
         "isGateway": args.isGateway,
         "name": args.name,
-        "path": args.path,
         "subnet": args.subnet,
         "type": args.type,
     }, opts);
@@ -51,10 +50,6 @@ export interface GetCniBridgePluginConfigurationArgs {
      * CNI plugin name.
      */
     name?: string;
-    /**
-     * Path to put the configuration file on the remote system
-     */
-    path?: string;
     /**
      * The subnet to use.
      */
@@ -103,10 +98,6 @@ export interface GetCniBridgePluginConfigurationOutputArgs {
      * CNI plugin name.
      */
     name?: pulumi.Input<string>;
-    /**
-     * Path to put the configuration file on the remote system
-     */
-    path?: pulumi.Input<string>;
     /**
      * The subnet to use.
      */

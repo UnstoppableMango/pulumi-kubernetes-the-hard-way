@@ -17,7 +17,6 @@ export function getCniLoopbackPluginConfiguration(args?: GetCniLoopbackPluginCon
     return pulumi.runtime.invoke("kubernetes-the-hard-way:config:getCniLoopbackPluginConfiguration", {
         "cniVersion": args.cniVersion,
         "name": args.name,
-        "path": args.path,
         "type": args.type,
     }, opts);
 }
@@ -31,10 +30,6 @@ export interface GetCniLoopbackPluginConfigurationArgs {
      * CNI plugin name.
      */
     name?: string;
-    /**
-     * Path to put the configuration file on the remote system
-     */
-    path?: string;
     /**
      * CNI plugin type.
      */
@@ -63,10 +58,6 @@ export interface GetCniLoopbackPluginConfigurationOutputArgs {
      * CNI plugin name.
      */
     name?: pulumi.Input<string>;
-    /**
-     * Path to put the configuration file on the remote system
-     */
-    path?: pulumi.Input<string>;
     /**
      * CNI plugin type.
      */

@@ -45,21 +45,6 @@ public final class GetCniLoopbackPluginConfigurationPlainArgs extends com.pulumi
     }
 
     /**
-     * Path to put the configuration file on the remote system
-     * 
-     */
-    @Import(name="path")
-    private @Nullable String path;
-
-    /**
-     * @return Path to put the configuration file on the remote system
-     * 
-     */
-    public Optional<String> path() {
-        return Optional.ofNullable(this.path);
-    }
-
-    /**
      * CNI plugin type.
      * 
      */
@@ -79,7 +64,6 @@ public final class GetCniLoopbackPluginConfigurationPlainArgs extends com.pulumi
     private GetCniLoopbackPluginConfigurationPlainArgs(GetCniLoopbackPluginConfigurationPlainArgs $) {
         this.cniVersion = $.cniVersion;
         this.name = $.name;
-        this.path = $.path;
         this.type = $.type;
     }
 
@@ -120,17 +104,6 @@ public final class GetCniLoopbackPluginConfigurationPlainArgs extends com.pulumi
          */
         public Builder name(@Nullable String name) {
             $.name = name;
-            return this;
-        }
-
-        /**
-         * @param path Path to put the configuration file on the remote system
-         * 
-         * @return builder
-         * 
-         */
-        public Builder path(@Nullable String path) {
-            $.path = path;
             return this;
         }
 

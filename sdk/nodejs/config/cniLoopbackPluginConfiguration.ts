@@ -44,7 +44,6 @@ export class CniLoopbackPluginConfiguration extends pulumi.ComponentResource {
         if (!opts.id) {
             resourceInputs["cniVersion"] = args ? args.cniVersion : undefined;
             resourceInputs["name"] = args ? args.name : undefined;
-            resourceInputs["path"] = args ? args.path : undefined;
             resourceInputs["type"] = args ? args.type : undefined;
             resourceInputs["result"] = undefined /*out*/;
             resourceInputs["yaml"] = undefined /*out*/;
@@ -69,10 +68,6 @@ export interface CniLoopbackPluginConfigurationArgs {
      * CNI plugin name.
      */
     name?: pulumi.Input<string>;
-    /**
-     * Path to put the configuration file on the remote system
-     */
-    path?: pulumi.Input<string>;
     /**
      * CNI plugin type.
      */

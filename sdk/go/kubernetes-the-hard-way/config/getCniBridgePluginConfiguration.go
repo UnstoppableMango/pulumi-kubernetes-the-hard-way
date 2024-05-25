@@ -35,8 +35,6 @@ type GetCniBridgePluginConfigurationArgs struct {
 	IsGateway *bool `pulumi:"isGateway"`
 	// CNI plugin name.
 	Name *string `pulumi:"name"`
-	// Path to put the configuration file on the remote system
-	Path *string `pulumi:"path"`
 	// The subnet to use.
 	Subnet string `pulumi:"subnet"`
 	// CNI plugin type.
@@ -74,8 +72,6 @@ type GetCniBridgePluginConfigurationOutputArgs struct {
 	IsGateway pulumi.BoolPtrInput `pulumi:"isGateway"`
 	// CNI plugin name.
 	Name pulumi.StringPtrInput `pulumi:"name"`
-	// Path to put the configuration file on the remote system
-	Path pulumi.StringPtrInput `pulumi:"path"`
 	// The subnet to use.
 	Subnet pulumi.StringInput `pulumi:"subnet"`
 	// CNI plugin type.

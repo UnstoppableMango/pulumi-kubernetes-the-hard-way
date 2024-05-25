@@ -102,7 +102,7 @@ func newCluster(t *testing.T, config map[string][]SshServerOption) map[string]no
 
 func expectKey[T comparable, V any](t *testing.T, m map[T]V, key T, value V) {
 	actual, ok := m[key]
-	assert.Truef(t, ok, "Key `%s` was not set", actual)
+	assert.Truef(t, ok, "Key `%s` was not set", key)
 	assert.Equal(t, value, actual)
 }
 

@@ -135,6 +135,11 @@ export type SystemdService = import("./systemdService").SystemdService;
 export const SystemdService: typeof import("./systemdService").SystemdService = null as any;
 utilities.lazyLoad(exports, ["SystemdService"], () => require("./systemdService"));
 
+export { WorkerNodeArgs } from "./workerNode";
+export type WorkerNode = import("./workerNode").WorkerNode;
+export const WorkerNode: typeof import("./workerNode").WorkerNode = null as any;
+utilities.lazyLoad(exports, ["WorkerNode"], () => require("./workerNode"));
+
 
 // Export enums:
 export * from "../types/enums/remote";
@@ -195,6 +200,8 @@ const _module = {
                 return new StaticPod(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:remote:SystemdService":
                 return new SystemdService(name, <any>undefined, { urn })
+            case "kubernetes-the-hard-way:remote:WorkerNode":
+                return new WorkerNode(name, <any>undefined, { urn })
             default:
                 throw new Error(`unknown resource type ${type}`);
         }

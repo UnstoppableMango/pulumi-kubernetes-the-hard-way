@@ -2014,10 +2014,6 @@
                     "type": "string",
                     "description": "CNI plugin name."
                 },
-                "path": {
-                    "type": "string",
-                    "description": "Path to put the configuration file on the remote system"
-                },
                 "subnet": {
                     "type": "string",
                     "description": "The subnet to use."
@@ -2055,10 +2051,6 @@
                 "name": {
                     "type": "string",
                     "description": "CNI plugin name."
-                },
-                "path": {
-                    "type": "string",
-                    "description": "Path to put the configuration file on the remote system"
                 },
                 "type": {
                     "type": "string",
@@ -4666,6 +4658,341 @@
             ],
             "isComponent": true
         },
+        "kubernetes-the-hard-way:remote:WorkerNode": {
+            "description": "A Kubernetes worker node.",
+            "properties": {
+                "architecture": {
+                    "$ref": "#/types/kubernetes-the-hard-way:remote:Architecture",
+                    "description": "The CPU architecture of the node."
+                },
+                "caPath": {
+                    "type": "string",
+                    "description": "The path to the cluster certificate authority file."
+                },
+                "clusterCIDR": {
+                    "type": "string",
+                    "description": "The CIDR to use for the cluster."
+                },
+                "clusterDomain": {
+                    "type": "string",
+                    "description": "The domain for the cluster to use. Defaults to cluster.local."
+                },
+                "cniBridgeConfiguration": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:config:CniBridgePluginConfiguration",
+                    "description": "The CNI bridge plugin configuration."
+                },
+                "cniBridgeConfigurationFile": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:remote:File",
+                    "description": "The CNI bridge plugin configuration file."
+                },
+                "cniConfigurationDirectory": {
+                    "type": "string",
+                    "description": "The directory to store CNI plugin configuration files. Defaults to /etc/cni/net.d."
+                },
+                "cniInstallDirectory": {
+                    "type": "string",
+                    "description": "The directory to store CNI plugin binaries. Defaults to /opt/cni/bin."
+                },
+                "cniLoopbackConfiguration": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:config:CniLoopbackPluginConfiguration",
+                    "description": "The CNI loopback plugin configuration."
+                },
+                "cniLoopbackConfigurationFile": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:remote:File",
+                    "description": "The CNI loopback plugin configuration file."
+                },
+                "cniMkdir": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mkdir",
+                    "description": "The CNI configuration mkdir operation."
+                },
+                "cniPluginsInstall": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:remote:CniPluginsInstall",
+                    "description": "The CNI plugin install."
+                },
+                "cniVersion": {
+                    "type": "string",
+                    "description": "The CNI version to use."
+                },
+                "connection": {
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
+                    "description": "The parameters with which to connect to the remote host."
+                },
+                "containerdConfiguration": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:config:ContainerdConfiguration",
+                    "description": "The containerd configuration."
+                },
+                "containerdConfigurationDirectory": {
+                    "type": "string",
+                    "description": "The directory to store containerd configuration files. Defaults to /etc/containerd."
+                },
+                "containerdConfigurationFile": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:remote:File",
+                    "description": "The containerd configuration file."
+                },
+                "containerdInstall": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:remote:ContainerdInstall",
+                    "description": "The containerd install."
+                },
+                "containerdInstallDirectory": {
+                    "type": "string",
+                    "description": "The directory to store the containerd binary. Defaults to /bin."
+                },
+                "containerdMkdir": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mkdir",
+                    "description": "The containerd configuration mkdir operation."
+                },
+                "containerdService": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:remote:ContainerdService",
+                    "description": "The containerd systemd service."
+                },
+                "containerdVersion": {
+                    "type": "string",
+                    "description": "The containerd version to use."
+                },
+                "crictlInstall": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:remote:CrictlInstall",
+                    "description": "The crictl install."
+                },
+                "crictlInstallDirectory": {
+                    "type": "string",
+                    "description": "The directory to store the crictl binary. Defaults to /usr/local/bin."
+                },
+                "kubeProxyConfiguration": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:config:KubeProxyConfiguration",
+                    "description": "The kube-proxy configuration"
+                },
+                "kubeProxyConfigurationDirectory": {
+                    "type": "string",
+                    "description": "The directory to store kube-proxy configuration files. Defaults to /var/lib/kube-proxy."
+                },
+                "kubeProxyConfigurationFile": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:remote:File",
+                    "description": "The kube-proxy configuration file."
+                },
+                "kubeProxyInstall": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:remote:KubeProxyInstall",
+                    "description": "The kube-proxy install."
+                },
+                "kubeProxyInstallDirectory": {
+                    "type": "string",
+                    "description": "The directory to store the kube-proxy binary. Defaults to /usr/local/bin."
+                },
+                "kubeProxyKubeconfigPath": {
+                    "type": "string",
+                    "description": "The path to the kube-proxy's kubeconfig file."
+                },
+                "kubeProxyMkdir": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mkdir",
+                    "description": "The kube-proxy configuration mkdir operation."
+                },
+                "kubeProxyService": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:remote:KubeProxyService",
+                    "description": "The kubelet systemd service."
+                },
+                "kubectlInstall": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:remote:KubectlInstall",
+                    "description": "The kubectl install."
+                },
+                "kubectlInstallDirectory": {
+                    "type": "string",
+                    "description": "The directory to store the kubectl binary. Defaults to /usr/local/bin."
+                },
+                "kubeletCertificatePath": {
+                    "type": "string",
+                    "description": "The path to the kubelet certificate."
+                },
+                "kubeletConfiguration": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:config:KubeletConfiguration",
+                    "description": "The kubelet configuration"
+                },
+                "kubeletConfigurationDirectory": {
+                    "type": "string",
+                    "description": "The directory to store kubelet configuration files. Defaults to /var/lib/kubelet."
+                },
+                "kubeletConfigurationFile": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:remote:File",
+                    "description": "The kubelet configuration file."
+                },
+                "kubeletInstall": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:remote:KubeletInstall",
+                    "description": "The kubelet install."
+                },
+                "kubeletInstallDirectory": {
+                    "type": "string",
+                    "description": "The directory to store the kubelet binary. Defaults to /usr/local/bin."
+                },
+                "kubeletKubeconfigPath": {
+                    "type": "string",
+                    "description": "The path to the kubelet's kubeconfig file."
+                },
+                "kubeletMkdir": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mkdir",
+                    "description": "The kubelet configuration mkdir operation."
+                },
+                "kubeletPrivateKeyPath": {
+                    "type": "string",
+                    "description": "The path to the kubelet private key file."
+                },
+                "kubeletService": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:remote:KubeletService",
+                    "description": "The kubelet systemd service."
+                },
+                "kubernetesVersion": {
+                    "type": "string",
+                    "description": "The kubernetes version to use."
+                },
+                "runcInstall": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:remote:RuncInstall",
+                    "description": "The runc install."
+                },
+                "subnet": {
+                    "type": "string",
+                    "description": "The subnet for the cluster."
+                },
+                "varLibKubernetesMkdir": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mkdir",
+                    "description": "The /var/lib/kubernetes mkdir operation."
+                },
+                "varRunKubernetesMkdir": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mkdir",
+                    "description": "The /var/run/kubernetes mkdir operation."
+                }
+            },
+            "required": [
+                "architecture",
+                "caPath",
+                "connection",
+                "kubeletCertificatePath",
+                "kubeletPrivateKeyPath",
+                "subnet",
+                "cniMkdir",
+                "cniBridgeConfiguration",
+                "cniBridgeConfigurationFile",
+                "cniLoopbackConfiguration",
+                "cniLoopbackConfigurationFile",
+                "containerdConfiguration",
+                "containerdConfigurationFile",
+                "containerdMkdir",
+                "containerdInstall",
+                "containerdService",
+                "crictlInstall",
+                "kubectlInstall",
+                "kubeletConfiguration",
+                "kubeletConfigurationFile",
+                "kubeletInstall",
+                "kubeletMkdir",
+                "kubeletService",
+                "kubeProxyConfiguration",
+                "kubeProxyConfigurationFile",
+                "kubeProxyMkdir",
+                "kubeProxyService",
+                "varLibKubernetesMkdir",
+                "varRunKubernetesMkdir"
+            ],
+            "inputProperties": {
+                "architecture": {
+                    "$ref": "#/types/kubernetes-the-hard-way:remote:Architecture",
+                    "description": "The CPU architecture of the node."
+                },
+                "caPath": {
+                    "type": "string",
+                    "description": "The path to the cluster certificate authority file."
+                },
+                "clusterCIDR": {
+                    "type": "string",
+                    "description": "The CIDR to use for the cluster."
+                },
+                "clusterDomain": {
+                    "type": "string",
+                    "description": "The domain for the cluster to use. Defaults to cluster.local."
+                },
+                "cniConfigurationDirectory": {
+                    "type": "string",
+                    "description": "The directory to store CNI plugin configuration files. Defaults to /etc/cni/net.d."
+                },
+                "cniInstallDirectory": {
+                    "type": "string",
+                    "description": "The directory to store CNI plugin binaries. Defaults to /opt/cni/bin."
+                },
+                "cniVersion": {
+                    "type": "string",
+                    "description": "The CNI version to use."
+                },
+                "connection": {
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
+                    "description": "The parameters with which to connect to the remote host."
+                },
+                "containerdConfigurationDirectory": {
+                    "type": "string",
+                    "description": "The directory to store containerd configuration files. Defaults to /etc/containerd."
+                },
+                "containerdInstallDirectory": {
+                    "type": "string",
+                    "description": "The directory to store the containerd binary. Defaults to /bin."
+                },
+                "containerdVersion": {
+                    "type": "string",
+                    "description": "The containerd version to use."
+                },
+                "crictlInstallDirectory": {
+                    "type": "string",
+                    "description": "The directory to store the crictl binary. Defaults to /usr/local/bin."
+                },
+                "kubeProxyConfigurationDirectory": {
+                    "type": "string",
+                    "description": "The directory to store kube-proxy configuration files. Defaults to /var/lib/kube-proxy."
+                },
+                "kubeProxyInstallDirectory": {
+                    "type": "string",
+                    "description": "The directory to store the kube-proxy binary. Defaults to /usr/local/bin."
+                },
+                "kubeProxyKubeconfigPath": {
+                    "type": "string",
+                    "description": "The path to the kube-proxy's kubeconfig file."
+                },
+                "kubectlInstallDirectory": {
+                    "type": "string",
+                    "description": "The directory to store the kubectl binary. Defaults to /usr/local/bin."
+                },
+                "kubeletCertificatePath": {
+                    "type": "string",
+                    "description": "The path to the kubelet certificate."
+                },
+                "kubeletConfigurationDirectory": {
+                    "type": "string",
+                    "description": "The directory to store kubelet configuration files. Defaults to /var/lib/kubelet."
+                },
+                "kubeletInstallDirectory": {
+                    "type": "string",
+                    "description": "The directory to store the kubelet binary. Defaults to /usr/local/bin."
+                },
+                "kubeletKubeconfigPath": {
+                    "type": "string",
+                    "description": "The path to the kubelet's kubeconfig file."
+                },
+                "kubeletPrivateKeyPath": {
+                    "type": "string",
+                    "description": "The path to the kubelet private key file."
+                },
+                "kubernetesVersion": {
+                    "type": "string",
+                    "description": "The kubernetes version to use."
+                },
+                "subnet": {
+                    "type": "string",
+                    "description": "The subnet for the cluster."
+                }
+            },
+            "requiredInputs": [
+                "architecture",
+                "caPath",
+                "connection",
+                "kubeletCertificatePath",
+                "kubeletPrivateKeyPath",
+                "subnet"
+            ],
+            "isComponent": true
+        },
         "kubernetes-the-hard-way:tls:Certificate": {
             "description": "A certificate key pair.",
             "properties": {
@@ -7267,10 +7594,6 @@
                         "type": "string",
                         "description": "CNI plugin name."
                     },
-                    "path": {
-                        "type": "string",
-                        "description": "Path to put the configuration file on the remote system"
-                    },
                     "subnet": {
                         "type": "string",
                         "description": "The subnet to use."
@@ -7307,10 +7630,6 @@
                     "name": {
                         "type": "string",
                         "description": "CNI plugin name."
-                    },
-                    "path": {
-                        "type": "string",
-                        "description": "Path to put the configuration file on the remote system"
                     },
                     "type": {
                         "type": "string",

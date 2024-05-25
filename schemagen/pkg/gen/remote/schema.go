@@ -39,6 +39,7 @@ func Generate(commandSpec schema.PackageSpec) schema.PackageSpec {
 		generateStartSystemdService(commandSpec, "StartKubeProxy", "kube-proxy"),
 		generateStaticPod(commandSpec),
 		generateSystemdService(commandSpec),
+		generateWorkerNode(commandSpec),
 		generateArchiveInstall(commandSpec, "CniPluginsInstall", "Installs cni-plugins on a remote system",
 			"bandwidth", "bridge", "dhcp", "dummy", "firewall", "hostDevice",
 			"hostLocal", "ipvlan", "loopback", "macvlan", "portmap", "ptp", "sbr",
