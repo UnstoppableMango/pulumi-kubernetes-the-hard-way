@@ -25,14 +25,17 @@ export class WorkerNode extends schema.WorkerNode {
     if (opts?.urn) return;
 
     const architecture = output(args.architecture);
+    const caPath = output(args.caPath);
     const clusterCIDR = output(args.clusterCIDR ?? '10.200.0.0/16');
     const connection = output(args.connection);
     const cniConfigurationDirectory = output(args.cniConfigurationDirectory ?? '/etc/cni/net.d');
     const containerdConfigurationDirectory = output(args.containerdConfigurationDirectory ?? '/etc/containerd');
+    const kubeletCertificatePath = output(args.kubeletCertificatePath);
     const kubeletConfigurationDirectory = output(args.kubeletConfigurationDirectory ?? '/var/lib/kubelet');
-    const kubeletKubeconfigPath = output(args.kubeletKubeconfigPath ?? '/var/lib/kubelet/kubeconfig');
+    const kubeletKubeconfigPath = output(args.kubeletKubeconfigPath ?? interpolate`${kubeletConfigurationDirectory}/kubeconfig`);
+    const kubeletPrivateKeyPath = output(args.kubeletPrivateKeyPath);
     const kubeProxyConfigurationDirectory = output(args.kubeProxyConfigurationDirectory ?? '/var/lib/kube-proxy');
-    const kubeProxyKubeconfigPath = output(args.kubeProxyKubeconfigPath ?? '/var/lib/kube-proxy/kubeconfig');
+    const kubeProxyKubeconfigPath = output(args.kubeProxyKubeconfigPath ?? interpolate`${kubeProxyConfigurationDirectory}/kubeconfig`);
     const kubernetesVersion = output(args.kubernetesVersion ?? '1.30.0');
     const subnet = output(args.subnet);
 
@@ -168,6 +171,9 @@ export class WorkerNode extends schema.WorkerNode {
 
     const kubeletConfiguration = new KubeletConfiguration(name, {
       podCIDR: subnet,
+      clientCAFile: caPath,
+      tlsCertFile: kubeletCertificatePath,
+      tlsPrivateKeyFile: kubeletPrivateKeyPath,
       // TODO: Rest of the config
     }, { parent: this });
 
@@ -217,6 +223,8 @@ export class WorkerNode extends schema.WorkerNode {
       },
     }, { parent: this });
 
+    this.architecture = architecture;
+    this.caPath = caPath;
     this.clusterCIDR = clusterCIDR;
     this.cniMkdir = cniMkdir;
     this.cniConfigurationDirectory = cniConfigurationDirectory;
@@ -238,19 +246,23 @@ export class WorkerNode extends schema.WorkerNode {
     this.crictlInstallDirectory = crictlInstall.directory;
     this.kubectlInstall = kubectlInstall;
     this.kubectlInstallDirectory = kubectlInstall.directory;
+    this.kubeletCertificatePath = kubeletCertificatePath;
     this.kubeletConfiguration = kubeletConfiguration;
     this.kubeletConfigurationDirectory = kubeletConfigurationDirectory;
     this.kubeletConfigurationFile = kubeletConfigurationFile;
+    this.kubeletKubeconfigPath = kubeletKubeconfigPath;
     this.kubeletInstall = kubeletInstall;
     this.kubeletInstallDirectory = kubeletInstall.directory;
     this.kubeletKubeconfigPath = kubeletKubeconfigPath;
     this.kubeletMkdir = kubeletMkdir;
+    this.kubeletPrivateKeyPath = kubeletPrivateKeyPath;
     this.kubeletService = kubeletService;
     this.kubeProxyConfiguration = kubeProxyConfiguration;
     this.kubeProxyConfigurationDirectory = kubeProxyConfigurationDirectory;
     this.kubeProxyConfigurationFile = kubeProxyConfigurationFile;
     this.kubeProxyInstall = kubeProxyInstall;
     this.kubeProxyInstallDirectory = kubeProxyInstall.directory;
+    this.kubeProxyKubeconfigPath = kubeProxyKubeconfigPath;
     this.kubeProxyMkdir = kubeProxyMkdir;
     this.kubeProxyService = kubeProxyService;
     this.kubernetesVersion = kubernetesVersion;
@@ -259,6 +271,8 @@ export class WorkerNode extends schema.WorkerNode {
     this.varRunKubernetesMkdir = varRunKubernetesMkdir;
 
     this.registerOutputs({
+      architecture,
+      caPath,
       clusterCIDR,
       cniMkdir,
       cniBridgeConfiguration,
@@ -278,9 +292,12 @@ export class WorkerNode extends schema.WorkerNode {
       containerdVersion: this.containerdVersion,
       crictlInstall,
       crictlInstallDirectory: this.crictlInstallDirectory,
+      kubeletCertificatePath,
       kubeletConfigurationDirectory,
       kubeletInstallDirectory: this.kubeletInstallDirectory,
+      kubeletKubeconfigPath,
       kubeletMkdir,
+      kubeletPrivateKeyPath,
       kubeletService,
       kubeProxyConfiguration,
       kubeProxyConfigurationDirectory,
@@ -288,7 +305,10 @@ export class WorkerNode extends schema.WorkerNode {
       kubeProxyInstall,
       kubeProxyInstallDirectory: this.kubeProxyInstallDirectory,
       kubeProxyMkdir,
+      kubeProxyKubeconfigPath,
       kubeProxyService,
+      kubernetesVersion,
+      subnet,
       varLibKubernetesMkdir,
       varRunKubernetesMkdir,
     });
