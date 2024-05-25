@@ -69,7 +69,7 @@ func ResourceTest(t *testing.T, project string, baseOptions integration.ProgramT
 				expected = append(expected, fmt.Sprintf("%s:%s", key.Name, key.Type))
 			}
 
-			assert.ElementsMatch(t, expected, validated)
+			assert.ElementsMatch(t, expected, validated, "Not all resources were validated")
 		},
 	})
 
