@@ -33,7 +33,7 @@ export class WorkerNode extends schema.WorkerNode {
     const kubeletKubeconfigPath = output(args.kubeletKubeconfigPath ?? '/var/lib/kubelet/kubeconfig');
     const kubeProxyConfigurationDirectory = output(args.kubeProxyConfigurationDirectory ?? '/var/lib/kube-proxy');
     const kubeProxyKubeconfigPath = output(args.kubeProxyKubeconfigPath ?? '/var/lib/kube-proxy/kubeconfig');
-    const kubernetesVersion = output(args.kubernetesVersion ?? '1.30.1');
+    const kubernetesVersion = output(args.kubernetesVersion ?? '1.30.0');
     const subnet = output(args.subnet);
 
     const cniMkdir = new Mkdir(`${name}-cni`, {
