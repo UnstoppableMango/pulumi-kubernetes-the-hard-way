@@ -254,7 +254,6 @@ export class WorkerNode extends schema.WorkerNode {
     this.kubeProxyMkdir = kubeProxyMkdir;
     this.kubeProxyService = kubeProxyService;
     this.kubernetesVersion = kubernetesVersion;
-    this.podCIDR = podCIDR;
     this.subnet = subnet;
     this.varLibKubernetesMkdir = varLibKubernetesMkdir;
     this.varRunKubernetesMkdir = varRunKubernetesMkdir;
