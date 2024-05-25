@@ -212,6 +212,21 @@ func TestRemoteWorkerTs(t *testing.T) {
 		})
 		Validate(ctx, "kubernetes-the-hard-way:remote:WorkerNode", "simple", func(t *testing.T, res apitype.ResourceV3) {
 			assert.NotEmpty(t, res.Outputs)
+
+			expectOutput(t, res, "subnet", "0.0.0.0/24")
+			expectOutput(t, res, "clusterCIDR", "10.200.0.0/16")
+			expectOutput(t, res, "architecture", "amd64")
+			expectOutput(t, res, "caPath", "TODO")
+			expectOutput(t, res, "kubeletCertificatePath", "TODO")
+			expectOutput(t, res, "kubeletPrivateKeyPath", "TODO")
+			expectOutput(t, res, "clusterCIDR", "10.200.0.0/16")
+			expectOutput(t, res, "cniConfigurationDirectory", "/etc/cni/net.d")
+			expectOutput(t, res, "containerdConfigurationDirectory", "/etc/containerd")
+			expectOutput(t, res, "kubeletConfigurationDirectory", "/var/lib/kubelet")
+			expectOutput(t, res, "kubeletKubeconfigPath", "/var/lib/kubelet/kubeconfig")
+			expectOutput(t, res, "kubeProxyConfigurationDirectory", "/var/lib/kube-proxy")
+			expectOutput(t, res, "kubeProxyKubeconfigPath", "/var/lib/kube-proxy/kubeconfig")
+			expectOutput(t, res, "kubernetesVersion", "1.30.0")
 		})
 	})
 }
