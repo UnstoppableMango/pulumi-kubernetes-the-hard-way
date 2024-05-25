@@ -4,6 +4,7 @@ import (
 	"maps"
 	"slices"
 
+	"github.com/UnstoppableMango/pulumi-kubernetes-the-hard-way/schemagen/pkg/gen/props"
 	"github.com/UnstoppableMango/pulumi-kubernetes-the-hard-way/schemagen/pkg/gen/types"
 	"github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 )
@@ -460,13 +461,12 @@ func generateEncryptionKey(randomSpec schema.PackageSpec) schema.ResourceSpec {
 	}
 
 	outputs := map[string]schema.PropertySpec{
-		"config": {
-			Description: "The generated `v1/EncryptionConfig`.",
-			TypeSpec:    typeSpecs.String,
-		},
+		"config": props.String("The generated `v1/EncryptionConfig`."),
 		"key": {
 			Description: "The generated random key.",
-			TypeSpec:    schema.TypeSpec{Ref: refResource(randomSpec, "RandomBytes", "index", "randomBytes")},
+			TypeSpec: schema.TypeSpec{
+				Ref: refResource(randomSpec, "RandomBytes", "index", "randomBytes"),
+			},
 		},
 	}
 	maps.Copy(outputs, inputs)
