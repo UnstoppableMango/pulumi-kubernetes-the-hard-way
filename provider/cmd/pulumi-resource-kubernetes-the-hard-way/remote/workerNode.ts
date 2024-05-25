@@ -233,6 +233,7 @@ export class WorkerNode extends schema.WorkerNode {
     this.cniInstallDirectory = cniPluginsInstall.directory;
     this.cniLoopbackConfiguration = cniLoopbackConfiguration;
     this.cniLoopbackConfigurationFile = cniLoopbackConfigurationFile;
+    this.cniPluginsInstall = cniPluginsInstall;
     this.cniVersion = cniPluginsInstall.version;
     this.connection = connection;
     this.containerdConfiguration = containerdConfiguration;
@@ -281,6 +282,7 @@ export class WorkerNode extends schema.WorkerNode {
       cniInstallDirectory: this.cniInstallDirectory,
       cniLoopbackConfiguration,
       cniLoopbackConfigurationFile,
+      cniPluginsInstall,
       cniVersion: this.cniVersion,
       connection,
       containerdConfiguration,
@@ -289,11 +291,16 @@ export class WorkerNode extends schema.WorkerNode {
       containerdInstall,
       containerdInstallDirectory: this.containerdInstallDirectory,
       containerdMkdir,
+      containerdService,
       containerdVersion: this.containerdVersion,
       crictlInstall,
       crictlInstallDirectory: this.crictlInstallDirectory,
+      kubectlInstall,
       kubeletCertificatePath,
+      kubeletConfiguration,
       kubeletConfigurationDirectory,
+      kubeletConfigurationFile,
+      kubeletInstall,
       kubeletInstallDirectory: this.kubeletInstallDirectory,
       kubeletKubeconfigPath,
       kubeletMkdir,
