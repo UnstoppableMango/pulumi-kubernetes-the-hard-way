@@ -38,7 +38,7 @@ export class WorkerNode extends schema.WorkerNode {
     const kubeletCertificatePath = output(args.kubeletCertificatePath);
     const kubeletConfigurationDirectory = output(args.kubeletConfigurationDirectory ?? '/var/lib/kubelet');
     // const kubeletKubeconfigPath = output(args.kubeletKubeconfigPath ?? '/var/lib/kubelet/kubeconfig');
-    const kubeProxy = output(args.kubeProxy).apply(kubeProxyDefauls);
+    const kubeProxy = output(args.kubeProxy).apply(kubeProxyDefaults);
     const kubeletPrivateKeyPath = output(args.kubeletPrivateKeyPath);
     const kubeProxyConfigurationDirectory = output(args.kubeProxyConfigurationDirectory ?? '/var/lib/kube-proxy');
     // const kubeProxyKubeconfigPath = output(args.kubeProxyKubeconfigPath ?? '/var/lib/kube-proxy/kubeconfig');
@@ -105,10 +105,6 @@ export class WorkerNode extends schema.WorkerNode {
       architecture,
       directory: args.cniInstallDirectory,
       version: args.cniVersion,
-    }, { parent: this });
-
-    const cniBridgeConfiguration = new CniBridgePluginConfiguration(name, {
-      subnet,
     }, { parent: this });
 
     const cniBridgeConfigurationFile = new File(`${name}-cni-bridge`, {
@@ -323,6 +319,30 @@ export class WorkerNode extends schema.WorkerNode {
   }
 }
 
-function kubeProxyDefauls(input?: schema.KubeProxyConfigurationInputs): schema.KubeProxyConfigurationOutputs {
+function cniBridgeDefaults(input?: schema.CniBridgePluginConfigurationInputs): schema.CniBridgePluginConfigurationOutputs {
+  return {
+    bridge: output(input?.bridge ?? ''),
+    ipam: output(input?.ipam).apply(ipamDefaults),
+  };
+}
+
+function ipamDefaults(ipam?: schema.CniBridgeIpamInputs): schema.CniBridgeIpamOutputs {
+  const required = (x?: string): string => {
+    if (!x) throw new Error('');
+    return x;
+  }
+
+  return {
+    type: output(ipam?.type ?? 'host-local'),
+    ranges: output(ipam?.ranges).apply(x => x ?? [{
+      subnet: required(subnet),
+    }]),
+    routes: output(ipam?.routes).apply(x => x ?? [{
+      dst: '0.0.0.0/0',
+    }]),
+  };
+}
+
+function kubeProxyDefaults(input?: schema.KubeProxyConfigurationInputs): schema.KubeProxyConfigurationOutputs {
   return {};
 }
