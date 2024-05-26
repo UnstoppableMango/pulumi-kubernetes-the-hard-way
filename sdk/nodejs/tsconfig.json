@@ -32,6 +32,7 @@
         "remote/cniPluginsInstall.ts",
         "remote/containerdInstall.ts",
         "remote/containerdService.ts",
+        "remote/controlPlaneNode.ts",
         "remote/crictlInstall.ts",
         "remote/download.ts",
         "remote/etcdCluster.ts",

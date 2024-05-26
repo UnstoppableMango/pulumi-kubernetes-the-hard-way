@@ -2772,6 +2772,150 @@
             ],
             "isComponent": true
         },
+        "kubernetes-the-hard-way:remote:ControlPlaneNode": {
+            "description": "A kubernetes control plane node.",
+            "properties": {
+                "caCertificatePath": {
+                    "type": "string",
+                    "description": "The path to the root certificate authority certificate."
+                },
+                "caPrivateKeyPath": {
+                    "type": "string",
+                    "description": "The path to the root certificate authority private key."
+                },
+                "connection": {
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
+                    "description": "The parameters with which to connect to the remote host."
+                },
+                "encryptionConfigYaml": {
+                    "type": "string",
+                    "description": "The v1/EncryptionConfig yaml."
+                },
+                "kubeApiServerCertificatePath": {
+                    "type": "string",
+                    "description": "The path to the kube-apiserver certificate."
+                },
+                "kubeApiServerInstall": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:remote:KubeApiServerInstall",
+                    "description": "The kube-apiserver install."
+                },
+                "kubeApiServerPrivateKeyPath": {
+                    "type": "string",
+                    "description": "The path to the kube-apiserver private key."
+                },
+                "kubeApiServerService": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:remote:SystemdService",
+                    "description": "The kube-apiserver systemd service."
+                },
+                "kubeControllerManagerInstall": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:remote:KubeControllerManagerInstall",
+                    "description": "The kube-controller-manager install."
+                },
+                "kubeControllerManagerKubeconfigPath": {
+                    "type": "string",
+                    "description": "The path to the kube-controller-manager kubeconfig file."
+                },
+                "kubeControllerManagerService": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:remote:SystemdService",
+                    "description": "The kube-controller-manager systemd service."
+                },
+                "kubeSchedulerConfigYaml": {
+                    "type": "string",
+                    "description": "The kube-scheduler config yaml."
+                },
+                "kubeSchedulerInstall": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:remote:KubeSchedulerInstall",
+                    "description": "The kube-scheduler isntall."
+                },
+                "kubeSchedulerKubeconfigPath": {
+                    "type": "string",
+                    "description": "The path to the kube-scheduler kubeconfig file."
+                },
+                "kubeSchedulerService": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:remote:SystemdService",
+                    "description": "The kube-scheduler systemd service."
+                },
+                "kubectlInstall": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:remote:KubectlInstall",
+                    "description": "The kubectl install."
+                },
+                "kubernetesConfigurationMkdir": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mkdir",
+                    "description": "The kubernetes configuration mkdir operation."
+                },
+                "serviceAccountsCertificatePath": {
+                    "type": "string",
+                    "description": "The path to the service accounts certificate."
+                },
+                "serviceAccountsPrivateKeyPath": {
+                    "type": "string",
+                    "description": "The path to the service accounts private key."
+                },
+                "varLibKubernetesMkdir": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mkdir",
+                    "description": "The /var/lib/kubernetes mkdir operation."
+                }
+            },
+            "required": [
+                "connection",
+                "kubeApiServerInstall",
+                "kubeControllerManagerInstall",
+                "kubectlInstall",
+                "kubernetesConfigurationMkdir",
+                "kubeSchedulerInstall",
+                "varLibKubernetesMkdir"
+            ],
+            "inputProperties": {
+                "caCertificatePath": {
+                    "type": "string",
+                    "description": "The path to the root certificate authority certificate."
+                },
+                "caPrivateKeyPath": {
+                    "type": "string",
+                    "description": "The path to the root certificate authority private key."
+                },
+                "connection": {
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
+                    "description": "The parameters with which to connect to the remote host."
+                },
+                "encryptionConfigYaml": {
+                    "type": "string",
+                    "description": "The v1/EncryptionConfig yaml."
+                },
+                "kubeApiServerCertificatePath": {
+                    "type": "string",
+                    "description": "The path to the kube-apiserver certificate."
+                },
+                "kubeApiServerPrivateKeyPath": {
+                    "type": "string",
+                    "description": "The path to the kube-apiserver private key."
+                },
+                "kubeControllerManagerKubeconfigPath": {
+                    "type": "string",
+                    "description": "The path to the kube-controller-manager kubeconfig file."
+                },
+                "kubeSchedulerConfigYaml": {
+                    "type": "string",
+                    "description": "The kube-scheduler config yaml."
+                },
+                "kubeSchedulerKubeconfigPath": {
+                    "type": "string",
+                    "description": "The path to the kube-scheduler kubeconfig file."
+                },
+                "serviceAccountsCertificatePath": {
+                    "type": "string",
+                    "description": "The path to the service accounts certificate."
+                },
+                "serviceAccountsPrivateKeyPath": {
+                    "type": "string",
+                    "description": "The path to the service accounts private key."
+                }
+            },
+            "requiredInputs": [
+                "connection"
+            ],
+            "isComponent": true
+        },
         "kubernetes-the-hard-way:remote:CrictlInstall": {
             "description": "Installs crictl on a remote system",
             "properties": {
