@@ -58,6 +58,7 @@
         "remote/staticPod.ts",
         "remote/systemdService.ts",
         "remote/workerNode.ts",
+        "remote/workerPreRequisites.ts",
         "tls/certificate.ts",
         "tls/clusterPki.ts",
         "tls/encryptionKey.ts",

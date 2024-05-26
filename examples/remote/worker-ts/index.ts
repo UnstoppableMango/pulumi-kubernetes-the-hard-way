@@ -1,5 +1,11 @@
 import { Config } from '@pulumi/pulumi';
-import { ContainerdService, KubeletService, KubeProxyService, WorkerNode } from '@unmango/pulumi-kubernetes-the-hard-way/remote';
+import {
+  ContainerdService,
+  KubeletService,
+  KubeProxyService,
+  WorkerNode,
+  WorkerPreRequisites,
+} from '@unmango/pulumi-kubernetes-the-hard-way/remote';
 import { Mkdir } from '@unmango/pulumi-kubernetes-the-hard-way/tools';
 
 const config = new Config();
@@ -44,6 +50,10 @@ const kubeProxyService = new KubeProxyService('simple', {
   },
 });
 
+const prereqs = new WorkerPreRequisites('simple', {
+  connection,
+});
+
 const worker = new WorkerNode('simple', {
   connection,
   subnet: '0.0.0.0/24',
@@ -51,4 +61,4 @@ const worker = new WorkerNode('simple', {
   caPath: 'TODO',
   kubeletCertificatePath: 'TODO',
   kubeletPrivateKeyPath: 'TODO',
-});
+}, { dependsOn: prereqs });

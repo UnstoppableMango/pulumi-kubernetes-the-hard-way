@@ -40,6 +40,7 @@ export type ResourceConstructor = {
     readonly "kubernetes-the-hard-way:remote:StaticPod": ConstructComponent<StaticPod>;
     readonly "kubernetes-the-hard-way:remote:SystemdService": ConstructComponent<SystemdService>;
     readonly "kubernetes-the-hard-way:remote:WorkerNode": ConstructComponent<WorkerNode>;
+    readonly "kubernetes-the-hard-way:remote:WorkerPreRequisites": ConstructComponent<WorkerPreRequisites>;
     readonly "kubernetes-the-hard-way:tls:Certificate": ConstructComponent<Certificate>;
     readonly "kubernetes-the-hard-way:tls:ClusterPki": ConstructComponent<ClusterPki>;
     readonly "kubernetes-the-hard-way:tls:EncryptionKey": ConstructComponent<EncryptionKey>;
@@ -920,6 +921,21 @@ export interface WorkerNodeArgs {
     readonly kubeletPrivateKeyPath: pulumi.Input<string>;
     readonly kubernetesVersion?: pulumi.Input<string>;
     readonly subnet: pulumi.Input<string>;
+}
+export abstract class WorkerPreRequisites<TData = any> extends (pulumi.ComponentResource)<TData> {
+    public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
+    public conntrack!: command.remote.Command | pulumi.Output<command.remote.Command>;
+    public ipset!: command.remote.Command | pulumi.Output<command.remote.Command>;
+    public socat!: command.remote.Command | pulumi.Output<command.remote.Command>;
+    public swap!: command.remote.Command | pulumi.Output<command.remote.Command>;
+    public triggers?: any[] | pulumi.Output<any[]>;
+    constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
+        super("kubernetes-the-hard-way:remote:WorkerPreRequisites", name, opts.urn ? { connection: undefined, conntrack: undefined, ipset: undefined, socat: undefined, swap: undefined, triggers: undefined } : { name, args, opts }, opts);
+    }
+}
+export interface WorkerPreRequisitesArgs {
+    readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
+    readonly triggers?: pulumi.Input<pulumi.Input<any>[]>;
 }
 export abstract class Certificate<TData = any> extends (pulumi.ComponentResource)<TData> {
     public algorithm!: AlgorithmOutputs | pulumi.Output<AlgorithmOutputs>;

@@ -58,6 +58,7 @@
     "remote/staticPod.ts",
     "remote/systemdService.ts",
     "remote/workerNode.ts",
+    "remote/workerPreRequisites.ts",
     "resources.ts",
     "schema-types.ts",
     "tools/chmod.ts",

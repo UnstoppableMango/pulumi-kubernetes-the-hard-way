@@ -34,5 +34,6 @@ from .start_kubelet import *
 from .static_pod import *
 from .systemd_service import *
 from .worker_node import *
+from .worker_pre_requisites import *
 from ._inputs import *
 from . import outputs

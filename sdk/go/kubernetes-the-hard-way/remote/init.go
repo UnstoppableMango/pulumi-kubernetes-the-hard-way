@@ -77,6 +77,8 @@ func (m *module) Construct(ctx *pulumi.Context, name, typ, urn string) (r pulumi
 		r = &SystemdService{}
 	case "kubernetes-the-hard-way:remote:WorkerNode":
 		r = &WorkerNode{}
+	case "kubernetes-the-hard-way:remote:WorkerPreRequisites":
+		r = &WorkerPreRequisites{}
 	default:
 		return nil, fmt.Errorf("unknown resource type: %s", typ)
 	}

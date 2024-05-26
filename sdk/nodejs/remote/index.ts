@@ -145,6 +145,11 @@ export type WorkerNode = import("./workerNode").WorkerNode;
 export const WorkerNode: typeof import("./workerNode").WorkerNode = null as any;
 utilities.lazyLoad(exports, ["WorkerNode"], () => require("./workerNode"));
 
+export { WorkerPreRequisitesArgs } from "./workerPreRequisites";
+export type WorkerPreRequisites = import("./workerPreRequisites").WorkerPreRequisites;
+export const WorkerPreRequisites: typeof import("./workerPreRequisites").WorkerPreRequisites = null as any;
+utilities.lazyLoad(exports, ["WorkerPreRequisites"], () => require("./workerPreRequisites"));
+
 
 // Export enums:
 export * from "../types/enums/remote";
@@ -209,6 +214,8 @@ const _module = {
                 return new SystemdService(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:remote:WorkerNode":
                 return new WorkerNode(name, <any>undefined, { urn })
+            case "kubernetes-the-hard-way:remote:WorkerPreRequisites":
+                return new WorkerPreRequisites(name, <any>undefined, { urn })
             default:
                 throw new Error(`unknown resource type ${type}`);
         }

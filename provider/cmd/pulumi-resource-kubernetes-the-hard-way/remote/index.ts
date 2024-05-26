@@ -25,3 +25,4 @@ export * from './startKubeProxy';
 export * from './staticPod';
 export * from './systemdService';
 export * from './workerNode';
+export * from './workerPreRequisites';

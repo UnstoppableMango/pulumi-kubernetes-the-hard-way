@@ -71,7 +71,8 @@ _utilities.register(
    "kubernetes-the-hard-way:remote:StartKubelet": "StartKubelet",
    "kubernetes-the-hard-way:remote:StaticPod": "StaticPod",
    "kubernetes-the-hard-way:remote:SystemdService": "SystemdService",
-   "kubernetes-the-hard-way:remote:WorkerNode": "WorkerNode"
+   "kubernetes-the-hard-way:remote:WorkerNode": "WorkerNode",
+   "kubernetes-the-hard-way:remote:WorkerPreRequisites": "WorkerPreRequisites"
   }
  },
  {

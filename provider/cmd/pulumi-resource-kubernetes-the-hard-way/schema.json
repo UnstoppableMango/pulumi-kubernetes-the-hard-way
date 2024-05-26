@@ -5261,6 +5261,62 @@
             ],
             "isComponent": true
         },
+        "kubernetes-the-hard-way:remote:WorkerPreRequisites": {
+            "description": "Verifies that all worker node pre-requisites have been met.",
+            "properties": {
+                "connection": {
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
+                    "description": "The parameters with which to connect to the remote host."
+                },
+                "conntrack": {
+                    "$ref": "/command/v0.11.1/schema.json#/resources/command:remote:Command",
+                    "description": "Verifies that the conntrack binary exists."
+                },
+                "ipset": {
+                    "$ref": "/command/v0.11.1/schema.json#/resources/command:remote:Command",
+                    "description": "Verifies that the ipset binary exists."
+                },
+                "socat": {
+                    "$ref": "/command/v0.11.1/schema.json#/resources/command:remote:Command",
+                    "description": "Verifies that the socat binary exists."
+                },
+                "swap": {
+                    "$ref": "/command/v0.11.1/schema.json#/resources/command:remote:Command",
+                    "description": "Verifies that swap is disabled."
+                },
+                "triggers": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "pulumi.json#/Any"
+                    },
+                    "description": "Trigger recheck on changes to this input."
+                }
+            },
+            "required": [
+                "connection",
+                "conntrack",
+                "ipset",
+                "socat",
+                "swap"
+            ],
+            "inputProperties": {
+                "connection": {
+                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
+                    "description": "The parameters with which to connect to the remote host."
+                },
+                "triggers": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "pulumi.json#/Any"
+                    },
+                    "description": "Trigger recheck on changes to this input."
+                }
+            },
+            "requiredInputs": [
+                "connection"
+            ],
+            "isComponent": true
+        },
         "kubernetes-the-hard-way:tls:Certificate": {
             "description": "A certificate key pair.",
             "properties": {
@@ -5953,7 +6009,7 @@
                     "items": {
                         "$ref": "pulumi.json#/Any"
                     },
-                    "description": "TODO"
+                    "description": "Trigger replacements on changes to this input."
                 },
                 "update": {
                     "oneOf": [
@@ -6029,7 +6085,7 @@
                     "items": {
                         "$ref": "pulumi.json#/Any"
                     },
-                    "description": "TODO"
+                    "description": "Trigger replacements on changes to this input."
                 },
                 "update": {
                     "oneOf": [
@@ -6115,7 +6171,7 @@
                     "items": {
                         "$ref": "pulumi.json#/Any"
                     },
-                    "description": "TODO"
+                    "description": "Trigger replacements on changes to this input."
                 },
                 "update": {
                     "oneOf": [
@@ -6191,7 +6247,7 @@
                     "items": {
                         "$ref": "pulumi.json#/Any"
                     },
-                    "description": "TODO"
+                    "description": "Trigger replacements on changes to this input."
                 },
                 "update": {
                     "oneOf": [
@@ -6277,7 +6333,7 @@
                     "items": {
                         "$ref": "pulumi.json#/Any"
                     },
-                    "description": "TODO"
+                    "description": "Trigger replacements on changes to this input."
                 },
                 "update": {
                     "oneOf": [
@@ -6353,7 +6409,7 @@
                     "items": {
                         "$ref": "pulumi.json#/Any"
                     },
-                    "description": "TODO"
+                    "description": "Trigger replacements on changes to this input."
                 },
                 "update": {
                     "oneOf": [
@@ -6439,7 +6495,7 @@
                     "items": {
                         "$ref": "pulumi.json#/Any"
                     },
-                    "description": "TODO"
+                    "description": "Trigger replacements on changes to this input."
                 },
                 "update": {
                     "oneOf": [
@@ -6515,7 +6571,7 @@
                     "items": {
                         "$ref": "pulumi.json#/Any"
                     },
-                    "description": "TODO"
+                    "description": "Trigger replacements on changes to this input."
                 },
                 "update": {
                     "oneOf": [
@@ -6601,7 +6657,7 @@
                     "items": {
                         "$ref": "pulumi.json#/Any"
                     },
-                    "description": "TODO"
+                    "description": "Trigger replacements on changes to this input."
                 },
                 "update": {
                     "oneOf": [
@@ -6677,7 +6733,7 @@
                     "items": {
                         "$ref": "pulumi.json#/Any"
                     },
-                    "description": "TODO"
+                    "description": "Trigger replacements on changes to this input."
                 },
                 "update": {
                     "oneOf": [
@@ -6763,7 +6819,7 @@
                     "items": {
                         "$ref": "pulumi.json#/Any"
                     },
-                    "description": "TODO"
+                    "description": "Trigger replacements on changes to this input."
                 },
                 "update": {
                     "oneOf": [
@@ -6839,7 +6895,7 @@
                     "items": {
                         "$ref": "pulumi.json#/Any"
                     },
-                    "description": "TODO"
+                    "description": "Trigger replacements on changes to this input."
                 },
                 "update": {
                     "oneOf": [
@@ -6925,7 +6981,7 @@
                     "items": {
                         "$ref": "pulumi.json#/Any"
                     },
-                    "description": "TODO"
+                    "description": "Trigger replacements on changes to this input."
                 },
                 "update": {
                     "oneOf": [
@@ -7001,7 +7057,7 @@
                     "items": {
                         "$ref": "pulumi.json#/Any"
                     },
-                    "description": "TODO"
+                    "description": "Trigger replacements on changes to this input."
                 },
                 "update": {
                     "oneOf": [
@@ -7087,7 +7143,7 @@
                     "items": {
                         "$ref": "pulumi.json#/Any"
                     },
-                    "description": "TODO"
+                    "description": "Trigger replacements on changes to this input."
                 },
                 "update": {
                     "oneOf": [
@@ -7163,7 +7219,7 @@
                     "items": {
                         "$ref": "pulumi.json#/Any"
                     },
-                    "description": "TODO"
+                    "description": "Trigger replacements on changes to this input."
                 },
                 "update": {
                     "oneOf": [
@@ -7249,7 +7305,7 @@
                     "items": {
                         "$ref": "pulumi.json#/Any"
                     },
-                    "description": "TODO"
+                    "description": "Trigger replacements on changes to this input."
                 },
                 "update": {
                     "oneOf": [
@@ -7325,7 +7381,7 @@
                     "items": {
                         "$ref": "pulumi.json#/Any"
                     },
-                    "description": "TODO"
+                    "description": "Trigger replacements on changes to this input."
                 },
                 "update": {
                     "oneOf": [
@@ -7411,7 +7467,7 @@
                     "items": {
                         "$ref": "pulumi.json#/Any"
                     },
-                    "description": "TODO"
+                    "description": "Trigger replacements on changes to this input."
                 },
                 "update": {
                     "oneOf": [
@@ -7487,7 +7543,7 @@
                     "items": {
                         "$ref": "pulumi.json#/Any"
                     },
-                    "description": "TODO"
+                    "description": "Trigger replacements on changes to this input."
                 },
                 "update": {
                     "oneOf": [
@@ -7573,7 +7629,7 @@
                     "items": {
                         "$ref": "pulumi.json#/Any"
                     },
-                    "description": "TODO"
+                    "description": "Trigger replacements on changes to this input."
                 },
                 "update": {
                     "oneOf": [
@@ -7649,7 +7705,7 @@
                     "items": {
                         "$ref": "pulumi.json#/Any"
                     },
-                    "description": "TODO"
+                    "description": "Trigger replacements on changes to this input."
                 },
                 "update": {
                     "oneOf": [
@@ -7735,7 +7791,7 @@
                     "items": {
                         "$ref": "pulumi.json#/Any"
                     },
-                    "description": "TODO"
+                    "description": "Trigger replacements on changes to this input."
                 },
                 "update": {
                     "oneOf": [
@@ -7811,7 +7867,7 @@
                     "items": {
                         "$ref": "pulumi.json#/Any"
                     },
-                    "description": "TODO"
+                    "description": "Trigger replacements on changes to this input."
                 },
                 "update": {
                     "oneOf": [
