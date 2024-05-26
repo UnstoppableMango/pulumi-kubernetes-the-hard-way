@@ -28,6 +28,7 @@ import {
   StaticPod,
   SystemdService,
   WorkerNode,
+  WorkerPreRequisites,
 } from './remote';
 import { ProvisionEtcd } from './remote/provisionEtcd';
 import { Certificate, ClusterPki, EncryptionKey, RootCa } from './tls';
@@ -76,6 +77,7 @@ const resources: schema.ResourceConstructor = {
   'kubernetes-the-hard-way:remote:StaticPod': (...args) => new StaticPod(...args),
   'kubernetes-the-hard-way:remote:SystemdService': (...args) => new SystemdService(...args),
   'kubernetes-the-hard-way:remote:WorkerNode': (...args) => new WorkerNode(...args),
+  'kubernetes-the-hard-way:remote:WorkerPreRequisites': (...args) => new WorkerPreRequisites(...args),
   'kubernetes-the-hard-way:tls:Certificate': (...args) => new Certificate(...args),
   'kubernetes-the-hard-way:tls:ClusterPki': (...args) => new ClusterPki(...args),
   'kubernetes-the-hard-way:tls:EncryptionKey': (...args) => new EncryptionKey(...args),
