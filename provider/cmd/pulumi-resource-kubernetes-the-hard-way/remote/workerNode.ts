@@ -1,6 +1,5 @@
 import { ComponentResourceOptions, interpolate, output } from '@pulumi/pulumi';
 import * as schema from '../schema-types';
-import { CniPluginsInstall } from './cniPlugins';
 import { Mkdir } from '../tools';
 import {
   CniBridgePluginConfiguration,
@@ -9,15 +8,16 @@ import {
   KubeProxyConfiguration,
   KubeletConfiguration,
 } from '../config';
-import { File } from './file';
-import { ContainerdInstall } from './containerd';
+import { CniPluginsInstall } from './cniPluginsInstall';
+import { ContainerdInstall } from './containerdInstall';
 import { ContainerdService } from './containerdService';
-import { CrictlInstall } from './crictl';
-import { KubectlInstall } from './kubectl';
-import { KubeletInstall } from './kubelet';
+import { CrictlInstall } from './crictlInstall';
+import { File } from './file';
+import { KubectlInstall } from './kubectlInstall';
+import { KubeletInstall } from './kubeletInstall';
 import { KubeletService } from './kubeletService';
 import { KubeProxyService } from './kubeProxyService';
-import { KubeProxyInstall } from './kubeProxy';
+import { KubeProxyInstall } from './kubeProxyInstall';
 
 export class WorkerNode extends schema.WorkerNode {
   constructor(name: string, args: schema.WorkerNodeArgs, opts?: ComponentResourceOptions) {
