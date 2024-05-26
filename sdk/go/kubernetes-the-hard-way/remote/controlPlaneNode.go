@@ -18,44 +18,68 @@ import (
 type ControlPlaneNode struct {
 	pulumi.ResourceState
 
+	// The number of kube-apiserver instance.
+	ApiServerCount pulumi.IntOutput `pulumi:"apiServerCount"`
+	// The node's CPU architecture.
+	Architecture ArchitectureOutput `pulumi:"architecture"`
+	// The path to store the audit log file.
+	AudiLogPath pulumi.StringPtrOutput `pulumi:"audiLogPath"`
 	// The path to the root certificate authority certificate.
-	CaCertificatePath pulumi.StringPtrOutput `pulumi:"caCertificatePath"`
+	CaCertificatePath pulumi.StringOutput `pulumi:"caCertificatePath"`
 	// The path to the root certificate authority private key.
-	CaPrivateKeyPath pulumi.StringPtrOutput `pulumi:"caPrivateKeyPath"`
+	CaPrivateKeyPath pulumi.StringOutput `pulumi:"caPrivateKeyPath"`
+	// The cluster CIDR.
+	ClusterCIDR pulumi.StringPtrOutput `pulumi:"clusterCIDR"`
+	// The cluster name.
+	ClusterName pulumi.StringPtrOutput `pulumi:"clusterName"`
 	// The parameters with which to connect to the remote host.
 	Connection pulumiCommand.ConnectionOutput `pulumi:"connection"`
 	// The v1/EncryptionConfig yaml.
-	EncryptionConfigYaml pulumi.StringPtrOutput `pulumi:"encryptionConfigYaml"`
+	EncryptionConfigYaml pulumi.StringOutput `pulumi:"encryptionConfigYaml"`
 	// The path to the kube-apiserver certificate.
-	KubeApiServerCertificatePath pulumi.StringPtrOutput `pulumi:"kubeApiServerCertificatePath"`
+	KubeApiServerCertificatePath pulumi.StringOutput `pulumi:"kubeApiServerCertificatePath"`
 	// The kube-apiserver install.
 	KubeApiServerInstall KubeApiServerInstallOutput `pulumi:"kubeApiServerInstall"`
+	// The directory to store the kube-apiserver binary.
+	KubeApiServerInstallDirectory pulumi.StringPtrOutput `pulumi:"kubeApiServerInstallDirectory"`
 	// The path to the kube-apiserver private key.
-	KubeApiServerPrivateKeyPath pulumi.StringPtrOutput `pulumi:"kubeApiServerPrivateKeyPath"`
+	KubeApiServerPrivateKeyPath pulumi.StringOutput `pulumi:"kubeApiServerPrivateKeyPath"`
 	// The kube-apiserver systemd service.
 	KubeApiServerService SystemdServiceOutput `pulumi:"kubeApiServerService"`
 	// The kube-controller-manager install.
 	KubeControllerManagerInstall KubeControllerManagerInstallOutput `pulumi:"kubeControllerManagerInstall"`
+	// The directory to store the kube-controller-manager binary.
+	KubeControllerManagerInstallDirectory pulumi.StringPtrOutput `pulumi:"kubeControllerManagerInstallDirectory"`
 	// The path to the kube-controller-manager kubeconfig file.
-	KubeControllerManagerKubeconfigPath pulumi.StringPtrOutput `pulumi:"kubeControllerManagerKubeconfigPath"`
+	KubeControllerManagerKubeconfigPath pulumi.StringOutput `pulumi:"kubeControllerManagerKubeconfigPath"`
 	// The kube-controller-manager systemd service.
 	KubeControllerManagerService SystemdServiceOutput `pulumi:"kubeControllerManagerService"`
 	// The kube-scheduler config yaml.
-	KubeSchedulerConfigYaml pulumi.StringPtrOutput `pulumi:"kubeSchedulerConfigYaml"`
+	KubeSchedulerConfigYaml pulumi.StringOutput `pulumi:"kubeSchedulerConfigYaml"`
 	// The kube-scheduler isntall.
 	KubeSchedulerInstall KubeSchedulerInstallOutput `pulumi:"kubeSchedulerInstall"`
+	// The directory to store the kube-scheduler binary.
+	KubeSchedulerInstallDirectory pulumi.StringPtrOutput `pulumi:"kubeSchedulerInstallDirectory"`
 	// The path to the kube-scheduler kubeconfig file.
-	KubeSchedulerKubeconfigPath pulumi.StringPtrOutput `pulumi:"kubeSchedulerKubeconfigPath"`
+	KubeSchedulerKubeconfigPath pulumi.StringOutput `pulumi:"kubeSchedulerKubeconfigPath"`
 	// The kube-scheduler systemd service.
 	KubeSchedulerService SystemdServiceOutput `pulumi:"kubeSchedulerService"`
 	// The kubectl install.
 	KubectlInstall KubectlInstallOutput `pulumi:"kubectlInstall"`
+	// The path to store the kubectl binary.
+	KubectlInstallDirectory pulumi.StringPtrOutput `pulumi:"kubectlInstallDirectory"`
 	// The kubernetes configuration mkdir operation.
 	KubernetesConfigurationMkdir tools.MkdirOutput `pulumi:"kubernetesConfigurationMkdir"`
+	// The version of kubernetes to use.
+	KubernetesVersion pulumi.StringPtrOutput `pulumi:"kubernetesVersion"`
+	// The name of the node.
+	NodeName pulumi.StringPtrOutput `pulumi:"nodeName"`
 	// The path to the service accounts certificate.
-	ServiceAccountsCertificatePath pulumi.StringPtrOutput `pulumi:"serviceAccountsCertificatePath"`
+	ServiceAccountsCertificatePath pulumi.StringOutput `pulumi:"serviceAccountsCertificatePath"`
 	// The path to the service accounts private key.
-	ServiceAccountsPrivateKeyPath pulumi.StringPtrOutput `pulumi:"serviceAccountsPrivateKeyPath"`
+	ServiceAccountsPrivateKeyPath pulumi.StringOutput `pulumi:"serviceAccountsPrivateKeyPath"`
+	// The IP range to use for cluster services.
+	ServiceClusterIpRange pulumi.StringPtrOutput `pulumi:"serviceClusterIpRange"`
 	// The /var/lib/kubernetes mkdir operation.
 	VarLibKubernetesMkdir tools.MkdirOutput `pulumi:"varLibKubernetesMkdir"`
 }
@@ -67,8 +91,44 @@ func NewControlPlaneNode(ctx *pulumi.Context,
 		return nil, errors.New("missing one or more required arguments")
 	}
 
+	if args.ApiServerCount == nil {
+		return nil, errors.New("invalid value for required argument 'ApiServerCount'")
+	}
+	if args.Architecture == nil {
+		return nil, errors.New("invalid value for required argument 'Architecture'")
+	}
+	if args.CaCertificatePath == nil {
+		return nil, errors.New("invalid value for required argument 'CaCertificatePath'")
+	}
+	if args.CaPrivateKeyPath == nil {
+		return nil, errors.New("invalid value for required argument 'CaPrivateKeyPath'")
+	}
 	if args.Connection == nil {
 		return nil, errors.New("invalid value for required argument 'Connection'")
+	}
+	if args.EncryptionConfigYaml == nil {
+		return nil, errors.New("invalid value for required argument 'EncryptionConfigYaml'")
+	}
+	if args.KubeApiServerCertificatePath == nil {
+		return nil, errors.New("invalid value for required argument 'KubeApiServerCertificatePath'")
+	}
+	if args.KubeApiServerPrivateKeyPath == nil {
+		return nil, errors.New("invalid value for required argument 'KubeApiServerPrivateKeyPath'")
+	}
+	if args.KubeControllerManagerKubeconfigPath == nil {
+		return nil, errors.New("invalid value for required argument 'KubeControllerManagerKubeconfigPath'")
+	}
+	if args.KubeSchedulerConfigYaml == nil {
+		return nil, errors.New("invalid value for required argument 'KubeSchedulerConfigYaml'")
+	}
+	if args.KubeSchedulerKubeconfigPath == nil {
+		return nil, errors.New("invalid value for required argument 'KubeSchedulerKubeconfigPath'")
+	}
+	if args.ServiceAccountsCertificatePath == nil {
+		return nil, errors.New("invalid value for required argument 'ServiceAccountsCertificatePath'")
+	}
+	if args.ServiceAccountsPrivateKeyPath == nil {
+		return nil, errors.New("invalid value for required argument 'ServiceAccountsPrivateKeyPath'")
 	}
 	args.Connection = args.Connection.ToConnectionOutput().ApplyT(func(v pulumiCommand.Connection) pulumiCommand.Connection { return *v.Defaults() }).(pulumiCommand.ConnectionOutput)
 	opts = internal.PkgResourceDefaultOpts(opts)
@@ -81,54 +141,102 @@ func NewControlPlaneNode(ctx *pulumi.Context,
 }
 
 type controlPlaneNodeArgs struct {
+	// The number of kube-apiserver instance.
+	ApiServerCount int `pulumi:"apiServerCount"`
+	// The node's CPU architecture.
+	Architecture Architecture `pulumi:"architecture"`
+	// The path to store the audit log file.
+	AudiLogPath *string `pulumi:"audiLogPath"`
 	// The path to the root certificate authority certificate.
-	CaCertificatePath *string `pulumi:"caCertificatePath"`
+	CaCertificatePath string `pulumi:"caCertificatePath"`
 	// The path to the root certificate authority private key.
-	CaPrivateKeyPath *string `pulumi:"caPrivateKeyPath"`
+	CaPrivateKeyPath string `pulumi:"caPrivateKeyPath"`
+	// The cluster CIDR.
+	ClusterCIDR *string `pulumi:"clusterCIDR"`
+	// The cluster name.
+	ClusterName *string `pulumi:"clusterName"`
 	// The parameters with which to connect to the remote host.
 	Connection pulumiCommand.Connection `pulumi:"connection"`
 	// The v1/EncryptionConfig yaml.
-	EncryptionConfigYaml *string `pulumi:"encryptionConfigYaml"`
+	EncryptionConfigYaml string `pulumi:"encryptionConfigYaml"`
 	// The path to the kube-apiserver certificate.
-	KubeApiServerCertificatePath *string `pulumi:"kubeApiServerCertificatePath"`
+	KubeApiServerCertificatePath string `pulumi:"kubeApiServerCertificatePath"`
+	// The directory to store the kube-apiserver binary.
+	KubeApiServerInstallDirectory *string `pulumi:"kubeApiServerInstallDirectory"`
 	// The path to the kube-apiserver private key.
-	KubeApiServerPrivateKeyPath *string `pulumi:"kubeApiServerPrivateKeyPath"`
+	KubeApiServerPrivateKeyPath string `pulumi:"kubeApiServerPrivateKeyPath"`
+	// The directory to store the kube-controller-manager binary.
+	KubeControllerManagerInstallDirectory *string `pulumi:"kubeControllerManagerInstallDirectory"`
 	// The path to the kube-controller-manager kubeconfig file.
-	KubeControllerManagerKubeconfigPath *string `pulumi:"kubeControllerManagerKubeconfigPath"`
+	KubeControllerManagerKubeconfigPath string `pulumi:"kubeControllerManagerKubeconfigPath"`
 	// The kube-scheduler config yaml.
-	KubeSchedulerConfigYaml *string `pulumi:"kubeSchedulerConfigYaml"`
+	KubeSchedulerConfigYaml string `pulumi:"kubeSchedulerConfigYaml"`
+	// The directory to store the kube-scheduler binary.
+	KubeSchedulerInstallDirectory *string `pulumi:"kubeSchedulerInstallDirectory"`
 	// The path to the kube-scheduler kubeconfig file.
-	KubeSchedulerKubeconfigPath *string `pulumi:"kubeSchedulerKubeconfigPath"`
+	KubeSchedulerKubeconfigPath string `pulumi:"kubeSchedulerKubeconfigPath"`
+	// The path to store the kubectl binary.
+	KubectlInstallDirectory *string `pulumi:"kubectlInstallDirectory"`
+	// The version of kubernetes to use.
+	KubernetesVersion *string `pulumi:"kubernetesVersion"`
+	// The name of the node.
+	NodeName *string `pulumi:"nodeName"`
 	// The path to the service accounts certificate.
-	ServiceAccountsCertificatePath *string `pulumi:"serviceAccountsCertificatePath"`
+	ServiceAccountsCertificatePath string `pulumi:"serviceAccountsCertificatePath"`
 	// The path to the service accounts private key.
-	ServiceAccountsPrivateKeyPath *string `pulumi:"serviceAccountsPrivateKeyPath"`
+	ServiceAccountsPrivateKeyPath string `pulumi:"serviceAccountsPrivateKeyPath"`
+	// The IP range to use for cluster services.
+	ServiceClusterIpRange *string `pulumi:"serviceClusterIpRange"`
 }
 
 // The set of arguments for constructing a ControlPlaneNode resource.
 type ControlPlaneNodeArgs struct {
+	// The number of kube-apiserver instance.
+	ApiServerCount pulumi.IntInput
+	// The node's CPU architecture.
+	Architecture ArchitectureInput
+	// The path to store the audit log file.
+	AudiLogPath pulumi.StringPtrInput
 	// The path to the root certificate authority certificate.
-	CaCertificatePath pulumi.StringPtrInput
+	CaCertificatePath pulumi.StringInput
 	// The path to the root certificate authority private key.
-	CaPrivateKeyPath pulumi.StringPtrInput
+	CaPrivateKeyPath pulumi.StringInput
+	// The cluster CIDR.
+	ClusterCIDR pulumi.StringPtrInput
+	// The cluster name.
+	ClusterName pulumi.StringPtrInput
 	// The parameters with which to connect to the remote host.
 	Connection pulumiCommand.ConnectionInput
 	// The v1/EncryptionConfig yaml.
-	EncryptionConfigYaml pulumi.StringPtrInput
+	EncryptionConfigYaml pulumi.StringInput
 	// The path to the kube-apiserver certificate.
-	KubeApiServerCertificatePath pulumi.StringPtrInput
+	KubeApiServerCertificatePath pulumi.StringInput
+	// The directory to store the kube-apiserver binary.
+	KubeApiServerInstallDirectory pulumi.StringPtrInput
 	// The path to the kube-apiserver private key.
-	KubeApiServerPrivateKeyPath pulumi.StringPtrInput
+	KubeApiServerPrivateKeyPath pulumi.StringInput
+	// The directory to store the kube-controller-manager binary.
+	KubeControllerManagerInstallDirectory pulumi.StringPtrInput
 	// The path to the kube-controller-manager kubeconfig file.
-	KubeControllerManagerKubeconfigPath pulumi.StringPtrInput
+	KubeControllerManagerKubeconfigPath pulumi.StringInput
 	// The kube-scheduler config yaml.
-	KubeSchedulerConfigYaml pulumi.StringPtrInput
+	KubeSchedulerConfigYaml pulumi.StringInput
+	// The directory to store the kube-scheduler binary.
+	KubeSchedulerInstallDirectory pulumi.StringPtrInput
 	// The path to the kube-scheduler kubeconfig file.
-	KubeSchedulerKubeconfigPath pulumi.StringPtrInput
+	KubeSchedulerKubeconfigPath pulumi.StringInput
+	// The path to store the kubectl binary.
+	KubectlInstallDirectory pulumi.StringPtrInput
+	// The version of kubernetes to use.
+	KubernetesVersion pulumi.StringPtrInput
+	// The name of the node.
+	NodeName pulumi.StringPtrInput
 	// The path to the service accounts certificate.
-	ServiceAccountsCertificatePath pulumi.StringPtrInput
+	ServiceAccountsCertificatePath pulumi.StringInput
 	// The path to the service accounts private key.
-	ServiceAccountsPrivateKeyPath pulumi.StringPtrInput
+	ServiceAccountsPrivateKeyPath pulumi.StringInput
+	// The IP range to use for cluster services.
+	ServiceClusterIpRange pulumi.StringPtrInput
 }
 
 func (ControlPlaneNodeArgs) ElementType() reflect.Type {
@@ -218,14 +326,39 @@ func (o ControlPlaneNodeOutput) ToControlPlaneNodeOutputWithContext(ctx context.
 	return o
 }
 
+// The number of kube-apiserver instance.
+func (o ControlPlaneNodeOutput) ApiServerCount() pulumi.IntOutput {
+	return o.ApplyT(func(v *ControlPlaneNode) pulumi.IntOutput { return v.ApiServerCount }).(pulumi.IntOutput)
+}
+
+// The node's CPU architecture.
+func (o ControlPlaneNodeOutput) Architecture() ArchitectureOutput {
+	return o.ApplyT(func(v *ControlPlaneNode) ArchitectureOutput { return v.Architecture }).(ArchitectureOutput)
+}
+
+// The path to store the audit log file.
+func (o ControlPlaneNodeOutput) AudiLogPath() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *ControlPlaneNode) pulumi.StringPtrOutput { return v.AudiLogPath }).(pulumi.StringPtrOutput)
+}
+
 // The path to the root certificate authority certificate.
-func (o ControlPlaneNodeOutput) CaCertificatePath() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *ControlPlaneNode) pulumi.StringPtrOutput { return v.CaCertificatePath }).(pulumi.StringPtrOutput)
+func (o ControlPlaneNodeOutput) CaCertificatePath() pulumi.StringOutput {
+	return o.ApplyT(func(v *ControlPlaneNode) pulumi.StringOutput { return v.CaCertificatePath }).(pulumi.StringOutput)
 }
 
 // The path to the root certificate authority private key.
-func (o ControlPlaneNodeOutput) CaPrivateKeyPath() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *ControlPlaneNode) pulumi.StringPtrOutput { return v.CaPrivateKeyPath }).(pulumi.StringPtrOutput)
+func (o ControlPlaneNodeOutput) CaPrivateKeyPath() pulumi.StringOutput {
+	return o.ApplyT(func(v *ControlPlaneNode) pulumi.StringOutput { return v.CaPrivateKeyPath }).(pulumi.StringOutput)
+}
+
+// The cluster CIDR.
+func (o ControlPlaneNodeOutput) ClusterCIDR() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *ControlPlaneNode) pulumi.StringPtrOutput { return v.ClusterCIDR }).(pulumi.StringPtrOutput)
+}
+
+// The cluster name.
+func (o ControlPlaneNodeOutput) ClusterName() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *ControlPlaneNode) pulumi.StringPtrOutput { return v.ClusterName }).(pulumi.StringPtrOutput)
 }
 
 // The parameters with which to connect to the remote host.
@@ -234,13 +367,13 @@ func (o ControlPlaneNodeOutput) Connection() pulumiCommand.ConnectionOutput {
 }
 
 // The v1/EncryptionConfig yaml.
-func (o ControlPlaneNodeOutput) EncryptionConfigYaml() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *ControlPlaneNode) pulumi.StringPtrOutput { return v.EncryptionConfigYaml }).(pulumi.StringPtrOutput)
+func (o ControlPlaneNodeOutput) EncryptionConfigYaml() pulumi.StringOutput {
+	return o.ApplyT(func(v *ControlPlaneNode) pulumi.StringOutput { return v.EncryptionConfigYaml }).(pulumi.StringOutput)
 }
 
 // The path to the kube-apiserver certificate.
-func (o ControlPlaneNodeOutput) KubeApiServerCertificatePath() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *ControlPlaneNode) pulumi.StringPtrOutput { return v.KubeApiServerCertificatePath }).(pulumi.StringPtrOutput)
+func (o ControlPlaneNodeOutput) KubeApiServerCertificatePath() pulumi.StringOutput {
+	return o.ApplyT(func(v *ControlPlaneNode) pulumi.StringOutput { return v.KubeApiServerCertificatePath }).(pulumi.StringOutput)
 }
 
 // The kube-apiserver install.
@@ -248,9 +381,14 @@ func (o ControlPlaneNodeOutput) KubeApiServerInstall() KubeApiServerInstallOutpu
 	return o.ApplyT(func(v *ControlPlaneNode) KubeApiServerInstallOutput { return v.KubeApiServerInstall }).(KubeApiServerInstallOutput)
 }
 
+// The directory to store the kube-apiserver binary.
+func (o ControlPlaneNodeOutput) KubeApiServerInstallDirectory() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *ControlPlaneNode) pulumi.StringPtrOutput { return v.KubeApiServerInstallDirectory }).(pulumi.StringPtrOutput)
+}
+
 // The path to the kube-apiserver private key.
-func (o ControlPlaneNodeOutput) KubeApiServerPrivateKeyPath() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *ControlPlaneNode) pulumi.StringPtrOutput { return v.KubeApiServerPrivateKeyPath }).(pulumi.StringPtrOutput)
+func (o ControlPlaneNodeOutput) KubeApiServerPrivateKeyPath() pulumi.StringOutput {
+	return o.ApplyT(func(v *ControlPlaneNode) pulumi.StringOutput { return v.KubeApiServerPrivateKeyPath }).(pulumi.StringOutput)
 }
 
 // The kube-apiserver systemd service.
@@ -263,9 +401,14 @@ func (o ControlPlaneNodeOutput) KubeControllerManagerInstall() KubeControllerMan
 	return o.ApplyT(func(v *ControlPlaneNode) KubeControllerManagerInstallOutput { return v.KubeControllerManagerInstall }).(KubeControllerManagerInstallOutput)
 }
 
+// The directory to store the kube-controller-manager binary.
+func (o ControlPlaneNodeOutput) KubeControllerManagerInstallDirectory() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *ControlPlaneNode) pulumi.StringPtrOutput { return v.KubeControllerManagerInstallDirectory }).(pulumi.StringPtrOutput)
+}
+
 // The path to the kube-controller-manager kubeconfig file.
-func (o ControlPlaneNodeOutput) KubeControllerManagerKubeconfigPath() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *ControlPlaneNode) pulumi.StringPtrOutput { return v.KubeControllerManagerKubeconfigPath }).(pulumi.StringPtrOutput)
+func (o ControlPlaneNodeOutput) KubeControllerManagerKubeconfigPath() pulumi.StringOutput {
+	return o.ApplyT(func(v *ControlPlaneNode) pulumi.StringOutput { return v.KubeControllerManagerKubeconfigPath }).(pulumi.StringOutput)
 }
 
 // The kube-controller-manager systemd service.
@@ -274,8 +417,8 @@ func (o ControlPlaneNodeOutput) KubeControllerManagerService() SystemdServiceOut
 }
 
 // The kube-scheduler config yaml.
-func (o ControlPlaneNodeOutput) KubeSchedulerConfigYaml() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *ControlPlaneNode) pulumi.StringPtrOutput { return v.KubeSchedulerConfigYaml }).(pulumi.StringPtrOutput)
+func (o ControlPlaneNodeOutput) KubeSchedulerConfigYaml() pulumi.StringOutput {
+	return o.ApplyT(func(v *ControlPlaneNode) pulumi.StringOutput { return v.KubeSchedulerConfigYaml }).(pulumi.StringOutput)
 }
 
 // The kube-scheduler isntall.
@@ -283,9 +426,14 @@ func (o ControlPlaneNodeOutput) KubeSchedulerInstall() KubeSchedulerInstallOutpu
 	return o.ApplyT(func(v *ControlPlaneNode) KubeSchedulerInstallOutput { return v.KubeSchedulerInstall }).(KubeSchedulerInstallOutput)
 }
 
+// The directory to store the kube-scheduler binary.
+func (o ControlPlaneNodeOutput) KubeSchedulerInstallDirectory() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *ControlPlaneNode) pulumi.StringPtrOutput { return v.KubeSchedulerInstallDirectory }).(pulumi.StringPtrOutput)
+}
+
 // The path to the kube-scheduler kubeconfig file.
-func (o ControlPlaneNodeOutput) KubeSchedulerKubeconfigPath() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *ControlPlaneNode) pulumi.StringPtrOutput { return v.KubeSchedulerKubeconfigPath }).(pulumi.StringPtrOutput)
+func (o ControlPlaneNodeOutput) KubeSchedulerKubeconfigPath() pulumi.StringOutput {
+	return o.ApplyT(func(v *ControlPlaneNode) pulumi.StringOutput { return v.KubeSchedulerKubeconfigPath }).(pulumi.StringOutput)
 }
 
 // The kube-scheduler systemd service.
@@ -298,19 +446,39 @@ func (o ControlPlaneNodeOutput) KubectlInstall() KubectlInstallOutput {
 	return o.ApplyT(func(v *ControlPlaneNode) KubectlInstallOutput { return v.KubectlInstall }).(KubectlInstallOutput)
 }
 
+// The path to store the kubectl binary.
+func (o ControlPlaneNodeOutput) KubectlInstallDirectory() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *ControlPlaneNode) pulumi.StringPtrOutput { return v.KubectlInstallDirectory }).(pulumi.StringPtrOutput)
+}
+
 // The kubernetes configuration mkdir operation.
 func (o ControlPlaneNodeOutput) KubernetesConfigurationMkdir() tools.MkdirOutput {
 	return o.ApplyT(func(v *ControlPlaneNode) tools.MkdirOutput { return v.KubernetesConfigurationMkdir }).(tools.MkdirOutput)
 }
 
+// The version of kubernetes to use.
+func (o ControlPlaneNodeOutput) KubernetesVersion() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *ControlPlaneNode) pulumi.StringPtrOutput { return v.KubernetesVersion }).(pulumi.StringPtrOutput)
+}
+
+// The name of the node.
+func (o ControlPlaneNodeOutput) NodeName() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *ControlPlaneNode) pulumi.StringPtrOutput { return v.NodeName }).(pulumi.StringPtrOutput)
+}
+
 // The path to the service accounts certificate.
-func (o ControlPlaneNodeOutput) ServiceAccountsCertificatePath() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *ControlPlaneNode) pulumi.StringPtrOutput { return v.ServiceAccountsCertificatePath }).(pulumi.StringPtrOutput)
+func (o ControlPlaneNodeOutput) ServiceAccountsCertificatePath() pulumi.StringOutput {
+	return o.ApplyT(func(v *ControlPlaneNode) pulumi.StringOutput { return v.ServiceAccountsCertificatePath }).(pulumi.StringOutput)
 }
 
 // The path to the service accounts private key.
-func (o ControlPlaneNodeOutput) ServiceAccountsPrivateKeyPath() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *ControlPlaneNode) pulumi.StringPtrOutput { return v.ServiceAccountsPrivateKeyPath }).(pulumi.StringPtrOutput)
+func (o ControlPlaneNodeOutput) ServiceAccountsPrivateKeyPath() pulumi.StringOutput {
+	return o.ApplyT(func(v *ControlPlaneNode) pulumi.StringOutput { return v.ServiceAccountsPrivateKeyPath }).(pulumi.StringOutput)
+}
+
+// The IP range to use for cluster services.
+func (o ControlPlaneNodeOutput) ServiceClusterIpRange() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *ControlPlaneNode) pulumi.StringPtrOutput { return v.ServiceClusterIpRange }).(pulumi.StringPtrOutput)
 }
 
 // The /var/lib/kubernetes mkdir operation.

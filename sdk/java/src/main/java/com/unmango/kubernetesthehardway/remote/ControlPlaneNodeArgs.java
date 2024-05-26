@@ -7,6 +7,8 @@ import com.pulumi.command.remote.inputs.ConnectionArgs;
 import com.pulumi.core.Output;
 import com.pulumi.core.annotations.Import;
 import com.pulumi.exceptions.MissingRequiredPropertyException;
+import com.unmango.kubernetesthehardway.remote.enums.Architecture;
+import java.lang.Integer;
 import java.lang.String;
 import java.util.Objects;
 import java.util.Optional;
@@ -18,33 +20,108 @@ public final class ControlPlaneNodeArgs extends com.pulumi.resources.ResourceArg
     public static final ControlPlaneNodeArgs Empty = new ControlPlaneNodeArgs();
 
     /**
+     * The number of kube-apiserver instance.
+     * 
+     */
+    @Import(name="apiServerCount", required=true)
+    private Output<Integer> apiServerCount;
+
+    /**
+     * @return The number of kube-apiserver instance.
+     * 
+     */
+    public Output<Integer> apiServerCount() {
+        return this.apiServerCount;
+    }
+
+    /**
+     * The node&#39;s CPU architecture.
+     * 
+     */
+    @Import(name="architecture", required=true)
+    private Output<Architecture> architecture;
+
+    /**
+     * @return The node&#39;s CPU architecture.
+     * 
+     */
+    public Output<Architecture> architecture() {
+        return this.architecture;
+    }
+
+    /**
+     * The path to store the audit log file.
+     * 
+     */
+    @Import(name="audiLogPath")
+    private @Nullable Output<String> audiLogPath;
+
+    /**
+     * @return The path to store the audit log file.
+     * 
+     */
+    public Optional<Output<String>> audiLogPath() {
+        return Optional.ofNullable(this.audiLogPath);
+    }
+
+    /**
      * The path to the root certificate authority certificate.
      * 
      */
-    @Import(name="caCertificatePath")
-    private @Nullable Output<String> caCertificatePath;
+    @Import(name="caCertificatePath", required=true)
+    private Output<String> caCertificatePath;
 
     /**
      * @return The path to the root certificate authority certificate.
      * 
      */
-    public Optional<Output<String>> caCertificatePath() {
-        return Optional.ofNullable(this.caCertificatePath);
+    public Output<String> caCertificatePath() {
+        return this.caCertificatePath;
     }
 
     /**
      * The path to the root certificate authority private key.
      * 
      */
-    @Import(name="caPrivateKeyPath")
-    private @Nullable Output<String> caPrivateKeyPath;
+    @Import(name="caPrivateKeyPath", required=true)
+    private Output<String> caPrivateKeyPath;
 
     /**
      * @return The path to the root certificate authority private key.
      * 
      */
-    public Optional<Output<String>> caPrivateKeyPath() {
-        return Optional.ofNullable(this.caPrivateKeyPath);
+    public Output<String> caPrivateKeyPath() {
+        return this.caPrivateKeyPath;
+    }
+
+    /**
+     * The cluster CIDR.
+     * 
+     */
+    @Import(name="clusterCIDR")
+    private @Nullable Output<String> clusterCIDR;
+
+    /**
+     * @return The cluster CIDR.
+     * 
+     */
+    public Optional<Output<String>> clusterCIDR() {
+        return Optional.ofNullable(this.clusterCIDR);
+    }
+
+    /**
+     * The cluster name.
+     * 
+     */
+    @Import(name="clusterName")
+    private @Nullable Output<String> clusterName;
+
+    /**
+     * @return The cluster name.
+     * 
+     */
+    public Optional<Output<String>> clusterName() {
+        return Optional.ofNullable(this.clusterName);
     }
 
     /**
@@ -66,136 +143,253 @@ public final class ControlPlaneNodeArgs extends com.pulumi.resources.ResourceArg
      * The v1/EncryptionConfig yaml.
      * 
      */
-    @Import(name="encryptionConfigYaml")
-    private @Nullable Output<String> encryptionConfigYaml;
+    @Import(name="encryptionConfigYaml", required=true)
+    private Output<String> encryptionConfigYaml;
 
     /**
      * @return The v1/EncryptionConfig yaml.
      * 
      */
-    public Optional<Output<String>> encryptionConfigYaml() {
-        return Optional.ofNullable(this.encryptionConfigYaml);
+    public Output<String> encryptionConfigYaml() {
+        return this.encryptionConfigYaml;
     }
 
     /**
      * The path to the kube-apiserver certificate.
      * 
      */
-    @Import(name="kubeApiServerCertificatePath")
-    private @Nullable Output<String> kubeApiServerCertificatePath;
+    @Import(name="kubeApiServerCertificatePath", required=true)
+    private Output<String> kubeApiServerCertificatePath;
 
     /**
      * @return The path to the kube-apiserver certificate.
      * 
      */
-    public Optional<Output<String>> kubeApiServerCertificatePath() {
-        return Optional.ofNullable(this.kubeApiServerCertificatePath);
+    public Output<String> kubeApiServerCertificatePath() {
+        return this.kubeApiServerCertificatePath;
+    }
+
+    /**
+     * The directory to store the kube-apiserver binary.
+     * 
+     */
+    @Import(name="kubeApiServerInstallDirectory")
+    private @Nullable Output<String> kubeApiServerInstallDirectory;
+
+    /**
+     * @return The directory to store the kube-apiserver binary.
+     * 
+     */
+    public Optional<Output<String>> kubeApiServerInstallDirectory() {
+        return Optional.ofNullable(this.kubeApiServerInstallDirectory);
     }
 
     /**
      * The path to the kube-apiserver private key.
      * 
      */
-    @Import(name="kubeApiServerPrivateKeyPath")
-    private @Nullable Output<String> kubeApiServerPrivateKeyPath;
+    @Import(name="kubeApiServerPrivateKeyPath", required=true)
+    private Output<String> kubeApiServerPrivateKeyPath;
 
     /**
      * @return The path to the kube-apiserver private key.
      * 
      */
-    public Optional<Output<String>> kubeApiServerPrivateKeyPath() {
-        return Optional.ofNullable(this.kubeApiServerPrivateKeyPath);
+    public Output<String> kubeApiServerPrivateKeyPath() {
+        return this.kubeApiServerPrivateKeyPath;
+    }
+
+    /**
+     * The directory to store the kube-controller-manager binary.
+     * 
+     */
+    @Import(name="kubeControllerManagerInstallDirectory")
+    private @Nullable Output<String> kubeControllerManagerInstallDirectory;
+
+    /**
+     * @return The directory to store the kube-controller-manager binary.
+     * 
+     */
+    public Optional<Output<String>> kubeControllerManagerInstallDirectory() {
+        return Optional.ofNullable(this.kubeControllerManagerInstallDirectory);
     }
 
     /**
      * The path to the kube-controller-manager kubeconfig file.
      * 
      */
-    @Import(name="kubeControllerManagerKubeconfigPath")
-    private @Nullable Output<String> kubeControllerManagerKubeconfigPath;
+    @Import(name="kubeControllerManagerKubeconfigPath", required=true)
+    private Output<String> kubeControllerManagerKubeconfigPath;
 
     /**
      * @return The path to the kube-controller-manager kubeconfig file.
      * 
      */
-    public Optional<Output<String>> kubeControllerManagerKubeconfigPath() {
-        return Optional.ofNullable(this.kubeControllerManagerKubeconfigPath);
+    public Output<String> kubeControllerManagerKubeconfigPath() {
+        return this.kubeControllerManagerKubeconfigPath;
     }
 
     /**
      * The kube-scheduler config yaml.
      * 
      */
-    @Import(name="kubeSchedulerConfigYaml")
-    private @Nullable Output<String> kubeSchedulerConfigYaml;
+    @Import(name="kubeSchedulerConfigYaml", required=true)
+    private Output<String> kubeSchedulerConfigYaml;
 
     /**
      * @return The kube-scheduler config yaml.
      * 
      */
-    public Optional<Output<String>> kubeSchedulerConfigYaml() {
-        return Optional.ofNullable(this.kubeSchedulerConfigYaml);
+    public Output<String> kubeSchedulerConfigYaml() {
+        return this.kubeSchedulerConfigYaml;
+    }
+
+    /**
+     * The directory to store the kube-scheduler binary.
+     * 
+     */
+    @Import(name="kubeSchedulerInstallDirectory")
+    private @Nullable Output<String> kubeSchedulerInstallDirectory;
+
+    /**
+     * @return The directory to store the kube-scheduler binary.
+     * 
+     */
+    public Optional<Output<String>> kubeSchedulerInstallDirectory() {
+        return Optional.ofNullable(this.kubeSchedulerInstallDirectory);
     }
 
     /**
      * The path to the kube-scheduler kubeconfig file.
      * 
      */
-    @Import(name="kubeSchedulerKubeconfigPath")
-    private @Nullable Output<String> kubeSchedulerKubeconfigPath;
+    @Import(name="kubeSchedulerKubeconfigPath", required=true)
+    private Output<String> kubeSchedulerKubeconfigPath;
 
     /**
      * @return The path to the kube-scheduler kubeconfig file.
      * 
      */
-    public Optional<Output<String>> kubeSchedulerKubeconfigPath() {
-        return Optional.ofNullable(this.kubeSchedulerKubeconfigPath);
+    public Output<String> kubeSchedulerKubeconfigPath() {
+        return this.kubeSchedulerKubeconfigPath;
+    }
+
+    /**
+     * The path to store the kubectl binary.
+     * 
+     */
+    @Import(name="kubectlInstallDirectory")
+    private @Nullable Output<String> kubectlInstallDirectory;
+
+    /**
+     * @return The path to store the kubectl binary.
+     * 
+     */
+    public Optional<Output<String>> kubectlInstallDirectory() {
+        return Optional.ofNullable(this.kubectlInstallDirectory);
+    }
+
+    /**
+     * The version of kubernetes to use.
+     * 
+     */
+    @Import(name="kubernetesVersion")
+    private @Nullable Output<String> kubernetesVersion;
+
+    /**
+     * @return The version of kubernetes to use.
+     * 
+     */
+    public Optional<Output<String>> kubernetesVersion() {
+        return Optional.ofNullable(this.kubernetesVersion);
+    }
+
+    /**
+     * The name of the node.
+     * 
+     */
+    @Import(name="nodeName")
+    private @Nullable Output<String> nodeName;
+
+    /**
+     * @return The name of the node.
+     * 
+     */
+    public Optional<Output<String>> nodeName() {
+        return Optional.ofNullable(this.nodeName);
     }
 
     /**
      * The path to the service accounts certificate.
      * 
      */
-    @Import(name="serviceAccountsCertificatePath")
-    private @Nullable Output<String> serviceAccountsCertificatePath;
+    @Import(name="serviceAccountsCertificatePath", required=true)
+    private Output<String> serviceAccountsCertificatePath;
 
     /**
      * @return The path to the service accounts certificate.
      * 
      */
-    public Optional<Output<String>> serviceAccountsCertificatePath() {
-        return Optional.ofNullable(this.serviceAccountsCertificatePath);
+    public Output<String> serviceAccountsCertificatePath() {
+        return this.serviceAccountsCertificatePath;
     }
 
     /**
      * The path to the service accounts private key.
      * 
      */
-    @Import(name="serviceAccountsPrivateKeyPath")
-    private @Nullable Output<String> serviceAccountsPrivateKeyPath;
+    @Import(name="serviceAccountsPrivateKeyPath", required=true)
+    private Output<String> serviceAccountsPrivateKeyPath;
 
     /**
      * @return The path to the service accounts private key.
      * 
      */
-    public Optional<Output<String>> serviceAccountsPrivateKeyPath() {
-        return Optional.ofNullable(this.serviceAccountsPrivateKeyPath);
+    public Output<String> serviceAccountsPrivateKeyPath() {
+        return this.serviceAccountsPrivateKeyPath;
+    }
+
+    /**
+     * The IP range to use for cluster services.
+     * 
+     */
+    @Import(name="serviceClusterIpRange")
+    private @Nullable Output<String> serviceClusterIpRange;
+
+    /**
+     * @return The IP range to use for cluster services.
+     * 
+     */
+    public Optional<Output<String>> serviceClusterIpRange() {
+        return Optional.ofNullable(this.serviceClusterIpRange);
     }
 
     private ControlPlaneNodeArgs() {}
 
     private ControlPlaneNodeArgs(ControlPlaneNodeArgs $) {
+        this.apiServerCount = $.apiServerCount;
+        this.architecture = $.architecture;
+        this.audiLogPath = $.audiLogPath;
         this.caCertificatePath = $.caCertificatePath;
         this.caPrivateKeyPath = $.caPrivateKeyPath;
+        this.clusterCIDR = $.clusterCIDR;
+        this.clusterName = $.clusterName;
         this.connection = $.connection;
         this.encryptionConfigYaml = $.encryptionConfigYaml;
         this.kubeApiServerCertificatePath = $.kubeApiServerCertificatePath;
+        this.kubeApiServerInstallDirectory = $.kubeApiServerInstallDirectory;
         this.kubeApiServerPrivateKeyPath = $.kubeApiServerPrivateKeyPath;
+        this.kubeControllerManagerInstallDirectory = $.kubeControllerManagerInstallDirectory;
         this.kubeControllerManagerKubeconfigPath = $.kubeControllerManagerKubeconfigPath;
         this.kubeSchedulerConfigYaml = $.kubeSchedulerConfigYaml;
+        this.kubeSchedulerInstallDirectory = $.kubeSchedulerInstallDirectory;
         this.kubeSchedulerKubeconfigPath = $.kubeSchedulerKubeconfigPath;
+        this.kubectlInstallDirectory = $.kubectlInstallDirectory;
+        this.kubernetesVersion = $.kubernetesVersion;
+        this.nodeName = $.nodeName;
         this.serviceAccountsCertificatePath = $.serviceAccountsCertificatePath;
         this.serviceAccountsPrivateKeyPath = $.serviceAccountsPrivateKeyPath;
+        this.serviceClusterIpRange = $.serviceClusterIpRange;
     }
 
     public static Builder builder() {
@@ -217,12 +411,75 @@ public final class ControlPlaneNodeArgs extends com.pulumi.resources.ResourceArg
         }
 
         /**
+         * @param apiServerCount The number of kube-apiserver instance.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder apiServerCount(Output<Integer> apiServerCount) {
+            $.apiServerCount = apiServerCount;
+            return this;
+        }
+
+        /**
+         * @param apiServerCount The number of kube-apiserver instance.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder apiServerCount(Integer apiServerCount) {
+            return apiServerCount(Output.of(apiServerCount));
+        }
+
+        /**
+         * @param architecture The node&#39;s CPU architecture.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder architecture(Output<Architecture> architecture) {
+            $.architecture = architecture;
+            return this;
+        }
+
+        /**
+         * @param architecture The node&#39;s CPU architecture.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder architecture(Architecture architecture) {
+            return architecture(Output.of(architecture));
+        }
+
+        /**
+         * @param audiLogPath The path to store the audit log file.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder audiLogPath(@Nullable Output<String> audiLogPath) {
+            $.audiLogPath = audiLogPath;
+            return this;
+        }
+
+        /**
+         * @param audiLogPath The path to store the audit log file.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder audiLogPath(String audiLogPath) {
+            return audiLogPath(Output.of(audiLogPath));
+        }
+
+        /**
          * @param caCertificatePath The path to the root certificate authority certificate.
          * 
          * @return builder
          * 
          */
-        public Builder caCertificatePath(@Nullable Output<String> caCertificatePath) {
+        public Builder caCertificatePath(Output<String> caCertificatePath) {
             $.caCertificatePath = caCertificatePath;
             return this;
         }
@@ -243,7 +500,7 @@ public final class ControlPlaneNodeArgs extends com.pulumi.resources.ResourceArg
          * @return builder
          * 
          */
-        public Builder caPrivateKeyPath(@Nullable Output<String> caPrivateKeyPath) {
+        public Builder caPrivateKeyPath(Output<String> caPrivateKeyPath) {
             $.caPrivateKeyPath = caPrivateKeyPath;
             return this;
         }
@@ -256,6 +513,48 @@ public final class ControlPlaneNodeArgs extends com.pulumi.resources.ResourceArg
          */
         public Builder caPrivateKeyPath(String caPrivateKeyPath) {
             return caPrivateKeyPath(Output.of(caPrivateKeyPath));
+        }
+
+        /**
+         * @param clusterCIDR The cluster CIDR.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder clusterCIDR(@Nullable Output<String> clusterCIDR) {
+            $.clusterCIDR = clusterCIDR;
+            return this;
+        }
+
+        /**
+         * @param clusterCIDR The cluster CIDR.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder clusterCIDR(String clusterCIDR) {
+            return clusterCIDR(Output.of(clusterCIDR));
+        }
+
+        /**
+         * @param clusterName The cluster name.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder clusterName(@Nullable Output<String> clusterName) {
+            $.clusterName = clusterName;
+            return this;
+        }
+
+        /**
+         * @param clusterName The cluster name.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder clusterName(String clusterName) {
+            return clusterName(Output.of(clusterName));
         }
 
         /**
@@ -285,7 +584,7 @@ public final class ControlPlaneNodeArgs extends com.pulumi.resources.ResourceArg
          * @return builder
          * 
          */
-        public Builder encryptionConfigYaml(@Nullable Output<String> encryptionConfigYaml) {
+        public Builder encryptionConfigYaml(Output<String> encryptionConfigYaml) {
             $.encryptionConfigYaml = encryptionConfigYaml;
             return this;
         }
@@ -306,7 +605,7 @@ public final class ControlPlaneNodeArgs extends com.pulumi.resources.ResourceArg
          * @return builder
          * 
          */
-        public Builder kubeApiServerCertificatePath(@Nullable Output<String> kubeApiServerCertificatePath) {
+        public Builder kubeApiServerCertificatePath(Output<String> kubeApiServerCertificatePath) {
             $.kubeApiServerCertificatePath = kubeApiServerCertificatePath;
             return this;
         }
@@ -322,12 +621,33 @@ public final class ControlPlaneNodeArgs extends com.pulumi.resources.ResourceArg
         }
 
         /**
+         * @param kubeApiServerInstallDirectory The directory to store the kube-apiserver binary.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder kubeApiServerInstallDirectory(@Nullable Output<String> kubeApiServerInstallDirectory) {
+            $.kubeApiServerInstallDirectory = kubeApiServerInstallDirectory;
+            return this;
+        }
+
+        /**
+         * @param kubeApiServerInstallDirectory The directory to store the kube-apiserver binary.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder kubeApiServerInstallDirectory(String kubeApiServerInstallDirectory) {
+            return kubeApiServerInstallDirectory(Output.of(kubeApiServerInstallDirectory));
+        }
+
+        /**
          * @param kubeApiServerPrivateKeyPath The path to the kube-apiserver private key.
          * 
          * @return builder
          * 
          */
-        public Builder kubeApiServerPrivateKeyPath(@Nullable Output<String> kubeApiServerPrivateKeyPath) {
+        public Builder kubeApiServerPrivateKeyPath(Output<String> kubeApiServerPrivateKeyPath) {
             $.kubeApiServerPrivateKeyPath = kubeApiServerPrivateKeyPath;
             return this;
         }
@@ -343,12 +663,33 @@ public final class ControlPlaneNodeArgs extends com.pulumi.resources.ResourceArg
         }
 
         /**
+         * @param kubeControllerManagerInstallDirectory The directory to store the kube-controller-manager binary.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder kubeControllerManagerInstallDirectory(@Nullable Output<String> kubeControllerManagerInstallDirectory) {
+            $.kubeControllerManagerInstallDirectory = kubeControllerManagerInstallDirectory;
+            return this;
+        }
+
+        /**
+         * @param kubeControllerManagerInstallDirectory The directory to store the kube-controller-manager binary.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder kubeControllerManagerInstallDirectory(String kubeControllerManagerInstallDirectory) {
+            return kubeControllerManagerInstallDirectory(Output.of(kubeControllerManagerInstallDirectory));
+        }
+
+        /**
          * @param kubeControllerManagerKubeconfigPath The path to the kube-controller-manager kubeconfig file.
          * 
          * @return builder
          * 
          */
-        public Builder kubeControllerManagerKubeconfigPath(@Nullable Output<String> kubeControllerManagerKubeconfigPath) {
+        public Builder kubeControllerManagerKubeconfigPath(Output<String> kubeControllerManagerKubeconfigPath) {
             $.kubeControllerManagerKubeconfigPath = kubeControllerManagerKubeconfigPath;
             return this;
         }
@@ -369,7 +710,7 @@ public final class ControlPlaneNodeArgs extends com.pulumi.resources.ResourceArg
          * @return builder
          * 
          */
-        public Builder kubeSchedulerConfigYaml(@Nullable Output<String> kubeSchedulerConfigYaml) {
+        public Builder kubeSchedulerConfigYaml(Output<String> kubeSchedulerConfigYaml) {
             $.kubeSchedulerConfigYaml = kubeSchedulerConfigYaml;
             return this;
         }
@@ -385,12 +726,33 @@ public final class ControlPlaneNodeArgs extends com.pulumi.resources.ResourceArg
         }
 
         /**
+         * @param kubeSchedulerInstallDirectory The directory to store the kube-scheduler binary.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder kubeSchedulerInstallDirectory(@Nullable Output<String> kubeSchedulerInstallDirectory) {
+            $.kubeSchedulerInstallDirectory = kubeSchedulerInstallDirectory;
+            return this;
+        }
+
+        /**
+         * @param kubeSchedulerInstallDirectory The directory to store the kube-scheduler binary.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder kubeSchedulerInstallDirectory(String kubeSchedulerInstallDirectory) {
+            return kubeSchedulerInstallDirectory(Output.of(kubeSchedulerInstallDirectory));
+        }
+
+        /**
          * @param kubeSchedulerKubeconfigPath The path to the kube-scheduler kubeconfig file.
          * 
          * @return builder
          * 
          */
-        public Builder kubeSchedulerKubeconfigPath(@Nullable Output<String> kubeSchedulerKubeconfigPath) {
+        public Builder kubeSchedulerKubeconfigPath(Output<String> kubeSchedulerKubeconfigPath) {
             $.kubeSchedulerKubeconfigPath = kubeSchedulerKubeconfigPath;
             return this;
         }
@@ -406,12 +768,75 @@ public final class ControlPlaneNodeArgs extends com.pulumi.resources.ResourceArg
         }
 
         /**
+         * @param kubectlInstallDirectory The path to store the kubectl binary.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder kubectlInstallDirectory(@Nullable Output<String> kubectlInstallDirectory) {
+            $.kubectlInstallDirectory = kubectlInstallDirectory;
+            return this;
+        }
+
+        /**
+         * @param kubectlInstallDirectory The path to store the kubectl binary.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder kubectlInstallDirectory(String kubectlInstallDirectory) {
+            return kubectlInstallDirectory(Output.of(kubectlInstallDirectory));
+        }
+
+        /**
+         * @param kubernetesVersion The version of kubernetes to use.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder kubernetesVersion(@Nullable Output<String> kubernetesVersion) {
+            $.kubernetesVersion = kubernetesVersion;
+            return this;
+        }
+
+        /**
+         * @param kubernetesVersion The version of kubernetes to use.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder kubernetesVersion(String kubernetesVersion) {
+            return kubernetesVersion(Output.of(kubernetesVersion));
+        }
+
+        /**
+         * @param nodeName The name of the node.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder nodeName(@Nullable Output<String> nodeName) {
+            $.nodeName = nodeName;
+            return this;
+        }
+
+        /**
+         * @param nodeName The name of the node.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder nodeName(String nodeName) {
+            return nodeName(Output.of(nodeName));
+        }
+
+        /**
          * @param serviceAccountsCertificatePath The path to the service accounts certificate.
          * 
          * @return builder
          * 
          */
-        public Builder serviceAccountsCertificatePath(@Nullable Output<String> serviceAccountsCertificatePath) {
+        public Builder serviceAccountsCertificatePath(Output<String> serviceAccountsCertificatePath) {
             $.serviceAccountsCertificatePath = serviceAccountsCertificatePath;
             return this;
         }
@@ -432,7 +857,7 @@ public final class ControlPlaneNodeArgs extends com.pulumi.resources.ResourceArg
          * @return builder
          * 
          */
-        public Builder serviceAccountsPrivateKeyPath(@Nullable Output<String> serviceAccountsPrivateKeyPath) {
+        public Builder serviceAccountsPrivateKeyPath(Output<String> serviceAccountsPrivateKeyPath) {
             $.serviceAccountsPrivateKeyPath = serviceAccountsPrivateKeyPath;
             return this;
         }
@@ -447,9 +872,66 @@ public final class ControlPlaneNodeArgs extends com.pulumi.resources.ResourceArg
             return serviceAccountsPrivateKeyPath(Output.of(serviceAccountsPrivateKeyPath));
         }
 
+        /**
+         * @param serviceClusterIpRange The IP range to use for cluster services.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder serviceClusterIpRange(@Nullable Output<String> serviceClusterIpRange) {
+            $.serviceClusterIpRange = serviceClusterIpRange;
+            return this;
+        }
+
+        /**
+         * @param serviceClusterIpRange The IP range to use for cluster services.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder serviceClusterIpRange(String serviceClusterIpRange) {
+            return serviceClusterIpRange(Output.of(serviceClusterIpRange));
+        }
+
         public ControlPlaneNodeArgs build() {
+            if ($.apiServerCount == null) {
+                throw new MissingRequiredPropertyException("ControlPlaneNodeArgs", "apiServerCount");
+            }
+            if ($.architecture == null) {
+                throw new MissingRequiredPropertyException("ControlPlaneNodeArgs", "architecture");
+            }
+            if ($.caCertificatePath == null) {
+                throw new MissingRequiredPropertyException("ControlPlaneNodeArgs", "caCertificatePath");
+            }
+            if ($.caPrivateKeyPath == null) {
+                throw new MissingRequiredPropertyException("ControlPlaneNodeArgs", "caPrivateKeyPath");
+            }
             if ($.connection == null) {
                 throw new MissingRequiredPropertyException("ControlPlaneNodeArgs", "connection");
+            }
+            if ($.encryptionConfigYaml == null) {
+                throw new MissingRequiredPropertyException("ControlPlaneNodeArgs", "encryptionConfigYaml");
+            }
+            if ($.kubeApiServerCertificatePath == null) {
+                throw new MissingRequiredPropertyException("ControlPlaneNodeArgs", "kubeApiServerCertificatePath");
+            }
+            if ($.kubeApiServerPrivateKeyPath == null) {
+                throw new MissingRequiredPropertyException("ControlPlaneNodeArgs", "kubeApiServerPrivateKeyPath");
+            }
+            if ($.kubeControllerManagerKubeconfigPath == null) {
+                throw new MissingRequiredPropertyException("ControlPlaneNodeArgs", "kubeControllerManagerKubeconfigPath");
+            }
+            if ($.kubeSchedulerConfigYaml == null) {
+                throw new MissingRequiredPropertyException("ControlPlaneNodeArgs", "kubeSchedulerConfigYaml");
+            }
+            if ($.kubeSchedulerKubeconfigPath == null) {
+                throw new MissingRequiredPropertyException("ControlPlaneNodeArgs", "kubeSchedulerKubeconfigPath");
+            }
+            if ($.serviceAccountsCertificatePath == null) {
+                throw new MissingRequiredPropertyException("ControlPlaneNodeArgs", "serviceAccountsCertificatePath");
+            }
+            if ($.serviceAccountsPrivateKeyPath == null) {
+                throw new MissingRequiredPropertyException("ControlPlaneNodeArgs", "serviceAccountsPrivateKeyPath");
             }
             return $;
         }

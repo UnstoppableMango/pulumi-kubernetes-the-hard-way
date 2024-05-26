@@ -17,16 +17,46 @@ namespace UnMango.KubernetesTheHardWay.Remote
     public partial class ControlPlaneNode : global::Pulumi.ComponentResource
     {
         /// <summary>
+        /// The number of kube-apiserver instance.
+        /// </summary>
+        [Output("apiServerCount")]
+        public Output<int> ApiServerCount { get; private set; } = null!;
+
+        /// <summary>
+        /// The node's CPU architecture.
+        /// </summary>
+        [Output("architecture")]
+        public Output<UnMango.KubernetesTheHardWay.Remote.Architecture> Architecture { get; private set; } = null!;
+
+        /// <summary>
+        /// The path to store the audit log file.
+        /// </summary>
+        [Output("audiLogPath")]
+        public Output<string?> AudiLogPath { get; private set; } = null!;
+
+        /// <summary>
         /// The path to the root certificate authority certificate.
         /// </summary>
         [Output("caCertificatePath")]
-        public Output<string?> CaCertificatePath { get; private set; } = null!;
+        public Output<string> CaCertificatePath { get; private set; } = null!;
 
         /// <summary>
         /// The path to the root certificate authority private key.
         /// </summary>
         [Output("caPrivateKeyPath")]
-        public Output<string?> CaPrivateKeyPath { get; private set; } = null!;
+        public Output<string> CaPrivateKeyPath { get; private set; } = null!;
+
+        /// <summary>
+        /// The cluster CIDR.
+        /// </summary>
+        [Output("clusterCIDR")]
+        public Output<string?> ClusterCIDR { get; private set; } = null!;
+
+        /// <summary>
+        /// The cluster name.
+        /// </summary>
+        [Output("clusterName")]
+        public Output<string?> ClusterName { get; private set; } = null!;
 
         /// <summary>
         /// The parameters with which to connect to the remote host.
@@ -38,13 +68,13 @@ namespace UnMango.KubernetesTheHardWay.Remote
         /// The v1/EncryptionConfig yaml.
         /// </summary>
         [Output("encryptionConfigYaml")]
-        public Output<string?> EncryptionConfigYaml { get; private set; } = null!;
+        public Output<string> EncryptionConfigYaml { get; private set; } = null!;
 
         /// <summary>
         /// The path to the kube-apiserver certificate.
         /// </summary>
         [Output("kubeApiServerCertificatePath")]
-        public Output<string?> KubeApiServerCertificatePath { get; private set; } = null!;
+        public Output<string> KubeApiServerCertificatePath { get; private set; } = null!;
 
         /// <summary>
         /// The kube-apiserver install.
@@ -53,10 +83,16 @@ namespace UnMango.KubernetesTheHardWay.Remote
         public Output<UnMango.KubernetesTheHardWay.Remote.KubeApiServerInstall> KubeApiServerInstall { get; private set; } = null!;
 
         /// <summary>
+        /// The directory to store the kube-apiserver binary.
+        /// </summary>
+        [Output("kubeApiServerInstallDirectory")]
+        public Output<string?> KubeApiServerInstallDirectory { get; private set; } = null!;
+
+        /// <summary>
         /// The path to the kube-apiserver private key.
         /// </summary>
         [Output("kubeApiServerPrivateKeyPath")]
-        public Output<string?> KubeApiServerPrivateKeyPath { get; private set; } = null!;
+        public Output<string> KubeApiServerPrivateKeyPath { get; private set; } = null!;
 
         /// <summary>
         /// The kube-apiserver systemd service.
@@ -71,10 +107,16 @@ namespace UnMango.KubernetesTheHardWay.Remote
         public Output<UnMango.KubernetesTheHardWay.Remote.KubeControllerManagerInstall> KubeControllerManagerInstall { get; private set; } = null!;
 
         /// <summary>
+        /// The directory to store the kube-controller-manager binary.
+        /// </summary>
+        [Output("kubeControllerManagerInstallDirectory")]
+        public Output<string?> KubeControllerManagerInstallDirectory { get; private set; } = null!;
+
+        /// <summary>
         /// The path to the kube-controller-manager kubeconfig file.
         /// </summary>
         [Output("kubeControllerManagerKubeconfigPath")]
-        public Output<string?> KubeControllerManagerKubeconfigPath { get; private set; } = null!;
+        public Output<string> KubeControllerManagerKubeconfigPath { get; private set; } = null!;
 
         /// <summary>
         /// The kube-controller-manager systemd service.
@@ -86,7 +128,7 @@ namespace UnMango.KubernetesTheHardWay.Remote
         /// The kube-scheduler config yaml.
         /// </summary>
         [Output("kubeSchedulerConfigYaml")]
-        public Output<string?> KubeSchedulerConfigYaml { get; private set; } = null!;
+        public Output<string> KubeSchedulerConfigYaml { get; private set; } = null!;
 
         /// <summary>
         /// The kube-scheduler isntall.
@@ -95,10 +137,16 @@ namespace UnMango.KubernetesTheHardWay.Remote
         public Output<UnMango.KubernetesTheHardWay.Remote.KubeSchedulerInstall> KubeSchedulerInstall { get; private set; } = null!;
 
         /// <summary>
+        /// The directory to store the kube-scheduler binary.
+        /// </summary>
+        [Output("kubeSchedulerInstallDirectory")]
+        public Output<string?> KubeSchedulerInstallDirectory { get; private set; } = null!;
+
+        /// <summary>
         /// The path to the kube-scheduler kubeconfig file.
         /// </summary>
         [Output("kubeSchedulerKubeconfigPath")]
-        public Output<string?> KubeSchedulerKubeconfigPath { get; private set; } = null!;
+        public Output<string> KubeSchedulerKubeconfigPath { get; private set; } = null!;
 
         /// <summary>
         /// The kube-scheduler systemd service.
@@ -113,22 +161,46 @@ namespace UnMango.KubernetesTheHardWay.Remote
         public Output<UnMango.KubernetesTheHardWay.Remote.KubectlInstall> KubectlInstall { get; private set; } = null!;
 
         /// <summary>
+        /// The path to store the kubectl binary.
+        /// </summary>
+        [Output("kubectlInstallDirectory")]
+        public Output<string?> KubectlInstallDirectory { get; private set; } = null!;
+
+        /// <summary>
         /// The kubernetes configuration mkdir operation.
         /// </summary>
         [Output("kubernetesConfigurationMkdir")]
         public Output<UnMango.KubernetesTheHardWay.Tools.Mkdir> KubernetesConfigurationMkdir { get; private set; } = null!;
 
         /// <summary>
+        /// The version of kubernetes to use.
+        /// </summary>
+        [Output("kubernetesVersion")]
+        public Output<string?> KubernetesVersion { get; private set; } = null!;
+
+        /// <summary>
+        /// The name of the node.
+        /// </summary>
+        [Output("nodeName")]
+        public Output<string?> NodeName { get; private set; } = null!;
+
+        /// <summary>
         /// The path to the service accounts certificate.
         /// </summary>
         [Output("serviceAccountsCertificatePath")]
-        public Output<string?> ServiceAccountsCertificatePath { get; private set; } = null!;
+        public Output<string> ServiceAccountsCertificatePath { get; private set; } = null!;
 
         /// <summary>
         /// The path to the service accounts private key.
         /// </summary>
         [Output("serviceAccountsPrivateKeyPath")]
-        public Output<string?> ServiceAccountsPrivateKeyPath { get; private set; } = null!;
+        public Output<string> ServiceAccountsPrivateKeyPath { get; private set; } = null!;
+
+        /// <summary>
+        /// The IP range to use for cluster services.
+        /// </summary>
+        [Output("serviceClusterIpRange")]
+        public Output<string?> ServiceClusterIpRange { get; private set; } = null!;
 
         /// <summary>
         /// The /var/lib/kubernetes mkdir operation.
@@ -166,16 +238,46 @@ namespace UnMango.KubernetesTheHardWay.Remote
     public sealed class ControlPlaneNodeArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
+        /// The number of kube-apiserver instance.
+        /// </summary>
+        [Input("apiServerCount", required: true)]
+        public Input<int> ApiServerCount { get; set; } = null!;
+
+        /// <summary>
+        /// The node's CPU architecture.
+        /// </summary>
+        [Input("architecture", required: true)]
+        public Input<UnMango.KubernetesTheHardWay.Remote.Architecture> Architecture { get; set; } = null!;
+
+        /// <summary>
+        /// The path to store the audit log file.
+        /// </summary>
+        [Input("audiLogPath")]
+        public Input<string>? AudiLogPath { get; set; }
+
+        /// <summary>
         /// The path to the root certificate authority certificate.
         /// </summary>
-        [Input("caCertificatePath")]
-        public Input<string>? CaCertificatePath { get; set; }
+        [Input("caCertificatePath", required: true)]
+        public Input<string> CaCertificatePath { get; set; } = null!;
 
         /// <summary>
         /// The path to the root certificate authority private key.
         /// </summary>
-        [Input("caPrivateKeyPath")]
-        public Input<string>? CaPrivateKeyPath { get; set; }
+        [Input("caPrivateKeyPath", required: true)]
+        public Input<string> CaPrivateKeyPath { get; set; } = null!;
+
+        /// <summary>
+        /// The cluster CIDR.
+        /// </summary>
+        [Input("clusterCIDR")]
+        public Input<string>? ClusterCIDR { get; set; }
+
+        /// <summary>
+        /// The cluster name.
+        /// </summary>
+        [Input("clusterName")]
+        public Input<string>? ClusterName { get; set; }
 
         /// <summary>
         /// The parameters with which to connect to the remote host.
@@ -186,50 +288,92 @@ namespace UnMango.KubernetesTheHardWay.Remote
         /// <summary>
         /// The v1/EncryptionConfig yaml.
         /// </summary>
-        [Input("encryptionConfigYaml")]
-        public Input<string>? EncryptionConfigYaml { get; set; }
+        [Input("encryptionConfigYaml", required: true)]
+        public Input<string> EncryptionConfigYaml { get; set; } = null!;
 
         /// <summary>
         /// The path to the kube-apiserver certificate.
         /// </summary>
-        [Input("kubeApiServerCertificatePath")]
-        public Input<string>? KubeApiServerCertificatePath { get; set; }
+        [Input("kubeApiServerCertificatePath", required: true)]
+        public Input<string> KubeApiServerCertificatePath { get; set; } = null!;
+
+        /// <summary>
+        /// The directory to store the kube-apiserver binary.
+        /// </summary>
+        [Input("kubeApiServerInstallDirectory")]
+        public Input<string>? KubeApiServerInstallDirectory { get; set; }
 
         /// <summary>
         /// The path to the kube-apiserver private key.
         /// </summary>
-        [Input("kubeApiServerPrivateKeyPath")]
-        public Input<string>? KubeApiServerPrivateKeyPath { get; set; }
+        [Input("kubeApiServerPrivateKeyPath", required: true)]
+        public Input<string> KubeApiServerPrivateKeyPath { get; set; } = null!;
+
+        /// <summary>
+        /// The directory to store the kube-controller-manager binary.
+        /// </summary>
+        [Input("kubeControllerManagerInstallDirectory")]
+        public Input<string>? KubeControllerManagerInstallDirectory { get; set; }
 
         /// <summary>
         /// The path to the kube-controller-manager kubeconfig file.
         /// </summary>
-        [Input("kubeControllerManagerKubeconfigPath")]
-        public Input<string>? KubeControllerManagerKubeconfigPath { get; set; }
+        [Input("kubeControllerManagerKubeconfigPath", required: true)]
+        public Input<string> KubeControllerManagerKubeconfigPath { get; set; } = null!;
 
         /// <summary>
         /// The kube-scheduler config yaml.
         /// </summary>
-        [Input("kubeSchedulerConfigYaml")]
-        public Input<string>? KubeSchedulerConfigYaml { get; set; }
+        [Input("kubeSchedulerConfigYaml", required: true)]
+        public Input<string> KubeSchedulerConfigYaml { get; set; } = null!;
+
+        /// <summary>
+        /// The directory to store the kube-scheduler binary.
+        /// </summary>
+        [Input("kubeSchedulerInstallDirectory")]
+        public Input<string>? KubeSchedulerInstallDirectory { get; set; }
 
         /// <summary>
         /// The path to the kube-scheduler kubeconfig file.
         /// </summary>
-        [Input("kubeSchedulerKubeconfigPath")]
-        public Input<string>? KubeSchedulerKubeconfigPath { get; set; }
+        [Input("kubeSchedulerKubeconfigPath", required: true)]
+        public Input<string> KubeSchedulerKubeconfigPath { get; set; } = null!;
+
+        /// <summary>
+        /// The path to store the kubectl binary.
+        /// </summary>
+        [Input("kubectlInstallDirectory")]
+        public Input<string>? KubectlInstallDirectory { get; set; }
+
+        /// <summary>
+        /// The version of kubernetes to use.
+        /// </summary>
+        [Input("kubernetesVersion")]
+        public Input<string>? KubernetesVersion { get; set; }
+
+        /// <summary>
+        /// The name of the node.
+        /// </summary>
+        [Input("nodeName")]
+        public Input<string>? NodeName { get; set; }
 
         /// <summary>
         /// The path to the service accounts certificate.
         /// </summary>
-        [Input("serviceAccountsCertificatePath")]
-        public Input<string>? ServiceAccountsCertificatePath { get; set; }
+        [Input("serviceAccountsCertificatePath", required: true)]
+        public Input<string> ServiceAccountsCertificatePath { get; set; } = null!;
 
         /// <summary>
         /// The path to the service accounts private key.
         /// </summary>
-        [Input("serviceAccountsPrivateKeyPath")]
-        public Input<string>? ServiceAccountsPrivateKeyPath { get; set; }
+        [Input("serviceAccountsPrivateKeyPath", required: true)]
+        public Input<string> ServiceAccountsPrivateKeyPath { get; set; } = null!;
+
+        /// <summary>
+        /// The IP range to use for cluster services.
+        /// </summary>
+        [Input("serviceClusterIpRange")]
+        public Input<string>? ServiceClusterIpRange { get; set; }
 
         public ControlPlaneNodeArgs()
         {

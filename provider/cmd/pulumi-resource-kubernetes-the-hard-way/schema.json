@@ -2775,6 +2775,18 @@
         "kubernetes-the-hard-way:remote:ControlPlaneNode": {
             "description": "A kubernetes control plane node.",
             "properties": {
+                "apiServerCount": {
+                    "type": "integer",
+                    "description": "The number of kube-apiserver instance."
+                },
+                "architecture": {
+                    "$ref": "#/types/kubernetes-the-hard-way:remote:Architecture",
+                    "description": "The node's CPU architecture."
+                },
+                "audiLogPath": {
+                    "type": "string",
+                    "description": "The path to store the audit log file."
+                },
                 "caCertificatePath": {
                     "type": "string",
                     "description": "The path to the root certificate authority certificate."
@@ -2782,6 +2794,14 @@
                 "caPrivateKeyPath": {
                     "type": "string",
                     "description": "The path to the root certificate authority private key."
+                },
+                "clusterCIDR": {
+                    "type": "string",
+                    "description": "The cluster CIDR."
+                },
+                "clusterName": {
+                    "type": "string",
+                    "description": "The cluster name."
                 },
                 "connection": {
                     "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
@@ -2799,6 +2819,10 @@
                     "$ref": "#/resources/kubernetes-the-hard-way:remote:KubeApiServerInstall",
                     "description": "The kube-apiserver install."
                 },
+                "kubeApiServerInstallDirectory": {
+                    "type": "string",
+                    "description": "The directory to store the kube-apiserver binary."
+                },
                 "kubeApiServerPrivateKeyPath": {
                     "type": "string",
                     "description": "The path to the kube-apiserver private key."
@@ -2810,6 +2834,10 @@
                 "kubeControllerManagerInstall": {
                     "$ref": "#/resources/kubernetes-the-hard-way:remote:KubeControllerManagerInstall",
                     "description": "The kube-controller-manager install."
+                },
+                "kubeControllerManagerInstallDirectory": {
+                    "type": "string",
+                    "description": "The directory to store the kube-controller-manager binary."
                 },
                 "kubeControllerManagerKubeconfigPath": {
                     "type": "string",
@@ -2827,6 +2855,10 @@
                     "$ref": "#/resources/kubernetes-the-hard-way:remote:KubeSchedulerInstall",
                     "description": "The kube-scheduler isntall."
                 },
+                "kubeSchedulerInstallDirectory": {
+                    "type": "string",
+                    "description": "The directory to store the kube-scheduler binary."
+                },
                 "kubeSchedulerKubeconfigPath": {
                     "type": "string",
                     "description": "The path to the kube-scheduler kubeconfig file."
@@ -2839,9 +2871,21 @@
                     "$ref": "#/resources/kubernetes-the-hard-way:remote:KubectlInstall",
                     "description": "The kubectl install."
                 },
+                "kubectlInstallDirectory": {
+                    "type": "string",
+                    "description": "The path to store the kubectl binary."
+                },
                 "kubernetesConfigurationMkdir": {
                     "$ref": "#/resources/kubernetes-the-hard-way:tools:Mkdir",
                     "description": "The kubernetes configuration mkdir operation."
+                },
+                "kubernetesVersion": {
+                    "type": "string",
+                    "description": "The version of kubernetes to use."
+                },
+                "nodeName": {
+                    "type": "string",
+                    "description": "The name of the node."
                 },
                 "serviceAccountsCertificatePath": {
                     "type": "string",
@@ -2851,13 +2895,29 @@
                     "type": "string",
                     "description": "The path to the service accounts private key."
                 },
+                "serviceClusterIpRange": {
+                    "type": "string",
+                    "description": "The IP range to use for cluster services."
+                },
                 "varLibKubernetesMkdir": {
                     "$ref": "#/resources/kubernetes-the-hard-way:tools:Mkdir",
                     "description": "The /var/lib/kubernetes mkdir operation."
                 }
             },
             "required": [
+                "apiServerCount",
+                "architecture",
                 "connection",
+                "caCertificatePath",
+                "caPrivateKeyPath",
+                "encryptionConfigYaml",
+                "kubeApiServerCertificatePath",
+                "kubeApiServerPrivateKeyPath",
+                "kubeControllerManagerKubeconfigPath",
+                "kubeSchedulerConfigYaml",
+                "kubeSchedulerKubeconfigPath",
+                "serviceAccountsCertificatePath",
+                "serviceAccountsPrivateKeyPath",
                 "kubeApiServerInstall",
                 "kubeControllerManagerInstall",
                 "kubectlInstall",
@@ -2866,6 +2926,18 @@
                 "varLibKubernetesMkdir"
             ],
             "inputProperties": {
+                "apiServerCount": {
+                    "type": "integer",
+                    "description": "The number of kube-apiserver instance."
+                },
+                "architecture": {
+                    "$ref": "#/types/kubernetes-the-hard-way:remote:Architecture",
+                    "description": "The node's CPU architecture."
+                },
+                "audiLogPath": {
+                    "type": "string",
+                    "description": "The path to store the audit log file."
+                },
                 "caCertificatePath": {
                     "type": "string",
                     "description": "The path to the root certificate authority certificate."
@@ -2873,6 +2945,14 @@
                 "caPrivateKeyPath": {
                     "type": "string",
                     "description": "The path to the root certificate authority private key."
+                },
+                "clusterCIDR": {
+                    "type": "string",
+                    "description": "The cluster CIDR."
+                },
+                "clusterName": {
+                    "type": "string",
+                    "description": "The cluster name."
                 },
                 "connection": {
                     "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
@@ -2886,9 +2966,17 @@
                     "type": "string",
                     "description": "The path to the kube-apiserver certificate."
                 },
+                "kubeApiServerInstallDirectory": {
+                    "type": "string",
+                    "description": "The directory to store the kube-apiserver binary."
+                },
                 "kubeApiServerPrivateKeyPath": {
                     "type": "string",
                     "description": "The path to the kube-apiserver private key."
+                },
+                "kubeControllerManagerInstallDirectory": {
+                    "type": "string",
+                    "description": "The directory to store the kube-controller-manager binary."
                 },
                 "kubeControllerManagerKubeconfigPath": {
                     "type": "string",
@@ -2898,9 +2986,25 @@
                     "type": "string",
                     "description": "The kube-scheduler config yaml."
                 },
+                "kubeSchedulerInstallDirectory": {
+                    "type": "string",
+                    "description": "The directory to store the kube-scheduler binary."
+                },
                 "kubeSchedulerKubeconfigPath": {
                     "type": "string",
                     "description": "The path to the kube-scheduler kubeconfig file."
+                },
+                "kubectlInstallDirectory": {
+                    "type": "string",
+                    "description": "The path to store the kubectl binary."
+                },
+                "kubernetesVersion": {
+                    "type": "string",
+                    "description": "The version of kubernetes to use."
+                },
+                "nodeName": {
+                    "type": "string",
+                    "description": "The name of the node."
                 },
                 "serviceAccountsCertificatePath": {
                     "type": "string",
@@ -2909,10 +3013,26 @@
                 "serviceAccountsPrivateKeyPath": {
                     "type": "string",
                     "description": "The path to the service accounts private key."
+                },
+                "serviceClusterIpRange": {
+                    "type": "string",
+                    "description": "The IP range to use for cluster services."
                 }
             },
             "requiredInputs": [
-                "connection"
+                "apiServerCount",
+                "architecture",
+                "connection",
+                "caCertificatePath",
+                "caPrivateKeyPath",
+                "encryptionConfigYaml",
+                "kubeApiServerCertificatePath",
+                "kubeApiServerPrivateKeyPath",
+                "kubeControllerManagerKubeconfigPath",
+                "kubeSchedulerConfigYaml",
+                "kubeSchedulerKubeconfigPath",
+                "serviceAccountsCertificatePath",
+                "serviceAccountsPrivateKeyPath"
             ],
             "isComponent": true
         },

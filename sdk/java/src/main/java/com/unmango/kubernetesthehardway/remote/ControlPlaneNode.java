@@ -15,7 +15,9 @@ import com.unmango.kubernetesthehardway.remote.KubeControllerManagerInstall;
 import com.unmango.kubernetesthehardway.remote.KubeSchedulerInstall;
 import com.unmango.kubernetesthehardway.remote.KubectlInstall;
 import com.unmango.kubernetesthehardway.remote.SystemdService;
+import com.unmango.kubernetesthehardway.remote.enums.Architecture;
 import com.unmango.kubernetesthehardway.tools.Mkdir;
+import java.lang.Integer;
 import java.lang.String;
 import java.util.Optional;
 import javax.annotation.Nullable;
@@ -27,32 +29,102 @@ import javax.annotation.Nullable;
 @ResourceType(type="kubernetes-the-hard-way:remote:ControlPlaneNode")
 public class ControlPlaneNode extends com.pulumi.resources.ComponentResource {
     /**
+     * The number of kube-apiserver instance.
+     * 
+     */
+    @Export(name="apiServerCount", refs={Integer.class}, tree="[0]")
+    private Output<Integer> apiServerCount;
+
+    /**
+     * @return The number of kube-apiserver instance.
+     * 
+     */
+    public Output<Integer> apiServerCount() {
+        return this.apiServerCount;
+    }
+    /**
+     * The node&#39;s CPU architecture.
+     * 
+     */
+    @Export(name="architecture", refs={Architecture.class}, tree="[0]")
+    private Output<Architecture> architecture;
+
+    /**
+     * @return The node&#39;s CPU architecture.
+     * 
+     */
+    public Output<Architecture> architecture() {
+        return this.architecture;
+    }
+    /**
+     * The path to store the audit log file.
+     * 
+     */
+    @Export(name="audiLogPath", refs={String.class}, tree="[0]")
+    private Output</* @Nullable */ String> audiLogPath;
+
+    /**
+     * @return The path to store the audit log file.
+     * 
+     */
+    public Output<Optional<String>> audiLogPath() {
+        return Codegen.optional(this.audiLogPath);
+    }
+    /**
      * The path to the root certificate authority certificate.
      * 
      */
     @Export(name="caCertificatePath", refs={String.class}, tree="[0]")
-    private Output</* @Nullable */ String> caCertificatePath;
+    private Output<String> caCertificatePath;
 
     /**
      * @return The path to the root certificate authority certificate.
      * 
      */
-    public Output<Optional<String>> caCertificatePath() {
-        return Codegen.optional(this.caCertificatePath);
+    public Output<String> caCertificatePath() {
+        return this.caCertificatePath;
     }
     /**
      * The path to the root certificate authority private key.
      * 
      */
     @Export(name="caPrivateKeyPath", refs={String.class}, tree="[0]")
-    private Output</* @Nullable */ String> caPrivateKeyPath;
+    private Output<String> caPrivateKeyPath;
 
     /**
      * @return The path to the root certificate authority private key.
      * 
      */
-    public Output<Optional<String>> caPrivateKeyPath() {
-        return Codegen.optional(this.caPrivateKeyPath);
+    public Output<String> caPrivateKeyPath() {
+        return this.caPrivateKeyPath;
+    }
+    /**
+     * The cluster CIDR.
+     * 
+     */
+    @Export(name="clusterCIDR", refs={String.class}, tree="[0]")
+    private Output</* @Nullable */ String> clusterCIDR;
+
+    /**
+     * @return The cluster CIDR.
+     * 
+     */
+    public Output<Optional<String>> clusterCIDR() {
+        return Codegen.optional(this.clusterCIDR);
+    }
+    /**
+     * The cluster name.
+     * 
+     */
+    @Export(name="clusterName", refs={String.class}, tree="[0]")
+    private Output</* @Nullable */ String> clusterName;
+
+    /**
+     * @return The cluster name.
+     * 
+     */
+    public Output<Optional<String>> clusterName() {
+        return Codegen.optional(this.clusterName);
     }
     /**
      * The parameters with which to connect to the remote host.
@@ -73,28 +145,28 @@ public class ControlPlaneNode extends com.pulumi.resources.ComponentResource {
      * 
      */
     @Export(name="encryptionConfigYaml", refs={String.class}, tree="[0]")
-    private Output</* @Nullable */ String> encryptionConfigYaml;
+    private Output<String> encryptionConfigYaml;
 
     /**
      * @return The v1/EncryptionConfig yaml.
      * 
      */
-    public Output<Optional<String>> encryptionConfigYaml() {
-        return Codegen.optional(this.encryptionConfigYaml);
+    public Output<String> encryptionConfigYaml() {
+        return this.encryptionConfigYaml;
     }
     /**
      * The path to the kube-apiserver certificate.
      * 
      */
     @Export(name="kubeApiServerCertificatePath", refs={String.class}, tree="[0]")
-    private Output</* @Nullable */ String> kubeApiServerCertificatePath;
+    private Output<String> kubeApiServerCertificatePath;
 
     /**
      * @return The path to the kube-apiserver certificate.
      * 
      */
-    public Output<Optional<String>> kubeApiServerCertificatePath() {
-        return Codegen.optional(this.kubeApiServerCertificatePath);
+    public Output<String> kubeApiServerCertificatePath() {
+        return this.kubeApiServerCertificatePath;
     }
     /**
      * The kube-apiserver install.
@@ -111,18 +183,32 @@ public class ControlPlaneNode extends com.pulumi.resources.ComponentResource {
         return this.kubeApiServerInstall;
     }
     /**
+     * The directory to store the kube-apiserver binary.
+     * 
+     */
+    @Export(name="kubeApiServerInstallDirectory", refs={String.class}, tree="[0]")
+    private Output</* @Nullable */ String> kubeApiServerInstallDirectory;
+
+    /**
+     * @return The directory to store the kube-apiserver binary.
+     * 
+     */
+    public Output<Optional<String>> kubeApiServerInstallDirectory() {
+        return Codegen.optional(this.kubeApiServerInstallDirectory);
+    }
+    /**
      * The path to the kube-apiserver private key.
      * 
      */
     @Export(name="kubeApiServerPrivateKeyPath", refs={String.class}, tree="[0]")
-    private Output</* @Nullable */ String> kubeApiServerPrivateKeyPath;
+    private Output<String> kubeApiServerPrivateKeyPath;
 
     /**
      * @return The path to the kube-apiserver private key.
      * 
      */
-    public Output<Optional<String>> kubeApiServerPrivateKeyPath() {
-        return Codegen.optional(this.kubeApiServerPrivateKeyPath);
+    public Output<String> kubeApiServerPrivateKeyPath() {
+        return this.kubeApiServerPrivateKeyPath;
     }
     /**
      * The kube-apiserver systemd service.
@@ -153,18 +239,32 @@ public class ControlPlaneNode extends com.pulumi.resources.ComponentResource {
         return this.kubeControllerManagerInstall;
     }
     /**
+     * The directory to store the kube-controller-manager binary.
+     * 
+     */
+    @Export(name="kubeControllerManagerInstallDirectory", refs={String.class}, tree="[0]")
+    private Output</* @Nullable */ String> kubeControllerManagerInstallDirectory;
+
+    /**
+     * @return The directory to store the kube-controller-manager binary.
+     * 
+     */
+    public Output<Optional<String>> kubeControllerManagerInstallDirectory() {
+        return Codegen.optional(this.kubeControllerManagerInstallDirectory);
+    }
+    /**
      * The path to the kube-controller-manager kubeconfig file.
      * 
      */
     @Export(name="kubeControllerManagerKubeconfigPath", refs={String.class}, tree="[0]")
-    private Output</* @Nullable */ String> kubeControllerManagerKubeconfigPath;
+    private Output<String> kubeControllerManagerKubeconfigPath;
 
     /**
      * @return The path to the kube-controller-manager kubeconfig file.
      * 
      */
-    public Output<Optional<String>> kubeControllerManagerKubeconfigPath() {
-        return Codegen.optional(this.kubeControllerManagerKubeconfigPath);
+    public Output<String> kubeControllerManagerKubeconfigPath() {
+        return this.kubeControllerManagerKubeconfigPath;
     }
     /**
      * The kube-controller-manager systemd service.
@@ -185,14 +285,14 @@ public class ControlPlaneNode extends com.pulumi.resources.ComponentResource {
      * 
      */
     @Export(name="kubeSchedulerConfigYaml", refs={String.class}, tree="[0]")
-    private Output</* @Nullable */ String> kubeSchedulerConfigYaml;
+    private Output<String> kubeSchedulerConfigYaml;
 
     /**
      * @return The kube-scheduler config yaml.
      * 
      */
-    public Output<Optional<String>> kubeSchedulerConfigYaml() {
-        return Codegen.optional(this.kubeSchedulerConfigYaml);
+    public Output<String> kubeSchedulerConfigYaml() {
+        return this.kubeSchedulerConfigYaml;
     }
     /**
      * The kube-scheduler isntall.
@@ -209,18 +309,32 @@ public class ControlPlaneNode extends com.pulumi.resources.ComponentResource {
         return this.kubeSchedulerInstall;
     }
     /**
+     * The directory to store the kube-scheduler binary.
+     * 
+     */
+    @Export(name="kubeSchedulerInstallDirectory", refs={String.class}, tree="[0]")
+    private Output</* @Nullable */ String> kubeSchedulerInstallDirectory;
+
+    /**
+     * @return The directory to store the kube-scheduler binary.
+     * 
+     */
+    public Output<Optional<String>> kubeSchedulerInstallDirectory() {
+        return Codegen.optional(this.kubeSchedulerInstallDirectory);
+    }
+    /**
      * The path to the kube-scheduler kubeconfig file.
      * 
      */
     @Export(name="kubeSchedulerKubeconfigPath", refs={String.class}, tree="[0]")
-    private Output</* @Nullable */ String> kubeSchedulerKubeconfigPath;
+    private Output<String> kubeSchedulerKubeconfigPath;
 
     /**
      * @return The path to the kube-scheduler kubeconfig file.
      * 
      */
-    public Output<Optional<String>> kubeSchedulerKubeconfigPath() {
-        return Codegen.optional(this.kubeSchedulerKubeconfigPath);
+    public Output<String> kubeSchedulerKubeconfigPath() {
+        return this.kubeSchedulerKubeconfigPath;
     }
     /**
      * The kube-scheduler systemd service.
@@ -251,6 +365,20 @@ public class ControlPlaneNode extends com.pulumi.resources.ComponentResource {
         return this.kubectlInstall;
     }
     /**
+     * The path to store the kubectl binary.
+     * 
+     */
+    @Export(name="kubectlInstallDirectory", refs={String.class}, tree="[0]")
+    private Output</* @Nullable */ String> kubectlInstallDirectory;
+
+    /**
+     * @return The path to store the kubectl binary.
+     * 
+     */
+    public Output<Optional<String>> kubectlInstallDirectory() {
+        return Codegen.optional(this.kubectlInstallDirectory);
+    }
+    /**
      * The kubernetes configuration mkdir operation.
      * 
      */
@@ -265,32 +393,74 @@ public class ControlPlaneNode extends com.pulumi.resources.ComponentResource {
         return this.kubernetesConfigurationMkdir;
     }
     /**
+     * The version of kubernetes to use.
+     * 
+     */
+    @Export(name="kubernetesVersion", refs={String.class}, tree="[0]")
+    private Output</* @Nullable */ String> kubernetesVersion;
+
+    /**
+     * @return The version of kubernetes to use.
+     * 
+     */
+    public Output<Optional<String>> kubernetesVersion() {
+        return Codegen.optional(this.kubernetesVersion);
+    }
+    /**
+     * The name of the node.
+     * 
+     */
+    @Export(name="nodeName", refs={String.class}, tree="[0]")
+    private Output</* @Nullable */ String> nodeName;
+
+    /**
+     * @return The name of the node.
+     * 
+     */
+    public Output<Optional<String>> nodeName() {
+        return Codegen.optional(this.nodeName);
+    }
+    /**
      * The path to the service accounts certificate.
      * 
      */
     @Export(name="serviceAccountsCertificatePath", refs={String.class}, tree="[0]")
-    private Output</* @Nullable */ String> serviceAccountsCertificatePath;
+    private Output<String> serviceAccountsCertificatePath;
 
     /**
      * @return The path to the service accounts certificate.
      * 
      */
-    public Output<Optional<String>> serviceAccountsCertificatePath() {
-        return Codegen.optional(this.serviceAccountsCertificatePath);
+    public Output<String> serviceAccountsCertificatePath() {
+        return this.serviceAccountsCertificatePath;
     }
     /**
      * The path to the service accounts private key.
      * 
      */
     @Export(name="serviceAccountsPrivateKeyPath", refs={String.class}, tree="[0]")
-    private Output</* @Nullable */ String> serviceAccountsPrivateKeyPath;
+    private Output<String> serviceAccountsPrivateKeyPath;
 
     /**
      * @return The path to the service accounts private key.
      * 
      */
-    public Output<Optional<String>> serviceAccountsPrivateKeyPath() {
-        return Codegen.optional(this.serviceAccountsPrivateKeyPath);
+    public Output<String> serviceAccountsPrivateKeyPath() {
+        return this.serviceAccountsPrivateKeyPath;
+    }
+    /**
+     * The IP range to use for cluster services.
+     * 
+     */
+    @Export(name="serviceClusterIpRange", refs={String.class}, tree="[0]")
+    private Output</* @Nullable */ String> serviceClusterIpRange;
+
+    /**
+     * @return The IP range to use for cluster services.
+     * 
+     */
+    public Output<Optional<String>> serviceClusterIpRange() {
+        return Codegen.optional(this.serviceClusterIpRange);
     }
     /**
      * The /var/lib/kubernetes mkdir operation.
