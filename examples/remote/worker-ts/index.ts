@@ -1,5 +1,4 @@
 import { Config } from '@pulumi/pulumi';
-import { ContainerdConfiguration } from '@unmango/pulumi-kubernetes-the-hard-way/config';
 import { ContainerdService, KubeletService, KubeProxyService, WorkerNode } from '@unmango/pulumi-kubernetes-the-hard-way/remote';
 import { Mkdir } from '@unmango/pulumi-kubernetes-the-hard-way/tools';
 
