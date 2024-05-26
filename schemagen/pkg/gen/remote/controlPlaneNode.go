@@ -11,14 +11,17 @@ import (
 
 func generateControlPlaneNode(commandSpec schema.PackageSpec) schema.PackageSpec {
 	inputs := map[string]schema.PropertySpec{
-		"caCertificatePath":              props.String("The path to the root certificate authority certificate."),
-		"caPrivateKeyPath":               props.String("The path to the root certificate authority private key."),
-		"connection":                     props.Connection(commandSpec),
-		"encryptionConfig":               props.String("The v1/EncryptionConfig yaml."),
-		"kubeApiServerCertificatePath":   props.String("The path to the kube-apiserver certificate."),
-		"kubeApiServerPrivateKeyPath":    props.String("The path to the kube-apiserver private key."),
-		"serviceAccountsCertificatePath": props.String("The path to the service accounts certificate."),
-		"serviceAccountsPrivateKeyPath":  props.String("The path to the service accounts private key."),
+		"caCertificatePath":                   props.String("The path to the root certificate authority certificate."),
+		"caPrivateKeyPath":                    props.String("The path to the root certificate authority private key."),
+		"connection":                          props.Connection(commandSpec),
+		"encryptionConfigYaml":                props.String("The v1/EncryptionConfig yaml."),
+		"kubeApiServerCertificatePath":        props.String("The path to the kube-apiserver certificate."),
+		"kubeApiServerPrivateKeyPath":         props.String("The path to the kube-apiserver private key."),
+		"kubeControllerManagerKubeconfigPath": props.String("The path to the kube-controller-manager kubeconfig file."),
+		"kubeSchedulerConfigYaml":             props.String("The kube-scheduler config yaml."),
+		"kubeSchedulerKubeconfigPath":         props.String("The path to the kube-scheduler kubeconfig file."),
+		"serviceAccountsCertificatePath":      props.String("The path to the service accounts certificate."),
+		"serviceAccountsPrivateKeyPath":       props.String("The path to the service accounts private key."),
 	}
 
 	requiredInputs := []string{"connection"}
@@ -30,7 +33,7 @@ func generateControlPlaneNode(commandSpec schema.PackageSpec) schema.PackageSpec
 		},
 		"kubeApiServerService": {
 			Description: "The kube-apiserver systemd service.",
-			TypeSpec:    types.LocalResource("KubeApiServerService", "remote"),
+			TypeSpec:    types.LocalResource("SystemdService", "remote"),
 		},
 		"kubeControllerManagerInstall": {
 			Description: "The kube-controller-manager install.",
@@ -38,7 +41,7 @@ func generateControlPlaneNode(commandSpec schema.PackageSpec) schema.PackageSpec
 		},
 		"kubeControllerManagerService": {
 			Description: "The kube-controller-manager systemd service.",
-			TypeSpec:    types.LocalResource("KubeControllerManagerService", "remote"),
+			TypeSpec:    types.LocalResource("SystemdService", "remote"),
 		},
 		"kubectlInstall": {
 			Description: "The kubectl install.",
@@ -54,6 +57,7 @@ func generateControlPlaneNode(commandSpec schema.PackageSpec) schema.PackageSpec
 		},
 		"kubeSchedulerService": {
 			Description: "The kube-scheduler systemd service.",
+			TypeSpec:    types.LocalResource("SystemdService", "remote"),
 		},
 		"varLibKubernetesMkdir": {
 			Description: "The /var/lib/kubernetes mkdir operation.",
