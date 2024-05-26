@@ -289,42 +289,66 @@ export interface ContainerdServiceArgs {
     readonly wantedBy?: pulumi.Input<string>;
 }
 export abstract class ControlPlaneNode<TData = any> extends (pulumi.ComponentResource)<TData> {
-    public caCertificatePath?: string | pulumi.Output<string>;
-    public caPrivateKeyPath?: string | pulumi.Output<string>;
+    public apiServerCount!: number | pulumi.Output<number>;
+    public architecture!: ArchitectureOutputs | pulumi.Output<ArchitectureOutputs>;
+    public audiLogPath?: string | pulumi.Output<string>;
+    public caCertificatePath!: string | pulumi.Output<string>;
+    public caPrivateKeyPath!: string | pulumi.Output<string>;
+    public clusterCIDR?: string | pulumi.Output<string>;
+    public clusterName?: string | pulumi.Output<string>;
     public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
-    public encryptionConfigYaml?: string | pulumi.Output<string>;
-    public kubeApiServerCertificatePath?: string | pulumi.Output<string>;
+    public encryptionConfigYaml!: string | pulumi.Output<string>;
+    public kubeApiServerCertificatePath!: string | pulumi.Output<string>;
     public kubeApiServerInstall!: KubeApiServerInstall | pulumi.Output<KubeApiServerInstall>;
-    public kubeApiServerPrivateKeyPath?: string | pulumi.Output<string>;
+    public kubeApiServerInstallDirectory?: string | pulumi.Output<string>;
+    public kubeApiServerPrivateKeyPath!: string | pulumi.Output<string>;
     public kubeApiServerService?: SystemdService | pulumi.Output<SystemdService>;
     public kubeControllerManagerInstall!: KubeControllerManagerInstall | pulumi.Output<KubeControllerManagerInstall>;
-    public kubeControllerManagerKubeconfigPath?: string | pulumi.Output<string>;
+    public kubeControllerManagerInstallDirectory?: string | pulumi.Output<string>;
+    public kubeControllerManagerKubeconfigPath!: string | pulumi.Output<string>;
     public kubeControllerManagerService?: SystemdService | pulumi.Output<SystemdService>;
-    public kubeSchedulerConfigYaml?: string | pulumi.Output<string>;
+    public kubeSchedulerConfigYaml!: string | pulumi.Output<string>;
     public kubeSchedulerInstall!: KubeSchedulerInstall | pulumi.Output<KubeSchedulerInstall>;
-    public kubeSchedulerKubeconfigPath?: string | pulumi.Output<string>;
+    public kubeSchedulerInstallDirectory?: string | pulumi.Output<string>;
+    public kubeSchedulerKubeconfigPath!: string | pulumi.Output<string>;
     public kubeSchedulerService?: SystemdService | pulumi.Output<SystemdService>;
     public kubectlInstall!: KubectlInstall | pulumi.Output<KubectlInstall>;
+    public kubectlInstallDirectory?: string | pulumi.Output<string>;
     public kubernetesConfigurationMkdir!: Mkdir | pulumi.Output<Mkdir>;
-    public serviceAccountsCertificatePath?: string | pulumi.Output<string>;
-    public serviceAccountsPrivateKeyPath?: string | pulumi.Output<string>;
+    public kubernetesVersion?: string | pulumi.Output<string>;
+    public nodeName?: string | pulumi.Output<string>;
+    public serviceAccountsCertificatePath!: string | pulumi.Output<string>;
+    public serviceAccountsPrivateKeyPath!: string | pulumi.Output<string>;
+    public serviceClusterIpRange?: string | pulumi.Output<string>;
     public varLibKubernetesMkdir!: Mkdir | pulumi.Output<Mkdir>;
     constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
-        super("kubernetes-the-hard-way:remote:ControlPlaneNode", name, opts.urn ? { caCertificatePath: undefined, caPrivateKeyPath: undefined, connection: undefined, encryptionConfigYaml: undefined, kubeApiServerCertificatePath: undefined, kubeApiServerInstall: undefined, kubeApiServerPrivateKeyPath: undefined, kubeApiServerService: undefined, kubeControllerManagerInstall: undefined, kubeControllerManagerKubeconfigPath: undefined, kubeControllerManagerService: undefined, kubeSchedulerConfigYaml: undefined, kubeSchedulerInstall: undefined, kubeSchedulerKubeconfigPath: undefined, kubeSchedulerService: undefined, kubectlInstall: undefined, kubernetesConfigurationMkdir: undefined, serviceAccountsCertificatePath: undefined, serviceAccountsPrivateKeyPath: undefined, varLibKubernetesMkdir: undefined } : { name, args, opts }, opts);
+        super("kubernetes-the-hard-way:remote:ControlPlaneNode", name, opts.urn ? { apiServerCount: undefined, architecture: undefined, audiLogPath: undefined, caCertificatePath: undefined, caPrivateKeyPath: undefined, clusterCIDR: undefined, clusterName: undefined, connection: undefined, encryptionConfigYaml: undefined, kubeApiServerCertificatePath: undefined, kubeApiServerInstall: undefined, kubeApiServerInstallDirectory: undefined, kubeApiServerPrivateKeyPath: undefined, kubeApiServerService: undefined, kubeControllerManagerInstall: undefined, kubeControllerManagerInstallDirectory: undefined, kubeControllerManagerKubeconfigPath: undefined, kubeControllerManagerService: undefined, kubeSchedulerConfigYaml: undefined, kubeSchedulerInstall: undefined, kubeSchedulerInstallDirectory: undefined, kubeSchedulerKubeconfigPath: undefined, kubeSchedulerService: undefined, kubectlInstall: undefined, kubectlInstallDirectory: undefined, kubernetesConfigurationMkdir: undefined, kubernetesVersion: undefined, nodeName: undefined, serviceAccountsCertificatePath: undefined, serviceAccountsPrivateKeyPath: undefined, serviceClusterIpRange: undefined, varLibKubernetesMkdir: undefined } : { name, args, opts }, opts);
     }
 }
 export interface ControlPlaneNodeArgs {
-    readonly caCertificatePath?: pulumi.Input<string>;
-    readonly caPrivateKeyPath?: pulumi.Input<string>;
+    readonly apiServerCount: pulumi.Input<number>;
+    readonly architecture: pulumi.Input<ArchitectureInputs>;
+    readonly audiLogPath?: pulumi.Input<string>;
+    readonly caCertificatePath: pulumi.Input<string>;
+    readonly caPrivateKeyPath: pulumi.Input<string>;
+    readonly clusterCIDR?: pulumi.Input<string>;
+    readonly clusterName?: pulumi.Input<string>;
     readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
-    readonly encryptionConfigYaml?: pulumi.Input<string>;
-    readonly kubeApiServerCertificatePath?: pulumi.Input<string>;
-    readonly kubeApiServerPrivateKeyPath?: pulumi.Input<string>;
-    readonly kubeControllerManagerKubeconfigPath?: pulumi.Input<string>;
-    readonly kubeSchedulerConfigYaml?: pulumi.Input<string>;
-    readonly kubeSchedulerKubeconfigPath?: pulumi.Input<string>;
-    readonly serviceAccountsCertificatePath?: pulumi.Input<string>;
-    readonly serviceAccountsPrivateKeyPath?: pulumi.Input<string>;
+    readonly encryptionConfigYaml: pulumi.Input<string>;
+    readonly kubeApiServerCertificatePath: pulumi.Input<string>;
+    readonly kubeApiServerInstallDirectory?: pulumi.Input<string>;
+    readonly kubeApiServerPrivateKeyPath: pulumi.Input<string>;
+    readonly kubeControllerManagerInstallDirectory?: pulumi.Input<string>;
+    readonly kubeControllerManagerKubeconfigPath: pulumi.Input<string>;
+    readonly kubeSchedulerConfigYaml: pulumi.Input<string>;
+    readonly kubeSchedulerInstallDirectory?: pulumi.Input<string>;
+    readonly kubeSchedulerKubeconfigPath: pulumi.Input<string>;
+    readonly kubectlInstallDirectory?: pulumi.Input<string>;
+    readonly kubernetesVersion?: pulumi.Input<string>;
+    readonly nodeName?: pulumi.Input<string>;
+    readonly serviceAccountsCertificatePath: pulumi.Input<string>;
+    readonly serviceAccountsPrivateKeyPath: pulumi.Input<string>;
+    readonly serviceClusterIpRange?: pulumi.Input<string>;
 }
 export abstract class CrictlInstall<TData = any> extends (pulumi.ComponentResource)<TData> {
     public architecture!: ArchitectureOutputs | pulumi.Output<ArchitectureOutputs>;
