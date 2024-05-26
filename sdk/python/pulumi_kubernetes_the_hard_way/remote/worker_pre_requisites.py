@@ -51,7 +51,7 @@ class WorkerPreRequisitesArgs:
         pulumi.set(self, "triggers", value)
 
 
-class WorkerPreRequisites(pulumi.CustomResource):
+class WorkerPreRequisites(pulumi.ComponentResource):
     @overload
     def __init__(__self__,
                  resource_name: str,
@@ -97,7 +97,9 @@ class WorkerPreRequisites(pulumi.CustomResource):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):
             raise TypeError('Expected resource options to be a ResourceOptions instance')
-        if opts.id is None:
+        if opts.id is not None:
+            raise ValueError('ComponentResource classes do not support opts.id')
+        else:
             if __props__ is not None:
                 raise TypeError('__props__ is only valid when passed in combination with a valid opts.id to get an existing resource')
             __props__ = WorkerPreRequisitesArgs.__new__(WorkerPreRequisitesArgs)
@@ -114,31 +116,8 @@ class WorkerPreRequisites(pulumi.CustomResource):
             'kubernetes-the-hard-way:remote:WorkerPreRequisites',
             resource_name,
             __props__,
-            opts)
-
-    @staticmethod
-    def get(resource_name: str,
-            id: pulumi.Input[str],
-            opts: Optional[pulumi.ResourceOptions] = None) -> 'WorkerPreRequisites':
-        """
-        Get an existing WorkerPreRequisites resource's state with the given name, id, and optional extra
-        properties used to qualify the lookup.
-
-        :param str resource_name: The unique name of the resulting resource.
-        :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
-        :param pulumi.ResourceOptions opts: Options for the resource.
-        """
-        opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
-
-        __props__ = WorkerPreRequisitesArgs.__new__(WorkerPreRequisitesArgs)
-
-        __props__.__dict__["connection"] = None
-        __props__.__dict__["conntrack"] = None
-        __props__.__dict__["ipset"] = None
-        __props__.__dict__["socat"] = None
-        __props__.__dict__["swap"] = None
-        __props__.__dict__["triggers"] = None
-        return WorkerPreRequisites(resource_name, opts=opts, __props__=__props__)
+            opts,
+            remote=True)
 
     @property
     @pulumi.getter

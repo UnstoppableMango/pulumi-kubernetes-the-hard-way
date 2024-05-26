@@ -21,7 +21,7 @@ import javax.annotation.Nullable;
  * 
  */
 @ResourceType(type="kubernetes-the-hard-way:remote:WorkerPreRequisites")
-public class WorkerPreRequisites extends com.pulumi.resources.CustomResource {
+public class WorkerPreRequisites extends com.pulumi.resources.ComponentResource {
     /**
      * The parameters with which to connect to the remote host.
      * 
@@ -128,30 +128,15 @@ public class WorkerPreRequisites extends com.pulumi.resources.CustomResource {
      * @param args The arguments to use to populate this resource's properties.
      * @param options A bag of options that control this resource's behavior.
      */
-    public WorkerPreRequisites(String name, WorkerPreRequisitesArgs args, @Nullable com.pulumi.resources.CustomResourceOptions options) {
-        super("kubernetes-the-hard-way:remote:WorkerPreRequisites", name, args == null ? WorkerPreRequisitesArgs.Empty : args, makeResourceOptions(options, Codegen.empty()));
+    public WorkerPreRequisites(String name, WorkerPreRequisitesArgs args, @Nullable com.pulumi.resources.ComponentResourceOptions options) {
+        super("kubernetes-the-hard-way:remote:WorkerPreRequisites", name, args == null ? WorkerPreRequisitesArgs.Empty : args, makeResourceOptions(options, Codegen.empty()), true);
     }
 
-    private WorkerPreRequisites(String name, Output<String> id, @Nullable com.pulumi.resources.CustomResourceOptions options) {
-        super("kubernetes-the-hard-way:remote:WorkerPreRequisites", name, null, makeResourceOptions(options, id));
-    }
-
-    private static com.pulumi.resources.CustomResourceOptions makeResourceOptions(@Nullable com.pulumi.resources.CustomResourceOptions options, @Nullable Output<String> id) {
-        var defaultOptions = com.pulumi.resources.CustomResourceOptions.builder()
+    private static com.pulumi.resources.ComponentResourceOptions makeResourceOptions(@Nullable com.pulumi.resources.ComponentResourceOptions options, @Nullable Output<String> id) {
+        var defaultOptions = com.pulumi.resources.ComponentResourceOptions.builder()
             .version(Utilities.getVersion())
             .build();
-        return com.pulumi.resources.CustomResourceOptions.merge(defaultOptions, options, id);
+        return com.pulumi.resources.ComponentResourceOptions.merge(defaultOptions, options, id);
     }
 
-    /**
-     * Get an existing Host resource's state with the given name, ID, and optional extra
-     * properties used to qualify the lookup.
-     *
-     * @param name The _unique_ name of the resulting resource.
-     * @param id The _unique_ provider ID of the resource to lookup.
-     * @param options Optional settings to control the behavior of the CustomResource.
-     */
-    public static WorkerPreRequisites get(String name, Output<String> id, @Nullable com.pulumi.resources.CustomResourceOptions options) {
-        return new WorkerPreRequisites(name, id, options);
-    }
 }

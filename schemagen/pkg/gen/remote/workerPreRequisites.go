@@ -59,6 +59,7 @@ func generateWorkerPreRequisites(commandSpec schema.PackageSpec) schema.PackageS
 		Functions: map[string]schema.FunctionSpec{},
 		Resources: map[string]schema.ResourceSpec{
 			name("WorkerPreRequisites"): {
+				IsComponent: true,
 				ObjectTypeSpec: schema.ObjectTypeSpec{
 					Description: "Verifies that all worker node pre-requisites have been met.",
 					Properties:  outputs,

@@ -9,19 +9,7 @@ import * as pulumiCommand from "@pulumi/command";
 /**
  * Verifies that all worker node pre-requisites have been met.
  */
-export class WorkerPreRequisites extends pulumi.CustomResource {
-    /**
-     * Get an existing WorkerPreRequisites resource's state with the given name, ID, and optional extra
-     * properties used to qualify the lookup.
-     *
-     * @param name The _unique_ name of the resulting resource.
-     * @param id The _unique_ provider ID of the resource to lookup.
-     * @param opts Optional settings to control the behavior of the CustomResource.
-     */
-    public static get(name: string, id: pulumi.Input<pulumi.ID>, opts?: pulumi.CustomResourceOptions): WorkerPreRequisites {
-        return new WorkerPreRequisites(name, undefined as any, { ...opts, id: id });
-    }
-
+export class WorkerPreRequisites extends pulumi.ComponentResource {
     /** @internal */
     public static readonly __pulumiType = 'kubernetes-the-hard-way:remote:WorkerPreRequisites';
 
@@ -68,7 +56,7 @@ export class WorkerPreRequisites extends pulumi.CustomResource {
      * @param args The arguments to use to populate this resource's properties.
      * @param opts A bag of options that control this resource's behavior.
      */
-    constructor(name: string, args: WorkerPreRequisitesArgs, opts?: pulumi.CustomResourceOptions) {
+    constructor(name: string, args: WorkerPreRequisitesArgs, opts?: pulumi.ComponentResourceOptions) {
         let resourceInputs: pulumi.Inputs = {};
         opts = opts || {};
         if (!opts.id) {
@@ -90,7 +78,7 @@ export class WorkerPreRequisites extends pulumi.CustomResource {
             resourceInputs["triggers"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
-        super(WorkerPreRequisites.__pulumiType, name, resourceInputs, opts);
+        super(WorkerPreRequisites.__pulumiType, name, resourceInputs, opts, true /*remote*/);
     }
 }
 

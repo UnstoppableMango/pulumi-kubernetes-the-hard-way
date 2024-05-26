@@ -15,7 +15,7 @@ import (
 
 // Verifies that all worker node pre-requisites have been met.
 type WorkerPreRequisites struct {
-	pulumi.CustomResourceState
+	pulumi.ResourceState
 
 	// The parameters with which to connect to the remote host.
 	Connection pulumiCommand.ConnectionOutput `pulumi:"connection"`
@@ -44,34 +44,11 @@ func NewWorkerPreRequisites(ctx *pulumi.Context,
 	args.Connection = args.Connection.ToConnectionOutput().ApplyT(func(v pulumiCommand.Connection) pulumiCommand.Connection { return *v.Defaults() }).(pulumiCommand.ConnectionOutput)
 	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource WorkerPreRequisites
-	err := ctx.RegisterResource("kubernetes-the-hard-way:remote:WorkerPreRequisites", name, args, &resource, opts...)
+	err := ctx.RegisterRemoteComponentResource("kubernetes-the-hard-way:remote:WorkerPreRequisites", name, args, &resource, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return &resource, nil
-}
-
-// GetWorkerPreRequisites gets an existing WorkerPreRequisites resource's state with the given name, ID, and optional
-// state properties that are used to uniquely qualify the lookup (nil if not required).
-func GetWorkerPreRequisites(ctx *pulumi.Context,
-	name string, id pulumi.IDInput, state *WorkerPreRequisitesState, opts ...pulumi.ResourceOption) (*WorkerPreRequisites, error) {
-	var resource WorkerPreRequisites
-	err := ctx.ReadResource("kubernetes-the-hard-way:remote:WorkerPreRequisites", name, id, state, &resource, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return &resource, nil
-}
-
-// Input properties used for looking up and filtering WorkerPreRequisites resources.
-type workerPreRequisitesState struct {
-}
-
-type WorkerPreRequisitesState struct {
-}
-
-func (WorkerPreRequisitesState) ElementType() reflect.Type {
-	return reflect.TypeOf((*workerPreRequisitesState)(nil)).Elem()
 }
 
 type workerPreRequisitesArgs struct {
