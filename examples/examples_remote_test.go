@@ -202,6 +202,46 @@ func TestRemoteEtcdInstallTs(t *testing.T) {
 	})
 }
 
+func TestRemoteControlPlaneTs(t *testing.T) {
+	ResourceTest(t, "remote/control-plane-ts", getJSBaseOptions(t), func(ctx *ResourceContext) {
+		Validate(ctx, "kubernetes-the-hard-way:remote:ControlPlaneNode", "simple", func(t *testing.T, res apitype.ResourceV3) {
+			assert.NotEmpty(t, res.Outputs)
+
+			expectOutput(t, res, "apiServerCount", 1.)
+			expectOutput(t, res, "architecture", "amd64")
+			expectOutput(t, res, "auditLogPath", "/var/log/audit.log")
+			expectOutput(t, res, "caCertificatePath", "TODO")
+			expectOutput(t, res, "caPrivateKeyPath", "TODO")
+			expectOutput(t, res, "clusterCIDR", "10.200.0.0/16")
+			expectOutput(t, res, "clusterName", "kubernetes")
+			expectOutput(t, res, "encryptionConfigYaml", "TODO")
+			expectOutput(t, res, "kubeApiServerCertificatePath", "TODO")
+			expectOutput(t, res, "kubeApiServerInstallDirectory", "/usr/local/bin")
+			expectOutput(t, res, "kubeApiServerPrivateKeyPath", "TODO")
+			expectOutput(t, res, "kubeControllerManagerInstallDirectory", "/usr/local/bin")
+			expectOutput(t, res, "kubeControllerManagerKubeconfigPath", "TODO")
+			expectOutput(t, res, "kubectlInstallDirectory", "/usr/local/bin")
+			expectOutput(t, res, "kubernetesVersion", "1.30.0")
+			expectOutput(t, res, "kubeSchedulerConfigYaml", "TODO")
+			expectOutput(t, res, "kubeSchedulerInstallDirectory", "/usr/local/bin")
+			expectOutput(t, res, "kubeSchedulerKubeconfigPath", "TODO")
+			expectOutput(t, res, "nodeName", "server")
+			expectOutput(t, res, "serviceAccountsCertificatePath", "TODO")
+			expectOutput(t, res, "serviceAccountsPrivateKeyPath", "TODO")
+			expectOutput(t, res, "serviceClusterIpRange", "10.32.0.0/24")
+
+			assert.Contains(t, res.Outputs, "kubeApiServerInstall")
+			assert.Contains(t, res.Outputs, "kubeApiServerService")
+			assert.Contains(t, res.Outputs, "kubeControllerManagerInstall")
+			assert.Contains(t, res.Outputs, "kubeControllerManagerService")
+			assert.Contains(t, res.Outputs, "kubectlInstall")
+			assert.Contains(t, res.Outputs, "kubernetesConfigurationMkdir")
+			assert.Contains(t, res.Outputs, "kubeSchedulerInstall")
+			assert.Contains(t, res.Outputs, "varLibKubernetesMkdir")
+		})
+	})
+}
+
 func TestRemoteWorkerTs(t *testing.T) {
 	ResourceTest(t, "remote/worker-ts", getJSBaseOptions(t), func(ctx *ResourceContext) {
 		Validate(ctx, "kubernetes-the-hard-way:config:ContainerdConfiguration", "simple", func(t *testing.T, res apitype.ResourceV3) {

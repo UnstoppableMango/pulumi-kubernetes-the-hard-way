@@ -20,6 +20,11 @@ export type ContainerdService = import("./containerdService").ContainerdService;
 export const ContainerdService: typeof import("./containerdService").ContainerdService = null as any;
 utilities.lazyLoad(exports, ["ContainerdService"], () => require("./containerdService"));
 
+export { ControlPlaneNodeArgs } from "./controlPlaneNode";
+export type ControlPlaneNode = import("./controlPlaneNode").ControlPlaneNode;
+export const ControlPlaneNode: typeof import("./controlPlaneNode").ControlPlaneNode = null as any;
+utilities.lazyLoad(exports, ["ControlPlaneNode"], () => require("./controlPlaneNode"));
+
 export { CrictlInstallArgs } from "./crictlInstall";
 export type CrictlInstall = import("./crictlInstall").CrictlInstall;
 export const CrictlInstall: typeof import("./crictlInstall").CrictlInstall = null as any;
@@ -154,6 +159,8 @@ const _module = {
                 return new ContainerdInstall(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:remote:ContainerdService":
                 return new ContainerdService(name, <any>undefined, { urn })
+            case "kubernetes-the-hard-way:remote:ControlPlaneNode":
+                return new ControlPlaneNode(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:remote:CrictlInstall":
                 return new CrictlInstall(name, <any>undefined, { urn })
             case "kubernetes-the-hard-way:remote:Download":

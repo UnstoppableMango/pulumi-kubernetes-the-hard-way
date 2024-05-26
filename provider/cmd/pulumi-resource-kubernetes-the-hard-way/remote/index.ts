@@ -1,6 +1,7 @@
 export * from './cniPluginsInstall';
 export * from './containerdInstall';
 export * from './containerdService';
+export * from './controlPlaneNode';
 export * from './crictlInstall';
 export * from './download';
 export * from './etcdCluster';
