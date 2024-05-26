@@ -10,6 +10,7 @@ from typing import Any, Mapping, Optional, Sequence, Union, overload
 from .. import _utilities
 from .. import tools as _tools
 from ._enums import *
+from .file import File
 from .kube_api_server_install import KubeApiServerInstall
 from .kube_controller_manager_install import KubeControllerManagerInstall
 from .kube_scheduler_install import KubeSchedulerInstall
@@ -547,6 +548,7 @@ class ControlPlaneNode(pulumi.ComponentResource):
                 raise TypeError("Missing required property 'service_accounts_private_key_path'")
             __props__.__dict__["service_accounts_private_key_path"] = service_accounts_private_key_path
             __props__.__dict__["service_cluster_ip_range"] = service_cluster_ip_range
+            __props__.__dict__["encryption_config_file"] = None
             __props__.__dict__["kube_api_server_install"] = None
             __props__.__dict__["kube_api_server_service"] = None
             __props__.__dict__["kube_controller_manager_install"] = None
@@ -626,6 +628,14 @@ class ControlPlaneNode(pulumi.ComponentResource):
         The parameters with which to connect to the remote host.
         """
         return pulumi.get(self, "connection")
+
+    @property
+    @pulumi.getter(name="encryptionConfigFile")
+    def encryption_config_file(self) -> pulumi.Output[Optional['File']]:
+        """
+        The remote encryption config file.
+        """
+        return pulumi.get(self, "encryption_config_file")
 
     @property
     @pulumi.getter(name="encryptionConfigYaml")

@@ -65,6 +65,12 @@ namespace UnMango.KubernetesTheHardWay.Remote
         public Output<Pulumi.Command.Remote.Outputs.Connection> Connection { get; private set; } = null!;
 
         /// <summary>
+        /// The remote encryption config file.
+        /// </summary>
+        [Output("encryptionConfigFile")]
+        public Output<UnMango.KubernetesTheHardWay.Remote.File?> EncryptionConfigFile { get; private set; } = null!;
+
+        /// <summary>
         /// The v1/EncryptionConfig yaml.
         /// </summary>
         [Output("encryptionConfigYaml")]

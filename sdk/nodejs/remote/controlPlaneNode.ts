@@ -10,7 +10,7 @@ import * as utilities from "../utilities";
 import * as pulumiCommand from "@pulumi/command";
 
 import {Mkdir} from "../tools";
-import {KubeApiServerInstall, KubeControllerManagerInstall, KubeSchedulerInstall, KubectlInstall, SystemdService} from "./index";
+import {File, KubeApiServerInstall, KubeControllerManagerInstall, KubeSchedulerInstall, KubectlInstall, SystemdService} from "./index";
 
 /**
  * A kubernetes control plane node.
@@ -62,6 +62,10 @@ export class ControlPlaneNode extends pulumi.ComponentResource {
      * The parameters with which to connect to the remote host.
      */
     public readonly connection!: pulumi.Output<pulumiCommand.types.output.remote.Connection>;
+    /**
+     * The remote encryption config file.
+     */
+    public /*out*/ readonly encryptionConfigFile!: pulumi.Output<File | undefined>;
     /**
      * The v1/EncryptionConfig yaml.
      */
@@ -232,6 +236,7 @@ export class ControlPlaneNode extends pulumi.ComponentResource {
             resourceInputs["serviceAccountsCertificatePath"] = args ? args.serviceAccountsCertificatePath : undefined;
             resourceInputs["serviceAccountsPrivateKeyPath"] = args ? args.serviceAccountsPrivateKeyPath : undefined;
             resourceInputs["serviceClusterIpRange"] = args ? args.serviceClusterIpRange : undefined;
+            resourceInputs["encryptionConfigFile"] = undefined /*out*/;
             resourceInputs["kubeApiServerInstall"] = undefined /*out*/;
             resourceInputs["kubeApiServerService"] = undefined /*out*/;
             resourceInputs["kubeControllerManagerInstall"] = undefined /*out*/;
@@ -250,6 +255,7 @@ export class ControlPlaneNode extends pulumi.ComponentResource {
             resourceInputs["clusterCIDR"] = undefined /*out*/;
             resourceInputs["clusterName"] = undefined /*out*/;
             resourceInputs["connection"] = undefined /*out*/;
+            resourceInputs["encryptionConfigFile"] = undefined /*out*/;
             resourceInputs["encryptionConfigYaml"] = undefined /*out*/;
             resourceInputs["kubeApiServerCertificatePath"] = undefined /*out*/;
             resourceInputs["kubeApiServerInstall"] = undefined /*out*/;

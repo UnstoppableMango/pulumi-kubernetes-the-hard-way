@@ -2807,6 +2807,10 @@
                     "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
                     "description": "The parameters with which to connect to the remote host."
                 },
+                "encryptionConfigFile": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:remote:File",
+                    "description": "The remote encryption config file."
+                },
                 "encryptionConfigYaml": {
                     "type": "string",
                     "description": "The v1/EncryptionConfig yaml."

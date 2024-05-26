@@ -10,6 +10,7 @@ import com.pulumi.core.annotations.ResourceType;
 import com.pulumi.core.internal.Codegen;
 import com.unmango.kubernetesthehardway.Utilities;
 import com.unmango.kubernetesthehardway.remote.ControlPlaneNodeArgs;
+import com.unmango.kubernetesthehardway.remote.File;
 import com.unmango.kubernetesthehardway.remote.KubeApiServerInstall;
 import com.unmango.kubernetesthehardway.remote.KubeControllerManagerInstall;
 import com.unmango.kubernetesthehardway.remote.KubeSchedulerInstall;
@@ -139,6 +140,20 @@ public class ControlPlaneNode extends com.pulumi.resources.ComponentResource {
      */
     public Output<Connection> connection() {
         return this.connection;
+    }
+    /**
+     * The remote encryption config file.
+     * 
+     */
+    @Export(name="encryptionConfigFile", refs={File.class}, tree="[0]")
+    private Output</* @Nullable */ File> encryptionConfigFile;
+
+    /**
+     * @return The remote encryption config file.
+     * 
+     */
+    public Output<Optional<File>> encryptionConfigFile() {
+        return Codegen.optional(this.encryptionConfigFile);
     }
     /**
      * The v1/EncryptionConfig yaml.

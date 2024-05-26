@@ -34,6 +34,8 @@ type ControlPlaneNode struct {
 	ClusterName pulumi.StringPtrOutput `pulumi:"clusterName"`
 	// The parameters with which to connect to the remote host.
 	Connection pulumiCommand.ConnectionOutput `pulumi:"connection"`
+	// The remote encryption config file.
+	EncryptionConfigFile FileOutput `pulumi:"encryptionConfigFile"`
 	// The v1/EncryptionConfig yaml.
 	EncryptionConfigYaml pulumi.StringOutput `pulumi:"encryptionConfigYaml"`
 	// The path to the kube-apiserver certificate.
@@ -364,6 +366,11 @@ func (o ControlPlaneNodeOutput) ClusterName() pulumi.StringPtrOutput {
 // The parameters with which to connect to the remote host.
 func (o ControlPlaneNodeOutput) Connection() pulumiCommand.ConnectionOutput {
 	return o.ApplyT(func(v *ControlPlaneNode) pulumiCommand.ConnectionOutput { return v.Connection }).(pulumiCommand.ConnectionOutput)
+}
+
+// The remote encryption config file.
+func (o ControlPlaneNodeOutput) EncryptionConfigFile() FileOutput {
+	return o.ApplyT(func(v *ControlPlaneNode) FileOutput { return v.EncryptionConfigFile }).(FileOutput)
 }
 
 // The v1/EncryptionConfig yaml.
