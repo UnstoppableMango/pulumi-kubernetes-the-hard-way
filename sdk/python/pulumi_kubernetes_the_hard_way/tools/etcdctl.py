@@ -36,7 +36,7 @@ class EtcdctlArgs:
                Command resource from previous create or update steps.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] environment: Environment variables
         :param pulumi.Input[str] stdin: TODO
-        :param pulumi.Input[Sequence[Any]] triggers: TODO
+        :param pulumi.Input[Sequence[Any]] triggers: Trigger replacements on changes to this input.
         :param Union[pulumi.Input[str], pulumi.Input['EtcdctlOptsArgs']] update: The command to run on update, if empty, create will 
                run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
                are set to the stdout and stderr properties of the Command resource from previous 
@@ -136,7 +136,7 @@ class EtcdctlArgs:
     @pulumi.getter
     def triggers(self) -> Optional[pulumi.Input[Sequence[Any]]]:
         """
-        TODO
+        Trigger replacements on changes to this input.
         """
         return pulumi.get(self, "triggers")
 
@@ -187,7 +187,7 @@ class Etcdctl(pulumi.ComponentResource):
                Command resource from previous create or update steps.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] environment: Environment variables
         :param pulumi.Input[str] stdin: TODO
-        :param pulumi.Input[Sequence[Any]] triggers: TODO
+        :param pulumi.Input[Sequence[Any]] triggers: Trigger replacements on changes to this input.
         :param Union[pulumi.Input[str], pulumi.Input[pulumi.InputType['EtcdctlOptsArgs']]] update: The command to run on update, if empty, create will 
                run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR 
                are set to the stdout and stderr properties of the Command resource from previous 
@@ -334,7 +334,7 @@ class Etcdctl(pulumi.ComponentResource):
     @pulumi.getter
     def triggers(self) -> pulumi.Output[Sequence[Any]]:
         """
-        TODO
+        Trigger replacements on changes to this input.
         """
         return pulumi.get(self, "triggers")
 

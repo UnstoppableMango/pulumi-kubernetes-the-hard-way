@@ -73,7 +73,7 @@ namespace UnMango.KubernetesTheHardWay.Tools
         public Output<string> Stdout { get; private set; } = null!;
 
         /// <summary>
-        /// TODO
+        /// Trigger replacements on changes to this input.
         /// </summary>
         [Output("triggers")]
         public Output<ImmutableArray<object>> Triggers { get; private set; } = null!;
@@ -164,7 +164,7 @@ namespace UnMango.KubernetesTheHardWay.Tools
         private InputList<object>? _triggers;
 
         /// <summary>
-        /// TODO
+        /// Trigger replacements on changes to this input.
         /// </summary>
         public InputList<object> Triggers
         {

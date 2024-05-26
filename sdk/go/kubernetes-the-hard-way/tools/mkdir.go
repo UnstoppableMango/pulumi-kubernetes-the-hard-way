@@ -37,7 +37,7 @@ type Mkdir struct {
 	Stdin pulumi.StringPtrOutput `pulumi:"stdin"`
 	// TODO
 	Stdout pulumi.StringOutput `pulumi:"stdout"`
-	// TODO
+	// Trigger replacements on changes to this input.
 	Triggers pulumi.ArrayOutput `pulumi:"triggers"`
 	// The command to run on update, if empty, create will
 	// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
@@ -81,7 +81,7 @@ type mkdirArgs struct {
 	Environment map[string]string `pulumi:"environment"`
 	// TODO
 	Stdin *string `pulumi:"stdin"`
-	// TODO
+	// Trigger replacements on changes to this input.
 	Triggers []interface{} `pulumi:"triggers"`
 	// The command to run on update, if empty, create will
 	// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
@@ -106,7 +106,7 @@ type MkdirArgs struct {
 	Environment pulumi.StringMapInput
 	// TODO
 	Stdin pulumi.StringPtrInput
-	// TODO
+	// Trigger replacements on changes to this input.
 	Triggers pulumi.ArrayInput
 	// The command to run on update, if empty, create will
 	// run again. The environment variables PULUMI_COMMAND_STDOUT and PULUMI_COMMAND_STDERR
@@ -249,7 +249,7 @@ func (o MkdirOutput) Stdout() pulumi.StringOutput {
 	return o.ApplyT(func(v *Mkdir) pulumi.StringOutput { return v.Stdout }).(pulumi.StringOutput)
 }
 
-// TODO
+// Trigger replacements on changes to this input.
 func (o MkdirOutput) Triggers() pulumi.ArrayOutput {
 	return o.ApplyT(func(v *Mkdir) pulumi.ArrayOutput { return v.Triggers }).(pulumi.ArrayOutput)
 }

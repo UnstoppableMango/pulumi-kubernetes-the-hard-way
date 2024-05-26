@@ -157,14 +157,14 @@ public class Tar extends com.pulumi.resources.ComponentResource {
         return this.stdout;
     }
     /**
-     * TODO
+     * Trigger replacements on changes to this input.
      * 
      */
     @Export(name="triggers", refs={List.class,Object.class}, tree="[0,1]")
     private Output<List<Object>> triggers;
 
     /**
-     * @return TODO
+     * @return Trigger replacements on changes to this input.
      * 
      */
     public Output<List<Object>> triggers() {

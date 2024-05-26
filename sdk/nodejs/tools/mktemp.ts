@@ -66,7 +66,7 @@ export class Mktemp extends pulumi.ComponentResource {
      */
     public /*out*/ readonly stdout!: pulumi.Output<string>;
     /**
-     * TODO
+     * Trigger replacements on changes to this input.
      */
     public readonly triggers!: pulumi.Output<any[]>;
     /**
@@ -151,7 +151,7 @@ export interface MktempArgs {
      */
     stdin?: pulumi.Input<string>;
     /**
-     * TODO
+     * Trigger replacements on changes to this input.
      */
     triggers?: pulumi.Input<any[]>;
     /**

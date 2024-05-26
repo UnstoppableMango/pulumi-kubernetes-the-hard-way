@@ -117,14 +117,14 @@ public final class HostnamectlArgs extends com.pulumi.resources.ResourceArgs {
     }
 
     /**
-     * TODO
+     * Trigger replacements on changes to this input.
      * 
      */
     @Import(name="triggers")
     private @Nullable Output<List<Object>> triggers;
 
     /**
-     * @return TODO
+     * @return Trigger replacements on changes to this input.
      * 
      */
     public Optional<Output<List<Object>>> triggers() {
@@ -336,7 +336,7 @@ public final class HostnamectlArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param triggers TODO
+         * @param triggers Trigger replacements on changes to this input.
          * 
          * @return builder
          * 
@@ -347,7 +347,7 @@ public final class HostnamectlArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param triggers TODO
+         * @param triggers Trigger replacements on changes to this input.
          * 
          * @return builder
          * 
@@ -357,7 +357,7 @@ public final class HostnamectlArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param triggers TODO
+         * @param triggers Trigger replacements on changes to this input.
          * 
          * @return builder
          * 
