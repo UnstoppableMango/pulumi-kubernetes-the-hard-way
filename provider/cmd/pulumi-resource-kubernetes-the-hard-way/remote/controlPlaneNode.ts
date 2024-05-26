@@ -127,7 +127,7 @@ export class ControlPlaneNode extends schema.ControlPlaneNode {
       connection,
       content: kubeSchedulerConfigYaml,
       path: interpolate`/etc/kubernetes/config/kube-scheduler.yaml`,
-    }, { parent: this });
+    }, { parent: this, dependsOn: kubernetesConfigurationMkdir });
 
     const kubeSchedulerService = this.getKubeSchedulerService(
       name,
