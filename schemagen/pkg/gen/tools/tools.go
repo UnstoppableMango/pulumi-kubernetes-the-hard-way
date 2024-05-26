@@ -86,7 +86,7 @@ func (tool tool) resourceSpec(commandSpec schema.PackageSpec, optsType schema.Ty
 		"environment": props.StringMap("Environment variables"),
 		"stdin":       props.String("TODO"),
 		"triggers": {
-			Description: "TODO",
+			Description: "Trigger replacements on changes to this input.",
 			TypeSpec: schema.TypeSpec{
 				Type: "array",
 				Items: &schema.TypeSpec{
