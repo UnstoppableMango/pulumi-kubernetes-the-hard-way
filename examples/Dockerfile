@@ -3,11 +3,14 @@ FROM --platform=${BUILDPLATFORM} ubuntu:noble-20240429
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt update \
     && apt install -y \
+        conntrack \
         curl \
         dbus \
         dbus-user-session \
+        ipset \
         net-tools \
         openssh-server \
+        socat \
         systemd \
         systemd-sysv \
         sudo \
