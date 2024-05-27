@@ -54,7 +54,7 @@ func TestRemoteInstallTs(t *testing.T) {
 			RunUpdateTest: false,
 			Config: map[string]string{
 				"host":     "localhost",
-				"port":     node.Port,
+				"port":     node.SshPort,
 				"user":     username,
 				"password": password,
 				"basePath": "/config",

@@ -42,12 +42,6 @@ func skipIfCi(t *testing.T) {
 	}
 }
 
-type node struct {
-	Server SshServer
-	Port   string
-	Ip     string
-}
-
 func (n node) Exec(t *testing.T, command []string) string {
 	result, err := n.Server.Exec(context.Background(), command)
 	require.NoError(t, err, "failed to execute command")

@@ -13,7 +13,8 @@ import (
 	"github.com/testcontainers/testcontainers-go/wait"
 )
 
-const internalPort = "22/tcp"
+const sshPort = "22/tcp"
+const etcdPort = "2379/tcp"
 
 type SshServer struct {
 	Container testcontainers.Container
@@ -75,9 +76,12 @@ func StartSshServer(ctx context.Context, opts ...SshServerOption) (SshServer, er
 		// FromDockerfile: testcontainers.FromDockerfile{
 		// 	ContextArchive: bytes.NewReader(buf.Bytes()),
 		// },
-		Image:        "kthw:dev",
-		ExposedPorts: []string{internalPort},
-		Networks:     options.Networks,
+		Image: "kthw:dev",
+		ExposedPorts: []string{
+			sshPort,
+			etcdPort,
+		},
+		Networks: options.Networks,
 		// Env: map[string]string{
 		// 	"PUID":            "1000",
 		// 	"PGID":            "1000",
@@ -129,9 +133,13 @@ func (s *SshServer) Ip(ctx context.Context) (string, error) {
 	return s.Container.ContainerIP(ctx)
 }
 
-func (s *SshServer) Port(ctx context.Context) (string, error) {
-	port, err := s.Container.MappedPort(ctx, nat.Port(internalPort))
+func (s *SshServer) SshPort(ctx context.Context) (string, error) {
+	port, err := s.Container.MappedPort(ctx, nat.Port(sshPort))
+	return port.Port(), err
+}
 
+func (s *SshServer) EtcdPort(ctx context.Context) (string, error) {
+	port, err := s.Container.MappedPort(ctx, nat.Port(etcdPort))
 	return port.Port(), err
 }
 

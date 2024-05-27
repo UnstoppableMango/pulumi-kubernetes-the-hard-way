@@ -31,6 +31,13 @@ type validatorKey struct {
 	Name string
 }
 
+type node struct {
+	Server   SshServer
+	SshPort  string
+	EtcdPort string
+	Ip       string
+}
+
 func Validate(ctx *ResourceContext, typ tokens.Type, name string, validator ResourceValidator) {
 	ctx.tokens[validatorKey{Type: typ, Name: name}] = validator
 }
@@ -87,7 +94,7 @@ func SingleContainerSetup(t *testing.T) integration.ProgramTestOptions {
 		Config: map[string]string{
 			"test:container": "single",
 			"host":           "localhost",
-			"port":           node.Port,
+			"port":           node.SshPort,
 			"user":           username,
 			"password":       password,
 		},
@@ -115,17 +122,17 @@ func MultiContainerSetup(t *testing.T) integration.ProgramTestOptions {
 			"test:container": "multi",
 			"node1-host":     "localhost",
 			"node1-ip":       nodes["node1"].Ip,
-			"node1-port":     nodes["node1"].Port,
+			"node1-port":     nodes["node1"].SshPort,
 			"node1-user":     username,
 			"node1-password": password,
 			"node2-host":     "localhost",
 			"node2-ip":       nodes["node2"].Ip,
-			"node2-port":     nodes["node2"].Port,
+			"node2-port":     nodes["node2"].SshPort,
 			"node2-user":     username,
 			"node2-password": password,
 			"node3-host":     "localhost",
 			"node3-ip":       nodes["node3"].Ip,
-			"node3-port":     nodes["node3"].Port,
+			"node3-port":     nodes["node3"].SshPort,
 			"node3-user":     username,
 			"node3-password": password,
 		},
@@ -146,13 +153,21 @@ func newNode(t *testing.T, opts ...SshServerOption) node {
 		require.NoError(t, err)
 	})
 
-	port, err := server.Port(ctx)
-	require.NoError(t, err, "failed to get node port")
+	sshPort, err := server.SshPort(ctx)
+	require.NoError(t, err, "failed to get ssh port")
+
+	etcdPort, err := server.EtcdPort(ctx)
+	require.NoError(t, err, "failed to get etcd port")
 
 	ip, err := server.Ip(ctx)
 	require.NoError(t, err, "failed to retrieve node IP")
 
-	return node{Server: server, Port: port, Ip: ip}
+	return node{
+		Server:   server,
+		SshPort:  sshPort,
+		EtcdPort: etcdPort,
+		Ip:       ip,
+	}
 }
 
 func newCluster(t *testing.T, config map[string][]SshServerOption) map[string]node {
