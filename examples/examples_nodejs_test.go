@@ -7,6 +7,7 @@ import (
 	"path"
 	"testing"
 
+	"github.com/UnstoppableMango/pulumi-kubernetes-the-hard-way/examples/internal/rt"
 	"github.com/pulumi/pulumi/pkg/v3/testing/integration"
 	"github.com/stretchr/testify/assert"
 )
@@ -36,16 +37,6 @@ func TestRemoteInstallTs(t *testing.T) {
 	skipIfShort(t)
 	skipIfCi(t)
 
-	const (
-		username = "root"
-		password = "root"
-	)
-
-	node := newNode(t,
-		WithSshUsername(username),
-		WithSshPassword(password),
-	)
-
 	test := getJSBaseOptions(t).
 		With(integration.ProgramTestOptions{
 			Dir:           path.Join(getCwd(t), "remote-install-ts"),
@@ -53,15 +44,11 @@ func TestRemoteInstallTs(t *testing.T) {
 			SkipRefresh:   true,
 			RunUpdateTest: false,
 			Config: map[string]string{
-				"host":     "localhost",
-				"port":     node.Port,
-				"user":     username,
-				"password": password,
 				"basePath": "/config",
 			},
 		})
 
-	integration.ProgramTest(t, &test)
+	rt.ResourceTest(t, "remote-install-ts", test, func(ctx *rt.ResourceContext) {})
 }
 
 func getJSBaseOptions(t *testing.T) integration.ProgramTestOptions {

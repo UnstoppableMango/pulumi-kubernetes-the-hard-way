@@ -3,20 +3,20 @@
 package examples
 
 import (
-	"path"
 	"testing"
 
+	"github.com/UnstoppableMango/pulumi-kubernetes-the-hard-way/examples/internal/rt"
 	"github.com/pulumi/pulumi/pkg/v3/testing/integration"
 	"github.com/pulumi/pulumi/sdk/v3/go/common/apitype"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestCniPluginsTs(t *testing.T) {
-	ResourceTest(t, "remote/cni-plugins-ts", getJSBaseOptions(t), func(ctx *ResourceContext) {
-		Validate(ctx, "kubernetes-the-hard-way:config:CniBridgePluginConfiguration", "simple", func(t *testing.T, res apitype.ResourceV3) {
+	rt.ResourceTest(t, "remote/cni-plugins-ts", getJSBaseOptions(t), func(ctx *rt.ResourceContext) {
+		rt.Validate(ctx, "kubernetes-the-hard-way:config:CniBridgePluginConfiguration", "simple", func(t *testing.T, res apitype.ResourceV3) {
 			assert.NotEmpty(t, res.Outputs)
 
-			expectOutput(t, res, "result", map[string]interface{}{
+			rt.ExpectOutput(t, res, "result", map[string]interface{}{
 				"name":       "bridge",
 				"type":       "bridge",
 				"bridge":     "cni0",
@@ -37,10 +37,10 @@ func TestCniPluginsTs(t *testing.T) {
 
 			assert.Contains(t, res.Outputs, "yaml")
 		})
-		Validate(ctx, "kubernetes-the-hard-way:config:CniLoopbackPluginConfiguration", "simple", func(t *testing.T, res apitype.ResourceV3) {
+		rt.Validate(ctx, "kubernetes-the-hard-way:config:CniLoopbackPluginConfiguration", "simple", func(t *testing.T, res apitype.ResourceV3) {
 			assert.NotEmpty(t, res.Outputs)
 
-			expectOutput(t, res, "result", map[string]interface{}{
+			rt.ExpectOutput(t, res, "result", map[string]interface{}{
 				"name":       "lo",
 				"type":       "loopback",
 				"cniVersion": "1.1.0",
@@ -52,96 +52,45 @@ func TestCniPluginsTs(t *testing.T) {
 }
 
 func TestRemoteEtcdClusterMultiTs(t *testing.T) {
-	skipIfShort(t)
+	opts := getJSBaseOptions(t).With(rt.MultiContainerSetup(t))
+	rt.ResourceTest(t, "remote/etcd-cluster-multi-ts", opts, func(ctx *rt.ResourceContext) {
+		rt.Validate(ctx, "kubernetes-the-hard-way:remote:EtcdCluster", "simple", func(t *testing.T, res apitype.ResourceV3) {
+			validateNode := func(name string, outputs map[string]interface{}) {
+				install, ok := outputs["install"]
+				assert.True(t, ok, "Output `install` was not set")
+				assert.Contains(t, install, name)
 
-	const (
-		username = "root"
-		password = "root"
-	)
+				configuration, ok := outputs["configuration"]
+				assert.True(t, ok, "Output `configuration` was not set")
+				assert.Contains(t, configuration, name)
 
-	opts := []SshServerOption{
-		WithSshUsername(username),
-		WithSshPassword(password),
-	}
-	nodes := newCluster(t, map[string][]SshServerOption{
-		"node1": opts,
-		"node2": opts,
-		"node3": opts,
-	})
+				nodes, ok := outputs["nodes"]
+				assert.True(t, ok, "Output `nodes` was not set")
+				assert.Contains(t, nodes, name)
 
-	validateNode := func(t *testing.T, name string, outputs map[string]interface{}) {
-		install, ok := outputs["install"]
-		assert.True(t, ok, "Output `install` was not set")
-		assert.Contains(t, install, name)
+				service, ok := outputs["service"]
+				assert.True(t, ok, "Output `service` was not set")
+				assert.Contains(t, service, name)
 
-		configuration, ok := outputs["configuration"]
-		assert.True(t, ok, "Output `configuration` was not set")
-		assert.Contains(t, configuration, name)
+				start, ok := outputs["start"]
+				assert.True(t, ok, "Output `start` was not set")
+				assert.Contains(t, start, name)
+			}
 
-		nodes, ok := outputs["nodes"]
-		assert.True(t, ok, "Output `nodes` was not set")
-		assert.Contains(t, nodes, name)
+			assert.NotEmpty(t, res.Outputs)
 
-		service, ok := outputs["service"]
-		assert.True(t, ok, "Output `service` was not set")
-		assert.Contains(t, service, name)
+			validateNode("node1", res.Outputs)
+			validateNode("node2", res.Outputs)
+			validateNode("node3", res.Outputs)
 
-		start, ok := outputs["start"]
-		assert.True(t, ok, "Output `start` was not set")
-		assert.Contains(t, start, name)
-	}
-
-	validateSimple := func(t *testing.T, res apitype.ResourceV3) {
-		assert.NotEmpty(t, res.Outputs)
-		validateNode(t, "node1", res.Outputs)
-		validateNode(t, "node2", res.Outputs)
-		validateNode(t, "node3", res.Outputs)
-		assert.Contains(t, res.Outputs, "bundle")
-	}
-
-	test := getJSBaseOptions(t).
-		With(integration.ProgramTestOptions{
-			Dir: path.Join(getCwd(t), "remote", "etcd-cluster-multi-ts"),
-			Config: map[string]string{
-				"node1-host":     "localhost",
-				"node1-ip":       nodes["node1"].Ip,
-				"node1-port":     nodes["node1"].Port,
-				"node1-user":     username,
-				"node1-password": password,
-				"node2-host":     "localhost",
-				"node2-ip":       nodes["node2"].Ip,
-				"node2-port":     nodes["node2"].Port,
-				"node2-user":     username,
-				"node2-password": password,
-				"node3-host":     "localhost",
-				"node3-ip":       nodes["node3"].Ip,
-				"node3-port":     nodes["node3"].Port,
-				"node3-user":     username,
-				"node3-password": password,
-			},
-			ExtraRuntimeValidation: func(t *testing.T, stack integration.RuntimeValidationStackInfo) {
-				validatedResources := []string{}
-				for _, res := range stack.Deployment.Resources {
-					if res.Type != "kubernetes-the-hard-way:remote:EtcdCluster" {
-						continue
-					}
-					switch res.URN.Name() {
-					case "simple":
-						validateSimple(t, res)
-						validatedResources = append(validatedResources, "simple")
-					}
-				}
-
-				assert.Equal(t, []string{"simple"}, validatedResources, "Not all resources were validated")
-			},
+			assert.Contains(t, res.Outputs, "bundle")
 		})
-
-	integration.ProgramTest(t, &test)
+	})
 }
 
 func TestRemoteEtcdClusterSingleTs(t *testing.T) {
-	ResourceTest(t, "remote/etcd-cluster-single-ts", getJSBaseOptions(t), func(ctx *ResourceContext) {
-		Validate(ctx, "kubernetes-the-hard-way:remote:EtcdCluster", "simple", func(t *testing.T, res apitype.ResourceV3) {
+	rt.ResourceTest(t, "remote/etcd-cluster-single-ts", getJSBaseOptions(t), func(ctx *rt.ResourceContext) {
+		rt.Validate(ctx, "kubernetes-the-hard-way:remote:EtcdCluster", "simple", func(t *testing.T, res apitype.ResourceV3) {
 			assert.NotEmpty(t, res.Outputs)
 
 			install, ok := res.Outputs["install"]
@@ -180,18 +129,18 @@ func TestRemoteEtcdInstallTs(t *testing.T) {
 		},
 	})
 
-	ResourceTest(t, "remote/etcd-install-ts", options, func(ctx *ResourceContext) {
-		Validate(ctx, "kubernetes-the-hard-way:remote:EtcdInstall", "simple", func(t *testing.T, res apitype.ResourceV3) {
+	rt.ResourceTest(t, "remote/etcd-install-ts", options, func(ctx *rt.ResourceContext) {
+		rt.Validate(ctx, "kubernetes-the-hard-way:remote:EtcdInstall", "simple", func(t *testing.T, res apitype.ResourceV3) {
 			assert.NotEmpty(t, res.Outputs)
 
-			expectOutput(t, res, "architecture", "amd64")
-			expectOutput(t, res, "archiveName", "etcd-v3.4.15-linux-amd64.tar.gz")
-			expectOutput(t, res, "directory", "/usr/local/bin")
-			expectOutput(t, res, "etcdPath", "/usr/local/bin/etcd")
-			expectOutput(t, res, "etcdctlPath", "/usr/local/bin/etcdctl")
-			expectOutput(t, res, "name", "simple")
-			expectOutput(t, res, "url", "https://github.com/etcd-io/etcd/releases/download/v3.4.15/etcd-v3.4.15-linux-amd64.tar.gz")
-			expectOutput(t, res, "version", "3.4.15")
+			rt.ExpectOutput(t, res, "architecture", "amd64")
+			rt.ExpectOutput(t, res, "archiveName", "etcd-v3.4.15-linux-amd64.tar.gz")
+			rt.ExpectOutput(t, res, "directory", "/usr/local/bin")
+			rt.ExpectOutput(t, res, "etcdPath", "/usr/local/bin/etcd")
+			rt.ExpectOutput(t, res, "etcdctlPath", "/usr/local/bin/etcdctl")
+			rt.ExpectOutput(t, res, "name", "simple")
+			rt.ExpectOutput(t, res, "url", "https://github.com/etcd-io/etcd/releases/download/v3.4.15/etcd-v3.4.15-linux-amd64.tar.gz")
+			rt.ExpectOutput(t, res, "version", "3.4.15")
 
 			assert.Contains(t, res.Outputs, "download")
 			assert.Contains(t, res.Outputs, "mkdir")
@@ -203,32 +152,32 @@ func TestRemoteEtcdInstallTs(t *testing.T) {
 }
 
 func TestRemoteControlPlaneTs(t *testing.T) {
-	ResourceTest(t, "remote/control-plane-ts", getJSBaseOptions(t), func(ctx *ResourceContext) {
-		Validate(ctx, "kubernetes-the-hard-way:remote:ControlPlaneNode", "simple", func(t *testing.T, res apitype.ResourceV3) {
+	rt.ResourceTest(t, "remote/control-plane-ts", getJSBaseOptions(t), func(ctx *rt.ResourceContext) {
+		rt.Validate(ctx, "kubernetes-the-hard-way:remote:ControlPlaneNode", "simple", func(t *testing.T, res apitype.ResourceV3) {
 			assert.NotEmpty(t, res.Outputs)
 
-			expectOutput(t, res, "apiServerCount", 1.)
-			expectOutput(t, res, "architecture", "amd64")
-			expectOutput(t, res, "auditLogPath", "/var/log/audit.log")
-			expectOutput(t, res, "caCertificatePath", "TODO")
-			expectOutput(t, res, "caPrivateKeyPath", "TODO")
-			expectOutput(t, res, "clusterCIDR", "10.200.0.0/16")
-			expectOutput(t, res, "clusterName", "kubernetes")
-			expectOutput(t, res, "encryptionConfigYaml", "TODO")
-			expectOutput(t, res, "kubeApiServerCertificatePath", "TODO")
-			expectOutput(t, res, "kubeApiServerInstallDirectory", "/usr/local/bin")
-			expectOutput(t, res, "kubeApiServerPrivateKeyPath", "TODO")
-			expectOutput(t, res, "kubeControllerManagerInstallDirectory", "/usr/local/bin")
-			expectOutput(t, res, "kubeControllerManagerKubeconfigPath", "TODO")
-			expectOutput(t, res, "kubectlInstallDirectory", "/usr/local/bin")
-			expectOutput(t, res, "kubernetesVersion", "1.30.0")
-			expectOutput(t, res, "kubeSchedulerConfigYaml", "TODO")
-			expectOutput(t, res, "kubeSchedulerInstallDirectory", "/usr/local/bin")
-			expectOutput(t, res, "kubeSchedulerKubeconfigPath", "TODO")
-			expectOutput(t, res, "nodeName", "server")
-			expectOutput(t, res, "serviceAccountsCertificatePath", "TODO")
-			expectOutput(t, res, "serviceAccountsPrivateKeyPath", "TODO")
-			expectOutput(t, res, "serviceClusterIpRange", "10.32.0.0/24")
+			rt.ExpectOutput(t, res, "apiServerCount", 1.)
+			rt.ExpectOutput(t, res, "architecture", "amd64")
+			rt.ExpectOutput(t, res, "auditLogPath", "/var/log/audit.log")
+			rt.ExpectOutput(t, res, "caCertificatePath", "TODO")
+			rt.ExpectOutput(t, res, "caPrivateKeyPath", "TODO")
+			rt.ExpectOutput(t, res, "clusterCIDR", "10.200.0.0/16")
+			rt.ExpectOutput(t, res, "clusterName", "kubernetes")
+			rt.ExpectOutput(t, res, "encryptionConfigYaml", "TODO")
+			rt.ExpectOutput(t, res, "kubeApiServerCertificatePath", "TODO")
+			rt.ExpectOutput(t, res, "kubeApiServerInstallDirectory", "/usr/local/bin")
+			rt.ExpectOutput(t, res, "kubeApiServerPrivateKeyPath", "TODO")
+			rt.ExpectOutput(t, res, "kubeControllerManagerInstallDirectory", "/usr/local/bin")
+			rt.ExpectOutput(t, res, "kubeControllerManagerKubeconfigPath", "TODO")
+			rt.ExpectOutput(t, res, "kubectlInstallDirectory", "/usr/local/bin")
+			rt.ExpectOutput(t, res, "kubernetesVersion", "1.30.0")
+			rt.ExpectOutput(t, res, "kubeSchedulerConfigYaml", "TODO")
+			rt.ExpectOutput(t, res, "kubeSchedulerInstallDirectory", "/usr/local/bin")
+			rt.ExpectOutput(t, res, "kubeSchedulerKubeconfigPath", "TODO")
+			rt.ExpectOutput(t, res, "nodeName", "server")
+			rt.ExpectOutput(t, res, "serviceAccountsCertificatePath", "TODO")
+			rt.ExpectOutput(t, res, "serviceAccountsPrivateKeyPath", "TODO")
+			rt.ExpectOutput(t, res, "serviceClusterIpRange", "10.32.0.0/24")
 
 			assert.Contains(t, res.Outputs, "kubeApiServerInstall")
 			assert.Contains(t, res.Outputs, "kubeApiServerService")
@@ -243,30 +192,30 @@ func TestRemoteControlPlaneTs(t *testing.T) {
 }
 
 func TestRemoteWorkerTs(t *testing.T) {
-	ResourceTest(t, "remote/worker-ts", getJSBaseOptions(t), func(ctx *ResourceContext) {
-		Validate(ctx, "kubernetes-the-hard-way:config:ContainerdConfiguration", "simple", func(t *testing.T, res apitype.ResourceV3) {
+	rt.ResourceTest(t, "remote/worker-ts", getJSBaseOptions(t), func(ctx *rt.ResourceContext) {
+		rt.Validate(ctx, "kubernetes-the-hard-way:config:ContainerdConfiguration", "simple", func(t *testing.T, res apitype.ResourceV3) {
 			assert.NotEmpty(t, res.Outputs)
 
 			assert.Contains(t, res.Outputs, "result")
 			assert.Contains(t, res.Outputs, "toml")
 		})
-		Validate(ctx, "kubernetes-the-hard-way:remote:WorkerNode", "simple", func(t *testing.T, res apitype.ResourceV3) {
+		rt.Validate(ctx, "kubernetes-the-hard-way:remote:WorkerNode", "simple", func(t *testing.T, res apitype.ResourceV3) {
 			assert.NotEmpty(t, res.Outputs)
 
-			expectOutput(t, res, "subnet", "0.0.0.0/24")
-			expectOutput(t, res, "clusterCIDR", "10.200.0.0/16")
-			expectOutput(t, res, "architecture", "amd64")
-			expectOutput(t, res, "caPath", "TODO")
-			expectOutput(t, res, "kubeletCertificatePath", "TODO")
-			expectOutput(t, res, "kubeletPrivateKeyPath", "TODO")
-			expectOutput(t, res, "clusterCIDR", "10.200.0.0/16")
-			expectOutput(t, res, "cniConfigurationDirectory", "/etc/cni/net.d")
-			expectOutput(t, res, "containerdConfigurationDirectory", "/etc/containerd")
-			expectOutput(t, res, "kubeletConfigurationDirectory", "/var/lib/kubelet")
-			expectOutput(t, res, "kubeletKubeconfigPath", "/var/lib/kubelet/kubeconfig")
-			expectOutput(t, res, "kubeProxyConfigurationDirectory", "/var/lib/kube-proxy")
-			expectOutput(t, res, "kubeProxyKubeconfigPath", "/var/lib/kube-proxy/kubeconfig")
-			expectOutput(t, res, "kubernetesVersion", "1.30.0")
+			rt.ExpectOutput(t, res, "subnet", "0.0.0.0/24")
+			rt.ExpectOutput(t, res, "clusterCIDR", "10.200.0.0/16")
+			rt.ExpectOutput(t, res, "architecture", "amd64")
+			rt.ExpectOutput(t, res, "caPath", "TODO")
+			rt.ExpectOutput(t, res, "kubeletCertificatePath", "TODO")
+			rt.ExpectOutput(t, res, "kubeletPrivateKeyPath", "TODO")
+			rt.ExpectOutput(t, res, "clusterCIDR", "10.200.0.0/16")
+			rt.ExpectOutput(t, res, "cniConfigurationDirectory", "/etc/cni/net.d")
+			rt.ExpectOutput(t, res, "containerdConfigurationDirectory", "/etc/containerd")
+			rt.ExpectOutput(t, res, "kubeletConfigurationDirectory", "/var/lib/kubelet")
+			rt.ExpectOutput(t, res, "kubeletKubeconfigPath", "/var/lib/kubelet/kubeconfig")
+			rt.ExpectOutput(t, res, "kubeProxyConfigurationDirectory", "/var/lib/kube-proxy")
+			rt.ExpectOutput(t, res, "kubeProxyKubeconfigPath", "/var/lib/kube-proxy/kubeconfig")
+			rt.ExpectOutput(t, res, "kubernetesVersion", "1.30.0")
 
 			assert.Contains(t, res.Outputs, "cniMkdir")
 			assert.Contains(t, res.Outputs, "containerdMkdir")

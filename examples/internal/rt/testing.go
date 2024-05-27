@@ -1,7 +1,8 @@
-package examples
+package rt
 
 import (
 	"fmt"
+	"os"
 	"path"
 	"testing"
 
@@ -28,26 +29,12 @@ func Validate(ctx *ResourceContext, typ tokens.Type, name string, validator Reso
 }
 
 func ResourceTest(t *testing.T, project string, baseOptions integration.ProgramTestOptions, validation func(ctx *ResourceContext)) {
-	skipIfShort(t)
-
-	const (
-		username = "root"
-		password = "root"
-	)
-
-	node := newNode(t,
-		WithSshUsername(username),
-		WithSshPassword(password),
-	)
+	if _, ok := baseOptions.Config["test:container"]; !ok {
+		baseOptions = baseOptions.With(SingleContainerSetup(t))
+	}
 
 	test := baseOptions.With(integration.ProgramTestOptions{
 		Dir: path.Join(getCwd(t), project),
-		Config: map[string]string{
-			"host":     "localhost",
-			"port":     node.Port,
-			"user":     username,
-			"password": password,
-		},
 		ExtraRuntimeValidation: func(t *testing.T, stack integration.RuntimeValidationStackInfo) {
 			ctx := ResourceContext{tokens: map[validatorKey]ResourceValidator{}}
 			validation(&ctx)
@@ -74,4 +61,13 @@ func ResourceTest(t *testing.T, project string, baseOptions integration.ProgramT
 	})
 
 	integration.ProgramTest(t, &test)
+}
+
+func getCwd(t *testing.T) string {
+	cwd, err := os.Getwd()
+	if err != nil {
+		t.FailNow()
+	}
+
+	return cwd
 }
