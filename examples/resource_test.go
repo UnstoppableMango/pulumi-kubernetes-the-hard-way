@@ -12,6 +12,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"github.com/testcontainers/testcontainers-go/network"
+	clientV3 "go.etcd.io/etcd/client/v3"
 	"golang.org/x/exp/maps"
 )
 
@@ -23,7 +24,8 @@ type ResourceTestSetup struct {
 }
 
 type ResourceContext struct {
-	tokens map[validatorKey]ResourceValidator
+	EtcdClient clientV3.Client
+	tokens     map[validatorKey]ResourceValidator
 }
 
 type validatorKey struct {
@@ -45,13 +47,15 @@ func Validate(ctx *ResourceContext, typ tokens.Type, name string, validator Reso
 func ResourceTest(t *testing.T, project string, baseOptions integration.ProgramTestOptions, validation func(ctx *ResourceContext)) {
 	skipIfShort(t)
 
-	if _, ok := baseOptions.Config["test:container"]; !ok {
+	if containerType, ok := baseOptions.Config["test:container"]; !ok {
 		baseOptions = baseOptions.With(SingleContainerSetup(t))
 	}
 
 	test := baseOptions.With(integration.ProgramTestOptions{
 		Dir: path.Join(getCwd(t), project),
 		ExtraRuntimeValidation: func(t *testing.T, stack integration.RuntimeValidationStackInfo) {
+			var etcdClient clientV3.Client
+
 			ctx := ResourceContext{tokens: map[validatorKey]ResourceValidator{}}
 			validation(&ctx)
 			lookup := ctx.tokens
