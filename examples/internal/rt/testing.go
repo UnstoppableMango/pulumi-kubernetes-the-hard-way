@@ -7,25 +7,12 @@ import (
 	"testing"
 
 	"github.com/pulumi/pulumi/pkg/v3/testing/integration"
-	"github.com/pulumi/pulumi/sdk/v3/go/common/apitype"
-	"github.com/pulumi/pulumi/sdk/v3/go/common/tokens"
 	"github.com/stretchr/testify/assert"
 	"golang.org/x/exp/maps"
 )
 
-type ResourceValidator func(t *testing.T, res apitype.ResourceV3)
-
 type ResourceContext struct {
 	tokens map[validatorKey]ResourceValidator
-}
-
-type validatorKey struct {
-	Type tokens.Type
-	Name string
-}
-
-func Validate(ctx *ResourceContext, typ tokens.Type, name string, validator ResourceValidator) {
-	ctx.tokens[validatorKey{Type: typ, Name: name}] = validator
 }
 
 func ResourceTest(t *testing.T, project string, baseOptions integration.ProgramTestOptions, validation func(ctx *ResourceContext)) {
