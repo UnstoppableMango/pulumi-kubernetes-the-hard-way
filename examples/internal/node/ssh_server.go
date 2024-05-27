@@ -1,4 +1,4 @@
-package examples
+package node
 
 import (
 	"archive/tar"
