@@ -10,15 +10,13 @@ import (
 	"github.com/pulumi/pulumi/sdk/v3/go/common/apitype"
 	"github.com/pulumi/pulumi/sdk/v3/go/common/tokens"
 	"github.com/stretchr/testify/assert"
-	clientV3 "go.etcd.io/etcd/client/v3"
 	"golang.org/x/exp/maps"
 )
 
 type ResourceValidator func(t *testing.T, res apitype.ResourceV3)
 
 type ResourceContext struct {
-	EtcdClient clientV3.Client
-	tokens     map[validatorKey]ResourceValidator
+	tokens map[validatorKey]ResourceValidator
 }
 
 type validatorKey struct {
