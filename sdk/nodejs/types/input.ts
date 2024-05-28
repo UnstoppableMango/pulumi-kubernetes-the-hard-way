@@ -774,6 +774,7 @@ export namespace remote {
          * Turns on delegation of further resource control partitioning to processes of the unit.
          */
         delegate?: pulumi.Input<enums.remote.SystemdDelegate>;
+        environment?: pulumi.Input<pulumi.Input<string>[]>;
         /**
          * Commands that are executed when this service is started.
          */

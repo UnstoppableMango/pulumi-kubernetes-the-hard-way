@@ -22,6 +22,14 @@ namespace UnMango.KubernetesTheHardWay.Remote.Inputs
         [Input("delegate")]
         public Input<UnMango.KubernetesTheHardWay.Remote.SystemdDelegate>? Delegate { get; set; }
 
+        [Input("environment")]
+        private InputList<string>? _environment;
+        public InputList<string> Environment
+        {
+            get => _environment ?? (_environment = new InputList<string>());
+            set => _environment = value;
+        }
+
         /// <summary>
         /// Commands that are executed when this service is started.
         /// </summary>

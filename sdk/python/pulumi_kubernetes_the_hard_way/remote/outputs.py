@@ -419,6 +419,7 @@ class SystemdServiceSection(dict):
 
     def __init__(__self__, *,
                  delegate: Optional['SystemdDelegate'] = None,
+                 environment: Optional[Sequence[str]] = None,
                  exec_start: Optional[str] = None,
                  exec_start_pre: Optional[str] = None,
                  exit_type: Optional['SystemdServiceExitType'] = None,
@@ -447,6 +448,8 @@ class SystemdServiceSection(dict):
         """
         if delegate is not None:
             pulumi.set(__self__, "delegate", delegate)
+        if environment is not None:
+            pulumi.set(__self__, "environment", environment)
         if exec_start is not None:
             pulumi.set(__self__, "exec_start", exec_start)
         if exec_start_pre is not None:
@@ -477,6 +480,11 @@ class SystemdServiceSection(dict):
         Turns on delegation of further resource control partitioning to processes of the unit.
         """
         return pulumi.get(self, "delegate")
+
+    @property
+    @pulumi.getter
+    def environment(self) -> Optional[Sequence[str]]:
+        return pulumi.get(self, "environment")
 
     @property
     @pulumi.getter(name="execStart")
