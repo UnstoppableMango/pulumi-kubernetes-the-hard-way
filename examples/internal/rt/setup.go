@@ -7,11 +7,6 @@ import (
 	"github.com/pulumi/pulumi/pkg/v3/testing/integration"
 )
 
-type ResourceTestSetup struct {
-	Config map[string]string
-	Setup  func(t *testing.T)
-}
-
 func SingleContainerSetup(t *testing.T) integration.ProgramTestOptions {
 	const (
 		username = "root"

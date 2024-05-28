@@ -12,6 +12,7 @@ import (
 )
 
 type ResourceContext struct {
+	Stack   integration.RuntimeValidationStackInfo
 	options integration.ProgramTestOptions
 	tokens  map[validatorKey]ResourceValidator
 }
@@ -23,14 +24,15 @@ func ForOptions(options integration.ProgramTestOptions) ResourceContext {
 	}
 }
 
-func ResourceTest(t *testing.T, project string, ctx ResourceContext, validation func(ctx *ResourceContext)) {
-	if _, ok := ctx.options.Config["test:container"]; !ok {
-		ctx.options = ctx.options.With(SingleContainerSetup(t))
+func ResourceTest(t *testing.T, project string, options integration.ProgramTestOptions, validation func(ctx *ResourceContext)) {
+	if _, ok := options.Config["test:container"]; !ok {
+		options = options.With(SingleContainerSetup(t))
 	}
 
-	test := ctx.options.With(integration.ProgramTestOptions{
+	test := options.With(integration.ProgramTestOptions{
 		Dir: path.Join(getCwd(t), project),
 		ExtraRuntimeValidation: func(t *testing.T, stack integration.RuntimeValidationStackInfo) {
+			ctx := ForOptions(options)
 			validation(&ctx)
 			lookup := ctx.tokens
 
