@@ -48,7 +48,7 @@ func TestRemoteInstallTs(t *testing.T) {
 			},
 		})
 
-	rt.ResourceTest(t, "remote-install-ts", rt.ForOptions(options), func(ctx *rt.ResourceContext) {})
+	rt.ResourceTest(t, "remote-install-ts", options, func(ctx *rt.ResourceContext) {})
 }
 
 func getJSBaseOptions(t *testing.T) integration.ProgramTestOptions {

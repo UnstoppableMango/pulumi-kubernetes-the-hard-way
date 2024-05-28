@@ -3,6 +3,7 @@
 package examples
 
 import (
+	"context"
 	"testing"
 
 	"github.com/UnstoppableMango/pulumi-kubernetes-the-hard-way/examples/internal/rt"
@@ -12,7 +13,7 @@ import (
 )
 
 func TestCniPluginsTs(t *testing.T) {
-	rt.ResourceTest(t, "remote/cni-plugins-ts", rt.ForOptions(getJSBaseOptions(t)), func(ctx *rt.ResourceContext) {
+	rt.ResourceTest(t, "remote/cni-plugins-ts", getJSBaseOptions(t), func(ctx *rt.ResourceContext) {
 		rt.Validate(ctx, "kubernetes-the-hard-way:config:CniBridgePluginConfiguration", "simple", func(t *testing.T, res apitype.ResourceV3) {
 			assert.NotEmpty(t, res.Outputs)
 
@@ -53,7 +54,7 @@ func TestCniPluginsTs(t *testing.T) {
 
 func TestRemoteEtcdClusterMultiTs(t *testing.T) {
 	options := getJSBaseOptions(t).With(rt.MultiContainerSetup(t))
-	rt.ResourceTest(t, "remote/etcd-cluster-multi-ts", rt.ForOptions(options), func(ctx *rt.ResourceContext) {
+	rt.ResourceTest(t, "remote/etcd-cluster-multi-ts", options, func(ctx *rt.ResourceContext) {
 		rt.Validate(ctx, "kubernetes-the-hard-way:remote:EtcdCluster", "simple", func(t *testing.T, res apitype.ResourceV3) {
 			validateNode := func(name string, outputs map[string]interface{}) {
 				install, ok := outputs["install"]
@@ -89,8 +90,8 @@ func TestRemoteEtcdClusterMultiTs(t *testing.T) {
 }
 
 func TestRemoteEtcdClusterSingleTs(t *testing.T) {
-	rt.ResourceTest(t, "remote/etcd-cluster-single-ts", rt.ForOptions(getJSBaseOptions(t)), func(ctx *rt.ResourceContext) {
-		rt.Validate(ctx, "kubernetes-the-hard-way:remote:EtcdCluster", "simple", func(t *testing.T, res apitype.ResourceV3) {
+	rt.EtcdNodeTest(t, "remote/etcd-cluster-single-ts", getJSBaseOptions(t), func(ctx *rt.EtcdContext) {
+		rt.Validate(&ctx.ResourceContext, "kubernetes-the-hard-way:remote:EtcdCluster", "simple", func(t *testing.T, res apitype.ResourceV3) {
 			assert.NotEmpty(t, res.Outputs)
 
 			install, ok := res.Outputs["install"]
@@ -114,6 +115,10 @@ func TestRemoteEtcdClusterSingleTs(t *testing.T) {
 			assert.Contains(t, start, "node0")
 
 			assert.Contains(t, res.Outputs, "bundle")
+
+			result, err := ctx.EtcdClient.MemberList(context.Background())
+			assert.NoError(t, err)
+			assert.NotEmpty(t, result.Members)
 		})
 	})
 }
@@ -129,7 +134,7 @@ func TestRemoteEtcdInstallTs(t *testing.T) {
 		},
 	})
 
-	rt.ResourceTest(t, "remote/etcd-install-ts", rt.ForOptions(options), func(ctx *rt.ResourceContext) {
+	rt.ResourceTest(t, "remote/etcd-install-ts", options, func(ctx *rt.ResourceContext) {
 		rt.Validate(ctx, "kubernetes-the-hard-way:remote:EtcdInstall", "simple", func(t *testing.T, res apitype.ResourceV3) {
 			assert.NotEmpty(t, res.Outputs)
 
@@ -152,7 +157,7 @@ func TestRemoteEtcdInstallTs(t *testing.T) {
 }
 
 func TestRemoteControlPlaneTs(t *testing.T) {
-	rt.ResourceTest(t, "remote/control-plane-ts", rt.ForOptions(getJSBaseOptions(t)), func(ctx *rt.ResourceContext) {
+	rt.ResourceTest(t, "remote/control-plane-ts", getJSBaseOptions(t), func(ctx *rt.ResourceContext) {
 		rt.Validate(ctx, "kubernetes-the-hard-way:remote:ControlPlaneNode", "simple", func(t *testing.T, res apitype.ResourceV3) {
 			assert.NotEmpty(t, res.Outputs)
 
@@ -192,7 +197,7 @@ func TestRemoteControlPlaneTs(t *testing.T) {
 }
 
 func TestRemoteWorkerTs(t *testing.T) {
-	rt.ResourceTest(t, "remote/worker-ts", rt.ForOptions(getJSBaseOptions(t)), func(ctx *rt.ResourceContext) {
+	rt.ResourceTest(t, "remote/worker-ts", getJSBaseOptions(t), func(ctx *rt.ResourceContext) {
 		rt.Validate(ctx, "kubernetes-the-hard-way:config:ContainerdConfiguration", "simple", func(t *testing.T, res apitype.ResourceV3) {
 			assert.NotEmpty(t, res.Outputs)
 
