@@ -39,6 +39,9 @@ export class EtcdService extends schema.EtcdService {
       },
       service: {
         type: 'notify',
+        environment: [
+          '"ETCD_UNSUPPORTED_ARCH=arm64"',
+        ],
         execStart,
         restart,
         restartSec,
