@@ -788,6 +788,7 @@ export namespace remote {
          * Turns on delegation of further resource control partitioning to processes of the unit.
          */
         delegate?: enums.remote.SystemdDelegate;
+        environment?: string[];
         /**
          * Commands that are executed when this service is started.
          */

@@ -1740,6 +1740,7 @@ export type SystemdServiceRestartInputs = "no" | "on-success" | "on-failure" | "
 export type SystemdServiceRestartOutputs = "no" | "on-success" | "on-failure" | "on-abnormal" | "on-watchdog" | "on-abort" | "always";
 export interface SystemdServiceSectionInputs {
     readonly delegate?: pulumi.Input<SystemdDelegateInputs>;
+    readonly environment?: pulumi.Input<pulumi.Input<string>[]>;
     readonly execStart?: pulumi.Input<string>;
     readonly execStartPre?: pulumi.Input<string>;
     readonly exitType?: pulumi.Input<SystemdServiceExitTypeInputs>;
@@ -1754,6 +1755,7 @@ export interface SystemdServiceSectionInputs {
 }
 export interface SystemdServiceSectionOutputs {
     readonly delegate?: pulumi.Output<SystemdDelegateOutputs>;
+    readonly environment?: pulumi.Output<string[]>;
     readonly execStart?: pulumi.Output<string>;
     readonly execStartPre?: pulumi.Output<string>;
     readonly exitType?: pulumi.Output<SystemdServiceExitTypeOutputs>;

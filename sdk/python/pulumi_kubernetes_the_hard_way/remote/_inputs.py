@@ -337,6 +337,7 @@ class SystemdInstallSectionArgs:
 class SystemdServiceSectionArgs:
     def __init__(__self__, *,
                  delegate: Optional[pulumi.Input['SystemdDelegate']] = None,
+                 environment: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  exec_start: Optional[pulumi.Input[str]] = None,
                  exec_start_pre: Optional[pulumi.Input[str]] = None,
                  exit_type: Optional[pulumi.Input['SystemdServiceExitType']] = None,
@@ -365,6 +366,8 @@ class SystemdServiceSectionArgs:
         """
         if delegate is not None:
             pulumi.set(__self__, "delegate", delegate)
+        if environment is not None:
+            pulumi.set(__self__, "environment", environment)
         if exec_start is not None:
             pulumi.set(__self__, "exec_start", exec_start)
         if exec_start_pre is not None:
@@ -399,6 +402,15 @@ class SystemdServiceSectionArgs:
     @delegate.setter
     def delegate(self, value: Optional[pulumi.Input['SystemdDelegate']]):
         pulumi.set(self, "delegate", value)
+
+    @property
+    @pulumi.getter
+    def environment(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        return pulumi.get(self, "environment")
+
+    @environment.setter
+    def environment(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
+        pulumi.set(self, "environment", value)
 
     @property
     @pulumi.getter(name="execStart")

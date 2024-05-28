@@ -12,6 +12,7 @@ import com.unmango.kubernetesthehardway.remote.enums.SystemdServiceRestart;
 import com.unmango.kubernetesthehardway.remote.enums.SystemdServiceType;
 import java.lang.Integer;
 import java.lang.String;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import javax.annotation.Nullable;
@@ -38,6 +39,13 @@ public final class SystemdServiceSectionArgs extends com.pulumi.resources.Resour
      */
     public Optional<Output<SystemdDelegate>> delegate() {
         return Optional.ofNullable(this.delegate);
+    }
+
+    @Import(name="environment")
+    private @Nullable Output<List<String>> environment;
+
+    public Optional<Output<List<String>>> environment() {
+        return Optional.ofNullable(this.environment);
     }
 
     /**
@@ -209,6 +217,7 @@ public final class SystemdServiceSectionArgs extends com.pulumi.resources.Resour
 
     private SystemdServiceSectionArgs(SystemdServiceSectionArgs $) {
         this.delegate = $.delegate;
+        this.environment = $.environment;
         this.execStart = $.execStart;
         this.execStartPre = $.execStartPre;
         this.exitType = $.exitType;
@@ -259,6 +268,19 @@ public final class SystemdServiceSectionArgs extends com.pulumi.resources.Resour
          */
         public Builder delegate(SystemdDelegate delegate) {
             return delegate(Output.of(delegate));
+        }
+
+        public Builder environment(@Nullable Output<List<String>> environment) {
+            $.environment = environment;
+            return this;
+        }
+
+        public Builder environment(List<String> environment) {
+            return environment(Output.of(environment));
+        }
+
+        public Builder environment(String... environment) {
+            return environment(List.of(environment));
         }
 
         /**

@@ -963,6 +963,12 @@
                     "$ref": "#/types/kubernetes-the-hard-way:remote:SystemdDelegate",
                     "description": "Turns on delegation of further resource control partitioning to processes of the unit."
                 },
+                "environment": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
                 "execStart": {
                     "type": "string",
                     "description": "Commands that are executed when this service is started."

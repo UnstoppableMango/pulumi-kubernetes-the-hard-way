@@ -11,6 +11,7 @@ import com.unmango.kubernetesthehardway.remote.enums.SystemdServiceRestart;
 import com.unmango.kubernetesthehardway.remote.enums.SystemdServiceType;
 import java.lang.Integer;
 import java.lang.String;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import javax.annotation.Nullable;
@@ -22,6 +23,7 @@ public final class SystemdServiceSection {
      * 
      */
     private @Nullable SystemdDelegate delegate;
+    private @Nullable List<String> environment;
     /**
      * @return Commands that are executed when this service is started.
      * 
@@ -85,6 +87,9 @@ public final class SystemdServiceSection {
      */
     public Optional<SystemdDelegate> delegate() {
         return Optional.ofNullable(this.delegate);
+    }
+    public List<String> environment() {
+        return this.environment == null ? List.of() : this.environment;
     }
     /**
      * @return Commands that are executed when this service is started.
@@ -174,6 +179,7 @@ public final class SystemdServiceSection {
     @CustomType.Builder
     public static final class Builder {
         private @Nullable SystemdDelegate delegate;
+        private @Nullable List<String> environment;
         private @Nullable String execStart;
         private @Nullable String execStartPre;
         private @Nullable SystemdServiceExitType exitType;
@@ -189,6 +195,7 @@ public final class SystemdServiceSection {
         public Builder(SystemdServiceSection defaults) {
     	      Objects.requireNonNull(defaults);
     	      this.delegate = defaults.delegate;
+    	      this.environment = defaults.environment;
     	      this.execStart = defaults.execStart;
     	      this.execStartPre = defaults.execStartPre;
     	      this.exitType = defaults.exitType;
@@ -207,6 +214,15 @@ public final class SystemdServiceSection {
 
             this.delegate = delegate;
             return this;
+        }
+        @CustomType.Setter
+        public Builder environment(@Nullable List<String> environment) {
+
+            this.environment = environment;
+            return this;
+        }
+        public Builder environment(String... environment) {
+            return environment(List.of(environment));
         }
         @CustomType.Setter
         public Builder execStart(@Nullable String execStart) {
@@ -277,6 +293,7 @@ public final class SystemdServiceSection {
         public SystemdServiceSection build() {
             final var _resultValue = new SystemdServiceSection();
             _resultValue.delegate = delegate;
+            _resultValue.environment = environment;
             _resultValue.execStart = execStart;
             _resultValue.execStartPre = execStartPre;
             _resultValue.exitType = exitType;

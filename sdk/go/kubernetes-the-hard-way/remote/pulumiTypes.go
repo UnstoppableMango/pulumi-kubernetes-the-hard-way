@@ -579,7 +579,8 @@ func (o SystemdInstallSectionPtrOutput) WantedBy() pulumi.StringArrayOutput {
 // https://www.freedesktop.org/software/systemd/man/latest/systemd.service.html#
 type SystemdServiceSection struct {
 	// Turns on delegation of further resource control partitioning to processes of the unit.
-	Delegate *SystemdDelegate `pulumi:"delegate"`
+	Delegate    *SystemdDelegate `pulumi:"delegate"`
+	Environment []string         `pulumi:"environment"`
 	// Commands that are executed when this service is started.
 	ExecStart *string `pulumi:"execStart"`
 	// Additional commands that are executed before the command in ExecStart=.
@@ -618,7 +619,8 @@ type SystemdServiceSectionInput interface {
 // https://www.freedesktop.org/software/systemd/man/latest/systemd.service.html#
 type SystemdServiceSectionArgs struct {
 	// Turns on delegation of further resource control partitioning to processes of the unit.
-	Delegate SystemdDelegatePtrInput `pulumi:"delegate"`
+	Delegate    SystemdDelegatePtrInput `pulumi:"delegate"`
+	Environment pulumi.StringArrayInput `pulumi:"environment"`
 	// Commands that are executed when this service is started.
 	ExecStart pulumi.StringPtrInput `pulumi:"execStart"`
 	// Additional commands that are executed before the command in ExecStart=.
@@ -673,6 +675,10 @@ func (o SystemdServiceSectionOutput) ToSystemdServiceSectionOutputWithContext(ct
 // Turns on delegation of further resource control partitioning to processes of the unit.
 func (o SystemdServiceSectionOutput) Delegate() SystemdDelegatePtrOutput {
 	return o.ApplyT(func(v SystemdServiceSection) *SystemdDelegate { return v.Delegate }).(SystemdDelegatePtrOutput)
+}
+
+func (o SystemdServiceSectionOutput) Environment() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v SystemdServiceSection) []string { return v.Environment }).(pulumi.StringArrayOutput)
 }
 
 // Commands that are executed when this service is started.
