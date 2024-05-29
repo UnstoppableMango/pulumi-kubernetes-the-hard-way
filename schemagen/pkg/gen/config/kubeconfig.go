@@ -12,28 +12,9 @@ func generateGetKubeconfig() schema.PackageSpec {
 		schema.ObjectTypeSpec{
 			Properties: map[string]schema.PropertySpec{
 				"caPem": props.String("Certificate authority data."),
-				"options": {
+				"options": { // Do we even actually need this?
 					Description: "Options for creating the kubeconfig.",
-					TypeSpec: schema.TypeSpec{
-						Plain: true,
-						OneOf: []schema.TypeSpec{
-							types.LocalType("KubeconfigAdminOptions", "config"),
-							types.LocalType("KubeconfigKubeControllerManagerOptions", "config"),
-							types.LocalType("KubeconfigKubeProxyOptions", "config"),
-							types.LocalType("KubeconfigKubeSchedulerOptions", "config"),
-							types.LocalType("KubeconfigWorkerOptions", "config"),
-						},
-						Discriminator: &schema.DiscriminatorSpec{
-							PropertyName: "type",
-							Mapping: map[string]string{
-								"admin":                   types.LocalTypeRef("KubeconfigAdminOptions", "config"),
-								"kube-controller-manager": types.LocalTypeRef("KubeconfigKubeControllerManagerOptions", "config"),
-								"kube-proxy":              types.LocalTypeRef("KubeconfigKubeProxyOptions", "config"),
-								"kube-scheduler":          types.LocalTypeRef("KubeconfigKubeSchedulerOptions", "config"),
-								"worker":                  types.LocalTypeRef("KubeconfigWorkerOptions", "config"),
-							},
-						},
-					},
+					TypeSpec:    types.LocalType("KubeconfigAdminOptions", "config"),
 				},
 			},
 			Required: []string{"caPem", "options"},
