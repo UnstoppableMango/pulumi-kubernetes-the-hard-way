@@ -60,7 +60,7 @@ class Kubeconfig(pulumi.ComponentResource):
                  options: Optional[Union[pulumi.Input[pulumi.InputType['KubeconfigAdminOptionsArgs']], pulumi.Input[pulumi.InputType['KubeconfigKubeControllerManagerOptionsArgs']], pulumi.Input[pulumi.InputType['KubeconfigKubeProxyOptionsArgs']], pulumi.Input[pulumi.InputType['KubeconfigKubeSchedulerOptionsArgs']], pulumi.Input[pulumi.InputType['KubeconfigWorkerOptionsArgs']]]] = None,
                  __props__=None):
         """
-        TODO
+        https://kubernetes.io/docs/concepts/configuration/organize-cluster-access-kubeconfig/
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -74,7 +74,7 @@ class Kubeconfig(pulumi.ComponentResource):
                  args: KubeconfigArgs,
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
-        TODO
+        https://kubernetes.io/docs/concepts/configuration/organize-cluster-access-kubeconfig/
 
         :param str resource_name: The name of the resource.
         :param KubeconfigArgs args: The arguments to use to populate this resource's properties.

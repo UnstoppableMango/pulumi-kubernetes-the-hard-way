@@ -201,28 +201,28 @@ public final class ConfigFunctions {
         return Deployment.getInstance().invokeAsync("kubernetes-the-hard-way:config:getKubeVipManifest", TypeShape.of(GetKubeVipManifestResult.class), args, Utilities.withVersion(options));
     }
     /**
-     * TODO
+     * https://kubernetes.io/docs/concepts/configuration/organize-cluster-access-kubeconfig/
      * 
      */
     public static Output<GetKubeconfigResult> getKubeconfig(GetKubeconfigArgs args) {
         return getKubeconfig(args, InvokeOptions.Empty);
     }
     /**
-     * TODO
+     * https://kubernetes.io/docs/concepts/configuration/organize-cluster-access-kubeconfig/
      * 
      */
     public static CompletableFuture<GetKubeconfigResult> getKubeconfigPlain(GetKubeconfigPlainArgs args) {
         return getKubeconfigPlain(args, InvokeOptions.Empty);
     }
     /**
-     * TODO
+     * https://kubernetes.io/docs/concepts/configuration/organize-cluster-access-kubeconfig/
      * 
      */
     public static Output<GetKubeconfigResult> getKubeconfig(GetKubeconfigArgs args, InvokeOptions options) {
         return Deployment.getInstance().invoke("kubernetes-the-hard-way:config:getKubeconfig", TypeShape.of(GetKubeconfigResult.class), args, Utilities.withVersion(options));
     }
     /**
-     * TODO
+     * https://kubernetes.io/docs/concepts/configuration/organize-cluster-access-kubeconfig/
      * 
      */
     public static CompletableFuture<GetKubeconfigResult> getKubeconfigPlain(GetKubeconfigPlainArgs args, InvokeOptions options) {

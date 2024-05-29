@@ -8,7 +8,7 @@ import * as enums from "../types/enums";
 import * as utilities from "../utilities";
 
 /**
- * TODO
+ * https://kubernetes.io/docs/concepts/configuration/organize-cluster-access-kubeconfig/
  */
 export function getKubeconfig(args: GetKubeconfigArgs, opts?: pulumi.InvokeOptions): Promise<GetKubeconfigResult> {
 
@@ -31,13 +31,13 @@ export interface GetKubeconfigArgs {
 }
 
 /**
- * TODO
+ * https://kubernetes.io/docs/concepts/configuration/organize-cluster-access-kubeconfig/
  */
 export interface GetKubeconfigResult {
     readonly result: outputs.config.Kubeconfig;
 }
 /**
- * TODO
+ * https://kubernetes.io/docs/concepts/configuration/organize-cluster-access-kubeconfig/
  */
 export function getKubeconfigOutput(args: GetKubeconfigOutputArgs, opts?: pulumi.InvokeOptions): pulumi.Output<GetKubeconfigResult> {
     return pulumi.output(args).apply((a: any) => getKubeconfig(a, opts))

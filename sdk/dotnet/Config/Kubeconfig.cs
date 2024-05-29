@@ -11,7 +11,7 @@ using Pulumi;
 namespace UnMango.KubernetesTheHardWay.Config
 {
     /// <summary>
-    /// TODO
+    /// https://kubernetes.io/docs/concepts/configuration/organize-cluster-access-kubeconfig/
     /// </summary>
     [KubernetesTheHardWayResourceType("kubernetes-the-hard-way:config:Kubeconfig")]
     public partial class Kubeconfig : global::Pulumi.ComponentResource

@@ -11,7 +11,7 @@ import (
 	"github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/sdk/go/kubernetes-the-hard-way/internal"
 )
 
-// TODO
+// https://kubernetes.io/docs/concepts/configuration/organize-cluster-access-kubeconfig/
 func GetKubeconfig(ctx *pulumi.Context, args *GetKubeconfigArgs, opts ...pulumi.InvokeOption) (*GetKubeconfigResult, error) {
 	opts = internal.PkgInvokeDefaultOpts(opts)
 	var rv GetKubeconfigResult
@@ -29,7 +29,7 @@ type GetKubeconfigArgs struct {
 	Options interface{} `pulumi:"options"`
 }
 
-// TODO
+// https://kubernetes.io/docs/concepts/configuration/organize-cluster-access-kubeconfig/
 type GetKubeconfigResult struct {
 	Result KubeconfigType `pulumi:"result"`
 }
@@ -58,7 +58,7 @@ func (GetKubeconfigOutputArgs) ElementType() reflect.Type {
 	return reflect.TypeOf((*GetKubeconfigArgs)(nil)).Elem()
 }
 
-// TODO
+// https://kubernetes.io/docs/concepts/configuration/organize-cluster-access-kubeconfig/
 type GetKubeconfigResultOutput struct{ *pulumi.OutputState }
 
 func (GetKubeconfigResultOutput) ElementType() reflect.Type {

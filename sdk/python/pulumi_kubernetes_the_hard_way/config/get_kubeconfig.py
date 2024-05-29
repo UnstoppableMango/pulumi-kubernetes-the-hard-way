@@ -21,7 +21,7 @@ __all__ = [
 @pulumi.output_type
 class GetKubeconfigResult:
     """
-    TODO
+    https://kubernetes.io/docs/concepts/configuration/organize-cluster-access-kubeconfig/
     """
     def __init__(__self__, result=None):
         if result and not isinstance(result, dict):
@@ -47,7 +47,7 @@ def get_kubeconfig(ca_pem: Optional[str] = None,
                    options: Optional[Union[pulumi.InputType['KubeconfigAdminOptions'], pulumi.InputType['KubeconfigKubeControllerManagerOptions'], pulumi.InputType['KubeconfigKubeProxyOptions'], pulumi.InputType['KubeconfigKubeSchedulerOptions'], pulumi.InputType['KubeconfigWorkerOptions']]] = None,
                    opts: Optional[pulumi.InvokeOptions] = None) -> AwaitableGetKubeconfigResult:
     """
-    TODO
+    https://kubernetes.io/docs/concepts/configuration/organize-cluster-access-kubeconfig/
 
 
     :param str ca_pem: Certificate authority data.
@@ -68,7 +68,7 @@ def get_kubeconfig_output(ca_pem: Optional[pulumi.Input[str]] = None,
                           options: Optional[pulumi.Input[Union[pulumi.InputType['KubeconfigAdminOptions'], pulumi.InputType['KubeconfigKubeControllerManagerOptions'], pulumi.InputType['KubeconfigKubeProxyOptions'], pulumi.InputType['KubeconfigKubeSchedulerOptions'], pulumi.InputType['KubeconfigWorkerOptions']]]] = None,
                           opts: Optional[pulumi.InvokeOptions] = None) -> pulumi.Output[GetKubeconfigResult]:
     """
-    TODO
+    https://kubernetes.io/docs/concepts/configuration/organize-cluster-access-kubeconfig/
 
 
     :param str ca_pem: Certificate authority data.

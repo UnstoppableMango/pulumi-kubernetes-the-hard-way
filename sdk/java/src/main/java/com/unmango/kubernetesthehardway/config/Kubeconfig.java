@@ -13,7 +13,7 @@ import java.lang.String;
 import javax.annotation.Nullable;
 
 /**
- * TODO
+ * https://kubernetes.io/docs/concepts/configuration/organize-cluster-access-kubeconfig/
  * 
  */
 @ResourceType(type="kubernetes-the-hard-way:config:Kubeconfig")

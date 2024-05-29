@@ -8,7 +8,7 @@ import * as enums from "../types/enums";
 import * as utilities from "../utilities";
 
 /**
- * TODO
+ * https://kubernetes.io/docs/concepts/configuration/organize-cluster-access-kubeconfig/
  */
 export class Kubeconfig extends pulumi.ComponentResource {
     /** @internal */

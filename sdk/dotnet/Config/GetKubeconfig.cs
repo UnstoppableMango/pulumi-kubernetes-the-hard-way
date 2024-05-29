@@ -13,13 +13,13 @@ namespace UnMango.KubernetesTheHardWay.Config
     public static class GetKubeconfig
     {
         /// <summary>
-        /// TODO
+        /// https://kubernetes.io/docs/concepts/configuration/organize-cluster-access-kubeconfig/
         /// </summary>
         public static Task<GetKubeconfigResult> InvokeAsync(GetKubeconfigArgs args, InvokeOptions? options = null)
             => global::Pulumi.Deployment.Instance.InvokeAsync<GetKubeconfigResult>("kubernetes-the-hard-way:config:getKubeconfig", args ?? new GetKubeconfigArgs(), options.WithDefaults());
 
         /// <summary>
-        /// TODO
+        /// https://kubernetes.io/docs/concepts/configuration/organize-cluster-access-kubeconfig/
         /// </summary>
         public static Output<GetKubeconfigResult> Invoke(GetKubeconfigInvokeArgs args, InvokeOptions? options = null)
             => global::Pulumi.Deployment.Instance.Invoke<GetKubeconfigResult>("kubernetes-the-hard-way:config:getKubeconfig", args ?? new GetKubeconfigInvokeArgs(), options.WithDefaults());

@@ -12,7 +12,7 @@ import (
 	"github.com/unstoppablemango/pulumi-kubernetes-the-hard-way/sdk/go/kubernetes-the-hard-way/internal"
 )
 
-// TODO
+// https://kubernetes.io/docs/concepts/configuration/organize-cluster-access-kubeconfig/
 type Kubeconfig struct {
 	pulumi.ResourceState
 
