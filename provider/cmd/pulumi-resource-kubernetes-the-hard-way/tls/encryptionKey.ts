@@ -1,6 +1,6 @@
 import * as path from 'node:path';
 import * as YAML from 'yaml';
-import { ComponentResourceOptions, output } from '@pulumi/pulumi';
+import { ComponentResourceOptions, log, output } from '@pulumi/pulumi';
 import { RandomBytes } from '@pulumi/random';
 import { remote } from '@pulumi/command/types/input';
 import * as schema from '../schema-types';
@@ -30,10 +30,10 @@ export class EncryptionKey extends schema.EncryptionKey {
         },
         { identity: {} },
       ],
-    }));
+    })).apply(x => log.error(`CONFIG: ${x}`));
 
     this.bytes = bytes;
-    this.config = config;
+    // this.config = config;
     this.key = key;
 
     this.registerOutputs({ bytes, config, key });

@@ -1,7 +1,7 @@
 import * as YAML from 'yaml';
 import { Config } from '@pulumi/pulumi';
 import { ControlPlaneNode, File } from '@unmango/pulumi-kubernetes-the-hard-way/remote';
-import { ClusterPki } from '@unmango/pulumi-kubernetes-the-hard-way/tls';
+import { ClusterPki, EncryptionKey } from '@unmango/pulumi-kubernetes-the-hard-way/tls';
 
 const config = new Config();
 const connection = {
@@ -28,26 +28,78 @@ const pki = new ClusterPki('simple', {
   },
 });
 
-const file = new File('simple', {
+const caCertFile = new File('caCertFile', {
   connection,
   content: pki.ca.certPem,
   path: '/tmp/caPem',
+});
+
+const caPrivateKeyFile = new File('caPrivateKeyFile', {
+  connection,
+  content: pki.ca.privateKeyPem,
+  path: '/tmp/caKey',
+});
+
+const encryptionConfig = new EncryptionKey('simple', {
+  bytes: 32,
+});
+
+const kubeApiServerCertFile = new File('kubeApiServerCertFile', {
+  connection,
+  content: pki.kubernetes.certPem,
+  path: '/tmp/kubeApiPem',
+});
+
+const kubeApiServerPrivateKeyFile = new File('kubeApiServerPrivateKeyFile', {
+  connection,
+  content: pki.kubernetes.privateKeyPem,
+  path: '/tmp/kubeApiKey',
+});
+
+const kubeControllerManagerKubeconfigFile = new File('kubeControllerManagerKubeconfigFile', {
+  connection,
+  content: pki.getKubeconfig({
+    options: {
+      type: 'kube-controller-manager',
+    },
+  }).apply(YAML.stringify),
+  path: '/tmp/kubeControllerManagerKubeconfig',
+});
+
+const kubeSchedulerKubeconfigFile = new File('kubeSchedulerKubeconfigFile', {
+  connection,
+  content: pki.getKubeconfig({
+    options: {
+      type: 'kube-scheduler',
+    },
+  }).apply(YAML.stringify),
+  path: '/tmp/kubeSchedulerKubeconfig',
+});
+
+const serviceAccountsCertFile = new File('serviceAccountsCertFile', {
+  connection,
+  content: pki.serviceAccounts.certPem,
+  path: '/tmp/saPem',
+});
+
+const serviceAccountsPrivateKeyFile = new File('serviceAccountsPrivateKeyFile', {
+  connection,
+  content: pki.serviceAccounts.privateKeyPem,
+  path: '/tmp/saKey',
 });
 
 const controlPlane = new ControlPlaneNode('simple', {
   connection,
   architecture: 'amd64',
   apiServerCount: 1,
-  caCertificatePath: file.path,
-  caPrivateKeyPath: 'TODO',
-  encryptionConfigYaml: 'TODO',
-  kubeApiServerCertificatePath: 'TODO',
-  kubeApiServerPrivateKeyPath: 'TODO',
-  kubeControllerManagerKubeconfigPath: 'TODO',
+  caCertificatePath: caCertFile.path,
+  caPrivateKeyPath: caPrivateKeyFile.path,
+  encryptionConfigYaml: encryptionConfig.config,
+  kubeApiServerCertificatePath: kubeApiServerCertFile.path,
+  kubeApiServerPrivateKeyPath: kubeApiServerPrivateKeyFile.path,
+  kubeControllerManagerKubeconfigPath: kubeControllerManagerKubeconfigFile.path,
   kubeSchedulerConfigYaml: 'TODO',
-  kubeSchedulerKubeconfigPath: 'TODO',
-  serviceAccountsCertificatePath: 'TODO',
-  serviceAccountsPrivateKeyPath: 'TODO',
+  kubeSchedulerKubeconfigPath: kubeSchedulerKubeconfigFile.path,
+  serviceAccountsCertificatePath: serviceAccountsCertFile.path,
+  serviceAccountsPrivateKeyPath: serviceAccountsPrivateKeyFile.path,
 });
-
-controlPlane.kubeApiServerInstallDirectory;
