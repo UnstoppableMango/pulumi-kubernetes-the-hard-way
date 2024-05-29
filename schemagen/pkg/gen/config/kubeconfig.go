@@ -11,13 +11,22 @@ func generateGetKubeconfig() schema.PackageSpec {
 		"https://kubernetes.io/docs/concepts/configuration/organize-cluster-access-kubeconfig/",
 		schema.ObjectTypeSpec{
 			Properties: map[string]schema.PropertySpec{
-				"caPem": props.String("Certificate authority data."),
-				"options": { // Do we even actually need this?
-					Description: "Options for creating the kubeconfig.",
-					TypeSpec:    types.LocalType("KubeconfigAdminOptions", "config"),
-				},
+				"caPem":       props.String("Certificate authority data."),
+				"clientCert":  props.String("The PEM encoded certificate data of the client."),
+				"clientKey":   props.String("The PEM encoded private key data of the client."),
+				"clusterName": props.String("A name to identify the cluster."),
+				"contextName": props.String("A name to use for the kubeconfig context"),
+				"server":      props.String("The address and port of the Kubernetes API server."),
+				"username":    props.String("The username of the user"),
 			},
-			Required: []string{"caPem", "options"},
+			Required: []string{
+				"caPem",
+				"clientCert",
+				"clientKey",
+				"clusterName",
+				"server",
+				"username",
+			},
 		},
 		schema.PropertySpec{
 			TypeSpec: types.LocalType("Kubeconfig", "config"),
