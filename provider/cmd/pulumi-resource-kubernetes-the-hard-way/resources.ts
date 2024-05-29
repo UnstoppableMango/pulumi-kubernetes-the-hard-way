@@ -46,6 +46,7 @@ const resources: schema.ResourceConstructor = {
   'kubernetes-the-hard-way:config:CniBridgePluginConfiguration': (...args) => new CniBridgePluginConfiguration(...args),
   'kubernetes-the-hard-way:config:CniLoopbackPluginConfiguration': (...args) => new CniLoopbackPluginConfiguration(...args),
   'kubernetes-the-hard-way:config:ContainerdConfiguration': (...args) => new ContainerdConfiguration(...args),
+  'kubernetes-the-hard-way:config:Kubeconfig': (...args) => new Kubeconfig(...args),
   'kubernetes-the-hard-way:config:KubeletConfiguration': (...args) => new KubeletConfiguration(...args),
   'kubernetes-the-hard-way:config:KubeProxyConfiguration': (...args) => new KubeProxyConfiguration(...args),
   'kubernetes-the-hard-way:config:KubeVipManifest': (...args) => new KubeVipManifest(...args),

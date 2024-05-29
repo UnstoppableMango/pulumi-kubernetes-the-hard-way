@@ -1,20 +1,18 @@
-import { all, interpolate } from '@pulumi/pulumi';
+import { Output, all, output } from '@pulumi/pulumi';
 import * as schema from '../schema-types';
-import { Kubeconfig } from '../schema-types';
+import { Kubeconfig } from './kubeconfig';
 
 export async function getKubeconfig(inputs: schema.getKubeconfigInputs): Promise<schema.getKubeconfigOutputs> {
-  const cert = this.getCert(inputs.options);
-  const ip = getIp(options);
-  const username = getUsername(options);
+  const caData = output(inputs.caPem);
+  const clientCert = output(inputs.clientCert);
+  const clientKey = output(inputs.clientKey);
+  const clusterName = output(inputs.clusterName);
+  const contextName = output(inputs.contextName ?? 'default');
+  const server = output(inputs.server);
+  const username = output(inputs.username);
 
-  const caData = this.ca.certPem;
-  const clientCertPem = cert.certPem;
-  const clientKeyPem = cert.privateKeyPem;
-  const clusterName = this.clusterName;
-  const server = interpolate`https://${ip}:6443`;
-
-  const kubeconfig = all([clusterName, caData, server, username, clientCertPem, clientKeyPem])
-    .apply<Kubeconfig>(([clusterName, caData, server, username, clientCertPem, clientKeyPem]) => ({
+  const kubeconfig = all([clusterName, contextName, caData, server, username, clientCert, clientKey])
+    .apply<Kubeconfig>(([clusterName, contextName, caData, server, username, clientCert, clientKey]) => ({
       clusters: [{
         name: clusterName,
         cluster: {
@@ -23,7 +21,7 @@ export async function getKubeconfig(inputs: schema.getKubeconfigInputs): Promise
         },
       }],
       contexts: [{
-        name: 'default',
+        name: contextName,
         context: {
           cluster: clusterName,
           user: username,
@@ -32,11 +30,11 @@ export async function getKubeconfig(inputs: schema.getKubeconfigInputs): Promise
       users: [{
         name: username,
         user: {
-          clientCertificateData: clientCertPem,
-          clientKeyData: clientKeyPem,
+          clientCertificateData: clientCert,
+          clientKeyData: clientKey,
         },
       }],
     }));
 
-  return { result: kubeconfig };
+  return { result: kubeconfig as unknown as Output<schema.KubeconfigOutputs> };
 }
