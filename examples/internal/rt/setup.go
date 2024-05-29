@@ -27,6 +27,7 @@ func SingleContainerSetup(t *testing.T) integration.ProgramTestOptions {
 		Config: map[string]string{
 			"test:container": "single",
 			"host":           "localhost",
+			"ip":             node.Ip,
 			"port":           node.SshPort,
 			"user":           username,
 			"password":       password,

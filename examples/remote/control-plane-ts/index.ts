@@ -1,5 +1,7 @@
+import * as YAML from 'yaml';
 import { Config } from '@pulumi/pulumi';
-import { ControlPlaneNode } from '@unmango/pulumi-kubernetes-the-hard-way/remote';
+import { ControlPlaneNode, File } from '@unmango/pulumi-kubernetes-the-hard-way/remote';
+import { ClusterPki } from '@unmango/pulumi-kubernetes-the-hard-way/tls';
 
 const config = new Config();
 const connection = {
@@ -8,12 +10,35 @@ const connection = {
   user: config.require('user'),
   password: config.require('password')
 };
+const ip = config.require('ip');
 
-const worker = new ControlPlaneNode('simple', {
+// Create the ClusterPki
+// - getKubeconfig(options: { type: 'kube-scheduler' })
+// Create the EncryptionConfig
+// output(object).apply(YAML.stringify)
+
+const pki = new ClusterPki('simple', {
+  clusterName: 'simple',
+  publicIp: ip,
+  nodes: {
+    'simple': {
+      ip,
+      role: 'controlplane'
+    },
+  },
+});
+
+const file = new File('simple', {
+  connection,
+  content: pki.ca.certPem,
+  path: '/tmp/caPem',
+});
+
+const controlPlane = new ControlPlaneNode('simple', {
   connection,
   architecture: 'amd64',
   apiServerCount: 1,
-  caCertificatePath: 'TODO',
+  caCertificatePath: file.path,
   caPrivateKeyPath: 'TODO',
   encryptionConfigYaml: 'TODO',
   kubeApiServerCertificatePath: 'TODO',
@@ -24,3 +49,5 @@ const worker = new ControlPlaneNode('simple', {
   serviceAccountsCertificatePath: 'TODO',
   serviceAccountsPrivateKeyPath: 'TODO',
 });
+
+controlPlane.kubeApiServerInstallDirectory;

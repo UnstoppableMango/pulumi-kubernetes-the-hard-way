@@ -159,7 +159,7 @@ func TestRemoteControlPlaneTs(t *testing.T) {
 			rt.ExpectOutput(t, res, "apiServerCount", 1.)
 			rt.ExpectOutput(t, res, "architecture", "amd64")
 			rt.ExpectOutput(t, res, "auditLogPath", "/var/log/audit.log")
-			rt.ExpectOutput(t, res, "caCertificatePath", "TODO")
+			rt.ExpectOutput(t, res, "caCertificatePath", "/tmp/caPem")
 			rt.ExpectOutput(t, res, "caPrivateKeyPath", "TODO")
 			rt.ExpectOutput(t, res, "clusterCIDR", "10.200.0.0/16")
 			rt.ExpectOutput(t, res, "clusterName", "kubernetes")
