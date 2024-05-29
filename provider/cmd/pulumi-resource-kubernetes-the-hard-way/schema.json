@@ -2271,41 +2271,38 @@
                     "type": "string",
                     "description": "Certificate authority data."
                 },
-                "options": {
-                    "oneOf": [
-                        {
-                            "$ref": "#/types/kubernetes-the-hard-way:config:KubeconfigAdminOptions"
-                        },
-                        {
-                            "$ref": "#/types/kubernetes-the-hard-way:config:KubeconfigKubeControllerManagerOptions"
-                        },
-                        {
-                            "$ref": "#/types/kubernetes-the-hard-way:config:KubeconfigKubeProxyOptions"
-                        },
-                        {
-                            "$ref": "#/types/kubernetes-the-hard-way:config:KubeconfigKubeSchedulerOptions"
-                        },
-                        {
-                            "$ref": "#/types/kubernetes-the-hard-way:config:KubeconfigWorkerOptions"
-                        }
-                    ],
-                    "discriminator": {
-                        "propertyName": "type",
-                        "mapping": {
-                            "admin": "#/types/kubernetes-the-hard-way:config:KubeconfigAdminOptions",
-                            "kube-controller-manager": "#/types/kubernetes-the-hard-way:config:KubeconfigKubeControllerManagerOptions",
-                            "kube-proxy": "#/types/kubernetes-the-hard-way:config:KubeconfigKubeProxyOptions",
-                            "kube-scheduler": "#/types/kubernetes-the-hard-way:config:KubeconfigKubeSchedulerOptions",
-                            "worker": "#/types/kubernetes-the-hard-way:config:KubeconfigWorkerOptions"
-                        }
-                    },
-                    "plain": true,
-                    "description": "Options for creating the kubeconfig."
+                "clientCert": {
+                    "type": "string",
+                    "description": "The PEM encoded certificate data of the client."
+                },
+                "clientKey": {
+                    "type": "string",
+                    "description": "The PEM encoded private key data of the client."
+                },
+                "clusterName": {
+                    "type": "string",
+                    "description": "A name to identify the cluster."
+                },
+                "contextName": {
+                    "type": "string",
+                    "description": "A name to use for the kubeconfig context"
+                },
+                "server": {
+                    "type": "string",
+                    "description": "The address and port of the Kubernetes API server."
+                },
+                "username": {
+                    "type": "string",
+                    "description": "The username of the user"
                 }
             },
             "requiredInputs": [
                 "caPem",
-                "options"
+                "clientCert",
+                "clientKey",
+                "clusterName",
+                "server",
+                "username"
             ],
             "isComponent": true
         },
@@ -8228,41 +8225,38 @@
                         "type": "string",
                         "description": "Certificate authority data."
                     },
-                    "options": {
-                        "oneOf": [
-                            {
-                                "$ref": "#/types/kubernetes-the-hard-way:config:KubeconfigAdminOptions"
-                            },
-                            {
-                                "$ref": "#/types/kubernetes-the-hard-way:config:KubeconfigKubeControllerManagerOptions"
-                            },
-                            {
-                                "$ref": "#/types/kubernetes-the-hard-way:config:KubeconfigKubeProxyOptions"
-                            },
-                            {
-                                "$ref": "#/types/kubernetes-the-hard-way:config:KubeconfigKubeSchedulerOptions"
-                            },
-                            {
-                                "$ref": "#/types/kubernetes-the-hard-way:config:KubeconfigWorkerOptions"
-                            }
-                        ],
-                        "discriminator": {
-                            "propertyName": "type",
-                            "mapping": {
-                                "admin": "#/types/kubernetes-the-hard-way:config:KubeconfigAdminOptions",
-                                "kube-controller-manager": "#/types/kubernetes-the-hard-way:config:KubeconfigKubeControllerManagerOptions",
-                                "kube-proxy": "#/types/kubernetes-the-hard-way:config:KubeconfigKubeProxyOptions",
-                                "kube-scheduler": "#/types/kubernetes-the-hard-way:config:KubeconfigKubeSchedulerOptions",
-                                "worker": "#/types/kubernetes-the-hard-way:config:KubeconfigWorkerOptions"
-                            }
-                        },
-                        "plain": true,
-                        "description": "Options for creating the kubeconfig."
+                    "clientCert": {
+                        "type": "string",
+                        "description": "The PEM encoded certificate data of the client."
+                    },
+                    "clientKey": {
+                        "type": "string",
+                        "description": "The PEM encoded private key data of the client."
+                    },
+                    "clusterName": {
+                        "type": "string",
+                        "description": "A name to identify the cluster."
+                    },
+                    "contextName": {
+                        "type": "string",
+                        "description": "A name to use for the kubeconfig context"
+                    },
+                    "server": {
+                        "type": "string",
+                        "description": "The address and port of the Kubernetes API server."
+                    },
+                    "username": {
+                        "type": "string",
+                        "description": "The username of the user"
                     }
                 },
                 "required": [
                     "caPem",
-                    "options"
+                    "clientCert",
+                    "clientKey",
+                    "clusterName",
+                    "server",
+                    "username"
                 ]
             },
             "outputs": {

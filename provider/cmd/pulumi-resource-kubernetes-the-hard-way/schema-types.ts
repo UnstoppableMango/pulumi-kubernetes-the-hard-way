@@ -167,7 +167,12 @@ export abstract class Kubeconfig<TData = any> extends (pulumi.ComponentResource)
 }
 export interface KubeconfigArgs {
     readonly caPem: pulumi.Input<string>;
-    readonly options: pulumi.Input<KubeconfigAdminOptionsInputs> | pulumi.Input<KubeconfigKubeControllerManagerOptionsInputs> | pulumi.Input<KubeconfigKubeProxyOptionsInputs> | pulumi.Input<KubeconfigKubeSchedulerOptionsInputs> | pulumi.Input<KubeconfigWorkerOptionsInputs>;
+    readonly clientCert: pulumi.Input<string>;
+    readonly clientKey: pulumi.Input<string>;
+    readonly clusterName: pulumi.Input<string>;
+    readonly contextName?: pulumi.Input<string>;
+    readonly server: pulumi.Input<string>;
+    readonly username: pulumi.Input<string>;
 }
 export abstract class KubeletConfiguration<TData = any> extends (pulumi.ComponentResource)<TData> {
     public result!: KubeletConfigurationOutputs | pulumi.Output<KubeletConfigurationOutputs>;
@@ -2165,7 +2170,12 @@ export interface getKubeVipManifestOutputs {
 }
 export interface getKubeconfigInputs {
     readonly caPem: pulumi.Input<string>;
-    readonly options: pulumi.Input<KubeconfigAdminOptionsInputs> | pulumi.Input<KubeconfigKubeControllerManagerOptionsInputs> | pulumi.Input<KubeconfigKubeProxyOptionsInputs> | pulumi.Input<KubeconfigKubeSchedulerOptionsInputs> | pulumi.Input<KubeconfigWorkerOptionsInputs>;
+    readonly clientCert: pulumi.Input<string>;
+    readonly clientKey: pulumi.Input<string>;
+    readonly clusterName: pulumi.Input<string>;
+    readonly contextName?: pulumi.Input<string>;
+    readonly server: pulumi.Input<string>;
+    readonly username: pulumi.Input<string>;
 }
 export interface getKubeconfigOutputs {
     readonly result: pulumi.Output<KubeconfigOutputs>;

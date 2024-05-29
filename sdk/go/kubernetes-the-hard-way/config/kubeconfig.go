@@ -31,6 +31,21 @@ func NewKubeconfig(ctx *pulumi.Context,
 	if args.CaPem == nil {
 		return nil, errors.New("invalid value for required argument 'CaPem'")
 	}
+	if args.ClientCert == nil {
+		return nil, errors.New("invalid value for required argument 'ClientCert'")
+	}
+	if args.ClientKey == nil {
+		return nil, errors.New("invalid value for required argument 'ClientKey'")
+	}
+	if args.ClusterName == nil {
+		return nil, errors.New("invalid value for required argument 'ClusterName'")
+	}
+	if args.Server == nil {
+		return nil, errors.New("invalid value for required argument 'Server'")
+	}
+	if args.Username == nil {
+		return nil, errors.New("invalid value for required argument 'Username'")
+	}
 	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource Kubeconfig
 	err := ctx.RegisterRemoteComponentResource("kubernetes-the-hard-way:config:Kubeconfig", name, args, &resource, opts...)
@@ -43,16 +58,36 @@ func NewKubeconfig(ctx *pulumi.Context,
 type kubeconfigArgs struct {
 	// Certificate authority data.
 	CaPem string `pulumi:"caPem"`
-	// Options for creating the kubeconfig.
-	Options interface{} `pulumi:"options"`
+	// The PEM encoded certificate data of the client.
+	ClientCert string `pulumi:"clientCert"`
+	// The PEM encoded private key data of the client.
+	ClientKey string `pulumi:"clientKey"`
+	// A name to identify the cluster.
+	ClusterName string `pulumi:"clusterName"`
+	// A name to use for the kubeconfig context
+	ContextName *string `pulumi:"contextName"`
+	// The address and port of the Kubernetes API server.
+	Server string `pulumi:"server"`
+	// The username of the user
+	Username string `pulumi:"username"`
 }
 
 // The set of arguments for constructing a Kubeconfig resource.
 type KubeconfigArgs struct {
 	// Certificate authority data.
 	CaPem pulumi.StringInput
-	// Options for creating the kubeconfig.
-	Options interface{}
+	// The PEM encoded certificate data of the client.
+	ClientCert pulumi.StringInput
+	// The PEM encoded private key data of the client.
+	ClientKey pulumi.StringInput
+	// A name to identify the cluster.
+	ClusterName pulumi.StringInput
+	// A name to use for the kubeconfig context
+	ContextName pulumi.StringPtrInput
+	// The address and port of the Kubernetes API server.
+	Server pulumi.StringInput
+	// The username of the user
+	Username pulumi.StringInput
 }
 
 func (KubeconfigArgs) ElementType() reflect.Type {

@@ -35,10 +35,40 @@ namespace UnMango.KubernetesTheHardWay.Config
         public string CaPem { get; set; } = null!;
 
         /// <summary>
-        /// Options for creating the kubeconfig.
+        /// The PEM encoded certificate data of the client.
         /// </summary>
-        [Input("options", required: true)]
-        public object Options { get; set; } = null!;
+        [Input("clientCert", required: true)]
+        public string ClientCert { get; set; } = null!;
+
+        /// <summary>
+        /// The PEM encoded private key data of the client.
+        /// </summary>
+        [Input("clientKey", required: true)]
+        public string ClientKey { get; set; } = null!;
+
+        /// <summary>
+        /// A name to identify the cluster.
+        /// </summary>
+        [Input("clusterName", required: true)]
+        public string ClusterName { get; set; } = null!;
+
+        /// <summary>
+        /// A name to use for the kubeconfig context
+        /// </summary>
+        [Input("contextName")]
+        public string? ContextName { get; set; }
+
+        /// <summary>
+        /// The address and port of the Kubernetes API server.
+        /// </summary>
+        [Input("server", required: true)]
+        public string Server { get; set; } = null!;
+
+        /// <summary>
+        /// The username of the user
+        /// </summary>
+        [Input("username", required: true)]
+        public string Username { get; set; } = null!;
 
         public GetKubeconfigArgs()
         {
@@ -55,10 +85,40 @@ namespace UnMango.KubernetesTheHardWay.Config
         public Input<string> CaPem { get; set; } = null!;
 
         /// <summary>
-        /// Options for creating the kubeconfig.
+        /// The PEM encoded certificate data of the client.
         /// </summary>
-        [Input("options", required: true)]
-        public object Options { get; set; } = null!;
+        [Input("clientCert", required: true)]
+        public Input<string> ClientCert { get; set; } = null!;
+
+        /// <summary>
+        /// The PEM encoded private key data of the client.
+        /// </summary>
+        [Input("clientKey", required: true)]
+        public Input<string> ClientKey { get; set; } = null!;
+
+        /// <summary>
+        /// A name to identify the cluster.
+        /// </summary>
+        [Input("clusterName", required: true)]
+        public Input<string> ClusterName { get; set; } = null!;
+
+        /// <summary>
+        /// A name to use for the kubeconfig context
+        /// </summary>
+        [Input("contextName")]
+        public Input<string>? ContextName { get; set; }
+
+        /// <summary>
+        /// The address and port of the Kubernetes API server.
+        /// </summary>
+        [Input("server", required: true)]
+        public Input<string> Server { get; set; } = null!;
+
+        /// <summary>
+        /// The username of the user
+        /// </summary>
+        [Input("username", required: true)]
+        public Input<string> Username { get; set; } = null!;
 
         public GetKubeconfigInvokeArgs()
         {

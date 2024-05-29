@@ -9,7 +9,6 @@ import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
 from .. import _utilities
 from . import outputs
-from ._inputs import *
 
 __all__ = [
     'GetKubeconfigResult',
@@ -44,18 +43,33 @@ class AwaitableGetKubeconfigResult(GetKubeconfigResult):
 
 
 def get_kubeconfig(ca_pem: Optional[str] = None,
-                   options: Optional[Union[pulumi.InputType['KubeconfigAdminOptions'], pulumi.InputType['KubeconfigKubeControllerManagerOptions'], pulumi.InputType['KubeconfigKubeProxyOptions'], pulumi.InputType['KubeconfigKubeSchedulerOptions'], pulumi.InputType['KubeconfigWorkerOptions']]] = None,
+                   client_cert: Optional[str] = None,
+                   client_key: Optional[str] = None,
+                   cluster_name: Optional[str] = None,
+                   context_name: Optional[str] = None,
+                   server: Optional[str] = None,
+                   username: Optional[str] = None,
                    opts: Optional[pulumi.InvokeOptions] = None) -> AwaitableGetKubeconfigResult:
     """
     https://kubernetes.io/docs/concepts/configuration/organize-cluster-access-kubeconfig/
 
 
     :param str ca_pem: Certificate authority data.
-    :param Union[pulumi.InputType['KubeconfigAdminOptions'], pulumi.InputType['KubeconfigKubeControllerManagerOptions'], pulumi.InputType['KubeconfigKubeProxyOptions'], pulumi.InputType['KubeconfigKubeSchedulerOptions'], pulumi.InputType['KubeconfigWorkerOptions']] options: Options for creating the kubeconfig.
+    :param str client_cert: The PEM encoded certificate data of the client.
+    :param str client_key: The PEM encoded private key data of the client.
+    :param str cluster_name: A name to identify the cluster.
+    :param str context_name: A name to use for the kubeconfig context
+    :param str server: The address and port of the Kubernetes API server.
+    :param str username: The username of the user
     """
     __args__ = dict()
     __args__['caPem'] = ca_pem
-    __args__['options'] = options
+    __args__['clientCert'] = client_cert
+    __args__['clientKey'] = client_key
+    __args__['clusterName'] = cluster_name
+    __args__['contextName'] = context_name
+    __args__['server'] = server
+    __args__['username'] = username
     opts = pulumi.InvokeOptions.merge(_utilities.get_invoke_opts_defaults(), opts)
     __ret__ = pulumi.runtime.invoke('kubernetes-the-hard-way:config:getKubeconfig', __args__, opts=opts, typ=GetKubeconfigResult).value
 
@@ -65,13 +79,23 @@ def get_kubeconfig(ca_pem: Optional[str] = None,
 
 @_utilities.lift_output_func(get_kubeconfig)
 def get_kubeconfig_output(ca_pem: Optional[pulumi.Input[str]] = None,
-                          options: Optional[pulumi.Input[Union[pulumi.InputType['KubeconfigAdminOptions'], pulumi.InputType['KubeconfigKubeControllerManagerOptions'], pulumi.InputType['KubeconfigKubeProxyOptions'], pulumi.InputType['KubeconfigKubeSchedulerOptions'], pulumi.InputType['KubeconfigWorkerOptions']]]] = None,
+                          client_cert: Optional[pulumi.Input[str]] = None,
+                          client_key: Optional[pulumi.Input[str]] = None,
+                          cluster_name: Optional[pulumi.Input[str]] = None,
+                          context_name: Optional[pulumi.Input[Optional[str]]] = None,
+                          server: Optional[pulumi.Input[str]] = None,
+                          username: Optional[pulumi.Input[str]] = None,
                           opts: Optional[pulumi.InvokeOptions] = None) -> pulumi.Output[GetKubeconfigResult]:
     """
     https://kubernetes.io/docs/concepts/configuration/organize-cluster-access-kubeconfig/
 
 
     :param str ca_pem: Certificate authority data.
-    :param Union[pulumi.InputType['KubeconfigAdminOptions'], pulumi.InputType['KubeconfigKubeControllerManagerOptions'], pulumi.InputType['KubeconfigKubeProxyOptions'], pulumi.InputType['KubeconfigKubeSchedulerOptions'], pulumi.InputType['KubeconfigWorkerOptions']] options: Options for creating the kubeconfig.
+    :param str client_cert: The PEM encoded certificate data of the client.
+    :param str client_key: The PEM encoded private key data of the client.
+    :param str cluster_name: A name to identify the cluster.
+    :param str context_name: A name to use for the kubeconfig context
+    :param str server: The address and port of the Kubernetes API server.
+    :param str username: The username of the user
     """
     ...

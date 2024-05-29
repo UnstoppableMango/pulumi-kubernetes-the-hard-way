@@ -26,15 +26,10 @@ __all__ = [
     'ContainerdCriPluginConfigurationContainerdArgs',
     'ContainerdCriPluginConfigurationArgs',
     'KubeconfigAdminOptions',
-    'KubeconfigAdminOptionsArgs',
     'KubeconfigKubeControllerManagerOptions',
-    'KubeconfigKubeControllerManagerOptionsArgs',
     'KubeconfigKubeProxyOptions',
-    'KubeconfigKubeProxyOptionsArgs',
     'KubeconfigKubeSchedulerOptions',
-    'KubeconfigKubeSchedulerOptionsArgs',
     'KubeconfigWorkerOptions',
-    'KubeconfigWorkerOptionsArgs',
     'PodManifestArgs',
 ]
 
@@ -603,40 +598,6 @@ class KubeconfigAdminOptions:
 
 
 @pulumi.input_type
-class KubeconfigAdminOptionsArgs:
-    def __init__(__self__, *,
-                 type: str,
-                 public_ip: Optional[pulumi.Input[str]] = None):
-        """
-        :param pulumi.Input[str] public_ip: TODO
-        """
-        pulumi.set(__self__, "type", 'admin')
-        if public_ip is not None:
-            pulumi.set(__self__, "public_ip", public_ip)
-
-    @property
-    @pulumi.getter
-    def type(self) -> str:
-        return pulumi.get(self, "type")
-
-    @type.setter
-    def type(self, value: str):
-        pulumi.set(self, "type", value)
-
-    @property
-    @pulumi.getter(name="publicIp")
-    def public_ip(self) -> Optional[pulumi.Input[str]]:
-        """
-        TODO
-        """
-        return pulumi.get(self, "public_ip")
-
-    @public_ip.setter
-    def public_ip(self, value: Optional[pulumi.Input[str]]):
-        pulumi.set(self, "public_ip", value)
-
-
-@pulumi.input_type
 class KubeconfigKubeControllerManagerOptions:
     def __init__(__self__, *,
                  type: str,
@@ -667,40 +628,6 @@ class KubeconfigKubeControllerManagerOptions:
 
     @public_ip.setter
     def public_ip(self, value: Optional[str]):
-        pulumi.set(self, "public_ip", value)
-
-
-@pulumi.input_type
-class KubeconfigKubeControllerManagerOptionsArgs:
-    def __init__(__self__, *,
-                 type: str,
-                 public_ip: Optional[pulumi.Input[str]] = None):
-        """
-        :param pulumi.Input[str] public_ip: TODO
-        """
-        pulumi.set(__self__, "type", 'kube-controller-manager')
-        if public_ip is not None:
-            pulumi.set(__self__, "public_ip", public_ip)
-
-    @property
-    @pulumi.getter
-    def type(self) -> str:
-        return pulumi.get(self, "type")
-
-    @type.setter
-    def type(self, value: str):
-        pulumi.set(self, "type", value)
-
-    @property
-    @pulumi.getter(name="publicIp")
-    def public_ip(self) -> Optional[pulumi.Input[str]]:
-        """
-        TODO
-        """
-        return pulumi.get(self, "public_ip")
-
-    @public_ip.setter
-    def public_ip(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "public_ip", value)
 
 
@@ -739,40 +666,6 @@ class KubeconfigKubeProxyOptions:
 
 
 @pulumi.input_type
-class KubeconfigKubeProxyOptionsArgs:
-    def __init__(__self__, *,
-                 type: str,
-                 public_ip: Optional[pulumi.Input[str]] = None):
-        """
-        :param pulumi.Input[str] public_ip: TODO
-        """
-        pulumi.set(__self__, "type", 'kube-proxy')
-        if public_ip is not None:
-            pulumi.set(__self__, "public_ip", public_ip)
-
-    @property
-    @pulumi.getter
-    def type(self) -> str:
-        return pulumi.get(self, "type")
-
-    @type.setter
-    def type(self, value: str):
-        pulumi.set(self, "type", value)
-
-    @property
-    @pulumi.getter(name="publicIp")
-    def public_ip(self) -> Optional[pulumi.Input[str]]:
-        """
-        TODO
-        """
-        return pulumi.get(self, "public_ip")
-
-    @public_ip.setter
-    def public_ip(self, value: Optional[pulumi.Input[str]]):
-        pulumi.set(self, "public_ip", value)
-
-
-@pulumi.input_type
 class KubeconfigKubeSchedulerOptions:
     def __init__(__self__, *,
                  type: str,
@@ -803,40 +696,6 @@ class KubeconfigKubeSchedulerOptions:
 
     @public_ip.setter
     def public_ip(self, value: Optional[str]):
-        pulumi.set(self, "public_ip", value)
-
-
-@pulumi.input_type
-class KubeconfigKubeSchedulerOptionsArgs:
-    def __init__(__self__, *,
-                 type: str,
-                 public_ip: Optional[pulumi.Input[str]] = None):
-        """
-        :param pulumi.Input[str] public_ip: TODO
-        """
-        pulumi.set(__self__, "type", 'kube-scheduler')
-        if public_ip is not None:
-            pulumi.set(__self__, "public_ip", public_ip)
-
-    @property
-    @pulumi.getter
-    def type(self) -> str:
-        return pulumi.get(self, "type")
-
-    @type.setter
-    def type(self, value: str):
-        pulumi.set(self, "type", value)
-
-    @property
-    @pulumi.getter(name="publicIp")
-    def public_ip(self) -> Optional[pulumi.Input[str]]:
-        """
-        TODO
-        """
-        return pulumi.get(self, "public_ip")
-
-    @public_ip.setter
-    def public_ip(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "public_ip", value)
 
 
@@ -877,55 +736,6 @@ class KubeconfigWorkerOptions:
 
     @public_ip.setter
     def public_ip(self, value: str):
-        pulumi.set(self, "public_ip", value)
-
-    @property
-    @pulumi.getter
-    def type(self) -> Optional[str]:
-        return pulumi.get(self, "type")
-
-    @type.setter
-    def type(self, value: Optional[str]):
-        pulumi.set(self, "type", value)
-
-
-@pulumi.input_type
-class KubeconfigWorkerOptionsArgs:
-    def __init__(__self__, *,
-                 name: pulumi.Input[str],
-                 public_ip: pulumi.Input[str],
-                 type: Optional[str] = None):
-        """
-        :param pulumi.Input[str] name: TODO
-        :param pulumi.Input[str] public_ip: TODO
-        """
-        pulumi.set(__self__, "name", name)
-        pulumi.set(__self__, "public_ip", public_ip)
-        if type is not None:
-            pulumi.set(__self__, "type", 'worker')
-
-    @property
-    @pulumi.getter
-    def name(self) -> pulumi.Input[str]:
-        """
-        TODO
-        """
-        return pulumi.get(self, "name")
-
-    @name.setter
-    def name(self, value: pulumi.Input[str]):
-        pulumi.set(self, "name", value)
-
-    @property
-    @pulumi.getter(name="publicIp")
-    def public_ip(self) -> pulumi.Input[str]:
-        """
-        TODO
-        """
-        return pulumi.get(self, "public_ip")
-
-    @public_ip.setter
-    def public_ip(self, value: pulumi.Input[str]):
         pulumi.set(self, "public_ip", value)
 
     @property

@@ -15,7 +15,12 @@ export function getKubeconfig(args: GetKubeconfigArgs, opts?: pulumi.InvokeOptio
     opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
     return pulumi.runtime.invoke("kubernetes-the-hard-way:config:getKubeconfig", {
         "caPem": args.caPem,
-        "options": args.options,
+        "clientCert": args.clientCert,
+        "clientKey": args.clientKey,
+        "clusterName": args.clusterName,
+        "contextName": args.contextName,
+        "server": args.server,
+        "username": args.username,
     }, opts);
 }
 
@@ -25,9 +30,29 @@ export interface GetKubeconfigArgs {
      */
     caPem: string;
     /**
-     * Options for creating the kubeconfig.
+     * The PEM encoded certificate data of the client.
      */
-    options: inputs.config.KubeconfigAdminOptions | inputs.config.KubeconfigKubeControllerManagerOptions | inputs.config.KubeconfigKubeProxyOptions | inputs.config.KubeconfigKubeSchedulerOptions | inputs.config.KubeconfigWorkerOptions;
+    clientCert: string;
+    /**
+     * The PEM encoded private key data of the client.
+     */
+    clientKey: string;
+    /**
+     * A name to identify the cluster.
+     */
+    clusterName: string;
+    /**
+     * A name to use for the kubeconfig context
+     */
+    contextName?: string;
+    /**
+     * The address and port of the Kubernetes API server.
+     */
+    server: string;
+    /**
+     * The username of the user
+     */
+    username: string;
 }
 
 /**
@@ -49,7 +74,27 @@ export interface GetKubeconfigOutputArgs {
      */
     caPem: pulumi.Input<string>;
     /**
-     * Options for creating the kubeconfig.
+     * The PEM encoded certificate data of the client.
      */
-    options: pulumi.Input<inputs.config.KubeconfigAdminOptionsArgs> | pulumi.Input<inputs.config.KubeconfigKubeControllerManagerOptionsArgs> | pulumi.Input<inputs.config.KubeconfigKubeProxyOptionsArgs> | pulumi.Input<inputs.config.KubeconfigKubeSchedulerOptionsArgs> | pulumi.Input<inputs.config.KubeconfigWorkerOptionsArgs>;
+    clientCert: pulumi.Input<string>;
+    /**
+     * The PEM encoded private key data of the client.
+     */
+    clientKey: pulumi.Input<string>;
+    /**
+     * A name to identify the cluster.
+     */
+    clusterName: pulumi.Input<string>;
+    /**
+     * A name to use for the kubeconfig context
+     */
+    contextName?: pulumi.Input<string>;
+    /**
+     * The address and port of the Kubernetes API server.
+     */
+    server: pulumi.Input<string>;
+    /**
+     * The username of the user
+     */
+    username: pulumi.Input<string>;
 }

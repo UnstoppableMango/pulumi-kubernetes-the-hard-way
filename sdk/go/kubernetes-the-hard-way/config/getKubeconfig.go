@@ -25,8 +25,18 @@ func GetKubeconfig(ctx *pulumi.Context, args *GetKubeconfigArgs, opts ...pulumi.
 type GetKubeconfigArgs struct {
 	// Certificate authority data.
 	CaPem string `pulumi:"caPem"`
-	// Options for creating the kubeconfig.
-	Options interface{} `pulumi:"options"`
+	// The PEM encoded certificate data of the client.
+	ClientCert string `pulumi:"clientCert"`
+	// The PEM encoded private key data of the client.
+	ClientKey string `pulumi:"clientKey"`
+	// A name to identify the cluster.
+	ClusterName string `pulumi:"clusterName"`
+	// A name to use for the kubeconfig context
+	ContextName *string `pulumi:"contextName"`
+	// The address and port of the Kubernetes API server.
+	Server string `pulumi:"server"`
+	// The username of the user
+	Username string `pulumi:"username"`
 }
 
 // https://kubernetes.io/docs/concepts/configuration/organize-cluster-access-kubeconfig/
@@ -50,8 +60,18 @@ func GetKubeconfigOutput(ctx *pulumi.Context, args GetKubeconfigOutputArgs, opts
 type GetKubeconfigOutputArgs struct {
 	// Certificate authority data.
 	CaPem pulumi.StringInput `pulumi:"caPem"`
-	// Options for creating the kubeconfig.
-	Options interface{} `pulumi:"options"`
+	// The PEM encoded certificate data of the client.
+	ClientCert pulumi.StringInput `pulumi:"clientCert"`
+	// The PEM encoded private key data of the client.
+	ClientKey pulumi.StringInput `pulumi:"clientKey"`
+	// A name to identify the cluster.
+	ClusterName pulumi.StringInput `pulumi:"clusterName"`
+	// A name to use for the kubeconfig context
+	ContextName pulumi.StringPtrInput `pulumi:"contextName"`
+	// The address and port of the Kubernetes API server.
+	Server pulumi.StringInput `pulumi:"server"`
+	// The username of the user
+	Username pulumi.StringInput `pulumi:"username"`
 }
 
 func (GetKubeconfigOutputArgs) ElementType() reflect.Type {

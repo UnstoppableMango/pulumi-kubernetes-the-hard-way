@@ -6,14 +6,10 @@ package com.unmango.kubernetesthehardway.config.inputs;
 import com.pulumi.core.Output;
 import com.pulumi.core.annotations.Import;
 import com.pulumi.exceptions.MissingRequiredPropertyException;
-import com.unmango.kubernetesthehardway.config.inputs.KubeconfigAdminOptionsArgs;
-import com.unmango.kubernetesthehardway.config.inputs.KubeconfigKubeControllerManagerOptionsArgs;
-import com.unmango.kubernetesthehardway.config.inputs.KubeconfigKubeProxyOptionsArgs;
-import com.unmango.kubernetesthehardway.config.inputs.KubeconfigKubeSchedulerOptionsArgs;
-import com.unmango.kubernetesthehardway.config.inputs.KubeconfigWorkerOptionsArgs;
-import java.lang.Object;
 import java.lang.String;
 import java.util.Objects;
+import java.util.Optional;
+import javax.annotation.Nullable;
 
 
 public final class GetKubeconfigArgs extends com.pulumi.resources.InvokeArgs {
@@ -36,25 +32,105 @@ public final class GetKubeconfigArgs extends com.pulumi.resources.InvokeArgs {
     }
 
     /**
-     * Options for creating the kubeconfig.
+     * The PEM encoded certificate data of the client.
      * 
      */
-    @Import(name="options", required=true)
-    private Object options;
+    @Import(name="clientCert", required=true)
+    private Output<String> clientCert;
 
     /**
-     * @return Options for creating the kubeconfig.
+     * @return The PEM encoded certificate data of the client.
      * 
      */
-    public Object options() {
-        return this.options;
+    public Output<String> clientCert() {
+        return this.clientCert;
+    }
+
+    /**
+     * The PEM encoded private key data of the client.
+     * 
+     */
+    @Import(name="clientKey", required=true)
+    private Output<String> clientKey;
+
+    /**
+     * @return The PEM encoded private key data of the client.
+     * 
+     */
+    public Output<String> clientKey() {
+        return this.clientKey;
+    }
+
+    /**
+     * A name to identify the cluster.
+     * 
+     */
+    @Import(name="clusterName", required=true)
+    private Output<String> clusterName;
+
+    /**
+     * @return A name to identify the cluster.
+     * 
+     */
+    public Output<String> clusterName() {
+        return this.clusterName;
+    }
+
+    /**
+     * A name to use for the kubeconfig context
+     * 
+     */
+    @Import(name="contextName")
+    private @Nullable Output<String> contextName;
+
+    /**
+     * @return A name to use for the kubeconfig context
+     * 
+     */
+    public Optional<Output<String>> contextName() {
+        return Optional.ofNullable(this.contextName);
+    }
+
+    /**
+     * The address and port of the Kubernetes API server.
+     * 
+     */
+    @Import(name="server", required=true)
+    private Output<String> server;
+
+    /**
+     * @return The address and port of the Kubernetes API server.
+     * 
+     */
+    public Output<String> server() {
+        return this.server;
+    }
+
+    /**
+     * The username of the user
+     * 
+     */
+    @Import(name="username", required=true)
+    private Output<String> username;
+
+    /**
+     * @return The username of the user
+     * 
+     */
+    public Output<String> username() {
+        return this.username;
     }
 
     private GetKubeconfigArgs() {}
 
     private GetKubeconfigArgs(GetKubeconfigArgs $) {
         this.caPem = $.caPem;
-        this.options = $.options;
+        this.clientCert = $.clientCert;
+        this.clientKey = $.clientKey;
+        this.clusterName = $.clusterName;
+        this.contextName = $.contextName;
+        this.server = $.server;
+        this.username = $.username;
     }
 
     public static Builder builder() {
@@ -97,22 +173,149 @@ public final class GetKubeconfigArgs extends com.pulumi.resources.InvokeArgs {
         }
 
         /**
-         * @param options Options for creating the kubeconfig.
+         * @param clientCert The PEM encoded certificate data of the client.
          * 
          * @return builder
          * 
          */
-        public Builder options(Object options) {
-            $.options = options;
+        public Builder clientCert(Output<String> clientCert) {
+            $.clientCert = clientCert;
             return this;
+        }
+
+        /**
+         * @param clientCert The PEM encoded certificate data of the client.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder clientCert(String clientCert) {
+            return clientCert(Output.of(clientCert));
+        }
+
+        /**
+         * @param clientKey The PEM encoded private key data of the client.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder clientKey(Output<String> clientKey) {
+            $.clientKey = clientKey;
+            return this;
+        }
+
+        /**
+         * @param clientKey The PEM encoded private key data of the client.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder clientKey(String clientKey) {
+            return clientKey(Output.of(clientKey));
+        }
+
+        /**
+         * @param clusterName A name to identify the cluster.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder clusterName(Output<String> clusterName) {
+            $.clusterName = clusterName;
+            return this;
+        }
+
+        /**
+         * @param clusterName A name to identify the cluster.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder clusterName(String clusterName) {
+            return clusterName(Output.of(clusterName));
+        }
+
+        /**
+         * @param contextName A name to use for the kubeconfig context
+         * 
+         * @return builder
+         * 
+         */
+        public Builder contextName(@Nullable Output<String> contextName) {
+            $.contextName = contextName;
+            return this;
+        }
+
+        /**
+         * @param contextName A name to use for the kubeconfig context
+         * 
+         * @return builder
+         * 
+         */
+        public Builder contextName(String contextName) {
+            return contextName(Output.of(contextName));
+        }
+
+        /**
+         * @param server The address and port of the Kubernetes API server.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder server(Output<String> server) {
+            $.server = server;
+            return this;
+        }
+
+        /**
+         * @param server The address and port of the Kubernetes API server.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder server(String server) {
+            return server(Output.of(server));
+        }
+
+        /**
+         * @param username The username of the user
+         * 
+         * @return builder
+         * 
+         */
+        public Builder username(Output<String> username) {
+            $.username = username;
+            return this;
+        }
+
+        /**
+         * @param username The username of the user
+         * 
+         * @return builder
+         * 
+         */
+        public Builder username(String username) {
+            return username(Output.of(username));
         }
 
         public GetKubeconfigArgs build() {
             if ($.caPem == null) {
                 throw new MissingRequiredPropertyException("GetKubeconfigArgs", "caPem");
             }
-            if ($.options == null) {
-                throw new MissingRequiredPropertyException("GetKubeconfigArgs", "options");
+            if ($.clientCert == null) {
+                throw new MissingRequiredPropertyException("GetKubeconfigArgs", "clientCert");
+            }
+            if ($.clientKey == null) {
+                throw new MissingRequiredPropertyException("GetKubeconfigArgs", "clientKey");
+            }
+            if ($.clusterName == null) {
+                throw new MissingRequiredPropertyException("GetKubeconfigArgs", "clusterName");
+            }
+            if ($.server == null) {
+                throw new MissingRequiredPropertyException("GetKubeconfigArgs", "server");
+            }
+            if ($.username == null) {
+                throw new MissingRequiredPropertyException("GetKubeconfigArgs", "username");
             }
             return $;
         }

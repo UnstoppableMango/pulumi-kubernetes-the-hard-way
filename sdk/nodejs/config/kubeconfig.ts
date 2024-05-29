@@ -45,11 +45,28 @@ export class Kubeconfig extends pulumi.ComponentResource {
             if ((!args || args.caPem === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'caPem'");
             }
-            if ((!args || args.options === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'options'");
+            if ((!args || args.clientCert === undefined) && !opts.urn) {
+                throw new Error("Missing required property 'clientCert'");
+            }
+            if ((!args || args.clientKey === undefined) && !opts.urn) {
+                throw new Error("Missing required property 'clientKey'");
+            }
+            if ((!args || args.clusterName === undefined) && !opts.urn) {
+                throw new Error("Missing required property 'clusterName'");
+            }
+            if ((!args || args.server === undefined) && !opts.urn) {
+                throw new Error("Missing required property 'server'");
+            }
+            if ((!args || args.username === undefined) && !opts.urn) {
+                throw new Error("Missing required property 'username'");
             }
             resourceInputs["caPem"] = args ? args.caPem : undefined;
-            resourceInputs["options"] = args ? args.options : undefined;
+            resourceInputs["clientCert"] = args ? args.clientCert : undefined;
+            resourceInputs["clientKey"] = args ? args.clientKey : undefined;
+            resourceInputs["clusterName"] = args ? args.clusterName : undefined;
+            resourceInputs["contextName"] = args ? args.contextName : undefined;
+            resourceInputs["server"] = args ? args.server : undefined;
+            resourceInputs["username"] = args ? args.username : undefined;
             resourceInputs["result"] = undefined /*out*/;
             resourceInputs["yaml"] = undefined /*out*/;
         } else {
@@ -70,7 +87,27 @@ export interface KubeconfigArgs {
      */
     caPem: pulumi.Input<string>;
     /**
-     * Options for creating the kubeconfig.
+     * The PEM encoded certificate data of the client.
      */
-    options: pulumi.Input<inputs.config.KubeconfigAdminOptionsArgs> | pulumi.Input<inputs.config.KubeconfigKubeControllerManagerOptionsArgs> | pulumi.Input<inputs.config.KubeconfigKubeProxyOptionsArgs> | pulumi.Input<inputs.config.KubeconfigKubeSchedulerOptionsArgs> | pulumi.Input<inputs.config.KubeconfigWorkerOptionsArgs>;
+    clientCert: pulumi.Input<string>;
+    /**
+     * The PEM encoded private key data of the client.
+     */
+    clientKey: pulumi.Input<string>;
+    /**
+     * A name to identify the cluster.
+     */
+    clusterName: pulumi.Input<string>;
+    /**
+     * A name to use for the kubeconfig context
+     */
+    contextName?: pulumi.Input<string>;
+    /**
+     * The address and port of the Kubernetes API server.
+     */
+    server: pulumi.Input<string>;
+    /**
+     * The username of the user
+     */
+    username: pulumi.Input<string>;
 }

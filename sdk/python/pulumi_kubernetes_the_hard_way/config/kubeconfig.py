@@ -9,7 +9,6 @@ import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
 from .. import _utilities
 from . import outputs
-from ._inputs import *
 
 __all__ = ['KubeconfigArgs', 'Kubeconfig']
 
@@ -17,14 +16,30 @@ __all__ = ['KubeconfigArgs', 'Kubeconfig']
 class KubeconfigArgs:
     def __init__(__self__, *,
                  ca_pem: pulumi.Input[str],
-                 options: Union[pulumi.Input['KubeconfigAdminOptionsArgs'], pulumi.Input['KubeconfigKubeControllerManagerOptionsArgs'], pulumi.Input['KubeconfigKubeProxyOptionsArgs'], pulumi.Input['KubeconfigKubeSchedulerOptionsArgs'], pulumi.Input['KubeconfigWorkerOptionsArgs']]):
+                 client_cert: pulumi.Input[str],
+                 client_key: pulumi.Input[str],
+                 cluster_name: pulumi.Input[str],
+                 server: pulumi.Input[str],
+                 username: pulumi.Input[str],
+                 context_name: Optional[pulumi.Input[str]] = None):
         """
         The set of arguments for constructing a Kubeconfig resource.
         :param pulumi.Input[str] ca_pem: Certificate authority data.
-        :param Union[pulumi.Input['KubeconfigAdminOptionsArgs'], pulumi.Input['KubeconfigKubeControllerManagerOptionsArgs'], pulumi.Input['KubeconfigKubeProxyOptionsArgs'], pulumi.Input['KubeconfigKubeSchedulerOptionsArgs'], pulumi.Input['KubeconfigWorkerOptionsArgs']] options: Options for creating the kubeconfig.
+        :param pulumi.Input[str] client_cert: The PEM encoded certificate data of the client.
+        :param pulumi.Input[str] client_key: The PEM encoded private key data of the client.
+        :param pulumi.Input[str] cluster_name: A name to identify the cluster.
+        :param pulumi.Input[str] server: The address and port of the Kubernetes API server.
+        :param pulumi.Input[str] username: The username of the user
+        :param pulumi.Input[str] context_name: A name to use for the kubeconfig context
         """
         pulumi.set(__self__, "ca_pem", ca_pem)
-        pulumi.set(__self__, "options", options)
+        pulumi.set(__self__, "client_cert", client_cert)
+        pulumi.set(__self__, "client_key", client_key)
+        pulumi.set(__self__, "cluster_name", cluster_name)
+        pulumi.set(__self__, "server", server)
+        pulumi.set(__self__, "username", username)
+        if context_name is not None:
+            pulumi.set(__self__, "context_name", context_name)
 
     @property
     @pulumi.getter(name="caPem")
@@ -39,16 +54,76 @@ class KubeconfigArgs:
         pulumi.set(self, "ca_pem", value)
 
     @property
-    @pulumi.getter
-    def options(self) -> Union[pulumi.Input['KubeconfigAdminOptionsArgs'], pulumi.Input['KubeconfigKubeControllerManagerOptionsArgs'], pulumi.Input['KubeconfigKubeProxyOptionsArgs'], pulumi.Input['KubeconfigKubeSchedulerOptionsArgs'], pulumi.Input['KubeconfigWorkerOptionsArgs']]:
+    @pulumi.getter(name="clientCert")
+    def client_cert(self) -> pulumi.Input[str]:
         """
-        Options for creating the kubeconfig.
+        The PEM encoded certificate data of the client.
         """
-        return pulumi.get(self, "options")
+        return pulumi.get(self, "client_cert")
 
-    @options.setter
-    def options(self, value: Union[pulumi.Input['KubeconfigAdminOptionsArgs'], pulumi.Input['KubeconfigKubeControllerManagerOptionsArgs'], pulumi.Input['KubeconfigKubeProxyOptionsArgs'], pulumi.Input['KubeconfigKubeSchedulerOptionsArgs'], pulumi.Input['KubeconfigWorkerOptionsArgs']]):
-        pulumi.set(self, "options", value)
+    @client_cert.setter
+    def client_cert(self, value: pulumi.Input[str]):
+        pulumi.set(self, "client_cert", value)
+
+    @property
+    @pulumi.getter(name="clientKey")
+    def client_key(self) -> pulumi.Input[str]:
+        """
+        The PEM encoded private key data of the client.
+        """
+        return pulumi.get(self, "client_key")
+
+    @client_key.setter
+    def client_key(self, value: pulumi.Input[str]):
+        pulumi.set(self, "client_key", value)
+
+    @property
+    @pulumi.getter(name="clusterName")
+    def cluster_name(self) -> pulumi.Input[str]:
+        """
+        A name to identify the cluster.
+        """
+        return pulumi.get(self, "cluster_name")
+
+    @cluster_name.setter
+    def cluster_name(self, value: pulumi.Input[str]):
+        pulumi.set(self, "cluster_name", value)
+
+    @property
+    @pulumi.getter
+    def server(self) -> pulumi.Input[str]:
+        """
+        The address and port of the Kubernetes API server.
+        """
+        return pulumi.get(self, "server")
+
+    @server.setter
+    def server(self, value: pulumi.Input[str]):
+        pulumi.set(self, "server", value)
+
+    @property
+    @pulumi.getter
+    def username(self) -> pulumi.Input[str]:
+        """
+        The username of the user
+        """
+        return pulumi.get(self, "username")
+
+    @username.setter
+    def username(self, value: pulumi.Input[str]):
+        pulumi.set(self, "username", value)
+
+    @property
+    @pulumi.getter(name="contextName")
+    def context_name(self) -> Optional[pulumi.Input[str]]:
+        """
+        A name to use for the kubeconfig context
+        """
+        return pulumi.get(self, "context_name")
+
+    @context_name.setter
+    def context_name(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "context_name", value)
 
 
 class Kubeconfig(pulumi.ComponentResource):
@@ -57,7 +132,12 @@ class Kubeconfig(pulumi.ComponentResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  ca_pem: Optional[pulumi.Input[str]] = None,
-                 options: Optional[Union[pulumi.Input[pulumi.InputType['KubeconfigAdminOptionsArgs']], pulumi.Input[pulumi.InputType['KubeconfigKubeControllerManagerOptionsArgs']], pulumi.Input[pulumi.InputType['KubeconfigKubeProxyOptionsArgs']], pulumi.Input[pulumi.InputType['KubeconfigKubeSchedulerOptionsArgs']], pulumi.Input[pulumi.InputType['KubeconfigWorkerOptionsArgs']]]] = None,
+                 client_cert: Optional[pulumi.Input[str]] = None,
+                 client_key: Optional[pulumi.Input[str]] = None,
+                 cluster_name: Optional[pulumi.Input[str]] = None,
+                 context_name: Optional[pulumi.Input[str]] = None,
+                 server: Optional[pulumi.Input[str]] = None,
+                 username: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         """
         https://kubernetes.io/docs/concepts/configuration/organize-cluster-access-kubeconfig/
@@ -65,7 +145,12 @@ class Kubeconfig(pulumi.ComponentResource):
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[str] ca_pem: Certificate authority data.
-        :param Union[pulumi.Input[pulumi.InputType['KubeconfigAdminOptionsArgs']], pulumi.Input[pulumi.InputType['KubeconfigKubeControllerManagerOptionsArgs']], pulumi.Input[pulumi.InputType['KubeconfigKubeProxyOptionsArgs']], pulumi.Input[pulumi.InputType['KubeconfigKubeSchedulerOptionsArgs']], pulumi.Input[pulumi.InputType['KubeconfigWorkerOptionsArgs']]] options: Options for creating the kubeconfig.
+        :param pulumi.Input[str] client_cert: The PEM encoded certificate data of the client.
+        :param pulumi.Input[str] client_key: The PEM encoded private key data of the client.
+        :param pulumi.Input[str] cluster_name: A name to identify the cluster.
+        :param pulumi.Input[str] context_name: A name to use for the kubeconfig context
+        :param pulumi.Input[str] server: The address and port of the Kubernetes API server.
+        :param pulumi.Input[str] username: The username of the user
         """
         ...
     @overload
@@ -92,7 +177,12 @@ class Kubeconfig(pulumi.ComponentResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  ca_pem: Optional[pulumi.Input[str]] = None,
-                 options: Optional[Union[pulumi.Input[pulumi.InputType['KubeconfigAdminOptionsArgs']], pulumi.Input[pulumi.InputType['KubeconfigKubeControllerManagerOptionsArgs']], pulumi.Input[pulumi.InputType['KubeconfigKubeProxyOptionsArgs']], pulumi.Input[pulumi.InputType['KubeconfigKubeSchedulerOptionsArgs']], pulumi.Input[pulumi.InputType['KubeconfigWorkerOptionsArgs']]]] = None,
+                 client_cert: Optional[pulumi.Input[str]] = None,
+                 client_key: Optional[pulumi.Input[str]] = None,
+                 cluster_name: Optional[pulumi.Input[str]] = None,
+                 context_name: Optional[pulumi.Input[str]] = None,
+                 server: Optional[pulumi.Input[str]] = None,
+                 username: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):
@@ -107,9 +197,22 @@ class Kubeconfig(pulumi.ComponentResource):
             if ca_pem is None and not opts.urn:
                 raise TypeError("Missing required property 'ca_pem'")
             __props__.__dict__["ca_pem"] = ca_pem
-            if options is None and not opts.urn:
-                raise TypeError("Missing required property 'options'")
-            __props__.__dict__["options"] = options
+            if client_cert is None and not opts.urn:
+                raise TypeError("Missing required property 'client_cert'")
+            __props__.__dict__["client_cert"] = client_cert
+            if client_key is None and not opts.urn:
+                raise TypeError("Missing required property 'client_key'")
+            __props__.__dict__["client_key"] = client_key
+            if cluster_name is None and not opts.urn:
+                raise TypeError("Missing required property 'cluster_name'")
+            __props__.__dict__["cluster_name"] = cluster_name
+            __props__.__dict__["context_name"] = context_name
+            if server is None and not opts.urn:
+                raise TypeError("Missing required property 'server'")
+            __props__.__dict__["server"] = server
+            if username is None and not opts.urn:
+                raise TypeError("Missing required property 'username'")
+            __props__.__dict__["username"] = username
             __props__.__dict__["result"] = None
             __props__.__dict__["yaml"] = None
         super(Kubeconfig, __self__).__init__(
