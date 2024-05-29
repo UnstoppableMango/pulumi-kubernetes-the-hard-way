@@ -7,51 +7,63 @@ import (
 )
 
 func generateGetKubeconfig() schema.PackageSpec {
-	function, resource := generatePseudoFunction(
-		"https://kubernetes.io/docs/concepts/configuration/organize-cluster-access-kubeconfig/",
-		schema.ObjectTypeSpec{
-			Properties: map[string]schema.PropertySpec{
-				"caPem": props.String("Certificate authority data."),
-				"options": {
-					Description: "Options for creating the kubeconfig.",
-					TypeSpec: schema.TypeSpec{
-						Plain: true,
-						OneOf: []schema.TypeSpec{
-							types.LocalType("KubeconfigAdminOptions", "config"),
-							types.LocalType("KubeconfigKubeControllerManagerOptions", "config"),
-							types.LocalType("KubeconfigKubeProxyOptions", "config"),
-							types.LocalType("KubeconfigKubeSchedulerOptions", "config"),
-							types.LocalType("KubeconfigWorkerOptions", "config"),
-						},
+	return schema.PackageSpec{
+		Types: map[string]schema.ComplexTypeSpec{
+			name("Cluster"): {
+				ObjectTypeSpec: schema.ObjectTypeSpec{
+					Type: "object",
+					Properties: map[string]schema.PropertySpec{
+						"certificateAuthorityData": props.String("TODO"),
+						"server":                   props.String("TODO"),
 					},
-				},
-				"contexts": {
-					TypeSpec: schema.TypeSpec{
-						Type: "array",
-						Items: &schema.TypeSpec{
-							Ref: types.LocalTypeRef("Context", "config"),
-						},
-					},
-				},
-				"users": {
-					TypeSpec: schema.TypeSpec{
-						Type: "array",
-						Items: &schema.TypeSpec{
-							Ref: types.LocalTypeRef("User", "config"),
-						},
+					Required: []string{
+						"certificateAuthorityData",
+						"server",
 					},
 				},
 			},
-			Required: []string{"clusters", "contexts", "users"},
-		},
-		schema.PropertySpec{
-			TypeSpec: types.LocalType("Kubeconfig", "config"),
-		},
-		"yaml", props.String("The yaml representation of the manifest."),
-	)
-
-	return schema.PackageSpec{
-		Types: map[string]schema.ComplexTypeSpec{
+			name("Context"): {
+				ObjectTypeSpec: schema.ObjectTypeSpec{
+					Type: "object",
+					Properties: map[string]schema.PropertySpec{
+						"cluster": props.String("TODO"),
+						"user":    props.String("TODO"),
+					},
+					Required: []string{"cluster", "user"},
+				},
+			},
+			name("Kubeconfig"): {
+				ObjectTypeSpec: schema.ObjectTypeSpec{
+					Type: "object",
+					Properties: map[string]schema.PropertySpec{
+						"clusters": {
+							TypeSpec: schema.TypeSpec{
+								Type: "array",
+								Items: &schema.TypeSpec{
+									Ref: types.LocalTypeRef("Cluster", "config"),
+								},
+							},
+						},
+						"contexts": {
+							TypeSpec: schema.TypeSpec{
+								Type: "array",
+								Items: &schema.TypeSpec{
+									Ref: types.LocalTypeRef("Context", "config"),
+								},
+							},
+						},
+						"users": {
+							TypeSpec: schema.TypeSpec{
+								Type: "array",
+								Items: &schema.TypeSpec{
+									Ref: types.LocalTypeRef("User", "config"),
+								},
+							},
+						},
+					},
+					Required: []string{"clusters", "contexts", "users"},
+				},
+			},
 			name("KubeconfigAdminOptions"): {
 				ObjectTypeSpec: schema.ObjectTypeSpec{
 					Type: "object",
@@ -193,10 +205,45 @@ func generateGetKubeconfig() schema.PackageSpec {
 			},
 		},
 		Functions: map[string]schema.FunctionSpec{
-			name("getKubeConfig"): function,
-		},
-		Resources: map[string]schema.ResourceSpec{
-			name("Kubeconfig"): resource,
+			name("getKubeconfig"): { // TODO: Need more pems
+				Inputs: &schema.ObjectTypeSpec{
+					Properties: map[string]schema.PropertySpec{
+						"caPem": props.String("Certificate authority data."),
+						"options": {
+							Description: "Options for creating the kubeconfig.",
+							TypeSpec: schema.TypeSpec{
+								Plain: true,
+								OneOf: []schema.TypeSpec{
+									types.LocalType("KubeconfigAdminOptions", "config"),
+									types.LocalType("KubeconfigKubeControllerManagerOptions", "config"),
+									types.LocalType("KubeconfigKubeProxyOptions", "config"),
+									types.LocalType("KubeconfigKubeSchedulerOptions", "config"),
+									types.LocalType("KubeconfigWorkerOptions", "config"),
+								},
+								Discriminator: &schema.DiscriminatorSpec{
+									PropertyName: "type",
+									Mapping: map[string]string{
+										"admin":                   types.LocalTypeRef("KubeconfigAdminOptions", "config"),
+										"kube-controller-manager": types.LocalTypeRef("KubeconfigKubeControllerManagerOptions", "config"),
+										"kube-proxy":              types.LocalTypeRef("KubeconfigKubeProxyOptions", "config"),
+										"kube-scheduler":          types.LocalTypeRef("KubeconfigKubeSchedulerOptions", "config"),
+										"worker":                  types.LocalTypeRef("KubeconfigWorkerOptions", "config"),
+									},
+								},
+							},
+						},
+					},
+					Required: []string{"caPem", "options"},
+				},
+				Outputs: &schema.ObjectTypeSpec{
+					Properties: map[string]schema.PropertySpec{
+						"result": {
+							TypeSpec: types.LocalType("Kubeconfig", "config"),
+						},
+					},
+					Required: []string{"result"},
+				},
+			},
 		},
 	}
 }
