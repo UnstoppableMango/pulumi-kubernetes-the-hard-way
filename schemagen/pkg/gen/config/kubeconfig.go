@@ -6,9 +6,9 @@ import (
 	"github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 )
 
-func generateGetKubeconfig() pseudoFunction {
-	return generatePseudoFunction(
-		"TODO",
+func generateGetKubeconfig() schema.PackageSpec {
+	function, resource := generatePseudoFunction(
+		"https://kubernetes.io/docs/concepts/configuration/organize-cluster-access-kubeconfig/",
 		schema.ObjectTypeSpec{
 			Properties: map[string]schema.PropertySpec{
 				"caPem": props.String("Certificate authority data."),
@@ -23,26 +23,35 @@ func generateGetKubeconfig() pseudoFunction {
 							types.LocalType("KubeconfigKubeSchedulerOptions", "config"),
 							types.LocalType("KubeconfigWorkerOptions", "config"),
 						},
-						"contexts": {
-							TypeSpec: schema.TypeSpec{
-								Type: "array",
-								Items: &schema.TypeSpec{
-									Ref: types.LocalTypeRef("Context", "config"),
-								},
-							},
-						},
-						"users": {
-							TypeSpec: schema.TypeSpec{
-								Type: "array",
-								Items: &schema.TypeSpec{
-									Ref: types.LocalTypeRef("User", "config"),
-								},
-							},
+					},
+				},
+				"contexts": {
+					TypeSpec: schema.TypeSpec{
+						Type: "array",
+						Items: &schema.TypeSpec{
+							Ref: types.LocalTypeRef("Context", "config"),
 						},
 					},
-					Required: []string{"clusters", "contexts", "users"},
+				},
+				"users": {
+					TypeSpec: schema.TypeSpec{
+						Type: "array",
+						Items: &schema.TypeSpec{
+							Ref: types.LocalTypeRef("User", "config"),
+						},
+					},
 				},
 			},
+			Required: []string{"clusters", "contexts", "users"},
+		},
+		schema.PropertySpec{
+			TypeSpec: types.LocalType("Kubeconfig", "config"),
+		},
+		"yaml", props.String("The yaml representation of the manifest."),
+	)
+
+	return schema.PackageSpec{
+		Types: map[string]schema.ComplexTypeSpec{
 			name("KubeconfigAdminOptions"): {
 				ObjectTypeSpec: schema.ObjectTypeSpec{
 					Type: "object",
@@ -183,9 +192,11 @@ func generateGetKubeconfig() pseudoFunction {
 				},
 			},
 		},
-		schema.PropertySpec{
-			TypeSpec: types.LocalType("Kubeconfig", "config"),
+		Functions: map[string]schema.FunctionSpec{
+			name("getKubeConfig"): function,
 		},
-		"yaml", props.String("The yaml representation of the manifest."),
-	)
+		Resources: map[string]schema.ResourceSpec{
+			name("Kubeconfig"): resource,
+		},
+	}
 }
