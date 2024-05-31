@@ -9,7 +9,7 @@ require (
 	github.com/pulumi/pulumi/sdk/v3 v3.118.0
 	github.com/stretchr/testify v1.9.0
 	github.com/testcontainers/testcontainers-go v0.31.0
-	golang.org/x/exp v0.0.0-20240530194437-404ba88c7ed0
+	golang.org/x/exp v0.0.0-20240531132922-fd00a4e0eefc
 )
 
 require (
