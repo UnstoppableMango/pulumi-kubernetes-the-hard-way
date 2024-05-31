@@ -154,9 +154,9 @@
     socks-proxy-agent "^8.0.3"
 
 "@npmcli/arborist@^7.3.1":
-  version "7.5.2"
-  resolved "https://registry.yarnpkg.com/@npmcli/arborist/-/arborist-7.5.2.tgz#0a1b86d9dce852391ce86314c0d4f2172723bb27"
-  integrity sha512-V0zqhdnK9Av3qSIbhYs2O+7HAJPSGhqBkNP6624iSVke2J2JKY306V5Czwul+tc2Xnq6SDEKe8v+frLeKJ4aeA==
+  version "7.5.3"
+  resolved "https://registry.yarnpkg.com/@npmcli/arborist/-/arborist-7.5.3.tgz#88c51b124a1ec48d358897778af6ab5b0e05694d"
+  integrity sha512-7gbMdDNSYUzi0j2mpb6FoXRg3BxXWplMQZH1MZlvNjSdWFObaUz2Ssvo0Nlh2xmWks1OPo+gpsE6qxpT/5M7lQ==
   dependencies:
     "@isaacs/string-locale-compare" "^1.1.0"
     "@npmcli/fs" "^3.1.1"
@@ -255,9 +255,9 @@
   integrity sha512-gp8pRXC2oOxu0DUE1/M3bYtb1b3/DbJ5aM113+XJBgfXdussRAsX0YOrOhdd8WvnAR6auDBvJomGAkLKA5ydxA==
 
 "@npmcli/package-json@^5.0.0", "@npmcli/package-json@^5.1.0":
-  version "5.1.0"
-  resolved "https://registry.yarnpkg.com/@npmcli/package-json/-/package-json-5.1.0.tgz#10d117b5fb175acc14c70901a151c52deffc843e"
-  integrity sha512-1aL4TuVrLS9sf8quCLerU3H9J4vtCtgu8VauYozrmEyU57i/EdKleCnsQ7vpnABIH6c9mnTxcH5sFkO3BlV8wQ==
+  version "5.1.1"
+  resolved "https://registry.yarnpkg.com/@npmcli/package-json/-/package-json-5.1.1.tgz#ec7339438ae16fcb2216f1c34a0dad707e62d55b"
+  integrity sha512-uTq5j/UqUzbOaOxVy+osfOhpqOiLfUZ0Ut33UbcyyAPJbZcJsf4Mrsyb8r58FoIFlofw0iOFsuCA/oDK14VDJQ==
   dependencies:
     "@npmcli/git" "^5.0.0"
     glob "^10.2.2"
@@ -483,9 +483,9 @@
     tmp "^0.0.33"
 
 "@pulumi/pulumi@^3.0.0", "@pulumi/pulumi@^3.111.1", "@pulumi/pulumi@^3.25.0":
-  version "3.117.0"
-  resolved "https://registry.yarnpkg.com/@pulumi/pulumi/-/pulumi-3.117.0.tgz#0ef4f05c96d3b3362f2aa17f4b46a155cd1152aa"
-  integrity sha512-pF4KF5FpSwckB/Xy0ZlCH6FGHiNUkmC9c4ATW2pjfp2oa0uyEQ+5nQjj/6osX5wWI2Wn+Qsf+9c9ZaZwrwyhnw==
+  version "3.118.0"
+  resolved "https://registry.yarnpkg.com/@pulumi/pulumi/-/pulumi-3.118.0.tgz#e3f4852cb42e59de384c65d7e463a3d7dae26818"
+  integrity sha512-bjhmDK+sYuDpUgd2DKI0GrTnBYI7oWnokc/oekLI8t4mfI3ZW0K5/g3EMjg6cPO9hbbNNzT4beTZvYDA0hW3vQ==
   dependencies:
     "@grpc/grpc-js" "^1.10.1"
     "@logdna/tail-file" "^2.0.6"
@@ -648,7 +648,14 @@
     "@types/node" "*"
     form-data "^4.0.0"
 
-"@types/node@*", "@types/node@>=13.7.0", "@types/node@^20.0.0":
+"@types/node@*", "@types/node@>=13.7.0":
+  version "20.13.0"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.13.0.tgz#011a76bc1e71ae9a026dddcfd7039084f752c4b6"
+  integrity sha512-FM6AOb3khNkNIXPnHFDYaHerSv8uN22C91z098AnGccVu+Pcdhi+pNUFDi0iLmPIsVE0JBD0KVS7mzUYt4nRzQ==
+  dependencies:
+    undici-types "~5.26.4"
+
+"@types/node@^20.0.0":
   version "20.12.13"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-20.12.13.tgz#90ed3b8a4e52dd3c5dc5a42dde5b85b74ad8ed88"
   integrity sha512-gBGeanV41c1L171rR7wjbMiEpEI/l5XFQdLLfhr/REwpgDy/4U8y89+i8kRiLzDyZdOkXh+cRaTetUnCYutoXA==
@@ -937,9 +944,9 @@ cssesc@^3.0.0:
   integrity sha512-/Tb/JcjK111nNScGob5MNtsntNM1aCNUDipB/TkwZFhyDrrE47SOx/18wF2bbjgc3ZzCSKW1T5nt5EbFoAz/Vg==
 
 debug@4, debug@^4.1.1, debug@^4.3.4:
-  version "4.3.4"
-  resolved "https://registry.yarnpkg.com/debug/-/debug-4.3.4.tgz#1319f6579357f2338d3337d2cdd4914bb5dcc865"
-  integrity sha512-PRWFHuSU3eDtQJPvnNY7Jcket1j0t5OuOsFzPPzsekD52Zl8qUfFIPEiswXqIvHWGVHOgX+7G/vCNNhehwxfkQ==
+  version "4.3.5"
+  resolved "https://registry.yarnpkg.com/debug/-/debug-4.3.5.tgz#e83444eceb9fedd4a1da56d671ae2446a01a6e1e"
+  integrity sha512-pt0bNEmneDIvdL1Xsd9oDQ/wrQRkXDT4AUWlNZNPKvW5x/jyO9VFXkJUP07vQ2upmw5PlaITaPKc31jK13V+jg==
   dependencies:
     ms "2.1.2"
 
