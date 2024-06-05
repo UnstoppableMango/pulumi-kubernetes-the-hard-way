@@ -1,4 +1,4 @@
-FROM --platform=${BUILDPLATFORM} ubuntu:noble-20240429
+FROM --platform=${BUILDPLATFORM} ubuntu:noble-20240530
 
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt update \
