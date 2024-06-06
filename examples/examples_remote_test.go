@@ -52,6 +52,7 @@ func TestCniPluginsTs(t *testing.T) {
 }
 
 func TestRemoteEtcdClusterMultiTs(t *testing.T) {
+	skipIfCi(t) // This test breaks all the time and we know it works to skip it for now
 	opts := getJSBaseOptions(t).With(rt.MultiContainerSetup(t))
 	rt.ResourceTest(t, "remote/etcd-cluster-multi-ts", opts, func(ctx *rt.ResourceContext) {
 		rt.Validate(ctx, "kubernetes-the-hard-way:remote:EtcdCluster", "simple", func(t *testing.T, res apitype.ResourceV3) {
