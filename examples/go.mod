@@ -5,8 +5,8 @@ go 1.21
 require (
 	github.com/docker/docker v26.1.4+incompatible
 	github.com/docker/go-connections v0.5.0
-	github.com/pulumi/pulumi/pkg/v3 v3.119.0
-	github.com/pulumi/pulumi/sdk/v3 v3.119.0
+	github.com/pulumi/pulumi/pkg/v3 v3.120.0
+	github.com/pulumi/pulumi/sdk/v3 v3.120.0
 	github.com/stretchr/testify v1.9.0
 	github.com/testcontainers/testcontainers-go v0.31.0
 	golang.org/x/exp v0.0.0-20240604190554-fc45aab8b7f8
