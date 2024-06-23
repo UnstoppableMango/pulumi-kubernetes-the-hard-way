@@ -1,5 +1,7 @@
 dario.cat/mergo v1.0.0 h1:AGCNq9Evsj31mOgNPcLyXc+4PNABt905YmuqPYYpBWk=
 dario.cat/mergo v1.0.0/go.mod h1:uNxQE+84aUszobStD9th8a29P2fMDhsBdgRYvZOxGmk=
+github.com/BurntSushi/toml v1.2.1 h1:9F2/+DoOYIOksmaJFPw1tGFy1eDnIJXg+UHjuD8lTak=
+github.com/BurntSushi/toml v1.2.1/go.mod h1:CxXYINrC8qIiEnFrOxCa7Jy5BFHlXnUU2pbicEuybxQ=
 github.com/HdrHistogram/hdrhistogram-go v1.1.2 h1:5IcZpTvzydCQeHzK4Ef/D5rrSqwxob0t8PQPMybUNFM=
 github.com/HdrHistogram/hdrhistogram-go v1.1.2/go.mod h1:yDgFjdqOqDEKOvasDdhWNXYg9BVp4O+o5f6V/ehm6Oo=
 github.com/Microsoft/go-winio v0.5.2/go.mod h1:WpS1mjBmmwHBEWmogvA2mj8546UReBk4v8QkMxJ6pZY=
@@ -168,6 +170,8 @@ github.com/pulumi/pulumi/pkg/v3 v3.119.0 h1:I7716j1xugGCUgcEIhRn1MzzfSpZnsDZpi+p
 github.com/pulumi/pulumi/pkg/v3 v3.119.0/go.mod h1:sKovnH/g9x8nKUNS38PlGQf2M8IwKu9uxBELuiSx4F4=
 github.com/pulumi/pulumi/pkg/v3 v3.120.0 h1:L2b8DiI4dQa+iRGXdbrMQl2AXUfnjP3siHEas6xPW84=
 github.com/pulumi/pulumi/pkg/v3 v3.120.0/go.mod h1:ZLTGs4I1q5VXzjV5LLBLVIAfE811TMsSDFJaWs7WD4g=
+github.com/pulumi/pulumi/pkg/v3 v3.121.0 h1:cLUQJYGJKfgCY0ubJo8dVwmsIm2WcgTprb9Orc/yiFg=
+github.com/pulumi/pulumi/pkg/v3 v3.121.0/go.mod h1:aaRixfKOh4DhGtuDJcI56dTPkb7oJBgRgH1aMF1FzbU=
 github.com/pulumi/pulumi/sdk/v3 v3.117.0 h1:ImIsukZ2ZIYQG94uWdSZl9dJjJTosQSTsOQTauTNX7U=
 github.com/pulumi/pulumi/sdk/v3 v3.117.0/go.mod h1:kNea72+FQk82OjZ3yEP4dl6nbAl2ngE8PDBc0iFAaHg=
 github.com/pulumi/pulumi/sdk/v3 v3.118.0 h1:NboaaB4cNuehzsax38PO1jZOS6Mzbx/jNaDNaHPmg4c=
@@ -176,6 +180,8 @@ github.com/pulumi/pulumi/sdk/v3 v3.119.0 h1:CPP0ZxAM1WT0O5/IJF0x13ZyvFMoWJi21gqN
 github.com/pulumi/pulumi/sdk/v3 v3.119.0/go.mod h1:/mQJPO+HehhoSJ9O3C6eUKAGeAr+4KSrbDhLsXHKldc=
 github.com/pulumi/pulumi/sdk/v3 v3.120.0 h1:KYtMkCmcSg4U+w41/Q0l3llKEodbfdyq6J0VMoEoVmY=
 github.com/pulumi/pulumi/sdk/v3 v3.120.0/go.mod h1:/mQJPO+HehhoSJ9O3C6eUKAGeAr+4KSrbDhLsXHKldc=
+github.com/pulumi/pulumi/sdk/v3 v3.121.0 h1:UsnFKIVOtJN/hQKPkWHL9cZktewPVQRbNUXbXQY/qrk=
+github.com/pulumi/pulumi/sdk/v3 v3.121.0/go.mod h1:p1U24en3zt51agx+WlNboSOV8eLlPWYAkxMzVEXKbnY=
 github.com/rivo/uniseg v0.1.0/go.mod h1:J6wj4VEh+S6ZtnVlnTBMWIodfgj8LQOQFoIToxlJtxc=
 github.com/rivo/uniseg v0.2.0/go.mod h1:J6wj4VEh+S6ZtnVlnTBMWIodfgj8LQOQFoIToxlJtxc=
 github.com/rivo/uniseg v0.4.7 h1:WUdvkW8uEhrYfLC4ZzdpI2ztxP1I582+49Oc5Mq64VQ=
