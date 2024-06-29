@@ -164,6 +164,8 @@ github.com/pulumi/pulumi-kubernetes/sdk/v4 v4.14.0 h1:y9+1n+Qh37zCronhamSmxa946T
 github.com/pulumi/pulumi-kubernetes/sdk/v4 v4.14.0/go.mod h1:Smqya4ClBt2okzTDgPkihKu/hHtoZJNkBtUWoHUUCbw=
 github.com/pulumi/pulumi-random/sdk/v4 v4.16.2 h1:5el+INHB9exKLbuQMaz1OEmnasU1A6/GoOMFHCveXb8=
 github.com/pulumi/pulumi-random/sdk/v4 v4.16.2/go.mod h1:FuKLicnDYepG3W/tGmqCYkgdML5GK9RE/Ti984E/Tq8=
+github.com/pulumi/pulumi-random/sdk/v4 v4.16.3 h1:nlN42MRSIuDh5Pc5nLq4b0lwZaX2ZUAW67Nw+OlNOig=
+github.com/pulumi/pulumi-random/sdk/v4 v4.16.3/go.mod h1:yRfWJSLEAVZvkwgXajr3S9OmFkAZTxfO44Ef2HfixXQ=
 github.com/pulumi/pulumi-tls/sdk/v5 v5.0.3 h1:kbdrJVO1PczQakfZZ2Ke2P5G4jlPgTw2geGHR2+7zYc=
 github.com/pulumi/pulumi-tls/sdk/v5 v5.0.3/go.mod h1:onWsBMCIYPEHfGAQ24FRZ67JtJDkuUQQLd9zp5MDoTM=
 github.com/pulumi/pulumi/sdk/v3 v3.117.0 h1:ImIsukZ2ZIYQG94uWdSZl9dJjJTosQSTsOQTauTNX7U=
