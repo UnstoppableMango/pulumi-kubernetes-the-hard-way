@@ -3,7 +3,7 @@ module github.com/UnstoppableMango/pulumi-kubernetes-the-hard-way/examples
 go 1.22
 
 require (
-	github.com/docker/docker v27.0.3+incompatible
+	github.com/docker/docker v26.1.0+incompatible
 	github.com/docker/go-connections v0.5.0
 	github.com/pulumi/pulumi/pkg/v3 v3.122.0
 	github.com/pulumi/pulumi/sdk/v3 v3.122.0
