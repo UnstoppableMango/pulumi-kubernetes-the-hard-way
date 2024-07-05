@@ -4,8 +4,8 @@ go 1.22.2
 
 require (
 	github.com/pkg/errors v0.9.1
-	github.com/pulumi/pulumi/pkg/v3 v3.121.0
-	github.com/pulumi/pulumi/sdk/v3 v3.121.0
+	github.com/pulumi/pulumi/pkg/v3 v3.122.0
+	github.com/pulumi/pulumi/sdk/v3 v3.122.0
 )
 
 require (
