@@ -8,7 +8,7 @@ import (
 	"github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 )
 
-func generateStaticPod(commandSpec, commandxSpec schema.PackageSpec) schema.ResourceSpec {
+func generateStaticPod(commandSpec, commandxSpec schema.PackageSpec) schema.PackageSpec {
 	inputs := map[string]schema.PropertySpec{
 		"connection": props.Connection(commandSpec),
 		"fileName":   props.String("The name of the file on the remote system."),

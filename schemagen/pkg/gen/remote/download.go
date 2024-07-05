@@ -8,7 +8,7 @@ import (
 	"github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 )
 
-func generateDownload(commandSpec, commandxSpec schema.PackageSpec) schema.ResourceSpec {
+func generateDownload(commandSpec, commandxSpec schema.PackageSpec) schema.PackageSpec {
 	inputs := map[string]schema.PropertySpec{
 		"connection": {
 			Description: "The parameters with which to connect to the remote host.",

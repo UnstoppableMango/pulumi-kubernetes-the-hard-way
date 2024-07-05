@@ -5,7 +5,7 @@ import (
 	"github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 )
 
-func Generate(commandSpec schema.PackageSpec) schema.PackageSpec {
+func Generate(commandSpec, commandxSpec schema.PackageSpec) schema.PackageSpec {
 	base := schema.PackageSpec{
 		Functions: map[string]schema.FunctionSpec{},
 		Resources: map[string]schema.ResourceSpec{},
@@ -24,21 +24,21 @@ func Generate(commandSpec schema.PackageSpec) schema.PackageSpec {
 	}
 
 	return internal.ExtendSchemas(base,
-		generateDownload(commandSpec),
+		generateDownload(commandSpec, commandxSpec),
 		generateContainerdService(commandSpec),
 		generateControlPlaneNode(commandSpec),
 		generateEtcdCluster(commandSpec),
-		generateEtcdConfiguration(commandSpec),
+		generateEtcdConfiguration(commandSpec, commandxSpec),
 		generateEtcdService(commandSpec),
 		generateFile(commandSpec),
 		generateKubeletService(commandSpec),
 		generateKubeProxyService(commandSpec),
 		generateProvisionEtcd(commandSpec),
-		generateStartSystemdService(commandSpec, "StartContainerd", "containerd"),
-		generateStartSystemdService(commandSpec, "StartEtcd", "etcd"),
-		generateStartSystemdService(commandSpec, "StartKubelet", "kubelet"),
-		generateStartSystemdService(commandSpec, "StartKubeProxy", "kube-proxy"),
-		generateStaticPod(commandSpec),
+		generateStartSystemdService(commandSpec, commandxSpec, "StartContainerd", "containerd"),
+		generateStartSystemdService(commandSpec, commandxSpec, "StartEtcd", "etcd"),
+		generateStartSystemdService(commandSpec, commandxSpec, "StartKubelet", "kubelet"),
+		generateStartSystemdService(commandSpec, commandxSpec, "StartKubeProxy", "kube-proxy"),
+		generateStaticPod(commandSpec, commandxSpec),
 		generateSystemdService(commandSpec),
 		generateWorkerNode(commandSpec),
 		generateWorkerPreRequisites(commandSpec),

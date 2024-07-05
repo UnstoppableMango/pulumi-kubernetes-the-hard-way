@@ -9,7 +9,7 @@ import (
 	"github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 )
 
-func generateEtcdConfiguration(commandSpec, commandxSpec schema.PackageSpec) schema.ResourceSpec {
+func generateEtcdConfiguration(commandSpec, commandxSpec schema.PackageSpec) schema.PackageSpec {
 	inputs := map[string]schema.PropertySpec{
 		"caPem":   props.String("The PEM encoded certificate authority data."),
 		"certPem": props.String("The PEM encoded certificate data."),

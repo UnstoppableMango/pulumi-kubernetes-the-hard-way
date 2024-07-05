@@ -10,7 +10,7 @@ import (
 	"github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 )
 
-func generateStartSystemdService(commandSpec schema.PackageSpec, t, n string) schema.PackageSpec {
+func generateStartSystemdService(commandSpec, commandxSpec schema.PackageSpec, t, n string) schema.PackageSpec {
 	inputs := map[string]schema.PropertySpec{
 		"connection": props.Connection(commandSpec),
 	}
