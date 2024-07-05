@@ -125,11 +125,24 @@ jobs:
       fail-fast: true
       matrix:
         language:
-          - nodejs
-          - python
-          - dotnet
-          - go
-          - java
+          - name: nodejs
+            tags: nodejs
+          - name: nodejs
+            tags: remote
+          - name: nodejs
+            tags: etcd
+          - name: nodejs
+            tags: controlplane
+          - name: nodejs
+            tags: worker
+          - name: python
+            tags: python
+          - name: dotnet
+            tags: dotnet
+          - name: go
+            tags: go
+          - name: java
+            tags: java
     name: Test SDKs
     steps:
       - name: Checkout Repo
@@ -140,7 +153,7 @@ jobs:
       - name: Setup
         uses: ./.github/actions/test-setup
         with:
-          language: ${{ matrix.language }}
+          language: ${{ matrix.language.name }}
 
       - name: Build test image
         uses: ./.github/actions/build-test-image
@@ -149,13 +162,13 @@ jobs:
         if: ${{ ! inputs.short_test }}
         run: |
           set -euo pipefail
-          cd examples && go test -v -json -cover -timeout 2h -tags=${{ matrix.language }} -parallel 16 . 2>&1 | tee /tmp/gotest.log | gotestfmt
+          cd examples && go test -v -json -cover -timeout 2h -tags=${{ matrix.language.tags }} -parallel 16 . 2>&1 | tee /tmp/gotest.log | gotestfmt
 
       - name: Run short tests
         if: inputs.short_test
         run: |
           set -euo pipefail
-          cd examples && go test -v -json -cover -timeout 15m -short -tags=${{ matrix.language }} -parallel 16 . 2>&1 | tee /tmp/gotest.log | gotestfmt
+          cd examples && go test -v -json -cover -timeout 15m -short -tags=${{ matrix.language.tags }} -parallel 16 . 2>&1 | tee /tmp/gotest.log | gotestfmt
 
   test_provider:
     runs-on: ubuntu-latest
