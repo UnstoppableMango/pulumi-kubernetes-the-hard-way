@@ -50,6 +50,7 @@ export function binaryInstall(name: string, args: BinaryInstallArgs, parent: Res
       dest: binPath,
     },
     delete: interpolate`rm -rf ${binPath}`,
+    triggers: [args.url],
   }, { parent, dependsOn: [download, mkdir] });
 
   const rm = new Rm(name, {
