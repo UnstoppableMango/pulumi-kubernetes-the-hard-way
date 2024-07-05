@@ -1,4 +1,4 @@
-import { ComponentResourceOptions, output } from '@pulumi/pulumi';
+import { ComponentResourceOptions } from '@pulumi/pulumi';
 import * as schema from '../schema-types';
 import * as tool from './tool';
 
@@ -12,15 +12,16 @@ const apply = tool.factory<
 
     // TODO: Little bit smarter check here
     if (opts.command !== 'daemon-reload') {
-      builder.arg(opts.unit);
+      b.arg(opts.unit);
     }
 
-    return b;
+    return b.option('--now', opts.now);
   },
   (i) => ({
     command: i.command,
     unit: tool.mapO(i.unit),
     pattern: tool.mapO(i.pattern),
+    now: tool.mapO(i.now),
   }),
 );
 
