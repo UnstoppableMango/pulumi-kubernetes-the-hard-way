@@ -8,17 +8,18 @@ export class RuncInstall extends schema.RuncInstall {
     if (opts?.urn) return;
 
     const architecture = output(args.architecture ?? 'amd64');
-    const binName = 'kube-apiserver';
+    const binName = interpolate`runc.${architecture}`;
     const connection = output(args.connection);
     const directory = output(args.directory ?? '/usr/local/bin');
-    const version = output(args.version ?? '1.29.2');
-    const url = interpolate`https://storage.googleapis.com/kubernetes-release/release/v${version}/bin/linux/${architecture}/${binName}`;
+    const version = output(args.version ?? '1.1.13');
+    const url = interpolate`https://github.com/opencontainers/runc/releases/download/v${version}/${binName}`;
 
     const { download, mkdir, mktemp, mv, path, rm } = binaryInstall(name, {
       binName,
       connection,
       directory,
       url,
+      finalBin: 'runc',
     }, this);
 
     this.architecture = architecture;
