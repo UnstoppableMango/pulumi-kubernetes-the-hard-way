@@ -4,12 +4,13 @@ import (
 	"maps"
 	"slices"
 
+	"github.com/UnstoppableMango/pulumi-kubernetes-the-hard-way/schemagen/pkg/gen/props"
 	"github.com/UnstoppableMango/pulumi-kubernetes-the-hard-way/schemagen/pkg/gen/types"
 	"github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 )
 
 func generateBinaryInstall(
-	commandSpec schema.PackageSpec,
+	commandSpec, commandxSpec schema.PackageSpec,
 	typ, description string,
 ) schema.PackageSpec {
 	inputs := map[string]schema.PropertySpec{
@@ -45,28 +46,22 @@ func generateBinaryInstall(
 		},
 		"mkdir": {
 			Description: "The mkdir operation.",
-			TypeSpec:    types.LocalResource("Mkdir", "tools"),
+			TypeSpec:    types.ExtResource(commandxSpec, "Mkdir", "remote"),
 		},
 		"mktemp": {
 			Description: "The mktemp operation.",
-			TypeSpec:    types.LocalResource("Mktemp", "tools"),
+			TypeSpec:    types.ExtResource(commandxSpec, "Mktemp", "remote"),
 		},
 		"mv": {
 			Description: "The mv operation.",
-			TypeSpec:    types.LocalResource("Mv", "tools"),
+			TypeSpec:    types.ExtResource(commandxSpec, "Mv", "remote"),
 		},
-		"path": {
-			Description: "The path to the installed binary.",
-			TypeSpec:    types.String,
-		},
+		"path": props.String("The path to the installed binary."),
 		"rm": {
 			Description: "The rm operation.",
-			TypeSpec:    types.LocalResource("Rm", "tools"),
+			TypeSpec:    types.ExtResource(commandxSpec, "Rm", "remote"),
 		},
-		"url": {
-			Description: "The url used to download the binary.",
-			TypeSpec:    types.String,
-		},
+		"url": props.String("The url used to download the binary."),
 	}
 	maps.Copy(outputs, inputs)
 

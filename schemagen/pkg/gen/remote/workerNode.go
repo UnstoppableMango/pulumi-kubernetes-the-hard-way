@@ -9,7 +9,7 @@ import (
 	"github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 )
 
-func generateWorkerNode(commandSpec schema.PackageSpec) schema.PackageSpec {
+func generateWorkerNode(commandSpec, commandxSpec schema.PackageSpec) schema.PackageSpec {
 	inputs := map[string]schema.PropertySpec{
 		"architecture": {
 			Description: "The CPU architecture of the node.",
@@ -71,7 +71,7 @@ func generateWorkerNode(commandSpec schema.PackageSpec) schema.PackageSpec {
 		},
 		"cniMkdir": {
 			Description: "The CNI configuration mkdir operation.",
-			TypeSpec:    types.LocalResource("Mkdir", "tools"),
+			TypeSpec:    types.ExtResource(commandxSpec, "Mkdir", "remote"),
 		},
 		"containerdConfiguration": {
 			Description: "The containerd configuration.",
@@ -83,7 +83,7 @@ func generateWorkerNode(commandSpec schema.PackageSpec) schema.PackageSpec {
 		},
 		"containerdMkdir": {
 			Description: "The containerd configuration mkdir operation.",
-			TypeSpec:    types.LocalResource("Mkdir", "tools"),
+			TypeSpec:    types.ExtResource(commandxSpec, "Mkdir", "remote"),
 		},
 		"containerdInstall": {
 			Description: "The containerd install.",
@@ -115,7 +115,7 @@ func generateWorkerNode(commandSpec schema.PackageSpec) schema.PackageSpec {
 		},
 		"kubeletMkdir": {
 			Description: "The kubelet configuration mkdir operation.",
-			TypeSpec:    types.LocalResource("Mkdir", "tools"),
+			TypeSpec:    types.ExtResource(commandxSpec, "Mkdir", "remote"),
 		},
 		"kubeletService": {
 			Description: "The kubelet systemd service.",
@@ -135,7 +135,7 @@ func generateWorkerNode(commandSpec schema.PackageSpec) schema.PackageSpec {
 		},
 		"kubeProxyMkdir": {
 			Description: "The kube-proxy configuration mkdir operation.",
-			TypeSpec:    types.LocalResource("Mkdir", "tools"),
+			TypeSpec:    types.ExtResource(commandxSpec, "Mkdir", "remote"),
 		},
 		"kubeProxyService": {
 			Description: "The kubelet systemd service.",
@@ -147,11 +147,11 @@ func generateWorkerNode(commandSpec schema.PackageSpec) schema.PackageSpec {
 		},
 		"varLibKubernetesMkdir": {
 			Description: "The /var/lib/kubernetes mkdir operation.",
-			TypeSpec:    types.LocalResource("Mkdir", "tools"),
+			TypeSpec:    types.ExtResource(commandxSpec, "Mkdir", "remote"),
 		},
 		"varRunKubernetesMkdir": {
 			Description: "The /var/run/kubernetes mkdir operation.",
-			TypeSpec:    types.LocalResource("Mkdir", "tools"),
+			TypeSpec:    types.ExtResource(commandxSpec, "Mkdir", "remote"),
 		},
 	}
 	maps.Copy(outputs, inputs)

@@ -10,7 +10,7 @@ import (
 )
 
 func generateArchiveInstall(
-	commandSpec schema.PackageSpec,
+	commandSpec, commandxSpec schema.PackageSpec,
 	typ, description string,
 	files ...string,
 ) schema.PackageSpec {
@@ -27,10 +27,7 @@ func generateArchiveInstall(
 			Description: "The CPU architecture to install.",
 			TypeSpec:    types.LocalType("Architecture", "remote"),
 		},
-		"connection": {
-			Description: "The parameters with which to connect to the remote host.",
-			TypeSpec:    types.ExtType(commandSpec, "Connection", "remote"),
-		},
+		"connection": props.Connection(commandSpec),
 		"directory": {
 			Description: "The directory to install the binary to.",
 			TypeSpec:    types.String,
@@ -49,20 +46,20 @@ func generateArchiveInstall(
 		},
 		"mkdir": {
 			Description: "The mkdir operation.",
-			TypeSpec:    types.LocalResource("Mkdir", "tools"),
+			TypeSpec:    types.ExtResource(commandxSpec, "Mkdir", "remote"),
 		},
 		"mktemp": {
 			Description: "The mktemp operation.",
-			TypeSpec:    types.LocalResource("Mktemp", "tools"),
+			TypeSpec:    types.ExtResource(commandxSpec, "Mktemp", "remote"),
 		},
 		"path": props.String("The path to the installed binary."),
 		"rm": {
 			Description: "The rm operation.",
-			TypeSpec:    types.LocalResource("Rm", "tools"),
+			TypeSpec:    types.ExtResource(commandxSpec, "Rm", "remote"),
 		},
 		"tar": {
 			Description: "The tar operation.",
-			TypeSpec:    types.LocalResource("Tar", "tools"),
+			TypeSpec:    types.ExtResource(commandxSpec, "Tar", "remote"),
 		},
 		"url": props.String("The url used to download the binary."),
 	}
@@ -86,7 +83,7 @@ func generateArchiveInstall(
 		mvProp := f + "Mv"
 		outputs[mvProp] = schema.PropertySpec{
 			Description: fmt.Sprintf("The %s mv operation.", f),
-			TypeSpec:    types.LocalResource("Mv", "tools"),
+			TypeSpec:    types.ExtResource(commandxSpec, "Mv", "remote"),
 		}
 		pathProp := f + "Path"
 		outputs[pathProp] = schema.PropertySpec{

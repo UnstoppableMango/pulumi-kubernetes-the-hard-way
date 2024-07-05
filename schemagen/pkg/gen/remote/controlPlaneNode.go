@@ -9,7 +9,7 @@ import (
 	"github.com/pulumi/pulumi/pkg/v3/codegen/schema"
 )
 
-func generateControlPlaneNode(commandSpec schema.PackageSpec) schema.PackageSpec {
+func generateControlPlaneNode(commandSpec, commandxSpec schema.PackageSpec) schema.PackageSpec {
 	inputs := map[string]schema.PropertySpec{
 		"apiServerCount": props.Integer("The number of kube-apiserver instance."),
 		"architecture": {
@@ -82,7 +82,7 @@ func generateControlPlaneNode(commandSpec schema.PackageSpec) schema.PackageSpec
 		},
 		"kubernetesConfigurationMkdir": {
 			Description: "The kubernetes configuration mkdir operation.",
-			TypeSpec:    types.LocalResource("Mkdir", "tools"),
+			TypeSpec:    types.ExtResource(commandxSpec, "Mkdir", "remote"),
 		},
 		"kubeSchedulerInstall": {
 			Description: "The kube-scheduler isntall.",
@@ -94,7 +94,7 @@ func generateControlPlaneNode(commandSpec schema.PackageSpec) schema.PackageSpec
 		},
 		"varLibKubernetesMkdir": {
 			Description: "The /var/lib/kubernetes mkdir operation.",
-			TypeSpec:    types.LocalResource("Mkdir", "tools"),
+			TypeSpec:    types.ExtResource(commandxSpec, "Mkdir", "remote"),
 		},
 	}
 	maps.Copy(outputs, inputs)
