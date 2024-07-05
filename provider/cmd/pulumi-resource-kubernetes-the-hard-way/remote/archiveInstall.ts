@@ -55,6 +55,7 @@ export function archiveInstall<T extends ReadonlyArray<string>>(
       gzip: true,
       stripComponents: args.stripComponents,
     },
+    triggers: [args.url],
   }, { parent, dependsOn: download });
 
   // Ensure directory exists
@@ -75,6 +76,7 @@ export function archiveInstall<T extends ReadonlyArray<string>>(
         dest: interpolate`${directory}/${k}`,
       },
       delete: interpolate`rm -f ${directory}/${k}`,
+      triggers: [args.url],
     }, { parent, dependsOn: [tar, mkdir] })
   }), {} as Maps<T, Mv>);
 
