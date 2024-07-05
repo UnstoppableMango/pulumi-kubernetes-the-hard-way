@@ -169,68 +169,6 @@ export interface KubeletConfigurationArgs {
     readonly tlsPrivateKeyFile?: pulumi.Input<string>;
     readonly webhook?: pulumi.Input<boolean>;
 }
-export abstract class CniBridgePluginConfiguration<TData = any> extends (pulumi.ComponentResource)<TData> {
-    public bridge!: string | pulumi.Output<string>;
-    public cniVersion!: string | pulumi.Output<string>;
-    public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
-    public file?: File | pulumi.Output<File>;
-    public ipMasq!: boolean | pulumi.Output<boolean>;
-    public ipam!: CniBridgeIpamOutputs | pulumi.Output<CniBridgeIpamOutputs>;
-    public isGateway!: boolean | pulumi.Output<boolean>;
-    public name!: string | pulumi.Output<string>;
-    public path!: string | pulumi.Output<string>;
-    public subnet?: string | pulumi.Output<string>;
-    public type!: string | pulumi.Output<string>;
-    constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
-        super("kubernetes-the-hard-way:remote:CniBridgePluginConfiguration", name, opts.urn ? { bridge: undefined, cniVersion: undefined, connection: undefined, file: undefined, ipMasq: undefined, ipam: undefined, isGateway: undefined, name: undefined, path: undefined, subnet: undefined, type: undefined } : { name, args, opts }, opts);
-    }
-}
-export interface CniBridgePluginConfigurationArgs {
-    readonly bridge?: pulumi.Input<string>;
-    readonly cniVersion?: pulumi.Input<string>;
-    readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
-    readonly ipMasq?: pulumi.Input<boolean>;
-    readonly ipam?: pulumi.Input<CniBridgeIpamInputs>;
-    readonly isGateway?: pulumi.Input<boolean>;
-    readonly name?: pulumi.Input<string>;
-    readonly path?: pulumi.Input<string>;
-    readonly subnet?: pulumi.Input<string>;
-    readonly type?: pulumi.Input<string>;
-}
-export abstract class CniLoopbackPluginConfiguration<TData = any> extends (pulumi.ComponentResource)<TData> {
-    public cniVersion!: string | pulumi.Output<string>;
-    public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
-    public file?: File | pulumi.Output<File>;
-    public name!: string | pulumi.Output<string>;
-    public path!: string | pulumi.Output<string>;
-    public type!: string | pulumi.Output<string>;
-    constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
-        super("kubernetes-the-hard-way:remote:CniLoopbackPluginConfiguration", name, opts.urn ? { cniVersion: undefined, connection: undefined, file: undefined, name: undefined, path: undefined, type: undefined } : { name, args, opts }, opts);
-    }
-}
-export interface CniLoopbackPluginConfigurationArgs {
-    readonly cniVersion?: pulumi.Input<string>;
-    readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
-    readonly name?: pulumi.Input<string>;
-    readonly path?: pulumi.Input<string>;
-    readonly type?: pulumi.Input<string>;
-}
-export abstract class CniPluginConfiguration<TData = any> extends (pulumi.ComponentResource)<TData> {
-    public bridge!: CniBridgePluginConfiguration | pulumi.Output<CniBridgePluginConfiguration>;
-    public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
-    public directory!: string | pulumi.Output<string>;
-    public loopback!: CniLoopbackPluginConfiguration | pulumi.Output<CniLoopbackPluginConfiguration>;
-    public mkdir!: commandx.remote.Mkdir | pulumi.Output<commandx.remote.Mkdir>;
-    public subnet!: string | pulumi.Output<string>;
-    constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
-        super("kubernetes-the-hard-way:remote:CniPluginConfiguration", name, opts.urn ? { bridge: undefined, connection: undefined, directory: undefined, loopback: undefined, mkdir: undefined, subnet: undefined } : { name, args, opts }, opts);
-    }
-}
-export interface CniPluginConfigurationArgs {
-    readonly connection: pulumi.Input<command.types.input.remote.ConnectionArgs>;
-    readonly directory?: pulumi.Input<string>;
-    readonly subnet: pulumi.Input<string>;
-}
 export abstract class CniPluginsInstall<TData = any> extends (pulumi.ComponentResource)<TData> {
     public architecture!: ArchitectureOutputs | pulumi.Output<ArchitectureOutputs>;
     public archiveName!: string | pulumi.Output<string>;
@@ -368,13 +306,13 @@ export abstract class ControlPlaneNode<TData = any> extends (pulumi.ComponentRes
     public kubeSchedulerService?: SystemdService | pulumi.Output<SystemdService>;
     public kubectlInstall!: KubectlInstall | pulumi.Output<KubectlInstall>;
     public kubectlInstallDirectory?: string | pulumi.Output<string>;
-    public kubernetesConfigurationMkdir!: Mkdir | pulumi.Output<Mkdir>;
+    public kubernetesConfigurationMkdir!: commandx.remote.Mkdir | pulumi.Output<commandx.remote.Mkdir>;
     public kubernetesVersion?: string | pulumi.Output<string>;
     public nodeName?: string | pulumi.Output<string>;
     public serviceAccountsCertificatePath!: string | pulumi.Output<string>;
     public serviceAccountsPrivateKeyPath!: string | pulumi.Output<string>;
     public serviceClusterIpRange?: string | pulumi.Output<string>;
-    public varLibKubernetesMkdir!: Mkdir | pulumi.Output<Mkdir>;
+    public varLibKubernetesMkdir!: commandx.remote.Mkdir | pulumi.Output<commandx.remote.Mkdir>;
     constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
         super("kubernetes-the-hard-way:remote:ControlPlaneNode", name, opts.urn ? { apiServerCount: undefined, architecture: undefined, audiLogPath: undefined, caCertificatePath: undefined, caPrivateKeyPath: undefined, clusterCIDR: undefined, clusterName: undefined, connection: undefined, encryptionConfigFile: undefined, encryptionConfigYaml: undefined, kubeApiServerCertificatePath: undefined, kubeApiServerInstall: undefined, kubeApiServerInstallDirectory: undefined, kubeApiServerPrivateKeyPath: undefined, kubeApiServerService: undefined, kubeControllerManagerInstall: undefined, kubeControllerManagerInstallDirectory: undefined, kubeControllerManagerKubeconfigPath: undefined, kubeControllerManagerService: undefined, kubeSchedulerConfigYaml: undefined, kubeSchedulerInstall: undefined, kubeSchedulerInstallDirectory: undefined, kubeSchedulerKubeconfigPath: undefined, kubeSchedulerService: undefined, kubectlInstall: undefined, kubectlInstallDirectory: undefined, kubernetesConfigurationMkdir: undefined, kubernetesVersion: undefined, nodeName: undefined, serviceAccountsCertificatePath: undefined, serviceAccountsPrivateKeyPath: undefined, serviceClusterIpRange: undefined, varLibKubernetesMkdir: undefined } : { name, args, opts }, opts);
     }
@@ -836,9 +774,9 @@ export interface RuncInstallArgs {
 }
 export abstract class StartContainerd<TData = any> extends (pulumi.ComponentResource)<TData> {
     public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
-    public daemonReload!: Systemctl | pulumi.Output<Systemctl>;
-    public enable!: Systemctl | pulumi.Output<Systemctl>;
-    public start!: Systemctl | pulumi.Output<Systemctl>;
+    public daemonReload!: commandx.remote.Systemctl | pulumi.Output<commandx.remote.Systemctl>;
+    public enable!: commandx.remote.Systemctl | pulumi.Output<commandx.remote.Systemctl>;
+    public start!: commandx.remote.Systemctl | pulumi.Output<commandx.remote.Systemctl>;
     constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
         super("kubernetes-the-hard-way:remote:StartContainerd", name, opts.urn ? { connection: undefined, daemonReload: undefined, enable: undefined, start: undefined } : { name, args, opts }, opts);
     }
@@ -860,9 +798,9 @@ export interface StartEtcdArgs {
 }
 export abstract class StartKubeProxy<TData = any> extends (pulumi.ComponentResource)<TData> {
     public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
-    public daemonReload!: Systemctl | pulumi.Output<Systemctl>;
-    public enable!: Systemctl | pulumi.Output<Systemctl>;
-    public start!: Systemctl | pulumi.Output<Systemctl>;
+    public daemonReload!: commandx.remote.Systemctl | pulumi.Output<commandx.remote.Systemctl>;
+    public enable!: commandx.remote.Systemctl | pulumi.Output<commandx.remote.Systemctl>;
+    public start!: commandx.remote.Systemctl | pulumi.Output<commandx.remote.Systemctl>;
     constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
         super("kubernetes-the-hard-way:remote:StartKubeProxy", name, opts.urn ? { connection: undefined, daemonReload: undefined, enable: undefined, start: undefined } : { name, args, opts }, opts);
     }
@@ -872,9 +810,9 @@ export interface StartKubeProxyArgs {
 }
 export abstract class StartKubelet<TData = any> extends (pulumi.ComponentResource)<TData> {
     public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
-    public daemonReload!: Systemctl | pulumi.Output<Systemctl>;
-    public enable!: Systemctl | pulumi.Output<Systemctl>;
-    public start!: Systemctl | pulumi.Output<Systemctl>;
+    public daemonReload!: commandx.remote.Systemctl | pulumi.Output<commandx.remote.Systemctl>;
+    public enable!: commandx.remote.Systemctl | pulumi.Output<commandx.remote.Systemctl>;
+    public start!: commandx.remote.Systemctl | pulumi.Output<commandx.remote.Systemctl>;
     constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
         super("kubernetes-the-hard-way:remote:StartKubelet", name, opts.urn ? { connection: undefined, daemonReload: undefined, enable: undefined, start: undefined } : { name, args, opts }, opts);
     }
@@ -929,7 +867,7 @@ export abstract class WorkerNode<TData = any> extends (pulumi.ComponentResource)
     public cniInstallDirectory?: string | pulumi.Output<string>;
     public cniLoopbackConfiguration!: CniLoopbackPluginConfiguration | pulumi.Output<CniLoopbackPluginConfiguration>;
     public cniLoopbackConfigurationFile!: File | pulumi.Output<File>;
-    public cniMkdir!: Mkdir | pulumi.Output<Mkdir>;
+    public cniMkdir!: commandx.remote.Mkdir | pulumi.Output<commandx.remote.Mkdir>;
     public cniPluginsInstall?: CniPluginsInstall | pulumi.Output<CniPluginsInstall>;
     public cniVersion?: string | pulumi.Output<string>;
     public connection!: command.types.output.remote.Connection | pulumi.Output<command.types.output.remote.Connection>;
@@ -938,7 +876,7 @@ export abstract class WorkerNode<TData = any> extends (pulumi.ComponentResource)
     public containerdConfigurationFile!: File | pulumi.Output<File>;
     public containerdInstall!: ContainerdInstall | pulumi.Output<ContainerdInstall>;
     public containerdInstallDirectory?: string | pulumi.Output<string>;
-    public containerdMkdir!: Mkdir | pulumi.Output<Mkdir>;
+    public containerdMkdir!: commandx.remote.Mkdir | pulumi.Output<commandx.remote.Mkdir>;
     public containerdService!: ContainerdService | pulumi.Output<ContainerdService>;
     public containerdVersion?: string | pulumi.Output<string>;
     public crictlInstall!: CrictlInstall | pulumi.Output<CrictlInstall>;
@@ -949,7 +887,7 @@ export abstract class WorkerNode<TData = any> extends (pulumi.ComponentResource)
     public kubeProxyInstall?: KubeProxyInstall | pulumi.Output<KubeProxyInstall>;
     public kubeProxyInstallDirectory?: string | pulumi.Output<string>;
     public kubeProxyKubeconfigPath?: string | pulumi.Output<string>;
-    public kubeProxyMkdir!: Mkdir | pulumi.Output<Mkdir>;
+    public kubeProxyMkdir!: commandx.remote.Mkdir | pulumi.Output<commandx.remote.Mkdir>;
     public kubeProxyService!: KubeProxyService | pulumi.Output<KubeProxyService>;
     public kubectlInstall!: KubectlInstall | pulumi.Output<KubectlInstall>;
     public kubectlInstallDirectory?: string | pulumi.Output<string>;
@@ -960,14 +898,14 @@ export abstract class WorkerNode<TData = any> extends (pulumi.ComponentResource)
     public kubeletInstall!: KubeletInstall | pulumi.Output<KubeletInstall>;
     public kubeletInstallDirectory?: string | pulumi.Output<string>;
     public kubeletKubeconfigPath?: string | pulumi.Output<string>;
-    public kubeletMkdir!: Mkdir | pulumi.Output<Mkdir>;
+    public kubeletMkdir!: commandx.remote.Mkdir | pulumi.Output<commandx.remote.Mkdir>;
     public kubeletPrivateKeyPath!: string | pulumi.Output<string>;
     public kubeletService!: KubeletService | pulumi.Output<KubeletService>;
     public kubernetesVersion?: string | pulumi.Output<string>;
     public runcInstall?: RuncInstall | pulumi.Output<RuncInstall>;
     public subnet!: string | pulumi.Output<string>;
-    public varLibKubernetesMkdir!: Mkdir | pulumi.Output<Mkdir>;
-    public varRunKubernetesMkdir!: Mkdir | pulumi.Output<Mkdir>;
+    public varLibKubernetesMkdir!: commandx.remote.Mkdir | pulumi.Output<commandx.remote.Mkdir>;
+    public varRunKubernetesMkdir!: commandx.remote.Mkdir | pulumi.Output<commandx.remote.Mkdir>;
     constructor(name: string, args: pulumi.Inputs, opts: pulumi.ComponentResourceOptions = {}) {
         super("kubernetes-the-hard-way:remote:WorkerNode", name, opts.urn ? { architecture: undefined, caPath: undefined, clusterCIDR: undefined, clusterDomain: undefined, cniBridgeConfiguration: undefined, cniBridgeConfigurationFile: undefined, cniConfigurationDirectory: undefined, cniInstallDirectory: undefined, cniLoopbackConfiguration: undefined, cniLoopbackConfigurationFile: undefined, cniMkdir: undefined, cniPluginsInstall: undefined, cniVersion: undefined, connection: undefined, containerdConfiguration: undefined, containerdConfigurationDirectory: undefined, containerdConfigurationFile: undefined, containerdInstall: undefined, containerdInstallDirectory: undefined, containerdMkdir: undefined, containerdService: undefined, containerdVersion: undefined, crictlInstall: undefined, crictlInstallDirectory: undefined, kubeProxyConfiguration: undefined, kubeProxyConfigurationDirectory: undefined, kubeProxyConfigurationFile: undefined, kubeProxyInstall: undefined, kubeProxyInstallDirectory: undefined, kubeProxyKubeconfigPath: undefined, kubeProxyMkdir: undefined, kubeProxyService: undefined, kubectlInstall: undefined, kubectlInstallDirectory: undefined, kubeletCertificatePath: undefined, kubeletConfiguration: undefined, kubeletConfigurationDirectory: undefined, kubeletConfigurationFile: undefined, kubeletInstall: undefined, kubeletInstallDirectory: undefined, kubeletKubeconfigPath: undefined, kubeletMkdir: undefined, kubeletPrivateKeyPath: undefined, kubeletService: undefined, kubernetesVersion: undefined, runcInstall: undefined, subnet: undefined, varLibKubernetesMkdir: undefined, varRunKubernetesMkdir: undefined } : { name, args, opts }, opts);
     }
@@ -1593,6 +1531,41 @@ export interface KeyPairOutputs {
 }
 export type NodeRoleInputs = "controlplane" | "worker";
 export type NodeRoleOutputs = "controlplane" | "worker";
+export interface getCniBridgePluginConfigurationInputs {
+    readonly bridge?: pulumi.Input<string>;
+    readonly cniVersion?: pulumi.Input<string>;
+    readonly ipMasq?: pulumi.Input<boolean>;
+    readonly ipam?: pulumi.Input<CniBridgeIpamInputs>;
+    readonly isGateway?: pulumi.Input<boolean>;
+    readonly name?: pulumi.Input<string>;
+    readonly subnet: pulumi.Input<string>;
+    readonly type?: pulumi.Input<string>;
+}
+export interface getCniBridgePluginConfigurationOutputs {
+    readonly result: pulumi.Output<CniBridgePluginConfigurationOutputs>;
+}
+export interface getCniLoopbackPluginConfigurationInputs {
+    readonly cniVersion?: pulumi.Input<string>;
+    readonly name?: pulumi.Input<string>;
+    readonly type?: pulumi.Input<string>;
+}
+export interface getCniLoopbackPluginConfigurationOutputs {
+    readonly result: pulumi.Output<CniLoopbackPluginConfigurationOutputs>;
+}
+export interface getContainerdConfigurationInputs {
+    readonly cri?: ContainerdCriPluginConfigurationInputs;
+}
+export interface getContainerdConfigurationOutputs {
+    readonly result: pulumi.Output<ContainerdConfigurationOutputs>;
+}
+export interface getKubeProxyConfigurationInputs {
+    readonly clusterCIDR: pulumi.Input<string>;
+    readonly kubeconfig: pulumi.Input<string>;
+    readonly mode?: pulumi.Input<string>;
+}
+export interface getKubeProxyConfigurationOutputs {
+    readonly result: pulumi.Output<KubeProxyConfigurationOutputs>;
+}
 export interface getKubeVipManifestInputs {
     readonly address: pulumi.Input<string>;
     readonly bgpAs?: pulumi.Input<number>;

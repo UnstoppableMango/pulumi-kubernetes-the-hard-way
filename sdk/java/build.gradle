@@ -49,6 +49,7 @@ dependencies {
     implementation("com.pulumi:pulumi:0.9.9")
     implementation("com.pulumi:random:4.16.2")
     implementation("com.pulumi:tls:5.0.2")
+    implementation("com.unmango.pulumi:commandx:0.1.2")
 }
 
 task sourcesJar(type: Jar) {

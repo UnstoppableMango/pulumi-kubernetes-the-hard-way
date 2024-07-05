@@ -8,9 +8,9 @@ import com.pulumi.core.Output;
 import com.pulumi.core.annotations.Export;
 import com.pulumi.core.annotations.ResourceType;
 import com.pulumi.core.internal.Codegen;
+import com.unmango.commandx.remote.Systemctl;
 import com.unmango.kubernetesthehardway.Utilities;
 import com.unmango.kubernetesthehardway.remote.StartEtcdArgs;
-import com.unmango.kubernetesthehardway.tools.Systemctl;
 import javax.annotation.Nullable;
 
 /**

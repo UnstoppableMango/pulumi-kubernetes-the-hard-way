@@ -47,7 +47,7 @@
                 "com.pulumi:kubernetes": "4.14.0",
                 "com.pulumi:pulumi": "0.9.9",
                 "com.pulumi:random": "4.16.2",
-                "com.pulumi:tls": "5.0.2"
+                "com.pulumi:tls": "5.0.2",
                 "com.unmango.pulumi:commandx": "0.1.2"
             },
             "gradleNexusPublishPluginVersion": "1.1.0",
@@ -59,7 +59,7 @@
                 "@pulumi/kubernetes": "^4.14.0",
                 "@pulumi/pulumi": "^3.0.0",
                 "@pulumi/random": "^4.16.2",
-                "@pulumi/tls": "^5.0.2"
+                "@pulumi/tls": "^5.0.2",
                 "@unmango/pulumi-commandx": "^0.1.2"
             },
             "devDependencies": {
@@ -79,7 +79,7 @@
                 "pulumi-command": "\u003e=1.0.0,\u003c2.0.0",
                 "pulumi-kubernetes": "\u003e=4.14.0,\u003c5.0.0",
                 "pulumi-random": "\u003e=4.16.2,\u003c5.0.0",
-                "pulumi-tls": "\u003e=5.0.2,\u003c6.0.0"
+                "pulumi-tls": "\u003e=5.0.2,\u003c6.0.0",
                 "unmango-pulumi-commandx": "\u003e=0.1.2,\u003c1.0.0"
             }
         }
@@ -1603,230 +1603,6 @@
             ],
             "isComponent": true
         },
-        "kubernetes-the-hard-way:remote:CniBridgePluginConfiguration": {
-            "description": "The CNI bridge plugin configuration.",
-            "properties": {
-                "bridge": {
-                    "type": "string",
-                    "description": "Bridge name."
-                },
-                "cniVersion": {
-                    "type": "string",
-                    "description": "CNI version."
-                },
-                "connection": {
-                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
-                    "description": "The parameters with which to connect to the remote host."
-                },
-                "file": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:remote:File",
-                    "description": "The file on the remote system."
-                },
-                "ipMasq": {
-                    "type": "boolean",
-                    "description": "IP masq."
-                },
-                "ipam": {
-                    "$ref": "#/types/kubernetes-the-hard-way:remote:CniBridgeIpam",
-                    "description": "IPAM"
-                },
-                "isGateway": {
-                    "type": "boolean",
-                    "description": "Is gateway."
-                },
-                "name": {
-                    "type": "string",
-                    "description": "CNI plugin name."
-                },
-                "path": {
-                    "type": "string",
-                    "description": "Path to put the configuration file on the remote system"
-                },
-                "subnet": {
-                    "type": "string",
-                    "description": "The subnet to use."
-                },
-                "type": {
-                    "type": "string",
-                    "description": "CNI plugin type."
-                }
-            },
-            "required": [
-                "connection",
-                "bridge",
-                "cniVersion",
-                "isGateway",
-                "ipMasq",
-                "ipam",
-                "name",
-                "path",
-                "type"
-            ],
-            "inputProperties": {
-                "bridge": {
-                    "type": "string",
-                    "description": "Bridge name."
-                },
-                "cniVersion": {
-                    "type": "string",
-                    "description": "CNI version."
-                },
-                "connection": {
-                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
-                    "description": "The parameters with which to connect to the remote host."
-                },
-                "ipMasq": {
-                    "type": "boolean",
-                    "description": "IP masq."
-                },
-                "ipam": {
-                    "$ref": "#/types/kubernetes-the-hard-way:remote:CniBridgeIpam",
-                    "description": "IPAM"
-                },
-                "isGateway": {
-                    "type": "boolean",
-                    "description": "Is gateway."
-                },
-                "name": {
-                    "type": "string",
-                    "description": "CNI plugin name."
-                },
-                "path": {
-                    "type": "string",
-                    "description": "Path to put the configuration file on the remote system"
-                },
-                "subnet": {
-                    "type": "string",
-                    "description": "The subnet to use."
-                },
-                "type": {
-                    "type": "string",
-                    "description": "CNI plugin type."
-                }
-            },
-            "requiredInputs": [
-                "connection"
-            ],
-            "isComponent": true
-        },
-        "kubernetes-the-hard-way:remote:CniLoopbackPluginConfiguration": {
-            "description": "The CNI loopback plugin configuration.",
-            "properties": {
-                "cniVersion": {
-                    "type": "string",
-                    "description": "CNI version."
-                },
-                "connection": {
-                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
-                    "description": "The parameters with which to connect to the remote host."
-                },
-                "file": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:remote:File",
-                    "description": "The file on the remote system."
-                },
-                "name": {
-                    "type": "string",
-                    "description": "CNI plugin name."
-                },
-                "path": {
-                    "type": "string",
-                    "description": "Path to put the configuration file on the remote system"
-                },
-                "type": {
-                    "type": "string",
-                    "description": "CNI plugin type."
-                }
-            },
-            "required": [
-                "connection",
-                "cniVersion",
-                "name",
-                "path",
-                "type"
-            ],
-            "inputProperties": {
-                "cniVersion": {
-                    "type": "string",
-                    "description": "CNI version."
-                },
-                "connection": {
-                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
-                    "description": "The parameters with which to connect to the remote host."
-                },
-                "name": {
-                    "type": "string",
-                    "description": "CNI plugin name."
-                },
-                "path": {
-                    "type": "string",
-                    "description": "Path to put the configuration file on the remote system"
-                },
-                "type": {
-                    "type": "string",
-                    "description": "CNI plugin type."
-                }
-            },
-            "requiredInputs": [
-                "connection"
-            ],
-            "isComponent": true
-        },
-        "kubernetes-the-hard-way:remote:CniPluginConfiguration": {
-            "description": "The CNI plugin configuration.",
-            "properties": {
-                "bridge": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:remote:CniBridgePluginConfiguration",
-                    "description": "The bridge plugin configuration."
-                },
-                "connection": {
-                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
-                    "description": "The parameters with which to connect to the remote host."
-                },
-                "directory": {
-                    "type": "string",
-                    "description": "The plugin configuration directory."
-                },
-                "loopback": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:remote:CniLoopbackPluginConfiguration",
-                    "description": "The loopback plugin configuration."
-                },
-                "mkdir": {
-                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Mkdir",
-                    "description": "The `directory` mkdir operation."
-                },
-                "subnet": {
-                    "type": "string",
-                    "description": "The subnet to use for the CNI bridge plugin configuration."
-                }
-            },
-            "required": [
-                "connection",
-                "subnet",
-                "bridge",
-                "directory",
-                "mkdir",
-                "loopback"
-            ],
-            "inputProperties": {
-                "connection": {
-                    "$ref": "/command/v0.11.1/schema.json#/types/command:remote:Connection",
-                    "description": "The parameters with which to connect to the remote host."
-                },
-                "directory": {
-                    "type": "string",
-                    "description": "The plugin configuration directory."
-                },
-                "subnet": {
-                    "type": "string",
-                    "description": "The subnet to use for the CNI bridge plugin configuration."
-                }
-            },
-            "requiredInputs": [
-                "connection",
-                "subnet"
-            ],
-            "isComponent": true
-        },
         "kubernetes-the-hard-way:remote:CniPluginsInstall": {
             "description": "Installs cni-plugins on a remote system",
             "properties": {
@@ -2398,7 +2174,7 @@
                     "description": "The path to store the kubectl binary."
                 },
                 "kubernetesConfigurationMkdir": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mkdir",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Mkdir",
                     "description": "The kubernetes configuration mkdir operation."
                 },
                 "kubernetesVersion": {
@@ -2422,7 +2198,7 @@
                     "description": "The IP range to use for cluster services."
                 },
                 "varLibKubernetesMkdir": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mkdir",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Mkdir",
                     "description": "The /var/lib/kubernetes mkdir operation."
                 }
             },
@@ -4266,15 +4042,15 @@
                     "description": "The parameters with which to connect to the remote host."
                 },
                 "daemonReload": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Systemctl",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Systemctl",
                     "description": "The daemon-reload command."
                 },
                 "enable": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Systemctl",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Systemctl",
                     "description": "The enable command."
                 },
                 "start": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Systemctl",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Systemctl",
                     "description": "The start command."
                 }
             },
@@ -4303,15 +4079,15 @@
                     "description": "The parameters with which to connect to the remote host."
                 },
                 "daemonReload": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Systemctl",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Systemctl",
                     "description": "The daemon-reload command."
                 },
                 "enable": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Systemctl",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Systemctl",
                     "description": "The enable command."
                 },
                 "start": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Systemctl",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Systemctl",
                     "description": "The start command."
                 }
             },
@@ -4340,15 +4116,15 @@
                     "description": "The parameters with which to connect to the remote host."
                 },
                 "daemonReload": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Systemctl",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Systemctl",
                     "description": "The daemon-reload command."
                 },
                 "enable": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Systemctl",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Systemctl",
                     "description": "The enable command."
                 },
                 "start": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Systemctl",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Systemctl",
                     "description": "The start command."
                 }
             },
@@ -4578,7 +4354,7 @@
                     "description": "The CNI loopback plugin configuration file."
                 },
                 "cniMkdir": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mkdir",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Mkdir",
                     "description": "The CNI configuration mkdir operation."
                 },
                 "cniPluginsInstall": {
@@ -4614,7 +4390,7 @@
                     "description": "The directory to store the containerd binary. Defaults to /bin."
                 },
                 "containerdMkdir": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mkdir",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Mkdir",
                     "description": "The containerd configuration mkdir operation."
                 },
                 "containerdService": {
@@ -4658,7 +4434,7 @@
                     "description": "The path to the kube-proxy's kubeconfig file."
                 },
                 "kubeProxyMkdir": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mkdir",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Mkdir",
                     "description": "The kube-proxy configuration mkdir operation."
                 },
                 "kubeProxyService": {
@@ -4702,7 +4478,7 @@
                     "description": "The path to the kubelet's kubeconfig file."
                 },
                 "kubeletMkdir": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mkdir",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Mkdir",
                     "description": "The kubelet configuration mkdir operation."
                 },
                 "kubeletPrivateKeyPath": {
@@ -4726,11 +4502,11 @@
                     "description": "The subnet for the cluster."
                 },
                 "varLibKubernetesMkdir": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mkdir",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Mkdir",
                     "description": "The /var/lib/kubernetes mkdir operation."
                 },
                 "varRunKubernetesMkdir": {
-                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mkdir",
+                    "$ref": "/commandx/v0.1.2/schema.json#/resources/commandx:remote:Mkdir",
                     "description": "The /var/run/kubernetes mkdir operation."
                 }
             },

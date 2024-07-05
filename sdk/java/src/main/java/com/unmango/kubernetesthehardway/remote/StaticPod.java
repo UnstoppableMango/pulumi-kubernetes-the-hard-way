@@ -8,11 +8,11 @@ import com.pulumi.core.Output;
 import com.pulumi.core.annotations.Export;
 import com.pulumi.core.annotations.ResourceType;
 import com.pulumi.core.internal.Codegen;
+import com.unmango.commandx.remote.Mkdir;
 import com.unmango.kubernetesthehardway.Utilities;
 import com.unmango.kubernetesthehardway.config.outputs.PodManifest;
 import com.unmango.kubernetesthehardway.remote.File;
 import com.unmango.kubernetesthehardway.remote.StaticPodArgs;
-import com.unmango.kubernetesthehardway.tools.Mkdir;
 import java.lang.String;
 import javax.annotation.Nullable;
 
