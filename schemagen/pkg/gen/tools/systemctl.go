@@ -17,6 +17,7 @@ func generateSystemctl() tool {
 		},
 		"pattern": props.String("Corresponds to the [PATTERN] argument"),
 		"unit":    props.String("Corresponds to the [UNIT...] argument."),
+		"now":     props.Boolean("Corresponds to the `--now` option."),
 	}
 
 	required := []string{"command"}

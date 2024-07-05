@@ -7,6 +7,7 @@ import com.pulumi.core.Output;
 import com.pulumi.core.annotations.Import;
 import com.pulumi.exceptions.MissingRequiredPropertyException;
 import com.unmango.kubernetesthehardway.tools.enums.SystemctlCommand;
+import java.lang.Boolean;
 import java.lang.String;
 import java.util.Objects;
 import java.util.Optional;
@@ -34,6 +35,21 @@ public final class SystemctlOptsArgs extends com.pulumi.resources.ResourceArgs {
      */
     public SystemctlCommand command() {
         return this.command;
+    }
+
+    /**
+     * Corresponds to the `--now` option.
+     * 
+     */
+    @Import(name="now")
+    private @Nullable Output<Boolean> now;
+
+    /**
+     * @return Corresponds to the `--now` option.
+     * 
+     */
+    public Optional<Output<Boolean>> now() {
+        return Optional.ofNullable(this.now);
     }
 
     /**
@@ -70,6 +86,7 @@ public final class SystemctlOptsArgs extends com.pulumi.resources.ResourceArgs {
 
     private SystemctlOptsArgs(SystemctlOptsArgs $) {
         this.command = $.command;
+        this.now = $.now;
         this.pattern = $.pattern;
         this.unit = $.unit;
     }
@@ -101,6 +118,27 @@ public final class SystemctlOptsArgs extends com.pulumi.resources.ResourceArgs {
         public Builder command(SystemctlCommand command) {
             $.command = command;
             return this;
+        }
+
+        /**
+         * @param now Corresponds to the `--now` option.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder now(@Nullable Output<Boolean> now) {
+            $.now = now;
+            return this;
+        }
+
+        /**
+         * @param now Corresponds to the `--now` option.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder now(Boolean now) {
+            return now(Output.of(now));
         }
 
         /**

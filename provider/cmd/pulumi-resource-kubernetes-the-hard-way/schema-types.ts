@@ -2022,11 +2022,13 @@ export type SystemctlCommandInputs = "bind" | "cat" | "clean" | "daemon-reload" 
 export type SystemctlCommandOutputs = "bind" | "cat" | "clean" | "daemon-reload" | "disable" | "enable" | "freeze" | "is-active" | "is-enabled" | "is-failed" | "isolate" | "kill" | "list-automounts" | "list-dependencies" | "list-paths" | "list-sockets" | "list-timers" | "list-units" | "mask" | "mount-image" | "reenable" | "reload" | "reload-or-restart" | "restart" | "set-property" | "show" | "start" | "status" | "stop" | "thaw" | "try-reload-or-restart" | "try-restart" | "unmask";
 export interface SystemctlOptsInputs {
     readonly command: SystemctlCommandInputs;
+    readonly now?: pulumi.Input<boolean>;
     readonly pattern?: pulumi.Input<string>;
     readonly unit?: pulumi.Input<string>;
 }
 export interface SystemctlOptsOutputs {
     readonly command: SystemctlCommandOutputs;
+    readonly now?: pulumi.Output<boolean>;
     readonly pattern?: pulumi.Output<string>;
     readonly unit?: pulumi.Output<string>;
 }
