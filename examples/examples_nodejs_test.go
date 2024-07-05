@@ -50,14 +50,3 @@ func TestRemoteInstallTs(t *testing.T) {
 
 	rt.ResourceTest(t, "remote-install-ts", test, func(ctx *rt.ResourceContext) {})
 }
-
-func getJSBaseOptions(t *testing.T) integration.ProgramTestOptions {
-	base := getBaseOptions(t)
-	baseJS := base.With(integration.ProgramTestOptions{
-		Dependencies: []string{
-			"@unmango/pulumi-kubernetes-the-hard-way",
-		},
-	})
-
-	return baseJS
-}

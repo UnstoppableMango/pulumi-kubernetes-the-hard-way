@@ -38,3 +38,14 @@ func skipIfCi(t *testing.T) {
 		t.Skip("skipping resource-intensive test in CI")
 	}
 }
+
+func getJSBaseOptions(t *testing.T) integration.ProgramTestOptions {
+	base := getBaseOptions(t)
+	baseJS := base.With(integration.ProgramTestOptions{
+		Dependencies: []string{
+			"@unmango/pulumi-kubernetes-the-hard-way",
+		},
+	})
+
+	return baseJS
+}
