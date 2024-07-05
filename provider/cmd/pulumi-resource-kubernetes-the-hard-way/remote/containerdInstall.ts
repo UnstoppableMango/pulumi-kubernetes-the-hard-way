@@ -10,7 +10,7 @@ export class ContainerdInstall extends schema.ContainerdInstall {
     const architecture = output(args.architecture ?? 'amd64');
     const connection = output(args.connection);
     const directory = output(args.directory ?? '/bin');
-    const version = output(args.version ?? '1.4.4'); // TODO: Stateful versioning?
+    const version = output(args.version ?? '1.7.19'); // TODO: Stateful versioning?
     const archiveName = interpolate`containerd-${version}-linux-${architecture}.tar.gz`;
     const url = interpolate`https://github.com/containerd/containerd/releases/download/v${version}/${archiveName}`;
 
@@ -20,7 +20,14 @@ export class ContainerdInstall extends schema.ContainerdInstall {
 
     const install = archiveInstall(name, {
       archiveName,
-      binaries: ['containerd'] as const,
+      binaries: [
+        'containerd',
+        'containerd-shim',
+        'containerd-shim-runc-v1',
+        'containerd-shim-runc-v2',
+        'containerd-stress',
+        'ctr',
+      ] as const,
       connection,
       directory,
       stripComponents: 1,
