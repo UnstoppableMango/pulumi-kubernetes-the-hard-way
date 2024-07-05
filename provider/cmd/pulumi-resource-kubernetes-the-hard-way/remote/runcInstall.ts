@@ -29,6 +29,7 @@ export class RuncInstall extends schema.RuncInstall {
         files: [path],
         mode: '+x',
       },
+      triggers: [url],
     }, { parent: this, dependsOn: mv });
 
     this.architecture = architecture;
