@@ -1270,15 +1270,19 @@ class SedOptsArgs:
 class SystemctlOptsArgs:
     def __init__(__self__, *,
                  command: 'SystemctlCommand',
+                 now: Optional[pulumi.Input[bool]] = None,
                  pattern: Optional[pulumi.Input[str]] = None,
                  unit: Optional[pulumi.Input[str]] = None):
         """
         Abstraction over the `systemctl` utility on a remote system.
         :param 'SystemctlCommand' command: Corresponds to the COMMAND argument.
+        :param pulumi.Input[bool] now: Corresponds to the `--now` option.
         :param pulumi.Input[str] pattern: Corresponds to the [PATTERN] argument
         :param pulumi.Input[str] unit: Corresponds to the [UNIT...] argument.
         """
         pulumi.set(__self__, "command", command)
+        if now is not None:
+            pulumi.set(__self__, "now", now)
         if pattern is not None:
             pulumi.set(__self__, "pattern", pattern)
         if unit is not None:
@@ -1295,6 +1299,18 @@ class SystemctlOptsArgs:
     @command.setter
     def command(self, value: 'SystemctlCommand'):
         pulumi.set(self, "command", value)
+
+    @property
+    @pulumi.getter
+    def now(self) -> Optional[pulumi.Input[bool]]:
+        """
+        Corresponds to the `--now` option.
+        """
+        return pulumi.get(self, "now")
+
+    @now.setter
+    def now(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "now", value)
 
     @property
     @pulumi.getter

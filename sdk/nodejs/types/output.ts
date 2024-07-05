@@ -1264,6 +1264,10 @@ export namespace tools {
          */
         command: enums.tools.SystemctlCommand;
         /**
+         * Corresponds to the `--now` option.
+         */
+        now?: boolean;
+        /**
          * Corresponds to the [PATTERN] argument
          */
         pattern?: string;

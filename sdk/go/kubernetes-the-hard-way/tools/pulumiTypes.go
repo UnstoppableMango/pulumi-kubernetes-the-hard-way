@@ -2391,6 +2391,8 @@ func (o SedOptsPtrOutput) Version() pulumi.BoolPtrOutput {
 type SystemctlOpts struct {
 	// Corresponds to the COMMAND argument.
 	Command SystemctlCommand `pulumi:"command"`
+	// Corresponds to the `--now` option.
+	Now *bool `pulumi:"now"`
 	// Corresponds to the [PATTERN] argument
 	Pattern *string `pulumi:"pattern"`
 	// Corresponds to the [UNIT...] argument.
@@ -2412,6 +2414,8 @@ type SystemctlOptsInput interface {
 type SystemctlOptsArgs struct {
 	// Corresponds to the COMMAND argument.
 	Command SystemctlCommand `pulumi:"command"`
+	// Corresponds to the `--now` option.
+	Now pulumi.BoolPtrInput `pulumi:"now"`
 	// Corresponds to the [PATTERN] argument
 	Pattern pulumi.StringPtrInput `pulumi:"pattern"`
 	// Corresponds to the [UNIT...] argument.
@@ -2501,6 +2505,11 @@ func (o SystemctlOptsOutput) Command() SystemctlCommandOutput {
 	return o.ApplyT(func(v SystemctlOpts) SystemctlCommand { return v.Command }).(SystemctlCommandOutput)
 }
 
+// Corresponds to the `--now` option.
+func (o SystemctlOptsOutput) Now() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v SystemctlOpts) *bool { return v.Now }).(pulumi.BoolPtrOutput)
+}
+
 // Corresponds to the [PATTERN] argument
 func (o SystemctlOptsOutput) Pattern() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v SystemctlOpts) *string { return v.Pattern }).(pulumi.StringPtrOutput)
@@ -2543,6 +2552,16 @@ func (o SystemctlOptsPtrOutput) Command() SystemctlCommandPtrOutput {
 		}
 		return &v.Command
 	}).(SystemctlCommandPtrOutput)
+}
+
+// Corresponds to the `--now` option.
+func (o SystemctlOptsPtrOutput) Now() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *SystemctlOpts) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.Now
+	}).(pulumi.BoolPtrOutput)
 }
 
 // Corresponds to the [PATTERN] argument

@@ -6,6 +6,7 @@ package com.unmango.kubernetesthehardway.tools.outputs;
 import com.pulumi.core.annotations.CustomType;
 import com.pulumi.exceptions.MissingRequiredPropertyException;
 import com.unmango.kubernetesthehardway.tools.enums.SystemctlCommand;
+import java.lang.Boolean;
 import java.lang.String;
 import java.util.Objects;
 import java.util.Optional;
@@ -18,6 +19,11 @@ public final class SystemctlOpts {
      * 
      */
     private SystemctlCommand command;
+    /**
+     * @return Corresponds to the `--now` option.
+     * 
+     */
+    private @Nullable Boolean now;
     /**
      * @return Corresponds to the [PATTERN] argument
      * 
@@ -36,6 +42,13 @@ public final class SystemctlOpts {
      */
     public SystemctlCommand command() {
         return this.command;
+    }
+    /**
+     * @return Corresponds to the `--now` option.
+     * 
+     */
+    public Optional<Boolean> now() {
+        return Optional.ofNullable(this.now);
     }
     /**
      * @return Corresponds to the [PATTERN] argument
@@ -62,12 +75,14 @@ public final class SystemctlOpts {
     @CustomType.Builder
     public static final class Builder {
         private SystemctlCommand command;
+        private @Nullable Boolean now;
         private @Nullable String pattern;
         private @Nullable String unit;
         public Builder() {}
         public Builder(SystemctlOpts defaults) {
     	      Objects.requireNonNull(defaults);
     	      this.command = defaults.command;
+    	      this.now = defaults.now;
     	      this.pattern = defaults.pattern;
     	      this.unit = defaults.unit;
         }
@@ -78,6 +93,12 @@ public final class SystemctlOpts {
               throw new MissingRequiredPropertyException("SystemctlOpts", "command");
             }
             this.command = command;
+            return this;
+        }
+        @CustomType.Setter
+        public Builder now(@Nullable Boolean now) {
+
+            this.now = now;
             return this;
         }
         @CustomType.Setter
@@ -95,6 +116,7 @@ public final class SystemctlOpts {
         public SystemctlOpts build() {
             final var _resultValue = new SystemctlOpts();
             _resultValue.command = command;
+            _resultValue.now = now;
             _resultValue.pattern = pattern;
             _resultValue.unit = unit;
             return _resultValue;

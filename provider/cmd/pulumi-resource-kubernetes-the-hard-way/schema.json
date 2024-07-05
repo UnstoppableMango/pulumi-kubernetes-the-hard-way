@@ -1826,6 +1826,10 @@
                     "plain": true,
                     "description": "Corresponds to the COMMAND argument."
                 },
+                "now": {
+                    "type": "boolean",
+                    "description": "Corresponds to the `--now` option."
+                },
                 "pattern": {
                     "type": "string",
                     "description": "Corresponds to the [PATTERN] argument"

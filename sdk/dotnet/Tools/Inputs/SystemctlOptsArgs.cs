@@ -23,6 +23,12 @@ namespace UnMango.KubernetesTheHardWay.Tools.Inputs
         public UnMango.KubernetesTheHardWay.Tools.SystemctlCommand Command { get; set; }
 
         /// <summary>
+        /// Corresponds to the `--now` option.
+        /// </summary>
+        [Input("now")]
+        public Input<bool>? Now { get; set; }
+
+        /// <summary>
         /// Corresponds to the [PATTERN] argument
         /// </summary>
         [Input("pattern")]

@@ -1249,6 +1249,10 @@ export namespace tools {
          */
         command: enums.tools.SystemctlCommand;
         /**
+         * Corresponds to the `--now` option.
+         */
+        now?: pulumi.Input<boolean>;
+        /**
          * Corresponds to the [PATTERN] argument
          */
         pattern?: pulumi.Input<string>;
