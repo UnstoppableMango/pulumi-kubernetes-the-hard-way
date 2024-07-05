@@ -24,6 +24,7 @@ export function binaryInstall(name: string, args: BinaryInstallArgs, parent: Res
   const mktemp = new Mktemp(name, {
     connection: args.connection,
     create: { directory: true },
+    triggers: [args.url],
   }, { parent });
 
   const tmpDir = mktemp.stdout;
@@ -63,6 +64,7 @@ export function binaryInstall(name: string, args: BinaryInstallArgs, parent: Res
       force: true,
       recursive: true,
     },
+    triggers: [mktemp],
   }, { parent, dependsOn: mv });
 
   return { mktemp, download, mkdir, mv, path: binPath, rm };

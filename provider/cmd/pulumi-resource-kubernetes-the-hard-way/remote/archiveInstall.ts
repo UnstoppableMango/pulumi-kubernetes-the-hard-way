@@ -36,6 +36,7 @@ export function archiveInstall<T extends ReadonlyArray<string>>(
   const mktemp = new Mktemp(name, {
     connection,
     create: { directory: true },
+    triggers: [url],
   }, { parent });
 
   const tmpDir = mktemp.stdout;
@@ -91,6 +92,7 @@ export function archiveInstall<T extends ReadonlyArray<string>>(
       force: true,
       recursive: true,
     },
+    triggers: [mktemp],
   }, { parent, dependsOn: Object.values(mvs) });
 
   return { download, mkdir, mktemp, mvs, paths, rm, tar };
