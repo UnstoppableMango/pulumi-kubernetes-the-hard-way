@@ -1,5 +1,6 @@
 import { ComponentResourceOptions, interpolate, output } from '@pulumi/pulumi';
 import * as schema from '../schema-types';
+import { Chmod } from '../tools';
 import { binaryInstall } from './binaryInstall';
 
 export class RuncInstall extends schema.RuncInstall {
@@ -21,6 +22,14 @@ export class RuncInstall extends schema.RuncInstall {
       url,
       finalBin: 'runc',
     }, this);
+
+    const chmod = new Chmod(name, {
+      connection,
+      create: {
+        files: [path],
+        mode: '+x',
+      },
+    }, { parent: this, dependsOn: mv });
 
     this.architecture = architecture;
     this.connection = connection;
