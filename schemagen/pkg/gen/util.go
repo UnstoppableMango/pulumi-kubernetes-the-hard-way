@@ -38,14 +38,6 @@ var typeSpecs = struct {
 	},
 }
 
-func implicitOutputs(inputs, outputs map[string]schema.PropertySpec) map[string]schema.PropertySpec {
-	for k, v := range inputs {
-		outputs[k] = v
-	}
-
-	return outputs
-}
-
 func localResource(name string, modules ...string) string {
 	return fmt.Sprintf("#/resources/kubernetes-the-hard-way:%s:%s",
 		strings.Join(modules, "/"),
