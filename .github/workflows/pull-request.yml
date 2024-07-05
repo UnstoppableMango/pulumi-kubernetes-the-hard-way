@@ -34,6 +34,10 @@ jobs:
             tags: remote
           - name: nodejs
             tags: etcd
+          - name: nodejs
+            tags: controlplane
+          - name: nodejs
+            tags: worker
           - name: python
             tags: python
           - name: dotnet
