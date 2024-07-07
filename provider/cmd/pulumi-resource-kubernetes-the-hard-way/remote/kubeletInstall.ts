@@ -13,7 +13,7 @@ export class KubeletInstall extends schema.KubeletInstall {
     const connection = output(args.connection);
     const directory = output(args.directory ?? '/usr/local/bin');
     const version = output(args.version ?? Defaults.k8sVersion);
-    const url = interpolate`https://storage.googleapis.com/kubernetes-release/release/v${version}/bin/linux/${architecture}/${binName}`;
+    const url = interpolate`https://dl.k8s.io/release/v${version}/bin/linux/${architecture}/${binName}`;
 
     const { download, mkdir, mktemp, mv, path, rm } = binaryInstall(name, {
       binName,
