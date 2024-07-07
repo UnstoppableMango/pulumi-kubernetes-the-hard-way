@@ -1,7 +1,8 @@
 {
     "name": "kubernetes-the-hard-way",
-    "license": "Apache-2.0",
     "version": "${VERSION}",
+    "license": "Apache-2.0",
+    "packageManager": "yarn@1.22.22",
     "bin": "bin/index.js",
     "dependencies": {
         "@pulumi/command": "1.0.0",
