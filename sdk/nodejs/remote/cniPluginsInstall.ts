@@ -239,7 +239,7 @@ export class CniPluginsInstall extends pulumi.ComponentResource {
             }
             resourceInputs["architecture"] = args ? args.architecture : undefined;
             resourceInputs["connection"] = args ? (args.connection ? pulumi.output(args.connection).apply(pulumiCommand.types.input.remote.connectionArgsProvideDefaults) : undefined) : undefined;
-            resourceInputs["directory"] = (args ? args.directory : undefined) ?? "/usr/local/bin";
+            resourceInputs["directory"] = (args ? args.directory : undefined) ?? "/opt/cni/bin";
             resourceInputs["version"] = args ? args.version : undefined;
             resourceInputs["archiveName"] = undefined /*out*/;
             resourceInputs["bandwidthMv"] = undefined /*out*/;

@@ -359,7 +359,7 @@ namespace UnMango.KubernetesTheHardWay.Remote
 
         public CniPluginsInstallArgs()
         {
-            Directory = "/usr/local/bin";
+            Directory = "/opt/cni/bin";
         }
         public static new CniPluginsInstallArgs Empty => new CniPluginsInstallArgs();
     }

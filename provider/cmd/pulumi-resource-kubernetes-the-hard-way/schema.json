@@ -2361,7 +2361,7 @@
                 "directory": {
                     "type": "string",
                     "description": "The directory to install the binary to.",
-                    "default": "/usr/local/bin"
+                    "default": "/opt/cni/bin"
                 },
                 "download": {
                     "$ref": "#/resources/kubernetes-the-hard-way:remote:Download",
@@ -2577,7 +2577,7 @@
                 "directory": {
                     "type": "string",
                     "description": "The directory to install the binary to.",
-                    "default": "/usr/local/bin"
+                    "default": "/opt/cni/bin"
                 },
                 "version": {
                     "type": "string",
