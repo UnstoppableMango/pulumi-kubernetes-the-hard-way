@@ -49,6 +49,7 @@ func Generate(commandSpec schema.PackageSpec) schema.PackageSpec {
 		generateArchiveInstall(commandSpec, "ContainerdInstall", "Installs containerd on a remote system", "containerd"),
 		generateArchiveInstall(commandSpec, "CrictlInstall", "Installs crictl on a remote system", "crictl"),
 		generateArchiveInstall(commandSpec, "EtcdInstall", "Installs etcd on a remote system", "etcd", "etcdctl"),
+		generateBinaryInstall(commandSpec, "KubeadmInstall", "Installs kubeadm on a remote system."),
 		generateBinaryInstall(commandSpec, "KubeApiServerInstall", "Installs kube-apiserver on a remote system."),
 		generateBinaryInstall(commandSpec, "KubeControllerManagerInstall", "Installs kube-controller-manager on a remote system."),
 		generateBinaryInstall(commandSpec, "KubectlInstall", "Installs kubectl on a remote system."),
