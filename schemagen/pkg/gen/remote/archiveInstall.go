@@ -14,6 +14,14 @@ func generateArchiveInstall(
 	typ, description string,
 	files ...string,
 ) schema.PackageSpec {
+	// Hacky... but better than refactoring this whole thing AGAIN
+	var defaultDir string
+	if typ == "CniPluginsInstall" {
+		defaultDir = "/opt/cni/bin"
+	} else {
+		defaultDir = "/usr/local/bin"
+	}
+
 	inputs := map[string]schema.PropertySpec{
 		"architecture": {
 			Description: "The CPU architecture to install.",
@@ -26,7 +34,7 @@ func generateArchiveInstall(
 		"directory": {
 			Description: "The directory to install the binary to.",
 			TypeSpec:    types.String,
-			Default:     "/usr/local/bin",
+			Default:     defaultDir,
 		},
 		"version": props.String("The version to install."),
 	}
