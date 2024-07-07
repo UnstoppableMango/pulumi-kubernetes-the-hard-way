@@ -5,6 +5,7 @@ import {
   ContainerdInstall,
   CrictlInstall,
   EtcdInstall,
+  KubeadmInstall,
   KubeApiServerInstall,
   KubeControllerManagerInstall,
   KubeProxyInstall,
@@ -42,6 +43,11 @@ const crictl = new CrictlInstall('remote', {
 });
 
 const apiServer = new KubeApiServerInstall('remote', {
+  connection: { host, port, user, password },
+  directory: path.join(basePath, 'kube-apiserver'),
+});
+
+const kubeadm = new KubeadmInstall('remote', {
   connection: { host, port, user, password },
   directory: path.join(basePath, 'kube-apiserver'),
 });
