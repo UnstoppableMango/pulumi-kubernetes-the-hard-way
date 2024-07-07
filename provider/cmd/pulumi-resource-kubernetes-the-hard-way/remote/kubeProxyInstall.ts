@@ -9,7 +9,7 @@ export class KubeProxyInstall extends schema.KubeProxyInstall {
     if (opts?.urn) return;
 
     const architecture = output(args.architecture ?? 'amd64');
-    const binName = 'kube-apiserver';
+    const binName = 'kube-proxy';
     const connection = output(args.connection);
     const directory = output(args.directory ?? '/usr/local/bin');
     const version = output(args.version ?? Defaults.k8sVersion);

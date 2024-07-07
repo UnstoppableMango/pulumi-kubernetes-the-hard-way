@@ -9,7 +9,7 @@ export class KubeletInstall extends schema.KubeletInstall {
     if (opts?.urn) return;
 
     const architecture = output(args.architecture ?? 'amd64');
-    const binName = 'kube-apiserver';
+    const binName = 'kubelet';
     const connection = output(args.connection);
     const directory = output(args.directory ?? '/usr/local/bin');
     const version = output(args.version ?? Defaults.k8sVersion);
