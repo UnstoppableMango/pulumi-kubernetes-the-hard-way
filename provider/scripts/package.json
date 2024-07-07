@@ -2,6 +2,7 @@
   "name": "provider-scripts",
   "version": "1.0.0",
   "license": "Apache-2.0",
+  "packageManager": "yarn@1.22.22",
   "scripts": {
     "gen-types": "ts-node generate-provider-types.ts"
   },

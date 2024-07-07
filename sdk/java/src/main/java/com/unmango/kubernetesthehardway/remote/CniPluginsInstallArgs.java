@@ -194,7 +194,7 @@ public final class CniPluginsInstallArgs extends com.pulumi.resources.ResourceAr
             if ($.connection == null) {
                 throw new MissingRequiredPropertyException("CniPluginsInstallArgs", "connection");
             }
-            $.directory = Codegen.stringProp("directory").output().arg($.directory).def("/usr/local/bin").getNullable();
+            $.directory = Codegen.stringProp("directory").output().arg($.directory).def("/opt/cni/bin").getNullable();
             return $;
         }
     }

@@ -128,7 +128,7 @@ func NewCniPluginsInstall(ctx *pulumi.Context,
 	}
 	args.Connection = args.Connection.ToConnectionOutput().ApplyT(func(v pulumiCommand.Connection) pulumiCommand.Connection { return *v.Defaults() }).(pulumiCommand.ConnectionOutput)
 	if args.Directory == nil {
-		args.Directory = pulumi.StringPtr("/usr/local/bin")
+		args.Directory = pulumi.StringPtr("/opt/cni/bin")
 	}
 	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource CniPluginsInstall

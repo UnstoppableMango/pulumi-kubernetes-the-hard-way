@@ -33,7 +33,7 @@ class CniPluginsInstallArgs:
         if architecture is not None:
             pulumi.set(__self__, "architecture", architecture)
         if directory is None:
-            directory = '/usr/local/bin'
+            directory = '/opt/cni/bin'
         if directory is not None:
             pulumi.set(__self__, "directory", directory)
         if version is not None:
@@ -152,7 +152,7 @@ class CniPluginsInstall(pulumi.ComponentResource):
                 raise TypeError("Missing required property 'connection'")
             __props__.__dict__["connection"] = connection
             if directory is None:
-                directory = '/usr/local/bin'
+                directory = '/opt/cni/bin'
             __props__.__dict__["directory"] = directory
             __props__.__dict__["version"] = version
             __props__.__dict__["archive_name"] = None
