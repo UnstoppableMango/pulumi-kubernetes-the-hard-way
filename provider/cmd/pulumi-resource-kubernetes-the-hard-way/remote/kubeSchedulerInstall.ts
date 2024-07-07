@@ -1,4 +1,5 @@
 import { ComponentResourceOptions, interpolate, output } from '@pulumi/pulumi';
+import { Defaults } from '../types';
 import * as schema from '../schema-types';
 import { binaryInstall } from './binaryInstall';
 
@@ -11,8 +12,8 @@ export class KubeSchedulerInstall extends schema.KubeSchedulerInstall {
     const binName = 'kube-scheduler';
     const connection = output(args.connection);
     const directory = output(args.directory ?? '/usr/local/bin');
-    const version = output(args.version ?? '1.29.2');
-    const url = interpolate`https://storage.googleapis.com/kubernetes-release/release/v${version}/bin/linux/${architecture}/${binName}`;
+    const version = output(args.version ?? Defaults.k8sVersion);
+    const url = interpolate`https://dl.k8s.io/release/v${version}/bin/linux/${architecture}/${binName}`;
 
     const { download, mkdir, mktemp, mv, path, rm } = binaryInstall(name, {
       binName,

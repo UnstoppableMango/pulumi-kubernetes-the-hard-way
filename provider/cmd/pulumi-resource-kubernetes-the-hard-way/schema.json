@@ -4171,6 +4171,96 @@
             ],
             "isComponent": true
         },
+        "kubernetes-the-hard-way:remote:KubeadmInstall": {
+            "description": "Installs kubeadm on a remote system.",
+            "properties": {
+                "architecture": {
+                    "$ref": "#/types/kubernetes-the-hard-way:remote:Architecture",
+                    "description": "The CPU architecture to install."
+                },
+                "binName": {
+                    "type": "string",
+                    "description": "The name of the installed binary."
+                },
+                "connection": {
+                    "$ref": "/command/v1.0.0/schema.json#/types/command:remote:Connection",
+                    "description": "The parameters with which to connect to the remote host."
+                },
+                "directory": {
+                    "type": "string",
+                    "description": "The directory to install the binary to.",
+                    "default": "/usr/local/bin"
+                },
+                "download": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:remote:Download",
+                    "description": "The download operation."
+                },
+                "mkdir": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mkdir",
+                    "description": "The mkdir operation."
+                },
+                "mktemp": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mktemp",
+                    "description": "The mktemp operation."
+                },
+                "mv": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Mv",
+                    "description": "The mv operation."
+                },
+                "path": {
+                    "type": "string",
+                    "description": "The path to the installed binary."
+                },
+                "rm": {
+                    "$ref": "#/resources/kubernetes-the-hard-way:tools:Rm",
+                    "description": "The rm operation."
+                },
+                "url": {
+                    "type": "string",
+                    "description": "The url used to download the binary."
+                },
+                "version": {
+                    "type": "string",
+                    "description": "The version to install."
+                }
+            },
+            "required": [
+                "connection",
+                "architecture",
+                "directory",
+                "download",
+                "mkdir",
+                "mktemp",
+                "mv",
+                "path",
+                "rm",
+                "url",
+                "version"
+            ],
+            "inputProperties": {
+                "architecture": {
+                    "$ref": "#/types/kubernetes-the-hard-way:remote:Architecture",
+                    "description": "The CPU architecture to install."
+                },
+                "connection": {
+                    "$ref": "/command/v1.0.0/schema.json#/types/command:remote:Connection",
+                    "description": "The parameters with which to connect to the remote host."
+                },
+                "directory": {
+                    "type": "string",
+                    "description": "The directory to install the binary to.",
+                    "default": "/usr/local/bin"
+                },
+                "version": {
+                    "type": "string",
+                    "description": "The version to install."
+                }
+            },
+            "requiredInputs": [
+                "connection"
+            ],
+            "isComponent": true
+        },
         "kubernetes-the-hard-way:remote:KubectlInstall": {
             "description": "Installs kubectl on a remote system.",
             "properties": {

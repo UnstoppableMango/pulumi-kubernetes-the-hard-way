@@ -35,3 +35,7 @@ export const KubeconfigType = {
 } as const;
 
 export type KubeconfigType = (typeof KubeconfigType)[keyof typeof KubeconfigType];
+
+export const Defaults = {
+  k8sVersion: '1.30.2',
+};

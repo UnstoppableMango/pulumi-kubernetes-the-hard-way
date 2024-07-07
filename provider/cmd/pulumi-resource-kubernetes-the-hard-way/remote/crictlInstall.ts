@@ -1,6 +1,7 @@
 import { ComponentResourceOptions, interpolate, output } from '@pulumi/pulumi';
 import * as schema from '../schema-types';
 import { archiveInstall } from './archiveInstall';
+import { Defaults } from '../types';
 
 export class CrictlInstall extends schema.CrictlInstall {
   constructor(name: string, args: schema.CrictlInstallArgs, opts?: ComponentResourceOptions) {
@@ -10,7 +11,7 @@ export class CrictlInstall extends schema.CrictlInstall {
     const architecture = output(args.architecture ?? 'amd64');
     const connection = output(args.connection);
     const directory = output(args.directory ?? '/usr/local/bin');
-    const version = output(args.version ?? '1.29.0'); // TODO: Stateful versioning?
+    const version = output(args.version ?? Defaults.k8sVersion); // TODO: Stateful versioning?
     const archiveName = interpolate`crictl-v${version}-linux-${architecture}.tar.gz`;
     const url = interpolate`https://github.com/kubernetes-sigs/cri-tools/releases/download/v${version}/crictl-v${version}-linux-${architecture}.tar.gz`;
 

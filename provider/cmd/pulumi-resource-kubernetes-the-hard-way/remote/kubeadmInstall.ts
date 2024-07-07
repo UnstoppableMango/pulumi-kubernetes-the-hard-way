@@ -3,13 +3,13 @@ import { Defaults } from '../types';
 import * as schema from '../schema-types';
 import { binaryInstall } from './binaryInstall';
 
-export class KubeControllerManagerInstall extends schema.KubeControllerManagerInstall {
-  constructor(name: string, args: schema.KubeControllerManagerInstallArgs, opts?: ComponentResourceOptions) {
+export class KubeadmInstall extends schema.KubeadmInstall {
+  constructor(name: string, args: schema.KubeadmInstallArgs, opts?: ComponentResourceOptions) {
     super(name, args, opts);
     if (opts?.urn) return;
 
     const architecture = output(args.architecture ?? 'amd64');
-    const binName = 'kube-controller-manager';
+    const binName = 'kubeadm';
     const connection = output(args.connection);
     const directory = output(args.directory ?? '/usr/local/bin');
     const version = output(args.version ?? Defaults.k8sVersion);
@@ -23,24 +23,27 @@ export class KubeControllerManagerInstall extends schema.KubeControllerManagerIn
     }, this);
 
     this.architecture = architecture;
-    this.binName = binName;
     this.connection = connection;
     this.directory = directory;
+    this.download = download;
     this.mkdir = mkdir;
+    this.mktemp = mktemp;
     this.mv = mv;
     this.path = path;
+    this.rm = rm;
     this.version = version;
 
     this.registerOutputs({
       architecture,
-      binName,
       connection,
       directory,
+      download,
       mkdir,
+      mktemp,
       mv,
       path,
+      rm,
       version,
-      url,
     });
   }
 }

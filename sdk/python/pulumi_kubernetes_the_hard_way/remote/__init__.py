@@ -22,6 +22,7 @@ from .kube_controller_manager_install import *
 from .kube_proxy_install import *
 from .kube_proxy_service import *
 from .kube_scheduler_install import *
+from .kubeadm_install import *
 from .kubectl_install import *
 from .kubelet_install import *
 from .kubelet_service import *
