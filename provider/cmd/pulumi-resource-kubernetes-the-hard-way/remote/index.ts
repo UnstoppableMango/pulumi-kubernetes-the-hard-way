@@ -9,6 +9,7 @@ export * from './etcdConfiguration';
 export * from './etcdInstall';
 export * from './etcdService';
 export * from './file';
+export * from './kubeadmInstall';
 export * from './kubeApiServerInstall';
 export * from './kubeControllerManagerInstall';
 export * from './kubectlInstall';

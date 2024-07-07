@@ -40,6 +40,7 @@
     "remote/etcdService.ts",
     "remote/file.ts",
     "remote/index.ts",
+    "remote/kubeadmInstall.ts",
     "remote/kubeApiServerInstall.ts",
     "remote/kubeControllerManagerInstall.ts",
     "remote/kubectlInstall.ts",
