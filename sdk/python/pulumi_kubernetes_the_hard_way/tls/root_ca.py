@@ -32,11 +32,6 @@ class RootCaArgs:
         :param pulumi.Input[int] validity_period_hours: Number of hours, after initial issuing, that the certificate will remain valid for.
         :param pulumi.Input['Algorithm'] algorithm: Name of the algorithm to use when generating the private key.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] dns_names: List of DNS names for which a certificate is being requested (i.e. certificate subjects).
-        :param pulumi.Input[int] early_renewal_hours: The resource will consider the certificate to have expired the given number of hours before its actual expiry time. This
-               can be useful to deploy an updated certificate in advance of the expiration of the current certificate. However, the old
-               certificate remains valid until its true expiration time, since this resource does not (and cannot) support certificate
-               revocation. Also, this advance update can only be performed should the Terraform configuration be applied during the
-               early renewal period. (default: `0`)
         :param pulumi.Input['EcdsaCurve'] ecdsa_curve: TODO
         :param pulumi.Input[Sequence[pulumi.Input[str]]] ip_addresses: List of IP addresses for which a certificate is being requested (i.e. certificate subjects).
         :param pulumi.Input[int] rsa_bits: When `algorithm` is `RSA`, the size of the generated RSA key, in bits (default: `2048`).
@@ -106,13 +101,6 @@ class RootCaArgs:
     @property
     @pulumi.getter(name="earlyRenewalHours")
     def early_renewal_hours(self) -> Optional[pulumi.Input[int]]:
-        """
-        The resource will consider the certificate to have expired the given number of hours before its actual expiry time. This
-        can be useful to deploy an updated certificate in advance of the expiration of the current certificate. However, the old
-        certificate remains valid until its true expiration time, since this resource does not (and cannot) support certificate
-        revocation. Also, this advance update can only be performed should the Terraform configuration be applied during the
-        early renewal period. (default: `0`)
-        """
         return pulumi.get(self, "early_renewal_hours")
 
     @early_renewal_hours.setter
@@ -228,11 +216,6 @@ class RootCa(pulumi.ComponentResource):
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input['Algorithm'] algorithm: Name of the algorithm to use when generating the private key.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] dns_names: List of DNS names for which a certificate is being requested (i.e. certificate subjects).
-        :param pulumi.Input[int] early_renewal_hours: The resource will consider the certificate to have expired the given number of hours before its actual expiry time. This
-               can be useful to deploy an updated certificate in advance of the expiration of the current certificate. However, the old
-               certificate remains valid until its true expiration time, since this resource does not (and cannot) support certificate
-               revocation. Also, this advance update can only be performed should the Terraform configuration be applied during the
-               early renewal period. (default: `0`)
         :param pulumi.Input['EcdsaCurve'] ecdsa_curve: TODO
         :param pulumi.Input[Sequence[pulumi.Input[str]]] ip_addresses: List of IP addresses for which a certificate is being requested (i.e. certificate subjects).
         :param pulumi.Input[int] rsa_bits: When `algorithm` is `RSA`, the size of the generated RSA key, in bits (default: `2048`).
@@ -367,13 +350,6 @@ class RootCa(pulumi.ComponentResource):
     @property
     @pulumi.getter(name="earlyRenewalHours")
     def early_renewal_hours(self) -> pulumi.Output[int]:
-        """
-        The resource will consider the certificate to have expired the given number of hours before its actual expiry time. This
-        can be useful to deploy an updated certificate in advance of the expiration of the current certificate. However, the old
-        certificate remains valid until its true expiration time, since this resource does not (and cannot) support certificate
-        revocation. Also, this advance update can only be performed should the Terraform configuration be applied during the
-        early renewal period. (default: `0`)
-        """
         return pulumi.get(self, "early_renewal_hours")
 
     @property

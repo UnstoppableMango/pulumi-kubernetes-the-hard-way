@@ -199,6 +199,21 @@ public final class SystemdServiceSectionArgs extends com.pulumi.resources.Resour
     }
 
     /**
+     * Configure unit start rate limiting. Units which are started more than burst times within an interval time span are not permitted to start any more. Use StartLimitIntervalSec= to configure the checking interval and StartLimitBurst= to configure how many starts per interval are allowed.
+     * 
+     */
+    @Import(name="startLimitInterval")
+    private @Nullable Output<String> startLimitInterval;
+
+    /**
+     * @return Configure unit start rate limiting. Units which are started more than burst times within an interval time span are not permitted to start any more. Use StartLimitIntervalSec= to configure the checking interval and StartLimitBurst= to configure how many starts per interval are allowed.
+     * 
+     */
+    public Optional<Output<String>> startLimitInterval() {
+        return Optional.ofNullable(this.startLimitInterval);
+    }
+
+    /**
      * Configures the mechanism via which the service notifies the manager that the service start-up has finished.
      * 
      */
@@ -228,6 +243,7 @@ public final class SystemdServiceSectionArgs extends com.pulumi.resources.Resour
         this.oomScoreAdjust = $.oomScoreAdjust;
         this.restart = $.restart;
         this.restartSec = $.restartSec;
+        this.startLimitInterval = $.startLimitInterval;
         this.type = $.type;
     }
 
@@ -491,6 +507,27 @@ public final class SystemdServiceSectionArgs extends com.pulumi.resources.Resour
          */
         public Builder restartSec(String restartSec) {
             return restartSec(Output.of(restartSec));
+        }
+
+        /**
+         * @param startLimitInterval Configure unit start rate limiting. Units which are started more than burst times within an interval time span are not permitted to start any more. Use StartLimitIntervalSec= to configure the checking interval and StartLimitBurst= to configure how many starts per interval are allowed.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder startLimitInterval(@Nullable Output<String> startLimitInterval) {
+            $.startLimitInterval = startLimitInterval;
+            return this;
+        }
+
+        /**
+         * @param startLimitInterval Configure unit start rate limiting. Units which are started more than burst times within an interval time span are not permitted to start any more. Use StartLimitIntervalSec= to configure the checking interval and StartLimitBurst= to configure how many starts per interval are allowed.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder startLimitInterval(String startLimitInterval) {
+            return startLimitInterval(Output.of(startLimitInterval));
         }
 
         /**

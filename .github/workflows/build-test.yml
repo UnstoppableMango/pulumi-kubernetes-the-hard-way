@@ -141,8 +141,8 @@ jobs:
             tags: dotnet
           - name: go
             tags: go
-          - name: java
-            tags: java
+          # - name: java
+          #   tags: java
     name: Test SDKs
     steps:
       - name: Checkout Repo

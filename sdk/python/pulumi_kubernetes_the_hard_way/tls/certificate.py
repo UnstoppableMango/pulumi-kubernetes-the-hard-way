@@ -38,11 +38,6 @@ class CertificateArgs:
         :param pulumi.Input[str] ca_private_key_pem: Private key of the Certificate Authority (CA) used to sign the certificate, in [PEM (RFC 1421)](https://datatracker.ietf.org/doc/html/rfc1421) format.
         :param pulumi.Input[int] validity_period_hours: Number of hours, after initial issuing, that the certificate will remain valid for.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] dns_names: List of DNS names for which a certificate is being requested (i.e. certificate subjects).
-        :param pulumi.Input[int] early_renewal_hours: The resource will consider the certificate to have expired the given number of hours before its actual expiry time. This
-               can be useful to deploy an updated certificate in advance of the expiration of the current certificate. However, the old
-               certificate remains valid until its true expiration time, since this resource does not (and cannot) support certificate
-               revocation. Also, this advance update can only be performed should the Terraform configuration be applied during the
-               early renewal period. (default: `0`)
         :param pulumi.Input['EcdsaCurve'] ecdsa_curve: TODO
         :param pulumi.Input[Sequence[pulumi.Input[str]]] ip_addresses: List of IP addresses for which a certificate is being requested (i.e. certificate subjects).
         :param pulumi.Input[bool] is_ca_certificate: Is the generated certificate representing a Certificate Authority (CA) (default: `false`).
@@ -150,13 +145,6 @@ class CertificateArgs:
     @property
     @pulumi.getter(name="earlyRenewalHours")
     def early_renewal_hours(self) -> Optional[pulumi.Input[int]]:
-        """
-        The resource will consider the certificate to have expired the given number of hours before its actual expiry time. This
-        can be useful to deploy an updated certificate in advance of the expiration of the current certificate. However, the old
-        certificate remains valid until its true expiration time, since this resource does not (and cannot) support certificate
-        revocation. Also, this advance update can only be performed should the Terraform configuration be applied during the
-        early renewal period. (default: `0`)
-        """
         return pulumi.get(self, "early_renewal_hours")
 
     @early_renewal_hours.setter
@@ -278,11 +266,6 @@ class Certificate(pulumi.ComponentResource):
         :param pulumi.Input[str] ca_cert_pem: Certificate data of the Certificate Authority (CA) in [PEM (RFC 1421)](https://datatracker.ietf.org/doc/html/rfc1421) format.
         :param pulumi.Input[str] ca_private_key_pem: Private key of the Certificate Authority (CA) used to sign the certificate, in [PEM (RFC 1421)](https://datatracker.ietf.org/doc/html/rfc1421) format.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] dns_names: List of DNS names for which a certificate is being requested (i.e. certificate subjects).
-        :param pulumi.Input[int] early_renewal_hours: The resource will consider the certificate to have expired the given number of hours before its actual expiry time. This
-               can be useful to deploy an updated certificate in advance of the expiration of the current certificate. However, the old
-               certificate remains valid until its true expiration time, since this resource does not (and cannot) support certificate
-               revocation. Also, this advance update can only be performed should the Terraform configuration be applied during the
-               early renewal period. (default: `0`)
         :param pulumi.Input['EcdsaCurve'] ecdsa_curve: TODO
         :param pulumi.Input[Sequence[pulumi.Input[str]]] ip_addresses: List of IP addresses for which a certificate is being requested (i.e. certificate subjects).
         :param pulumi.Input[bool] is_ca_certificate: Is the generated certificate representing a Certificate Authority (CA) (default: `false`).
@@ -472,13 +455,6 @@ class Certificate(pulumi.ComponentResource):
     @property
     @pulumi.getter(name="earlyRenewalHours")
     def early_renewal_hours(self) -> pulumi.Output[int]:
-        """
-        The resource will consider the certificate to have expired the given number of hours before its actual expiry time. This
-        can be useful to deploy an updated certificate in advance of the expiration of the current certificate. However, the old
-        certificate remains valid until its true expiration time, since this resource does not (and cannot) support certificate
-        revocation. Also, this advance update can only be performed should the Terraform configuration be applied during the
-        early renewal period. (default: `0`)
-        """
         return pulumi.get(self, "early_renewal_hours")
 
     @property

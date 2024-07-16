@@ -36,13 +36,8 @@ type Certificate struct {
 	// The certificate signing request.
 	Csr tls.CertRequestOutput `pulumi:"csr"`
 	// List of DNS names for which a certificate is being requested (i.e. certificate subjects).
-	DnsNames pulumi.StringArrayOutput `pulumi:"dnsNames"`
-	// The resource will consider the certificate to have expired the given number of hours before its actual expiry time. This
-	// can be useful to deploy an updated certificate in advance of the expiration of the current certificate. However, the old
-	// certificate remains valid until its true expiration time, since this resource does not (and cannot) support certificate
-	// revocation. Also, this advance update can only be performed should the Terraform configuration be applied during the
-	// early renewal period. (default: `0`)
-	EarlyRenewalHours pulumi.IntOutput `pulumi:"earlyRenewalHours"`
+	DnsNames          pulumi.StringArrayOutput `pulumi:"dnsNames"`
+	EarlyRenewalHours pulumi.IntOutput         `pulumi:"earlyRenewalHours"`
 	// TODO
 	EcdsaCurve EcdsaCurveOutput `pulumi:"ecdsaCurve"`
 	// List of IP addresses for which a certificate is being requested (i.e. certificate subjects).
@@ -129,13 +124,8 @@ type certificateArgs struct {
 	// Private key of the Certificate Authority (CA) used to sign the certificate, in [PEM (RFC 1421)](https://datatracker.ietf.org/doc/html/rfc1421) format.
 	CaPrivateKeyPem string `pulumi:"caPrivateKeyPem"`
 	// List of DNS names for which a certificate is being requested (i.e. certificate subjects).
-	DnsNames []string `pulumi:"dnsNames"`
-	// The resource will consider the certificate to have expired the given number of hours before its actual expiry time. This
-	// can be useful to deploy an updated certificate in advance of the expiration of the current certificate. However, the old
-	// certificate remains valid until its true expiration time, since this resource does not (and cannot) support certificate
-	// revocation. Also, this advance update can only be performed should the Terraform configuration be applied during the
-	// early renewal period. (default: `0`)
-	EarlyRenewalHours *int `pulumi:"earlyRenewalHours"`
+	DnsNames          []string `pulumi:"dnsNames"`
+	EarlyRenewalHours *int     `pulumi:"earlyRenewalHours"`
 	// TODO
 	EcdsaCurve *EcdsaCurve `pulumi:"ecdsaCurve"`
 	// List of IP addresses for which a certificate is being requested (i.e. certificate subjects).
@@ -165,12 +155,7 @@ type CertificateArgs struct {
 	// Private key of the Certificate Authority (CA) used to sign the certificate, in [PEM (RFC 1421)](https://datatracker.ietf.org/doc/html/rfc1421) format.
 	CaPrivateKeyPem pulumi.StringInput
 	// List of DNS names for which a certificate is being requested (i.e. certificate subjects).
-	DnsNames pulumi.StringArrayInput
-	// The resource will consider the certificate to have expired the given number of hours before its actual expiry time. This
-	// can be useful to deploy an updated certificate in advance of the expiration of the current certificate. However, the old
-	// certificate remains valid until its true expiration time, since this resource does not (and cannot) support certificate
-	// revocation. Also, this advance update can only be performed should the Terraform configuration be applied during the
-	// early renewal period. (default: `0`)
+	DnsNames          pulumi.StringArrayInput
 	EarlyRenewalHours pulumi.IntPtrInput
 	// TODO
 	EcdsaCurve EcdsaCurvePtrInput
@@ -327,11 +312,6 @@ func (o CertificateOutput) DnsNames() pulumi.StringArrayOutput {
 	return o.ApplyT(func(v *Certificate) pulumi.StringArrayOutput { return v.DnsNames }).(pulumi.StringArrayOutput)
 }
 
-// The resource will consider the certificate to have expired the given number of hours before its actual expiry time. This
-// can be useful to deploy an updated certificate in advance of the expiration of the current certificate. However, the old
-// certificate remains valid until its true expiration time, since this resource does not (and cannot) support certificate
-// revocation. Also, this advance update can only be performed should the Terraform configuration be applied during the
-// early renewal period. (default: `0`)
 func (o CertificateOutput) EarlyRenewalHours() pulumi.IntOutput {
 	return o.ApplyT(func(v *Certificate) pulumi.IntOutput { return v.EarlyRenewalHours }).(pulumi.IntOutput)
 }

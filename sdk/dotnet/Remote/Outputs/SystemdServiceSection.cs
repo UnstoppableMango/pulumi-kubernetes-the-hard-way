@@ -63,6 +63,10 @@ namespace UnMango.KubernetesTheHardWay.Remote.Outputs
         /// </summary>
         public readonly string? RestartSec;
         /// <summary>
+        /// Configure unit start rate limiting. Units which are started more than burst times within an interval time span are not permitted to start any more. Use StartLimitIntervalSec= to configure the checking interval and StartLimitBurst= to configure how many starts per interval are allowed.
+        /// </summary>
+        public readonly string? StartLimitInterval;
+        /// <summary>
         /// Configures the mechanism via which the service notifies the manager that the service start-up has finished.
         /// </summary>
         public readonly UnMango.KubernetesTheHardWay.Remote.SystemdServiceType? Type;
@@ -93,6 +97,8 @@ namespace UnMango.KubernetesTheHardWay.Remote.Outputs
 
             string? restartSec,
 
+            string? startLimitInterval,
+
             UnMango.KubernetesTheHardWay.Remote.SystemdServiceType? type)
         {
             Delegate = @delegate;
@@ -107,6 +113,7 @@ namespace UnMango.KubernetesTheHardWay.Remote.Outputs
             OomScoreAdjust = oomScoreAdjust;
             Restart = restart;
             RestartSec = restartSec;
+            StartLimitInterval = startLimitInterval;
             Type = type;
         }
     }

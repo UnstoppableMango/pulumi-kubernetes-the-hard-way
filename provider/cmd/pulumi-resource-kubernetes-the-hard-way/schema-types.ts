@@ -1775,6 +1775,7 @@ export interface SystemdServiceSectionInputs {
     readonly oomScoreAdjust?: pulumi.Input<number>;
     readonly restart?: pulumi.Input<SystemdServiceRestartInputs>;
     readonly restartSec?: pulumi.Input<string>;
+    readonly startLimitInterval?: pulumi.Input<string>;
     readonly type?: pulumi.Input<SystemdServiceTypeInputs>;
 }
 export interface SystemdServiceSectionOutputs {
@@ -1790,6 +1791,7 @@ export interface SystemdServiceSectionOutputs {
     readonly oomScoreAdjust?: pulumi.Output<number>;
     readonly restart?: pulumi.Output<SystemdServiceRestartOutputs>;
     readonly restartSec?: pulumi.Output<string>;
+    readonly startLimitInterval?: pulumi.Output<string>;
     readonly type?: pulumi.Output<SystemdServiceTypeOutputs>;
 }
 export type SystemdServiceTypeInputs = "simple" | "exec" | "forking" | "oneshot" | "dbus" | "notify" | "notify-reload" | "idle";

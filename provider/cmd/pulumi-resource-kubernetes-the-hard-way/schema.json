@@ -43,10 +43,10 @@
                 "com.google.code.findbugs:jsr305": "3.0.2",
                 "com.google.code.gson:gson": "2.8.9",
                 "com.pulumi:command": "1.0.0",
-                "com.pulumi:kubernetes": "4.14.0",
+                "com.pulumi:kubernetes": "4.15.0",
                 "com.pulumi:pulumi": "0.9.9",
                 "com.pulumi:random": "4.16.2",
-                "com.pulumi:tls": "5.0.2"
+                "com.pulumi:tls": "5.0.4"
             },
             "gradleNexusPublishPluginVersion": "1.1.0",
             "liftSingleValueMethodReturns": true
@@ -54,10 +54,10 @@
         "nodejs": {
             "dependencies": {
                 "@pulumi/command": "^1.0.0",
-                "@pulumi/kubernetes": "^4.14.0",
+                "@pulumi/kubernetes": "^4.15.0",
                 "@pulumi/pulumi": "^3.0.0",
                 "@pulumi/random": "^4.16.2",
-                "@pulumi/tls": "^5.0.2"
+                "@pulumi/tls": "^5.0.4"
             },
             "devDependencies": {
                 "@types/node": "^18",
@@ -74,9 +74,9 @@
             "requires": {
                 "pulumi": "\u003e=3.91.1,\u003c4.0.0",
                 "pulumi-command": "\u003e=1.0.0,\u003c2.0.0",
-                "pulumi-kubernetes": "\u003e=4.14.0,\u003c5.0.0",
+                "pulumi-kubernetes": "\u003e=4.15.0,\u003c5.0.0",
                 "pulumi-random": "\u003e=4.16.2,\u003c5.0.0",
-                "pulumi-tls": "\u003e=5.0.2,\u003c6.0.0"
+                "pulumi-tls": "\u003e=5.0.4,\u003c6.0.0"
             }
         }
     },
@@ -685,15 +685,15 @@
                     "const": "Pod"
                 },
                 "metadata": {
-                    "$ref": "/kubernetes/v4.14.0/schema.json#/types/kubernetes:meta/v1:ObjectMeta",
+                    "$ref": "/kubernetes/v4.15.0/schema.json#/types/kubernetes:meta/v1:ObjectMeta",
                     "description": "Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata"
                 },
                 "spec": {
-                    "$ref": "/kubernetes/v4.14.0/schema.json#/types/kubernetes:core/v1:PodSpec",
+                    "$ref": "/kubernetes/v4.15.0/schema.json#/types/kubernetes:core/v1:PodSpec",
                     "description": "Specification of the desired behavior of the pod. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status"
                 },
                 "status": {
-                    "$ref": "/kubernetes/v4.14.0/schema.json#/types/kubernetes:core/v1:PodStatus",
+                    "$ref": "/kubernetes/v4.15.0/schema.json#/types/kubernetes:core/v1:PodStatus",
                     "description": "Most recently observed status of the pod. This data may not be up to date. Populated by the system. Read-only. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status"
                 }
             },
@@ -1009,6 +1009,10 @@
                     "type": "string",
                     "description": "Configures the time to sleep before restarting a service (as configured with Restart=)."
                 },
+                "startLimitInterval": {
+                    "type": "string",
+                    "description": "Configure unit start rate limiting. Units which are started more than burst times within an interval time span are not permitted to start any more. Use StartLimitIntervalSec= to configure the checking interval and StartLimitBurst= to configure how many starts per interval are allowed."
+                },
                 "type": {
                     "$ref": "#/types/kubernetes-the-hard-way:remote:SystemdServiceType",
                     "description": "Configures the mechanism via which the service notifies the manager that the service start-up has finished."
@@ -1215,10 +1219,10 @@
                 "cert": {
                     "oneOf": [
                         {
-                            "$ref": "/tls/v5.0.2/schema.json#/resources/tls:index/locallySignedCert:LocallySignedCert"
+                            "$ref": "/tls/v5.0.4/schema.json#/resources/tls:index/locallySignedCert:LocallySignedCert"
                         },
                         {
-                            "$ref": "/tls/v5.0.2/schema.json#/resources/tls:index/selfSignedCert:SelfSignedCert"
+                            "$ref": "/tls/v5.0.4/schema.json#/resources/tls:index/selfSignedCert:SelfSignedCert"
                         }
                     ],
                     "description": "The certificate resource."
@@ -1228,7 +1232,7 @@
                     "description": "The PEM encoded certificate data."
                 },
                 "key": {
-                    "$ref": "/tls/v5.0.2/schema.json#/resources/tls:index/privateKey:PrivateKey",
+                    "$ref": "/tls/v5.0.4/schema.json#/resources/tls:index/privateKey:PrivateKey",
                     "description": "The private key resource."
                 },
                 "privateKeyPem": {
@@ -5444,7 +5448,7 @@
                     "description": "Private key of the Certificate Authority (CA) used to sign the certificate, in [PEM (RFC 1421)](https://datatracker.ietf.org/doc/html/rfc1421) format.\n"
                 },
                 "cert": {
-                    "$ref": "/tls/v5.0.2/schema.json#/resources/tls:index/locallySignedCert:LocallySignedCert",
+                    "$ref": "/tls/v5.0.4/schema.json#/resources/tls:index/locallySignedCert:LocallySignedCert",
                     "description": "The certificate."
                 },
                 "certPem": {
@@ -5456,7 +5460,7 @@
                     "description": "Certificate request data in [PEM (RFC 1421)](https://datatracker.ietf.org/doc/html/rfc1421) format.\n"
                 },
                 "csr": {
-                    "$ref": "/tls/v5.0.2/schema.json#/resources/tls:index/certRequest:CertRequest",
+                    "$ref": "/tls/v5.0.4/schema.json#/resources/tls:index/certRequest:CertRequest",
                     "description": "The certificate signing request."
                 },
                 "dnsNames": {
@@ -5467,8 +5471,7 @@
                     "description": "List of DNS names for which a certificate is being requested (i.e. certificate subjects).\n"
                 },
                 "earlyRenewalHours": {
-                    "type": "integer",
-                    "description": "The resource will consider the certificate to have expired the given number of hours before its actual expiry time. This\ncan be useful to deploy an updated certificate in advance of the expiration of the current certificate. However, the old\ncertificate remains valid until its true expiration time, since this resource does not (and cannot) support certificate\nrevocation. Also, this advance update can only be performed should the Terraform configuration be applied during the\nearly renewal period. (default: `0`)\n"
+                    "type": "integer"
                 },
                 "ecdsaCurve": {
                     "$ref": "#/types/kubernetes-the-hard-way:tls:EcdsaCurve",
@@ -5486,7 +5489,7 @@
                     "description": "Is the generated certificate representing a Certificate Authority (CA) (default: `false`).\n"
                 },
                 "key": {
-                    "$ref": "/tls/v5.0.2/schema.json#/resources/tls:index/privateKey:PrivateKey",
+                    "$ref": "/tls/v5.0.4/schema.json#/resources/tls:index/privateKey:PrivateKey",
                     "description": "The private key"
                 },
                 "keyAlgorithm": {
@@ -5534,7 +5537,7 @@
                     "description": "Should the generated certificate include a [subject key identifier](https://datatracker.ietf.org/doc/html/rfc5280#section-4.2.1.2) (default: `false`).\n"
                 },
                 "subject": {
-                    "$ref": "/tls/v5.0.2/schema.json#/types/tls:index/CertRequestSubject:CertRequestSubject",
+                    "$ref": "/tls/v5.0.4/schema.json#/types/tls:index/CertRequestSubject:CertRequestSubject",
                     "description": "TODO"
                 },
                 "uris": {
@@ -5617,8 +5620,7 @@
                     "description": "List of DNS names for which a certificate is being requested (i.e. certificate subjects).\n"
                 },
                 "earlyRenewalHours": {
-                    "type": "integer",
-                    "description": "The resource will consider the certificate to have expired the given number of hours before its actual expiry time. This\ncan be useful to deploy an updated certificate in advance of the expiration of the current certificate. However, the old\ncertificate remains valid until its true expiration time, since this resource does not (and cannot) support certificate\nrevocation. Also, this advance update can only be performed should the Terraform configuration be applied during the\nearly renewal period. (default: `0`)\n"
+                    "type": "integer"
                 },
                 "ecdsaCurve": {
                     "$ref": "#/types/kubernetes-the-hard-way:tls:EcdsaCurve",
@@ -5644,7 +5646,7 @@
                     "description": "Should the generated certificate include a [subject key identifier](https://datatracker.ietf.org/doc/html/rfc5280#section-4.2.1.2) (default: `false`).\n"
                 },
                 "subject": {
-                    "$ref": "/tls/v5.0.2/schema.json#/types/tls:index/CertRequestSubject:CertRequestSubject",
+                    "$ref": "/tls/v5.0.4/schema.json#/types/tls:index/CertRequestSubject:CertRequestSubject",
                     "description": "TODO"
                 },
                 "uris": {
@@ -5849,7 +5851,7 @@
                     "description": "List of key usages allowed for the issued certificate. Values are defined in [RFC 5280](https://datatracker.ietf.org/doc/html/rfc5280) and combine flags defined by both [Key Usages](https://datatracker.ietf.org/doc/html/rfc5280#section-4.2.1.3) and [Extended Key Usages](https://datatracker.ietf.org/doc/html/rfc5280#section-4.2.1.12). Accepted values: `any_extended`, `cert_signing`, `client_auth`, `code_signing`, `content_commitment`, `crl_signing`, `data_encipherment`, `decipher_only`, `digital_signature`, `email_protection`, `encipher_only`, `ipsec_end_system`, `ipsec_tunnel`, `ipsec_user`, `key_agreement`, `key_encipherment`, `microsoft_commercial_code_signing`, `microsoft_kernel_code_signing`, `microsoft_server_gated_crypto`, `netscape_server_gated_crypto`, `ocsp_signing`, `server_auth`, `timestamping`.\n"
                 },
                 "cert": {
-                    "$ref": "/tls/v5.0.2/schema.json#/resources/tls:index/selfSignedCert:SelfSignedCert",
+                    "$ref": "/tls/v5.0.4/schema.json#/resources/tls:index/selfSignedCert:SelfSignedCert",
                     "description": "The certificate authority certificate."
                 },
                 "certPem": {
@@ -5864,8 +5866,7 @@
                     "description": "List of DNS names for which a certificate is being requested (i.e. certificate subjects).\n"
                 },
                 "earlyRenewalHours": {
-                    "type": "integer",
-                    "description": "The resource will consider the certificate to have expired the given number of hours before its actual expiry time. This\ncan be useful to deploy an updated certificate in advance of the expiration of the current certificate. However, the old\ncertificate remains valid until its true expiration time, since this resource does not (and cannot) support certificate\nrevocation. Also, this advance update can only be performed should the Terraform configuration be applied during the\nearly renewal period. (default: `0`)\n"
+                    "type": "integer"
                 },
                 "ecdsaCurve": {
                     "$ref": "#/types/kubernetes-the-hard-way:tls:EcdsaCurve",
@@ -5883,7 +5884,7 @@
                     "description": "Is the generated certificate representing a Certificate Authority (CA) (default: `false`).\n"
                 },
                 "key": {
-                    "$ref": "/tls/v5.0.2/schema.json#/resources/tls:index/privateKey:PrivateKey",
+                    "$ref": "/tls/v5.0.4/schema.json#/resources/tls:index/privateKey:PrivateKey",
                     "description": "The certificate authority key."
                 },
                 "keyAlgorithm": {
@@ -5935,7 +5936,7 @@
                     "description": "Should the generated certificate include a [subject key identifier](https://datatracker.ietf.org/doc/html/rfc5280#section-4.2.1.2) (default: `false`).\n"
                 },
                 "subject": {
-                    "$ref": "/tls/v5.0.2/schema.json#/types/tls:index/SelfSignedCertSubject:SelfSignedCertSubject",
+                    "$ref": "/tls/v5.0.4/schema.json#/types/tls:index/SelfSignedCertSubject:SelfSignedCertSubject",
                     "description": "TODO"
                 },
                 "uris": {
@@ -5997,8 +5998,7 @@
                     "description": "List of DNS names for which a certificate is being requested (i.e. certificate subjects).\n"
                 },
                 "earlyRenewalHours": {
-                    "type": "integer",
-                    "description": "The resource will consider the certificate to have expired the given number of hours before its actual expiry time. This\ncan be useful to deploy an updated certificate in advance of the expiration of the current certificate. However, the old\ncertificate remains valid until its true expiration time, since this resource does not (and cannot) support certificate\nrevocation. Also, this advance update can only be performed should the Terraform configuration be applied during the\nearly renewal period. (default: `0`)\n"
+                    "type": "integer"
                 },
                 "ecdsaCurve": {
                     "$ref": "#/types/kubernetes-the-hard-way:tls:EcdsaCurve",
@@ -6024,7 +6024,7 @@
                     "description": "Should the generated certificate include a [subject key identifier](https://datatracker.ietf.org/doc/html/rfc5280#section-4.2.1.2) (default: `false`).\n"
                 },
                 "subject": {
-                    "$ref": "/tls/v5.0.2/schema.json#/types/tls:index/SelfSignedCertSubject:SelfSignedCertSubject",
+                    "$ref": "/tls/v5.0.4/schema.json#/types/tls:index/SelfSignedCertSubject:SelfSignedCertSubject",
                     "description": "TODO"
                 },
                 "uris": {
