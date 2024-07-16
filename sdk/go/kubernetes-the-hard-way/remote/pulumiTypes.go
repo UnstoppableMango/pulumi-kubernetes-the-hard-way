@@ -600,7 +600,9 @@ type SystemdServiceSection struct {
 	// Configures whether the service shall be restarted when the service process exits, is killed, or a timeout is reached.
 	Restart *SystemdServiceRestart `pulumi:"restart"`
 	// Configures the time to sleep before restarting a service (as configured with Restart=).
-	RestartSec *string `pulumi:"restartSec"`
+	RestartSec *int `pulumi:"restartSec"`
+	// Configure unit start rate limiting. Units which are started more than burst times within an interval time span are not permitted to start any more. Use StartLimitIntervalSec= to configure the checking interval and StartLimitBurst= to configure how many starts per interval are allowed.
+	StartLimitInterval *int `pulumi:"startLimitInterval"`
 	// Configures the mechanism via which the service notifies the manager that the service start-up has finished.
 	Type *SystemdServiceType `pulumi:"type"`
 }
@@ -640,7 +642,9 @@ type SystemdServiceSectionArgs struct {
 	// Configures whether the service shall be restarted when the service process exits, is killed, or a timeout is reached.
 	Restart SystemdServiceRestartPtrInput `pulumi:"restart"`
 	// Configures the time to sleep before restarting a service (as configured with Restart=).
-	RestartSec pulumi.StringPtrInput `pulumi:"restartSec"`
+	RestartSec pulumi.IntPtrInput `pulumi:"restartSec"`
+	// Configure unit start rate limiting. Units which are started more than burst times within an interval time span are not permitted to start any more. Use StartLimitIntervalSec= to configure the checking interval and StartLimitBurst= to configure how many starts per interval are allowed.
+	StartLimitInterval pulumi.IntPtrInput `pulumi:"startLimitInterval"`
 	// Configures the mechanism via which the service notifies the manager that the service start-up has finished.
 	Type SystemdServiceTypePtrInput `pulumi:"type"`
 }
@@ -727,8 +731,13 @@ func (o SystemdServiceSectionOutput) Restart() SystemdServiceRestartPtrOutput {
 }
 
 // Configures the time to sleep before restarting a service (as configured with Restart=).
-func (o SystemdServiceSectionOutput) RestartSec() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v SystemdServiceSection) *string { return v.RestartSec }).(pulumi.StringPtrOutput)
+func (o SystemdServiceSectionOutput) RestartSec() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v SystemdServiceSection) *int { return v.RestartSec }).(pulumi.IntPtrOutput)
+}
+
+// Configure unit start rate limiting. Units which are started more than burst times within an interval time span are not permitted to start any more. Use StartLimitIntervalSec= to configure the checking interval and StartLimitBurst= to configure how many starts per interval are allowed.
+func (o SystemdServiceSectionOutput) StartLimitInterval() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v SystemdServiceSection) *int { return v.StartLimitInterval }).(pulumi.IntPtrOutput)
 }
 
 // Configures the mechanism via which the service notifies the manager that the service start-up has finished.

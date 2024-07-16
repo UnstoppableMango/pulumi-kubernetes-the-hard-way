@@ -26,13 +26,8 @@ type RootCa struct {
 	// Certificate data in PEM (RFC 1421).
 	CertPem pulumi.StringOutput `pulumi:"certPem"`
 	// List of DNS names for which a certificate is being requested (i.e. certificate subjects).
-	DnsNames pulumi.StringArrayOutput `pulumi:"dnsNames"`
-	// The resource will consider the certificate to have expired the given number of hours before its actual expiry time. This
-	// can be useful to deploy an updated certificate in advance of the expiration of the current certificate. However, the old
-	// certificate remains valid until its true expiration time, since this resource does not (and cannot) support certificate
-	// revocation. Also, this advance update can only be performed should the Terraform configuration be applied during the
-	// early renewal period. (default: `0`)
-	EarlyRenewalHours pulumi.IntOutput `pulumi:"earlyRenewalHours"`
+	DnsNames          pulumi.StringArrayOutput `pulumi:"dnsNames"`
+	EarlyRenewalHours pulumi.IntOutput         `pulumi:"earlyRenewalHours"`
 	// TODO
 	EcdsaCurve EcdsaCurveOutput `pulumi:"ecdsaCurve"`
 	// List of IP addresses for which a certificate is being requested (i.e. certificate subjects).
@@ -100,13 +95,8 @@ type rootCaArgs struct {
 	// Name of the algorithm to use when generating the private key.
 	Algorithm *Algorithm `pulumi:"algorithm"`
 	// List of DNS names for which a certificate is being requested (i.e. certificate subjects).
-	DnsNames []string `pulumi:"dnsNames"`
-	// The resource will consider the certificate to have expired the given number of hours before its actual expiry time. This
-	// can be useful to deploy an updated certificate in advance of the expiration of the current certificate. However, the old
-	// certificate remains valid until its true expiration time, since this resource does not (and cannot) support certificate
-	// revocation. Also, this advance update can only be performed should the Terraform configuration be applied during the
-	// early renewal period. (default: `0`)
-	EarlyRenewalHours *int `pulumi:"earlyRenewalHours"`
+	DnsNames          []string `pulumi:"dnsNames"`
+	EarlyRenewalHours *int     `pulumi:"earlyRenewalHours"`
 	// TODO
 	EcdsaCurve *EcdsaCurve `pulumi:"ecdsaCurve"`
 	// List of IP addresses for which a certificate is being requested (i.e. certificate subjects).
@@ -130,12 +120,7 @@ type RootCaArgs struct {
 	// Name of the algorithm to use when generating the private key.
 	Algorithm AlgorithmPtrInput
 	// List of DNS names for which a certificate is being requested (i.e. certificate subjects).
-	DnsNames pulumi.StringArrayInput
-	// The resource will consider the certificate to have expired the given number of hours before its actual expiry time. This
-	// can be useful to deploy an updated certificate in advance of the expiration of the current certificate. However, the old
-	// certificate remains valid until its true expiration time, since this resource does not (and cannot) support certificate
-	// revocation. Also, this advance update can only be performed should the Terraform configuration be applied during the
-	// early renewal period. (default: `0`)
+	DnsNames          pulumi.StringArrayInput
 	EarlyRenewalHours pulumi.IntPtrInput
 	// TODO
 	EcdsaCurve EcdsaCurvePtrInput
@@ -267,11 +252,6 @@ func (o RootCaOutput) DnsNames() pulumi.StringArrayOutput {
 	return o.ApplyT(func(v *RootCa) pulumi.StringArrayOutput { return v.DnsNames }).(pulumi.StringArrayOutput)
 }
 
-// The resource will consider the certificate to have expired the given number of hours before its actual expiry time. This
-// can be useful to deploy an updated certificate in advance of the expiration of the current certificate. However, the old
-// certificate remains valid until its true expiration time, since this resource does not (and cannot) support certificate
-// revocation. Also, this advance update can only be performed should the Terraform configuration be applied during the
-// early renewal period. (default: `0`)
 func (o RootCaOutput) EarlyRenewalHours() pulumi.IntOutput {
 	return o.ApplyT(func(v *RootCa) pulumi.IntOutput { return v.EarlyRenewalHours }).(pulumi.IntOutput)
 }

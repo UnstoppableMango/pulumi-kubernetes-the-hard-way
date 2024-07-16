@@ -828,7 +828,11 @@ export namespace remote {
         /**
          * Configures the time to sleep before restarting a service (as configured with Restart=).
          */
-        restartSec?: string;
+        restartSec?: number;
+        /**
+         * Configure unit start rate limiting. Units which are started more than burst times within an interval time span are not permitted to start any more. Use StartLimitIntervalSec= to configure the checking interval and StartLimitBurst= to configure how many starts per interval are allowed.
+         */
+        startLimitInterval?: number;
         /**
          * Configures the mechanism via which the service notifies the manager that the service start-up has finished.
          */

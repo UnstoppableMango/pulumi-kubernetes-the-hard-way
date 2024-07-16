@@ -73,7 +73,12 @@ public final class SystemdServiceSection {
      * @return Configures the time to sleep before restarting a service (as configured with Restart=).
      * 
      */
-    private @Nullable String restartSec;
+    private @Nullable Integer restartSec;
+    /**
+     * @return Configure unit start rate limiting. Units which are started more than burst times within an interval time span are not permitted to start any more. Use StartLimitIntervalSec= to configure the checking interval and StartLimitBurst= to configure how many starts per interval are allowed.
+     * 
+     */
+    private @Nullable Integer startLimitInterval;
     /**
      * @return Configures the mechanism via which the service notifies the manager that the service start-up has finished.
      * 
@@ -158,8 +163,15 @@ public final class SystemdServiceSection {
      * @return Configures the time to sleep before restarting a service (as configured with Restart=).
      * 
      */
-    public Optional<String> restartSec() {
+    public Optional<Integer> restartSec() {
         return Optional.ofNullable(this.restartSec);
+    }
+    /**
+     * @return Configure unit start rate limiting. Units which are started more than burst times within an interval time span are not permitted to start any more. Use StartLimitIntervalSec= to configure the checking interval and StartLimitBurst= to configure how many starts per interval are allowed.
+     * 
+     */
+    public Optional<Integer> startLimitInterval() {
+        return Optional.ofNullable(this.startLimitInterval);
     }
     /**
      * @return Configures the mechanism via which the service notifies the manager that the service start-up has finished.
@@ -189,7 +201,8 @@ public final class SystemdServiceSection {
         private @Nullable Integer limitNoFile;
         private @Nullable Integer oomScoreAdjust;
         private @Nullable SystemdServiceRestart restart;
-        private @Nullable String restartSec;
+        private @Nullable Integer restartSec;
+        private @Nullable Integer startLimitInterval;
         private @Nullable SystemdServiceType type;
         public Builder() {}
         public Builder(SystemdServiceSection defaults) {
@@ -206,6 +219,7 @@ public final class SystemdServiceSection {
     	      this.oomScoreAdjust = defaults.oomScoreAdjust;
     	      this.restart = defaults.restart;
     	      this.restartSec = defaults.restartSec;
+    	      this.startLimitInterval = defaults.startLimitInterval;
     	      this.type = defaults.type;
         }
 
@@ -279,9 +293,15 @@ public final class SystemdServiceSection {
             return this;
         }
         @CustomType.Setter
-        public Builder restartSec(@Nullable String restartSec) {
+        public Builder restartSec(@Nullable Integer restartSec) {
 
             this.restartSec = restartSec;
+            return this;
+        }
+        @CustomType.Setter
+        public Builder startLimitInterval(@Nullable Integer startLimitInterval) {
+
+            this.startLimitInterval = startLimitInterval;
             return this;
         }
         @CustomType.Setter
@@ -304,6 +324,7 @@ public final class SystemdServiceSection {
             _resultValue.oomScoreAdjust = oomScoreAdjust;
             _resultValue.restart = restart;
             _resultValue.restartSec = restartSec;
+            _resultValue.startLimitInterval = startLimitInterval;
             _resultValue.type = type;
             return _resultValue;
         }
