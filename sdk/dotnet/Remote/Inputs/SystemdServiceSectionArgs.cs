@@ -88,13 +88,13 @@ namespace UnMango.KubernetesTheHardWay.Remote.Inputs
         /// Configures the time to sleep before restarting a service (as configured with Restart=).
         /// </summary>
         [Input("restartSec")]
-        public Input<int>? RestartSec { get; set; }
+        public Input<string>? RestartSec { get; set; }
 
         /// <summary>
         /// Configure unit start rate limiting. Units which are started more than burst times within an interval time span are not permitted to start any more. Use StartLimitIntervalSec= to configure the checking interval and StartLimitBurst= to configure how many starts per interval are allowed.
         /// </summary>
         [Input("startLimitInterval")]
-        public Input<int>? StartLimitInterval { get; set; }
+        public Input<string>? StartLimitInterval { get; set; }
 
         /// <summary>
         /// Configures the mechanism via which the service notifies the manager that the service start-up has finished.

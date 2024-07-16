@@ -431,8 +431,8 @@ class SystemdServiceSection(dict):
                  limit_no_file: Optional[int] = None,
                  oom_score_adjust: Optional[int] = None,
                  restart: Optional['SystemdServiceRestart'] = None,
-                 restart_sec: Optional[int] = None,
-                 start_limit_interval: Optional[int] = None,
+                 restart_sec: Optional[str] = None,
+                 start_limit_interval: Optional[str] = None,
                  type: Optional['SystemdServiceType'] = None):
         """
         https://www.freedesktop.org/software/systemd/man/latest/systemd.service.html#
@@ -446,8 +446,8 @@ class SystemdServiceSection(dict):
         :param int limit_no_file: https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#Process%20Properties
         :param int oom_score_adjust: https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#OOMScoreAdjust=
         :param 'SystemdServiceRestart' restart: Configures whether the service shall be restarted when the service process exits, is killed, or a timeout is reached.
-        :param int restart_sec: Configures the time to sleep before restarting a service (as configured with Restart=).
-        :param int start_limit_interval: Configure unit start rate limiting. Units which are started more than burst times within an interval time span are not permitted to start any more. Use StartLimitIntervalSec= to configure the checking interval and StartLimitBurst= to configure how many starts per interval are allowed.
+        :param str restart_sec: Configures the time to sleep before restarting a service (as configured with Restart=).
+        :param str start_limit_interval: Configure unit start rate limiting. Units which are started more than burst times within an interval time span are not permitted to start any more. Use StartLimitIntervalSec= to configure the checking interval and StartLimitBurst= to configure how many starts per interval are allowed.
         :param 'SystemdServiceType' type: Configures the mechanism via which the service notifies the manager that the service start-up has finished.
         """
         if delegate is not None:
@@ -566,7 +566,7 @@ class SystemdServiceSection(dict):
 
     @property
     @pulumi.getter(name="restartSec")
-    def restart_sec(self) -> Optional[int]:
+    def restart_sec(self) -> Optional[str]:
         """
         Configures the time to sleep before restarting a service (as configured with Restart=).
         """
@@ -574,7 +574,7 @@ class SystemdServiceSection(dict):
 
     @property
     @pulumi.getter(name="startLimitInterval")
-    def start_limit_interval(self) -> Optional[int]:
+    def start_limit_interval(self) -> Optional[str]:
         """
         Configure unit start rate limiting. Units which are started more than burst times within an interval time span are not permitted to start any more. Use StartLimitIntervalSec= to configure the checking interval and StartLimitBurst= to configure how many starts per interval are allowed.
         """

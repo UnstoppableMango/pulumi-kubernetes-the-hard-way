@@ -61,11 +61,11 @@ namespace UnMango.KubernetesTheHardWay.Remote.Outputs
         /// <summary>
         /// Configures the time to sleep before restarting a service (as configured with Restart=).
         /// </summary>
-        public readonly int? RestartSec;
+        public readonly string? RestartSec;
         /// <summary>
         /// Configure unit start rate limiting. Units which are started more than burst times within an interval time span are not permitted to start any more. Use StartLimitIntervalSec= to configure the checking interval and StartLimitBurst= to configure how many starts per interval are allowed.
         /// </summary>
-        public readonly int? StartLimitInterval;
+        public readonly string? StartLimitInterval;
         /// <summary>
         /// Configures the mechanism via which the service notifies the manager that the service start-up has finished.
         /// </summary>
@@ -95,9 +95,9 @@ namespace UnMango.KubernetesTheHardWay.Remote.Outputs
 
             UnMango.KubernetesTheHardWay.Remote.SystemdServiceRestart? restart,
 
-            int? restartSec,
+            string? restartSec,
 
-            int? startLimitInterval,
+            string? startLimitInterval,
 
             UnMango.KubernetesTheHardWay.Remote.SystemdServiceType? type)
         {

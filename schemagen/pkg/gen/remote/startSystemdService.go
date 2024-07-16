@@ -32,14 +32,11 @@ func generateStartSystemdService(commandSpec schema.PackageSpec, t, n string) sc
 	}
 	maps.Copy(outputs, inputs)
 
-	requiredOutputs := slices.Concat(
-		requiredInputs,
-		[]string{
-			"daemonReload",
-			"enable",
-			"start",
-		},
-	)
+	requiredOutputs := slices.Concat(requiredInputs, []string{
+		"daemonReload",
+		"enable",
+		"start",
+	})
 
 	return schema.PackageSpec{
 		Types:     map[string]schema.ComplexTypeSpec{},

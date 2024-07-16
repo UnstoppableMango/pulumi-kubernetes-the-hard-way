@@ -188,13 +188,13 @@ public final class SystemdServiceSectionArgs extends com.pulumi.resources.Resour
      * 
      */
     @Import(name="restartSec")
-    private @Nullable Output<Integer> restartSec;
+    private @Nullable Output<String> restartSec;
 
     /**
      * @return Configures the time to sleep before restarting a service (as configured with Restart=).
      * 
      */
-    public Optional<Output<Integer>> restartSec() {
+    public Optional<Output<String>> restartSec() {
         return Optional.ofNullable(this.restartSec);
     }
 
@@ -203,13 +203,13 @@ public final class SystemdServiceSectionArgs extends com.pulumi.resources.Resour
      * 
      */
     @Import(name="startLimitInterval")
-    private @Nullable Output<Integer> startLimitInterval;
+    private @Nullable Output<String> startLimitInterval;
 
     /**
      * @return Configure unit start rate limiting. Units which are started more than burst times within an interval time span are not permitted to start any more. Use StartLimitIntervalSec= to configure the checking interval and StartLimitBurst= to configure how many starts per interval are allowed.
      * 
      */
-    public Optional<Output<Integer>> startLimitInterval() {
+    public Optional<Output<String>> startLimitInterval() {
         return Optional.ofNullable(this.startLimitInterval);
     }
 
@@ -494,7 +494,7 @@ public final class SystemdServiceSectionArgs extends com.pulumi.resources.Resour
          * @return builder
          * 
          */
-        public Builder restartSec(@Nullable Output<Integer> restartSec) {
+        public Builder restartSec(@Nullable Output<String> restartSec) {
             $.restartSec = restartSec;
             return this;
         }
@@ -505,7 +505,7 @@ public final class SystemdServiceSectionArgs extends com.pulumi.resources.Resour
          * @return builder
          * 
          */
-        public Builder restartSec(Integer restartSec) {
+        public Builder restartSec(String restartSec) {
             return restartSec(Output.of(restartSec));
         }
 
@@ -515,7 +515,7 @@ public final class SystemdServiceSectionArgs extends com.pulumi.resources.Resour
          * @return builder
          * 
          */
-        public Builder startLimitInterval(@Nullable Output<Integer> startLimitInterval) {
+        public Builder startLimitInterval(@Nullable Output<String> startLimitInterval) {
             $.startLimitInterval = startLimitInterval;
             return this;
         }
@@ -526,7 +526,7 @@ public final class SystemdServiceSectionArgs extends com.pulumi.resources.Resour
          * @return builder
          * 
          */
-        public Builder startLimitInterval(Integer startLimitInterval) {
+        public Builder startLimitInterval(String startLimitInterval) {
             return startLimitInterval(Output.of(startLimitInterval));
         }
 
