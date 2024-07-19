@@ -5,7 +5,7 @@
     "packageManager": "yarn@1.22.22",
     "bin": "bin/index.js",
     "dependencies": {
-        "@pulumi/command": "1.0.0",
+        "@pulumi/command": "1.0.1",
         "@pulumi/kubernetes": "4.15.0",
         "@pulumi/pulumi": "^3.111.1",
         "@pulumi/random": "4.16.3",
